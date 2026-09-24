@@ -192,7 +192,7 @@ flowchart LR
     end
 
     subgraph OBS[Audit and observability]
-        AUD[(Audit log)] --> EVAL[Eval service] & DASH[Dashboards: operational | safety]
+        AUD[(Audit log)] --> EVAL[Eval service] & DASH["Dashboards: operational | safety"]
     end
 
     VER --> RR
