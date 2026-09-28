@@ -18,6 +18,7 @@ design, delivery planning, production trade-offs, leadership, and interview exec
 | `Last_Day_Prep/` | Eighteen rapid-review modules and the final interview execution framework |
 | `Study_Guides/` | Recall-oriented technical and production study guides |
 | `Question_Banks/` | Vendor-neutral FDE problem-decomposition practice |
+| `OpenAI_Applied/` | OpenAI Applied AI Engineer prep: decomposition-round coverage/gap analysis and sample questions |
 | `Supplementary_Guides/` | Production judgment, platform examples, and delivery-framework theory |
 | `site/` | The deployable interactive course experience |
 
