@@ -505,7 +505,7 @@ Repair the common weak answers on the spot. "The answer is correct, so the citat
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`. Purchased material lives under `FDE/Complete GEN AI FDE Interview System — Core + GenAI/`, abbreviated below as `FDE/Complete…/`.
+All paths are relative to the repository root. Purchased material lives under `FDE/Complete GEN AI FDE Interview System — Core + GenAI/`, abbreviated below as `FDE/Complete…/`.
 
 | Section | Source |
 |---|---|
@@ -514,7 +514,7 @@ All paths are relative to `06_Interview_Prep/`. Purchased material lives under `
 | 3, 7 (compliance variant) | `…/04_CASE_STUDY_WORKSHEET/03_financial_compliance_reviewer.md` and its answer key |
 | 3, 7 (contract variant) | `…/04_CASE_STUDY_WORKSHEET/05_legal_contract_copilot.md` and its answer key |
 | 12, 15 (objections, follow-ups, rubric) | `FDE/Complete…/07_MOCK_INTERVIEWS_AND_SCORECARDS/02_SHORT_PRACTICE_MOCK/03_financial_red_team_mock.md` and `03_FULL_MOCK_INTERVIEWS/03_financial_red_team_full_mock.md` |
-| 3, 10, 11, 15 (OpenAI-style Q3) and 8, 15 (OpenAI-style Q12) | `OpenAI_Applied/Sample_Questions/OpenAI Applied_Engineer_Problem_Decomposition_Questions.md`, questions 3 and 12 |
+| 3, 10, 11, 15 (OpenAI-style Q3) and 8, 15 (OpenAI-style Q12) | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, questions 3 and 12 |
 | 14 | `FDE/Complete…/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/05_bad_citations.md` and `08_ingestion_parser_failure.md` |
 | 6 | `Study_Guides/chunking/chunking-reference-by-doc-type.md`, sections 3.4, 3.6 and 7 |
 | 13 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill for #30 |
@@ -523,7 +523,7 @@ All paths are relative to `06_Interview_Prep/`. Purchased material lives under `
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [OpenAI Applied Engineer problem-decomposition practice questions (repo)](../../OpenAI_Applied/Sample_Questions/OpenAI%20Applied_Engineer_Problem_Decomposition_Questions.md) — the claims and regulated-industry prompts are practice cases, not official OpenAI questions
+- [FDE problem-decomposition question bank](../../Question_Banks/FDE_Problem_Decomposition_Question_Bank.md) — claims and regulated-industry practice cases
 - [HL7 FHIR R5 Subscriptions framework](https://hl7.org/fhir/R5/subscriptions.html) — event-driven FHIR needs Subscriptions; otherwise you poll
 - [FINRA Books and Records (SEA 17a-4, FINRA 4511)](https://www.finra.org/rules-guidance/key-topics/books-records) — retention of advisor communications; WORM or audit-trail storage
 - [FINRA Rule 3110: Supervision](https://www.finra.org/rules-guidance/rulebooks/finra-rules/3110) — supervisory review of correspondence

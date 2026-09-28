@@ -363,15 +363,15 @@ All paths are relative to the repository root unless stated.
 
 | Section | Source |
 |---|---|
-| Member prompts (#73, #81, #83, #84), 1, 13 | `06_Interview_Prep/OpenAI_Applied/Sample_Questions/openai_decomposition_interview_prep.html`, Tier 1 prompts 8, 16, 18 and 19; section 4 "The Framework That Wins the Round" |
+| Member prompts (#73, #81, #83, #84), 1, 13 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompts 8, 16, 18 and 19; section 4 "The Framework That Wins the Round" |
 | 5, 6, 8 | `01_Foundations/00_Theory_and_Foundations/Fine_Tuning_and_RL/01_Foundations/` labs: where fine-tuning fits, instruction tuning, data preparation, training (`pythia-70m`, `pythia-410m`), evaluation (ARC) |
 | 6 | `01_Foundations/00_Theory_and_Foundations/Fine_Tuning_and_RL/03_Applications/3_ways_Fine_Tuning_LLAMA_2_with_autotrain.ipynb` (`use_peft`, `use_int4`, QLoRA) |
-| 5, 8, 11, 12 | `06_Interview_Prep/FDE/Cracking_Agentic_AI_System_Design_Interviews/ch08_learning_in_agentic_systems.md` (four learning surfaces, when parameter updates earn their cost, data flywheel, the 94% case) |
-| 10 | `06_Interview_Prep/Handbook/04_Enterprise_RAG/06_Output_Guardrails.md` (three-verdict sufficiency, over-refusal) |
-| 11 | `06_Interview_Prep/FDE/FDE_System_Design_Interview_20_Scenarios/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md` (memory per replica, quantisation) |
-| 11 | `06_Interview_Prep/FDE/System_Design and Delivery/2. System Design Components.md` (model distillation) |
-| 8 | `06_Interview_Prep/Case_Study_Groups/G13_Evaluation_And_Release_Gating.md` (release gate) |
-| 14 | `06_Interview_Prep/Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md` (fine-tuning and GPU hosting cost rows; the four verbs) |
+| 5, 8, 11, 12 | `FDE/Cracking_Agentic_AI_System_Design_Interviews/ch08_learning_in_agentic_systems.md` (four learning surfaces, when parameter updates earn their cost, data flywheel, the 94% case) |
+| 10 | `Handbook/04_Enterprise_RAG/06_Output_Guardrails.md` (three-verdict sufficiency, over-refusal) |
+| 11 | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md` (memory per replica, quantisation) |
+| 11 | `FDE/System_Design and Delivery/2. System Design Components.md` (model distillation) |
+| 8 | `Case_Study_Groups/G13_Evaluation_And_Release_Gating.md` (release gate) |
+| 14 | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md` (fine-tuning and GPU hosting cost rows; the four verbs) |
 | 2, 3, 4, 7, 9, 10, 11, 14, and every item marked own construction | Built for this page; the RLHF, DPO, parallelism and scaling material is general knowledge, not repo content |
 | Not available | `01_Foundations/00_Theory_and_Foundations/Fine_Tuning_and_RL/02_Techniques/` (RLHF, DPO, LoRA) and `Transformer_Architecture/` are planned and empty; the repo's own gap analysis lists them as a gap |
 
@@ -390,5 +390,5 @@ All paths are relative to the repository root unless stated.
 - [PyTorch blog: Quantization-Aware Training for LLMs](https://pytorch.org/blog/quantization-aware-training/) — QAT loses less quality than post-training quantisation
 - [Ovadia et al. 2023, Fine-Tuning or Retrieval?](https://arxiv.org/abs/2312.05934) — RAG beats fine-tuning for injecting new facts; fine-tuning does so weakly
 - [Zhao et al. 2024, LoRA Land](https://arxiv.org/abs/2405.00732) — small LoRA-tuned models often match larger prompted ones on narrow tasks, varying by task
-- `06_Interview_Prep/FDE/Cracking_Agentic_AI_System_Design_Interviews/ch08_learning_in_agentic_systems.md` — the book's worked example (140,000 → 9,000 traces; 94% / 78% / 83%) and the four learning surfaces
+- `FDE/Cracking_Agentic_AI_System_Design_Interviews/ch08_learning_in_agentic_systems.md` — the book's worked example (140,000 → 9,000 traces; 94% / 78% / 83%) and the four learning surfaces
 - `05_Projects/Enterprise_RAG_Platform/src/enterprise_rag/graph/nodes.py` — the partial-verdict over-refusal point is a code comment, not measured data

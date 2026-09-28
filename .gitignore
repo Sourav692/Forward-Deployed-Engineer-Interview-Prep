@@ -1,0 +1,21 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+out/
+coverage/
+*.log
+
+# Raw client stories and unredacted originals stay local.
+_private/
+
+# Purchased binary source material is stored outside Git unless deliberately
+# reviewed and added through an approved large-file workflow.
+FDE/Complete GEN AI FDE Interview System — Core + GenAI/**/*.pdf
+FDE/Complete GEN AI FDE Interview System — Core + GenAI/**/*.docx
+FDE/Complete GEN AI FDE Interview System — Core + GenAI/**/*.pptx
+
+# The dedicated interview-labs package is intentionally versioned in full.
+!FDE/Complete GEN AI FDE Interview System — Core + GenAI/11_HANDS_ON_LABS/**/*.pdf

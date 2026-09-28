@@ -1,0 +1,8 @@
+flowchart TD
+  AI[AI Suggests]-->Policy[Risk Policy]
+  Policy--Safe-->Answer[Return Answer]
+  Policy--Risky-->Queue[Review Queue]
+  Queue-->Decision[Approve / Edit / Reject / Escalate]
+  Decision-->Execute[Execution Gate]
+  Execute-->Audit[Audit Log]
+  Audit-->Eval[Evaluation Update]

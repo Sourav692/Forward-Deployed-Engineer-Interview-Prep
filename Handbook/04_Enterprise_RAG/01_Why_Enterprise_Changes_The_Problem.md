@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 1 of 10 · **Time** ~35 min
 > **Prerequisites:** Module 01 docs 1–2
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/README.md` (business case), `docs/01-theory.md` §2, §7 (the three patterns, "groups overlap")
-> **Lab:** `project/notebooks/02-hands-on-parts/part01-corpus-and-permissions.ipynb`
+> **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part01-corpus-and-permissions.ipynb`
 
 ## Why this matters
 
@@ -118,12 +118,12 @@ And the pattern choice: *"(b) and (c) together — partition by tenant and pre-f
 
 | Concept | Where |
 |---|---|
-| Per-tenant collection | `project/src/enterprise_rag/ingest/store.py` → `get_collection`, `SETTINGS.collection_for(tenant_id)` |
+| Per-tenant collection | `05_Projects/Enterprise_RAG_Platform/src/enterprise_rag/ingest/store.py` → `get_collection`, `SETTINGS.collection_for(tenant_id)` |
 | Pre-filter compilation | `authz/policy.py` → `compile_prefilter` |
 | Post-check | `authz/enforcement.py` → `enforce` |
 | Group flags as boolean columns | `models.py` → `Chunk.to_metadata`, `attrs_from_metadata` |
-| The personas | `project/data/identities.json` (9 personas, each exercising a different rule) |
-| Notebook | `project/notebooks/02-hands-on-parts/part01-corpus-and-permissions.ipynb` |
+| The personas | `05_Projects/Enterprise_RAG_Platform/data/identities.json` (9 personas, each exercising a different rule) |
+| Notebook | `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part01-corpus-and-permissions.ipynb` |
 
 ## Checkpoint
 

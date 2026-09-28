@@ -1,85 +1,57 @@
-# 06 — Interview Prep
+# Forward-Deployed Engineer Interview Prep
 
-**Prerequisites: the curriculum groups**, at least in part — this material assumes the concepts and drills recall of them. A top-level group because prep is derived material, not a topic.
+A private, self-contained course for preparing engineers to scope, design, deliver,
+and defend production AI systems in Forward-Deployed Engineer interviews.
 
-**5 tracks · 21 notebooks · ~330 markdown documents.**
+This repository is intentionally separate from the hands-on AI Engineering course.
+It teaches the judgment layer: customer discovery, problem decomposition, system
+design, delivery planning, production trade-offs, leadership, and interview execution.
 
-> ⚠ **`FDE/` contains purchased third-party material.** Everything under `FDE/Complete GEN AI FDE Interview System — Core + GenAI/` except `.md` files is gitignored by design. If that folder ever moves, the path-anchored rules in the root `.gitignore` must move with it — see this group's `CLAUDE.md`.
+## What is included
 
-## Topics covered
+| Area | Purpose |
+|---|---|
+| `Handbook/` | Ordered FDE curriculum from AI-system foundations through delivery and storytelling |
+| `FDE/` | System-design scenarios, behavioral preparation, mock interviews, and role guidance |
+| `FDE/Complete GEN AI FDE Interview System — Core + GenAI/11_HANDS_ON_LABS/` | Curated FDE interview labs and production-architecture references |
+| `Case_Study_Groups/` | Three-layer case-study packs: main guide, deep dive, cheat sheet, and sourced full pack |
+| `Last_Day_Prep/` | Eighteen rapid-review modules and the final interview execution framework |
+| `Study_Guides/` | Recall-oriented technical and production study guides |
+| `Question_Banks/` | Vendor-neutral FDE problem-decomposition practice |
+| `Supplementary_Guides/` | Production judgment, platform examples, and delivery-framework theory |
+| `site/` | The deployable interactive course experience |
 
-### `Handbook/` — the written handbook, 13 chapters
-- `00_Orientation`
-- `01_LLM_Systems_Foundations`
-- `02_System_Design_Fundamentals`
-- `03_Robust_Agents`
-- `04_Enterprise_RAG`
-- `05_Agentic_Workflow_Platforms`
-- `06_Cross_Cutting_Concerns`
-- `07_Multi_Agent_Systems`
-- `08_AgentOps_And_Platform`
-- `09_AI_System_Design_Casebook`
-- `10_FDE_Delivery_Operating_Model`
-- `11_Telling_The_Story`
-- `99_Appendices`
+## Scope boundary
 
-Prose, not notebooks. It re-covers topics the curriculum owns, from a system-design and delivery angle rather than a build-it angle.
+This repository contains theory, functional architecture, worksheets, answer keys,
+case studies, the dedicated FDE interview-labs module, and the delivery website.
+Outside that explicitly included labs module, it does not duplicate notebooks,
+application source trees, or project implementations from the AI Engineering course.
 
-### `FDE/` — Forward Deployed Engineer preparation
+Hands-on implementations remain in the companion AI Engineering course and are
+referenced at an immutable source revision in [`COMPANION_COURSE.md`](COMPANION_COURSE.md).
 
-**The complete GenAI FDE interview system** ⚠ purchased
-- Customer discovery and decomposition
-- Architecture and system design
-- Enterprise data, RAG and agents
-- Evaluation, security and red team
-- Production debugging, observability and optimization
-- Coding interview practice
-- Mock interviews and scorecards
-- Final readiness assessment
-- MCP, A2A and LLMOps
-- Case study reference library
-- Hands-on labs
-- Answer language and interview day
-- Career and portfolio assets
+## Run the course site
 
-**Other FDE tracks**
-- `FDE_System_Design_Interview_20_Scenarios/`
-- `Cracking_Agentic_AI_System_Design_Interviews/`
-- `Behavioral_and_Leadership/`
-- `Senior_FDE_Day_to_Day.md`
+```bash
+cd site
+npm install
+npm run check:content
+npm run dev
+```
 
-### `AI_Engineer/` — AI Engineer role prep
-- Cross-cutting preparation
-- A delivery framework from scoping through delivery
+The site syncs its source material from `FDE/`, `Case_Study_Groups/`, and
+`Last_Day_Prep/`. Generated content under `site/content/` is committed because the
+Vercel project is rooted at `site/`.
 
-### `OpenAI_Applied/` — Applied AI Engineer prep
-- Coverage and gap analysis
-- Sample questions
+## Versioning
 
-### `Study_Guides/` — recall drills built from this repo
+The course follows semantic versioning. While extraction and curriculum cleanup are
+in progress, releases start at `v0.x`. A `v1.0.0` release means the module sequence,
+assessment model, and delivery site are ready for paid learners.
 
-**Per-phase interview tutorials**
-- LangChain foundations
-- LangGraph fundamentals
-- RAG and retrieval
-- Memory and state
-- Multi-agent systems
-- Advanced RAG techniques
-- Production and operations
+## Privacy
 
-**Cost & Latency Optimization**
-- The 8 drivers worth memorizing
-- Full-playbook cram sheet (§1–§18)
-- §15/§16 deep-dive cram sheet
-- A 258-card offline drill deck
-
-**Other**
-- Chunking notes
-- Retrieval-strategy notes
-- `INTERVIEW_DRILL_HUB.html`
-- Async operations in AI agents
-- Callbacks in AI agents
-
-## Related but elsewhere
-
-**Evaluation interview material** — question banks, decomposition case studies and the evaluation drill — lives in the sibling repo `Agent_Evaluation_Demystified` under `docs/interview-prep/`, alongside the eval content it tests.
+This is a private course repository. Raw client stories, unredacted source material,
+local credentials, and ignored purchased binaries are not committed automatically.
+Private visibility does not replace deliberate data minimization.

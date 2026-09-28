@@ -1,0 +1,14 @@
+flowchart LR
+  Docs[Documents] --> Clean[Clean and Normalize Text]
+  Clean --> Chunk[Chunker]
+  Chunk --> Hash[Content Hash]
+  Hash --> Provider[EmbeddingProvider]
+  Provider --> Local[Local Sentence Transformer]
+  Provider --> Vertex[Optional Vertex AI]
+  Local --> Cache[(SQLite Embedding Cache)]
+  Vertex --> Cache
+  Cache --> Store[(Vector Store + Metadata)]
+  Query[User Query] --> QEmbed[Query Embedding]
+  QEmbed --> Search[Cosine Similarity + Permission Filter]
+  Store --> Search
+  Search --> TopK[Top-K Chunks + Scores + Citations]

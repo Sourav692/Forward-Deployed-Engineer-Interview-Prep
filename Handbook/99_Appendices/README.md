@@ -14,6 +14,6 @@ The handbook is designed to absorb new material. When adding:
 1. **Place it in a level.** A new topic belongs at the level whose plateau it extends — Foundations, Building, Scale/Security/Ops, or Mastery/FDE.
 2. **Give it the standard header** — level, module, doc number, time, prerequisites, source material — and end with a Checkpoint and a Next pointer.
 3. **Record provenance in the Source Map** with a treatment code, and add any new terms to the Glossary.
-4. **If it is a project, copy it into a `project/` folder** minus generated artefacts, and strip its docs into rewritten handbook documents; keep its scripts and README runnable.
+4. **If it is a project, keep the implementation in the companion AI Engineering repository.** Record its immutable source path in `COMPANION_COURSE.md` and rewrite only the interview-relevant theory here.
 5. **If it is a performance artefact** — a script, a narrative, a quick reference — copy it with a header rather than rewriting it; those are used by rehearsing, not by reading.
 6. **Update the module README's reading order and the Progress Checklist.**

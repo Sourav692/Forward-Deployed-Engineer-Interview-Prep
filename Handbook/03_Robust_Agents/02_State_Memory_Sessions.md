@@ -2,7 +2,7 @@
 
 > **Level** 🟡 Building Production Systems · **Module** 03 · **Doc** 2 of 5 · **Time** ~25 min
 > **Prerequisites:** [Retry, Fallback, Memoization and the Confirmation Gate](01_Retry_Fallback_Memo_Confirm.md)
-> **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/docs/DESIGN.md` §1, `src/scratch_agent.py`; `06_Interview_Prep/FDE/System_Design and Delivery/6. Customer Support AI Assistant Design.md` §6 *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
+> **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/docs/DESIGN.md` §1, `src/scratch_agent.py`; `FDE/System_Design and Delivery/6. Customer Support AI Assistant Design.md` §6 *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
 
 ## Why this matters
 
@@ -78,11 +78,11 @@ One more distinction that saves a lot of pain. A refund investigation, a warrant
 
 | Concept | Where |
 |---|---|
-| Session state | `project/src/scratch_agent.py` → `Session` |
+| Session state | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/scratch_agent.py` → `Session` |
 | History recorded on final answer | `Agent.run` → `session.history.append(...)` |
 | Memo shared across turns | `execute_tool(..., memo=session.memo)` |
-| Graph-level run state | `project/src/langgraph_agent.py` → `AgentState` |
-| Checkpointing and interrupts | `project/notebooks/robust_langgraph_tool_calling_agent.ipynb` |
+| Graph-level run state | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/langgraph_agent.py` → `AgentState` |
+| Checkpointing and interrupts | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/robust_langgraph_tool_calling_agent.ipynb` |
 | Test | `test_session_memo_persists_across_turns` |
 
 ## Interview lens

@@ -1,0 +1,5 @@
+# Educational Kubernetes manifest placeholder for service.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: genai-fde-lab-service

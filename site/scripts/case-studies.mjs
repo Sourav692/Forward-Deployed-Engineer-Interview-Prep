@@ -1,6 +1,6 @@
 /**
  * Syncs the FDE Case Studies module: the three-layer interview guides under
- * `06_Interview_Prep/Case_Study_Groups/`, one folder per group (G01–G20).
+ * `Case_Study_Groups/`, one folder per group (G01–G20).
  *
  * Unlike the worksheet modules, these are reading pages. Each group folder holds four
  * documents, and each becomes a tab on the group's page:
@@ -30,8 +30,8 @@ import { TABS, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
 
 export const CASE_STUDY_MODULE_ID = '15-fde-case-studies'
 
-const GITHUB_BLOB = 'https://github.com/Sourav692/AI-ENGINEERING-DEMYSTIFIED/blob/main/'
-const GITHUB_TREE = 'https://github.com/Sourav692/AI-ENGINEERING-DEMYSTIFIED/tree/main/'
+const GITHUB_BLOB = 'https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/'
+const GITHUB_TREE = 'https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/tree/main/'
 
 /**
  * Groups published on the site. Extend this list to publish more; a group missing
@@ -125,8 +125,8 @@ const STANDALONE = [
 
 const isPublished = (group) => PUBLISHED === null || PUBLISHED.includes(group)
 
-/** `…/06_Interview_Prep/Case_Study_Groups` -> the repository root. */
-const repoRootOf = (caseStudyRoot) => resolve(caseStudyRoot, '..', '..')
+/** `…/Case_Study_Groups` -> the repository root. */
+const repoRootOf = (caseStudyRoot) => resolve(caseStudyRoot, '..')
 
 /** `G01_Enterprise_Knowledge_Assistant` -> `enterprise-knowledge-assistant` */
 const slugOf = (folder) => folder.replace(/^G\d+_/, '').replace(/_/g, '-').toLowerCase()
@@ -245,7 +245,7 @@ async function collectCases(root) {
 }
 
 export async function syncCaseStudies({ repoRoot, outDir }) {
-  const root = join(repoRoot, '06_Interview_Prep', 'Case_Study_Groups')
+  const root = join(repoRoot, 'Case_Study_Groups')
   const cases = await collectCases(root)
 
   // Page URL and file -> tab for every published folder, so cross-links point at the

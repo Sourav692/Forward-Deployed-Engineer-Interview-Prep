@@ -1,8 +1,8 @@
 # Module 03 · Robust Agents
 
-> **Level** 🟡 Building Production Systems · **Docs** 5 · **Time** ~2 h + lab
+> **Level** 🟡 Building Production Systems · **Docs** 5 · **Time** ~2 h
 > **Prerequisites:** Module 01 (the loop and the `execute_tool` black box)
-> **Lab:** reuses `../01_LLM_Systems_Foundations/project/` — `src/robustness.py`, `src/observability.py`, `tests/test_agent.py`
+> **Implementation:** see the pinned companion AI Engineering course
 
 Module 01 built the loop and used a safe executor as a black box. This module opens the box. The organising idea: **a model deciding to call a tool is a proposal, never an authorisation** — and everything between the proposal and the real world is a check that exists because of a specific way agents fail.
 
@@ -16,14 +16,11 @@ Module 01 built the loop and used a safe executor as a black box. This module op
 | 4 | [Observability for Tool Calls](04_Observability_For_Tool_Calls.md) | The five statuses; the trace as debugging, cost and audit artefact; from in-memory log to spans | 20 min |
 | 5 | [The Eight Guard Checks](05_The_Eight_Guard_Checks.md) | All eight checks in one pipeline; argument validation and disambiguation; why none substitutes for another | 30 min |
 
-## The lab
+## Interview practice
 
-```bash
-cd ../01_LLM_Systems_Foundations/project
-python -m pytest -q -k "retry or memo or fallback or disambig or confirmation or session"
-```
-
-Then read `src/robustness.py` top to bottom with doc 1 open. It is 130 lines; every line is a decision.
+For each guard, state the failure it prevents, the evidence it emits, and whether it
+fails open or closed. That reasoning is the course requirement; runnable guard code
+lives in the companion AI Engineering course.
 
 ## Checkpoint
 

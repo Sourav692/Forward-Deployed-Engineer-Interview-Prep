@@ -1,0 +1,3 @@
+pip install -e .
+pip install -e ".[vertex]"
+pip install -e ".[test]"

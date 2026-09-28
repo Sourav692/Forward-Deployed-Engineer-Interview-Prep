@@ -675,7 +675,7 @@ Acme uses an enterprise support copilot over customer contracts, escalation poli
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|

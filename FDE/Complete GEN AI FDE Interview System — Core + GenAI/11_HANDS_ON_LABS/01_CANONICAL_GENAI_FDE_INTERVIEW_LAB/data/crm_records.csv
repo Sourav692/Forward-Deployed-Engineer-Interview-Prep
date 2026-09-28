@@ -1,0 +1,4 @@
+customer_id,customer_name,arr_eur,renewal_date,health_score,account_owner,renewal_risk,notes
+CUST-1001,Acme Bank,450000,2026-09-30,62,Sana Sales,Medium,"Two unresolved Sev2 support tickets, procurement asked for security evidence, champion changed teams."
+CUST-1002,Globex Retail,180000,2026-11-15,84,Sana Sales,Low,"Expansion interest in AI support automation, positive executive sponsor feedback."
+CUST-1003,Helios Health,620000,2026-08-01,51,Maya Manager,High,"Delayed integration, legal review pending, asks for stricter PII controls and audit logs."

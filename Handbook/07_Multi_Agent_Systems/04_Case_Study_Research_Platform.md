@@ -3,7 +3,7 @@
 > **Level** 🟠 Scale, Security, Operations · **Module** 07 · **Doc** 4 of 5 · **Time** ~45 min
 > **Prerequisites:** docs 1–3 of this module; Module 02 doc 1 (the AI additions)
 > **Source material:** `05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/ARCHITECTURE DIAGRAMS/LAYERS_EXPLAINED.md`; `CODE/README.md`
-> **Reference:** `diagrams/` (nine per-layer `.mmd` files, the combined architecture HTML and PNG); `reference_code/` (the deployed AWS application)
+> **Reference:** `diagrams/` (nine per-layer `.mmd` files, the combined architecture HTML and PNG); `05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/` (the deployed AWS application)
 
 ## Why this matters
 
@@ -130,7 +130,7 @@ And two things it does *not* have that Modules 04–06 insist on: **per-user acc
 
 ## Where to look
 
-| Layer | `reference_code/` | `diagrams/` |
+| Layer | `05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/` | `diagrams/` |
 |---|---|---|
 | 1 | `app/auth.py`, `app/main.py`, `app/guardrails.py` | `01-entry-security.mmd` |
 | 2 | `app/cache.py`, `app/memory.py` | `02-smart-lookup.mmd` |

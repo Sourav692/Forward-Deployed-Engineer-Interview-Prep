@@ -2,8 +2,8 @@
 
 > **Level** 🔴 The FDE Role · **Module** 10 · **Doc** 3 of 7 · **Time** ~40 min
 > **Prerequisites:** Module 05 (staged rollout, the `Decision` shape); Module 04 doc 7 (golden sets)
-> **Source material:** `06_Interview_Prep/AI_Engineer/Delivery Framework from Scoping to Delivery/docs/01-theory.md`; `docs/02-architecture-end-to-end.md`; `README.md`
-> **Lab:** `project/scripts/run_engagement_demo.py`, `project/notebooks/02-hands-on.ipynb`
+> **Source material:** `Supplementary_Guides/FDE_Delivery_Framework/docs/01-theory.md`; `docs/02-architecture-end-to-end.md`; `README.md`
+> **Companion implementation:** `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/scripts/run_engagement_demo.py`, `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/notebooks/02-hands-on.ipynb`
 
 ## Why this matters
 
@@ -160,13 +160,13 @@ Getting this right *provably* — not by writing "get security sign-off" in a pr
 
 | Concept | Where |
 |---|---|
-| Intake refusal | `project/src/delivery_framework/pipeline.py` → `intake`, `ScopingRefused` |
+| Intake refusal | `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/src/delivery_framework/pipeline.py` → `intake`, `ScopingRefused` |
 | The seven stages | `models.py` → `Stage`, `STAGE_ORDER` |
 | Stage transitions, no skip path | `engine.py` → `advance_stage`, `mark_deployed` |
 | Auto-escalation on day 3 | `engine.py` → `check_escalation_triggers` |
 | The library and the reuse decision | `accelerators.py` → `LIBRARY`, `pull_or_build` |
 | The reuse rate | `metrics.py` → `accelerator_reuse_rate` |
-| The happy path | `project/scripts/run_engagement_demo.py` — all 14 days, every gate in order |
+| The happy path | `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/scripts/run_engagement_demo.py` — all 14 days, every gate in order |
 
 ## Checkpoint
 

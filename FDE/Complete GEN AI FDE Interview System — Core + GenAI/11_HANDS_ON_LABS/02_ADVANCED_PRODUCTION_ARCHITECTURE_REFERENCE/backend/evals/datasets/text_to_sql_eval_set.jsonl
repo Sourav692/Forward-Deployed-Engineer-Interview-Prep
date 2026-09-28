@@ -1,0 +1,1 @@
+{"sql":"SELECT * FROM tickets LIMIT 10","allowed":true}

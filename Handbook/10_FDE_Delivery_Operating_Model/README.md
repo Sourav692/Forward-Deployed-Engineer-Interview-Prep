@@ -1,8 +1,8 @@
 # Module 10 · FDE Delivery and Operating Model
 
-> **Level** 🔴 The FDE Role · **Docs** 7 · **Time** ~3 h + lab
+> **Level** 🔴 The FDE Role · **Docs** 7 · **Time** ~3 h
 > **Prerequisites:** Module 00 doc 2, Module 02, Module 04 doc 7, Module 05
-> **Lab:** `project/` — the Delivery Framework. No API key; 17 deterministic tests.
+> **Format:** theory, functional architecture, and whiteboard rehearsal
 
 The forward-deployed engineer's unit of work is the engagement. This module is what that means day to day, how to narrate a delivery end to end, and — as a runnable system — how to take a customer from a scoping document to production in two weeks the same way every time: a reusable accelerator library for speed, and hard, role-gated checkpoints for safety, built as a state machine with the same `Decision` shape as Module 04's access control and Module 05's guardrails.
 
@@ -18,16 +18,11 @@ The forward-deployed engineer's unit of work is the engagement. This module is w
 | 6 | [Module Reference](06_Module_Reference.md) | Every function in `src/delivery_framework` | reference |
 | 7 | [Coverage Map](07_Coverage_Map.md) | What is proven vs described; the scale gap as a tenancy decision | 20 min |
 
-## The lab
+## Functional rehearsal
 
-```bash
-cd project
-python scripts/run_engagement_demo.py      # Northwind Logistics — 14 days, every gate in order
-python scripts/demo_gate_failure.py        # the negative-control demo — refusals and denials
-python -m pytest -q                        # 17 passed
-```
-
-Read `src/delivery_framework/gates.py` and `engine.py` with doc 4 open. The whole authority layer is under 200 lines, and it is the same shape as `authz/policy.py` in Module 04.
+Walk the Northwind case twice: once through the happy path and once through a blocked
+gate. State the accountable signer, required evidence, escalation, and recovery at
+every transition. The goal is to defend the operating model, not demonstrate code.
 
 ## The whiteboard script
 

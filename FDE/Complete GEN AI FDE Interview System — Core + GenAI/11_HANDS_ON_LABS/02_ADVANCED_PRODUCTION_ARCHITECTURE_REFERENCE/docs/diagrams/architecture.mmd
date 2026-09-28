@@ -1,0 +1,7 @@
+flowchart LR
+  User-->Frontend-->API-->Auth-->RAG
+  RAG-->VectorStore[(Postgres + pgvector)]
+  RAG-->LLMRouter
+  RAG-->HITL
+  HITL-->AuditLog[(Audit Log)]
+  API-->OpenTelemetry-->Prometheus-->Grafana

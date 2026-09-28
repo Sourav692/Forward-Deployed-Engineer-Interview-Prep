@@ -199,7 +199,7 @@ export const BEHAVIOURAL_TRACKS = ['hiring-manager', 'leadership-principles']
 /**
  * The behavioural Story Bank (CONTENT-15): one page of the author's anonymised stories,
  * each cut to a single moment, with links to every question it can answer. Source is
- * `06_Interview_Prep/FDE/Behavioral_and_Leadership/story_bank.md`. A story lists its
+ * `FDE/Behavioral_and_Leadership/story_bank.md`. A story lists its
  * questions on an `**Answers:**` line; those links also drive the "Stories that fit"
  * line on each behavioural worksheet question, so the two views cannot disagree.
  */
@@ -738,4 +738,3 @@ export function qualifierFor(mode: ContentMode): string {
 }
 
 export const normaliseTitle = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, '')
-

@@ -574,7 +574,7 @@ Every strong answer on this page runs through four verbs in order. Measure by at
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
@@ -583,7 +583,7 @@ All paths are relative to `06_Interview_Prep/`.
 | 4 (sampling diagram, sizing), 9 (triage diagram), 14 (gap answers) | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_2/chapter-15-observability-customer-facing-ai-application-tutorial_v2.md`; sizing and gap answers from its supplementary "My Perspective on the Gaps" |
 | 10 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/03_latency_spike.md` (#87) |
 | 11 | Same folder, `04_cost_spike.md` (#88) |
-| 12 | `OpenAI_Applied/Sample_Questions/OpenAI Applied_Engineer_Problem_Decomposition_Questions.md`, questions 9 (#53) and 10 (#54); `OpenAI_Applied/Sample_Questions/openai_decomposition_interview_prep.html`, Tier 1 prompt 9 (#74) |
+| 12 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, questions 9 (#53) and 10 (#54); `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompt 9 (#74) |
 | 12 (prefill, decode, utilization), 15.8 (prefix match), 15.9, 15.10 | `Study_Guides/Cost_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections A1, B1, D and E (#119, #121) |
 | 15.1 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #44; `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 7 |
 | 15.2–15.8 | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §15 scenarios 1, 2, 6, 7, 10, 11, 12 (#104, #105, #109, #110, #113, #114, #115) and §4's four verbs |

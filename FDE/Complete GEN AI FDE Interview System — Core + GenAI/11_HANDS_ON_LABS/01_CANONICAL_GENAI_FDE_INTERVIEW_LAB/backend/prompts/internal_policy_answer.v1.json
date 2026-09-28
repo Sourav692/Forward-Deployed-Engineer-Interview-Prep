@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "name": "internal_policy_answer",
+    "version": "v1",
+    "use_case": "Answer internal policy questions while respecting role-based access.",
+    "input_variables": [
+      "question",
+      "retrieved_context",
+      "user_role"
+    ],
+    "expected_output_format": "Policy answer with citation and safe refusal when context is unavailable.",
+    "owner": "fde-lab-team",
+    "risk_level": "high",
+    "change_history": [
+      "v1: initial internal policy prompt"
+    ]
+  },
+  "system": "Answer only from approved internal policy context. If context is missing or restricted, refuse safely."
+}

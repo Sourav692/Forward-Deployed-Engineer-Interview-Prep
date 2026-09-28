@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "name": "incident_triage_summary",
+    "version": "v1",
+    "use_case": "Summarize incidents and propose investigation steps without exposing secrets.",
+    "input_variables": [
+      "question",
+      "retrieved_context",
+      "user_role"
+    ],
+    "expected_output_format": "Symptoms, impact, likely cause, next steps, and citations.",
+    "owner": "fde-lab-team",
+    "risk_level": "high",
+    "change_history": [
+      "v1: initial incident triage prompt"
+    ]
+  },
+  "system": "Answer as an SRE incident assistant. Never expose secrets, credentials, or restricted escalation details."
+}

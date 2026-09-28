@@ -2,9 +2,14 @@
 
 **From first principles to production-grade agentic systems — and the Forward Deployed Engineer who ships them.**
 
-This handbook turns a working body of interview-preparation material — three fully built platform projects, a from-scratch agent loop, a system-design framework, a delivery operating model, and a set of real client narratives — into one ordered curriculum. You can start with no knowledge of RAG or agents and finish able to design, build, secure, evaluate, operate and *explain* an enterprise AI system under interview pressure.
+This handbook turns system-design, delivery, and interview-preparation material into
+one ordered curriculum. You can start with basic AI engineering knowledge and finish
+able to scope, design, secure, evaluate, operate, and *explain* an enterprise AI
+system under interview pressure.
 
-Everything here is grounded in code that runs. Where a module teaches a concept, the `project/` folder next to it contains the implementation, the notebooks, and the tests.
+The active course is theory and functional architecture. Where implementation detail
+materially improves an explanation, the handbook points to a pinned revision of the
+companion AI Engineering course instead of duplicating its projects here.
 
 ---
 
@@ -23,34 +28,34 @@ Everything here is grounded in code that runs. Where a module teaches a concept,
 
 ### 🟢 Level 1 — Foundations
 
-| Module | What it teaches | Docs | Hands-on |
+| Module | What it teaches | Docs | Implementation reference |
 |---|---|---|---|
 | [00 · Orientation](00_Orientation/README.md) | How to use this handbook, the three roles it prepares you for, and the habit that underlies all of them: ask before you architect. | 3 | — |
-| [01 · LLM Systems Foundations](01_LLM_Systems_Foundations/README.md) | What RAG actually is; chunking, dense vs lexical retrieval, fusion, reranking; what an agent actually is; the ReAct loop coded from scratch and then in LangGraph. | 5 | `project/` — 4 notebooks, 12 tests, zero API keys needed |
+| [01 · LLM Systems Foundations](01_LLM_Systems_Foundations/README.md) | What RAG actually is; chunking, dense vs lexical retrieval, fusion, reranking; what an agent actually is; the ReAct loop from scratch and in LangGraph. | 5 | Companion course |
 | [02 · System Design Fundamentals](02_System_Design_Fundamentals/README.md) | The 12-part framework, the 15 principles, monolith vs microservices, a worked example, and the 60-minute whiteboard method used by every script in this handbook. | 5 | — |
 
 ### 🟡 Level 2 — Building Production Systems
 
-| Module | What it teaches | Docs | Hands-on |
+| Module | What it teaches | Docs | Implementation reference |
 |---|---|---|---|
-| [03 · Robust Agents](03_Robust_Agents/README.md) | Retry, fallback, memoization, confirmation gates, disambiguation; state and memory across turns; parallel vs sequential tool calls; per-call observability; the eight guard checks. | 5 | reuses Module 01 `project/` |
-| [04 · Enterprise RAG](04_Enterprise_RAG/README.md) | The Meridian Assist project as a course: ABAC access control, ingestion, hybrid retrieval, the LangGraph query pipeline, output guardrails, evaluation with golden sets and judges, observability. | 10 | `project/` — 11-part notebook series, corpus, tests, eval harness |
-| [05 · Agentic Workflow Platforms](05_Agentic_Workflow_Platforms/README.md) | The Agent Platform project as a course: canonical events and channel adapters, deterministic routing, durable and idempotent orchestration, approvals, spend caps and staged rollout. | 7 | `project/` — notebook, demo scripts, tests |
+| [03 · Robust Agents](03_Robust_Agents/README.md) | Retry, fallback, memoization, confirmation gates, disambiguation; state and memory across turns; parallel vs sequential tool calls; per-call observability; the eight guard checks. | 5 | Companion course |
+| [04 · Enterprise RAG](04_Enterprise_RAG/README.md) | Meridian Assist as a system-design case: ABAC access control, ingestion, hybrid retrieval, the query pipeline, output guardrails, evaluation, and observability. | 10 | `Enterprise_RAG_Platform` |
+| [05 · Agentic Workflow Platforms](05_Agentic_Workflow_Platforms/README.md) | Canonical events and channel adapters, deterministic routing, durable and idempotent orchestration, approvals, spend caps, and staged rollout. | 7 | `Enterprise_Agentic_Workflow_Automation_Platform` |
 
 ### 🟠 Level 3 — Scale, Security, Operations
 
-| Module | What it teaches | Docs | Hands-on |
+| Module | What it teaches | Docs | Implementation reference |
 |---|---|---|---|
 | [06 · Cross-Cutting Concerns](06_Cross_Cutting_Concerns/README.md) | Identity and secrets, tenant fairness, observability standards and failure patterns, semantic caching and streaming, CI/CD rigor, build vs buy, prompt injection and egress, structured-data routing, scaling to 20M documents. | 7 | — |
-| [07 · Multi-Agent Systems](07_Multi_Agent_Systems/README.md) | When multi-agent is justified (and when it is not), handoffs, failure isolation, evaluation; two case studies — a nine-layer research platform on AWS and a supervisor-to-deep-agent evolution. | 5 | `reference_code/` (deployed AWS platform), `diagrams/` |
-| [08 · AgentOps & Platform](08_AgentOps_And_Platform/README.md) | Prompt versioning, canary rollout and rollback; AgentOps on Databricks with MLflow and Unity Catalog; Enterprise RAG on Databricks; multi-channel delivery and human escalation; red teaming; infrastructure and CI/CD. | 6 | Module 04 `project/databricks/`, `project/notebooks/04-*` |
+| [07 · Multi-Agent Systems](07_Multi_Agent_Systems/README.md) | When multi-agent is justified (and when it is not), handoffs, failure isolation, evaluation; two case studies — a nine-layer research platform on AWS and a supervisor-to-deep-agent evolution. | 5 | `Enterprise_Multi_Agent_AI_Research_Platform` |
+| [08 · AgentOps & Platform](08_AgentOps_And_Platform/README.md) | Prompt versioning, canary rollout and rollback; AgentOps on Databricks with MLflow and Unity Catalog; Enterprise RAG on Databricks; multi-channel delivery and human escalation; red teaming; infrastructure and CI/CD. | 6 | Companion course |
 
 ### 🔴 Level 4 — Design Mastery & the FDE Role
 
-| Module | What it teaches | Docs | Hands-on |
+| Module | What it teaches | Docs | Implementation reference |
 |---|---|---|---|
 | [09 · AI System Design Casebook](09_AI_System_Design_Casebook/README.md) | Five worked AI system designs (enterprise assistant, customer support, coding assistant, recruiting, logistics exception handling), the agentic coverage map, and four full 60-minute whiteboard scripts. | 6 + 4 scripts | — |
-| [10 · FDE Delivery & Operating Model](10_FDE_Delivery_Operating_Model/README.md) | What an FDE does all day; the six-stage AI delivery framework; scoping-doc to production in two weeks as a gate-enforcing state machine; gates, risks and metrics; cross-team collaboration. | 7 | `project/` — delivery pipeline engine, gates, tests |
+| [10 · FDE Delivery & Operating Model](10_FDE_Delivery_Operating_Model/README.md) | What an FDE does all day; the six-stage AI delivery framework; scoping-doc to production in two weeks; gates, risks and metrics; cross-team collaboration. | 7 | Functional architecture only |
 | [11 · Telling the Story](11_Telling_The_Story/README.md) | How to narrate a build in 15–20 minutes or in open conversation; the proof-vs-cheat-sheet honesty discipline; nine worked narratives from real engagements as templates. | 2 + 9 stories | — |
 | [99 · Appendices](99_Appendices/README.md) | Glossary, source map (every handbook doc → its original file), interview Q&A log, progress checklist. | 4 | — |
 
@@ -84,32 +89,18 @@ Three recurring sections appear throughout:
 
 - **Why this matters** — the problem the concept solves, before the concept itself.
 - **Interview lens** — how the concept is tested in a design round and the sentence that carries it.
-- **In the code** — where the concept is implemented in the module's `project/` folder.
+- **Implementation reference** — where the concept can be inspected in the pinned companion course.
 
-## Running the labs
+## Companion implementations
 
-Each `project/` folder is self-contained with its own `requirements.txt`. From the handbook root:
-
-```bash
-# Module 01 — no API key required
-cd 01_LLM_Systems_Foundations/project && pip install -r requirements.txt && python -m pytest -q
-
-# Module 04 — needs OPENAI_API_KEY in a .env at the project root
-cd 04_Enterprise_RAG/project && pip install -r requirements.txt && python scripts/ingest.py
-
-# Module 05 and Module 10 — no API key required
-cd 05_Agentic_Workflow_Platforms/project && python -m pytest -q
-cd 10_FDE_Delivery_Operating_Model/project && python -m pytest -q
-```
-
-Module 07's `reference_code/` is a deployed AWS platform (Terraform, ECS, Bedrock, TensorZero, PyRIT); it is included for reading, not for local execution.
+This repository intentionally ships no labs. When you need to inspect code, use the
+project mapping and immutable revision recorded in [`../COMPANION_COURSE.md`](../COMPANION_COURSE.md).
 
 ## Where this came from
 
-The handbook was assembled from three source folders in this repository, which remain untouched:
-
-- `06_Interview_Prep/AI_Engineer/` — the three platform projects and the cross-cutting notes
-- `06_Interview_Prep/FDE/` — system design, delivery framework, STAR stories, day-in-the-life
-- `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/` — the tool-calling loop *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
+The handbook was assembled from the FDE source material, system-design cases,
+production-judgment guides, and companion AI Engineering projects. Appendix B records
+that provenance; a provenance path is not a promise that the implementation is copied
+into this repository.
 
 Appendix B maps every handbook document back to its source. The handbook is designed to grow: new modules slot into the level structure, and the source map records provenance as material is added.

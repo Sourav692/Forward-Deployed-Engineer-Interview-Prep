@@ -1,8 +1,8 @@
 # Module 04 · Enterprise RAG
 
-> **Level** 🟡 Building Production Systems · **Docs** 10 · **Time** ~5.5 h reading + 4–6 h lab
+> **Level** 🟡 Building Production Systems · **Docs** 10 · **Time** ~5.5 h reading
 > **Prerequisites:** Module 01 (RAG concepts, LangGraph), Module 03 (robustness patterns)
-> **Lab:** `project/` — Meridian Assist. Needs `OPENAI_API_KEY` in a `.env` at the project root; a full run of the golden set costs a few cents.
+> **Implementation:** `Enterprise_RAG_Platform` in the pinned companion course
 
 This module is the **Meridian Assist** project taught as a course. It is an enterprise RAG platform built around the problem that actually makes enterprise RAG hard: *not everyone is allowed to read everything, so the same question has different correct answers for different people.* You will learn attribute-based access control enforced at two layers, a permission-aware ingestion pipeline, six swappable retrieval strategies, an eight-node LangGraph query pipeline, output guardrails, an evaluation harness with a zero-leak release gate, and full run tracing — and you will run every one of them.
 
@@ -21,38 +21,12 @@ This module is the **Meridian Assist** project taught as a course. It is an ente
 | 9 | [Module Reference](09_Module_Reference.md) | Every function in `src/enterprise_rag`, grouped by concept | reference |
 | 10 | [Coverage Map](10_Coverage_Map.md) | What is proven in code vs what is cheat-sheet; what to say for each gap | 25 min |
 
-## The lab — eleven notebook parts
+## Implementation reference
 
-`project/notebooks/02-hands-on-parts/` builds every component step by step. Each part pairs with a document:
-
-| Part | Builds | Read first |
-|---|---|---|
-| 01 · corpus and permissions | The 22 documents, the manifest, the 9 personas | Doc 1 |
-| 02 · policy engine | The seven rules, `decide()`, obligations | Doc 2 |
-| 03 · compiling policy to filter | Layer 1 — `compile_prefilter()` and the `grp__*` columns | Doc 2 |
-| 04 · chunking and ingestion | Heading-aware chunking; ingest into Chroma and the catalog | Doc 3 |
-| 05 · hybrid search | Dense, BM25 over the allowed pool, RRF | Doc 4 |
-| 06 · query transformation | Multi-query, HyDE, decomposition | Doc 4 |
-| 07 · reranking | LLM and cross-encoder rerankers; why after enforce | Doc 4 |
-| 08 · full graph | The eight nodes end to end | Doc 5 |
-| 09 · attacking it | Prompt injection, the other-tenant attacker, embargo, live revocation | Docs 2, 6 |
-| 10 · evaluation | The harness, the gate, the strategy comparison | Doc 7 |
-| 11 · observability and takeaways | The trace; timeline; what to say | Doc 8 |
-
-Quick start:
-
-```bash
-cd project
-pip install -r requirements.txt
-# put OPENAI_API_KEY=sk-... in ./.env
-python scripts/ingest.py                              # build the index (~seconds, ~$0.0001)
-python scripts/demo_access_control.py --matrix        # the visibility matrix — no LLM cost
-python scripts/ask.py --user u_marco_t3 "Why did EU ingest degrade on 14 March?"
-python scripts/evaluate.py --kinds security           # the release gate
-python -m pytest -m "not llm"                         # 62 fast tests
-```
-
-Module 08 covers the Databricks variant (`project/notebooks/04-databricks-enterprise-rag.ipynb`, `project/databricks/`).
+The companion course contains the corpus, policy engine, ingestion path, retrieval
+strategies, query graph, adversarial checks, evaluation harness, and observability
+implementation. In this repository, treat them as functional components you must be
+able to draw, order, and defend.
 
 ## Checkpoint
 

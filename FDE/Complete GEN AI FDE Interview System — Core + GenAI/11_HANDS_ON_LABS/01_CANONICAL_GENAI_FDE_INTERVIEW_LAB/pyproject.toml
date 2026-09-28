@@ -1,0 +1,28 @@
+[project]
+name = "genai-fde-interview-lab"
+version = "1.1.0"
+description = "Canonical production-aware GenAI FDE interview preparation lab"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.124,<1.0",
+    "httpx>=0.28,<1.0",
+    "numpy>=1.26,<3.0",
+    "pydantic>=2.12,<3.0",
+    "pydantic-settings>=2.12,<3.0",
+    "python-dotenv>=1.2,<2.0",
+    "uvicorn[standard]>=0.38,<1.0",
+]
+
+[project.optional-dependencies]
+semantic = ["sentence-transformers>=3.0,<6.0"]
+vertex = ["google-cloud-aiplatform>=1.60"]
+test = [
+    "bandit>=1.9,<2.0",
+    "pytest>=8.0,<10.0",
+    "pytest-cov>=5.0,<8.0",
+    "ruff>=0.14,<1.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"

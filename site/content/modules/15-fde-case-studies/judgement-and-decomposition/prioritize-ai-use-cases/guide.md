@@ -8,7 +8,7 @@ This is a portfolio question, not a design question. Nothing gets drawn until th
 
 | Case | Where it comes from | What the source gives |
 |---|---|---|
-| #60 Prioritise AI Use Cases for a Large Enterprise | `OpenAI_Applied/Sample_Questions/OpenAI Applied_Engineer_Problem_Decomposition_Questions.md`, Question 16 | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
+| #60 Prioritise AI Use Cases for a Large Enterprise | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, Question 16 | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
 
 The source is talking points, not a worked answer. Everything marked *(own construction)* was built for this page from the arguments in the repo's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
 
@@ -417,16 +417,16 @@ The four verbs from the cost playbook still apply, one level up. Measure cost pe
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 12, 14 | `OpenAI_Applied/Sample_Questions/OpenAI Applied_Engineer_Problem_Decomposition_Questions.md`: Question 16 (#60) and its follow-up, verbatim; the reusable answer template; the biggest mistakes to avoid |
-| 5 | `OpenAI_Applied/Sample_Questions/openai_decomposition_interview_prep.html`: section 4, the six-step framework and "tie every design choice back to how you'd evaluate it" |
+| 1, 12, 14 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`: Question 16 (#60) and its follow-up, verbatim; the reusable answer template; the biggest mistakes to avoid |
+| 5 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`: section 4, the six-step framework and "tie every design choice back to how you'd evaluate it" |
 | 1, 6, 12, 15 | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md`: why demos die in production, the executive-concern table (ROI), the customer narrative |
 | 4, 15 | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_S15_S16.md`: drill 7, "Customer complains the AI is too expensive" |
 | 3, 4, 11 | `Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: the six gates, deny rules, intake refusal, SME prerequisite, week-4 retention, accelerator reuse rate |
-| 9, 10 | `AI_Engineer/Delivery Framework from Scoping to Delivery/docs/01-theory.md`: the governing question, "pulled from a library, or built from scratch" |
+| 9, 10 | `Supplementary_Guides/FDE_Delivery_Framework/docs/01-theory.md`: the governing question, "pulled from a library, or built from scratch" |
 | 10 | `Handbook/10_FDE_Delivery_Operating_Model/05_Cross_Team_Collaboration.md`: two-phase delivery and narrowing the first build |
 | 2, 3 | `Handbook/10_FDE_Delivery_Operating_Model/02_End_To_End_AI_Delivery_Six_Stages.md`: anchor on business value and quantified impact |
 

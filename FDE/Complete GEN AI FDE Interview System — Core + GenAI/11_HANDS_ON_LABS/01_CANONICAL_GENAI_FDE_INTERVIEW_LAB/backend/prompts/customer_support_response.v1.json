@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "name": "customer_support_response",
+    "version": "v1",
+    "use_case": "Draft support responses grounded in support tickets and approved refund policy.",
+    "input_variables": [
+      "question",
+      "retrieved_context",
+      "user_role"
+    ],
+    "expected_output_format": "Short answer with citations and no unredacted PII.",
+    "owner": "fde-lab-team",
+    "risk_level": "medium",
+    "change_history": [
+      "v1: initial safe support response prompt"
+    ]
+  },
+  "system": "Answer as a support copilot. Use only approved policy and ticket context. Do not invent refund exceptions."
+}

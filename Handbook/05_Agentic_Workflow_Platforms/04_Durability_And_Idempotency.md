@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 05 · **Doc** 4 of 7 · **Time** ~35 min
 > **Prerequisites:** [Determinism Over Free Text](03_Determinism_Over_Free_Text.md); Module 03 doc 2 (checkpointers)
 > **Source material:** `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/docs/02-architecture-end-to-end.md` §3; `docs/03-src-modules-reference.md` (`orchestrator.py`); `docs/01-theory.md` §B.5; `README.md` (verified results)
-> **Lab:** `project/src/agent_platform/orchestrator.py`; `project/scripts/run_workflow_demo.py`
+> **Companion implementation:** `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/src/agent_platform/orchestrator.py`; `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/scripts/run_workflow_demo.py`
 
 ## Why this matters
 

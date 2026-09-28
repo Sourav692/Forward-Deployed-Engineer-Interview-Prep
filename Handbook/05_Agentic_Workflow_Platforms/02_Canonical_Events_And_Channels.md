@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 05 · **Doc** 2 of 7 · **Time** ~25 min
 > **Prerequisites:** [The Problem in Plain English](01_The_Problem_In_Plain_English.md)
 > **Source material:** `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/docs/01-theory.md` §B.1–B.2; `docs/02-architecture-end-to-end.md` §1–2; `docs/03-src-modules-reference.md` (`channels.py`, `routing.py`, `models.py`)
-> **Lab:** `project/src/agent_platform/channels.py`, `routing.py`; `project/notebooks/02-hands-on.ipynb`
+> **Companion implementation:** `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/src/agent_platform/channels.py`, `routing.py`; `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/notebooks/02-hands-on.ipynb`
 
 ## Why this matters
 

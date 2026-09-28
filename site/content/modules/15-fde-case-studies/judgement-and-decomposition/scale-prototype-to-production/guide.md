@@ -448,11 +448,11 @@ Every strong cost answer follows four verbs in order. Measure tokens and cost pe
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 12, 13 | `OpenAI_Applied/Sample_Questions/OpenAI Applied_Engineer_Problem_Decomposition_Questions.md`: Question 17 (#61, prompt, "Cover" list, follow-up), prompt E (notebook variant), "Biggest Mistakes to Avoid" |
+| 1, 2, 12, 13 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`: Question 17 (#61, prompt, "Cover" list, follow-up), prompt E (notebook variant), "Biggest Mistakes to Avoid" |
 | 2, 7, 11, 12, 15 | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md`: §1 (why demos die, prototype vs production, executive table), §9, §11, §13, §14, §15–§16 |
 | 11, 15 | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_S15_S16.md`: incidents 1, 2, 5 and 12 |
 | 4, 7, 9, 12 | `Study_Guides/Cost_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`: A1 (prefix caching, cascades), A2 (prices), A3 (batch discount), B3 (Little's Law), B4 (cost per successful task), E (rate limits, eval bill) |

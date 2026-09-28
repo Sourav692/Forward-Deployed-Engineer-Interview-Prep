@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 6 of 10 · **Time** ~20 min
 > **Prerequisites:** [The Query Graph](05_The_Query_Graph.md)
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/01-theory.md` §8; `docs/04-security-checks-reference.md` §6 (checks E–I)
-> **Lab:** `project/notebooks/02-hands-on-parts/part09-attacking-it.ipynb`
+> **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part09-attacking-it.ipynb`
 
 ## Why this matters
 
@@ -71,7 +71,7 @@ E–H are this document. A–D were the previous three. I is the next one.
 | Citation extraction and live re-check | `graph/nodes.py` → `verify`; `authz/enforcement.py` → `verify_citations` |
 | Groundedness | `graph/prompts.py` → `GROUNDEDNESS_SYSTEM` |
 | Refusal | `graph/nodes.py` → `refuse`; `graph/prompts.py` → `REFUSAL_TEMPLATE` |
-| Attack notebook | `project/notebooks/02-hands-on-parts/part09-attacking-it.ipynb`; golden-set case `S07` |
+| Attack notebook | `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part09-attacking-it.ipynb`; golden-set case `S07` |
 
 ## Interview lens
 

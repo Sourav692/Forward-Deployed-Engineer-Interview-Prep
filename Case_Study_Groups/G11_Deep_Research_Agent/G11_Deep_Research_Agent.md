@@ -448,14 +448,14 @@ Every strong cost answer follows four verbs in order. Measure, by tracing tokens
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
 | 1, 2, 3, 4, 6, 7, 9, 10, 13 | `FDE/Cracking_Agentic_AI_System_Design_Interviews/ch28_system_design_interview.md`, "The Forty-Five Minute Script", "Worked Design One", the follow-up bank, the rubric and recovery moves (the anchor, #10) |
 | 5 | `FDE/Cracking_Agentic_AI_System_Design_Interviews/ch06_orchestration_context_engineering.md`, "Context Rot and Sub-Agent Isolation" |
 | 7 | `FDE/Cracking_Agentic_AI_System_Design_Interviews/ch23_system_design_patterns.md` (Trifecta Guard, Provenance Tagging) and `ch05_tool_use_agent_computer_interface.md` (cross-server data flow) |
-| 8, 11, 14 | `Handbook/07_Multi_Agent_Systems/04_Case_Study_Research_Platform.md` (#12); deployed code under `Handbook/07_Multi_Agent_Systems/reference_code/` |
+| 8, 11, 14 | `Handbook/07_Multi_Agent_Systems/04_Case_Study_Research_Platform.md` (#12); deployed code under `05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/` |
 | 3, 8, 9, 10, 12, 14 | `Study_Guides/07_multi_agent_systems_INTERVIEW_TUTORIAL.md`, sections 1.6, 2, 3 and question 7 (#103) |
 | 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #10 |
 | 2 (MoSCoW split), 4 (trust-zone diagrams, component table), 9 (ladder), 10 (metric table), 13 (spoken answer, lines), and every item marked own construction | Built for this page from the sources' arguments; not source material |
@@ -481,4 +481,4 @@ All paths are relative to `06_Interview_Prep/`.
 - [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations) — GPT-4o still offered
 - [OpenAI API docs: GPT-4o model page](https://developers.openai.com/api/docs/models/gpt-4o) — GPT-4o still listed
 - [microsoft/PyRIT](https://github.com/microsoft/PyRIT) — Crescendo, Skeleton Key and XPIA attacks
-- [Reference build: `app/auth.py`](../../../05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/app/auth.py) and [`app/cache.py`](../../../05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/app/cache.py) — one API key, no tenant model, shared report cache
+- [Reference build: `app/auth.py`](https://github.com/Sourav692/AI-ENGINEERING-DEMYSTIFIED/blob/d3cd0e5ea2c5f3c7609bc6d9b767bdff5bd19071/05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/app/auth.py) and [`app/cache.py`](https://github.com/Sourav692/AI-ENGINEERING-DEMYSTIFIED/blob/d3cd0e5ea2c5f3c7609bc6d9b767bdff5bd19071/05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/app/cache.py) — one API key, no tenant model, shared report cache

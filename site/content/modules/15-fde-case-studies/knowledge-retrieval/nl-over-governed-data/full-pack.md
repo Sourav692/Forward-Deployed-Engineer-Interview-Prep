@@ -631,7 +631,7 @@ Add the warehouse side in the same breath. Warehouse compute per answer is the c
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|

@@ -1,8 +1,8 @@
 # Module 05 · Agentic Workflow Platforms
 
-> **Level** 🟡 Building Production Systems · **Docs** 7 · **Time** ~3 h reading + 2 h lab
+> **Level** 🟡 Building Production Systems · **Docs** 7 · **Time** ~3 h reading
 > **Prerequisites:** Module 01 doc 3, Module 03
-> **Lab:** `project/` — the Agent Platform. No API key; 21 deterministic tests in under a second.
+> **Implementation:** `Enterprise_Agentic_Workflow_Automation_Platform` in the pinned companion course
 
 This module is the **Agent Platform** project taught as a course. The prompt: *design an AI agent platform for non-technical users to configure workflow automations across multiple channels.* The insight: the hard part is not running an agent, it is letting someone who cannot read code trust that an automation will only do what they meant — even when the model is wrong, the network retries, or the server crashes mid-run. The project contains no LLM at all; every safety property is proven with a deterministic test, including the negative cases.
 
@@ -18,17 +18,11 @@ This module is the **Agent Platform** project taught as a course. The prompt: *d
 | 6 | [Module Reference](06_Module_Reference.md) | Every function in `src/agent_platform` | reference |
 | 7 | [Coverage Map](07_Coverage_Map.md) | What is proven vs cheat-sheet; what the no-LLM choice bought and cost | 20 min |
 
-## The lab
+## Implementation reference
 
-```bash
-cd project
-python scripts/run_workflow_demo.py        # happy path: rollout, routing conflict, approval, idempotent retry, crash + resume
-python scripts/demo_guardrail_failure.py   # the negative-control demo — seven denials
-python -m pytest -q                        # 21 passed
-jupyter notebook notebooks/02-hands-on.ipynb
-```
-
-Read `src/agent_platform/orchestrator.py` with doc 4 open and `guardrails.py` with doc 5 open. Together they are under 300 lines.
+The companion project demonstrates rollout, routing conflicts, approvals, idempotent
+retries, crash recovery, and guardrail denials. Here, practice explaining the state
+transitions and authority boundaries without relying on a live demo.
 
 ## Checkpoint
 

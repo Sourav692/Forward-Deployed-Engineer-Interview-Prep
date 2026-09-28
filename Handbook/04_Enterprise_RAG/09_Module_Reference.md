@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 9 of 10 · **Time** reference — use as needed
 > **Prerequisites:** docs 1–8 of this module
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/05-src-modules-reference.md`; `docs/06-architecture-end-to-end.md` §8
-> **Code:** `project/src/enterprise_rag/`
+> **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/src/enterprise_rag/`
 
 ## How to use this
 

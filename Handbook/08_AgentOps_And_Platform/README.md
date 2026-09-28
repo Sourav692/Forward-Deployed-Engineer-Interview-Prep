@@ -2,7 +2,7 @@
 
 > **Level** 🟠 Scale, Security, Operations · **Docs** 6 · **Time** ~3 h
 > **Prerequisites:** Modules 04, 05, 06, 07
-> **Lab:** `../04_Enterprise_RAG/project/notebooks/04-databricks-enterprise-rag.ipynb` and `project/databricks/validate_*.py` (need a Databricks workspace); `../07_Multi_Agent_Systems/reference_code/` (Terraform, CI workflow, PyRIT dashboard — read)
+> **Implementation:** platform examples live in the pinned companion AI Engineering course
 
 The "after it works once" module. How do you change a prompt safely, and what does that look like with real tools named? What changes when the platform gives you governance for free — and the one place it deliberately does not? How does one system serve four channels, and what does "escalate to a human" actually do? How do you keep proving the guardrails hold? And what does all of it run on?
 

@@ -6,16 +6,16 @@ Tick a box only when you can pass the module's checkpoint **without looking**. T
 
 - [ ] **00 · Orientation** — I can name the four levels, the three lenses, and the five question areas of the first ten minutes.
 - [ ] **01 · LLM Systems Foundations** — I can draw the RAG query pipeline with its two security positions; explain hybrid search and RRF; write the ReAct loop with its guard and pause exit; say what `add_messages` does.
-  - [ ] Lab: `project/` tests pass; I have run the from-scratch and LangGraph notebooks.
+  - [ ] Companion review: I can trace the from-scratch and LangGraph implementations at the pinned companion revision.
 - [ ] **02 · System Design Fundamentals** — I can walk the 12 parts naming each component's cost; explain a circuit breaker's three states; spot the five travel-agent mistakes; write the six-step time budget.
 
 ## 🟡 Level 2 — Building Production Systems
 
 - [ ] **03 · Robust Agents** — I can write `execute_tool` and defend its order; explain why a fallback goes through the same gate; name the three scopes of state; list the eight guard checks.
 - [ ] **04 · Enterprise RAG** — I can explain the two failures of post-filtering; draw the seven ABAC checks and name the four things that cannot be pushed into the index; draw the eight-node graph; say why security is a gate and tell the false-alarm story; point at the code for any ✅ row.
-  - [ ] Lab: index built; visibility matrix produced; `evaluate.py --kinds security` passes with zero leaks; I have worked through all eleven notebook parts.
+  - [ ] Companion review: I can explain the index, visibility matrix, zero-leak gate, and evaluation flow from the pinned implementation.
 - [ ] **05 · Agentic Workflow Platforms** — I can restate the problem in one breath; draw the orchestrator loop and explain why run and resume share it; say why the idempotency key is on the action and what "every side effect" includes; list the five guardrail rules; name the four rollout gates and who may promote.
-  - [ ] Lab: happy path and negative-control demos run; tests pass.
+  - [ ] Companion review: I can explain the happy path, negative controls, and the tests that prove them.
 
 ## 🟠 Level 3 — Scale, Security, Operations
 
@@ -29,7 +29,7 @@ Tick a box only when you can pass the module's checkpoint **without looking**. T
 - [ ] **09 · AI System Design Casebook** — For each of the five prompts I can state the framing sentence and the hardest part; I can walk the agentic spine and raise the four gaps unprompted.
   - [ ] I have delivered at least one whiteboard script from the method alone, timed.
 - [ ] **10 · FDE Delivery and Operating Model** — I can deliver the day-in-the-life closing line; walk a delivery story through six stages with numbers; draw the gate/stage state machine with signing roles; explain why a real gate can still be a rubber stamp; give a RACI and a tiered cadence.
-  - [ ] Lab: engagement demo and negative-control demo run; tests pass.
+  - [ ] Companion review: I can explain the engagement demo, failure controls, and gate tests.
 - [ ] **11 · Telling the Story** — For a project of my own: I have written the cold-open sentence, five beats, the trust story, the honest limitation and a follow-up crib sheet; I have a coverage map with "what to say" for every gap; I can deliver a 15-minute deep-dive from headers alone.
 
 ## The handbook is finished when

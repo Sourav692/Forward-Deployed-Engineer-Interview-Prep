@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 4 of 10 · **Time** ~35 min
 > **Prerequisites:** Module 01 doc 2; [The Ingestion Pipeline](03_Ingestion_Pipeline.md)
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/06-architecture-end-to-end.md` §4–5; `docs/05-src-modules-reference.md` (`retrieval/*`); `README.md` (strategy comparison)
-> **Lab:** `project/notebooks/02-hands-on-parts/part05-hybrid-search.ipynb`, `part06-query-transformation.ipynb`, `part07-reranking.ipynb`
+> **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part05-hybrid-search.ipynb`, `part06-query-transformation.ipynb`, `part07-reranking.ipynb`
 
 ## Why this matters
 
@@ -96,7 +96,7 @@ That paragraph is itself a lesson: the discipline of not overclaiming what a dem
 | RRF | `retrieval/fusion.py` → `reciprocal_rank_fusion` |
 | Rerankers | `retrieval/rerank.py` → `LLMReranker`, `CrossEncoderReranker` |
 | Pool sizes | `config.py` → `dense_k`/`bm25_k` = 40, `fusion_k` = 50, `rerank_k` = 6 |
-| Strategy comparison | `project/scripts/evaluate.py --compare dense bm25 hybrid multi_query hyde enterprise` |
+| Strategy comparison | `05_Projects/Enterprise_RAG_Platform/scripts/evaluate.py --compare dense bm25 hybrid multi_query hyde enterprise` |
 
 ## Interview lens
 

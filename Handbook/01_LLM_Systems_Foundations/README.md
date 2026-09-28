@@ -1,6 +1,6 @@
 # Module 01 · LLM Systems Foundations
 
-> **Level** 🟢 Foundations · **Docs** 5 · **Time** ~2.5 h reading + 2 h lab
+> **Level** 🟢 Foundations · **Docs** 5 · **Time** ~2.5 h reading
 > **Prerequisites:** Module 00; Python; having called an LLM API once
 
 Two ideas underlie every system in this handbook: **retrieve** (find the right text before you generate) and **act** (let the model choose an action, execute it, feed the result back). This module builds both from first principles, ending with a working agent loop you can write on a whiteboard and then express in LangGraph.
@@ -15,35 +15,11 @@ Two ideas underlie every system in this handbook: **retrieve** (find the right t
 | 4 | [The Tool-Calling Loop From Scratch](04_Tool_Calling_Loop_From_Scratch.md) | `Agent.run` line by line; `Session`; the three exits; swapping a rule-based brain for an LLM | 35 min + lab |
 | 5 | [The Same Loop in LangGraph](05_Same_Loop_In_LangGraph.md) | `StateGraph`, reducers, the two nodes and conditional edge; what the framework gives you and what it does not | 30 min + lab |
 
-## The lab
+## Implementation reference
 
-`project/` is the agent tool-calling demo — pure Python, no API key, twelve passing tests.
-
-```bash
-cd project
-pip install -r requirements.txt     # only needed for the LangGraph half
-python -m pytest -q                 # 12 passed
-```
-
-Then work through the notebooks in this order:
-
-1. `notebooks/agent_tool_calling_demo.ipynb` — the from-scratch loop, every concept, runnable.
-2. `notebooks/langgraph_react_agent.ipynb` — the same loop as a graph.
-3. `notebooks/robust_langgraph_tool_calling_agent.ipynb` — checkpointing and interrupts (previews Module 03 and Module 05).
-4. `notebooks/agent_tool_calling_demo_openai.ipynb` — the real-LLM brain, if you have a key.
-
-The RAG techniques in docs 1–2 are implemented in Module 04's project; this module teaches the concepts, Module 04 has you build them.
-
-## What each concept maps to in the code
-
-| Concept | `project/src/` |
-|---|---|
-| Tool, registry, `destructive` flag | `tools.py` |
-| Brain contract, rule-based and LLM brains | `brain.py` |
-| The loop, `Session`, `RunResult` | `scratch_agent.py` |
-| The same loop as a `StateGraph` | `langgraph_agent.py` |
-| Confirmation gate, memo, retry, fallback, disambiguation | `robustness.py` → Module 03 |
-| Per-call trace | `observability.py` → Module 03 |
+Use the pinned companion AI Engineering course when you want to inspect or run an
+agent loop. This module tests whether you can explain the loop, its trust boundary,
+and its failure exits without depending on a framework-specific demo.
 
 ## Checkpoint
 

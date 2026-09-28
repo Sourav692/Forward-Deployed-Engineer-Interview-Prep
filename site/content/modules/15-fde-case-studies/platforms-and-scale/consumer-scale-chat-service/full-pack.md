@@ -381,11 +381,11 @@ Every strong cost answer follows four verbs in order. Measure tokens and stage t
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 13, 14 (Tier 2 follow-ups) | `OpenAI_Applied/Sample_Questions/openai_decomposition_interview_prep.html`: prompt 6 "Design ChatGPT." (#71), prompt 13 "Design the Claude chat service." (#78), sections 1, 3 and 4 |
+| 1, 13, 14 (Tier 2 follow-ups) | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`: prompt 6 "Design ChatGPT." (#71), prompt 13 "Design the Claude chat service." (#78), sections 1, 3 and 4 |
 | 3, 7, 8, 10, 15 | `Study_Guides/Cost_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`: A1 (prefix match), A2 (tiers and routing), B1 (prefill vs decode), B3 (Little's Law), B4 (cost per successful task), E (rate limits, abandon) |
 | 15 | `Study_Guides/Cost_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 1 and 2 |
 | 5 | `Study_Guides/07_memory_and_state_INTERVIEW_TUTORIAL.md`, sections 1.4 to 1.8 and the section 6 mock design |

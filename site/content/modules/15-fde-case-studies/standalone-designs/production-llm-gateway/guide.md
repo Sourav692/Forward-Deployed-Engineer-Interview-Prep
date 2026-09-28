@@ -425,7 +425,7 @@ The playbook's own case says the same: "reduce cost **by workflow**, not across 
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|

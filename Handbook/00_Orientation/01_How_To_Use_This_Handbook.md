@@ -10,7 +10,7 @@ A handbook is not a reading list. It is a sequence in which each thing you learn
 
 Three principles shaped it:
 
-1. **Grounded in code that runs.** Every concept in Levels 1–3 points to an implementation in a `project/` folder next to the module. When the text says "the post-check re-runs the full policy on every candidate", there is a function you can open, a test that proves it, and a notebook that walks it.
+1. **Grounded in implementations.** Concepts in Levels 1–3 point to implementations at the immutable companion-course revision recorded in [`COMPANION_COURSE.md`](../../COMPANION_COURSE.md). When the text says "the post-check re-runs the full policy on every candidate", there is a function and test you can inspect without duplicating that source tree here.
 2. **Problem before solution.** Every document opens with *why this matters* — the failure the concept prevents — before it explains the concept. If you understand the failure, you can reconstruct the solution under pressure. If you memorise the solution, you cannot.
 3. **Honest about what is proven.** The source projects were built with a discipline called the *coverage map*: for every claim the design makes, is it demonstrated in code, or is it cheat-sheet knowledge? That discipline runs through the handbook and gets its own treatment in Module 11.
 
@@ -42,7 +42,7 @@ Every document has the same shape, so you always know where you are:
 ## Why this matters            ← the failure this prevents
 ## (concept sections)          ← diagrams, tables, code pointers
 ## Interview lens              ← how it is tested; the line that carries it
-## In the code                 ← where it lives in project/  (Levels 1–3)
+## In the code                 ← where it lives in the pinned companion revision
 ## Checkpoint                  ← can you answer these without looking?
 **Next →**
 ```
@@ -55,38 +55,34 @@ Two of those sections deserve a word.
 
 ## Three ways to read
 
-**Linear.** Start at Module 00, end at Module 11. Roughly 35–45 hours of reading plus lab time. This is the right path if you are new to the field or want the complete picture.
+**Linear.** Start at Module 00, end at Module 11. Roughly 35–45 hours of reading and interview practice. This is the right path if you are new to the field or want the complete picture.
 
 **By role.** The [root README](../README.md) gives three tracks. They skip nothing essential; they reorder to reach your role's core material sooner. The FDE track, for example, goes to Module 02 (system design) and Module 10 (delivery) before the deep technical modules, because an FDE's first day is a scoping conversation, not a chunking strategy.
 
 **By question.** You have a specific gap — "how does ABAC differ from RBAC?", "when is multi-agent justified?" — and want the answer. Use [Appendix A · Glossary](../99_Appendices/A_Glossary.md), which links every term to the document that explains it.
 
-## The labs
+## Labs and implementation references
 
-Four modules ship runnable code:
+The dedicated FDE interview-labs module is included under
+`FDE/Complete GEN AI FDE Interview System — Core + GenAI/11_HANDS_ON_LABS/`.
+It contains the interview walkthroughs and production-architecture references that
+belong to this course.
 
-| Module | Project | Needs | Start with |
-|---|---|---|---|
-| 01 | `project/` — the agent tool-calling loop | nothing (pure Python; LangGraph optional) | `notebooks/agent_tool_calling_demo.ipynb` |
-| 04 | `project/` — Meridian Assist, enterprise RAG | `OPENAI_API_KEY` in `.env`; a few cents of API spend | `notebooks/02-hands-on-parts/part01-*.ipynb` |
-| 05 | `project/` — the agent workflow platform | nothing | `scripts/run_workflow_demo.py` |
-| 10 | `project/` — the delivery framework | nothing | `scripts/run_engagement_demo.py` |
-
-Module 07 includes `reference_code/` for a deployed AWS platform. Read it; do not expect to run it without an AWS account and the Terraform backend described in its README.
-
-Each project's own `README.md` has the quick-start commands. Run the tests first (`python -m pytest -q`) — a green test suite is the fastest way to confirm the environment works before you start reading code.
+Broader runnable implementations—enterprise RAG, workflow platforms, multi-agent
+systems, and the supporting notebooks and tests—remain in the AI Engineering
+repository. Every implementation path in this handbook is relative to the pinned
+revision in [`COMPANION_COURSE.md`](../../COMPANION_COURSE.md), not to this repository.
 
 ## What to bring
 
-- Python 3.11+ and a virtual environment.
-- Comfort reading dataclasses, type hints and a `while` loop.
-- Having called an LLM API at least once. You do not need to have built anything with it.
+- Comfort reading Python, dataclasses, type hints and a `while` loop when following companion references.
+- Having called an LLM API at least once is helpful, but not required for the interview-prep sequence.
 - For Level 4: a real project of your own — the narrative module is far more useful when you apply the formats to something you actually shipped.
 
 ## Checkpoint
 
 - What are the three principles that shaped the handbook, and what would break if each were dropped?
-- Which modules have runnable projects, and which of those need an API key?
+- Which material is included here, and which implementations remain in the pinned companion course?
 - Why has the interview framing been kept rather than stripped out?
 
 **Next →** [The Three Roles](02_The_Three_Roles.md)

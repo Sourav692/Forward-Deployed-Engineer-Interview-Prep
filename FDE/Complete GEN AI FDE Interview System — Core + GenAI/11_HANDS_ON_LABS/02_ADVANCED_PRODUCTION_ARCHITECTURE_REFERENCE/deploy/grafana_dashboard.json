@@ -1,0 +1,14 @@
+{
+  "title": "GenAI FDE Lab",
+  "panels": [
+    {
+      "title": "LLM latency"
+    },
+    {
+      "title": "Review queue"
+    },
+    {
+      "title": "Permission denials"
+    }
+  ]
+}

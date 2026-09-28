@@ -2,7 +2,7 @@
 
 > **Level** 🟠 Scale, Security, Operations · **Docs** 5 · **Time** ~2.5 h
 > **Prerequisites:** Modules 01, 04, 05, 06 (docs 2, 4, 5)
-> **Reference:** `reference_code/` — a deployed AWS multi-agent platform (read, not run); `diagrams/` — nine per-layer Mermaid files plus the combined architecture
+> **Implementation:** `Enterprise_Multi_Agent_AI_Research_Platform` in the pinned companion course; local diagrams remain part of this module
 
 Multi-agent is the most over-reached-for architecture in AI system design. This module gives you the definition (a pipeline with eight steps is still one agent), the default (one agent with good tools), the two triggers that justify escalating, the handoff contract that makes the escalation safe, the failure-isolation and evaluation obligations it creates — and two real systems: a deployed nine-layer research platform, and a production supervisor-to-deep-agent evolution in a regulated industry.
 
@@ -16,9 +16,11 @@ Multi-agent is the most over-reached-for architecture in AI system design. This 
 | 4 | [Case Study — The Research Platform](04_Case_Study_Research_Platform.md) | Nine layers of a deployed AWS system: entry, cache and memory, the four-agent Critic loop, gateway with fallback, output guardrails, storage, LangSmith, PyRIT, Terraform and CI/CD | 45 min |
 | 5 | [Case Study — From Supervisor to Deep Agent](05_Case_Study_Supervisor_To_Deep_Agent.md) | Three stages and two pivots; why LangGraph; the eight-node supervisor; four specialists and their trade-offs; governance underneath; results stated honestly | 30 min |
 
-## The reference material
+## Reference material
 
-`reference_code/` is the research platform's application, gateway config, red-team dashboard, Terraform and CI workflow. Its `README.md` explains the AWS setup; it is included for reading alongside doc 4, not for local execution. `diagrams/` holds the nine `.mmd` files doc 4 walks through, the combined `ARCHITECTURE.mmd`, and rendered HTML and PNG.
+`diagrams/` holds the per-layer architecture files and the combined rendering. The
+application, gateway, red-team dashboard, Terraform, and CI workflow live only in the
+pinned companion project.
 
 ## Checkpoint
 

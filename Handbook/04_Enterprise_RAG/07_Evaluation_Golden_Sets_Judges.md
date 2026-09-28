@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 7 of 10 · **Time** ~35 min
 > **Prerequisites:** [The Query Graph](05_The_Query_Graph.md), [Output Guardrails](06_Output_Guardrails.md)
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/01-theory.md` §9; `docs/06-architecture-end-to-end.md` §7; `docs/05-src-modules-reference.md` (`evaluation/harness.py`); `README.md` ("Verified results", "Read these numbers honestly"); `docs/07-system-design-coverage-map.md` §4.5
-> **Lab:** `project/notebooks/02-hands-on-parts/part10-evaluation.ipynb`, `project/scripts/evaluate.py`, `calibrate_judge.py`, `project/tests/test_golden_set.py`
+> **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part10-evaluation.ipynb`, `05_Projects/Enterprise_RAG_Platform/scripts/evaluate.py`, `calibrate_judge.py`, `05_Projects/Enterprise_RAG_Platform/tests/test_golden_set.py`
 
 ## Why this matters
 
@@ -99,8 +99,8 @@ The corpus is 22 documents, so the quality numbers say almost nothing about stra
 |---|---|
 | Harness | `evaluation/harness.py` → `run_eval`, `_score_case`, `compare_strategies`, `_ndcg_binary` |
 | Pass/fail semantics | `CaseResult.passed`, `refusal_advisory`; `EvalReport.leak_count`, `leak_rate`, `pass_rate` |
-| Golden set | `project/data/golden_set.json`; integrity test `project/tests/test_golden_set.py` |
-| Judge calibration | `project/scripts/calibrate_judge.py`; `project/data/judge_calibration_set.json` |
+| Golden set | `05_Projects/Enterprise_RAG_Platform/data/golden_set.json`; integrity test `05_Projects/Enterprise_RAG_Platform/tests/test_golden_set.py` |
+| Judge calibration | `05_Projects/Enterprise_RAG_Platform/scripts/calibrate_judge.py`; `05_Projects/Enterprise_RAG_Platform/data/judge_calibration_set.json` |
 | Run it | `python scripts/evaluate.py --kinds security` (the gate) · `python scripts/evaluate.py --compare ...` |
 
 ## Interview lens

@@ -15,8 +15,8 @@ every page now meets, and the house style that editorial work should follow from
 | D3 | **Visible names come from `editorial.ts`; ids never change.** Tab ids, track ids, slugs, file names, anchors and `fd:v1:*` keys are untouched. The sync scripts read names from the same module, so the manifest, the static Last-Day pages, search and page headers cannot drift. `check:content` fails when a manifest name differs from the registry. | Renaming a tab used to rename its id (ids were derived from labels), which would have broken `#deep-dive` links and read progress. |
 | D4 | **Metadata is a sidecar, not frontmatter.** Family defaults per track in `FAMILY_META`, plus fixed records for revision, orientation and final rehearsal. | Keeps ~200 source files and both parsers untouched. Per-page overrides can be added to the same file when a page genuinely differs from its family. |
 | D5 | **The Last-Day sequence is "Review 01–18", never "Module".** Applied to the hub, the static HTML (titles, headings, doc ids, trigger-sheet column) and the two markdown guides, at sync time. The sources keep their wording. | "Module" already means one of the 15 roadmap parts. `check:content` fails a static page that still says "Module N". |
-| D6 | **The Roadmap and Rapid Revision Guide are app reading pages** at `/fde-last-day-prep/roadmap` and `/fde-last-day-prep/rapid-revision`, synced from `06_Interview_Prep/Last_Day_Prep/`. Their top-level `#` sections are demoted one level so the reading pipeline can split and index them. | They get the site theme, a contents list and search, which the static pages cannot. |
-| D7 | **The static Last-Day HTML is now generated.** `scripts/last-day.mjs` copies `06_Interview_Prep/Last_Day_Prep/html/` into `public/fde-last-day-prep/` and applies the renames and links. Edit the sources, then `npm run sync`. Hand edits under `public/fde-last-day-prep/` are overwritten. | One place to edit, as with every other content family. |
+| D6 | **The Roadmap and Rapid Revision Guide are app reading pages** at `/fde-last-day-prep/roadmap` and `/fde-last-day-prep/rapid-revision`, synced from `Last_Day_Prep/`. Their top-level `#` sections are demoted one level so the reading pipeline can split and index them. | They get the site theme, a contents list and search, which the static pages cannot. |
+| D7 | **The static Last-Day HTML is now generated.** `scripts/last-day.mjs` copies `Last_Day_Prep/html/` into `public/fde-last-day-prep/` and applies the renames and links. Edit the sources, then `npm run sync`. Hand edits under `public/fde-last-day-prep/` are overwritten. | One place to edit, as with every other content family. |
 
 ## Content modes
 
@@ -175,7 +175,7 @@ The behavioural answers and some case studies were written from real client enga
 
 **What changed**
 
-- Raw client stories moved to the gitignored `06_Interview_Prep/_private/`. Unredacted originals of every file edited in the scrub are kept there too, under `originals/`. Nothing in `_private/` is ever committed.
+- Raw client stories moved to the gitignored `_private/`. Unredacted originals of every file edited in the scrub are kept there too, under `originals/`. Nothing in `_private/` is ever committed.
 - Tracked copies were anonymised, which also cleans the website:
   - Clients became "a large Asian life insurer", "a large Indian consumer lender" and "a global tier-1 bank".
   - Identifying details were generalised: superlatives, cloud and region, exact durations, ticket counts and schema names.

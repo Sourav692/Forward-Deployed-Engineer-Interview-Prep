@@ -781,7 +781,7 @@ Incidents and production scenarios on this system are not new designs; they are 
 
 ## References
 
-All paths are relative to `06_Interview_Prep/`.
+All paths are relative to the repository root.
 
 | Section                                                                          | Source                                                                                                                                                                                                              |
 | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -791,7 +791,7 @@ All paths are relative to `06_Interview_Prep/`.
 | 2, 5, 8, 9, 11, 12 (tutorial material)                                           | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_2/chapter-1-enterprise-knowledge-assistant-rag-tutorial_v2.md`, sections 1 to 4 and 8                                                                       |
 | 5 to 12                                                                          | `Handbook/09_AI_System_Design_Casebook/whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md`                                                                                                               |
 | 13                                                                               | `Handbook/09_AI_System_Design_Casebook/whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md`                                                                                                                     |
-| 12 (follow-ups)                                                                  | `OpenAI_Applied/Sample_Questions/OpenAI Applied_Engineer_Problem_Decomposition_Questions.md`, questions 1 and 13                                                                                                  |
+| 12 (follow-ups)                                                                  | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, questions 1 and 13                                                                                                  |
 | 14                                                                               | `Handbook/11_Telling_The_Story/stories/Enterprise_RAG_Conversational_Guide.md`; `Handbook/04_Enterprise_RAG/01_Why_Enterprise_Changes_The_Problem.md`                                                 |
 | 15                                                                               | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 1, §4 and §5                                                                                                                          |
 | 16                                                                               | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/` (02, 09, 10); `CRAM_SHEET_S15_S16.md` §15 scenarios 3, 8, 9, 14 |

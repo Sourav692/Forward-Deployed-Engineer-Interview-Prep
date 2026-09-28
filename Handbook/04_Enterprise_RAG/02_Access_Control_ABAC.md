@@ -3,7 +3,7 @@
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 2 of 10 · **Time** ~60 min
 > **Prerequisites:** [Why Enterprise Changes the Problem](01_Why_Enterprise_Changes_The_Problem.md)
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/04-security-checks-reference.md` (all sections), `docs/01-theory.md` §7 (ABAC, the two-layer trick, the LLM is never the enforcement point)
-> **Lab:** `project/notebooks/02-hands-on-parts/part02-policy-engine.ipynb`, `part03-compiling-policy-to-filter.ipynb`
+> **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part02-policy-engine.ipynb`, `part03-compiling-policy-to-filter.ipynb`
 
 ## Why this matters
 
@@ -374,8 +374,8 @@ Six personas, four different denial reasons. This one row is the best sixty seco
 | Redaction | `authz/enforcement.py` → `redact_pii` |
 | Fresh identity | `identity.py` → `get_principal` (returns a fresh copy each call) |
 | Sensitivity ladder | `models.py` → `SENSITIVITY_RANK` |
-| Matrix | `project/scripts/demo_access_control.py --matrix` |
-| Doc/policy agreement test | `project/tests/verify_security_reference.py` |
+| Matrix | `05_Projects/Enterprise_RAG_Platform/scripts/demo_access_control.py --matrix` |
+| Doc/policy agreement test | `05_Projects/Enterprise_RAG_Platform/tests/verify_security_reference.py` |
 
 ## Checkpoint
 

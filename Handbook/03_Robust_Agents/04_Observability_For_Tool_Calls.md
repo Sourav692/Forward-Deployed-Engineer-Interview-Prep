@@ -83,8 +83,8 @@ Per-call telemetry and the run-level trace are complementary, not redundant. The
 
 | Concept | Where |
 |---|---|
-| Record and logger | `project/src/observability.py` → `ToolCall`, `ToolCallLogger` |
-| Every branch logs | `project/src/robustness.py` → each `logger.log(...)` in `execute_tool` and `with_fallback` |
+| Record and logger | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/observability.py` → `ToolCall`, `ToolCallLogger` |
+| Every branch logs | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/robustness.py` → each `logger.log(...)` in `execute_tool` and `with_fallback` |
 | Session-wide trace | `Session.logger` |
 | Tests that assert on the trace | `test_retry_on_flaky_tool`, `test_memoization`, `test_session_memo_persists_across_turns` |
 

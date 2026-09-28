@@ -2,7 +2,7 @@
 
 Every handbook document, and the original file(s) it was built from. Paths are relative to the repository root. **The originals are untouched**; this handbook was assembled from them, and this map is how provenance is preserved as the handbook grows.
 
-Treatment codes: **R** rewritten into the handbook voice · **C** copied with a handbook header (performance artefacts and personal narratives) · **N** new for the handbook · **P** project code copied (caches, `runs/`, and the Chroma index excluded).
+Treatment codes: **R** rewritten into the handbook voice · **C** copied with a handbook header (performance artefacts and personal narratives) · **N** new for the handbook · **P** implementation retained at the immutable companion-course revision in `COMPANION_COURSE.md`.
 
 ## Root and Module 00
 
@@ -10,8 +10,8 @@ Treatment codes: **R** rewritten into the handbook voice · **C** copied with a 
 |---|---|---|
 | `README.md` | N | — |
 | `00_Orientation/01_How_To_Use_This_Handbook.md` | N | — |
-| `00_Orientation/02_The_Three_Roles.md` | N | `06_Interview_Prep/FDE/Senior_FDE_Day_to_Day.md` (three-lens model) |
-| `00_Orientation/03_The_First_Ten_Minutes.md` | R | `06_Interview_Prep/AI_Engineer/Cross Cutting Preparation/00-first-ten-minutes.html` |
+| `00_Orientation/02_The_Three_Roles.md` | N | `FDE/Senior_FDE_Day_to_Day.md` (three-lens model) |
+| `00_Orientation/03_The_First_Ten_Minutes.md` | R | `Supplementary_Guides/Production_and_Platform_Judgment/00-first-ten-minutes.html` |
 
 ## Module 01 · LLM Systems Foundations
 
@@ -22,13 +22,13 @@ Treatment codes: **R** rewritten into the handbook voice · **C** copied with a 
 | `03_What_An_Agent_Actually_Is.md` | R | `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/README.md`, `src/tools.py`, `src/brain.py`; `Enterprise Agentic Workflow Automation Platform/docs/01-theory.md` §A.2–A.4 *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)* |
 | `04_Tool_Calling_Loop_From_Scratch.md` | R | `agent_tool_calling_demo/src/scratch_agent.py`, `src/brain.py`, `README.md`, `tests/test_agent.py` |
 | `05_Same_Loop_In_LangGraph.md` | R | `agent_tool_calling_demo/src/langgraph_agent.py`, `README.md` |
-| `project/` | P | `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/` (minus `docs/`) *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)* |
+| Companion implementation | P | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/` at the pinned revision |
 
 ## Module 02 · System Design Fundamentals
 
 | Handbook doc | Treatment | Source |
 |---|---|---|
-| `01_The_12_Part_Framework.md` | R | `06_Interview_Prep/FDE/System_Design and Delivery/2. System Design Components.md` |
+| `01_The_12_Part_Framework.md` | R | `FDE/System_Design and Delivery/2. System Design Components.md` |
 | `02_The_15_Principles.md` | R | `…/3. System Design Principles.md` |
 | `03_Monolith_vs_Microservices.md` | R | `…/4. Monolith vs Microservice Architecture.md` |
 | `04_Worked_Example_Travel_Agent.md` | R | `…/1. System Design Overview.md` |
@@ -60,7 +60,7 @@ All sources under `05_Projects/Enterprise_RAG_Platform/`.
 | `08_Observability.md` | R | `docs/01-theory.md` §10; `docs/05-src-modules-reference.md` (`observability/`, `llm/client.py` → `Usage`) |
 | `09_Module_Reference.md` | R | `docs/05-src-modules-reference.md`; `docs/06-architecture-end-to-end.md` §8 |
 | `10_Coverage_Map.md` | R | `docs/07-system-design-coverage-map.md` |
-| `project/` | P | the project root (minus `docs/`, the two `INTERVIEW_SCRIPT*.md`, `runs/`, `data/chroma/`, caches) |
+| Companion implementation | P | the `05_Projects/Enterprise_RAG_Platform/` project root at the pinned revision |
 
 ## Module 05 · Agentic Workflow Platforms
 
@@ -75,7 +75,7 @@ All sources under `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/`
 | `05_Approvals_Spend_Caps_Staged_Rollout.md` | R | `README.md` (guardrail rules, staged rollout); `docs/01-theory.md` §A.6–A.7, §B.4; `docs/03-src-modules-reference.md` |
 | `06_Module_Reference.md` | R | `docs/03-src-modules-reference.md`; `docs/02-architecture-end-to-end.md` §4 |
 | `07_Coverage_Map.md` | R | `docs/04-system-design-coverage-map.md` |
-| `project/` | P | the project root (minus `docs/`, `INTERVIEW_SCRIPT.md`, `runs/`, caches) |
+| Companion implementation | P | the `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/` project root at the pinned revision |
 
 ## Module 06 · Cross-Cutting Concerns
 
@@ -99,7 +99,7 @@ All sources under `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/`
 | `04_Case_Study_Research_Platform.md` | R | `Enteprise Multi-Agent AI Research Platform/ARCHITECTURE DIAGRAMS/LAYERS_EXPLAINED.md`; `CODE/README.md` |
 | `05_Case_Study_Supervisor_To_Deep_Agent.md` | R | the owner's private engagement notes (not in the repo) |
 | `diagrams/` | P | `Enteprise Multi-Agent AI Research Platform/ARCHITECTURE DIAGRAMS/*.mmd`, `architecture.html`, `platform-architecture.html`, `PNG DIAAGRAM.png` (renamed `platform-architecture.png`) |
-| `reference_code/` | P | `Enteprise Multi-Agent AI Research Platform/CODE/` |
+| Companion implementation | P | `05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/` at the pinned revision |
 
 ## Module 08 · AgentOps and Platform
 
@@ -114,7 +114,7 @@ All sources under `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/`
 
 ## Module 09 · AI System Design Casebook
 
-All sources under `06_Interview_Prep/FDE/System_Design and Delivery/` unless noted.
+All sources under `FDE/System_Design and Delivery/` unless noted.
 
 | Handbook doc | Treatment | Source |
 |---|---|---|
@@ -127,7 +127,7 @@ All sources under `06_Interview_Prep/FDE/System_Design and Delivery/` unless not
 | `whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md` | C | `05_Projects/Enterprise_RAG_Platform/INTERVIEW_SCRIPT.md` |
 | `whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md` | C | `…/Enterprise RAG Platform/INTERVIEW_SCRIPT_DATABRICKS.md` |
 | `whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md` | C | `…/Enterprise Agentic Workflow Automation Platform/INTERVIEW_SCRIPT.md` |
-| `whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` | C | `06_Interview_Prep/AI_Engineer/Delivery Framework from Scoping to Delivery/INTERVIEW_SCRIPT.md` |
+| `whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` | C | `Supplementary_Guides/FDE_Delivery_Framework/INTERVIEW_SCRIPT.md` |
 
 Not carried over: the `.html` twins of the markdown design docs in `System_Design and Delivery/` and its `index.html` (renderings of files already rewritten here).
 
@@ -135,14 +135,14 @@ Not carried over: the `.html` twins of the markdown design docs in `System_Desig
 
 | Handbook doc | Treatment | Source |
 |---|---|---|
-| `01_A_Day_In_The_Life.md` | R | `06_Interview_Prep/FDE/Senior_FDE_Day_to_Day.md` |
+| `01_A_Day_In_The_Life.md` | R | `FDE/Senior_FDE_Day_to_Day.md` |
 | `02_End_To_End_AI_Delivery_Six_Stages.md` | R | `System_Design and Delivery/9. Proj Delivery.md` |
 | `03_Scoping_To_Production_In_Two_Weeks.md` | R | `Delivery Framework from Scoping to Delivery/docs/01-theory.md`; `docs/02-architecture-end-to-end.md`; `README.md` |
 | `04_Gates_Risks_Metrics.md` | R | `…/docs/01-theory.md` §B.3–B.6; `docs/05-security-gate-depth-and-tenant-scale.md`; `README.md` |
 | `05_Cross_Team_Collaboration.md` | R | `System_Design and Delivery/10. Cross Team Collaboration.md` |
 | `06_Module_Reference.md` | R | `…/docs/03-src-modules-reference.md`; `docs/02-architecture-end-to-end.md` §4 |
 | `07_Coverage_Map.md` | R | `…/docs/04-system-design-coverage-map.md`; `README.md` |
-| `project/` | P | `06_Interview_Prep/AI_Engineer/Delivery Framework from Scoping to Delivery/` (minus `docs/`, `INTERVIEW_SCRIPT.md`, caches) |
+| Companion implementation | P | `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/` at the pinned revision |
 
 ## Module 11 · Telling the Story
 
