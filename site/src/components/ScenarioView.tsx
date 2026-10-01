@@ -8,14 +8,17 @@ import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
 import {
   clearScenario,
   loadAnswers,
+  loadAnswerStatuses,
   loadExtraRows,
   loadScores,
   loadStatus,
   notifyProgress,
   saveAnswers,
+  saveAnswerStatuses,
   saveExtraRows,
   saveScores,
   saveStatus,
+  STATUS_LABELS,
   type Answers,
   type ExtraRows,
   type Scores,
@@ -26,18 +29,18 @@ import { AnswerKeyReveal } from './AnswerKeyReveal'
 import { ScenarioToolbar } from './ScenarioToolbar'
 
 const SAVE_DEBOUNCE_MS = 400
+type AnswerStatusFilter = 'all' | Status
 
 /**
- * `requireComplete` holds back "Mastered" until every field has an answer. Behavioural
- * pages use it: their model answers are one candidate's template, so mastery means
- * having written your own evidence into every field — not having read theirs.
+ * Behavioural pages are a focused answer library: the answer is visible immediately,
+ * while each question keeps its own preparation status in local storage.
  */
 export function ScenarioView({
   scenario,
-  requireComplete = false,
+  behavioral = false,
 }: {
   scenario: Scenario
-  requireComplete?: boolean
+  behavioral?: boolean
 }) {
   const id = `${scenario.ref.trackId}/${scenario.ref.slug}`
 
@@ -46,6 +49,8 @@ export function ScenarioView({
   const [answers, setAnswers] = useState<Answers>({})
   const [scores, setScores] = useState<Scores>({})
   const [extraRows, setExtraRows] = useState<ExtraRows>({})
+  const [answerStatuses, setAnswerStatuses] = useState<Record<string, Status>>({})
+  const [statusFilter, setStatusFilter] = useState<AnswerStatusFilter>('all')
   const [status, setStatus] = useState<Status>('not-started')
   const [hydrated, setHydrated] = useState(false)
   const [storageAvailable, setStorageAvailable] = useState(true)
@@ -58,9 +63,21 @@ export function ScenarioView({
   // what would be unsafe. One pass, on scenario change.
   /* eslint-disable react-hooks/set-state-in-effect -- hydration-safe by design */
   useEffect(() => {
+    const savedAnswerStatuses = loadAnswerStatuses(id)
+    const defaultAnswerStatus = loadStatus(id)
+    const initialAnswerStatuses = behavioral
+      ? Object.fromEntries(
+          scenario.sections.map((section) => [
+            section.key,
+            savedAnswerStatuses[section.key] ?? defaultAnswerStatus,
+          ]),
+        )
+      : savedAnswerStatuses
     setAnswers(loadAnswers(id))
     setScores(loadScores(id))
     setExtraRows(loadExtraRows(id))
+    setAnswerStatuses(initialAnswerStatuses)
+    if (behavioral) saveAnswerStatuses(id, initialAnswerStatuses, scenario.sections.length)
     setStatus(loadStatus(id))
     try {
       const probe = '__fd_probe__'
@@ -70,7 +87,7 @@ export function ScenarioView({
       setStorageAvailable(false)
     }
     setHydrated(true)
-  }, [id])
+  }, [behavioral, id, scenario.sections])
   /* eslint-enable react-hooks/set-state-in-effect */
 
   // Debounced so typing does not write on every keystroke. The timer is cleared on
@@ -137,6 +154,18 @@ export function ScenarioView({
     [id],
   )
 
+  const handleAnswerStatus = useCallback(
+    (sectionKey: string, nextStatus: Status) => {
+      setAnswerStatuses((previous) => {
+        const next = { ...previous, [sectionKey]: nextStatus }
+        saveAnswerStatuses(id, next, scenario.sections.length)
+        notifyProgress()
+        return next
+      })
+    },
+    [id, scenario.sections.length],
+  )
+
   const handleReset = useCallback(() => {
     const message =
       'Clear your saved answers, scores and status for this scenario?\n\n' +
@@ -148,6 +177,7 @@ export function ScenarioView({
     setAnswers({})
     setScores({})
     setExtraRows({})
+    setAnswerStatuses({})
     setStatus('not-started')
     setSavedAt(null)
     notifyProgress()
@@ -170,31 +200,49 @@ export function ScenarioView({
     () => Object.values(answers).filter((v) => v.trim() !== '').length,
     [answers],
   )
+  const visibleSections = behavioral
+    ? scenario.sections.filter((section) =>
+        statusFilter === 'all' ? true : (answerStatuses[section.key] ?? 'not-started') === statusFilter,
+      )
+    : scenario.sections
 
   return (
     <article className="pb-20">
-      <ScenarioToolbar
-        status={status}
-        onStatus={handleStatus}
-        answered={answered}
-        total={totalFields}
-        masteredLocked={requireComplete && answered < totalFields}
-        savedAt={savedAt}
-        storageAvailable={storageAvailable && hydrated}
-        revealAll={revealAll}
-        onRevealAll={setRevealAll}
-        onExport={handleExport}
-        onReset={handleReset}
-      />
+      {!behavioral && (
+        <ScenarioToolbar
+          status={status}
+          onStatus={handleStatus}
+          answered={answered}
+          total={totalFields}
+          savedAt={savedAt}
+          storageAvailable={storageAvailable && hydrated}
+          revealAll={revealAll}
+          onRevealAll={setRevealAll}
+          onExport={handleExport}
+          onReset={handleReset}
+        />
+      )}
 
-      {scenario.intro.length > 0 && (
+      {behavioral && (
+        <>
+          <BehavioralReadingGuide />
+          <AnswerStatusFilterBar
+            activeFilter={statusFilter}
+            onChange={setStatusFilter}
+            visible={visibleSections.length}
+            total={scenario.sections.length}
+          />
+        </>
+      )}
+
+      {!behavioral && scenario.intro.length > 0 && (
         <div className="mb-12 rounded-xl border border-border bg-surface-2/50 p-5 text-[0.9375rem] leading-relaxed">
           <Blocks blocks={scenario.intro} />
         </div>
       )}
 
       <div className="space-y-12">
-        {scenario.sections.map((section) => (
+        {visibleSections.map((section) => (
           <section key={section.index} id={`section-${section.index}`} className="scroll-mt-32">
             <div className="mb-4 flex items-baseline gap-3">
               <span className="text-[0.8125rem] font-bold tabular-nums text-accent">
@@ -217,23 +265,38 @@ export function ScenarioView({
               </p>
             )}
 
-            <Blocks
-              blocks={section.blocks}
-              answers={answers}
-              scores={scores}
-              extraRows={extraRows}
-              onAnswer={handleAnswer}
-              onScore={handleScore}
-              onAddRow={handleAddRow}
-            />
+            {behavioral ? (
+              <BehavioralAnswer
+                sections={section.answerKey}
+                status={answerStatuses[section.key] ?? 'not-started'}
+                onStatus={(nextStatus) => handleAnswerStatus(section.key, nextStatus)}
+              />
+            ) : (
+              <>
+                <Blocks
+                  blocks={section.blocks}
+                  answers={answers}
+                  scores={scores}
+                  extraRows={extraRows}
+                  onAnswer={handleAnswer}
+                  onScore={handleScore}
+                  onAddRow={handleAddRow}
+                />
 
-            <AnswerKeyReveal
-              key={`${section.index}-${revealAll}`}
-              sections={section.answerKey}
-              defaultOpen={revealAll}
-            />
+                <AnswerKeyReveal
+                  key={`${section.index}-${revealAll}`}
+                  sections={section.answerKey}
+                  defaultOpen={revealAll}
+                />
+              </>
+            )}
           </section>
         ))}
+        {behavioral && visibleSections.length === 0 && (
+          <div className="rounded-xl border border-dashed border-border p-6 text-center text-[0.875rem] text-muted">
+            No answers have this status yet. Choose another filter or update an answer’s status.
+          </div>
+        )}
       </div>
 
       {scenario.closing && <ClosingCard section={scenario.closing} />}
@@ -266,6 +329,208 @@ export function ScenarioView({
       </nav>
     </article>
   )
+}
+
+const ANSWER_STATUSES: Status[] = ['not-started', 'practiced', 'mastered']
+
+function AnswerStatusFilterBar({
+  activeFilter,
+  onChange,
+  visible,
+  total,
+}: {
+  activeFilter: AnswerStatusFilter
+  onChange: (filter: AnswerStatusFilter) => void
+  visible: number
+  total: number
+}) {
+  const options: { value: AnswerStatusFilter; label: string }[] = [
+    { value: 'all', label: 'All' },
+    ...ANSWER_STATUSES.map((status) => ({ value: status, label: STATUS_LABELS[status] })),
+  ]
+
+  return (
+    <div className="no-print mb-8 rounded-xl border border-border bg-surface px-4 py-3">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-[0.875rem] font-semibold">Filter answers by status</p>
+          <p className="text-[0.8125rem] text-muted">Showing {visible} of {total} answers</p>
+        </div>
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter answers by status">
+          {options.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              aria-pressed={activeFilter === option.value}
+              onClick={() => onChange(option.value)}
+              className={`rounded-md border px-2.5 py-1.5 text-[0.75rem] font-semibold transition-colors ${
+                option.value === 'all'
+                  ? activeFilter === 'all'
+                    ? 'border-border-strong bg-surface-2 text-text'
+                    : 'border-border text-muted hover:border-border-strong hover:text-text'
+                  : answerStatusClass(option.value, activeFilter === option.value)
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function BehavioralReadingGuide() {
+  return (
+    <aside className="no-print mb-5 rounded-xl border border-accent/25 bg-accent-soft px-4 py-3.5">
+      <h2 className="text-[0.9375rem] font-semibold">A simple way to read these answers</h2>
+      <p className="mt-1 text-[0.875rem] leading-relaxed text-muted">
+        Listen for four things: what the customer needed, the problem you owned, what you did,
+        and what changed. You do not need to sound technical. Use clear words and a real example.
+      </p>
+    </aside>
+  )
+}
+
+function BehavioralAnswer({
+  sections,
+  status,
+  onStatus,
+}: {
+  sections: Section[]
+  status: Status
+  onStatus: (status: Status) => void
+}) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-surface">
+      <div className="flex flex-col gap-3 border-b border-border bg-surface-2/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-[0.875rem] font-semibold">Sample answer</p>
+          <p className="mt-0.5 text-[0.8125rem] text-muted">Read it, practise it in your own words, then choose your status.</p>
+        </div>
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Answer preparation status">
+          {ANSWER_STATUSES.map((option) => (
+            <button
+              key={option}
+              type="button"
+              aria-pressed={status === option}
+              onClick={() => onStatus(option)}
+              className={`rounded-md border px-2.5 py-1.5 text-[0.75rem] font-semibold transition-colors ${answerStatusClass(option, status === option)}`}
+            >
+              {STATUS_LABELS[option]}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-6 px-4 py-4">
+        {sections.length > 0 ? (
+          sections.map((answer) => (
+            <div key={answer.key}>
+              <h3 className="mb-2.5 text-[0.75rem] font-bold uppercase tracking-[0.08em] text-accent">
+                {answer.title}
+              </h3>
+              <Blocks blocks={makeBehavioralAnswerEasyToRead(answer.blocks)} />
+            </div>
+          ))
+        ) : (
+          <p className="text-[0.875rem] text-muted">A sample answer is not available for this question yet.</p>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function answerStatusClass(status: Status, active: boolean): string {
+  if (status === 'mastered') return active
+    ? 'border-success bg-success/15 text-success'
+    : 'border-success/30 text-success hover:bg-success/10'
+  if (status === 'practiced') return active
+    ? 'border-warning bg-warning/15 text-warning'
+    : 'border-warning/30 text-warning hover:bg-warning/10'
+  return active
+    ? 'border-border-strong bg-surface text-text shadow-[var(--shadow)]'
+    : 'border-border text-muted hover:border-border-strong hover:text-text'
+}
+
+function makeBehavioralAnswerEasyToRead(blocks: Block[]): Block[] {
+  return blocks
+    .map((block) => {
+      if (block.kind === 'prose') return { ...block, html: plainLanguageText(cleanFillText(block.html)) }
+      if (block.kind === 'subheading') return { ...block, text: plainLanguageText(block.text) }
+      if (block.kind === 'list') {
+        return {
+          ...block,
+          items: block.items
+            .filter((item) => item.kind === 'text')
+            .map((item) => item.kind === 'text' ? { ...item, html: plainLanguageText(cleanFillText(item.html)) } : item),
+        }
+      }
+      if (block.kind === 'table') {
+        return {
+          ...block,
+          headers: block.headers.map(plainLanguageText),
+          rows: block.rows.map((row) => row.map((cell) => ({
+            ...cell,
+            editable: false,
+            text: plainLanguageText(cleanFillText(cell.text)),
+          }))),
+        }
+      }
+      return block
+    })
+    .filter((block) => block.kind !== 'list' || block.items.length > 0)
+}
+
+function cleanFillText(value: string): string {
+  return value
+    .replace(/\[FILL:[^\]]+\]/g, '')
+    .replace(/\[[^\]]+\]/g, '')
+    .replace(/\s*[—–-]\s*([.,;:])/g, '$1')
+    .replace(/\bwhen\s+reviewed\b/gi, 'when the review team reviewed')
+    .replace(/\s+([,.;:])/g, '$1')
+    .replace(/\s{2,}/g, ' ')
+}
+
+/**
+ * Behavioral answer keys were written by experienced FDEs and contain useful detail,
+ * but their original vocabulary assumes customer-facing delivery experience. This keeps
+ * the evidence while translating the terms a newer candidate is least likely to know.
+ */
+function plainLanguageText(value: string): string {
+  return value
+    .replace(/\bSituation\./g, 'What the customer needed.')
+    .replace(/\bTask\./g, 'What I needed to do.')
+    .replace(/\bAction\./g, 'What I did.')
+    .replace(/\bResult\./g, 'What happened.')
+    .replace(/\bWhy it lands\./g, 'Why an interviewer likes this answer.')
+    .replace(/\bThe trap\./g, 'Watch out.')
+    .replace(/\bAnchor\b/g, 'Real example')
+    .replace(/\bengagements\b/gi, 'customer projects')
+    .replace(/\bengagement\b/gi, 'customer project')
+    .replace(/\bstakeholders\b/gi, 'people involved')
+    .replace(/\bstakeholder\b/gi, 'person involved')
+    .replace(/\bscope creep\b/gi, 'extra work being added')
+    .replace(/\bscoping\b/gi, 'agreeing the work')
+    .replace(/\bscope\b/gi, 'amount of work')
+    .replace(/\bgovernance\b/gi, 'safety')
+    .replace(/\bgoverned\b/gi, 'approved and controlled')
+    .replace(/\brollout\b/gi, 'launch')
+    .replace(/\bproduction\b/gi, 'live system')
+    .replace(/\barchitecture\b/gi, 'system plan')
+    .replace(/\btradeoff\b/gi, 'choice and its downside')
+    .replace(/\bsupervised autonomy\b/gi, 'a person checks important decisions')
+    .replace(/\bfull autonomy\b/gi, 'fully automated decisions')
+    .replace(/\bautonomy\b/gi, 'independence')
+    .replace(/\bobservability\b/gi, 'tracking')
+    .replace(/\btraceability\b/gi, 'a clear record of what happened')
+    .replace(/\bescalation surface\b/gi, 'impact if it fails')
+    .replace(/\beconomic buyer\b/gi, 'person who owns the budget')
+    .replace(/\btechnical buyer\b/gi, 'person who will use or run the system')
+    .replace(/\bMVP\b/g, 'first useful version')
+    .replace(/\bRCA\b/g, 'root-cause analysis')
+    .replace(/\bPII\b/g, 'personal data')
+    .replace(/\bdemonstrable consumption and ROI\b/gi, 'whether the investment was being used and delivering value')
+    .replace(/\bconstrained rollout\b/gi, 'safe first launch')
 }
 
 /**

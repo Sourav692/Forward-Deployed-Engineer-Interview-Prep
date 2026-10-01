@@ -1,12 +1,12 @@
 # Story Bank
 
-You don't need 87 stories for 87 behavioural questions. The same handful of real moments answers almost all of them. This page cuts those moments into sixteen stories, one moment each, and lists every question each story can honestly answer.
+You do not need a different story for every interview question. A few real moments can answer many questions. This page breaks those moments into sixteen short stories and shows you which questions each one can answer.
 
-How to use it: learn every one-liner cold first, then the full version out loud, in about two minutes. In the room, work out what the question is really testing — a failure, a hard no, ownership, influence — and pick the story whose "What it proves" line matches. One story can answer many questions. It just gets told from a different angle each time.
+How to use this page: start with the short spoken answer. Then practise the full story out loud in about two minutes. In an interview, listen for what the question is really about: a setback, a difficult decision, ownership, or working with people. Choose the story that best shows that skill. You can use one story for several questions by changing the part you focus on.
 
-The honesty rule runs through all of it. State limits plainly and never claim a number you can't prove. Where a story is partly grounded, it tells you what you have to supply yourself. Never say a gap out loud as if it were filled.
+Be honest. Only use results and numbers you can prove. If a story says it is partly grounded, add your own real detail before using it. Never pretend a missing detail is true.
 
-These are the author's own stories, anonymised, as worked examples: a large Asian life insurer, a large Indian consumer lender, the Meridian Assist reference build. They aren't yours to tell. The last two sections list the questions that need a story of your own, and show you how to build your own bank the same way.
+These are anonymised example stories from someone else’s work. Use them to learn the format, not as your own answers. The final sections show which questions need your own example and how to build your own story bank.
 
 ## The insurer: two conversations in discovery
 

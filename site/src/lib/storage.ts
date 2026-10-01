@@ -15,7 +15,7 @@ export type Status = 'not-started' | 'practiced' | 'mastered'
 
 export const STATUS_LABELS: Record<Status, string> = {
   'not-started': 'Not started',
-  practiced: 'Practiced',
+  practiced: 'In progress',
   mastered: 'Mastered',
 }
 
@@ -51,6 +51,7 @@ function remove(key: string): void {
 const answersKey = (scenario: string) => `${PREFIX}:answers:${scenario}`
 const scoresKey = (scenario: string) => `${PREFIX}:scores:${scenario}`
 const statusKey = (scenario: string) => `${PREFIX}:status:${scenario}`
+const answerStatusesKey = (scenario: string) => `${PREFIX}:answer-statuses:${scenario}`
 const rowsKey = (scenario: string) => `${PREFIX}:rows:${scenario}`
 const readKey = (scenario: string) => `${PREFIX}:read:${scenario}`
 
@@ -70,6 +71,28 @@ export const saveExtraRows = (s: string, v: ExtraRows) => write(rowsKey(s), v)
 
 export const loadStatus = (s: string) => read<Status>(statusKey(s), 'not-started')
 export const saveStatus = (s: string, v: Status) => write(statusKey(s), v)
+
+/** Individual behavioural-answer statuses, keyed by question section. */
+export type AnswerStatuses = Record<string, Status>
+
+export const loadAnswerStatuses = (s: string) => read<AnswerStatuses>(answerStatusesKey(s), {})
+
+export function saveAnswerStatuses(
+  scenario: string,
+  statuses: AnswerStatuses,
+  totalAnswers: number,
+): boolean {
+  const values = Object.values(statuses)
+  const overall: Status =
+    values.length === 0 || values.every((status) => status === 'not-started')
+      ? 'not-started'
+      : values.length >= totalAnswers && values.every((status) => status === 'mastered')
+        ? 'mastered'
+        : 'practiced'
+  const ok = write(answerStatusesKey(scenario), statuses)
+  saveStatus(scenario, overall)
+  return ok
+}
 
 /**
  * Reading pages (FDE Case Studies) track which tabs the reader has marked as read.
@@ -91,6 +114,7 @@ export function clearScenario(scenario: string): void {
   remove(answersKey(scenario))
   remove(scoresKey(scenario))
   remove(statusKey(scenario))
+  remove(answerStatusesKey(scenario))
   remove(rowsKey(scenario))
   remove(readKey(scenario))
 }

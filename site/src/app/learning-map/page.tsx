@@ -15,7 +15,7 @@ import {
 import { scenarioHref, type ScenarioRef } from '@/lib/scenario'
 
 export const metadata: Metadata = {
-  title: 'Learning map',
+  title: 'Start Here',
   description:
     'How practice, case studies and the last-day review fit together, what each numbering ' +
     'system means, and which material covers each of the eighteen review topics.',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
 
 const LOOP: { mode: ContentMode; title: string; href: string; when: string }[] = [
   { mode: 'orientation', title: LAST_DAY_GUIDES[0].title, href: `${LAST_DAY.href}/roadmap`, when: 'First, once' },
-  { mode: 'practice', title: 'Practice', href: '/#practice', when: 'To learn a skill by doing it' },
-  { mode: 'case-study', title: 'Case Studies', href: '/modules/15-fde-case-studies', when: 'To see the skill in a complete system' },
+  { mode: 'practice', title: 'Technical Practice', href: '/modules/01-customer-discovery-and-decomposition', when: 'To learn a technical skill by doing it' },
+  { mode: 'case-study', title: 'Worked System Designs', href: '/modules/15-fde-case-studies', when: 'To see a complete strong answer' },
   { mode: 'revision', title: LAST_DAY.title, href: LAST_DAY.href, when: 'The days before the interview' },
 ]
 
@@ -32,11 +32,11 @@ const NUMBERING = [
   {
     label: 'Part 01–15',
     name: 'Curriculum roadmap',
-    body: 'The full plan for this site. Three parts are available today — Customer Discovery (Part 01), Behavioural and Leadership Practice (Part 14) and Case Studies (Part 15); the rest are planned.',
+    body: 'The full plan for this site. Three parts are available today — Technical Interview Practice (Part 01), Behavioral and Leadership Stories (Part 14) and Worked System Designs (Part 15); the rest are planned.',
   },
   {
     label: 'Review 01–18',
-    name: 'Last-Day Review',
+    name: 'Final Week Review',
     body: 'A separate, complete sequence of condensed topics, in the order an interview answer flows. Reviews are not roadmap parts: several reviews usually cover one part.',
   },
   {
@@ -71,11 +71,10 @@ export default async function LearningMapPage() {
         <p className="mb-3 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-accent">
           {MODES.orientation.label}
         </p>
-        <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em]">Learning map</h1>
+        <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em]">Start Here</h1>
         <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted">
-          The site has four kinds of material, three numbering systems, and one loop for
-          using them. This page shows how they relate, and which practice and case studies
-          stand behind each review topic.
+          Pick the path that matches your immediate need. The detailed content map below
+          is optional reference material, not a prerequisite to getting started.
         </p>
       </header>
 

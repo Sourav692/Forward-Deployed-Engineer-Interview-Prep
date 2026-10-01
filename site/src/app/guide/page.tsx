@@ -16,19 +16,19 @@ export const metadata: Metadata = {
 const MODE_GUIDE: { mode: ContentMode; title: string; href: string; use: string }[] = [
   {
     mode: 'practice',
-    title: 'Practice',
+    title: 'Technical FDE Interview Practice',
     href: '/modules/01-customer-discovery-and-decomposition',
     use: 'Where you learn by doing. Start with Discovery Foundations; move to System Design Practice once the discovery moves feel natural.',
   },
   {
     mode: 'case-study',
-    title: 'Case Studies',
+    title: 'Worked System Designs',
     href: '/modules/15-fde-case-studies',
     use: 'Where you see a skill in a complete system. Read after practising the same kind of problem, or when a practice scenario stumps you.',
   },
   {
     mode: 'behavioural',
-    title: 'Behavioural and Leadership Practice',
+    title: 'Behavioral and Leadership Stories',
     href: '/modules/14-behavioural-and-leadership-round',
     use: 'Where you prepare the non-technical half. The model answers come from one candidate’s engagements and mark every personal detail as a gap: they show the shape of a strong answer, never an answer to recite.',
   },
@@ -78,9 +78,9 @@ export default function GuidePage() {
           How to use this site
         </h1>
         <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted">
-          {SITE.name} has four kinds of material. Each has its own job, and they work best
-          in order: practise a skill, see it in a complete system, then revise it before
-          the interview. The{' '}
+          {SITE.name} has four distinct prep paths. Each has one job: practise a technical
+          skill, prepare your stories, read a complete system design, or revise before the
+          interview. The{' '}
           <Link href="/learning-map" className="text-accent underline underline-offset-2">
             learning map
           </Link>{' '}

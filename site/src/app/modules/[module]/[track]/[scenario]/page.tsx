@@ -111,9 +111,7 @@ export default async function ScenarioPage({ params }: { params: Promise<Params>
                 <>
                   <span aria-hidden>·</span>
                   <span className="font-semibold text-text">
-                    Personalisation required
-                    {scenario.fillSlots > 0 &&
-                      ` — ${scenario.fillSlots} detail${scenario.fillSlots === 1 ? '' : 's'} in the model answers to replace with your own`}
+                    Track each answer as you practise
                   </span>
                 </>
               )
@@ -123,7 +121,7 @@ export default async function ScenarioPage({ params }: { params: Promise<Params>
         <BeforeYouStart meta={meta} />
       </header>
 
-      <ScenarioView scenario={scenario} requireComplete={Boolean(meta.personalisation)} />
+      <ScenarioView scenario={scenario} behavioral={meta.mode === 'behavioural'} />
 
       <WhereNext reviews={related.reviews} counterpart={related.counterpart} next={null} />
     </div>

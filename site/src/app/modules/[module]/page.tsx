@@ -7,6 +7,8 @@ import { ModuleProgress, ScenarioList } from '@/components/Progress'
 import { MetaStrip } from '@/components/PageIntro'
 import { STORY_BANK } from '@/lib/editorial'
 
+const BEHAVIORAL_MODULE = '14-behavioural-and-leadership-round'
+
 export function generateStaticParams() {
   return MODULES.filter((m) => m.status === 'live').map((m) => ({ module: m.id }))
 }
@@ -50,7 +52,7 @@ export default async function ModulePage({
         {/* The roadmap number stays out of the eyebrow: with twelve parts still planned,
             "Module 14" reads as if 2–13 were missing. The learning mode says more. */}
         <div className="mb-2 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-accent">
-          {meta.kind === 'reading' ? 'Case studies' : 'Practice'}
+          {meta.kind === 'reading' ? 'Worked system designs' : meta.id.includes('behavioural') ? 'Behavioral preparation' : 'Technical practice'}
         </div>
         <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em]">
           {meta.title}
@@ -89,6 +91,14 @@ export default async function ModulePage({
                 <div className="mt-2">
                   <MetaStrip meta={familyMeta(track.id)} minutes={null} />
                 </div>
+                {moduleId === BEHAVIORAL_MODULE && (
+                  <div className="mt-5 rounded-lg border border-border bg-surface-2/50 p-4">
+                    <p className="mb-3 text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-subtle">
+                      Track progress
+                    </p>
+                    <ModuleProgress scenarios={refs} />
+                  </div>
+                )}
               </div>
               <ScenarioList scenarios={refs} />
             </section>

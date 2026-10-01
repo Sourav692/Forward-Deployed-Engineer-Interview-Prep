@@ -89,15 +89,16 @@ export const SITE_NAME = 'Forward Deployed'
 export const SITE_TAGLINE = 'FDE interview practice and system-design review'
 
 export const NAV = [
-  { label: 'Practice', href: '/#practice' },
-  { label: 'Case Studies', href: '/modules/15-fde-case-studies' },
-  { label: 'Last-Day Review', href: '/fde-last-day-prep' },
-  { label: 'How It Works', href: '/guide' },
+  { label: 'Start Here', href: '/learning-map' },
+  { label: 'Technical Practice', href: '/modules/01-customer-discovery-and-decomposition' },
+  { label: 'Behavioral Stories', href: '/modules/14-behavioural-and-leadership-round' },
+  { label: 'Worked Designs', href: '/modules/15-fde-case-studies' },
+  { label: 'Final Week', href: '/fde-last-day-prep' },
 ] as const
 
 export const LAST_DAY = {
-  title: 'Last-Day Review',
-  eyebrow: 'Focused final review',
+  title: 'Final Week Review',
+  eyebrow: 'Focused interview-week review',
   href: '/fde-last-day-prep',
 } as const
 
@@ -513,13 +514,12 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
       'A short list of six to ten real engagements you can talk about in detail',
     ],
     outcomes: [
-      'Draft a STAR answer for each question from your own evidence',
-      'Know which of your stories supports which question, and where you have gaps',
+      'Read a strong answer for each question and practise it in your own words',
+      'Track which answers you have not started, are practising, or have mastered',
     ],
     howToUse:
-      'Draft each answer out loud, then in writing, before revealing the model answer. The ' +
-      'model answers are one candidate’s template: replace every highlighted detail with ' +
-      'your own. Mastered stays locked until every field on the page has your answer.',
+      'Read the sample answer, practise the structure in your own words, and choose a status ' +
+      'for each question. Use the Story Bank to find a real experience that fits the question.',
     minutes: 40,
     sourceStatus: 'personal',
     lastReviewed: null,
@@ -534,13 +534,12 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
       'The Hiring Manager Questions, if you have not practised behavioural answers before',
     ],
     outcomes: [
-      'Map your own stories onto each principle, and be honest about the ones they do not cover',
-      'Deliver each answer in about two minutes without reciting a template',
+      'Read a strong answer for each principle and connect it to a real story of your own',
+      'Track which answers you have not started, are practising, or have mastered',
     ],
     howToUse:
-      'Use the grounding labels to see which answers need your input. Every highlighted ' +
-      'detail in a model answer is a placeholder — never say it aloud; replace it. Mastered ' +
-      'stays locked until every field on the page has your answer.',
+      'Read the sample answer, practise the structure in your own words, and choose a status ' +
+      'for each question. Use the Story Bank to find a real experience that fits the principle.',
     minutes: 40,
     sourceStatus: 'personal',
     lastReviewed: null,

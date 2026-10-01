@@ -25,7 +25,7 @@ export const SITE = {
   name: SITE_NAME,
   tagline: SITE_TAGLINE,
   description:
-    'Practice worksheets, case studies and a last-day review for Forward Deployed Engineer ' +
+    'Technical practice, behavioural-story preparation, worked system designs and final-week review for Forward Deployed Engineer ' +
     'interviews. Work a real customer scenario end to end — discovery, requirements, ' +
     'architecture, evaluation, rollout — then check yourself against what a strong answer covers.',
 } as const
@@ -34,10 +34,10 @@ export const MODULES: ModuleMeta[] = [
   {
     id: '01-customer-discovery-and-decomposition',
     number: 1,
-    title: 'Customer Discovery and Problem Decomposition',
+    title: 'Technical FDE Interview Practice',
     blurb:
-      'Turn an ambiguous customer problem into users, workflows, requirements and a ' +
-      'defensible architecture. 22 practice scenarios with model answers.',
+      'Practise turning ambiguous customer problems into requirements, architecture, ' +
+      'evaluation and rollout plans. 22 guided scenarios with model answers.',
     status: 'live',
   },
   {
@@ -127,7 +127,7 @@ export const MODULES: ModuleMeta[] = [
   {
     id: '14-behavioural-and-leadership-round',
     number: 14,
-    title: 'Behavioural and Leadership Practice',
+    title: 'Behavioral and Leadership Stories',
     blurb:
       'The non-technical half of the loop: customer-facing competencies for the hiring ' +
       'manager, and leadership-principle answers. The model answers are a personal ' +
@@ -137,11 +137,10 @@ export const MODULES: ModuleMeta[] = [
   {
     id: '15-fde-case-studies',
     number: 15,
-    title: 'Case Studies',
+    title: 'Worked System Designs',
     blurb:
-      'Twenty grouped system designs, each read at three depths — Interview Guide, ' +
-      'Technical Deep Dive and Quick Review, backed by Sources and Full Design — plus ' +
-      'thirteen further cases, from complete designs to product-judgement questions.',
+      'Read 20 complete system designs at three depths — interview answer, technical ' +
+      'deep dive, and quick review — plus 13 additional reference cases.',
     status: 'live',
     kind: 'reading',
   },
