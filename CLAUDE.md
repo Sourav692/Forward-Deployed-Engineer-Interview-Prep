@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Context management
+
+- Any Claude or Codex session working in this repository must use the Caveman skill to manage context length.
+
 ## Layout
 
 - Root dirs (`FDE/`, `Case_Study_Groups/`, `Last_Day_Prep/`, `Handbook/`, …) are markdown prep content. Only `FDE/`, `Case_Study_Groups/`, `Last_Day_Prep/` and `Blitzy_Prep/` feed the site.
