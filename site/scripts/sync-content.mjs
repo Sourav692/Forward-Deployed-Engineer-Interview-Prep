@@ -14,7 +14,7 @@
  * and a path change here would otherwise fail silently at build time.
  */
 
-import { copyFile, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { copyFile, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
@@ -26,6 +26,7 @@ const SITE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const REPO_ROOT = resolve(SITE_DIR, '..')
 const SOURCE_ROOT = join(REPO_ROOT, 'FDE')
 const OUT_DIR = join(SITE_DIR, 'content')
+const COMPANY_PREP_SNAPSHOT_DIR = join(SITE_DIR, '.company-prep-snapshot')
 
 const BEHAVIOURAL_ROOT = join(SOURCE_ROOT, 'Behavioral_and_Leadership')
 
@@ -228,6 +229,21 @@ async function main() {
     )
   }
 
+  // Company packs can deliberately remain outside Git, while their generated site
+  // content is committed. Keep that snapshot through a full content refresh so a
+  // Vercel build does not need the private source folder.
+  await rm(COMPANY_PREP_SNAPSHOT_DIR, { recursive: true, force: true })
+  try {
+    await cp(
+      join(OUT_DIR, 'modules', '16-company-oriented-prep'),
+      COMPANY_PREP_SNAPSHOT_DIR,
+      { recursive: true },
+    )
+  } catch {
+    // A new pack has no committed snapshot yet; syncCompanyPrep will report a
+    // useful error if its private source is also unavailable.
+  }
+
   await rm(OUT_DIR, { recursive: true, force: true })
   await mkdir(OUT_DIR, { recursive: true })
 
@@ -256,7 +272,14 @@ async function main() {
   modules.push(await syncCaseStudies({ repoRoot: REPO_ROOT, outDir: OUT_DIR }))
 
   // Company-oriented material: packs tailored to a specific interview loop.
-  modules.push(await syncCompanyPrep({ repoRoot: REPO_ROOT, outDir: OUT_DIR }))
+  modules.push(
+    await syncCompanyPrep({
+      repoRoot: REPO_ROOT,
+      outDir: OUT_DIR,
+      snapshotDir: COMPANY_PREP_SNAPSHOT_DIR,
+    }),
+  )
+  await rm(COMPANY_PREP_SNAPSHOT_DIR, { recursive: true, force: true })
 
   // Last-Day Review: its cross-links point at the pages above, so it syncs last and
   // is handed the list of what was actually published.

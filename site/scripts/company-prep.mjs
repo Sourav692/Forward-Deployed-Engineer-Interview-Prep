@@ -4,7 +4,7 @@
  * content is committed and can be built when the Vercel project is rooted at `site/`.
  */
 
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { cp, mkdir, readFile, stat, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { TRACKS } from '../src/lib/editorial.ts'
 
@@ -29,10 +29,56 @@ function titleFrom(markdown, fallback) {
   return heading ? heading.replace(/^#\s+/, '').trim() : fallback
 }
 
-export async function syncCompanyPrep({ repoRoot, outDir }) {
+async function isDirectory(path) {
+  try {
+    return (await stat(path)).isDirectory()
+  } catch {
+    return false
+  }
+}
+
+export async function syncCompanyPrep({ repoRoot, outDir, snapshotDir }) {
   const sourceDir = join(repoRoot, 'Blitzy_Prep')
   const track = TRACKS[TRACK_ID]
   if (!track) throw new Error(`Track "${TRACK_ID}" has no editorial entry`)
+
+  if (!(await isDirectory(sourceDir))) {
+    if (!(snapshotDir && (await isDirectory(snapshotDir)))) {
+      throw new Error(
+        `Blitzy source is not available at ${sourceDir} and no committed site snapshot was found.`,
+      )
+    }
+
+    await cp(snapshotDir, join(outDir, 'modules', COMPANY_PREP_MODULE_ID), {
+      recursive: true,
+    })
+    const scenarios = []
+    for (const document of DOCUMENTS) {
+      const raw = await readFile(
+        join(snapshotDir, TRACK_ID, document.slug, 'company-guide.md'),
+        'utf8',
+      )
+      scenarios.push({
+        slug: document.slug,
+        order: document.order,
+        title: document.title ?? titleFrom(raw, document.slug),
+        tag: `Blitzy ${String(document.order).padStart(2, '0')}`,
+        tabs: [{ id: 'company-guide', label: 'Company Guide' }],
+      })
+    }
+    scenarios.push({
+      slug: 'drill-verifier',
+      order: 11,
+      title: 'Drill Verifier',
+      tag: 'Blitzy 11',
+      tabs: [{ id: 'company-guide', label: 'Company Guide' }],
+    })
+    return {
+      id: COMPANY_PREP_MODULE_ID,
+      kind: 'reading',
+      tracks: [{ id: TRACK_ID, title: track.title, blurb: track.blurb, scenarios }],
+    }
+  }
 
   const scenarios = []
   for (const document of DOCUMENTS) {
