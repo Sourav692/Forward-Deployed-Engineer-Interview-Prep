@@ -523,7 +523,7 @@ All paths are relative to the repository root. Purchased material lives under `F
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [FDE problem-decomposition question bank](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/Question_Banks/FDE_Problem_Decomposition_Question_Bank.md) — claims and regulated-industry practice cases
+- [FDE problem-decomposition question bank](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md) — claims and regulated-industry practice cases
 - [HL7 FHIR R5 Subscriptions framework](https://hl7.org/fhir/R5/subscriptions.html) — event-driven FHIR needs Subscriptions; otherwise you poll
 - [FINRA Books and Records (SEA 17a-4, FINRA 4511)](https://www.finra.org/rules-guidance/key-topics/books-records) — retention of advisor communications; WORM or audit-trail storage
 - [FINRA Rule 3110: Supervision](https://www.finra.org/rules-guidance/rulebooks/finra-rules/3110) — supervisory review of correspondence

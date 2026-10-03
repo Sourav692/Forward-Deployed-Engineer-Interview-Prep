@@ -1,5 +1,0 @@
-# Educational Kubernetes manifest placeholder for postgres-statefulset.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: genai-fde-lab-postgres-statefulset

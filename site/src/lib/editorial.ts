@@ -211,7 +211,7 @@ export const BEHAVIOURAL_TRACKS = ['hiring-manager', 'leadership-principles']
 /**
  * The behavioural Story Bank (CONTENT-15): one page of the author's anonymised stories,
  * each cut to a single moment, with links to every question it can answer. Source is
- * `FDE/Behavioral_and_Leadership/story_bank.md`. A story lists its
+ * `04_Behavioral_and_Leadership/story_bank.md`. A story lists its
  * questions on an `**Answers:**` line; those links also drive the "Stories that fit"
  * line on each behavioural worksheet question, so the two views cannot disagree.
  */

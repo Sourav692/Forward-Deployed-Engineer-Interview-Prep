@@ -509,7 +509,7 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [FDE problem-decomposition question bank](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/Question_Banks/FDE_Problem_Decomposition_Question_Bank.md) — reusable practice cases for ambiguous enterprise problems
+- [FDE problem-decomposition question bank](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md) — reusable practice cases for ambiguous enterprise problems
 - [Control Who Sees What (Salesforce Help)](https://help.salesforce.com/s/articleView?id=platform.security_data_access.htm&type=5) — record access starts from org-wide defaults; FLS controls fields
 - [Field-Level Security (Salesforce Help)](https://help.salesforce.com/s/articleView?id=sf.admin_fls.htm&language=en_US&type=5) — hiding fields such as amount by profile or permission set
 - [AWS KMS cryptography essentials (envelope encryption)](https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html) — what per-tenant data keys do and do not protect

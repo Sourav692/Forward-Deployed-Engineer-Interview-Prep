@@ -38,7 +38,7 @@ async function isDirectory(path) {
 }
 
 export async function syncCompanyPrep({ repoRoot, outDir, snapshotDir }) {
-  const sourceDir = join(repoRoot, 'Blitzy_Prep')
+  const sourceDir = join(repoRoot, '08_Company_Specific_Prep', 'Blitzy')
   const track = TRACKS[TRACK_ID]
   if (!track) throw new Error(`Track "${TRACK_ID}" has no editorial entry`)
 
