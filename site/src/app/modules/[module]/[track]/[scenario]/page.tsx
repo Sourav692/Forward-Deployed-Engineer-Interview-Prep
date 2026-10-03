@@ -31,7 +31,10 @@ export async function generateMetadata({
     return study
       ? {
           title: `${study.ref.tag} · ${qualifiedTitle(study.ref)}`,
-          description: `FDE case study: ${study.title} — ${study.docs.map((d) => d.label.toLowerCase()).join(', ')}.`,
+          description:
+            moduleId === '16-company-oriented-prep'
+              ? `Company-oriented interview preparation: ${study.title}.`
+              : `FDE case study: ${study.title} — ${study.docs.map((d) => d.label.toLowerCase()).join(', ')}.`,
         }
       : {}
   }
@@ -51,7 +54,7 @@ function Breadcrumbs({ moduleId, page, reading }: { moduleId: string; page: Scen
     <nav aria-label="Breadcrumb" className="no-print mb-6 flex flex-wrap items-center gap-1.5 text-[0.8125rem] text-subtle">
       {reading ? (
         <Link href={`/modules/${moduleId}`} className="transition-colors hover:text-text">
-          Case Studies
+          {moduleId === '16-company-oriented-prep' ? 'Company Prep' : 'Case Studies'}
         </Link>
       ) : (
         <>

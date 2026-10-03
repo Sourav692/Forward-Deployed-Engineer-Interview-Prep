@@ -359,7 +359,11 @@ for (const mod of manifest.modules) {
     if (FAMILY_META[track.id]?.personalisation) continue
     for (const s of track.scenarios) {
       const key = `${track.id}/${s.slug}`
-      if (!cited.has(key)) failures.push(`${key}: not linked from any review in REVIEWS, so it is missing from the learning map`)
+      // Company packs are intentionally entered directly from Company Prep; they are
+      // not part of the general FDE learning map or its cross-company review pages.
+      if (mod.id !== '16-company-oriented-prep' && !cited.has(key)) {
+        failures.push(`${key}: not linked from any review in REVIEWS, so it is missing from the learning map`)
+      }
     }
   }
 }

@@ -8,6 +8,7 @@ import { MetaStrip } from '@/components/PageIntro'
 import { STORY_BANK } from '@/lib/editorial'
 
 const BEHAVIORAL_MODULE = '14-behavioural-and-leadership-round'
+const COMPANY_PREP_MODULE = '16-company-oriented-prep'
 
 export function generateStaticParams() {
   return MODULES.filter((m) => m.status === 'live').map((m) => ({ module: m.id }))
@@ -52,7 +53,13 @@ export default async function ModulePage({
         {/* The roadmap number stays out of the eyebrow: with twelve parts still planned,
             "Module 14" reads as if 2–13 were missing. The learning mode says more. */}
         <div className="mb-2 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-accent">
-          {meta.kind === 'reading' ? 'Worked system designs' : meta.id.includes('behavioural') ? 'Behavioral preparation' : 'Technical practice'}
+          {meta.id === COMPANY_PREP_MODULE
+            ? 'Company-oriented preparation'
+            : meta.kind === 'reading'
+              ? 'Worked system designs'
+              : meta.id.includes('behavioural')
+                ? 'Behavioral preparation'
+                : 'Technical practice'}
         </div>
         <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em]">
           {meta.title}
@@ -61,7 +68,10 @@ export default async function ModulePage({
       </header>
 
       <div className="mt-7 rounded-xl border border-border bg-surface p-5">
-        <ModuleProgress scenarios={moduleScenarios} />
+        <ModuleProgress
+          scenarios={moduleScenarios}
+          readingNoun={moduleId === COMPANY_PREP_MODULE ? 'guides' : undefined}
+        />
       </div>
 
       {moduleId === STORY_BANK.moduleId && (

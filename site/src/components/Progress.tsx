@@ -39,7 +39,13 @@ function useProgress(scenarios: ScenarioRef[]) {
   return progress
 }
 
-export function ModuleProgress({ scenarios }: { scenarios: ScenarioRef[] }) {
+export function ModuleProgress({
+  scenarios,
+  readingNoun = 'case studies',
+}: {
+  scenarios: ScenarioRef[]
+  readingNoun?: string
+}) {
   const progress = useProgress(scenarios)
   // Reading modules count pages read, not worksheets mastered.
   const reading = scenarios.some((s) => s.reading)
@@ -63,7 +69,7 @@ export function ModuleProgress({ scenarios }: { scenarios: ScenarioRef[] }) {
         <Ring percent={progress ? percent : 0} />
         <div>
           <div className="text-[0.9375rem] font-semibold tabular-nums">
-            {progress ? `${done} of ${total}` : `${total} ${reading ? 'case studies' : 'scenarios'}`}
+            {progress ? `${done} of ${total}` : `${total} ${reading ? readingNoun : 'scenarios'}`}
           </div>
           <div className="text-[0.75rem] text-subtle">
             {progress

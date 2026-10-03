@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T20:29:44.796Z",
+  "generatedAt": "2026-10-03T22:21:21.981Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1004,6 +1004,151 @@
                 {
                   "id": "guide",
                   "label": "Interview Guide"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "16-company-oriented-prep",
+      "kind": "reading",
+      "tracks": [
+        {
+          "id": "blitzy-prep",
+          "title": "Blitzy Prep",
+          "blurb": "Company-specific preparation for the Blitzy interview loop: product context, code-review drills, incidents, customer communication and engineering leadership.",
+          "scenarios": [
+            {
+              "slug": "start-here",
+              "order": 1,
+              "title": "Start Here",
+              "tag": "Blitzy 01",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "coverage-and-gaps",
+              "order": 2,
+              "title": "Blitzy FDE Prep — Repo Coverage vs. Gaps",
+              "tag": "Blitzy 02",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "code-review-bug-drills",
+              "order": 3,
+              "title": "Code Review Bug Drills (Round 1)",
+              "tag": "Blitzy 03",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "product-and-demo-brief",
+              "order": 4,
+              "title": "Blitzy Product, Autonomous Codegen & Demo Brief",
+              "tag": "Blitzy 04",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "questions-to-ask",
+              "order": 5,
+              "title": "Questions to Ask the Blitzy Interviewer",
+              "tag": "Blitzy 05",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "incident-triage-and-customer-comms",
+              "order": 6,
+              "title": "Intermittent Failure Triage + Customer Comms (Round 1, P1)",
+              "tag": "Blitzy 06",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "cto-trust-and-roadmap",
+              "order": 7,
+              "title": "CTO Trust + Exec Vision → Engineering Roadmap (Round 2, P1)",
+              "tag": "Blitzy 07",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "brownfield-integration-and-testing",
+              "order": 8,
+              "title": "Integrating a New Service into an Existing Stack + Testing Strategy (Round 1, P2)",
+              "tag": "Blitzy 08",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "enterprise-sdlc-and-cross-functional",
+              "order": 9,
+              "title": "Enterprise SDLC, Agile/Scrum & Cross-Functional Delivery (Round 2, P2)",
+              "tag": "Blitzy 09",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "scaling-spikes-and-graceful-degradation",
+              "order": 10,
+              "title": "Traffic Spikes & Graceful Degradation: One-Pager (Round 1)",
+              "tag": "Blitzy 10",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "drill-verifier",
+              "order": 11,
+              "title": "Drill Verifier",
+              "tag": "Blitzy 11",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
                 }
               ]
             }

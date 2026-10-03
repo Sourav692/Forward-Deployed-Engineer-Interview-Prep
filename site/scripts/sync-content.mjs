@@ -18,6 +18,7 @@ import { copyFile, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promi
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
+import { syncCompanyPrep } from './company-prep.mjs'
 import { syncLastDay } from './last-day.mjs'
 import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
 
@@ -253,6 +254,9 @@ async function main() {
 
   // Reading module: the G01–G20 interview guides, one page per group with tabs.
   modules.push(await syncCaseStudies({ repoRoot: REPO_ROOT, outDir: OUT_DIR }))
+
+  // Company-oriented material: packs tailored to a specific interview loop.
+  modules.push(await syncCompanyPrep({ repoRoot: REPO_ROOT, outDir: OUT_DIR }))
 
   // Last-Day Review: its cross-links point at the pages above, so it syncs last and
   // is handed the list of what was actually published.

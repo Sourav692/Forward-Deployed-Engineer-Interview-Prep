@@ -356,6 +356,10 @@ export const NOT_ACRONYMS = new Set([
   // SQL keywords and name fragments: ROW FILTER, MT-Bench, and PCI / DSS as the two
   // halves of the 'PCI DSS' entry above.
   'ROW', 'MT', 'PCI', 'DSS',
+  // Company-specific interview-pack terms. They are named tools, titles or standards
+  // rather than general concepts that need an entry in the FDE glossary.
+  'MTTR', 'CEO', 'UTC', 'PR', 'ISO', 'VPC', 'AAP', 'SDLC', 'CTO', 'POC', 'UAT', 'COBOL',
+  'CISO', 'SQS',
 ])
 
 export const glossaryAnchor = (term: string) =>

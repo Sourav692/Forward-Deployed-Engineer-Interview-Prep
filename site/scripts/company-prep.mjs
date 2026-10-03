@@ -1,0 +1,70 @@
+/**
+ * Syncs company-specific preparation packs into the deployable `site/content/`
+ * snapshot. The source folder may be intentionally gitignored, so the generated
+ * content is committed and can be built when the Vercel project is rooted at `site/`.
+ */
+
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import { TRACKS } from '../src/lib/editorial.ts'
+
+export const COMPANY_PREP_MODULE_ID = '16-company-oriented-prep'
+const TRACK_ID = 'blitzy-prep'
+
+const DOCUMENTS = [
+  { file: 'README.md', slug: 'start-here', order: 1, title: 'Start Here' },
+  { file: '00_Coverage_And_Gaps.md', slug: 'coverage-and-gaps', order: 2 },
+  { file: '01_Code_Review_Bug_Drills.md', slug: 'code-review-bug-drills', order: 3 },
+  { file: '02_Blitzy_Product_And_Demo_Brief.md', slug: 'product-and-demo-brief', order: 4 },
+  { file: '03_Questions_To_Ask_Interviewer.md', slug: 'questions-to-ask', order: 5 },
+  { file: '04_Incident_Triage_And_Customer_Comms.md', slug: 'incident-triage-and-customer-comms', order: 6 },
+  { file: '05_CTO_Trust_And_Vision_To_Roadmap.md', slug: 'cto-trust-and-roadmap', order: 7 },
+  { file: '06_Brownfield_Integration_And_Testing.md', slug: 'brownfield-integration-and-testing', order: 8 },
+  { file: '07_Enterprise_SDLC_Agile_CrossFunctional.md', slug: 'enterprise-sdlc-and-cross-functional', order: 9 },
+  { file: '08_Scaling_Spikes_And_Graceful_Degradation.md', slug: 'scaling-spikes-and-graceful-degradation', order: 10 },
+]
+
+function titleFrom(markdown, fallback) {
+  const heading = markdown.split('\n').find((line) => line.startsWith('# '))
+  return heading ? heading.replace(/^#\s+/, '').trim() : fallback
+}
+
+export async function syncCompanyPrep({ repoRoot, outDir }) {
+  const sourceDir = join(repoRoot, 'Blitzy_Prep')
+  const track = TRACKS[TRACK_ID]
+  if (!track) throw new Error(`Track "${TRACK_ID}" has no editorial entry`)
+
+  const scenarios = []
+  for (const document of DOCUMENTS) {
+    const raw = await readFile(join(sourceDir, document.file), 'utf8')
+    const outDirForDocument = join(outDir, 'modules', COMPANY_PREP_MODULE_ID, TRACK_ID, document.slug)
+    await mkdir(outDirForDocument, { recursive: true })
+    await writeFile(join(outDirForDocument, 'company-guide.md'), raw)
+    scenarios.push({
+      slug: document.slug,
+      order: document.order,
+      title: document.title ?? titleFrom(raw, document.slug),
+      tag: `Blitzy ${String(document.order).padStart(2, '0')}`,
+      tabs: [{ id: 'company-guide', label: 'Company Guide' }],
+    })
+  }
+
+  const drillSource = await readFile(join(sourceDir, 'drills_verify.py'), 'utf8')
+  const drillMarkdown = `# Drill Verifier\n\nRun this script locally to check the Blitzy bug-drill exercises.\n\n## Run it locally\n\n\`\`\`bash\npython drills_verify.py\n\`\`\`\n\n## Script\n\n\`\`\`python\n${drillSource.trim()}\n\`\`\`\n`
+  const drillOutDir = join(outDir, 'modules', COMPANY_PREP_MODULE_ID, TRACK_ID, 'drill-verifier')
+  await mkdir(drillOutDir, { recursive: true })
+  await writeFile(join(drillOutDir, 'company-guide.md'), drillMarkdown)
+  scenarios.push({
+    slug: 'drill-verifier',
+    order: 11,
+    title: 'Drill Verifier',
+    tag: 'Blitzy 11',
+    tabs: [{ id: 'company-guide', label: 'Company Guide' }],
+  })
+
+  return {
+    id: COMPANY_PREP_MODULE_ID,
+    kind: 'reading',
+    tracks: [{ id: TRACK_ID, title: track.title, blurb: track.blurb, scenarios }],
+  }
+}

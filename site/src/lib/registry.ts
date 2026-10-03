@@ -144,6 +144,15 @@ export const MODULES: ModuleMeta[] = [
     status: 'live',
     kind: 'reading',
   },
+  {
+    id: '16-company-oriented-prep',
+    number: 16,
+    title: 'Company-Oriented Prep',
+    blurb:
+      'Preparation packs tailored to a specific company and interview loop. Start with Blitzy Prep for product context, customer situations and engineering drills.',
+    status: 'live',
+    kind: 'reading',
+  },
 ]
 
 export function getModule(id: string): ModuleMeta | undefined {

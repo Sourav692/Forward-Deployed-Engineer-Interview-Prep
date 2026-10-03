@@ -22,6 +22,7 @@ export type ContentMode =
   | 'practice'
   | 'behavioural'
   | 'case-study'
+  | 'company-prep'
   | 'revision'
 
 export const MODES: Record<ContentMode, { label: string; summary: string }> = {
@@ -42,6 +43,10 @@ export const MODES: Record<ContentMode, { label: string; summary: string }> = {
   'case-study': {
     label: 'Case study',
     summary: 'A complete system design to read, at several depths, from interview answer to sourced detail.',
+  },
+  'company-prep': {
+    label: 'Company prep',
+    summary: 'A company-specific preparation pack for one interview loop, including its product context and likely exercises.',
   },
   revision: {
     label: 'Revision',
@@ -93,6 +98,7 @@ export const NAV = [
   { label: 'Technical Practice', href: '/modules/01-customer-discovery-and-decomposition' },
   { label: 'Behavioral Stories', href: '/modules/14-behavioural-and-leadership-round' },
   { label: 'Worked Designs', href: '/modules/15-fde-case-studies' },
+  { label: 'Company Prep', href: '/modules/16-company-oriented-prep' },
   { label: 'Final Week', href: '/fde-last-day-prep' },
 ] as const
 
@@ -175,6 +181,11 @@ export const TRACKS: Record<string, { title: string; blurb: string }> = {
       'fund, how to scale a prototype, what to do with poor data, and how to break an ' +
       'open-ended problem down in sixty minutes.',
   },
+  'blitzy-prep': {
+    title: 'Blitzy Prep',
+    blurb:
+      'Company-specific preparation for the Blitzy interview loop: product context, code-review drills, incidents, customer communication and engineering leadership.',
+  },
 }
 
 export const PRACTICE_TRACKS = ['core', 'system-design']
@@ -224,6 +235,10 @@ export const STORY_BANK = {
  * of the tab. The source file names in `scripts/case-studies.mjs` point at these ids.
  */
 export const TABS: Record<string, { label: string; purpose: string }> = {
+  'company-guide': {
+    label: 'Company Guide',
+    purpose: 'A company-specific preparation guide for this interview loop.',
+  },
   main: {
     label: 'Interview Guide',
     purpose:
@@ -612,6 +627,20 @@ FAMILY_META['judgement-and-decomposition'] = {
   ],
 }
 
+FAMILY_META['blitzy-prep'] = {
+  ...CASE_STUDY_BASE,
+  mode: 'company-prep',
+  difficulty: 'Intermediate',
+  sourceStatus: 'original',
+  prerequisites: ['Read the Start Here guide before choosing a drill or topic'],
+  howToUse:
+    'Start with the coverage guide, then work through the documents that match your next interview round. Mark each guide as read when you can explain its key points out loud.',
+  outcomes: [
+    'Explain Blitzy’s product, customer and engineering context in interview-ready language',
+    'Practise the code-review, incident, communication and scaling themes likely to appear in the loop',
+  ],
+}
+
 export const REVISION_META: EditorialMeta = {
   mode: 'revision',
   audience: FDE_AUDIENCE,
@@ -733,7 +762,9 @@ export const RELATED_PRACTICE: Record<string, string> = Object.fromEntries(
  * duplicate is qualified without anyone remembering to list it.
  */
 export function qualifierFor(mode: ContentMode): string {
-  return mode === 'case-study' ? 'Case Study' : 'Practice Worksheet'
+  if (mode === 'case-study') return 'Case Study'
+  if (mode === 'company-prep') return 'Company Prep'
+  return 'Practice Worksheet'
 }
 
 export const normaliseTitle = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, '')
