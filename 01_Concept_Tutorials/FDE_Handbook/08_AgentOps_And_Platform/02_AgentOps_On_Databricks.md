@@ -2,7 +2,7 @@
 
 > **Level** 🟠 Scale, Security, Operations · **Module** 08 · **Doc** 2 of 6 · **Time** ~25 min
 > **Prerequisites:** [Prompt Versioning, Rollout and Rollback](01_Prompt_Versioning_Rollout_Rollback.md); Module 06 doc 2
-> **Source material:** `Supplementary_Guides/Production_and_Platform_Judgment/04-agentops-on-databricks.md`
+> **Source material:** `01_Concept_Tutorials/Production_and_Platform_Judgment/04-agentops-on-databricks.md`
 
 ## Why this matters
 

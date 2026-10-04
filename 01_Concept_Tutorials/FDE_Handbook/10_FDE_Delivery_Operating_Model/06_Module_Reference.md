@@ -2,7 +2,7 @@
 
 > **Level** 🔴 The FDE Role · **Module** 10 · **Doc** 6 of 7 · **Time** reference — use as needed
 > **Prerequisites:** docs 3–4 of this module
-> **Source material:** `Supplementary_Guides/FDE_Delivery_Framework/docs/03-src-modules-reference.md`; `docs/02-architecture-end-to-end.md` §4
+> **Source material:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/03-src-modules-reference.md`; `docs/02-architecture-end-to-end.md` §4
 > **Companion implementation:** `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/src/delivery_framework/`
 
 ## The package in one paragraph

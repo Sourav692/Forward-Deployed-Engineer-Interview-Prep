@@ -2,7 +2,7 @@
 
 > **Level** 🔴 The FDE Role · **Module** 10 · **Doc** 3 of 7 · **Time** ~40 min
 > **Prerequisites:** Module 05 (staged rollout, the `Decision` shape); Module 04 doc 7 (golden sets)
-> **Source material:** `Supplementary_Guides/FDE_Delivery_Framework/docs/01-theory.md`; `docs/02-architecture-end-to-end.md`; `README.md`
+> **Source material:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md`; `docs/02-architecture-end-to-end.md`; `README.md`
 > **Companion implementation:** `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/scripts/run_engagement_demo.py`, `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/notebooks/02-hands-on.ipynb`
 
 ## Why this matters

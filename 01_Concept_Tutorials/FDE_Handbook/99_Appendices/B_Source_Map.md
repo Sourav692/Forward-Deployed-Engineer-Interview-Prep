@@ -10,8 +10,8 @@ Treatment codes: **R** rewritten into the handbook voice · **C** copied with a 
 |---|---|---|
 | `README.md` | N | — |
 | `00_Orientation/01_How_To_Use_This_Handbook.md` | N | — |
-| `00_Orientation/02_The_Three_Roles.md` | N | `FDE/Senior_FDE_Day_to_Day.md` (three-lens model) |
-| `00_Orientation/03_The_First_Ten_Minutes.md` | R | `Supplementary_Guides/Production_and_Platform_Judgment/00-first-ten-minutes.html` |
+| `00_Orientation/02_The_Three_Roles.md` | N | `05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md` (three-lens model) |
+| `00_Orientation/03_The_First_Ten_Minutes.md` | R | `01_Concept_Tutorials/Production_and_Platform_Judgment/00-first-ten-minutes.html` |
 
 ## Module 01 · LLM Systems Foundations
 
@@ -28,7 +28,7 @@ Treatment codes: **R** rewritten into the handbook voice · **C** copied with a 
 
 | Handbook doc | Treatment | Source |
 |---|---|---|
-| `01_The_12_Part_Framework.md` | R | `FDE/System_Design and Delivery/2. System Design Components.md` |
+| `01_The_12_Part_Framework.md` | R | `01_Concept_Tutorials/System_Design_Fundamentals/2. System Design Components.md` |
 | `02_The_15_Principles.md` | R | `…/3. System Design Principles.md` |
 | `03_Monolith_vs_Microservices.md` | R | `…/4. Monolith vs Microservice Architecture.md` |
 | `04_Worked_Example_Travel_Agent.md` | R | `…/1. System Design Overview.md` |
@@ -114,7 +114,7 @@ All sources under `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/`
 
 ## Module 09 · AI System Design Casebook
 
-All sources under `FDE/System_Design and Delivery/` unless noted.
+All sources under `01_Concept_Tutorials/System_Design_Fundamentals/` unless noted.
 
 | Handbook doc | Treatment | Source |
 |---|---|---|
@@ -127,7 +127,7 @@ All sources under `FDE/System_Design and Delivery/` unless noted.
 | `whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md` | C | `05_Projects/Enterprise_RAG_Platform/INTERVIEW_SCRIPT.md` |
 | `whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md` | C | `…/Enterprise RAG Platform/INTERVIEW_SCRIPT_DATABRICKS.md` |
 | `whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md` | C | `…/Enterprise Agentic Workflow Automation Platform/INTERVIEW_SCRIPT.md` |
-| `whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` | C | `Supplementary_Guides/FDE_Delivery_Framework/INTERVIEW_SCRIPT.md` |
+| `whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` | C | `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md` |
 
 Not carried over: the `.html` twins of the markdown design docs in `System_Design and Delivery/` and its `index.html` (renderings of files already rewritten here).
 
@@ -135,7 +135,7 @@ Not carried over: the `.html` twins of the markdown design docs in `System_Desig
 
 | Handbook doc | Treatment | Source |
 |---|---|---|
-| `01_A_Day_In_The_Life.md` | R | `FDE/Senior_FDE_Day_to_Day.md` |
+| `01_A_Day_In_The_Life.md` | R | `05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md` |
 | `02_End_To_End_AI_Delivery_Six_Stages.md` | R | `System_Design and Delivery/9. Proj Delivery.md` |
 | `03_Scoping_To_Production_In_Two_Weeks.md` | R | `Delivery Framework from Scoping to Delivery/docs/01-theory.md`; `docs/02-architecture-end-to-end.md`; `README.md` |
 | `04_Gates_Risks_Metrics.md` | R | `…/docs/01-theory.md` §B.3–B.6; `docs/05-security-gate-depth-and-tenant-scale.md`; `README.md` |

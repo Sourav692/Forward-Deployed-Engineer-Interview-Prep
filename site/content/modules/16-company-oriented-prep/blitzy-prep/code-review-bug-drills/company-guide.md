@@ -1,7 +1,7 @@
 # Code Review Bug Drills (Round 1)
 
 Covers: *"Read a short function, identify the bug, walk through how you'd fix and test it."*
-The fixes for every drill except #6, which needs a real database, are verified by running `python3 Blitzy_Prep/drills_verify.py`.
+The fixes for every drill except #6, which needs a real database, are verified by running `python3 08_Company_Specific_Prep/Blitzy/drills_verify.py`.
 
 ## The 4-step answer script (say this out loud)
 

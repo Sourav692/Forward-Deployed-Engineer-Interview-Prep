@@ -1,6 +1,6 @@
 """Fixed versions of the drills in 01_Code_Review_Bug_Drills.md, with tests.
 
-Run: python3 Blitzy_Prep/drills_verify.py
+Run: python3 08_Company_Specific_Prep/Blitzy/drills_verify.py
 """
 import json
 import random
@@ -121,7 +121,7 @@ def test_all():
     calls = []
 
     def always_timeout():
-        calls.append(1)-
+        calls.append(1)
         raise TimeoutError("boom")
     try:
         call_with_retry(always_timeout)

@@ -577,13 +577,13 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 3, 5, 6, 11, 12, 14 | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_3/10_high_volume_batch_inference_system.md` and `answer_keys/10_high_volume_batch_inference_system_answer_key.md` (the anchor, #21) |
-| 1 to 12, 14 (ninety-second summary, pacing, trade-offs, probes) | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_2/chapter-10-high-volume-batch-inference-system-tutorial_v2.md` |
-| Same material in long prose | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_1/chapter-10-high-volume-batch-inference-system-tutorial.md` |
+| 1, 2, 3, 5, 6, 11, 12, 14 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md` and `answer_keys/10_high_volume_batch_inference_system_answer_key.md` (the anchor, #21) |
+| 1 to 12, 14 (ninety-second summary, pacing, trade-offs, probes) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-10-high-volume-batch-inference-system-tutorial_v2.md` |
+| Same material in long prose | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-10-high-volume-batch-inference-system-tutorial.md` |
 | 4 (dollar formula), 7 (named frameworks) | V2 tutorial, "My Perspective on the Gaps", which its author marks as supplementary and not chapter content |
-| 13 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, question 5 (#49) |
-| 15 (#42) | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_S15_S16.md`, Case 5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #42 |
-| 15 (#116) | `Study_Guides/Cost_Latency_Optimization/CRAM_SHEET_S15_S16.md`, scenario 13 and its §2 one-liner |
+| 13 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 5 (#49) |
+| 15 (#42) | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, Case 5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #42 |
+| 15 (#116) | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, scenario 13 and its §2 one-liner |
 | Every item marked own construction | Built for this page from the sources' arguments; not source material |
 
 ### Fact-check sources (checked 27 Sep 2026)

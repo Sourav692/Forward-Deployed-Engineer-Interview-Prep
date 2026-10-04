@@ -2,7 +2,7 @@
 
 > **Level** 🔴 The FDE Role · **Module** 10 · **Doc** 5 of 7 · **Time** ~20 min
 > **Prerequisites:** [A Day in the Life](01_A_Day_In_The_Life.md)
-> **Source material:** `FDE/System_Design and Delivery/10. Cross Team Collaboration.md`
+> **Source material:** `05_FDE_Delivery_and_Scoping/Delivery_and_Collaboration/10. Cross Team Collaboration.md`
 
 ## Why this matters
 

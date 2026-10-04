@@ -2,7 +2,7 @@
 
 > **Level** 🟡 Building Production Systems · **Module** 03 · **Doc** 5 of 5 · **Time** ~30 min
 > **Prerequisites:** the four preceding documents in this module
-> **Source material:** `Supplementary_Guides/Production_and_Platform_Judgment/05-guarding-tool-calls.md`; `agent_tool_calling_demo/src/robustness.py` → `disambiguate`
+> **Source material:** `01_Concept_Tutorials/Production_and_Platform_Judgment/05-guarding-tool-calls.md`; `agent_tool_calling_demo/src/robustness.py` → `disambiguate`
 
 ## Why this matters
 

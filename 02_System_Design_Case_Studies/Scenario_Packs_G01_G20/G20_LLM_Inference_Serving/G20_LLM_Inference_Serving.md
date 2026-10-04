@@ -421,12 +421,12 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| Member prompts | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompts 9 (#74), 10 (#75), 11 (#76), 12 (#77) and 14 (#79); the section C note that these test "batching, queuing, load balancing" |
-| 3 (formula, memory budget, "challenge the request profile"), 13 | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md`, "Memory and Throughput per Replica" and "The Replica Sizing Formula" |
-| 1, 3, 10, 11, 15, 17 | `Study_Guides/Cost_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections B1 (prefill vs decode), B3 (Little's Law), D (goodput, TTFT vs TPOT, utilization knee) and E (rate limits, cancellation) |
-| 9, 17 | `Study_Guides/Cost_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, driver 2 and the latency-only add-ons (cold starts) |
-| 15 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, question 9 (latency decomposition and "which latency" split) |
-| Cross-references | `Case_Study_Groups/G14_Observability_And_Production_Diagnosis.md` section 12 (#74 from the application's traces); `G10_High_Volume_Batch_Pipeline.md` (admission before the quota breach); `G11_Deep_Research_Agent.md` (Little's Law used for provisioning); `G07_Secure_Multi_Tenant_AI_Platform.md` (quotas and noisy neighbours) |
+| Member prompts | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompts 9 (#74), 10 (#75), 11 (#76), 12 (#77) and 14 (#79); the section C note that these test "batching, queuing, load balancing" |
+| 3 (formula, memory budget, "challenge the request profile"), 13 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md`, "Memory and Throughput per Replica" and "The Replica Sizing Formula" |
+| 1, 3, 10, 11, 15, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections B1 (prefill vs decode), B3 (Little's Law), D (goodput, TTFT vs TPOT, utilization knee) and E (rate limits, cancellation) |
+| 9, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, driver 2 and the latency-only add-ons (cold starts) |
+| 15 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 9 (latency decomposition and "which latency" split) |
+| Cross-references | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis.md` section 12 (#74 from the application's traces); `G10_High_Volume_Batch_Pipeline.md` (admission before the quota breach); `G11_Deep_Research_Agent.md` (Little's Law used for provisioning); `G07_Secure_Multi_Tenant_AI_Platform.md` (quotas and noisy neighbours) |
 | 2 to 17 wherever marked *(own construction)*: every throughput, memory and latency figure; continuous batching, chunked prefill, paged KV, power-of-two routing, health layers, cells | Built for this page from general serving practice. The repo has no worked design and no serving-engine notes for these topics, so treat them as the candidate's own reasoning, not a sourced claim |
 
 ### Fact-check sources (checked 27 Sep 2026)

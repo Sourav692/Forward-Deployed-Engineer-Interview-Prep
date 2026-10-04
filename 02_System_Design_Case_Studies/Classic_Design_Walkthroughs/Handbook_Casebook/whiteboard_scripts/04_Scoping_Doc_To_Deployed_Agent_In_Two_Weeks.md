@@ -2,7 +2,7 @@
 
 > **Level** 🔴 Design Mastery · **Module** 09 · **whiteboard_scripts/** · **Time** ~60 min to deliver, ~2 h to internalise
 > **Prerequisites:** [The 60-Minute Whiteboard Method](../../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md); Module 10
-> **Source material:** `Supplementary_Guides/FDE_Delivery_Framework/INTERVIEW_SCRIPT.md` — kept as a performance artefact: a full six-step script, minute by minute, with the lines that carry each step. Read the method first; rehearse from this.
+> **Source material:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md` — kept as a performance artefact: a full six-step script, minute by minute, with the lines that carry each step. Read the method first; rehearse from this.
 
 ---
 
