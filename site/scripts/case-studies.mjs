@@ -87,15 +87,22 @@ const THEMES = THEME_GROUPS.map(([id, groups]) => {
  * superseded versions that stay in the repo and are linked on GitHub from the page but
  * are not tabs, not searched, and not counted towards read progress. Every `.md` in the
  * folder must be in one list or the other, so a new file cannot silently go unpublished.
+ * A file given as a repo-relative path (it contains `/`) is read from its canonical
+ * location instead of the case folder, so a case reuses a worksheet or tutorial
+ * without keeping a copy.
  * `practice` names the same case's interactive worksheet in Module 01 (`track/slug`),
  * which the page links to — the Worksheet tab here is read-only.
  */
-const WORKSHEET_SET = [
-  ['1_Worksheet.md', 'worksheet'],
-  ['2_Answer_Key.md', 'answer-key'],
+const SYSTEM_DESIGN_WORKSHEETS = '03_Practice_Worksheets_and_Keys/System_Design_Worksheets'
+const LONG_FORM_V1 = '02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1'
+/** Worksheet and key come from the System Design worksheets; only the V2 tutorial is local. */
+const worksheetSet = (slug) => [
+  [`${SYSTEM_DESIGN_WORKSHEETS}/${slug}.md`, 'worksheet'],
+  [`${SYSTEM_DESIGN_WORKSHEETS}/answer_keys/${slug}_answer_key.md`, 'answer-key'],
   ['3_Tutorial_V2.md', 'tutorial-v2'],
 ]
-const V1_ARCHIVE = [['4_Tutorial_V1.md', 'Tutorial V1 (superseded)']]
+const v1Archive = (chapter) => [[`${LONG_FORM_V1}/${chapter}.md`, 'Tutorial V1 (superseded)']]
+const isRepoPath = (file) => file.includes('/')
 const guide = (file) => [[file, 'guide']]
 
 const STANDALONE = [
@@ -103,14 +110,21 @@ const STANDALONE = [
     files: [['1_Handbook_Casebook_Recruiting_Platform.md', 'casebook'], ['2_FDE_Recruiting_Platform_Design_long.md', 'full-design']] },
   { folder: '14_Travel_Agent_Worked_Example', theme: 'standalone-designs', number: 14, title: 'Travel Agent: the 12-Part Framework Worked Through',
     files: [['1_Handbook_Worked_Example_Travel_Agent.md', 'worked-example'], ['2_FDE_System_Design_Overview_source.md', 'framework-overview']] },
-  { folder: '19_Air_Gapped_AI_System', theme: 'standalone-designs', number: 19, title: 'AI System for an Air-Gapped Environment', files: WORKSHEET_SET,
-    archived: V1_ARCHIVE, practice: 'system-design/ai-system-for-an-air-gapped-environment' },
-  { folder: '23_Reliable_Workflow_Orchestration', theme: 'standalone-designs', number: 23, title: 'Reliable Workflow Orchestration System', files: WORKSHEET_SET,
-    archived: V1_ARCHIVE, practice: 'system-design/reliable-workflow-orchestration-system' },
-  { folder: '25_Configurable_Platform_Customer_Workflows', theme: 'standalone-designs', number: 25, title: 'Configurable Platform for Customer-Specific Workflows', files: WORKSHEET_SET,
-    archived: V1_ARCHIVE, practice: 'system-design/configurable-platform-customer-specific-workflows' },
-  { folder: '26_Enterprise_Chatbot_Platform', theme: 'standalone-designs', number: 26, title: 'Enterprise Chatbot Platform', files: WORKSHEET_SET,
-    archived: [...V1_ARCHIVE, ['5_Tutorial_V1_uncondensed.md', 'Original uncondensed tutorial']],
+  { folder: '19_Air_Gapped_AI_System', theme: 'standalone-designs', number: 19, title: 'AI System for an Air-Gapped Environment',
+    files: worksheetSet('07_ai_system_for_an_air_gapped_environment'),
+    archived: v1Archive('chapter-7-ai-system-for-an-air-gapped-environment-tutorial'), practice: 'system-design/ai-system-for-an-air-gapped-environment' },
+  { folder: '23_Reliable_Workflow_Orchestration', theme: 'standalone-designs', number: 23, title: 'Reliable Workflow Orchestration System',
+    files: worksheetSet('13_reliable_workflow_orchestration_system'),
+    archived: v1Archive('chapter-13-reliable-workflow-orchestration-system-tutorial'), practice: 'system-design/reliable-workflow-orchestration-system' },
+  { folder: '25_Configurable_Platform_Customer_Workflows', theme: 'standalone-designs', number: 25, title: 'Configurable Platform for Customer-Specific Workflows',
+    files: worksheetSet('17_configurable_platform_customer_specific_workflows'),
+    archived: v1Archive('chapter-17-configurable-platform-customer-specific-workflows-tutorial'), practice: 'system-design/configurable-platform-customer-specific-workflows' },
+  { folder: '26_Enterprise_Chatbot_Platform', theme: 'standalone-designs', number: 26, title: 'Enterprise Chatbot Platform',
+    files: worksheetSet('21_enterprise_chatbot_platform'),
+    archived: [
+      ...v1Archive('chapter-21-enterprise-chatbot-platform-tutorial-condensed'),
+      [`${LONG_FORM_V1}/chapter-21-enterprise-chatbot-platform-tutorial.md`, 'Original uncondensed tutorial'],
+    ],
     practice: 'system-design/enterprise-chatbot-platform' },
   { folder: '80_Self_Adapting_Agent', theme: 'standalone-designs', number: 80, title: 'Agent That Adapts to New Tasks',
     files: [['80_Self_Adapting_Agent.md', 'guide'], ['self_adapting_agent_fde_interview_template.md', 'interview-template']] },
@@ -216,8 +230,12 @@ async function collectCases(root, standaloneRoot, repoRoot) {
     if (!THEMES.some((t) => t.id === c.theme)) throw new Error(`${c.folder}: unknown theme ${c.theme}`)
     const dir = join(standaloneRoot, c.folder)
     const files = (await readdir(dir)).filter((f) => f.endsWith('.md'))
-    const declaredFiles = [...c.files, ...(c.archived ?? [])].map(([f]) => f)
-    const missing = declaredFiles.filter((f) => !files.includes(f))
+    const declared = [...c.files, ...(c.archived ?? [])].map(([f]) => f)
+    const declaredFiles = declared.filter((f) => !isRepoPath(f))
+    const missing = [
+      ...declaredFiles.filter((f) => !files.includes(f)),
+      ...declared.filter((f) => isRepoPath(f) && !existsSync(join(repoRoot, f))),
+    ]
     const extra = files.filter((f) => !declaredFiles.includes(f))
     if (missing.length || extra.length) {
       throw new Error(`${c.folder}: declared files do not match disk (missing: ${missing.join(', ') || '—'}; undeclared: ${extra.join(', ') || '—'})`)
@@ -229,10 +247,15 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       tag: c.tag ?? `#${c.number}`,
       order: c.number,
       title: c.title,
-      tabs: c.files.map(([file, id]) => ({ id, label: labelOf(id), file })),
+      tabs: c.files.map(([file, id]) => ({
+        id,
+        label: labelOf(id),
+        file: basename(file),
+        src: isRepoPath(file) ? join(repoRoot, file) : join(dir, file),
+      })),
       archived: (c.archived ?? []).map(([file, label]) => ({
         label,
-        href: `${GITHUB_BLOB}${relative(repoRoot, join(dir, file)).split(/[\\/]/).map(encodeURIComponent).join('/')}`,
+        href: `${GITHUB_BLOB}${relative(repoRoot, isRepoPath(file) ? join(repoRoot, file) : join(dir, file)).split(/[\\/]/).map(encodeURIComponent).join('/')}`,
       })),
       practice: c.practice,
     })
@@ -264,7 +287,7 @@ export async function syncCaseStudies({ repoRoot, outDir }) {
       const outBase = join(outDir, 'modules', CASE_STUDY_MODULE_ID, theme.id, c.slug)
       await mkdir(outBase, { recursive: true })
       for (const tab of c.tabs) {
-        const file = join(c.dir, tab.file)
+        const file = tab.src ?? join(c.dir, tab.file)
         if (!existsSync(file)) throw new Error(`Missing ${tab.label} document: ${file}`)
         await writeFile(join(outBase, `${tab.id}.md`), rewriteLinks(await readFile(file, 'utf8'), file, ctx))
       }

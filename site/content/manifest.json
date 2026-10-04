@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T22:53:18.636Z",
+  "generatedAt": "2026-10-04T11:25:13.271Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -822,7 +822,7 @@
               "archived": [
                 {
                   "label": "Tutorial V1 (superseded)",
-                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/4_Tutorial_V1.md"
+                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-7-ai-system-for-an-air-gapped-environment-tutorial.md"
                 }
               ],
               "practice": "system-design/ai-system-for-an-air-gapped-environment"
@@ -849,7 +849,7 @@
               "archived": [
                 {
                   "label": "Tutorial V1 (superseded)",
-                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/4_Tutorial_V1.md"
+                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-13-reliable-workflow-orchestration-system-tutorial.md"
                 }
               ],
               "practice": "system-design/reliable-workflow-orchestration-system"
@@ -876,7 +876,7 @@
               "archived": [
                 {
                   "label": "Tutorial V1 (superseded)",
-                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/4_Tutorial_V1.md"
+                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-17-configurable-platform-customer-specific-workflows-tutorial.md"
                 }
               ],
               "practice": "system-design/configurable-platform-customer-specific-workflows"
@@ -903,11 +903,11 @@
               "archived": [
                 {
                   "label": "Tutorial V1 (superseded)",
-                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/4_Tutorial_V1.md"
+                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-21-enterprise-chatbot-platform-tutorial-condensed.md"
                 },
                 {
                   "label": "Original uncondensed tutorial",
-                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/5_Tutorial_V1_uncondensed.md"
+                  "href": "https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-21-enterprise-chatbot-platform-tutorial.md"
                 }
               ],
               "practice": "system-design/enterprise-chatbot-platform"
