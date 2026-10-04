@@ -2,7 +2,7 @@
 
 > **Level** 🔴 Design Mastery · **Module** 09 · **Doc** 5 of 6 · **Time** ~35 min
 > **Prerequisites:** Module 00 doc 3, Module 02 doc 5, Module 05, Module 06 doc 4
-> **Source material:** `FDE/System_Design and Delivery/AI Logistics Exception-Handling Assistant Design.md`; `Mock - AI Exception-Handling Assistant.md`
+> **Source material:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/AI Logistics Exception-Handling Assistant Design.md`; `Mock - AI Exception-Handling Assistant.md`
 
 ## The prompt
 

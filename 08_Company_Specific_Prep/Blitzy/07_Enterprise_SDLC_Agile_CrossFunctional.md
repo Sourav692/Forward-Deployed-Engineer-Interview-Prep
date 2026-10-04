@@ -2,7 +2,7 @@
 
 Covers: *"Understanding the SDLC in large enterprises from requirements gathering through deployment and ongoing support: cross-functional teams (Product, Eng, QA, DevOps, Security), managing releases and production issues, Agile/Scrum."*
 
-Built from: `Handbook/10/02` (six delivery stages), `Handbook/10/03` (14-day plan), `Handbook/10/04` (gates, deny rules, metrics), `Handbook/10/05` (RACI, structured comms, conflict resolved through an interface), `Last_Day_Prep/module-14` (release mechanics). What's new here is **classic enterprise SDLC vocabulary, Scrum mechanics, per-function friction points, and the "agentic SDLC" angle Blitzy sells.**
+Built from: `01_Concept_Tutorials/FDE_Handbook/10/02` (six delivery stages), `01_Concept_Tutorials/FDE_Handbook/10/03` (14-day plan), `01_Concept_Tutorials/FDE_Handbook/10/04` (gates, deny rules, metrics), `01_Concept_Tutorials/FDE_Handbook/10/05` (RACI, structured comms, conflict resolved through an interface), `07_Last_Day_Revision/module-14` (release mechanics). What's new here is **classic enterprise SDLC vocabulary, Scrum mechanics, per-function friction points, and the "agentic SDLC" angle Blitzy sells.**
 
 ## 1. The 30-second opening
 
@@ -38,7 +38,7 @@ An enterprise SDLC (software development life cycle) is the sequence of steps a 
 ### Stage 1: Intake & requirements
 - **What happens:** the business case is written; user stories, acceptance criteria and NFRs are defined.
 - **Owner:** Product owner / BA.
-- **Gate:** signed scope plus a **measurable success metric**. Per `Handbook/10/04`, refuse to start without one.
+- **Gate:** signed scope plus a **measurable success metric**. Per `01_Concept_Tutorials/FDE_Handbook/10/04`, refuse to start without one.
 - **Your role as FDE:** run discovery and turn the executive's vision into concrete requirements.
 - **Where it gets stuck:** vague outcomes like "make it better with AI."
 
@@ -129,7 +129,7 @@ An enterprise SDLC (software development life cycle) is the sequence of steps a 
 |---|---|
 | Production incident | Interrupt the sprint; incident process (`04_`) |
 | Exec "urgent" feature | Swap scope, don't add it: "We can take this if X moves to the next sprint. Your call." The PO decides |
-| Scope creep from a stakeholder | Back to the backlog and prioritised by the PO; change control on the signed scope (`Handbook/10/04`) |
+| Scope creep from a stakeholder | Back to the backlog and prioritised by the PO; change control on the signed scope (`01_Concept_Tutorials/FDE_Handbook/10/04`) |
 | Recurring interrupts | Reserve 15–20% capacity as an interrupt buffer, or run a Kanban lane |
 
 ## 4. Cross-functional RACI (FDE engagement)
@@ -156,14 +156,14 @@ An enterprise SDLC (software development life cycle) is the sequence of steps a 
 | **Security** | Data leakage, an unknown vendor, a supply chain risk | Evidence, early engagement | Day-1 kickoff; SOC 2 / ISO docs; threat model; least-privilege design; answer questionnaires fast |
 | **Business / exec** | No ROI, disruption | Measured outcomes | Baseline on day 1; demo against the metric |
 
-**Conflict pattern (from `Handbook/10/05`):** resolve conflicts between teams with an **interface** (an API contract, a schema, a SLA), not a meeting. Two teams arguing about a data format → agree a versioned contract and contract tests.
+**Conflict pattern (from `01_Concept_Tutorials/FDE_Handbook/10/05`):** resolve conflicts between teams with an **interface** (an API contract, a schema, a SLA), not a meeting. Two teams arguing about a data format → agree a versioned contract and contract tests.
 
 ## 6. Managing releases & production issues: what to say
 
 | Topic | Points | Repo pointer |
 |---|---|---|
 | Release strategy | Flags → shadow → canary → ramp; version prompts, configs and schemas; tested rollback; kill switch | `module-14` |
-| Release readiness | Go/no-go checklist: tests, security, rollback tested, runbook, on-call, comms plan | `Handbook/10/04` |
+| Release readiness | Go/no-go checklist: tests, security, rollback tested, runbook, on-call, comms plan | `01_Concept_Tutorials/FDE_Handbook/10/04` |
 | Production issues | Severity, IC, comms cadence, blameless RCA, regression test | `04_Incident_Triage...` |
 | After the issue | Every incident becomes a test, an alert or a gate | `module-15` §8 |
 

@@ -2,7 +2,7 @@
 
 > **Level** 🟢 Foundations · **Module** 02 · **Doc** 1 of 5 · **Time** ~60 min
 > **Prerequisites:** Module 00, Module 01
-> **Source material:** `FDE/System_Design and Delivery/2. System Design Components.md`
+> **Source material:** `01_Concept_Tutorials/System_Design_Fundamentals/2. System Design Components.md`
 
 ## Why this matters
 

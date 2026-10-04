@@ -2,7 +2,7 @@
 
 > **Level** 🟢 Foundations · **Module** 00 · **Doc** 3 of 3 · **Time** ~20 min
 > **Prerequisites:** none
-> **Source material:** `Supplementary_Guides/Production_and_Platform_Judgment/00-first-ten-minutes.html`
+> **Source material:** `01_Concept_Tutorials/Production_and_Platform_Judgment/00-first-ten-minutes.html`
 
 ## Why this matters
 

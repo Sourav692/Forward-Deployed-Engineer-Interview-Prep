@@ -13,7 +13,7 @@ python drills_verify.py
 ```python
 """Fixed versions of the drills in 01_Code_Review_Bug_Drills.md, with tests.
 
-Run: python3 Blitzy_Prep/drills_verify.py
+Run: python3 08_Company_Specific_Prep/Blitzy/drills_verify.py
 """
 import json
 import random

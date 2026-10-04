@@ -2,7 +2,7 @@
 
 Covers: *"A service is failing intermittently. How would you triage it, what would you check first, and how would you keep the customer informed?"*
 
-Built from: `Last_Day_Prep/module-12` (reliability patterns), `module-15` (observability), `Case_Study_Groups/G14` (diagnosis order), `05_PRODUCTION_DEBUGGING.../03_latency_spike.md` (compounded-change incident). What's new here is the **generic, non-LLM triage order** and the **customer comms layer**, which the repo didn't cover.
+Built from: `07_Last_Day_Revision/module-12` (reliability patterns), `module-15` (observability), `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14` (diagnosis order), `05_PRODUCTION_DEBUGGING.../03_latency_spike.md` (compounded-change incident). What's new here is the **generic, non-LLM triage order** and the **customer comms layer**, which the repo didn't cover.
 
 ## 1. The 30-second opening (say this first)
 

@@ -2,7 +2,7 @@
 
 > **Level** 🟢 Foundations · **Module** 02 · **Doc** 3 of 5 · **Time** ~25 min
 > **Prerequisites:** [The 12-Part Framework](01_The_12_Part_Framework.md)
-> **Source material:** `FDE/System_Design and Delivery/4. Monolith vs Microservice Architecture.md`
+> **Source material:** `01_Concept_Tutorials/System_Design_Fundamentals/4. Monolith vs Microservice Architecture.md`
 
 ## Why this matters
 

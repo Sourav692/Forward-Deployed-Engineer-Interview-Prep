@@ -2,7 +2,7 @@
 
 > **Level** 🟢 Foundations · **Module** 00 · **Doc** 2 of 3 · **Time** ~15 min
 > **Prerequisites:** none
-> **Source material:** `FDE/Senior_FDE_Day_to_Day.md` (the three-lens model); synthesis across the three source projects
+> **Source material:** `05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md` (the three-lens model); synthesis across the three source projects
 
 ## Why this matters
 

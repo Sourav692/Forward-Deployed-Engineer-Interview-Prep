@@ -10,7 +10,7 @@ Everything about the companies' loops comes from public guides, not first-hand r
 |---|---|---|
 | 1 | Skim this guide once | 45 min |
 | 2 | Work the Core Plan in the workbook, top to bottom | about 55 hours |
-| 3 | Do the coding track (`OpenAI_AI_Assisted_Coding_Round/` plus `worked_solutions/`) | about 25 hours |
+| 3 | Do the coding track (`06_Coding_Round_Prep/AI_Assisted_Coding_Round/` plus `worked_solutions/`) | about 25 hours |
 | 4 | Final week: weight by company (section 3) and take the timed final exam last | as needed |
 
 No fixed deadline, so the Excel "Start Here" tab converts hours per day into days.

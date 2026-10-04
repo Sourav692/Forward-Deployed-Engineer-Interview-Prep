@@ -2,7 +2,7 @@
 
 > **Level** 🟠 Scale, Security, Operations · **Module** 06 · **Doc** 2 of 7 · **Time** ~30 min
 > **Prerequisites:** Module 03 doc 4, Module 04 doc 8 (the trace), Module 04 doc 5 (circuit breaker)
-> **Source material:** `Supplementary_Guides/Production_and_Platform_Judgment/02-observability-standards-and-failure-patterns.md`; `Enterprise Agentic Workflow Automation Platform/docs/05-security-tenancy-and-observability-gaps.md` §4
+> **Source material:** `01_Concept_Tutorials/Production_and_Platform_Judgment/02-observability-standards-and-failure-patterns.md`; `Enterprise Agentic Workflow Automation Platform/docs/05-security-tenancy-and-observability-gaps.md` §4
 
 ## Why this matters
 

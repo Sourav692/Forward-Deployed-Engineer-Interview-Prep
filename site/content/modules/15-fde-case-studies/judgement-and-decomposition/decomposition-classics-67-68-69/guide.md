@@ -516,12 +516,12 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| Case table, 1, 2, 4, 5.9 (the GPS curveball), 9 (probe wording) | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`: section 1 (what the round is, two failure modes, scoring), section 2 prompts 2–4 (#67, #68, #69) and the pattern note, section 3 Tier 2 probes, section 4 six-step framework |
-| 2 (opener and practice floor), 7.9 ("is AI the right solution") | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`: reusable answer template, preparation plan, Questions 12 and 18 |
-| 4 (gate vocabulary), 6.4 (gated phases) | `Supplementary_Guides/FDE_Delivery_Framework/docs/01-theory.md` (stages, gates, named sign-off authorities); `Case_Study_Groups/G12_Scoping_To_Deployed_Agent.md` |
-| 11 | `Study_Guides/Cost_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 5 (agent steps and tool calls) and 8 (batch jobs and evaluation pipelines) |
+| Case table, 1, 2, 4, 5.9 (the GPS curveball), 9 (probe wording) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: section 1 (what the round is, two failure modes, scoring), section 2 prompts 2–4 (#67, #68, #69) and the pattern note, section 3 Tier 2 probes, section 4 six-step framework |
+| 2 (opener and practice floor), 7.9 ("is AI the right solution") | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: reusable answer template, preparation plan, Questions 12 and 18 |
+| 4 (gate vocabulary), 6.4 (gated phases) | `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md` (stages, gates, named sign-off authorities); `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent.md` |
+| 11 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 5 (agent steps and tool calls) and 8 (batch jobs and evaluation pipelines) |
 | 3 (added columns), 5, 6, 7, 8, 9 (answers), 10, 11 (card), and every item marked own construction | Built for this page from the sources' arguments; not source material. The repo has no worked treatment of emergency dispatch, bank fraud or medication safety. |
-| Cross-references | G12 (scoping gates), G17 (evaluation raised unprompted, the #66 sibling prompt) in `Case_Study_Groups/`; #62 (building when the customer's data is poor) overlaps #68 |
+| Cross-references | G12 (scoping gates), G17 (evaluation raised unprompted, the #66 sibling prompt) in `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/`; #62 (building when the customer's data is poor) overlaps #68 |
 
 ### Fact-check sources (checked 27 Sep 2026)
 

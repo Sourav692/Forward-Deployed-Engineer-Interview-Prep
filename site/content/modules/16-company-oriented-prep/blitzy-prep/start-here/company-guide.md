@@ -20,7 +20,7 @@ Everything else is framed around Blitzy, so start here.
 | 5 | Same notebook, second pass | 15 min | Recall without looking | Rewrite 2 fixes from memory in a scratch cell |
 | 6 | `04_Incident_Triage_And_Customer_Comms.md` | 40 min | Triage order + customer comms | Give the 90-second answer and recite the 7-step triage order |
 | 7 | `06_Brownfield_Integration_And_Testing.md` | 40 min | Integrating into an existing stack + testing strategy | Whiteboard the bank loan-eligibility example in 5 minutes |
-| 8 | `08_Scaling_Spikes_And_Graceful_Degradation.md` (depth: repo `Last_Day_Prep/module-09`) | 15 min | Traffic spikes + graceful degradation | Say the 2-minute answer and the 5-level degradation ladder from memory |
+| 8 | `08_Scaling_Spikes_And_Graceful_Degradation.md` (depth: repo `07_Last_Day_Revision/module-09`) | 15 min | Traffic spikes + graceful degradation | Say the 2-minute answer and the 5-level degradation ladder from memory |
 | 9 | Re-read `02` §6 (autonomy vs. control) | 10 min | The Blitzy trade-off question | State the one-line principle and argue 2 of the 6 scenarios |
 
 ## Phase 3: Round 2, Enterprise Readiness + Demo (≈ 2 h)
@@ -29,7 +29,7 @@ Everything else is framed around Blitzy, so start here.
 |---|---|---|---|---|
 | 10 | `07_Enterprise_SDLC_Agile_CrossFunctional.md` | 40 min | SDLC gates, Scrum, cross-functional work | Walk the 9 SDLC stages and explain the "agentic SDLC moves the bottleneck to review" point |
 | 11 | `05_CTO_Trust_And_Vision_To_Roadmap.md` | 45 min | CTO trust + vision → roadmap | Present the 5-phase modernization roadmap with exit criteria and signers |
-| 12 | Repo: `FDE/Behavioral_and_Leadership/story_bank.md` | 30 min | Make your stories interview-ready | Tell 4 stories from the `05` §A5 map in 2 minutes each. **Fill in the PARTLY GROUNDED details first** |
+| 12 | Repo: `04_Behavioral_and_Leadership/story_bank.md` | 30 min | Make your stories interview-ready | Tell 4 stories from the `05` §A5 map in 2 minutes each. **Fill in the PARTLY GROUNDED details first** |
 | 13 | Re-read `02` §8 (demo narrative) | 10 min | 5-minute demo | Run the demo script out loud once, timed |
 
 ## Phase 4: Fill in your own material (≈ 30 min, don't skip)
@@ -54,9 +54,9 @@ Everything else is framed around Blitzy, so start here.
 
 | Topic | Repo source |
 |---|---|
-| Reliability patterns (retries, breakers, idempotency) | `Last_Day_Prep/module-12-reliability-and-failure-handling.md` |
-| Release mechanics (shadow, canary, kill switch) | `Last_Day_Prep/module-14-release-and-change-management.md` |
+| Reliability patterns (retries, breakers, idempotency) | `07_Last_Day_Revision/module-12-reliability-and-failure-handling.md` |
+| Release mechanics (shadow, canary, kill switch) | `07_Last_Day_Revision/module-14-release-and-change-management.md` |
 | Incident drill with real telemetry | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_.../04_PRODUCTION_INCIDENT_LOGS/03_latency_spike.md` |
-| AI coding-assistant system design | `Case_Study_Groups/G09_Enterprise_Coding_Assistant/` |
-| Use-case prioritization scoring | `Case_Study_Groups/Standalone/60_Prioritize_AI_Use_Cases/` |
-| Stakeholder influence answer key | `FDE/Behavioral_and_Leadership/hiring_manager_round/answer_keys/02_stakeholder_influence_answer_key.md` |
+| AI coding-assistant system design | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/` |
+| Use-case prioritization scoring | `02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/` |
+| Stakeholder influence answer key | `04_Behavioral_and_Leadership/hiring_manager_round/answer_keys/02_stakeholder_influence_answer_key.md` |

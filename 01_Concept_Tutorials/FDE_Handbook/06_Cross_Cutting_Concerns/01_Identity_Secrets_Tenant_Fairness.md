@@ -2,7 +2,7 @@
 
 > **Level** 🟠 Scale, Security, Operations · **Module** 06 · **Doc** 1 of 7 · **Time** ~25 min
 > **Prerequisites:** Module 04 doc 2 (ABAC), Module 05 doc 5 (guardrails)
-> **Source material:** `Supplementary_Guides/Production_and_Platform_Judgment/01-identity-secrets-and-tenant-fairness.md`
+> **Source material:** `01_Concept_Tutorials/Production_and_Platform_Judgment/01-identity-secrets-and-tenant-fairness.md`
 
 ## Why this matters
 

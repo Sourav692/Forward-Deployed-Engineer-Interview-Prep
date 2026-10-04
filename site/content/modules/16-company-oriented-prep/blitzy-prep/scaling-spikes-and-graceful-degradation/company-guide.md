@@ -1,7 +1,7 @@
 # Traffic Spikes & Graceful Degradation: One-Pager (Round 1)
 
 Covers: *"A quick question on handling sudden traffic spikes and graceful degradation."*
-Built from: `Last_Day_Prep/module-09` (MEASURE → LIMIT → ADMIT → QUEUE → SCALE → BACKPRESSURE → SHED), `module-12` (breakers, capability-specific degradation), `Study_Guides/12` §1.9 + the degradation vs. hard-failure trade-off.
+Built from: `07_Last_Day_Revision/module-09` (MEASURE → LIMIT → ADMIT → QUEUE → SCALE → BACKPRESSURE → SHED), `module-12` (breakers, capability-specific degradation), `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12` §1.9 + the degradation vs. hard-failure trade-off.
 
 ## The 2-minute answer (memorize)
 

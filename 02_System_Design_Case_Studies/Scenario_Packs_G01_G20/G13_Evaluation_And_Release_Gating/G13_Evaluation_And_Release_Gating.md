@@ -519,12 +519,12 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1 to 8, 11 to 13 | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_2/chapter-9-llm-evaluation-and-release-gating-platform-tutorial_v2.md` (the anchor, #20, cram form) |
-| Same | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_1/chapter-9-llm-evaluation-and-release-gating-platform-tutorial.md` (long form; the V2 is regenerated from it with no new material) |
-| 1, 2, 4, 12, 13 | `FDE/FDE_System_Design_Interview_20_Scenarios/Version_3/09_llm_evaluation_and_release_gating_platform.md` and `answer_keys/09_llm_evaluation_and_release_gating_platform_answer_key.md` |
+| 1 to 8, 11 to 13 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-9-llm-evaluation-and-release-gating-platform-tutorial_v2.md` (the anchor, #20, cram form) |
+| Same | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-9-llm-evaluation-and-release-gating-platform-tutorial.md` (long form; the V2 is regenerated from it with no new material) |
+| 1, 2, 4, 12, 13 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md` and `answer_keys/09_llm_evaluation_and_release_gating_platform_answer_key.md` |
 | 9 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/07_eval_regression.md` (#91) |
-| 10 | `Question_Banks/FDE_Problem_Decomposition_Question_Bank.md`, question 8 (#52) and question 11 (#55) |
-| 14 | `Study_Guides/Cost_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, section E (#120); `Study_Guides/Cost_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, driver 8; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #20 |
+| 10 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 8 (#52) and question 11 (#55) |
+| 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, section E (#120); `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, driver 8; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #20 |
 | 13 (regulation and fairness rows), 14 (human-review cost) | The V2 tutorial's "My Perspective on the Gaps", which the tutorial itself marks as not from the original chapter |
 | 4 (ASCII diagram, failure column), 9 (mapping onto the anchor), 10 (mapping tables), and every item marked own construction | Built for this page from the sources' arguments; not source material |
 

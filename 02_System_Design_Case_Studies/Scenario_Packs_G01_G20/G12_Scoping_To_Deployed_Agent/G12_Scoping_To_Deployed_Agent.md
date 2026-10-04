@@ -481,11 +481,11 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 4, 6, 7, 8, 9, 11, 14 | `Handbook/09_AI_System_Design_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` (the anchor, #9) |
-| 1, 3, 4, 5, 8 | `Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` (#65) |
+| 1, 2, 4, 6, 7, 8, 9, 11, 14 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` (the anchor, #9) |
+| 1, 3, 4, 5, 8 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` (#65) |
 | 3 | `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/data/case_study.json` (#65) |
-| 3, 5, 8, 12, 13 | `Supplementary_Guides/FDE_Delivery_Framework/` — `INTERVIEW_SCRIPT.md`, `README.md`, `scripts/run_engagement_demo.py`, `src/delivery_framework/accelerators.py` (#65) |
-| 6, 9, 10, 12 | `Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`; `Supplementary_Guides/FDE_Delivery_Framework/docs/05-security-gate-depth-and-tenant-scale.md` |
+| 3, 5, 8, 12, 13 | `05_FDE_Delivery_and_Scoping/Delivery_Framework/` — `INTERVIEW_SCRIPT.md`, `README.md`, `scripts/run_engagement_demo.py`, `src/delivery_framework/accelerators.py` (#65) |
+| 6, 9, 10, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`; `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/05-security-gate-depth-and-tenant-scale.md` |
 | 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #9 |
 | 3 (MoSCoW split, agent requirements, non-functional table), 4 (triage agent diagrams, component failure column), 15 (fit to the framework), and every item marked own construction | Built for this page from the sources' arguments; not source material |
 

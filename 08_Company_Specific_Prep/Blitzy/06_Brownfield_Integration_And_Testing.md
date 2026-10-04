@@ -2,7 +2,7 @@
 
 Covers: *"Integrating a new service into an existing stack, covering deployment, data access, and validation."* Also covers the testing-strategy gap (#7).
 
-Built from: `Handbook/08/06_Infra_And_CICD` (Terraform, GitHub Actions, health-check rollback, Secrets Manager), `Handbook/06/05` (connector registry, backfill vs. incremental, connector health), `Last_Day_Prep/module-14` (shadow, canary, flags, rollback, kill switch). What's new here is the **brownfield framing**: you're joining a system that already exists, has owners and can't go down.
+Built from: `01_Concept_Tutorials/FDE_Handbook/08/06_Infra_And_CICD` (Terraform, GitHub Actions, health-check rollback, Secrets Manager), `01_Concept_Tutorials/FDE_Handbook/06/05` (connector registry, backfill vs. incremental, connector health), `07_Last_Day_Revision/module-14` (shadow, canary, flags, rollback, kill switch). What's new here is the **brownfield framing**: you're joining a system that already exists, has owners and can't go down.
 
 ## 1. The 30-second opening
 
@@ -145,12 +145,12 @@ When a new service joins an existing system, it has to do one or more of four th
 
 | Concern | Approach | Repo pointer |
 |---|---|---|
-| Infra | IaC (Terraform), reviewed like code; reuse their modules and naming | `Handbook/08/06` |
-| Pipeline | *Their* CI/CD: build → tests → SAST/SCA → image → deploy per environment | `Handbook/08/06` |
-| Secrets | Their secret manager; referenced, never baked into images | `Handbook/06/01`, `08/06` |
+| Infra | IaC (Terraform), reviewed like code; reuse their modules and naming | `01_Concept_Tutorials/FDE_Handbook/08/06` |
+| Pipeline | *Their* CI/CD: build → tests → SAST/SCA → image → deploy per environment | `01_Concept_Tutorials/FDE_Handbook/08/06` |
+| Secrets | Their secret manager; referenced, never baked into images | `01_Concept_Tutorials/FDE_Handbook/06/01`, `08/06` |
 | Environments | dev → QA → UAT (customer sign-off) → prod; config per environment, same artifact | — |
 | Release | Feature flag off by default → shadow → canary (one tenant or 5% of traffic) → ramp | `module-14` |
-| Rollback | Health-check auto-rollback + flag kill switch; **rollback tested before canary** | `module-14`, `Handbook/10/04` (`rollback_tested` gate) |
+| Rollback | Health-check auto-rollback + flag kill switch; **rollback tested before canary** | `module-14`, `01_Concept_Tutorials/FDE_Handbook/10/04` (`rollback_tested` gate) |
 | Change control | Change ticket / CAB slot; deploy outside freeze windows | See `07_Enterprise_SDLC...` |
 | Observability | Join their tracing (propagate trace IDs); SLO dashboards and alerts owned by a named team | `module-15` |
 
@@ -163,7 +163,7 @@ When a new service joins an existing system, it has to do one or more of four th
 | PII | Mask or tokenize; residency rules decide the region |
 | Multi-tenant | Tenant ID in every query and cache key (see Drill 10 in `01_`) |
 | Audit | Log who accessed what; keep it separate from app logs |
-| Backfill vs. incremental | Initial load is bounded and resumable; then incremental with change tokens (`Handbook/06/05`) |
+| Backfill vs. incremental | Initial load is bounded and resumable; then incremental with change tokens (`01_Concept_Tutorials/FDE_Handbook/06/05`) |
 
 ## 6. Validation: staged rollout gates
 

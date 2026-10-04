@@ -2,7 +2,7 @@
 
 > **Level** 🟡 Building Production Systems · **Module** 03 · **Doc** 2 of 5 · **Time** ~25 min
 > **Prerequisites:** [Retry, Fallback, Memoization and the Confirmation Gate](01_Retry_Fallback_Memo_Confirm.md)
-> **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/docs/DESIGN.md` §1, `src/scratch_agent.py`; `FDE/System_Design and Delivery/6. Customer Support AI Assistant Design.md` §6 *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
+> **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/docs/DESIGN.md` §1, `src/scratch_agent.py`; `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/6. Customer Support AI Assistant Design.md` §6 *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
 
 ## Why this matters
 
