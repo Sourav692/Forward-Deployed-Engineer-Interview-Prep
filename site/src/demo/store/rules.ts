@@ -62,13 +62,16 @@ export function effectiveConfidence(rating: ConfidenceRating | undefined, now: n
 /**
  * Mastered: passed twice, at least 7 days apart, with confidence ≥ 4.
  *
- * TODO(learner): implement. Inputs: every attempt at this module's checkpoint, oldest
- * first, and the learner's current (already decayed) confidence for the module.
+ * Any two passes count, so comparing the earliest and latest pass is enough. A fail
+ * after the second pass is handled by `revisionReason`, which `moduleStatus` checks
+ * next. `attempts` are oldest first; `confidence` is already decayed.
  */
 export function isMastered(attempts: Attempt[], confidence: number | undefined): boolean {
-  void attempts
-  void confidence
-  return false
+  if (confidence === undefined || confidence < 4) return false
+  const passes = attempts.filter((a) => a.passed)
+  if (passes.length < 2) return false
+  const gap = Date.parse(passes[passes.length - 1].at) - Date.parse(passes[0].at)
+  return gap >= MASTERY_GAP_DAYS * DAY_MS
 }
 
 // ── Prerequisites (soft gating) ────────────────────────────────────────────
