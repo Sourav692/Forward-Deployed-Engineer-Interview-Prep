@@ -104,7 +104,7 @@ export function Dashboard() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 pt-2 md:grid-cols-4">
-        <StatCard label="Modules done" value={Object.values(progress.modules).filter((m) => isDone(m.status)).length} hint="of 54" />
+        <StatCard label="Modules done" value={Object.values(progress.modules).filter((m) => isDone(m.status)).length} hint={`of ${repo.listModules().length}`} />
         <StatCard label="Revision queue" value={progress.revision.length} hint={<Link href="/demo/progress/revision" className="text-accent hover:underline">Clear it</Link>} />
         <StatCard label="Checkpoints passed" value={new Set(state.attempts.filter((a) => a.kind === 'checkpoint' && a.passed).map((a) => a.assessmentId)).size} />
         <StatCard label="Mocks passed" value={new Set(state.attempts.filter((a) => a.kind === 'mock' && a.passed).map((a) => a.assessmentId)).size} hint={`${path.requiredMockIds.length} required`} />

@@ -485,7 +485,7 @@ export const LESSONS_BROWSABLE: Lesson[] = [
     referenceIds: ['ref-sre', 'ref-canonical-handbook'],
   },
 
-  // ── T8.3 Mock interviews and scorecards ─────────────────────────────────
+  // ── T8.2 Mock interviews and scorecards ─────────────────────────────────
   {
     id: 't8-3-l1',
     moduleId: 't8-3',
