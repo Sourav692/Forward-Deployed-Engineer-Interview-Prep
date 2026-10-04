@@ -50,4 +50,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - The active Vercel project is `forward-deployed`; production is https://forward-deployed-sigma.vercel.app/. The former `site` project and `site-sourav-dbx.vercel.app` deployment were deleted.
 - Vercel deploys `main` to production on push; other branches get preview URLs. Never push to `main` directly: work on a branch, open a PR, merge.
 - Commit messages use conventional prefixes: `feat:`, `content:`, `fix:`, `chore:`.
+- Branch per task. Whenever the user asks to fix something, work on a plan, or work on a specific task, first create a new branch from an up-to-date `main` and do all of that work there. One task per branch: do not mix unrelated changes, and do not reuse a branch from an earlier task. If you are already on a branch created for this same task, keep using it.
+- Branch names are `<type>/<short-kebab-description>`. The type matches the kind of change and the commit prefix it will use:
+  - `feat/`: new site feature or behaviour (`feat/search-page`)
+  - `fix/`: bug fix (`fix/mobile-nav-overflow`)
+  - `content/`: prep material or synced content (`content/restore-mock-interviews`)
+  - `docs/`: README, CLAUDE.md, specs, plans (`docs/site-implementation-plan`)
+  - `refactor/`: restructuring with no behaviour change (`refactor/registry-types`)
+  - `chore/`: tooling, dependencies, config, skills (`chore/plan-to-tasks-skill`)
+- For a task from a plan or task board, put its task ID in the branch name: `feat/FE-04-search-index`. The type still follows the kind of change.
+- Uncommitted changes from other work stay out of the task's commits: stage only the task's files.
 - Style guide for content: `site/specs/2026-09-27-content-architecture-and-editorial-style.md`.
