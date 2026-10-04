@@ -10,6 +10,8 @@
 export const PREFIX = 'fd:demo:v1'
 export const SESSION_KEY = `${PREFIX}:session`
 export const THEME_KEY = `${PREFIX}:theme`
+/** A signed-out visitor's path choice; adopted by the learner they create. */
+export const GUEST_PATH_KEY = `${PREFIX}:guest-path`
 export const learnerKey = (userId: string) => `${PREFIX}:learner:${userId}`
 
 /** Fired on same-tab writes; the native `storage` event only reaches other tabs. */

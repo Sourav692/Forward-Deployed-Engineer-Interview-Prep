@@ -13,7 +13,7 @@ import { useMemo, useSyncExternalStore } from 'react'
 import type { ActivityEvent, LearnerState, User } from '../types'
 import { DEMO_USER, getSession, signIn, signOut } from '../auth'
 import { emptyState, seedDemoState } from '../data/seed'
-import { SESSION_KEY, learnerKey, readJson, readRaw, removeKey, subscribe, writeJson, storageAvailable } from './persist'
+import { GUEST_PATH_KEY, SESSION_KEY, learnerKey, readJson, readRaw, removeKey, subscribe, writeJson, storageAvailable } from './persist'
 import { deriveProgress, type Progress } from './selectors'
 
 interface Snapshot {
@@ -27,13 +27,13 @@ let cached: Snapshot = { raw: '\u0001', at: 0 }
 
 function getSnapshot(): Snapshot {
   const session = readRaw(SESSION_KEY)
-  let raw = ''
+  let raw = readRaw(GUEST_PATH_KEY) ?? ''
   if (session) {
     try {
       const id = (JSON.parse(session) as { userId: string }).userId
-      raw = `${session}\u0000${readRaw(learnerKey(id)) ?? ''}`
+      raw += `\u0000${session}\u0000${readRaw(learnerKey(id)) ?? ''}`
     } catch {
-      raw = ''
+      /* a corrupt session reads as signed out */
     }
   }
   if (raw !== cached.raw) cached = { raw, at: Date.now() }
@@ -48,12 +48,14 @@ export interface DemoStore {
   state: LearnerState | null
   progress: Progress | null
   storageOk: boolean
+  /** The learner's path, or a signed-out visitor's choice, defaulting to FDE. */
+  pathId: string
 }
 
 export function useDemo(): DemoStore {
   const snap = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
   return useMemo(() => {
-    if (snap === null) return { ready: false, signedIn: false, state: null, progress: null, storageOk: true }
+    if (snap === null) return { ready: false, signedIn: false, state: null, progress: null, storageOk: true, pathId: 'fde' }
     const session = getSession()
     const state = session ? readJson<LearnerState>(learnerKey(session.userId)) : null
     return {
@@ -62,6 +64,7 @@ export function useDemo(): DemoStore {
       state,
       progress: state ? deriveProgress(state, snap.at) : null,
       storageOk: storageAvailable(),
+      pathId: state?.pathId ?? readJson<string>(GUEST_PATH_KEY) ?? 'fde',
     }
   }, [snap])
 }
@@ -97,7 +100,14 @@ export function signInAsDemo(): void {
   signIn(DEMO_USER.id)
 }
 
-export function signInAsNew(user: User, pathId?: string): void {
+/** Sets the path for the signed-in learner, or remembers it for a guest. */
+export function choosePath(pathId: string, label: string): void {
+  if (!update((s) => void (s.pathId = pathId), { kind: 'path-chosen', itemId: pathId, label: `Chose the ${label} path`, href: `/demo/start/paths/${pathId}` })) {
+    writeJson(GUEST_PATH_KEY, pathId)
+  }
+}
+
+export function signInAsNew(user: User, pathId = readJson<string>(GUEST_PATH_KEY) ?? 'fde'): void {
   if (!readJson<LearnerState>(learnerKey(user.id))) writeJson(learnerKey(user.id), emptyState(user, Date.now(), pathId))
   signIn(user.id)
 }

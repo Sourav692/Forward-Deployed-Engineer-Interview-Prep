@@ -15,7 +15,7 @@ Adding content to the site touches several files. Work through every step; `npm 
    - Cite every new page in some `REVIEWS[].learnFirst/goDeeper`, or add an explicit exemption in `check-parse.ts`.
 5. **`site/scripts/check-parse.ts`.** Worksheet tracks need an `EXPECTATIONS[trackId]` entry, otherwise the check fails.
 6. **`site/src/lib/glossary.ts`.** Any all-caps token used on 3+ pages goes in `GLOSSARY` or `NOT_ACRONYMS`.
-7. **Hardcoded ids in pages.** Check `src/app/page.tsx`, `src/app/modules/[module]/page.tsx`, `src/app/modules/[module]/[track]/[scenario]/page.tsx` for module-specific labels/branches that need the new module.
+7. **Hardcoded ids in pages.** Check `src/app/(site)/page.tsx`, `src/app/(site)/modules/[module]/page.tsx`, `src/app/(site)/modules/[module]/[track]/[scenario]/page.tsx` (live routes sit in the `(site)` route group; `/demo` has its own root layout) for module-specific labels/branches that need the new module.
 8. **Ids.** Track ids must be unique site-wide; never rename an existing track/tab/slug id (URLs and saved progress depend on them).
 
 Then from `site/`: `npm run sync && npm run check:content && npm run lint`, and run `npm run dev` to eyeball the new pages.
