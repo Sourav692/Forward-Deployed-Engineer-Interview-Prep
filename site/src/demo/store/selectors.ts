@@ -229,3 +229,41 @@ function nextUp(
 }
 
 export const daysAgo = (iso: string, now: number) => Math.floor((now - Date.parse(iso)) / DAY_MS)
+
+export interface SkillEvidence {
+  label: string
+  href: string
+}
+
+/**
+ * Proficiency 0–4 from evidence only: +1 per passed checkpoint (max 2), +1 for a
+ * submitted exercise self-scored ≥ 3, +1 for a project ready for review or completed.
+ * Reading never counts.
+ */
+export function skillProficiency(state: LearnerState, skillId: string): { level: number; evidence: SkillEvidence[] } {
+  const evidence: SkillEvidence[] = []
+  let cps = 0
+  let exercise = 0
+  let project = 0
+  for (const m of repo.listModules()) {
+    if (!m.skillIds.includes(skillId) || state.skipped[m.id]) continue
+    if (attemptsFor(state, m.checkpointId).some((a) => a.passed)) {
+      cps++
+      evidence.push({ label: `${m.code} checkpoint passed`, href: repo.href.module(m) })
+    }
+    const ex = state.exercises[`${m.id}-ex1`]
+    const vals = ex ? Object.values(ex.selfScores) : []
+    if (vals.length && vals.reduce((a, b) => a + b, 0) / vals.length >= 3) {
+      exercise = 1
+      evidence.push({ label: `${m.code} exercise`, href: repo.href.exercise({ id: `${m.id}-ex1`, moduleId: m.id }) })
+    }
+  }
+  for (const p of repo.listProjects({ skillId })) {
+    const ps = state.projects[p.id]
+    if (ps && (ps.status === 'ready-for-review' || ps.status === 'completed')) {
+      project = 1
+      evidence.push({ label: `${p.code} ${p.title}`, href: repo.href.project(p.id) })
+    }
+  }
+  return { level: Math.min(4, Math.min(cps, 2) + exercise + project), evidence }
+}
