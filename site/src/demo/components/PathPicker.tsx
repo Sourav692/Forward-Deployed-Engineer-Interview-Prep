@@ -50,7 +50,7 @@ export function PathPicker() {
   const recPath = repo.getPath(rec.pathId)!
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
       <section aria-labelledby="diag">
         <h2 id="diag" className="text-[1.125rem] font-semibold">
           Path diagnostic
@@ -63,7 +63,7 @@ export function PathPicker() {
                 <legend className="px-1 text-[0.9375rem] font-semibold">
                   {n + 1}. {q.prompt}
                 </legend>
-                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {q.options.map((o, i) => (
                     <label
                       key={o.label}

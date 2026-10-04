@@ -40,7 +40,7 @@ export default function DemoHome() {
 
   return (
     <div className="space-y-16">
-      <section className="grid items-start gap-10 pt-4 lg:grid-cols-[1.1fr_1fr]">
+      <section className="grid grid-cols-1 items-start gap-10 pt-4 lg:grid-cols-[1.1fr_1fr]">
         <div>
           <SampleContentBadge />
           <h1 className="mt-4 text-[2.25rem] font-bold leading-[1.1] tracking-[-0.03em] sm:text-[2.75rem]">Forward Deployed</h1>
@@ -98,7 +98,7 @@ export default function DemoHome() {
 
       <section aria-labelledby="areas">
         <H2 id="areas">Six areas, one loop</H2>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {AREAS.map((a) => (
             <li key={a.href}>
               <Link href={a.href} className="block h-full rounded-xl border border-border bg-surface p-4 transition-colors hover:border-accent">
@@ -112,7 +112,7 @@ export default function DemoHome() {
 
       <section aria-labelledby="who">
         <H2 id="who">Who it’s for</H2>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {repo.listPersonas().map((p) => (
             <li key={p.id}>
               <Card className="h-full">
@@ -129,7 +129,7 @@ export default function DemoHome() {
 
       <section aria-labelledby="different">
         <H2 id="different">What makes it different</H2>
-        <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+        <dl className="grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2">
           {DIFFERENT.map(([t, d]) => (
             <div key={t} className="border-l-2 border-accent/40 pl-4">
               <dt className="font-semibold">{t}</dt>
@@ -143,7 +143,7 @@ export default function DemoHome() {
         <H2 id="tracks" action={<Link href="/demo/learn" className="text-[0.875rem] font-semibold text-accent hover:underline">All ten tracks →</Link>}>
           Featured tracks
         </H2>
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {featuredTracks.map((t) => (
             <li key={t.id}>
               <Link href={repo.href.track(t.id)} className="block h-full rounded-xl border border-border bg-surface p-4 transition-colors hover:border-accent">
@@ -160,7 +160,7 @@ export default function DemoHome() {
         </ul>
       </section>
 
-      <section aria-labelledby="projects" className="grid gap-8 lg:grid-cols-2">
+      <section aria-labelledby="projects" className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div>
           <H2 id="projects" action={<Link href="/demo/practice" className="text-[0.875rem] font-semibold text-accent hover:underline">P1–P10 →</Link>}>
             Featured projects
@@ -202,7 +202,7 @@ export default function DemoHome() {
 
       <section aria-labelledby="outcomes">
         <H2 id="outcomes">Sample outcomes</H2>
-        <ol className="grid gap-3 sm:grid-cols-2">
+        <ol className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {OUTCOMES.map((o, i) => (
             <li key={o} className="flex gap-3 rounded-lg bg-surface-2 p-3 text-[0.9375rem]">
               <span className="font-semibold tabular-nums text-accent">{i + 1}</span>

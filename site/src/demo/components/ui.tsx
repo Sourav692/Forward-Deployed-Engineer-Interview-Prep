@@ -242,7 +242,7 @@ export function StatCard({ label, value, hint }: { label: string; value: React.R
 
 export function Dl({ items }: { items: [string, React.ReactNode][] }) {
   return (
-    <dl className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
+    <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
       {items.map(([k, v]) => (
         <div key={k} className="min-w-0">
           <dt className="text-[0.75rem] font-semibold uppercase tracking-wide text-subtle">{k}</dt>

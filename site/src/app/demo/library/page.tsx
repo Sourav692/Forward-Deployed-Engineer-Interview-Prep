@@ -12,7 +12,7 @@ export default function LibraryPage() {
       <Breadcrumbs items={[{ label: 'Library' }]} />
       <PageHeader eyebrow="Utility" title="Library" description="Reading the sample lessons cite, and the planned canonical source behind every module." />
       <H2>References</H2>
-      <ul className="grid gap-3 md:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {repo.listReferences().map((r) => (
           <li key={r.id}>
             <Card className="h-full">

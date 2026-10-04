@@ -36,7 +36,7 @@ export default async function ModulePage({ params }: { params: Params }) {
   const href = repo.href.module(m)
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[15rem_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_minmax(0,1fr)]">
       <TrackTree trackId={track.id} currentModuleId={m.id} />
       <div className="min-w-0">
         <Breadcrumbs
@@ -68,7 +68,7 @@ export default async function ModulePage({ params }: { params: Params }) {
           </PageHeader>
 
           <PrerequisiteGate moduleId={m.id}>
-            <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_18rem]">
+            <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_18rem]">
               <div className="min-w-0">
                 <Card className="border-l-4 border-l-accent">
                   <p className="text-[0.8125rem] font-semibold text-accent">Why this matters</p>
@@ -91,7 +91,7 @@ export default async function ModulePage({ params }: { params: Params }) {
                   )}
                 </Card>
 
-                <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div>
                     <h2 className="text-[0.9375rem] font-semibold">Learning objectives</h2>
                     <ul className="mt-2 list-disc space-y-1 pl-5 text-[0.9375rem]">
@@ -124,7 +124,7 @@ export default async function ModulePage({ params }: { params: Params }) {
                   ))}
                 </ul>
 
-                <div className="mt-10 grid gap-6 sm:grid-cols-2">
+                <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div>
                     <h2 className="text-[0.9375rem] font-semibold">Related modules</h2>
                     <ul className="mt-2 space-y-1 text-[0.875rem]">

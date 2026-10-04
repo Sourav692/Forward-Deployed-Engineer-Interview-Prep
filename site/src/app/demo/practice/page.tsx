@@ -15,7 +15,7 @@ export default function PracticePage() {
       <ProjectCatalog />
       <H2>Worksheets by track</H2>
       <p className="mb-3 text-[0.875rem] text-muted">One exercise per module. Required exercises count toward module completion and Interview readiness.</p>
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {repo.listTracks().map((t) => (
           <details key={t.id} className="rounded-xl border border-border bg-surface">
             <summary className="cursor-pointer px-4 py-3 font-semibold">

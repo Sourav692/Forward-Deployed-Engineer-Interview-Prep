@@ -143,7 +143,7 @@ function QuestionCard({ q, reviewed }: { q: InterviewQuestion; reviewed: boolean
               </blockquote>
             )}
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <h3 className="font-semibold">Common weak answers</h3>
               <ul className="mt-1 list-disc space-y-0.5 pl-5 text-[0.875rem]">
@@ -163,7 +163,7 @@ function QuestionCard({ q, reviewed }: { q: InterviewQuestion; reviewed: boolean
           </div>
           <div>
             <h3 className="font-semibold">Rubric anchors: what “4 Strong” sounds like</h3>
-            <dl className="mt-1 grid gap-2 sm:grid-cols-2">
+            <dl className="mt-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {q.rubricAnchors.map((r) => (
                 <div key={r.dimension} className="rounded-md bg-surface-2 px-3 py-2 text-[0.875rem]">
                   <dt className="font-semibold">{DIM_LABEL[r.dimension]}</dt>

@@ -45,7 +45,7 @@ export function ProjectCatalog() {
       {projects.length === 0 ? (
         <EmptyState title="No projects match" body="Loosen a filter, or clear them all to see P1–P10." action={<button type="button" onClick={clear} className="text-[0.875rem] font-semibold text-accent underline">Clear filters</button>} />
       ) : (
-        <ul className="grid gap-3 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {projects.map((p) => {
             const s = state?.projects[p.id]?.status ?? 'not-started'
             return (

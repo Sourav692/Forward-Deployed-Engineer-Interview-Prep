@@ -22,7 +22,7 @@ export function AssessmentRunner({ moduleId }: { moduleId: string }) {
   const [i, setI] = useState(0)
   const [confirm, setConfirm] = useState(false)
   const [unanswered, setUnanswered] = useState<number[]>([])
-  const [result, setResult] = useState<CheckpointResult | null>(null)
+  const [result, setResult] = useState<{ r: CheckpointResult; attempt: number } | null>(null)
   const attempts = state ? attemptsFor(state, assessment.id) : []
 
   const restart = () => {
@@ -63,11 +63,11 @@ export function AssessmentRunner({ moduleId }: { moduleId: string }) {
         href: repo.href.checkpoint(m),
       },
     )
-    setResult(r)
+    setResult({ r, attempt: attempts.length + 1 })
     toast(r.passed ? `Passed with ${r.score}%.` : `Scored ${r.score}%. Pass is 70%.`, r.passed ? 'success' : 'error')
   }
 
-  if (result) return <ScoreScreen moduleId={moduleId} result={result} attempts={attempts.length} onRetry={restart} />
+  if (result) return <ScoreScreen moduleId={moduleId} result={result.r} attempt={result.attempt} onRetry={restart} />
 
   const item = items[i]
   return (
@@ -165,7 +165,7 @@ export function AssessmentRunner({ moduleId }: { moduleId: string }) {
   )
 }
 
-function ScoreScreen({ moduleId, result, attempts, onRetry }: { moduleId: string; result: CheckpointResult; attempts: number; onRetry: () => void }) {
+function ScoreScreen({ moduleId, result, attempt, onRetry }: { moduleId: string; result: CheckpointResult; attempt: number; onRetry: () => void }) {
   const { progress } = useDemo()
   const m = repo.getModule(moduleId)!
   const revise = [...new Set(result.missed.map((x) => x.remediationModuleId))].map((id) => repo.getModule(id)!)
@@ -176,7 +176,7 @@ function ScoreScreen({ moduleId, result, attempts, onRetry }: { moduleId: string
         <p className="text-[0.8125rem] font-semibold uppercase tracking-wide">{result.passed ? 'Passed' : 'Not passed'}</p>
         <p className="mt-1 text-[2.5rem] font-bold tabular-nums leading-none">{result.score}%</p>
         <p className="mt-2 text-[0.875rem]">
-          Pass mark 70%. This was attempt {attempts + 1}.{' '}
+          Pass mark 70%. This was attempt {attempt}.{' '}
           {result.passed ? 'Prerequisite checks that depended on this checkpoint now pass.' : 'Revise the modules below, then retry.'}
         </p>
         {status && (

@@ -28,7 +28,7 @@ export default async function TrackPage({ params }: { params: Promise<{ trackId:
   const sections = repo.listSections(track.id)
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[15rem_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_minmax(0,1fr)]">
       <TrackTree trackId={track.id} />
       <div className="min-w-0">
         <Breadcrumbs items={[{ label: 'Learn', href: '/demo/learn' }, { label: `${track.code} ${track.title}` }]} />
@@ -96,7 +96,7 @@ export default async function TrackPage({ params }: { params: Promise<{ trackId:
                       )
                     })}
                   </ul>
-                  <dl className="mt-3 grid gap-2 text-[0.8125rem] sm:grid-cols-3">
+                  <dl className="mt-3 grid grid-cols-1 gap-2 text-[0.8125rem] sm:grid-cols-3">
                     <div>
                       <dt className="font-semibold text-subtle">Project</dt>
                       <dd>{project ? <Link href={repo.href.project(project.id)} className="text-accent hover:underline">{project.code} {project.title}</Link> : s.projectLabel}</dd>
@@ -116,7 +116,7 @@ export default async function TrackPage({ params }: { params: Promise<{ trackId:
           })}
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div>
             <H2>Related projects</H2>
             <ul className="space-y-1.5 text-[0.875rem]">

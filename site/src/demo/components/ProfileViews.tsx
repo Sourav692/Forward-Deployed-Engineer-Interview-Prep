@@ -81,7 +81,7 @@ function Portfolio({ state, publicView }: { state: LearnerState; publicView?: bo
   return (
     <div className="space-y-6">
       {projects.length ? (
-        <ul className="grid gap-3 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {projects.map(([id, ps]) => {
             const p = repo.getProject(id)!
             return (
@@ -167,7 +167,7 @@ export function ProfileView({ publicView }: { publicView?: boolean }) {
 
   const overview = (
     <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <ReadinessGauge title="Interview readiness" readiness={progress.interview} target={75} remedyHref={publicView ? undefined : remedyFor(progress.interview.weakest.id)} />
         </Card>

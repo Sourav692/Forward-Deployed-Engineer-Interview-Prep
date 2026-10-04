@@ -44,7 +44,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ compan
   if (!c) notFound()
   const tone = { high: 'success', medium: 'accent', low: 'danger' } as const
   return (
-    <div className="grid gap-8 lg:grid-cols-[13rem_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[13rem_minmax(0,1fr)]">
       <nav aria-label="Pack sections" className="hidden text-[0.8125rem] lg:sticky lg:top-20 lg:block lg:self-start">
         <ol className="space-y-1">
           {SECTIONS.map((s, i) => (
@@ -95,7 +95,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ compan
           </Card>
         </Sec>
         <Sec n={3}>
-          <ul className="grid gap-2 sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {c.coverage.map((x) => (
               <li key={x.area} className={cx('rounded-lg border px-3 py-2 text-[0.875rem]', x.covered ? 'border-success/40 bg-success-soft' : 'border-warning/50 bg-warning-soft')}>
                 <span className="font-semibold">{x.covered ? 'Covered' : 'Gap'}: {x.area}</span>

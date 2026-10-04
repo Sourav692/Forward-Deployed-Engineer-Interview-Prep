@@ -122,7 +122,7 @@ export function ExerciseRunner({ exerciseId }: { exerciseId: string }) {
           {ex.rubric.map((r) => (
             <fieldset key={r.criterion}>
               <legend className="text-[0.875rem] font-semibold">{r.criterion}</legend>
-              <div className="mt-1.5 grid gap-2 sm:grid-cols-4">
+              <div className="mt-1.5 grid grid-cols-1 gap-2 sm:grid-cols-4">
                 {r.anchors.map((a) => (
                   <label
                     key={a.level}

@@ -52,7 +52,7 @@ export default async function PathPage({ params }: { params: Promise<{ pathId: s
         ))}
       </ol>
 
-      <div className="mt-6 grid gap-6 md:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
         <div>
           <H2>Required projects</H2>
           <ul className="space-y-1 text-[0.9375rem]">
@@ -80,7 +80,7 @@ export default async function PathPage({ params }: { params: Promise<{ pathId: s
       </div>
 
       <H2>Modules by track</H2>
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {repo.listTracks().map((t) => {
           const skipped = repo.trackSkippedForPath(path.id, t.id)
           return (

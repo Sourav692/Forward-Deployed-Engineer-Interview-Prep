@@ -42,7 +42,7 @@ export function Dashboard() {
           {unread.map((n) => (
             <li key={n.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-accent/30 bg-accent-soft px-3 py-2 text-[0.875rem]">
               <span className="font-semibold">{n.title}</span>
-              <span className="min-w-0 flex-1 text-muted">{n.body}</span>
+              <span className="w-full text-muted sm:w-auto sm:min-w-0 sm:flex-1">{n.body}</span>
               {n.href && (
                 <Link href={n.href} className="font-semibold text-accent hover:underline">
                   Open
@@ -56,7 +56,7 @@ export function Dashboard() {
         </ul>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="border-accent/40 lg:col-span-2">
           <p className="text-[0.75rem] font-semibold uppercase tracking-wide text-accent">Next up</p>
           {next ? (
@@ -94,7 +94,7 @@ export function Dashboard() {
         </Card>
       </div>
 
-      <div className="grid gap-4 pt-2 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-2">
         <Card>
           <ReadinessGauge title="Interview readiness" readiness={progress.interview} target={75} remedyHref={remedyFor(progress.interview.weakest.id)} />
         </Card>
@@ -113,7 +113,7 @@ export function Dashboard() {
       <H2 action={<Link href="/demo/progress/revision" className="text-[0.875rem] font-semibold text-accent hover:underline">All →</Link>}>Revision queue</H2>
       <RevisionQueueList items={progress.revision} limit={5} />
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <section>
           <H2>Track progress</H2>
           <ul className="space-y-2.5">
@@ -166,7 +166,7 @@ export function Dashboard() {
         </section>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <section>
           <H2 action={<Link href="/demo/progress/history" className="text-[0.875rem] font-semibold text-accent hover:underline">History →</Link>}>Recent activity</H2>
           <ActivityTimeline events={state.activity} limit={6} now={progress.now} />

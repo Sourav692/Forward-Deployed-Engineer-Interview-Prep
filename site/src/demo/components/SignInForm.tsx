@@ -28,7 +28,7 @@ export function SignInForm() {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <Card>
         <h2 className="font-semibold">Demo account</h2>
         <p className="mt-1 text-[0.875rem] text-muted">Alex Morgan (fictional): Applied AI Engineer targeting Forward Deployed Engineer roles, on the FDE path with the OpenAI / Anthropic variant. Pre-filled with progress so every state is visible.</p>

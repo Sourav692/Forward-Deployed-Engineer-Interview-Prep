@@ -58,7 +58,7 @@ export function BookmarksPage() {
   const data = useLearner()
   if (!data) return null
   return (
-    <div className="grid gap-x-8 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2">
       {CATEGORIES.map((c) => {
         const items = data.state.bookmarks.filter((b) => b.kind === c.kind)
         return (

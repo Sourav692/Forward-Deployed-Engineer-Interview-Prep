@@ -43,7 +43,7 @@ export function SettingsView() {
   return (
     <div className="max-w-3xl space-y-2">
       <H2>Path and pace</H2>
-      <Card className="grid gap-4 sm:grid-cols-2">
+      <Card className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Select
           id="s-path"
           label="Learning path"
@@ -68,7 +68,7 @@ export function SettingsView() {
       <H2>Profile</H2>
       <Card>
         <form
-          className="grid gap-3 sm:grid-cols-2"
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2"
           onSubmit={(e) => {
             e.preventDefault()
             update((s) => void (s.user = { ...s.user, ...fields }))

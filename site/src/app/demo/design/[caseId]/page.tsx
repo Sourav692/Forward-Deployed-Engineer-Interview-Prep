@@ -55,7 +55,7 @@ export default async function CasePage({ params }: { params: Promise<{ caseId: s
             id: 'cheat',
             label: 'Cheat Sheet',
             content: (
-              <ul className="grid max-w-3xl gap-2 sm:grid-cols-2">
+              <ul className="grid grid-cols-1 max-w-3xl gap-2 sm:grid-cols-2">
                 {c.cheatSheet.map((x) => (
                   <li key={x} className="rounded-lg border border-border bg-surface px-3 py-2 text-[0.9375rem]">
                     {x}

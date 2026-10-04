@@ -8,7 +8,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useId, useState } from 'react'
 import type { BookmarkKind, LearnerState, Status } from '../types'
-import { update, useDemo } from '../store/useDemo'
+import { recentlySignedOut, update, useDemo } from '../store/useDemo'
 import { setUnsaved } from '../store/unsaved'
 import type { Progress } from '../store/selectors'
 import { toast } from './feedback'
@@ -20,7 +20,7 @@ export function AuthGate({ children, fallbackLines = 4 }: { children: React.Reac
   const router = useRouter()
   const pathname = usePathname()
   useEffect(() => {
-    if (ready && !signedIn) router.replace(`/demo/sign-in?next=${encodeURIComponent(pathname)}`)
+    if (ready && !signedIn && !recentlySignedOut()) router.replace(`/demo/sign-in?next=${encodeURIComponent(pathname)}`)
   }, [ready, signedIn, router, pathname])
   if (!ready || !signedIn)
     return (

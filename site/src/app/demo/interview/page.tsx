@@ -20,7 +20,7 @@ export default function InterviewIndex() {
       <Breadcrumbs items={[{ label: 'Interview' }]} />
       <PageHeader eyebrow="Interview" title="Perform under interview conditions" description="Five topic hubs, mock rounds A–E on one shared rubric, a final readiness exam, and company packs built on a shared ten-section template." />
 
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {repo.listHubs().map((h) => (
           <li key={h.id}>
             <Link href={repo.href.hub(h.id)} className="flex h-full flex-col rounded-xl border border-border bg-surface p-4 hover:border-accent">
@@ -32,7 +32,7 @@ export default function InterviewIndex() {
         ))}
       </ul>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <section>
           <H2>Mock interviews</H2>
           <ul className="space-y-2">

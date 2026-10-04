@@ -66,10 +66,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </button>
           <Link href="/demo" className="flex items-center gap-2 font-semibold tracking-[-0.011em]" aria-label="Forward Deployed prototype home">
             <Logo />
-            <span className="hidden sm:inline">Forward Deployed</span>
+            <span className="hidden sm:inline md:hidden xl:inline">Forward Deployed</span>
             <span className="rounded bg-surface-2 px-1.5 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-subtle">Prototype</span>
           </Link>
-          <nav aria-label="Areas" className="ml-3 hidden items-center gap-0.5 md:flex">
+          <nav aria-label="Areas" className="ml-1 hidden items-center gap-0.5 md:flex lg:ml-3">
             {AREAS.map((a) => (
               <Link
                 key={a.href}

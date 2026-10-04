@@ -10,7 +10,7 @@ export default function DesignIndex() {
     <>
       <Breadcrumbs items={[{ label: 'Design' }]} />
       <PageHeader eyebrow="Design" title="Casebook" description="Worked AI system designs, each at three depths: Main for the shape of the answer, Deep Dive for the hardest part, and a Cheat Sheet for recall the night before." />
-      <ul className="grid gap-3 md:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {repo.listCases().map((c) => (
           <li key={c.id}>
             <Link href={repo.href.case(c.id)} className="flex h-full flex-col rounded-xl border border-border bg-surface p-4 hover:border-accent">

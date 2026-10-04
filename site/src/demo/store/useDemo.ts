@@ -112,7 +112,13 @@ export function signInAsNew(user: User, pathId = readJson<string>(GUEST_PATH_KEY
   signIn(user.id)
 }
 
+let signedOutAt = 0
+
+/** True briefly after an intentional sign-out, so auth gates don't race the redirect home. */
+export const recentlySignedOut = (): boolean => Date.now() - signedOutAt < 3000
+
 export function signOutDemo(): void {
+  signedOutAt = Date.now()
   signOut()
 }
 
