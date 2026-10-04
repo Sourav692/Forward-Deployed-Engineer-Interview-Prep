@@ -16,7 +16,7 @@ Folders are grouped by the kind of material they hold, numbered in study order.
 | `00_Start_Here/` | Platform blueprint, repository coverage guide, companion-course pointer, case-study index |
 | `01_Concept_Tutorials/` | Explanatory tutorials: the FDE Handbook, GenAI engineering modules, RAG and agent topic guides, the agentic system design book, system design fundamentals, production judgment, cost and latency |
 | `02_System_Design_Case_Studies/` | Solved designs, one system per folder: G01–G20 scenario packs, standalone designs, long-form scenario tutorials, classic design walkthroughs |
-| `03_Practice_Worksheets_and_Keys/` | Fill-in worksheets with answer keys: customer discovery, system design, problem decomposition |
+| `03_Practice_Worksheets_and_Keys/` | Fill-in worksheets with answer keys: customer discovery, system design, problem decomposition; mock interviews with scorecards |
 | `04_Behavioral_and_Leadership/` | Hiring-manager and leadership-principle worksheets, answer keys, story bank |
 | `05_FDE_Delivery_and_Scoping/` | How the job runs: scoping a project, delivery framework, cross-team delivery, day-to-day |
 | `06_Coding_Round_Prep/` | AI-assisted coding-round kit with tests |
