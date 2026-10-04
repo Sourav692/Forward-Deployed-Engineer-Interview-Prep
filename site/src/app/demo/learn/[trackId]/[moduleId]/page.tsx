@@ -8,7 +8,7 @@ import { TrackTree } from '@/demo/components/TrackTree'
 import { Breadcrumbs, Card, H2, PageHeader, btn, formatMinutes } from '@/demo/components/ui'
 
 /**
- * Module detail. The page is a Server Component that prerenders every module (54) via
+ * Module detail. The page is a Server Component that prerenders every module (53) via
  * `generateStaticParams`; the auth gate, prerequisite card, progress and controls are
  * client islands nested inside it. A Server Component can pass server-rendered JSX as
  * `children` into a client component, so the static content is not re-rendered on the
