@@ -5,7 +5,7 @@ import { SITE } from '@/lib/registry'
 import { NAV } from '@/lib/editorial'
 import { SearchDialog } from '@/components/SearchDialog'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import './globals.css'
+import '../globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
