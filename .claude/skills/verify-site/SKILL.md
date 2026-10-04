@@ -13,6 +13,6 @@ Run each step from `site/`, in order. Stop at the first failure, show the decisi
 
 Then run `git status --short` and report:
 - `site/content/manifest.json` modified only by `generatedAt` is expected noise from sync. Say so rather than treating it as a change.
-- **Privacy check:** if anything under `site/content/modules/16-company-oriented-prep/` or `site/scripts/company-prep.mjs` is staged or about to be committed, warn loudly. Blitzy content must stay private; it must not be committed or pushed without the user's explicit approval.
+- **Privacy check:** warn loudly if anything from `09_Study_Plans/` (purchased library index) or text copied from `99_Reference_Library/` third-party PDFs is staged, or if a newly synced page references the purchased library (`LIBRARY_MAP.md`, `ROADMAP_7_DAY.md`, the condensed plan xlsx).
 
 Finish with a short pass/fail line per step.

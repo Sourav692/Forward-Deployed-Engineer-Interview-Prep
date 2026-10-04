@@ -12,10 +12,7 @@ coverage/
 # Raw client stories and unredacted originals stay local.
 _private/
 
-# Company-specific and purchased interview prep kept local.
-06_Coding_Round_Prep/
-08_Company_Specific_Prep/Blitzy/
-08_Company_Specific_Prep/OpenAI_Anthropic_Pack/
+# Study plans index a purchased third-party library; kept local.
 09_Study_Plans/
 
 # Personal Claude Code instructions

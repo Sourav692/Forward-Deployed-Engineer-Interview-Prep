@@ -13,15 +13,15 @@ Folders are grouped by the kind of material they hold, numbered in study order.
 
 | Folder | What it holds |
 |---|---|
-| `00_Start_Here/` | Repository coverage guide, companion-course pointer, case-study index |
+| `00_Start_Here/` | Platform blueprint, repository coverage guide, companion-course pointer, case-study index |
 | `01_Concept_Tutorials/` | Explanatory tutorials: the FDE Handbook, GenAI engineering modules, RAG and agent topic guides, the agentic system design book, system design fundamentals, production judgment, cost and latency |
 | `02_System_Design_Case_Studies/` | Solved designs, one system per folder: G01–G20 scenario packs, standalone designs, long-form scenario tutorials, classic design walkthroughs |
 | `03_Practice_Worksheets_and_Keys/` | Fill-in worksheets with answer keys: customer discovery, system design, problem decomposition |
 | `04_Behavioral_and_Leadership/` | Hiring-manager and leadership-principle worksheets, answer keys, story bank |
 | `05_FDE_Delivery_and_Scoping/` | How the job runs: scoping a project, delivery framework, cross-team delivery, day-to-day |
-| `06_Coding_Round_Prep/` | Coding-round drills (local only, gitignored) |
+| `06_Coding_Round_Prep/` | AI-assisted coding-round kit with tests |
 | `07_Last_Day_Revision/` | Eighteen rapid-review modules, memory cards and the final interview execution framework |
-| `08_Company_Specific_Prep/` | Company loops: OpenAI Applied (committed); Blitzy and OpenAI/Anthropic packs (local only) |
+| `08_Company_Specific_Prep/` | Company loops: Blitzy, OpenAI Applied, OpenAI/Anthropic |
 | `09_Study_Plans/` | Study-plan spreadsheets and coverage maps (local only, gitignored) |
 | `99_Reference_Library/` | Third-party PDFs, sketchnotes and external references |
 | `site/` | The deployable interactive course experience |

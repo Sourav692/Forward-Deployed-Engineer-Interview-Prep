@@ -17,7 +17,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Only these feed the site: `03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/` and `System_Design_Worksheets/` (module 01), `04_Behavioral_and_Leadership/` (module 14), `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/` and `Standalone_Designs/` (module 15), `07_Last_Day_Revision/`, `08_Company_Specific_Prep/Blitzy/` (module 16). Renaming any of them needs the matching path change in `site/scripts/*.mjs`.
 - `site/` is the only JS project: Next.js 16 App Router, React 19, Tailwind v4, npm. Run all npm commands from `site/`. No root package.json.
 - Next 16 APIs may differ from training data. Read `site/node_modules/next/dist/docs/` before using Next APIs (see `site/AGENTS.md`).
-- `06_Coding_Round_Prep/`, `08_Company_Specific_Prep/Blitzy/`, `08_Company_Specific_Prep/OpenAI_Anthropic_Pack/` and `09_Study_Plans/` are gitignored local material. Keep `.gitignore` in step if they move.
+- `09_Study_Plans/` is gitignored: it indexes a purchased third-party library. `06_` and `08_` packs are committed (only Blitzy is synced); some files (`LIBRARY_MAP.md`, `ROADMAP_7_DAY.md`, the condensed plan xlsx) reference that library, so strip those references before wiring them into the public site.
+- Platform plan: `00_Start_Here/Platform_Blueprint.html` (source brief `website_prompt.md`).
 
 ## Commands (from `site/`)
 
@@ -39,8 +40,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Blitzy / module 16
 
-- `08_Company_Specific_Prep/Blitzy/` is gitignored on purpose, but its generated snapshot in `site/content/modules/16-company-oriented-prep/` is committed and deployed as the public Blitzy Prep section.
-- The public site contains 11 Blitzy guides at `/modules/16-company-oriented-prep`. Treat the root source as private working material and the generated snapshot as the deployable copy.
+- `08_Company_Specific_Prep/Blitzy/` is committed; its generated snapshot in `site/content/modules/16-company-oriented-prep/` is committed and deployed as the public Blitzy Prep section.
+- The public site contains 11 Blitzy guides at `/modules/16-company-oriented-prep`. The root source is the canonical copy; the generated snapshot is what deploys.
 - `company-prep.mjs` reads `08_Company_Specific_Prep/Blitzy/` when available. In clones without it, `sync-content.mjs` preserves the committed company-prep snapshot so Vercel builds still succeed.
 - `08_Company_Specific_Prep/Blitzy/01_Code_Review_Bug_Drills.md` is the source of truth; the `.ipynb` is a derived practice copy. Sync reads only the `.md`.
 
