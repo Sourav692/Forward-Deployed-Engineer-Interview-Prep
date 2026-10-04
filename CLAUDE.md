@@ -18,7 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `site/` is the only JS project: Next.js 16 App Router, React 19, Tailwind v4, npm. Run all npm commands from `site/`. No root package.json.
 - Next 16 APIs may differ from training data. Read `site/node_modules/next/dist/docs/` before using Next APIs (see `site/AGENTS.md`).
 - `09_Study_Plans/` is gitignored: it indexes a purchased third-party library. `06_` and `08_` packs are committed (only Blitzy is synced); some files (`LIBRARY_MAP.md`, `ROADMAP_7_DAY.md`, the condensed plan xlsx) reference that library, so strip those references before wiring them into the public site.
-- Platform plan: `00_Start_Here/Platform_Blueprint.html` (source brief `website_prompt.md`).
+- Platform plan: `00_Start_Here/Platform_Blueprint.html` (source brief `.website_plan/website_prompt.md`, local only).
 
 ## Commands (from `site/`)
 
