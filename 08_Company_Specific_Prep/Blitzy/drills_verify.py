@@ -121,7 +121,7 @@ def test_all():
     calls = []
 
     def always_timeout():
-        calls.append(1)-
+        calls.append(1)
         raise TimeoutError("boom")
     try:
         call_with_retry(always_timeout)
