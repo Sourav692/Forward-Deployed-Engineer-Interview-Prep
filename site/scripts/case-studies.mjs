@@ -1,6 +1,6 @@
 /**
  * Syncs the FDE Case Studies module: the three-layer interview guides under
- * `Case_Study_Groups/`, one folder per group (G01–G20).
+ * `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/`, one folder per group (G01–G20).
  *
  * Unlike the worksheet modules, these are reading pages. Each group folder holds four
  * documents, and each becomes a tab on the group's page:
@@ -10,7 +10,7 @@
  *   Gxx_Name_Cheat_Sheet.md -> cheat-sheet
  *   Gxx_Name.md             -> full-pack   (the original consolidated, sourced pack)
  *
- * The standalone cases under `Case_Study_Groups/Standalone/` have no fixed shape — one to
+ * The standalone cases under `02_System_Design_Case_Studies/Standalone_Designs/` have no fixed shape — one to
  * five documents each — so they are declared in `STANDALONE` with a label per file, and
  * each file becomes a tab. The manifest carries each page's tab list, so the app never
  * assumes four tabs.
@@ -81,7 +81,7 @@ const THEMES = THEME_GROUPS.map(([id, groups]) => {
 })
 
 /**
- * Standalone cases, keyed by folder under `Case_Study_Groups/Standalone/`. `number`
+ * Standalone cases, keyed by folder under `02_System_Design_Case_Studies/Standalone_Designs/`. `number`
  * orders them and is the case number from CASE_STUDY_INDEX.xlsx; `tag` is the badge.
  * `files` are `[file, tabId]`, published as tabs; `archived` are `[file, label]`,
  * superseded versions that stay in the repo and are linked on GitHub from the page but
@@ -125,9 +125,6 @@ const STANDALONE = [
 
 const isPublished = (group) => PUBLISHED === null || PUBLISHED.includes(group)
 
-/** `…/Case_Study_Groups` -> the repository root. */
-const repoRootOf = (caseStudyRoot) => resolve(caseStudyRoot, '..')
-
 /** `G01_Enterprise_Knowledge_Assistant` -> `enterprise-knowledge-assistant` */
 const slugOf = (folder) => folder.replace(/^G\d+_/, '').replace(/_/g, '-').toLowerCase()
 
@@ -160,7 +157,7 @@ function rewriteHref(href, sourceFile, ctx) {
   let abs = resolve(dirname(sourceFile), decodeURI(pathPart))
 
   // Packs written before the three-layer folders existed link to `Gxx_Name.md` at the
-  // top of Case_Study_Groups. That file now lives inside its own folder.
+  // top of the packs folder. That file now lives inside its own folder.
   if (!existsSync(abs)) {
     const moved = join(dirname(abs), basename(abs, '.md'), basename(abs))
     if (existsSync(moved)) abs = moved
@@ -190,7 +187,7 @@ function rewriteLinks(markdown, sourceFile, ctx) {
 }
 
 /** Every page to publish, whatever its source shape, as one list. */
-async function collectCases(root) {
+async function collectCases(root, standaloneRoot, repoRoot) {
   const groups = await listGroups(root)
   const listed = THEMES.flatMap((t) => t.groups)
   const unlisted = [...groups.keys()].filter((g) => !listed.includes(g))
@@ -210,7 +207,6 @@ async function collectCases(root) {
     }
   }
 
-  const standaloneRoot = join(root, 'Standalone')
   const onDisk = (await readdir(standaloneRoot, { withFileTypes: true })).filter((e) => e.isDirectory()).map((e) => e.name)
   const declared = STANDALONE.map((c) => c.folder)
   const undeclared = onDisk.filter((f) => !declared.includes(f))
@@ -236,7 +232,7 @@ async function collectCases(root) {
       tabs: c.files.map(([file, id]) => ({ id, label: labelOf(id), file })),
       archived: (c.archived ?? []).map(([file, label]) => ({
         label,
-        href: `${GITHUB_BLOB}${relative(repoRootOf(root), join(dir, file)).split(/[\\/]/).map(encodeURIComponent).join('/')}`,
+        href: `${GITHUB_BLOB}${relative(repoRoot, join(dir, file)).split(/[\\/]/).map(encodeURIComponent).join('/')}`,
       })),
       practice: c.practice,
     })
@@ -245,8 +241,9 @@ async function collectCases(root) {
 }
 
 export async function syncCaseStudies({ repoRoot, outDir }) {
-  const root = join(repoRoot, 'Case_Study_Groups')
-  const cases = await collectCases(root)
+  const caseStudiesDir = join(repoRoot, '02_System_Design_Case_Studies')
+  const root = join(caseStudiesDir, 'Scenario_Packs_G01_G20')
+  const cases = await collectCases(root, join(caseStudiesDir, 'Standalone_Designs'), repoRoot)
 
   // Page URL and file -> tab for every published folder, so cross-links point at the
   // site instead of the repo.

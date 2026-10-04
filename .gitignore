@@ -12,15 +12,11 @@ coverage/
 # Raw client stories and unredacted originals stay local.
 _private/
 
-# Purchased binary source material is stored outside Git unless deliberately
-# reviewed and added through an approved large-file workflow.
-FDE/Complete GEN AI FDE Interview System — Core + GenAI/**/*.pdf
-FDE/Complete GEN AI FDE Interview System — Core + GenAI/**/*.docx
-FDE/Complete GEN AI FDE Interview System — Core + GenAI/**/*.pptx
+# Company-specific and purchased interview prep kept local.
+06_Coding_Round_Prep/
+08_Company_Specific_Prep/Blitzy/
+08_Company_Specific_Prep/OpenAI_Anthropic_Pack/
+09_Study_Plans/
 
-# The dedicated interview-labs package is intentionally versioned in full.
-!FDE/Complete GEN AI FDE Interview System — Core + GenAI/11_HANDS_ON_LABS/**/*.pdf
-
-# Company-specific interview prep kept local.
-Blitzy_Prep/
-Gumroad_Study_Plans/
+# Personal Claude Code instructions
+CLAUDE.local.md

@@ -16,7 +16,7 @@ import { ReadingPanel } from '@/components/CaseStudyView'
 
 /**
  * The Roadmap (orientation) and the Rapid Revision Guide (final rehearsal): markdown
- * from `Last_Day_Prep/`, synced to `content/last-day/` by
+ * from `07_Last_Day_Revision/`, synced to `content/last-day/` by
  * `scripts/last-day.mjs` and rendered with the same reading panel as the case studies.
  */
 

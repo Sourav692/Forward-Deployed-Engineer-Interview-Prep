@@ -10,7 +10,7 @@ import { ReadingPanel } from '@/components/CaseStudyView'
 
 /**
  * The behavioural Story Bank (CONTENT-15): markdown from
- * `FDE/Behavioral_and_Leadership/story_bank.md`, synced to
+ * `04_Behavioral_and_Leadership/story_bank.md`, synced to
  * `content/behavioural/` and rendered with the same reading panel as the case studies.
  * It lives under the behavioural module, beside its two tracks; the static `story-bank`
  * segment takes precedence over the `[track]` route.

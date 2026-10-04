@@ -1,5 +1,0 @@
-# Educational Kubernetes manifest placeholder for configmap.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: genai-fde-lab-configmap

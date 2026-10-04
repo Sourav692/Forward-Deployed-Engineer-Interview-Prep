@@ -1,5 +1,0 @@
-# Educational Kubernetes manifest placeholder for frontend-deployment.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: genai-fde-lab-frontend-deployment

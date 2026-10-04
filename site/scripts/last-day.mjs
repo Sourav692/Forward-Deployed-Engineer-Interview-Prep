@@ -1,5 +1,5 @@
 /**
- * Syncs the Last-Day Review collection from `Last_Day_Prep/`.
+ * Syncs the Last-Day Review collection from `07_Last_Day_Revision/`.
  *
  * Two outputs, because the collection has two shapes:
  *
@@ -288,7 +288,7 @@ function transformTriggerSheet(html) {
  * learn-first and go-deeper links are checked against what actually exists.
  */
 export async function syncLastDay({ repoRoot, siteDir, outDir, pages }) {
-  const root = join(repoRoot, 'Last_Day_Prep')
+  const root = join(repoRoot, '07_Last_Day_Revision')
   if (!existsSync(root)) throw new Error(`Last-Day sources not found at ${root}`)
 
   // Markdown guides -> content/last-day/

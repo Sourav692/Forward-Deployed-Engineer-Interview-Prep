@@ -126,4 +126,4 @@ An end-to-end AI workflow — structured extraction, semantic matching, explaina
 - Name three fairness mechanisms and say which is continuous.
 - Why is the personalisation answer's "similar to successful hires" a bias risk, and what mitigates it?
 
-**Next →** [Case 5 — Logistics Exception Handling](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/Handbook/09_AI_System_Design_Casebook/05_Logistics_Exception_Handling.md)
+**Next →** [Case 5 — Logistics Exception Handling](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md)

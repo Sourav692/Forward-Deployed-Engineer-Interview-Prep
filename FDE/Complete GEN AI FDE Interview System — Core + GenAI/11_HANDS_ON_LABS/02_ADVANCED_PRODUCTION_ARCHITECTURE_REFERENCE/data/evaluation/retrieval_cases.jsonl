@@ -1,2 +1,0 @@
-{"case_id":"auth-001","query":"Why can the customer no longer access billing?","relevant_chunk_ids":["billing-oauth-02"],"tags":["authentication","billing"],"difficulty":"easy"}
-{"case_id":"permissions-001","query":"Which support policy applies to tenant Alpha?","relevant_chunk_ids":["alpha-policy-01"],"tags":["permissions","tenant-isolation"],"difficulty":"medium"}

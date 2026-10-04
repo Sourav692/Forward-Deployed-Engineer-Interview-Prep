@@ -24,11 +24,12 @@ import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
 
 const SITE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const REPO_ROOT = resolve(SITE_DIR, '..')
-const SOURCE_ROOT = join(REPO_ROOT, 'FDE')
+// Worksheet sources; also the presence check for building from the committed snapshot.
+const SOURCE_ROOT = join(REPO_ROOT, '03_Practice_Worksheets_and_Keys')
 const OUT_DIR = join(SITE_DIR, 'content')
 const COMPANY_PREP_SNAPSHOT_DIR = join(SITE_DIR, '.company-prep-snapshot')
 
-const BEHAVIOURAL_ROOT = join(SOURCE_ROOT, 'Behavioral_and_Leadership')
+const BEHAVIOURAL_ROOT = join(REPO_ROOT, '04_Behavioral_and_Leadership')
 
 /**
  * Every live module and the tracks inside it. Track ids must be unique across all
@@ -41,34 +42,13 @@ const MODULES = [
     tracks: [
       {
         id: 'core',
-        worksheetDir: join(
-          SOURCE_ROOT,
-          'Complete GEN AI FDE Interview System — Core + GenAI',
-          '01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION',
-          '04_CASE_STUDY_WORKSHEET',
-        ),
-        answerKeyDir: join(
-          SOURCE_ROOT,
-          'Complete GEN AI FDE Interview System — Core + GenAI',
-          '01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION',
-          '04_CASE_STUDY_WORKSHEET',
-          'answer_keys',
-          'answer-keys-in-md',
-        ),
+        worksheetDir: join(SOURCE_ROOT, 'Customer_Discovery_Worksheets'),
+        answerKeyDir: join(SOURCE_ROOT, 'Customer_Discovery_Worksheets', 'answer_keys'),
       },
       {
         id: 'system-design',
-        worksheetDir: join(
-          SOURCE_ROOT,
-          'FDE_System_Design_Interview_20_Scenarios',
-          'Version_3',
-        ),
-        answerKeyDir: join(
-          SOURCE_ROOT,
-          'FDE_System_Design_Interview_20_Scenarios',
-          'Version_3',
-          'answer_keys',
-        ),
+        worksheetDir: join(SOURCE_ROOT, 'System_Design_Worksheets'),
+        answerKeyDir: join(SOURCE_ROOT, 'System_Design_Worksheets', 'answer_keys'),
       },
     ],
   },
