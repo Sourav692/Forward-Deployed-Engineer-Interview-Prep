@@ -171,7 +171,7 @@ This plan turns the prototype into the production platform without writing new c
 
 **Navigation model.** Desktop top bar: six areas plus Glossary, Library, ⌘K search, theme toggle. Track, module and lesson pages add a left sidebar with the section and module tree (drawer below 1024 px). Mobile: slide-over menu plus a bottom bar with Learn, Practice, Interview, Progress. Breadcrumbs on every page below area level: Learn › Track › Section › Module › Lesson.
 
-**URL and slug rules.**
+**Decisions.** URL and slug rules:
 
 | Decision | Why | Rejected alternative |
 |---|---|---|
@@ -199,7 +199,7 @@ This plan turns the prototype into the production platform without writing new c
 | ID | Outcome | Size | Depends on |
 |---|---|---|---|
 | UX-01 | Final slug table for 10 tracks and 53 modules committed in `curriculum.ts`, checked for collisions with `editorial.TRACKS` ids | M | DATA-01 |
-| UX-02 | `NAV` in `editorial.ts` relabelled to the six areas; existing hrefs reached from area indexes | S | FE-03 |
+| UX-02 | `NAV` in `editorial.ts` relabelled to the six areas; existing hrefs reached from area indexes | S | UX-01 |
 | UX-03 | Breadcrumb spec per template (labels, truncation at 375 px) | S | UX-01 |
 
 **Acceptance criteria.**
@@ -211,6 +211,14 @@ This plan turns the prototype into the production platform without writing new c
 ## 5. UX flows and key screens
 
 **Goal.** Make the top three jobs take the fewest steps, and make every empty or missing state say what to do next (R33).
+
+**Decisions.**
+
+| Decision | Why | Rejected alternative |
+|---|---|---|
+| Path choice is optional: every area works without a chosen path | Revision-only visitors skip straight to practice | Force the diagnostic before Learn opens |
+| Gaps are shown in place (Partly ready panel, Coming soon module page) | Learners see what is missing and where to look instead | Hide gaps until filled |
+| Prerequisites gate softly (Blocked plus "Open anyway") | Experienced learners must not be locked out | Hard locks |
 
 **Critical flows.**
 
@@ -528,8 +536,9 @@ Rule: material already live under `/modules/...` or `/fde-last-day-prep` is neve
 | DATA-05 | Glossary pass: add acronyms surfaced by the new lessons to `glossary.ts` | M | DATA-02 |
 | DATA-06 | `scripts/mocks.mjs` syncing `03_.../Mock_Interviews/` (5 short + 5 full + README) to `content/mocks/`; rubric dimensions parsed from each scorecard section | M | DATA-01 |
 | DATA-07 | Interview hub definitions in `curriculum.ts`: five hubs, each listing existing question sources by link and the related modules | M | DATA-01 |
-| DATA-08 | Update CLAUDE.md "Layout" and "Content pipeline" bullets: `01_`, `05_` and `Mock_Interviews` now feed the site | S | DATA-02, DATA-06 |
+| DATA-08 | Update CLAUDE.md "Layout" and "Content pipeline" bullets: `01_`, `05_` and `Mock_Interviews` now feed the site (DATA-06 adds its own line in Phase 2) | S | DATA-02 |
 | DATA-09 | Phase 3: restore chosen git-history folders (PM-05) into root sources and map them to T6.6, T9.1, T8.3 | M | PM-05 |
+| DATA-10 | Phase 2, only if PM-04 approves: owner-written 6–10 item checkpoints for the T2–T6 modules, stored beside `curriculum.ts` | L | PM-04, DATA-01 |
 
 **Acceptance criteria.**
 
@@ -668,7 +677,7 @@ Rule: material already live under `/modules/...` or `/fde-last-day-prep` is neve
 
 Outcome: owner decisions are recorded, CI guards every PR, and the curriculum model exists as data.
 
-Tasks: PM-01, PM-02, PM-04, PM-05, OPS-03, OPS-04, FE-01, QA-01, OPS-01, DS-01, DS-02, DATA-01, DATA-03, PM-03, UX-01.
+Tasks: PM-01, PM-02, PM-04, PM-05, OPS-03, OPS-04, FE-01, QA-01, OPS-01, SEC-04, DS-01, DS-02, DATA-01, DATA-03, PM-03, UX-01.
 
 Exit criteria:
 
@@ -680,7 +689,7 @@ Exit criteria:
 
 Outcome: a visitor picks a path, browses all 10 tracks and 53 modules, reads real lessons for every ready and partly ready module, sees honest gap states, and keeps lesson progress in their browser.
 
-Tasks (build order): DATA-02, SEC-01, DATA-04, DATA-05, FE-02, BE-01, FE-05, DS-03, DS-04, UX-02, UX-03, UX-04, UX-06, FE-03, A11Y-03, FE-04, FE-06, FE-07, FE-08, FE-09, UX-05, FE-10, FE-11, FE-13, FE-14, FE-12, PERF-02, SEO-01, SEC-02, SEC-05, DATA-08, QA-02, A11Y-01, PERF-01, OPS-02, QA-03, QA-04, A11Y-02, QA-05.
+Tasks: DATA-02, SEC-01, DATA-04, DATA-05, FE-02, SEC-03, BE-01, FE-05, DS-03, DS-04, UX-02, UX-03, UX-04, UX-06, FE-03, A11Y-03, FE-04, FE-06, FE-07, FE-08, FE-09, UX-05, FE-10, FE-11, FE-13, FE-14, FE-12, PERF-02, SEO-01, SEC-02, SEC-05, DATA-08, QA-02, A11Y-01, PERF-01, OPS-02, QA-03, QA-04, A11Y-02, QA-05.
 
 Exit criteria:
 
@@ -694,7 +703,9 @@ Exit criteria:
 
 Outcome: a learner practises mocks with a timer and rubric, sees a dashboard with next-up, revision queue and readiness, and can export and restore progress.
 
-Tasks: DATA-06, FE-15, DATA-07, FE-18, UX-07, FE-16, FE-17, then checkpoints if PM-04 approved authoring (new task `DATA-10`: author 6–10 item checkpoints for T2–T6 modules, owner-written, M per track), then FE-19.
+Tasks: DATA-06, FE-15, DATA-07, FE-18, UX-07, FE-16, FE-17, DATA-10, FE-19.
+
+DATA-10 runs only if PM-04 (Phase 0) approved authoring checkpoints.
 
 Exit criteria:
 
@@ -718,6 +729,13 @@ Exit criteria:
 **Critical path.** PM-01 → DATA-01 → DATA-02 → FE-04 → FE-07 → FE-09 → QA-02 → Phase 1 release. Owner decisions (PM-01, PM-03) are the longest-lead item; DATA-01 can start in parallel using `pending` for undecided lessons. Design-system work (DS-*), CI (OPS-*) and the AppShell move (FE-03) run in parallel with the sync work. Phase 2 mocks (DATA-06, FE-15) can start during Phase 1 once FE-02 lands.
 
 ## 15. Risks and open questions
+
+**Owner decisions recorded on 5 October 2026 (Phase 0):**
+
+- PM-01: all third-party material is kept **with credit** (`publish: 'credited'`, credit line on each lesson, `/library/credits` page). Resolves Q1 and Q2.
+- PM-02: the FDE Handbook is the owner's own writing (`publish: 'own'`). Resolves Q3 and confirms A5.
+- PM-04: checkpoint questions, diagnostic questions and project briefs may be authored; the owner writes them. DATA-10 goes ahead in Phase 2. Resolves Q4 and confirms A2.
+- PM-05: restore all four git-history groups: incident logs, hands-on labs, readiness assessment, red-team fixtures and diagram explanations (DATA-09). Resolves Q11.
 
 | ID | Risk or question | Impact | Likelihood | Mitigation or decision needed | Owner |
 |---|---|---|---|---|---|
