@@ -10,6 +10,7 @@
     "check:content": "node scripts/check-parse.ts",
     "check:curriculum": "node scripts/check-curriculum.ts",
     "check:rules": "node scripts/check-progress-rules.ts",
+    "check:store": "node scripts/check-progress-store.ts",
     "predev": "npm run sync",
     "dev": "next dev",
     "prebuild": "npm run sync",

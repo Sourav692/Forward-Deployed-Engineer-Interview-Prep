@@ -8,6 +8,7 @@ import { update, useDemo } from '../store/useDemo'
 import { Select } from './CurriculumOverview'
 import { toast } from './feedback'
 import { EmptyState, ErrorState, StatusBadge, Tag, btn, cx } from './ui'
+import { Input } from '@/components/ui'
 
 const STATUSES: ProjectStatus[] = ['not-started', 'in-progress', 'ready-for-review', 'completed']
 const STATUS_LABEL: Record<ProjectStatus, string> = {
@@ -153,13 +154,13 @@ export function ProjectTracker({ projectId }: { projectId: string }) {
           <label htmlFor="repo" className="text-[0.8125rem] font-semibold">
             GitHub repository (placeholder)
           </label>
-          <input id="repo" value={repoUrl ?? ps.repoUrl} onChange={(e) => setRepoUrl(e.target.value)} placeholder="https://github.com/you/project" className="mt-1 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-[0.875rem] outline-none focus:border-accent" />
+          <Input id="repo" value={repoUrl ?? ps.repoUrl} onChange={(e) => setRepoUrl(e.target.value)} placeholder="https://github.com/you/project" className="mt-1" />
         </div>
         <div>
           <label htmlFor="portfolio" className="text-[0.8125rem] font-semibold">
             Portfolio link (placeholder)
           </label>
-          <input id="portfolio" value={portfolioUrl ?? ps.portfolioUrl} onChange={(e) => setPortfolioUrl(e.target.value)} placeholder="https://your-site.example/project" className="mt-1 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-[0.875rem] outline-none focus:border-accent" />
+          <Input id="portfolio" value={portfolioUrl ?? ps.portfolioUrl} onChange={(e) => setPortfolioUrl(e.target.value)} placeholder="https://your-site.example/project" className="mt-1" />
         </div>
         <button type="button" className={cx(btn.secondary, 'px-3 py-1.5 text-[0.8125rem]')} onClick={saveLinks} disabled={repoUrl === null && portfolioUrl === null}>
           Save links

@@ -5,26 +5,28 @@
  * be swapped for API calls without reshaping the UI. Every entity has a stable string
  * id; relationships are expressed as ids, never as nested copies.
  *
- * This file holds types only. `src/lib/progress/rules.ts` imports it with `import type`, which
- * keeps the rules runnable under plain `node` (type stripping erases the import).
+ * This file holds types only. The rule vocabulary the demo shares with production
+ * (statuses, confidence, attempts, rubric dimensions) lives in `src/lib/progress/types.ts`
+ * and is re-exported here, so `src/lib` never imports from `src/demo`.
  */
+
+import type {
+  AssessmentKind,
+  AttemptBase,
+  ConfidenceRating,
+  RubricDimension,
+  Status,
+} from '../lib/progress/types'
+
+export type { AssessmentKind, ConfidenceRating, RubricDimension, Status }
+/** The demo's attempt shape (no `updatedAt`); production adds it in `Attempt`. */
+export type Attempt = AttemptBase
 
 // ── Shared ──────────────────────────────────────────────────────────────────
 
 export type Level = 'foundation' | 'intermediate' | 'advanced'
 export type Difficulty = 'easy' | 'medium' | 'hard'
 export type ModuleFlag = 'required' | 'recommended' | 'optional'
-
-/** The eight learner-facing statuses (blueprint §16). */
-export type Status =
-  | 'not-started'
-  | 'in-progress'
-  | 'blocked'
-  | 'ready-for-review'
-  | 'completed'
-  | 'needs-revision'
-  | 'mastered'
-  | 'skipped'
 
 export type Topic =
   | 'orientation'
@@ -149,7 +151,6 @@ export interface Exercise {
   rubric: { criterion: string; anchors: RubricAnchor[] }[]
 }
 
-export type AssessmentKind = 'checkpoint' | 'mock' | 'readiness-exam'
 
 export interface AssessmentOption {
   id: string
@@ -247,13 +248,6 @@ export interface InterviewQuestion {
   mockId: string
   relatedModuleIds: string[]
 }
-
-export type RubricDimension =
-  | 'structure'
-  | 'technical-depth'
-  | 'trade-offs'
-  | 'communication'
-  | 'customer-judgement'
 
 export interface MockInterview {
   id: string // 'mock-a'
@@ -388,12 +382,6 @@ export interface GlossaryTerm {
 
 // ── Learner state ──────────────────────────────────────────────────────────
 
-/** A dated 1–5 self-rating; decays one level per 21 days without review. */
-export interface ConfidenceRating {
-  value: 1 | 2 | 3 | 4 | 5
-  at: string // ISO
-}
-
 export interface ProgressRecord {
   itemId: string
   status: Status
@@ -401,21 +389,6 @@ export interface ProgressRecord {
   confidence?: ConfidenceRating
   timeSpentMin: number
   lastAccessed?: string
-}
-
-export interface Attempt {
-  id: string
-  assessmentId: string
-  kind: AssessmentKind
-  at: string
-  /** 0–100 for checkpoints and the exam; rubric mean ×25 for mocks. */
-  score: number
-  passed: boolean
-  answers?: Record<string, string>
-  skillScores?: Record<string, { correct: number; total: number }>
-  rubric?: Partial<Record<RubricDimension, number>>
-  sectionScores?: Record<string, number>
-  autoFails?: string[]
 }
 
 export interface ExerciseSubmission {

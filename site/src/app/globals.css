@@ -13,6 +13,8 @@
   --surface-2: oklch(97.2% 0.004 260);
   --border: oklch(91% 0.006 260);
   --border-strong: oklch(84% 0.008 260);
+  /* Form-control boundary: 3.64:1 on --surface (WCAG 1.4.11 needs 3:1). --border-strong stays decorative. */
+  --input-border: oklch(62% 0.01 260);
   --text: oklch(24% 0.014 260);
   --text-muted: oklch(50% 0.012 260);
   --text-subtle: oklch(62% 0.01 260);
@@ -42,6 +44,7 @@
   --surface-2: oklch(24% 0.015 265);
   --border: oklch(29% 0.016 265);
   --border-strong: oklch(38% 0.018 265);
+  --input-border: oklch(54% 0.016 265);
   --text: oklch(94% 0.005 265);
   --text-muted: oklch(72% 0.012 265);
   --text-subtle: oklch(58% 0.014 265);
@@ -70,12 +73,14 @@
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-input-border: var(--input-border);
   --color-text: var(--text);
   --color-muted: var(--text-muted);
   --color-subtle: var(--text-subtle);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-ring: var(--accent-ring);
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
@@ -189,6 +194,90 @@ body {
 }
 .prose li::marker {
   color: var(--text-subtle);
+}
+
+/*
+ * Lesson reading column (DS-04). Applies the type scale from
+ * specs/2026-10-05-design-tokens.md: 16/24 body, 68ch measure, headings on the
+ * 18/28 to 30/36 steps. In the components layer so Tailwind utilities still win,
+ * and only pages that opt in with `.lesson-reading` change.
+ */
+@layer components {
+  .lesson-reading {
+    max-width: 68ch;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--text);
+  }
+  .lesson-reading :where(h1) {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+  }
+  .lesson-reading :where(h2) {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.011em;
+  }
+  .lesson-reading :where(h3) {
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+  }
+  .lesson-reading :where(h4) {
+    margin-top: 1.25rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+  }
+  .lesson-reading :where(p, ul, ol) {
+    margin-block: 0.75rem;
+  }
+  .lesson-reading :where(ul) {
+    list-style: disc;
+    padding-left: 1.4rem;
+  }
+  .lesson-reading :where(ol) {
+    list-style: decimal;
+    padding-left: 1.4rem;
+  }
+  .lesson-reading :where(li) {
+    margin-block: 0.25rem;
+  }
+  .lesson-reading :where(li)::marker {
+    color: var(--text-subtle);
+  }
+  .lesson-reading :where(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .lesson-reading :where(code) {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.35em;
+  }
+  /* Lead paragraph: 18/28. Small print (source notes, credits): 14/20. Captions: 12/16. */
+  .lesson-reading :where(.lead) {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  .lesson-reading :where(small, .text-small) {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .lesson-reading :where(figcaption, .caption) {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: var(--text-muted);
+  }
 }
 
 /*

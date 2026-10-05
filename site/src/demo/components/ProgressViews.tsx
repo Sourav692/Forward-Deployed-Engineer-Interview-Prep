@@ -5,7 +5,8 @@ import type { ActivityEvent, Status } from '../types'
 import * as repo from '../repo'
 import type { Readiness } from '@/lib/progress/rules'
 import type { RevisionItem } from '../store/selectors'
-import { STATUS_META, EmptyState, ProgressBar, StatusBadge, cx, formatDate } from './ui'
+import { LEARNER_STATUSES } from '@/components/ui'
+import { EmptyState, ProgressBar, StatusBadge, cx, formatDate } from './ui'
 
 const REASON: Record<RevisionItem['reason'], string> = {
   'low-confidence': 'Confidence 2 or below',
@@ -120,7 +121,7 @@ function relative(iso: string, now: number): string {
 export function StatusLegend({ counts }: { counts: Partial<Record<Status, number>> }) {
   return (
     <ul className="flex flex-wrap gap-2">
-      {(Object.keys(STATUS_META) as Status[]).map((s) => (
+      {LEARNER_STATUSES.map((s) => (
         <li key={s} className="flex items-center gap-1.5">
           <StatusBadge status={s} size="xs" />
           <span className="text-[0.75rem] tabular-nums text-subtle">{counts[s] ?? 0}</span>

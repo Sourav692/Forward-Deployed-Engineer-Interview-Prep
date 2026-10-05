@@ -6,6 +6,7 @@ import * as repo from '../repo'
 import { update, useDemo } from '../store/useDemo'
 import { toast } from './feedback'
 import { Callout, ErrorState, btn, cx } from './ui'
+import { Textarea } from '@/components/ui'
 
 /**
  * Exercise flow: progressive hints, a simulated submission (no code runs), then a
@@ -107,13 +108,7 @@ export function ExerciseRunner({ exerciseId }: { exerciseId: string }) {
           Your submission
         </label>
         <p className="text-[0.8125rem] text-subtle">Simulated: paste a summary or link. Nothing is executed.</p>
-        <textarea
-          id="answer"
-          rows={6}
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-          className="mt-2 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-[0.9375rem] outline-none focus:border-accent"
-        />
+        <Textarea id="answer" rows={6} value={answer} onChange={(e) => setAnswer(e.target.value)} className="mt-2" />
       </section>
 
       <section>

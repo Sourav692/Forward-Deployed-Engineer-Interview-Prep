@@ -13,6 +13,7 @@ import { setUnsaved } from '../store/unsaved'
 import type { Progress } from '../store/selectors'
 import { toast } from './feedback'
 import { ProgressBar, ProgressRing, SkeletonCard, StatusBadge, btn, cx, Skeleton } from './ui'
+import { Textarea } from '@/components/ui'
 
 /** Renders children only for a signed-in learner; otherwise redirects to sign-in. */
 export function AuthGate({ children, fallbackLines = 4 }: { children: React.ReactNode; fallbackLines?: number }) {
@@ -178,14 +179,14 @@ export function NotesPanel({ itemId, label, href }: { itemId: string; label: str
           ))}
         </ul>
       )}
-      <textarea
+      <Textarea
         id={fieldId}
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
         disabled={!state}
         rows={3}
         placeholder={state ? 'Write a note for future you…' : 'Sign in to keep notes'}
-        className="mt-2 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-[0.875rem] outline-none focus:border-accent"
+        className="mt-2"
       />
       <button type="button" onClick={save} disabled={!draft.trim()} className={cx(btn.secondary, 'mt-1.5 px-3 py-1.5 text-[0.8125rem]')}>
         Save note

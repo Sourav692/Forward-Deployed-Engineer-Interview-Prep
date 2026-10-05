@@ -92,4 +92,6 @@ export type CurriculumLesson = {
   publish: PublishDecision
   /** Credit line shown under the lesson when `publish` is `credited`. */
   credit?: string
+  /** Estimated reading time. Weights the module progress rollup when known. */
+  estMinutes?: number
 }
