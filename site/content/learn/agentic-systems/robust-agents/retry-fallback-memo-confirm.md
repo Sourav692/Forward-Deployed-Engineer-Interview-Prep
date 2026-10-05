@@ -1,7 +1,7 @@
 # Retry, Fallback, Memoization and the Confirmation Gate
 
 > **Level** 🟡 Building Production Systems · **Module** 03 · **Doc** 1 of 5 · **Time** ~35 min + lab
-> **Prerequisites:** Module 01 (especially [The Tool-Calling Loop From Scratch](/learn/agentic-systems/the-tool-calling-loop/tool-calling-loop-from-scratch))
+> **Prerequisites:** Module 01 (especially [The Tool-Calling Loop From Scratch](/learn/agentic-systems/the-tool-calling-loop/the-tool-calling-loop-from-scratch))
 > **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/src/robustness.py`, `docs/DESIGN.md` §4, `tests/test_agent.py` *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
 > **Companion implementation:** `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/robustness.py` and its tests
 

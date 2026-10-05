@@ -1,6 +1,6 @@
 # Blitzy Prep: Suggested Reading Order
 
-Total ≈ 6–7 hours of focused prep. Follow the order: each file builds on the one before it.
+Total ≈ 9–10 hours of focused prep. Follow the order: each file builds on the one before it.
 
 ## Phase 1: Know the product (≈ 1.5 h)
 
@@ -39,6 +39,18 @@ Everything else is framed around Blitzy, so start here.
 | A release-that-went-wrong STAR story | `07` §6 template |
 | Your POC success metrics for the demo | `02` §9 + `05` §B6 |
 | The 2–3 questions you'll actually ask in each round | `03`: write them on a card |
+
+## Phase 5: Final Round (≈ 3 h)
+
+The final round tests engineering fit, ownership, and executive communication. The final-round guides now link to the earlier Blitzy material, hiring-manager worksheets, system-design cases, and delivery framework, with specific sections to revisit and exercises to complete. Build the answers around your own examples.
+
+| # | File | Time | Goal | Done when you can… |
+| --- | --- | --- | --- | --- |
+| 14 | `Final_Round/00_Final_Round_Runbook.md` | Start here | Follow the three-hour reading and rehearsal plan | Name your three stories and the judgement each proves |
+| 15 | `Final_Round/01_Engineering_Fit_And_Technical_Aptitude.md` | 35 min | Refresh existing technical guides and explain a real project | Defend your design, validation, and changed decisions |
+| 16 | `Final_Round/02_Ownership_Story_Workbook.md` | 45 min | Prepare specific ownership and pushback stories | Tell three real stories in two minutes and 45 seconds |
+| 17 | `Final_Round/03_Executive_Communication_And_Scope.md` | 35 min | Turn technical constraints into executive decisions | Make a scope recommendation with an outcome, fact, trade-off, and ask |
+| 18 | `Final_Round/04_Final_Round_Mock_Interview.md` | 50 min + 15 min repair | Rehearse under pressure and revisit weak areas | Score the answers, repair the weakest one, and repeat it aloud |
 
 ## Final 30 minutes before each round
 
