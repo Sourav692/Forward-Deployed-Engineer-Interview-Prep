@@ -21,6 +21,7 @@ import { ConfidenceControl } from '@/components/learn/ConfidenceControl'
 import { COPY } from '@/components/learn/copy'
 import { GapPanel } from '@/components/learn/GapPanel'
 import { ModuleNotes } from '@/components/learn/LessonActions'
+import { ModulePathFlag } from '@/components/learn/PathFlagIslands'
 import { PrerequisiteCard } from '@/components/learn/PrerequisiteCard'
 import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { ReadingList } from '@/components/learn/ReadingList'
@@ -80,6 +81,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
               <span className="text-xs font-semibold tabular-nums text-subtle">{mod.code}</span>
               <ModuleStatusBadge input={input} />
               {mod.status === 'partly' && <Tag>Partly ready</Tag>}
+              <ModulePathFlag moduleSlug={mod.slug} />
             </div>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">{mod.title}</h1>
             <p className="mt-3 text-lg text-muted">{capitalise(mod.objective)}.</p>

@@ -16,7 +16,8 @@
     "prebuild": "npm run sync",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:paths": "node scripts/check-paths.ts"
   },
   "dependencies": {
     "marked": "^18.0.13",
