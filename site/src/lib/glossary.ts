@@ -311,6 +311,8 @@ export const GLOSSARY: GlossaryEntry[] = [
   // ---------------------------------------------------------------- business and domain
   { term: 'ROI', expansion: 'return on investment', group: 'Business and domain',
     plain: 'What the customer gets back for what they spend. Say it in hours saved or money saved, not "better AI".' },
+  { term: 'CFO', expansion: 'chief financial officer', group: 'Business and domain',
+    plain: 'The executive who owns the budget. Answer them with cost per outcome, budgets and predictability, not token counts.' },
   { term: 'KPI', expansion: 'key performance indicator', group: 'Business and domain',
     plain: 'The number the business watches to judge success.' },
   { term: 'CSAT', expansion: 'customer satisfaction score', group: 'Business and domain',
