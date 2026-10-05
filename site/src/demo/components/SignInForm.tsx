@@ -6,6 +6,7 @@ import { newUser, safeNext } from '../auth'
 import { signInAsDemo, signInAsNew, useDemo } from '../store/useDemo'
 import { toast } from './feedback'
 import { Card, ErrorState, btn } from './ui'
+import { Input } from '@/components/ui'
 
 /**
  * Mock sign-in. `useSearchParams` reads `?next=`; in Next 16 a client component using it
@@ -53,13 +54,13 @@ export function SignInForm() {
             <label htmlFor="name" className="text-[0.8125rem] font-semibold">
               Name
             </label>
-            <input id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" className="mt-1 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-[0.9375rem] outline-none focus:border-accent" />
+            <Input id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" className="mt-1" />
           </div>
           <div>
             <label htmlFor="email" className="text-[0.8125rem] font-semibold">
               Email
             </label>
-            <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" className="mt-1 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-[0.9375rem] outline-none focus:border-accent" />
+            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" className="mt-1" />
           </div>
           {error && <ErrorState title="Check the form" body={error} />}
           <button type="submit" className={btn.secondary}>

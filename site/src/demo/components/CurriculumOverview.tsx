@@ -6,6 +6,7 @@ import type { Level, Topic } from '../types'
 import * as repo from '../repo'
 import { useDemo } from '../store/useDemo'
 import { EmptyState, ProgressBar, StatusBadge, Tag, cx } from './ui'
+import { Select as SelectControl } from '@/components/ui'
 
 const LEVELS: Level[] = ['foundation', 'intermediate', 'advanced']
 const TOPICS: Topic[] = ['orientation', 'engineering', 'llm-retrieval', 'agents', 'production', 'design', 'fde', 'communication', 'interview', 'portfolio']
@@ -17,13 +18,13 @@ export function Select({ id, label: text, value, onChange, options }: { id: stri
       <label htmlFor={id} className="text-[0.75rem] font-semibold text-subtle">
         {text}
       </label>
-      <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className="rounded-md border border-border-strong bg-surface px-2.5 py-1.5 text-[0.875rem]">
+      <SelectControl id={id} value={value} onChange={(e) => onChange(e.target.value)}>
         {options.map(([v, l]) => (
           <option key={v} value={v}>
             {l}
           </option>
         ))}
-      </select>
+      </SelectControl>
     </div>
   )
 }
