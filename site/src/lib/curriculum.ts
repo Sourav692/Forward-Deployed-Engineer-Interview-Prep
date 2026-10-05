@@ -496,7 +496,7 @@ export const MODULES: CurriculumModule[] = [
       'practise-api-and-backend',
     ],
     gapNote: 'Code examples; authentication beyond a single mention.',
-    seeAlso: ['identity-secrets-tenant-fairness'],
+    seeAlso: ['identity-verification-with-sso-and-oidc'],
   },
   {
     slug: 'cloud-containers-deployment',
@@ -906,13 +906,15 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'Users see documents they shouldn\'t',
     commonMistakes: ['Filtering after retrieval'],
     lessons: [
-      'why-enterprise-changes-the-problem',
-      'access-control-abac',
-      'ingestion-pipeline',
-      'the-query-graph',
-      'output-guardrails',
+      'why-access-control-shapes-enterprise-rag',
+      'the-seven-access-rules',
+      'pushing-policy-into-the-index',
+      'permission-aware-ingestion',
+      'the-security-first-query-graph',
+      'output-guardrails-and-refusals',
+      'practise-enterprise-rag',
     ],
-    seeAlso: ['retrieval-hybrid-rerank', 'evaluation-golden-sets-judges', 'observability'],
+    seeAlso: ['retrieval-hybrid-rerank', 'the-evaluation-pyramid', 'observability'],
   },
   {
     slug: 'evaluation-and-release-gates',
@@ -929,7 +931,14 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Checkpoint',
     interviewProbe: 'How do you know it works?',
     commonMistakes: ['Vibes-based evaluation', 'unvalidated LLM judges'],
-    lessons: ['evaluation-golden-sets-judges', 'ch12-validation-and-measurement'],
+    lessons: [
+      'the-evaluation-pyramid',
+      'component-and-trajectory-metrics',
+      'golden-sets-and-sample-size',
+      'validating-llm-judges',
+      'release-gates-safety-quality-and-cost',
+      'practise-evaluation-and-release-gates',
+    ],
     seeAlso: ['g13-evaluation-and-release-gating'],
   },
   {
@@ -948,10 +957,12 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'How do you stop prompt injection?',
     commonMistakes: ['Trusting retrieved text'],
     lessons: [
-      'prompt-injection-egress-tenancy',
-      'identity-secrets-tenant-fairness',
-      'identity-secrets-and-tenant-fairness',
-      'cross-cutting-system-design-quick-reference-v2',
+      'identity-verification-with-sso-and-oidc',
+      'secrets-and-per-tenant-encryption-keys',
+      'prompt-injection-and-egress-control',
+      'tenant-isolation-levels',
+      'fair-sharing-between-tenants',
+      'practise-security-and-tenancy',
     ],
     seeAlso: ['g07-secure-multi-tenant-ai-platform'],
   },
@@ -1683,6 +1694,9 @@ export const RENAMED: Record<string, string | null> = {
 }
 
 /** Credit for the T3.4 consolidated lessons that summarise ideas from the third-party Chapter 7. */
+const T4_2_CH12_CREDIT =
+  'Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.'
+
 const T3_4_CH07_CREDIT =
   'Draws on ideas from Chapter 7 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.'
 
@@ -1967,7 +1981,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md',
     home: 'security-tenancy-prompt-injection',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'infra-and-cicd',
@@ -2566,13 +2580,71 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'own',
   },
+  // T4.1 Enterprise RAG in production: seven consolidated lessons. They replace the
+  // five excluded Handbook lessons below.
+  {
+    slug: 'why-access-control-shapes-enterprise-rag',
+    title: 'Why Access Control Shapes Enterprise RAG',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/01_Why_Access_Control_Shapes_Enterprise_RAG.md',
+    home: 'enterprise-rag-in-production',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'the-seven-access-rules',
+    title: 'The Seven Access Rules',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/02_The_Seven_Access_Rules.md',
+    home: 'enterprise-rag-in-production',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'pushing-policy-into-the-index',
+    title: 'Pushing Policy Into the Index',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/03_Pushing_Policy_Into_the_Index.md',
+    home: 'enterprise-rag-in-production',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'permission-aware-ingestion',
+    title: 'Permission-Aware Ingestion',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/04_Permission_Aware_Ingestion.md',
+    home: 'enterprise-rag-in-production',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'the-security-first-query-graph',
+    title: 'The Security-First Query Graph',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/05_The_Security_First_Query_Graph.md',
+    home: 'enterprise-rag-in-production',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'output-guardrails-and-refusals',
+    title: 'Output Guardrails and Refusals',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/06_Output_Guardrails_and_Refusals.md',
+    home: 'enterprise-rag-in-production',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'practise-enterprise-rag',
+    title: 'Practise Enterprise RAG Interview Questions',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/07_Practise_Enterprise_RAG_Interview_Questions.md',
+    home: 'enterprise-rag-in-production',
+    kind: 'sync',
+    publish: 'own',
+  },
   {
     slug: 'why-enterprise-changes-the-problem',
     title: 'Why Enterprise Changes the Problem',
     source: '01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/01_Why_Enterprise_Changes_The_Problem.md',
     home: 'enterprise-rag-in-production',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'access-control-abac',
@@ -2580,7 +2652,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/02_Access_Control_ABAC.md',
     home: 'enterprise-rag-in-production',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'ingestion-pipeline',
@@ -2588,7 +2660,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/03_Ingestion_Pipeline.md',
     home: 'enterprise-rag-in-production',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'the-query-graph',
@@ -2596,7 +2668,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/05_The_Query_Graph.md',
     home: 'enterprise-rag-in-production',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'output-guardrails',
@@ -2604,7 +2676,63 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/06_Output_Guardrails.md',
     home: 'enterprise-rag-in-production',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
+  },
+  // T4.2 Evaluation and release gates: six consolidated lessons. They replace the
+  // excluded Handbook evaluation lesson below and the excluded Chapter 12 lesson.
+  {
+    slug: 'the-evaluation-pyramid',
+    title: 'The Evaluation Pyramid',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/01_The_Evaluation_Pyramid.md',
+    home: 'evaluation-and-release-gates',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T4_2_CH12_CREDIT,
+  },
+  {
+    slug: 'component-and-trajectory-metrics',
+    title: 'Component and Trajectory Metrics',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/02_Component_and_Trajectory_Metrics.md',
+    home: 'evaluation-and-release-gates',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T4_2_CH12_CREDIT,
+  },
+  {
+    slug: 'golden-sets-and-sample-size',
+    title: 'Golden Sets and Sample Size',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md',
+    home: 'evaluation-and-release-gates',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T4_2_CH12_CREDIT,
+  },
+  {
+    slug: 'validating-llm-judges',
+    title: 'Validating LLM Judges',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/04_Validating_LLM_Judges.md',
+    home: 'evaluation-and-release-gates',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T4_2_CH12_CREDIT,
+  },
+  {
+    slug: 'release-gates-safety-quality-and-cost',
+    title: 'Release Gates: Safety, Quality, and Cost',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/05_Release_Gates_Safety_Quality_and_Cost.md',
+    home: 'evaluation-and-release-gates',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T4_2_CH12_CREDIT,
+  },
+  {
+    slug: 'practise-evaluation-and-release-gates',
+    title: 'Practise Evaluation and Release-Gate Interview Questions',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/06_Practise_Evaluation_Interview_Questions.md',
+    home: 'evaluation-and-release-gates',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T4_2_CH12_CREDIT,
   },
   {
     slug: 'evaluation-golden-sets-judges',
@@ -2612,7 +2740,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md',
     home: 'evaluation-and-release-gates',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'observability',
@@ -2636,8 +2764,57 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md',
     home: 'evaluation-and-release-gates',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
+    publish: 'excluded',
+  },
+  // T4.4 Security, tenancy and prompt injection: six consolidated lessons. They replace
+  // the four excluded sources below and the excluded Handbook identity lesson.
+  {
+    slug: 'identity-verification-with-sso-and-oidc',
+    title: 'Identity Verification with SSO and OIDC',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/01_Identity_Verification_with_SSO_and_OIDC.md',
+    home: 'security-tenancy-prompt-injection',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'secrets-and-per-tenant-encryption-keys',
+    title: 'Secrets and Per-Tenant Encryption Keys',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/02_Secrets_and_Per_Tenant_Encryption_Keys.md',
+    home: 'security-tenancy-prompt-injection',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'prompt-injection-and-egress-control',
+    title: 'Prompt Injection and Egress Control',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/03_Prompt_Injection_and_Egress_Control.md',
+    home: 'security-tenancy-prompt-injection',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'tenant-isolation-levels',
+    title: 'Tenant Isolation Levels',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/04_Tenant_Isolation_Levels.md',
+    home: 'security-tenancy-prompt-injection',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'fair-sharing-between-tenants',
+    title: 'Fair Sharing Between Tenants',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/05_Fair_Sharing_Between_Tenants.md',
+    home: 'security-tenancy-prompt-injection',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'practise-security-and-tenancy',
+    title: 'Practise Security and Tenancy Interview Questions',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/06_Practise_Security_and_Tenancy_Interview_Questions.md',
+    home: 'security-tenancy-prompt-injection',
+    kind: 'sync',
+    publish: 'own',
   },
   {
     slug: 'prompt-injection-egress-tenancy',
@@ -2645,7 +2822,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/04_Prompt_Injection_Egress_Tenancy.md',
     home: 'security-tenancy-prompt-injection',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'identity-secrets-and-tenant-fairness',
@@ -2653,7 +2830,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Production_and_Platform_Judgment/01-identity-secrets-and-tenant-fairness.md',
     home: 'security-tenancy-prompt-injection',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'cross-cutting-system-design-quick-reference-v2',
@@ -2661,7 +2838,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Production_and_Platform_Judgment/Cross_Cutting_System_Design_Quick_Reference_v2.md',
     home: 'security-tenancy-prompt-injection',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'g07-secure-multi-tenant-ai-platform',
