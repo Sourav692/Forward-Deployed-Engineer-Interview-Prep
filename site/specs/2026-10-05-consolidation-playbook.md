@@ -33,3 +33,64 @@ Date: 5 October 2026. Owner decision: every module whose lessons are reading mat
 - Source files stay in the repository unchanged.
 - Do not regenerate the table in `2026-10-05-canonical-homes.md`; the integrator does it once at the end. Update `site/scripts/baselines.json` with `npm run check:content -- --update-baseline` only when a count change is intended, and say why in the PR.
 - Write a short note per track in `site/specs/consolidation/<Track>.md`: old-to-new lesson mapping per module, source conflicts found, and handoffs.
+
+## Integration
+
+Done on branch `content/consolidation-integration` after PRs #34 to #42 merged.
+
+### Redirect hygiene
+
+- One chain existed: `memory-and-state/module-09-memory-databases-caching-for-genai-systems` pointed at a T2.3 key that PR #40 retired. It now points straight at `chunking-and-indexing/choosing-a-database-and-vector-store`.
+- `check:curriculum` now fails when a `RENAMED` value is itself a key (a chain), when a value is not a published lesson, and when a key is still published. All 106 entries pass.
+
+### Handoffs
+
+"Covered" means the concept was already taught in a published lesson of the target module. "Added" means a section was written into the named lesson, grounded only in the retired source the handoff names, with the source added to the lesson's Sources line. "Linked" means a `seeAlso` entry was added.
+
+| From | Handoff | Result |
+|---|---|---|
+| T0–T1 | T1.2 caching and T4.5 caching | Linked both ways (`caching-in-genai-systems` in T1.2, `cache-answers-without-serving-wrong-ones` in T4.5). T4.5 is the canonical home for semantic caching. |
+| T0–T1 | T1.4 release gates and rollout, from T4.7 | Linked: `gate-releases-on-quality` and `roll-out-changes-gradually` in T4.7. T1.4 already links `infrastructure-as-code-and-the-release-pipeline`. |
+| T0–T1 | T4.4 authentication beyond API keys | Covered: T1.2 links `identity-verification-with-sso-and-oidc`; T1.2's gap note stands. |
+| T0–T1, T6 | Senior FDE's day in T6.3 | Covered: T6.3 lists `a-senior-fdes-day`. |
+| T0–T1 | T5.1 owns the full design method | Covered; no action. |
+| T2 | T4.5: Module 1 Topic 10 caching | Covered by `caching-in-genai-systems`. |
+| T2 | T3.4: Module 1 Topic 10 chat memory and session privacy | Covered by `short-term-memory-and-the-context-window` and `memory-in-production`. |
+| T2 | T4.1: Module 1 Topic 12 guardrail families, PII, output validation, auditing | Added to `output-guardrails-and-refusals` ("Place Each Guardrail Where Its Failure Starts"), including the source conflict on input filtering. RBAC was already covered. |
+| T2 | T4.1: `document_permissions` table (Module 9) and relational plus vector stores (Module 1 Topic 10) | Added to `permission-aware-ingestion` ("Give the Catalog a Schema That Outlives One Demo"). |
+| T2 | T4.1: ACL pre- and post-filtering | Covered by `why-access-control-shapes-enterprise-rag`. |
+| T2 | T4.2: Module 2 Topic 4 evaluation tools and CI gating | Added to `release-gates-safety-quality-and-cost` ("Run the Gate on Every Change, at Two Sizes"). |
+| T2 | T4.2: RAGAS faithfulness detail | Covered: groundedness as the share of supported claims in `component-and-trajectory-metrics`; the thresholds stay in T2.2, where the conflict is stated. |
+| T2 | T3.x supervisor patterns | Covered by T3.6. |
+| T2 | LangSmith environment-variable gotcha | Not placed: a framework setup detail with no concept to teach. |
+| T2 | `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md` origin | Open. The file names a `Comprehensive_RAG_Techniques` notebook collection as its source; the repository cannot confirm whether that is third-party. Owner to confirm; lessons drawing on it are unchanged. |
+| T3.1–T3.3 | T3.4 memory (§1.8, §2, §3, §4 Q3, §5.2 Q7) | Covered by T3.4 lessons 1, 3, 4, 6 and 7. |
+| T3.1–T3.3 | T3.5 interrupts, safe resume, `NodeInterrupt`, `RetryPolicy` | Added to `the-confirmation-gate-and-memoization` ("Resume From the Pause Without Repeating the Write") and `retries-and-fallbacks` ("Scope Framework Retries to the Failures That Pass"). Linked T2.5's `checkpoints-interrupts-and-human-approval` and `retries-fan-out-and-streaming` from T3.5. |
+| T3.1–T3.3 | T3.6 supervisor, swarm, hierarchical, blackboard, deep agents | Supervisor, handoff, hierarchy and deep agents were covered. Added swarm and blackboard to `multi-agent-coordination-patterns` ("Use a Blackboard When the Next Contributor Depends on the Board"). |
+| T3.1–T3.3 | T3.6 travel support mock (§6) | Added to `practise-multi-agent-systems` ("Rehearse a Full Mock: A Travel Support Agent"). |
+| T3.1–T3.3 | T4.2 agent, RAG and tool evaluation; deterministic versus judge metrics | Covered by `component-and-trajectory-metrics`, `validating-llm-judges` and `release-gates-safety-quality-and-cost`. |
+| T3.1–T3.3 | T4.3 tracing and no-repro debugging | Covered by `standard-tracing-and-customer-facing-dashboards` and `diagnosing-production-incidents`. |
+| T3.1–T3.3 | T4.5 low-latency agent pipeline | Covered across T4.5 lessons 3, 4 and 6. |
+| T3.1–T3.3 | T1/T2 role-track questions | Covered by the T2.2 and T2.4 practice lessons. |
+| T3.1–T3.3 | T2.4 ChromaDB `n_results` warning | Added to `production-retrieval-pipelines` (alert when fewer than `k` results return). |
+| T3.1–T3.3 | T4.4 link to The Model Context Protocol | Linked: `the-model-context-protocol` in T4.4. |
+| T3.1–T3.3 | T4.5 link to Deterministic Context Assembly | Linked: `deterministic-context-assembly` in T4.5. |
+| T3.5–T3.7 | T4 links to the research-platform case study | Linked: `anatomy-of-a-deployed-multi-agent-platform` in T4.7. |
+| T4 operations | T2.3: 20M-documents §7 chunking by type, §8 parent-child | §8 was covered by `retrieve-small-return-large`; added the parent-held access rule there. Added the missing formats and "one chunker, many parsers" to `chunking-by-document-type` ("Write One Chunker and Many Parsers"). |
+| T4 operations | T4.4/T4.1: guardrail and PII material in T4.7 lesson 6 | Linked: `red-teaming-and-layered-guardrails` in T4.4. |
+| T4 quality | Quick reference §2 OpenTelemetry and §7 failure patterns, to T4.3 | §2 covered. Added §7 to `production-monitoring-metrics-drift-and-slos` ("Watch the Four Ways Quality Fails Quietly"). |
+| T4 quality | §3 semantic caching (T4.5), §9 build versus buy (T4.7) | Covered by `caching-in-genai-systems` and `enterprise-rag-on-a-governed-lakehouse`. |
+| T4 quality | §4 AgentOps on Databricks, §8 MLflow, rollback and A/B (T4.7) | Covered by `agentops-mapped-to-databricks`, `prompt-versioning-rollout-and-rollback` and `testing-prompt-changes`. |
+| T4 quality | §5 eight-step guard pipeline (T3.5) | Covered by `the-eight-guard-checks`. |
+| T4 quality | MRR glossary entry | Fixed: `MRR` is now "mean reciprocal rank" in the retrieval group. No page uses it for revenue, and the entry notes the other meaning. |
+| T4 quality | T4.1 `seeAlso` to `observability` | Covered: already replaced by `the-run-trace`. |
+| T5 | Guardrails, prompt injection and prompt versioning for the customer support case | Linked in T5.4: `prompt-injection-and-egress-control`, `red-teaming-and-layered-guardrails`, `prompt-versioning-rollout-and-rollback`. |
+| T5 | Databricks RAG cross-link | Linked both ways: `enterprise-rag-on-a-governed-lakehouse` in T5.4, `access-controlled-rag-on-databricks` in T4.7. |
+| T5 | Duplicate live T5.5 pages | No action: live pages are out of rewrite scope. |
+| T6 | T7 behavioural drill link to cross-team ownership | Linked: `cross-team-ownership-and-cadence` in T7.2. |
+| T6 | T4/T5 depth for decomposition cases; T5.5 live practice | Covered: the decomposition cases stay practice; T6.2, T6.4 and T6.5 list the live pages. |
+| T7–T8 | Baseline refresh | `scripts/baselines.json` refreshed once here for all tracks. |
+
+### Naming audit
+
+No published lesson title or consolidated file name uses "Module", "Chapter", "Topic", "Part", "Interview Tutorial", "Beginner Guide" or a source series name. The one match, "The Twelve-Part Design Framework", names the framework's twelve parts rather than a series part, so it stays. Every synced lesson's H1 matches its curriculum title.

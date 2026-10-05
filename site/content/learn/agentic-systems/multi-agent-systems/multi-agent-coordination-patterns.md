@@ -2,13 +2,13 @@
 
 *A central coordinator gives a plan that is easy to audit, but every routing decision it makes is another model call before any real work happens.*
 
-◷ 8 min
+◷ 10 min
 
 Every coordination pattern answers one question: who decides which agent runs next. Pick the pattern from the shape of the work, after [When Multi-Agent Is Justified](/learn/agentic-systems/multi-agent-systems/when-multi-agent-is-justified) has confirmed that a split is worth it at all.
 
 **Objectives:**
 
-- name six coordination patterns and who decides the next step in each;
+- name seven coordination patterns and who decides the next step in each;
 - state the cost each pattern adds, per hop or per level;
 - choose a pattern from the shape of the task, not from the framework.
 
@@ -98,6 +98,16 @@ The guide's comparison sets these beside the supervisor.
 
 Orchestrator-workers fits when the decomposition cannot be known in advance. Evaluator-optimizer fits when a second reasoning pass can check a rubric better than the generator can check itself in one shot.
 
+## Use a Blackboard When the Next Contributor Depends on the Board
+
+Some work has no fixed order. A fact-checked article may need research twice before the writer can start. A routing table written in advance cannot know that.
+
+The agent fundamentals tutorial adds the **blackboard** for this case. The state holds a shared workspace of named contributions. Before every turn, a controller reads the board and picks the next contributor from what is missing or weak, or declares the work done. The contributor reads the whole board, adds its piece, and hands back to the controller. The tutorial's notebook drafts a fact-checked article this way, with a researcher, a critic, and a writer.
+
+The price is a controller model call before every contribution. That is more per unit of work than a supervisor with a fixed routing table. Choose a blackboard only when the sequence of contributors truly depends on the data.
+
+The same tutorial calls peer handoff a **swarm**: specialists transfer control directly, with no central router. A swarm saves the round trip through a supervisor, so it is faster. It also loses the one place to see what happened, because the trace is now a chain of handoffs between peers. The tutorial's default follows from that: a supervisor for anything that needs an audit trail or a human approval gate, and a swarm for latency-sensitive handoffs between agents that trust each other.
+
 ## Choose What Each Agent Sees on Purpose
 
 The sources disagree on what a supervisor passes to a specialist. The coordination-patterns guide describes the supervisor handing control and the full shared message history to each specialist. Its billing and refund agents read each other's findings straight from that history. The FDE Handbook and the interview tutorial both argue the opposite. Pass a small, defined package or a summary, because full history is expensive, dilutes focus, and leaks information an agent does not need.
@@ -148,6 +158,7 @@ A supervisor fits because the three domains are known in advance, and each needs
 - A hierarchy keeps each routing decision small, at one routing call per level.
 - Parallel agents cut latency to the slowest agent only when the subtasks are independent.
 - Orchestrator-workers splits work at runtime; evaluator-optimizer refines one draft against a checkable rubric.
+- A blackboard pays a controller call per contribution to handle data-dependent order; a swarm trades the central audit trail for speed.
 - The sources disagree on full shared history versus a defined package, so choose what each agent sees on purpose.
 - Match the pattern to the task: fixed domains suit a supervisor, and unpredictable decomposition suits orchestrator-workers.
 
@@ -162,6 +173,9 @@ A supervisor fits because the three domains are known in advance, and each needs
 3. **When is a hierarchy worth its cost?**
    When one router has too many agents to choose between well. Each level adds a routing call before any work, so under roughly five agents a flat design is better.
 
+4. **When is a blackboard worth a controller call before every contribution?**
+   When the right next contributor cannot be known in advance, such as needing research twice before writing. If the order is fixed, a supervisor's routing table or a hardcoded pipeline is cheaper.
+
 ## References
 
-**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: "The one idea: agents are nodes, coordination is edges", §1.2 on supervisor cost, §1.3, §1.5, the §2 gotcha "Hierarchy multiplies routing cost invisibly", §3 "Supervisor versus handoff", "Parallel versus sequential" and "Flat versus hierarchical", and §4 question 7 on hardcoding a predictable decomposition. `multi_agent_coordination_patterns.md`: "Orchestrator-Workers Pattern", "Multi-Agent Supervisor Pattern", "Evaluator-Optimizer Pattern", and "Cross-Pattern Comparison Summary". `02_Reference_Architecture_Handoffs.md` (FDE Handbook, Multi-Agent Systems): "The handoff is the hard part".
+**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: "The one idea: agents are nodes, coordination is edges", §1.2 on supervisor cost, §1.3, §1.5, the §2 gotcha "Hierarchy multiplies routing cost invisibly", §3 "Supervisor versus handoff", "Parallel versus sequential" and "Flat versus hierarchical", and §4 question 7 on hardcoding a predictable decomposition. `multi_agent_coordination_patterns.md`: "Orchestrator-Workers Pattern", "Multi-Agent Supervisor Pattern", "Evaluator-Optimizer Pattern", and "Cross-Pattern Comparison Summary". `02_Reference_Architecture_Handoffs.md` (FDE Handbook, Multi-Agent Systems): "The handoff is the hard part". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.6 "Multi-agent topology", §1.7 "Blackboard coordination", and §3 "Supervisor vs. swarm topology".

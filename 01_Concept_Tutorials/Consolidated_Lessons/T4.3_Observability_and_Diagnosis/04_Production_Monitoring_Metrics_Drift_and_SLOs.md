@@ -2,7 +2,7 @@
 
 *A trace explains one run after the fact, while monitoring watches thousands of runs for the change that comes before an incident.*
 
-◷ 6 min
+◷ 7 min
 
 Per-run traces do not answer "is the system getting worse?" Aggregate the fields from [The Run Trace](02_The_Run_Trace.md) into metrics, compare them to a baseline, and set targets that page someone before a customer notices.
 
@@ -41,6 +41,21 @@ Two questions a per-run trace cannot answer are drift and attribution.
 **Drift alerting.** A sudden change in refusal rate, tool error rate or mean cost per run usually comes before a visible incident. A per-run budget that halts one runaway workflow is the same instinct applied to one execution. Drift alerting applies it across many runs over time: compare today with a rolling baseline and page when they diverge. A scheduled evaluation run is one input; production metrics are the other. At scale, a scheduled harness run that diffs leak count, refusal accuracy and groundedness catches quality regressions before a customer does.
 
 **Cost attribution.** Expect the question "who pays for a runaway agent?" Totals by tenant, by workflow and by model answer it. The per-run cost-by-purpose field is the other half. The gap is a report and a bill, not a missing event.
+
+## Watch the Four Ways Quality Fails Quietly
+
+A web service fails with a 500 that an alert can catch. A model fails with a fluent, schema-valid answer that is wrong. The success rate can hold at 95% while users report that answers are getting worse. The cross-cutting quick reference names four patterns to watch, each with its own signal.
+
+| What is going wrong? | Signal to track | First response |
+|---|---|---|
+| Are answers drifting away from the retrieved text? | Similarity between the embedded context and the embedded answer, as a weekly average | Roll back the last prompt or model change |
+| Are relevant documents no longer surfacing? | Hit rate: share of queries with a relevant document in the top five | Re-index, check for new query topics, or re-embed |
+| Is spend rising without more traffic? | Average tokens per query beside query volume | Look for prompt bloat, over-fetching, or retry loops |
+| Is the system failing politely? | Share of "I don't know" answers | Log each as a capability gap and route to a human |
+
+The worked numbers show the shapes. Answer-to-context similarity slides from 0.91 to 0.88 to 0.82 over three weeks, under a 0.85 floor. Hit rate falls from 85% to 78% to 65%, and the alert fires below 70%. Daily cost jumps from $135 to $280, a rise of more than 50%, while queries stay near 1,000 and tokens per query go from 450 to 1,200. The fixes there are a trimmed prompt, top-k cut from 10 to 5, and at most 2 retries per query. "I don't know" answers rise from 2% to 8%.
+
+The last pattern is the easiest to miss. A polite refusal looks like a success to every error counter. Parse responses for it and count it as a gap, not a pass.
 
 ## Set Targets on the Right Percentiles
 
@@ -82,6 +97,7 @@ When P99 rises with a flat P50 a month later, the queue chart shows it is load, 
 - Measure every stage of the request path, read latency at P95 and P99, and put enough fields on each trace event to slice the metrics later.
 - Build separate dashboards for cost, component latency, tenant usage, incidents and model quality.
 - Alert on drift against a rolling baseline, and attribute cost by tenant, workflow and model.
+- Track answer-to-context similarity, retrieval hit rate, tokens per query, and the "I don't know" rate, because each failure looks like success to an error counter.
 - Set TTFT, TPOT and total latency as separate SLOs, and track goodput, token-weighted cache hits, queue wait and utilisation.
 - Keep telemetry asynchronous and sampled so monitoring does not become the slowdown.
 
@@ -98,4 +114,4 @@ When P99 rises with a flat P50 a month later, the queue chart shows it is load, 
 
 ## References
 
-**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (cost and latency playbook notes): §3 method (P95 and P99), §12 observability (metrics, five dashboards, trace event fields), §17 observability checklist. `ADDITIONS_BEYOND_PLAYBOOK.md`: §D metrics the playbook misses. `CORE_8_DRIVERS_MEMORIZE.md`: driver 7. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §3 drift and attribution. `06_Scaling_To_20M_Documents.md` (FDE Handbook): §9 drift detection.
+**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (cost and latency playbook notes): §3 method (P95 and P99), §12 observability (metrics, five dashboards, trace event fields), §17 observability checklist. `ADDITIONS_BEYOND_PLAYBOOK.md`: §D metrics the playbook misses. `CORE_8_DRIVERS_MEMORIZE.md`: driver 7. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §3 drift and attribution. `06_Scaling_To_20M_Documents.md` (FDE Handbook): §9 drift detection. `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §7 "Failure Pattern Detection", including the monitoring dashboard figures.

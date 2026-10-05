@@ -11,7 +11,7 @@ export const RENAMED_T3: Record<string, string | null> = {
   'memory-and-state/memory-and-state-interview-tutorial': 'memory-and-state/short-term-memory-and-the-context-window',
   'memory-and-state/ch07-knowledge-memory-retrieval': 'memory-and-state/long-term-memory-write-retrieve-forget',
   'memory-and-state/module-09-memory-databases-caching-for-genai-systems':
-    'chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems',
+    'chunking-and-indexing/choosing-a-database-and-vector-store',
   // T3.1–T3.3
   // T3.1 consolidated into four lessons.
   'the-tool-calling-loop/tool-calling-loop-from-scratch': 'the-tool-calling-loop/the-tool-calling-loop-from-scratch',

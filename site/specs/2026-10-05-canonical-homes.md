@@ -13,64 +13,73 @@ Apply these in order when a new lesson is used by more than one module.
 1. **A required track wins over an optional one.** T1 and T9 are optional, so many learners never open them. A lesson shared with a required track lives there, and the T1 or T9 module links to it.
 2. **A lesson lives where its source folder is taught in sequence.** A Handbook chapter belongs to the module that walks through that chapter's folder in order.
 3. **Every scenario pack and standalone design lives in T5.5 Scenario library.** Topic modules link to them. These are already published under `/modules/15-fde-case-studies`, so for them the home sets only the breadcrumb.
-4. **When two lessons overlap inside one module, move one to the module whose scope it serves.** For example, `a-day-in-the-life` moved from T0.2 to T6.3, because T0.2 already has `senior-fde-day-to-day` and its scope says delivery detail lives in T6.3.
-5. **When one file covers two modules' topics in separate H2 sections, publish it as slices.** The home keeps its slug and the original URL, and publishes the file minus the sections that belong elsewhere (`sections: { exclude: [...] }`). Each moved part becomes a new lesson with its own slug, homed in the module it serves, that publishes only those sections (`sections: { include: [...] }`). Headings are matched exactly, every H2 goes to exactly one slice (or is excluded on purpose), and `check:curriculum` fails on overlap or a missing heading. A repository link to the file opens the slice holding the link's anchor, else the home part. Current slices:
-   - `module-10-backend-fastapi-deployment` (T1.2) keeps the overview, FastAPI and LLM serving; `module-10-deployment-and-operations` (T1.4) takes "Topic 3: Deployment & Infrastructure" and "Topic 4: Production Operations".
-   - `module-01-rag-fundamentals-core-components` (T2.2) keeps every topic except embeddings; `module-01-embeddings` (T2.1) takes "Topic 4: Embeddings".
-   - `module-09-memory-databases-caching-for-genai-systems` (T2.3) keeps the overview, Topic 2 and Topic 3; `module-09-caching-in-genai-systems` (T4.5) takes "Topic 4: Caching in GenAI Systems"; "Topic 1: Memory Design in AI Systems" and "Topic 5: Memory & Caching for Agent Systems" are excluded on purpose, because the T3.4 consolidated lessons teach them.
-   - `scoping-an-fde-project-complete-guide` (T6.2) keeps modules 1 to 4 and 6 to 8; `scoping-roll-out-and-prove-the-result` (T6.5) takes "Module 5: Roll Out, Operate, and Prove the Result", with the same credit line.
+4. **When two lessons overlap inside one module, move one to the module whose scope it serves.** For example, the senior FDE's day is taught once, in T0.2 (`a-senior-fdes-day`), and T6.3 lists it under `seeAlso` instead of keeping its own copy.
+5. **When one file covers two modules' topics in separate H2 sections, publish it as slices.** The home keeps its slug and the original URL, and publishes the file minus the sections that belong elsewhere (`sections: { exclude: [...] }`). Each moved part becomes a new lesson with its own slug, homed in the module it serves, that publishes only those sections (`sections: { include: [...] }`). Headings are matched exactly, every H2 goes to exactly one slice (or is excluded on purpose), and `check:curriculum` fails on overlap or a missing heading. A repository link to the file opens the slice holding the link's anchor, else the home part. The consolidation retired every slice that existed (the Module 1, Module 9 and Module 10 files and the scoping guide are now taught by concept lessons), so no lesson publishes a slice today; the mechanism stays for future sources.
 
 Lessons of kind `live` (already published under `/modules/...` or `/fde-last-day-prep`) are linked from Learn rather than copied, whatever their home.
 
 ## Consequence for module pages (FE-07)
 
-Under rule 1, T1.5 Distributed systems essentials owns no lessons: everything it teaches is homed in a required track. (T1.4 Cloud, containers and deployment was in the same position until rule 5 gave it the deployment slice of Module 10.) Its module page must present `seeAlso` lessons as the main reading list, not as a footnote. The same layout applies to any module whose `lessons` list is empty.
+Under rule 1, T1.5 Distributed systems essentials owns no lessons: everything it teaches is homed in a required track (`durability-and-idempotency`, `retries-and-fallbacks` and the live reliability module). Its module page must present `seeAlso` lessons as the main reading list, not as a footnote. The same layout applies to any module whose `lessons` list is empty.
 
 To change a home, edit `home` on the lesson in `curriculum.ts`, then move its slug from the old module's `lessons` to its `seeAlso` and the other way round. The check fails until both sides agree.
 
 ## Consolidated modules
 
-Some modules were assembled from several overlapping sources, so one concept was taught three or four times in different words. A consolidated module replaces those sources with a short run of lessons written once, in the house tutorial format, drawn only from the original sources (grounding rule) and credited where a third-party source contributed. The original files stay in the repository. Their curriculum entries become `publish: 'excluded'` and leave every reading list, `RENAMED` maps each retired lesson key to the lesson that now teaches its material, and `next.config.ts` redirects the old URLs permanently. An excluded lesson may be listed in no module; `check:curriculum` allows that only for `excluded` lessons.
+Most modules were assembled from several overlapping sources, so one concept was taught three or four times in different words. Every reading module (any module with a published `kind: 'sync'` lesson) is now consolidated: a short run of concept lessons, written once in the house tutorial format, drawn only from the original sources (grounding rule) and credited where a third-party source contributed. The method is `2026-10-05-consolidation-playbook.md`; the per-track old-to-new mappings are in `consolidation/*.md`. T3.4 Memory and state was the pilot (PR #31); PRs #34 to #42 did the rest, and the integration pass closed the cross-track handoffs.
 
-**T3.4 Memory and state is the pilot** (October 2026, owner review before merge). Seven lessons in `01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/` replace four sources:
+- New lessons live in `01_Concept_Tutorials/Consolidated_Lessons/<Code>_<Module_Title>/`, one folder per module with a README listing its sources.
+- The original files stay in the repository as references. Their curriculum entries become `publish: 'excluded'` and leave every reading list and `seeAlso`. An excluded lesson may be listed in no module; `check:curriculum` allows that only for `excluded` lessons.
+- `RENAMED` maps each retired `<module>/<lesson>` key to the lesson that now teaches its material. It is assembled from one file per track in `src/lib/consolidation/tN.ts`, and `next.config.ts` turns every entry into a permanent (308) redirect. `check:curriculum` fails when a value is itself a retired key (a redirect chain), when a value is not a published lesson, and when a key is still published.
+- `kind: 'live'` lessons (worksheets, scenario packs, the story bank and the final-week reviews) were not rewritten; only their display titles were cleaned.
 
-| Old lesson (T3.4) | Now | Redirect target |
-|---|---|---|
-| `state-memory-sessions` | Excluded; taught by lessons 1, 2 and 6 | `why-agents-need-state` |
-| `memory-and-state-interview-tutorial` | Excluded; taught by lessons 1, 3, 5, 6 and 7 | `short-term-memory-and-the-context-window` |
-| `ch07-knowledge-memory-retrieval` | Excluded; summarised in lessons 2, 4, 6 and 7 (credited) | `long-term-memory-write-retrieve-forget` |
-| `module-09-memory-databases-caching-for-genai-systems` | Moved to T2.3 as "Databases and Vector Search for GenAI Systems", minus Topics 1, 4 and 5; Topic 4 is a new slice `module-09-caching-in-genai-systems` in T4.5; Topics 1 and 5 are taught by lessons 1 to 6 | `chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems` |
-
-The new lessons, in order: `why-agents-need-state`, `types-of-memory`, `short-term-memory-and-the-context-window`, `long-term-memory-write-retrieve-forget`, `advanced-memory-architectures`, `memory-in-production`, `practise-memory-and-state`. T3.5 now lists `why-agents-need-state` under `seeAlso` in place of `state-memory-sessions`.
+Totals after consolidation: 209 published synced lessons, 105 excluded lessons and 106 redirects.
 
 ## Multi-use lessons
 
+Generated by `npm run check:curriculum -- --homes`.
+
 | Lesson | Home | Also used by | Kind |
 |---|---|---|---|
-| `a-day-in-the-life` | T6.3 | T0.2 | sync |
+| `a-senior-fdes-day` | T0.2 | T6.3 | sync |
 | `code-review-bug-drills` | T8.4 | T1.1 | live |
-| `identity-secrets-tenant-fairness` | T4.4 | T1.2 | sync |
-| `infra-and-cicd` | T4.7 | T1.4 | sync |
-| `durability-and-idempotency` | T3.7 | T1.5 | sync |
-| `retry-fallback-memo-confirm` | T3.5 | T1.5 | sync |
+| `gate-releases-on-quality` | T1.4 | T4.7 | sync |
+| `roll-out-changes-gradually` | T1.4 | T4.7 | sync |
+| `cache-answers-without-serving-wrong-ones` | T1.2 | T4.5 | sync |
 | `module-12-reliability-and-failure-handling` | T8.3 | T1.5 | live |
-| `core-8-drivers-memorize` | T4.5 | T2.1 | sync |
-| `retrieval-hybrid-rerank` | T2.4 | T4.1 | sync |
+| `production-retrieval-pipelines` | T2.4 | T4.1 | sync |
+| `checkpoints-interrupts-and-human-approval` | T2.5 | T3.5 | sync |
+| `retries-fan-out-and-streaming` | T2.5 | T3.5 | sync |
+| `the-model-context-protocol` | T3.2 | T4.4 | sync |
+| `deterministic-context-assembly` | T3.3 | T4.5 | sync |
 | `why-agents-need-state` | T3.4 | T3.5 | sync |
-| `evaluation-golden-sets-judges` | T4.2 | T4.1 | sync |
-| `observability` | T4.3 | T4.1 | sync |
+| `retries-and-fallbacks` | T3.5 | T1.5 | sync |
+| `anatomy-of-a-deployed-multi-agent-platform` | T3.6 | T4.7 | sync |
+| `durability-and-idempotency` | T3.7 | T1.5 | sync |
+| `the-evaluation-pyramid` | T4.2 | T4.1 | sync |
 | `g13-evaluation-and-release-gating` | T5.5 | T4.2 | live |
+| `identity-verification-with-sso-and-oidc` | T4.4 | T1.2 | sync |
+| `prompt-injection-and-egress-control` | T4.4 | T5.4 | sync |
 | `g07-secure-multi-tenant-ai-platform` | T5.5 | T4.4 | live |
+| `the-run-trace` | T4.3 | T4.1 | sync |
 | `g14-observability-and-production-diagnosis` | T5.5 | T4.3, T6.6 | live |
+| `the-eight-cost-and-latency-drivers` | T4.5 | T2.1 | sync |
+| `caching-in-genai-systems` | T4.5 | T1.2 | sync |
 | `scale-prototype-to-production` | T5.5 | T4.6, T6.4 | live |
 | `g18-consumer-scale-chat-service` | T5.5 | T4.6 | live |
 | `g10-high-volume-batch-pipeline` | T5.5 | T4.6 | live |
+| `prompt-versioning-rollout-and-rollback` | T4.7 | T5.4 | sync |
+| `enterprise-rag-on-a-governed-lakehouse` | T4.7 | T5.4 | sync |
+| `red-teaming-and-layered-guardrails` | T4.7 | T4.4, T5.4 | sync |
+| `infrastructure-as-code-and-the-release-pipeline` | T4.7 | T1.4 | sync |
 | `g19-model-development-and-post-training` | T5.5 | T4.8 | live |
 | `g20-llm-inference-serving` | T5.5 | T4.8 | live |
+| `access-controlled-rag-on-databricks` | T5.4 | T4.7 | sync |
 | `g12-scoping-to-deployed-agent` | T5.5 | T6.2 | live |
 | `prioritize-ai-use-cases` | T5.5 | T6.4, T6.5 | live |
 | `build-when-customer-data-is-poor` | T5.5 | T6.4 | live |
 | `decomposition-classics-67-68-69` | T5.5 | T6.4 | live |
+| `choosing-the-first-use-case` | T6.1 | T6.4 | sync |
 | `internal-knowledge-assistant` | T8.1 | T6.1 | live |
 | `sales-copilot` | T8.1 | T6.1 | live |
 | `financial-compliance-reviewer` | T8.1 | T6.1 | live |
@@ -81,9 +90,10 @@ The new lessons, in order: `why-agents-need-state`, `types-of-memory`, `short-te
 | `retail-demand-explainer` | T8.1 | T6.1 | live |
 | `service-now-ticket-agent` | T8.1 | T6.1 | live |
 | `executive-dashboard-copilot` | T8.1 | T6.1 | live |
-| `gates-risks-metrics` | T6.3 | T6.5 | sync |
-| `deep-dive-and-conversational-formats` | T7.1 | T9.2 | sync |
-| `proof-vs-cheat-sheet-honesty` | T7.1 | T9.2 | sync |
+| `risk-checks-and-delivery-metrics` | T6.3 | T6.5 | sync |
+| `cross-team-ownership-and-cadence` | T6.3 | T7.2 | sync |
+| `three-formats-for-one-project` | T7.1 | T9.2 | sync |
+| `proof-versus-knowledge` | T7.1 | T9.2 | sync |
 | `communicates-with-clarity` | T7.3 | T7.5 | live |
 
-38 lessons are used by more than one module.
+54 lessons are used by more than one module.

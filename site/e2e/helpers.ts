@@ -2,8 +2,8 @@ import { expect, type Locator, type Page } from '@playwright/test'
 
 /** Stable fixtures from `src/lib/curriculum.ts` (slugs never change; see CLAUDE.md). */
 export const READY_MODULE = '/learn/orientation/the-fde-role'
-export const LESSON = '/learn/orientation/the-fde-role/the-three-roles'
-export const LESSON_TITLE = 'The Three Roles'
+export const LESSON = '/learn/orientation/the-fde-role/three-roles-three-questions'
+export const LESSON_TITLE = 'Three Roles, Three Questions'
 /** Ready module whose prerequisite (apis-and-backend) a fresh browser has not completed. */
 export const GATED_MODULE = '/learn/engineering-foundations/distributed-systems-essentials'
 export const COMING_SOON_MODULE = '/learn/engineering-foundations/sql-and-data-modelling'

@@ -2,7 +2,7 @@
 
 *An impressive multi-agent design loses marks if it never says why one agent was not enough, or what stops the agents looping, leaking, or overspending.*
 
-◷ 10 min
+◷ 12 min
 
 Most multi-agent questions test judgement before mechanics: interviewers want the simpler design named first. Answer each prompt below out loud, then compare with the outline and reread the lesson it points to.
 
@@ -103,6 +103,26 @@ Longer than the demo. Termination, partial failure, and per-agent permissions ar
 
 > **Warning: do not lead with the framework.** Naming a library answers none of the skeleton's questions. An answer that starts with tools and agent names, and never says why or what stops it, reads as architecture by fashion.
 
+## Rehearse a Full Mock: A Travel Support Agent
+
+A 45-minute mock tests whether the controls appear without prompting. The agent fundamentals tutorial sets this one. A travel booking company wants an agent for customer support: lookups on existing bookings, changes and cancellations, and policy questions. Weather disruptions bring thousands of conversations at once. No conversation may be lost mid-flight, and no refund over $200 may go out without a human check.
+
+Pick the least autonomous shape that works. A supervisor over three specialists fits: a read-only booking lookup, a policy question-answerer over the policy documents with no side-effecting tools, and a change-or-cancel agent that alone can write to the booking system. Prefer the supervisor over peer handoff here, because refunds need every routing decision logged in one place. Then say what needs no agent at all. "What is the baggage allowance?" is a direct retrieval lookup, wired as a workflow.
+
+Place the approval gate precisely. The change-or-cancel agent computes the refund in plain code, with no model call for the number. Above $200 it raises an interrupt before the refund tool runs. The refund call is keyed by booking ID plus a generated request ID, so an approved resume cannot pay twice.
+
+Close with state, limits, and operations. Keep each conversation as a thread in a durable checkpointer such as Postgres, never an in-memory saver. Keep cross-session customer history in a separate store, read once at the start of a thread. Cap each conversation at 15 steps before it must resolve or go to a human, and alert on a per-conversation cost ceiling. Retry only the booking-system calls on transient network errors. Send malformed tool calls back to the supervisor to re-plan. Stream the reply so customers see progress during a spike. Trace every model and tool call, and alert on approval wait time, because a backlog of pending refunds is itself an incident.
+
+| Did the answer... | Points to |
+|---|---|
+| Justify the topology? | Supervisor over three specialists, with the audit reason |
+| Place the human gate and protect the resume? | Interrupt above $200, idempotent refund key |
+| Separate thread state from customer history? | Durable checkpointer plus a separate store |
+| Bound the run? | Step cap, cost ceiling, hand-off to a human |
+| Split retry from escalation? | Retry transient errors, re-plan bad calls |
+| Cover scale and observability? | Threads in a database, streaming, traced spans |
+| Refuse an agent where none is needed? | Policy lookup as a plain workflow |
+
 ## Worked Example: Design a Research System With a Supervisor and Workers
 
 The prompt: "Design a research system that answers broad questions with cited reports."
@@ -138,6 +158,7 @@ A strong answer covers all six without being asked. The point is not the diagram
 - Say what the handoff package holds and that permission scope travels with it.
 - Decide partial failure in advance, isolate failures per agent, and evaluate per agent and per trajectory.
 - Use the case studies to show escalation justified by measured failure, and say which definition of multi-agent you use.
+- In a full mock, volunteer the human gate, the safe resume, the run limits, and the parts that need no agent.
 
 ## Check Yourself
 
@@ -152,4 +173,4 @@ A strong answer covers all six without being asked. The point is not the diagram
 
 ## References
 
-**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: §1 "Say this in an interview" prompts, §3 one-liners, §4 "Top 10 interview questions" (restated in new words), §5 "Role tracks", and §6 "Self-check". FDE Handbook, Multi-Agent Systems: the "Interview lens" and "Checkpoint" sections of `01_When_Multi_Agent_Is_Justified.md`, `02_Reference_Architecture_Handoffs.md`, `03_Failure_Isolation_And_Evaluation.md`, `04_Case_Study_Research_Platform.md`, and `05_Case_Study_Supervisor_To_Deep_Agent.md`. `multi_agent_coordination_patterns.md`: "Cross-Pattern Comparison Summary".
+**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: §1 "Say this in an interview" prompts, §3 one-liners, §4 "Top 10 interview questions" (restated in new words), §5 "Role tracks", and §6 "Self-check". FDE Handbook, Multi-Agent Systems: the "Interview lens" and "Checkpoint" sections of `01_When_Multi_Agent_Is_Justified.md`, `02_Reference_Architecture_Handoffs.md`, `03_Failure_Isolation_And_Evaluation.md`, `04_Case_Study_Research_Platform.md`, and `05_Case_Study_Supervisor_To_Deep_Agent.md`. `multi_agent_coordination_patterns.md`: "Cross-Pattern Comparison Summary". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §6 "Mock system design: a real-time customer support agent for a travel booking platform" (prompt, rubric and worked answer, restated in new words).

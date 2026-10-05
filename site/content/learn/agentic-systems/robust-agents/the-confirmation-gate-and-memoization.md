@@ -2,7 +2,7 @@
 
 *A cache saves time and money on repeated calls, but a cache that answers before the safety check can quietly approve an action nobody approved.*
 
-◷ 7 min
+◷ 9 min
 
 A tool call is not a black box the loop can trust; it is where a toy loop becomes a real agent. Put the confirmation gate in front of everything else, then add a memo behind it, and read [Retries and Fallbacks](/learn/agentic-systems/robust-agents/retries-and-fallbacks) for what happens when the call itself fails.
 
@@ -81,6 +81,16 @@ The ordering makes that impossible: the gate runs first, unconditionally, on eve
 
 > **Warning: the cache is not a second authorisation path.** If memoization ever runs before the destructive check, a repeated request inherits an approval that was given for a different moment and a different intent. Keep the gate first, and keep destructive results out of the cache unless the action is idempotent by design.
 
+## Resume From the Pause Without Repeating the Write
+
+Pausing is the easy half of human approval. The hard half is resuming without running a side effect a second time. A resume that re-executes a write turns one approval into two refunds.
+
+LangGraph builds the pause into the graph. A node raises `NodeInterrupt` with a message for the reviewer, the checkpointer saves state at that point, and the run stops. In the interview tutorial's hotel-booking notebook, a compliance check raises it on a booking request that looks like SQL injection. The interrupted node has not committed its write, so a resume re-enters cleanly instead of replaying earlier steps.
+
+A hand-built gate needs the same guarantee. Give every call that is not a pure read an idempotency key: an id the caller supplies and the system remembers, so a repeated call returns the first result instead of acting twice. A refund tool keyed by booking ID plus a generated request ID cannot double-pay, even if a human approves and the run resumes twice.
+
+Read the paused state, not the printed stream. A run stopped by `NodeInterrupt` ends abruptly, with the interrupt buried in the saved state's task list. It is easy to mistake for a crash. Check the state's `next` field, which names the node waiting to run, and the interrupts on its tasks. That is how logs tell "waiting for approval" apart from "failed". [Checkpoints, Interrupts, and Human Approval](/learn/llm-and-retrieval/langchain-and-langgraph/checkpoints-interrupts-and-human-approval) covers the framework mechanics in full.
+
 ## Worked Example: Two Requests to Close a Ticket
 
 A support agent handles "find the login ticket and close it".
@@ -100,6 +110,7 @@ The read was cheap the second time, and the write never happened without a yes. 
 - The gate is reliable because destructiveness is declared at registration, the default is deny, and a block raises a resumable pause.
 - The memo keys on the tool name plus sorted arguments and is shared across turns of one session.
 - A cache hit must never route around the gate; the sources differ only on whether an approved destructive result may be cached.
+- A pause is only safe if the resume cannot repeat a write, so key every side-effecting call and read the paused state to tell waiting from failed.
 
 ## Check Yourself
 
@@ -112,6 +123,9 @@ The read was cheap the second time, and the write never happened without a yes. 
 3. **Two calls arrive: `search_tickets` with `{"query": "auth", "limit": 5}` and the same call with the keys in the other order. How many times does the tool run?**
    Once. The memo key sorts the arguments before serialising them, so both calls map to the same entry, and the second is logged as a `cache_hit`.
 
+4. **A run that hit `NodeInterrupt` looks like it crashed. How do you tell, and what must hold before it resumes?**
+   Read the saved state: `next` names the node waiting to run and the tasks carry the interrupt, which a crash does not leave. Before resuming, every side-effecting call must be idempotent, for example a refund keyed by booking ID plus a request ID, so a repeated resume cannot act twice.
+
 ## References
 
-**Sources:** `01_Retry_Fallback_Memo_Confirm.md` (FDE Handbook, Robust Agents): "Why this matters", "The composed executor", "1 · The confirmation gate" and "2 · Memoization". `05_The_Eight_Guard_Checks.md`: "6 · Memoization — the ordering rule" and "The pipeline, in order". `05-guarding-tool-calls.md` (Production and Platform Judgment): "6. Memoization".
+**Sources:** `01_Retry_Fallback_Memo_Confirm.md` (FDE Handbook, Robust Agents): "Why this matters", "The composed executor", "1 · The confirmation gate" and "2 · Memoization". `05_The_Eight_Guard_Checks.md`: "6 · Memoization — the ordering rule" and "The pipeline, in order". `05-guarding-tool-calls.md` (Production and Platform Judgment): "6. Memoization". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.10 "Human-in-the-loop: interrupts and safe resume", the §2 gotcha "`NodeInterrupt` looks like it crashed the graph", §6 approval gate, and §7 questions 3 and 14.

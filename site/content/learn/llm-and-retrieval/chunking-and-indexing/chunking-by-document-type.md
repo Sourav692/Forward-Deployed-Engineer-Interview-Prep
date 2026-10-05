@@ -2,7 +2,7 @@
 
 *One fixed splitter is fast to ship and works on anything, but it cuts through the headers, functions, rows, and turns that give each document type its meaning.*
 
-◷ 9 min
+◷ 10 min
 
 No single splitter suits every document. Route each document to a splitter that cuts only at that type's safe boundaries, using the size and overlap ideas from [Why Retrieval Needs Chunks](/learn/llm-and-retrieval/chunking-and-indexing/why-retrieval-needs-chunks).
 
@@ -103,6 +103,22 @@ Real files mix types. A Markdown page may embed code blocks; a mostly-prose PDF 
 
 The chunking lab gives a concrete trap. A header-aware splitter sees `##` inside a comment in a fenced code block and treats it as a header. It cuts inside the block, leaving one chunk with an unterminated fence and another with a dangling closing fence. Fix it by tracking whether the parser is inside a fence and suppressing header detection there. Alternatively, protect code blocks first, split the rest, and reinsert them.
 
+## Write One Chunker and Many Parsers
+
+At enterprise scale the input is never uniform Markdown. The FDE Handbook's scaling chapter, planning for 20 million documents, states the rule that generalises. Split on the format's natural unit of meaning, carry its structure into the chunk, and fall back to a fixed-size window only when no structure exists. The format decides where a cut is allowed. Size and overlap decide how big each piece is.
+
+The chapter adds formats the earlier table does not cover.
+
+| Format | Natural unit | What breaks if ignored |
+|---|---|---|
+| Word documents | Paragraphs, with heading styles mapped to heading levels | Concatenated paragraphs lose the structure; strip tracked changes first |
+| Slides | One slide, prefixed with its title, with the speaker notes appended | Orphaned notes lose the slide they explain |
+| Email, chat, tickets | One turn, or a question with its resolving answer | A window that cuts a question from its answer is the worst failure for support retrieval |
+| Images | Text only after OCR, kept only above a confidence threshold | Charts need multimodal embeddings when the visual structure is the meaning |
+| Spreadsheets | Logical row groups, such as an account or a time window | Wide tables flatten to sentences so relationships survive |
+
+Do not write six chunkers. Write one parser per format that produces a common intermediate form: text with its heading hierarchy, or explicit table, slide, or message boundaries. Then send every format through the same heading-aware packer. A new format then costs one parser, not a new chunking strategy.
+
 ## Check Boundaries Automatically
 
 Broken boundaries are silent. Nothing throws an error; the model just sees worse text. Build a boundary-integrity check per document type at ingestion. For code, verify that each chunk starts at a `def`, a `class`, or a blank line. For tables, verify that each chunk's column count matches the header.
@@ -127,6 +143,7 @@ A related question has the same shape. A fintech client has two weeks before lau
 - PDF extraction quality limits chunk quality, so keep page metadata and extract tables separately.
 - Semantic and proposition chunking track meaning at an indexing cost; use them where baseline cuts visibly break ideas.
 - Mixed documents need per-region rules, such as fence-aware header splitting.
+- At scale, write one parser per format into a common form and share one chunker.
 - Broken boundaries are silent, so check them automatically per type and alert on the failure rate.
 
 ## Check Yourself
@@ -142,4 +159,4 @@ A related question has the same shape. A fintech client has two weeks before lau
 
 ## References
 
-**Sources:** `chunking-lab-and-drills.md`: the safe-boundary mechanism, the lab results table, the per-type strategy table, "When to use structure-aware splitting", and interview questions 1, 3, 4, and 5. `chunking-reference-by-doc-type.md`: §3 "Document-Type Breakdown", §4 "Comparison Table", §5 "Decision Framework", §6 (drift), and §7 "Pitfalls and Best Practices Checklist". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 3 "Fixed-size vs semantic vs hierarchical chunking". `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.3 "Structure-aware chunking". `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: the "Fixed chunk_size vs. structure-aware chunking" trade-off.
+**Sources:** `chunking-lab-and-drills.md`: the safe-boundary mechanism, the lab results table, the per-type strategy table, "When to use structure-aware splitting", and interview questions 1, 3, 4, and 5. `chunking-reference-by-doc-type.md`: §3 "Document-Type Breakdown", §4 "Comparison Table", §5 "Decision Framework", §6 (drift), and §7 "Pitfalls and Best Practices Checklist". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 3 "Fixed-size vs semantic vs hierarchical chunking". `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.3 "Structure-aware chunking". `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: the "Fixed chunk_size vs. structure-aware chunking" trade-off. `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): §7 "Chunking by document type".

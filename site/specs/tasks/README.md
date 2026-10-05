@@ -107,6 +107,25 @@ Estimate only, using S = 0.5, M = 1.5, L = 4 days.
 | Phase 2: Practice, Interview and Progress (about 3 weeks) | 9 | not yet carded |
 | Phase 3: Version 2 (about 4–6 weeks, scheduled later) | 6 | not yet carded |
 
+## Consolidation
+
+Every reading module was rewritten into concept lessons under `01_Concept_Tutorials/Consolidated_Lessons/`, following `../2026-10-05-consolidation-playbook.md`. Per-track notes are in `../consolidation/`.
+
+| PR | Scope |
+|---|---|
+| #31 | T3.4 Memory and state (the pilot) |
+| #33 | Scaffold: per-track RENAMED files, derived redirects, playbook |
+| #34 | T3.1–T3.3 single agents |
+| #35 | T7.1 and T8.2, T7–T8 live titles |
+| #36 | T0.1–T0.3, T1.2, T1.4 and T9.1 |
+| #37 | T4.1, T4.2 and T4.4 quality and safety |
+| #38 | T3.5–T3.7 reliable and multi-agent systems |
+| #39 | T5.1–T5.4, T5.5 titles |
+| #40 | T2 LLM and retrieval fundamentals |
+| #41 | T6.1–T6.3 and T6.5 |
+| #42 | T4.3 and T4.5–T4.8 operations and scale |
+| Integration (this pass) | RENAMED hygiene and check, handoffs, naming audit, MRR glossary, canonical-homes table |
+
 ## Backlog
 
 None. Every plan task belongs to a phase.
