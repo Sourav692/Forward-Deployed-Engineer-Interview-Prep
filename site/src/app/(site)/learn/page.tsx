@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { allMinutes, getTracks, isRequired } from '@/lib/learn'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
+import { PathBanner } from '@/components/learn/PathFlagIslands'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { TrackCard } from '@/components/learn/TrackCard'
 
@@ -35,6 +36,7 @@ export default function LearnPage() {
         </p>
       </header>
       <StorageNotice />
+      <PathBanner />
       {/* useSearchParams in TrackBrowser needs a Suspense boundary on a static page. */}
       <Suspense fallback={<StaticTrackGrid items={items} />}>
         <TrackBrowser items={items} minutes={minutes} />

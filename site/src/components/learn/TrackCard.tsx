@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { CurriculumTrack, ModuleStatus } from '@/lib/curriculum-types'
 import { REQUIREMENT_LABEL, isRequired, learnHref, trackModules } from '@/lib/learn'
 import { Tag, cx, focusRing } from '@/components/ui'
+import { TrackPathSummary } from './PathFlagIslands'
 import { TrackProgress } from './ProgressIslands'
 
 const STATUS_LABEL: Record<ModuleStatus, string> = {
@@ -41,6 +42,7 @@ export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes:
         {counts.length > 0 && ': '}
         {counts.map((c) => `${c.n} ${STATUS_LABEL[c.s]}`).join(', ')}
       </p>
+      <TrackPathSummary trackSlug={track.slug} />
       <div className="mt-auto pt-4">
         <TrackProgress trackSlug={track.slug} minutes={minutes} />
       </div>
