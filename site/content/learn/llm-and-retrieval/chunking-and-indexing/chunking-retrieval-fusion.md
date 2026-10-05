@@ -172,4 +172,4 @@ The question is usually "how would you improve retrieval quality?" and the weak 
 - What is the difference between Multi-Query and HyDE? When would you use each?
 - Why can a reranker make a judgement that dense retrieval cannot?
 
-**Next →** [What an Agent Actually Is](/learn/agentic-systems/the-tool-calling-loop/what-an-agent-actually-is)
+**Next →** [What an Agent Actually Is](/learn/agentic-systems/the-tool-calling-loop/what-an-agent-is)
