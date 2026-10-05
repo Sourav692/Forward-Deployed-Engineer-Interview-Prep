@@ -17,7 +17,8 @@
  *    emoji or decorative prefix); when a source uses `#` for its sections, every
  *    heading after the title moves down one level;
  *  - repository links become site links: a synced lesson becomes its /learn page, an
- *    already-published page becomes that page's URL, and anything else in the
+ *    already-published page becomes that page's URL, an excluded lesson that has a
+ *    RENAMED entry becomes its replacement's /learn page, and anything else in the
  *    repository becomes its GitHub URL;
  *  - raw `<script>`, `<iframe>` and `<style>` elements and `on*=` attributes are
  *    removed outside code (defence in depth: `marked` passes raw HTML through).
@@ -444,6 +445,12 @@ function rewriteHref(href, sourceFile, ctx) {
     // A live URL that already names a tab keeps it; a source anchor is meaningless there.
     return live.includes('#') ? live : `${live}${hash}`
   }
+  const replacement = ctx.retired?.get(abs)
+  if (replacement) {
+    // The replacement has different headings, so a source anchor is dropped.
+    ctx.stats.lesson++
+    return replacement
+  }
   const exists = existsSync(abs)
   if (!exists) ctx.missing.push(`${repoPath(ctx.repoRoot, sourceFile)} -> ${href}`)
   const isDir = exists && statSync(abs).isDirectory()
@@ -514,12 +521,22 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
 
   const liveUrls = new Map([...given, ...lastDayUrls(repoRoot)])
   const lessonsBySource = new Map()
+  /** Source path of a retired (excluded, RENAMED) lesson → URL of the lesson that replaced it. */
+  const retired = new Map()
   const notes = []
   const plan = []
   for (const lesson of LESSONS) {
     const decision = lessonDecision(lesson)
     if (decision !== 'publish') {
       if (decision === 'outside-allow-list') notes.push(`${lesson.slug}: source outside the allow-list, not read (${lesson.source})`)
+      // A retired lesson whose material moved (RENAMED) keeps its inbound repo links on
+      // the site: they go to the lesson that replaced it, not to GitHub.
+      const target = decision === 'excluded' ? RENAMED[lessonKey(lesson)] : null
+      if (target) {
+        const [moduleSlug, lessonSlug] = target.split('/')
+        const mod = moduleBySlug.get(moduleSlug)
+        if (mod) retired.set(resolve(repoRoot, lesson.source), `/learn/${mod.track}/${mod.slug}/${lessonSlug}`)
+      }
       continue
     }
     const abs = resolve(repoRoot, lesson.source)
@@ -546,7 +563,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
   }
 
   const stats = { lesson: 0, live: 0, github: 0 }
-  const ctx = { repoRoot, lessonsBySource, liveUrls, stats, missing: [] }
+  const ctx = { repoRoot, lessonsBySource, liveUrls, retired, stats, missing: [] }
   const manifest = []
   await rm(learnDir, { recursive: true, force: true })
 

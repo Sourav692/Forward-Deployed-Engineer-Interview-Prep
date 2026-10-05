@@ -17,6 +17,7 @@ Apply these in order when a new lesson is used by more than one module.
 5. **When one file covers two modules' topics in separate H2 sections, publish it as slices.** The home keeps its slug and the original URL, and publishes the file minus the sections that belong elsewhere (`sections: { exclude: [...] }`). Each moved part becomes a new lesson with its own slug, homed in the module it serves, that publishes only those sections (`sections: { include: [...] }`). Headings are matched exactly, every H2 goes to exactly one slice (or is excluded on purpose), and `check:curriculum` fails on overlap or a missing heading. A repository link to the file opens the slice holding the link's anchor, else the home part. Current slices:
    - `module-10-backend-fastapi-deployment` (T1.2) keeps the overview, FastAPI and LLM serving; `module-10-deployment-and-operations` (T1.4) takes "Topic 3: Deployment & Infrastructure" and "Topic 4: Production Operations".
    - `module-01-rag-fundamentals-core-components` (T2.2) keeps every topic except embeddings; `module-01-embeddings` (T2.1) takes "Topic 4: Embeddings".
+   - `module-09-memory-databases-caching-for-genai-systems` (T2.3) keeps the overview, Topic 2 and Topic 3; `module-09-caching-in-genai-systems` (T4.5) takes "Topic 4: Caching in GenAI Systems"; "Topic 1: Memory Design in AI Systems" and "Topic 5: Memory & Caching for Agent Systems" are excluded on purpose, because the T3.4 consolidated lessons teach them.
    - `scoping-an-fde-project-complete-guide` (T6.2) keeps modules 1 to 4 and 6 to 8; `scoping-roll-out-and-prove-the-result` (T6.5) takes "Module 5: Roll Out, Operate, and Prove the Result", with the same credit line.
 
 Lessons of kind `live` (already published under `/modules/...` or `/fde-last-day-prep`) are linked from Learn rather than copied, whatever their home.
@@ -26,6 +27,21 @@ Lessons of kind `live` (already published under `/modules/...` or `/fde-last-day
 Under rule 1, T1.5 Distributed systems essentials owns no lessons: everything it teaches is homed in a required track. (T1.4 Cloud, containers and deployment was in the same position until rule 5 gave it the deployment slice of Module 10.) Its module page must present `seeAlso` lessons as the main reading list, not as a footnote. The same layout applies to any module whose `lessons` list is empty.
 
 To change a home, edit `home` on the lesson in `curriculum.ts`, then move its slug from the old module's `lessons` to its `seeAlso` and the other way round. The check fails until both sides agree.
+
+## Consolidated modules
+
+Some modules were assembled from several overlapping sources, so one concept was taught three or four times in different words. A consolidated module replaces those sources with a short run of lessons written once, in the house tutorial format, drawn only from the original sources (grounding rule) and credited where a third-party source contributed. The original files stay in the repository. Their curriculum entries become `publish: 'excluded'` and leave every reading list, `RENAMED` maps each retired lesson key to the lesson that now teaches its material, and `next.config.ts` redirects the old URLs permanently. An excluded lesson may be listed in no module; `check:curriculum` allows that only for `excluded` lessons.
+
+**T3.4 Memory and state is the pilot** (October 2026, owner review before merge). Seven lessons in `01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/` replace four sources:
+
+| Old lesson (T3.4) | Now | Redirect target |
+|---|---|---|
+| `state-memory-sessions` | Excluded; taught by lessons 1, 2 and 6 | `why-agents-need-state` |
+| `memory-and-state-interview-tutorial` | Excluded; taught by lessons 1, 3, 5, 6 and 7 | `short-term-memory-and-the-context-window` |
+| `ch07-knowledge-memory-retrieval` | Excluded; summarised in lessons 2, 4, 6 and 7 (credited) | `long-term-memory-write-retrieve-forget` |
+| `module-09-memory-databases-caching-for-genai-systems` | Moved to T2.3 as "Databases and Vector Search for GenAI Systems", minus Topics 1, 4 and 5; Topic 4 is a new slice `module-09-caching-in-genai-systems` in T4.5; Topics 1 and 5 are taught by lessons 1 to 6 | `chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems` |
+
+The new lessons, in order: `why-agents-need-state`, `types-of-memory`, `short-term-memory-and-the-context-window`, `long-term-memory-write-retrieve-forget`, `advanced-memory-architectures`, `memory-in-production`, `practise-memory-and-state`. T3.5 now lists `why-agents-need-state` under `seeAlso` in place of `state-memory-sessions`.
 
 ## Multi-use lessons
 
@@ -40,7 +56,7 @@ To change a home, edit `home` on the lesson in `curriculum.ts`, then move its sl
 | `module-12-reliability-and-failure-handling` | T8.3 | T1.5 | live |
 | `core-8-drivers-memorize` | T4.5 | T2.1 | sync |
 | `retrieval-hybrid-rerank` | T2.4 | T4.1 | sync |
-| `state-memory-sessions` | T3.4 | T3.5 | sync |
+| `why-agents-need-state` | T3.4 | T3.5 | sync |
 | `evaluation-golden-sets-judges` | T4.2 | T4.1 | sync |
 | `observability` | T4.3 | T4.1 | sync |
 | `g13-evaluation-and-release-gating` | T5.5 | T4.2 | live |

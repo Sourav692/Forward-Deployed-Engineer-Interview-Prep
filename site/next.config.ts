@@ -32,7 +32,25 @@ const csp = (extra: { style?: string; font?: string } = {}) =>
     "form-action 'self'",
   ].join('; ')
 
+/**
+ * Lesson URLs retired by a consolidation. Each maps to the lesson that now teaches
+ * the same material, mirroring the RENAMED entries in src/lib/curriculum.ts.
+ */
+const MEMORY = '/learn/agentic-systems/memory-and-state'
+const LESSON_REDIRECTS: [string, string][] = [
+  [`${MEMORY}/state-memory-sessions`, `${MEMORY}/why-agents-need-state`],
+  [`${MEMORY}/memory-and-state-interview-tutorial`, `${MEMORY}/short-term-memory-and-the-context-window`],
+  [`${MEMORY}/ch07-knowledge-memory-retrieval`, `${MEMORY}/long-term-memory-write-retrieve-forget`],
+  [
+    `${MEMORY}/module-09-memory-databases-caching-for-genai-systems`,
+    '/learn/llm-and-retrieval/chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems',
+  ],
+]
+
 const nextConfig: NextConfig = {
+  async redirects() {
+    return LESSON_REDIRECTS.map(([source, destination]) => ({ source, destination, permanent: true }))
+  },
   async headers() {
     return [
       {
