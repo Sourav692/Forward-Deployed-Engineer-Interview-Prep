@@ -18,7 +18,13 @@ For deeper architecture practice, choose one case: [G09 Enterprise Coding Assist
 
 ## Real Experience: A Five-Minute Walkthrough
 
-Choose a project you actually built or operated. Spend one minute on the outcome and constraints, two on your design and rejected alternative, one on validation and results, and one on what changed after deployment.
+Lead with one project you actually built or operated. Spend one minute on the outcome and constraints, two on your design and rejected alternative, one on validation and results, and one on what changed after deployment. Keep the other two projects ready for follow-ups; do not splice their results into the lead story.
+
+| Project to lead with | Five-minute spine | Claim boundary |
+| --- | --- | --- |
+| **Life insurer multi-agent system** | A business question took days through a BI queue. Discovery with users and compliance exposed different access rules by role, document type, and market. The first design put twenty-plus tools behind one agent; traces showed wrong tool selection as context grew. Explain your move to a LangGraph supervisor with four specialists, a clarification gate for low-confidence intent, governed assets, and per-node traces. Close with the bounded launch and days-to-minutes time-to-insight. | Separate the shipped supervisor from the later Deep Agent evolution. Describe adoption as a signal, not a controlled causal result. Use the anonymised [insurer stories](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/04_Behavioral_and_Leadership/story_bank.md) to rehearse the decision and your role. |
+| **Enterprise RAG platform** | The same question can have different permitted answers for different users. Walk through tenant isolation, a fast permission filter before retrieval, an authoritative check against fresh permissions before generation, and a deny-by-default release gate. Explain why the simpler single-filter design could leak after a grant changes. The small reference build passed its 22-document golden set with zero leaks; testing also exposed a false alarm, an unexercised rule, and a flaky model-judged gate. | This is a reference build, not a customer deployment or evidence of retrieval quality at enterprise scale. Say that the small corpus supports the security test and design exercise, not a large-corpus performance claim. See the [RAG build story](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/stories/STAR_Stories_Technical_Build_Projects.html). |
+| **Insurance customer-support agent** | Use this if you can show the real request path: customer intent, policy or case lookup, permission check, proposed answer or action, human handoff, and the failure you found in testing. Name what you personally built, the alternative you rejected, the evidence you collected, and the operating owner. | Add only verified details from your own project notes. Do not borrow the insurer multi-agent outcome or the RAG reference-build test numbers for this agent. |
 
 Be ready for these follow-ups:
 
@@ -26,6 +32,8 @@ Be ready for these follow-ups:
 - Walk through a request or data flow and identify the first likely failure point.
 - What evidence changed your initial hypothesis or design?
 - What broke, and how did you isolate the cause?
+- Where is access checked, and what happens if a permission changes after indexing?
+- Which actions need a human decision, and who owns that handoff?
 - Which result was measured, and what remained uncertain?
 
 Use the evidence inventory in section 4 to capture your answers. The hypothetical prompts below practise your reasoning; the project walkthrough demonstrates your experience.
@@ -45,8 +53,9 @@ When given a technical problem, talk through it in this order.
 | Frame the outcome | "What business or engineering result changes if this works?" | Prevents an impressive demo with no useful adoption |
 | Establish the baseline | "What is the current failure rate, lead time, review effort, or manual work?" | A pilot needs a before-and-after comparison |
 | Discover constraints | "Which repositories, environments, controls, data classes, and change windows matter?" | Customer systems set the real boundary |
+| Trace the actual path | "Show one real request from input through tools or retrieval to an answer or action. Where can it fail?" | Traces exposed the insurer's wrong-tool problem; the path also reveals stale permissions and unsafe writes |
 | Reduce the first bet | "What is the smallest high-value, reversible scope?" | A bounded module proves the workflow without a big-bang cutover |
-| Design evidence | "What would make us trust generated output: compile, tests, static analysis, review, or parallel-run comparison?" | Generated code is not trustworthy because it exists; it is trustworthy because it passes agreed evidence gates |
+| Design evidence | "What would make us trust this output: compile, tests, static analysis, review, a held-out set, or parallel-run comparison?" | Choose gates for the actual failure mode; wrong tool choice and permission leaks need different tests from generated code |
 | Plan the rollback | "How do we stop or reverse this without harming customers?" | Reversibility creates room to move quickly |
 | Define ownership | "Who signs each gate and who operates it after handover?" | The FDE must build customer ownership, not dependency |
 
