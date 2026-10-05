@@ -1,8 +1,8 @@
 /**
- * Self-check for the /demo prototype's business rules (`src/demo/store/rules.ts`).
+ * Self-check for the learner-progress rules (`src/lib/progress/rules.ts`).
  *
  * Runs under plain `node` via native TypeScript type stripping, like check-parse.ts:
- *   node scripts/check-demo-rules.ts
+ *   npm run check:rules
  * Covers status transitions, prerequisite gating, the revision queue, readiness
  * formulas, mock and exam scoring, and the finish-by model.
  */
@@ -20,7 +20,7 @@ import {
   scoreCheckpoint,
   scoreExam,
   scoreMock,
-} from '../src/demo/store/rules.ts'
+} from '../src/lib/progress/rules.ts'
 import type { Attempt, AssessmentItem, LearnerState, Module } from '../src/demo/types.ts'
 
 let failures = 0

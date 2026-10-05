@@ -8,6 +8,7 @@
   "scripts": {
     "sync": "node scripts/sync-content.mjs",
     "check:content": "node scripts/check-parse.ts",
+    "check:rules": "node scripts/check-progress-rules.ts",
     "predev": "npm run sync",
     "dev": "next dev",
     "prebuild": "npm run sync",

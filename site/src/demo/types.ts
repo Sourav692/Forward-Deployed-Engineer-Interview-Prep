@@ -5,7 +5,7 @@
  * be swapped for API calls without reshaping the UI. Every entity has a stable string
  * id; relationships are expressed as ids, never as nested copies.
  *
- * This file holds types only. `store/rules.ts` imports it with `import type`, which
+ * This file holds types only. `src/lib/progress/rules.ts` imports it with `import type`, which
  * keeps the rules runnable under plain `node` (type stripping erases the import).
  */
 
