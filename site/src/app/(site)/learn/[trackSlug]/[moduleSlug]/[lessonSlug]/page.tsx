@@ -1,0 +1,127 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput } from '@/lib/learn'
+import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
+import { LessonActions } from '@/components/learn/LessonActions'
+import { LessonReader } from '@/components/learn/LessonReader'
+import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
+import { SideNav } from '@/components/learn/SideNav'
+import { cx, focusRing } from '@/components/ui'
+
+/**
+ * Lesson page (FE-07). One static page per synced, published lesson: the params come
+ * from the sync manifest, and `dynamicParams = false` turns any other URL into a 404.
+ * `lessonParams()` throws when a manifest entry has no markdown file, so a missing
+ * lesson fails the build instead of shipping an empty page.
+ */
+
+type Params = { trackSlug: string; moduleSlug: string; lessonSlug: string }
+
+export const dynamicParams = false
+
+export function generateStaticParams(): Params[] {
+  return lessonParams()
+}
+
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { trackSlug, moduleSlug, lessonSlug } = await params
+  const page = getLessonPage(trackSlug, moduleSlug, lessonSlug)
+  if (!page) return {}
+  // The root layout's template appends "· Forward Deployed".
+  return {
+    title: `${page.lesson.title} · ${page.module.code}`,
+    description: capitalise(page.module.objective),
+    openGraph: { title: page.lesson.title, description: capitalise(page.module.objective), type: 'article' },
+  }
+}
+
+export default async function LessonPage({ params }: { params: Promise<Params> }) {
+  const { trackSlug, moduleSlug, lessonSlug } = await params
+  const page = getLessonPage(trackSlug, moduleSlug, lessonSlug)
+  if (!page) notFound()
+  const { lesson, track, section, module: mod, prev, next, index, count } = page
+  const input = moduleInput(mod)
+
+  return (
+    <>
+      <Breadcrumbs
+        items={[
+          { label: 'Learn', href: learnHref.index() },
+          { label: `${track.code} ${track.title}`, href: learnHref.track(track.slug) },
+          ...(section ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []),
+          { label: `${mod.code} ${mod.title}`, href: learnHref.module(mod) },
+          { label: lesson.title },
+        ]}
+      />
+      <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
+        <SideNav track={track} currentModule={mod.slug} onLesson />
+        <div className="min-w-0">
+          <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg border border-border bg-surface px-3 py-2">
+            <Link href={learnHref.module(mod)} className={cx('rounded-sm text-[0.8125rem] font-semibold hover:text-accent', focusRing)}>
+              {mod.code} {mod.title}
+            </Link>
+            {index >= 0 && (
+              <span className="text-[0.8125rem] text-subtle">
+                Lesson {index + 1} of {count}
+              </span>
+            )}
+            <div className="min-w-32 flex-1">
+              <ModuleProgress input={input} />
+            </div>
+            <ModuleStatusBadge input={input} size="xs" />
+          </div>
+
+          <StorageNotice />
+
+          <LessonReader page={page} />
+
+          <div className="mt-10 border-t border-border pt-6">
+            <LessonActions moduleSlug={mod.slug} lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} />
+            <p className="mt-3 text-xs text-muted">
+              Rate your confidence and keep notes on the{' '}
+              <Link href={`${learnHref.module(mod)}#yours`} className="text-accent underline underline-offset-2">
+                module page
+              </Link>
+              .
+            </p>
+          </div>
+
+          {/* Sticky at the bottom on small screens so the next lesson is always one tap away. */}
+          <nav
+            aria-label="Lesson navigation"
+            className="no-print sticky bottom-0 z-20 -mx-4 mt-8 grid grid-cols-2 gap-3 border-t border-border bg-bg/95 px-4 py-3 text-sm backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-t-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none"
+          >
+            {prev ? (
+              <NavLink href={prev.href} dir="prev" label={prev.title} />
+            ) : (
+              <NavLink href={learnHref.module(mod)} dir="prev" label={`${mod.code} overview`} />
+            )}
+            {next ? (
+              <NavLink href={next.href} dir="next" label={next.title} />
+            ) : (
+              <NavLink href={learnHref.module(mod)} dir="next" label={`Back to ${mod.code}`} />
+            )}
+          </nav>
+        </div>
+      </div>
+    </>
+  )
+}
+
+function NavLink({ href, dir, label }: { href: string; dir: 'prev' | 'next'; label: string }) {
+  return (
+    <Link
+      href={href}
+      rel={dir}
+      className={cx(
+        'flex min-w-0 flex-col rounded-md px-2 py-1 hover:bg-surface-2',
+        dir === 'next' && 'col-start-2 items-end text-right',
+        focusRing,
+      )}
+    >
+      <span className="text-xs text-subtle">{dir === 'prev' ? '← Previous' : 'Next →'}</span>
+      <span className="w-full truncate font-semibold">{label}</span>
+    </Link>
+  )
+}
