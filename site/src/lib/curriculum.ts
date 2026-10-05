@@ -1713,7 +1713,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'cost-and-latency',
     kind: 'sync',
     publish: 'credited',
-    credit: 'Condensed from a third-party GenAI FDE cost and latency optimisation playbook.',
+    credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
   },
   {
     slug: 'what-rag-actually-is',
@@ -2160,7 +2160,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'cost-and-latency',
     kind: 'sync',
     publish: 'credited',
-    credit: 'Condensed from a third-party GenAI FDE cost and latency optimisation playbook.',
+    credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
   },
   {
     slug: 'cram-sheet-s15-s16',
@@ -2169,7 +2169,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'cost-and-latency',
     kind: 'sync',
     publish: 'credited',
-    credit: 'Condensed from a third-party GenAI FDE cost and latency optimisation playbook.',
+    credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
   },
   {
     slug: 'additions-beyond-playbook',
@@ -2178,7 +2178,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'cost-and-latency',
     kind: 'sync',
     publish: 'credited',
-    credit: 'Condensed from a third-party GenAI FDE cost and latency optimisation playbook.',
+    credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
   },
   {
     slug: 'cost-latency-cicd-rigor-and-build-vs-buy',
@@ -2299,8 +2299,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md',
     home: 'design-framework',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'Adapted from iGrace course pages.',
+    publish: 'own',
   },
   {
     slug: 'the-15-principles',
@@ -2308,8 +2307,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/02_The_15_Principles.md',
     home: 'design-framework',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'Adapted from iGrace course pages.',
+    publish: 'own',
   },
   {
     slug: 'worked-example-travel-agent',
@@ -2317,8 +2315,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/04_Worked_Example_Travel_Agent.md',
     home: 'design-framework',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'Adapted from iGrace course pages.',
+    publish: 'own',
   },
   {
     slug: 'the-60-minute-whiteboard-method',
@@ -2326,8 +2323,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md',
     home: 'sixty-minute-whiteboard',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'Adapted from iGrace course pages.',
+    publish: 'own',
   },
   {
     slug: 'monolith-vs-microservices',
@@ -2335,8 +2331,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/03_Monolith_vs_Microservices.md',
     home: 'architecture-patterns',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'Adapted from iGrace course pages.',
+    publish: 'own',
   },
   {
     slug: 'ch23-system-design-patterns',
@@ -2529,7 +2524,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/',
     home: 'scenario-library',
     kind: 'live',
-    publish: 'own',
+    publish: 'credited',
+    credit: 'Includes material adapted from iGrace course pages.',
   },
   {
     slug: 'production-llm-gateway',
@@ -2545,7 +2541,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/',
     home: 'scenario-library',
     kind: 'live',
-    publish: 'own',
+    publish: 'credited',
+    credit: 'Includes material adapted from iGrace course pages.',
   },
   {
     slug: 'air-gapped-ai-system',
@@ -2553,7 +2550,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/',
     home: 'scenario-library',
     kind: 'live',
-    publish: 'own',
+    publish: 'credited',
+    credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
   },
   {
     slug: 'reliable-workflow-orchestration',
@@ -2561,7 +2559,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/',
     home: 'scenario-library',
     kind: 'live',
-    publish: 'own',
+    publish: 'credited',
+    credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
   },
   {
     slug: 'configurable-platform-customer-workflows',
@@ -2569,7 +2568,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/',
     home: 'scenario-library',
     kind: 'live',
-    publish: 'own',
+    publish: 'credited',
+    credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
   },
   {
     slug: 'enterprise-chatbot-platform',
@@ -2577,7 +2577,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/',
     home: 'scenario-library',
     kind: 'live',
-    publish: 'own',
+    publish: 'credited',
+    credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
   },
   {
     slug: 'prioritize-ai-use-cases',
@@ -2722,8 +2723,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '05_FDE_Delivery_and_Scoping/Delivery_Framework/README.md',
     home: 'delivery-stages-and-gates',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'The problem prompt is quoted from the DevRev interview preparation guide.',
+    publish: 'own',
   },
   {
     slug: 'theory',
@@ -2732,7 +2732,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'delivery-stages-and-gates',
     kind: 'sync',
     publish: 'credited',
-    credit: 'The problem prompt is quoted from the DevRev interview preparation guide.',
+    credit: 'Quotes its problem prompt from the DevRev interview preparation guide.',
   },
   {
     slug: 'architecture-end-to-end',
@@ -2740,8 +2740,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/02-architecture-end-to-end.md',
     home: 'delivery-stages-and-gates',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'The problem prompt is quoted from the DevRev interview preparation guide.',
+    publish: 'own',
   },
   {
     slug: 'security-gate-depth-and-tenant-scale',
@@ -2749,8 +2748,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/05-security-gate-depth-and-tenant-scale.md',
     home: 'delivery-stages-and-gates',
     kind: 'sync',
-    publish: 'credited',
-    credit: 'The problem prompt is quoted from the DevRev interview preparation guide.',
+    publish: 'own',
   },
   {
     slug: 'interview-script',
@@ -2759,7 +2757,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'delivery-stages-and-gates',
     kind: 'sync',
     publish: 'credited',
-    credit: 'The problem prompt is quoted from the DevRev interview preparation guide.',
+    credit: 'Quotes its problem prompt from the DevRev interview preparation guide.',
   },
   {
     slug: 'end-to-end-ai-delivery-six-stages',

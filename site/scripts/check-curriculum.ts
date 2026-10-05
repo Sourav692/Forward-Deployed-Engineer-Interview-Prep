@@ -31,8 +31,29 @@ function unique(kind: string, slugs: string[]) {
  * at the end, e.g. ['a', 'b', 'a']), or null when the prerequisite graph is acyclic.
  */
 export function findPrerequisiteCycle(modules: CurriculumModule[]): string[] | null {
-  // TODO(owner): implement cycle detection over `module.prerequisites`.
-  void modules
+  // Depth-first search with three states: unvisited, on the current path, done.
+  // Reaching a module that is still on the path closes a cycle; the path stack
+  // gives the exact loop for the error message.
+  const prereqs = new Map(modules.map((m) => [m.slug, m.prerequisites]))
+  const state = new Map<string, 'path' | 'done'>()
+  const path: string[] = []
+  const visit = (slug: string): string[] | null => {
+    if (state.get(slug) === 'done') return null
+    if (state.get(slug) === 'path') return [...path.slice(path.indexOf(slug)), slug]
+    state.set(slug, 'path')
+    path.push(slug)
+    for (const p of prereqs.get(slug) ?? []) {
+      const cycle = visit(p)
+      if (cycle) return cycle
+    }
+    path.pop()
+    state.set(slug, 'done')
+    return null
+  }
+  for (const m of modules) {
+    const cycle = visit(m.slug)
+    if (cycle) return cycle
+  }
   return null
 }
 
