@@ -98,41 +98,43 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * labels may change. `href` is where the area link goes; `match` lists the path
  * prefixes that also mark the area as current (`aria-current="page"`).
  *
- * Phase 1 hrefs point at pages that already exist, so no link 404s. They change in
- * later workstreams: Start → `/start` (F), Design → `/design`, Practice → `/practice`
- * and Interview → `/interview` (G). Progress joins the list in Phase 2.
+ * Each area links to its own index page. `match` keeps the existing module pages
+ * highlighting the area they belong to: the casebook (`/modules/15-…`) under Design,
+ * worksheets and behavioural practice (`/modules/01-…`, `/modules/14-…`) under
+ * Practice, and the final-week review and company prep under Interview. Progress
+ * joins the list in Phase 2.
  */
 export const NAV = [
-  { id: 'start', label: 'Start', href: '/guide', match: ['/guide', '/start'] },
+  { id: 'start', label: 'Start', href: '/start', match: ['/start', '/guide'] },
   { id: 'learn', label: 'Learn', href: '/learn', match: ['/learn'] },
   {
     id: 'design',
     label: 'Design',
-    href: '/modules/15-fde-case-studies',
-    match: ['/modules/15-fde-case-studies', '/design'],
+    href: '/design',
+    match: ['/design', '/modules/15-fde-case-studies'],
   },
   {
     id: 'practice',
     label: 'Practice',
-    href: '/modules/01-customer-discovery-and-decomposition',
+    href: '/practice',
     match: [
+      '/practice',
       '/modules/01-customer-discovery-and-decomposition',
       '/modules/14-behavioural-and-leadership-round',
-      '/practice',
     ],
   },
   {
     id: 'interview',
     label: 'Interview',
-    href: '/fde-last-day-prep',
-    match: ['/fde-last-day-prep', '/modules/16-company-oriented-prep', '/interview'],
+    href: '/interview',
+    match: ['/interview', '/fde-last-day-prep', '/modules/16-company-oriented-prep'],
   },
 ] as const
 
-/** Utility links shown after the areas. Library points at the learning map until `/library` exists. */
+/** Utility links shown after the areas. The learning map sits under Library. */
 export const UTILITY_NAV = [
   { id: 'glossary', label: 'Glossary', href: '/glossary', match: ['/glossary'] },
-  { id: 'library', label: 'Library', href: '/learning-map', match: ['/learning-map', '/library'] },
+  { id: 'library', label: 'Library', href: '/library', match: ['/library', '/learning-map'] },
 ] as const
 
 export const LAST_DAY = {
