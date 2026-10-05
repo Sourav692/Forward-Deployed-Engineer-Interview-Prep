@@ -1585,6 +1585,15 @@ export const MODULES: CurriculumModule[] = [
   },
 ]
 
+/**
+ * Slug guard for published lessons (DATA-04). Keys are `<moduleSlug>/<lessonSlug>`,
+ * the same pair that keys saved progress. A lesson that was published and then
+ * disappears fails `npm run sync` and `check:content` unless it has an entry here:
+ * the new `<moduleSlug>/<lessonSlug>` it moved to, or `null` when it was withdrawn
+ * on purpose.
+ */
+export const RENAMED: Record<string, string | null> = {}
+
 export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'how-to-use-this-handbook',
