@@ -2,6 +2,9 @@
   "name": "forward-deployed",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "sync": "node scripts/sync-content.mjs",
     "check:content": "node scripts/check-parse.ts",
