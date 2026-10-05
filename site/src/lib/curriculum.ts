@@ -1281,7 +1281,7 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'It works for us, not for them',
     commonMistakes: ['Blaming the model first'],
     lessons: [],
-    gapNote: 'Most material is in Blitzy 04 (company pack) and the incident logs in git history.',
+    gapNote: 'Worked incident-debugging cases and customer-communication drills.',
     seeAlso: ['g14-observability-and-production-diagnosis'],
   },
   {
@@ -1393,7 +1393,7 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'Explain this to the CEO',
     commonMistakes: ['Jargon', 'no recommendation'],
     lessons: [],
-    gapNote: 'Executive communication material (mainly in Blitzy 05, a company pack).',
+    gapNote: 'Lessons on presenting to executives and turning a vision into an engineering roadmap.',
     seeAlso: ['communicates-with-clarity'],
   },
   {
@@ -1561,7 +1561,7 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'Project deep dive',
     commonMistakes: ['Demo without evaluation'],
     lessons: ['companion-course'],
-    gapNote: 'Capstone briefs and lab code (labs exist only in git history as 11_HANDS_ON_LABS).',
+    gapNote: 'Capstone briefs and hands-on lab code.',
     seeAlso: [],
   },
   {
