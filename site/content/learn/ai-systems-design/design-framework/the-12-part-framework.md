@@ -29,7 +29,7 @@ The running example is an **AI travel assistant** — search flights, book hotel
 
 ## 1 · Problem Definition
 
-Clarify before touching the whiteboard. Five minutes of questions prevents twenty minutes of designing the wrong system — this is [The First Ten Minutes](/learn/orientation/first-ten-minutes/the-first-ten-minutes) applied.
+Clarify before touching the whiteboard. Five minutes of questions prevents twenty minutes of designing the wrong system — this is [The First Ten Minutes](/learn/orientation/first-ten-minutes/ask-before-you-architect) applied.
 
 - **What are we building?** Restate it in your own words and get confirmation. A wrong assumption about the product is far more expensive than a wrong choice of database.
 - **Who are the users?** Consumers, internal staff and partners have wildly different scale, latency and trust profiles. A million casual readers is a caching problem; a thousand power users writing constantly is a locking problem.
