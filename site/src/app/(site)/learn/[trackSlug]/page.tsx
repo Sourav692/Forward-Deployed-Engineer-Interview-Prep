@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { breadcrumbJsonLd, courseJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 import {
   REQUIREMENT_LABEL,
   formatMinutes,
@@ -35,7 +37,12 @@ export function generateStaticParams(): Params[] {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const track = getTrack((await params).trackSlug)
   if (!track) return {}
-  return { title: `${track.title} · ${track.code}`, description: track.objective }
+  return pageMetadata({
+    path: learnHref.track(track.slug),
+    title: `${track.title} · ${track.code}`,
+    ogTitle: `${track.code} ${track.title}`,
+    description: track.objective,
+  })
 }
 
 export default async function TrackPage({ params }: { params: Promise<Params> }) {
@@ -49,6 +56,20 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: 'Learn', path: learnHref.index() },
+            { name: `${track.code} ${track.title}`, path: learnHref.track(track.slug) },
+          ]),
+          courseJsonLd({
+            name: track.title,
+            description: track.objective,
+            code: track.code,
+            path: learnHref.track(track.slug),
+          }),
+        ]}
+      />
       <Breadcrumbs items={[{ label: 'Learn', href: learnHref.index() }, { label: `${track.code} ${track.title}` }]} />
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <SideNav track={track} />

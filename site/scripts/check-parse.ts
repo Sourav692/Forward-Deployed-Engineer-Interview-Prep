@@ -34,6 +34,7 @@ import {
 } from '../src/lib/editorial.ts'
 import { existsSync } from 'node:fs'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
+import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
 import { findUnsafeHtml, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
@@ -654,6 +655,33 @@ for (const [token, files] of acronymPages) {
 }
 
 rows.push(`\n  editorial: ${pages.size} pages with metadata, ${cited.size} cited by reviews, ${linksChecked} internal links resolved`)
+
+// ------------------------------------------------------------------ search index budget
+//
+// The search index ships as one static file per area (PERF-02). The route handler already
+// fails the build when a file goes over budget; this re-checks the files from the last
+// `next build`, so `check:content` after a build reports sizes and catches a stale budget.
+{
+  const built = join(SITE_ROOT, '.next', 'server', 'app', 'search')
+  if (!existsSync(built)) {
+    rows.push('\n  search index: no build output yet (run `npm run build`, then this check, to measure the area files)')
+  } else {
+    const sizes: string[] = []
+    for (const area of SEARCH_AREAS) {
+      const file = join(built, `${area}.json.body`)
+      if (!existsSync(file)) {
+        failures.push(`search index: ${area}.json missing from the last build`)
+        continue
+      }
+      const bytes = (await readFile(file)).byteLength
+      sizes.push(`${area} ${Math.round(bytes / 1024)} KB`)
+      if (bytes > SEARCH_AREA_BUDGET_BYTES) {
+        failures.push(`search index: ${area}.json is ${bytes} bytes, over the ${SEARCH_AREA_BUDGET_BYTES}-byte budget`)
+      }
+    }
+    rows.push(`\n  search index: ${sizes.join(', ')} (budget ${SEARCH_AREA_BUDGET_BYTES / 1024} KB each)`)
+  }
+}
 
 console.log(rows.join('\n'))
 console.log(`\n  ${diagramTotal} mermaid diagram(s) parsed across answer keys and case studies`)

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput } from '@/lib/learn'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { LessonActions } from '@/components/learn/LessonActions'
@@ -29,11 +31,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const page = getLessonPage(trackSlug, moduleSlug, lessonSlug)
   if (!page) return {}
   // The root layout's template appends "· Forward Deployed".
-  return {
+  return pageMetadata({
+    path: page.lesson.href,
     title: `${page.lesson.title} · ${page.module.code}`,
+    ogTitle: page.lesson.title,
     description: capitalise(page.module.objective),
-    openGraph: { title: page.lesson.title, description: capitalise(page.module.objective), type: 'article' },
-  }
+    type: 'article',
+  })
 }
 
 export default async function LessonPage({ params }: { params: Promise<Params> }) {
@@ -45,6 +49,23 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: 'Learn', path: learnHref.index() },
+            { name: `${track.code} ${track.title}`, path: learnHref.track(track.slug) },
+            { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
+            { name: lesson.title, path: lesson.href },
+          ]),
+          learningResourceJsonLd({
+            name: lesson.title,
+            description: capitalise(mod.objective),
+            path: lesson.href,
+            minutes: lesson.estMinutes,
+            partOf: { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
+          }),
+        ]}
+      />
       <Breadcrumbs
         items={[
           { label: 'Learn', href: learnHref.index() },

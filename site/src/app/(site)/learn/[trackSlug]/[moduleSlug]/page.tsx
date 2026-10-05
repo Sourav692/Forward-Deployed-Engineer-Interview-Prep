@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 import {
   capitalise,
   formatMinutes,
@@ -45,7 +47,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { trackSlug, moduleSlug } = await params
   const mod = getModule(trackSlug, moduleSlug)
   if (!mod) return {}
-  return { title: `${mod.title} · ${mod.code}`, description: capitalise(mod.objective) }
+  return pageMetadata({
+    path: learnHref.module(mod),
+    title: `${mod.title} · ${mod.code}`,
+    ogTitle: `${mod.code} ${mod.title}`,
+    description: capitalise(mod.objective),
+  })
 }
 
 export default async function ModulePage({ params }: { params: Promise<Params> }) {
@@ -64,6 +71,13 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Learn', path: learnHref.index() },
+          { name: `${track.code} ${track.title}`, path: learnHref.track(track.slug) },
+          { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
+        ])}
+      />
       <Breadcrumbs
         items={[
           { label: 'Learn', href: learnHref.index() },

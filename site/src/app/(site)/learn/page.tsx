@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/seo'
 import { Suspense } from 'react'
 import { allMinutes, getTracks, isRequired } from '@/lib/learn'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
@@ -10,9 +11,11 @@ import { TrackCard } from '@/components/learn/TrackCard'
  * render here on the server; filtering and progress are client islands.
  */
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/learn',
   title: 'Learn',
-  description: 'The Forward Deployed curriculum: ten tracks from orientation to capstone, each with modules, lessons and progress you can track in this browser.',}
+  description: 'The Forward Deployed curriculum: ten tracks from orientation to capstone, each with modules, lessons and progress you can track in this browser.',
+})
 
 export default function LearnPage() {
   const tracks = getTracks()
