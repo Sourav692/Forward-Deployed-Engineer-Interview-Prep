@@ -56,35 +56,35 @@ export default async function LessonPage({ params }: { params: Params }) {
           <ModuleStatus moduleId={m.id} size="xs" />
         </div>
 
-        <article>
+        <article className="lesson-reading">
           <header>
             <div className="flex flex-wrap items-center gap-2 text-[0.8125rem] text-subtle">
               <SampleContentBadge />
               <span>{l.readingMin} min read</span>
               {!repo.isAuthoredLesson(l.id) && <span>· Template-generated sample</span>}
             </div>
-            <h1 className="mt-3 text-[1.875rem] font-bold leading-tight tracking-[-0.022em]">{l.title}</h1>
-            <p className="mt-2 text-[1.0625rem] italic leading-relaxed text-muted">{l.tagline}</p>
+            <h1 className="mt-3">{l.title}</h1>
+            <p className="lead mt-2 italic text-muted">{l.tagline}</p>
           </header>
 
           <Card className="mt-6">
-            <h2 className="text-[0.8125rem] font-semibold uppercase tracking-wide text-subtle">By the end you can</h2>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-[0.9375rem]">
+            <h2 className="mt-0 text-xs font-semibold uppercase tracking-wide text-subtle">By the end you can</h2>
+            <ul className="mb-0 mt-2">
               {l.objectives.map((o) => (
                 <li key={o}>{o}</li>
               ))}
             </ul>
           </Card>
 
-          <div className="prose mt-8 max-w-none">
+          <div>
             {l.sections.map((s) => (
-              <section key={s.heading} className="mt-8">
-                <h2 className="text-[1.25rem] font-semibold tracking-[-0.011em]">{s.heading}</h2>
+              <section key={s.heading}>
+                <h2>{s.heading}</h2>
                 <p>{s.body}</p>
               </section>
             ))}
             <section className="mt-8 rounded-xl border border-border bg-surface-2 p-5">
-              <h2 className="text-[1.0625rem] font-semibold">Worked example: {l.workedExample.title}</h2>
+              <h2 className="mt-0 text-lg">Worked example: {l.workedExample.title}</h2>
               <p>{l.workedExample.body}</p>
             </section>
           </div>
@@ -93,27 +93,27 @@ export default async function LessonPage({ params }: { params: Params }) {
             <Callout title="Watch out">{l.warning}</Callout>
           </div>
 
-          <section className="mt-8">
-            <h2 className="text-[1.125rem] font-semibold">Key takeaways</h2>
-            <ul className="mt-2 list-disc space-y-1 pl-5">
+          <section>
+            <h2>Key takeaways</h2>
+            <ul>
               {l.takeaways.map((t) => (
                 <li key={t}>{t}</li>
               ))}
             </ul>
           </section>
 
-          <section className="mt-8">
-            <h2 className="text-[1.125rem] font-semibold">Check yourself</h2>
-            <ol className="mt-2 list-decimal space-y-1 pl-5">
+          <section>
+            <h2>Check yourself</h2>
+            <ol>
               {l.checkYourself.map((q) => (
                 <li key={q}>{q}</li>
               ))}
             </ol>
           </section>
 
-          <section className="mt-8 text-[0.875rem]">
-            <h2 className="font-semibold">References</h2>
-            <ul className="mt-1 space-y-1 text-muted">
+          <section className="mt-8 text-sm">
+            <h2 className="text-lg">References</h2>
+            <ul className="list-none pl-0 text-muted">
               {refs.map((r) => (
                 <li key={r.id}>
                   <span className="text-text">{r.title}</span>, {r.source}. {r.note}

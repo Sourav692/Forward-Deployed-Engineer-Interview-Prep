@@ -1,6 +1,6 @@
 # Design Tokens
 
-Date: 5 October 2026. Phase 0 tasks DS-01 and DS-02 of `2026-10-05-production-implementation-plan.md`. Tokens live in `site/src/app/globals.css`: colour values in `:root` (light) and `.dark`, mapped to Tailwind utilities in `@theme inline`.
+Date: 5 October 2026. Phase 0 tasks DS-01 and DS-02, extended by Phase 1 tasks DS-03, DS-04 and FE-05, of `2026-10-05-production-implementation-plan.md`. Tokens live in `site/src/app/globals.css`: colour values in `:root` (light) and `.dark`, mapped to Tailwind utilities in `@theme inline`.
 
 ## Radius
 
@@ -20,18 +20,20 @@ Hard-coded radii in `globals.css` now use these tokens. Two values moved slightl
 
 The status hues are part of the core palette (they were first added for the `/demo` prototype). Each status pairs one colour with one icon and a text label, so no status relies on colour alone.
 
-| Status | Colour | Icon |
-|---|---|---|
-| Not started | `--text-subtle` | Hollow circle |
-| In progress | `--accent` | Half circle |
-| Blocked | `--warning` (text `--warning-text` on `--warning-soft`) | Lock |
-| Ready for review | `--accent` | Flag |
-| Completed | `--success` | Check |
-| Needs revision | `--review` | Rotate arrow |
-| Mastered | `--mastered` | Star |
-| Skipped | `--text-subtle` | Skip arrow |
-| Coming soon (module) | `--text-subtle` outline pill | None |
-| On hold (module) | `--warning` outline pill | None |
+| Status | Colour | Icon | Pill |
+|---|---|---|---|
+| Not started | `--text-subtle` icon, `--text-muted` label | Hollow circle | `--border-strong` outline on `--surface` |
+| In progress | `--accent` | Half circle | `--accent-soft` fill |
+| Blocked | `--warning` (icon and label `--warning-text` on `--warning-soft`) | Lock | `--warning-soft` fill |
+| Ready for review | `--accent` | Flag | `--accent` outline on `--surface` |
+| Completed | `--success` icon, `--text` label | Check | `--success-soft` fill |
+| Needs revision | `--review` | Rotate arrow | `--review-soft` fill |
+| Mastered | `--mastered` | Star | `--mastered-soft` fill |
+| Skipped | `--text-subtle` icon, `--text-muted` label | Skip arrow | Dashed `--border-strong` outline |
+| Coming soon (module) | `--text-subtle` icon, `--text-muted` label | Clock | `--border-strong` outline pill |
+| On hold (module) | `--warning` (icon and label `--warning-text`) | Pause | `--warning` outline pill |
+
+The component is `StatusBadge` in `site/src/components/ui/StatusBadge.tsx` (DS-03). Icons are inline 16 px SVGs drawn in `currentColor` and marked `aria-hidden`; the text label is always visible. Where the status colour itself is below 4.5:1 for 12 px text (`--text-subtle` everywhere, `--success` on `--success-soft` in light mode at 3.89:1), the icon keeps the status colour (it only needs 3:1) and the label uses `--text-muted` or `--text`. The optional rule tooltip shows on hover and on keyboard focus, hides on Escape, and is linked to the badge with `aria-describedby`, so it is never hover-only.
 
 ## Contrast
 
@@ -58,9 +60,31 @@ Computed from the oklch values with the WCAG 2.2 relative-luminance formula. Tar
 | `--review` on `--surface` | 3:1 | 5.46 | 8.02 |
 | `--mastered` on `--mastered-soft` | 4.5:1 | 5.16 | 7.02 |
 | `--mastered` on `--surface` | 3:1 | 5.89 | 8.80 |
-| `--border-strong` on `--surface` | 3:1 | 1.63 | 1.79 | **below**
+| `--border-strong` on `--surface` | decorative only | 1.63 | 1.79 |
+| `--input-border` on `--surface` | 3:1 | 3.64 | 3.54 |
+| `--input-border` on `--bg` | 3:1 | 3.54 | 3.78 |
+| `--input-border` on `--surface-2` | 3:1 | 3.36 | 3.25 |
 | `--accent-ring` on `--bg` | 3:1 | 5.66 | 7.47 |
 
 `--review` in light mode moved from `oklch(52% 0.13 220)` to `oklch(50% 0.13 220)`, because badge text on `--review-soft` measured 4.45:1.
 
-**Open follow-up (A11Y-02, FE-05):** `--border-strong` is 1.6 to 1.8:1 against `--surface`. That is fine for decorative dividers, but the demo's form inputs use it as their only boundary, which fails WCAG 1.4.11 (non-text contrast, 3:1). Fix it when the input primitive moves out of `src/demo/`: either a darker input-border token or a filled input background.
+**Input borders (closed, FE-05).** `--border-strong` is 1.6 to 1.8:1 against `--surface`. That is fine for decorative dividers, but it failed WCAG 1.4.11 (non-text contrast, 3:1) as the only boundary of a form control. A new token, `--input-border`, carries form-control edges: `oklch(62% 0.01 260)` in light mode and `oklch(54% 0.016 265)` in dark mode, mapped to the `border-input-border` utility. The `Input`, `Textarea` and `Select` primitives in `site/src/components/ui/Field.tsx` use it, and the demo forms now use those primitives. `--border-strong` keeps its value, so live pages do not change.
+
+The ratios above were computed from the oklch values: oklch to OKLab, OKLab to linear sRGB with the OKLab matrices (Björn Ottosson's reference), clamped to the sRGB gamut, then WCAG 2.2 relative luminance `0.2126 R + 0.7152 G + 0.0722 B` and `(L1 + 0.05) / (L2 + 0.05)`.
+
+## Type scale
+
+Phase 1 task DS-04. The scale is Tailwind v4's default `text-*` steps, so the utilities already set size and line height together; no new tokens are needed. Weights are 400 (body), 500 (UI labels) and 600 (headings, badges).
+
+| Step | Size / line height | Utility | Use for |
+|---|---|---|---|
+| Caption | 12 / 16 px | `text-xs` | Badges, captions, figure labels, eyebrow labels |
+| Small | 14 / 20 px | `text-sm` | UI controls, buttons, source notes, credit lines |
+| Body | 16 / 24 px | `text-base` | Lesson body text, lists |
+| Lead | 18 / 28 px | `text-lg` | Lesson tagline, minor headings (h4) |
+| Heading 3 | 20 / 28 px | `text-xl` | Lesson h3 |
+| Heading 2 | 24 / 32 px | `text-2xl` | Lesson h2 |
+| Heading 1 | 30 / 36 px | `text-3xl` | Lesson title |
+| Display | 36 / 40 px | `text-4xl` | Landing and hub titles only |
+
+**Lesson reading column.** `.lesson-reading` in `globals.css` applies the scale to a lesson: 16/24 body, a 68ch maximum measure, h1 30/36, h2 24/32, h3 20/28, h4 18/28, `.lead` 18/28, `small` 14/20 and `figcaption` / `.caption` 12/16. It sits in `@layer components` and styles descendants through `:where()`, so any Tailwind utility on an element still wins. Only pages that opt in change: the `/demo` lesson page uses it today; the live `/modules` pages keep `.prose` and `.reading` unchanged.

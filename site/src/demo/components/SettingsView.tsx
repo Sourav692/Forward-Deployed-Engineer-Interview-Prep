@@ -8,6 +8,7 @@ import { Select } from './CurriculumOverview'
 import { ConfirmDialog, toast } from './feedback'
 import { useLearner } from './islands'
 import { Card, ErrorState, H2, btn, cx, formatDate } from './ui'
+import { Input } from '@/components/ui'
 
 export function SettingsView() {
   const data = useLearner()
@@ -89,7 +90,7 @@ export function SettingsView() {
               <label htmlFor={`p-${k}`} className="text-[0.75rem] font-semibold text-subtle">
                 {l}
               </label>
-              <input id={`p-${k}`} value={fields[k]} onChange={(e) => setProfile({ ...fields, [k]: e.target.value })} className="mt-1 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-[0.875rem] outline-none focus:border-accent" />
+              <Input id={`p-${k}`} value={fields[k]} onChange={(e) => setProfile({ ...fields, [k]: e.target.value })} className="mt-1" />
             </div>
           ))}
           <div className="flex items-end">
