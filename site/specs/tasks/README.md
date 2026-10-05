@@ -80,14 +80,14 @@ Phase 1 was built in workstreams straight from the plan, without separate task c
 | 37 | QA-03 | Route audit script: crawl preview sitemap, fail on 404 and on pages with zero published lessons marked `ready` | S | SEO-01 | done (this PR) |
 | 38 | QA-04 | Regression check that live counts (module pages, links, diagrams reported by `check:content`) only grow | S | DATA-04 | done (this PR) |
 | 39 | A11Y-02 | Manual audit report per template (keyboard, screen reader, zoom, reduced motion) with fixes filed | M | Phase 1 build | done (this PR); screen-reader pass still manual |
-| 40 | QA-05 | Lighthouse run on preview for landing, lesson, dashboard | S | Phase 1 build | done (this PR) on a local build; repeat on the preview |
+| 40 | QA-05 | Lighthouse run on preview for landing, lesson, dashboard | S | Phase 1 build | done (#26; production re-measured in #27: LCP 1.2–2.4 s) |
 
 Exit criteria:
 
 - [x] `/learn` shows 10 tracks and 53 modules; module status matches `curriculum_plan.md` after owner decisions (`check:curriculum`, `check:paths`).
 - [x] Every published lesson renders with no repository links and passes `check:content` (108 synced, 96 live).
 - [x] Existing `/modules/...`, `/fde-last-day-prep/...`, `/guide`, `/learning-map`, `/glossary` behave as before; their `fd:v1` progress is intact (`check:routes` crawls all 321 sitemap URLs; the e2e worksheet regression saves to `fd:v1:answers:*`).
-- [ ] Smoke and axe suites pass in CI; Lighthouse targets met on preview. The suites pass locally and run in the new `e2e` CI job. Lighthouse performance is 90 to 96 on a local build, but simulated mobile LCP is 2.8 to 3.6 s. Re-measure on the preview.
+- [x] Smoke and axe suites pass in CI; Lighthouse targets met. The suites run in the `e2e` CI job. On production, performance is 95 to 100 and LCP is 1.2 to 2.4 s (see the QA report).
 - [ ] Owner verifies the Vercel preview before merge.
 
 ## Critical path
