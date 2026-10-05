@@ -7,11 +7,15 @@
  *
  * Fails on: duplicate or malformed slugs, track slugs that collide with the live
  * site's track ids, dangling references, a lesson without exactly one home,
- * prerequisite cycles, and module statuses that contradict their lessons.
+ * prerequisite cycles, module statuses that contradict their lessons, and lesson
+ * slices that overlap, drop a heading or name a heading the source lacks.
  */
 import { LESSONS, MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
-import type { CurriculumModule } from '../src/lib/curriculum-types.ts'
+import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
+import { existsSync, readFileSync, statSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { publishedHeadings, splitH2, stripFrontMatter, unknownHeadings } from './learn.mjs'
 
 const errors: string[] = []
 const fail = (msg: string) => errors.push(msg)
@@ -103,6 +107,51 @@ for (const m of MODULES) {
   if ((m.status === 'ready' || m.status === 'partly') && count === 0) fail(`module ${m.code} is ${m.status} but has no lessons`)
   if (m.status === 'coming-soon' && count > 0) fail(`module ${m.code} is coming-soon but lists lessons`)
   if (m.status === 'partly' && !m.gapNote) fail(`module ${m.code} is partly ready without a gapNote`)
+}
+
+// Lesson slices (CurriculumLesson.sections). Lessons that share a source must split
+// it cleanly: no H2 published twice, no H2 silently dropped (it must be published or
+// listed in an `exclude`), and at most one "main" part without `include`. Headings
+// are validated against the source file; when root sources are absent (a deploy
+// rooted at site/) the source-reading part is skipped.
+{
+  const REPO_ROOT = resolve(import.meta.dirname, '..', '..')
+  const bySource = new Map<string, CurriculumLesson[]>()
+  for (const l of LESSONS) bySource.set(l.source, [...(bySource.get(l.source) ?? []), l])
+  for (const [source, lessons] of bySource) {
+    const sliced = lessons.filter((l) => l.sections)
+    if (!sliced.length) continue
+    const names = lessons.map((l) => l.slug).join(', ')
+    for (const l of sliced) {
+      const { include, exclude } = l.sections!
+      if (include && exclude) fail(`lesson ${l.slug}: sections has both include and exclude; use one`)
+      if (!include?.length && !exclude?.length) fail(`lesson ${l.slug}: sections lists no headings`)
+      if (l.kind !== 'sync') fail(`lesson ${l.slug}: only synced lessons can have sections`)
+    }
+    if (lessons.length > 1) {
+      if (sliced.length !== lessons.length) fail(`source ${source} is shared by [${names}], so every one of them needs sections`)
+      if (lessons.filter((l) => !l.sections?.include).length > 1) fail(`source ${source}: more than one of [${names}] lacks include, so they overlap`)
+    }
+    const abs = resolve(REPO_ROOT, source)
+    if (!existsSync(abs)) continue
+    if (statSync(abs).isDirectory() || !abs.endsWith('.md')) {
+      fail(`source ${source}: sections need a single .md source file`)
+      continue
+    }
+    const headings = splitH2(stripFrontMatter(readFileSync(abs, 'utf8'))).sections.map((s: { heading: string }) => s.heading)
+    const owner = new Map<string, string>()
+    for (const l of sliced) {
+      for (const h of unknownHeadings(l, headings)) fail(`lesson ${l.slug}: heading "${h}" is not a "## " heading of ${source}`)
+      for (const h of publishedHeadings(l, headings)) {
+        if (owner.has(h)) fail(`source ${source}: "## ${h}" is published by both ${owner.get(h)} and ${l.slug}`)
+        else owner.set(h, l.slug)
+      }
+    }
+    const excluded = new Set(sliced.flatMap((l) => l.sections!.exclude ?? []))
+    for (const h of lessons.length > 1 ? headings : []) {
+      if (!owner.has(h) && !excluded.has(h)) fail(`source ${source}: "## ${h}" is published by none of [${names}]; include it in one or exclude it on purpose`)
+    }
+  }
 }
 
 const cycle = findPrerequisiteCycle(MODULES)

@@ -57,14 +57,25 @@
     },
     {
       "slug": "module-10-backend-fastapi-deployment",
-      "title": "Module 10 – Backend, FastAPI & Deployment (Beginner Guide + Keywords)",
+      "title": "Backend, FastAPI and LLM Serving APIs",
       "track": "engineering-foundations",
       "module": "apis-and-backend",
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md",
-      "estMinutes": 19,
+      "estMinutes": 10,
       "href": "/learn/engineering-foundations/apis-and-backend/module-10-backend-fastapi-deployment"
+    },
+    {
+      "slug": "module-10-deployment-and-operations",
+      "title": "Deployment, Infrastructure and Production Operations",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md",
+      "estMinutes": 10,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/module-10-deployment-and-operations"
     },
     {
       "slug": "caching-streaming-cicd-buildvsbuy",
@@ -85,8 +96,19 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_01_RAG_Fundamentals_Core_Components.md",
-      "estMinutes": 39,
+      "estMinutes": 35,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/module-01-rag-fundamentals-core-components"
+    },
+    {
+      "slug": "module-01-embeddings",
+      "title": "Embeddings",
+      "track": "llm-and-retrieval",
+      "module": "how-llms-behave",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_01_RAG_Fundamentals_Core_Components.md",
+      "estMinutes": 3,
+      "href": "/learn/llm-and-retrieval/how-llms-behave/module-01-embeddings"
     },
     {
       "slug": "what-rag-actually-is",
@@ -1413,8 +1435,20 @@
       "publish": "credited",
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in the author's own words.",
       "source": "05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md",
-      "estMinutes": 33,
+      "estMinutes": 31,
       "href": "/learn/forward-deployed/scoping-an-fde-project/scoping-an-fde-project-complete-guide"
+    },
+    {
+      "slug": "scoping-roll-out-and-prove-the-result",
+      "title": "Roll Out, Operate, and Prove the Result",
+      "track": "forward-deployed",
+      "module": "adoption-and-impact",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in the author's own words.",
+      "source": "05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md",
+      "estMinutes": 2,
+      "href": "/learn/forward-deployed/adoption-and-impact/scoping-roll-out-and-prove-the-result"
     },
     {
       "slug": "readme",

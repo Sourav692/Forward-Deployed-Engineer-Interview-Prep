@@ -94,4 +94,23 @@ export type CurriculumLesson = {
   credit?: string
   /** Estimated reading time. Weights the module progress rollup when known. */
   estMinutes?: number
+  /**
+   * Publishes only part of a markdown source file (a "lesson slice"), so one file
+   * that covers two modules' topics can give each module a real lesson.
+   *
+   * Entries are the texts of the source's `## ` headings, matched exactly after
+   * trimming (punctuation included). The sync fails when a listed heading is not
+   * in the source.
+   *  - `include`: publish only those H2 sections, in the listed order. Nothing
+   *    before the first H2 is kept except the title `#` heading.
+   *  - `exclude`: publish the whole file minus those H2 sections.
+   *
+   * When several lessons share one source, every H2 must be published by exactly
+   * one of them or be excluded on purpose (listed in an `exclude` and in no
+   * `include`), and at most one of them may lack `include`. That one is the "main"
+   * part: it keeps the preamble, and a repository link to the file without an
+   * anchor goes to it. `check:curriculum` enforces this, so a heading can neither
+   * be published twice nor silently dropped.
+   */
+  sections?: { include?: string[]; exclude?: string[] }
 }

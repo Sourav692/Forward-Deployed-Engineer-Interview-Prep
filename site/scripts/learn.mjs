@@ -23,6 +23,12 @@
  *    removed outside code (defence in depth: `marked` passes raw HTML through).
  * Mermaid and every other fenced block are copied through untouched.
  *
+ * Lesson slices: a lesson with `sections` publishes only some `## ` sections of its
+ * source (see CurriculumLesson.sections), so one file can be several lessons. A repo
+ * link to such a file goes to the slice holding the link's anchor, else to the main
+ * slice; an in-page `#anchor` whose heading lives in a sibling slice becomes that
+ * slice's /learn URL. Reading time is counted per slice.
+ *
  * Only the folders in `ALLOWED_ROOTS` are ever read (SEC-01): private material in
  * `06_`, `09_` and `99_` cannot leak by accident, whatever `curriculum.ts` says.
  *
@@ -247,7 +253,117 @@ function normaliseHeadings(markdown, title) {
 }
 
 /** Drops a leading YAML front-matter block, which the reading pipeline would print. */
-const stripFrontMatter = (markdown) => markdown.replace(/^---\n[\s\S]*?\n---\n/, '')
+export const stripFrontMatter = (markdown) => markdown.replace(/^---\n[\s\S]*?\n---\n/, '')
+
+// ------------------------------------------------------------------ lesson slices
+
+/** Calls `fn(line, index)` for every line outside fenced code blocks. */
+function eachProseLine(lines, fn) {
+  let fence = null
+  lines.forEach((line, i) => {
+    const marker = line.match(/^\s*(`{3,}|~{3,})/)
+    if (fence) {
+      if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length) fence = null
+      return
+    }
+    if (marker) {
+      fence = marker[1]
+      return
+    }
+    fn(line, i)
+  })
+}
+
+/**
+ * Splits a markdown source at its `## ` headings (code fences respected). Returns
+ * the preamble lines before the first H2 and one `{ heading, lines }` per H2
+ * section, `heading` being the trimmed heading text.
+ */
+export function splitH2(markdown) {
+  const lines = markdown.split('\n')
+  const starts = []
+  eachProseLine(lines, (line, i) => {
+    const m = line.match(/^##\s+(.*?)\s*#*\s*$/)
+    if (m) starts.push({ i, heading: m[1].trim() })
+  })
+  const preamble = lines.slice(0, starts[0]?.i ?? lines.length)
+  const sections = starts.map((s, n) => ({ heading: s.heading, lines: lines.slice(s.i, starts[n + 1]?.i ?? lines.length) }))
+  return { preamble, sections }
+}
+
+/** The H2 headings a lesson's `sections` rule publishes, in published order. */
+export function publishedHeadings(lesson, headings) {
+  const { include, exclude = [] } = lesson.sections ?? {}
+  if (include) return [...include]
+  return headings.filter((h) => !exclude.includes(h))
+}
+
+/** Listed headings that the source does not have, for error messages. */
+export function unknownHeadings(lesson, headings) {
+  const { include = [], exclude = [] } = lesson.sections ?? {}
+  return [...include, ...exclude].filter((h) => !headings.includes(h))
+}
+
+/**
+ * Applies a lesson's `sections` rule to its source (see CurriculumLesson.sections).
+ * `include` keeps only the title heading of the preamble, then the listed sections
+ * in order; `exclude` keeps everything but the listed sections. Throws when a listed
+ * heading is not in the source.
+ */
+export function sliceMarkdown(markdown, lesson) {
+  if (!lesson.sections) return markdown
+  const { preamble, sections } = splitH2(markdown)
+  const headings = sections.map((s) => s.heading)
+  const unknown = unknownHeadings(lesson, headings)
+  if (unknown.length) {
+    throw new Error(`${lesson.slug}: sections lists heading(s) not found as "## " in ${lesson.source}: ${unknown.map((h) => JSON.stringify(h)).join(', ')}`)
+  }
+  const byHeading = new Map(sections.map((s) => [s.heading, s.lines]))
+  if (lesson.sections.include) {
+    const title = []
+    eachProseLine(preamble, (line) => {
+      if (!title.length && /^#\s/.test(line)) title.push(line, '')
+    })
+    return [...title, ...lesson.sections.include.flatMap((h) => byHeading.get(h))].join('\n')
+  }
+  const exclude = lesson.sections.exclude ?? []
+  return [...preamble, ...sections.filter((s) => !exclude.includes(s.heading)).flatMap((s) => s.lines)].join('\n')
+}
+
+/** GitHub's heading anchor: lower case, punctuation dropped, spaces to hyphens. */
+const githubSlug = (text) =>
+  text
+    .toLowerCase()
+    .replace(/<[^>]*>/g, '')
+    .replace(/[^\p{L}\p{N}\s_-]/gu, '')
+    .trim()
+    .replace(/\s/g, '-')
+
+/** The id the reading pipeline (src/lib/reading.ts) gives a lesson's `## ` section. */
+const readingSlug = (text) =>
+  text
+    .toLowerCase()
+    .replace(/<[^>]*>/g, '')
+    .replace(/&[a-z]+;/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+
+/**
+ * Every anchor a link may use to reach a heading of this markdown: the GitHub
+ * anchor of any heading (as authored in the repository) and the `lesson-…` id the
+ * site gives each `## ` section.
+ */
+export function headingAnchors(markdown) {
+  const anchors = new Set(['lesson-intro'])
+  eachProseLine(markdown.split('\n'), (line) => {
+    const m = line.match(/^(#{1,6})\s+(.*?)\s*#*\s*$/)
+    if (!m) return
+    anchors.add(githubSlug(m[2]))
+    if (m[1].length === 2) anchors.add(`lesson-${readingSlug(m[2]) || 'section'}`)
+  })
+  return anchors
+}
 
 // ------------------------------------------------------------------ links
 
@@ -280,7 +396,27 @@ function lastDayUrls(repoRoot) {
   return urls
 }
 
+/**
+ * The lesson a link to a source file should open. A source published as slices has
+ * several lessons: a link with an anchor goes to the slice holding that heading,
+ * any other link to the slice without `include` (the main part), else the first.
+ */
+function lessonForSource(slices, anchor) {
+  if (slices.length === 1) return slices[0].lesson
+  const holder = anchor && slices.find((s) => s.anchors.has(anchor))
+  return (holder || slices.find((s) => !s.lesson.sections?.include) || slices[0]).lesson
+}
+
 function rewriteHref(href, sourceFile, ctx) {
+  // In-page anchor in a sliced lesson whose heading went to a sibling slice.
+  if (href.startsWith('#') && ctx.self) {
+    const anchor = href.slice(1)
+    if (!anchor || ctx.self.anchors.has(anchor)) return null
+    const sibling = (ctx.lessonsBySource.get(sourceFile) ?? []).find((s) => s.anchors.has(anchor))
+    if (!sibling || sibling.lesson === ctx.self.lesson) return null
+    ctx.stats.lesson++
+    return `${lessonHref(sibling.lesson)}${href}`
+  }
   if (/^(https?:|mailto:|tel:|#|\/)/i.test(href)) return null
   if (/^[a-z][a-z0-9+.-]*:/i.test(href)) return null
   const [pathPart, anchor = ''] = href.split('#')
@@ -296,8 +432,9 @@ function rewriteHref(href, sourceFile, ctx) {
   if (rel.startsWith('..')) return null
   const hash = anchor ? `#${anchor}` : ''
 
-  const lesson = ctx.lessonsBySource.get(abs)
-  if (lesson) {
+  const slices = ctx.lessonsBySource.get(abs)
+  if (slices) {
+    const lesson = lessonForSource(slices, anchor)
     ctx.stats.lesson++
     return `${lessonHref(lesson)}${hash}`
   }
@@ -387,6 +524,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
     }
     const abs = resolve(repoRoot, lesson.source)
     if (lesson.kind === 'live') {
+      if (lesson.sections) throw new Error(`${lesson.slug}: a live lesson cannot have sections; only synced lessons can be sliced`)
       plan.push({ lesson, abs })
       continue
     }
@@ -398,9 +536,13 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
       continue
     }
     if (main !== abs) notes.push(`${lesson.slug}: folder source, published ${repoPath(repoRoot, md)}`)
-    plan.push({ lesson, abs, md })
-    lessonsBySource.set(abs.replace(/[\\/]$/, ''), lesson)
-    lessonsBySource.set(md, lesson)
+    // A slice (lesson.sections) publishes part of the file; sliceMarkdown throws on unknown headings.
+    const source = sliceMarkdown(stripFrontMatter(await readFile(md, 'utf8')), lesson)
+    const slice = { lesson, anchors: headingAnchors(source) }
+    plan.push({ lesson, abs, md, source, slice })
+    for (const key of new Set([abs.replace(/[\\/]$/, ''), md])) {
+      lessonsBySource.set(key, [...(lessonsBySource.get(key) ?? []), slice])
+    }
   }
 
   const stats = { lesson: 0, live: 0, github: 0 }
@@ -408,7 +550,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
   const manifest = []
   await rm(learnDir, { recursive: true, force: true })
 
-  for (const { lesson, abs, md } of plan) {
+  for (const { lesson, abs, md, source, slice } of plan) {
     const mod = moduleBySlug.get(lesson.home)
     const entry = {
       slug: lesson.slug,
@@ -429,9 +571,8 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
       manifest.push(entry)
       continue
     }
-    let body = stripFrontMatter(await readFile(md, 'utf8'))
-    body = normaliseHeadings(body, entry.title)
-    body = rewriteLinks(body, md, ctx)
+    let body = normaliseHeadings(source, entry.title)
+    body = rewriteLinks(body, md, { ...ctx, self: lesson.sections ? slice : null })
     body = sanitise(body)
     const out = join(learnDir, mod.track, mod.slug, `${lesson.slug}.md`)
     await mkdir(dirname(out), { recursive: true })
