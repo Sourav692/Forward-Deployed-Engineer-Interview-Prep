@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import * as repo from '../repo'
-import { attemptsFor } from '../store/rules'
+import { attemptsFor } from '@/lib/progress/rules'
 import { skillProficiency } from '../store/selectors'
 import type { LearnerState } from '../types'
 import type { Progress } from '../store/selectors'
