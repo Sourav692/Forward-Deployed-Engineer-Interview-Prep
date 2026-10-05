@@ -8,17 +8,14 @@ import { cx, focusRing } from '@/components/ui'
  *
  * From 1024 px it is a sticky sidebar. Below that the same tree sits in a native
  * `<details>` drawer, which is keyboard-operable and needs no JavaScript. The current
- * module carries `aria-current="page"` (or `"location"` on its lesson pages, where
- * the module is an ancestor of the page rather than the page itself).
+ * module carries `aria-current="page"`. Lesson pages use `LessonSideNav` instead.
  */
 export function SideNav({
   track,
   currentModule,
-  onLesson = false,
 }: {
   track: CurriculumTrack
   currentModule?: string
-  onLesson?: boolean
 }) {
   const tree = (
     <nav aria-label={`${track.code} ${track.title}: sections and modules`} className="text-[0.8125rem]">
@@ -43,7 +40,7 @@ export function SideNav({
                   <li key={slug}>
                     <Link
                       href={learnHref.module(m)}
-                      aria-current={current ? (onLesson ? 'location' : 'page') : undefined}
+                      aria-current={current ? 'page' : undefined}
                       className={cx(
                         'flex items-start gap-2 rounded-md px-2 py-1.5',
                         current ? 'bg-accent-soft font-semibold text-accent' : 'text-text hover:bg-surface-2',

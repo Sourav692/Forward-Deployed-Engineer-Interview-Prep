@@ -171,6 +171,8 @@ export type LessonPage = {
   sourceNote: string
   /** Credit line as inline HTML (it may carry italics), when `publish` is `credited`. */
   creditHtml: string | null
+  /** The module's home lessons in teaching order, for the lesson sidebar. */
+  siblings: LearnLesson[]
   /** Siblings in the module's home list. */
   prev: LearnLesson | null
   next: LearnLesson | null
@@ -203,6 +205,7 @@ export const getLessonPage = cache((trackSlug: string, moduleSlug: string, lesso
       lesson.publish === 'credited' && lesson.credit
         ? (marked.parseInline(lesson.credit, { async: false }) as string)
         : null,
+    siblings,
     prev: index > 0 ? siblings[index - 1] : null,
     next: index >= 0 && index < siblings.length - 1 ? siblings[index + 1] : null,
     index,
