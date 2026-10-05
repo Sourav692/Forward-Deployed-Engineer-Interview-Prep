@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { SearchEntry } from '@/lib/scenario'
+import { OPEN_SEARCH_EVENT } from '@/components/shell/nav'
 
 /**
  * Full-text search over every worksheet, answer-key and case-study section.
@@ -67,6 +68,12 @@ export function SearchDialog() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
+
+  // Other shell pieces (the mobile bottom bar) open search by firing this event.
+  useEffect(() => {
+    window.addEventListener(OPEN_SEARCH_EVENT, openDialog)
+    return () => window.removeEventListener(OPEN_SEARCH_EVENT, openDialog)
+  }, [openDialog])
 
   // Fetch the index the first time search opens. The state updates land in the
   // promise callbacks, after the effect has returned.

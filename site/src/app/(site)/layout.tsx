@@ -2,9 +2,12 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import { SITE } from '@/lib/registry'
-import { NAV } from '@/lib/editorial'
 import { SearchDialog } from '@/components/SearchDialog'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { BottomBar } from '@/components/shell/BottomBar'
+import { Logo } from '@/components/shell/Logo'
+import { MobileNav } from '@/components/shell/MobileNav'
+import { TopNav } from '@/components/shell/TopNav'
 import '../globals.css'
 
 const inter = Inter({
@@ -49,32 +52,26 @@ export default async function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
-      <body className={`${inter.variable} min-h-screen`}>
+      {/* Below 768 px the bottom bar is fixed over the viewport; this padding keeps the
+          end of every page clear of it. */}
+      <body
+        className={`${inter.variable} min-h-screen pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0`}
+      >
         <a
           href="#main"
-          className="no-print sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+          className="shell-chrome no-print sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-surface"
         >
           Skip to content
         </a>
 
-        <header className="no-print sticky top-0 z-30 border-b border-border bg-bg/85 backdrop-blur-md">
-          <div className="mx-auto flex h-[3.75rem] max-w-5xl items-center gap-4 px-4 sm:px-6">
-            <Link
-              href="/"
-              aria-label={`${SITE.name} home`}
-              className="flex items-center gap-2.5 font-semibold tracking-[-0.011em]"
-            >
-              <Logo />
-              <span>{SITE.name}</span>
-            </Link>
-            <nav aria-label="Primary" className="ml-2 hidden gap-1 sm:flex">
-              {NAV.map((item) => (
-                <HeaderLink key={item.href} href={item.href}>
-                  {item.label}
-                </HeaderLink>
-              ))}
-            </nav>
-            <div className="ml-auto flex items-center gap-1.5">
+        {/* The layout stays a Server Component. Only TopNav, MobileNav, BottomBar,
+            SearchDialog and ThemeToggle are Client Components ('use client'). */}
+        <header className="shell-chrome no-print sticky top-0 z-30 border-b border-border bg-bg/85 backdrop-blur-md">
+          <div className="mx-auto flex h-[3.75rem] max-w-5xl items-center gap-2 px-4 sm:px-6 lg:gap-4">
+            <MobileNav />
+            <Logo />
+            <TopNav />
+            <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
               <SearchDialog />
               <ThemeToggle />
             </div>
@@ -85,7 +82,7 @@ export default async function RootLayout({
           {children}
         </main>
 
-        <footer className="no-print mt-24 border-t border-border">
+        <footer className="shell-chrome no-print mt-24 border-t border-border">
           <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-8 text-[0.8125rem] text-subtle sm:flex-row sm:items-center sm:px-6">
             <p>
               {SITE.name} — {SITE.tagline}
@@ -102,35 +99,9 @@ export default async function RootLayout({
             </p>
           </div>
         </footer>
+
+        <BottomBar />
       </body>
     </html>
-  )
-}
-
-function HeaderLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      className="rounded-md px-2.5 py-1.5 text-[0.875rem] text-muted transition-colors hover:bg-surface-2 hover:text-text"
-    >
-      {children}
-    </Link>
-  )
-}
-
-function Logo() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden className="h-[1.375rem] w-[1.375rem] text-accent">
-      <rect x="2" y="2" width="20" height="20" rx="5" fill="currentColor" opacity="0.12" />
-      <path
-        d="M7 15.5L11 8l4 7.5M8.6 13h4.8"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="17" cy="8" r="1.6" fill="currentColor" />
-    </svg>
   )
 }
