@@ -34,7 +34,7 @@ export const isRead = (lessonSlug: string) => isLessonRead(lessonHome(lessonSlug
 /**
  * Progress over the main reading list, weighted by manifest minutes. When the list is
  * the module's own home lessons this is the store's `moduleProgress`; for a module
- * that only has see-also lessons (T1.4, T1.5) the same weighted rollup runs over them.
+ * that only has see-also lessons (T1.5) the same weighted rollup runs over them.
  */
 export function readingProgress(input: Pick<ModuleInput, 'slug' | 'reading' | 'minutes'>): ProgressSummary {
   const mod = MODULES.find((m) => m.slug === input.slug)

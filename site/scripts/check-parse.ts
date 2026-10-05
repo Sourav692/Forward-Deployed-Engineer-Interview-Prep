@@ -14,7 +14,7 @@
  */
 
 import { readFile, readdir } from 'node:fs/promises'
-import { join, relative, resolve } from 'node:path'
+import { join, relative, resolve, sep } from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { parseDocument } from '../src/lib/parse.ts'
 import type { Block } from '../src/lib/parse.ts'
@@ -36,7 +36,7 @@ import { existsSync } from 'node:fs'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
-import { findUnsafeHtml, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
+import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
 
@@ -545,6 +545,28 @@ for (const file of [...learnOnDisk].filter((f) => expectedFiles.has(f)).sort()) 
     }
   }
   await checkDocument(label, raw, false)
+}
+
+// Anchors in Learn lessons must land on a heading: an in-page `#anchor` on the
+// lesson itself, and a `/learn/...#anchor` link (from a lesson slice to its sibling,
+// or a repo link with an anchor) on the target lesson. Anchors are the GitHub ids
+// the sources were written with, or the `lesson-...` ids the site gives each section.
+{
+  const anchorsOf = new Map<string, Set<string>>()
+  for (const file of learnFiles) {
+    const href = '/learn/' + relative(LEARN, file).replace(/\.md$/, '').split(sep).join('/')
+    anchorsOf.set(href, headingAnchors(await readFile(file, 'utf8')))
+  }
+  for (const file of learnFiles) {
+    const self = '/learn/' + relative(LEARN, file).replace(/\.md$/, '').split(sep).join('/')
+    const raw = await readFile(file, 'utf8')
+    const prose = raw.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '')
+    for (const [, path, anchor] of prose.matchAll(/\]\((\/learn\/[^)#\s]*)?#([^)\s]+)\)/g)) {
+      const target = path ?? self
+      const anchors = anchorsOf.get(target)
+      if (anchors && !anchors.has(decodeURIComponent(anchor))) failures.push(`learn ${self}: anchor link ${path ?? ''}#${anchor} matches no heading`)
+    }
+  }
 }
 
 // Slug guard: compare with the manifest on main (or the last commit), so a lesson

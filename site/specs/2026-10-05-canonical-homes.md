@@ -14,12 +14,16 @@ Apply these in order when a new lesson is used by more than one module.
 2. **A lesson lives where its source folder is taught in sequence.** A Handbook chapter belongs to the module that walks through that chapter's folder in order.
 3. **Every scenario pack and standalone design lives in T5.5 Scenario library.** Topic modules link to them. These are already published under `/modules/15-fde-case-studies`, so for them the home sets only the breadcrumb.
 4. **When two lessons overlap inside one module, move one to the module whose scope it serves.** For example, `a-day-in-the-life` moved from T0.2 to T6.3, because T0.2 already has `senior-fde-day-to-day` and its scope says delivery detail lives in T6.3.
+5. **When one file covers two modules' topics in separate H2 sections, publish it as slices.** The home keeps its slug and the original URL, and publishes the file minus the sections that belong elsewhere (`sections: { exclude: [...] }`). Each moved part becomes a new lesson with its own slug, homed in the module it serves, that publishes only those sections (`sections: { include: [...] }`). Headings are matched exactly, every H2 goes to exactly one slice (or is excluded on purpose), and `check:curriculum` fails on overlap or a missing heading. A repository link to the file opens the slice holding the link's anchor, else the home part. Current slices:
+   - `module-10-backend-fastapi-deployment` (T1.2) keeps the overview, FastAPI and LLM serving; `module-10-deployment-and-operations` (T1.4) takes "Topic 3: Deployment & Infrastructure" and "Topic 4: Production Operations".
+   - `module-01-rag-fundamentals-core-components` (T2.2) keeps every topic except embeddings; `module-01-embeddings` (T2.1) takes "Topic 4: Embeddings".
+   - `scoping-an-fde-project-complete-guide` (T6.2) keeps modules 1 to 4 and 6 to 8; `scoping-roll-out-and-prove-the-result` (T6.5) takes "Module 5: Roll Out, Operate, and Prove the Result", with the same credit line.
 
 Lessons of kind `live` (already published under `/modules/...` or `/fde-last-day-prep`) are linked from Learn rather than copied, whatever their home.
 
 ## Consequence for module pages (FE-07)
 
-Under rule 1, T1.4 Cloud, containers and deployment and T1.5 Distributed systems essentials own no lessons: everything they teach is homed in a required track. Their module pages must present `seeAlso` lessons as the main reading list, not as a footnote. The same layout applies to any module whose `lessons` list is empty.
+Under rule 1, T1.5 Distributed systems essentials owns no lessons: everything it teaches is homed in a required track. (T1.4 Cloud, containers and deployment was in the same position until rule 5 gave it the deployment slice of Module 10.) Its module page must present `seeAlso` lessons as the main reading list, not as a footnote. The same layout applies to any module whose `lessons` list is empty.
 
 To change a home, edit `home` on the lesson in `curriculum.ts`, then move its slug from the old module's `lessons` to its `seeAlso` and the other way round. The check fails until both sides agree.
 
@@ -29,13 +33,11 @@ To change a home, edit `home` on the lesson in `curriculum.ts`, then move its sl
 |---|---|---|---|
 | `a-day-in-the-life` | T6.3 | T0.2 | sync |
 | `code-review-bug-drills` | T8.4 | T1.1 | live |
-| `module-10-backend-fastapi-deployment` | T1.2 | T1.4 | sync |
 | `identity-secrets-tenant-fairness` | T4.4 | T1.2 | sync |
 | `infra-and-cicd` | T4.7 | T1.4 | sync |
 | `durability-and-idempotency` | T3.7 | T1.5 | sync |
 | `retry-fallback-memo-confirm` | T3.5 | T1.5 | sync |
 | `module-12-reliability-and-failure-handling` | T8.3 | T1.5 | live |
-| `module-01-rag-fundamentals-core-components` | T2.2 | T2.1 | sync |
 | `core-8-drivers-memorize` | T4.5 | T2.1 | sync |
 | `retrieval-hybrid-rerank` | T2.4 | T4.1 | sync |
 | `state-memory-sessions` | T3.4 | T3.5 | sync |
@@ -63,11 +65,9 @@ To change a home, edit `home` on the lesson in `curriculum.ts`, then move its sl
 | `retail-demand-explainer` | T8.1 | T6.1 | live |
 | `service-now-ticket-agent` | T8.1 | T6.1 | live |
 | `executive-dashboard-copilot` | T8.1 | T6.1 | live |
-| `scoping-an-fde-project-complete-guide` | T6.2 | T6.5 | sync |
 | `gates-risks-metrics` | T6.3 | T6.5 | sync |
 | `deep-dive-and-conversational-formats` | T7.1 | T9.2 | sync |
 | `proof-vs-cheat-sheet-honesty` | T7.1 | T9.2 | sync |
 | `communicates-with-clarity` | T7.3 | T7.5 | live |
 
-41 lessons are used by more than one module.
-
+38 lessons are used by more than one module.
