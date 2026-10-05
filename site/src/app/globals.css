@@ -36,6 +36,8 @@
   --mastered-soft: oklch(95% 0.04 175);
   --shadow: 0 1px 2px oklch(24% 0.014 260 / 0.05), 0 4px 16px oklch(24% 0.014 260 / 0.04);
   --shadow-lg: 0 8px 40px oklch(24% 0.014 260 / 0.12);
+  /* Dimmed backdrop behind modal panels (mobile menu). */
+  --overlay: oklch(24% 0.014 260 / 0.4);
 }
 
 .dark {
@@ -65,6 +67,7 @@
   --mastered-soft: oklch(28% 0.05 175);
   --shadow: 0 1px 2px oklch(0% 0 0 / 0.3), 0 4px 16px oklch(0% 0 0 / 0.2);
   --shadow-lg: 0 8px 40px oklch(0% 0 0 / 0.5);
+  --overlay: oklch(0% 0 0 / 0.6);
 }
 
 @theme inline {
@@ -485,7 +488,47 @@ abbr.gloss {
   color: var(--text-muted);
 }
 
+/*
+ * Site shell (FE-03, A11Y-03): header, mobile menu, bottom bar, footer, skip link.
+ * Focus adds a soft --accent-ring halo to the global :focus-visible outline, so the
+ * ring is visible on every shell control, including SearchDialog and ThemeToggle.
+ */
+.shell-chrome :focus-visible,
+.shell-chrome:focus-visible {
+  box-shadow: 0 0 0 4px var(--accent-ring);
+}
+
+/* Mobile slide-over: slides in from the left over a dimmed backdrop. */
+.shell-drawer::backdrop {
+  background: var(--overlay);
+}
+.shell-drawer[open] {
+  animation: shell-drawer-in 200ms ease-out;
+}
+.shell-drawer[open]::backdrop {
+  animation: shell-backdrop-in 200ms ease-out;
+}
+@keyframes shell-drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+}
+@keyframes shell-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shell-drawer[open],
+  .shell-drawer[open]::backdrop {
+    animation: none;
+  }
+}
+
 @media print {
+  body {
+    padding-bottom: 0 !important;
+  }
   .no-print {
     display: none !important;
   }

@@ -93,13 +93,46 @@ export type EditorialMeta = {
 export const SITE_NAME = 'Forward Deployed'
 export const SITE_TAGLINE = 'FDE interview practice and system-design review'
 
+/**
+ * The top-level areas of the site (plan §4, UX-02), in display order. Ids are stable;
+ * labels may change. `href` is where the area link goes; `match` lists the path
+ * prefixes that also mark the area as current (`aria-current="page"`).
+ *
+ * Phase 1 hrefs point at pages that already exist, so no link 404s. They change in
+ * later workstreams: Start → `/start` (F), Design → `/design`, Practice → `/practice`
+ * and Interview → `/interview` (G). Progress joins the list in Phase 2.
+ */
 export const NAV = [
-  { label: 'Start Here', href: '/learning-map' },
-  { label: 'Technical Practice', href: '/modules/01-customer-discovery-and-decomposition' },
-  { label: 'Behavioral Stories', href: '/modules/14-behavioural-and-leadership-round' },
-  { label: 'Worked Designs', href: '/modules/15-fde-case-studies' },
-  { label: 'Company Prep', href: '/modules/16-company-oriented-prep' },
-  { label: 'Final Week', href: '/fde-last-day-prep' },
+  { id: 'start', label: 'Start', href: '/guide', match: ['/guide', '/start'] },
+  { id: 'learn', label: 'Learn', href: '/learn', match: ['/learn'] },
+  {
+    id: 'design',
+    label: 'Design',
+    href: '/modules/15-fde-case-studies',
+    match: ['/modules/15-fde-case-studies', '/design'],
+  },
+  {
+    id: 'practice',
+    label: 'Practice',
+    href: '/modules/01-customer-discovery-and-decomposition',
+    match: [
+      '/modules/01-customer-discovery-and-decomposition',
+      '/modules/14-behavioural-and-leadership-round',
+      '/practice',
+    ],
+  },
+  {
+    id: 'interview',
+    label: 'Interview',
+    href: '/fde-last-day-prep',
+    match: ['/fde-last-day-prep', '/modules/16-company-oriented-prep', '/interview'],
+  },
+] as const
+
+/** Utility links shown after the areas. Library points at the learning map until `/library` exists. */
+export const UTILITY_NAV = [
+  { id: 'glossary', label: 'Glossary', href: '/glossary', match: ['/glossary'] },
+  { id: 'library', label: 'Library', href: '/learning-map', match: ['/learning-map', '/library'] },
 ] as const
 
 export const LAST_DAY = {
