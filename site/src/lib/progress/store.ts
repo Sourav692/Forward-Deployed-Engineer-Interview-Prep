@@ -279,11 +279,17 @@ export interface ProgressSummary {
  * The share of a module's home lessons read, weighted by each lesson's `estMinutes`
  * when known. A lesson without an estimate weighs the mean of the known ones, or 1
  * when none are known, so the rollup is an equal split until estimates arrive.
+ *
+ * `minutes` (lesson slug → minutes) overrides the curriculum estimates. Learn pages
+ * pass the sync manifest's `estMinutes` here, since the curriculum file carries none.
  */
-export function moduleProgress(moduleSlug: string): ProgressSummary {
+export function moduleProgress(moduleSlug: string, minutes?: Readonly<Record<string, number>>): ProgressSummary {
   const mod = MODULES.find((m) => m.slug === moduleSlug)
   if (!mod) return { fraction: 0, lessonsRead: 0, lessonsTotal: 0 }
-  const lessons = mod.lessons.map((slug) => LESSONS.find((l) => l.slug === slug))
+  const lessons = mod.lessons.map((slug) => {
+    const lesson = LESSONS.find((l) => l.slug === slug)
+    return lesson && minutes?.[slug] ? { ...lesson, estMinutes: minutes[slug] } : lesson
+  })
   const known = lessons.map((l) => l?.estMinutes).filter((m): m is number => typeof m === 'number' && m > 0)
   const fallback = known.length ? known.reduce((s, m) => s + m, 0) / known.length : 1
   let lessonsRead = 0
@@ -301,11 +307,11 @@ export function moduleProgress(moduleSlug: string): ProgressSummary {
  * Modules with no home lessons yet (Coming soon) are left out, because there is
  * nothing to read.
  */
-export function trackProgress(trackSlug: string): ProgressSummary {
+export function trackProgress(trackSlug: string, minutes?: Readonly<Record<string, number>>): ProgressSummary {
   let lessonsRead = 0
   let lessonsTotal = 0
   const parts = MODULES.filter((m) => m.track === trackSlug && m.lessons.length > 0).map((m) => {
-    const p = moduleProgress(m.slug)
+    const p = moduleProgress(m.slug, minutes)
     lessonsRead += p.lessonsRead
     lessonsTotal += p.lessonsTotal
     return { minutes: m.estMinutes > 0 ? m.estMinutes : 1, fraction: p.fraction }

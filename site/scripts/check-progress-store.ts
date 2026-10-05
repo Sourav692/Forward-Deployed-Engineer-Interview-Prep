@@ -113,6 +113,11 @@ check(
 )
 delete lesson1.estMinutes
 delete lesson2.estMinutes
+check(
+  'module progress: minutes override from the manifest',
+  store.moduleProgress(mod.slug, { [l1]: 30, [l2]: 90 }).fraction,
+  30 / (30 + 90 + rest * 60),
+)
 store.markLessonUnread(mod.slug, l1)
 check('unread removes key', store.isLessonRead(mod.slug, l1), false)
 check('module progress zero', store.moduleProgress(mod.slug).fraction, 0)
