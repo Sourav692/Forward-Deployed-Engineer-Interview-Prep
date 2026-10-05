@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T11:28:38.380Z",
+  "generatedAt": "2026-10-05T13:27:15.048Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1141,10 +1141,70 @@
               ]
             },
             {
-              "slug": "drill-verifier",
+              "slug": "final-round-runbook",
               "order": 11,
-              "title": "Drill Verifier",
+              "title": "Final Round Runbook",
               "tag": "Blitzy 11",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "final-round-engineering-fit",
+              "order": 12,
+              "title": "Engineering Fit and Technical Aptitude",
+              "tag": "Blitzy 12",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "final-round-ownership",
+              "order": 13,
+              "title": "Ownership Story Workbook",
+              "tag": "Blitzy 13",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "final-round-executive-communication",
+              "order": 14,
+              "title": "Executive Communication and Scope",
+              "tag": "Blitzy 14",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "final-round-mock-interview",
+              "order": 15,
+              "title": "Final Round Mock Interview",
+              "tag": "Blitzy 15",
+              "tabs": [
+                {
+                  "id": "company-guide",
+                  "label": "Company Guide"
+                }
+              ]
+            },
+            {
+              "slug": "drill-verifier",
+              "order": 16,
+              "title": "Drill Verifier",
+              "tag": "Blitzy 16",
               "tabs": [
                 {
                   "id": "company-guide",
