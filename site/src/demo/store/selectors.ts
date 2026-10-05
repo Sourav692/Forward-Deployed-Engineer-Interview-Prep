@@ -23,7 +23,7 @@ import {
   type PrerequisiteCheck,
   type Readiness,
   type RevisionReason,
-} from './rules'
+} from '@/lib/progress/rules'
 
 const CHECKPOINT_MINUTES = 20
 

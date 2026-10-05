@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import * as repo from '../repo'
-import { isDone } from '../store/rules'
+import { isDone } from '@/lib/progress/rules'
 import { useDemo } from '../store/useDemo'
 import { btn } from './ui'
 

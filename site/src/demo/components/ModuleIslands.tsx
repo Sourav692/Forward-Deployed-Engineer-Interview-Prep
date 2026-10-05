@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import * as repo from '../repo'
-import { attemptsFor, isDone } from '../store/rules'
+import { attemptsFor, isDone } from '@/lib/progress/rules'
 import { update, useDemo } from '../store/useDemo'
 import { ConfirmDialog, toast } from './feedback'
 import { ModuleStatus } from './islands'

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import type { ActivityEvent, Status } from '../types'
 import * as repo from '../repo'
-import type { Readiness } from '../store/rules'
+import type { Readiness } from '@/lib/progress/rules'
 import type { RevisionItem } from '../store/selectors'
 import { STATUS_META, EmptyState, ProgressBar, StatusBadge, cx, formatDate } from './ui'
 
