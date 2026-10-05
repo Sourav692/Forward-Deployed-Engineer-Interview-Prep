@@ -266,28 +266,6 @@
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems"
     },
     {
-      "slug": "durability-and-idempotency",
-      "title": "Durability and Idempotency",
-      "track": "agentic-systems",
-      "module": "agentic-workflow-platforms",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/04_Durability_And_Idempotency.md",
-      "estMinutes": 8,
-      "href": "/learn/agentic-systems/agentic-workflow-platforms/durability-and-idempotency"
-    },
-    {
-      "slug": "retry-fallback-memo-confirm",
-      "title": "Retry, Fallback, Memoization and the Confirmation Gate",
-      "track": "agentic-systems",
-      "module": "robust-agents",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/03_Robust_Agents/01_Retry_Fallback_Memo_Confirm.md",
-      "estMinutes": 9,
-      "href": "/learn/agentic-systems/robust-agents/retry-fallback-memo-confirm"
-    },
-    {
       "slug": "what-an-agent-actually-is",
       "title": "What an Agent Actually Is",
       "track": "agentic-systems",
@@ -427,15 +405,37 @@
       "href": "/learn/agentic-systems/memory-and-state/practise-memory-and-state"
     },
     {
-      "slug": "parallel-vs-sequential",
-      "title": "Parallel vs Sequential Tool Calls",
+      "slug": "the-confirmation-gate-and-memoization",
+      "title": "The Confirmation Gate and Memoization",
       "track": "agentic-systems",
       "module": "robust-agents",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/03_Robust_Agents/03_Parallel_vs_Sequential.md",
-      "estMinutes": 4,
-      "href": "/learn/agentic-systems/robust-agents/parallel-vs-sequential"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/01_The_Confirmation_Gate_and_Memoization.md",
+      "estMinutes": 8,
+      "href": "/learn/agentic-systems/robust-agents/the-confirmation-gate-and-memoization"
+    },
+    {
+      "slug": "retries-and-fallbacks",
+      "title": "Retries and Fallbacks",
+      "track": "agentic-systems",
+      "module": "robust-agents",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/02_Retries_and_Fallbacks.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/robust-agents/retries-and-fallbacks"
+    },
+    {
+      "slug": "parallel-and-sequential-tool-calls",
+      "title": "Parallel and Sequential Tool Calls",
+      "track": "agentic-systems",
+      "module": "robust-agents",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/03_Parallel_and_Sequential_Tool_Calls.md",
+      "estMinutes": 6,
+      "href": "/learn/agentic-systems/robust-agents/parallel-and-sequential-tool-calls"
     },
     {
       "slug": "observability-for-tool-calls",
@@ -444,8 +444,8 @@
       "module": "robust-agents",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/03_Robust_Agents/04_Observability_For_Tool_Calls.md",
-      "estMinutes": 5,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/04_Observability_for_Tool_Calls.md",
+      "estMinutes": 6,
       "href": "/learn/agentic-systems/robust-agents/observability-for-tool-calls"
     },
     {
@@ -455,20 +455,20 @@
       "module": "robust-agents",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/03_Robust_Agents/05_The_Eight_Guard_Checks.md",
-      "estMinutes": 8,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/05_The_Eight_Guard_Checks.md",
+      "estMinutes": 9,
       "href": "/learn/agentic-systems/robust-agents/the-eight-guard-checks"
     },
     {
-      "slug": "guarding-tool-calls",
-      "title": "Guarding tool calls in an agentic system",
+      "slug": "practise-robust-agents",
+      "title": "Practise Robust Agent Interview Questions",
       "track": "agentic-systems",
       "module": "robust-agents",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Production_and_Platform_Judgment/05-guarding-tool-calls.md",
-      "estMinutes": 9,
-      "href": "/learn/agentic-systems/robust-agents/guarding-tool-calls"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/06_Practise_Robust_Agent_Interview_Questions.md",
+      "estMinutes": 8,
+      "href": "/learn/agentic-systems/robust-agents/practise-robust-agents"
     },
     {
       "slug": "when-multi-agent-is-justified",
@@ -477,20 +477,42 @@
       "module": "multi-agent-systems",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/01_When_Multi_Agent_Is_Justified.md",
-      "estMinutes": 6,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/01_When_Multi_Agent_Is_Justified.md",
+      "estMinutes": 8,
       "href": "/learn/agentic-systems/multi-agent-systems/when-multi-agent-is-justified"
     },
     {
-      "slug": "reference-architecture-handoffs",
-      "title": "Reference Architecture and Handoffs",
+      "slug": "multi-agent-coordination-patterns",
+      "title": "Multi-Agent Coordination Patterns",
       "track": "agentic-systems",
       "module": "multi-agent-systems",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/02_Reference_Architecture_Handoffs.md",
-      "estMinutes": 6,
-      "href": "/learn/agentic-systems/multi-agent-systems/reference-architecture-handoffs"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/02_Multi_Agent_Coordination_Patterns.md",
+      "estMinutes": 10,
+      "href": "/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns"
+    },
+    {
+      "slug": "shared-state-routing-and-termination",
+      "title": "Shared State, Routing, and Termination",
+      "track": "agentic-systems",
+      "module": "multi-agent-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/03_Shared_State_Routing_and_Termination.md",
+      "estMinutes": 9,
+      "href": "/learn/agentic-systems/multi-agent-systems/shared-state-routing-and-termination"
+    },
+    {
+      "slug": "handoffs-and-permission-scope",
+      "title": "Handoffs and Permission Scope",
+      "track": "agentic-systems",
+      "module": "multi-agent-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/04_Handoffs_and_Permission_Scope.md",
+      "estMinutes": 8,
+      "href": "/learn/agentic-systems/multi-agent-systems/handoffs-and-permission-scope"
     },
     {
       "slug": "failure-isolation-and-evaluation",
@@ -499,75 +521,64 @@
       "module": "multi-agent-systems",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/03_Failure_Isolation_And_Evaluation.md",
-      "estMinutes": 5,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/05_Failure_Isolation_and_Evaluation.md",
+      "estMinutes": 8,
       "href": "/learn/agentic-systems/multi-agent-systems/failure-isolation-and-evaluation"
     },
     {
-      "slug": "case-study-research-platform",
-      "title": "Case Study — The Research Platform",
+      "slug": "from-supervisor-to-deep-agent",
+      "title": "From Supervisor to Deep Agent",
       "track": "agentic-systems",
       "module": "multi-agent-systems",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/04_Case_Study_Research_Platform.md",
-      "estMinutes": 10,
-      "href": "/learn/agentic-systems/multi-agent-systems/case-study-research-platform"
-    },
-    {
-      "slug": "case-study-supervisor-to-deep-agent",
-      "title": "Case Study — From Supervisor to Deep Agent",
-      "track": "agentic-systems",
-      "module": "multi-agent-systems",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/05_Case_Study_Supervisor_To_Deep_Agent.md",
-      "estMinutes": 11,
-      "href": "/learn/agentic-systems/multi-agent-systems/case-study-supervisor-to-deep-agent"
-    },
-    {
-      "slug": "multi-agent-systems-interview-tutorial",
-      "title": "Multi-Agent Systems — Interview Tutorial",
-      "track": "agentic-systems",
-      "module": "multi-agent-systems",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/07_multi_agent_systems_INTERVIEW_TUTORIAL.md",
-      "estMinutes": 24,
-      "href": "/learn/agentic-systems/multi-agent-systems/multi-agent-systems-interview-tutorial"
-    },
-    {
-      "slug": "multi-agent-coordination-patterns",
-      "title": "Multi-Agent Coordination Patterns: Execution Flow & Real-World Use Cases",
-      "track": "agentic-systems",
-      "module": "multi-agent-systems",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/multi_agent/multi_agent_coordination_patterns.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/06_From_Supervisor_to_Deep_Agent.md",
       "estMinutes": 12,
-      "href": "/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns"
+      "href": "/learn/agentic-systems/multi-agent-systems/from-supervisor-to-deep-agent"
     },
     {
-      "slug": "the-problem-in-plain-english",
-      "title": "The Problem in Plain English",
+      "slug": "anatomy-of-a-deployed-multi-agent-platform",
+      "title": "Anatomy of a Deployed Multi-Agent Platform",
+      "track": "agentic-systems",
+      "module": "multi-agent-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/07_Anatomy_of_a_Deployed_Multi_Agent_Platform.md",
+      "estMinutes": 12,
+      "href": "/learn/agentic-systems/multi-agent-systems/anatomy-of-a-deployed-multi-agent-platform"
+    },
+    {
+      "slug": "practise-multi-agent-systems",
+      "title": "Practise Multi-Agent Interview Questions",
+      "track": "agentic-systems",
+      "module": "multi-agent-systems",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/08_Practise_Multi_Agent_Interview_Questions.md",
+      "estMinutes": 12,
+      "href": "/learn/agentic-systems/multi-agent-systems/practise-multi-agent-systems"
+    },
+    {
+      "slug": "why-workflow-automation-is-a-trust-problem",
+      "title": "Why Workflow Automation Is a Trust Problem",
       "track": "agentic-systems",
       "module": "agentic-workflow-platforms",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/01_The_Problem_In_Plain_English.md",
-      "estMinutes": 8,
-      "href": "/learn/agentic-systems/agentic-workflow-platforms/the-problem-in-plain-english"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/01_Why_Workflow_Automation_Is_a_Trust_Problem.md",
+      "estMinutes": 9,
+      "href": "/learn/agentic-systems/agentic-workflow-platforms/why-workflow-automation-is-a-trust-problem"
     },
     {
-      "slug": "canonical-events-and-channels",
-      "title": "Canonical Events, Channels and Routing",
+      "slug": "canonical-events-and-routing",
+      "title": "Canonical Events and Routing",
       "track": "agentic-systems",
       "module": "agentic-workflow-platforms",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/02_Canonical_Events_And_Channels.md",
-      "estMinutes": 6,
-      "href": "/learn/agentic-systems/agentic-workflow-platforms/canonical-events-and-channels"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/02_Canonical_Events_and_Routing.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/agentic-workflow-platforms/canonical-events-and-routing"
     },
     {
       "slug": "determinism-over-free-text",
@@ -576,20 +587,53 @@
       "module": "agentic-workflow-platforms",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/03_Determinism_Over_Free_Text.md",
-      "estMinutes": 7,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/03_Determinism_Over_Free_Text.md",
+      "estMinutes": 9,
       "href": "/learn/agentic-systems/agentic-workflow-platforms/determinism-over-free-text"
     },
     {
-      "slug": "approvals-spend-caps-staged-rollout",
-      "title": "Approvals, Spend Caps and Staged Rollout",
+      "slug": "durability-and-idempotency",
+      "title": "Durability and Idempotency",
       "track": "agentic-systems",
       "module": "agentic-workflow-platforms",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/05_Approvals_Spend_Caps_Staged_Rollout.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/04_Durability_and_Idempotency.md",
+      "estMinutes": 9,
+      "href": "/learn/agentic-systems/agentic-workflow-platforms/durability-and-idempotency"
+    },
+    {
+      "slug": "approvals-and-spend-caps",
+      "title": "Approvals and Spend Caps",
+      "track": "agentic-systems",
+      "module": "agentic-workflow-platforms",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/05_Approvals_and_Spend_Caps.md",
+      "estMinutes": 8,
+      "href": "/learn/agentic-systems/agentic-workflow-platforms/approvals-and-spend-caps"
+    },
+    {
+      "slug": "staged-rollout",
+      "title": "Staged Rollout",
+      "track": "agentic-systems",
+      "module": "agentic-workflow-platforms",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/06_Staged_Rollout.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/agentic-workflow-platforms/staged-rollout"
+    },
+    {
+      "slug": "practise-agentic-workflow-platforms",
+      "title": "Practise Agentic Workflow Platform Interview Questions",
+      "track": "agentic-systems",
+      "module": "agentic-workflow-platforms",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/07_Practise_Agentic_Workflow_Platform_Interview_Questions.md",
       "estMinutes": 10,
-      "href": "/learn/agentic-systems/agentic-workflow-platforms/approvals-spend-caps-staged-rollout"
+      "href": "/learn/agentic-systems/agentic-workflow-platforms/practise-agentic-workflow-platforms"
     },
     {
       "slug": "identity-secrets-tenant-fairness",

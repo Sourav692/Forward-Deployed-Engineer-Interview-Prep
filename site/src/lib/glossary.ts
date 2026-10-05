@@ -424,8 +424,8 @@ export const NOT_ACRONYMS = new Set([
   'CISO', 'SQS',
   // Learn lessons (DATA-05): SQL and boolean keywords (IF NOT EXISTS, IS NULL, AND, OR),
   // a THINK / ACT / OBSERVE loop label, a mermaid node id (GW), ticket-id prefixes
-  // (MRD-4290), product-name fragments (Azure AD, VS Code), a currency and a region.
-  'IF', 'IS', 'AND', 'OR', 'ACT', 'GW', 'MRD', 'AD', 'VS', 'USD', 'APJ',
+  // (MRD-4290, TKT-3), product-name fragments (Azure AD, VS Code), a currency and a region.
+  'IF', 'IS', 'AND', 'OR', 'ACT', 'GW', 'MRD', 'TKT', 'AD', 'VS', 'USD', 'APJ',
 ])
 
 export const glossaryAnchor = (term: string) =>
