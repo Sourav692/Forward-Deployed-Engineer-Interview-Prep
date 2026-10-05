@@ -93,7 +93,7 @@ function BlockView({ block, ...p }: { block: Block } & BlocksProps) {
 
     case 'code':
       return (
-        <pre className="code-block" data-lang={block.lang || undefined}>
+        <pre className="code-block" data-lang={block.lang || undefined} tabIndex={0}>
           <code>{block.code}</code>
         </pre>
       )
@@ -137,7 +137,7 @@ function TableView({ block, ...p }: { block: Extract<Block, { kind: 'table' }> }
 
   return (
     <div className="space-y-2">
-      <div className="overflow-x-auto rounded-lg border border-border">
+      <div className="overflow-x-auto rounded-lg border border-border" tabIndex={0} role="region" aria-label="Table">
         <table className="w-full border-collapse text-left text-[0.9375rem]">
           <thead>
             <tr className="bg-surface-2">

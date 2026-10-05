@@ -152,7 +152,7 @@ async function CaseStudyPage({
 
       <header className="mb-6 max-w-3xl">
         <div className="mb-2 flex items-center gap-2.5">
-          <span className="rounded bg-accent px-1.5 py-0.5 text-[0.6875rem] font-bold tabular-nums text-white">
+          <span className="rounded bg-accent px-1.5 py-0.5 text-[0.6875rem] font-bold tabular-nums text-white dark:text-bg">
             {study.ref.tag}
           </span>
           <span className="text-[0.8125rem] text-subtle">{study.ref.trackTitle}</span>
@@ -200,7 +200,7 @@ function ReadingOrder({ study }: { study: CaseStudy }) {
           <ol className="list-decimal space-y-0.5 pl-4 marker:text-subtle">
             {study.docs.map((d) => (
               <li key={d.tab}>
-                <a href={`#${d.tab}`} className="text-accent hover:text-accent-hover">
+                <a href={`#${d.tab}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
                   {d.label}
                 </a>{' '}
                 <span className="text-subtle">· {d.minutes} min</span>
@@ -213,7 +213,7 @@ function ReadingOrder({ study }: { study: CaseStudy }) {
         {study.sources ? (
           <>
             The references for every tab are in{' '}
-            <a href={`#${study.sources.anchor}`} className="text-accent hover:text-accent-hover">
+            <a href={`#${study.sources.anchor}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
               {study.sources.label} → {study.sources.title}
             </a>
             .

@@ -60,18 +60,19 @@ export default function CreditsPage() {
             <p className="mt-1 text-[0.8125rem] text-subtle">
               {group.lessons.length} {group.lessons.length === 1 ? 'lesson' : 'lessons'}
             </p>
-            <ul className="mt-3 flex flex-col gap-2.5">
+            <ul className="mt-3 flex flex-col gap-1.5">
               {group.lessons.map((lesson) => {
                 const mod = getModuleBySlug(lesson.module)
                 return (
                   <li key={lesson.slug} className="text-[0.9375rem] leading-snug">
-                    <Link href={lesson.href} className={`font-medium ${link}`}>
+                    {/* inline-block + padding keeps each link a 24 px target (WCAG 2.5.8) when they stack on phones. */}
+                    <Link href={lesson.href} className={`inline-block py-0.5 font-medium ${link}`}>
                       {lesson.title}
                     </Link>
                     {mod && (
                       <span className="block text-[0.8125rem] text-subtle sm:inline">
                         <span className="hidden sm:inline"> · </span>
-                        <Link href={learnHref.module(mod)} className={link}>
+                        <Link href={learnHref.module(mod)} className={`inline-block py-1 ${link}`}>
                           {mod.code} {mod.title}
                         </Link>
                       </span>

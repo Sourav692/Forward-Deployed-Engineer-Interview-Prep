@@ -47,8 +47,10 @@ function slugify(text: string): string {
  * outbound links open in a new tab so the reader keeps their place in the guide.
  */
 function finish(html: string): string {
+  // tabindex="0" lets keyboard users scroll a wide table or code block (WCAG 2.1.1).
   return html
-    .replace(/<table>/g, '<div class="table-wrap"><table>')
+    .replace(/<table>/g, '<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table>')
+    .replace(/<pre>/g, '<pre tabindex="0">')
     .replace(/<\/table>/g, '</table></div>')
     .replace(/<a href="(https?:[^"]+)"/g, '<a href="$1" target="_blank" rel="noopener noreferrer"')
 }

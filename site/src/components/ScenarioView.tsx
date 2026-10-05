@@ -554,7 +554,7 @@ function ClosingCard({ section }: { section: Section }) {
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="no-print mt-3 rounded-md bg-accent px-3 py-1.5 text-[0.8125rem] font-semibold text-white transition-colors hover:bg-accent-hover"
+            className="no-print mt-3 rounded-md bg-accent px-3 py-1.5 text-[0.8125rem] font-semibold text-white transition-colors dark:text-bg hover:bg-accent-hover"
           >
             Show the model answer
           </button>

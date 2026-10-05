@@ -136,7 +136,7 @@ export function Diagram({ code }: { code: string }) {
   if (failed) {
     return (
       <figure className="my-1 space-y-1.5">
-        <pre className="code-block">
+        <pre className="code-block" tabIndex={0}>
           <code>{code}</code>
         </pre>
         <figcaption className="text-[0.75rem] text-subtle">
@@ -159,7 +159,11 @@ export function Diagram({ code }: { code: string }) {
 
   return (
     <div
-      className="mermaid-figure overflow-x-auto rounded-lg border border-border bg-surface p-3"
+      // Wide diagrams scroll sideways; tabIndex lets keyboard users scroll them too (WCAG 2.1.1).
+      role="figure"
+      aria-label="Diagram"
+      tabIndex={0}
+      className="mermaid-figure overflow-x-auto rounded-lg border border-border bg-surface p-3 outline-none focus-visible:ring-4 focus-visible:ring-accent-ring"
       // Mermaid output is generated from the markdown we ship, and is sanitised by
       // its own `securityLevel: 'strict'` before it gets here.
       dangerouslySetInnerHTML={{ __html: svg }}

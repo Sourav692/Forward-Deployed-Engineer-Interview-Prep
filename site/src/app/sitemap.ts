@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAllScenarios } from '@/lib/content'
 import { LAST_DAY_GUIDES, REVIEW_DOCS, REVIEWS, STORY_BANK, TRIGGER_SHEET, reviewHref } from '@/lib/editorial'
 import { getLearnManifest, getTracks, learnHref, trackModules } from '@/lib/learn'
+import { PATHS } from '@/lib/paths'
 import { MODULES } from '@/lib/registry'
 import { scenarioHref } from '@/lib/scenario'
 import { absoluteUrl } from '@/lib/seo'
@@ -31,6 +32,7 @@ const STATIC_PAGES = [
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const paths = new Set<string>(STATIC_PAGES)
 
+  for (const path of PATHS) paths.add(`/start/paths/${path.id}`)
   for (const track of getTracks()) {
     paths.add(learnHref.track(track.slug))
     for (const mod of trackModules(track)) paths.add(learnHref.module(mod))

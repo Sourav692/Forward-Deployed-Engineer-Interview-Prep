@@ -170,7 +170,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                 className={`flex items-center gap-2 rounded-md px-3.5 py-2 text-[0.875rem] font-semibold transition-colors ${
                   done
                     ? 'bg-success-soft text-success hover:opacity-90'
-                    : 'bg-accent text-white hover:bg-accent-hover'
+                    : 'bg-accent text-white hover:bg-accent-hover dark:text-bg'
                 }`}
               >
                 {done && <Check className="h-4 w-4" />}
@@ -231,12 +231,12 @@ export function ReadingPanel({ doc, drawDiagrams }: { doc: ReadingDocument; draw
             <div className="mb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-subtle">
               On this page
             </div>
-            <ul className="space-y-1.5 border-l border-border">
+            <ul className="space-y-0.5 border-l border-border">
               {toc.map((s) => (
                 <li key={s.id}>
                   <a
                     href={`#${s.id}`}
-                    className="-ml-px block border-l border-transparent pl-3 text-[0.8125rem] leading-snug text-muted transition-colors hover:border-accent hover:text-text"
+                    className="-ml-px block border-l border-transparent py-1 pl-3 text-[0.8125rem] leading-snug text-muted transition-colors hover:border-accent hover:text-text"
                     dangerouslySetInnerHTML={{ __html: s.title! }}
                   />
                 </li>
