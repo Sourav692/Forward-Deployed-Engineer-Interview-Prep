@@ -4,6 +4,14 @@ Spoken answers - 3 grounded. Deliver them in your own cadence; the wording is a 
 
 ## 1. A significant result with limited headcount
 
+**CEO-ready answer.**
+
+> "I delivered a production MVP in about two months without a large team behind me. The insurer's BI queue took days for a question and weeks for a dashboard. I architected and built it hands-on, including the data foundation. Two choices made that possible. First, I used managed platform services wherever they were good enough, and hand-built only the gaps. Second, I designed for cheap iteration: prompts stored in a governed table, tracing on every step. A wrong answer took minutes to diagnose, not days. Time-to-insight went from days to minutes. Dashboards became self-serve. Adoption grew afterward."
+
+**Technical-interviewer answer.**
+
+> "I spent build effort only where the platform had a gap. Genie Spaces handled text-to-SQL for the analytics specialist. Vector Search with managed embeddings handled retrieval. Model Serving sat behind an AI Gateway. The hand-built piece was the Supervisor, because the managed multi-agent feature wasn't available to this customer. I also built the Unity Catalog foundation the agents depended on. For iteration speed, prompts lived in a governed table with a five-minute cache. I could change behaviour without a redeploy. Per-node MLflow tracing showed which step produced a wrong answer, so diagnosis took minutes. The trade-off was less control inside the managed pieces. The MVP shipped in about two months."
+
 **GROUNDED — a large Asian life insurer, about two months, hands-on**
 
 *"At the insurer, I had about two months to replace a BI queue where an ad-hoc question took days and a dashboard took weeks. There wasn't a large delivery team behind it — I architected, built, and shipped the MVP hands-on, including the Unity Catalog data foundation underneath the agents.*
@@ -14,6 +22,14 @@ Spoken answers - 3 grounded. Deliver them in your own cadence; the wording is a 
 
 ## 2. A constraint that forced a creative solution
 
+**CEO-ready answer.**
+
+> "The constraint defined the design. At the insurer, the managed multi-agent feature I needed wasn't available to this customer. I wasn't going to tie their launch to a roadmap nobody in the room controlled. So I built the coordinating agent myself. It classifies the request, asks a clarifying question when confidence is low, and routes to one of four specialists. That meant more code to own. It also meant I could evolve the design when it hit its limits. A second constraint: the search index didn't inherit the source's access rules. That produced a two-layer check, fast filtering plus a live permission check before every answer."
+
+**Technical-interviewer answer.**
+
+> "I built the Supervisor as an 8-node LangGraph state machine. It classifies intent with a confidence score. Below 60%, it asks a clarifying question instead of routing. It resolves governed assets once through a central Context Index, routes to one of four specialists and composes the answer. The cost was owning orchestration code. The benefit was that I could later evolve it into a Deep Agent with self-contained subagents. The second constraint was security. The Vector Search index is a derived copy and does not inherit Unity Catalog row filters. A revoked grant at the source never reaches the index. So retrieval uses a fast pre-filter, then a live grant re-check right before generation. The first layer gives speed. The second gives correctness."
+
 **GROUNDED — hand-built supervisor (insurer), with the Vector Search / Unity Catalog gap as a second**
 
 *"At the insurer, the managed multi-agent feature — exactly the pattern I needed — wasn't an option for this customer at the time. And I couldn't leave a production system's core path waiting on it.*
@@ -23,6 +39,14 @@ Spoken answers - 3 grounded. Deliver them in your own cadence; the wording is a 
 *A second constraint on the same engagement: the platform's Vector Search index — it's called AI Search now — is a derived copy of the governed data — it doesn't inherit Unity Catalog's row-level rules. A revoked grant at the source doesn't reach the index. That constraint is what produced the two-layer design: fast pre-filter for speed, live grant re-check right before generation for correctness. The constraint didn't limit the design; it defined it."*
 
 ## 3. Reuse or buy versus build
+
+**CEO-ready answer.**
+
+> "I build only where the platform has a gap that matters. At the insurer, I used a managed text-to-SQL service for analytics questions. It is less flexible. But it only reads data, which shrinks the security risk. And the insurer's own analysts could curate it without an engineer. For orchestration, I built, because the managed option wasn't available to them. At a consumer lender, I chose retrieval over a hand-coded rules engine. Rules need constant upkeep as wording drifts. My test is simple. Does building give the customer control, a smaller attack surface or independence from a timeline? If not, buy."
+
+**Technical-interviewer answer.**
+
+> "My build-versus-buy test has three inputs: control over a constraint, attack surface and timeline independence. For analytics, Genie Spaces won. Its generated SQL is read-only, so a prompt or SQL injection cannot modify data. That is a smaller blast radius than a hand-rolled text-to-SQL chain. It also let the insurer's analysts curate the space without an engineer. Orchestration was the build case. Waiting on the managed multi-agent feature would tie the launch to someone else's roadmap. At the lender, I compared retrieval over historical tickets with a hand-coded decision tree. A rules tree needs manual fixes every time phrasing drifts. Retrieval generalises across phrasing, but it is only as good as its seed examples. I accepted that dependency and named it."
 
 **GROUNDED — Genie managed text-to-SQL vs hand-built Supervisor; RAG vs rules engine at a large Indian consumer lender**
 
