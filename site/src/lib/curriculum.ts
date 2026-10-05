@@ -1118,7 +1118,13 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Worksheet',
     interviewProbe: 'Any design round',
     commonMistakes: ['Skipping requirements and metrics'],
-    lessons: ['the-12-part-framework', 'the-15-principles', 'worked-example-travel-agent'],
+    lessons: [
+      'the-twelve-part-design-framework',
+      'architecture-data-and-request-flow',
+      'scale-reliability-and-security',
+      'design-principles-as-tie-breakers',
+      'reviewing-an-agent-architecture',
+    ],
     seeAlso: [],
   },
   {
@@ -1136,7 +1142,10 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Timed worksheet ≥ 3',
     interviewProbe: 'Design rounds',
     commonMistakes: ['Over-spending time on one box'],
-    lessons: ['the-60-minute-whiteboard-method'],
+    lessons: [
+      'the-six-step-whiteboard-clock',
+      'deep-dive-failure-modes-and-the-close',
+    ],
     seeAlso: [],
   },
   {
@@ -1154,7 +1163,13 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'P5 rubric',
     interviewProbe: 'Why this over that?',
     commonMistakes: ['Listing tools without trade-offs'],
-    lessons: ['monolith-vs-microservices', 'ch23-system-design-patterns'],
+    lessons: [
+      'monoliths-microservices-and-the-evolution-model',
+      'orchestration-patterns-for-agents',
+      'context-memory-and-tool-patterns',
+      'reliability-and-safety-patterns',
+      'cost-patterns-and-the-pattern-audit',
+    ],
     seeAlso: [],
   },
   {
@@ -1173,15 +1188,15 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'Design an enterprise assistant',
     commonMistakes: ['Memorising instead of reasoning'],
     lessons: [
-      'enterprise-ai-assistant',
-      'customer-support-assistant',
-      'coding-assistant',
-      'recruiting-platform',
-      'logistics-exception-handling',
-      'enterprise-rag-with-access-control',
-      'whiteboard-scripts-enterprise-rag-on-databricks',
-      'agent-platform-for-non-technical-users',
-      'scoping-doc-to-deployed-agent-in-two-weeks',
+      'enterprise-ai-assistant-integration-layers-at-scale',
+      'customer-support-assistant-knowledge-actions-and-approval',
+      'coding-assistant-context-engineering-under-300-ms',
+      'recruiting-platform-explainable-ranking-human-decisions',
+      'logistics-exceptions-designing-around-a-policy-gate',
+      'access-controlled-enterprise-rag',
+      'access-controlled-rag-on-databricks',
+      'safe-workflow-automation-for-non-technical-users',
+      'delivering-an-agent-in-two-weeks-with-enforced-gates',
     ],
     seeAlso: [],
   },
@@ -1714,6 +1729,10 @@ export const RENAMED: Record<string, string | null> = {
   ...RENAMED_T8,
   ...RENAMED_T9,
 }
+
+/** Credit for the T5.3 consolidated lessons that summarise ideas from the third-party Chapter 23. */
+const T5_3_CH23_CREDIT =
+  'Draws on ideas from Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.'
 
 /** Credit for the T3.4 consolidated lessons that summarise ideas from the third-party Chapter 7. */
 const T4_2_CH12_CREDIT =
@@ -3167,7 +3186,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g13-evaluation-and-release-gating',
-    title: 'G13 Evaluation And Release Gating',
+    title: 'G13 Evaluation and Release Gating',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/',
     home: 'scenario-library',
     kind: 'live',
@@ -3257,7 +3276,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g07-secure-multi-tenant-ai-platform',
-    title: 'G07 Secure Multi Tenant AI Platform',
+    title: 'G07 Secure Multi-Tenant AI Platform',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/',
     home: 'scenario-library',
     kind: 'live',
@@ -3289,7 +3308,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g14-observability-and-production-diagnosis',
-    title: 'G14 Observability And Production Diagnosis',
+    title: 'G14 Observability and Production Diagnosis',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/',
     home: 'scenario-library',
     kind: 'live',
@@ -3340,7 +3359,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'scale-prototype-to-production',
-    title: '61 Scale Prototype To Production',
+    title: 'Scale a Prototype to Production',
     source: '02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/',
     home: 'scenario-library',
     kind: 'live',
@@ -3348,7 +3367,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g18-consumer-scale-chat-service',
-    title: 'G18 Consumer Scale Chat Service',
+    title: 'G18 Consumer-Scale Chat Service',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/',
     home: 'scenario-library',
     kind: 'live',
@@ -3356,7 +3375,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g10-high-volume-batch-pipeline',
-    title: 'G10 High Volume Batch Pipeline',
+    title: 'G10 High-Volume Batch Pipeline',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/',
     home: 'scenario-library',
     kind: 'live',
@@ -3412,7 +3431,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g19-model-development-and-post-training',
-    title: 'G19 Model Development And Post Training',
+    title: 'G19 Model Development and Post-Training',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/',
     home: 'scenario-library',
     kind: 'live',
@@ -3435,13 +3454,187 @@ export const LESSONS: CurriculumLesson[] = [
     publish: 'credited',
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
   },
+  // T5.1 to T5.4: consolidated lessons. They replace the excluded sources that follow
+  // (see specs/consolidation/T5.md for the old-to-new mapping).
+  {
+    slug: 'the-twelve-part-design-framework',
+    title: 'The Twelve-Part Design Framework',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/01_The_Twelve_Part_Design_Framework.md',
+    home: 'design-framework',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'architecture-data-and-request-flow',
+    title: 'Architecture, Data, and Request Flow',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/02_Architecture_Data_and_Request_Flow.md',
+    home: 'design-framework',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'scale-reliability-and-security',
+    title: 'Scale, Reliability, and Security',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/03_Scale_Reliability_and_Security.md',
+    home: 'design-framework',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'design-principles-as-tie-breakers',
+    title: 'Design Principles as Tie-Breakers',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md',
+    home: 'design-framework',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'reviewing-an-agent-architecture',
+    title: 'Reviewing an Agent Architecture',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/05_Reviewing_an_Agent_Architecture.md',
+    home: 'design-framework',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'the-six-step-whiteboard-clock',
+    title: 'The Six-Step Whiteboard Clock',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.2_The_60_Minute_Whiteboard_Method/01_The_Six_Step_Whiteboard_Clock.md',
+    home: 'sixty-minute-whiteboard',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'deep-dive-failure-modes-and-the-close',
+    title: 'Deep Dive, Failure Modes, and the Close',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.2_The_60_Minute_Whiteboard_Method/02_Deep_Dive_Failure_Modes_and_the_Close.md',
+    home: 'sixty-minute-whiteboard',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'monoliths-microservices-and-the-evolution-model',
+    title: 'Monoliths, Microservices, and the Evolution Model',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/01_Monoliths_Microservices_and_the_Evolution_Model.md',
+    home: 'architecture-patterns',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'orchestration-patterns-for-agents',
+    title: 'Orchestration Patterns for Agents',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/02_Orchestration_Patterns_for_Agents.md',
+    home: 'architecture-patterns',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T5_3_CH23_CREDIT,
+  },
+  {
+    slug: 'context-memory-and-tool-patterns',
+    title: 'Context, Memory, and Tool Patterns',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/03_Context_Memory_and_Tool_Patterns.md',
+    home: 'architecture-patterns',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T5_3_CH23_CREDIT,
+  },
+  {
+    slug: 'reliability-and-safety-patterns',
+    title: 'Reliability and Safety Patterns',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/04_Reliability_and_Safety_Patterns.md',
+    home: 'architecture-patterns',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T5_3_CH23_CREDIT,
+  },
+  {
+    slug: 'cost-patterns-and-the-pattern-audit',
+    title: 'Cost Patterns and the Pattern Audit',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/05_Cost_Patterns_and_the_Pattern_Audit.md',
+    home: 'architecture-patterns',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T5_3_CH23_CREDIT,
+  },
+  {
+    slug: 'enterprise-ai-assistant-integration-layers-at-scale',
+    title: 'Enterprise AI Assistant: Integration Layers at Scale',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/01_Enterprise_AI_Assistant_Integration_Layers_at_Scale.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'customer-support-assistant-knowledge-actions-and-approval',
+    title: 'Customer Support Assistant: Knowledge, Actions, and Approval',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/02_Customer_Support_Assistant_Knowledge_Actions_and_Approval.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'coding-assistant-context-engineering-under-300-ms',
+    title: 'Coding Assistant: Context Engineering Under 300 ms',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/03_Coding_Assistant_Context_Engineering_Under_300_ms.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'recruiting-platform-explainable-ranking-human-decisions',
+    title: 'Recruiting Platform: Explainable Ranking, Human Decisions',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'logistics-exceptions-designing-around-a-policy-gate',
+    title: 'Logistics Exceptions: Designing Around a Policy Gate',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/05_Logistics_Exceptions_Designing_Around_a_Policy_Gate.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'access-controlled-enterprise-rag',
+    title: 'Access-Controlled Enterprise RAG',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'access-controlled-rag-on-databricks',
+    title: 'Access-Controlled RAG on Databricks',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'safe-workflow-automation-for-non-technical-users',
+    title: 'Safe Workflow Automation for Non-Technical Users',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/08_Safe_Workflow_Automation_for_Non_Technical_Users.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'delivering-an-agent-in-two-weeks-with-enforced-gates',
+    title: 'Delivering an Agent in Two Weeks with Enforced Gates',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+  },
   {
     slug: 'the-12-part-framework',
     title: 'The 12-Part Framework',
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md',
     home: 'design-framework',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'the-15-principles',
@@ -3449,7 +3642,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/02_The_15_Principles.md',
     home: 'design-framework',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'worked-example-travel-agent',
@@ -3457,7 +3650,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/04_Worked_Example_Travel_Agent.md',
     home: 'design-framework',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'the-60-minute-whiteboard-method',
@@ -3465,7 +3658,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md',
     home: 'sixty-minute-whiteboard',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'monolith-vs-microservices',
@@ -3473,7 +3666,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/03_Monolith_vs_Microservices.md',
     home: 'architecture-patterns',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'ch23-system-design-patterns',
@@ -3481,7 +3674,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md',
     home: 'architecture-patterns',
     kind: 'sync',
-    publish: 'credited',
+    publish: 'excluded',
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
   },
   {
@@ -3490,7 +3683,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/01_Enterprise_AI_Assistant.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'customer-support-assistant',
@@ -3498,7 +3691,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/02_Customer_Support_Assistant.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'coding-assistant',
@@ -3506,7 +3699,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/03_Coding_Assistant.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'recruiting-platform',
@@ -3514,7 +3707,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/04_Recruiting_Platform.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'logistics-exception-handling',
@@ -3522,7 +3715,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'enterprise-rag-with-access-control',
@@ -3530,7 +3723,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'whiteboard-scripts-enterprise-rag-on-databricks',
@@ -3538,7 +3731,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'agent-platform-for-non-technical-users',
@@ -3546,7 +3739,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'scoping-doc-to-deployed-agent-in-two-weeks',
@@ -3554,7 +3747,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'g01-enterprise-knowledge-assistant',
@@ -3574,7 +3767,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g03-tool-using-agent-with-safety-controls',
-    title: 'G03 Tool Using Agent With Safety Controls',
+    title: 'G03 Tool-Using Agent with Safety Controls',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/',
     home: 'scenario-library',
     kind: 'live',
@@ -3598,7 +3791,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g06-nl-over-governed-data',
-    title: 'G06 NL Over Governed Data',
+    title: 'G06 Natural Language over Governed Data',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/',
     home: 'scenario-library',
     kind: 'live',
@@ -3630,7 +3823,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g12-scoping-to-deployed-agent',
-    title: 'G12 Scoping To Deployed Agent',
+    title: 'G12 Scoping to Deployed Agent',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/',
     home: 'scenario-library',
     kind: 'live',
@@ -3638,7 +3831,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g15-agent-platform-for-non-technical-users',
-    title: 'G15 Agent Platform For Non Technical Users',
+    title: 'G15 Agent Platform for Non-Technical Users',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/',
     home: 'scenario-library',
     kind: 'live',
@@ -3646,7 +3839,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g16-real-time-call-assistant',
-    title: 'G16 Real Time Call Assistant',
+    title: 'G16 Real-Time Call Assistant',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/',
     home: 'scenario-library',
     kind: 'live',
@@ -3662,7 +3855,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'standalone-designs-recruiting-platform',
-    title: '04 Recruiting Platform',
+    title: 'AI Recruiting Platform',
     source: '02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/',
     home: 'scenario-library',
     kind: 'live',
@@ -3671,7 +3864,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'production-llm-gateway',
-    title: '100 Production LLM Gateway',
+    title: 'Production LLM Gateway',
     source: '02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/',
     home: 'scenario-library',
     kind: 'live',
@@ -3679,7 +3872,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'travel-agent-worked-example',
-    title: '14 Travel Agent Worked Example',
+    title: 'Travel Agent Worked Example',
     source: '02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/',
     home: 'scenario-library',
     kind: 'live',
@@ -3688,7 +3881,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'air-gapped-ai-system',
-    title: '19 Air Gapped AI System',
+    title: 'Air-Gapped AI System',
     source: '02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/',
     home: 'scenario-library',
     kind: 'live',
@@ -3697,7 +3890,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'reliable-workflow-orchestration',
-    title: '23 Reliable Workflow Orchestration',
+    title: 'Reliable Workflow Orchestration',
     source: '02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/',
     home: 'scenario-library',
     kind: 'live',
@@ -3706,7 +3899,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'configurable-platform-customer-workflows',
-    title: '25 Configurable Platform Customer Workflows',
+    title: 'Configurable Platform for Customer Workflows',
     source: '02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/',
     home: 'scenario-library',
     kind: 'live',
@@ -3715,7 +3908,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'enterprise-chatbot-platform',
-    title: '26 Enterprise Chatbot Platform',
+    title: 'Enterprise Chatbot Platform',
     source: '02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/',
     home: 'scenario-library',
     kind: 'live',
@@ -3724,7 +3917,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'prioritize-ai-use-cases',
-    title: '60 Prioritize AI Use Cases',
+    title: 'Prioritise AI Use Cases',
     source: '02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/',
     home: 'scenario-library',
     kind: 'live',
@@ -3732,7 +3925,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'build-when-customer-data-is-poor',
-    title: '62 Build When Customer Data Is Poor',
+    title: 'Build When Customer Data Is Poor',
     source: '02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/',
     home: 'scenario-library',
     kind: 'live',
@@ -3740,7 +3933,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'self-adapting-agent',
-    title: '80 Self Adapting Agent',
+    title: 'Self-Adapting Agent',
     source: '02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/',
     home: 'scenario-library',
     kind: 'live',
@@ -3748,7 +3941,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'personal-assistant-with-memory',
-    title: '98 Personal Assistant With Memory',
+    title: 'Personal Assistant with Memory',
     source: '02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/',
     home: 'scenario-library',
     kind: 'live',
@@ -3756,7 +3949,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'decomposition-classics-67-68-69',
-    title: 'Decomposition Classics 67 68 69',
+    title: 'Decomposition Classics: 911 Response Times, Bank Fraud, and Medication Errors',
     source: '02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/',
     home: 'scenario-library',
     kind: 'live',

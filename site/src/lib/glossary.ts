@@ -184,6 +184,10 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: "The login layer on top of OAuth. OAuth only says what an app may do; OIDC adds who the user is, as a signed ID token." },
   { term: 'DLP', expansion: 'data loss prevention', group: 'Security and compliance',
     plain: 'Tools that stop sensitive data leaving where it should stay.' },
+  { term: 'DLS', expansion: 'document-level security', group: 'Security and compliance',
+    plain: 'A search index that filters results per document by who is asking, so a user only ever matches what they may read.' },
+  { term: 'TLS', expansion: 'Transport Layer Security', group: 'Security and compliance',
+    plain: 'The encryption that protects data in transit, the S in HTTPS. mTLS makes both sides prove who they are.' },
   { term: 'HMAC', expansion: 'hash-based message authentication code', group: 'Security and compliance',
     plain: 'A signature that proves a message came from who it says and was not changed on the way.' },
   { term: 'GDPR', expansion: 'General Data Protection Regulation', group: 'Security and compliance',
@@ -434,6 +438,8 @@ export const NOT_ACRONYMS = new Set([
   'IF', 'IS', 'AND', 'OR', 'ACT', 'GW', 'MRD', 'TKT', 'AD', 'VS', 'USD', 'APJ',
   // Mermaid flowchart direction keyword (flowchart TD)
   'TD',
+  // SQL column type in the T5.4 and T4 Databricks row-filter examples (sensitivity_lvl INT).
+  'INT',
 ])
 
 export const glossaryAnchor = (term: string) =>
