@@ -592,17 +592,6 @@
       "href": "/learn/agentic-systems/agentic-workflow-platforms/approvals-spend-caps-staged-rollout"
     },
     {
-      "slug": "identity-secrets-tenant-fairness",
-      "title": "Identity, Secrets, Per-Tenant Keys and Fair Sharing",
-      "track": "production-ai",
-      "module": "security-tenancy-prompt-injection",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md",
-      "estMinutes": 6,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-secrets-tenant-fairness"
-    },
-    {
       "slug": "infra-and-cicd",
       "title": "Infrastructure and CI/CD",
       "track": "production-ai",
@@ -637,70 +626,153 @@
       "href": "/learn/production-ai/cost-and-latency/module-09-caching-in-genai-systems"
     },
     {
-      "slug": "why-enterprise-changes-the-problem",
-      "title": "Why Enterprise Changes the Problem",
+      "slug": "why-access-control-shapes-enterprise-rag",
+      "title": "Why Access Control Shapes Enterprise RAG",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/01_Why_Enterprise_Changes_The_Problem.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/01_Why_Access_Control_Shapes_Enterprise_RAG.md",
       "estMinutes": 8,
-      "href": "/learn/production-ai/enterprise-rag-in-production/why-enterprise-changes-the-problem"
+      "href": "/learn/production-ai/enterprise-rag-in-production/why-access-control-shapes-enterprise-rag"
     },
     {
-      "slug": "access-control-abac",
-      "title": "Access Control with ABAC",
+      "slug": "the-seven-access-rules",
+      "title": "The Seven Access Rules",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/02_Access_Control_ABAC.md",
-      "estMinutes": 19,
-      "href": "/learn/production-ai/enterprise-rag-in-production/access-control-abac"
-    },
-    {
-      "slug": "ingestion-pipeline",
-      "title": "The Ingestion Pipeline",
-      "track": "production-ai",
-      "module": "enterprise-rag-in-production",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/03_Ingestion_Pipeline.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/02_The_Seven_Access_Rules.md",
       "estMinutes": 9,
-      "href": "/learn/production-ai/enterprise-rag-in-production/ingestion-pipeline"
+      "href": "/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules"
     },
     {
-      "slug": "the-query-graph",
-      "title": "The Query Graph",
+      "slug": "pushing-policy-into-the-index",
+      "title": "Pushing Policy Into the Index",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/05_The_Query_Graph.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/03_Pushing_Policy_Into_the_Index.md",
+      "estMinutes": 8,
+      "href": "/learn/production-ai/enterprise-rag-in-production/pushing-policy-into-the-index"
+    },
+    {
+      "slug": "permission-aware-ingestion",
+      "title": "Permission-Aware Ingestion",
+      "track": "production-ai",
+      "module": "enterprise-rag-in-production",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/04_Permission_Aware_Ingestion.md",
+      "estMinutes": 8,
+      "href": "/learn/production-ai/enterprise-rag-in-production/permission-aware-ingestion"
+    },
+    {
+      "slug": "the-security-first-query-graph",
+      "title": "The Security-First Query Graph",
+      "track": "production-ai",
+      "module": "enterprise-rag-in-production",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/05_The_Security_First_Query_Graph.md",
       "estMinutes": 9,
-      "href": "/learn/production-ai/enterprise-rag-in-production/the-query-graph"
+      "href": "/learn/production-ai/enterprise-rag-in-production/the-security-first-query-graph"
     },
     {
-      "slug": "output-guardrails",
-      "title": "Output Guardrails",
+      "slug": "output-guardrails-and-refusals",
+      "title": "Output Guardrails and Refusals",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/06_Output_Guardrails.md",
-      "estMinutes": 6,
-      "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/06_Output_Guardrails_and_Refusals.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails-and-refusals"
     },
     {
-      "slug": "evaluation-golden-sets-judges",
-      "title": "Evaluation — Golden Sets, Judges and the Gate",
+      "slug": "practise-enterprise-rag",
+      "title": "Practise Enterprise RAG Interview Questions",
+      "track": "production-ai",
+      "module": "enterprise-rag-in-production",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/07_Practise_Enterprise_RAG_Interview_Questions.md",
+      "estMinutes": 9,
+      "href": "/learn/production-ai/enterprise-rag-in-production/practise-enterprise-rag"
+    },
+    {
+      "slug": "the-evaluation-pyramid",
+      "title": "The Evaluation Pyramid",
       "track": "production-ai",
       "module": "evaluation-and-release-gates",
       "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/01_The_Evaluation_Pyramid.md",
+      "estMinutes": 5,
+      "href": "/learn/production-ai/evaluation-and-release-gates/the-evaluation-pyramid"
+    },
+    {
+      "slug": "component-and-trajectory-metrics",
+      "title": "Component and Trajectory Metrics",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/02_Component_and_Trajectory_Metrics.md",
+      "estMinutes": 6,
+      "href": "/learn/production-ai/evaluation-and-release-gates/component-and-trajectory-metrics"
+    },
+    {
+      "slug": "golden-sets-and-sample-size",
+      "title": "Golden Sets and Sample Size",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/evaluation-and-release-gates/golden-sets-and-sample-size"
+    },
+    {
+      "slug": "validating-llm-judges",
+      "title": "Validating LLM Judges",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/04_Validating_LLM_Judges.md",
+      "estMinutes": 6,
+      "href": "/learn/production-ai/evaluation-and-release-gates/validating-llm-judges"
+    },
+    {
+      "slug": "release-gates-safety-quality-and-cost",
+      "title": "Release Gates: Safety, Quality, and Cost",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/05_Release_Gates_Safety_Quality_and_Cost.md",
       "estMinutes": 8,
-      "href": "/learn/production-ai/evaluation-and-release-gates/evaluation-golden-sets-judges"
+      "href": "/learn/production-ai/evaluation-and-release-gates/release-gates-safety-quality-and-cost"
+    },
+    {
+      "slug": "practise-evaluation-and-release-gates",
+      "title": "Practise Evaluation and Release-Gate Interview Questions",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/06_Practise_Evaluation_Interview_Questions.md",
+      "estMinutes": 9,
+      "href": "/learn/production-ai/evaluation-and-release-gates/practise-evaluation-and-release-gates"
     },
     {
       "slug": "observability",
@@ -714,49 +786,70 @@
       "href": "/learn/production-ai/observability-and-diagnosis/observability"
     },
     {
-      "slug": "ch12-validation-and-measurement",
-      "title": "Chapter 12 — Validation and Measurement",
-      "track": "production-ai",
-      "module": "evaluation-and-release-gates",
-      "kind": "sync",
-      "publish": "credited",
-      "credit": "Selected chapter from *Cracking Agentic AI System Design Interviews*.",
-      "source": "01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md",
-      "estMinutes": 11,
-      "href": "/learn/production-ai/evaluation-and-release-gates/ch12-validation-and-measurement"
-    },
-    {
-      "slug": "prompt-injection-egress-tenancy",
-      "title": "Prompt Injection, Egress and Tenancy",
+      "slug": "identity-verification-with-sso-and-oidc",
+      "title": "Identity Verification with SSO and OIDC",
       "track": "production-ai",
       "module": "security-tenancy-prompt-injection",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/04_Prompt_Injection_Egress_Tenancy.md",
-      "estMinutes": 7,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/prompt-injection-egress-tenancy"
-    },
-    {
-      "slug": "identity-secrets-and-tenant-fairness",
-      "title": "Identity, secrets, encryption, and fair sharing",
-      "track": "production-ai",
-      "module": "security-tenancy-prompt-injection",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Production_and_Platform_Judgment/01-identity-secrets-and-tenant-fairness.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/01_Identity_Verification_with_SSO_and_OIDC.md",
       "estMinutes": 6,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-secrets-and-tenant-fairness"
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-verification-with-sso-and-oidc"
     },
     {
-      "slug": "cross-cutting-system-design-quick-reference-v2",
-      "title": "Cross-Cutting System Design — Interview Quick Reference",
+      "slug": "secrets-and-per-tenant-encryption-keys",
+      "title": "Secrets and Per-Tenant Encryption Keys",
       "track": "production-ai",
       "module": "security-tenancy-prompt-injection",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Production_and_Platform_Judgment/Cross_Cutting_System_Design_Quick_Reference_v2.md",
-      "estMinutes": 40,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/cross-cutting-system-design-quick-reference-v2"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/02_Secrets_and_Per_Tenant_Encryption_Keys.md",
+      "estMinutes": 5,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/secrets-and-per-tenant-encryption-keys"
+    },
+    {
+      "slug": "prompt-injection-and-egress-control",
+      "title": "Prompt Injection and Egress Control",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/03_Prompt_Injection_and_Egress_Control.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/prompt-injection-and-egress-control"
+    },
+    {
+      "slug": "tenant-isolation-levels",
+      "title": "Tenant Isolation Levels",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/04_Tenant_Isolation_Levels.md",
+      "estMinutes": 5,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/tenant-isolation-levels"
+    },
+    {
+      "slug": "fair-sharing-between-tenants",
+      "title": "Fair Sharing Between Tenants",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/05_Fair_Sharing_Between_Tenants.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/fair-sharing-between-tenants"
+    },
+    {
+      "slug": "practise-security-and-tenancy",
+      "title": "Practise Security and Tenancy Interview Questions",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/06_Practise_Security_and_Tenancy_Interview_Questions.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/practise-security-and-tenancy"
     },
     {
       "slug": "observability-standards-failure-patterns",

@@ -1,7 +1,7 @@
 # Observability
 
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 8 of 10 · **Time** ~20 min
-> **Prerequisites:** [The Query Graph](/learn/production-ai/enterprise-rag-in-production/the-query-graph); Module 03 doc 4
+> **Prerequisites:** [The Query Graph](/learn/production-ai/enterprise-rag-in-production/the-security-first-query-graph); Module 03 doc 4
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/01-theory.md` §10; `docs/05-src-modules-reference.md` (`observability/trace.py`, `llm/client.py` → `Usage`)
 > **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part11-observability-and-takeaways.ipynb`; any file in `05_Projects/Enterprise_RAG_Platform/runs/` after a query
 

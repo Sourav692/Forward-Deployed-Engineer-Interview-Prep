@@ -88,4 +88,4 @@ The line is not "build everything to prove capability" or "buy everything to mov
 - Give the four-rung testing ladder from cheapest to most expensive.
 - State the one question that decides build vs buy, and apply it to a vector index and to a permission policy.
 
-**Next →** [Prompt Injection, Egress and Tenancy](/learn/production-ai/security-tenancy-prompt-injection/prompt-injection-egress-tenancy)
+**Next →** [Prompt Injection, Egress and Tenancy](/learn/production-ai/security-tenancy-prompt-injection/prompt-injection-and-egress-control)
