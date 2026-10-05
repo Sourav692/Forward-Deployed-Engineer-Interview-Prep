@@ -225,6 +225,8 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'The actual measurement behind an SLO — latency, error rate, answer success rate.' },
   { term: 'SRE', expansion: 'site reliability engineering', group: 'Reliability and operations',
     plain: 'The team and practice that keeps production running: on-call, SLOs, incident response.' },
+  { term: 'SEV', expansion: 'severity level', group: 'Reliability and operations',
+    plain: 'The incident severity scale. SEV-1 is the worst: a major outage that pages everyone.' },
   { term: 'RCA', expansion: 'root cause analysis', group: 'Reliability and operations',
     plain: 'Working out why something actually broke, not just what broke.' },
   { term: 'CI/CD', expansion: 'continuous integration and continuous delivery', group: 'Reliability and operations',

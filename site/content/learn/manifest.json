@@ -1,92 +1,257 @@
 {
   "lessons": [
     {
-      "slug": "how-to-use-this-handbook",
-      "title": "How To Use This Handbook",
+      "slug": "how-the-material-is-built",
+      "title": "How the Material Is Built",
       "track": "orientation",
       "module": "how-the-platform-works",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/01_How_the_Material_Is_Built.md",
       "estMinutes": 5,
-      "href": "/learn/orientation/how-the-platform-works/how-to-use-this-handbook"
+      "href": "/learn/orientation/how-the-platform-works/how-the-material-is-built"
     },
     {
-      "slug": "repository-coverage-guide",
-      "title": "FDE Interview Preparation Coverage Guide",
+      "slug": "choose-a-reading-path",
+      "title": "Choose a Reading Path",
       "track": "orientation",
       "module": "how-the-platform-works",
       "kind": "sync",
       "publish": "own",
-      "source": "00_Start_Here/REPOSITORY_COVERAGE_GUIDE.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/02_Choose_a_Reading_Path.md",
       "estMinutes": 4,
-      "href": "/learn/orientation/how-the-platform-works/repository-coverage-guide"
+      "href": "/learn/orientation/how-the-platform-works/choose-a-reading-path"
     },
     {
-      "slug": "the-three-roles",
-      "title": "The Three Roles",
+      "slug": "find-material-by-interview-area",
+      "title": "Find Material by Interview Area",
+      "track": "orientation",
+      "module": "how-the-platform-works",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/03_Find_Material_by_Interview_Area.md",
+      "estMinutes": 5,
+      "href": "/learn/orientation/how-the-platform-works/find-material-by-interview-area"
+    },
+    {
+      "slug": "three-roles-three-questions",
+      "title": "Three Roles, Three Questions",
       "track": "orientation",
       "module": "the-fde-role",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/00_Orientation/02_The_Three_Roles.md",
-      "estMinutes": 7,
-      "href": "/learn/orientation/the-fde-role/the-three-roles"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/01_Three_Roles_Three_Questions.md",
+      "estMinutes": 6,
+      "href": "/learn/orientation/the-fde-role/three-roles-three-questions"
     },
     {
-      "slug": "senior-fde-day-to-day",
-      "title": "A Day in the Life — Senior Forward Deployed Engineer",
+      "slug": "the-three-lenses-of-fde-work",
+      "title": "The Three Lenses of FDE Work",
       "track": "orientation",
       "module": "the-fde-role",
       "kind": "sync",
       "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md",
-      "estMinutes": 8,
-      "href": "/learn/orientation/the-fde-role/senior-fde-day-to-day"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/02_The_Three_Lenses_of_FDE_Work.md",
+      "estMinutes": 4,
+      "href": "/learn/orientation/the-fde-role/the-three-lenses-of-fde-work"
     },
     {
-      "slug": "the-first-ten-minutes",
-      "title": "The First Ten Minutes",
+      "slug": "a-senior-fdes-day",
+      "title": "A Senior FDE's Day",
+      "track": "orientation",
+      "module": "the-fde-role",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/03_A_Senior_FDEs_Day.md",
+      "estMinutes": 5,
+      "href": "/learn/orientation/the-fde-role/a-senior-fdes-day"
+    },
+    {
+      "slug": "practise-fde-role",
+      "title": "Practise FDE Role Interview Questions",
+      "track": "orientation",
+      "module": "the-fde-role",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/04_Practise_FDE_Role_Interview_Questions.md",
+      "estMinutes": 5,
+      "href": "/learn/orientation/the-fde-role/practise-fde-role"
+    },
+    {
+      "slug": "ask-before-you-architect",
+      "title": "Ask Before You Architect",
       "track": "orientation",
       "module": "first-ten-minutes",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/00_Orientation/03_The_First_Ten_Minutes.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.3_First_Ten_Minutes/01_Ask_Before_You_Architect.md",
       "estMinutes": 6,
-      "href": "/learn/orientation/first-ten-minutes/the-first-ten-minutes"
+      "href": "/learn/orientation/first-ten-minutes/ask-before-you-architect"
     },
     {
-      "slug": "module-10-backend-fastapi-deployment",
-      "title": "Backend, FastAPI and LLM Serving APIs",
-      "track": "engineering-foundations",
-      "module": "apis-and-backend",
+      "slug": "let-the-answers-change-the-design",
+      "title": "Let the Answers Change the Design",
+      "track": "orientation",
+      "module": "first-ten-minutes",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md",
-      "estMinutes": 10,
-      "href": "/learn/engineering-foundations/apis-and-backend/module-10-backend-fastapi-deployment"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.3_First_Ten_Minutes/02_Let_the_Answers_Change_the_Design.md",
+      "estMinutes": 4,
+      "href": "/learn/orientation/first-ten-minutes/let-the-answers-change-the-design"
     },
     {
-      "slug": "module-10-deployment-and-operations",
-      "title": "Deployment, Infrastructure and Production Operations",
+      "slug": "package-the-service-and-keep-secrets-out",
+      "title": "Package the Service and Keep Secrets Out",
       "track": "engineering-foundations",
       "module": "cloud-containers-deployment",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md",
-      "estMinutes": 10,
-      "href": "/learn/engineering-foundations/cloud-containers-deployment/module-10-deployment-and-operations"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/01_Package_the_Service_and_Keep_Secrets_Out.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/package-the-service-and-keep-secrets-out"
     },
     {
-      "slug": "caching-streaming-cicd-buildvsbuy",
-      "title": "Caching, Streaming, CI/CD Rigor and Build vs Buy",
+      "slug": "choose-a-runtime-and-scale-it",
+      "title": "Choose a Runtime and Scale It",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/02_Choose_a_Runtime_and_Scale_It.md",
+      "estMinutes": 7,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/choose-a-runtime-and-scale-it"
+    },
+    {
+      "slug": "gate-releases-on-quality",
+      "title": "Gate Releases on Quality",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/03_Gate_Releases_on_Quality.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/gate-releases-on-quality"
+    },
+    {
+      "slug": "roll-out-changes-gradually",
+      "title": "Roll Out Changes Gradually",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/04_Roll_Out_Changes_Gradually.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/roll-out-changes-gradually"
+    },
+    {
+      "slug": "observe-the-running-service",
+      "title": "Observe the Running Service",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/05_Observe_the_Running_Service.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/observe-the-running-service"
+    },
+    {
+      "slug": "degrade-gracefully-and-load-test",
+      "title": "Degrade Gracefully and Load Test",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/06_Degrade_Gracefully_and_Load_Test.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/degrade-gracefully-and-load-test"
+    },
+    {
+      "slug": "practise-deployment",
+      "title": "Practise Deployment Interview Questions",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/07_Practise_Deployment_Interview_Questions.md",
+      "estMinutes": 9,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/practise-deployment"
+    },
+    {
+      "slug": "keep-the-request-path-free",
+      "title": "Keep the Request Path Free",
       "track": "engineering-foundations",
       "module": "apis-and-backend",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/03_Caching_Streaming_CICD_BuildVsBuy.md",
-      "estMinutes": 8,
-      "href": "/learn/engineering-foundations/apis-and-backend/caching-streaming-cicd-buildvsbuy"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/01_Keep_the_Request_Path_Free.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/apis-and-backend/keep-the-request-path-free"
+    },
+    {
+      "slug": "structure-the-service-and-decide-what-to-build",
+      "title": "Structure the Service and Decide What to Build",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/02_Structure_the_Service_and_Decide_What_to_Build.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/apis-and-backend/structure-the-service-and-decide-what-to-build"
+    },
+    {
+      "slug": "define-the-api-contract-with-typed-schemas",
+      "title": "Define the API Contract With Typed Schemas",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/03_Define_the_API_Contract_With_Typed_Schemas.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/apis-and-backend/define-the-api-contract-with-typed-schemas"
+    },
+    {
+      "slug": "protect-the-endpoint-from-abuse-and-cost",
+      "title": "Protect the Endpoint From Abuse and Cost",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/04_Protect_the_Endpoint_From_Abuse_and_Cost.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/apis-and-backend/protect-the-endpoint-from-abuse-and-cost"
+    },
+    {
+      "slug": "build-a-streaming-chat-endpoint",
+      "title": "Build a Streaming Chat Endpoint",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/05_Build_a_Streaming_Chat_Endpoint.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/apis-and-backend/build-a-streaming-chat-endpoint"
+    },
+    {
+      "slug": "cache-answers-without-serving-wrong-ones",
+      "title": "Cache Answers Without Serving Wrong Ones",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/06_Cache_Answers_Without_Serving_Wrong_Ones.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/apis-and-backend/cache-answers-without-serving-wrong-ones"
+    },
+    {
+      "slug": "practise-api-and-backend",
+      "title": "Practise API and Backend Interview Questions",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/07_Practise_API_and_Backend_Interview_Questions.md",
+      "estMinutes": 7,
+      "href": "/learn/engineering-foundations/apis-and-backend/practise-api-and-backend"
     },
     {
       "slug": "module-01-rag-fundamentals-core-components",
@@ -266,62 +431,215 @@
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems"
     },
     {
-      "slug": "what-an-agent-actually-is",
-      "title": "What an Agent Actually Is",
+      "slug": "what-an-agent-is",
+      "title": "What an Agent Is",
       "track": "agentic-systems",
       "module": "the-tool-calling-loop",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/01_LLM_Systems_Foundations/03_What_An_Agent_Actually_Is.md",
-      "estMinutes": 8,
-      "href": "/learn/agentic-systems/the-tool-calling-loop/what-an-agent-actually-is"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.1_The_Tool_Calling_Loop/01_What_an_Agent_Is.md",
+      "estMinutes": 10,
+      "href": "/learn/agentic-systems/the-tool-calling-loop/what-an-agent-is"
     },
     {
-      "slug": "tool-calling-loop-from-scratch",
+      "slug": "the-tool-calling-loop-from-scratch",
       "title": "The Tool-Calling Loop From Scratch",
       "track": "agentic-systems",
       "module": "the-tool-calling-loop",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/01_LLM_Systems_Foundations/04_Tool_Calling_Loop_From_Scratch.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.1_The_Tool_Calling_Loop/02_The_Tool_Calling_Loop_From_Scratch.md",
       "estMinutes": 10,
-      "href": "/learn/agentic-systems/the-tool-calling-loop/tool-calling-loop-from-scratch"
+      "href": "/learn/agentic-systems/the-tool-calling-loop/the-tool-calling-loop-from-scratch"
     },
     {
-      "slug": "agent-fundamentals-and-advanced-agentic-systems-interview-tutorial",
-      "title": "Agent Fundamentals & Advanced Agentic Systems — Interview Tutorial",
+      "slug": "loop-guards-and-termination",
+      "title": "Loop Guards and Termination",
       "track": "agentic-systems",
       "module": "the-tool-calling-loop",
       "kind": "sync",
-      "publish": "credited",
-      "credit": "Interview sections quote and link external guides (Interview Guys, DesignGurus, NovelVista, PromptLayer, prachub and others).",
-      "source": "01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md",
-      "estMinutes": 57,
-      "href": "/learn/agentic-systems/the-tool-calling-loop/agent-fundamentals-and-advanced-agentic-systems-interview-tutorial"
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.1_The_Tool_Calling_Loop/03_Loop_Guards_and_Termination.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/the-tool-calling-loop/loop-guards-and-termination"
     },
     {
-      "slug": "ch05-tool-use-agent-computer-interface",
-      "title": "Chapter 5 — Tool Use and the Agent-Computer Interface",
+      "slug": "practise-agent-loop-interview-questions",
+      "title": "Practise Agent Loop Interview Questions",
+      "track": "agentic-systems",
+      "module": "the-tool-calling-loop",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.1_The_Tool_Calling_Loop/04_Practise_Agent_Loop_Interview_Questions.md",
+      "estMinutes": 8,
+      "href": "/learn/agentic-systems/the-tool-calling-loop/practise-agent-loop-interview-questions"
+    },
+    {
+      "slug": "the-agent-computer-interface",
+      "title": "The Agent-Computer Interface",
       "track": "agentic-systems",
       "module": "tool-design-mcp-a2a",
       "kind": "sync",
       "publish": "credited",
-      "credit": "Selected chapter from *Cracking Agentic AI System Design Interviews*.",
-      "source": "01_Concept_Tutorials/Agentic_System_Design_Book/ch05_tool_use_agent_computer_interface.md",
-      "estMinutes": 13,
-      "href": "/learn/agentic-systems/tool-design-mcp-a2a/ch05-tool-use-agent-computer-interface"
+      "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/01_The_Agent_Computer_Interface.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/tool-design-mcp-a2a/the-agent-computer-interface"
     },
     {
-      "slug": "ch06-orchestration-context-engineering",
-      "title": "Chapter 6 — Orchestration and Context Engineering",
+      "slug": "tool-schema-design",
+      "title": "Tool Schema Design",
+      "track": "agentic-systems",
+      "module": "tool-design-mcp-a2a",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/02_Tool_Schema_Design.md",
+      "estMinutes": 6,
+      "href": "/learn/agentic-systems/tool-design-mcp-a2a/tool-schema-design"
+    },
+    {
+      "slug": "typed-tool-results-and-teachable-errors",
+      "title": "Typed Tool Results and Teachable Errors",
+      "track": "agentic-systems",
+      "module": "tool-design-mcp-a2a",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/03_Typed_Tool_Results_and_Teachable_Errors.md",
+      "estMinutes": 6,
+      "href": "/learn/agentic-systems/tool-design-mcp-a2a/typed-tool-results-and-teachable-errors"
+    },
+    {
+      "slug": "the-tool-gateway-and-code-sandboxing",
+      "title": "The Tool Gateway and Code Sandboxing",
+      "track": "agentic-systems",
+      "module": "tool-design-mcp-a2a",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/04_The_Tool_Gateway_and_Code_Sandboxing.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/tool-design-mcp-a2a/the-tool-gateway-and-code-sandboxing"
+    },
+    {
+      "slug": "the-model-context-protocol",
+      "title": "The Model Context Protocol",
+      "track": "agentic-systems",
+      "module": "tool-design-mcp-a2a",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/05_The_Model_Context_Protocol.md",
+      "estMinutes": 5,
+      "href": "/learn/agentic-systems/tool-design-mcp-a2a/the-model-context-protocol"
+    },
+    {
+      "slug": "tool-selection-at-scale",
+      "title": "Tool Selection at Scale",
+      "track": "agentic-systems",
+      "module": "tool-design-mcp-a2a",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/06_Tool_Selection_at_Scale.md",
+      "estMinutes": 4,
+      "href": "/learn/agentic-systems/tool-design-mcp-a2a/tool-selection-at-scale"
+    },
+    {
+      "slug": "practise-tool-design-interview-questions",
+      "title": "Practise Tool Design Interview Questions",
+      "track": "agentic-systems",
+      "module": "tool-design-mcp-a2a",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/07_Practise_Tool_Design_Interview_Questions.md",
+      "estMinutes": 7,
+      "href": "/learn/agentic-systems/tool-design-mcp-a2a/practise-tool-design-interview-questions"
+    },
+    {
+      "slug": "control-placement",
+      "title": "Control Placement",
       "track": "agentic-systems",
       "module": "context-engineering",
       "kind": "sync",
       "publish": "credited",
-      "credit": "Selected chapter from *Cracking Agentic AI System Design Interviews*.",
-      "source": "01_Concept_Tutorials/Agentic_System_Design_Book/ch06_orchestration_context_engineering.md",
-      "estMinutes": 10,
-      "href": "/learn/agentic-systems/context-engineering/ch06-orchestration-context-engineering"
+      "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/01_Control_Placement.md",
+      "estMinutes": 6,
+      "href": "/learn/agentic-systems/context-engineering/control-placement"
+    },
+    {
+      "slug": "orchestration-topologies",
+      "title": "Orchestration Topologies",
+      "track": "agentic-systems",
+      "module": "context-engineering",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/02_Orchestration_Topologies.md",
+      "estMinutes": 6,
+      "href": "/learn/agentic-systems/context-engineering/orchestration-topologies"
+    },
+    {
+      "slug": "planning-and-self-correction-patterns",
+      "title": "Planning and Self-Correction Patterns",
+      "track": "agentic-systems",
+      "module": "context-engineering",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/03_Planning_and_Self_Correction_Patterns.md",
+      "estMinutes": 6,
+      "href": "/learn/agentic-systems/context-engineering/planning-and-self-correction-patterns"
+    },
+    {
+      "slug": "the-four-context-operations",
+      "title": "The Four Context Operations",
+      "track": "agentic-systems",
+      "module": "context-engineering",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/04_The_Four_Context_Operations.md",
+      "estMinutes": 5,
+      "href": "/learn/agentic-systems/context-engineering/the-four-context-operations"
+    },
+    {
+      "slug": "deterministic-context-assembly",
+      "title": "Deterministic Context Assembly",
+      "track": "agentic-systems",
+      "module": "context-engineering",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/05_Deterministic_Context_Assembly.md",
+      "estMinutes": 4,
+      "href": "/learn/agentic-systems/context-engineering/deterministic-context-assembly"
+    },
+    {
+      "slug": "context-rot-and-sub-agent-isolation",
+      "title": "Context Rot and Sub-Agent Isolation",
+      "track": "agentic-systems",
+      "module": "context-engineering",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/06_Context_Rot_and_Sub_Agent_Isolation.md",
+      "estMinutes": 4,
+      "href": "/learn/agentic-systems/context-engineering/context-rot-and-sub-agent-isolation"
+    },
+    {
+      "slug": "practise-context-and-orchestration-interview-questions",
+      "title": "Practise Context and Orchestration Interview Questions",
+      "track": "agentic-systems",
+      "module": "context-engineering",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/07_Practise_Context_and_Orchestration_Interview_Questions.md",
+      "estMinutes": 6,
+      "href": "/learn/agentic-systems/context-engineering/practise-context-and-orchestration-interview-questions"
     },
     {
       "slug": "why-agents-need-state",
@@ -636,17 +954,6 @@
       "href": "/learn/agentic-systems/agentic-workflow-platforms/practise-agentic-workflow-platforms"
     },
     {
-      "slug": "identity-secrets-tenant-fairness",
-      "title": "Identity, Secrets, Per-Tenant Keys and Fair Sharing",
-      "track": "production-ai",
-      "module": "security-tenancy-prompt-injection",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md",
-      "estMinutes": 6,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-secrets-tenant-fairness"
-    },
-    {
       "slug": "infra-and-cicd",
       "title": "Infrastructure and CI/CD",
       "track": "production-ai",
@@ -681,70 +988,153 @@
       "href": "/learn/production-ai/cost-and-latency/module-09-caching-in-genai-systems"
     },
     {
-      "slug": "why-enterprise-changes-the-problem",
-      "title": "Why Enterprise Changes the Problem",
+      "slug": "why-access-control-shapes-enterprise-rag",
+      "title": "Why Access Control Shapes Enterprise RAG",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/01_Why_Enterprise_Changes_The_Problem.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/01_Why_Access_Control_Shapes_Enterprise_RAG.md",
       "estMinutes": 8,
-      "href": "/learn/production-ai/enterprise-rag-in-production/why-enterprise-changes-the-problem"
+      "href": "/learn/production-ai/enterprise-rag-in-production/why-access-control-shapes-enterprise-rag"
     },
     {
-      "slug": "access-control-abac",
-      "title": "Access Control with ABAC",
+      "slug": "the-seven-access-rules",
+      "title": "The Seven Access Rules",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/02_Access_Control_ABAC.md",
-      "estMinutes": 19,
-      "href": "/learn/production-ai/enterprise-rag-in-production/access-control-abac"
-    },
-    {
-      "slug": "ingestion-pipeline",
-      "title": "The Ingestion Pipeline",
-      "track": "production-ai",
-      "module": "enterprise-rag-in-production",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/03_Ingestion_Pipeline.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/02_The_Seven_Access_Rules.md",
       "estMinutes": 9,
-      "href": "/learn/production-ai/enterprise-rag-in-production/ingestion-pipeline"
+      "href": "/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules"
     },
     {
-      "slug": "the-query-graph",
-      "title": "The Query Graph",
+      "slug": "pushing-policy-into-the-index",
+      "title": "Pushing Policy Into the Index",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/05_The_Query_Graph.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/03_Pushing_Policy_Into_the_Index.md",
+      "estMinutes": 8,
+      "href": "/learn/production-ai/enterprise-rag-in-production/pushing-policy-into-the-index"
+    },
+    {
+      "slug": "permission-aware-ingestion",
+      "title": "Permission-Aware Ingestion",
+      "track": "production-ai",
+      "module": "enterprise-rag-in-production",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/04_Permission_Aware_Ingestion.md",
+      "estMinutes": 8,
+      "href": "/learn/production-ai/enterprise-rag-in-production/permission-aware-ingestion"
+    },
+    {
+      "slug": "the-security-first-query-graph",
+      "title": "The Security-First Query Graph",
+      "track": "production-ai",
+      "module": "enterprise-rag-in-production",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/05_The_Security_First_Query_Graph.md",
       "estMinutes": 9,
-      "href": "/learn/production-ai/enterprise-rag-in-production/the-query-graph"
+      "href": "/learn/production-ai/enterprise-rag-in-production/the-security-first-query-graph"
     },
     {
-      "slug": "output-guardrails",
-      "title": "Output Guardrails",
+      "slug": "output-guardrails-and-refusals",
+      "title": "Output Guardrails and Refusals",
       "track": "production-ai",
       "module": "enterprise-rag-in-production",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/06_Output_Guardrails.md",
-      "estMinutes": 6,
-      "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/06_Output_Guardrails_and_Refusals.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails-and-refusals"
     },
     {
-      "slug": "evaluation-golden-sets-judges",
-      "title": "Evaluation — Golden Sets, Judges and the Gate",
+      "slug": "practise-enterprise-rag",
+      "title": "Practise Enterprise RAG Interview Questions",
+      "track": "production-ai",
+      "module": "enterprise-rag-in-production",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/07_Practise_Enterprise_RAG_Interview_Questions.md",
+      "estMinutes": 9,
+      "href": "/learn/production-ai/enterprise-rag-in-production/practise-enterprise-rag"
+    },
+    {
+      "slug": "the-evaluation-pyramid",
+      "title": "The Evaluation Pyramid",
       "track": "production-ai",
       "module": "evaluation-and-release-gates",
       "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/01_The_Evaluation_Pyramid.md",
+      "estMinutes": 5,
+      "href": "/learn/production-ai/evaluation-and-release-gates/the-evaluation-pyramid"
+    },
+    {
+      "slug": "component-and-trajectory-metrics",
+      "title": "Component and Trajectory Metrics",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/02_Component_and_Trajectory_Metrics.md",
+      "estMinutes": 6,
+      "href": "/learn/production-ai/evaluation-and-release-gates/component-and-trajectory-metrics"
+    },
+    {
+      "slug": "golden-sets-and-sample-size",
+      "title": "Golden Sets and Sample Size",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/03_Golden_Sets_and_Sample_Size.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/evaluation-and-release-gates/golden-sets-and-sample-size"
+    },
+    {
+      "slug": "validating-llm-judges",
+      "title": "Validating LLM Judges",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/04_Validating_LLM_Judges.md",
+      "estMinutes": 6,
+      "href": "/learn/production-ai/evaluation-and-release-gates/validating-llm-judges"
+    },
+    {
+      "slug": "release-gates-safety-quality-and-cost",
+      "title": "Release Gates: Safety, Quality, and Cost",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/05_Release_Gates_Safety_Quality_and_Cost.md",
       "estMinutes": 8,
-      "href": "/learn/production-ai/evaluation-and-release-gates/evaluation-golden-sets-judges"
+      "href": "/learn/production-ai/evaluation-and-release-gates/release-gates-safety-quality-and-cost"
+    },
+    {
+      "slug": "practise-evaluation-and-release-gates",
+      "title": "Practise Evaluation and Release-Gate Interview Questions",
+      "track": "production-ai",
+      "module": "evaluation-and-release-gates",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/06_Practise_Evaluation_Interview_Questions.md",
+      "estMinutes": 9,
+      "href": "/learn/production-ai/evaluation-and-release-gates/practise-evaluation-and-release-gates"
     },
     {
       "slug": "observability",
@@ -758,49 +1148,70 @@
       "href": "/learn/production-ai/observability-and-diagnosis/observability"
     },
     {
-      "slug": "ch12-validation-and-measurement",
-      "title": "Chapter 12 — Validation and Measurement",
-      "track": "production-ai",
-      "module": "evaluation-and-release-gates",
-      "kind": "sync",
-      "publish": "credited",
-      "credit": "Selected chapter from *Cracking Agentic AI System Design Interviews*.",
-      "source": "01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md",
-      "estMinutes": 11,
-      "href": "/learn/production-ai/evaluation-and-release-gates/ch12-validation-and-measurement"
-    },
-    {
-      "slug": "prompt-injection-egress-tenancy",
-      "title": "Prompt Injection, Egress and Tenancy",
+      "slug": "identity-verification-with-sso-and-oidc",
+      "title": "Identity Verification with SSO and OIDC",
       "track": "production-ai",
       "module": "security-tenancy-prompt-injection",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/04_Prompt_Injection_Egress_Tenancy.md",
-      "estMinutes": 7,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/prompt-injection-egress-tenancy"
-    },
-    {
-      "slug": "identity-secrets-and-tenant-fairness",
-      "title": "Identity, secrets, encryption, and fair sharing",
-      "track": "production-ai",
-      "module": "security-tenancy-prompt-injection",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Production_and_Platform_Judgment/01-identity-secrets-and-tenant-fairness.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/01_Identity_Verification_with_SSO_and_OIDC.md",
       "estMinutes": 6,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-secrets-and-tenant-fairness"
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-verification-with-sso-and-oidc"
     },
     {
-      "slug": "cross-cutting-system-design-quick-reference-v2",
-      "title": "Cross-Cutting System Design — Interview Quick Reference",
+      "slug": "secrets-and-per-tenant-encryption-keys",
+      "title": "Secrets and Per-Tenant Encryption Keys",
       "track": "production-ai",
       "module": "security-tenancy-prompt-injection",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Production_and_Platform_Judgment/Cross_Cutting_System_Design_Quick_Reference_v2.md",
-      "estMinutes": 40,
-      "href": "/learn/production-ai/security-tenancy-prompt-injection/cross-cutting-system-design-quick-reference-v2"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/02_Secrets_and_Per_Tenant_Encryption_Keys.md",
+      "estMinutes": 5,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/secrets-and-per-tenant-encryption-keys"
+    },
+    {
+      "slug": "prompt-injection-and-egress-control",
+      "title": "Prompt Injection and Egress Control",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/03_Prompt_Injection_and_Egress_Control.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/prompt-injection-and-egress-control"
+    },
+    {
+      "slug": "tenant-isolation-levels",
+      "title": "Tenant Isolation Levels",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/04_Tenant_Isolation_Levels.md",
+      "estMinutes": 5,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/tenant-isolation-levels"
+    },
+    {
+      "slug": "fair-sharing-between-tenants",
+      "title": "Fair Sharing Between Tenants",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/05_Fair_Sharing_Between_Tenants.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/fair-sharing-between-tenants"
+    },
+    {
+      "slug": "practise-security-and-tenancy",
+      "title": "Practise Security and Tenancy Interview Questions",
+      "track": "production-ai",
+      "module": "security-tenancy-prompt-injection",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/06_Practise_Security_and_Tenancy_Interview_Questions.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/security-tenancy-prompt-injection/practise-security-and-tenancy"
     },
     {
       "slug": "observability-standards-failure-patterns",
@@ -1654,26 +2065,70 @@
       "href": "/learn/forward-deployed/delivery-stages-and-gates/cross-team-collaboration"
     },
     {
-      "slug": "deep-dive-and-conversational-formats",
-      "title": "Deep-Dive and Conversational Formats",
+      "slug": "three-formats-for-one-project",
+      "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/01_Deep_Dive_And_Conversational_Formats.md",
-      "estMinutes": 11,
-      "href": "/learn/communication-and-behavioural/telling-the-build-story/deep-dive-and-conversational-formats"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/01_Three_Formats_for_One_Project.md",
+      "estMinutes": 5,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project"
     },
     {
-      "slug": "proof-vs-cheat-sheet-honesty",
-      "title": "Proof vs Cheat-Sheet — the Honesty Discipline",
+      "slug": "the-timed-deep-dive",
+      "title": "The Timed Deep-Dive",
       "track": "communication-and-behavioural",
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/02_Proof_vs_Cheat_Sheet_Honesty.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_The_Timed_Deep_Dive.md",
       "estMinutes": 7,
-      "href": "/learn/communication-and-behavioural/telling-the-build-story/proof-vs-cheat-sheet-honesty"
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/the-timed-deep-dive"
+    },
+    {
+      "slug": "the-open-ended-conversation",
+      "title": "The Open-Ended Conversation",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_The_Open_Ended_Conversation.md",
+      "estMinutes": 6,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/the-open-ended-conversation"
+    },
+    {
+      "slug": "the-technical-implementation-flow",
+      "title": "The Technical Implementation Flow",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Technical_Implementation_Flow.md",
+      "estMinutes": 5,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/the-technical-implementation-flow"
+    },
+    {
+      "slug": "proof-versus-knowledge",
+      "title": "Proof versus Knowledge",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_Proof_versus_Knowledge.md",
+      "estMinutes": 6,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge"
+    },
+    {
+      "slug": "offered-honesty-and-war-stories",
+      "title": "Offered Honesty and War Stories",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_Offered_Honesty_and_War_Stories.md",
+      "estMinutes": 5,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/offered-honesty-and-war-stories"
     },
     {
       "slug": "story-bank",
@@ -1688,7 +2143,7 @@
     },
     {
       "slug": "customer-obsession",
-      "title": "Customer Obsession - Practice Worksheet",
+      "title": "Customer Obsession",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1699,7 +2154,7 @@
     },
     {
       "slug": "ownership",
-      "title": "Ownership - Practice Worksheet",
+      "title": "Ownership",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1710,7 +2165,7 @@
     },
     {
       "slug": "attracts-and-retains-talent",
-      "title": "Attracts and Retains Talent - Practice Worksheet",
+      "title": "Attracts and Retains Talent",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1721,7 +2176,7 @@
     },
     {
       "slug": "communicates-with-clarity",
-      "title": "Communicates with Clarity - Practice Worksheet",
+      "title": "Communicates with Clarity",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1732,7 +2187,7 @@
     },
     {
       "slug": "sets-high-standards",
-      "title": "Sets High Standards - Practice Worksheet",
+      "title": "Sets High Standards",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1743,7 +2198,7 @@
     },
     {
       "slug": "focuses-on-outcomes",
-      "title": "Focuses on Outcomes - Practice Worksheet",
+      "title": "Focuses on Outcomes",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1754,7 +2209,7 @@
     },
     {
       "slug": "resourceful",
-      "title": "Resourceful - Practice Worksheet",
+      "title": "Resourceful",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1765,7 +2220,7 @@
     },
     {
       "slug": "makes-good-decisions-quickly",
-      "title": "Makes Good Decisions Quickly - Practice Worksheet",
+      "title": "Makes Good Decisions Quickly",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1776,7 +2231,7 @@
     },
     {
       "slug": "develops-people",
-      "title": "Develops People - Practice Worksheet",
+      "title": "Develops People",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1787,7 +2242,7 @@
     },
     {
       "slug": "creates-a-culture-of-accountability",
-      "title": "Creates a Culture of Accountability - Practice Worksheet",
+      "title": "Creates a Culture of Accountability",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1798,7 +2253,7 @@
     },
     {
       "slug": "engenders-trust",
-      "title": "Engenders Trust - Practice Worksheet",
+      "title": "Engenders Trust",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1809,7 +2264,7 @@
     },
     {
       "slug": "embraces-adversity",
-      "title": "Embraces Adversity - Practice Worksheet",
+      "title": "Embraces Adversity",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1820,7 +2275,7 @@
     },
     {
       "slug": "never-stops-learning-and-growing",
-      "title": "Never Stops Learning and Growing - Practice Worksheet",
+      "title": "Never Stops Learning and Growing",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1831,7 +2286,7 @@
     },
     {
       "slug": "staff-level-and-cross-cutting",
-      "title": "Staff-Level and Cross-Cutting - Practice Worksheet",
+      "title": "Staff-Level and Cross-Cutting",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1842,7 +2297,7 @@
     },
     {
       "slug": "ambiguity-and-discovery",
-      "title": "Ambiguity and Discovery - Practice Worksheet",
+      "title": "Ambiguity and Discovery",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1853,7 +2308,7 @@
     },
     {
       "slug": "stakeholder-influence",
-      "title": "Stakeholder Influence - Practice Worksheet",
+      "title": "Stakeholder Influence",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1864,7 +2319,7 @@
     },
     {
       "slug": "delivery-under-pressure",
-      "title": "Delivery Under Pressure - Practice Worksheet",
+      "title": "Delivery Under Pressure",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1875,7 +2330,7 @@
     },
     {
       "slug": "pushback-and-saying-no",
-      "title": "Pushback and Saying No - Practice Worksheet",
+      "title": "Pushback and Saying No",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1886,7 +2341,7 @@
     },
     {
       "slug": "scale-beyond-self",
-      "title": "Scale Beyond Self - Practice Worksheet",
+      "title": "Scale Beyond Self",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1897,7 +2352,7 @@
     },
     {
       "slug": "module-12-reliability-and-failure-handling",
-      "title": "Module 12 — Reliability & Failure Handling",
+      "title": "Reliability and Failure Handling",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -1908,7 +2363,7 @@
     },
     {
       "slug": "internal-knowledge-assistant",
-      "title": "Internal Knowledge Assistant for Enterprise Support - Case Study Worksheet",
+      "title": "Internal Knowledge Assistant for Enterprise Support",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1919,7 +2374,7 @@
     },
     {
       "slug": "sales-copilot",
-      "title": "Sales Copilot for Account Executives - Case Study Worksheet",
+      "title": "Sales Copilot for Account Executives",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1930,7 +2385,7 @@
     },
     {
       "slug": "financial-compliance-reviewer",
-      "title": "Financial Compliance Document Reviewer - Case Study Worksheet",
+      "title": "Financial Compliance Document Reviewer",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1941,7 +2396,7 @@
     },
     {
       "slug": "healthcare-prior-auth-assistant",
-      "title": "Healthcare Prior Authorization Assistant - Case Study Worksheet",
+      "title": "Healthcare Prior Authorization Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1952,7 +2407,7 @@
     },
     {
       "slug": "legal-contract-copilot",
-      "title": "Legal Contract Review Copilot - Case Study Worksheet",
+      "title": "Legal Contract Review Copilot",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1963,7 +2418,7 @@
     },
     {
       "slug": "sre-triage-agent",
-      "title": "SRE Incident Triage Agent - Case Study Worksheet",
+      "title": "SRE Incident Triage Agent",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1974,7 +2429,7 @@
     },
     {
       "slug": "multi-tenant-saas-support",
-      "title": "Multi-Tenant SaaS Support Assistant - Case Study Worksheet",
+      "title": "Multi-Tenant SaaS Support Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1985,7 +2440,7 @@
     },
     {
       "slug": "retail-demand-explainer",
-      "title": "Retail Demand Forecast Explanation Assistant - Case Study Worksheet",
+      "title": "Retail Demand Forecast Explanation Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -1996,7 +2451,7 @@
     },
     {
       "slug": "service-now-ticket-agent",
-      "title": "ServiceNow Ticket Automation Agent - Case Study Worksheet",
+      "title": "ServiceNow Ticket Automation Agent",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2007,7 +2462,7 @@
     },
     {
       "slug": "executive-dashboard-copilot",
-      "title": "Executive Dashboard Copilot - Case Study Worksheet",
+      "title": "Executive Dashboard Copilot",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2018,7 +2473,7 @@
     },
     {
       "slug": "enterprise-knowledge-assistant-rag",
-      "title": "Enterprise Knowledge Assistant with RAG - Case Study Worksheet",
+      "title": "Enterprise Knowledge Assistant with RAG",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2030,7 +2485,7 @@
     },
     {
       "slug": "secure-multi-tenant-ai-platform",
-      "title": "Secure Multi-Tenant AI Platform - Case Study Worksheet",
+      "title": "Secure Multi-Tenant AI Platform",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2042,7 +2497,7 @@
     },
     {
       "slug": "natural-language-to-sql-analytics-assistant",
-      "title": "Natural-Language-to-SQL Analytics Assistant - Case Study Worksheet",
+      "title": "Natural-Language-to-SQL Analytics Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2054,7 +2509,7 @@
     },
     {
       "slug": "ai-customer-support-automation",
-      "title": "AI Customer-Support Automation - Case Study Worksheet",
+      "title": "AI Customer-Support Automation",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2066,7 +2521,7 @@
     },
     {
       "slug": "ai-system-for-an-air-gapped-environment",
-      "title": "AI System for an Air-Gapped Environment - Case Study Worksheet",
+      "title": "AI System for an Air-Gapped Environment",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2078,7 +2533,7 @@
     },
     {
       "slug": "llm-evaluation-and-release-gating-platform",
-      "title": "LLM Evaluation and Release-Gating Platform - Case Study Worksheet",
+      "title": "LLM Evaluation and Release-Gating Platform",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2090,7 +2545,7 @@
     },
     {
       "slug": "high-volume-batch-inference-system",
-      "title": "High-Volume Batch Inference System - Case Study Worksheet",
+      "title": "High-Volume Batch Inference System",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2102,7 +2557,7 @@
     },
     {
       "slug": "tool-using-ai-agent-with-safety-controls",
-      "title": "Tool-Using AI Agent with Safety Controls - Case Study Worksheet",
+      "title": "Tool-Using AI Agent with Safety Controls",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2114,7 +2569,7 @@
     },
     {
       "slug": "reliable-workflow-orchestration-system",
-      "title": "Reliable Workflow Orchestration System - Case Study Worksheet",
+      "title": "Reliable Workflow Orchestration System",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2126,7 +2581,7 @@
     },
     {
       "slug": "observability-customer-facing-ai-application",
-      "title": "Observability for a Customer-Facing AI Application - Case Study Worksheet",
+      "title": "Observability for a Customer-Facing AI Application",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2138,7 +2593,7 @@
     },
     {
       "slug": "configurable-platform-customer-specific-workflows",
-      "title": "Configurable Platform for Customer-Specific Workflows - Case Study Worksheet",
+      "title": "Configurable Platform for Customer-Specific Workflows",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2150,7 +2605,7 @@
     },
     {
       "slug": "system-design-worksheets-enterprise-chatbot-platform",
-      "title": "Enterprise Chatbot Platform - Case Study Worksheet",
+      "title": "Enterprise Chatbot Platform",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2161,30 +2616,74 @@
       "href": "/modules/01-customer-discovery-and-decomposition/system-design/enterprise-chatbot-platform"
     },
     {
-      "slug": "short-practice-mocks",
-      "title": "Short practice mocks: five 45-minute mocks, each with transcript, weak-candidate signals, follow-ups and scorecard",
+      "slug": "running-and-scoring-a-mock-interview",
+      "title": "Running and Scoring a Mock Interview",
       "track": "interview-practice",
       "module": "mock-interviews",
       "kind": "sync",
       "publish": "own",
-      "source": "03_Practice_Worksheets_and_Keys/Mock_Interviews/Short_Practice_Mocks/",
-      "estMinutes": 3,
-      "href": "/learn/interview-practice/mock-interviews/short-practice-mocks"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/01_Running_and_Scoring_a_Mock_Interview.md",
+      "estMinutes": 12,
+      "href": "/learn/interview-practice/mock-interviews/running-and-scoring-a-mock-interview"
     },
     {
-      "slug": "full-mock-interviews",
-      "title": "Full mock interviews: the same five as full transcripts with weak, average and strong versions, score and debrief",
+      "slug": "internal-knowledge-assistant-mock-interview",
+      "title": "Internal Knowledge Assistant Mock Interview",
       "track": "interview-practice",
       "module": "mock-interviews",
       "kind": "sync",
       "publish": "own",
-      "source": "03_Practice_Worksheets_and_Keys/Mock_Interviews/Full_Mock_Interviews/",
-      "estMinutes": 1,
-      "href": "/learn/interview-practice/mock-interviews/full-mock-interviews"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/02_Internal_Knowledge_Assistant_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/internal-knowledge-assistant-mock-interview"
+    },
+    {
+      "slug": "agentic-support-workflow-mock-interview",
+      "title": "Agentic Support Workflow Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/03_Agentic_Support_Workflow_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/agentic-support-workflow-mock-interview"
+    },
+    {
+      "slug": "financial-compliance-and-red-team-mock-interview",
+      "title": "Financial Compliance and Red-Team Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/04_Financial_Compliance_and_Red_Team_Mock_Interview.md",
+      "estMinutes": 8,
+      "href": "/learn/interview-practice/mock-interviews/financial-compliance-and-red-team-mock-interview"
+    },
+    {
+      "slug": "sre-triage-agent-mock-interview",
+      "title": "SRE Triage Agent Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/05_SRE_Triage_Agent_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/sre-triage-agent-mock-interview"
+    },
+    {
+      "slug": "multi-tenant-saas-assistant-mock-interview",
+      "title": "Multi-Tenant SaaS Assistant Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/06_Multi_Tenant_SaaS_Assistant_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/multi-tenant-saas-assistant-mock-interview"
     },
     {
       "slug": "roadmap",
-      "title": "FDE AI System Design — Interview Learning Roadmap",
+      "title": "Interview Learning Roadmap",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2195,7 +2694,7 @@
     },
     {
       "slug": "rapid-revision-guide",
-      "title": "FDE AI System Design — Rapid Revision Guide",
+      "title": "Rapid Revision Guide",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2206,7 +2705,7 @@
     },
     {
       "slug": "trigger-to-concept-cheat-sheet",
-      "title": "FDE Interview — Trigger → Concept Cheat Sheet",
+      "title": "Trigger-to-Concept Cheat Sheet",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2217,7 +2716,7 @@
     },
     {
       "slug": "module-01-fde-problem-decomposition",
-      "title": "Module 1 — FDE Problem Decomposition",
+      "title": "FDE Problem Decomposition",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2228,7 +2727,7 @@
     },
     {
       "slug": "module-02-functional-requirements",
-      "title": "Module 2 — Functional Requirements",
+      "title": "Functional Requirements",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2239,7 +2738,7 @@
     },
     {
       "slug": "module-03-non-functional-requirements",
-      "title": "Module 3 — Non-Functional Requirements",
+      "title": "Non-Functional Requirements",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2250,7 +2749,7 @@
     },
     {
       "slug": "module-04-core-architecture-building-blocks",
-      "title": "Module 4 — Core Architecture Building Blocks",
+      "title": "Core Architecture Building Blocks",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2261,7 +2760,7 @@
     },
     {
       "slug": "module-05-rag-and-enterprise-data",
-      "title": "Module 5 — RAG & Enterprise Data",
+      "title": "RAG and Enterprise Data",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2272,7 +2771,7 @@
     },
     {
       "slug": "module-06-agentic-architecture",
-      "title": "Module 6 — Agentic Architecture",
+      "title": "Agentic Architecture",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2283,7 +2782,7 @@
     },
     {
       "slug": "module-07-tools-actions-and-enterprise-integration",
-      "title": "Module 7 — Tools, Actions & Enterprise Integration",
+      "title": "Tools, Actions and Enterprise Integration",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2294,7 +2793,7 @@
     },
     {
       "slug": "module-08-guardrails-policy-and-human-approval",
-      "title": "Module 8 — Guardrails, Policy & Human Approval",
+      "title": "Guardrails, Policy and Human Approval",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2305,7 +2804,7 @@
     },
     {
       "slug": "module-09-scaling-ai-systems",
-      "title": "Module 9 — Scaling AI Systems",
+      "title": "Scaling AI Systems",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2316,7 +2815,7 @@
     },
     {
       "slug": "module-10-latency-optimization",
-      "title": "Module 10 — Latency Optimization",
+      "title": "Latency Optimisation",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2327,7 +2826,7 @@
     },
     {
       "slug": "module-11-cost-optimization",
-      "title": "Module 11 — Cost Optimization",
+      "title": "Cost Optimisation",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2338,7 +2837,7 @@
     },
     {
       "slug": "module-13-ai-evaluation",
-      "title": "Module 13 — AI Evaluation",
+      "title": "AI Evaluation",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2349,7 +2848,7 @@
     },
     {
       "slug": "module-14-release-and-change-management",
-      "title": "Module 14 — Release & Change Management",
+      "title": "Release and Change Management",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2360,7 +2859,7 @@
     },
     {
       "slug": "module-15-observability-and-production-operations",
-      "title": "Module 15 — Observability & Production Operations",
+      "title": "Observability and Production Operations",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2371,7 +2870,7 @@
     },
     {
       "slug": "module-16-security-and-enterprise-multi-tenancy",
-      "title": "Module 16 — Security & Enterprise Multi-Tenancy",
+      "title": "Security and Enterprise Multi-Tenancy",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2382,7 +2881,7 @@
     },
     {
       "slug": "module-17-trade-off-thinking",
-      "title": "Module 17 — Trade-Off Thinking",
+      "title": "Trade-Off Thinking",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2393,7 +2892,7 @@
     },
     {
       "slug": "module-18-end-to-end-fde-interview-execution",
-      "title": "Module 18 — End-to-End FDE Interview Execution",
+      "title": "End-to-End FDE Interview Execution",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2403,15 +2902,26 @@
       "href": "/fde-last-day-prep/module-18-end-to-end-fde-interview-execution/concise-interview-module.html"
     },
     {
-      "slug": "companion-course",
-      "title": "Companion AI Engineering Course",
+      "slug": "choose-a-capstone-project",
+      "title": "Choose a Capstone Project",
       "track": "capstone-and-portfolio",
       "module": "capstone-build",
       "kind": "sync",
       "publish": "own",
-      "source": "00_Start_Here/COMPANION_COURSE.md",
-      "estMinutes": 2,
-      "href": "/learn/capstone-and-portfolio/capstone-build/companion-course"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T9.1_Capstone_Build/01_Choose_a_Capstone_Project.md",
+      "estMinutes": 4,
+      "href": "/learn/capstone-and-portfolio/capstone-build/choose-a-capstone-project"
+    },
+    {
+      "slug": "build-from-a-pinned-revision",
+      "title": "Build From a Pinned Revision",
+      "track": "capstone-and-portfolio",
+      "module": "capstone-build",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T9.1_Capstone_Build/02_Build_From_a_Pinned_Revision.md",
+      "estMinutes": 4,
+      "href": "/learn/capstone-and-portfolio/capstone-build/build-from-a-pinned-revision"
     }
   ]
 }

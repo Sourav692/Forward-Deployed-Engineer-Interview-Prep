@@ -24,6 +24,11 @@ export const COMPANY_PREP_DOCUMENTS = [
   { file: '06_Brownfield_Integration_And_Testing.md', slug: 'brownfield-integration-and-testing', order: 8 },
   { file: '07_Enterprise_SDLC_Agile_CrossFunctional.md', slug: 'enterprise-sdlc-and-cross-functional', order: 9 },
   { file: '08_Scaling_Spikes_And_Graceful_Degradation.md', slug: 'scaling-spikes-and-graceful-degradation', order: 10 },
+  { file: 'Final_Round/00_Final_Round_Runbook.md', slug: 'final-round-runbook', order: 11, title: 'Final Round Runbook' },
+  { file: 'Final_Round/01_Engineering_Fit_And_Technical_Aptitude.md', slug: 'final-round-engineering-fit', order: 12, title: 'Engineering Fit and Technical Aptitude' },
+  { file: 'Final_Round/02_Ownership_Story_Workbook.md', slug: 'final-round-ownership', order: 13, title: 'Ownership Story Workbook' },
+  { file: 'Final_Round/03_Executive_Communication_And_Scope.md', slug: 'final-round-executive-communication', order: 14, title: 'Executive Communication and Scope' },
+  { file: 'Final_Round/04_Final_Round_Mock_Interview.md', slug: 'final-round-mock-interview', order: 15, title: 'Final Round Mock Interview' },
 ]
 
 function titleFrom(markdown, fallback) {
@@ -70,9 +75,9 @@ export async function syncCompanyPrep({ repoRoot, outDir, snapshotDir }) {
     }
     scenarios.push({
       slug: 'drill-verifier',
-      order: 11,
+      order: 16,
       title: 'Drill Verifier',
-      tag: 'Blitzy 11',
+      tag: 'Blitzy 16',
       tabs: [{ id: 'company-guide', label: 'Company Guide' }],
     })
     return {
@@ -104,9 +109,9 @@ export async function syncCompanyPrep({ repoRoot, outDir, snapshotDir }) {
   await writeFile(join(drillOutDir, 'company-guide.md'), drillMarkdown)
   scenarios.push({
     slug: 'drill-verifier',
-    order: 11,
+    order: 16,
     title: 'Drill Verifier',
-    tag: 'Blitzy 11',
+    tag: 'Blitzy 16',
     tabs: [{ id: 'company-guide', label: 'Company Guide' }],
   })
 

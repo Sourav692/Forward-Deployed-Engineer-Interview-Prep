@@ -1,7 +1,7 @@
 # The Same Loop in LangGraph
 
 > **Level** 🟢 Foundations · **Module** 01 · **Doc** 5 of 5 · **Time** ~30 min + lab
-> **Prerequisites:** [The Tool-Calling Loop From Scratch](/learn/agentic-systems/the-tool-calling-loop/tool-calling-loop-from-scratch)
+> **Prerequisites:** [The Tool-Calling Loop From Scratch](/learn/agentic-systems/the-tool-calling-loop/the-tool-calling-loop-from-scratch)
 > **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/src/langgraph_agent.py`, `README.md` *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
 > **Companion implementation:** `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/langgraph_react_agent.ipynb` · `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/robust_langgraph_tool_calling_agent.ipynb` · `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/langgraph_agent.py`
 

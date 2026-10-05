@@ -6,4 +6,7 @@
  * parallel consolidation PRs from editing the same lines.
  */
 export const RENAMED_T8: Record<string, string | null> = {
+  // T8.2 consolidated into a how-to lesson and five scenario mocks (site/specs/consolidation/T7-T8.md).
+  'mock-interviews/short-practice-mocks': 'mock-interviews/running-and-scoring-a-mock-interview',
+  'mock-interviews/full-mock-interviews': 'mock-interviews/running-and-scoring-a-mock-interview',
 }

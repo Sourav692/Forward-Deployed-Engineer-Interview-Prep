@@ -30,4 +30,4 @@ silent scope expansion, weak evidence, and unsafe launches.
 This folder deliberately contains no runnable pipeline, notebook, test suite, or
 customer environment. It teaches the functional behavior and the decisions an FDE
 must defend. Hands-on implementation belongs to the companion AI Engineering course;
-see [`../../COMPANION_COURSE.md`](/learn/capstone-and-portfolio/capstone-build/companion-course).
+see [`../../COMPANION_COURSE.md`](/learn/capstone-and-portfolio/capstone-build/choose-a-capstone-project).

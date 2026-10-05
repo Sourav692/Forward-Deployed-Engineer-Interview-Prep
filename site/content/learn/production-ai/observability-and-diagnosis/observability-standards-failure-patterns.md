@@ -82,4 +82,4 @@ A staged rollout — draft → test → shadow → live → autonomous — is a 
 - Distinguish a circuit breaker, a backup provider and a bulkhead — what does each protect against?
 - Why is a kill switch the opposite instinct from a staged rollout? Name two properties it needs that rollout demotion lacks.
 
-**Next →** [Caching, Streaming, CI/CD Rigor and Build vs Buy](/learn/engineering-foundations/apis-and-backend/caching-streaming-cicd-buildvsbuy)
+**Next →** [Caching, Streaming, CI/CD Rigor and Build vs Buy](/learn/engineering-foundations/apis-and-backend/cache-answers-without-serving-wrong-ones)

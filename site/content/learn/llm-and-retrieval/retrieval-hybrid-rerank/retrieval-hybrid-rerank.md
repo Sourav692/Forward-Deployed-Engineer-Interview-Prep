@@ -1,7 +1,7 @@
 # Retrieval — Hybrid, Expansion, Rerank
 
 > **Level** 🟡 Building Production Systems · **Module** 04 · **Doc** 4 of 10 · **Time** ~35 min
-> **Prerequisites:** Module 01 doc 2; [The Ingestion Pipeline](/learn/production-ai/enterprise-rag-in-production/ingestion-pipeline)
+> **Prerequisites:** Module 01 doc 2; [The Ingestion Pipeline](/learn/production-ai/enterprise-rag-in-production/permission-aware-ingestion)
 > **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/06-architecture-end-to-end.md` §4–5; `docs/05-src-modules-reference.md` (`retrieval/*`); `README.md` (strategy comparison)
 > **Companion implementation:** `05_Projects/Enterprise_RAG_Platform/notebooks/02-hands-on-parts/part05-hybrid-search.ipynb`, `part06-query-transformation.ipynb`, `part07-reranking.ipynb`
 
@@ -110,4 +110,4 @@ That paragraph is itself a lesson: the discipline of not overclaiming what a dem
 - State the interaction between reranking and ACL enforcement in one sentence.
 - Why should the strategy-comparison table *not* be used to justify HyDE?
 
-**Next →** [The Query Graph](/learn/production-ai/enterprise-rag-in-production/the-query-graph)
+**Next →** [The Query Graph](/learn/production-ai/enterprise-rag-in-production/the-security-first-query-graph)
