@@ -14,7 +14,8 @@
  */
 
 import { readFile, readdir } from 'node:fs/promises'
-import { join, resolve } from 'node:path'
+import { join, relative, resolve } from 'node:path'
+import { execFileSync } from 'node:child_process'
 import { parseDocument } from '../src/lib/parse.ts'
 import type { Block } from '../src/lib/parse.ts'
 import { ANSWER_KEY_MAP } from '../src/lib/mapping.ts'
@@ -33,6 +34,8 @@ import {
 } from '../src/lib/editorial.ts'
 import { existsSync } from 'node:fs'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
+import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
+import { findUnsafeHtml, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
 
@@ -441,6 +444,129 @@ for (const path of staticFiles) {
   }
 }
 
+// ------------------------------------------------------------------ Learn lessons
+//
+// DATA-04 and SEC-01. curriculum.ts decides what may be published; the sync writes it.
+// These checks make sure the committed snapshot matches that decision: every
+// publishable lesson is there, nothing pending, excluded, on hold or outside the
+// folder allow-list is, no link points into the repository, no unsafe HTML survived,
+// and no published lesson slug vanished without a RENAMED entry.
+
+type LearnEntry = {
+  slug: string
+  title: string
+  track: string
+  module: string
+  kind: 'sync' | 'live'
+  publish: string
+  source: string
+  estMinutes: number
+  href: string
+}
+
+const LEARN = join(CONTENT, 'learn')
+const learnFiles: string[] = []
+let learnManifest: LearnEntry[] = []
+{
+  const raw = await readFile(join(LEARN, 'manifest.json'), 'utf8').catch(() => null)
+  if (raw === null) failures.push('content/learn/manifest.json: missing — run npm run sync')
+  else learnManifest = JSON.parse(raw).lessons
+}
+const learnByKey = new Map(learnManifest.map((l) => [`${l.module}/${l.slug}`, l]))
+for (const l of learnManifest) if (l.kind === 'sync') routes.add(l.href)
+
+const listMarkdown = async (dir: string): Promise<string[]> => {
+  const entries = await readdir(dir, { withFileTypes: true }).catch(() => [])
+  const out: string[] = []
+  for (const e of entries) {
+    const path = join(dir, e.name)
+    if (e.isDirectory()) out.push(...(await listMarkdown(path)))
+    else if (e.name.endsWith('.md')) out.push(path)
+  }
+  return out
+}
+const learnOnDisk = new Set(await listMarkdown(LEARN))
+const expectedFiles = new Set<string>()
+let learnSynced = 0
+let learnLive = 0
+
+for (const lesson of LESSONS) {
+  const decision = lessonDecision(lesson)
+  const key = lessonKey(lesson)
+  const entry = learnByKey.get(key)
+  const home = CURRICULUM_MODULES.find((m) => m.slug === lesson.home)
+  const file = home ? join(LEARN, home.track, home.slug, `${lesson.slug}.md`) : null
+  if (decision !== 'publish') {
+    if (entry) failures.push(`learn ${key}: in the manifest but not publishable (${decision})`)
+    if (file && learnOnDisk.has(file)) failures.push(`learn ${key}: file exists but the lesson is ${decision}`)
+    continue
+  }
+  if (!entry) {
+    failures.push(`learn ${key}: publishable but missing from content/learn/manifest.json — run npm run sync`)
+    continue
+  }
+  if (entry.href === undefined) failures.push(`learn ${key}: no href in the manifest`)
+  if (lesson.kind === 'live') {
+    learnLive++
+    if (!entry.href || !resolvesInternally(entry.href)) failures.push(`learn ${key}: live page ${entry.href} does not resolve`)
+    continue
+  }
+  learnSynced++
+  expectedFiles.add(file!)
+  if (!learnOnDisk.has(file!)) failures.push(`learn ${key}: missing ${relative(CONTENT, file!)} — run npm run sync`)
+}
+for (const file of learnOnDisk) {
+  if (!expectedFiles.has(file)) failures.push(`content/${relative(CONTENT, file)}: no publishable lesson owns this file`)
+}
+for (const l of learnManifest) {
+  if (!isAllowedSource(l.source)) failures.push(`learn ${l.module}/${l.slug}: source ${l.source} is outside the folder allow-list`)
+}
+
+for (const file of [...learnOnDisk].filter((f) => expectedFiles.has(f)).sort()) {
+  const label = `learn/${relative(LEARN, file).replace(/\.md$/, '')}`
+  const raw = await readFile(file, 'utf8')
+  learnFiles.push(file)
+  for (const tag of findUnsafeHtml(raw)) failures.push(`${label}: unsafe HTML survived the sanitiser: ${tag.slice(0, 60)}`)
+  const doc = parseReading(raw, 'lesson')
+  if (!doc.title) failures.push(`${label}: no # title`)
+  const h1s = raw.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '').match(/^# /gm) ?? []
+  if (h1s.length !== 1) failures.push(`${label}: ${h1s.length} # headings; a lesson has exactly one`)
+  for (const section of doc.sections) {
+    for (const chunk of section.chunks) {
+      if (chunk.kind === 'diagram') {
+        diagramTotal++
+        continue
+      }
+      if (/language-mermaid/.test(chunk.html)) failures.push(`${label}: a mermaid fence rendered as prose`)
+      for (const [, href] of chunk.html.matchAll(/(?:href|src)="([^"]*)"/g)) {
+        if (!/^(https?:|mailto:|#|\/)/.test(href)) failures.push(`${label}: link still points into the repo: ${href}`)
+      }
+    }
+  }
+  await checkDocument(label, raw, false)
+}
+
+// Slug guard: compare with the manifest on main (or the last commit), so a lesson
+// that disappears in a branch fails before merge unless RENAMED records it.
+{
+  const show = (ref: string) => {
+    try {
+      return execFileSync('git', ['show', `${ref}:site/content/learn/manifest.json`], {
+        cwd: SITE_ROOT,
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }).toString()
+    } catch {
+      return null
+    }
+  }
+  const base = show('origin/main') ?? show('HEAD')
+  if (base === null) rows.push('\n  learn slug guard: no committed content/learn manifest to compare with (first sync)')
+  else {
+    for (const problem of slugGuard(JSON.parse(base).lessons, learnManifest)) failures.push(`learn slug guard: ${problem}`)
+  }
+}
+rows.push(`\n  learn: ${learnSynced} lessons synced, ${learnLive} live lessons resolved, ${learnOnDisk.size} files on disk`)
+
 // Acronyms: anything in capitals that shows up on three or more pages must either be in
 // the glossary or be listed as not-an-acronym. A new term then gets a plain definition
 // the day it spreads, instead of the reader having to guess.
@@ -462,6 +588,7 @@ for (const mod of manifest.modules) {
 for (const g of LAST_DAY_GUIDES) scanFiles.push(join(CONTENT, 'last-day', `${g.id}.md`))
 scanFiles.push(join(CONTENT, 'behavioural', `${STORY_BANK.slug}.md`))
 for (const path of staticFiles) scanFiles.push(join(SITE_ROOT, 'public', path))
+scanFiles.push(...learnFiles)
 for (const file of scanFiles) {
   const raw = await readFile(file, 'utf8').catch(() => '')
   const text = raw

@@ -18,8 +18,14 @@ import { copyFile, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/p
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
-import { syncCompanyPrep } from './company-prep.mjs'
+import {
+  COMPANY_PREP_DOCUMENTS,
+  COMPANY_PREP_MODULE_ID,
+  COMPANY_PREP_TRACK_ID,
+  syncCompanyPrep,
+} from './company-prep.mjs'
 import { syncLastDay } from './last-day.mjs'
+import { learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
 import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
 
 const SITE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -28,6 +34,7 @@ const REPO_ROOT = resolve(SITE_DIR, '..')
 const SOURCE_ROOT = join(REPO_ROOT, '03_Practice_Worksheets_and_Keys')
 const OUT_DIR = join(SITE_DIR, 'content')
 const COMPANY_PREP_SNAPSHOT_DIR = join(SITE_DIR, '.company-prep-snapshot')
+const LEARN_SNAPSHOT_DIR = learnSnapshotDir(SITE_DIR)
 
 const BEHAVIOURAL_ROOT = join(REPO_ROOT, '04_Behavioral_and_Leadership')
 
@@ -113,7 +120,7 @@ async function readMarkdownFiles(dir) {
     .sort((a, b) => sourceNumber(a) - sourceNumber(b) || a.localeCompare(b))
 }
 
-async function syncTrack(moduleId, track) {
+async function syncTrack(moduleId, track, sourceUrls) {
   const worksheetFiles = await readMarkdownFiles(track.worksheetDir)
   const answerKeyFiles = new Set(await readMarkdownFiles(track.answerKeyDir))
 
@@ -137,6 +144,9 @@ async function syncTrack(moduleId, track) {
     await mkdir(join(outBase, 'answer-keys'), { recursive: true })
     await writeFile(join(outBase, 'worksheets', `${slug}.md`), worksheet)
     await writeFile(join(outBase, 'answer-keys', `${slug}.md`), answerKey)
+    const href = `/modules/${moduleId}/${track.id}/${slug}`
+    sourceUrls.set(join(track.worksheetDir, file), href)
+    sourceUrls.set(join(track.answerKeyDir, keyFile), href)
 
     scenarios.push({
       slug,
@@ -224,16 +234,22 @@ async function main() {
     // useful error if its private source is also unavailable.
   }
 
+  // Learn lessons: the same snapshot pattern, for clones without the lesson sources.
+  // The previous manifest in the snapshot also drives the lesson slug guard.
+  await snapshotLearn({ outDir: OUT_DIR, snapshotDir: LEARN_SNAPSHOT_DIR })
+
   await rm(OUT_DIR, { recursive: true, force: true })
   await mkdir(OUT_DIR, { recursive: true })
 
   const modules = []
   const warnings = []
+  // Absolute source path -> URL of the page that publishes it, for the Learn sync.
+  const sourceUrls = new Map()
 
   for (const mod of MODULES) {
     const tracks = []
     for (const track of mod.tracks) {
-      const result = await syncTrack(mod.id, track)
+      const result = await syncTrack(mod.id, track, sourceUrls)
       tracks.push(result.manifest)
       warnings.push(...result.warnings)
     }
@@ -247,9 +263,10 @@ async function main() {
     join(BEHAVIOURAL_ROOT, STORY_BANK.source),
     join(OUT_DIR, 'behavioural', `${STORY_BANK.slug}.md`),
   )
+  sourceUrls.set(join(BEHAVIOURAL_ROOT, STORY_BANK.source), STORY_BANK.href)
 
   // Reading module: the G01–G20 interview guides, one page per group with tabs.
-  modules.push(await syncCaseStudies({ repoRoot: REPO_ROOT, outDir: OUT_DIR }))
+  modules.push(await syncCaseStudies({ repoRoot: REPO_ROOT, outDir: OUT_DIR, sourceUrls }))
 
   // Company-oriented material: packs tailored to a specific interview loop.
   modules.push(
@@ -260,6 +277,13 @@ async function main() {
     }),
   )
   await rm(COMPANY_PREP_SNAPSHOT_DIR, { recursive: true, force: true })
+  const companyDir = join(REPO_ROOT, '08_Company_Specific_Prep', 'Blitzy')
+  for (const document of COMPANY_PREP_DOCUMENTS) {
+    sourceUrls.set(
+      join(companyDir, document.file),
+      `/modules/${COMPANY_PREP_MODULE_ID}/${COMPANY_PREP_TRACK_ID}/${document.slug}`,
+    )
+  }
 
   // Last-Day Review: its cross-links point at the pages above, so it syncs last and
   // is handed the list of what was actually published.
@@ -275,6 +299,18 @@ async function main() {
     }
   }
   await syncLastDay({ repoRoot: REPO_ROOT, siteDir: SITE_DIR, outDir: OUT_DIR, pages })
+
+  // Learn lessons last: their links point at every page published above.
+  try {
+    await syncLearn({
+      repoRoot: REPO_ROOT,
+      outDir: OUT_DIR,
+      snapshotDir: LEARN_SNAPSHOT_DIR,
+      liveUrls: sourceUrls,
+    })
+  } finally {
+    await rm(LEARN_SNAPSHOT_DIR, { recursive: true, force: true })
+  }
 
   const manifest = { generatedAt: new Date().toISOString(), modules }
   await writeFile(join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2))

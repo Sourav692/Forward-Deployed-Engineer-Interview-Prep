@@ -9,9 +9,11 @@ import { join } from 'node:path'
 import { TRACKS } from '../src/lib/editorial.ts'
 
 export const COMPANY_PREP_MODULE_ID = '16-company-oriented-prep'
-const TRACK_ID = 'blitzy-prep'
+export const COMPANY_PREP_TRACK_ID = 'blitzy-prep'
+const TRACK_ID = COMPANY_PREP_TRACK_ID
 
-const DOCUMENTS = [
+/** Source file -> page, in display order. Exported so the Learn sync can link to these pages. */
+export const COMPANY_PREP_DOCUMENTS = [
   { file: 'README.md', slug: 'start-here', order: 1, title: 'Start Here' },
   { file: '00_Coverage_And_Gaps.md', slug: 'coverage-and-gaps', order: 2 },
   { file: '01_Code_Review_Bug_Drills.md', slug: 'code-review-bug-drills', order: 3 },
@@ -53,7 +55,7 @@ export async function syncCompanyPrep({ repoRoot, outDir, snapshotDir }) {
       recursive: true,
     })
     const scenarios = []
-    for (const document of DOCUMENTS) {
+    for (const document of COMPANY_PREP_DOCUMENTS) {
       const raw = await readFile(
         join(snapshotDir, TRACK_ID, document.slug, 'company-guide.md'),
         'utf8',
@@ -81,7 +83,7 @@ export async function syncCompanyPrep({ repoRoot, outDir, snapshotDir }) {
   }
 
   const scenarios = []
-  for (const document of DOCUMENTS) {
+  for (const document of COMPANY_PREP_DOCUMENTS) {
     const raw = await readFile(join(sourceDir, document.file), 'utf8')
     const outDirForDocument = join(outDir, 'modules', COMPANY_PREP_MODULE_ID, TRACK_ID, document.slug)
     await mkdir(outDirForDocument, { recursive: true })

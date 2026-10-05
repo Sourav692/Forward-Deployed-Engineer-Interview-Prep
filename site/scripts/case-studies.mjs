@@ -263,7 +263,13 @@ async function collectCases(root, standaloneRoot, repoRoot) {
   return cases
 }
 
-export async function syncCaseStudies({ repoRoot, outDir }) {
+/**
+ * `sourceUrls`, when given, is filled with the site URL of every published case:
+ * absolute folder path -> page URL, absolute tab file -> page URL with its tab. The
+ * Learn sync uses it to link lessons to these pages instead of the repository. A
+ * file another module already publishes (a reused worksheet) keeps that mapping.
+ */
+export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
   const caseStudiesDir = join(repoRoot, '02_System_Design_Case_Studies')
   const root = join(caseStudiesDir, 'Scenario_Packs_G01_G20')
   const cases = await collectCases(root, join(caseStudiesDir, 'Standalone_Designs'), repoRoot)
@@ -278,6 +284,16 @@ export async function syncCaseStudies({ repoRoot, outDir }) {
     })
   }
   const ctx = { root, repoRoot, pages }
+  if (sourceUrls) {
+    for (const c of cases) {
+      const url = `/modules/${CASE_STUDY_MODULE_ID}/${c.theme}/${c.slug}`
+      sourceUrls.set(c.dir, url)
+      for (const tab of c.tabs) {
+        const file = tab.src ?? join(c.dir, tab.file)
+        if (!sourceUrls.has(file)) sourceUrls.set(file, `${url}#${tab.id}`)
+      }
+    }
+  }
 
   const tracks = []
   for (const theme of THEMES) {
