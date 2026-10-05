@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { MODULES, RENAMED } from './src/lib/curriculum.ts'
 
 /**
  * Security headers (plan §12, SEC-02).
@@ -33,23 +34,24 @@ const csp = (extra: { style?: string; font?: string } = {}) =>
   ].join('; ')
 
 /**
- * Lesson URLs retired by a consolidation. Each maps to the lesson that now teaches
- * the same material, mirroring the RENAMED entries in src/lib/curriculum.ts.
+ * Lesson URLs retired by a consolidation, derived from RENAMED in src/lib/curriculum.ts
+ * (one file per track in src/lib/consolidation/). A retired lesson redirects to the
+ * lesson that now teaches it, or to its module page when it was withdrawn (`null`).
  */
-const MEMORY = '/learn/agentic-systems/memory-and-state'
-const LESSON_REDIRECTS: [string, string][] = [
-  [`${MEMORY}/state-memory-sessions`, `${MEMORY}/why-agents-need-state`],
-  [`${MEMORY}/memory-and-state-interview-tutorial`, `${MEMORY}/short-term-memory-and-the-context-window`],
-  [`${MEMORY}/ch07-knowledge-memory-retrieval`, `${MEMORY}/long-term-memory-write-retrieve-forget`],
-  [
-    `${MEMORY}/module-09-memory-databases-caching-for-genai-systems`,
-    '/learn/llm-and-retrieval/chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems',
-  ],
-]
+function lessonRedirects(): [string, string][] {
+  const trackOf = new Map(MODULES.map((m) => [m.slug, m.track]))
+  const href = (key: string) => {
+    const [mod, lesson] = key.split('/')
+    const track = trackOf.get(mod)
+    if (!track) throw new Error(`RENAMED key "${key}" names an unknown module`)
+    return lesson ? `/learn/${track}/${mod}/${lesson}` : `/learn/${track}/${mod}`
+  }
+  return Object.entries(RENAMED).map(([from, to]) => [href(from), href(to ?? from.split('/')[0])])
+}
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return LESSON_REDIRECTS.map(([source, destination]) => ({ source, destination, permanent: true }))
+    return lessonRedirects().map(([source, destination]) => ({ source, destination, permanent: true }))
   },
   async headers() {
     return [
