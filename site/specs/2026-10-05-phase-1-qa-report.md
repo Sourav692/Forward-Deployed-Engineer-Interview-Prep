@@ -87,3 +87,15 @@ Lighthouse 13.5 ran on 5 October 2026 through `npx lighthouse`.
 - **Storage export and import UI.** Phase 1 has no Settings page (FE-17 is in Phase 2). The smoke test round-trips the `exportProgress` JSON shape through `localStorage`. The test for the import guard rejecting a bad file waits for the Phase 2 UI.
 - **Screen-reader passes.** VoiceOver and NVDA checks need a person.
 - **Lighthouse on the Vercel preview.** The plan targets the preview. The scores above are from a local build.
+
+## Production Lighthouse (after all Phase 1 PRs merged)
+
+Measured on 5 October 2026 against https://forward-deployed-sigma.vercel.app with Lighthouse 13, mobile preset, headless Chrome.
+
+| Page | Performance | Accessibility | Best practices | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|
+| `/` | 95 | 100 | 100 | 91 | 2.4 s | 0 | 20 ms |
+| `/learn` | 96 | 100 | 100 | 92 | 2.4 s | 0 | 0 ms |
+| Lesson (`/learn/orientation/how-the-platform-works/how-to-use-this-handbook`) | 100 | 100 | 100 | 92 | 1.2 s | 0 | 0 ms |
+
+LCP is under the 2.5 s target and performance is at least 90 on every page, so the Lighthouse exit criterion is met on production. The SEO deduction is the "Start" link text noted above.
