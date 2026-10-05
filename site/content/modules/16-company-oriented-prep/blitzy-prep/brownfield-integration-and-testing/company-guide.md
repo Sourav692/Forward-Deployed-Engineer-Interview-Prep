@@ -41,25 +41,51 @@ When a new service joins an existing system, it has to do one or more of four th
 
 ### Need 1: Call existing logic
 
-#### Option A: Synchronous call (REST or gRPC) through an API gateway
-- **One-liner:** your service calls their service over HTTP (REST) or a faster binary protocol (gRPC) and waits for the answer. The API gateway is the front door that handles auth, routing and rate limits.
-- **Pros:**
-  - Simple to build and reason about.
-  - You get the answer immediately.
-- **Cons:**
-  - Tight coupling: if their service is down, yours is too.
-  - Their slowness adds directly to your response time.
-- **Choose when:** a user is waiting and you need the answer right now (e.g. "is this customer eligible?").
+#### Option A: Synchronous — Call and Wait
 
-#### Option B: Asynchronous events or a message queue
-- **One-liner:** your service publishes a message (e.g. "LoanApproved") to a queue or event stream (Kafka, SQS, Pub/Sub). Other services pick it up and act when they're ready.
-- **Pros:**
-  - Loose coupling: if a consumer is down, messages wait in the queue.
-  - Absorbs traffic spikes, because the queue buffers the load.
-- **Cons:**
-  - Eventual consistency: the effect happens later, not instantly.
-  - Harder to debug, because a request's path is spread across services and time.
-- **Choose when:** you're triggering side effects (send email, update CRM), several services need to react to one event (fan-out), or load is spiky.
+**What happens:** Your service asks another service a question and waits for its answer.
+
+For example: "Is this customer eligible for a loan?" You need the answer before showing the next screen.
+
+The call uses REST or gRPC. An API gateway checks who can call, sends the request to the right service, and limits traffic.
+
+**Advantages:**
+
+- Easy to follow: ask a question, get an answer.
+- You can use the answer in the current user request.
+
+**Disadvantages:**
+
+- If the other service is slow, your user waits longer.
+- If it is unavailable, this operation may fail unless you have a fallback.
+
+**Choose this when:** The user needs the result before they can continue.
+
+#### Option B: Asynchronous — Send and Continue
+
+**What happens:** Your service sends a message and continues. Another service processes the message separately.
+
+For example: "The loan was approved." Other services can then send an email or update the CRM.
+
+A queue or event stream holds the message until it can be processed.
+
+**Advantages:**
+
+- Your service can continue without waiting for the other work.
+- If a consumer is temporarily down, a durable queue can hold the message.
+- During a traffic spike, messages can wait instead of overwhelming the consumer.
+
+**Disadvantages:**
+
+- The work may finish later, so you cannot assume the result is ready immediately.
+- Problems are harder to trace because several services process the work at different times.
+
+**Choose this when:** The work can happen after the current request, or several services need to react to the same event.
+
+**Quick way to remember:**
+
+- **Synchronous:** "I need your answer before I continue."
+- **Asynchronous:** "Here's the work. I'll continue while you handle it."
 
 ---
 
