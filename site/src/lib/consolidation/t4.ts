@@ -23,4 +23,27 @@ export const RENAMED_T4: Record<string, string | null> = {
     'security-tenancy-prompt-injection/identity-verification-with-sso-and-oidc',
   'security-tenancy-prompt-injection/cross-cutting-system-design-quick-reference-v2':
     'security-tenancy-prompt-injection/practise-security-and-tenancy',
+  // T4.3, T4.5–T4.8 consolidated (site/specs/consolidation/T4-operations-scale.md).
+  'observability-and-diagnosis/observability': 'observability-and-diagnosis/the-run-trace',
+  'observability-and-diagnosis/observability-standards-failure-patterns':
+    'observability-and-diagnosis/standard-tracing-and-customer-facing-dashboards',
+  'observability-and-diagnosis/observability-standards-and-failure-patterns':
+    'observability-and-diagnosis/standard-tracing-and-customer-facing-dashboards',
+  'observability-and-diagnosis/production-and-operations-interview-tutorial':
+    'observability-and-diagnosis/practise-observability-and-diagnosis',
+  'cost-and-latency/core-8-drivers-memorize': 'cost-and-latency/the-eight-cost-and-latency-drivers',
+  'cost-and-latency/cram-sheet-full-playbook': 'cost-and-latency/why-cost-and-latency-decide-production',
+  'cost-and-latency/cram-sheet-s15-s16': 'cost-and-latency/practise-cost-and-latency',
+  'cost-and-latency/additions-beyond-playbook': 'cost-and-latency/latency-prefill-decode-streaming-and-the-tail',
+  'cost-and-latency/cost-latency-cicd-rigor-and-build-vs-buy': 'cost-and-latency/caching-in-genai-systems',
+  'cost-and-latency/module-09-caching-in-genai-systems': 'cost-and-latency/caching-in-genai-systems',
+  'scaling-and-reliability/scaling-to-20m-documents': 'scaling-and-reliability/what-breaks-at-twenty-million-documents',
+  'agentops/prompt-versioning-rollout-rollback': 'agentops/prompt-versioning-rollout-and-rollback',
+  'agentops/agentops-on-databricks': 'agentops/agentops-mapped-to-databricks',
+  'agentops/enterprise-rag-on-databricks': 'agentops/enterprise-rag-on-a-governed-lakehouse',
+  'agentops/multi-channel-and-hitl-escalation': 'agentops/channel-adapters-and-human-escalation',
+  'agentops/red-teaming': 'agentops/red-teaming-and-layered-guardrails',
+  'agentops/infra-and-cicd': 'agentops/infrastructure-as-code-and-the-release-pipeline',
+  'agentops/production-and-platform-judgment-agentops-on-databricks': 'agentops/agentops-mapped-to-databricks',
+  'model-adaptation-and-serving/ch08-learning-in-agentic-systems': 'model-adaptation-and-serving/four-learning-surfaces',
 }
