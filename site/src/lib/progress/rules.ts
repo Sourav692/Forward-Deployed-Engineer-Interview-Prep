@@ -4,19 +4,23 @@
  * Nothing here reads storage, the clock or the data files: callers pass the learner
  * state, the entities and `now`. That keeps every rule testable under plain `node`
  * (`scripts/check-progress-rules.ts`) and lets the "time travel" setting work by simply
- * passing a shifted `now`. Only `import type` is allowed in this file: Node's type
+ * passing a shifted `now`. The rules are typed against the minimal structural shapes in
+ * `./types` (`RuleAttempt`, `RuleModule`, `ScorableItem`), so demo entities and production
+ * records both fit. Only `import type` is allowed in this file: Node's type
  * stripping erases it, whereas a runtime import would need a resolvable path.
  */
 import type {
-  Assessment,
-  AssessmentItem,
-  Attempt,
   ConfidenceRating,
-  LearnerState,
-  Module,
   RubricDimension,
+  RuleAttempt,
+  RuleModule,
+  RuleState,
+  ScorableItem,
   Status,
-} from '../../demo/types'
+} from './types'
+
+/** Rules read only these learner-state fields; callers pass a `Pick` of what they hold. */
+type LearnerState = RuleState
 
 export const DAY_MS = 86_400_000
 export const CHECKPOINT_PASS = 70
@@ -35,18 +39,18 @@ export function effectiveNow(state: Pick<LearnerState, 'clockOffsetDays'>, realN
 
 // ── Attempts and confidence ────────────────────────────────────────────────
 
-export function attemptsFor(state: Pick<LearnerState, 'attempts'>, assessmentId: string): Attempt[] {
+export function attemptsFor<A extends RuleAttempt>(state: { attempts: A[] }, assessmentId: string): A[] {
   return state.attempts
     .filter((a) => a.assessmentId === assessmentId)
     .sort((a, b) => Date.parse(a.at) - Date.parse(b.at))
 }
 
-export function latestAttempt(state: Pick<LearnerState, 'attempts'>, assessmentId: string): Attempt | undefined {
+export function latestAttempt<A extends RuleAttempt>(state: { attempts: A[] }, assessmentId: string): A | undefined {
   const all = attemptsFor(state, assessmentId)
   return all[all.length - 1]
 }
 
-export function lastPass(state: Pick<LearnerState, 'attempts'>, assessmentId: string): Attempt | undefined {
+export function lastPass<A extends RuleAttempt>(state: { attempts: A[] }, assessmentId: string): A | undefined {
   return attemptsFor(state, assessmentId).filter((a) => a.passed).pop()
 }
 
@@ -66,7 +70,7 @@ export function effectiveConfidence(rating: ConfidenceRating | undefined, now: n
  * after the second pass is handled by `revisionReason`, which `moduleStatus` checks
  * next. `attempts` are oldest first; `confidence` is already decayed.
  */
-export function isMastered(attempts: Attempt[], confidence: number | undefined): boolean {
+export function isMastered(attempts: RuleAttempt[], confidence: number | undefined): boolean {
   if (confidence === undefined || confidence < 4) return false
   const passes = attempts.filter((a) => a.passed)
   if (passes.length < 2) return false
@@ -87,8 +91,8 @@ export interface PrerequisiteCheck {
 /** A prerequisite is met by a passed checkpoint or a skip ("Test out" or the path). */
 export function checkPrerequisites(
   state: Pick<LearnerState, 'attempts' | 'skipped'>,
-  module: Pick<Module, 'prerequisites'>,
-  modulesById: Record<string, Pick<Module, 'checkpointId'>>,
+  module: Pick<RuleModule, 'prerequisites'>,
+  modulesById: Record<string, Pick<RuleModule, 'checkpointId'>>,
 ): PrerequisiteCheck {
   const missing: string[] = []
   const failed: string[] = []
@@ -149,9 +153,9 @@ export interface ModuleFacts {
 /** Precedence: skipped > mastered > needs-revision > completed > blocked > ready > in progress. */
 export function moduleStatus(
   state: Pick<LearnerState, 'attempts' | 'skipped' | 'confidence'>,
-  module: Module,
+  module: RuleModule,
   facts: ModuleFacts,
-  modulesById: Record<string, Pick<Module, 'checkpointId'>>,
+  modulesById: Record<string, Pick<RuleModule, 'checkpointId'>>,
   now: number,
 ): Status {
   if (state.skipped[module.id]) return 'skipped'
@@ -197,21 +201,21 @@ export function moduleFraction(
 
 // ── Assessments ────────────────────────────────────────────────────────────
 
-export interface CheckpointResult {
+export interface CheckpointResult<I extends ScorableItem = ScorableItem> {
   score: number
   passed: boolean
   unanswered: string[]
   skillScores: Record<string, { correct: number; total: number }>
-  missed: AssessmentItem[]
+  missed: I[]
 }
 
-export function scoreCheckpoint(
-  assessment: Pick<Assessment, 'passPercent'>,
-  items: AssessmentItem[],
+export function scoreCheckpoint<I extends ScorableItem>(
+  assessment: { passPercent: number },
+  items: I[],
   answers: Record<string, string>,
-): CheckpointResult {
+): CheckpointResult<I> {
   const skillScores: CheckpointResult['skillScores'] = {}
-  const missed: AssessmentItem[] = []
+  const missed: I[] = []
   const unanswered = items.filter((i) => !answers[i.id]).map((i) => i.id)
   let correct = 0
   for (const i of items) {

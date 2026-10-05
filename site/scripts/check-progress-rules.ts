@@ -21,7 +21,7 @@ import {
   scoreExam,
   scoreMock,
 } from '../src/lib/progress/rules.ts'
-import type { Attempt, AssessmentItem, LearnerState, Module } from '../src/demo/types.ts'
+import type { AttemptBase as Attempt, RuleModule, RuleState, ScorableItem } from '../src/lib/progress/types.ts'
 
 let failures = 0
 let passes = 0
@@ -37,11 +37,7 @@ function check(name: string, actual: unknown, expected: unknown) {
 const NOW = Date.parse('2026-10-05T12:00:00Z')
 const ago = (days: number) => new Date(NOW - days * DAY_MS).toISOString()
 
-const mod = (id: string, prerequisites: string[] = []): Module => ({
-  id, code: id.toUpperCase(), trackId: 't9', sectionId: 's', title: id, objective: '', scope: '', why: '',
-  outcomes: [], prerequisites, unlocks: [], lessonIds: ['l1', 'l2'], exerciseIds: ['ex'], checkpointId: `${id}-cp`,
-  estMinutes: 60, canonicalSource: '', relatedModuleIds: [], interviewQuestionIds: [], commonMistakes: [], skillIds: [],
-})
+const mod = (id: string, prerequisites: string[] = []): RuleModule => ({ id, prerequisites, checkpointId: `${id}-cp` })
 const A = mod('a')
 const B = mod('b', ['a'])
 const byId = { a: A, b: B }
@@ -49,7 +45,7 @@ const byId = { a: A, b: B }
 const attempt = (assessmentId: string, daysAgo: number, passed: boolean): Attempt => ({
   id: `${assessmentId}-${daysAgo}`, assessmentId, kind: 'checkpoint', at: ago(daysAgo), score: passed ? 85 : 50, passed,
 })
-type S = Pick<LearnerState, 'attempts' | 'skipped' | 'confidence'>
+type S = Pick<RuleState<Attempt>, 'attempts' | 'skipped' | 'confidence'>
 const state = (s: Partial<S> = {}): S => ({ attempts: [], skipped: {}, confidence: {}, ...s })
 const facts = (read: number, ex: boolean) => ({ lessonsRead: read, lessonsTotal: 2, requiredExerciseSubmitted: ex, anyExerciseSubmitted: ex })
 
@@ -90,9 +86,8 @@ check('confidence decays one level per 21 days', effectiveConfidence({ value: 5,
 check('rollup weights by minutes', rollup([{ minutes: 30, fraction: 1 }, { minutes: 90, fraction: 0 }]), 0.25)
 
 // Checkpoint scoring
-const items: AssessmentItem[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => ({
-  id: `q${n}`, kind: 'multiple-choice', prompt: '', options: [], correctOptionId: 'a', explanation: '',
-  skillId: n <= 5 ? 's1' : 's2', remediationModuleId: 'a',
+const items: ScorableItem[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => ({
+  id: `q${n}`, correctOptionId: 'a', skillId: n <= 5 ? 's1' : 's2',
 }))
 const answers = (right: number) => Object.fromEntries(items.map((i, n) => [i.id, n < right ? 'a' : 'b']))
 check('70% passes', scoreCheckpoint({ passPercent: 70 }, items, answers(7)).passed, true)

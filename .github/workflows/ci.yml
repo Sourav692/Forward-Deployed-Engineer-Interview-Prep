@@ -51,6 +51,9 @@ jobs:
       - name: Check progress rules
         run: npm run check:rules
 
+      - name: Check progress store
+        run: npm run check:store
+
       - name: Check curriculum model
         run: npm run check:curriculum
 
