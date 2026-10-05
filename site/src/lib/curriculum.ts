@@ -11,10 +11,21 @@
  *   use it list it under `seeAlso` and link to the home lesson.
  * - `kind: 'live'` lessons are already published under /modules or
  *   /fde-last-day-prep; Learn links to them instead of syncing a copy.
- * - Only `import type` is allowed here: the .mjs sync scripts import this file
- *   under plain `node`, which erases type imports but cannot resolve runtime ones.
+ * - The .mjs sync scripts import this file under plain `node`. Type imports are
+ *   erased; runtime imports must be data-only modules imported with an explicit
+ *   `.ts` extension (the per-track RENAMED files in ./consolidation/).
  */
 import type { CurriculumLesson, CurriculumModule, CurriculumTrack } from './curriculum-types'
+import { RENAMED_T0 } from './consolidation/t0.ts'
+import { RENAMED_T1 } from './consolidation/t1.ts'
+import { RENAMED_T2 } from './consolidation/t2.ts'
+import { RENAMED_T3 } from './consolidation/t3.ts'
+import { RENAMED_T4 } from './consolidation/t4.ts'
+import { RENAMED_T5 } from './consolidation/t5.ts'
+import { RENAMED_T6 } from './consolidation/t6.ts'
+import { RENAMED_T7 } from './consolidation/t7.ts'
+import { RENAMED_T8 } from './consolidation/t8.ts'
+import { RENAMED_T9 } from './consolidation/t9.ts'
 
 export const TRACKS: CurriculumTrack[] = [
   {
@@ -1597,12 +1608,16 @@ export const MODULES: CurriculumModule[] = [
  * on purpose.
  */
 export const RENAMED: Record<string, string | null> = {
-  // T3.4 consolidated into seven lessons (canonical-homes spec, "Consolidated modules").
-  'memory-and-state/state-memory-sessions': 'memory-and-state/why-agents-need-state',
-  'memory-and-state/memory-and-state-interview-tutorial': 'memory-and-state/short-term-memory-and-the-context-window',
-  'memory-and-state/ch07-knowledge-memory-retrieval': 'memory-and-state/long-term-memory-write-retrieve-forget',
-  'memory-and-state/module-09-memory-databases-caching-for-genai-systems':
-    'chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems',
+  ...RENAMED_T0,
+  ...RENAMED_T1,
+  ...RENAMED_T2,
+  ...RENAMED_T3,
+  ...RENAMED_T4,
+  ...RENAMED_T5,
+  ...RENAMED_T6,
+  ...RENAMED_T7,
+  ...RENAMED_T8,
+  ...RENAMED_T9,
 }
 
 /** Credit for the T3.4 consolidated lessons that summarise ideas from the third-party Chapter 7. */
