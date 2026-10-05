@@ -64,7 +64,7 @@ For a technical question, add the evidence you would use to decide. For an execu
 - Invented numbers or outcomes. Say what you measured and what you did not know.
 - Making a stakeholder sound unreasonable. Describe the pressure they were under.
 - Treating a scope reduction as failure. A narrower scope can be the responsible way to deliver value.
-- Repeating product claims you cannot explain. It is stronger to say, "My understanding is X. I would validate that with the team." 
+- Repeating product claims you cannot explain. It is stronger to say, "My understanding is X. I would validate that with the team."
 
 ## Night-before checklist
 
