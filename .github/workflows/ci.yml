@@ -57,6 +57,9 @@ jobs:
       - name: Check curriculum model
         run: npm run check:curriculum
 
+      - name: Check learning paths
+        run: npm run check:paths
+
       - name: Lint
         run: npm run lint
 

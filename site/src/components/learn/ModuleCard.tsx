@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { CurriculumModule } from '@/lib/curriculum-types'
 import { formatMinutes, learnHref, moduleInput } from '@/lib/learn'
 import { Tag, cx, focusRing } from '@/components/ui'
+import { ModulePathFlag } from './PathFlagIslands'
 import { ModuleProgress, ModuleStatusBadge } from './ProgressIslands'
 
 /**
@@ -28,6 +29,7 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
         </p>
       </div>
       <div className="relative z-10 flex flex-wrap items-center gap-2 pl-11 sm:pl-0">
+        <ModulePathFlag moduleSlug={mod.slug} size="xs" />
         {mod.status === 'partly' && <Tag>Partly ready</Tag>}
         <ModuleStatusBadge input={input} size="xs" />
         {!gap && (
