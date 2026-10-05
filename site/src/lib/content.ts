@@ -298,7 +298,15 @@ export const getScenario = cache(
   },
 )
 
-const SEARCH_TEXT_CAP = 500
+export const SEARCH_TEXT_CAP = 500
+
+export type ContentSearchEntries = {
+  practice: SearchEntry[]
+  interview: SearchEntry[]
+  design: SearchEntry[]
+  company: SearchEntry[]
+  reference: SearchEntry[]
+}
 
 /** Whole minutes to read a markdown document, rounded up; never zero. */
 export function readingMinutes(markdown: string): number {
@@ -367,27 +375,38 @@ export const getCaseStudy = cache(
   },
 )
 
-/** Build-time search index. Section-level so results land on a specific heading. */
-export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
+/**
+ * Build-time search entries for the scenario, case-study and review content, grouped by
+ * the search area file each one ships in (`/search/{area}.json`). Section-level so
+ * results land on a specific heading. The Learn area is built in `search-index.ts`.
+ */
+export const getContentSearchEntries = cache(async (): Promise<ContentSearchEntries> => {
   const all = await getAllScenarios()
-  const entries: SearchEntry[] = []
+  const practice: SearchEntry[] = []
+  const interview: SearchEntry[] = []
+  const design: SearchEntry[] = []
+  const company: SearchEntry[] = []
+  const reference: SearchEntry[] = []
 
   for (const ref of all) {
     if (ref.reading) {
       const study = await getCaseStudy(ref.moduleId, ref.trackId, ref.slug)
       if (!study) continue
       const href = scenarioHref(ref)
+      // Company prep (module 16) ships in its own file; the rest are system design cases.
+      const area = ref.moduleId.startsWith('16-') ? company : design
       for (const { label, doc } of study.docs) {
         for (const section of doc.sections) {
           if (!section.title) continue
-          entries.push({
+          area.push({
             title: `${ref.tag} · ${qualifiedTitle(ref)}`,
             section: toPlainText(section.title),
             kind: label,
             href: `${href}#${section.id}`,
-            // Capped: the index ships to every page, and these guides are long. The
+            // Capped: these guides are long, and the area file has a size budget. The
             // opening of a section carries its claim, which is what a search hits.
-            text: `${toPlainText(section.title)} ${readingText(section)}`.slice(0, SEARCH_TEXT_CAP),
+            // The heading is already in `section`, so the text carries only the body.
+            text: readingText(section).slice(0, SEARCH_TEXT_CAP),
           })
         }
       }
@@ -399,8 +418,10 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
 
     const title = qualifiedTitle({ title: scenario.title, qualifier: ref.qualifier })
     const personal = Boolean(familyMeta(ref.trackId).personalisation)
+    // Behavioural rounds ship in the interview file, technical practice in the practice file.
+    const area = personal ? interview : practice
     for (const section of scenario.sections) {
-      entries.push({
+      area.push({
         title,
         section: section.title,
         kind: personal ? 'Behavioural' : 'Practice',
@@ -409,7 +430,7 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
       })
     }
     for (const section of scenario.answerKeyDocument.sections) {
-      entries.push({
+      area.push({
         title,
         section: section.title,
         kind: 'Model Answer',
@@ -425,7 +446,7 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
     if (!loaded) continue
     for (const section of loaded.doc.sections) {
       if (!section.title) continue
-      entries.push({
+      reference.push({
         title: guide.title,
         section: toPlainText(section.title),
         kind: 'Revision',
@@ -437,7 +458,7 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
   const storyBank = await getStoryBank()
   for (const section of storyBank?.doc.sections ?? []) {
     if (!section.title) continue
-    entries.push({
+    interview.push({
       title: STORY_BANK.title,
       section: toPlainText(section.title),
       kind: 'Behavioural',
@@ -446,7 +467,7 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
     })
   }
   for (const r of REVIEWS) {
-    entries.push({
+    reference.push({
       title: 'Last-Day Review',
       section: `${reviewLabel(r.number)} — ${r.title}`,
       kind: 'Revision',
@@ -455,7 +476,7 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
     })
   }
   for (const g of GLOSSARY) {
-    entries.push({
+    reference.push({
       title: 'Glossary',
       section: g.expansion ? `${g.term} — ${g.expansion}` : g.term,
       kind: 'Glossary',
@@ -463,7 +484,7 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
       text: `${g.term} ${g.expansion ?? ''} ${g.plain} ${g.sayIt ?? ''}`,
     })
   }
-  entries.push({
+  reference.push({
     title: 'Last-Day Review',
     section: TRIGGER_SHEET.title,
     kind: 'Revision',
@@ -471,7 +492,7 @@ export const getSearchIndex = cache(async (): Promise<SearchEntry[]> => {
     text: TRIGGER_SHEET.blurb,
   })
 
-  return entries
+  return { practice, interview, design, company, reference }
 })
 
 function plainText(section: Section): string {
