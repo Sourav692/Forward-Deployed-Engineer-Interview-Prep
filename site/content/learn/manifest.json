@@ -1,92 +1,257 @@
 {
   "lessons": [
     {
-      "slug": "how-to-use-this-handbook",
-      "title": "How To Use This Handbook",
+      "slug": "how-the-material-is-built",
+      "title": "How the Material Is Built",
       "track": "orientation",
       "module": "how-the-platform-works",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/01_How_the_Material_Is_Built.md",
       "estMinutes": 5,
-      "href": "/learn/orientation/how-the-platform-works/how-to-use-this-handbook"
+      "href": "/learn/orientation/how-the-platform-works/how-the-material-is-built"
     },
     {
-      "slug": "repository-coverage-guide",
-      "title": "FDE Interview Preparation Coverage Guide",
+      "slug": "choose-a-reading-path",
+      "title": "Choose a Reading Path",
       "track": "orientation",
       "module": "how-the-platform-works",
       "kind": "sync",
       "publish": "own",
-      "source": "00_Start_Here/REPOSITORY_COVERAGE_GUIDE.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/02_Choose_a_Reading_Path.md",
       "estMinutes": 4,
-      "href": "/learn/orientation/how-the-platform-works/repository-coverage-guide"
+      "href": "/learn/orientation/how-the-platform-works/choose-a-reading-path"
     },
     {
-      "slug": "the-three-roles",
-      "title": "The Three Roles",
+      "slug": "find-material-by-interview-area",
+      "title": "Find Material by Interview Area",
+      "track": "orientation",
+      "module": "how-the-platform-works",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/03_Find_Material_by_Interview_Area.md",
+      "estMinutes": 5,
+      "href": "/learn/orientation/how-the-platform-works/find-material-by-interview-area"
+    },
+    {
+      "slug": "three-roles-three-questions",
+      "title": "Three Roles, Three Questions",
       "track": "orientation",
       "module": "the-fde-role",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/00_Orientation/02_The_Three_Roles.md",
-      "estMinutes": 7,
-      "href": "/learn/orientation/the-fde-role/the-three-roles"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/01_Three_Roles_Three_Questions.md",
+      "estMinutes": 6,
+      "href": "/learn/orientation/the-fde-role/three-roles-three-questions"
     },
     {
-      "slug": "senior-fde-day-to-day",
-      "title": "A Day in the Life — Senior Forward Deployed Engineer",
+      "slug": "the-three-lenses-of-fde-work",
+      "title": "The Three Lenses of FDE Work",
       "track": "orientation",
       "module": "the-fde-role",
       "kind": "sync",
       "publish": "own",
-      "source": "05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md",
-      "estMinutes": 8,
-      "href": "/learn/orientation/the-fde-role/senior-fde-day-to-day"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/02_The_Three_Lenses_of_FDE_Work.md",
+      "estMinutes": 4,
+      "href": "/learn/orientation/the-fde-role/the-three-lenses-of-fde-work"
     },
     {
-      "slug": "the-first-ten-minutes",
-      "title": "The First Ten Minutes",
+      "slug": "a-senior-fdes-day",
+      "title": "A Senior FDE's Day",
+      "track": "orientation",
+      "module": "the-fde-role",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/03_A_Senior_FDEs_Day.md",
+      "estMinutes": 5,
+      "href": "/learn/orientation/the-fde-role/a-senior-fdes-day"
+    },
+    {
+      "slug": "practise-fde-role",
+      "title": "Practise FDE Role Interview Questions",
+      "track": "orientation",
+      "module": "the-fde-role",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/04_Practise_FDE_Role_Interview_Questions.md",
+      "estMinutes": 5,
+      "href": "/learn/orientation/the-fde-role/practise-fde-role"
+    },
+    {
+      "slug": "ask-before-you-architect",
+      "title": "Ask Before You Architect",
       "track": "orientation",
       "module": "first-ten-minutes",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/00_Orientation/03_The_First_Ten_Minutes.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.3_First_Ten_Minutes/01_Ask_Before_You_Architect.md",
       "estMinutes": 6,
-      "href": "/learn/orientation/first-ten-minutes/the-first-ten-minutes"
+      "href": "/learn/orientation/first-ten-minutes/ask-before-you-architect"
     },
     {
-      "slug": "module-10-backend-fastapi-deployment",
-      "title": "Backend, FastAPI and LLM Serving APIs",
-      "track": "engineering-foundations",
-      "module": "apis-and-backend",
+      "slug": "let-the-answers-change-the-design",
+      "title": "Let the Answers Change the Design",
+      "track": "orientation",
+      "module": "first-ten-minutes",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md",
-      "estMinutes": 10,
-      "href": "/learn/engineering-foundations/apis-and-backend/module-10-backend-fastapi-deployment"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.3_First_Ten_Minutes/02_Let_the_Answers_Change_the_Design.md",
+      "estMinutes": 4,
+      "href": "/learn/orientation/first-ten-minutes/let-the-answers-change-the-design"
     },
     {
-      "slug": "module-10-deployment-and-operations",
-      "title": "Deployment, Infrastructure and Production Operations",
+      "slug": "package-the-service-and-keep-secrets-out",
+      "title": "Package the Service and Keep Secrets Out",
       "track": "engineering-foundations",
       "module": "cloud-containers-deployment",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md",
-      "estMinutes": 10,
-      "href": "/learn/engineering-foundations/cloud-containers-deployment/module-10-deployment-and-operations"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/01_Package_the_Service_and_Keep_Secrets_Out.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/package-the-service-and-keep-secrets-out"
     },
     {
-      "slug": "caching-streaming-cicd-buildvsbuy",
-      "title": "Caching, Streaming, CI/CD Rigor and Build vs Buy",
+      "slug": "choose-a-runtime-and-scale-it",
+      "title": "Choose a Runtime and Scale It",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/02_Choose_a_Runtime_and_Scale_It.md",
+      "estMinutes": 7,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/choose-a-runtime-and-scale-it"
+    },
+    {
+      "slug": "gate-releases-on-quality",
+      "title": "Gate Releases on Quality",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/03_Gate_Releases_on_Quality.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/gate-releases-on-quality"
+    },
+    {
+      "slug": "roll-out-changes-gradually",
+      "title": "Roll Out Changes Gradually",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/04_Roll_Out_Changes_Gradually.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/roll-out-changes-gradually"
+    },
+    {
+      "slug": "observe-the-running-service",
+      "title": "Observe the Running Service",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/05_Observe_the_Running_Service.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/observe-the-running-service"
+    },
+    {
+      "slug": "degrade-gracefully-and-load-test",
+      "title": "Degrade Gracefully and Load Test",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/06_Degrade_Gracefully_and_Load_Test.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/degrade-gracefully-and-load-test"
+    },
+    {
+      "slug": "practise-deployment",
+      "title": "Practise Deployment Interview Questions",
+      "track": "engineering-foundations",
+      "module": "cloud-containers-deployment",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/07_Practise_Deployment_Interview_Questions.md",
+      "estMinutes": 9,
+      "href": "/learn/engineering-foundations/cloud-containers-deployment/practise-deployment"
+    },
+    {
+      "slug": "keep-the-request-path-free",
+      "title": "Keep the Request Path Free",
       "track": "engineering-foundations",
       "module": "apis-and-backend",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/03_Caching_Streaming_CICD_BuildVsBuy.md",
-      "estMinutes": 8,
-      "href": "/learn/engineering-foundations/apis-and-backend/caching-streaming-cicd-buildvsbuy"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/01_Keep_the_Request_Path_Free.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/apis-and-backend/keep-the-request-path-free"
+    },
+    {
+      "slug": "structure-the-service-and-decide-what-to-build",
+      "title": "Structure the Service and Decide What to Build",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/02_Structure_the_Service_and_Decide_What_to_Build.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/apis-and-backend/structure-the-service-and-decide-what-to-build"
+    },
+    {
+      "slug": "define-the-api-contract-with-typed-schemas",
+      "title": "Define the API Contract With Typed Schemas",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/03_Define_the_API_Contract_With_Typed_Schemas.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/apis-and-backend/define-the-api-contract-with-typed-schemas"
+    },
+    {
+      "slug": "protect-the-endpoint-from-abuse-and-cost",
+      "title": "Protect the Endpoint From Abuse and Cost",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/04_Protect_the_Endpoint_From_Abuse_and_Cost.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/apis-and-backend/protect-the-endpoint-from-abuse-and-cost"
+    },
+    {
+      "slug": "build-a-streaming-chat-endpoint",
+      "title": "Build a Streaming Chat Endpoint",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/05_Build_a_Streaming_Chat_Endpoint.md",
+      "estMinutes": 6,
+      "href": "/learn/engineering-foundations/apis-and-backend/build-a-streaming-chat-endpoint"
+    },
+    {
+      "slug": "cache-answers-without-serving-wrong-ones",
+      "title": "Cache Answers Without Serving Wrong Ones",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/06_Cache_Answers_Without_Serving_Wrong_Ones.md",
+      "estMinutes": 5,
+      "href": "/learn/engineering-foundations/apis-and-backend/cache-answers-without-serving-wrong-ones"
+    },
+    {
+      "slug": "practise-api-and-backend",
+      "title": "Practise API and Backend Interview Questions",
+      "track": "engineering-foundations",
+      "module": "apis-and-backend",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/07_Practise_API_and_Backend_Interview_Questions.md",
+      "estMinutes": 7,
+      "href": "/learn/engineering-foundations/apis-and-backend/practise-api-and-backend"
     },
     {
       "slug": "module-01-rag-fundamentals-core-components",
@@ -2600,15 +2765,26 @@
       "href": "/fde-last-day-prep/module-18-end-to-end-fde-interview-execution/concise-interview-module.html"
     },
     {
-      "slug": "companion-course",
-      "title": "Companion AI Engineering Course",
+      "slug": "choose-a-capstone-project",
+      "title": "Choose a Capstone Project",
       "track": "capstone-and-portfolio",
       "module": "capstone-build",
       "kind": "sync",
       "publish": "own",
-      "source": "00_Start_Here/COMPANION_COURSE.md",
-      "estMinutes": 2,
-      "href": "/learn/capstone-and-portfolio/capstone-build/companion-course"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T9.1_Capstone_Build/01_Choose_a_Capstone_Project.md",
+      "estMinutes": 4,
+      "href": "/learn/capstone-and-portfolio/capstone-build/choose-a-capstone-project"
+    },
+    {
+      "slug": "build-from-a-pinned-revision",
+      "title": "Build From a Pinned Revision",
+      "track": "capstone-and-portfolio",
+      "module": "capstone-build",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T9.1_Capstone_Build/02_Build_From_a_Pinned_Revision.md",
+      "estMinutes": 4,
+      "href": "/learn/capstone-and-portfolio/capstone-build/build-from-a-pinned-revision"
     }
   ]
 }

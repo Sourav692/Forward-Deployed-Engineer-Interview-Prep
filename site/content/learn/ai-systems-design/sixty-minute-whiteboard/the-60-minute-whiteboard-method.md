@@ -1,7 +1,7 @@
 # The 60-Minute Whiteboard Method
 
 > **Level** 🟢 Foundations · **Module** 02 · **Doc** 5 of 5 · **Time** ~30 min
-> **Prerequisites:** [The First Ten Minutes](/learn/orientation/first-ten-minutes/the-first-ten-minutes), [The 12-Part Framework](/learn/ai-systems-design/design-framework/the-12-part-framework)
+> **Prerequisites:** [The First Ten Minutes](/learn/orientation/first-ten-minutes/ask-before-you-architect), [The 12-Part Framework](/learn/ai-systems-design/design-framework/the-12-part-framework)
 > **Source material:** synthesised from the shared structure of the four whiteboard scripts — `Enterprise RAG Platform/INTERVIEW_SCRIPT.md`, `INTERVIEW_SCRIPT_DATABRICKS.md`, `Enterprise Agentic Workflow Automation Platform/INTERVIEW_SCRIPT.md`, `Delivery Framework from Scoping to Delivery/INTERVIEW_SCRIPT.md`
 
 ## Why this matters
@@ -25,7 +25,7 @@ The asymmetry is the point. Twenty minutes on the deep dive; four on entities. I
 
 ## Step 1 — Clarify and scope (0–8)
 
-**Do not draw anything yet.** Ask the questions from [The First Ten Minutes](/learn/orientation/first-ten-minutes/the-first-ten-minutes), out loud, and write the answers where they stay visible. Then do three things the scripts all do:
+**Do not draw anything yet.** Ask the questions from [The First Ten Minutes](/learn/orientation/first-ten-minutes/ask-before-you-architect), out loud, and write the answers where they stay visible. Then do three things the scripts all do:
 
 **Say the one sentence that frames the round.** Each script opens with a single sentence, delivered in the first two minutes, that names the real difficulty and sets up every later decision. For enterprise RAG:
 
