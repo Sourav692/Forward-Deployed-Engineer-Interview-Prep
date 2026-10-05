@@ -8,7 +8,7 @@ import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { LessonActions } from '@/components/learn/LessonActions'
 import { LessonReader } from '@/components/learn/LessonReader'
 import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
-import { SideNav } from '@/components/learn/SideNav'
+import { LessonSideNav } from '@/components/learn/LessonSideNav'
 import { cx, focusRing } from '@/components/ui'
 
 /**
@@ -44,7 +44,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const { trackSlug, moduleSlug, lessonSlug } = await params
   const page = getLessonPage(trackSlug, moduleSlug, lessonSlug)
   if (!page) notFound()
-  const { lesson, track, section, module: mod, prev, next, index, count } = page
+  const { lesson, track, section, module: mod, siblings, doc, prev, next, index, count } = page
   const input = moduleInput(mod)
 
   return (
@@ -76,7 +76,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
         ]}
       />
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
-        <SideNav track={track} currentModule={mod.slug} onLesson />
+        <LessonSideNav track={track} module={mod} lessons={siblings} current={lesson.slug} doc={doc} />
         <div className="min-w-0">
           <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg border border-border bg-surface px-3 py-2">
             <Link href={learnHref.module(mod)} className={cx('rounded-sm text-[0.8125rem] font-semibold hover:text-accent', focusRing)}>
