@@ -475,6 +475,11 @@ let learnManifest: LearnEntry[] = []
 }
 const learnByKey = new Map(learnManifest.map((l) => [`${l.module}/${l.slug}`, l]))
 for (const l of learnManifest) if (l.kind === 'sync') routes.add(l.href)
+// Every track and module page is prerendered (generateStaticParams), so lessons may link to them.
+for (const m of CURRICULUM_MODULES) {
+  routes.add(`/learn/${m.track}`)
+  routes.add(`/learn/${m.track}/${m.slug}`)
+}
 
 const listMarkdown = async (dir: string): Promise<string[]> => {
   const entries = await readdir(dir, { withFileTypes: true }).catch(() => [])

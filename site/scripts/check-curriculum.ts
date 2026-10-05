@@ -97,7 +97,11 @@ for (const m of MODULES) for (const l of m.lessons) homes.set(l, [...(homes.get(
 for (const l of LESSONS) {
   const listed = homes.get(l.slug) ?? []
   if (!moduleBySlug.has(l.home)) fail(`lesson ${l.slug}: unknown home "${l.home}"`)
-  if (listed.length !== 1 || listed[0] !== l.home) fail(`lesson ${l.slug}: home is ${l.home} but listed as a home lesson in [${listed.join(', ')}]`)
+  // An excluded lesson is never published. It may stay out of every module's
+  // reading list (a consolidated module replaces it); `home` still names the
+  // module it was retired from, which keys its RENAMED entry.
+  const retired = l.publish === 'excluded' && listed.length === 0
+  if (!retired && (listed.length !== 1 || listed[0] !== l.home)) fail(`lesson ${l.slug}: home is ${l.home} but listed as a home lesson in [${listed.join(', ')}]`)
   if (l.publish === 'credited' && !l.credit) fail(`lesson ${l.slug}: credited without a credit line`)
 }
 

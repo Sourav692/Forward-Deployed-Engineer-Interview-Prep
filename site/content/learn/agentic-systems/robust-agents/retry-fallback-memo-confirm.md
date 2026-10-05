@@ -178,4 +178,4 @@ When asked "how do you make tool calls robust?", the answer is the executor's th
 - Write `execute_tool` from memory.
 - A tool fails with a 503 four times in a row. Walk through exactly what happens with `retries=3` and a declared fallback.
 
-**Next →** [State, Memory and Sessions](/learn/agentic-systems/memory-and-state/state-memory-sessions)
+**Next →** [State, Memory and Sessions](/learn/agentic-systems/memory-and-state/why-agents-need-state)
