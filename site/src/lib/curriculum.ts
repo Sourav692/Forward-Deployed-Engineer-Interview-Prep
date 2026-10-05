@@ -1331,7 +1331,14 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Self-score',
     interviewProbe: 'Walk me through a project',
     commonMistakes: ['No numbers', 'no trade-offs'],
-    lessons: ['deep-dive-and-conversational-formats', 'proof-vs-cheat-sheet-honesty'],
+    lessons: [
+      'three-formats-for-one-project',
+      'the-timed-deep-dive',
+      'the-open-ended-conversation',
+      'the-technical-implementation-flow',
+      'proof-versus-knowledge',
+      'offered-honesty-and-war-stories',
+    ],
     seeAlso: [],
   },
   {
@@ -1484,7 +1491,14 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Mock rubric',
     interviewProbe: 'All rounds',
     commonMistakes: ['Practising only the easy parts'],
-    lessons: ['short-practice-mocks', 'full-mock-interviews'],
+    lessons: [
+      'running-and-scoring-a-mock-interview',
+      'internal-knowledge-assistant-mock-interview',
+      'agentic-support-workflow-mock-interview',
+      'financial-compliance-and-red-team-mock-interview',
+      'sre-triage-agent-mock-interview',
+      'multi-tenant-saas-assistant-mock-interview',
+    ],
     seeAlso: [],
   },
   {
@@ -1613,7 +1627,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: ['Overclaiming'],
     lessons: [],
     gapNote: 'A written-portfolio template.',
-    seeAlso: ['proof-vs-cheat-sheet-honesty', 'deep-dive-and-conversational-formats'],
+    seeAlso: ['proof-versus-knowledge', 'three-formats-for-one-project'],
   },
 ]
 
@@ -1766,7 +1780,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-12-reliability-and-failure-handling',
-    title: 'Module 12 — Reliability & Failure Handling',
+    title: 'Reliability and Failure Handling',
     source: '07_Last_Day_Revision/module-12-reliability-and-failure-handling.md',
     home: 'final-week',
     kind: 'live',
@@ -2951,7 +2965,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'internal-knowledge-assistant',
-    title: 'Internal Knowledge Assistant for Enterprise Support - Case Study Worksheet',
+    title: 'Internal Knowledge Assistant for Enterprise Support',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/01_internal_knowledge_assistant.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -2959,7 +2973,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'sales-copilot',
-    title: 'Sales Copilot for Account Executives - Case Study Worksheet',
+    title: 'Sales Copilot for Account Executives',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/02_sales_copilot.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -2967,7 +2981,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'financial-compliance-reviewer',
-    title: 'Financial Compliance Document Reviewer - Case Study Worksheet',
+    title: 'Financial Compliance Document Reviewer',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/03_financial_compliance_reviewer.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -2975,7 +2989,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'healthcare-prior-auth-assistant',
-    title: 'Healthcare Prior Authorization Assistant - Case Study Worksheet',
+    title: 'Healthcare Prior Authorization Assistant',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/04_healthcare_prior_auth_assistant.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -2983,7 +2997,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'legal-contract-copilot',
-    title: 'Legal Contract Review Copilot - Case Study Worksheet',
+    title: 'Legal Contract Review Copilot',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/05_legal_contract_copilot.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -2991,7 +3005,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'sre-triage-agent',
-    title: 'SRE Incident Triage Agent - Case Study Worksheet',
+    title: 'SRE Incident Triage Agent',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/06_sre_triage_agent.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -2999,7 +3013,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'multi-tenant-saas-support',
-    title: 'Multi-Tenant SaaS Support Assistant - Case Study Worksheet',
+    title: 'Multi-Tenant SaaS Support Assistant',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/07_multi_tenant_saas_support.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3007,7 +3021,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'retail-demand-explainer',
-    title: 'Retail Demand Forecast Explanation Assistant - Case Study Worksheet',
+    title: 'Retail Demand Forecast Explanation Assistant',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/08_retail_demand_explainer.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3015,7 +3029,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'service-now-ticket-agent',
-    title: 'ServiceNow Ticket Automation Agent - Case Study Worksheet',
+    title: 'ServiceNow Ticket Automation Agent',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/09_service_now_ticket_agent.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3023,7 +3037,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'executive-dashboard-copilot',
-    title: 'Executive Dashboard Copilot - Case Study Worksheet',
+    title: 'Executive Dashboard Copilot',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/10_executive_dashboard_copilot.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3123,13 +3137,63 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'own',
   },
+  // T7.1 Telling the build story: six consolidated lessons. They replace the two
+  // excluded Handbook lessons below.
+  {
+    slug: 'three-formats-for-one-project',
+    title: 'Three Formats for One Project',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/01_Three_Formats_for_One_Project.md',
+    home: 'telling-the-build-story',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'the-timed-deep-dive',
+    title: 'The Timed Deep-Dive',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_The_Timed_Deep_Dive.md',
+    home: 'telling-the-build-story',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'the-open-ended-conversation',
+    title: 'The Open-Ended Conversation',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_The_Open_Ended_Conversation.md',
+    home: 'telling-the-build-story',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'the-technical-implementation-flow',
+    title: 'The Technical Implementation Flow',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Technical_Implementation_Flow.md',
+    home: 'telling-the-build-story',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'proof-versus-knowledge',
+    title: 'Proof versus Knowledge',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_Proof_versus_Knowledge.md',
+    home: 'telling-the-build-story',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'offered-honesty-and-war-stories',
+    title: 'Offered Honesty and War Stories',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_Offered_Honesty_and_War_Stories.md',
+    home: 'telling-the-build-story',
+    kind: 'sync',
+    publish: 'own',
+  },
   {
     slug: 'deep-dive-and-conversational-formats',
     title: 'Deep-Dive and Conversational Formats',
     source: '01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/01_Deep_Dive_And_Conversational_Formats.md',
     home: 'telling-the-build-story',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'proof-vs-cheat-sheet-honesty',
@@ -3137,7 +3201,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/02_Proof_vs_Cheat_Sheet_Honesty.md',
     home: 'telling-the-build-story',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'story-bank',
@@ -3149,7 +3213,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'customer-obsession',
-    title: 'Customer Obsession - Practice Worksheet',
+    title: 'Customer Obsession',
     source: '04_Behavioral_and_Leadership/leadership_principles/01_customer_obsession.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3157,7 +3221,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'ownership',
-    title: 'Ownership - Practice Worksheet',
+    title: 'Ownership',
     source: '04_Behavioral_and_Leadership/leadership_principles/02_ownership.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3165,7 +3229,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'attracts-and-retains-talent',
-    title: 'Attracts and Retains Talent - Practice Worksheet',
+    title: 'Attracts and Retains Talent',
     source: '04_Behavioral_and_Leadership/leadership_principles/03_attracts_and_retains_talent.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3173,7 +3237,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'communicates-with-clarity',
-    title: 'Communicates with Clarity - Practice Worksheet',
+    title: 'Communicates with Clarity',
     source: '04_Behavioral_and_Leadership/leadership_principles/04_communicates_with_clarity.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3181,7 +3245,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'sets-high-standards',
-    title: 'Sets High Standards - Practice Worksheet',
+    title: 'Sets High Standards',
     source: '04_Behavioral_and_Leadership/leadership_principles/05_sets_high_standards.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3189,7 +3253,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'focuses-on-outcomes',
-    title: 'Focuses on Outcomes - Practice Worksheet',
+    title: 'Focuses on Outcomes',
     source: '04_Behavioral_and_Leadership/leadership_principles/06_focuses_on_outcomes.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3197,7 +3261,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'resourceful',
-    title: 'Resourceful - Practice Worksheet',
+    title: 'Resourceful',
     source: '04_Behavioral_and_Leadership/leadership_principles/07_resourceful.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3205,7 +3269,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'makes-good-decisions-quickly',
-    title: 'Makes Good Decisions Quickly - Practice Worksheet',
+    title: 'Makes Good Decisions Quickly',
     source: '04_Behavioral_and_Leadership/leadership_principles/08_makes_good_decisions_quickly.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3213,7 +3277,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'develops-people',
-    title: 'Develops People - Practice Worksheet',
+    title: 'Develops People',
     source: '04_Behavioral_and_Leadership/leadership_principles/09_develops_people.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3221,7 +3285,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'creates-a-culture-of-accountability',
-    title: 'Creates a Culture of Accountability - Practice Worksheet',
+    title: 'Creates a Culture of Accountability',
     source: '04_Behavioral_and_Leadership/leadership_principles/10_creates_a_culture_of_accountability.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3229,7 +3293,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'engenders-trust',
-    title: 'Engenders Trust - Practice Worksheet',
+    title: 'Engenders Trust',
     source: '04_Behavioral_and_Leadership/leadership_principles/11_engenders_trust.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3237,7 +3301,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'embraces-adversity',
-    title: 'Embraces Adversity - Practice Worksheet',
+    title: 'Embraces Adversity',
     source: '04_Behavioral_and_Leadership/leadership_principles/12_embraces_adversity.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3245,7 +3309,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'never-stops-learning-and-growing',
-    title: 'Never Stops Learning and Growing - Practice Worksheet',
+    title: 'Never Stops Learning and Growing',
     source: '04_Behavioral_and_Leadership/leadership_principles/13_never_stops_learning_and_growing.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3253,7 +3317,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'staff-level-and-cross-cutting',
-    title: 'Staff-Level and Cross-Cutting - Practice Worksheet',
+    title: 'Staff-Level and Cross-Cutting',
     source: '04_Behavioral_and_Leadership/leadership_principles/14_staff_level_and_cross_cutting.md',
     home: 'leadership-principle-answers',
     kind: 'live',
@@ -3261,7 +3325,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'ambiguity-and-discovery',
-    title: 'Ambiguity and Discovery - Practice Worksheet',
+    title: 'Ambiguity and Discovery',
     source: '04_Behavioral_and_Leadership/hiring_manager_round/01_ambiguity_and_discovery.md',
     home: 'hiring-manager-round',
     kind: 'live',
@@ -3269,7 +3333,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'stakeholder-influence',
-    title: 'Stakeholder Influence - Practice Worksheet',
+    title: 'Stakeholder Influence',
     source: '04_Behavioral_and_Leadership/hiring_manager_round/02_stakeholder_influence.md',
     home: 'hiring-manager-round',
     kind: 'live',
@@ -3277,7 +3341,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'delivery-under-pressure',
-    title: 'Delivery Under Pressure - Practice Worksheet',
+    title: 'Delivery Under Pressure',
     source: '04_Behavioral_and_Leadership/hiring_manager_round/03_delivery_under_pressure.md',
     home: 'hiring-manager-round',
     kind: 'live',
@@ -3285,7 +3349,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'pushback-and-saying-no',
-    title: 'Pushback and Saying No - Practice Worksheet',
+    title: 'Pushback and Saying No',
     source: '04_Behavioral_and_Leadership/hiring_manager_round/04_pushback_and_saying_no.md',
     home: 'hiring-manager-round',
     kind: 'live',
@@ -3293,7 +3357,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'scale-beyond-self',
-    title: 'Scale Beyond Self - Practice Worksheet',
+    title: 'Scale Beyond Self',
     source: '04_Behavioral_and_Leadership/hiring_manager_round/05_scale_beyond_self.md',
     home: 'hiring-manager-round',
     kind: 'live',
@@ -3301,7 +3365,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'enterprise-knowledge-assistant-rag',
-    title: 'Enterprise Knowledge Assistant with RAG - Case Study Worksheet',
+    title: 'Enterprise Knowledge Assistant with RAG',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/01_enterprise_knowledge_assistant_rag.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3310,7 +3374,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'secure-multi-tenant-ai-platform',
-    title: 'Secure Multi-Tenant AI Platform - Case Study Worksheet',
+    title: 'Secure Multi-Tenant AI Platform',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3319,7 +3383,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'natural-language-to-sql-analytics-assistant',
-    title: 'Natural-Language-to-SQL Analytics Assistant - Case Study Worksheet',
+    title: 'Natural-Language-to-SQL Analytics Assistant',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/03_natural_language_to_sql_analytics_assistant.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3328,7 +3392,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'ai-customer-support-automation',
-    title: 'AI Customer-Support Automation - Case Study Worksheet',
+    title: 'AI Customer-Support Automation',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/04_ai_customer_support_automation.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3337,7 +3401,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'ai-system-for-an-air-gapped-environment',
-    title: 'AI System for an Air-Gapped Environment - Case Study Worksheet',
+    title: 'AI System for an Air-Gapped Environment',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/07_ai_system_for_an_air_gapped_environment.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3346,7 +3410,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'llm-evaluation-and-release-gating-platform',
-    title: 'LLM Evaluation and Release-Gating Platform - Case Study Worksheet',
+    title: 'LLM Evaluation and Release-Gating Platform',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3355,7 +3419,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'high-volume-batch-inference-system',
-    title: 'High-Volume Batch Inference System - Case Study Worksheet',
+    title: 'High-Volume Batch Inference System',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3364,7 +3428,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'tool-using-ai-agent-with-safety-controls',
-    title: 'Tool-Using AI Agent with Safety Controls - Case Study Worksheet',
+    title: 'Tool-Using AI Agent with Safety Controls',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3373,7 +3437,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'reliable-workflow-orchestration-system',
-    title: 'Reliable Workflow Orchestration System - Case Study Worksheet',
+    title: 'Reliable Workflow Orchestration System',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/13_reliable_workflow_orchestration_system.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3382,7 +3446,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'observability-customer-facing-ai-application',
-    title: 'Observability for a Customer-Facing AI Application - Case Study Worksheet',
+    title: 'Observability for a Customer-Facing AI Application',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3391,7 +3455,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'configurable-platform-customer-specific-workflows',
-    title: 'Configurable Platform for Customer-Specific Workflows - Case Study Worksheet',
+    title: 'Configurable Platform for Customer-Specific Workflows',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/17_configurable_platform_customer_specific_workflows.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -3400,12 +3464,62 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'system-design-worksheets-enterprise-chatbot-platform',
-    title: 'Enterprise Chatbot Platform - Case Study Worksheet',
+    title: 'Enterprise Chatbot Platform',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/21_enterprise_chatbot_platform.md',
     home: 'case-study-worksheets',
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+  },
+  // T8.2 Mock interviews: a how-to lesson plus one practice lesson per scenario.
+  // They replace the two excluded folder lessons below.
+  {
+    slug: 'running-and-scoring-a-mock-interview',
+    title: 'Running and Scoring a Mock Interview',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/01_Running_and_Scoring_a_Mock_Interview.md',
+    home: 'mock-interviews',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'internal-knowledge-assistant-mock-interview',
+    title: 'Internal Knowledge Assistant Mock Interview',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/02_Internal_Knowledge_Assistant_Mock_Interview.md',
+    home: 'mock-interviews',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'agentic-support-workflow-mock-interview',
+    title: 'Agentic Support Workflow Mock Interview',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/03_Agentic_Support_Workflow_Mock_Interview.md',
+    home: 'mock-interviews',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'financial-compliance-and-red-team-mock-interview',
+    title: 'Financial Compliance and Red-Team Mock Interview',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/04_Financial_Compliance_and_Red_Team_Mock_Interview.md',
+    home: 'mock-interviews',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'sre-triage-agent-mock-interview',
+    title: 'SRE Triage Agent Mock Interview',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/05_SRE_Triage_Agent_Mock_Interview.md',
+    home: 'mock-interviews',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'multi-tenant-saas-assistant-mock-interview',
+    title: 'Multi-Tenant SaaS Assistant Mock Interview',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/06_Multi_Tenant_SaaS_Assistant_Mock_Interview.md',
+    home: 'mock-interviews',
+    kind: 'sync',
+    publish: 'own',
   },
   {
     slug: 'short-practice-mocks',
@@ -3413,7 +3527,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '03_Practice_Worksheets_and_Keys/Mock_Interviews/Short_Practice_Mocks/',
     home: 'mock-interviews',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'full-mock-interviews',
@@ -3421,11 +3535,11 @@ export const LESSONS: CurriculumLesson[] = [
     source: '03_Practice_Worksheets_and_Keys/Mock_Interviews/Full_Mock_Interviews/',
     home: 'mock-interviews',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'roadmap',
-    title: 'FDE AI System Design — Interview Learning Roadmap',
+    title: 'Interview Learning Roadmap',
     source: '07_Last_Day_Revision/Roadmap.md',
     home: 'final-week',
     kind: 'live',
@@ -3433,7 +3547,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'rapid-revision-guide',
-    title: 'FDE AI System Design — Rapid Revision Guide',
+    title: 'Rapid Revision Guide',
     source: '07_Last_Day_Revision/Rapid_Revision_Guide.md',
     home: 'final-week',
     kind: 'live',
@@ -3441,7 +3555,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'trigger-to-concept-cheat-sheet',
-    title: 'FDE Interview — Trigger → Concept Cheat Sheet',
+    title: 'Trigger-to-Concept Cheat Sheet',
     source: '07_Last_Day_Revision/trigger-to-concept-cheat-sheet.md',
     home: 'final-week',
     kind: 'live',
@@ -3449,7 +3563,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-01-fde-problem-decomposition',
-    title: 'Module 1 — FDE Problem Decomposition',
+    title: 'FDE Problem Decomposition',
     source: '07_Last_Day_Revision/module-01-fde-problem-decomposition.md',
     home: 'final-week',
     kind: 'live',
@@ -3457,7 +3571,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-02-functional-requirements',
-    title: 'Module 2 — Functional Requirements',
+    title: 'Functional Requirements',
     source: '07_Last_Day_Revision/module-02-functional-requirements.md',
     home: 'final-week',
     kind: 'live',
@@ -3465,7 +3579,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-03-non-functional-requirements',
-    title: 'Module 3 — Non-Functional Requirements',
+    title: 'Non-Functional Requirements',
     source: '07_Last_Day_Revision/module-03-non-functional-requirements.md',
     home: 'final-week',
     kind: 'live',
@@ -3473,7 +3587,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-04-core-architecture-building-blocks',
-    title: 'Module 4 — Core Architecture Building Blocks',
+    title: 'Core Architecture Building Blocks',
     source: '07_Last_Day_Revision/module-04-core-architecture-building-blocks.md',
     home: 'final-week',
     kind: 'live',
@@ -3481,7 +3595,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-05-rag-and-enterprise-data',
-    title: 'Module 5 — RAG & Enterprise Data',
+    title: 'RAG and Enterprise Data',
     source: '07_Last_Day_Revision/module-05-rag-and-enterprise-data.md',
     home: 'final-week',
     kind: 'live',
@@ -3489,7 +3603,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-06-agentic-architecture',
-    title: 'Module 6 — Agentic Architecture',
+    title: 'Agentic Architecture',
     source: '07_Last_Day_Revision/module-06-agentic-architecture.md',
     home: 'final-week',
     kind: 'live',
@@ -3497,7 +3611,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-07-tools-actions-and-enterprise-integration',
-    title: 'Module 7 — Tools, Actions & Enterprise Integration',
+    title: 'Tools, Actions and Enterprise Integration',
     source: '07_Last_Day_Revision/module-07-tools-actions-and-enterprise-integration.md',
     home: 'final-week',
     kind: 'live',
@@ -3505,7 +3619,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-08-guardrails-policy-and-human-approval',
-    title: 'Module 8 — Guardrails, Policy & Human Approval',
+    title: 'Guardrails, Policy and Human Approval',
     source: '07_Last_Day_Revision/module-08-guardrails-policy-and-human-approval.md',
     home: 'final-week',
     kind: 'live',
@@ -3513,7 +3627,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-09-scaling-ai-systems',
-    title: 'Module 9 — Scaling AI Systems',
+    title: 'Scaling AI Systems',
     source: '07_Last_Day_Revision/module-09-scaling-ai-systems.md',
     home: 'final-week',
     kind: 'live',
@@ -3521,7 +3635,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-10-latency-optimization',
-    title: 'Module 10 — Latency Optimization',
+    title: 'Latency Optimisation',
     source: '07_Last_Day_Revision/module-10-latency-optimization.md',
     home: 'final-week',
     kind: 'live',
@@ -3529,7 +3643,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-11-cost-optimization',
-    title: 'Module 11 — Cost Optimization',
+    title: 'Cost Optimisation',
     source: '07_Last_Day_Revision/module-11-cost-optimization.md',
     home: 'final-week',
     kind: 'live',
@@ -3537,7 +3651,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-13-ai-evaluation',
-    title: 'Module 13 — AI Evaluation',
+    title: 'AI Evaluation',
     source: '07_Last_Day_Revision/module-13-ai-evaluation.md',
     home: 'final-week',
     kind: 'live',
@@ -3545,7 +3659,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-14-release-and-change-management',
-    title: 'Module 14 — Release & Change Management',
+    title: 'Release and Change Management',
     source: '07_Last_Day_Revision/module-14-release-and-change-management.md',
     home: 'final-week',
     kind: 'live',
@@ -3553,7 +3667,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-15-observability-and-production-operations',
-    title: 'Module 15 — Observability & Production Operations',
+    title: 'Observability and Production Operations',
     source: '07_Last_Day_Revision/module-15-observability-and-production-operations.md',
     home: 'final-week',
     kind: 'live',
@@ -3561,7 +3675,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-16-security-and-enterprise-multi-tenancy',
-    title: 'Module 16 — Security & Enterprise Multi-Tenancy',
+    title: 'Security and Enterprise Multi-Tenancy',
     source: '07_Last_Day_Revision/module-16-security-and-enterprise-multi-tenancy.md',
     home: 'final-week',
     kind: 'live',
@@ -3569,7 +3683,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-17-trade-off-thinking',
-    title: 'Module 17 — Trade-Off Thinking',
+    title: 'Trade-Off Thinking',
     source: '07_Last_Day_Revision/module-17-trade-off-thinking.md',
     home: 'final-week',
     kind: 'live',
@@ -3577,7 +3691,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'module-18-end-to-end-fde-interview-execution',
-    title: 'Module 18 — End-to-End FDE Interview Execution',
+    title: 'End-to-End FDE Interview Execution',
     source: '07_Last_Day_Revision/module-18-end-to-end-fde-interview-execution.md',
     home: 'final-week',
     kind: 'live',

@@ -1763,26 +1763,70 @@
       "href": "/learn/forward-deployed/delivery-stages-and-gates/cross-team-collaboration"
     },
     {
-      "slug": "deep-dive-and-conversational-formats",
-      "title": "Deep-Dive and Conversational Formats",
+      "slug": "three-formats-for-one-project",
+      "title": "Three Formats for One Project",
       "track": "communication-and-behavioural",
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/01_Deep_Dive_And_Conversational_Formats.md",
-      "estMinutes": 11,
-      "href": "/learn/communication-and-behavioural/telling-the-build-story/deep-dive-and-conversational-formats"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/01_Three_Formats_for_One_Project.md",
+      "estMinutes": 5,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project"
     },
     {
-      "slug": "proof-vs-cheat-sheet-honesty",
-      "title": "Proof vs Cheat-Sheet — the Honesty Discipline",
+      "slug": "the-timed-deep-dive",
+      "title": "The Timed Deep-Dive",
       "track": "communication-and-behavioural",
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/02_Proof_vs_Cheat_Sheet_Honesty.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_The_Timed_Deep_Dive.md",
       "estMinutes": 7,
-      "href": "/learn/communication-and-behavioural/telling-the-build-story/proof-vs-cheat-sheet-honesty"
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/the-timed-deep-dive"
+    },
+    {
+      "slug": "the-open-ended-conversation",
+      "title": "The Open-Ended Conversation",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_The_Open_Ended_Conversation.md",
+      "estMinutes": 6,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/the-open-ended-conversation"
+    },
+    {
+      "slug": "the-technical-implementation-flow",
+      "title": "The Technical Implementation Flow",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Technical_Implementation_Flow.md",
+      "estMinutes": 5,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/the-technical-implementation-flow"
+    },
+    {
+      "slug": "proof-versus-knowledge",
+      "title": "Proof versus Knowledge",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_Proof_versus_Knowledge.md",
+      "estMinutes": 6,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge"
+    },
+    {
+      "slug": "offered-honesty-and-war-stories",
+      "title": "Offered Honesty and War Stories",
+      "track": "communication-and-behavioural",
+      "module": "telling-the-build-story",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_Offered_Honesty_and_War_Stories.md",
+      "estMinutes": 5,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/offered-honesty-and-war-stories"
     },
     {
       "slug": "story-bank",
@@ -1797,7 +1841,7 @@
     },
     {
       "slug": "customer-obsession",
-      "title": "Customer Obsession - Practice Worksheet",
+      "title": "Customer Obsession",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1808,7 +1852,7 @@
     },
     {
       "slug": "ownership",
-      "title": "Ownership - Practice Worksheet",
+      "title": "Ownership",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1819,7 +1863,7 @@
     },
     {
       "slug": "attracts-and-retains-talent",
-      "title": "Attracts and Retains Talent - Practice Worksheet",
+      "title": "Attracts and Retains Talent",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1830,7 +1874,7 @@
     },
     {
       "slug": "communicates-with-clarity",
-      "title": "Communicates with Clarity - Practice Worksheet",
+      "title": "Communicates with Clarity",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1841,7 +1885,7 @@
     },
     {
       "slug": "sets-high-standards",
-      "title": "Sets High Standards - Practice Worksheet",
+      "title": "Sets High Standards",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1852,7 +1896,7 @@
     },
     {
       "slug": "focuses-on-outcomes",
-      "title": "Focuses on Outcomes - Practice Worksheet",
+      "title": "Focuses on Outcomes",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1863,7 +1907,7 @@
     },
     {
       "slug": "resourceful",
-      "title": "Resourceful - Practice Worksheet",
+      "title": "Resourceful",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1874,7 +1918,7 @@
     },
     {
       "slug": "makes-good-decisions-quickly",
-      "title": "Makes Good Decisions Quickly - Practice Worksheet",
+      "title": "Makes Good Decisions Quickly",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1885,7 +1929,7 @@
     },
     {
       "slug": "develops-people",
-      "title": "Develops People - Practice Worksheet",
+      "title": "Develops People",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1896,7 +1940,7 @@
     },
     {
       "slug": "creates-a-culture-of-accountability",
-      "title": "Creates a Culture of Accountability - Practice Worksheet",
+      "title": "Creates a Culture of Accountability",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1907,7 +1951,7 @@
     },
     {
       "slug": "engenders-trust",
-      "title": "Engenders Trust - Practice Worksheet",
+      "title": "Engenders Trust",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1918,7 +1962,7 @@
     },
     {
       "slug": "embraces-adversity",
-      "title": "Embraces Adversity - Practice Worksheet",
+      "title": "Embraces Adversity",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1929,7 +1973,7 @@
     },
     {
       "slug": "never-stops-learning-and-growing",
-      "title": "Never Stops Learning and Growing - Practice Worksheet",
+      "title": "Never Stops Learning and Growing",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1940,7 +1984,7 @@
     },
     {
       "slug": "staff-level-and-cross-cutting",
-      "title": "Staff-Level and Cross-Cutting - Practice Worksheet",
+      "title": "Staff-Level and Cross-Cutting",
       "track": "communication-and-behavioural",
       "module": "leadership-principle-answers",
       "kind": "live",
@@ -1951,7 +1995,7 @@
     },
     {
       "slug": "ambiguity-and-discovery",
-      "title": "Ambiguity and Discovery - Practice Worksheet",
+      "title": "Ambiguity and Discovery",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1962,7 +2006,7 @@
     },
     {
       "slug": "stakeholder-influence",
-      "title": "Stakeholder Influence - Practice Worksheet",
+      "title": "Stakeholder Influence",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1973,7 +2017,7 @@
     },
     {
       "slug": "delivery-under-pressure",
-      "title": "Delivery Under Pressure - Practice Worksheet",
+      "title": "Delivery Under Pressure",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1984,7 +2028,7 @@
     },
     {
       "slug": "pushback-and-saying-no",
-      "title": "Pushback and Saying No - Practice Worksheet",
+      "title": "Pushback and Saying No",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -1995,7 +2039,7 @@
     },
     {
       "slug": "scale-beyond-self",
-      "title": "Scale Beyond Self - Practice Worksheet",
+      "title": "Scale Beyond Self",
       "track": "communication-and-behavioural",
       "module": "hiring-manager-round",
       "kind": "live",
@@ -2006,7 +2050,7 @@
     },
     {
       "slug": "module-12-reliability-and-failure-handling",
-      "title": "Module 12 — Reliability & Failure Handling",
+      "title": "Reliability and Failure Handling",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2017,7 +2061,7 @@
     },
     {
       "slug": "internal-knowledge-assistant",
-      "title": "Internal Knowledge Assistant for Enterprise Support - Case Study Worksheet",
+      "title": "Internal Knowledge Assistant for Enterprise Support",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2028,7 +2072,7 @@
     },
     {
       "slug": "sales-copilot",
-      "title": "Sales Copilot for Account Executives - Case Study Worksheet",
+      "title": "Sales Copilot for Account Executives",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2039,7 +2083,7 @@
     },
     {
       "slug": "financial-compliance-reviewer",
-      "title": "Financial Compliance Document Reviewer - Case Study Worksheet",
+      "title": "Financial Compliance Document Reviewer",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2050,7 +2094,7 @@
     },
     {
       "slug": "healthcare-prior-auth-assistant",
-      "title": "Healthcare Prior Authorization Assistant - Case Study Worksheet",
+      "title": "Healthcare Prior Authorization Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2061,7 +2105,7 @@
     },
     {
       "slug": "legal-contract-copilot",
-      "title": "Legal Contract Review Copilot - Case Study Worksheet",
+      "title": "Legal Contract Review Copilot",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2072,7 +2116,7 @@
     },
     {
       "slug": "sre-triage-agent",
-      "title": "SRE Incident Triage Agent - Case Study Worksheet",
+      "title": "SRE Incident Triage Agent",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2083,7 +2127,7 @@
     },
     {
       "slug": "multi-tenant-saas-support",
-      "title": "Multi-Tenant SaaS Support Assistant - Case Study Worksheet",
+      "title": "Multi-Tenant SaaS Support Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2094,7 +2138,7 @@
     },
     {
       "slug": "retail-demand-explainer",
-      "title": "Retail Demand Forecast Explanation Assistant - Case Study Worksheet",
+      "title": "Retail Demand Forecast Explanation Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2105,7 +2149,7 @@
     },
     {
       "slug": "service-now-ticket-agent",
-      "title": "ServiceNow Ticket Automation Agent - Case Study Worksheet",
+      "title": "ServiceNow Ticket Automation Agent",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2116,7 +2160,7 @@
     },
     {
       "slug": "executive-dashboard-copilot",
-      "title": "Executive Dashboard Copilot - Case Study Worksheet",
+      "title": "Executive Dashboard Copilot",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2127,7 +2171,7 @@
     },
     {
       "slug": "enterprise-knowledge-assistant-rag",
-      "title": "Enterprise Knowledge Assistant with RAG - Case Study Worksheet",
+      "title": "Enterprise Knowledge Assistant with RAG",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2139,7 +2183,7 @@
     },
     {
       "slug": "secure-multi-tenant-ai-platform",
-      "title": "Secure Multi-Tenant AI Platform - Case Study Worksheet",
+      "title": "Secure Multi-Tenant AI Platform",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2151,7 +2195,7 @@
     },
     {
       "slug": "natural-language-to-sql-analytics-assistant",
-      "title": "Natural-Language-to-SQL Analytics Assistant - Case Study Worksheet",
+      "title": "Natural-Language-to-SQL Analytics Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2163,7 +2207,7 @@
     },
     {
       "slug": "ai-customer-support-automation",
-      "title": "AI Customer-Support Automation - Case Study Worksheet",
+      "title": "AI Customer-Support Automation",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2175,7 +2219,7 @@
     },
     {
       "slug": "ai-system-for-an-air-gapped-environment",
-      "title": "AI System for an Air-Gapped Environment - Case Study Worksheet",
+      "title": "AI System for an Air-Gapped Environment",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2187,7 +2231,7 @@
     },
     {
       "slug": "llm-evaluation-and-release-gating-platform",
-      "title": "LLM Evaluation and Release-Gating Platform - Case Study Worksheet",
+      "title": "LLM Evaluation and Release-Gating Platform",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2199,7 +2243,7 @@
     },
     {
       "slug": "high-volume-batch-inference-system",
-      "title": "High-Volume Batch Inference System - Case Study Worksheet",
+      "title": "High-Volume Batch Inference System",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2211,7 +2255,7 @@
     },
     {
       "slug": "tool-using-ai-agent-with-safety-controls",
-      "title": "Tool-Using AI Agent with Safety Controls - Case Study Worksheet",
+      "title": "Tool-Using AI Agent with Safety Controls",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2223,7 +2267,7 @@
     },
     {
       "slug": "reliable-workflow-orchestration-system",
-      "title": "Reliable Workflow Orchestration System - Case Study Worksheet",
+      "title": "Reliable Workflow Orchestration System",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2235,7 +2279,7 @@
     },
     {
       "slug": "observability-customer-facing-ai-application",
-      "title": "Observability for a Customer-Facing AI Application - Case Study Worksheet",
+      "title": "Observability for a Customer-Facing AI Application",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2247,7 +2291,7 @@
     },
     {
       "slug": "configurable-platform-customer-specific-workflows",
-      "title": "Configurable Platform for Customer-Specific Workflows - Case Study Worksheet",
+      "title": "Configurable Platform for Customer-Specific Workflows",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2259,7 +2303,7 @@
     },
     {
       "slug": "system-design-worksheets-enterprise-chatbot-platform",
-      "title": "Enterprise Chatbot Platform - Case Study Worksheet",
+      "title": "Enterprise Chatbot Platform",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -2270,30 +2314,74 @@
       "href": "/modules/01-customer-discovery-and-decomposition/system-design/enterprise-chatbot-platform"
     },
     {
-      "slug": "short-practice-mocks",
-      "title": "Short practice mocks: five 45-minute mocks, each with transcript, weak-candidate signals, follow-ups and scorecard",
+      "slug": "running-and-scoring-a-mock-interview",
+      "title": "Running and Scoring a Mock Interview",
       "track": "interview-practice",
       "module": "mock-interviews",
       "kind": "sync",
       "publish": "own",
-      "source": "03_Practice_Worksheets_and_Keys/Mock_Interviews/Short_Practice_Mocks/",
-      "estMinutes": 3,
-      "href": "/learn/interview-practice/mock-interviews/short-practice-mocks"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/01_Running_and_Scoring_a_Mock_Interview.md",
+      "estMinutes": 12,
+      "href": "/learn/interview-practice/mock-interviews/running-and-scoring-a-mock-interview"
     },
     {
-      "slug": "full-mock-interviews",
-      "title": "Full mock interviews: the same five as full transcripts with weak, average and strong versions, score and debrief",
+      "slug": "internal-knowledge-assistant-mock-interview",
+      "title": "Internal Knowledge Assistant Mock Interview",
       "track": "interview-practice",
       "module": "mock-interviews",
       "kind": "sync",
       "publish": "own",
-      "source": "03_Practice_Worksheets_and_Keys/Mock_Interviews/Full_Mock_Interviews/",
-      "estMinutes": 1,
-      "href": "/learn/interview-practice/mock-interviews/full-mock-interviews"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/02_Internal_Knowledge_Assistant_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/internal-knowledge-assistant-mock-interview"
+    },
+    {
+      "slug": "agentic-support-workflow-mock-interview",
+      "title": "Agentic Support Workflow Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/03_Agentic_Support_Workflow_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/agentic-support-workflow-mock-interview"
+    },
+    {
+      "slug": "financial-compliance-and-red-team-mock-interview",
+      "title": "Financial Compliance and Red-Team Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/04_Financial_Compliance_and_Red_Team_Mock_Interview.md",
+      "estMinutes": 8,
+      "href": "/learn/interview-practice/mock-interviews/financial-compliance-and-red-team-mock-interview"
+    },
+    {
+      "slug": "sre-triage-agent-mock-interview",
+      "title": "SRE Triage Agent Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/05_SRE_Triage_Agent_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/sre-triage-agent-mock-interview"
+    },
+    {
+      "slug": "multi-tenant-saas-assistant-mock-interview",
+      "title": "Multi-Tenant SaaS Assistant Mock Interview",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/06_Multi_Tenant_SaaS_Assistant_Mock_Interview.md",
+      "estMinutes": 9,
+      "href": "/learn/interview-practice/mock-interviews/multi-tenant-saas-assistant-mock-interview"
     },
     {
       "slug": "roadmap",
-      "title": "FDE AI System Design — Interview Learning Roadmap",
+      "title": "Interview Learning Roadmap",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2304,7 +2392,7 @@
     },
     {
       "slug": "rapid-revision-guide",
-      "title": "FDE AI System Design — Rapid Revision Guide",
+      "title": "Rapid Revision Guide",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2315,7 +2403,7 @@
     },
     {
       "slug": "trigger-to-concept-cheat-sheet",
-      "title": "FDE Interview — Trigger → Concept Cheat Sheet",
+      "title": "Trigger-to-Concept Cheat Sheet",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2326,7 +2414,7 @@
     },
     {
       "slug": "module-01-fde-problem-decomposition",
-      "title": "Module 1 — FDE Problem Decomposition",
+      "title": "FDE Problem Decomposition",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2337,7 +2425,7 @@
     },
     {
       "slug": "module-02-functional-requirements",
-      "title": "Module 2 — Functional Requirements",
+      "title": "Functional Requirements",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2348,7 +2436,7 @@
     },
     {
       "slug": "module-03-non-functional-requirements",
-      "title": "Module 3 — Non-Functional Requirements",
+      "title": "Non-Functional Requirements",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2359,7 +2447,7 @@
     },
     {
       "slug": "module-04-core-architecture-building-blocks",
-      "title": "Module 4 — Core Architecture Building Blocks",
+      "title": "Core Architecture Building Blocks",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2370,7 +2458,7 @@
     },
     {
       "slug": "module-05-rag-and-enterprise-data",
-      "title": "Module 5 — RAG & Enterprise Data",
+      "title": "RAG and Enterprise Data",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2381,7 +2469,7 @@
     },
     {
       "slug": "module-06-agentic-architecture",
-      "title": "Module 6 — Agentic Architecture",
+      "title": "Agentic Architecture",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2392,7 +2480,7 @@
     },
     {
       "slug": "module-07-tools-actions-and-enterprise-integration",
-      "title": "Module 7 — Tools, Actions & Enterprise Integration",
+      "title": "Tools, Actions and Enterprise Integration",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2403,7 +2491,7 @@
     },
     {
       "slug": "module-08-guardrails-policy-and-human-approval",
-      "title": "Module 8 — Guardrails, Policy & Human Approval",
+      "title": "Guardrails, Policy and Human Approval",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2414,7 +2502,7 @@
     },
     {
       "slug": "module-09-scaling-ai-systems",
-      "title": "Module 9 — Scaling AI Systems",
+      "title": "Scaling AI Systems",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2425,7 +2513,7 @@
     },
     {
       "slug": "module-10-latency-optimization",
-      "title": "Module 10 — Latency Optimization",
+      "title": "Latency Optimisation",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2436,7 +2524,7 @@
     },
     {
       "slug": "module-11-cost-optimization",
-      "title": "Module 11 — Cost Optimization",
+      "title": "Cost Optimisation",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2447,7 +2535,7 @@
     },
     {
       "slug": "module-13-ai-evaluation",
-      "title": "Module 13 — AI Evaluation",
+      "title": "AI Evaluation",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2458,7 +2546,7 @@
     },
     {
       "slug": "module-14-release-and-change-management",
-      "title": "Module 14 — Release & Change Management",
+      "title": "Release and Change Management",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2469,7 +2557,7 @@
     },
     {
       "slug": "module-15-observability-and-production-operations",
-      "title": "Module 15 — Observability & Production Operations",
+      "title": "Observability and Production Operations",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2480,7 +2568,7 @@
     },
     {
       "slug": "module-16-security-and-enterprise-multi-tenancy",
-      "title": "Module 16 — Security & Enterprise Multi-Tenancy",
+      "title": "Security and Enterprise Multi-Tenancy",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2491,7 +2579,7 @@
     },
     {
       "slug": "module-17-trade-off-thinking",
-      "title": "Module 17 — Trade-Off Thinking",
+      "title": "Trade-Off Thinking",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
@@ -2502,7 +2590,7 @@
     },
     {
       "slug": "module-18-end-to-end-fde-interview-execution",
-      "title": "Module 18 — End-to-End FDE Interview Execution",
+      "title": "End-to-End FDE Interview Execution",
       "track": "interview-practice",
       "module": "final-week",
       "kind": "live",
