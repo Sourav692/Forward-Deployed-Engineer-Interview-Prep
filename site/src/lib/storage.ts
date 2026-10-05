@@ -19,6 +19,27 @@ export const STATUS_LABELS: Record<Status, string> = {
   mastered: 'Mastered',
 }
 
+let probed: boolean | null = null
+
+/**
+ * True when localStorage accepts a write and a read back. Cached after the first
+ * successful check in the browser; always false on the server.
+ */
+export function storageAvailable(): boolean {
+  if (typeof window === 'undefined') return false
+  if (probed !== null) return probed
+  try {
+    const key = `${PREFIX}:probe`
+    window.localStorage.setItem(key, '1')
+    const ok = window.localStorage.getItem(key) === '1'
+    window.localStorage.removeItem(key)
+    probed = ok
+  } catch {
+    probed = false
+  }
+  return probed
+}
+
 function read<T>(key: string, fallback: T): T {
   if (typeof window === 'undefined') return fallback
   try {

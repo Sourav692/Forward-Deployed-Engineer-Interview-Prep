@@ -7,6 +7,7 @@ import { DAY_MS, attemptsFor, scoreCheckpoint, type CheckpointResult } from '@/l
 import { update, useDemo } from '../store/useDemo'
 import { ConfirmDialog, toast } from './feedback'
 import { ErrorState, ProgressBar, StatusBadge, btn, cx } from './ui'
+import type { AssessmentItem } from '../types'
 
 /**
  * Checkpoint runner: one question at a time, a confirmation step before submitting,
@@ -22,7 +23,7 @@ export function AssessmentRunner({ moduleId }: { moduleId: string }) {
   const [i, setI] = useState(0)
   const [confirm, setConfirm] = useState(false)
   const [unanswered, setUnanswered] = useState<number[]>([])
-  const [result, setResult] = useState<{ r: CheckpointResult; attempt: number } | null>(null)
+  const [result, setResult] = useState<{ r: CheckpointResult<AssessmentItem>; attempt: number } | null>(null)
   const attempts = state ? attemptsFor(state, assessment.id) : []
 
   const restart = () => {
@@ -165,7 +166,7 @@ export function AssessmentRunner({ moduleId }: { moduleId: string }) {
   )
 }
 
-function ScoreScreen({ moduleId, result, attempt, onRetry }: { moduleId: string; result: CheckpointResult; attempt: number; onRetry: () => void }) {
+function ScoreScreen({ moduleId, result, attempt, onRetry }: { moduleId: string; result: CheckpointResult<AssessmentItem>; attempt: number; onRetry: () => void }) {
   const { progress } = useDemo()
   const m = repo.getModule(moduleId)!
   const revise = [...new Set(result.missed.map((x) => x.remediationModuleId))].map((id) => repo.getModule(id)!)
