@@ -1,20 +1,22 @@
 # Durability and Idempotency
 
-> **Level** 🟡 Building Production Systems · **Module** 05 · **Doc** 4 of 7 · **Time** ~35 min
-> **Prerequisites:** [Determinism Over Free Text](/learn/agentic-systems/agentic-workflow-platforms/determinism-over-free-text); Module 03 doc 2 (checkpointers)
-> **Source material:** `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/docs/02-architecture-end-to-end.md` §3; `docs/03-src-modules-reference.md` (`orchestrator.py`); `docs/01-theory.md` §B.5; `README.md` (verified results)
-> **Companion implementation:** `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/src/agent_platform/orchestrator.py`; `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/scripts/run_workflow_demo.py`
+*Retries and restarts must be allowed to happen freely, yet no customer may ever be refunded twice because one happened.*
 
-## Why this matters
+◷ 8 min
 
-Two questions decide whether an agent platform is safe to point at real money:
+Two questions decide whether an agent platform is safe to point at real money: what happens when the orchestrator restarts mid-run, and what happens when a refund step is retried. Answer both with one loop and one key per action, after reading [Determinism Over Free Text](/learn/agentic-systems/agentic-workflow-platforms/determinism-over-free-text) for the step list the loop walks.
 
-1. **A workflow has been running for two hours when the orchestrator restarts. What happens?**
-2. **A refund step is retried — flaky network, duplicate webhook, rewound checkpoint. Is the customer refunded twice?**
+**Objectives:**
 
-This document is the orchestrator that answers both, and it is *the* diagram to be able to draw from memory in this module. It also carries two real bugs that were found building it, and each teaches something about idempotency that most explanations miss.
+- draw the orchestrator loop with its checkpoint, its exits, and its crash-and-resume edge;
+- explain why the idempotency key sits on the action rather than the run;
+- tell the two idempotency bugs and the lesson each teaches.
 
-## The loop
+---
+
+## Draw the Loop From Memory
+
+This is the diagram to be able to draw without notes.
 
 ```mermaid
 flowchart TB
@@ -23,11 +25,11 @@ flowchart TB
     VALID{"Args valid\nagainst the tool's schema?"}
     AUTH{"Guardrail authorizes\nthis step?"}
     APPLY["Apply the tool's effect\nvia its idempotency key —\na repeat key is a no-op"]
-    CKPT["next_step_index += 1\n*** THE CHECKPOINT ***"]
+    CKPT["next_step_index += 1\nTHE CHECKPOINT"]
     MORE{"More steps?"}
     DONE(["state = COMPLETED"])
-    PAUSE(["state = PAUSED_FOR_APPROVAL\nor HALTED — a named reason,\nnever a silent stop"])
-    CRASH(["Process 'crashes' —\nstate = CRASHED,\ncheckpoint already saved"])
+    PAUSE(["PAUSED_FOR_APPROVAL or HALTED\na named reason, never a silent stop"])
+    CRASH(["Process crashes\nstate = CRASHED, checkpoint saved"])
     START --> STEP --> VALID
     VALID -- no --> PAUSE
     VALID -- yes --> AUTH
@@ -36,95 +38,90 @@ flowchart TB
     MORE -- yes --> STEP
     MORE -- no --> DONE
     CKPT -.simulated crash.-> CRASH
-    CRASH -."resume()" reads next_step_index, never 0 .-> STEP
+    CRASH -."resume() reads next_step_index, never 0".-> STEP
 ```
 
-## Durability: the checkpoint is `next_step_index`
+The orchestrator executes one step, checkpoints, then executes the next. It never runs the whole workflow at once.
 
-The orchestrator executes one step, checkpoints, executes the next — never the whole run at once. The checkpoint is not a separate mechanism; it is one integer on the `Run`:
+## Make the Checkpoint One Integer
 
-> *"`resume()` and a fresh `run_workflow()` call the exact same execution loop. There is no special 'recovery path' with its own bugs; there's just one loop that always starts wherever `next_step_index` says to start, whether that's 0 or mid-run."*
+The checkpoint is not a separate mechanism. It is one field on the run, `next_step_index`. After a step applies, the index moves forward, and that is the saved progress.
 
-That sentence is the design. A recovery path that is *different code* from the normal path is a second implementation of the same logic, and its bugs are only found during incidents. Making resume and run the same loop means the recovery path is exercised on every single run.
+Resume and a fresh run call the exact same loop. There is no special recovery path. The loop always starts wherever `next_step_index` says, whether that is 0 or mid-run. This is the whole design. A recovery path that is different code is a second implementation of the same logic, and its bugs are found only during incidents. A recovery path that is the normal path is exercised on every single run.
 
-The demo proves it by *actually crashing*: `run_workflow(..., crash_after_step=0)` sets state to `CRASHED` after the checkpoint is saved; `resume(run, ...)` continues from step 1. Step 0 does not run again — verified by the external call count.
+The demo proves it by actually crashing. It crashes a run after step 0, once the checkpoint is saved. Resuming continues from step 1, and the external call count shows step 0 never ran again.
 
-## Idempotency: a key on the action, not a flag on the run
+## Put the Idempotency Key on the Action
+
+The key for each side effect is the run plus the step:
 
 ```
 idempotency_key = f"{run_id}:{step_name}"
 ```
 
-`_apply_side_effect(idempotency_key, tool_name, args)` returns `True` only the first time a key is seen. Every subsequent call with the same key is a no-op, and `external_call_count(tool_name)` does not increment.
+Applying a side effect returns true only the first time a key is seen. Every later call with the same key is a no-op, and the external call count does not increase.
 
-Why the key is on the *action* and not a run-level "already started" flag: a run legitimately retries after a transient failure, and a run-level flag would still let two attempts at the *same step* both fire. Keying by `{run_id}:{step_name}` deduplicates the specific side effect. Reruns of the *loop* are fine and expected; reruns of one already-applied *side effect* are not — and the two are told apart precisely.
+The key belongs on the action, not on a run-level "already started" flag. A run legitimately retries after a transient failure. A run-level flag would still let two attempts at the same step both fire. Keying by run and step deduplicates the specific side effect. Re-running the loop is fine and expected. Re-running a side effect that already applied is not, and the key tells the two apart precisely.
 
-## Three honest outcomes
+## End Every Run With a Named Outcome
 
-A run ends in exactly one of: `COMPLETED`, `PAUSED_FOR_APPROVAL`, or `HALTED` (budget) — plus `CRASHED` as a transient state that `resume()` clears. There is no fourth "it just stopped and nobody knows" path. Every non-completion carries a named reason on the trace. This is the same property as Module 01's three loop exits, at platform scale.
+A run ends in exactly one of three states: `COMPLETED`, `PAUSED_FOR_APPROVAL`, or `HALTED` for a budget. `CRASHED` is a transient fourth state that resume clears. There is no "it just stopped and nobody knows" path. Every non-completion carries a named reason on the trace, the same property as a single agent loop's three exits, at platform scale.
 
-## Two bugs that make the point
+## Learn From Two Real Bugs
 
-Both were caught building this project. Both are worth telling in a design conversation because they show what "idempotent" actually has to mean.
+Both bugs were caught while building the project. Both show what idempotent has to mean.
 
-### Bug 1 — the spend cap was checking the wrong number
+**Bug 1: the spend cap checked the wrong number.** The cost that counts against the spend cap must be the actual dollar amount for a refund, the `amount_usd` argument. The first version used one nominal operational cost for every tool. So a refund of any size passed a deliberately tiny cap, because the cap check was looking at $0.00. Now every other tool uses a small fixed operational cost, and a financial tool's cost is the money it moves.
 
-`_step_cost(tool_name, args)` is what counts against the spend cap. For `issue_refund` it must be the **actual dollar amount** — `args["amount_usd"]` — not a nominal per-call fee. The first version used a hardcoded operational cost for every tool, so a refund of *any size* passed an intentionally tiny cap, because the cap check was looking at $0.00. Now every other tool uses a small fixed operational cost, and a financial tool's cost is the money it moves.
+**Bug 2: idempotency covered the side effect but not the cost.** The first loop let an idempotent replay skip the side effect. But it still sent the step through `authorize_step` and still added the step's cost to the run's total again. An approved run whose completed refund step was retried could then hit `spend_cap_exceeded` on the retry. No money had moved a second time, and nothing in the outside world had changed.
 
-### Bug 2 — idempotency covered the side effect but not the cost
+The fix moves the idempotency check before authorisation. A replay of an applied key is recorded as a free, pre-authorised no-op. It never re-enters the guardrail or the cost total. The lesson in one sentence: idempotency has to cover every side effect of a step, not just its most obvious one, and cost accounting is a side effect too.
 
-The first `_continue()` let an idempotent replay skip the *side effect* but still ran the step through `authorize_step()` and still added `_step_cost()` to `run.total_cost_usd` again. A legitimately approved run whose already-completed refund step was retried could be pushed into `spend_cap_exceeded` *on the retry* — even though no money moved a second time, because nothing about the outside world had changed.
+> **Warning: a correct-looking idempotency guarantee can still be false under retry.** Check every place a step leaves a mark, including counters, budgets, and logs, not only the external call. Bug 2 passed every happy-path test.
 
-The fix moves the idempotency check **before** authorisation: a replay of an already-applied key is recorded as a free, pre-authorised no-op and never re-enters `authorize_step()` or the cost accumulator. The lesson:
+## Worked Example: A Refund Run That Pauses, Resumes, and Retries
 
-> **Idempotency has to cover every side effect of a step, not just its most obvious one.** Cost accounting is a side effect too, and forgetting that made a correct-looking idempotency guarantee false under retry.
+The project's demo runs `run_001` on the ticket-triage workflow, version 1.
 
-## Verified
+Step 0, `draft_reply`, applies and costs $0.02. Step 1, `issue_refund`, is denied because no approver is present, so the run pauses as `PAUSED_FOR_APPROVAL`. An approver arrives, and the run resumes through the same loop. Step 1 applies and the run completes.
 
-From `scripts/run_workflow_demo.py`:
+Now a duplicate webhook triggers a retry of the refund step. The key `run_001:issue_refund` already exists. Before the retry there was one apply; after it there is still one apply. Because the replay check runs before authorisation, the retry adds nothing to the spend total either.
 
-```mermaid
-flowchart TD
-    start["run_001 on wf_ticket_triage v1"] --> s0["step 0: draft APPLIED, 0.02 USD"]
-    s0 --> s1deny["step 1: refund denied, no approval"]
-    s1deny --> pause["PAUSED_FOR_APPROVAL"]
-    pause --> resume["resume with approver"]
-    resume --> s1ok["step 1: refund APPLIED"]
-    s1ok --> done["state: completed"]
-```
+Separately, the crash test stops a run after step 0 and resumes it. Step 0 never runs again, and the run completes. Every guarantee here came from two things: one integer checkpoint and one key per action, both read by the same loop.
 
-Idempotency: before retry, 1 apply; after retry, still 1 apply. Durability: crash after step 0, resume, step 0 never re-ran, run completed.
+## Name the Storage and Retry Gaps
 
-## Where the honest gap is
+The lock store, idempotency-key store, and version store are in-process dictionaries. They are correct in shape and wrong in storage for anything past one process. A real deployment needs a distributed lock, either a database row with a unique constraint or a Redis lease. A lease must be checked with a fencing token, because it can expire while its holder is still writing. It also needs a durable idempotency-key store shared across workers that survives restarts.
 
-The lock store, the idempotency-key store and the version store are plain in-process dicts — correct in shape, wrong in storage for anything past one process. A real deployment needs a distributed lock (a database row with a unique constraint, or a Redis lease checked with a fencing token, since a lease can expire while its holder is still writing) and a durable idempotency-key store shared across workers and surviving restarts. The mechanism does not change, only where it is persisted — which is why the logic sits behind two thin functions, `acquire_lock`/`release_lock`, and a single `_apply_side_effect`. Doc 7 carries the full "what to say".
+The mechanism does not change, only where it is persisted. That is why the logic sits behind two thin lock functions and one side-effect function. The tractable slice is swapping the dictionary for a real store behind them.
 
-Module 03 introduced LangGraph checkpointers as the framework's version of this. Having built it by hand here, you know exactly what a checkpointer is persisting and why a checkpoint after every node is the right granularity.
+The coverage map names one more gap: nothing calls resume automatically. A retry wrapper with backoff is low effort, because the hard part, idempotent resumption, is done.
 
-## In the code
+The FDE Handbook introduced framework checkpointers earlier. Having built one by hand, you can say exactly what a checkpointer persists, and why a checkpoint after every step is the right granularity.
 
-| Concept | Where |
-|---|---|
-| Start a run (acquires the lock, executes from 0) | `orchestrator.py` → `run_workflow` |
-| Resume from the checkpoint, never from 0 | `orchestrator.py` → `resume` |
-| The one loop | `orchestrator.py` → `_continue` |
-| Idempotent side effect | `orchestrator.py` → `_apply_side_effect`, `external_call_count` |
-| Real cost for financial tools | `orchestrator.py` → `_step_cost` |
-| The checkpoint field and run states | `models.py` → `Run.next_step_index`, `RunState`, `RunStep` |
-| Tests | `tests/test_platform.py` — idempotent retry, crash and resume, `external_call_count` assertions |
+---
 
-## Interview lens
+## Key Takeaways
 
-For the two-hour-restart question: *"`run.next_step_index` is the checkpoint; `resume()` continues from it, never from step 0 — and it's the same loop as a fresh run, so there's no separate recovery path to have its own bugs. Demoed by actually crashing a run mid-way."*
+- The orchestrator runs one step, checkpoints, and runs the next, and the diagram is worth drawing from memory.
+- The checkpoint is one integer, and resume shares the normal loop, so the recovery path is exercised on every run.
+- The idempotency key is `{run_id}:{step_name}`, on the action, so a retried loop is fine and a retried side effect is a no-op.
+- Every run ends completed, paused for approval, or halted, each with a named reason.
+- The spend cap must count the money a financial tool moves, and the replay check must run before authorisation and cost accounting.
+- A paused refund resumes through the same loop, and a duplicate retry adds neither a second apply nor a second charge to the budget.
+- In-process stores are the storage gap, fixed by a fenced distributed lock and a shared key store, and automatic resume is a low-effort gap.
 
-For the double-refund question: *"The idempotency key is on the action — `{run_id}:{step_name}` — not on the run, so a retried loop is fine and a retried side effect is a no-op. And the replay check runs before authorisation and before cost accounting, because cost is a side effect too."*
+## Check Yourself
 
-## Checkpoint
+1. **A workflow has run for two hours when the orchestrator restarts. What happens?**
+   The run's `next_step_index` is the checkpoint, and resume continues from it, never from step 0. It is the same loop as a fresh run, so there is no separate recovery path with its own bugs.
 
-- Draw the orchestrator loop with the checkpoint, the three exits and the crash/resume edge.
-- Why must `resume()` and `run_workflow()` share one loop?
-- Why is the idempotency key on the action rather than the run?
-- Explain bug 2 and state the lesson in one sentence.
-- What is the storage gap, and why does it not change the mechanism?
+2. **Why is the idempotency key on the action rather than on the run?**
+   A run legitimately retries, and a run-level flag would still let two attempts at one step fire. Keying by run and step lets the loop re-run while each side effect applies only once.
 
-**Next →** [Approvals, Spend Caps and Staged Rollout](/learn/agentic-systems/agentic-workflow-platforms/approvals-spend-caps-staged-rollout)
+3. **Explain bug 2 and state its lesson.**
+   An idempotent replay skipped the refund but still passed through the guardrail and added its cost again, so a retry could trip the spend cap with no money moving. Idempotency must cover every side effect of a step, including cost accounting.
+
+## References
+
+**Sources:** `04_Durability_And_Idempotency.md` (FDE Handbook, Agentic Workflow Platforms): "Why this matters", "The loop", "Durability: the checkpoint is `next_step_index`", "Idempotency: a key on the action, not a flag on the run", "Three honest outcomes", "Two bugs that make the point", "Verified", "Where the honest gap is", and "Interview lens". `07_Coverage_Map.md`: "Reference architecture" (automatic retries) and "The scale gap".

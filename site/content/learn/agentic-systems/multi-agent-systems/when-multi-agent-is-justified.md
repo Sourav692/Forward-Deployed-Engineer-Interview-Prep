@@ -1,88 +1,113 @@
 # When Multi-Agent Is Justified
 
-> **Level** 🟠 Scale, Security, Operations · **Module** 07 · **Doc** 1 of 5 · **Time** ~25 min
-> **Prerequisites:** Module 01 doc 3, Module 02 doc 4 (the travel-agent fixes), Module 05
-> **Source material:** `05_Projects/Enterprise_RAG_Platform/docs/09-multi-agent-orchestration.md` §1; `Enterprise Agentic Workflow Automation Platform/docs/05-security-tenancy-and-observability-gaps.md` §5; `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/6. Customer Support AI Assistant Design.md` §5
+*Splitting work across specialist agents can fix context and tool overload, but every split adds coordination that has to be designed, tested, and paid for.*
 
-## Why this matters
+◷ 7 min
 
-"Multi-agent" is the most over-reached-for architecture in AI system design. It sounds sophisticated, frameworks make it easy to draw, and it is almost never the right *starting* point. Interviewers notice when the line between "one pipeline with several steps" and "genuinely multiple agents" gets blurred, and they notice when a candidate reaches for specialists before a single agent has been shown to fail. This document gives you the definition, the default, the two triggers that justify escalating past it, and the empirical evidence for those triggers from a real engagement.
+Multi-agent is an escalation, not a mark of a complete design. Start with one agent and a tight tool set, and split only when a named trigger has fired; [Multi-Agent Coordination Patterns](/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns) covers what to build once it has.
 
-## What actually makes something multi-agent
+**Objectives:**
 
-A single pipeline with several steps — rewrite the question, retrieve, check quality, generate — is **not** multi-agent. It is one agent with several *steps*. Module 04's eight-node graph is exactly that, and it is honest to describe it as such rather than overclaim.
+- tell a single agent with several steps apart from a true multi-agent system;
+- name the triggers that justify a split, and say where the sources disagree on them;
+- route simple requests past the planner, and know when to collapse agents back into one.
 
-**Multi-agent** means multiple **independently scoped** agents, each with its own responsibility, its own tools and its own failure mode — coordinated by something above them, handing off a well-defined package of information rather than a raw transcript.
+---
 
-| | Single agent, multi-step | True multi-agent |
+## Separate Steps From Agents
+
+A pipeline with several steps is not a multi-agent system. Rewrite the question, retrieve, check quality, generate: that is one agent taking four steps. An eight-node graph of that shape is still one agent, and it is honest to describe it that way.
+
+Multi-agent means several independently scoped agents. Each has its own responsibility, its own tools, and its own failure mode. Something above them coordinates, and they pass a defined package of information rather than a raw transcript.
+
+| Question | Single agent, several steps | True multi-agent |
 |---|---|---|
-| Who decides what happens next | One fixed sequence | A coordinator, or the agents themselves via handoff |
-| Tool access | One shared set of tools | Each agent scoped to only what its job needs |
-| Failure blast radius | One bad step can fail the whole run | One agent's failure should degrade, not crash, the others |
-| What gets passed forward | Everything accumulates | A defined handoff — the next agent gets what it needs, not everything |
+| Who decides what happens next? | One fixed sequence | A coordinator, or the agents themselves through handoff |
+| Which tools can each part use? | One shared set | Each agent only what its job needs |
+| What happens when one part fails? | One bad step can fail the whole run | One agent's failure should degrade the others, not crash them |
+| What is passed forward? | Everything accumulates | A defined handoff with what the next agent needs |
 
-The right-hand column is a list of *obligations*. Each one is something you now have to design, test and operate. That is why the default is the left-hand column.
+Read the right-hand column as a list of obligations. Each row now has to be designed, tested, and operated. That cost is why the left-hand column is the default.
 
-## The default: one agent with good tools
+## Start With One Agent and Tight Tools
 
-The governing trade-off: **one agent with a tight tool set** — simpler to debug, cheaper to run, one context to reason about. Split into specialists only when one of two triggers fires:
+One agent with a small tool set is simpler to debug and cheaper to run. It has one context to reason about. The interview tutorial puts it bluntly: most multi-agent systems should have been one agent with more tools.
 
-1. **Contexts genuinely conflict.** The same model cannot hold "be a careful finance closer" and "be a chatty support drafter" without one contaminating the other. The system prompt for one job degrades the other.
-2. **The tool count becomes unmanageable.** The model starts picking the wrong tool. Past some number of tools — the schemas and descriptions all sitting in context on every turn — selection accuracy falls.
+Multi-agent also brings failures a single agent cannot have. Coordination adds overhead and message-passing latency. Agents can wait on a peer that never signals it is done. Three agents can cost three times as much and produce nothing better than one. So lead with the simple design out loud. Choosing it explicitly scores better than building the complicated one by fashion.
 
-If pushed with "why not many agents?", name one of those two triggers — not "it sounds more sophisticated". Multi-agent is an escalation, not a badge of completeness.
+## Name the Trigger Before You Split
 
-## Not every request needs a planner
+The FDE Handbook names two triggers.
 
-The customer-support design in Module 09 makes the same point from the request side. *"Track my order"* is a single tool call — no orchestration. *"My laptop arrived damaged. Refund the order, cancel the warranty, notify shipping, and create a high-priority ticket"* requires planning and coordination across systems. That is when a planner agent earns its cost.
+1. **Contexts genuinely conflict.** One model cannot hold "be a careful finance closer" and "be a chatty support drafter" at once. The system prompt for one job degrades the other.
+2. **The tool count becomes unmanageable.** Every tool's schema and description sits in context on every turn. Past some number of tools, the model starts picking the wrong one.
 
-So even inside a multi-agent system, route simple requests straight to a tool or a single agent, and reserve the planner for cross-system tasks. Module 02's travel agent showed the same thing: the supervisor spawns *only the specialists the query needs*, and a cache hit spawns none.
+The interview tutorial frames it differently. It accepts three reasons: real parallelism over independent subtasks, distinct tool permissions per role, and context too large for one agent to hold. The two lists overlap on context size. The Handbook's "tool count" is close to the tutorial's "context too big", since tool schemas are what fill the context. The tutorial adds parallelism and permissions, which the Handbook does not list as triggers. The Handbook's "conflicting contexts" has no direct match in the tutorial.
 
-## The evidence: a monolithic agent that failed
+Treat the union as the working list, and keep one rule from both. A split is justified only when its benefit can be named. "It sounds more sophisticated" is not on either list.
 
-The engagement with a large Asian life insurer in the fifth document of this module started with the default — one agent — and it broke. Not on paper; in real testing. The single agent carried the full system prompt, **20+ tool schemas**, and the entire conversation history, and it degraded on exactly the two axes above:
+The tutorial's decision order is a useful check. Ask first whether the subtasks run truly independently; if so, run parallel agents. If not, ask whether roles need different tool permissions; if so, use a supervisor or handoff. If not, ask whether the context is too big for one agent; if so, consider hierarchical teams. If none apply, use one agent with more tools.
 
-- **Context bloat** — every tool's schema and description sat in context on every turn, degrading the model's ability to reason about the actual question.
-- **Tool confusion** — with that many tools competing for selection, the agent picked the wrong one often enough that accuracy became unusable for a production engagement.
-
-The fix was not a bigger model or better prompting. It was architectural: split *decide what to do* from *do it*. And later, when the supervisor's own tool list grew back toward the same problem, the same principle was applied again one level up.
-
-That is what the two triggers look like when they actually fire. The default was tried first; it failed measurably; the escalation was justified by the failure. That sequence is the answer to "why multi-agent?"
-
-## The judgement, stated
-
-```
-                       start here
-                           │
-              ┌────────────▼────────────┐
-              │  one agent, tight tools  │
-              └────────────┬────────────┘
-                           │  does it fail?
-          ┌────────────────┼────────────────┐
-          │ no             │                │ yes — which trigger?
-          ▼                │                ▼
-      ship it              │     contexts conflict?   tool count unmanageable?
-                           │          │                       │
-                           │          ▼                       ▼
-                           │   split by role             split by domain
-                           │   (answer vs draft)         (customer / claims / policy …)
-                           │          └───────────┬───────────┘
-                           │                      ▼
-                           │            multi-agent, with a
-                           │            defined handoff contract   → doc 2
-                           │            and failure isolation      → doc 3
+```mermaid
+flowchart TD
+  A["Considering multiple agents"] --> B{"Do subtasks run<br/>truly independently?"}
+  B -->|"Yes"| P["Parallel agents"]
+  B -->|"No"| C{"Do roles need<br/>different tool permissions?"}
+  C -->|"Yes"| S["Supervisor or handoff"]
+  C -->|"No"| D{"Is the context too big<br/>for one agent?"}
+  D -->|"Yes"| H["Hierarchical teams"]
+  D -->|"No"| Z["One agent with more tools"]
 ```
 
-## Interview lens
+Read the chart top to bottom: each "no" moves one step closer to the bottom-right box, one agent with more tools.
 
-> *"I'd start with one agent and a tight tool set. I'd split only when contexts conflict or the tool catalogue is too large to route reliably — and I'd want to have seen it fail first. Multi-agent is an escalation, not a badge of completeness. A pipeline with eight steps is still one agent, and I'd describe it that way."*
 
-## Checkpoint
+## Keep the Planner for Cross-System Work
 
-- Give the four-row table distinguishing single-agent multi-step from true multi-agent, from memory.
-- Name the two triggers and say what each looks like when it fires.
-- Why is Module 04's eight-node graph *not* multi-agent?
-- Describe the insurer stage-1 failure and why it justified the escalation.
-- What does "not every request needs a planner" imply for routing inside a multi-agent system?
+The same judgement applies per request. "Track my order" is a single tool call and needs no orchestration. "My laptop arrived damaged. Refund the order, cancel the warranty, notify shipping, and create a high-priority ticket" needs planning across several systems. That is when a planner agent earns its cost.
 
-**Next →** [Reference Architecture and Handoffs](/learn/agentic-systems/multi-agent-systems/reference-architecture-handoffs)
+So even inside a multi-agent system, route simple requests straight to a tool or a single agent. Reserve the planner for cross-system tasks. A supervisor should spawn only the specialists a query needs, and a cache hit should spawn none.
+
+## Collapse Agents That Do Not Earn Their Split
+
+Splitting is not one-way. The tutorial's test for collapsing is simple. Three agents that share tools, share context, and never run concurrently are three prompts, not three agents. Merge them.
+
+The same test helps on cost. An agent whose only job is passing messages along adds a call and buys nothing. Collapsing pass-through agents is usually the biggest single saving in an expensive multi-agent design.
+
+> **Warning: do not split before the single agent has failed.** Interviewers notice when a candidate reaches for specialists before showing one agent fail. The justification is a measured failure on a named trigger, not a diagram that looks complete.
+
+## Worked Example: A Monolith That Failed in Testing
+
+A governed data assistant for a large Asian life insurer started with the default: one agent. It carried the full system prompt, **20+ tool schemas**, and the entire conversation history. It broke in real testing, not on paper, on both Handbook triggers.
+
+The first failure was context bloat. Every tool's schema and description sat in context on every turn, which degraded the model's reasoning about the actual question. The second was tool confusion. With that many tools competing, the agent picked the wrong one often enough that accuracy was unusable for a production engagement.
+
+The fix was not a bigger model or a better prompt. It was architectural: separate *deciding what to do* from *doing it*. Later, when the supervisor's own tool list grew back toward the same problem, the team applied the same principle one level up. [From Supervisor to Deep Agent](/learn/agentic-systems/multi-agent-systems/from-supervisor-to-deep-agent) tells the full story.
+
+The sequence is the answer to "why multi-agent?". The default was tried first. It failed measurably on a named trigger. The escalation was justified by that failure.
+
+---
+
+## Key Takeaways
+
+- A pipeline with several steps is one agent; multi-agent means independently scoped agents, and each property of that is an obligation.
+- The default is one agent with a tight tool set, because it is simpler, cheaper, and easier to debug.
+- Split only on a named trigger: the Handbook names conflicting contexts and tool overload, the tutorial adds parallelism and per-role permissions.
+- Route simple requests straight to a tool, and keep the planner for cross-system tasks.
+- Collapse agents that share tools and context and never run concurrently.
+- The insurer's monolith failed on both triggers in testing, and that failure is what justified the split.
+
+## Check Yourself
+
+1. **Why is an eight-node retrieve-and-generate graph not a multi-agent system?**
+   It is one agent following one fixed sequence with one shared tool set. Multi-agent needs independently scoped agents, each with its own tools and failure mode, coordinated by something above them.
+
+2. **An interviewer asks, "Why not many agents?" What do you name?**
+   A trigger, not sophistication. The Handbook's two are conflicting contexts and a tool count too large to route reliably. The tutorial also accepts real parallelism and distinct tool permissions per role. Ideally you have seen the single agent fail first.
+
+3. **When would you merge three agents back into one?**
+   When they share tools, share context, and never run concurrently. Then they are three prompts, not three agents, and every extra hop is cost with no return.
+
+## References
+
+**Sources:** `01_When_Multi_Agent_Is_Justified.md` (FDE Handbook, Multi-Agent Systems): "What actually makes something multi-agent", "The default", "Not every request needs a planner", "The evidence", "The judgement, stated", and "Interview lens". `05_Case_Study_Supervisor_To_Deep_Agent.md`: "Stage 1 → 2". `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: the opening note, "Should you use multiple agents at all?", the §2 gotcha "Multi-agent is usually the wrong answer", §3 "One agent versus many", and §5.1 and §5.3 on collapsing agents and cost.

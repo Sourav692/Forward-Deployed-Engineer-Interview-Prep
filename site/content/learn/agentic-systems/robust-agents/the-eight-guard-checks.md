@@ -1,53 +1,51 @@
 # The Eight Guard Checks
 
-> **Level** 🟡 Building Production Systems · **Module** 03 · **Doc** 5 of 5 · **Time** ~30 min
-> **Prerequisites:** the four preceding documents in this module
-> **Source material:** `01_Concept_Tutorials/Production_and_Platform_Judgment/05-guarding-tool-calls.md`; `agent_tool_calling_demo/src/robustness.py` → `disambiguate`
+*One big gate is simpler to describe, but each failure mode needs its own check, and none of them covers for another.*
 
-## Why this matters
+◷ 7 min
 
-One sentence generates everything in this document:
+A model deciding to call a tool is a proposal, never an authorisation. Check every proposed call at several independent points in one pipeline, then use [Practise Robust Agent Interview Questions](/learn/agentic-systems/robust-agents/practise-robust-agents) to say it out loud.
 
-> **A model deciding to call a tool is a proposal, never an authorisation.**
+**Objectives:**
 
-The model can suggest an action. Something else has to decide whether it is allowed to happen, whether it is worth re-doing, and whether it needs a fallback. The previous four documents built five of those "something elses" in code. This document names all eight, shows where each sits in one pipeline, and makes the point that matters most in a design review: **none of them substitute for another.** Each closes a gap the rest do not.
+- name all eight checks and the failure each prevents;
+- place each check in one pipeline, in order;
+- explain why no check can be dropped because another seems to cover it.
 
-## The eight
+---
+
+## Treat Every Tool Call as a Proposal
+
+The model can suggest an action. Something else has to decide whether it is allowed, whether it is worth re-doing, and whether it needs a fallback. Eight checks do that work.
 
 | # | Check | Protects against | If skipped |
 |---|---|---|---|
 | 1 | **Argument validation** | A malformed or hallucinated argument reaching a real system | A typo'd ID or wrong-typed field silently corrupts a downstream call instead of failing fast |
 | 2 | **Destructive-action gate** | An irreversible action executing without authorisation | A refund, delete or send fired because the model was "pretty sure" |
-| 3 | **Step / loop guard** | A run that never terminates | A planning-execution cycle repeats until someone notices the bill |
-| 4 | **Spend / cost guard** | One action spending more than it should | A single call commits real money or quota past what the run was allowed |
+| 3 | **Step or loop guard** | A run that never terminates | A planning-execution cycle repeats until someone notices the bill |
+| 4 | **Spend or cost guard** | One action spending more than it should | A single call commits real money or quota past what the run was allowed |
 | 5 | **Retry with fallback** | A transient failure killing the whole run | One flaky dependency becomes a full outage instead of a graceful degrade |
-| 6 | **Memoization** | Redundant, wasted re-execution | The same read re-run, re-billed, re-waited every time it is asked again |
-| 7 | **Disambiguation** | Silent, undebuggable tool selection | Two tools could satisfy the intent; which runs depends on undocumented model whim |
-| 8 | **Per-call telemetry** | Nobody being able to answer "what actually happened" | A bad outcome with no record of which tool ran, with what, how long, or whether it was cached, retried or replaced |
+| 6 | **Memoization** | Redundant, wasted re-execution | The same read re-run, re-billed and re-waited every time it is asked again |
+| 7 | **Disambiguation** | Silent, undebuggable tool selection | Two tools could satisfy the intent, and which runs depends on undocumented model whim |
+| 8 | **Per-call telemetry** | Nobody being able to answer "what actually happened" | A bad outcome with no record of which tool ran, with what, for how long, or whether it was cached, retried or replaced |
 
-Checks 2, 3 and 4 — the **guardrail trio** — operate on the *whole run* and are the heart of Module 05's guardrail engine (approvals, step budgets, spend caps per tenant). Checks 1, 5, 6, 7 and 8 live *around an individual tool call*. Module 01's loop has the step guard; Module 03 so far has built 2, 5, 6 and 8. Two remain to describe.
+## Separate Run Guards From Call Guards
 
-## 1 · Argument validation
+The eight split into two groups. Checks 2, 3 and 4, the **guardrail trio**, operate on the whole run. They are the heart of a workflow platform's guardrail engine: approvals, step budgets and spend caps per tenant. Checks 1, 5, 6, 7 and 8 live around an individual tool call.
 
-Before a tool call executes, its arguments are checked against a strict shape — required fields present, correct types, values within declared constraints — *before* anything downstream sees them. This is the "constrained schema, not free text" instinct that runs through the whole handbook, applied to the model's tool-call arguments: a typed signature is checked before execution the same way a citation is checked before it is shown, or a workflow spec is checked before it is promoted.
+Earlier lessons built four of them: the gate and memoization in [The Confirmation Gate and Memoization](/learn/agentic-systems/robust-agents/the-confirmation-gate-and-memoization), retry with fallback in [Retries and Fallbacks](/learn/agentic-systems/robust-agents/retries-and-fallbacks), and telemetry in [Observability for Tool Calls](/learn/agentic-systems/robust-agents/observability-for-tool-calls). The basic agent loop already carries a step guard. Two checks remain to describe.
 
-Why it must be a separate, explicit step: a model can be extremely confident about an argument that is still wrong-shaped — a ticket ID that does not match the expected pattern, an amount that is a string. Catching it here means the failure is "invalid input, try again" — cheap and safe — instead of a downstream system choking on garbage it never expected. Module 05's `tools.py::validate_args()` is the full implementation.
+## Validate Arguments Before Anything Executes
 
-## 2–4 · The guardrail trio, restated for tool calls
+A downstream system cannot defend against a value it has already accepted. So a tool call's arguments are checked against a strict shape first: required fields present, correct types, and values within declared constraints.
 
-Covered in depth in Module 05. One addition worth restating here: **the destructive/non-destructive distinction must be a declared property of the tool**, tagged once at registration. The call-time check is "is this one of the tagged ones?", never a fresh judgement about whether this particular call looks risky. That is what makes the gate reliable.
+This is the "constrained schema, not free text" instinct applied to the model's tool-call arguments. A typed signature is checked before execution in the same way a citation is checked before it is shown. It must be a separate, explicit step because a model can be very confident about an argument that is still wrong-shaped. Examples are a ticket ID that does not match the expected pattern, or an amount sent as a string. Caught here, the failure is "invalid input, try again", which is cheap and safe.
 
-## 5 · Retry with fallback — the subtlety
+## Resolve Overlapping Tools Deterministically
 
-Built in the first document of this module. The easy-to-miss point: **a fallback tool is still a real tool call.** It needs the same argument validation and destructive check the primary would have had. A fallback is not a free pass around the checks that applied to the tool it replaces — and the code enforces that by routing the fallback through the same `execute_tool`.
+Sometimes two registered tools could satisfy the same intent. A primary search and an archival fallback both "search for X". A user who says "find and close" could match `search_tickets` or `close_ticket`. Leaving the choice to the model makes tool selection silent and unrepeatable.
 
-## 6 · Memoization — the ordering rule
-
-Built in the first document. The rule: **only read/non-destructive calls are safely memoized**, and the cache check must come *after* the destructive gate so a cache hit can never route around authorisation.
-
-## 7 · Disambiguation between overlapping tools
-
-Sometimes more than one registered tool could plausibly satisfy the same intent — a primary search and an archival fallback both "search for X"; a `search_tickets` and a `close_ticket` when the user says "find and close". Rather than leaving the choice to whatever the model happens to pick, resolve it deterministically:
+The Handbook's demo resolves it with a priority tuple: safety first, then word overlap with the description.
 
 ```python
 def disambiguate(candidates: List[Tool], query: str) -> Tool:
@@ -59,13 +57,15 @@ def disambiguate(candidates: List[Tool], query: str) -> Tool:
     return max(candidates, key=score)
 ```
 
-The demo's policy is a priority tuple: safety first, then description overlap. Production systems typically carry a declared priority per tool. Either way the property that matters is the same: tool selection becomes **auditable and reproducible**. The same intent always resolves to the same tool, and if the wrong one is picked, the fix is changing a declared number, not debugging why the model felt like using a different tool this time. And the tie-break rule never bends: *never silently run a destructive tool on a tie.*
+Production systems typically carry a declared priority per tool instead. Either way, selection becomes auditable and reproducible. The same intent always resolves to the same tool. If the wrong one is picked, the fix is changing a declared number, not debugging the model's mood. One rule never bends: never silently run a destructive tool on a tie.
 
-## 8 · Per-call telemetry
+## Declare Destructiveness on the Tool Itself
 
-Built in the previous document. Every call logged individually — the finer-grained sibling of the run-level trace, complementary rather than redundant.
+The gate is only as reliable as the flag it reads. The destructive or non-destructive property must be declared on the tool, tagged once at registration. The call-time check is "is this one of the tagged ones?", never a fresh judgement about whether this call looks risky. The same applies to a fallback: it is a real tool call and needs the same validation and destructive check as the primary.
 
-## The pipeline, in order
+## Run the Checks as One Pipeline
+
+Every check sits at a different point in the same pipeline:
 
 ```mermaid
 flowchart TD
@@ -86,33 +86,59 @@ flowchart TD
     K --> L["Back to planning /<br/>loop + spend guard"]
 ```
 
-Read the diagram top to bottom and you have the executor from the first document with two checks added in front (disambiguation, validation) and the run-level guards closing the loop at the bottom. The one line that ties it together: every check exists at a different point in the same pipeline, and skipping any one is *not* caught by the others.
+Read it top to bottom. It is the executor from the first lesson, with disambiguation and validation added in front and the run-level guards closing the loop at the bottom. Validation catches bad input. The gate catches unauthorised action. The cache catches redundant work. Retry and fallback catch transient failure. Telemetry catches "we need to know this happened at all". Skipping one is not caught by the others.
 
-## Where each check lives across the handbook
+> **Warning: "the gate covers it" is how a check gets dropped.** A malformed argument to a non-destructive tool never meets the gate. A cached read never meets the retry policy. Each check closes a gap the rest do not, so removing one reopens exactly that gap.
 
-| Check | Module 01 demo | Module 05 agent platform |
+## Know Where Each Check Lives
+
+The Handbook builds the checks twice: in a small tool-calling demo and in a full workflow platform.
+
+| Check | Tool-calling demo | Workflow platform |
 |---|---|---|
 | 1 Argument validation | — | `tools.py::validate_args()` |
 | 2 Destructive gate | `robustness.execute_tool` (confirmation policy) | `guardrails.py` (role-gated approval, autonomous allow-list) |
 | 3 Step guard | `Agent.run` `while` bound | `guardrails.py::authorize_step()` (max steps) |
 | 4 Spend guard | — | `guardrails.py::authorize_step()` (spend cap at every status) |
-| 5 Retry + fallback | `execute_tool`, `with_fallback` | idempotent step retry in `orchestrator.py` |
-| 6 Memoization | `execute_tool` + `Session.memo` | — |
-| 7 Disambiguation | `robustness.disambiguate` | `routing.py` priority ordering (for workflows) |
+| 5 Retry and fallback | `execute_tool`, `with_fallback` | Idempotent step retry in `orchestrator.py` |
+| 6 Memoization | `execute_tool` and `Session.memo` | — |
+| 7 Disambiguation | `robustness.disambiguate` | `routing.py` priority ordering, for workflows |
 | 8 Per-call telemetry | `observability.ToolCallLogger` | `observability.py` run store |
 
-## Interview lens
+The workflow-platform side of the guardrail trio is taught in full under Agentic workflow platforms, in the lesson on approvals and spend caps.
 
-The source material's direct answer, worth learning close to verbatim:
+## Worked Example: A Destructive Call With a Malformed Argument
 
-> *"A tool call gets checked at several independent points, not one big gate: arguments are validated against a schema before anything executes; destructive actions are gated on approval, checked every single time, never served from cache; non-destructive calls are memoized within a session; a failed call retries with backoff and falls back to a declared alternate tool if it's still failing — and that fallback goes through the exact same validation and destructive checks. Every call is logged individually. None of these checks replace each other — each one catches a different failure mode, and skipping any one leaves that specific gap open."*
+The model proposes `close_ticket` with `ticket_id` set to `"TKT 3"`, which does not match the expected pattern.
 
-## Checkpoint
+Disambiguation runs first, but only one tool matches, so it passes. Validation runs next and finds the ID wrong-shaped. The call is rejected with "invalid input, try again". It never reaches the destructive gate, the cache or the ticket system.
 
-- Name all eight checks and, for each, the failure it prevents.
-- Which three operate on the whole run rather than one call, and where are they built?
-- Why must disambiguation prefer non-destructive tools on a tie?
-- Trace a proposed destructive call with a malformed argument through the pipeline diagram. Where does it stop?
-- Argue, in one sentence, why no check can be dropped on the grounds that another covers it.
+On the next turn the model proposes `close_ticket` with `"TKT-3"`. Validation passes. The tool is tagged destructive and nobody has approved it, so the gate pauses the run for approval. The result is never cached. Telemetry records both the rejection and the pause.
 
-**Next →** [Module 04 · Enterprise RAG](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/README.md)
+Validation stopped the bad argument, and the gate stopped the unapproved write. Neither check could have done the other's job.
+
+---
+
+## Key Takeaways
+
+- A tool call is a proposal; eight checks decide whether it is allowed, worth re-doing, or needs a fallback.
+- The guardrail trio of gate, step guard and spend guard covers the run; the other five surround each call.
+- Argument validation rejects wrong-shaped input before anything downstream sees it.
+- Disambiguation makes tool selection deterministic and auditable, and never runs a destructive tool on a tie.
+- Destructiveness is declared at registration, and a fallback faces the same checks as the primary.
+- The checks form one pipeline, and no check substitutes for another.
+
+## Check Yourself
+
+1. **Which three checks operate on the whole run rather than one call?**
+   The destructive-action gate, the step or loop guard, and the spend or cost guard. In the Handbook's workflow platform they live in `guardrails.py::authorize_step()`.
+
+2. **Why must disambiguation prefer non-destructive tools on a tie?**
+   A tie means the system cannot tell which tool the user meant. Picking the destructive one would run an irreversible action on a guess, so safe tools win ties and a destructive tool never runs silently on one.
+
+3. **Argue, in one sentence, why no check can be dropped on the grounds that another covers it.**
+   Each check sits at a different point and catches a different failure, so removing any one leaves that specific gap open and no other check sees it.
+
+## References
+
+**Sources:** `05_The_Eight_Guard_Checks.md` (FDE Handbook, Robust Agents): "Why this matters", "The eight", "1 · Argument validation", "2–4 · The guardrail trio", "5 · Retry with fallback", "7 · Disambiguation between overlapping tools", "The pipeline, in order" and "Where each check lives across the handbook". `05-guarding-tool-calls.md` (Production and Platform Judgment): "The eight checks", "1. Argument validation", "2–4. The guardrail trio", "7. Disambiguation between overlapping tools" and "The pipeline, in order".
