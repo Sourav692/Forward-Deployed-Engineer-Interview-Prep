@@ -2,7 +2,7 @@
 
 Source plan: [`site/specs/2026-10-05-production-implementation-plan.md`](../2026-10-05-production-implementation-plan.md) · Review verdict: Ready with fixes ([PLAN_REVIEW.md](PLAN_REVIEW.md)) · Generated: 5 October 2026
 
-Only Phase 0 is carded. Later phases are listed below with their task counts and will be carded when Phase 0 exits.
+Phase 0 is carded. Phase 1 is listed in full with the PR that delivered each task. Later phases are listed below with their task counts.
 
 ## Phase 0: Decisions and foundations (about 1 week)
 
@@ -33,6 +33,63 @@ Exit criteria:
 - [x] Canonical homes decided for every multi-use file.
 - [x] CI runs on PRs and is green on `main`.
 
+## Phase 1: Learn MVP (about 3 weeks)
+
+Outcome: a visitor picks a path, browses all 10 tracks and 53 modules, reads real lessons for every ready and partly ready module, sees honest gap states, and keeps lesson progress in their browser.
+
+Phase 1 was built in workstreams straight from the plan, without separate task cards. QA findings: [2026-10-05-phase-1-qa-report.md](../2026-10-05-phase-1-qa-report.md).
+
+| # | Task | Outcome | Size | Depends on | Status |
+|---|---|---|---|---|---|
+| 1 | DATA-02 | `scripts/learn.mjs` sync with link rewriting, heading normalisation, emoji stripping, credit line, snapshot fallback | L | DATA-01, PM-01 | done (#19) |
+| 2 | SEC-01 | Folder allow-list and sanitiser in `learn.mjs` and `mocks.mjs`; check fails on any `content/` file whose source is outside the allow-list | S | DATA-02 | done (#19) |
+| 3 | DATA-04 | `check-parse.ts` extended with the learn checks above | M | DATA-02 | done (#19) |
+| 4 | DATA-05 | Glossary pass: add acronyms surfaced by the new lessons to `glossary.ts` | M | DATA-02 | done (#19) |
+| 5 | FE-02 | `src/lib/progress/store.ts` with the `fd:v1` keys above, storage probe, `fd:progress` change event, export/import/reset | M | FE-01 | done (#17) |
+| 6 | SEC-03 | Import type guard rejects unknown keys and values over 1 MB | S | FE-02 | done (#17) |
+| 7 | BE-01 | Learner record types in `src/lib/progress/types.ts` with `id` and `updatedAt` on every record | S | FE-01 | done (#17) |
+| 8 | FE-05 | Primitives moved from demo (`ui.tsx`, `feedback.tsx`) into `src/components/` | S | DS-01 | done (#18) |
+| 9 | DS-03 | `StatusBadge` primitive with the eight statuses plus Coming soon and On hold, colour + icon + text label, tooltip with the rule | S | DS-02 | done (#18) |
+| 10 | DS-04 | Type scale documented in `site/specs/` and applied to the lesson reading column | S | — | done (#18) |
+| 11 | UX-02 | `NAV` in `editorial.ts` relabelled to the six areas; existing hrefs reached from area indexes | S | UX-01 | done (#20) |
+| 12 | UX-03 | Breadcrumb spec per template (labels, truncation at 375 px) | S | UX-01 | done (#21) |
+| 13 | UX-04 | Wireframes for module, lesson, track, path, gap states (Partly ready, Coming soon, On hold) at 375 and 1280 px | M | UX-01 | done (#21) |
+| 14 | UX-06 | Copy deck for empty, error and gap states | S | UX-04 | done (#21) |
+| 15 | FE-03 | Production AppShell: TopNav (six areas + utilities), SideNav tree, MobileNav, BottomBar, Breadcrumbs, moved from demo and used in `(site)/layout.tsx` without changing existing `/modules` page bodies | L | UX-02, DS-01 | done (#20) |
+| 16 | A11Y-03 | Skip link, focus-visible ring using `--accent-ring`, landmark roles in the new AppShell | S | FE-03 | done (#20) |
+| 17 | FE-04 | `src/lib/learn.ts` loaders and `generateStaticParams` for `/learn/[trackSlug]`, `/[moduleSlug]`, `/[lessonSlug]` with `dynamicParams = false` | M | DATA-02 | done (#21) |
+| 18 | FE-06 | `/learn` overview (10 tracks, flags from chosen path, filters by level, topic, required) and track page with SectionAccordion | M | FE-04, FE-05 | done (#21) |
+| 19 | FE-07 | Module page and lesson page, including GapPanel and LessonReader with source note and credit line | L | FE-04, DS-03 | done (#21) |
+| 20 | FE-08 | PrerequisiteCard and Blocked status driven by `checkPrerequisites`, with "Open anyway" | S | FE-02, FE-07 | done (#21) |
+| 21 | FE-09 | LessonActions (mark read, bookmark, note) and ConfidenceControl, with module rollup weighted by lesson minutes | M | FE-02, FE-07 | done (#21) |
+| 22 | UX-05 | Diagnostic copy (10 questions) and scoring table mapped to the seven paths, ported from `src/demo/data/paths.ts` and reviewed by owner | S | PM-04 | done (#24) |
+| 23 | FE-10 | `/start` diagnostic and `/start/paths/[pathId]`; path flags shown on `/learn` and module pages | M | FE-02, UX-05 | done (#24) |
+| 24 | FE-11 | `/design`, `/practice`, `/interview` area index pages linking into existing `/modules/...` pages and `/fde-last-day-prep` | M | FE-03 | done (#25) |
+| 25 | FE-13 | New landing page at `/` (name, tagline, personas, six areas, CTAs) | M | FE-03 | done (#25) |
+| 26 | FE-14 | `not-found.tsx`, `error.tsx`, `loading.tsx` for `(site)` | S | FE-03 | done (#25) |
+| 27 | FE-12 | Search index extended with tracks, modules and lessons; index split into per-area files fetched on demand to keep each under 500 KB | M | FE-04 | done (#23) |
+| 28 | PERF-02 | Search index split per area (FE-12) with a size check in `check-parse.ts` | S | FE-12 | done (#23) |
+| 29 | SEO-01 | `sitemap.ts`, `robots.ts`, metadata and JSON-LD on new routes | M | FE-04 | done (#23) |
+| 30 | SEC-02 | Security headers in `next.config.ts`; CSP verified against mermaid and the theme script on preview | M | — | done (#23) |
+| 31 | SEC-05 | Credits page `/library/credits` listing every `credited` source | S | DATA-02 | done (#23) |
+| 32 | DATA-08 | Update CLAUDE.md "Layout" and "Content pipeline" bullets: `01_`, `05_` and `Mock_Interviews` now feed the site (DATA-06 adds its own line in Phase 2) | S | DATA-02 | done (#19) |
+| 33 | QA-02 | Playwright setup with smoke flows above | M | OPS-01 | done (this PR) |
+| 34 | A11Y-01 | axe checks in Playwright for landing, learn, track, module, lesson, start, progress, settings, existing scenario page | M | QA-02 | done (this PR) |
+| 35 | PERF-01 | Bundle-size check in CI from `next build` output against budgets | S | OPS-01 | done (this PR) |
+| 36 | OPS-02 | Bundle budget script reading `.next` build manifest | S | OPS-01 | done (this PR) |
+| 37 | QA-03 | Route audit script: crawl preview sitemap, fail on 404 and on pages with zero published lessons marked `ready` | S | SEO-01 | done (this PR) |
+| 38 | QA-04 | Regression check that live counts (module pages, links, diagrams reported by `check:content`) only grow | S | DATA-04 | done (this PR) |
+| 39 | A11Y-02 | Manual audit report per template (keyboard, screen reader, zoom, reduced motion) with fixes filed | M | Phase 1 build | done (this PR); screen-reader pass still manual |
+| 40 | QA-05 | Lighthouse run on preview for landing, lesson, dashboard | S | Phase 1 build | done (this PR) on a local build; repeat on the preview |
+
+Exit criteria:
+
+- [x] `/learn` shows 10 tracks and 53 modules; module status matches `curriculum_plan.md` after owner decisions (`check:curriculum`, `check:paths`).
+- [x] Every published lesson renders with no repository links and passes `check:content` (108 synced, 96 live).
+- [x] Existing `/modules/...`, `/fde-last-day-prep/...`, `/guide`, `/learning-map`, `/glossary` behave as before; their `fd:v1` progress is intact (`check:routes` crawls all 321 sitemap URLs; the e2e worksheet regression saves to `fd:v1:answers:*`).
+- [ ] Smoke and axe suites pass in CI; Lighthouse targets met on preview. The suites pass locally and run in the new `e2e` CI job. Lighthouse performance is 90 to 96 on a local build, but simulated mobile LCP is 2.8 to 3.6 s. Re-measure on the preview.
+- [ ] Owner verifies the Vercel preview before merge.
+
 ## Critical path
 
 Estimate only, using S = 0.5, M = 1.5, L = 4 days.
@@ -47,7 +104,6 @@ Estimate only, using S = 0.5, M = 1.5, L = 4 days.
 
 | Phase | Tasks | Status |
 |---|---|---|
-| Phase 1: Learn MVP (about 3 weeks) | 40 | not yet carded |
 | Phase 2: Practice, Interview and Progress (about 3 weeks) | 9 | not yet carded |
 | Phase 3: Version 2 (about 4–6 weeks, scheduled later) | 6 | not yet carded |
 

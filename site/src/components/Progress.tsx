@@ -88,7 +88,7 @@ export function ModuleProgress({
       {next && (
         <Link
           href={scenarioHref(next)}
-          className="rounded-md bg-accent px-3.5 py-2 text-[0.875rem] font-semibold text-white transition-colors hover:bg-accent-hover"
+          className="rounded-md bg-accent px-3.5 py-2 text-[0.875rem] font-semibold text-white transition-colors dark:text-bg hover:bg-accent-hover"
         >
           {done + started > 0 ? 'Continue' : 'Start'} → {next.title}
         </Link>

@@ -683,6 +683,48 @@ rows.push(`\n  editorial: ${pages.size} pages with metadata, ${cited.size} cited
   }
 }
 
+// ------------------------------------------------------------------ live count baseline (QA-04)
+//
+// The counts below may only grow. A drop means a page, link, diagram or lesson went
+// missing in a sync or refactor, which no other check would notice. When a drop is
+// intended, run `npm run check:content -- --update-baseline` and commit baselines.json.
+{
+  const baselineFile = join(SITE_ROOT, 'scripts', 'baselines.json')
+  let modulePages = 0
+  for (const mod of manifest.modules) for (const track of mod.tracks) modulePages += track.scenarios.length
+  const current: Record<string, number> = {
+    modulePages,
+    editorialPages: pages.size,
+    internalLinks: linksChecked,
+    diagrams: diagramTotal,
+    learnSynced,
+    learnLive,
+  }
+  if (process.argv.includes('--update-baseline')) {
+    const { writeFile } = await import('node:fs/promises')
+    await writeFile(baselineFile, `${JSON.stringify(current, null, 2)}\n`)
+    rows.push(`\n  baseline: written to scripts/baselines.json`)
+  } else if (!existsSync(baselineFile)) {
+    failures.push('scripts/baselines.json is missing; run `npm run check:content -- --update-baseline`')
+  } else {
+    const baseline = JSON.parse(await readFile(baselineFile, 'utf8')) as Record<string, number>
+    const grown: string[] = []
+    for (const [key, value] of Object.entries(baseline)) {
+      const now = current[key]
+      if (now === undefined) failures.push(`baseline: unknown count "${key}" in scripts/baselines.json`)
+      else if (now < value) {
+        failures.push(
+          `baseline: ${key} dropped from ${value} to ${now}. If intended, run \`npm run check:content -- --update-baseline\``,
+        )
+      } else if (now > value) grown.push(`${key} ${value}→${now}`)
+    }
+    rows.push(
+      `\n  baseline: ${Object.entries(current).map(([k, v]) => `${k} ${v}`).join(', ')}` +
+        (grown.length ? ` (grown: ${grown.join(', ')}; refresh with --update-baseline)` : ''),
+    )
+  }
+}
+
 console.log(rows.join('\n'))
 console.log(`\n  ${diagramTotal} mermaid diagram(s) parsed across answer keys and case studies`)
 

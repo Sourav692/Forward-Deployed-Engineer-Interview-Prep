@@ -17,7 +17,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:paths": "node scripts/check-paths.ts"
+    "check:paths": "node scripts/check-paths.ts",
+    "check:bundle": "node scripts/check-bundle.mjs",
+    "check:routes": "node scripts/check-routes.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "marked": "^18.0.13",
@@ -28,6 +31,8 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

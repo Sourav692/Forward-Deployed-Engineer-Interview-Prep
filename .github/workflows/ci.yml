@@ -68,3 +68,60 @@ jobs:
 
       - name: Typecheck
         run: npx tsc --noEmit
+
+  e2e:
+    name: Bundle, routes and E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: site
+    env:
+      PORT: 3307
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check bundle budgets
+        run: npm run check:bundle
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start server
+        run: |
+          npx next start -p "$PORT" > next-start.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null "http://localhost:$PORT/" && exit 0
+            sleep 1
+          done
+          cat next-start.log
+          echo "::error::next start did not answer on port $PORT"
+          exit 1
+
+      - name: Check routes
+        run: npm run check:routes
+        env:
+          BASE_URL: http://localhost:3307
+
+      - name: E2E smoke and axe
+        run: npm run test:e2e
+
+      - name: Upload Playwright traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: site/test-results/
+          retention-days: 7
