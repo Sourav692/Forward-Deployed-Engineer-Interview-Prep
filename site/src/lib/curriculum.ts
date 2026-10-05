@@ -496,7 +496,7 @@ export const MODULES: CurriculumModule[] = [
       'practise-api-and-backend',
     ],
     gapNote: 'Code examples; authentication beyond a single mention.',
-    seeAlso: ['identity-verification-with-sso-and-oidc'],
+    seeAlso: ['identity-verification-with-sso-and-oidc', 'caching-in-genai-systems'],
   },
   {
     slug: 'cloud-containers-deployment',
@@ -857,7 +857,7 @@ export const MODULES: CurriculumModule[] = [
       'the-eight-guard-checks',
       'practise-robust-agents',
     ],
-    seeAlso: ['why-agents-need-state'],
+    seeAlso: ['why-agents-need-state', 'checkpoints-interrupts-and-human-approval', 'retries-fan-out-and-streaming'],
   },
   {
     slug: 'multi-agent-systems',
@@ -986,7 +986,7 @@ export const MODULES: CurriculumModule[] = [
       'fair-sharing-between-tenants',
       'practise-security-and-tenancy',
     ],
-    seeAlso: ['g07-secure-multi-tenant-ai-platform'],
+    seeAlso: ['g07-secure-multi-tenant-ai-platform', 'the-model-context-protocol', 'red-teaming-and-layered-guardrails'],
   },
   {
     slug: 'observability-and-diagnosis',
@@ -1038,7 +1038,7 @@ export const MODULES: CurriculumModule[] = [
       'budgets-and-spend-guardrails',
       'practise-cost-and-latency',
     ],
-    seeAlso: [],
+    seeAlso: ['cache-answers-without-serving-wrong-ones', 'deterministic-context-assembly'],
   },
   {
     slug: 'scaling-and-reliability',
@@ -1094,7 +1094,7 @@ export const MODULES: CurriculumModule[] = [
       'infrastructure-as-code-and-the-release-pipeline',
       'practise-agentops',
     ],
-    seeAlso: [],
+    seeAlso: ['gate-releases-on-quality', 'roll-out-changes-gradually', 'access-controlled-rag-on-databricks', 'anatomy-of-a-deployed-multi-agent-platform'],
   },
   {
     slug: 'model-adaptation-and-serving',
@@ -1215,7 +1215,7 @@ export const MODULES: CurriculumModule[] = [
       'safe-workflow-automation-for-non-technical-users',
       'delivering-an-agent-in-two-weeks-with-enforced-gates',
     ],
-    seeAlso: [],
+    seeAlso: ['prompt-injection-and-egress-control', 'red-teaming-and-layered-guardrails', 'prompt-versioning-rollout-and-rollback', 'enterprise-rag-on-a-governed-lakehouse'],
   },
   {
     slug: 'scenario-library',
@@ -1466,7 +1466,7 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'Any behavioural question',
     commonMistakes: ['Borrowed or vague stories'],
     lessons: ['story-bank'],
-    seeAlso: [],
+    seeAlso: ['cross-team-ownership-and-cadence'],
   },
   {
     slug: 'leadership-principle-answers',

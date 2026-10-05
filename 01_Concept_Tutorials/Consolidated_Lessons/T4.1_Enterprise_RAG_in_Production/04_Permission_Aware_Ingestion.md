@@ -2,7 +2,7 @@
 
 *Defaulting an unclassified document to "internal" keeps the pipeline moving, and it is exactly how a latent leak gets indexed.*
 
-◷ 6 min
+◷ 8 min
 
 Ingestion is the offline half of RAG, and it is where enterprise RAG leaks are born. Refuse what cannot be classified, and keep permissions and content in separate stores, because they change for different reasons.
 
@@ -60,6 +60,16 @@ The index's rule copy and the catalog mirror Layer 1 and Layer 2 from [Pushing P
 
 With two stores, an ACL change is a manifest edit and one SQLite write. `scripts/demo_acl_catalog_update.py` shows the next `enforce()` seeing it immediately, with no Chroma write. Without a separate catalog, Layer 2 would re-read the same cached copy Layer 1 used. Running a policy twice against the same stale data is not a second opinion.
 
+## Give the Catalog a Schema That Outlives One Demo
+
+The Handbook's catalog is one SQLite row per document. The GenAI engineering notes show the shape the same idea takes in a production relational database. Three tables cover a document's whole life.
+
+The **documents** table holds the tenant, source, type, a file hash to catch duplicate uploads, a status (ingesting, indexed, failed, superseded), a version, timestamps, and flexible metadata. The **document_chunks** table holds each chunk's text, token count, the embedding model and version that produced its vector, and the id of that vector in the vector store. The **document_permissions** table records which users, roles, or teams may read, write, or administer each document.
+
+The split pays off three ways. A changed document invalidates all its chunks at once. A duplicate upload is caught by its hash. A model upgrade shows exactly which chunks need re-embedding.
+
+The two stores then cooperate at query time. The relational side holds what a compliance review asks about: ownership, permissions, department, classification, version, and audit logs. The vector side holds embeddings, chunk ids, and minimal metadata for search. The query asks the relational database for the documents this user may read, runs vector search restricted to them, enriches the results from the relational side, and logs the retrieval.
+
 ## Prove It Is a Pipeline, Not a Script
 
 Three additions showed the path is general.
@@ -94,6 +104,7 @@ Ingestion is batch, not streaming change-data capture, but it is no longer full-
 - A document with no manifest record is refused, and one with unmappable permissions is quarantined, never defaulted.
 - Each document is chunked and embedded into the tenant's collection, and separately written as one row in the access catalog.
 - The catalog is authoritative and the index copy is a cache, so a revocation is one row write and Layer 2 is a genuine second opinion.
+- In production the catalog becomes documents, chunks, and permissions tables, and queries resolve allowed documents relationally before searching vectors.
 - Incremental sync hashes text only, and both resets and hash skips must be scoped to avoid wiping or emptying an index silently.
 
 ## Check Yourself
@@ -109,4 +120,4 @@ Ingestion is batch, not streaming change-data capture, but it is no longer full-
 
 ## References
 
-**Sources:** `03_Ingestion_Pipeline.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The 30,000-foot picture", "Step by step", "Why two stores", "Beyond the first connector", "Two real bugs, worth knowing", "What this deliberately does not do" and "Interview lens".
+**Sources:** `03_Ingestion_Pipeline.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The 30,000-foot picture", "Step by step", "Why two stores", "Beyond the first connector", "Two real bugs, worth knowing", "What this deliberately does not do" and "Interview lens". `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md` (GenAI Engineering Modules): "How do I design the database tables for RAG ingestion?". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 10, "How do vector databases and relational databases work together in companies?".

@@ -372,7 +372,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.3_Chunking_and_Indexing/02_Chunking_by_Document_Type.md",
-      "estMinutes": 11,
+      "estMinutes": 12,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/chunking-by-document-type"
     },
     {
@@ -507,7 +507,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/06_Production_Retrieval_Pipelines.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/production-retrieval-pipelines"
     },
     {
@@ -911,7 +911,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/01_The_Confirmation_Gate_and_Memoization.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/agentic-systems/robust-agents/the-confirmation-gate-and-memoization"
     },
     {
@@ -922,7 +922,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/02_Retries_and_Fallbacks.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/agentic-systems/robust-agents/retries-and-fallbacks"
     },
     {
@@ -988,7 +988,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/02_Multi_Agent_Coordination_Patterns.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns"
     },
     {
@@ -1054,7 +1054,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/08_Practise_Multi_Agent_Interview_Questions.md",
-      "estMinutes": 12,
+      "estMinutes": 15,
       "href": "/learn/agentic-systems/multi-agent-systems/practise-multi-agent-systems"
     },
     {
@@ -1175,7 +1175,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/04_Permission_Aware_Ingestion.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/learn/production-ai/enterprise-rag-in-production/permission-aware-ingestion"
     },
     {
@@ -1197,7 +1197,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/06_Output_Guardrails_and_Refusals.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails-and-refusals"
     },
     {
@@ -1268,7 +1268,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/05_Release_Gates_Safety_Quality_and_Cost.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/production-ai/evaluation-and-release-gates/release-gates-safety-quality-and-cost"
     },
     {
@@ -1392,7 +1392,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/04_Production_Monitoring_Metrics_Drift_and_SLOs.md",
-      "estMinutes": 7,
+      "estMinutes": 9,
       "href": "/learn/production-ai/observability-and-diagnosis/production-monitoring-metrics-drift-and-slos"
     },
     {

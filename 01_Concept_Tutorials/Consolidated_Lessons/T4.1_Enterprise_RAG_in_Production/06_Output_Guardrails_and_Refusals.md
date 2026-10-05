@@ -2,7 +2,7 @@
 
 *Refusing whenever the context is imperfect is safe and useless, while answering whenever possible is useful and leaks, so the output checks sit between the two.*
 
-◷ 6 min
+◷ 8 min
 
 Correct retrieval is not enough to make an answer honest. A model given six authorised passages can still answer beyond them, cite a document it never saw, or refuse in a way that reveals what it was not shown. Add three checks on the way out, one rule for refusing, and one deliberate absence.
 
@@ -50,6 +50,16 @@ No guardrail scans for "ignore your instructions". No prompt says "do not reveal
 
 Retrieved documents and tool outputs are still **untrusted input**. They must never alter the system prompt or unlock a capability. In agentic systems the model can *act*, and the architectural defence needs reinforcing. [Prompt Injection and Egress Control](../T4.4_Security_Tenancy_and_Prompt_Injection/03_Prompt_Injection_and_Egress_Control.md) covers that case.
 
+## Place Each Guardrail Where Its Failure Starts
+
+The GenAI engineering notes sort guardrails into four families by where they act. **Input** guardrails filter a query before retrieval. **Retrieval** guardrails enforce access per chunk. **Output** guardrails check the answer. **Domain** guardrails keep the system inside its scope. The access rules in this module are the retrieval family, and the checks above are part of the output family.
+
+The notes add output checks that the Handbook pipeline does not build. A toxicity classifier blocks or flags harmful output. A PII scan, by pattern or a detection model, catches names, emails, phone numbers, and ids. A domain check treats a large semantic distance between question and answer as a red flag, and a classifier before the model can reject off-topic questions before retrieval runs. Length and format checks confirm that citations are present and the answer is the right size.
+
+**The sources disagree on input filtering.** The notes recommend scanning queries for patterns such as "ignore previous instructions". The Handbook leaves that filter out on purpose, as the previous section explains. Both hold: a pattern filter is a cheap extra layer, but the architecture, not the filter, is what keeps unauthorised text out of the context.
+
+Every response also needs an audit record. Log the query, the retrieved chunks, the answer, the check scores, the user id, and the time. Keep the logs searchable, give reviewers a dashboard of flagged answers, and sample responses weekly across user groups and query types. The audit is how prompts, retrieval, and guardrails improve.
+
 ## See Every Gate in One Table
 
 Here is every gate in the pipeline that is not one of the seven access rules.
@@ -85,6 +95,7 @@ A two-verdict grader would have refused the whole question. The `partial` verdic
 - Groundedness is scored by a judge on every run as the online quality signal.
 - A refusal escalates with a next step and never hints that withheld material exists.
 - There is no prompt-injection filter because unauthorised text never enters the context, though retrieved text stays untrusted.
+- Guardrails come in input, retrieval, output, and domain families, and every response leaves an audit record.
 - Nine gates outside the access rules run from ingest to CI, ending with a leak gate that must read zero.
 
 ## Check Yourself
@@ -100,4 +111,4 @@ A two-verdict grader would have refused the whole question. The `partial` verdic
 
 ## References
 
-**Sources:** `06_Output_Guardrails.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The three checks", "Refusal hygiene", "The deliberate absence: no prompt-injection check", "Checks outside the ACL — the full list" and "Interview lens". The Tier-1 example comes from `01_Why_Enterprise_Changes_The_Problem.md`, "The case study: Meridian Assist".
+**Sources:** `06_Output_Guardrails.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The three checks", "Refusal hygiene", "The deliberate absence: no prompt-injection check", "Checks outside the ACL — the full list" and "Interview lens". `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering Modules): Topic 12, "What are guardrails, and why do you need them?", "How do you keep the system on-topic and stop data leaks?" and "How do you validate outputs and audit responses in production?". The Tier-1 example comes from `01_Why_Enterprise_Changes_The_Problem.md`, "The case study: Meridian Assist".

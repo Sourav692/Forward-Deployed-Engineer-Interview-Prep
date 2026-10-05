@@ -2,7 +2,7 @@
 
 *Retrying absorbs a brief outage, but retrying the wrong failure, or retrying without a bound, turns a blip into a storm against a dependency that is already down.*
 
-◷ 6 min
+◷ 8 min
 
 A failed tool call is not one kind of event. Classify the failure first, retry only what is transient and only a bounded number of times, then fall back or escalate; [The Confirmation Gate and Memoization](01_The_Confirmation_Gate_and_Memoization.md) covers the checks that run before any of this.
 
@@ -56,6 +56,14 @@ while True:
 Two controls work together. The budget, `retries=3`, stops a long outage from becoming a tight loop. The growing delay, `0.01 * attempt` in the demo plus jitter in production, spreads the attempts out. Together they absorb a short outage without amplifying a long one.
 
 The Handbook's test `test_retry_on_flaky_tool` proves the behaviour. It wraps search to fail twice, then asserts two `retry` records and one `ok`.
+
+## Scope Framework Retries to the Failures That Pass
+
+A retry cannot fix a call that fails the same way every time. Frameworks make retries a one-line setting, which makes it easy to retry the wrong thing.
+
+LangGraph wraps a node in `RetryPolicy`. On a matching exception it re-runs the node up to `max_attempts` times, waiting `initial_interval * backoff_factor^n` up to `max_interval`, with jitter so many callers do not retry at the same instant. The interview tutorial's hotel-booking notebook shows the before and after. A node that fails at random crashes the run, then succeeds once `RetryPolicy(max_attempts=5)` is attached.
+
+The trap is the exception filter. `retry_on` has a default set of retryable types, and a plain `Exception` may or may not match it. A logic bug fails five times in a row, burning latency and calls before the traceback appears. The symptom is an error rate that looks the same with retries on and off. Pass an explicit `retry_on` for infrastructure failures such as timeouts and connection errors. Send malformed tool calls and failed validation to a re-plan or a human, because the model would only repeat the same bad arguments. [Retries, Fan-Out, and Streaming](../T2.5_LangChain_and_LangGraph/07_Retries_Fan_Out_and_Streaming.md) covers the framework settings.
 
 ## Route Permanent Failures to a Declared Fallback
 
@@ -119,6 +127,7 @@ If no fallback had been declared, the policy would end at escalation: tell the u
 
 - Classify every failure first: transient errors are retried, permanent errors are raised at once.
 - A retry budget and a growing delay together absorb short outages without hammering a dead dependency.
+- A framework retry policy needs an explicit exception filter, or it retries deterministic bugs.
 - A permanent failure routes to a declared fallback, with arguments adapted if the signature differs.
 - A fallback goes through the same gate, cache, retry and validation, and a confirmation pause is never treated as a failure.
 - The policy is one decision path: retry, then fallback, then escalate, and never swallow a failure silently.
@@ -134,6 +143,9 @@ If no fallback had been declared, the policy would end at escalation: tell the u
 3. **What are the two rules of the failure policy that never bend?**
    Never silently swallow a failure inside an agent loop, and never auto-retry a destructive call without re-checking the confirmation.
 
+4. **An agent's error rate is the same with node retries on and off. What is the likely cause?**
+   The retry policy is retrying a deterministic failure, such as a logic bug or a malformed tool call. Narrow `retry_on` to transient infrastructure errors, and route bad arguments to a re-plan instead.
+
 ## References
 
-**Sources:** `01_Retry_Fallback_Memo_Confirm.md` (FDE Handbook, Robust Agents): "The composed executor", "3 · Retry — and what is retryable", "4 · Fallback", "The failure policy, as a decision" and "Checkpoint". `05_The_Eight_Guard_Checks.md`: "5 · Retry with fallback — the subtlety". `05-guarding-tool-calls.md` (Production and Platform Judgment): "5. Retry with fallback".
+**Sources:** `01_Retry_Fallback_Memo_Confirm.md` (FDE Handbook, Robust Agents): "The composed executor", "3 · Retry — and what is retryable", "4 · Fallback", "The failure policy, as a decision" and "Checkpoint". `05_The_Eight_Guard_Checks.md`: "5 · Retry with fallback — the subtlety". `05-guarding-tool-calls.md` (Production and Platform Judgment): "5. Retry with fallback". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.11 "Retries and node-level failure containment", the §2 gotcha "RetryPolicy silently doesn't fire on the exception you expect", and §7 question 2.

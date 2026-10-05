@@ -58,6 +58,8 @@ The parents live in a **docstore**: a plain key-value store from id to document.
 
 Keeping it separate is what makes the design flexible. The vector index can be Chroma or pgvector while the docstore lives in memory, Postgres, or Redis. Each is a separate persistence decision behind a stable interface. An in-memory docstore is a demo default: it is wiped on restart and cannot be shared between processes. Anything past a demo needs a persistent store. If both stores are Postgres, there is one database to run.
 
+Put access rules on the parent too. The FDE Handbook's scaling chapter notes that its access attributes already flow from a document to each of its chunks. Adding a parent id to each chunk and keeping the rules on the parent leaves one place for a rule to live, so a policy change still needs no re-index. Only the step that builds the context changes.
+
 > **Warning: the two stores can drift out of sync.** Indexing writes the vector index and the docstore in separate calls. A crash between them, or a delete on one side only, leaves a child whose parent id finds nothing. Treat indexing and deletion as one operation, and never edit either store alone in production. Use content-derived ids. Without them, indexing the same content twice creates new random ids and duplicate parents pile up.
 
 ## Deduplicate Parents After Retrieval
@@ -102,7 +104,7 @@ The parent document tutorial's latency budget then adds up. Query embedding take
 - Index small children for sharp search and return their parents for context; an id in each child's metadata links them.
 - Child-only mode returns whole documents; two-splitter mode bounds parent size and suits long sources.
 - The docstore is a plain key-value store, separate from the vector index, and should be persistent past a demo.
-- Deduplicate parents by id in code, and treat writes to both stores as one operation with content-derived ids.
+- Deduplicate parents by id in code, treat writes to both stores as one operation with content-derived ids, and keep access rules on the parent.
 - Multi-representation indexing, the context enrichment window, and contextual retrieval vary what is searched and what is returned.
 - Once k times parent size outgrows the context window, cap k or switch to a multi-call strategy.
 
@@ -119,4 +121,4 @@ The parent document tutorial's latency budget then adds up. Query embedding take
 
 ## References
 
-**Sources:** `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: §1 "Core concepts" (1.1 to 1.6), §2 "Gotchas", §3 "Tradeoffs", the cost and sizing answers in §5, and the §6 mock system design, rewritten in our own words. `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.13 "Multi-representation and parent document indexing", §1.14 "Contextual retrieval", the contextual-retrieval cost gotcha, and the matching trade-offs. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.11 "Context enrichment window". `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): rule 3, the title-and-section prefix.
+**Sources:** `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: §1 "Core concepts" (1.1 to 1.6), §2 "Gotchas", §3 "Tradeoffs", the cost and sizing answers in §5, and the §6 mock system design, rewritten in our own words. `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.13 "Multi-representation and parent document indexing", §1.14 "Contextual retrieval", the contextual-retrieval cost gotcha, and the matching trade-offs. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.11 "Context enrichment window". `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): rule 3, the title-and-section prefix. `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): §8 "Parent-child (small-to-big) chunking".

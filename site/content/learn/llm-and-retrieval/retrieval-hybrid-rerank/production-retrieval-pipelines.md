@@ -121,6 +121,8 @@ For every retrieval call, log the query sent and the strategy used. Log the chun
 
 Answers should be checkable too. Carry chunk metadata, such as source file and page, through the pipeline, and have the generation prompt cite by ID. When nothing clears a relevance threshold, say "I don't have that in my docs" instead of letting the model guess.
 
+Alert when a search returns fewer results than it asked for. Some vector stores quietly shrink the result count when the collection holds fewer items than `k`. Chroma, in the agent fundamentals tutorial's notebook, logs only a warning and returns one result for a request of two. In a demo with a one-document collection that is harmless. In production it usually means the index is nearly empty or the filter matched almost nothing, and a log line nobody reads will hide it.
+
 ## Worked Example: A Two-Second Support Assistant
 
 The prompt: answer customer questions from product documentation and internal runbooks, in under 2 seconds, for 10,000 users a day. Some questions need both sources. One source design answers it like this.
@@ -138,7 +140,7 @@ Generation cites which source each claim came from. It refuses when nothing cros
 - Degrade every model-dependent step and every store call; run independent calls concurrently.
 - Rerank after access enforcement, never before.
 - Budget latency per stage and cost per model call, and use caching and conditional reranking to cut both.
-- Log query, strategy, chunks, scores and prompt contents per call, and cite sources in answers.
+- Log query, strategy, chunks, scores and prompt contents per call, cite sources in answers, and alert when a search returns fewer than `k` results.
 
 ## Check Yourself
 
@@ -153,4 +155,4 @@ Generation cites which source each claim came from. It refuses when nothing cros
 
 ## References
 
-**Sources:** `rag_retrieval_strategies.md`: "Putting It Together: A Production-Style Composite Retriever" and "Choosing a Strategy: Decision Checklist". `04_Retrieval_Hybrid_Rerank.md` (FDE Handbook): "Why this matters", "The six strategies", "Every LLM-dependent step degrades", "BM25 is built over the authorised pool", "The interaction worth naming", "What the numbers actually say" and "In the code". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: "Coverage gaps", §2 gotcha on contextual retrieval cost, §5.1 to §5.3 answers on parallel retrieval, partial failure, logging and citations, and §6 "Mock system design", rewritten in our own words. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §5.3 answers on investigation order and per-query cost.
+**Sources:** `rag_retrieval_strategies.md`: "Putting It Together: A Production-Style Composite Retriever" and "Choosing a Strategy: Decision Checklist". `04_Retrieval_Hybrid_Rerank.md` (FDE Handbook): "Why this matters", "The six strategies", "Every LLM-dependent step degrades", "BM25 is built over the authorised pool", "The interaction worth naming", "What the numbers actually say" and "In the code". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: "Coverage gaps", §2 gotcha on contextual retrieval cost, §5.1 to §5.3 answers on parallel retrieval, partial failure, logging and citations, and §6 "Mock system design", rewritten in our own words. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §5.3 answers on investigation order and per-query cost. `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: the §2 gotcha on the ChromaDB `n_results` warning.
