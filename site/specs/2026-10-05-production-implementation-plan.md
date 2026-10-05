@@ -39,7 +39,7 @@ This plan turns the prototype into the production platform without writing new c
 | R8 | One canonical home per concept; other modules reference rather than repeat | website_prompt §3, §14 |
 | R9 | Third-party material needs a per-item publishing decision (exclude, credit, rewrite) before going public | module_source_audit |
 | R10 | Company-specific prep (T1.1, T8.4) and the coding kit (T8.5) stay on hold | module_source_audit |
-| R11 | Seven learning paths plus two company variants, with a 10-question diagnostic and required/recommended/optional module flags | prototype_prompt §3, website_prompt §9 |
+| R11 | Seven learning paths plus two company variants, with a 10-question diagnostic and required/recommended/optional module flags. Only one variant ships (Frontier Lab Loop, grounded in the OpenAI/Anthropic pack); the second was removed on 5 October 2026 for lack of a repository source | prototype_prompt §3, website_prompt §9 |
 | R12 | Soft prerequisite gating: Blocked status and check card, learner can still open | prototype_prompt §2, §5 |
 | R13 | Progress statuses (not started, in progress, blocked, ready for review, completed, needs revision, mastered, skipped) and their rules | prototype_prompt §5, website_prompt §12 |
 | R14 | Revision queue with decay (14, 30, 60 days) and confidence 1–5 | prototype_prompt §5 |

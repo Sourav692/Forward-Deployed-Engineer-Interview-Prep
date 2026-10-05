@@ -419,39 +419,38 @@ export const PATHS: LearningPath[] = [
     startModule: 'first-ten-minutes',
   },
   {
+    // Grounded in 08_Company_Specific_Prep/OpenAI_Anthropic_Pack/INTERVIEW_CENTRIC_GUIDE.md:
+    // the loop map runs a coding round and then a build or take-home, about 5 hours on
+    // model APIs with a recorded video walkthrough, or a 3 to 4 hour build against a brief.
+    // A Big-Tech Loop variant was removed on 5 October 2026: no repository pack backs it,
+    // and the modules it leaned on (T1.3, T1.6) are Coming soon.
     id: 'fde-frontier-lab',
     title: 'Forward Deployed Engineer: Frontier Lab Loop',
     persona: 'fde-candidate',
     variantOf: 'fde',
     summary:
-      'The Forward Deployed Engineer path weighted towards agents, evaluation and customer debugging, for loops with a take-home build.',
+      'The Forward Deployed Engineer path for loops with a coding round and a take-home build of 3 to 5 hours, with customer delivery and evaluation required.',
     moduleFlags: {
       ...FDE_FLAGS,
+      // T6 Forward Deployed Engineering and T4.2 Evaluation and release gates.
+      'customer-discovery': 'required',
+      'scoping-an-fde-project': 'required',
+      'judgement-cases': 'required',
+      'delivery-stages-and-gates': 'required',
+      'adoption-and-impact': 'required',
+      'debugging-customer-environment': 'required',
+      'evaluation-and-release-gates': 'required',
+      // The take-home is a small working service with tests.
       'apis-and-backend': 'recommended',
-      'model-adaptation-and-serving': 'optional',
       'capstone-build': 'recommended',
+      'model-adaptation-and-serving': 'optional',
     },
     estHours: 174,
     skipCriteria: 'As the Forward Deployed Engineer path.',
-    readinessCriteria: [...FDE_READINESS, 'One take-home build rehearsed against the clock, with tests and a short write-up.'],
-    startModule: 'how-the-platform-works',
-  },
-  {
-    id: 'fde-big-tech',
-    title: 'Forward Deployed Engineer: Big-Tech Loop',
-    persona: 'fde-candidate',
-    variantOf: 'fde',
-    summary:
-      'The Forward Deployed Engineer path plus coding patterns, SQL and distributed systems, for loops with a separate coding round.',
-    moduleFlags: {
-      ...FDE_FLAGS,
-      'coding-interview-patterns': 'required',
-      'sql-and-data-modelling': 'recommended',
-      'distributed-systems-essentials': 'required',
-    },
-    estHours: 162,
-    skipCriteria: 'As the Forward Deployed Engineer path.',
-    readinessCriteria: [...FDE_READINESS, 'Timed coding sets passed at 70% or more.'],
+    readinessCriteria: [
+      ...FDE_READINESS,
+      'One take-home rehearsed against the clock: a 3 to 5 hour build against a written brief using model APIs, with tests and a recorded walkthrough of the design and its trade-offs.',
+    ],
     startModule: 'how-the-platform-works',
   },
 ]
