@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import * as repo from '../repo'
-import { DAY_MS, attemptsFor, scoreCheckpoint, type CheckpointResult } from '../store/rules'
+import { DAY_MS, attemptsFor, scoreCheckpoint, type CheckpointResult } from '@/lib/progress/rules'
 import { update, useDemo } from '../store/useDemo'
 import { ConfirmDialog, toast } from './feedback'
 import { ErrorState, ProgressBar, StatusBadge, btn, cx } from './ui'

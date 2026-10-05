@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import * as repo from '../repo'
-import { attemptsFor, isDone } from '../store/rules'
+import { attemptsFor, isDone } from '@/lib/progress/rules'
 import { update } from '../store/useDemo'
 import { useLearner } from './islands'
 import { ActivityTimeline, ReadinessGauge, RevisionQueueList, StatusLegend, remedyFor } from './ProgressViews'

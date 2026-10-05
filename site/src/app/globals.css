@@ -23,12 +23,12 @@
   --success: oklch(56% 0.13 155);
   --success-soft: oklch(95.5% 0.04 155);
   --warning: oklch(64% 0.14 70);
-  /* Added for the /demo prototype: danger and per-status hues, checked for contrast. */
+  /* Status hues: warning, danger, needs revision (review) and mastered, each with a soft fill. */
   --warning-soft: oklch(96% 0.04 80);
   --warning-text: oklch(48% 0.12 65);
   --danger: oklch(55% 0.19 25);
   --danger-soft: oklch(96% 0.025 25);
-  --review: oklch(52% 0.13 220);
+  --review: oklch(50% 0.13 220);
   --review-soft: oklch(95.5% 0.03 220);
   --mastered: oklch(48% 0.12 175);
   --mastered-soft: oklch(95% 0.04 175);
@@ -87,6 +87,13 @@
   --color-review-soft: var(--review-soft);
   --color-mastered: var(--mastered);
   --color-mastered-soft: var(--mastered-soft);
+  /* Radius scale. Values pin Tailwind v4's defaults, so rounded-sm/md/lg/xl utilities
+     and plain CSS share one scale: sm 4px (badges, inputs), md 6px (buttons),
+     lg 8px (cards, panels), xl 12px (dialogs, large panels). */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
 }
@@ -117,7 +124,7 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -158,7 +165,7 @@ body {
   font-size: 0.875em;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   padding: 0.1em 0.35em;
 }
 .prose a {
@@ -208,7 +215,7 @@ body {
   margin: 0 0 1.25rem;
   border-left: 3px solid var(--accent);
   background: var(--accent-soft);
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   padding: 0.8rem 1rem;
   color: var(--text-muted);
 }
@@ -218,7 +225,7 @@ body {
 .reading .story-card {
   margin-top: 1rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   background: var(--surface);
   padding: 1rem 1.1rem;
 }
@@ -231,7 +238,7 @@ body {
 .reading .interview-answer {
   margin: 0.9rem 0 1rem;
   border-left: 3px solid var(--accent);
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   background: var(--accent-soft);
   padding: 0.75rem 0.9rem;
 }
@@ -248,7 +255,7 @@ body {
   min-height: 15.5rem;
   flex-direction: column;
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-xl);
   background: var(--surface);
   padding: 1.25rem;
   box-shadow: var(--shadow);
@@ -266,7 +273,7 @@ body {
   margin-block: 1rem;
   border-left: 3px solid var(--accent);
   background: var(--surface);
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   padding: 0.65rem 1rem;
   color: var(--text-muted);
 }
@@ -282,7 +289,7 @@ body {
   margin-block: 1rem;
   overflow-x: auto;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
 }
 /* Native scrollbars follow color-scheme, not the site's tokens: without this a table
    that scrolls sideways draws a light scrollbar across a dark page. */
@@ -327,7 +334,7 @@ body {
   color: var(--text);
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   padding: 0.85rem 1rem;
   overflow-x: auto;
   white-space: pre;

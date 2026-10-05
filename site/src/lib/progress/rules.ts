@@ -1,9 +1,9 @@
 /**
- * Business rules for the prototype (blueprint §16), as pure functions.
+ * Learner-progress business rules (blueprint §16), shared by /demo and production, as pure functions.
  *
  * Nothing here reads storage, the clock or the data files: callers pass the learner
  * state, the entities and `now`. That keeps every rule testable under plain `node`
- * (`scripts/check-demo-rules.ts`) and lets the "time travel" setting work by simply
+ * (`scripts/check-progress-rules.ts`) and lets the "time travel" setting work by simply
  * passing a shifted `now`. Only `import type` is allowed in this file: Node's type
  * stripping erases it, whereas a runtime import would need a resolvable path.
  */
@@ -16,7 +16,7 @@ import type {
   Module,
   RubricDimension,
   Status,
-} from '../types'
+} from '../../demo/types'
 
 export const DAY_MS = 86_400_000
 export const CHECKPOINT_PASS = 70
