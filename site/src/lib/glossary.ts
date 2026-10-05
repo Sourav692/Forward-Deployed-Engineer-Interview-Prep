@@ -184,6 +184,10 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: "The login layer on top of OAuth. OAuth only says what an app may do; OIDC adds who the user is, as a signed ID token." },
   { term: 'DLP', expansion: 'data loss prevention', group: 'Security and compliance',
     plain: 'Tools that stop sensitive data leaving where it should stay.' },
+  { term: 'DLS', expansion: 'document-level security', group: 'Security and compliance',
+    plain: 'A search index that filters results per document by who is asking, so a user only ever matches what they may read.' },
+  { term: 'TLS', expansion: 'Transport Layer Security', group: 'Security and compliance',
+    plain: 'The encryption that protects data in transit, the S in HTTPS. mTLS makes both sides prove who they are.' },
   { term: 'HMAC', expansion: 'hash-based message authentication code', group: 'Security and compliance',
     plain: 'A signature that proves a message came from who it says and was not changed on the way.' },
   { term: 'GDPR', expansion: 'General Data Protection Regulation', group: 'Security and compliance',
@@ -355,6 +359,10 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'Vector search that trades a little recall for a huge speed-up by not comparing the query with every vector.' },
   { term: 'IVF', expansion: 'inverted file index', group: 'Retrieval and data',
     plain: 'A vector index that groups vectors into clusters and searches only the clusters nearest the query.' },
+  { term: 'PQ', expansion: 'product quantization', group: 'Retrieval and data',
+    plain: 'A way to compress each vector into short codes, so a large index fits in memory at a small cost in accuracy.' },
+  { term: 'INT8', expansion: '8-bit integer', group: 'Retrieval and data',
+    plain: 'Storing each vector number in one byte instead of four, which cuts index memory at a small cost in recall.' },
   { term: 'FAISS', group: 'Retrieval and data',
     plain: 'Meta’s open-source library for fast vector similarity search on CPU or GPU.' },
   { term: 'RAGAS', group: 'Retrieval and data',
@@ -414,7 +422,7 @@ export const NOT_ACRONYMS = new Set([
   // Shouted "as", the SQL keyword, and PCAOB audit-standard numbers (AS 2201)
   'AS',
   // Regions, well-known names and products, units, versions
-  'US', 'EU', 'APAC', 'EMEA', 'AMER', 'AWS', 'SAP', 'VIP', 'OS', 'IT', 'IP', 'KB', 'GB', 'MB',
+  'US', 'EU', 'APAC', 'EMEA', 'AMER', 'AWS', 'SAP', 'VIP', 'OS', 'IT', 'IP', 'KB', 'GB', 'MB', 'TB',
   'UI', 'UX', 'URL', 'HTTP', 'HTTPS', 'ASCII', 'SHA256', 'V1', 'V2', 'Q3', 'CD', 'CI', 'SOC',
   'DM',
   // SQL keywords and name fragments: ROW FILTER, MT-Bench, and PCI / DSS as the two
@@ -428,6 +436,10 @@ export const NOT_ACRONYMS = new Set([
   // a THINK / ACT / OBSERVE loop label, a mermaid node id (GW), ticket-id prefixes
   // (MRD-4290, TKT-3), product-name fragments (Azure AD, VS Code), a currency and a region.
   'IF', 'IS', 'AND', 'OR', 'ACT', 'GW', 'MRD', 'TKT', 'AD', 'VS', 'USD', 'APJ',
+  // Mermaid flowchart direction keyword (flowchart TD)
+  'TD',
+  // SQL column type in the T5.4 and T4 Databricks row-filter examples (sensitivity_lvl INT).
+  'INT',
 ])
 
 export const glossaryAnchor = (term: string) =>
