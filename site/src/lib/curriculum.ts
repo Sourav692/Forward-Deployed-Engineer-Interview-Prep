@@ -626,6 +626,7 @@ export const MODULES: CurriculumModule[] = [
       'chunking-reference-by-doc-type',
       'parent-document-retrieval-interview-tutorial',
       'chunking-retrieval-fusion',
+      'module-09-memory-databases-caching-for-genai-systems',
     ],
     seeAlso: [],
   },
@@ -749,10 +750,13 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'How does the assistant remember users safely?',
     commonMistakes: ['Long-term memory with no deletion policy'],
     lessons: [
-      'state-memory-sessions',
-      'memory-and-state-interview-tutorial',
-      'module-09-memory-databases-caching-for-genai-systems',
-      'ch07-knowledge-memory-retrieval',
+      'why-agents-need-state',
+      'types-of-memory',
+      'short-term-memory-and-the-context-window',
+      'long-term-memory-write-retrieve-forget',
+      'advanced-memory-architectures',
+      'memory-in-production',
+      'practise-memory-and-state',
     ],
     seeAlso: [],
   },
@@ -778,7 +782,7 @@ export const MODULES: CurriculumModule[] = [
       'the-eight-guard-checks',
       'guarding-tool-calls',
     ],
-    seeAlso: ['state-memory-sessions'],
+    seeAlso: ['why-agents-need-state'],
   },
   {
     slug: 'multi-agent-systems',
@@ -939,6 +943,7 @@ export const MODULES: CurriculumModule[] = [
       'cram-sheet-s15-s16',
       'additions-beyond-playbook',
       'cost-latency-cicd-rigor-and-build-vs-buy',
+      'module-09-caching-in-genai-systems',
     ],
     seeAlso: [],
   },
@@ -1591,7 +1596,18 @@ export const MODULES: CurriculumModule[] = [
  * the new `<moduleSlug>/<lessonSlug>` it moved to, or `null` when it was withdrawn
  * on purpose.
  */
-export const RENAMED: Record<string, string | null> = {}
+export const RENAMED: Record<string, string | null> = {
+  // T3.4 consolidated into seven lessons (canonical-homes spec, "Consolidated modules").
+  'memory-and-state/state-memory-sessions': 'memory-and-state/why-agents-need-state',
+  'memory-and-state/memory-and-state-interview-tutorial': 'memory-and-state/short-term-memory-and-the-context-window',
+  'memory-and-state/ch07-knowledge-memory-retrieval': 'memory-and-state/long-term-memory-write-retrieve-forget',
+  'memory-and-state/module-09-memory-databases-caching-for-genai-systems':
+    'chunking-and-indexing/module-09-memory-databases-caching-for-genai-systems',
+}
+
+/** Credit for the T3.4 consolidated lessons that summarise ideas from the third-party Chapter 7. */
+const T3_4_CH07_CREDIT =
+  'Draws on ideas from Chapter 7 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.'
 
 export const LESSONS: CurriculumLesson[] = [
   {
@@ -1891,13 +1907,76 @@ export const LESSONS: CurriculumLesson[] = [
     publish: 'credited',
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
   },
+  // T3.4 Memory and state: seven consolidated lessons. They replace the three
+  // excluded sources below; Module 9's memory topics are taught here and its other
+  // topics publish as slices under T2.3 and T4.5.
+  {
+    slug: 'why-agents-need-state',
+    title: 'Why Agents Need State',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/01_Why_Agents_Need_State.md',
+    home: 'memory-and-state',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'types-of-memory',
+    title: 'Types of Memory',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/02_Types_of_Memory.md',
+    home: 'memory-and-state',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T3_4_CH07_CREDIT,
+  },
+  {
+    slug: 'short-term-memory-and-the-context-window',
+    title: 'Short-Term Memory and the Context Window',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/03_Short_Term_Memory_and_the_Context_Window.md',
+    home: 'memory-and-state',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'long-term-memory-write-retrieve-forget',
+    title: 'Long-Term Memory: Write, Retrieve, and Forget',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/04_Long_Term_Memory_Write_Retrieve_Forget.md',
+    home: 'memory-and-state',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T3_4_CH07_CREDIT,
+  },
+  {
+    slug: 'advanced-memory-architectures',
+    title: 'Advanced Memory Architectures',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/05_Advanced_Memory_Architectures.md',
+    home: 'memory-and-state',
+    kind: 'sync',
+    publish: 'own',
+  },
+  {
+    slug: 'memory-in-production',
+    title: 'Memory in Production',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/06_Memory_in_Production.md',
+    home: 'memory-and-state',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T3_4_CH07_CREDIT,
+  },
+  {
+    slug: 'practise-memory-and-state',
+    title: 'Practise Memory and State Interview Questions',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/07_Practise_Memory_and_State_Interview_Questions.md',
+    home: 'memory-and-state',
+    kind: 'sync',
+    publish: 'credited',
+    credit: T3_4_CH07_CREDIT,
+  },
   {
     slug: 'state-memory-sessions',
     title: 'State, Memory and Sessions',
     source: '01_Concept_Tutorials/FDE_Handbook/03_Robust_Agents/02_State_Memory_Sessions.md',
     home: 'memory-and-state',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'memory-and-state-interview-tutorial',
@@ -1905,15 +1984,31 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/07_memory_and_state_INTERVIEW_TUTORIAL.md',
     home: 'memory-and-state',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'module-09-memory-databases-caching-for-genai-systems',
-    title: 'Module 9 – Memory, Databases & Caching for GenAI Systems (Beginner Guide + Keywords)',
+    title: 'Databases and Vector Search for GenAI Systems',
     source: '01_Concept_Tutorials/GenAI_Engineering_Modules/Module_09_Memory_Databases_Caching_for_GenAI_Systems.md',
-    home: 'memory-and-state',
+    home: 'chunking-and-indexing',
     kind: 'sync',
     publish: 'own',
+    sections: {
+      exclude: [
+        'Topic 1: Memory Design in AI Systems',
+        'Topic 4: Caching in GenAI Systems',
+        'Topic 5: Memory & Caching for Agent Systems',
+      ],
+    },
+  },
+  {
+    slug: 'module-09-caching-in-genai-systems',
+    title: 'Caching in GenAI Systems',
+    source: '01_Concept_Tutorials/GenAI_Engineering_Modules/Module_09_Memory_Databases_Caching_for_GenAI_Systems.md',
+    home: 'cost-and-latency',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['Topic 4: Caching in GenAI Systems'] },
   },
   {
     slug: 'ch07-knowledge-memory-retrieval',
@@ -1921,7 +2016,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Agentic_System_Design_Book/ch07_knowledge_memory_retrieval.md',
     home: 'memory-and-state',
     kind: 'sync',
-    publish: 'credited',
+    publish: 'excluded',
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
   },
   {
