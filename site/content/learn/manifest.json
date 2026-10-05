@@ -1384,7 +1384,7 @@
     },
     {
       "slug": "g13-evaluation-and-release-gating",
-      "title": "G13 Evaluation And Release Gating",
+      "title": "G13 Evaluation and Release Gating",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1395,7 +1395,7 @@
     },
     {
       "slug": "g07-secure-multi-tenant-ai-platform",
-      "title": "G07 Secure Multi Tenant AI Platform",
+      "title": "G07 Secure Multi-Tenant AI Platform",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1406,7 +1406,7 @@
     },
     {
       "slug": "g14-observability-and-production-diagnosis",
-      "title": "G14 Observability And Production Diagnosis",
+      "title": "G14 Observability and Production Diagnosis",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1417,7 +1417,7 @@
     },
     {
       "slug": "scale-prototype-to-production",
-      "title": "61 Scale Prototype To Production",
+      "title": "Scale a Prototype to Production",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1428,7 +1428,7 @@
     },
     {
       "slug": "g18-consumer-scale-chat-service",
-      "title": "G18 Consumer Scale Chat Service",
+      "title": "G18 Consumer-Scale Chat Service",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1439,7 +1439,7 @@
     },
     {
       "slug": "g10-high-volume-batch-pipeline",
-      "title": "G10 High Volume Batch Pipeline",
+      "title": "G10 High-Volume Batch Pipeline",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1450,7 +1450,7 @@
     },
     {
       "slug": "g19-model-development-and-post-training",
-      "title": "G19 Model Development And Post Training",
+      "title": "G19 Model Development and Post-Training",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1471,170 +1471,239 @@
       "href": "/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving"
     },
     {
-      "slug": "the-12-part-framework",
-      "title": "The 12-Part Framework",
+      "slug": "the-twelve-part-design-framework",
+      "title": "The Twelve-Part Design Framework",
       "track": "ai-systems-design",
       "module": "design-framework",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md",
-      "estMinutes": 23,
-      "href": "/learn/ai-systems-design/design-framework/the-12-part-framework"
-    },
-    {
-      "slug": "the-15-principles",
-      "title": "The 15 Principles",
-      "track": "ai-systems-design",
-      "module": "design-framework",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/02_The_15_Principles.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/01_The_Twelve_Part_Design_Framework.md",
       "estMinutes": 8,
-      "href": "/learn/ai-systems-design/design-framework/the-15-principles"
+      "href": "/learn/ai-systems-design/design-framework/the-twelve-part-design-framework"
     },
     {
-      "slug": "worked-example-travel-agent",
-      "title": "Worked Example — The Travel Agent",
+      "slug": "architecture-data-and-request-flow",
+      "title": "Architecture, Data, and Request Flow",
       "track": "ai-systems-design",
       "module": "design-framework",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/04_Worked_Example_Travel_Agent.md",
-      "estMinutes": 9,
-      "href": "/learn/ai-systems-design/design-framework/worked-example-travel-agent"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/02_Architecture_Data_and_Request_Flow.md",
+      "estMinutes": 12,
+      "href": "/learn/ai-systems-design/design-framework/architecture-data-and-request-flow"
     },
     {
-      "slug": "the-60-minute-whiteboard-method",
-      "title": "The 60-Minute Whiteboard Method",
+      "slug": "scale-reliability-and-security",
+      "title": "Scale, Reliability, and Security",
+      "track": "ai-systems-design",
+      "module": "design-framework",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/03_Scale_Reliability_and_Security.md",
+      "estMinutes": 12,
+      "href": "/learn/ai-systems-design/design-framework/scale-reliability-and-security"
+    },
+    {
+      "slug": "design-principles-as-tie-breakers",
+      "title": "Design Principles as Tie-Breakers",
+      "track": "ai-systems-design",
+      "module": "design-framework",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md",
+      "estMinutes": 9,
+      "href": "/learn/ai-systems-design/design-framework/design-principles-as-tie-breakers"
+    },
+    {
+      "slug": "reviewing-an-agent-architecture",
+      "title": "Reviewing an Agent Architecture",
+      "track": "ai-systems-design",
+      "module": "design-framework",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/05_Reviewing_an_Agent_Architecture.md",
+      "estMinutes": 10,
+      "href": "/learn/ai-systems-design/design-framework/reviewing-an-agent-architecture"
+    },
+    {
+      "slug": "the-six-step-whiteboard-clock",
+      "title": "The Six-Step Whiteboard Clock",
       "track": "ai-systems-design",
       "module": "sixty-minute-whiteboard",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md",
-      "estMinutes": 9,
-      "href": "/learn/ai-systems-design/sixty-minute-whiteboard/the-60-minute-whiteboard-method"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.2_The_60_Minute_Whiteboard_Method/01_The_Six_Step_Whiteboard_Clock.md",
+      "estMinutes": 8,
+      "href": "/learn/ai-systems-design/sixty-minute-whiteboard/the-six-step-whiteboard-clock"
     },
     {
-      "slug": "monolith-vs-microservices",
-      "title": "Monolith vs Microservices",
+      "slug": "deep-dive-failure-modes-and-the-close",
+      "title": "Deep Dive, Failure Modes, and the Close",
+      "track": "ai-systems-design",
+      "module": "sixty-minute-whiteboard",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.2_The_60_Minute_Whiteboard_Method/02_Deep_Dive_Failure_Modes_and_the_Close.md",
+      "estMinutes": 7,
+      "href": "/learn/ai-systems-design/sixty-minute-whiteboard/deep-dive-failure-modes-and-the-close"
+    },
+    {
+      "slug": "monoliths-microservices-and-the-evolution-model",
+      "title": "Monoliths, Microservices, and the Evolution Model",
       "track": "ai-systems-design",
       "module": "architecture-patterns",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/03_Monolith_vs_Microservices.md",
-      "estMinutes": 7,
-      "href": "/learn/ai-systems-design/architecture-patterns/monolith-vs-microservices"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/01_Monoliths_Microservices_and_the_Evolution_Model.md",
+      "estMinutes": 8,
+      "href": "/learn/ai-systems-design/architecture-patterns/monoliths-microservices-and-the-evolution-model"
     },
     {
-      "slug": "ch23-system-design-patterns",
-      "title": "Chapter 23 — System Design Patterns for Agents",
+      "slug": "orchestration-patterns-for-agents",
+      "title": "Orchestration Patterns for Agents",
       "track": "ai-systems-design",
       "module": "architecture-patterns",
       "kind": "sync",
       "publish": "credited",
-      "credit": "Selected chapter from *Cracking Agentic AI System Design Interviews*.",
-      "source": "01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md",
-      "estMinutes": 10,
-      "href": "/learn/ai-systems-design/architecture-patterns/ch23-system-design-patterns"
-    },
-    {
-      "slug": "enterprise-ai-assistant",
-      "title": "Case 1 — Enterprise AI Assistant over 100+ Applications",
-      "track": "ai-systems-design",
-      "module": "classic-ai-designs",
-      "kind": "sync",
-      "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/01_Enterprise_AI_Assistant.md",
-      "estMinutes": 7,
-      "href": "/learn/ai-systems-design/classic-ai-designs/enterprise-ai-assistant"
-    },
-    {
-      "slug": "customer-support-assistant",
-      "title": "Case 2 — Customer Support AI Assistant",
-      "track": "ai-systems-design",
-      "module": "classic-ai-designs",
-      "kind": "sync",
-      "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/02_Customer_Support_Assistant.md",
-      "estMinutes": 7,
-      "href": "/learn/ai-systems-design/classic-ai-designs/customer-support-assistant"
-    },
-    {
-      "slug": "coding-assistant",
-      "title": "Case 3 — AI-Powered Coding Assistant",
-      "track": "ai-systems-design",
-      "module": "classic-ai-designs",
-      "kind": "sync",
-      "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/03_Coding_Assistant.md",
-      "estMinutes": 7,
-      "href": "/learn/ai-systems-design/classic-ai-designs/coding-assistant"
-    },
-    {
-      "slug": "recruiting-platform",
-      "title": "Case 4 — AI-Powered Recruiting Platform",
-      "track": "ai-systems-design",
-      "module": "classic-ai-designs",
-      "kind": "sync",
-      "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/04_Recruiting_Platform.md",
+      "credit": "Draws on ideas from Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/02_Orchestration_Patterns_for_Agents.md",
       "estMinutes": 6,
-      "href": "/learn/ai-systems-design/classic-ai-designs/recruiting-platform"
+      "href": "/learn/ai-systems-design/architecture-patterns/orchestration-patterns-for-agents"
     },
     {
-      "slug": "logistics-exception-handling",
-      "title": "Case 5 — AI Logistics Exception-Handling Assistant (the FDE round)",
+      "slug": "context-memory-and-tool-patterns",
+      "title": "Context, Memory, and Tool Patterns",
+      "track": "ai-systems-design",
+      "module": "architecture-patterns",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/03_Context_Memory_and_Tool_Patterns.md",
+      "estMinutes": 6,
+      "href": "/learn/ai-systems-design/architecture-patterns/context-memory-and-tool-patterns"
+    },
+    {
+      "slug": "reliability-and-safety-patterns",
+      "title": "Reliability and Safety Patterns",
+      "track": "ai-systems-design",
+      "module": "architecture-patterns",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/04_Reliability_and_Safety_Patterns.md",
+      "estMinutes": 7,
+      "href": "/learn/ai-systems-design/architecture-patterns/reliability-and-safety-patterns"
+    },
+    {
+      "slug": "cost-patterns-and-the-pattern-audit",
+      "title": "Cost Patterns and the Pattern Audit",
+      "track": "ai-systems-design",
+      "module": "architecture-patterns",
+      "kind": "sync",
+      "publish": "credited",
+      "credit": "Draws on ideas from Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/05_Cost_Patterns_and_the_Pattern_Audit.md",
+      "estMinutes": 6,
+      "href": "/learn/ai-systems-design/architecture-patterns/cost-patterns-and-the-pattern-audit"
+    },
+    {
+      "slug": "enterprise-ai-assistant-integration-layers-at-scale",
+      "title": "Enterprise AI Assistant: Integration Layers at Scale",
       "track": "ai-systems-design",
       "module": "classic-ai-designs",
       "kind": "sync",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/01_Enterprise_AI_Assistant_Integration_Layers_at_Scale.md",
       "estMinutes": 10,
-      "href": "/learn/ai-systems-design/classic-ai-designs/logistics-exception-handling"
+      "href": "/learn/ai-systems-design/classic-ai-designs/enterprise-ai-assistant-integration-layers-at-scale"
     },
     {
-      "slug": "enterprise-rag-with-access-control",
-      "title": "Whiteboard Script — Enterprise RAG with Access Control",
+      "slug": "customer-support-assistant-knowledge-actions-and-approval",
+      "title": "Customer Support Assistant: Knowledge, Actions, and Approval",
       "track": "ai-systems-design",
       "module": "classic-ai-designs",
       "kind": "sync",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md",
-      "estMinutes": 17,
-      "href": "/learn/ai-systems-design/classic-ai-designs/enterprise-rag-with-access-control"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/02_Customer_Support_Assistant_Knowledge_Actions_and_Approval.md",
+      "estMinutes": 12,
+      "href": "/learn/ai-systems-design/classic-ai-designs/customer-support-assistant-knowledge-actions-and-approval"
     },
     {
-      "slug": "whiteboard-scripts-enterprise-rag-on-databricks",
-      "title": "Whiteboard Script — Enterprise RAG with Access Control, on Databricks",
+      "slug": "coding-assistant-context-engineering-under-300-ms",
+      "title": "Coding Assistant: Context Engineering Under 300 ms",
       "track": "ai-systems-design",
       "module": "classic-ai-designs",
       "kind": "sync",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md",
-      "estMinutes": 22,
-      "href": "/learn/ai-systems-design/classic-ai-designs/whiteboard-scripts-enterprise-rag-on-databricks"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/03_Coding_Assistant_Context_Engineering_Under_300_ms.md",
+      "estMinutes": 9,
+      "href": "/learn/ai-systems-design/classic-ai-designs/coding-assistant-context-engineering-under-300-ms"
     },
     {
-      "slug": "agent-platform-for-non-technical-users",
-      "title": "Whiteboard Script — AI Agent Platform for Non-Technical Users",
+      "slug": "recruiting-platform-explainable-ranking-human-decisions",
+      "title": "Recruiting Platform: Explainable Ranking, Human Decisions",
       "track": "ai-systems-design",
       "module": "classic-ai-designs",
       "kind": "sync",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md",
+      "estMinutes": 9,
+      "href": "/learn/ai-systems-design/classic-ai-designs/recruiting-platform-explainable-ranking-human-decisions"
+    },
+    {
+      "slug": "logistics-exceptions-designing-around-a-policy-gate",
+      "title": "Logistics Exceptions: Designing Around a Policy Gate",
+      "track": "ai-systems-design",
+      "module": "classic-ai-designs",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/05_Logistics_Exceptions_Designing_Around_a_Policy_Gate.md",
+      "estMinutes": 11,
+      "href": "/learn/ai-systems-design/classic-ai-designs/logistics-exceptions-designing-around-a-policy-gate"
+    },
+    {
+      "slug": "access-controlled-enterprise-rag",
+      "title": "Access-Controlled Enterprise RAG",
+      "track": "ai-systems-design",
+      "module": "classic-ai-designs",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
       "estMinutes": 16,
-      "href": "/learn/ai-systems-design/classic-ai-designs/agent-platform-for-non-technical-users"
+      "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag"
     },
     {
-      "slug": "scoping-doc-to-deployed-agent-in-two-weeks",
-      "title": "Whiteboard Script — Scoping Doc to Deployed Agent in Under Two Weeks",
+      "slug": "access-controlled-rag-on-databricks",
+      "title": "Access-Controlled RAG on Databricks",
       "track": "ai-systems-design",
       "module": "classic-ai-designs",
       "kind": "sync",
       "publish": "own",
-      "source": "02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
+      "estMinutes": 19,
+      "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks"
+    },
+    {
+      "slug": "safe-workflow-automation-for-non-technical-users",
+      "title": "Safe Workflow Automation for Non-Technical Users",
+      "track": "ai-systems-design",
+      "module": "classic-ai-designs",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/08_Safe_Workflow_Automation_for_Non_Technical_Users.md",
+      "estMinutes": 15,
+      "href": "/learn/ai-systems-design/classic-ai-designs/safe-workflow-automation-for-non-technical-users"
+    },
+    {
+      "slug": "delivering-an-agent-in-two-weeks-with-enforced-gates",
+      "title": "Delivering an Agent in Two Weeks with Enforced Gates",
+      "track": "ai-systems-design",
+      "module": "classic-ai-designs",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md",
       "estMinutes": 14,
-      "href": "/learn/ai-systems-design/classic-ai-designs/scoping-doc-to-deployed-agent-in-two-weeks"
+      "href": "/learn/ai-systems-design/classic-ai-designs/delivering-an-agent-in-two-weeks-with-enforced-gates"
     },
     {
       "slug": "g01-enterprise-knowledge-assistant",
@@ -1660,7 +1729,7 @@
     },
     {
       "slug": "g03-tool-using-agent-with-safety-controls",
-      "title": "G03 Tool Using Agent With Safety Controls",
+      "title": "G03 Tool-Using Agent with Safety Controls",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1693,7 +1762,7 @@
     },
     {
       "slug": "g06-nl-over-governed-data",
-      "title": "G06 NL Over Governed Data",
+      "title": "G06 Natural Language over Governed Data",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1737,7 +1806,7 @@
     },
     {
       "slug": "g12-scoping-to-deployed-agent",
-      "title": "G12 Scoping To Deployed Agent",
+      "title": "G12 Scoping to Deployed Agent",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1748,7 +1817,7 @@
     },
     {
       "slug": "g15-agent-platform-for-non-technical-users",
-      "title": "G15 Agent Platform For Non Technical Users",
+      "title": "G15 Agent Platform for Non-Technical Users",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1759,7 +1828,7 @@
     },
     {
       "slug": "g16-real-time-call-assistant",
-      "title": "G16 Real Time Call Assistant",
+      "title": "G16 Real-Time Call Assistant",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1781,7 +1850,7 @@
     },
     {
       "slug": "standalone-designs-recruiting-platform",
-      "title": "04 Recruiting Platform",
+      "title": "AI Recruiting Platform",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1793,7 +1862,7 @@
     },
     {
       "slug": "production-llm-gateway",
-      "title": "100 Production LLM Gateway",
+      "title": "Production LLM Gateway",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1804,7 +1873,7 @@
     },
     {
       "slug": "travel-agent-worked-example",
-      "title": "14 Travel Agent Worked Example",
+      "title": "Travel Agent Worked Example",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1816,7 +1885,7 @@
     },
     {
       "slug": "air-gapped-ai-system",
-      "title": "19 Air Gapped AI System",
+      "title": "Air-Gapped AI System",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1828,7 +1897,7 @@
     },
     {
       "slug": "reliable-workflow-orchestration",
-      "title": "23 Reliable Workflow Orchestration",
+      "title": "Reliable Workflow Orchestration",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1840,7 +1909,7 @@
     },
     {
       "slug": "configurable-platform-customer-workflows",
-      "title": "25 Configurable Platform Customer Workflows",
+      "title": "Configurable Platform for Customer Workflows",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1852,7 +1921,7 @@
     },
     {
       "slug": "enterprise-chatbot-platform",
-      "title": "26 Enterprise Chatbot Platform",
+      "title": "Enterprise Chatbot Platform",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1864,7 +1933,7 @@
     },
     {
       "slug": "prioritize-ai-use-cases",
-      "title": "60 Prioritize AI Use Cases",
+      "title": "Prioritise AI Use Cases",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1875,7 +1944,7 @@
     },
     {
       "slug": "build-when-customer-data-is-poor",
-      "title": "62 Build When Customer Data Is Poor",
+      "title": "Build When Customer Data Is Poor",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1886,7 +1955,7 @@
     },
     {
       "slug": "self-adapting-agent",
-      "title": "80 Self Adapting Agent",
+      "title": "Self-Adapting Agent",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1897,7 +1966,7 @@
     },
     {
       "slug": "personal-assistant-with-memory",
-      "title": "98 Personal Assistant With Memory",
+      "title": "Personal Assistant with Memory",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1908,7 +1977,7 @@
     },
     {
       "slug": "decomposition-classics-67-68-69",
-      "title": "Decomposition Classics 67 68 69",
+      "title": "Decomposition Classics: 911 Response Times, Bank Fraud, and Medication Errors",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
