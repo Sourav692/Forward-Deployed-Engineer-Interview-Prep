@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  site:
+    name: Verify site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Sync content from root sources
+        run: npm run sync
+
+      - name: Generated content is committed
+        run: |
+          # sync rewrites generatedAt on every run, so ignore manifest.json
+          drift=$(git status --porcelain -- content public/fde-last-day-prep ':!content/manifest.json')
+          if [ -n "$drift" ]; then
+            echo "$drift"
+            echo "::error::Generated content is out of date. Run npm run sync in site/ and commit the result."
+            exit 1
+          fi
+
+      - name: Check content
+        run: npm run check:content
+
+      - name: Check progress rules
+        run: npm run check:rules
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npx next build
+
+      - name: Typecheck
+        run: npx tsc --noEmit
