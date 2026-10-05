@@ -7,15 +7,16 @@
  *
  * Fails on: duplicate or malformed slugs, track slugs that collide with the live
  * site's track ids, dangling references, a lesson without exactly one home,
- * prerequisite cycles, module statuses that contradict their lessons, and lesson
+ * prerequisite cycles, module statuses that contradict their lessons, RENAMED
+ * redirects that chain, point at an unpublished lesson or retire a live one, and lesson
  * slices that overlap, drop a heading or name a heading the source lacks.
  */
-import { LESSONS, MODULES, TRACKS } from '../src/lib/curriculum.ts'
+import { LESSONS, MODULES, RENAMED, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { publishedHeadings, splitH2, stripFrontMatter, unknownHeadings } from './learn.mjs'
+import { lessonDecision, publishedHeadings, splitH2, stripFrontMatter, unknownHeadings } from './learn.mjs'
 
 const errors: string[] = []
 const fail = (msg: string) => errors.push(msg)
@@ -155,6 +156,25 @@ for (const m of MODULES) {
     for (const h of lessons.length > 1 ? headings : []) {
       if (!owner.has(h) && !excluded.has(h)) fail(`source ${source}: "## ${h}" is published by none of [${names}]; include it in one or exclude it on purpose`)
     }
+  }
+}
+
+// Retired lesson redirects (RENAMED, one file per track in src/lib/consolidation/).
+// Every value must be a lesson published right now, reached in one hop: a value
+// that is itself a RENAMED key would make next.config.ts emit a redirect chain.
+// A key that is still published would shadow a live page with a redirect.
+{
+  const published = new Set(
+    LESSONS.filter(
+      (l) => l.kind === 'sync' && lessonDecision(l) === 'publish' && moduleBySlug.get(l.home)?.lessons.includes(l.slug),
+    ).map((l) => `${l.home}/${l.slug}`),
+  )
+  for (const [from, to] of Object.entries(RENAMED)) {
+    if (!moduleBySlug.has(from.split('/')[0])) fail(`RENAMED key ${from} names an unknown module`)
+    if (published.has(from)) fail(`RENAMED key ${from} is still a published lesson; drop the entry or retire the lesson`)
+    if (to === null) continue
+    if (to in RENAMED) fail(`RENAMED chain: ${from} → ${to} → ${RENAMED[to]}; point ${from} straight at the final lesson`)
+    else if (!published.has(to)) fail(`RENAMED maps ${from} to ${to}, which is not a published lesson`)
   }
 }
 
