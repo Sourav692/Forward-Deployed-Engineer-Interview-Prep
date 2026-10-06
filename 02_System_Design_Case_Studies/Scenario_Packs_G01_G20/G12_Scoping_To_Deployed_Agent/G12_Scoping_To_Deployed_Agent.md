@@ -378,7 +378,7 @@ Read these as one engagement, run once. The eval score and time-to-value are dem
 | Source in #65 | What it adds beyond the anchor script |
 |---|---|
 | Module 10 doc 3, Scoping to Production in Two Weeks | The fourteen-day table with exit conditions, the trust-ladder link to Module 05, the one-breath restatement |
-| `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/data/case_study.json` | The two success metrics verbatim, the three connectors, the SME id |
+| `projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/data/case_study.json` | The two success metrics verbatim, the three connectors, the SME id |
 | AI_Engineer `INTERVIEW_SCRIPT.md` | Identical to the anchor; the anchor was lifted from it, so reading one covers both |
 | The code project (`run_engagement_demo.py`, `demo_gate_failure.py`, 17 tests) | The evidence strings and figures in section 5, and the negative-control demo |
 | Module 10 doc 4 and `docs/05` | The five metrics, the two gate pairs, the evidence-bar critique, credentials, residency and tenancy |
@@ -483,7 +483,7 @@ All paths are relative to the repository root.
 |---|---|
 | 1, 2, 4, 6, 7, 8, 9, 11, 14 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` (the anchor, #9) |
 | 1, 3, 4, 5, 8 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` (#65) |
-| 3 | `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/data/case_study.json` (#65) |
+| 3 | `projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/data/case_study.json` (#65) |
 | 3, 5, 8, 12, 13 | `05_FDE_Delivery_and_Scoping/Delivery_Framework/` — `INTERVIEW_SCRIPT.md`, `README.md`, `scripts/run_engagement_demo.py`, `src/delivery_framework/accelerators.py` (#65) |
 | 6, 9, 10, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`; `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/05-security-gate-depth-and-tenant-scale.md` |
 | 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #9 |
@@ -491,8 +491,8 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Demo script `run_engagement_demo.py` (pinned companion revision)](https://github.com/Sourav692/AI-ENGINEERING-DEMYSTIFIED/blob/d3cd0e5ea2c5f3c7609bc6d9b767bdff5bd19071/06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/scripts/run_engagement_demo.py) — the 0.83 eval score, "verified <2min" rollback and week-2 metrics are hard-coded evidence strings, not measurements
-- [Gate definitions `gates.py` (pinned companion revision)](https://github.com/Sourav692/AI-ENGINEERING-DEMYSTIFIED/blob/d3cd0e5ea2c5f3c7609bc6d9b767bdff5bd19071/06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/src/delivery_framework/gates.py) — the customer SME signs two gates; the FDA signs the eval and rollback gates
+- [Demo script `run_engagement_demo.py` (pinned companion revision)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/scripts/run_engagement_demo.py) — the 0.83 eval score, "verified <2min" rollback and week-2 metrics are hard-coded evidence strings, not measurements
+- [Gate definitions `gates.py` (pinned companion revision)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/src/delivery_framework/gates.py) — the customer SME signs two gates; the FDA signs the eval and rollback gates
 - [Zendesk: Announcing the removal of API tokens](https://support.zendesk.com/hc/en-us/articles/10851263566234-Announcing-the-removal-of-API-tokens-as-an-authentication-method-for-API-requests) — API tokens are all-or-nothing; no new tokens from 27 Oct 2026, all off 30 Apr 2027
 - [Zendesk: Creating and using OAuth tokens with the API](https://developer.zendesk.com/documentation/authentication/creating-and-using-oauth-tokens-with-the-api/) — read-only access needs the OAuth `read` scope
 - [Atlassian: Scoped API tokens in Confluence Cloud](https://support.atlassian.com/confluence/kb/scoped-api-tokens-in-confluence-cloud/) — Confluence supports scoped tokens

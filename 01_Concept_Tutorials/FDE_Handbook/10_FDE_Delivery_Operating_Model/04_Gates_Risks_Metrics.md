@@ -3,7 +3,7 @@
 > **Level** 🔴 The FDE Role · **Module** 10 · **Doc** 4 of 7 · **Time** ~35 min
 > **Prerequisites:** [Scoping Doc to Production in Two Weeks](03_Scoping_To_Production_In_Two_Weeks.md); Module 04 doc 2 (the `Decision` shape); Module 06 doc 1 (secrets)
 > **Source material:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md` §B.3–B.6; `docs/05-security-gate-depth-and-tenant-scale.md`; `README.md`
-> **Companion implementation:** `06_Interview_Prep/Handbook/10_FDE_Delivery_Operating_Model/project/scripts/demo_gate_failure.py` — the negative-control demo
+> **Companion implementation:** `projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/scripts/demo_gate_failure.py` — the negative-control demo
 
 ## Why this matters
 

@@ -3,7 +3,7 @@
 > **Level** 🟢 Foundations · **Module** 01 · **Doc** 5 of 5 · **Time** ~30 min + lab
 > **Prerequisites:** [The Tool-Calling Loop From Scratch](04_Tool_Calling_Loop_From_Scratch.md)
 > **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/src/langgraph_agent.py`, `README.md` *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
-> **Companion implementation:** `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/langgraph_react_agent.ipynb` · `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/robust_langgraph_tool_calling_agent.ipynb` · `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/langgraph_agent.py`
+> **Companion implementation:** `projects/01_foundational_projects/01_agent_tool_calling_foundations/notebooks/langgraph_react_agent.ipynb` · `projects/01_foundational_projects/01_agent_tool_calling_foundations/notebooks/robust_langgraph_tool_calling_agent.ipynb` · `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/langgraph_agent.py`
 
 ## Why this matters
 
@@ -153,12 +153,12 @@ And what it does *not* buy you: the step budget, the confirmation policy, the re
 
 | Concept | Where |
 |---|---|
-| State schema | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/langgraph_agent.py` → `AgentState` |
+| State schema | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/langgraph_agent.py` → `AgentState` |
 | Nodes and edge | `build_graph` → `agent_node`, `tools_node`, `should_continue` |
 | Running | `run_query` |
-| Guided notebook | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/langgraph_react_agent.ipynb` (+ `.py` twin) |
-| Checkpointing and interrupts | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/robust_langgraph_tool_calling_agent.ipynb` |
-| Real-LLM variant | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/agent_tool_calling_demo_openai.ipynb` (needs an API key) |
+| Guided notebook | `projects/01_foundational_projects/01_agent_tool_calling_foundations/notebooks/langgraph_react_agent.ipynb` |
+| Checkpointing and interrupts | `projects/01_foundational_projects/01_agent_tool_calling_foundations/notebooks/robust_langgraph_tool_calling_agent.ipynb` |
+| Real-LLM variant | `projects/01_foundational_projects/01_agent_tool_calling_foundations/notebooks/agent_tool_calling_demo_openai.ipynb` (needs an API key) |
 
 ## Interview lens
 

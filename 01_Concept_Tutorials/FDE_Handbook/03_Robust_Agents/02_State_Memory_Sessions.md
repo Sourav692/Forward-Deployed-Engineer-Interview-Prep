@@ -78,11 +78,11 @@ One more distinction that saves a lot of pain. A refund investigation, a warrant
 
 | Concept | Where |
 |---|---|
-| Session state | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/scratch_agent.py` → `Session` |
+| Session state | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/scratch_agent.py` → `Session` |
 | History recorded on final answer | `Agent.run` → `session.history.append(...)` |
 | Memo shared across turns | `execute_tool(..., memo=session.memo)` |
-| Graph-level run state | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/langgraph_agent.py` → `AgentState` |
-| Checkpointing and interrupts | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/robust_langgraph_tool_calling_agent.ipynb` |
+| Graph-level run state | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/langgraph_agent.py` → `AgentState` |
+| Checkpointing and interrupts | `projects/01_foundational_projects/01_agent_tool_calling_foundations/notebooks/robust_langgraph_tool_calling_agent.ipynb` |
 | Test | `test_session_memo_persists_across_turns` |
 
 ## Interview lens
