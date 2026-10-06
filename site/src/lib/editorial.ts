@@ -105,7 +105,7 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * joins the list in Phase 2.
  */
 export const NAV = [
-  { id: 'start', label: 'Start', href: '/start', match: ['/start', '/guide'] },
+  { id: 'start', label: 'Choose Your Path', href: '/start', match: ['/start', '/guide'] },
   { id: 'learn', label: 'Learn', href: '/learn', match: ['/learn'] },
   {
     id: 'design',

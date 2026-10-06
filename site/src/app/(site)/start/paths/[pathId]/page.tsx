@@ -45,7 +45,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
 
   return (
     <>
-      <Breadcrumbs items={[{ label: 'Start', href: '/start' }, { label: `${path.title} Path` }]} />
+      <Breadcrumbs items={[{ label: 'Choose Your Path', href: '/start' }, { label: `${path.title} Path` }]} />
       <div className="max-w-3xl">
         <header>
           <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Learning Path</p>
