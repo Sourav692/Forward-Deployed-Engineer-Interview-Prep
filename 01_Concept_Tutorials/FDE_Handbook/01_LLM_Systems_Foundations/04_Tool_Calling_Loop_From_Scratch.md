@@ -3,7 +3,7 @@
 > **Level** 🟢 Foundations · **Module** 01 · **Doc** 4 of 5 · **Time** ~35 min + lab
 > **Prerequisites:** [What an Agent Actually Is](03_What_An_Agent_Actually_Is.md)
 > **Source material:** `1. Company_Wise_Preparation/2. DevRev/Coding_Round/agent_tool_calling_demo/src/scratch_agent.py`, `src/brain.py`, `README.md` *(source not in this repo — the DevRev coding-round material was removed; kept as provenance)*
-> **Companion implementation:** `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/notebooks/agent_tool_calling_demo.ipynb` · `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/scratch_agent.py` · `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/tests/test_agent.py`
+> **Companion implementation:** `projects/01_foundational_projects/01_agent_tool_calling_foundations/notebooks/agent_tool_calling_demo.ipynb` · `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/scratch_agent.py` · `projects/01_foundational_projects/01_agent_tool_calling_foundations/tests/test_agent.py`
 
 ## Why this matters
 
@@ -166,14 +166,14 @@ Same contract; the `Agent` class is untouched. This is the separation that matte
 
 | Concept | Where |
 |---|---|
-| The loop | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/scratch_agent.py` → `Agent.run` |
-| Cross-turn state | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/scratch_agent.py` → `Session` |
+| The loop | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/scratch_agent.py` → `Agent.run` |
+| Cross-turn state | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/scratch_agent.py` → `Session` |
 | Max-iteration guard | the `while iterations < self.max_iterations` condition |
 | Pause-for-confirmation ending | the `except ConfirmationRequired` branch and `RunResult.blocked_on` |
-| Deterministic brain | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/brain.py` → `RuleBasedBrain.decide`, `_classify` |
-| LLM brain | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/brain.py` → `make_llm_brain` |
-| Tools and registry | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/src/tools.py` → `Tool`, `ToolRegistry`, `build_registry` |
-| Tests | `06_Interview_Prep/Handbook/01_LLM_Systems_Foundations/project/tests/test_agent.py` — 12 cases covering the loop, guard, gate, memo, retry, fallback, disambiguation |
+| Deterministic brain | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/brain.py` → `RuleBasedBrain.decide`, `_classify` |
+| LLM brain | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/brain.py` → `make_llm_brain` |
+| Tools and registry | `projects/01_foundational_projects/01_agent_tool_calling_foundations/src/tools.py` → `Tool`, `ToolRegistry`, `build_registry` |
+| Tests | `projects/01_foundational_projects/01_agent_tool_calling_foundations/tests/test_agent.py` — 12 cases covering the loop, guard, gate, memo, retry, fallback, disambiguation |
 
 Run it:
 
