@@ -219,14 +219,14 @@ A queue or event stream holds the message until it can be processed.
 
 ### Testing AI-generated code specifically
 
-| Risk | Test approach |
-|---|---|
-| Plausible but wrong logic | Property-based tests (Hypothesis); mutation testing on critical modules, to check that tests actually fail when code is broken |
-| Behaviour drift in a migration | Golden-output / parallel-run diff: same inputs into legacy and new, compare outputs |
-| Tests that assert nothing | Coverage *and* mutation score; check that tests import production code |
-| Security regressions | SAST + secret scan + authz and tenant-isolation tests on every PR |
-| Flaky tests poisoning validation | Run the baseline branch first; quarantine flaky tests with sign-off and track them (`04_` §7) |
-| Breaking public contracts | Contract tests + API diff tooling in CI |
+AI-generated code can look convincing and still be wrong. I would check it in six ways:
+
+- **Could the logic be wrong?** I would try many valid inputs and edge cases with property-based tests, using a tool such as Hypothesis. For critical code, I would also introduce small deliberate bugs and check that the tests catch them. That is mutation testing.
+- **Did the migration change what users get?** I would send the same inputs to the old and new systems, then compare their outputs. Any difference needs an explanation before we switch traffic.
+- **Do the tests actually prove anything?** I would check that they call the real production code. Coverage shows what ran; a mutation score shows whether the tests notice broken behaviour. I would look at both.
+- **Did we weaken security?** On every pull request, I would scan the code for security issues and leaked secrets. I would also test that users cannot take unauthorised actions or read someone else's or another tenant's data.
+- **Are the failures caused by flaky tests?** I would run the tests on the baseline branch first. If a test fails there too, I would quarantine it only with sign-off and track the fix (`04_` §7).
+- **Did we break an API that another team uses?** I would run contract tests and compare the old and new API definitions in continuous integration (CI).
 
 **Trade-off to say out loud:** *"More test layers means slower PRs. I put fast unit and contract tests on every PR, and heavier E2E, load and mutation tests on merge or nightly, gated by risk tier. Payments code gets everything, an internal tool gets the basics."*
 
