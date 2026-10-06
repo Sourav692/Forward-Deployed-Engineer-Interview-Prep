@@ -88,7 +88,7 @@ Exit criteria:
 - [x] Every published lesson renders with no repository links and passes `check:content` (108 synced, 96 live).
 - [x] Existing `/modules/...`, `/fde-last-day-prep/...`, `/guide`, `/learning-map`, `/glossary` behave as before; their `fd:v1` progress is intact (`check:routes` crawls all 321 sitemap URLs; the e2e worksheet regression saves to `fd:v1:answers:*`).
 - [x] Smoke and axe suites pass in CI; Lighthouse targets met. The suites run in the `e2e` CI job. On production, performance is 95 to 100 and LCP is 1.2 to 2.4 s (see the QA report).
-- [ ] Owner verifies the Vercel preview before merge.
+- [x] Owner verifies the site. Done on 6 October 2026: the owner walked through production, ran the screen-reader pass, approved the diagnostic questions and settled the open decisions.
 
 ## Critical path
 

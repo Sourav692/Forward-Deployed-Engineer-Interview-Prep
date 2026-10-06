@@ -42,7 +42,7 @@ The first axe run found the following serious violations. All are fixed. The sui
 | Reflow at 400 % zoom (320 CSS px) | Pass on the same eight templates |
 | Reduced motion | Pass. With `prefers-reduced-motion: reduce`, transitions are 0.01 ms and scrolling is not smooth |
 | Both themes | Covered by the axe suite (all 17 templates in light and dark) |
-| Screen reader (VoiceOver on Safari, NVDA on Firefox) | Not run. This needs a person; it is left for the owner's preview review |
+| Screen reader (VoiceOver on Safari, NVDA on Firefox) | Done by the owner on 6 October 2026 |
 
 ## Performance (PERF-01, OPS-02, QA-05)
 
@@ -85,7 +85,7 @@ Lighthouse 13.5 ran on 5 October 2026 through `npx lighthouse`.
 ## Still open
 
 - **Storage export and import UI.** Phase 1 has no Settings page (FE-17 is in Phase 2). The smoke test round-trips the `exportProgress` JSON shape through `localStorage`. The test for the import guard rejecting a bad file waits for the Phase 2 UI.
-- **Screen-reader passes.** VoiceOver and NVDA checks need a person.
+- **Screen-reader passes.** Done by the owner on 6 October 2026.
 - **Lighthouse on the Vercel preview.** The plan targets the preview. The scores above are from a local build.
 
 ## Production Lighthouse (after all Phase 1 PRs merged)
@@ -99,3 +99,9 @@ Measured on 5 October 2026 against https://forward-deployed-sigma.vercel.app wit
 | Lesson (`/learn/orientation/how-the-platform-works/how-to-use-this-handbook`) | 100 | 100 | 100 | 92 | 1.2 s | 0 | 0 ms |
 
 LCP is under the 2.5 s target and performance is at least 90 on every page, so the Lighthouse exit criterion is met on production. The SEO deduction is the "Start" link text noted above.
+
+## Phase 1 sign-off (6 October 2026)
+
+All 40 Phase 1 tasks are done and every exit criterion is met. Owner actions completed: production walkthrough, screen-reader pass, approval of the ten path-diagnostic questions, and the open decisions (nav label renamed to "Choose Your Path" in #49).
+
+Search index files on production, all under the 500 KB cap: learn 182 KB, practice 440 KB, interview 296 KB, design-1 437 KB, design-2 377 KB, company 98 KB, reference 78 KB. Practice and design-1 are within 15% of the cap; split them before they grow further (the build fails at the cap).
