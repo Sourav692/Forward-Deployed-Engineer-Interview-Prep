@@ -94,7 +94,15 @@ What I learned: I now ask early how many kinds of knowledge the agent needs and 
 
 "First, I tell them the concern is fair. I wouldn't trust any code without checks, from a person or from AI. So the code has to prove itself.
 
-I use four layers. One, automatic checks: it must build, pass their linters and security scans, and add no unapproved libraries. Two, tests: it must pass their existing tests, plus new tests that capture current behaviour. I also break the code on purpose to make sure the tests catch it. Three, human review based on risk: boilerplate gets a light look, while login, payments and data writes get a careful review by their senior engineers. I keep the pull requests small and clearly described. Four, safe rollout: behind a feature flag, first to a test environment, then a small share of traffic, with quick rollback.
+I use four layers. 
+
+One, automatic checks: it must build, pass their linters and security scans, and add no unapproved libraries. 
+
+Two, tests: it must pass their existing tests, plus new tests that capture current behaviour. I also break the code on purpose to make sure the tests catch it. 
+
+Three, human review based on risk: boilerplate gets a light look, while login, payments and data writes get a careful review by their senior engineers. I keep the pull requests small and clearly described. 
+
+Four, safe rollout: behind a feature flag, first to a test environment, then a small share of traffic, with quick rollback.
 
 To win trust, I start with one small, low-risk piece and run it through every layer with their team watching. I show the numbers: what each layer caught and how much time it saved. Then we take on bigger work.
 
