@@ -63,7 +63,7 @@ Done on branch `content/consolidation-integration` after PRs #34 to #42 merged.
 | T2 | T4.2: RAGAS faithfulness detail | Covered: groundedness as the share of supported claims in `component-and-trajectory-metrics`; the thresholds stay in T2.2, where the conflict is stated. |
 | T2 | T3.x supervisor patterns | Covered by T3.6. |
 | T2 | LangSmith environment-variable gotcha | Not placed: a framework setup detail with no concept to teach. |
-| T2 | `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md` origin | Open. The file names a `Comprehensive_RAG_Techniques` notebook collection as its source; the repository cannot confirm whether that is third-party. Owner to confirm; lessons drawing on it are unchanged. |
+| T2 | `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md` origin | Resolved (6 October 2026): the owner wrote the file, so it is own material and lessons drawing on it stay `own`. The T2 credit lines cover only interview answers that quote external guides. |
 | T3.1–T3.3 | T3.4 memory (§1.8, §2, §3, §4 Q3, §5.2 Q7) | Covered by T3.4 lessons 1, 3, 4, 6 and 7. |
 | T3.1–T3.3 | T3.5 interrupts, safe resume, `NodeInterrupt`, `RetryPolicy` | Added to `the-confirmation-gate-and-memoization` ("Resume From the Pause Without Repeating the Write") and `retries-and-fallbacks` ("Scope Framework Retries to the Failures That Pass"). Linked T2.5's `checkpoints-interrupts-and-human-approval` and `retries-fan-out-and-streaming` from T3.5. |
 | T3.1–T3.3 | T3.6 supervisor, swarm, hierarchical, blackboard, deep agents | Supervisor, handoff, hierarchy and deep agents were covered. Added swarm and blackboard to `multi-agent-coordination-patterns` ("Use a Blackboard When the Next Contributor Depends on the Board"). |
