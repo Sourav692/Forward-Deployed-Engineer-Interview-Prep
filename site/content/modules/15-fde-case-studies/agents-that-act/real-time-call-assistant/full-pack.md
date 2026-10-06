@@ -460,7 +460,7 @@ All paths are relative to the repository root unless they start with `05_Project
 - [OpenAI API reference: Realtime client events](https://developers.openai.com/api/reference/resources/realtime/client-events) — silence_duration_ms defaults to 500 ms
 - [AssemblyAI: Introducing Universal-Streaming](https://www.assemblyai.com/blog/introducing-universal-streaming) — ~300 ms streaming transcripts (vendor-reported)
 - [Artificial Analysis LLM leaderboard](https://artificialanalysis.ai/leaderboards/models) — ~0.4 s time to first token is at the fast end of hosted APIs
-- [Realtime Voice AI Agent project report (pinned companion course)](https://github.com/Sourav692/AI-ENGINEERING-DEMYSTIFIED/blob/d3cd0e5ea2c5f3c7609bc6d9b767bdff5bd19071/05_Projects/Realtime_Voice_AI_Agent_with_RAG/Docs/PROJECT_REPORT.md) — "<2 second response latency" is a stated aim, not a measurement
+- [Realtime Voice AI Agent project report (pinned companion course)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/05_realtime_voice_ai_agent_with_rag/Docs/PROJECT_REPORT.md) — "<2 second response latency" is a stated aim, not a measurement
 - [18 U.S.C. 2511(2)(d)](https://www.law.cornell.edu/uscode/text/18/2511) — US federal one-party consent to record
 - [California Penal Code 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) — all-party consent in some states
 - [Deepgram docs: Models overview](https://developers.deepgram.com/docs/models-languages-overview) — Nova-3, Nova-2 and Flux (recommended for voice agents)
