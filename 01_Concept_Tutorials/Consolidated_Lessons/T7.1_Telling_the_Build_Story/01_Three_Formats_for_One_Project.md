@@ -4,23 +4,21 @@
 
 ◷ 4 min
 
-A project story is not one speech. Pick the shape from the room, then translate every technical term in the breath that introduces it.
+A project story is not one speech. Prepare the material once, then pick the shape from the room.
 
 **Objectives:**
 
-- state the meta-rule that governs every format, with an example;
+- explain why preparation comes before any format;
 - name the three formats and what each one is for;
 - choose a format from the interview situation.
 
 ---
 
-## Translate Each Term in the Same Breath
+## Prepare Once, Assemble per Room
 
-One rule governs all three formats. Every technical term gets its plain-English meaning in the same sentence that introduces it, not three sentences later. A listener who loses the thread on one term does not recover it later.
+The substance of a project does not change between rooms. Only the order and the depth do. So prepare the substance once, as a kit of short pieces, and assemble it for whichever room comes next.
 
-Compare two ways of saying the same thing. The weak version names "a two-layer access control system" and explains it afterwards. The strong version says: "a two-layer access control system — think a fast ID check at the door, then a second, more careful check right before you're handed anything sensitive." That is one sentence carrying one idea, not two.
-
-Apply the rule everywhere: in the hook, in the Action beat, and in the answers to follow-up questions.
+This module follows that order. [Proof versus Knowledge](02_Proof_versus_Knowledge.md) settles what can honestly be claimed. [Building the Story Kit](03_Building_the_Story_Kit.md) writes the reusable pieces: the cold open, five beats, a follow-up map and closing lines. The last three lessons assemble the kit into each format.
 
 ## Match the Format to the Room
 
@@ -28,9 +26,9 @@ The same substance has to land in three very different shapes.
 
 | Format | What it is | Where it is taught |
 |---|---|---|
-| Timed deep-dive | A speakable script you move through top to bottom, with timing per segment | [The Timed Deep-Dive](02_The_Timed_Deep_Dive.md) |
-| Open-ended conversation | A toolkit of short story beats deployed in whatever order the listener steers | [The Open-Ended Conversation](03_The_Open_Ended_Conversation.md) |
-| Technical implementation flow | The architecture's evolution, the pivots and the reasoning behind each tool | [The Technical Implementation Flow](04_The_Technical_Implementation_Flow.md) |
+| Timed deep-dive | A speakable script delivered top to bottom, with timing per segment | [The Timed Deep-Dive](04_The_Timed_Deep_Dive.md) |
+| Open-ended conversation | A toolkit of short story beats deployed in whatever order the listener steers | [The Open-Ended Conversation](05_The_Open_Ended_Conversation.md) |
+| Technical implementation flow | The architecture's evolution, the pivots and the reasoning behind each tool | [The Technical Implementation Flow](06_The_Technical_Implementation_Flow.md) |
 
 The formats differ on one axis: who controls the order. In the deep-dive the speaker does. In the conversation the listener does. In the implementation flow the history of the build does.
 
@@ -65,14 +63,14 @@ The substance is identical in all three. Only the order and the depth change, an
 
 ## Key Takeaways
 
-- Translate every technical term in the sentence that introduces it; this rule holds in every format.
+- Prepare the substance once as a kit, then assemble it for each room.
 - The three formats differ in who controls the order: the speaker, the listener, or the history of the build.
 - Choose the format from the situation; STAR fits inside any of them.
 
 ## Check Yourself
 
-1. **State the meta-rule and give an example of a term translated in the same breath.**
-   Every technical term is translated as it is introduced. Example: "a two-layer access control system — think a fast ID check at the door, then a more careful check right before anything sensitive is handed over."
+1. **Why does this module teach honesty and the story kit before any format?**
+   Because the substance does not change between rooms. Prepared once, it can be assembled into any of the three formats.
 
 2. **A one-on-one interviewer says, "Tell me about something you built." Which format, and why?**
    The open-ended conversation, because the agenda is open and the listener will steer.
@@ -82,4 +80,4 @@ The substance is identical in all three. Only the order and the depth change, an
 
 ## References
 
-**Sources:** `01_Deep_Dive_And_Conversational_Formats.md` (FDE Handbook, Telling the Story): "Why this matters", the meta-rule, and "Choosing the format". The handbook's worked narratives in `11_Telling_The_Story/stories/` show each format fully dressed.
+**Sources:** `01_Deep_Dive_And_Conversational_Formats.md` (FDE Handbook, Telling the Story): "Why this matters", "Choosing the format" and "Building your own". The handbook's worked narratives in `11_Telling_The_Story/stories/` show each format fully dressed.

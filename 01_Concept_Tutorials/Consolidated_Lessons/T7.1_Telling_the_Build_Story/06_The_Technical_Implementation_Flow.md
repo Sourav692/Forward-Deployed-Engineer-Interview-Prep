@@ -39,9 +39,7 @@ Part 3 carries the most judgement. A pivot explained as "we needed a better mode
 
 ## State Results Honestly
 
-Part 8 is where the flow earns trust. State each result with its limits. One of the handbook's flows reports an adoption increase after rollout as "a correlational signal, not a controlled experiment — worth saying exactly that if pressed."
-
-Then name what to verify next. [Proof versus Knowledge](05_Proof_versus_Knowledge.md) turns this into a habit for every number.
+Part 8 follows the habits in [Proof versus Knowledge](02_Proof_versus_Knowledge.md): give each result with what it does not prove, such as an adoption increase reported as a correlational signal, not a controlled experiment.
 
 ## Worked Example: Filling In the Structure
 
