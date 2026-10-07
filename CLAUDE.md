@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Layout
 
 - Root dirs are markdown prep content grouped by kind, numbered `00_`–`09_` plus `99_Reference_Library/` (see the README table). Put new material in the folder matching its kind, not its source.
-- These feed the site: `03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/` and `System_Design_Worksheets/` (module 01), `04_Behavioral_and_Leadership/` (module 14), `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/` and `Standalone_Designs/` (module 15), `07_Last_Day_Revision/`, `08_Company_Specific_Prep/Blitzy/` (module 16). `/learn` lessons come from the files `site/src/lib/curriculum.ts` lists, synced by `site/scripts/learn.mjs`: mostly `01_Concept_Tutorials/` and `05_FDE_Delivery_and_Scoping/`, plus a few files in `00_Start_Here/`, `02_.../Classic_Design_Walkthroughs/`, `03_.../Problem_Decomposition_Bank/` and `03_.../Mock_Interviews/`. Renaming any of them needs the matching path change in `site/scripts/*.mjs` or `curriculum.ts`.
+- These feed the site: `03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/` and `System_Design_Worksheets/` (module 01), `04_Behavioral_and_Leadership/` (module 14), `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/` and `Standalone_Designs/` (module 15), `07_Last_Day_Revision/`, `08_Company_Specific_Prep/Blitzy/` (module 16, currently unpublished). `/learn` lessons come from the files `site/src/lib/curriculum.ts` lists, synced by `site/scripts/learn.mjs`: mostly `01_Concept_Tutorials/` and `05_FDE_Delivery_and_Scoping/`, plus a few files in `00_Start_Here/`, `02_.../Classic_Design_Walkthroughs/`, `03_.../Problem_Decomposition_Bank/` and `03_.../Mock_Interviews/`. Renaming any of them needs the matching path change in `site/scripts/*.mjs` or `curriculum.ts`.
 - `site/` is the only JS project: Next.js 16 App Router, React 19, Tailwind v4, npm. Run all npm commands from `site/`. No root package.json.
 - Next 16 APIs may differ from training data. Read `site/node_modules/next/dist/docs/` before using Next APIs (see `site/AGENTS.md`).
 - `09_Study_Plans/` is gitignored: it indexes a purchased third-party library. `06_` and `08_` packs are committed (only Blitzy is synced); some files (`LIBRARY_MAP.md`, `ROADMAP_7_DAY.md`, the condensed plan xlsx) reference that library, so strip those references before wiring them into the public site.
@@ -40,11 +40,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - An all-caps token on 3+ pages must be added to `GLOSSARY` or `NOT_ACRONYMS` in `glossary.ts`, or `check:content` fails.
 - Adding a module/track/scenario touches many files: use the `/add-module` skill.
 
+## Interview and Company Prep areas
+
+- The interview practice track (`interview-practice`: worksheets, mock interviews, final week) is not listed under `/learn`. Its pages live at `/interview/<module>/<lesson>`; `site/src/lib/curriculum-href.ts` (`AREA_TRACKS`) decides the URL and `next.config.ts` 308s the old `/learn/interview-practice/*` URLs. Track id and progress keys are unchanged.
+- Company Prep is its own nav area at `/company-prep`, currently an empty "coming soon" page.
+
 ## Blitzy / module 16
 
-- `08_Company_Specific_Prep/Blitzy/` is committed; its generated snapshot in `site/content/modules/16-company-oriented-prep/` is committed and deployed as the public Blitzy Prep section.
-- The public site contains 11 Blitzy guides at `/modules/16-company-oriented-prep`. The root source is the canonical copy; the generated snapshot is what deploys.
-- `company-prep.mjs` reads `08_Company_Specific_Prep/Blitzy/` when available. In clones without it, `sync-content.mjs` preserves the committed company-prep snapshot so Vercel builds still succeed.
+- Module 16 (Blitzy) is unpublished: `COMPANY_PREP_PUBLISHED = false` in `site/scripts/sync-content.mjs` and `status: 'planned'` in `site/src/lib/registry.ts`. `/modules/16-company-oriented-prep/*` 307s to `/company-prep`.
+- `08_Company_Specific_Prep/Blitzy/` stays committed as the canonical source. To republish, flip both switches back, run `npm run sync`, and list the packs on `/company-prep`.
+- `company-prep.mjs` reads `08_Company_Specific_Prep/Blitzy/` when available. With publishing on, clones without it keep the committed company-prep snapshot so Vercel builds still succeed.
 - `08_Company_Specific_Prep/Blitzy/01_Code_Review_Bug_Drills.md` is the source of truth; the `.ipynb` is a derived practice copy. Sync reads only the `.md`.
 
 ## Git and deploy

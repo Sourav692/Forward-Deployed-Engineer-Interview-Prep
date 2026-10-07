@@ -51,7 +51,8 @@ const AREA_COPY: Record<(typeof NAV)[number]['id'], { purpose: string; cta: stri
   learn: { purpose: 'The curriculum: tracks, modules and lessons, with progress saved in this browser.', cta: 'Browse the curriculum' },
   design: { purpose: 'The casebook: complete system designs to read as interview answers or deep dives.', cta: 'Open the casebook' },
   practice: { purpose: 'Worksheets and behavioural questions you answer, then score against a model answer.', cta: 'Start practising' },
-  interview: { purpose: 'The final-week review, company prep and full mock rounds for the days before the loop.', cta: 'Get interview ready' },
+  interview: { purpose: 'Case-study worksheets, full mock rounds and the final-week review for the days before the loop.', cta: 'Get interview ready' },
+  'company-prep': { purpose: 'Preparation packs for one company’s interview loop. The first packs are being written.', cta: 'See company prep' },
 }
 
 const DIFFERENT = [
@@ -89,7 +90,6 @@ export default async function HomePage() {
     `${count(LIVE.behavioural)} behavioural worksheets`,
     `${count(LIVE.casebook)} worked system designs`,
     `${REVIEWS.length} final-week reviews`,
-    `${count(LIVE.companyPrep)} company prep guides`,
   ]
 
   return (

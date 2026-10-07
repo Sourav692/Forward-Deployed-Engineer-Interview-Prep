@@ -34,6 +34,10 @@ const REPO_ROOT = resolve(SITE_DIR, '..')
 const SOURCE_ROOT = join(REPO_ROOT, '03_Practice_Worksheets_and_Keys')
 const OUT_DIR = join(SITE_DIR, 'content')
 const COMPANY_PREP_SNAPSHOT_DIR = join(SITE_DIR, '.company-prep-snapshot')
+// Company-oriented prep (module 16) is unpublished while its packs are reworked for the
+// Company Prep area (/company-prep). To publish it again, set this to true and the
+// module's `status` in src/lib/registry.ts back to 'live'.
+const COMPANY_PREP_PUBLISHED = false
 const LEARN_SNAPSHOT_DIR = learnSnapshotDir(SITE_DIR)
 
 const BEHAVIOURAL_ROOT = join(REPO_ROOT, '04_Behavioral_and_Leadership')
@@ -223,15 +227,17 @@ async function main() {
   // content is committed. Keep that snapshot through a full content refresh so a
   // Vercel build does not need the private source folder.
   await rm(COMPANY_PREP_SNAPSHOT_DIR, { recursive: true, force: true })
-  try {
-    await cp(
-      join(OUT_DIR, 'modules', '16-company-oriented-prep'),
-      COMPANY_PREP_SNAPSHOT_DIR,
-      { recursive: true },
-    )
-  } catch {
-    // A new pack has no committed snapshot yet; syncCompanyPrep will report a
-    // useful error if its private source is also unavailable.
+  if (COMPANY_PREP_PUBLISHED) {
+    try {
+      await cp(
+        join(OUT_DIR, 'modules', COMPANY_PREP_MODULE_ID),
+        COMPANY_PREP_SNAPSHOT_DIR,
+        { recursive: true },
+      )
+    } catch {
+      // A new pack has no committed snapshot yet; syncCompanyPrep will report a
+      // useful error if its private source is also unavailable.
+    }
   }
 
   // Learn lessons: the same snapshot pattern, for clones without the lesson sources.
@@ -269,20 +275,22 @@ async function main() {
   modules.push(await syncCaseStudies({ repoRoot: REPO_ROOT, outDir: OUT_DIR, sourceUrls }))
 
   // Company-oriented material: packs tailored to a specific interview loop.
-  modules.push(
-    await syncCompanyPrep({
-      repoRoot: REPO_ROOT,
-      outDir: OUT_DIR,
-      snapshotDir: COMPANY_PREP_SNAPSHOT_DIR,
-    }),
-  )
-  await rm(COMPANY_PREP_SNAPSHOT_DIR, { recursive: true, force: true })
-  const companyDir = join(REPO_ROOT, '08_Company_Specific_Prep', 'Blitzy')
-  for (const document of COMPANY_PREP_DOCUMENTS) {
-    sourceUrls.set(
-      join(companyDir, document.file),
-      `/modules/${COMPANY_PREP_MODULE_ID}/${COMPANY_PREP_TRACK_ID}/${document.slug}`,
+  if (COMPANY_PREP_PUBLISHED) {
+    modules.push(
+      await syncCompanyPrep({
+        repoRoot: REPO_ROOT,
+        outDir: OUT_DIR,
+        snapshotDir: COMPANY_PREP_SNAPSHOT_DIR,
+      }),
     )
+    await rm(COMPANY_PREP_SNAPSHOT_DIR, { recursive: true, force: true })
+    const companyDir = join(REPO_ROOT, '08_Company_Specific_Prep', 'Blitzy')
+    for (const document of COMPANY_PREP_DOCUMENTS) {
+      sourceUrls.set(
+        join(companyDir, document.file),
+        `/modules/${COMPANY_PREP_MODULE_ID}/${COMPANY_PREP_TRACK_ID}/${document.slug}`,
+      )
+    }
   }
 
   // Last-Day Review: its cross-links point at the pages above, so it syncs last and

@@ -8,7 +8,7 @@
  * 1. Fetches `/sitemap.xml` and every URL in it (rewritten onto BASE_URL).
  * 2. Collects every internal link (`href="/..."`) on those pages and fetches each
  *    one it has not already seen. Redirects are not followed: a 3xx counts as
- *    reachable (intentional redirects such as /interview/final-week).
+ *    reachable (intentional redirects such as /learn/interview-practice).
  * 3. Fails on any 4xx/5xx or network error, listing the page that linked to it.
  * 4. Fails when a module marked `ready` or `partly` in `src/lib/curriculum.ts` has
  *    no published or live lesson in `content/learn/manifest.json` (an empty module

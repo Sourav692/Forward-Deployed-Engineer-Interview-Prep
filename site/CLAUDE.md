@@ -4,4 +4,4 @@
 
 - Active Vercel project: `forward-deployed`.
 - Production: https://forward-deployed-sigma.vercel.app/.
-- The Company Prep section, including 11 Blitzy guides, is live at `/modules/16-company-oriented-prep`.
+- Company Prep is a nav area at `/company-prep` with no packs yet. The Blitzy guides (module 16) are unpublished; old URLs redirect to `/company-prep`.

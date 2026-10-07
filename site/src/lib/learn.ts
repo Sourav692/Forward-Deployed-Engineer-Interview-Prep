@@ -5,6 +5,7 @@ import { join } from 'node:path'
 import { cache } from 'react'
 import { marked } from 'marked'
 import { LESSONS, MODULES, TRACKS } from './curriculum'
+import { INTERVIEW_TRACK, curriculumHref, isLearnTrack } from './curriculum-href'
 import type {
   CurriculumLesson,
   CurriculumModule,
@@ -58,15 +59,33 @@ export const getLearnManifest = cache((): LearnLesson[] => {
 
 const publishedBySlug = cache(() => new Map(getLearnManifest().map((l) => [l.slug, l])))
 
+/** Track and module URLs. Tracks in `AREA_TRACKS` are served by their own area, not /learn. */
 export const learnHref = {
   index: () => '/learn',
-  track: (track: string) => `/learn/${track}`,
-  module: (m: Pick<CurriculumModule, 'track' | 'slug'>) => `/learn/${m.track}/${m.slug}`,
+  track: (track: string) => curriculumHref(track),
+  module: (m: Pick<CurriculumModule, 'track' | 'slug'>) => curriculumHref(m.track, m.slug),
+}
+
+export { INTERVIEW_TRACK }
+
+/**
+ * The breadcrumb trail above a module: Learn and the track for a Learn track, or just
+ * the area for a track served elsewhere (Interview has one track, so no track crumb).
+ */
+export function trackTrail(track: CurriculumTrack): { label: string; href: string }[] {
+  if (track.slug === INTERVIEW_TRACK) return [{ label: 'Interview', href: '/interview' }]
+  return [
+    { label: 'Learn', href: learnHref.index() },
+    { label: `${track.code} ${track.title}`, href: learnHref.track(track.slug) },
+  ]
 }
 
 // ── Lookups ────────────────────────────────────────────────────────────────
 
 export const getTracks = (): CurriculumTrack[] => TRACKS
+
+/** The tracks listed and served under /learn (every track except the area-served ones). */
+export const learnTracks = (): CurriculumTrack[] => TRACKS.filter((t) => isLearnTrack(t.slug))
 
 export const getTrack = (slug: string): CurriculumTrack | undefined => TRACKS.find((t) => t.slug === slug)
 
@@ -135,18 +154,34 @@ export const totalMinutes = (lessons: LearnLesson[]) => lessons.reduce((s, l) =>
 
 // ── Static params ──────────────────────────────────────────────────────────
 
-export const trackParams = () => TRACKS.map((t) => ({ trackSlug: t.slug }))
+export const trackParams = () => learnTracks().map((t) => ({ trackSlug: t.slug }))
 
-export const moduleParams = () => MODULES.map((m) => ({ trackSlug: m.track, moduleSlug: m.slug }))
+export const moduleParams = () =>
+  MODULES.filter((m) => isLearnTrack(m.track)).map((m) => ({ trackSlug: m.track, moduleSlug: m.slug }))
+
+/** Module pages under /interview: the interview practice track's modules. */
+export const interviewModuleParams = () =>
+  MODULES.filter((m) => m.track === INTERVIEW_TRACK).map((m) => ({ moduleSlug: m.slug }))
 
 /**
- * One route per synced, published lesson. `live` lessons have no Learn page: they
- * link to their existing `/modules/...` or `/fde-last-day-prep` page instead.
+ * One route per synced, published lesson of a Learn track. `live` lessons have no
+ * Learn page: they link to their existing `/modules/...` or `/fde-last-day-prep` page
+ * instead. Lessons of area-served tracks get their routes from that area.
  *
  * A manifest entry whose markdown file is missing fails the build here, instead of
  * shipping an empty lesson page (plan §8, "Data fetching and errors").
  */
 export function lessonParams() {
+  return syncedLessonParams().filter((p) => isLearnTrack(p.trackSlug))
+}
+
+/** Lesson pages under /interview. */
+export const interviewLessonParams = () =>
+  syncedLessonParams()
+    .filter((p) => p.trackSlug === INTERVIEW_TRACK)
+    .map(({ moduleSlug, lessonSlug }) => ({ moduleSlug, lessonSlug }))
+
+function syncedLessonParams() {
   return getLearnManifest()
     .filter((l) => l.kind === 'sync')
     .map((l) => {

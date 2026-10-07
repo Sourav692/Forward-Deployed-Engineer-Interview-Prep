@@ -101,8 +101,8 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * Each area links to its own index page. `match` keeps the existing module pages
  * highlighting the area they belong to: the casebook (`/modules/15-…`) under Design,
  * worksheets and behavioural practice (`/modules/01-…`, `/modules/14-…`) under
- * Practice, and the final-week review and company prep under Interview. Progress
- * joins the list in Phase 2.
+ * Practice, the final-week review under Interview, and company packs
+ * (`/modules/16-…`) under Company Prep. Progress joins the list in Phase 2.
  */
 export const NAV = [
   { id: 'start', label: 'Choose Your Path', href: '/start', match: ['/start', '/guide'] },
@@ -127,7 +127,13 @@ export const NAV = [
     id: 'interview',
     label: 'Interview',
     href: '/interview',
-    match: ['/interview', '/fde-last-day-prep', '/modules/16-company-oriented-prep'],
+    match: ['/interview', '/fde-last-day-prep'],
+  },
+  {
+    id: 'company-prep',
+    label: 'Company Prep',
+    href: '/company-prep',
+    match: ['/company-prep', '/modules/16-company-oriented-prep'],
   },
 ] as const
 

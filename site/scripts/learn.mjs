@@ -41,6 +41,7 @@ import { existsSync, readdirSync, statSync } from 'node:fs'
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { LESSONS, MODULES, RENAMED, TRACKS } from '../src/lib/curriculum.ts'
+import { curriculumHref } from '../src/lib/curriculum-href.ts'
 import {
   LAST_DAY,
   LAST_DAY_GUIDES,
@@ -94,7 +95,7 @@ export function lessonDecision(lesson) {
 
 export const lessonHref = (lesson) => {
   const mod = moduleBySlug.get(lesson.home)
-  return `/learn/${mod.track}/${mod.slug}/${lesson.slug}`
+  return curriculumHref(mod.track, mod.slug, lesson.slug)
 }
 
 /** Progress and slug-guard key, matching `fd:v1:learn:lesson:<moduleSlug>/<lessonSlug>`. */
@@ -535,7 +536,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
       if (target) {
         const [moduleSlug, lessonSlug] = target.split('/')
         const mod = moduleBySlug.get(moduleSlug)
-        if (mod) retired.set(resolve(repoRoot, lesson.source), `/learn/${mod.track}/${mod.slug}/${lessonSlug}`)
+        if (mod) retired.set(resolve(repoRoot, lesson.source), curriculumHref(mod.track, mod.slug, lessonSlug))
       }
       continue
     }

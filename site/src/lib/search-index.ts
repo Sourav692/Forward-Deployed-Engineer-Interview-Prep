@@ -2,6 +2,7 @@ import 'server-only'
 
 import { cache } from 'react'
 import { getContentSearchEntries, SEARCH_TEXT_CAP } from './content'
+import { isLearnTrack } from './curriculum-href'
 import { getLearnManifest, getLessonPage, getModule, getTrack, getTracks, learnHref, trackModules } from './learn'
 import { readingText, toPlainText } from './reading'
 import type { SearchEntry } from './scenario'
@@ -20,7 +21,7 @@ const getLearnSearchEntries = cache((): SearchEntry[] => {
 
   for (const track of getTracks()) {
     entries.push({
-      title: `${track.code} · Learn`,
+      title: isLearnTrack(track.slug) ? `${track.code} · Learn` : `${track.code} · Interview`,
       section: track.title,
       kind: 'Track',
       href: learnHref.track(track.slug),
