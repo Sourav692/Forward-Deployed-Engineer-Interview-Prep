@@ -1,6 +1,6 @@
 # T8.2 Mock Interviews and Scorecards: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T8.2 "Mock interviews and scorecards". The first teaches how to run and score a mock once. Each of the other five is one practice mock that combines the short warm-up round and the full round for one scenario, with weak, average and strong versions and a scorecard. The site publishes them at `/learn/interview-practice/mock-interviews`.
+These six lessons are the site's teaching copy of module T8.2 "Mock interviews and scorecards". The first teaches how to run and score a mock once. Each of the other five is one practice mock that combines the short warm-up round and the full round for one scenario, with weak, average and strong versions and a scorecard. The site publishes them at `/interview/mock-interviews`.
 
 | # | Lesson | Site slug |
 |---|---|---|

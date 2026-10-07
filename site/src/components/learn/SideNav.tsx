@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { CurriculumTrack } from '@/lib/curriculum-types'
-import { getModuleBySlug, learnHref } from '@/lib/learn'
+import { getModuleBySlug, learnHref, trackLabel } from '@/lib/learn'
 import { cx, focusRing } from '@/components/ui'
 
 /**
@@ -18,13 +18,13 @@ export function SideNav({
   currentModule?: string
 }) {
   const tree = (
-    <nav aria-label={`${track.code} ${track.title}: sections and modules`} className="text-[0.8125rem]">
+    <nav aria-label={`${trackLabel(track)}: sections and modules`} className="text-[0.8125rem]">
       <Link
         href={learnHref.track(track.slug)}
         aria-current={!currentModule ? 'page' : undefined}
         className={cx('block rounded-md px-2 py-1 font-semibold hover:text-accent', focusRing)}
       >
-        {track.code} {track.title}
+        {trackLabel(track)}
       </Link>
       <ul className="mt-2 space-y-3">
         {track.sections.map((s) => (
@@ -67,7 +67,7 @@ export function SideNav({
     <>
       <details className="no-print mb-6 rounded-lg border border-border bg-surface lg:hidden">
         <summary className={cx('cursor-pointer rounded-lg px-4 py-3 text-sm font-semibold', focusRing)}>
-          {track.code} sections and modules
+          {trackLabel(track)}: sections and modules
         </summary>
         <div className="border-t border-border p-3">{tree}</div>
       </details>

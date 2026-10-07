@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { CurriculumModule, CurriculumTrack } from '@/lib/curriculum-types'
-import { learnHref, type LearnLesson } from '@/lib/learn'
+import { learnHref, trackLabel, type LearnLesson } from '@/lib/learn'
 import type { ReadingDocument } from '@/lib/reading'
 import { cx, focusRing } from '@/components/ui'
 import { LessonToc, type TocHeading } from './LessonToc'
@@ -38,7 +38,7 @@ export function LessonSideNav({
         className={cx('inline-flex rounded-sm px-2 py-1 text-xs text-muted hover:text-accent', focusRing)}
       >
         <span aria-hidden="true">←&nbsp;</span>
-        {track.code} {track.title}
+        {trackLabel(track)}
       </Link>
       <Link
         href={learnHref.module(mod)}

@@ -69,6 +69,13 @@ export const learnHref = {
 export { INTERVIEW_TRACK }
 
 /**
+ * A track's name with its code ("T2 LLM and Retrieval"). Area-served tracks drop the
+ * code: their `I` code only prefixes module codes (I1, I2) and reads badly on its own.
+ */
+export const trackLabel = (track: Pick<CurriculumTrack, 'slug' | 'code' | 'title'>) =>
+  isLearnTrack(track.slug) ? `${track.code} ${track.title}` : track.title
+
+/**
  * The breadcrumb trail above a module: Learn and the track for a Learn track, or just
  * the area for a track served elsewhere (Interview has one track, so no track crumb).
  */
@@ -76,7 +83,7 @@ export function trackTrail(track: CurriculumTrack): { label: string; href: strin
   if (track.slug === INTERVIEW_TRACK) return [{ label: 'Interview', href: '/interview' }]
   return [
     { label: 'Learn', href: learnHref.index() },
-    { label: `${track.code} ${track.title}`, href: learnHref.track(track.slug) },
+    { label: trackLabel(track), href: learnHref.track(track.slug) },
   ]
 }
 

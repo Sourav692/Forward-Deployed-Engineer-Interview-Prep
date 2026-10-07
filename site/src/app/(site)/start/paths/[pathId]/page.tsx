@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { FLAG_HELP, FLAG_ORDER, PATHS, getPathById, pathVariants, personaFor } from '@/lib/paths'
+import { isLearnTrack } from '@/lib/curriculum-href'
 import { getModuleBySlug, getTracks, learnHref, moduleInput, trackModules } from '@/lib/learn'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { PathFlag } from '@/components/learn/PathFlag'
@@ -123,7 +124,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
               return (
                 <li key={track.slug}>
                   <h3 className="flex flex-wrap items-baseline gap-2 text-base font-semibold">
-                    <span className="text-xs font-semibold tabular-nums text-subtle">{track.code}</span>
+                    <span className="text-xs font-semibold tabular-nums text-subtle">{isLearnTrack(track.slug) ? track.code : 'Interview'}</span>
                     <Link href={learnHref.track(track.slug)} className={cx('rounded-sm hover:text-accent', focusRing)}>
                       {track.title}
                     </Link>

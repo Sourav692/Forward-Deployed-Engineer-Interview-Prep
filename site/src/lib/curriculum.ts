@@ -329,7 +329,7 @@ export const TRACKS: CurriculumTrack[] = [
   },
   {
     slug: 'interview-practice',
-    code: 'T8',
+    code: 'I',
     title: 'Interview Practice and Revision',
     objective: 'Prove readiness under realistic conditions',
     forWhom: 'Candidates',
@@ -1546,7 +1546,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'case-study-worksheets',
-    code: 'T8.1',
+    code: 'I1',
     title: 'Case-study worksheets',
     track: 'interview-practice',
     section: 'practice-and-revision',
@@ -1587,7 +1587,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'mock-interviews',
-    code: 'T8.2',
+    code: 'I2',
     title: 'Mock interviews and scorecards',
     track: 'interview-practice',
     section: 'practice-and-revision',
@@ -1612,7 +1612,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'final-week',
-    code: 'T8.3',
+    code: 'I3',
     title: 'Final week',
     track: 'interview-practice',
     section: 'practice-and-revision',
@@ -1652,7 +1652,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'company-loops',
-    code: 'T8.4',
+    code: 'I4',
     title: 'Company loops',
     track: 'interview-practice',
     section: 'practice-and-revision',
@@ -1683,7 +1683,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'coding-round-practice',
-    code: 'T8.5',
+    code: 'I5',
     title: 'Coding round practice',
     track: 'interview-practice',
     section: 'practice-and-revision',
