@@ -21,6 +21,7 @@ const STATIC_PAGES = [
   '/design',
   '/practice',
   '/interview',
+  '/company-prep',
   '/library',
   '/library/credits',
   '/guide',

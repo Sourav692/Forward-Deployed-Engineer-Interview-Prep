@@ -4,7 +4,7 @@
 
 ◷ 6 min
 
-The demo did not fail because the model was weak. It failed on stale pages and a permission leak, so practise answering with scope and access control first, using the answer moves from [Running and Scoring a Mock Interview](/learn/interview-practice/mock-interviews/running-and-scoring-a-mock-interview).
+The demo did not fail because the model was weak. It failed on stale pages and a permission leak, so practise answering with scope and access control first, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
 **Objectives:**
 
@@ -42,7 +42,7 @@ Then take the interviewer's follow-ups:
 4. What if the system becomes too expensive after launch?
 5. What should be human-approved and what automated?
 
-A strong answer to the short round follows six steps: workflow and users, success metrics and risk boundaries, data sources and permissions, a secure architecture, evals with red-team tests and human approval, then monitoring, cost, latency and rollout. [Running and Scoring a Mock Interview](/learn/interview-practice/mock-interviews/running-and-scoring-a-mock-interview) gives the model answer to each question.
+A strong answer to the short round follows six steps: workflow and users, success metrics and risk boundaries, data sources and permissions, a secure architecture, evals with red-team tests and human approval, then monitoring, cost, latency and rollout. [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview) gives the model answer to each question.
 
 ## Run the Full Round Under Pressure
 
@@ -89,7 +89,7 @@ The same opening question, "How would you build it?", separates the three candid
 | Average | "I would clarify users, index documents, add permissions, and evaluate answer quality. I would start with support and use citations. For security, I would check that users only see allowed documents." | 3 / 5 |
 | Strong | See the worked example below | 4.5 / 5 |
 
-The weak answer starts from tools instead of workflow and risk. The average answer points the right way but stays vague. [Running and Scoring a Mock Interview](/learn/interview-practice/mock-interviews/running-and-scoring-a-mock-interview) explains each score.
+The weak answer starts from tools instead of workflow and risk. The average answer points the right way but stays vague. [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview) explains each score.
 
 ## Worked Example: The Strong Answer in One Paragraph
 
@@ -115,7 +115,7 @@ Score each signal from 1 to 5. Next to each score, write one line of evidence qu
 | Production | SLOs, costs, rollout, rollback | |
 | Communication | Clear business and technical framing | |
 
-For the full six-dimension rubric, with what separates a 3 from a 4 and a 4 from a 5, use [Running and Scoring a Mock Interview](/learn/interview-practice/mock-interviews/running-and-scoring-a-mock-interview).
+For the full six-dimension rubric, with what separates a 3 from a 4 and a 4 from a 5, use [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
 ---
 

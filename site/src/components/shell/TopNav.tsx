@@ -24,7 +24,7 @@ export function TopNav() {
               href={item.href}
               aria-current={current ? 'page' : undefined}
               className={cx(
-                'rounded-md px-2.5 py-1.5 text-sm transition-colors',
+                'whitespace-nowrap rounded-md px-2.5 py-1.5 text-sm transition-colors',
                 current
                   ? 'bg-accent-soft font-semibold text-accent'
                   : 'text-muted hover:bg-surface-2 hover:text-text',

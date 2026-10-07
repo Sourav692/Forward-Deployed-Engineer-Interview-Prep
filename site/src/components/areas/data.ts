@@ -17,7 +17,6 @@ export const LIVE = {
   worksheets: '01-customer-discovery-and-decomposition',
   behavioural: '14-behavioural-and-leadership-round',
   casebook: '15-fde-case-studies',
-  companyPrep: '16-company-oriented-prep',
 } as const
 
 export const moduleHref = (moduleId: string) => `/modules/${moduleId}`

@@ -1,25 +1,27 @@
 import type { Metadata } from 'next'
-import { ModuleProgress } from '@/components/Progress'
-import { AreaGroup, AreaHeader, AreaSection, LinkList, PlannedList } from '@/components/areas/Area'
-import { LIVE, curriculumModules, curriculumTrack, moduleGroups, moduleHref } from '@/components/areas/data'
+import { AreaHeader, AreaSection, LinkList, PlannedList } from '@/components/areas/Area'
+import { curriculumModules } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { LAST_DAY, LAST_DAY_GUIDES, MODES, REVIEWS } from '@/lib/editorial'
-import { learnHref } from '@/lib/learn'
+import { INTERVIEW_TRACK } from '@/lib/learn'
 
 /**
- * /interview: the interview prep hub (FE-11). Links to the final-week review
- * (/fde-last-day-prep), company prep (/modules/16-...) and the interview-practice
- * modules in Learn. The five topic hubs arrive with FE-18 in Phase 2; until then they
- * are listed as Coming soon without links.
+ * /interview: the interview prep area (FE-11). It is the home of the interview
+ * practice track (worksheets, mock interviews, final week), whose module and lesson
+ * pages live at /interview/<module>/<lesson> rather than under /learn, and it links
+ * to the final-week review (/fde-last-day-prep). Company-specific packs have their
+ * own area at /company-prep. The five topic hubs arrive with FE-18 in Phase 2; until
+ * then they are listed as Coming soon without links.
  */
 
 export const metadata: Metadata = {
   title: 'Interview',
   description:
-    'Interview preparation: the final-week review, company-specific prep, and the interview practice and revision modules.',
+    'Interview preparation: case-study worksheets, mock interviews and scorecards, and the final-week review.',
 }
 
-const PRACTICE_TRACK = 'interview-practice'
+/** Company loops is a company-prep module; it is surfaced under Company Prep, not here. */
+const COMPANY_MODULE = 'company-loops'
 
 /** Phase 2 topic hubs (FE-18, DATA-07). Titles only: no page exists yet. */
 const TOPIC_HUBS = [
@@ -45,19 +47,29 @@ const TOPIC_HUBS = [
   },
 ]
 
-export default async function InterviewPage() {
-  const company = await moduleGroups(LIVE.companyPrep)
-  const practiceModules = curriculumModules(PRACTICE_TRACK)
-  const practiceTrack = curriculumTrack(PRACTICE_TRACK)
+export default function InterviewPage() {
+  const practiceModules = curriculumModules(INTERVIEW_TRACK).filter((m) => m.slug !== COMPANY_MODULE)
 
   return (
     <div className="py-12">
       <AreaHeader eyebrow="Interview" title="Get Ready for the Loop">
         <p>
-          The last stretch before an interview: condensed revision of what you already know, preparation for one
-          company’s loop, and full practice rounds under time.
+          The last stretch before an interview: full practice rounds under time, scored against a rubric, and condensed
+          revision of what you already know.
         </p>
       </AreaHeader>
+
+      <AreaSection
+        id="practice-modules"
+        title="Interview Practice and Revision"
+        description="Prove readiness under realistic conditions: case-study worksheets, mock interviews with scorecards, and the final week."
+      >
+        <div className="space-y-2">
+          {practiceModules.map((m) => (
+            <ModuleCard key={m.slug} module={m} />
+          ))}
+        </div>
+      </AreaSection>
 
       <AreaSection
         id="final-week"
@@ -68,40 +80,6 @@ export default async function InterviewPage() {
         <LinkList
           items={LAST_DAY_GUIDES.map((g) => ({ href: `${LAST_DAY.href}/${g.id}`, title: g.title, note: g.blurb }))}
         />
-      </AreaSection>
-
-      <AreaSection
-        id="company-prep"
-        title="Company Prep"
-        description={MODES['company-prep'].summary}
-        action={{ label: 'Open company prep', href: moduleHref(LIVE.companyPrep) }}
-      >
-        <ModuleProgress scenarios={company.scenarios} readingNoun="guides" />
-        <div className="mt-5 space-y-4">
-          {company.groups.map((g) => (
-            <AreaGroup
-              key={g.id}
-              title={g.title}
-              blurb={g.blurb}
-              action={{ label: `${g.items.length} guides`, href: g.href }}
-            >
-              <LinkList items={g.items} />
-            </AreaGroup>
-          ))}
-        </div>
-      </AreaSection>
-
-      <AreaSection
-        id="practice-modules"
-        title="Interview Practice and Revision"
-        description="The curriculum modules for proving readiness: case-study worksheets, mock interviews, the final week and company loops."
-        action={practiceTrack ? { label: 'Open the track', href: learnHref.track(practiceTrack.slug) } : undefined}
-      >
-        <div className="space-y-2">
-          {practiceModules.map((m) => (
-            <ModuleCard key={m.slug} module={m} />
-          ))}
-        </div>
       </AreaSection>
 
       <AreaSection

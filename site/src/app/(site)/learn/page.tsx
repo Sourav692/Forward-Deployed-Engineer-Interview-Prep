@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { pageMetadata } from '@/lib/seo'
 import { Suspense } from 'react'
-import { allMinutes, getTracks, isRequired } from '@/lib/learn'
+import { allMinutes, isRequired, learnTracks } from '@/lib/learn'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
 import { PathBanner } from '@/components/learn/PathFlagIslands'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
@@ -15,11 +16,11 @@ import { TrackCard } from '@/components/learn/TrackCard'
 export const metadata: Metadata = pageMetadata({
   path: '/learn',
   title: 'Learn',
-  description: 'The Forward Deployed curriculum: ten tracks from orientation to capstone, each with modules, lessons and progress you can track in this browser.',
+  description: 'The Forward Deployed curriculum: tracks from orientation to capstone, each with modules, lessons and progress you can track in this browser. Interview practice lives under Interview.',
 })
 
 export default function LearnPage() {
-  const tracks = getTracks()
+  const tracks = learnTracks()
   const minutes = allMinutes()
   const items: TrackItem[] = tracks.map((t) => ({
     slug: t.slug,
@@ -34,8 +35,13 @@ export default function LearnPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Learn</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">The Curriculum</h1>
         <p className="mt-3 text-base text-muted">
-          Ten tracks, about {hours} hours in all. Required tracks build the core every Forward Deployed Engineer is
-          tested on; optional tracks fill gaps. Open a track to see its sections and modules.
+          {tracks.length} tracks, about {hours} hours in all. Required tracks build the core every Forward Deployed
+          Engineer is tested on; optional tracks fill gaps. Open a track to see its sections and modules. Worksheets,
+          mock interviews and final-week revision are under{' '}
+          <Link href="/interview" className="text-accent underline underline-offset-2">
+            Interview
+          </Link>
+          .
         </p>
       </header>
       <StorageNotice />

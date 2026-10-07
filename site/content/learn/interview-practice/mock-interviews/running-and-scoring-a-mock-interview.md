@@ -25,11 +25,11 @@ The **full round** is a realistic simulation. It adds a customer scenario, an am
 
 | Mock | What the customer asked for | What failed in the demo |
 |---|---|---|
-| [Internal Knowledge Assistant](/learn/interview-practice/mock-interviews/internal-knowledge-assistant-mock-interview) | One chat box for all company knowledge | Stale pages cited; a restricted contract clause shown to the wrong support tier |
-| [Agentic Support Workflow](/learn/interview-practice/mock-interviews/agentic-support-workflow-mock-interview) | AI that handles support tickets end to end | The wrong order refunded twice; a confident reply from a stale shipping event |
-| [Financial Compliance and Red-Team](/learn/interview-practice/mock-interviews/financial-compliance-and-red-team-mock-interview) | AI that reviews all advisor messages for risk | Subtle promissory language missed; instructions inside emails obeyed |
-| [SRE Triage Agent](/learn/interview-practice/mock-interviews/sre-triage-agent-mock-interview) | A copilot that finds what is broken and fixes it | A hallucinated root cause in a payments outage; the wrong service restarted |
-| [Multi-Tenant SaaS Assistant](/learn/interview-practice/mock-interviews/multi-tenant-saas-assistant-mock-interview) | A per-customer assistant inside the product | Two tenants mixed in one cached response |
+| [Internal Knowledge Assistant](/interview/mock-interviews/internal-knowledge-assistant-mock-interview) | One chat box for all company knowledge | Stale pages cited; a restricted contract clause shown to the wrong support tier |
+| [Agentic Support Workflow](/interview/mock-interviews/agentic-support-workflow-mock-interview) | AI that handles support tickets end to end | The wrong order refunded twice; a confident reply from a stale shipping event |
+| [Financial Compliance and Red-Team](/interview/mock-interviews/financial-compliance-and-red-team-mock-interview) | AI that reviews all advisor messages for risk | Subtle promissory language missed; instructions inside emails obeyed |
+| [SRE Triage Agent](/interview/mock-interviews/sre-triage-agent-mock-interview) | A copilot that finds what is broken and fixes it | A hallucinated root cause in a payments outage; the wrong service restarted |
+| [Multi-Tenant SaaS Assistant](/interview/mock-interviews/multi-tenant-saas-assistant-mock-interview) | A per-customer assistant inside the product | Two tenants mixed in one cached response |
 
 ## Follow the Interviewer's Arc
 

@@ -36,6 +36,7 @@ import { existsSync } from 'node:fs'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
+import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
@@ -477,8 +478,8 @@ const learnByKey = new Map(learnManifest.map((l) => [`${l.module}/${l.slug}`, l]
 for (const l of learnManifest) if (l.kind === 'sync') routes.add(l.href)
 // Every track and module page is prerendered (generateStaticParams), so lessons may link to them.
 for (const m of CURRICULUM_MODULES) {
-  routes.add(`/learn/${m.track}`)
-  routes.add(`/learn/${m.track}/${m.slug}`)
+  routes.add(curriculumHref(m.track))
+  routes.add(curriculumHref(m.track, m.slug))
 }
 
 const listMarkdown = async (dir: string): Promise<string[]> => {
@@ -558,15 +559,21 @@ for (const file of [...learnOnDisk].filter((f) => expectedFiles.has(f)).sort()) 
 // the sources were written with, or the `lesson-...` ids the site gives each section.
 {
   const anchorsOf = new Map<string, Set<string>>()
-  for (const file of learnFiles) {
-    const href = '/learn/' + relative(LEARN, file).replace(/\.md$/, '').split(sep).join('/')
-    anchorsOf.set(href, headingAnchors(await readFile(file, 'utf8')))
+  // content/learn/<track>/<module>/<lesson>.md → the lesson's URL (/learn/... or an area's).
+  const hrefOf = (file: string) => {
+    const [track, mod, lesson] = relative(LEARN, file).replace(/\.md$/, '').split(sep)
+    return curriculumHref(track, mod, lesson)
   }
   for (const file of learnFiles) {
-    const self = '/learn/' + relative(LEARN, file).replace(/\.md$/, '').split(sep).join('/')
+    anchorsOf.set(hrefOf(file), headingAnchors(await readFile(file, 'utf8')))
+  }
+  const areaBases = Object.values(AREA_TRACKS).map((b) => b.slice(1)).join('|')
+  const anchorLink = new RegExp(`\\]\\((\\/(?:learn|${areaBases})\\/[^)#\\s]*)?#([^)\\s]+)\\)`, 'g')
+  for (const file of learnFiles) {
+    const self = hrefOf(file)
     const raw = await readFile(file, 'utf8')
     const prose = raw.replace(/^(`{3,}|~{3,})[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '')
-    for (const [, path, anchor] of prose.matchAll(/\]\((\/learn\/[^)#\s]*)?#([^)\s]+)\)/g)) {
+    for (const [, path, anchor] of prose.matchAll(anchorLink)) {
       const target = path ?? self
       const anchors = anchorsOf.get(target)
       if (anchors && !anchors.has(decodeURIComponent(anchor))) failures.push(`learn ${self}: anchor link ${path ?? ''}#${anchor} matches no heading`)

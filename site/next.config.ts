@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next'
 import { MODULES, RENAMED } from './src/lib/curriculum.ts'
+import { AREA_TRACKS, curriculumHref } from './src/lib/curriculum-href.ts'
 
 /**
  * Security headers (plan §12, SEC-02).
@@ -40,18 +41,54 @@ const csp = (extra: { style?: string; font?: string } = {}) =>
  */
 function lessonRedirects(): [string, string][] {
   const trackOf = new Map(MODULES.map((m) => [m.slug, m.track]))
-  const href = (key: string) => {
+  const resolveKey = (key: string) => {
     const [mod, lesson] = key.split('/')
     const track = trackOf.get(mod)
     if (!track) throw new Error(`RENAMED key "${key}" names an unknown module`)
-    return lesson ? `/learn/${track}/${mod}/${lesson}` : `/learn/${track}/${mod}`
+    return { track, mod, lesson }
   }
-  return Object.entries(RENAMED).map(([from, to]) => [href(from), href(to ?? from.split('/')[0])])
+  const out: [string, string][] = []
+  for (const [from, to] of Object.entries(RENAMED)) {
+    const src = resolveKey(from)
+    const dst = resolveKey(to ?? from.split('/')[0])
+    const destination = curriculumHref(dst.track, dst.mod, dst.lesson)
+    out.push([curriculumHref(src.track, src.mod, src.lesson), destination])
+    // A track that moved out of /learn keeps its old /learn URL, sent straight to the
+    // final page so the redirect never chains through the area rule below.
+    if (src.track in AREA_TRACKS) {
+      out.push([[`/learn/${src.track}`, src.mod, src.lesson].filter(Boolean).join('/'), destination])
+    }
+  }
+  return out
 }
+
+/**
+ * Tracks served by their own area (src/lib/curriculum-href.ts) used to live under
+ * /learn/<track>. Their old URLs redirect to the area, keeping the module and lesson.
+ */
+const areaRedirects = () =>
+  Object.entries(AREA_TRACKS).map(([track, base]) => ({
+    source: `/learn/${track}/:path*`,
+    destination: `${base}/:path*`,
+    permanent: true,
+  }))
+
+/**
+ * Company-oriented prep (module 16) is unpublished while its packs move to the Company
+ * Prep area. Temporary (307), because the module URLs may come back.
+ */
+const companyPrepRedirects = [
+  { source: '/modules/16-company-oriented-prep', destination: '/company-prep', permanent: false },
+  { source: '/modules/16-company-oriented-prep/:path*', destination: '/company-prep', permanent: false },
+]
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return lessonRedirects().map(([source, destination]) => ({ source, destination, permanent: true }))
+    return [
+      ...lessonRedirects().map(([source, destination]) => ({ source, destination, permanent: true })),
+      ...areaRedirects(),
+      ...companyPrepRedirects,
+    ]
   },
   async headers() {
     return [

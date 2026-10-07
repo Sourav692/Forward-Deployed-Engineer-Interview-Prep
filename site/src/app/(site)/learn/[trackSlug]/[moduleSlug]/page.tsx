@@ -16,6 +16,7 @@ import {
   moduleParams,
   readingList,
   relatedModules,
+  trackTrail,
 } from '@/lib/learn'
 import type { CurriculumModule } from '@/lib/curriculum-types'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
@@ -69,23 +70,20 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   const gap = mod.status === 'coming-soon' || mod.status === 'on-hold'
   const prereqModules = mod.prerequisites.map((s) => getModuleBySlug(s)).filter((m): m is CurriculumModule => !!m)
   const firstLesson = list.main[0]
+  const trail = trackTrail(track)
+  // Section anchors exist only on Learn track pages.
+  const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
 
   return (
     <>
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: 'Learn', path: learnHref.index() },
-          { name: `${track.code} ${track.title}`, path: learnHref.track(track.slug) },
+          ...trail.map((c) => ({ name: c.label, path: c.href })),
           { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
         ])}
       />
       <Breadcrumbs
-        items={[
-          { label: 'Learn', href: learnHref.index() },
-          { label: `${track.code} ${track.title}`, href: learnHref.track(track.slug) },
-          ...(section ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []),
-          { label: `${mod.code} ${mod.title}` },
-        ]}
+        items={[...trail, ...sectionCrumb, { label: `${mod.code} ${mod.title}` }]}
       />
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <SideNav track={track} currentModule={mod.slug} />

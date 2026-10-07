@@ -1678,7 +1678,7 @@ export const MODULES: CurriculumModule[] = [
       'interview-centric-guide',
       'openai-applied-ai-engineer-coverage-gap-analysis',
     ],
-    holdNote: 'Company-specific prep is on hold, to be built later from 08_Company_Specific_Prep (Blitzy, OpenAI_Anthropic_Pack, OpenAI_Applied).',
+    holdNote: 'Company-specific prep has moved to its own Company Prep area (/company-prep), where packs will be added one company at a time.',
     seeAlso: [],
   },
   {

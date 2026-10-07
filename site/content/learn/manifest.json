@@ -3138,7 +3138,7 @@
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/01_Running_and_Scoring_a_Mock_Interview.md",
       "estMinutes": 12,
-      "href": "/learn/interview-practice/mock-interviews/running-and-scoring-a-mock-interview"
+      "href": "/interview/mock-interviews/running-and-scoring-a-mock-interview"
     },
     {
       "slug": "internal-knowledge-assistant-mock-interview",
@@ -3149,7 +3149,7 @@
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/02_Internal_Knowledge_Assistant_Mock_Interview.md",
       "estMinutes": 9,
-      "href": "/learn/interview-practice/mock-interviews/internal-knowledge-assistant-mock-interview"
+      "href": "/interview/mock-interviews/internal-knowledge-assistant-mock-interview"
     },
     {
       "slug": "agentic-support-workflow-mock-interview",
@@ -3160,7 +3160,7 @@
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/03_Agentic_Support_Workflow_Mock_Interview.md",
       "estMinutes": 9,
-      "href": "/learn/interview-practice/mock-interviews/agentic-support-workflow-mock-interview"
+      "href": "/interview/mock-interviews/agentic-support-workflow-mock-interview"
     },
     {
       "slug": "financial-compliance-and-red-team-mock-interview",
@@ -3171,7 +3171,7 @@
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/04_Financial_Compliance_and_Red_Team_Mock_Interview.md",
       "estMinutes": 8,
-      "href": "/learn/interview-practice/mock-interviews/financial-compliance-and-red-team-mock-interview"
+      "href": "/interview/mock-interviews/financial-compliance-and-red-team-mock-interview"
     },
     {
       "slug": "sre-triage-agent-mock-interview",
@@ -3182,7 +3182,7 @@
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/05_SRE_Triage_Agent_Mock_Interview.md",
       "estMinutes": 9,
-      "href": "/learn/interview-practice/mock-interviews/sre-triage-agent-mock-interview"
+      "href": "/interview/mock-interviews/sre-triage-agent-mock-interview"
     },
     {
       "slug": "multi-tenant-saas-assistant-mock-interview",
@@ -3193,7 +3193,7 @@
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/06_Multi_Tenant_SaaS_Assistant_Mock_Interview.md",
       "estMinutes": 9,
-      "href": "/learn/interview-practice/mock-interviews/multi-tenant-saas-assistant-mock-interview"
+      "href": "/interview/mock-interviews/multi-tenant-saas-assistant-mock-interview"
     },
     {
       "slug": "roadmap",

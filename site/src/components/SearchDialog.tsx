@@ -197,8 +197,9 @@ export function SearchDialog() {
           <circle cx="7" cy="7" r="4.5" />
           <path d="M10.5 10.5L14 14" strokeLinecap="round" />
         </svg>
-        <span className="hidden sm:inline">Search</span>
-        <kbd className="hidden rounded border border-border bg-surface-2 px-1 font-sans text-[0.6875rem] sm:inline">
+        {/* Icon only at lg–xl, where the six area links need the header width. */}
+        <span className="hidden sm:inline lg:hidden xl:inline">Search</span>
+        <kbd className="hidden rounded border border-border bg-surface-2 px-1 font-sans text-[0.6875rem] sm:inline lg:hidden xl:inline">
           ⌘K
         </kbd>
       </button>

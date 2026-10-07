@@ -148,9 +148,8 @@ export const MODULES: ModuleMeta[] = [
     id: '16-company-oriented-prep',
     number: 16,
     title: 'Company-Oriented Prep',
-    blurb:
-      'Preparation packs tailored to a specific company and interview loop. Start with Blitzy Prep for product context, customer situations and engineering drills.',
-    status: 'live',
+    blurb: 'Preparation packs tailored to a specific company and interview loop, listed under Company Prep as each is written.',
+    status: 'planned',
     kind: 'reading',
   },
 ]

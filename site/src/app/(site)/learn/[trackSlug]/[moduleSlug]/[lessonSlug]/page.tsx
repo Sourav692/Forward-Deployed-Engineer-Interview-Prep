@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
-import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput } from '@/lib/learn'
+import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput, trackTrail } from '@/lib/learn'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { LessonActions } from '@/components/learn/LessonActions'
 import { LessonReader } from '@/components/learn/LessonReader'
@@ -46,14 +46,16 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   if (!page) notFound()
   const { lesson, track, section, module: mod, siblings, doc, prev, next, index, count } = page
   const input = moduleInput(mod)
+  const trail = trackTrail(track)
+  // Section anchors exist only on Learn track pages.
+  const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
 
   return (
     <>
       <JsonLd
         data={[
           breadcrumbJsonLd([
-            { name: 'Learn', path: learnHref.index() },
-            { name: `${track.code} ${track.title}`, path: learnHref.track(track.slug) },
+            ...trail.map((c) => ({ name: c.label, path: c.href })),
             { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
             { name: lesson.title, path: lesson.href },
           ]),
@@ -68,9 +70,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
       />
       <Breadcrumbs
         items={[
-          { label: 'Learn', href: learnHref.index() },
-          { label: `${track.code} ${track.title}`, href: learnHref.track(track.slug) },
-          ...(section ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []),
+          ...trail,
+          ...sectionCrumb,
           { label: `${mod.code} ${mod.title}`, href: learnHref.module(mod) },
           { label: lesson.title },
         ]}
