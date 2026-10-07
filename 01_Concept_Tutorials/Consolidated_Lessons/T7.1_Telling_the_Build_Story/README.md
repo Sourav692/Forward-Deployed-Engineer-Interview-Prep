@@ -1,6 +1,6 @@
 # T7.1 Telling the Build Story: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T7.1 "Telling the build story". Each concept is taught once, in the house tutorial format, drawing only on two repository sources. The site publishes them at `/learn/communication-and-behavioural/telling-the-build-story`.
+These six lessons are the site's teaching copy of module T7.1 "Telling the build story". Each concept is taught once, in the house tutorial format, drawing on two repository sources, plus one companion project for lesson 6's worked example. The site publishes them at `/learn/communication-and-behavioural/telling-the-build-story`.
 
 The lessons run in the order a candidate prepares: orient, then prepare the material once, then assemble it for the room.
 
@@ -22,4 +22,8 @@ On 2026-10-08 the module was reordered so preparation comes before the formats. 
 
 The source files stay in the repository unchanged. The site no longer publishes them as separate lessons; their old URLs redirect to lessons 1 and 2. The worked narratives in `11_Telling_The_Story/stories/` are referenced but not republished.
 
-The sources set no interview questions, only self-check items, so the module has no separate practice lesson. Every claim, number and quotation in these lessons comes from the two sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+Companion source:
+
+- The companion [Enterprise RAG platform](https://github.com/Sourav692/ai-engineering-demystified-14-projects/tree/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/01_enterprise_rag_platform) at revision `db71e98` (own material), for lesson 6's worked example only. Its facts are checked against the files at that revision; do not move the pin as part of a lesson edit.
+
+The sources set no interview questions, only self-check items, so the module has no separate practice lesson. Every claim, number and quotation in these lessons comes from the two handbook sources, except lesson 6's worked example, which comes from the companion project above. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
