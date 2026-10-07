@@ -1,9 +1,14 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { Button } from '@/components/ui'
+import { JourneyBoundary } from './JourneyBoundary'
 import styles from './landing.module.css'
+
+// The renderer stays out of the initial HTML and is requested only near the journey.
+const JourneyWorld = dynamic(() => import('./JourneyWorld'), { ssr: false })
 
 const SCENES = [
   { title: 'Understand the problem', body: 'Start with the person, the task, and what cannot go wrong. A useful system begins with a useful question.', href: '/start', cta: 'Choose your path', detail: 'Discovery notes become a clear brief.' },
@@ -89,8 +94,27 @@ function Island({ scene, x = 0 }: { scene: 0 | 1; x?: number }) {
 export function LearningJourney() {
   const root = useRef<HTMLElement>(null)
   const panel = useRef<HTMLDivElement>(null)
-  const camera = useRef<SVGGElement>(null)
+  const progress = useRef(0)
+  const requestRender = useRef<(() => void) | null>(null)
   const [staticView, setStaticView] = useState(false)
+  const [eligible, setEligible] = useState(false)
+  const [nearViewport, setNearViewport] = useState(false)
+  const [ready, setReady] = useState(false)
+  const [unavailable, setUnavailable] = useState(false)
+  const handleUnavailable = useCallback(() => { setUnavailable(true); setReady(false) }, [])
+  const handleReady = useCallback(() => setReady(true), [])
+  const handleInvalidate = useCallback((render: (() => void) | null) => {
+    requestRender.current = render
+    if (!render) setReady(false)
+  }, [])
+
+  useEffect(() => {
+    const element = root.current
+    if (!element) return
+    const observer = new IntersectionObserver(([entry]) => setNearViewport(entry.isIntersecting), { rootMargin: '200px 0px' })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const element = root.current
@@ -101,14 +125,14 @@ export function LearningJourney() {
 
     function update() {
       frame = 0
-      if (!element || !panel.current || !camera.current || !enabled) return
+      if (!element || !panel.current || !enabled) return
       const bounds = element.getBoundingClientRect()
       const travel = Math.max(1, bounds.height - panel.current.offsetHeight)
-      const progress = Math.max(0, Math.min(1, (88 - bounds.top) / travel))
-      // Scroll moves the camera through one connected world. No React renders per frame.
-      camera.current.setAttribute('transform', `translate(${-620 * progress} 0)`)
-      element.style.setProperty('--journey-progress', String(progress))
-      const scene = progress < 0.5 ? '0' : '1'
+      const next = Math.max(0, Math.min(1, (88 - bounds.top) / travel))
+      // Render a frame only when the camera moves. No React renders per scroll frame.
+      if (progress.current !== next) { progress.current = next; requestRender.current?.() }
+      element.style.setProperty('--journey-progress', String(next))
+      const scene = next < 0.5 ? '0' : '1'
       element.dataset.scene = scene
       element.querySelectorAll<HTMLButtonElement>('[data-scene-button]').forEach((button) => {
         if (button.dataset.sceneButton === scene) button.setAttribute('aria-current', 'step')
@@ -119,8 +143,9 @@ export function LearningJourney() {
       if (!frame && enabled) frame = requestAnimationFrame(update)
     }
     function syncMode() {
-      enabled = media.matches && !staticView
+      enabled = media.matches && !staticView && !unavailable
       element!.dataset.motion = enabled ? 'true' : 'false'
+      setEligible(enabled)
       schedule()
     }
     syncMode()
@@ -133,7 +158,7 @@ export function LearningJourney() {
       window.removeEventListener('scroll', schedule)
       window.removeEventListener('resize', schedule)
     }
-  }, [staticView])
+  }, [staticView, unavailable])
 
   function goToScene(index: number) {
     if (!root.current || !panel.current) return
@@ -154,10 +179,10 @@ export function LearningJourney() {
       <section ref={root} aria-label="Discovery to architecture journey" className={styles.journeyTrack} data-motion="false" data-scene="0">
         <div ref={panel} className={styles.journeyPanel}>
           <div className={styles.journeyHeader}>
-            <p className="text-xs font-medium text-muted">Two scenes. One connected idea.</p>
-            <Button variant="ghost" onClick={() => setStaticView(!staticView)} aria-pressed={staticView} className={styles.viewToggle}>
-              {staticView ? 'Use scroll view' : 'Use static view'}
-            </Button>
+            <p className="text-xs font-medium text-muted">{unavailable ? 'Showing the static journey.' : 'Two scenes. One connected idea.'}</p>
+            {!unavailable && <Button variant="ghost" onClick={() => setStaticView(!staticView)} aria-pressed={staticView} className={styles.viewToggle}>
+              {staticView ? 'Use 3D view' : 'Use static view'}
+            </Button>}
           </div>
           <div className={styles.motionLayout}>
             <div className={styles.journeyCopy}>
@@ -176,13 +201,11 @@ export function LearningJourney() {
               <p className="mt-7 text-xs text-muted">Scroll to follow the idea, or choose a scene.</p>
               <div className={styles.journeyProgress} aria-hidden><span /></div>
             </div>
-            <div className={styles.mapWindow}>
-              <svg viewBox="0 0 650 510" aria-hidden="true" className={styles.worldMap}>
-                <g ref={camera} data-testid="journey-camera">
-                  <path d="M556 320 684 320" fill="none" stroke="var(--accent)" strokeWidth="3" strokeDasharray="5 7" />
-                  <Island scene={0} /><Island scene={1} x={620} />
-                </g>
-              </svg>
+            <div className={styles.mapWindow} data-ready={ready && eligible && nearViewport}>
+              <svg viewBox="0 0 650 510" aria-hidden="true" className={styles.worldPreview}><Island scene={0} /></svg>
+              {eligible && nearViewport && <JourneyBoundary onUnavailable={handleUnavailable}>
+                <JourneyWorld progress={progress} onInvalidate={handleInvalidate} onReady={handleReady} onUnavailable={handleUnavailable} />
+              </JourneyBoundary>}
             </div>
           </div>
           <div className={styles.staticLayout}>
