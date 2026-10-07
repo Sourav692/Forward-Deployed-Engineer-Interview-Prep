@@ -74,8 +74,7 @@ const BEHAVIOURAL: Expectation = {
 const EXPECTATIONS: Record<string, Expectation> = {
   core: CASE_STUDY,
   'system-design': CASE_STUDY,
-  'hiring-manager': BEHAVIOURAL,
-  'leadership-principles': BEHAVIOURAL,
+  'fde-competencies': BEHAVIOURAL,
 }
 
 type Counts = {

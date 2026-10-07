@@ -1,5 +1,5 @@
 import type { NextConfig } from 'next'
-import { MODULES, RENAMED } from './src/lib/curriculum.ts'
+import { MODULES, RENAMED, RETIRED_MODULES } from './src/lib/curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from './src/lib/curriculum-href.ts'
 
 /**
@@ -49,6 +49,8 @@ function lessonRedirects(): [string, string][] {
   }
   const out: [string, string][] = []
   for (const [from, to] of Object.entries(RENAMED)) {
+    // A retired module's lessons go with it; retiredModuleRedirects sends the module on.
+    if (from.split('/')[0] in RETIRED_MODULES) continue
     const src = resolveKey(from)
     const dst = resolveKey(to ?? from.split('/')[0])
     const destination = curriculumHref(dst.track, dst.mod, dst.lesson)
@@ -83,12 +85,58 @@ const companyPrepRedirects = [
   { source: '/modules/16-company-oriented-prep/:path*', destination: '/company-prep', permanent: false },
 ]
 
+/** Removed modules (RETIRED_MODULES in curriculum.ts) redirect to the module that took them over. */
+const retiredModuleRedirects = () => {
+  const trackOf = new Map(MODULES.map((m) => [m.slug, m.track]))
+  return Object.entries(RETIRED_MODULES).map(([from, to]) => ({
+    source: curriculumHref(trackOf.get(to)!, from),
+    destination: curriculumHref(trackOf.get(to)!, to),
+    permanent: true,
+  }))
+}
+
+/**
+ * The leadership-principle and hiring-manager worksheets were merged into the FDE
+ * competency worksheets (T7.2, The behavioural round). Each old worksheet goes to the new
+ * one that holds most of its questions.
+ */
+const BEHAVIOURAL_MODULE = '/modules/14-behavioural-and-leadership-round'
+const RETIRED_BEHAVIOURAL_WORKSHEETS: Record<string, string> = {
+  'hiring-manager/ambiguity-and-discovery': 'customer-focus-and-discovery',
+  'hiring-manager/delivery-under-pressure': 'delivery-under-pressure',
+  'hiring-manager/pushback-and-saying-no': 'pushback-and-saying-no',
+  'hiring-manager/scale-beyond-self': 'scale-beyond-yourself',
+  'hiring-manager/stakeholder-influence': 'communication-and-influence',
+  'leadership-principles/attracts-and-retains-talent': 'leading-people',
+  'leadership-principles/communicates-with-clarity': 'communication-and-influence',
+  'leadership-principles/creates-a-culture-of-accountability': 'leading-people',
+  'leadership-principles/customer-obsession': 'customer-focus-and-discovery',
+  'leadership-principles/develops-people': 'leading-people',
+  'leadership-principles/embraces-adversity': 'ownership-standards-and-failure',
+  'leadership-principles/engenders-trust': 'communication-and-influence',
+  'leadership-principles/focuses-on-outcomes': 'ownership-standards-and-failure',
+  'leadership-principles/makes-good-decisions-quickly': 'delivery-under-pressure',
+  'leadership-principles/never-stops-learning-and-growing': 'ownership-standards-and-failure',
+  'leadership-principles/ownership': 'ownership-standards-and-failure',
+  'leadership-principles/resourceful': 'scale-beyond-yourself',
+  'leadership-principles/sets-high-standards': 'ownership-standards-and-failure',
+  'leadership-principles/staff-level-and-cross-cutting': 'scale-beyond-yourself',
+}
+
+const behaviouralRedirects = Object.entries(RETIRED_BEHAVIOURAL_WORKSHEETS).map(([from, to]) => ({
+  source: `${BEHAVIOURAL_MODULE}/${from}`,
+  destination: `${BEHAVIOURAL_MODULE}/fde-competencies/${to}`,
+  permanent: true,
+}))
+
 const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...lessonRedirects().map(([source, destination]) => ({ source, destination, permanent: true })),
       ...areaRedirects(),
       ...companyPrepRedirects,
+      ...retiredModuleRedirects(),
+      ...behaviouralRedirects,
     ]
   },
   async headers() {

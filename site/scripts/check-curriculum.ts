@@ -11,7 +11,7 @@
  * redirects that chain, point at an unpublished lesson or retire a live one, and lesson
  * slices that overlap, drop a heading or name a heading the source lacks.
  */
-import { LESSONS, MODULES, RENAMED, TRACKS } from '../src/lib/curriculum.ts'
+import { LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
@@ -170,12 +170,18 @@ for (const m of MODULES) {
     ).map((l) => `${l.home}/${l.slug}`),
   )
   for (const [from, to] of Object.entries(RENAMED)) {
-    if (!moduleBySlug.has(from.split('/')[0])) fail(`RENAMED key ${from} names an unknown module`)
+    const mod = from.split('/')[0]
+    if (!moduleBySlug.has(mod) && !(mod in RETIRED_MODULES)) fail(`RENAMED key ${from} names an unknown module`)
     if (published.has(from)) fail(`RENAMED key ${from} is still a published lesson; drop the entry or retire the lesson`)
     if (to === null) continue
     if (to in RENAMED) fail(`RENAMED chain: ${from} → ${to} → ${RENAMED[to]}; point ${from} straight at the final lesson`)
     else if (!published.has(to)) fail(`RENAMED maps ${from} to ${to}, which is not a published lesson`)
   }
+}
+
+for (const [from, to] of Object.entries(RETIRED_MODULES)) {
+  if (moduleBySlug.has(from)) fail(`RETIRED_MODULES key ${from} is still a module`)
+  if (!moduleBySlug.has(to)) fail(`RETIRED_MODULES maps ${from} to ${to}, which is not a module`)
 }
 
 const cycle = findPrerequisiteCycle(MODULES)

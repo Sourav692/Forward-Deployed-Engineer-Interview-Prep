@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T07:35:39.413Z",
+  "generatedAt": "2026-10-07T22:46:13.644Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -134,111 +134,44 @@
       "id": "14-behavioural-and-leadership-round",
       "tracks": [
         {
-          "id": "hiring-manager",
-          "title": "Hiring Manager Questions",
-          "blurb": "Five customer-facing competencies, four questions each: whether you can be put in front of a customer, not whether you can design a system.",
+          "id": "fde-competencies",
+          "title": "Behavioural Round Questions",
+          "blurb": "Six competencies FDE interviewers probe, from discovery to scaling beyond yourself, plus an optional set for lead roles. Each model answer shows the shape of a strong story and marks the details you must supply yourself.",
           "scenarios": [
             {
-              "slug": "ambiguity-and-discovery",
+              "slug": "customer-focus-and-discovery",
               "order": 1,
-              "title": "Ambiguity and Discovery"
+              "title": "Customer Focus and Discovery"
             },
             {
-              "slug": "stakeholder-influence",
+              "slug": "communication-and-influence",
               "order": 2,
-              "title": "Stakeholder Influence"
-            },
-            {
-              "slug": "delivery-under-pressure",
-              "order": 3,
-              "title": "Delivery Under Pressure"
+              "title": "Communication and Influence"
             },
             {
               "slug": "pushback-and-saying-no",
-              "order": 4,
+              "order": 3,
               "title": "Pushback and Saying No"
             },
             {
-              "slug": "scale-beyond-self",
-              "order": 5,
-              "title": "Scale Beyond Self"
-            }
-          ]
-        },
-        {
-          "id": "leadership-principles",
-          "title": "Leadership Principle Questions",
-          "blurb": "Thirteen principles plus a staff-level cross-cutting set. Each model answer shows the shape of a strong story and marks the details you must supply yourself.",
-          "scenarios": [
-            {
-              "slug": "customer-obsession",
-              "order": 1,
-              "title": "Customer Obsession"
-            },
-            {
-              "slug": "ownership",
-              "order": 2,
-              "title": "Ownership"
-            },
-            {
-              "slug": "attracts-and-retains-talent",
-              "order": 3,
-              "title": "Attracts and Retains Talent"
-            },
-            {
-              "slug": "communicates-with-clarity",
+              "slug": "delivery-under-pressure",
               "order": 4,
-              "title": "Communicates with Clarity"
+              "title": "Delivery Under Pressure"
             },
             {
-              "slug": "sets-high-standards",
+              "slug": "ownership-standards-and-failure",
               "order": 5,
-              "title": "Sets High Standards"
+              "title": "Ownership, Standards, and Failure"
             },
             {
-              "slug": "focuses-on-outcomes",
+              "slug": "scale-beyond-yourself",
               "order": 6,
-              "title": "Focuses on Outcomes"
+              "title": "Scale Beyond Yourself"
             },
             {
-              "slug": "resourceful",
+              "slug": "leading-people",
               "order": 7,
-              "title": "Resourceful"
-            },
-            {
-              "slug": "makes-good-decisions-quickly",
-              "order": 8,
-              "title": "Makes Good Decisions Quickly"
-            },
-            {
-              "slug": "develops-people",
-              "order": 9,
-              "title": "Develops People"
-            },
-            {
-              "slug": "creates-a-culture-of-accountability",
-              "order": 10,
-              "title": "Creates a Culture of Accountability"
-            },
-            {
-              "slug": "engenders-trust",
-              "order": 11,
-              "title": "Engenders Trust"
-            },
-            {
-              "slug": "embraces-adversity",
-              "order": 12,
-              "title": "Embraces Adversity"
-            },
-            {
-              "slug": "never-stops-learning-and-growing",
-              "order": 13,
-              "title": "Never Stops Learning and Growing"
-            },
-            {
-              "slug": "staff-level-and-cross-cutting",
-              "order": 14,
-              "title": "Staff-Level and Cross-Cutting"
+              "title": "Leading People"
             }
           ]
         }

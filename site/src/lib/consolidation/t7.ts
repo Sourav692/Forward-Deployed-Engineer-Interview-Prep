@@ -11,4 +11,25 @@ export const RENAMED_T7: Record<string, string | null> = {
   'telling-the-build-story/proof-vs-cheat-sheet-honesty': 'telling-the-build-story/proof-versus-knowledge',
   // 2026-10-08: reordered to prepare-then-deliver; the honesty lessons merged.
   'telling-the-build-story/offered-honesty-and-war-stories': 'telling-the-build-story/proof-versus-knowledge',
+  // 2026-10-08: T7.3 and T7.4 retired (RETIRED_MODULES in curriculum.ts). Their worksheets
+  // live under /modules/14-behavioural-and-leadership-round, redirected in next.config.ts.
+  'leadership-principle-answers/customer-obsession': null,
+  'leadership-principle-answers/ownership': null,
+  'leadership-principle-answers/attracts-and-retains-talent': null,
+  'leadership-principle-answers/communicates-with-clarity': null,
+  'leadership-principle-answers/sets-high-standards': null,
+  'leadership-principle-answers/focuses-on-outcomes': null,
+  'leadership-principle-answers/resourceful': null,
+  'leadership-principle-answers/makes-good-decisions-quickly': null,
+  'leadership-principle-answers/develops-people': null,
+  'leadership-principle-answers/creates-a-culture-of-accountability': null,
+  'leadership-principle-answers/engenders-trust': null,
+  'leadership-principle-answers/embraces-adversity': null,
+  'leadership-principle-answers/never-stops-learning-and-growing': null,
+  'leadership-principle-answers/staff-level-and-cross-cutting': null,
+  'hiring-manager-round/ambiguity-and-discovery': null,
+  'hiring-manager-round/stakeholder-influence': null,
+  'hiring-manager-round/delivery-under-pressure': null,
+  'hiring-manager-round/pushback-and-saying-no': null,
+  'hiring-manager-round/scale-beyond-self': null,
 }

@@ -67,14 +67,9 @@ const MODULES = [
     id: '14-behavioural-and-leadership-round',
     tracks: [
       {
-        id: 'hiring-manager',
-        worksheetDir: join(BEHAVIOURAL_ROOT, 'hiring_manager_round'),
-        answerKeyDir: join(BEHAVIOURAL_ROOT, 'hiring_manager_round', 'answer_keys'),
-      },
-      {
-        id: 'leadership-principles',
-        worksheetDir: join(BEHAVIOURAL_ROOT, 'leadership_principles'),
-        answerKeyDir: join(BEHAVIOURAL_ROOT, 'leadership_principles', 'answer_keys'),
+        id: 'fde-competencies',
+        worksheetDir: join(BEHAVIOURAL_ROOT, 'fde_competencies'),
+        answerKeyDir: join(BEHAVIOURAL_ROOT, 'fde_competencies', 'answer_keys'),
       },
     ],
   },

@@ -17,7 +17,7 @@ This guide explains what each folder contributes to Forward-Deployed Engineer an
 | `01_Concept_Tutorials/` | Technical depth and judgement | FDE Handbook (12 chapters), GenAI engineering modules (11), RAG and agent topic guides, selected agentic system design book chapters, system design fundamentals, production and platform judgement, cost and latency optimisation |
 | `02_System_Design_Case_Studies/` | Pattern recognition across realistic designs | 20 scenario packs (main guide, deep dive, cheat sheet, sourced full pack), standalone designs, long-form scenario tutorials (V1 and V2), classic design walkthroughs with whiteboard scripts |
 | `03_Practice_Worksheets_and_Keys/` | Timed practice with model answers | 10 customer-discovery worksheets, 12 system-design worksheets, a vendor-neutral problem-decomposition question bank |
-| `04_Behavioral_and_Leadership/` | Behavioural and hiring-manager rounds | Story bank, 14 leadership-principle worksheets, 5 hiring-manager-round worksheets, all with answer keys |
+| `04_Behavioral_and_Leadership/` | The behavioural round | Story bank (with a map from the 14 leadership principles to the questions), six FDE competency worksheets and an optional leading-people worksheet in `fde_competencies/`, all with answer keys |
 | `05_FDE_Delivery_and_Scoping/` | Delivery and scoping questions | Scoping guide, delivery framework with a 60-minute interview script, cross-team delivery, the senior FDE day to day |
 | `06_Coding_Round_Prep/` | AI-assisted coding round | 7-day roadmap, agent-loop mock and ledger drill with tests, rubric, prompt playbook |
 | `07_Last_Day_Revision/` | Rapid recall before the interview | 18 review modules with memory cards, the roadmap, a rapid revision guide, a trigger-to-concept cheat sheet |
