@@ -168,17 +168,12 @@ export const TRACKS: Record<string, { title: string; blurb: string }> = {
       'Twelve harder scenarios, each built around one dangerous constraint — permission ' +
       'fidelity, tenant isolation, air-gapped deployment, release gating.',
   },
-  'hiring-manager': {
-    title: 'Hiring Manager Questions',
+  'fde-competencies': {
+    title: 'Behavioural Round Questions',
     blurb:
-      'Five customer-facing competencies, four questions each: whether you can be put in ' +
-      'front of a customer, not whether you can design a system.',
-  },
-  'leadership-principles': {
-    title: 'Leadership Principle Questions',
-    blurb:
-      'Thirteen principles plus a staff-level cross-cutting set. Each model answer shows ' +
-      'the shape of a strong story and marks the details you must supply yourself.',
+      'Six competencies FDE interviewers probe, from discovery to scaling beyond yourself, ' +
+      'plus an optional set for lead roles. Each model answer shows the shape of a strong ' +
+      'story and marks the details you must supply yourself.',
   },
   'knowledge-retrieval': {
     title: 'Knowledge and Retrieval',
@@ -247,7 +242,7 @@ export const TITLE_OVERRIDES: Record<string, string> = {
   // legal contract copilot, so the same noun.
   'core/financial-compliance-reviewer': 'Financial Compliance Review Copilot',
 }
-export const BEHAVIOURAL_TRACKS = ['hiring-manager', 'leadership-principles']
+export const BEHAVIOURAL_TRACKS = ['fde-competencies']
 
 /**
  * The behavioural Story Bank (CONTENT-15): one page of the author's anonymised stories,
@@ -562,7 +557,7 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
     // Fact-check round 2 (CONTENT-18): external claims checked against official docs.
     lastReviewed: '2026-09-27',
   },
-  'hiring-manager': {
+  'fde-competencies': {
     mode: 'behavioural',
     audience: 'Candidates with real customer-facing delivery experience to draw on',
     difficulty: 'Intermediate',
@@ -576,26 +571,6 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
     howToUse:
       'Read the sample answer, practise the structure in your own words, and choose a status ' +
       'for each question. Use the Story Bank to find a real experience that fits the question.',
-    minutes: 40,
-    sourceStatus: 'personal',
-    lastReviewed: null,
-    personalisation: true,
-  },
-  'leadership-principles': {
-    mode: 'behavioural',
-    audience: 'Candidates with real delivery and leadership experience to draw on',
-    difficulty: 'Advanced',
-    prerequisites: [
-      'A short list of six to ten real engagements you can talk about in detail',
-      'The Hiring Manager Questions, if you have not practised behavioural answers before',
-    ],
-    outcomes: [
-      'Read a strong answer for each principle and connect it to a real story of your own',
-      'Track which answers you have not started, are practising, or have mastered',
-    ],
-    howToUse:
-      'Read the sample answer, practise the structure in your own words, and choose a status ' +
-      'for each question. Use the Story Bank to find a real experience that fits the principle.',
     minutes: 40,
     sourceStatus: 'personal',
     lastReviewed: null,
@@ -719,7 +694,7 @@ export const ORIENTATION_META: EditorialMeta = {
 
 export const STORY_BANK_META: EditorialMeta = {
   mode: 'behavioural',
-  audience: 'Candidates preparing hiring-manager and leadership-principle rounds',
+  audience: 'Candidates preparing the behavioural round',
   difficulty: 'Intermediate',
   prerequisites: ['Try a few behavioural worksheets first, so you know what the questions test'],
   outcomes: [
