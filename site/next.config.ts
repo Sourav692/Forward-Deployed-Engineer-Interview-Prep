@@ -65,13 +65,14 @@ function lessonRedirects(): [string, string][] {
 /**
  * Tracks served by their own area (src/lib/curriculum-href.ts) used to live under
  * /learn/<track>. Their old URLs redirect to the area, keeping the module and lesson.
+ * The bare track URL gets its own rule: `:path*` matching nothing would leave a
+ * trailing slash (`/interview/`) and cost a second redirect.
  */
 const areaRedirects = () =>
-  Object.entries(AREA_TRACKS).map(([track, base]) => ({
-    source: `/learn/${track}/:path*`,
-    destination: `${base}/:path*`,
-    permanent: true,
-  }))
+  Object.entries(AREA_TRACKS).flatMap(([track, base]) => [
+    { source: `/learn/${track}`, destination: base, permanent: true },
+    { source: `/learn/${track}/:path+`, destination: `${base}/:path+`, permanent: true },
+  ])
 
 /**
  * Company-oriented prep (module 16) is unpublished while its packs move to the Company
