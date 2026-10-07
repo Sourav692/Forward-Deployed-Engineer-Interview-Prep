@@ -7,6 +7,7 @@ import { CASE_STUDY, COMING_SOON_MODULE, LESSON, READY_MODULE, WORKSHEET, hydrat
 
 const PAGES: [string, string][] = [
   ['landing', '/'],
+  ['company prep', '/company-prep'],
   ['start', '/start'],
   ['path', '/start/paths/fde'],
   ['learn', '/learn'],
