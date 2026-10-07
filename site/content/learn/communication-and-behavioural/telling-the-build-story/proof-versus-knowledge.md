@@ -99,27 +99,22 @@ When the room is ready to close, one sentence carries the whole discipline:
 ## Key Takeaways
 
 - Showing and knowing are both legitimate; presenting knowledge as proof is the failure.
-- Keep a coverage map with ✅, 🟡 and ❌, plus "to close" and "what to say" for every gap.
-- For every number, say what it does not prove and what it does, before anyone asks.
-- List what the system deliberately does not do, each with its production answer.
-- Offer the limitation first and without apology; it adds weight to every other claim and demonstrates the FDE job.
-- Tell each war story as what broke, how it was found, what changed and a one-sentence lesson, and close with the sentence that separates what runs, what is known and where the demo ends.
+- For every project, prepare a coverage map with "to close" and "what to say" for each gap, an honest paragraph for each number, and a "does not do" list with production answers.
+- Offer the limitation first and without apology; it adds weight to every other claim.
+- Tell each war story as what broke, how it was found, what changed and a one-sentence lesson.
 
 ## Check Yourself
 
 1. **State the distinction and the failure in one sentence each.**
    "I built this, let me show you" and "I know how this is done" are both legitimate positions. The failure is presenting the second as the first.
 
-2. **What two extra columns does a coverage map carry for every partial or missing item?**
-   What it would take to close the gap, and, where closing is infeasible, what to say instead, worded ready to speak.
-
-3. **Your retrieval benchmark scores near-perfectly on 22 documents. How do you present it?**
+2. **Your retrieval benchmark scores near-perfectly on 22 documents. How do you present it?**
    Say the corpus is tiny, so the differences between strategies are noise and prove nothing about them. Then say what it does prove: the harness exists and gates the release, and the zero-leak column is the number that matters.
 
-4. **Why does offered honesty strengthen every other claim?**
+3. **Why does offered honesty strengthen every other claim?**
    The listener sees the speaker volunteer a caveat they could have hidden, so they trust the claims that were not caveated, such as the zero-leak gate, without checking.
 
-5. **A project has no war stories. What does that suggest?**
+4. **A project has no war stories. What does that suggest?**
    Either it has not been tested hard enough, or it is not being described honestly.
 
 ## References
