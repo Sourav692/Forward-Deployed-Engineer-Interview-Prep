@@ -2586,7 +2586,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/01_Three_Formats_for_One_Project.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project"
     },
     {
@@ -2596,8 +2596,8 @@
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_The_Timed_Deep_Dive.md",
-      "estMinutes": 7,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Timed_Deep_Dive.md",
+      "estMinutes": 6,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/the-timed-deep-dive"
     },
     {
@@ -2607,8 +2607,8 @@
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_The_Open_Ended_Conversation.md",
-      "estMinutes": 6,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_The_Open_Ended_Conversation.md",
+      "estMinutes": 4,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/the-open-ended-conversation"
     },
     {
@@ -2618,7 +2618,7 @@
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Technical_Implementation_Flow.md",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_The_Technical_Implementation_Flow.md",
       "estMinutes": 5,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/the-technical-implementation-flow"
     },
@@ -2629,20 +2629,20 @@
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_Proof_versus_Knowledge.md",
-      "estMinutes": 6,
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_Proof_versus_Knowledge.md",
+      "estMinutes": 10,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge"
     },
     {
-      "slug": "offered-honesty-and-war-stories",
-      "title": "Offered Honesty and War Stories",
+      "slug": "building-the-story-kit",
+      "title": "Building the Story Kit",
       "track": "communication-and-behavioural",
       "module": "telling-the-build-story",
       "kind": "sync",
       "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_Offered_Honesty_and_War_Stories.md",
-      "estMinutes": 5,
-      "href": "/learn/communication-and-behavioural/telling-the-build-story/offered-honesty-and-war-stories"
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_Building_the_Story_Kit.md",
+      "estMinutes": 8,
+      "href": "/learn/communication-and-behavioural/telling-the-build-story/building-the-story-kit"
     },
     {
       "slug": "story-bank",

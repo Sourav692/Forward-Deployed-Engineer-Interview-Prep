@@ -9,4 +9,6 @@ export const RENAMED_T7: Record<string, string | null> = {
   // T7.1 consolidated into six lessons (site/specs/consolidation/T7-T8.md).
   'telling-the-build-story/deep-dive-and-conversational-formats': 'telling-the-build-story/three-formats-for-one-project',
   'telling-the-build-story/proof-vs-cheat-sheet-honesty': 'telling-the-build-story/proof-versus-knowledge',
+  // 2026-10-08: reordered to prepare-then-deliver; the honesty lessons merged.
+  'telling-the-build-story/offered-honesty-and-war-stories': 'telling-the-build-story/proof-versus-knowledge',
 }

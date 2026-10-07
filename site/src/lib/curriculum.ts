@@ -1433,20 +1433,21 @@ export const MODULES: CurriculumModule[] = [
     section: 'stories-and-communication',
     status: 'ready',
     estMinutes: 120,
-    objective: 'Narrate a project at two depths',
+    objective: 'Tell one project in the format the room needs',
     scope: 'Narrative technique',
     prerequisites: ['first-ten-minutes'],
-    deliverable: 'Record a 2-minute and a 10-minute version',
+    deliverable:
+      'A story kit for one project, then a recorded 15-minute deep-dive and a recorded cold-open conversation',
     assessment: 'Self-score',
     interviewProbe: 'Walk me through a project',
-    commonMistakes: ['No numbers', 'no trade-offs'],
+    commonMistakes: ['No numbers', 'no trade-offs', 'Presenting knowledge as proof', 'Hiding the failed designs'],
     lessons: [
       'three-formats-for-one-project',
+      'proof-versus-knowledge',
+      'building-the-story-kit',
       'the-timed-deep-dive',
       'the-open-ended-conversation',
       'the-technical-implementation-flow',
-      'proof-versus-knowledge',
-      'offered-honesty-and-war-stories',
     ],
     seeAlso: [],
   },
@@ -4645,7 +4646,8 @@ export const LESSONS: CurriculumLesson[] = [
     publish: 'excluded',
   },
   // T7.1 Telling the build story: six consolidated lessons. They replace the two
-  // excluded Handbook lessons below.
+  // excluded Handbook lessons below. "Offered Honesty and War Stories" was merged
+  // into proof-versus-knowledge on 2026-10-08 (see RENAMED in consolidation/t7.ts).
   {
     slug: 'three-formats-for-one-project',
     title: 'Three Formats for One Project',
@@ -4657,7 +4659,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'the-timed-deep-dive',
     title: 'The Timed Deep-Dive',
-    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_The_Timed_Deep_Dive.md',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Timed_Deep_Dive.md',
     home: 'telling-the-build-story',
     kind: 'sync',
     publish: 'own',
@@ -4665,7 +4667,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'the-open-ended-conversation',
     title: 'The Open-Ended Conversation',
-    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_The_Open_Ended_Conversation.md',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_The_Open_Ended_Conversation.md',
     home: 'telling-the-build-story',
     kind: 'sync',
     publish: 'own',
@@ -4673,7 +4675,7 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'the-technical-implementation-flow',
     title: 'The Technical Implementation Flow',
-    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/04_The_Technical_Implementation_Flow.md',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_The_Technical_Implementation_Flow.md',
     home: 'telling-the-build-story',
     kind: 'sync',
     publish: 'own',
@@ -4681,15 +4683,15 @@ export const LESSONS: CurriculumLesson[] = [
   {
     slug: 'proof-versus-knowledge',
     title: 'Proof versus Knowledge',
-    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/05_Proof_versus_Knowledge.md',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/02_Proof_versus_Knowledge.md',
     home: 'telling-the-build-story',
     kind: 'sync',
     publish: 'own',
   },
   {
-    slug: 'offered-honesty-and-war-stories',
-    title: 'Offered Honesty and War Stories',
-    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_Offered_Honesty_and_War_Stories.md',
+    slug: 'building-the-story-kit',
+    title: 'Building the Story Kit',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/03_Building_the_Story_Kit.md',
     home: 'telling-the-build-story',
     kind: 'sync',
     publish: 'own',
