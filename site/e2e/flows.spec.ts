@@ -15,7 +15,7 @@ import {
 
 test('path flow: landing → start → keyboard diagnostic → path flag on /learn', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('main').getByRole('link', { name: 'Start learning' }).first().click()
+  await page.getByRole('main').getByRole('link', { name: 'Choose your path', exact: true }).first().click()
   await expect(page).toHaveURL(/\/start$/)
   await hydrated(page)
 

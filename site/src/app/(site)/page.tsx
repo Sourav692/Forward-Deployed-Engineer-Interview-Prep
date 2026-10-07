@@ -3,11 +3,14 @@ import type { ReactNode } from 'react'
 import { TextLink } from '@/components/areas/Area'
 import { LIVE, coverage } from '@/components/areas/data'
 import { LinkButton } from '@/components/ui'
+import { PracticePreview } from '@/components/landing/PracticePreview'
+import { LearningJourney } from '@/components/landing/LearningJourney'
 import { getAllScenarios } from '@/lib/content'
-import { NAV, REVIEWS, SITE_NAME } from '@/lib/editorial'
+import { NAV, REVIEWS } from '@/lib/editorial'
 
 /**
- * `/`: the product landing page (FE-13). A static Server Component. It says what the
+ * `/`: the product landing page (FE-13). A Server Component with two interactive
+ * leaves: a small practice exercise and a scroll camera study. It says what the
  * site is, who it is for and what each area does, then sends the reader to /start or
  * /learn. The old home's module cards now live on the area indexes: worksheets and
  * behavioural practice on /practice, worked designs on /design, company prep and the
@@ -17,7 +20,7 @@ import { NAV, REVIEWS, SITE_NAME } from '@/lib/editorial'
  * so the coverage claim cannot drift from what is actually published.
  */
 
-const TAGLINE = 'Applied AI engineering, from the customer’s problem to production, and the interview that tests both.'
+const TAGLINE = 'Learn the foundations, work through real designs, and practise the decisions interviewers test.'
 
 export const metadata: Metadata = {
   description: TAGLINE,
@@ -52,7 +55,7 @@ const AREA_COPY: Record<(typeof NAV)[number]['id'], { purpose: string; cta: stri
   design: { purpose: 'The casebook: complete system designs to read as interview answers or deep dives.', cta: 'Open the casebook' },
   practice: { purpose: 'Worksheets and behavioural questions you answer, then score against a model answer.', cta: 'Start practising' },
   interview: { purpose: 'Case-study worksheets, full mock rounds and the final-week review for the days before the loop.', cta: 'Get interview ready' },
-  'company-prep': { purpose: 'Preparation packs for one company’s interview loop. The first packs are being written.', cta: 'See company prep' },
+  'company-prep': { purpose: 'Product context, technical drills, and final-round preparation for a specific company’s interview loop.', cta: 'See company prep' },
 }
 
 const DIFFERENT = [
@@ -93,45 +96,53 @@ export default async function HomePage() {
   ]
 
   return (
-    <div className="py-14 sm:py-20">
-      <section aria-labelledby="hero-heading" className="max-w-3xl">
-        <h1 id="hero-heading" className="text-[2.25rem] font-bold leading-[1.1] tracking-[-0.022em] sm:text-[3rem]">
-          {SITE_NAME}
-        </h1>
-        <p className="mt-4 text-xl leading-snug text-text sm:text-2xl">{TAGLINE}</p>
-        <p className="mt-5 text-[1.0625rem] leading-relaxed text-muted">
-          One place to learn how AI systems are built for real customers, practise explaining them under interview
-          conditions, and see what is ready and what is still being written.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <LinkButton href="/start" className="px-4 py-2.5 text-[0.9375rem]">
-            Start learning
-          </LinkButton>
-          <LinkButton href="/learn" variant="secondary" className="px-4 py-2.5 text-[0.9375rem]">
-            Explore curriculum
-          </LinkButton>
+    <div className="py-10 sm:py-14">
+      <section aria-labelledby="hero-heading" className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">From the customer’s problem to production</p>
+          <h1 id="hero-heading" className="mt-5 text-[2.6rem] font-bold leading-[1.06] tracking-[-0.035em] sm:text-[3.4rem] lg:text-[3.3rem]">
+            Build AI systems.<br /><span className="text-accent">Explain them with confidence.</span>
+          </h1>
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg">{TAGLINE}</p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <LinkButton href="/start" className="min-h-11 px-4 py-2.5 text-[0.9375rem]">Choose your path</LinkButton>
+            <LinkButton href="/learn" variant="secondary" className="min-h-11 px-4 py-2.5 text-[0.9375rem]">Explore curriculum</LinkButton>
+          </div>
         </div>
+        <PracticePreview />
       </section>
 
-      <LandingSection id="areas" title="Five Areas, One Path">
+      <dl className="mt-10 grid grid-cols-3 gap-4 border-y border-border py-5 sm:mt-14">
+        {[
+          { value: cov.byStatus.ready, label: 'ready curriculum modules' },
+          { value: count(LIVE.casebook), label: 'worked system designs' },
+          { value: count(LIVE.worksheets), label: 'technical worksheets' },
+        ].map((item) => (
+          <div key={item.label}>
+            <dd className="text-2xl font-semibold tabular-nums sm:text-3xl">{item.value}</dd>
+            <dt className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">{item.label}</dt>
+          </div>
+        ))}
+      </dl>
+
+      <LearningJourney />
+
+      <LandingSection id="areas" title="Find Your Next Step">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {NAV.map((area) => (
             <li key={area.id} className="flex flex-col rounded-xl border border-border bg-surface p-5">
               <h3 className="text-lg font-semibold">{area.label}</h3>
               <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">{AREA_COPY[area.id].purpose}</p>
+              {area.id === 'company-prep' && scenarios.some((s) => s.trackId === 'blitzy-prep') && (
+                <p className="mt-3 text-xs font-medium text-accent">Blitzy pack available</p>
+              )}
               <div className="mt-4">
                 <TextLink href={area.href}>{AREA_COPY[area.id].cta}</TextLink>
               </div>
             </li>
           ))}
-          <li className="flex flex-col rounded-xl border border-dashed border-border-strong p-5">
-            <h3 className="text-lg font-semibold">Progress</h3>
-            <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">
-              A dashboard of what you have read, practised and need to revise. Coming soon; progress is already saved
-              in this browser as you go.
-            </p>
-          </li>
         </ul>
+        <p className="mt-4 text-sm leading-relaxed text-muted">Your reading and practice progress stays in this browser as you go.</p>
       </LandingSection>
 
       <LandingSection id="who" title="Who It Is For">
@@ -194,7 +205,7 @@ export default async function HomePage() {
 
 function LandingSection({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="mt-16 scroll-mt-20">
+    <section id={id} tabIndex={-1} aria-labelledby={`${id}-heading`} className="mt-16 scroll-mt-20">
       <h2 id={`${id}-heading`} className="mb-5 text-[1.375rem] font-semibold tracking-[-0.014em]">
         {title}
       </h2>

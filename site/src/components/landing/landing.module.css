@@ -1,0 +1,82 @@
+.practice {
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.practiceTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.practiceSteps {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: 1.1rem 1.4rem 0;
+  color: var(--text-muted);
+  font-size: .75rem;
+}
+
+.practiceSteps li { display: flex; align-items: center; gap: .45rem; }
+.practiceSteps li > span { display: grid; place-items: center; width: 1.4rem; height: 1.4rem; border: 1px solid var(--border-strong); border-radius: 50%; }
+.practiceSteps li[aria-current] { color: var(--accent); font-weight: 600; }
+.practiceSteps li[aria-current] > span { color: var(--surface); background: var(--accent); border-color: var(--accent); }
+:global(.dark) .practiceSteps li[aria-current] > span { color: var(--bg); }
+.practiceBody { padding: 1.5rem 1.4rem 1.3rem; min-height: 22rem; }
+.answer { width: 100%; margin-top: .5rem; resize: vertical; border: 1px solid var(--input-border); border-radius: var(--radius-md); background: var(--surface-2); padding: .75rem; font-size: .875rem; line-height: 1.6; }
+.answer::placeholder { color: var(--text-muted); }
+.answer[aria-invalid] { border-color: var(--danger); }
+.scoreOption { display: flex; align-items: center; gap: .6rem; min-height: 3rem; padding: .65rem .7rem; border: 1px solid var(--input-border); border-radius: var(--radius-md); cursor: pointer; }
+.scoreOption:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.scoreOption input { accent-color: var(--accent); }
+.scoreOption span:first-of-type { flex-shrink: 0; color: var(--accent); }
+
+.journeyTrack { --journey-progress: 0; margin-top: 1.5rem; }
+.journeyPanel { overflow: hidden; border: 1px solid var(--border-strong); border-radius: var(--radius-xl); background: var(--surface); }
+.journeyHeader { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.5rem; padding: .75rem 1.25rem; border-bottom: 1px solid var(--border); }
+.viewToggle { display: none; }
+.motionLayout { display: none; }
+.staticLayout { display: grid; }
+.staticScene + .staticScene { border-top: 1px solid var(--border); }
+.staticMap { width: 100%; height: auto; max-height: 19rem; background-image: radial-gradient(var(--border) .8px, transparent .8px); background-size: 18px 18px; }
+.mapCaption { fill: var(--text-muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.6px; }
+.island { stroke-linecap: round; }
+
+@media (min-width: 640px) {
+  .staticLayout { grid-template-columns: 1fr 1fr; }
+  .staticScene + .staticScene { border-top: 0; border-left: 1px solid var(--border); }
+}
+
+@media (min-width: 960px) and (prefers-reduced-motion: no-preference) {
+  .viewToggle { display: inline-flex; min-height: 2.75rem; }
+  .journeyTrack[data-motion='true'] { height: 165svh; min-height: 900px; }
+  .journeyTrack[data-motion='true'] .journeyPanel { position: sticky; top: 88px; }
+  .journeyTrack[data-motion='true'] .staticLayout { display: none; }
+  .journeyTrack[data-motion='true'] .motionLayout { display: grid; grid-template-columns: 35% 65%; min-height: 30rem; }
+  .journeyCopy { padding: 2.4rem 0 1.6rem 1.6rem; }
+  .sceneCopy { padding-left: 1rem; border-left: 2px solid var(--border); }
+  .sceneCopy + .sceneCopy { margin-top: 1.8rem; }
+  .sceneButton { display: flex; align-items: baseline; gap: .6rem; width: 100%; text-align: left; cursor: pointer; }
+  .sceneButton > span { color: var(--text-muted); }
+  .journeyTrack[data-scene='0'] [data-copy-scene='0'], .journeyTrack[data-scene='1'] [data-copy-scene='1'] { border-color: var(--accent); }
+  .sceneButton[aria-current] { color: var(--accent); }
+  .mapWindow { overflow: hidden; align-self: stretch; display: flex; align-items: center; background-image: radial-gradient(var(--border) .8px, transparent .8px); background-size: 18px 18px; }
+  .worldMap { width: 100%; height: auto; }
+  .journeyProgress { height: 2px; background: var(--border); margin-top: .75rem; }
+  .journeyProgress > span { display: block; height: 100%; background: var(--accent); transform: scaleX(var(--journey-progress)); transform-origin: left; }
+}
+
+@media print {
+  .motionLayout { display: none !important; }
+  .staticLayout { display: grid !important; }
+  .journeyTrack { height: auto !important; min-height: 0 !important; }
+  .journeyPanel { position: static !important; }
+  .viewToggle { display: none; }
+}
