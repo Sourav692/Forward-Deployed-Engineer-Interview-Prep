@@ -71,4 +71,4 @@ The final round tests engineering fit, ownership, and executive communication. T
 | Incident drill with real telemetry | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_.../04_PRODUCTION_INCIDENT_LOGS/03_latency_spike.md` |
 | AI coding-assistant system design | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/` |
 | Use-case prioritization scoring | `02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/` |
-| Stakeholder influence answer key | `04_Behavioral_and_Leadership/hiring_manager_round/answer_keys/02_stakeholder_influence_answer_key.md` |
+| Communication and influence answer key | `04_Behavioral_and_Leadership/fde_competencies/answer_keys/02_communication_and_influence_answer_key.md` |

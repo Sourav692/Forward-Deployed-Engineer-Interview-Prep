@@ -1,6 +1,6 @@
 # CTO Trust + Exec Vision → Engineering Roadmap (Round 2, P1)
 
-Built from: `04_Behavioral_and_Leadership/story_bank.md`, `hiring_manager_round/02_stakeholder_influence` (+ answer key), `04_pushback_and_saying_no`, `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03` (14-day plan) and `04` (gates and metrics), `02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases` (scoring model). What's new here is the **CTO framing, the story-to-question map, and a Blitzy-specific roadmap template**.
+Built from: `04_Behavioral_and_Leadership/story_bank.md`, `fde_competencies/02_communication_and_influence` (+ answer key), `03_pushback_and_saying_no`, `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03` (14-day plan) and `04` (gates and metrics), `02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases` (scoring model). What's new here is the **CTO framing, the story-to-question map, and a Blitzy-specific roadmap template**.
 
 ---
 
