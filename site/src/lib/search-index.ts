@@ -3,7 +3,7 @@ import 'server-only'
 import { cache } from 'react'
 import { getContentSearchEntries, SEARCH_TEXT_CAP } from './content'
 import { isLearnTrack } from './curriculum-href'
-import { getLearnManifest, getLessonPage, getModule, getTrack, getTracks, learnHref, trackModules } from './learn'
+import { getLearnManifest, getLessonPage, getModule, getTrack, getTracks, learnHref, trackLabel, trackModules } from './learn'
 import { readingText, toPlainText } from './reading'
 import type { SearchEntry } from './scenario'
 import type { SearchArea } from './search-areas'
@@ -21,7 +21,7 @@ const getLearnSearchEntries = cache((): SearchEntry[] => {
 
   for (const track of getTracks()) {
     entries.push({
-      title: isLearnTrack(track.slug) ? `${track.code} · Learn` : `${track.code} · Interview`,
+      title: isLearnTrack(track.slug) ? `${track.code} · Learn` : 'Interview',
       section: track.title,
       kind: 'Track',
       href: learnHref.track(track.slug),
@@ -29,7 +29,7 @@ const getLearnSearchEntries = cache((): SearchEntry[] => {
     })
     for (const mod of trackModules(track)) {
       entries.push({
-        title: `${track.code} ${track.title}`,
+        title: trackLabel(track),
         section: `${mod.code} ${mod.title}`,
         kind: 'Module',
         href: learnHref.module(mod),
