@@ -48,6 +48,17 @@
 .staticMap { width: 100%; height: auto; max-height: 19rem; background-image: radial-gradient(var(--border) .8px, transparent .8px); background-size: 18px 18px; }
 .mapCaption { fill: var(--text-muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.6px; }
 .island { stroke-linecap: round; }
+.worldStage { width: 100%; display: flex; flex-direction: column; }
+.worldCanvas { height: 24rem; position: relative; }
+.worldCanvas canvas { display: block; touch-action: pan-y; }
+.worldInspector { padding: .25rem 1.25rem .75rem; }
+.componentButtons { display: flex; flex-wrap: wrap; gap: .35rem; }
+.componentButtons button { min-height: 2.75rem; padding: .4rem .65rem; border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-size: .75rem; color: var(--text-muted); cursor: pointer; background: var(--surface); }
+.componentButtons button[aria-pressed='true'] { color: var(--text); border-color: var(--accent); background: var(--accent-soft); }
+.worldPreview { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.mapWindow[data-ready='true'] .worldPreview { display: none; }
+.mapWindow[data-ready='false'] .worldStage { visibility: hidden; }
+.journeyTrack[data-scene='0'] .worldInspector { visibility: hidden; }
 
 @media (min-width: 640px) {
   .staticLayout { grid-template-columns: 1fr 1fr; }
@@ -64,11 +75,10 @@
   .sceneCopy { padding-left: 1rem; border-left: 2px solid var(--border); }
   .sceneCopy + .sceneCopy { margin-top: 1.8rem; }
   .sceneButton { display: flex; align-items: baseline; gap: .6rem; width: 100%; text-align: left; cursor: pointer; }
-  .sceneButton > span { color: var(--text-muted); }
+  .sceneButton > span:first-child { color: var(--text-muted); }
   .journeyTrack[data-scene='0'] [data-copy-scene='0'], .journeyTrack[data-scene='1'] [data-copy-scene='1'] { border-color: var(--accent); }
   .sceneButton[aria-current] { color: var(--accent); }
-  .mapWindow { overflow: hidden; align-self: stretch; display: flex; align-items: center; background-image: radial-gradient(var(--border) .8px, transparent .8px); background-size: 18px 18px; }
-  .worldMap { width: 100%; height: auto; }
+  .mapWindow { position: relative; overflow: hidden; align-self: stretch; min-height: 30rem; display: flex; align-items: center; background-image: radial-gradient(var(--border) .8px, transparent .8px); background-size: 18px 18px; }
   .journeyProgress { height: 2px; background: var(--border); margin-top: .75rem; }
   .journeyProgress > span { display: block; height: 100%; background: var(--accent); transform: scaleX(var(--journey-progress)); transform-origin: left; }
 }

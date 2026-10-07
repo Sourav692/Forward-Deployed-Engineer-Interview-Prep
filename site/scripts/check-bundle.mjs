@@ -29,6 +29,8 @@ const KB = 1024
 
 /** Budgets in KB of gzipped first-load JS beyond the framework baseline. */
 const BUDGETS = [
+  // The 3D world loads near the journey, never as part of the initial landing visit.
+  { label: 'landing', match: (r) => r === '/', kb: 45 },
   { label: 'lesson', match: (r) => r === '/learn/[trackSlug]/[moduleSlug]/[lessonSlug]', kb: 90 },
   { label: 'module', match: (r) => r === '/learn/[trackSlug]/[moduleSlug]', kb: 90 },
   // Client-heavy learner pages (Phase 2 dashboard). None exist in Phase 1.
@@ -110,7 +112,7 @@ if (process.argv.includes('--json')) {
 }
 
 const budgeted = rows.filter((r) => r.budget !== undefined)
-for (const b of BUDGETS.slice(0, 2)) {
+for (const b of BUDGETS.filter((b) => b.label !== 'client-heavy')) {
   if (!rows.some((r) => b.match(r.route))) {
     console.error(`\ncheck-bundle: no ${b.label} route found in the build; the budget check would be vacuous.`)
     process.exit(1)
