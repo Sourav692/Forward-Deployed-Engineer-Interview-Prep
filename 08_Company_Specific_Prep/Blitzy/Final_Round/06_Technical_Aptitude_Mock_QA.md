@@ -54,7 +54,13 @@ After the fix, I add those tickets to the test set and set alerts on empty tool 
 
 "First, I agree with the VP on what the plan must contain: what we modernize first, the risks, how we prove it works, and a timeline. Week one is for learning the system. Week two is for deciding.
 
-I don't read 2 million lines. I learn from three places. The code: Blitzy's ingestion and static analysis give me a map of modules and dependencies. Production: logs show which code actually runs every day. People: the support engineers and business users know the scary parts, like the night job nobody touches.
+I don't read 2 million lines. I learn from three places. 
+
+The code: Blitzy's ingestion and static analysis give me a map of modules and dependencies. 
+
+Production: logs show which code actually runs every day.
+
+People: the support engineers and business users know the scary parts, like the night job nobody touches.
 
 Then I map what the domain depends on. The biggest trap is shared database tables, because two parts that share a table can't be separated cleanly.
 
@@ -94,13 +100,13 @@ What I learned: I now ask early how many kinds of knowledge the agent needs and 
 
 "First, I tell them the concern is fair. I wouldn't trust any code without checks, from a person or from AI. So the code has to prove itself.
 
-I use four layers. 
+I use four layers.
 
-One, automatic checks: it must build, pass their linters and security scans, and add no unapproved libraries. 
+One, automatic checks: it must build, pass their linters and security scans, and add no unapproved libraries.
 
-Two, tests: it must pass their existing tests, plus new tests that capture current behaviour. I also break the code on purpose to make sure the tests catch it. 
+Two, tests: it must pass their existing tests, plus new tests that capture current behaviour. I also break the code on purpose to make sure the tests catch it.
 
-Three, human review based on risk: boilerplate gets a light look, while login, payments and data writes get a careful review by their senior engineers. I keep the pull requests small and clearly described. 
+Three, human review based on risk: boilerplate gets a light look, while login, payments and data writes get a careful review by their senior engineers. I keep the pull requests small and clearly described.
 
 Four, safe rollout: behind a feature flag, first to a test environment, then a small share of traffic, with quick rollback.
 
