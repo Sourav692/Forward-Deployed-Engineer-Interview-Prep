@@ -52,6 +52,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `company-prep.mjs` reads `08_Company_Specific_Prep/Blitzy/` when available. With publishing on, clones without it keep the committed company-prep snapshot so Vercel builds still succeed.
 - `08_Company_Specific_Prep/Blitzy/01_Code_Review_Bug_Drills.md` is the source of truth; the `.ipynb` is a derived practice copy. Sync reads only the `.md`.
 
+## Planning workflow
+
+- When asked to plan something, write the plan to `.plan/implementation_plan_<slug>.md` (`<slug>` is short kebab-case, e.g. `implementation_plan_search-page.md`). Create `.plan/` if missing. It is gitignored: plans and task cards stay local.
+- The plan file holds ordered, step-by-step implementation steps only. No task cards, task IDs or task tables in it.
+- When work on the plan starts, run the `plan-to-tasks` skill on that plan file first. Its cards go to `.plan/tasks/` (next to the plan). Its `check_plan.py` expects task tables, so for a step-only plan skip the script and review the steps by judgment.
+- Then build each task on its own branch, cut from an up-to-date `main` and named with the task ID (see Git and deploy). One task per branch.
+
 ## Git and deploy
 
 - The active Vercel project is `forward-deployed`; production is https://forward-deployed-sigma.vercel.app/. The former `site` project and `site-sourav-dbx.vercel.app` deployment were deleted.
