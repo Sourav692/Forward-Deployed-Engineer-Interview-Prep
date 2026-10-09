@@ -8,12 +8,12 @@ Spend 15 minutes choosing prompts from the existing worksheets, then 30 minutes 
 
 | Story needed | Existing worksheet | Exercise to use |
 | --- | --- | --- |
-| Ambiguous problem | [Customer Focus and Discovery](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/04_Behavioral_and_Leadership/fde_competencies/01_customer_focus_and_discovery.md) | Week one with unclear requirements; discovery with an unclear ask; or a project you scoped incorrectly |
-| Pushback | [Pushback and Saying No](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/04_Behavioral_and_Leadership/fde_competencies/03_pushback_and_saying_no.md) | Telling a customer no; scope creep on a fixed timeline; or changing approach mid-project |
-| Delivery issue or mistake | [Delivery Under Pressure](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/04_Behavioral_and_Leadership/fde_competencies/04_delivery_under_pressure.md) | Production issue; missed deadline; or customer escalation |
-| Stakeholder follow-up | [Communication and Influence](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/04_Behavioral_and_Leadership/fde_competencies/02_communication_and_influence.md) | Disagreeing with an executive or building trust with a sceptical architect |
+| Ambiguous problem | [Customer Focus and Discovery](https://forward-deployed-sigma.vercel.app/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery) | Week one with unclear requirements; discovery with an unclear ask; or a project you scoped incorrectly |
+| Pushback | [Pushback and Saying No](https://forward-deployed-sigma.vercel.app/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no) | Telling a customer no; scope creep on a fixed timeline; or changing approach mid-project |
+| Delivery issue or mistake | [Delivery Under Pressure](https://forward-deployed-sigma.vercel.app/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure) | Production issue; missed deadline; or customer escalation |
+| Stakeholder follow-up | [Communication and Influence](https://forward-deployed-sigma.vercel.app/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence) | Disagreeing with an executive or building trust with a sceptical architect |
 
-The [Story Bank](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/04_Behavioral_and_Leadership/story_bank.md) shows how one experience can answer several questions. Its stories are anonymised examples from someone else's work. Use their structure and follow-up patterns; supply your own actions and results. The [competency answer keys](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/tree/main/04_Behavioral_and_Leadership/fde_competencies/answer_keys) serve the same purpose.
+The [Story Bank](https://forward-deployed-sigma.vercel.app/modules/14-behavioural-and-leadership-round/story-bank) shows how one experience can answer several questions. Its stories are anonymised examples from someone else's work. Use their structure and follow-up patterns; supply your own actions and results. The answer key on each [competency worksheet](https://forward-deployed-sigma.vercel.app/modules/14-behavioural-and-leadership-round) serves the same purpose.
 
 ## Three-Story Capture Sheet
 
