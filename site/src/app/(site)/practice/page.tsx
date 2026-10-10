@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ModuleProgress } from '@/components/Progress'
-import { AreaGroup, AreaHeader, AreaSection, LinkList, TextLink } from '@/components/areas/Area'
+import { AreaGroup, AreaHeader, AreaSection, LinkList, SuggestTopic, TextLink } from '@/components/areas/Area'
 import { LIVE, curriculumModules, moduleGroups, moduleHref } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { STORY_BANK } from '@/lib/editorial'
@@ -115,6 +115,7 @@ export default async function PracticePage() {
           ))}
         </div>
       </AreaSection>
+      <SuggestTopic hub="Practice" />
     </div>
   )
 }

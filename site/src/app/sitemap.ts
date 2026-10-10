@@ -26,6 +26,8 @@ const STATIC_PAGES = [
   '/interview',
   '/library',
   '/library/credits',
+  '/about',
+  '/changelog',
   '/guide',
   '/learning-map',
   '/glossary',

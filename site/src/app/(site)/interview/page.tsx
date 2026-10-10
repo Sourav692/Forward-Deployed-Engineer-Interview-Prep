@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { AreaHeader, AreaSection, LinkList } from '@/components/areas/Area'
+import { AreaHeader, AreaSection, LinkList, SuggestTopic } from '@/components/areas/Area'
 import { curriculumModules } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { LAST_DAY, LAST_DAY_GUIDES, MODES, REVIEWS } from '@/lib/editorial'
@@ -73,6 +73,7 @@ export default function InterviewPage() {
       >
         <LinkList items={INTERVIEW_HUBS.map((h) => ({ href: hubHref(h.slug), title: h.title, note: h.summary }))} />
       </AreaSection>
+      <SuggestTopic hub="Interview" />
     </div>
   )
 }

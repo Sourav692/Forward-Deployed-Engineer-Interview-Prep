@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
-import { FOOTER_NAV, SITE_URL } from '@/lib/editorial'
+import { FOOTER_NAV, SITE_URL, reportHref } from '@/lib/editorial'
 import { SITE } from '@/lib/registry'
 import { SearchDialog } from '@/components/SearchDialog'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -87,24 +87,26 @@ export default async function RootLayout({
         </main>
 
         <footer className="shell-chrome no-print mt-24 border-t border-border">
-          <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-8 text-[0.8125rem] text-subtle sm:flex-row sm:items-center sm:px-6">
+          <div className="mx-auto max-w-5xl space-y-3 px-4 py-8 text-[0.8125rem] text-subtle sm:px-6">
             <p>
-              {SITE.name} — {SITE.tagline}
+              {SITE.name} — {SITE.tagline}. Your answers are stored in this browser only.
             </p>
-            <p className="sm:ml-auto">
-              Your answers are stored in this browser only.{' '}
-              <Link href="/guide" className="text-muted underline underline-offset-2 hover:text-text">
-                How this works
-              </Link>
-              {FOOTER_NAV.map((item) => (
-                <span key={item.id}>
-                  {' · '}
-                  <Link href={item.href} className="text-muted underline underline-offset-2 hover:text-text">
-                    {item.label}
-                  </Link>
-                </span>
-              ))}
-            </p>
+            <nav aria-label="Footer">
+              <ul className="flex flex-wrap gap-x-4 gap-y-2">
+                {FOOTER_NAV.map((item) => (
+                  <li key={item.id}>
+                    <Link href={item.href} className="text-muted underline underline-offset-2 hover:text-text">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <a href={reportHref()} className="text-muted underline underline-offset-2 hover:text-text">
+                    Report an issue
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </footer>
 

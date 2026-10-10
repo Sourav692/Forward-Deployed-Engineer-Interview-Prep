@@ -22,7 +22,7 @@ export function LessonReader({ page }: { page: LessonPage }) {
         <h1 id="lesson-title" className="text-balance">
           {lesson.title}
         </h1>
-        <Byline updated={lesson.updated} />
+        <Byline updated={lesson.updated} report={{ title: lesson.title, path: lesson.href }} />
         <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
           {lesson.estMinutes ? <span>{formatMinutes(lesson.estMinutes)} read</span> : null}
           {lesson.estMinutes ? <span aria-hidden="true">·</span> : null}

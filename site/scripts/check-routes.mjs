@@ -12,7 +12,8 @@
  * 3. Fails on any 4xx/5xx or network error, listing the page that linked to it.
  * 4. Fails when a sitemap page lacks exactly one canonical link to itself, an
  *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10),
- *    or when a lesson, case or worksheet lacks its "By … · Last updated …" line (PQ-15).
+ *    or when a lesson, case or worksheet lacks its "By … · Last updated …" line (PQ-15),
+ *    or a content page (those, plus final-week pages) lacks a report link (PR-15).
  * 5. Fails when a module marked `ready` or `partly` in `src/lib/curriculum.ts` has
  *    no published or live lesson in `content/learn/manifest.json` (an empty module
  *    would be dressed up as readable), mirroring `readingList()` in `src/lib/learn.ts`.
@@ -104,6 +105,10 @@ function headProblems(path, html) {
   if (h1 !== 1) problems.push(`${h1} <h1> elements`)
   if (bylined.has(path) && !new RegExp(`By ${AUTHOR} · Last updated \\d{1,2} \\w{3} \\d{4}`).test(html)) {
     problems.push('no "By … · Last updated …" line')
+  }
+  const content = bylined.has(path) || path.startsWith('/fde-last-day-prep/')
+  if (content && !/<a\b[^>]*\bhref="mailto:[^"]*\?subject=[^"]*"[^>]*>Report an issue<\/a>/.test(html)) {
+    problems.push('no "Report an issue" link')
   }
   return problems
 }
