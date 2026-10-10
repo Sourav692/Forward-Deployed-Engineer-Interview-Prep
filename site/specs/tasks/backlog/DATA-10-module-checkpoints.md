@@ -19,7 +19,7 @@ Interview readiness gives checkpoints 20 % weight, and modules reach Completed f
 - PM-04 (5 Oct 2026): checkpoint questions may be authored, and the owner writes them.
 - Deferred on 10 Oct 2026: the owner writes them later as a content task; Phase 2 ships without them.
 - Rules (exist): `CHECKPOINT_PASS = 70`, `scoreCheckpoint` in `src/lib/progress/rules.ts`. Module sections already say `assessment: 'Checkpoint'` and `doneWhen: 'Checkpoint ≥ 70%'`.
-- Demo sample of the data shape: `src/demo/data/assessments-checkpoint-t2-4.ts` (copy the shape before FE-19 deletes it).
+- Demo sample of the data shape: `site/src/demo/data/assessments-checkpoint-t2-4.ts`, deleted by FE-19. Read it from history: `git show 3759ff8:site/src/demo/data/assessments-checkpoint-t2-4.ts`.
 
 ## Scope
 In:

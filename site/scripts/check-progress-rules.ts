@@ -13,7 +13,6 @@ import {
   finishBy,
   behaviouralReadiness,
   checkpointReadiness,
-  interviewReadiness,
   measuredInterviewReadiness,
   mockReadiness,
   isMastered,
@@ -116,9 +115,6 @@ check('exam pass at 82', scoreExam({ a: 50, b: 32 }, []).passed, true)
 check('exam auto-fail caps result', scoreExam({ a: 60, b: 35 }, ['filter-after-retrieval']), { total: 81, raw: 95, passed: false, capped: true })
 
 // Readiness formulas
-const ir = interviewReadiness({ rubricMeans: [4], mockMeans: [5, 0], checkpointsPassed: 1, checkpointsTotal: 2, behavioural: 40 })
-check('interview readiness = 35 + 15 + 10 + 6', ir.score, 66)
-check('weakest interview dimension', ir.weakest.id, 'behavioural')
 // Measured readiness (UX-07): unmeasured inputs are left out, never counted as 0
 const none = measuredInterviewReadiness({})
 check('no input measured: no score, no weakest', [none.score, none.measured, none.weakest], [null, 0, null])

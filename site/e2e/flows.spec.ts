@@ -81,6 +81,12 @@ test('mock flow: score a full round → pass rule applied → result survives re
   for (const [dim, value] of Object.entries(scores)) {
     await page.getByRole('group', { name: dim, exact: true }).getByText(value, { exact: true }).click()
   }
+  // Scores of 4 or 5 need a line of evidence before the round saves.
+  await page.getByRole('button', { name: 'Save full round score' }).click()
+  await expect(page.getByText(/^Add a line of evidence for each score of 4 or 5: Discovery, Evaluation, Production, Communication\.$/)).toBeVisible()
+  for (const dim of ['Discovery', 'Evaluation', 'Production', 'Communication']) {
+    await page.getByRole('group', { name: dim, exact: true }).getByRole('textbox').fill(`Quoted line for ${dim}`)
+  }
   await page.getByRole('button', { name: 'Save full round score' }).click()
   // Mean 3.5 passes the mean bar, but Security at 1 is below the floor of 2.
   const result = page.getByText('Last saved, full round: Not yet, mean 3.5 of 5')
@@ -123,7 +129,9 @@ test('progress: empty first, then readiness and the revision queue follow what t
   await hydrated(page)
   await page.getByText('Full round (6 dimensions)', { exact: true }).click()
   for (const dim of ['Discovery', 'Architecture', 'Security', 'Evaluation', 'Production', 'Communication']) {
-    await page.getByRole('group', { name: dim, exact: true }).getByText('5', { exact: true }).click()
+    const group = page.getByRole('group', { name: dim, exact: true })
+    await group.getByText('5', { exact: true }).click()
+    await group.getByRole('textbox').fill(`Quoted line for ${dim}`)
   }
   await page.getByRole('button', { name: 'Save full round score' }).click()
   await expect(page.getByText(/^Last saved, full round: Pass/)).toBeVisible()
@@ -180,6 +188,14 @@ test('checkpoint: a pass feeds readiness; a fail puts the module in the revision
   await hydrated(page)
   await expect(page.getByRole('region', { name: /^Revision Queue/ })).toContainText('Checkpoint not passed (0 %)')
   await expect(page.getByRole('region', { name: 'Next Up' })).toContainText('checkpoint did not pass')
+})
+
+test('retired /demo URLs redirect home in one hop', async ({ page }) => {
+  for (const path of ['/demo', '/demo/progress/history']) {
+    const res = await page.request.get(path, { maxRedirects: 0 })
+    expect(res.status()).toBe(308)
+    expect(res.headers().location).toBe('/')
+  }
 })
 
 test('soft gating: blocked module → open anyway → remembered after reload', async ({ page }) => {

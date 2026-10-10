@@ -107,11 +107,13 @@ export const mockAssessmentId = (lessonSlug: string, round: MockRound) => `mock:
 /**
  * Why a round cannot be saved yet, as a message for the learner, or `null` when it can.
  *
- * TODO(owner): decide the evidence policy. The lessons say "A score without evidence is
- * a guess." Today only scores are required. Options: require an evidence line for every
- * dimension; require it only for scores of 4 or 5 (the ones most likely to be generous);
- * or keep evidence optional.
+ * Evidence policy (owner decision, 10 October 2026): a score of 4 or 5 needs one line of
+ * evidence quoted from the answer. The lessons say "a score without evidence is a
+ * guess", and generous high scores are the guesses that mislead readiness; low scores
+ * stay quick to record.
  */
+export const EVIDENCE_FROM = 4
+
 export function saveBlocker(
   dims: MockDimension[],
   scores: Record<string, number>,
@@ -119,6 +121,9 @@ export function saveBlocker(
 ): string | null {
   const unscored = dims.filter((d) => !scores[d.id])
   if (unscored.length) return `Score every dimension first: ${unscored.map((d) => d.label).join(', ')}.`
-  void evidence
+  const unevidenced = dims.filter((d) => scores[d.id] >= EVIDENCE_FROM && !evidence[d.id]?.trim())
+  if (unevidenced.length) {
+    return `Add a line of evidence for each score of ${EVIDENCE_FROM} or 5: ${unevidenced.map((d) => d.label).join(', ')}.`
+  }
   return null
 }

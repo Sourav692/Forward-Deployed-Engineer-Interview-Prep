@@ -5,16 +5,14 @@
  * `layout.tsx`. This component holds no state of its own: which icon shows is decided
  * by CSS from that class, so there is nothing to sync after mount and no frame where
  * the wrong icon is visible.
- *
- * `storageKey` lets the /demo prototype keep its theme under its own namespace.
  */
-export function ThemeToggle({ storageKey = 'fd:v1:theme' }: { storageKey?: string } = {}) {
+export function ThemeToggle() {
   function toggle() {
     const root = document.documentElement
     const next = root.classList.contains('dark') ? 'light' : 'dark'
     root.classList.toggle('dark', next === 'dark')
     try {
-      window.localStorage.setItem(storageKey, next)
+      window.localStorage.setItem('fd:v1:theme', next)
     } catch {
       /* the choice just will not survive a reload */
     }

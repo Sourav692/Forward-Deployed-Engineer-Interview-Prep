@@ -73,7 +73,7 @@ function scriptsIn(html) {
 /** route pattern → { url, bytes } for its heaviest instance */
 const routes = new Map()
 for (const [url, info] of Object.entries(prerender.routes)) {
-  if (url.startsWith('/demo') || url.startsWith('/_')) continue
+  if (url.startsWith('/_')) continue
   const file = htmlPath(url)
   if (!existsSync(file)) continue
   const scripts = scriptsIn(readFileSync(file, 'utf8'))
