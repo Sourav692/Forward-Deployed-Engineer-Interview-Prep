@@ -115,6 +115,21 @@ function progressKeys(): string[] {
   }
 }
 
+/**
+ * Every `fd:v1:<kind>:*` value, keyed by the rest of the key. Reads the live worksheet
+ * keys the dashboard counts (`scores`, `answer-statuses`), which `lib/storage` writes.
+ */
+export function readKind<T>(kind: string): Record<string, T> {
+  const prefix = `${PREFIX}${kind}:`
+  const out: Record<string, T> = {}
+  for (const key of progressKeys()) {
+    if (!key.startsWith(prefix)) continue
+    const value = readJson<T>(key)
+    if (value !== null) out[key.slice(prefix.length)] = value
+  }
+  return out
+}
+
 const iso = (now: number) => new Date(now).toISOString()
 
 // ── Lessons ────────────────────────────────────────────────────────────────

@@ -11,7 +11,10 @@ import {
   checkPrerequisites,
   effectiveConfidence,
   finishBy,
+  behaviouralReadiness,
   interviewReadiness,
+  measuredInterviewReadiness,
+  mockReadiness,
   isMastered,
   moduleStatus,
   portfolioReadiness,
@@ -19,6 +22,7 @@ import {
   rollup,
   rubricToPercent,
   scoreCheckpoint,
+  scorecardReadiness,
   scoreExam,
   scoreMock,
 } from '../src/lib/progress/rules.ts'
@@ -114,6 +118,17 @@ check('exam auto-fail caps result', scoreExam({ a: 60, b: 35 }, ['filter-after-r
 const ir = interviewReadiness({ rubricMeans: [4], mockMeans: [5, 0], checkpointsPassed: 1, checkpointsTotal: 2, behavioural: 40 })
 check('interview readiness = 35 + 15 + 10 + 6', ir.score, 66)
 check('weakest interview dimension', ir.weakest.id, 'behavioural')
+// Measured readiness (UX-07): unmeasured inputs are left out, never counted as 0
+const none = measuredInterviewReadiness({})
+check('no input measured: no score, no weakest', [none.score, none.measured, none.weakest], [null, 0, null])
+const some = measuredInterviewReadiness({ worksheets: 80, mocks: 40, checkpoints: null })
+check('re-weighted over measured inputs: (0.35·80 + 0.3·40) / 0.65', some.score, Math.round((0.35 * 80 + 0.3 * 40) / 0.65))
+check('weakest is the lowest measured input', [some.measured, some.weakest?.id], [2, 'mocks'])
+check('scorecards: empty is unmeasured; 1, 3, 5 average to 50', [scorecardReadiness([]), scorecardReadiness([1, 3, 5])], [null, 50])
+check('mocks: none taken is unmeasured; untaken count 0', [mockReadiness([null, null]), mockReadiness([5, null, null, null, null])], [null, 20])
+check('behavioural: not-started only is unmeasured', behaviouralReadiness(['not-started', 'not-started'], 10), null)
+check('behavioural: practised half, mastered one', behaviouralReadiness(['practiced', 'mastered', 'not-started'], 6), 25)
+
 const pr = portfolioReadiness({ capstoneRubric: undefined, projectsCompleted: 1, projectsRequired: 2, writeUpDone: true, storyProjectLinks: 3 })
 check('portfolio readiness = 0 + 15 + 20 + 10', pr.score, 45)
 check('weakest portfolio dimension', pr.weakest.id, 'capstone')

@@ -104,6 +104,45 @@ test('interview hubs: /interview → hub → a practice lesson; unknown hubs 404
   expect((await page.request.get('/interview/hubs/no-such-hub')).status()).toBe(404)
 })
 
+test('progress: empty first, then readiness and the revision queue follow what the learner does', async ({ page }) => {
+  await page.goto('/progress')
+  await hydrated(page)
+  await expect(page.getByRole('heading', { name: 'Nothing to Show Yet' })).toBeVisible()
+  await expect(page.getByText(/^No score yet/)).toBeVisible()
+
+  // A confidence rating of 2 puts the module in the revision queue.
+  const confidence = page.getByRole('group', { name: 'How confident are you with this module?' })
+  await page.goto(READY_MODULE)
+  await hydrated(page)
+  await confidence.getByText('Shaky').click()
+  await expect(page.getByText('Confidence set to 2 of 5.')).toBeVisible()
+
+  await page.goto(MOCK_LESSON)
+  await hydrated(page)
+  await page.getByText('Full round (6 dimensions)', { exact: true }).click()
+  for (const dim of ['Discovery', 'Architecture', 'Security', 'Evaluation', 'Production', 'Communication']) {
+    await page.getByRole('group', { name: dim, exact: true }).getByText('5', { exact: true }).click()
+  }
+  await page.getByRole('button', { name: 'Save full round score' }).click()
+  await expect(page.getByText(/^Last saved, full round: Pass/)).toBeVisible()
+
+  // One of five mocks at 5 of 5 is 20 %, and mocks are the only measured input.
+  await page.goto('/progress')
+  await hydrated(page)
+  await expect(page.getByText('based on 1 of 4 inputs')).toBeVisible()
+  await expect(page.getByRole('region', { name: 'Interview Readiness' })).toContainText('20 %')
+  await expect(page.getByRole('region', { name: /^Revision Queue/ })).toContainText('Low confidence')
+
+  // Rating 3 or more takes it out of the queue.
+  await page.goto(READY_MODULE)
+  await hydrated(page)
+  await confidence.getByText('Getting there').click()
+  await expect(page.getByText('Confidence set to 3 of 5.')).toBeVisible()
+  await page.goto('/progress/revision')
+  await hydrated(page)
+  await expect(page.getByText('Nothing to revise.')).toBeVisible()
+})
+
 test('soft gating: blocked module → open anyway → remembered after reload', async ({ page }) => {
   await page.goto(GATED_MODULE)
   await hydrated(page)

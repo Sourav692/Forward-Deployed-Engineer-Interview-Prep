@@ -297,9 +297,74 @@ function readiness(parts: ReadinessPart[]): Readiness {
 /** Rubric means map to 0–100 so that 1 = 0 and the top score = 100. Worksheets use 1–4, mocks 1–5. */
 export const rubricToPercent = (mean: number, max = 4) => Math.max(0, Math.min(100, ((mean - 1) / (max - 1)) * 100))
 
+/** Interview readiness inputs and weights (plan §9). Reading counts zero. */
+export const INTERVIEW_INPUTS = [
+  { id: 'worksheets', label: 'Worksheet and rubric scores', weight: 0.35 },
+  { id: 'mocks', label: 'Mock interviews', weight: 0.3 },
+  { id: 'checkpoints', label: 'Checkpoint pass rate', weight: 0.2 },
+  { id: 'behavioural', label: 'Behavioural readiness', weight: 0.15 },
+] as const
+
+export type InterviewInput = (typeof INTERVIEW_INPUTS)[number]['id']
+
+/** A readiness input that may not be measured yet: `value` is 0–100, or `null`. */
+export interface MeasuredPart {
+  id: InterviewInput
+  label: string
+  weight: number
+  value: number | null
+}
+
+export interface MeasuredReadiness {
+  /** `null` until at least one input is measured. */
+  score: number | null
+  measured: number
+  parts: MeasuredPart[]
+  /** The lowest measured input; never an unmeasured one. */
+  weakest: MeasuredPart | null
+}
+
 /**
- * Interview readiness: 35% worksheet and rubric means + 30% mocks + 20% checkpoint
- * pass rate + 15% behavioural readiness. Reading counts zero.
+ * Interview readiness from measured inputs only (UX-07): an unmeasured input is left
+ * out and the remaining weights are rescaled to 100%, so "not measured" never reads as
+ * 0. With no measured input there is no score.
+ */
+export function measuredInterviewReadiness(values: Partial<Record<InterviewInput, number | null>>): MeasuredReadiness {
+  const parts: MeasuredPart[] = INTERVIEW_INPUTS.map((p) => ({ ...p, value: values[p.id] ?? null }))
+  const measured = parts.filter((p): p is MeasuredPart & { value: number } => p.value !== null)
+  const weight = measured.reduce((s, p) => s + p.weight, 0)
+  const score = measured.length ? Math.round(measured.reduce((s, p) => s + p.weight * p.value, 0) / weight) : null
+  const weakest = measured.reduce<MeasuredPart | null>((w, p) => (w === null || p.value < (w.value ?? 0) ? p : w), null)
+  return { score, measured: measured.length, parts, weakest }
+}
+
+/** Worksheet input: the mean of every scored scorecard row (levels 1, 3, 5) as 0–100. */
+export function scorecardReadiness(scores: number[]): number | null {
+  const valid = scores.filter((s) => s >= 1 && s <= 5)
+  return valid.length ? rubricToPercent(valid.reduce((s, v) => s + v, 0) / valid.length, 5) : null
+}
+
+/**
+ * Mock input: one entry per scenario mock, the latest round's 1–5 mean or `null` when
+ * the mock was never scored. Untaken mocks count 0; no scored mock at all is unmeasured.
+ */
+export function mockReadiness(latestMeans: (number | null)[]): number | null {
+  if (!latestMeans.some((m) => m !== null)) return null
+  return latestMeans.reduce<number>((s, m) => s + (m === null ? 0 : rubricToPercent(m, 5)), 0) / latestMeans.length
+}
+
+/**
+ * Behavioural input: across every competency-worksheet question, Practised counts half
+ * and Mastered one. Unmeasured until at least one question is Practised or Mastered.
+ */
+export function behaviouralReadiness(statuses: string[], totalQuestions: number): number | null {
+  const credit = statuses.reduce((s, v) => s + (v === 'mastered' ? 1 : v === 'practiced' ? 0.5 : 0), 0)
+  return credit > 0 && totalQuestions > 0 ? Math.min(100, (credit / totalQuestions) * 100) : null
+}
+
+/**
+ * Interview readiness as the demo computes it, with unmeasured inputs at 0. Demo only:
+ * production uses `measuredInterviewReadiness`; removed with /demo (FE-19).
  */
 export function interviewReadiness(input: {
   rubricMeans: number[] // latest self-scored exercise/worksheet means, 1–4
@@ -309,12 +374,13 @@ export function interviewReadiness(input: {
   behavioural: number // 0–100
 }): Readiness {
   const avg = (xs: number[]) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0)
-  return readiness([
-    { id: 'worksheets', label: 'Worksheet and rubric scores', weight: 0.35, value: input.rubricMeans.length ? rubricToPercent(avg(input.rubricMeans)) : 0 },
-    { id: 'mocks', label: 'Mock interviews', weight: 0.3, value: avg(input.mockMeans.map((m) => (m ? rubricToPercent(m, 5) : 0))) },
-    { id: 'checkpoints', label: 'Checkpoint pass rate', weight: 0.2, value: input.checkpointsTotal ? (input.checkpointsPassed / input.checkpointsTotal) * 100 : 0 },
-    { id: 'behavioural', label: 'Behavioural readiness', weight: 0.15, value: input.behavioural },
-  ])
+  const value: Record<InterviewInput, number> = {
+    worksheets: input.rubricMeans.length ? rubricToPercent(avg(input.rubricMeans)) : 0,
+    mocks: avg(input.mockMeans.map((m) => (m ? rubricToPercent(m, 5) : 0))),
+    checkpoints: input.checkpointsTotal ? (input.checkpointsPassed / input.checkpointsTotal) * 100 : 0,
+    behavioural: input.behavioural,
+  }
+  return readiness(INTERVIEW_INPUTS.map((p) => ({ ...p, value: value[p.id] })))
 }
 
 /** Portfolio readiness: 40% capstone rubric + 30% projects + 20% write-up + 10% story links. */
