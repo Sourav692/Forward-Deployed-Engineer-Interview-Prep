@@ -275,6 +275,7 @@ export function ScenarioView({
               <>
                 <Blocks
                   blocks={section.blocks}
+                  subheading="h3"
                   answers={answers}
                   scores={scores}
                   extraRows={extraRows}

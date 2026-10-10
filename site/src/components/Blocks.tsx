@@ -19,6 +19,8 @@ export type BlocksProps = {
   onAnswer?: (id: string, value: string) => void
   onScore?: (id: string, value: number) => void
   onAddRow?: (blockId: string) => void
+  /** Level of in-block sub-headings: `h3` directly under a section's `h2`, else `h4`. */
+  subheading?: 'h3' | 'h4'
 }
 
 export function Blocks(props: BlocksProps) {
@@ -36,12 +38,10 @@ function BlockView({ block, ...p }: { block: Block } & BlocksProps) {
     case 'prose':
       return <div className="prose" dangerouslySetInnerHTML={{ __html: block.html }} />
 
-    case 'subheading':
-      return (
-        <h4 className="pt-2 text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-muted">
-          {block.text}
-        </h4>
-      )
+    case 'subheading': {
+      const Heading = p.subheading ?? 'h4'
+      return <Heading className="pt-2 text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-muted">{block.text}</Heading>
+    }
 
     case 'list':
       return (

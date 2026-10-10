@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 /**
  * Renders a ```mermaid fence as a diagram.
@@ -81,12 +81,15 @@ export function Diagram({ code }: { code: string }) {
   const seed = useId().replace(/[^a-zA-Z0-9]/g, '')
   const [svg, setSvg] = useState('')
   const [failed, setFailed] = useState(false)
+  const placeholder = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     let cancelled = false
+    let visible = false
     let rendered: 'dark' | 'light' | null = null
 
     async function render() {
+      if (!visible) return
       const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
       if (theme === rendered) return
       rendered = theme
@@ -119,7 +122,23 @@ export function Diagram({ code }: { code: string }) {
       }
     }
 
-    render()
+    // Mermaid and its layout engine are about 1.5 MB, and drawing every diagram on load
+    // blocked the main thread for seconds on long case pages (audit check PR-17). So a
+    // diagram draws when it comes near the viewport, or when the page is printed.
+    const show = () => {
+      if (visible) return
+      visible = true
+      void render()
+    }
+    const nearby = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        nearby.disconnect()
+        show()
+      }
+    }, { rootMargin: '600px 0px' })
+    if (placeholder.current) nearby.observe(placeholder.current)
+    else show()
+    window.addEventListener('beforeprint', show)
 
     const observer = new MutationObserver(() => void render())
     observer.observe(document.documentElement, {
@@ -129,7 +148,9 @@ export function Diagram({ code }: { code: string }) {
 
     return () => {
       cancelled = true
+      nearby.disconnect()
       observer.disconnect()
+      window.removeEventListener('beforeprint', show)
     }
   }, [code, seed])
 
@@ -149,6 +170,7 @@ export function Diagram({ code }: { code: string }) {
   if (!svg) {
     return (
       <div
+        ref={placeholder}
         role="status"
         className="rounded-lg border border-border bg-surface-2 px-4 py-6 text-center text-[0.8125rem] text-subtle"
       >

@@ -46,6 +46,26 @@ test('the mobile menu lists Settings', async ({ page }, info) => {
   await expect(page.getByRole('dialog', { name: 'Menu' }).getByRole('link', { name: 'Settings' })).toBeVisible()
 })
 
+// PR-11: a 390 × 844 phone shows each page type without sideways scroll, with the
+// bottom bar in view. A screenshot of each goes to the test output for review.
+for (const [name, path] of [
+  ['home', '/'],
+  ['lesson', LESSON],
+  ['case', CASE_STUDY],
+  ['worksheet', WORKSHEET],
+] as const) {
+  test(`390px ${name}: no sideways scroll, bottom bar visible`, async ({ page }, info) => {
+    test.skip(info.project.name !== 'desktop-1280', 'viewport set per test; run once')
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto(path)
+    await hydrated(page)
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+    expect(overflow, `page scrolls sideways by ${overflow}px`).toBeLessThanOrEqual(1)
+    await expect(page.getByRole('navigation', { name: 'Quick links' })).toBeVisible()
+    await page.screenshot({ path: info.outputPath(`390-${name}.png`) })
+  })
+}
+
 test('keyboard focus is visible on the skip link, nav and primary action', async ({ page }) => {
   await page.goto(LESSON)
   await hydrated(page)
