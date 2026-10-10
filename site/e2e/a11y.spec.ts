@@ -20,6 +20,7 @@ const PAGES: [string, string][] = [
   ['interview', '/interview'],
   ['mock lesson', MOCK_LESSON],
   ['settings', '/settings'],
+  ['interview hub', '/interview/hubs/ai-systems-design'],
   ['library', '/library'],
   ['credits', '/library/credits'],
   ['worksheet', WORKSHEET],

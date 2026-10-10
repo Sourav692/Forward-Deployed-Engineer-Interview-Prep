@@ -13,6 +13,8 @@
 - The five hubs (titles and summaries already on `/interview`; ids from the demo `src/demo/data/interview.ts:10`): `technical-foundations`, `ai-ml`, `ai-systems-design`, `fde`, `behavioural`. Hub slugs are URLs and must never change once published.
 - Question sources the plan names (§8 FE-18): problem decomposition bank, leadership principles, hiring-manager round, scenario packs.
 
+Status: **done** (#74). Built with one change: hubs list lesson and module **slugs** (`practice`, `modules`) instead of `{ title, href }` sources, so titles and URLs come from the curriculum and `check:curriculum` resolves every entry. Each hub needs at least two practice lessons and one module.
+
 ## Scope
 In:
 - `InterviewHub` type in `curriculum-types.ts`: `slug`, `title`, `summary`, `sources` (each `{ title, href, kind, note? }` pointing at a live site page), `relatedModules` (module slugs).
