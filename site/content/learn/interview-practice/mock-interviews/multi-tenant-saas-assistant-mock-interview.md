@@ -103,22 +103,6 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 
 > **Warning: A tenant ID in the prompt does not isolate tenants.** The weak candidate relies on the model to remember which customer it serves. The demo's leak came from a shared cache the model never saw. Put tenant and user context in every query, tool call, cache key, log and evaluation fixture.
 
-## Score the Round
-
-Score each signal from 1 to 5. Next to each score, write one line of evidence quoted from the answer just given.
-
-| Signal | Strong evidence | Your score (1–5) |
-|---|---|---|
-| Discovery | Clear workflow, users, metrics | |
-| Architecture | Secure, permission-aware, observable | |
-| Evals | Golden set, regression, red-team | |
-| Production | SLOs, costs, rollout, rollback | |
-| Communication | Clear business and technical framing | |
-
-For the full six-dimension rubric, with what separates a 3 from a 4 and a 4 from a 5, use [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
-
----
-
 ## Key Takeaways
 
 - The demo leaked through a cache, so isolation must hold in every layer, not only in retrieval.

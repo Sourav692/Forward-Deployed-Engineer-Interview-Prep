@@ -3027,7 +3027,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/03_Agentic_Support_Workflow_Mock_Interview.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/interview/mock-interviews/agentic-support-workflow-mock-interview"
     },
     {
@@ -3049,7 +3049,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/05_SRE_Triage_Agent_Mock_Interview.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/interview/mock-interviews/sre-triage-agent-mock-interview"
     },
     {
@@ -3060,7 +3060,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/06_Multi_Tenant_SaaS_Assistant_Mock_Interview.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/interview/mock-interviews/multi-tenant-saas-assistant-mock-interview"
     },
     {

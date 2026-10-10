@@ -40,7 +40,9 @@ export default async function HubPage({ params }: { params: Promise<Params> }) {
     const lesson = getPublishedLesson(slug)
     const mod = lesson && getModuleBySlug(lesson.module)
     if (!lesson || !mod) throw new Error(`Hub ${hub.slug}: practice lesson "${slug}" is not in the learn manifest. Run npm run sync.`)
-    return { href: lesson.href, title: lesson.title, tag: mod.code, note: [mod.title, lesson.estMinutes && formatMinutes(lesson.estMinutes)].filter(Boolean).join(' · ') }
+    // No code tag: practice items such as the story bank live outside their module's
+    // code scheme, and the note already names the module.
+    return { href: lesson.href, title: lesson.title, note: [mod.title, lesson.estMinutes && formatMinutes(lesson.estMinutes)].filter(Boolean).join(' · ') }
   })
   const modules = hub.modules.map((slug) => getModuleBySlug(slug)!)
   const others = INTERVIEW_HUBS.filter((h) => h.slug !== hub.slug)
