@@ -339,3 +339,16 @@ test('theme toggle persists across reloads', async ({ page }) => {
   await page.reload()
   await expect(html).not.toHaveClass(/\bdark\b/)
 })
+
+// PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
+// unmatched URL and for an unknown param on a prerendered route.
+for (const path of ['/no-such-page', '/learn/no-such-track', '/modules/15-fde-case-studies/core/no-such-case']) {
+  test(`404 HTML is server-rendered: ${path}`, async ({ request }) => {
+    const res = await request.get(path)
+    expect(res.status()).toBe(404)
+    const html = await res.text()
+    expect(html).not.toContain('__next_error__')
+    expect(html).toMatch(/<h1[^>]*>Page Not Found<\/h1>/)
+    for (const hub of ['/learn', '/design', '/practice', '/interview']) expect(html).toContain(`href="${hub}"`)
+  })
+}

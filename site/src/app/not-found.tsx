@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
 import { LinkButton } from '@/components/ui'
-import { ThemeSync } from '@/components/areas/ThemeSync'
 import { LinkList } from '@/components/areas/Area'
 
 /**
- * 404 for the site (FE-14). Rendered inside the (site) root layout whenever a page
- * calls `notFound()` (unknown module, track, lesson or scenario), and for unmatched
- * URLs through the `[...missing]` catch-all. A Server Component; ThemeSync is the
- * only client island, restoring dark mode on the client-rendered error document.
+ * 404 for the site (FE-14). It sits next to the root layout, so Next prerenders it at
+ * build time as `/_not-found` inside the site shell and serves that HTML, with a 404
+ * status, for every unmatched URL and every unknown param (each dynamic route sets
+ * `dynamicParams = false`). The served HTML therefore holds the heading and links
+ * before any JavaScript runs (audit check PR-21).
+ *
+ * A `notFound()` thrown while a page renders on demand would instead send Next's
+ * client-rendered error document (`<html id="__next_error__">`): React error
+ * boundaries do not run during server rendering. No route renders on demand today.
  */
 
 export const metadata: Metadata = {
@@ -24,7 +28,6 @@ const AREAS = [
 export default function NotFound() {
   return (
     <div className="py-16 sm:py-24">
-      <ThemeSync />
       <div className="max-w-2xl">
         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Error 404</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">Page Not Found</h1>
