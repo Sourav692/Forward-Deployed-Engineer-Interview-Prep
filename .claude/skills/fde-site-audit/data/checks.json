@@ -29,6 +29,7 @@
     {"id": "IA-12", "lens": "IA", "title": "Track and module numbering complete and in order", "verify": "read", "pass_when": "No gaps in visible numbering; lists render in numeric order", "severity": "low", "dimension": "navigation"},
     {"id": "IA-13", "lens": "IA", "title": "Same item has the same title everywhere", "verify": "scan+read", "pass_when": "A worksheet, case or review has one title across every hub and card", "severity": "low", "dimension": "navigation"},
     {"id": "IA-14", "lens": "IA", "title": "List pages have filters", "verify": "browser", "pass_when": "Casebook and practice lists filter by theme, level and time, with counts", "severity": "medium", "dimension": "progress"},
+    {"id": "IA-15", "lens": "IA", "title": "Every user feature reachable from visible navigation", "verify": "browser", "pass_when": "Every user feature, including Settings, has a visible link in the header, footer or mobile menu at desktop and mobile widths", "severity": "high", "dimension": "navigation"},
 
     {"id": "ON-01", "lens": "ON", "title": "Exactly one onboarding page", "verify": "read", "pass_when": "One page explains how to start and pick a path; other how-to pages are merged or redirect", "severity": "high", "dimension": "onboarding"},
     {"id": "ON-02", "lens": "ON", "title": "\"Path\" has one meaning", "verify": "read", "pass_when": "The word path refers to the same set of paths on every page", "severity": "medium", "dimension": "onboarding"},
@@ -45,6 +46,7 @@
     {"id": "FV-04", "lens": "FV", "title": "Counts on the homepage match the hubs", "verify": "scan+read", "pass_when": "Track, module, design, worksheet and review counts agree on home, hubs and guide pages", "severity": "medium", "dimension": "polish"},
     {"id": "FV-05", "lens": "FV", "title": "No stub modules published with a Start button", "verify": "scan+read", "pass_when": "Modules with no lessons are hidden or shown as Planned without a Start button", "severity": "medium", "dimension": "coverage"},
     {"id": "FV-06", "lens": "FV", "title": "Homepage interactive preview works", "verify": "browser", "pass_when": "The write, compare, score preview accepts input and reveals the strong answer", "severity": "low", "dimension": "practice"},
+    {"id": "FV-07", "lens": "FV", "title": "Readiness not shown as complete on thin data", "verify": "browser", "pass_when": "The progress page shows no readiness percentage until at least 2 of its inputs are measured; below that it says how many are measured", "severity": "high", "dimension": "progress"},
 
     {"id": "PQ-01", "lens": "PQ", "title": "Every content page uses the site header, footer and search", "verify": "scan", "pass_when": "No content page renders outside the shared shell", "severity": "high", "dimension": "template"},
     {"id": "PQ-02", "lens": "PQ", "title": "Three or fewer body layouts", "verify": "read", "pass_when": "Lesson, case and worksheet variants only", "severity": "medium", "dimension": "template"},
@@ -61,6 +63,7 @@
     {"id": "PQ-13", "lens": "PQ", "title": "Diagrams fit the content column", "verify": "browser", "pass_when": "No diagram wider than its column; wide ones scale or offer a full-size view", "severity": "medium", "dimension": "template"},
     {"id": "PQ-14", "lens": "PQ", "title": "Diagrams render after load", "verify": "browser", "pass_when": "No Drawing diagram placeholder remains 4 seconds after load", "severity": "high", "dimension": "template"},
     {"id": "PQ-15", "lens": "PQ", "title": "Author and last-updated date on content pages", "verify": "scan", "pass_when": "Every lesson, case and worksheet shows an author line and a last-updated date", "severity": "medium", "dimension": "credibility"},
+    {"id": "PQ-16", "lens": "PQ", "title": "One scoring control per practice page", "verify": "browser", "pass_when": "Each worksheet and mock page has exactly one scoring control", "severity": "medium", "dimension": "practice"},
 
     {"id": "PR-01", "lens": "PR", "title": "Custom domain", "verify": "fetch", "pass_when": "Site served from its own domain; the vercel.app host redirects to it", "severity": "high", "dimension": "polish"},
     {"id": "PR-02", "lens": "PR", "title": "Share preview image", "verify": "scan", "pass_when": "og:image (1200x630) on every page and twitter:card summary_large_image", "severity": "high", "dimension": "polish"},
@@ -82,6 +85,7 @@
     {"id": "PR-18", "lens": "PR", "title": "Security headers", "verify": "fetch", "pass_when": "Framing blocked, HSTS, X-Content-Type-Options and a content security policy present", "severity": "low", "dimension": "polish"},
     {"id": "PR-19", "lens": "PR", "title": "Error monitoring and uptime check", "verify": "read", "pass_when": "Owner confirms error tracking and an uptime monitor are configured", "severity": "low", "dimension": "polish"},
     {"id": "PR-20", "lens": "PR", "title": "Key content present in server HTML", "verify": "scan", "pass_when": "Diagrams and lesson text are in the served HTML, not drawn only after JavaScript runs", "severity": "low", "dimension": "polish"},
+    {"id": "PR-21", "lens": "PR", "title": "404 page content in the served HTML", "verify": "fetch", "pass_when": "The served HTML for an unknown URL, before JavaScript runs, holds the 404 heading and links back into the sections", "severity": "medium", "dimension": "polish"},
 
     {"id": "CT-01", "lens": "CT", "title": "Every design ends with level calibration", "verify": "scan", "pass_when": "Each casebook design states what Senior, Staff and Principal answers cover", "severity": "medium", "dimension": "depth"},
     {"id": "CT-02", "lens": "CT", "title": "Company loop guides for at least four companies", "verify": "read", "pass_when": "Guides with round-by-round format, timing, sample prompts and linked material for 4+ companies", "severity": "high", "dimension": "grounding"},
@@ -104,11 +108,11 @@
     "C7": {"title": "Feedback is self-scored only", "checks": ["CT-05"]},
     "C8": {"title": "No reported questions or candidate experiences", "checks": ["CT-06"]},
     "C9": {"title": "No video or spoken practice", "checks": ["CT-07"]},
-    "S1": {"title": "Same content behind several hubs, long nav, many numbering systems", "checks": ["IA-01", "IA-02", "IA-03", "IA-04", "IA-05", "IA-06", "IA-07", "IA-08", "IA-09", "IA-10", "IA-13"]},
+    "S1": {"title": "Same content behind several hubs, long nav, many numbering systems", "checks": ["IA-01", "IA-02", "IA-03", "IA-04", "IA-05", "IA-06", "IA-07", "IA-08", "IA-09", "IA-10", "IA-13", "IA-15"]},
     "S2": {"title": "Competing start pages and meanings of path", "checks": ["ON-01", "ON-02", "ON-03", "ON-04", "ON-05", "ON-06", "ON-07"]},
-    "S3": {"title": "Many page layouts; final-week pages outside the template", "checks": ["PQ-01", "PQ-02", "PQ-03", "PQ-04", "PQ-05", "PQ-06"]},
-    "S4": {"title": "Blocked badges on first visit; no filters", "checks": ["FV-01", "IA-14"]},
+    "S3": {"title": "Many page layouts; final-week pages outside the template", "checks": ["PQ-01", "PQ-02", "PQ-03", "PQ-04", "PQ-05", "PQ-06", "PQ-16"]},
+    "S4": {"title": "Blocked badges on first visit; no filters", "checks": ["FV-01", "IA-14", "FV-07"]},
     "S5": {"title": "Empty areas in the top nav", "checks": ["FV-02", "FV-03"]},
-    "S6": {"title": "Launch basics and visible build files", "checks": ["PR-01", "PR-02", "PR-03", "PR-04", "PR-06", "PQ-07"]}
+    "S6": {"title": "Launch basics and visible build files", "checks": ["PR-01", "PR-02", "PR-03", "PR-04", "PR-06", "PQ-07", "PR-21"]}
   }
 }

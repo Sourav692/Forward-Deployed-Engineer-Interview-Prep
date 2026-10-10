@@ -55,6 +55,7 @@ Question: Can a user predict where something lives, and find it in one place?
 | IA-12 | Track and module numbering complete and in order | read | No gaps in visible numbering; lists render in numeric order | low | navigation | fail | No T8 track; path pages list T1.4 before T1.3, T2.6 before T2.2, T4.4 before T4.3, T6.4 before T6.3 |
 | IA-13 | Same item has the same title everywhere | scan+read | A worksheet, case or review has one title across every hub and card | low | navigation | fail | 'ServiceNow Ticket Agent' vs '...Automation Agent'; 'Financial Compliance Review Copilot' vs '...Document Reviewer'; 'Latency Optimisation' vs 'Latency and Performance' |
 | IA-14 | List pages have filters | browser | Casebook and practice lists filter by theme, level and time, with counts | medium | progress | fail | /learn has requirement and progress filters; /design casebook and /practice have none |
+| IA-15 | Every user feature reachable from visible navigation | browser | Every user feature, including Settings, has a visible link in the header, footer or mobile menu at desktop and mobile widths | high | navigation | - |  |
 
 ## ON Onboarding
 
@@ -83,6 +84,7 @@ Question: Does anything look broken, locked or empty before the user has read a 
 | FV-04 | Counts on the homepage match the hubs | scan+read | Track, module, design, worksheet and review counts agree on home, hubs and guide pages | medium | polish | fail | Home: 10 tracks, 50 modules, 34 ready. /learn: 9 tracks, 45 modules, 31 ready. /guide: '3 of 16 parts'. /learning-map: 15 parts |
 | FV-05 | No stub modules published with a Start button | scan+read | Modules with no lessons are hidden or shown as Planned without a Start button | medium | coverage | fail | ml-fundamentals (~50 words, no lessons), python-for-ai-services (On hold), portfolio-write-up (partly written; Start goes to T7) |
 | FV-06 | Homepage interactive preview works | browser | The write, compare, score preview accepts input and reveals the strong answer | low | practice | pass | Homepage 'Before you pick a model' preview: write, compare, score |
+| FV-07 | Readiness not shown as complete on thin data | browser | The progress page shows no readiness percentage until at least 2 of its inputs are measured; below that it says how many are measured | high | progress | - |  |
 
 ## PQ Page quality
 
@@ -105,6 +107,7 @@ Question: Does every page of the same type behave the same way, and are its numb
 | PQ-13 | Diagrams fit the content column | browser | No diagram wider than its column; wide ones scale or offer a full-size view | medium | template | fail | RAG pipeline diagram 1,320 px wide in a 685 px column with horizontal scroll |
 | PQ-14 | Diagrams render after load | browser | No Drawing diagram placeholder remains 4 seconds after load | high | template | pass | No 'Drawing diagram' left after load; 21 SVGs rendered on #67-69 |
 | PQ-15 | Author and last-updated date on content pages | scan | Every lesson, case and worksheet shows an author line and a last-updated date | medium | credibility | fail | No author or last-updated date; some cases show 'Key facts checked ... 27 Sep 2026' |
+| PQ-16 | One scoring control per practice page | browser | Each worksheet and mock page has exactly one scoring control | medium | practice | - |  |
 
 ## PR Production readiness
 
@@ -132,6 +135,7 @@ Question: Would this survive being shared on LinkedIn, indexed by Google and use
 | PR-18 | Security headers | fetch | Framing blocked, HSTS, X-Content-Type-Options and a content security policy present | low | polish | partial | Site refuses to be framed; other headers not checked |
 | PR-19 | Error monitoring and uptime check | read | Owner confirms error tracking and an uptime monitor are configured | low | polish | not_checked | Not visible from outside; ask the owner |
 | PR-20 | Key content present in server HTML | scan | Diagrams and lesson text are in the served HTML, not drawn only after JavaScript runs | low | polish | fail | Served HTML shows 'Drawing diagram...' placeholders; diagrams drawn client-side |
+| PR-21 | 404 page content in the served HTML | fetch | The served HTML for an unknown URL, before JavaScript runs, holds the 404 heading and links back into the sections | medium | polish | - |  |
 
 ## CT Content coverage
 
@@ -165,9 +169,9 @@ Gaps from the competitive rating (C = content, S = structure) and the checks tha
 | C7 | Feedback is self-scored only | CT-05 |
 | C8 | No reported questions or candidate experiences | CT-06 |
 | C9 | No video or spoken practice | CT-07 |
-| S1 | Same content behind several hubs, long nav, many numbering systems | IA-01, IA-02, IA-03, IA-04, IA-05, IA-06, IA-07, IA-08, IA-09, IA-10, IA-13 |
+| S1 | Same content behind several hubs, long nav, many numbering systems | IA-01, IA-02, IA-03, IA-04, IA-05, IA-06, IA-07, IA-08, IA-09, IA-10, IA-13, IA-15 |
 | S2 | Competing start pages and meanings of path | ON-01, ON-02, ON-03, ON-04, ON-05, ON-06, ON-07 |
-| S3 | Many page layouts; final-week pages outside the template | PQ-01, PQ-02, PQ-03, PQ-04, PQ-05, PQ-06 |
-| S4 | Blocked badges on first visit; no filters | FV-01, IA-14 |
+| S3 | Many page layouts; final-week pages outside the template | PQ-01, PQ-02, PQ-03, PQ-04, PQ-05, PQ-06, PQ-16 |
+| S4 | Blocked badges on first visit; no filters | FV-01, IA-14, FV-07 |
 | S5 | Empty areas in the top nav | FV-02, FV-03 |
-| S6 | Launch basics and visible build files | PR-01, PR-02, PR-03, PR-04, PR-06, PQ-07 |
+| S6 | Launch basics and visible build files | PR-01, PR-02, PR-03, PR-04, PR-06, PQ-07, PR-21 |
