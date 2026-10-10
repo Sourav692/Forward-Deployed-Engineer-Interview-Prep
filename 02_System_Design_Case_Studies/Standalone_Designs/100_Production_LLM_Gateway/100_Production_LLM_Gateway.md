@@ -4,7 +4,7 @@
 
 ◷ 27 min
 
-This prompt sounds like one box on a diagram, and it is graded as four constraints that fight each other: uptime, safety, a daily budget and a latency ceiling. Treat the gateway as the one place where every model call is metered, screened, routed and recovered, and the fights become explicit trade-offs. This page is the standalone pack for case #100 of `CASE_STUDY_INDEX.xlsx`.
+This prompt sounds like one box on a diagram, and it is graded as four constraints that fight each other: uptime, safety, a daily budget and a latency ceiling. Treat the gateway as the one place where every model call is metered, screened, routed and recovered, and the fights become explicit trade-offs. This page is the standalone pack for this case.
 
 | Case | What it contributes here |
 |---|---|

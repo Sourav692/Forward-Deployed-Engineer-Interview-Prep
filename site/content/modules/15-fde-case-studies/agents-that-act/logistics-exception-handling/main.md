@@ -15,7 +15,7 @@ End to end, as a missed scan in Frankfurt:
 
 That’s it: **feed → detect → policy → draft or narrow auto → audit.** “Just ping the carrier for every blip” stays out.
 
-> **Source:** [G17_Logistics_Exception_Handling.md](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#full-pack), especially §§1–10. Use the [Deep Dive](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#deep-dive) for gate, reliability and evaluation detail and the [Cheat Sheet](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#cheat-sheet) for rehearsal.
+> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#full-pack), especially §§1–10. Use the [Deep Dive](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#deep-dive) for gate, reliability and evaluation detail and the [Cheat Sheet](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#cheat-sheet) for rehearsal.
 
 ## Anchor and related case
 

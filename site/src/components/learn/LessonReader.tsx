@@ -25,8 +25,8 @@ export function LessonReader({ page }: { page: LessonPage }) {
         <Byline updated={lesson.updated} report={{ title: lesson.title, path: lesson.href }} />
         <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
           {lesson.estMinutes ? <span>{formatMinutes(lesson.estMinutes)} read</span> : null}
-          {lesson.estMinutes ? <span aria-hidden="true">·</span> : null}
-          <span>{sourceNote}</span>
+          {lesson.estMinutes && sourceNote ? <span aria-hidden="true">·</span> : null}
+          {sourceNote && <span>{sourceNote}</span>}
         </p>
         {creditHtml && (
           <p className="mt-2 rounded-md border border-border bg-surface-2 px-3 py-2 text-sm text-muted">

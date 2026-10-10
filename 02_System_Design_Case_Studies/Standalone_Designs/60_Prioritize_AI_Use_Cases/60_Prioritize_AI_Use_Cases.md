@@ -4,7 +4,7 @@
 
 ◷ 24 min
 
-This is a portfolio question, not a design question. Nothing gets drawn until the list has been cut. The answer is a repeatable way to turn thirty enthusiastic one-liners into a funded sequence with kill criteria, and the architecture only appears as the shared platform that makes later items cheaper. The page is the standalone pack for #60 in `CASE_STUDY_INDEX.xlsx`.
+This is a portfolio question, not a design question. Nothing gets drawn until the list has been cut. The answer is a repeatable way to turn thirty enthusiastic one-liners into a funded sequence with kill criteria, and the architecture only appears as the shared platform that makes later items cheaper. The page is the standalone pack for this case.
 
 | Case | Where it comes from | What the source gives |
 |---|---|---|

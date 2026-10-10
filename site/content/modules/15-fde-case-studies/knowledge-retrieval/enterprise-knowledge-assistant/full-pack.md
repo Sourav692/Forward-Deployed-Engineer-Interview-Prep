@@ -4,7 +4,7 @@
 
 ◷ 38 min
 
-The hard part of this system is not finding the right passage. It is that a Tier-1 agent, a Tier-3 engineer and an account manager must get different correct answers to the same question. So the design starts from access control and earns retrieval quality second. This page consolidates group G01 of `CASE_STUDY_INDEX.xlsx` into one read for the day before. Everything else in the group is a delta on it.
+The hard part of this system is not finding the right passage. It is that a Tier-1 agent, a Tier-3 engineer and an account manager must get different correct answers to the same question. So the design starts from access control and earns retrieval quality second. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group                                                | What it contributes here                                                   |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------- |

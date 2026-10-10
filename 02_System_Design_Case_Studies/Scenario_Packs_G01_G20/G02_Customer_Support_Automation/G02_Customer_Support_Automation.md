@@ -4,7 +4,7 @@
 
 ◷ 40 min
 
-The product is not a chatbot that answers everything. It is a routed service that must decide when to act, when to ask for approval, and when to stop. A fluent model is one input to that decision, never its authority. This page consolidates group G02 of `CASE_STUDY_INDEX.xlsx` into one read for the day before. Everything else in the group is a delta on it.
+The product is not a chatbot that answers everything. It is a routed service that must decide when to act, when to ask for approval, and when to stop. A fluent model is one input to that decision, never its authority. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group                                              | What it contributes here                                                               |
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------- |

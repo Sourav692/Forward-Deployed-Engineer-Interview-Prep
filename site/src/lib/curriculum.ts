@@ -37,7 +37,7 @@ export const TRACKS: CurriculumTrack[] = [
     prerequisites: [],
     required: 'yes',
     estHours: 3,
-    exitCompetencies: ['State the first-ten-minutes routine', 'chosen path'],
+    exitCompetencies: ['State the first-ten-minutes routine', 'Choose your learning path'],
     sections: [
       {
         slug: 'orientation',
@@ -385,10 +385,12 @@ export const MODULES: CurriculumModule[] = [
   {
     slug: 'how-the-platform-works',
     code: 'T0.1',
-    title: 'How the platform works and choosing a path',
+    title: 'How the course works',
     track: 'orientation',
     section: 'orientation',
-    status: 'partly',
+    // Ready since /start became the one onboarding page (ENH-11): it holds the site
+    // walkthrough and the path diagnostic this module once planned to add.
+    status: 'ready',
     estMinutes: 30,
     objective: 'Pick a path and know how to study each mode',
     scope: 'Platform use only; no technical content',
@@ -398,7 +400,6 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: '',
     commonMistakes: ['Reading everything in order instead of following a path'],
     lessons: ['how-the-material-is-built'],
-    gapNote: 'A walkthrough of the platform and how to choose a path.',
     seeAlso: [],
   },
   {

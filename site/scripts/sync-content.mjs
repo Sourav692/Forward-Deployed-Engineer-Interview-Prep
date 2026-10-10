@@ -333,7 +333,12 @@ async function main() {
     await rm(LEARN_SNAPSHOT_DIR, { recursive: true, force: true })
   }
 
-  const manifest = { generatedAt: new Date().toISOString(), modules, lastDayUpdated: lastDay.updated }
+  const manifest = {
+    generatedAt: new Date().toISOString(),
+    modules,
+    lastDayUpdated: lastDay.updated,
+    storyBankUpdated: updatedOf(join(BEHAVIOURAL_ROOT, STORY_BANK.source)),
+  }
   await writeFile(join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2))
 
   const allTracks = modules.flatMap((m) => m.tracks)

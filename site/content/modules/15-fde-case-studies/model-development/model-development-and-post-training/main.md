@@ -1,6 +1,6 @@
 # G19 — Model Development and Post-Training: Main Interview Guide
 
-> **Source:** [G19_Model_Development_And_Post_Training.md](/modules/15-fde-case-studies/model-development/model-development-and-post-training#full-pack), especially §§1–12. Use the [Deep Dive](/modules/15-fde-case-studies/model-development/model-development-and-post-training#deep-dive) for methods and arithmetic and the [Cheat Sheet](/modules/15-fde-case-studies/model-development/model-development-and-post-training#cheat-sheet) for rehearsal. The source constructs the design from reported prompts; its run sizes and throughput are illustrations, not measured training results.
+> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/model-development/model-development-and-post-training#full-pack), especially §§1–12. Use the [Deep Dive](/modules/15-fde-case-studies/model-development/model-development-and-post-training#deep-dive) for methods and arithmetic and the [Cheat Sheet](/modules/15-fde-case-studies/model-development/model-development-and-post-training#cheat-sheet) for rehearsal. The source constructs the design from reported prompts; its run sizes and throughput are illustrations, not measured training results.
 
 ## The anchor and its variants
 

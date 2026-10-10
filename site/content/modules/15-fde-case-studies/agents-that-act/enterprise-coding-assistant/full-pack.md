@@ -4,7 +4,7 @@
 
 ◷ 27 min
 
-A coding assistant is a context-engineering problem before it is a model problem, because "must feel instant" and "must understand the whole repository" pull in opposite directions. This group has one worked design and one question-bank prompt, so the page is shorter than its siblings; it consolidates group G09 of `CASE_STUDY_INDEX.xlsx` into one read for the day before.
+A coding assistant is a context-engineering problem before it is a model problem, because "must feel instant" and "must understand the whole repository" pull in opposite directions. This group has one worked design and one question-bank prompt, so the page is shorter than its siblings; it consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|

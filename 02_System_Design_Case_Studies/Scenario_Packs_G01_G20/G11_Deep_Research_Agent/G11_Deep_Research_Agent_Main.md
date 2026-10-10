@@ -15,7 +15,7 @@ End to end, as “Who is Acme’s CEO, with sources?”
 
 That’s it: **plan → search in isolation → cite or show the hole → stop.** External actions stay out.
 
-> **Source:** [G11_Deep_Research_Agent.md](G11_Deep_Research_Agent.md). Use the [Deep Dive](G11_Deep_Research_Agent_Deep_Dive.md) for state and security mechanics and the [Cheat Sheet](G11_Deep_Research_Agent_Cheat_Sheet.md) for rehearsal.
+> **Source:** [Sources and Full Design](G11_Deep_Research_Agent.md). Use the [Deep Dive](G11_Deep_Research_Agent_Deep_Dive.md) for state and security mechanics and the [Cheat Sheet](G11_Deep_Research_Agent_Cheat_Sheet.md) for rehearsal.
 
 ## The case in one sentence
 

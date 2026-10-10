@@ -4,7 +4,7 @@
 
 ◷ 24 min
 
-This is not a software architecture question, even though it is asked in a system design round. It is an operating-model question, and the design is a state machine whose gates are code rather than trust. The page consolidates group G12 of `CASE_STUDY_INDEX.xlsx` into one read for the day before.
+This is not a software architecture question, even though it is asked in a system design round. It is an operating-model question, and the design is a state machine whose gates are code rather than trust. The page consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|

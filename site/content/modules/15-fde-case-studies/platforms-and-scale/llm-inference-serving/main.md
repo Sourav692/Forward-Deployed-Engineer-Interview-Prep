@@ -1,6 +1,6 @@
 # G20 — LLM Inference Serving: Main Interview Guide
 
-> **Source:** [G20_LLM_Inference_Serving.md](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#full-pack), especially §§1–11 for the anchor and §§12–15 for variants. Use the [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#deep-dive) for scheduling, KV and failover mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#cheat-sheet) for rehearsal. The source states that its serving design and all capacity figures are constructed examples, not measurements of an actual engine.
+> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#full-pack), especially §§1–11 for the anchor and §§12–15 for variants. Use the [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#deep-dive) for scheduling, KV and failover mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#cheat-sheet) for rehearsal. The source states that its serving design and all capacity figures are constructed examples, not measurements of an actual engine.
 
 ## Anchor and related prompts
 

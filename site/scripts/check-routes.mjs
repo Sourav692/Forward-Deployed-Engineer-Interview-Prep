@@ -22,7 +22,7 @@
  */
 import { readFileSync } from 'node:fs'
 import { MODULES } from '../src/lib/curriculum.ts'
-import { AUTHOR } from '../src/lib/editorial.ts'
+import { AUTHOR, STORY_BANK } from '../src/lib/editorial.ts'
 
 const BASE = (process.env.BASE_URL ?? 'http://localhost:3307').replace(/\/$/, '')
 const CONCURRENCY = 12
@@ -36,6 +36,7 @@ const siteManifest = JSON.parse(readFileSync(new URL('../content/manifest.json',
 const bylined = new Set([
   ...manifest.lessons.filter((l) => l.kind === 'sync').map((l) => l.href),
   ...siteManifest.modules.flatMap((m) => m.tracks.flatMap((t) => t.scenarios.map((sc) => `/modules/${m.id}/${t.id}/${sc.slug}`))),
+  STORY_BANK.href,
 ])
 let readable = 0
 for (const mod of MODULES) {

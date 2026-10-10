@@ -4,7 +4,7 @@
 
 ◷ 26 min
 
-Scaling a prototype a thousandfold is not a bigger deployment of the same system. It is a different system that happens to share a prompt. This page is the day-before pack for case #61 of `CASE_STUDY_INDEX.xlsx`, a standalone case with no group.
+Scaling a prototype a thousandfold is not a bigger deployment of the same system. It is a different system that happens to share a prompt. This page is the day-before pack for this case, a standalone case with no group.
 
 | Source | What it contributes here |
 |---|---|

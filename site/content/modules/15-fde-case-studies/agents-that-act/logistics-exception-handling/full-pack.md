@@ -4,7 +4,7 @@
 
 ◷ 24 min
 
-This is a low-scale, high-stakes design, not a traffic problem. Only 150 people use it, and the engineering bar is correctness at one decision boundary. This page consolidates group G17 of `CASE_STUDY_INDEX.xlsx` into one read for the day before. It reuses the deny-first gate from G03 and the tenancy ladder from G07, and names them rather than repeating them.
+This is a low-scale, high-stakes design, not a traffic problem. Only 150 people use it, and the engineering bar is correctness at one decision boundary. This page consolidates the group's prompts into one read for the day before. It reuses the deny-first gate from G03 and the tenancy ladder from G07, and names them rather than repeating them.
 
 | Case in the group | What it contributes here |
 |---|---|

@@ -4,7 +4,7 @@
 
 ◷ 24 min
 
-"Design ChatGPT" is not a model question. It is a distributed-systems question about conversation state, token streaming, admission control and cost at hundreds of millions of users. This page consolidates group G18 of `CASE_STUDY_INDEX.xlsx` into one read for the day before.
+"Design ChatGPT" is not a model question. It is a distributed-systems question about conversation state, token streaming, admission control and cost at hundreds of millions of users. This page consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|

@@ -29,7 +29,7 @@ export function ModuleStatusBadge({ input, size = 'sm' }: { input: ModuleInput; 
 export function ModuleProgress({ input, compact = false }: { input: ModuleInput; compact?: boolean }) {
   const p = useProgress(() => readingProgress(input))
   if (input.reading.length === 0) return null
-  const label = p ? `${p.lessonsRead} of ${p.lessonsTotal} read` : `${input.reading.length} lessons`
+  const label = p ? `${p.lessonsRead} of ${p.lessonsTotal} read` : `${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`
   return (
     <div className={cx('flex items-center gap-3', compact ? 'min-w-28' : 'w-full')}>
       <div className="min-w-16 flex-1">

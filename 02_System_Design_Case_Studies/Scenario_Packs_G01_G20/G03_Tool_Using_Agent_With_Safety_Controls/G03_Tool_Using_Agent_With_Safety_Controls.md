@@ -4,7 +4,7 @@
 
 ◷ 38 min
 
-The hard part of this system is not getting a model to call a tool. It is that an agent which reads email, queries systems, updates CRM and issues refunds has to be useful without holding any authority. So the model proposes and deterministic systems decide. This page consolidates group G03 of `CASE_STUDY_INDEX.xlsx` into one read for the day before. Everything else in the group is a delta on it.
+The hard part of this system is not getting a model to call a tool. It is that an agent which reads email, queries systems, updates CRM and issues refunds has to be useful without holding any authority. So the model proposes and deterministic systems decide. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group | What it contributes here |
 |---|---|

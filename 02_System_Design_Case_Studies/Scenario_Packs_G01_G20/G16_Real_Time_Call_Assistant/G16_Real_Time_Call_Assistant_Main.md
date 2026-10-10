@@ -15,7 +15,7 @@ End to end, as Sara on an Acme call:
 
 That’s it: **prep before → tiny live suggest → rich after, with a human on writes.** Voice-out and auto-send are out (that’s a different product).
 
-> **Full source:** [G16_Real_Time_Call_Assistant.md](G16_Real_Time_Call_Assistant.md), especially §§1–11 for the design and §14 for the sub-3-second pivot. Use the [Deep Dive](G16_Real_Time_Call_Assistant_Deep_Dive.md) for budgets and evaluation and the [Cheat Sheet](G16_Real_Time_Call_Assistant_Cheat_Sheet.md) for rehearsal. Much of the source design is explicitly its author's construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
+> **Full source:** [Sources and Full Design](G16_Real_Time_Call_Assistant.md), especially §§1–11 for the design and §14 for the sub-3-second pivot. Use the [Deep Dive](G16_Real_Time_Call_Assistant_Deep_Dive.md) for budgets and evaluation and the [Cheat Sheet](G16_Real_Time_Call_Assistant_Cheat_Sheet.md) for rehearsal. Much of the source design is explicitly its author's construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
 
 ## One call, three clocks
 

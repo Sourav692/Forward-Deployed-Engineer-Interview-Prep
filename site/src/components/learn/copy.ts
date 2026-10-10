@@ -6,7 +6,7 @@
 export const COPY = {
   // Gap states
   partlyTitle: 'Partly ready',
-  partlyLead: 'The lessons below are published. The rest of this module is still being written.',
+  partlyLead: 'The lessons above are published. The rest of this module is still being written.',
   partlyComingSoon: (gap: string) => `Coming soon in this module: ${gap}`,
   comingSoonTitle: 'Coming soon',
   comingSoonLead:

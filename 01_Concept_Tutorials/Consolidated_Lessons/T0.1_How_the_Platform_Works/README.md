@@ -1,6 +1,6 @@
 # T0.1 How the Platform Works: Consolidated Lessons
 
-These lessons are the site's teaching copy of module T0.1 "How the platform works and choosing a path". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/orientation/how-the-platform-works`.
+These lessons are the site's teaching copy of module T0.1 "How the course works". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/orientation/how-the-platform-works`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -16,6 +16,6 @@ Lessons 2 and 3 are no longer published (11 October 2026). The site's `/start` p
 - `01_Concept_Tutorials/FDE_Handbook/00_Orientation/README.md` (own material): the orientation checkpoint.
 - `00_Start_Here/REPOSITORY_COVERAGE_GUIDE.md` (own material). Its `09_Study_Plans/` row indexes a purchased third-party library and is not repeated. Its "What the site publishes" section predates the Learn section and is not repeated either.
 
-The source files stay in the repository unchanged. The site no longer publishes `how-to-use-this-handbook` and `repository-coverage-guide` as separate lessons; old URLs redirect to lessons here. The module stays Partly ready: a walkthrough of the site itself and a path diagnostic are not in the sources.
+The source files stay in the repository unchanged. The site no longer publishes `how-to-use-this-handbook` and `repository-coverage-guide` as separate lessons; old URLs redirect to lessons here. The module is ready: the site walkthrough and the path diagnostic live on `/start`, which lesson 1 links to.
 
 Every claim and number in these lessons comes from the sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

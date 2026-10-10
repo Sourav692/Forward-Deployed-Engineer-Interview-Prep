@@ -15,7 +15,7 @@ End to end, as the refund-bot prompt change:
 
 That’s it: **pin candidate → eval vs baseline → pass/block/hold → learn.** Shipping on vibes stays out.
 
-> **Source:** [G13_Evaluation_And_Release_Gating.md](G13_Evaluation_And_Release_Gating.md). The [Deep Dive](G13_Evaluation_And_Release_Gating_Deep_Dive.md) expands the gate, graders and incident; the [Cheat Sheet](G13_Evaluation_And_Release_Gating_Cheat_Sheet.md) is for rehearsal.
+> **Source:** [Sources and Full Design](G13_Evaluation_And_Release_Gating.md). The [Deep Dive](G13_Evaluation_And_Release_Gating_Deep_Dive.md) expands the gate, graders and incident; the [Cheat Sheet](G13_Evaluation_And_Release_Gating_Cheat_Sheet.md) is for rehearsal.
 
 ## The case in one sentence
 
