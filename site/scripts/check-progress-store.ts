@@ -81,6 +81,9 @@ check('confidence out of range rejected', store.setConfidence(mod.slug, 9 as 5, 
 
 store.choosePath({ pathId: 'fde', weeklyHours: 8 }, NOW)
 check('path stored', store.getPath(), { pathId: 'fde', weeklyHours: 8, chosenAt: '2026-10-05T12:00:00.000Z' })
+storage.setItem('fd:v1:scores:core/internal-knowledge-assistant', JSON.stringify({ r1: 3, r2: 5 }))
+check('readKind returns live worksheet values by key', store.readKind('scores'), { 'core/internal-knowledge-assistant': { r1: 3, r2: 5 } })
+storage.removeItem('fd:v1:scores:core/internal-knowledge-assistant')
 check('weekly hours change keeps the path', [store.setWeeklyHours(12), store.getPath()?.weeklyHours, store.getPath()?.pathId], [true, 12, 'fde'])
 store.setWeeklyHours(8)
 

@@ -21,6 +21,8 @@ const PAGES: [string, string][] = [
   ['mock lesson', MOCK_LESSON],
   ['settings', '/settings'],
   ['interview hub', '/interview/hubs/ai-systems-design'],
+  ['progress (new learner)', '/progress'],
+  ['progress history', '/progress/history'],
   ['library', '/library'],
   ['credits', '/library/credits'],
   ['worksheet', WORKSHEET],
@@ -36,8 +38,9 @@ for (const theme of ['light', 'dark'] as const) {
       await page.addInitScript((t) => localStorage.setItem('fd:v1:theme', t), theme)
     })
 
-    for (const [name, path] of PAGES) {
+    for (const [name, path, seed] of [...PAGES, ['progress (with data)', '/progress', true] as const]) {
       test(`${name} ${path}`, async ({ page }) => {
+        if (seed) await page.addInitScript(seedProgress)
         await page.goto(path)
         await hydrated(page)
         await expect(page.locator('html')).toHaveClass(theme === 'dark' ? /\bdark\b/ : /^(?!.*\bdark\b)/)
@@ -57,4 +60,23 @@ for (const theme of ['light', 'dark'] as const) {
       })
     }
   })
+}
+
+/** A learner with a path, a low and a faded confidence rating, a mock round, scores and a bookmark. */
+function seedProgress() {
+  const now = new Date().toISOString()
+  const old = new Date(Date.now() - 50 * 86_400_000).toISOString()
+  const set = (key: string, value: unknown) => localStorage.setItem(key, JSON.stringify(value))
+  set('fd:v1:path', { pathId: 'fde', weeklyHours: 6, chosenAt: now })
+  set('fd:v1:learn:lesson:the-fde-role/three-roles-three-questions', { readAt: now })
+  set('fd:v1:learn:module:memory-and-state', { confidence: [{ value: 2, at: now }], notes: '', updatedAt: now })
+  set('fd:v1:learn:module:the-fde-role', { confidence: [{ value: 4, at: old }], notes: '', updatedAt: old })
+  const rubric = { discovery: 4, architecture: 3, security: 3, evaluation: 4, production: 3, communication: 4 }
+  set('fd:v1:learn:attempts:mock:sre-triage-agent-mock-interview:full', [
+    { assessmentId: 'mock:sre-triage-agent-mock-interview:full', kind: 'mock', at: now, score: 63, passed: true, rubric, answers: {}, id: 'a:1', updatedAt: now },
+  ])
+  set('fd:v1:scores:core/internal-knowledge-assistant', { a: 3, b: 5 })
+  set('fd:v1:answer-statuses:fde-competencies/customer-focus-and-discovery', { s1: 'practiced' })
+  set('fd:v1:activity', [{ kind: 'lesson-read', itemId: 'the-fde-role/three-roles-three-questions', label: 'Three Roles, Three Questions', id: 'e1', at: now, updatedAt: now }])
+  set('fd:v1:bookmarks', [{ kind: 'lesson', itemId: 'the-fde-role/three-roles-three-questions', label: 'Three Roles, Three Questions', href: '/learn/orientation/the-fde-role/three-roles-three-questions', id: 'b1', at: now, updatedAt: now }])
 }

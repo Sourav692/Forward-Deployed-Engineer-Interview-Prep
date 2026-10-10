@@ -26,6 +26,7 @@ export const ICONS = {
   glossary: 'M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3zM5 17a3 3 0 013-3h11',
   library: 'M4 4v16M9 4v16M14 5l5 15',
   settings: 'M4 7h9M17 7h3M15 5v4M4 17h3M11 17h9M9 15v4',
+  progress: 'M5 19v-7M12 19V5M19 19v-4M3 21h18',
   search: 'M11 18a7 7 0 100-14 7 7 0 000 14zM20 20l-4-4',
   menu: 'M4 7h16M4 12h16M4 17h16',
   close: 'M6 6l12 12M18 6L6 18',

@@ -113,15 +113,15 @@ Re-scoped on 10 October 2026 after checking the plan against the code (see the n
 | 3 | [DATA-07](phase-2/03-DATA-07-interview-hub-definitions.md) | Five interview hubs defined in `curriculum.ts`, linking existing sources and modules | M | DATA-01 | done (#74) |
 | 4 | [FE-18](phase-2/04-FE-18-interview-hub-pages.md) | Hub pages at `/interview/hubs/[hubSlug]` | M | DATA-07 | done (this PR) |
 | 5 | [UX-07](phase-2/05-UX-07-dashboard-wireframe.md) | Empty-first dashboard wireframes and the missing-input readiness rule | M | UX-04 | done (this PR) |
-| 6 | [FE-16](phase-2/06-FE-16-progress-dashboard.md) | `/progress` dashboard, revision, history and bookmarks on real data | L | FE-09, FE-15, UX-07 | todo |
+| 6 | [FE-16](phase-2/06-FE-16-progress-dashboard.md) | `/progress` dashboard, revision, history and bookmarks on real data | L | FE-09, FE-15, UX-07 | done (this PR) |
 | 7 | [FE-19](phase-2/07-FE-19-retire-demo.md) | `/demo` retired with redirects; `src/demo/` removed | S | FE-15, FE-16, FE-17, FE-18 | todo |
 
 Exit criteria:
 
 - [ ] The five scenario mock lessons at `/interview/mock-interviews/...` carry a timer and a scorer for the short (five signals) and full (six dimensions) rounds, scored 1–5; pass rule (no dimension below 2, mean ≥ 3) applied; attempts saved.
 - [x] Five topic hubs at `/interview/hubs/...` list existing question sources by link, with no copied content.
-- [ ] Dashboard shows real data only; empty state for new learners.
-- [ ] Readiness formulas from `rules.ts` drive gauges; inputs not yet measured (checkpoints) show "not measured" instead of 0. Rule settled in UX-07: overall score re-weighted over measured inputs.
+- [x] Dashboard shows real data only; empty state for new learners.
+- [x] Readiness formulas from `rules.ts` drive gauges; inputs not yet measured (checkpoints) show "not measured" instead of 0. Rule settled in UX-07: overall score re-weighted over measured inputs.
 - [ ] Export → reset → import restores state exactly.
 - [ ] `/demo` retired.
 
