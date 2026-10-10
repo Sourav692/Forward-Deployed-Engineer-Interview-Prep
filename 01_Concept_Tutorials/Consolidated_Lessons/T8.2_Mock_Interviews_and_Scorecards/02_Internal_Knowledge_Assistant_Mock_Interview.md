@@ -115,7 +115,7 @@ Score each signal from 1 to 5. Next to each score, write one line of evidence qu
 | Production | SLOs, costs, rollout, rollback | |
 | Communication | Clear business and technical framing | |
 
-For the full six-dimension rubric, with what separates a 3 from a 4 and a 4 from a 5, use [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
+This table is the short round's five signals. The full round adds Security for six dimensions. For that rubric, with what separates a 3 from a 4 and a 4 from a 5, use [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
 ---
 

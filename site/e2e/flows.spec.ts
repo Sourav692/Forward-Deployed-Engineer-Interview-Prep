@@ -136,12 +136,23 @@ test('progress: empty first, then readiness and the revision queue follow what t
   await page.getByRole('button', { name: 'Save full round score' }).click()
   await expect(page.getByText(/^Last saved, full round: Pass/)).toBeVisible()
 
-  // One of five mocks at 5 of 5 is 20 %, and mocks are the only measured input.
+  // One of five mocks at 5 of 5 is 20 %. With mocks the only measured input, no headline score shows yet (FV-07).
   await page.goto('/progress')
   await hydrated(page)
-  await expect(page.getByText('based on 1 of 4 inputs')).toBeVisible()
-  await expect(page.getByRole('region', { name: 'Interview Readiness' })).toContainText('20 %')
+  const readiness = page.getByRole('region', { name: 'Interview Readiness' })
+  await expect(readiness).toContainText('Not enough data yet: 1 of 4 inputs measured (Mock interviews, 20 %)')
+  await expect(readiness.getByText(/based on \d of 4 inputs/)).toHaveCount(0)
   await expect(page.getByRole('region', { name: /^Revision Queue/ })).toContainText('Low confidence')
+
+  // A second input (a passed checkpoint) brings the headline score.
+  await page.goto(CHECKPOINT_MODULE)
+  await hydrated(page)
+  await takeCheckpoint(page, true)
+  await expect(page.getByText('Passed: 100 % (8 of 8)')).toBeVisible()
+  await page.goto('/progress')
+  await hydrated(page)
+  await expect(readiness).toContainText('based on 2 of 4 inputs')
+  await expect(readiness.getByRole('progressbar', { name: /^Interview readiness \d+ %$/ })).toBeVisible()
 
   // Rating 3 or more takes it out of the queue.
   await page.goto(READY_MODULE)
@@ -175,7 +186,7 @@ test('checkpoint: a pass feeds readiness; a fail puts the module in the revision
   await page.goto('/progress')
   await hydrated(page)
   const readiness = page.getByRole('region', { name: 'Interview Readiness' })
-  await expect(readiness).toContainText('based on 1 of 4 inputs')
+  await expect(readiness).toContainText('Not enough data yet: 1 of 4 inputs measured')
   await expect(readiness).toContainText('Checkpoint pass rate100 %')
 
   await page.goto(CHECKPOINT_MODULE)

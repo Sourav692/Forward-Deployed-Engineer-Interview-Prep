@@ -198,12 +198,20 @@ function ReadinessPanel({
   modules: DashboardData['modules']
 }) {
   const { score, measured, parts, weakest } = readiness
+  // One input re-weighted to 100 % of the score overstates readiness, so the
+  // headline waits for a second input (audit check FV-07).
+  const only = measured === 1 ? parts.find((p) => p.value !== null) : undefined
   return (
     <Panel title="Interview Readiness">
       {score === null ? (
         <p className="text-sm text-muted">
           No score yet. It is built from your worksheet scorecards, mock interviews, module checkpoints and
           behavioural worksheets.
+        </p>
+      ) : only ? (
+        <p className="text-sm text-muted">
+          Not enough data yet: 1 of 4 inputs measured ({only.label}, {Math.round(only.value ?? 0)} %). Measure one
+          more to see a readiness score.
         </p>
       ) : (
         <>
@@ -232,18 +240,13 @@ function ReadinessPanel({
                   <ProgressBar value={p.value / 100} label={`${p.label} ${Math.round(p.value)} %`} tone={isWeakest ? 'warning' : 'accent'} />
                 </div>
               )}
-              {p.id === 'checkpoints' && p.value === null && !remedy ? (
-                <p className="mt-1 text-xs text-muted">Module checkpoints are coming later.</p>
-              ) : (
-                (p.value === null || isWeakest) &&
-                remedy && (
-                  <p className="mt-1 text-xs text-muted">
-                    {isWeakest ? 'Weakest. Next: ' : 'Start with '}
-                    <Link href={remedy.href} className="text-accent underline underline-offset-2">
-                      {remedy.label}
-                    </Link>
-                  </p>
-                )
+              {(p.value === null || isWeakest) && remedy && (
+                <p className="mt-1 text-xs text-muted">
+                  {isWeakest ? 'Weakest. Next: ' : 'Start with '}
+                  <Link href={remedy.href} className="text-accent underline underline-offset-2">
+                    {remedy.label}
+                  </Link>
+                </p>
               )}
             </li>
           )

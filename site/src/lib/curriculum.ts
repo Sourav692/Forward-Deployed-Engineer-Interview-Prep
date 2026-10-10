@@ -1527,7 +1527,7 @@ export const MODULES: CurriculumModule[] = [
     objective: 'Perform full rounds under time',
     scope: 'Mocks A–E',
     prerequisites: ['case-study-worksheets'],
-    deliverable: '3 mocks + readiness exam',
+    deliverable: '3 scored mocks',
     assessment: 'Mock rubric',
     interviewProbe: 'All rounds',
     commonMistakes: ['Practising only the easy parts'],
@@ -4929,6 +4929,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'mock-interviews',
     kind: 'sync',
     publish: 'own',
+    sections: { exclude: ['Score the Round'] },
   },
   {
     slug: 'agentic-support-workflow-mock-interview',
@@ -4937,6 +4938,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'mock-interviews',
     kind: 'sync',
     publish: 'own',
+    sections: { exclude: ['Score the Round'] },
   },
   {
     slug: 'financial-compliance-and-red-team-mock-interview',
@@ -4945,6 +4947,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'mock-interviews',
     kind: 'sync',
     publish: 'own',
+    sections: { exclude: ['Score the Round'] },
   },
   {
     slug: 'sre-triage-agent-mock-interview',
@@ -4953,6 +4956,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'mock-interviews',
     kind: 'sync',
     publish: 'own',
+    sections: { exclude: ['Score the Round'] },
   },
   {
     slug: 'multi-tenant-saas-assistant-mock-interview',
@@ -4961,6 +4965,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'mock-interviews',
     kind: 'sync',
     publish: 'own',
+    sections: { exclude: ['Score the Round'] },
   },
   {
     slug: 'short-practice-mocks',

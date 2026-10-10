@@ -103,22 +103,6 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 
 > **Warning: Auto-remediation is the last step of the rollout, not the first.** The customer asked for automatic fixes, and the weak candidate offers runbook-driven restarts. Keep the copilot read-only by default, and gate any destructive action behind approval, blast-radius checks and command simulation.
 
-## Score the Round
-
-Score each signal from 1 to 5. Next to each score, write one line of evidence quoted from the answer just given.
-
-| Signal | Strong evidence | Your score (1–5) |
-|---|---|---|
-| Discovery | Clear workflow, users, metrics | |
-| Architecture | Secure, permission-aware, observable | |
-| Evals | Golden set, regression, red-team | |
-| Production | SLOs, costs, rollout, rollback | |
-| Communication | Clear business and technical framing | |
-
-For the full six-dimension rubric, with what separates a 3 from a 4 and a 4 from a 5, use [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
-
----
-
 ## Key Takeaways
 
 - The demo failed by claiming a root cause without telemetry and suggesting a wrong restart.
