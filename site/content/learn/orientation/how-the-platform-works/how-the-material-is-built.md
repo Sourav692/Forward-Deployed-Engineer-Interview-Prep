@@ -4,7 +4,7 @@
 
 ◷ 4 min
 
-A handbook is not a reading list. Learn the three principles and the four levels first. Then read [Choose a Reading Path](/learn/orientation/how-the-platform-works/choose-a-reading-path) to decide which route through them fits your role.
+A handbook is not a reading list. Learn the three principles and the four levels first. Then [choose your path](/start): it marks which modules matter for your background and interview date.
 
 **Objectives:**
 

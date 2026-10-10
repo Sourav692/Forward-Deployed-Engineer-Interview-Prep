@@ -397,11 +397,7 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Diagnostic submitted',
     interviewProbe: '',
     commonMistakes: ['Reading everything in order instead of following a path'],
-    lessons: [
-      'how-the-material-is-built',
-      'choose-a-reading-path',
-      'find-material-by-interview-area',
-    ],
+    lessons: ['how-the-material-is-built'],
     gapNote: 'A walkthrough of the platform and how to choose a path.',
     seeAlso: [],
   },
@@ -1856,7 +1852,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/02_Choose_a_Reading_Path.md',
     home: 'how-the-platform-works',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'find-material-by-interview-area',
@@ -1864,7 +1860,7 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/03_Find_Material_by_Interview_Area.md',
     home: 'how-the-platform-works',
     kind: 'sync',
-    publish: 'own',
+    publish: 'excluded',
   },
   {
     slug: 'the-three-roles',
