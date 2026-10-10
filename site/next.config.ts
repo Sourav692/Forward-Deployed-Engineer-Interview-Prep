@@ -139,6 +139,10 @@ const nextConfig: NextConfig = {
       ...behaviouralRedirects,
       // Hubs have no index page of their own: /interview lists them (FE-18).
       { source: '/interview/hubs', destination: '/interview', permanent: false },
+      // The /demo prototype was retired once production covered it (FE-19). Its
+      // fd:demo:v1 progress is not migrated (plan §15 Q12).
+      { source: '/demo', destination: '/', permanent: true },
+      { source: '/demo/:path*', destination: '/', permanent: true },
     ]
   },
   async headers() {
