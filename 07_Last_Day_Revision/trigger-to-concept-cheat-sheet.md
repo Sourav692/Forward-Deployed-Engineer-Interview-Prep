@@ -124,7 +124,7 @@ Latency: Trace → Critical path → Optimize → Recheck quality
 Cost: Total cost across attempts ÷ successful tasks
 ```
 
-Streaming does not necessarily reduce computation. Async does not automatically shorten completion. A queue does not create capacity. TTFT means time to first token; useful user output and confirmed action completion are separate measurements.
+Streaming does not necessarily reduce computation. Async does not automatically shorten completion. A queue does not create capacity. TTFT marks only when output starts; useful user output and confirmed action completion are separate measurements.
 
 ## 6. Failure and Recovery — Module 12
 

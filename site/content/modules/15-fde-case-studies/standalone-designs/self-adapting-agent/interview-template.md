@@ -212,7 +212,7 @@ flowchart TD
 
 ---
 
-# 6. Core Architecture Principle
+## 6. Core Architecture Principle
 
 The architecture has **two loops and one gate**.
 
@@ -224,7 +224,7 @@ Learning Loop
 Evaluation Gate
 ```
 
-## Runtime Loop
+### Runtime Loop
 
 The runtime serves production traffic.
 
@@ -248,7 +248,7 @@ Trace
 
 The runtime should use only approved versions.
 
-## Learning Loop
+### Learning Loop
 
 The learning system studies historical traces.
 
@@ -266,13 +266,13 @@ Shadow
 Promote
 ```
 
-## Evaluation Gate
+### Evaluation Gate
 
 The learning loop cannot directly change production.
 
 Every change must pass through a controlled gate.
 
-### Important separation
+#### Important separation
 
 > Runtime serves users.  
 > Learning proposes improvements.  
@@ -280,7 +280,7 @@ Every change must pass through a controlled gate.
 
 ---
 
-# 7. Capability Registry
+## 7. Capability Registry
 
 We need a registry that stores all approved and candidate capabilities.
 
@@ -321,7 +321,7 @@ This makes rollback easy.
 
 ---
 
-# 8. Novelty Detection
+## 8. Novelty Detection
 
 Before solving a request, the system should determine:
 
@@ -345,7 +345,7 @@ A bad router may force this request into the closest known skill.
 
 That is risky.
 
-## Signals for novelty
+### Signals for novelty
 
 We can use:
 
@@ -367,7 +367,7 @@ Treat as novel task.
 
 ---
 
-# 9. Safe General Fallback
+## 9. Safe General Fallback
 
 Unknown tasks should not get normal production freedom.
 
@@ -403,13 +403,13 @@ This prevents:
 
 ---
 
-# 10. Adapt Inside One Request First
+## 10. Adapt Inside One Request First
 
 Before storing anything permanently, let the agent adapt inside the current request.
 
 There are two useful mechanisms.
 
-## A. Dynamic Examples
+### A. Dynamic Examples
 
 Instead of always using fixed few-shot examples:
 
@@ -447,7 +447,7 @@ A similar failed trace is not necessarily a good example.
 
 ---
 
-## B. Reflexion
+### B. Reflexion
 
 The agent tries something.
 
@@ -468,7 +468,7 @@ Use ISO-8601 UTC format
 Retry
 ```
 
-### Critical rule
+#### Critical rule
 
 The agent should not grade itself.
 
@@ -500,7 +500,7 @@ This avoids endless loops and runaway cost.
 
 ---
 
-# 11. Memory Write Policy
+## 11. Memory Write Policy
 
 Do not start by asking:
 
@@ -533,7 +533,7 @@ Service was slow at 3:17 PM today
 
 ---
 
-## Structured Memory
+### Structured Memory
 
 Prefer structured facts when possible.
 
@@ -564,7 +564,7 @@ This reduces contradictory retrieval.
 
 ---
 
-# 12. Skill Learning
+## 12. Skill Learning
 
 Suppose the agent repeatedly succeeds with:
 
@@ -588,7 +588,7 @@ safe_restart(service_name)
 
 But one successful trace is not enough.
 
-## Skill Promotion Flow
+### Skill Promotion Flow
 
 ```mermaid
 flowchart TD
@@ -605,13 +605,13 @@ flowchart TD
     J --> K[LIVE]
 ```
 
-### Key interview rule
+#### Key interview rule
 
 > A successful execution is evidence for a skill. It is not permission to deploy the skill.
 
 ---
 
-# 13. Prompt Optimisation
+## 13. Prompt Optimisation
 
 Prompt changes should be handled like software changes.
 
@@ -643,7 +643,7 @@ Shadow
 Promote
 ```
 
-## Why hidden test data?
+### Why hidden test data?
 
 If we keep testing many prompt versions on the same dataset, eventually one may look good only because it overfit that test set.
 
@@ -668,7 +668,7 @@ The release should be blocked.
 
 ---
 
-# 14. Model Fine-Tuning
+## 14. Model Fine-Tuning
 
 Fine-tuning should come last.
 
@@ -706,7 +706,7 @@ Do not use fine-tuning just to teach changing business facts.
 
 ---
 
-# 15. Evaluation and Release Gate
+## 15. Evaluation and Release Gate
 
 Every learned artifact must go through the same release process.
 
@@ -735,7 +735,7 @@ Deploy
 
 ---
 
-## Deterministic Checks
+### Deterministic Checks
 
 These are exact checks.
 
@@ -753,7 +753,7 @@ Did it produce valid schema?
 
 ---
 
-## Non-Deterministic Checks
+### Non-Deterministic Checks
 
 These need semantic evaluation.
 
@@ -776,7 +776,7 @@ These may use:
 
 ---
 
-# 16. Evaluate the Trajectory, Not Only Final Answer
+## 16. Evaluate the Trajectory, Not Only Final Answer
 
 For agents, final answer accuracy is not enough.
 
@@ -826,7 +826,7 @@ Latency
 
 ---
 
-# 17. Shadow Testing
+## 17. Shadow Testing
 
 Before making a new candidate live:
 
@@ -854,7 +854,7 @@ If healthy, promote.
 
 ---
 
-# 18. Automatic Demotion
+## 18. Automatic Demotion
 
 Learning does not stop at promotion.
 
@@ -880,7 +880,7 @@ This is important because production environments change.
 
 ---
 
-# 19. Safety Boundary
+## 19. Safety Boundary
 
 The system should clearly separate:
 
@@ -926,7 +926,7 @@ Permissions remain outside the agent.
 
 ---
 
-# 20. Goal Drift and Metric Gaming
+## 20. Goal Drift and Metric Gaming
 
 Suppose we optimise:
 
@@ -964,7 +964,7 @@ Do not use a single easily gamed metric.
 
 ---
 
-# 21. Failure Modes
+## 21. Failure Modes
 
 | Failure Mode | What Happens | Protection |
 |---|---|---|
@@ -983,7 +983,7 @@ Do not use a single easily gamed metric.
 
 ---
 
-# 22. Scaling Considerations
+## 22. Scaling Considerations
 
 Assume these whiteboard numbers, which I'd state aloud as my own:
 
@@ -1018,7 +1018,7 @@ You cannot promise instant adaptation for low-frequency tasks.
 
 ---
 
-## Candidate Explosion
+### Candidate Explosion
 
 Suppose the system produces:
 
@@ -1052,11 +1052,11 @@ Full Evaluation
 
 ---
 
-# 23. Latency Strategy
+## 23. Latency Strategy
 
 Do not put the entire learning process on the user request path.
 
-## Online path
+### Online path
 
 Keep only:
 
@@ -1070,7 +1070,7 @@ Tool Call
 Trace Write
 ```
 
-## Offline path
+### Offline path
 
 Move expensive work here:
 
@@ -1087,7 +1087,7 @@ This keeps user latency predictable.
 
 ---
 
-# 24. Cost Optimisation
+## 24. Cost Optimisation
 
 In this design, I'd expect most of the learning cost to come from:
 
@@ -1122,7 +1122,7 @@ Evaluation Cost
 
 ---
 
-# 25. Security and Governance
+## 25. Security and Governance
 
 Important controls:
 
@@ -1167,11 +1167,11 @@ Use human approval for:
 
 ---
 
-# 26. Data Model
+## 26. Data Model
 
 A simple production design may use these objects.
 
-## Execution Trace
+### Execution Trace
 
 ```text
 trace_id
@@ -1189,7 +1189,7 @@ cost
 timestamp
 ```
 
-## Memory Record
+### Memory Record
 
 ```text
 memory_id
@@ -1202,7 +1202,7 @@ status
 supersedes
 ```
 
-## Skill
+### Skill
 
 ```text
 skill_id
@@ -1218,7 +1218,7 @@ eval_result
 created_at
 ```
 
-## Learning Candidate
+### Learning Candidate
 
 ```text
 candidate_id
@@ -1233,7 +1233,7 @@ promotion_status
 
 ---
 
-# 27. End-to-End Example
+## 27. End-to-End Example
 
 Request:
 
@@ -1243,7 +1243,7 @@ Restart Orion payment service.
 
 The system has never seen Orion before.
 
-## Step 1 — Route
+### Step 1 — Route
 
 ```text
 Request
@@ -1259,7 +1259,7 @@ Result:
 NOVEL TASK
 ```
 
-## Step 2 — Safe Fallback
+### Step 2 — Safe Fallback
 
 The general agent gets tighter controls.
 
@@ -1273,7 +1273,7 @@ Create plan
 
 Risky writes require approval.
 
-## Step 3 — Execute
+### Step 3 — Execute
 
 The agent discovers:
 
@@ -1296,7 +1296,7 @@ External monitoring returns:
 SUCCESS
 ```
 
-## Step 4 — Trace
+### Step 4 — Trace
 
 Store:
 
@@ -1311,7 +1311,7 @@ cost
 outcome
 ```
 
-## Step 5 — Memory Candidate
+### Step 5 — Memory Candidate
 
 Proposed memory:
 
@@ -1330,7 +1330,7 @@ Permitted?    Yes
 
 Store it.
 
-## Step 6 — Skill Candidate
+### Step 6 — Skill Candidate
 
 After repeated successful executions:
 
@@ -1340,7 +1340,7 @@ safe_orion_restart(service)
 
 is created.
 
-## Step 7 — Evaluate
+### Step 7 — Evaluate
 
 Run:
 
@@ -1352,11 +1352,11 @@ Cost tests
 Latency tests
 ```
 
-## Step 8 — Shadow
+### Step 8 — Shadow
 
 Candidate observes real requests without controlling them.
 
-## Step 9 — Promote
+### Step 9 — Promote
 
 If healthy:
 
@@ -1364,7 +1364,7 @@ If healthy:
 Candidate → LIVE
 ```
 
-## Step 10 — Environment Changes
+### Step 10 — Environment Changes
 
 Later Orion API changes.
 
@@ -1382,9 +1382,9 @@ Previous Skill / General Fallback
 
 ---
 
-# 28. Main Tradeoffs
+## 28. Main Tradeoffs
 
-## Fast Learning vs Safety
+### Fast Learning vs Safety
 
 More automatic promotion:
 
@@ -1404,7 +1404,7 @@ Higher reliability
 
 ---
 
-## Memory vs Skill
+### Memory vs Skill
 
 Memory stores facts.
 
@@ -1422,7 +1422,7 @@ Do not put everything into memory.
 
 ---
 
-## General Agent vs Specialised Skills
+### General Agent vs Specialised Skills
 
 General agent:
 
@@ -1446,7 +1446,7 @@ Use both.
 
 ---
 
-## Fine-Tuning vs Retrieval
+### Fine-Tuning vs Retrieval
 
 Fine-tuning:
 
@@ -1466,7 +1466,7 @@ Easy rollback
 
 ---
 
-# 29. MVP Design
+## 29. MVP Design
 
 Do not build every self-learning feature on day one.
 
@@ -1502,7 +1502,7 @@ This keeps the first version safer and easier to operate.
 
 ---
 
-# 30. What I Would Prioritise as an FDE
+## 30. What I Would Prioritise as an FDE
 
 For a customer deployment, I would prioritise:
 
@@ -1540,7 +1540,7 @@ The reason is simple:
 
 ---
 
-# 31. Interview Delivery Structure
+## 31. Interview Delivery Structure
 
 A clean 60-minute interview flow:
 
@@ -1572,7 +1572,7 @@ Scaling, cost, failures, tradeoffs
 
 ---
 
-# 32. Strong Discovery Questions
+## 32. Strong Discovery Questions
 
 Before designing, ask questions like:
 
@@ -1629,7 +1629,7 @@ human review process
 
 ---
 
-# 33. What to Remember for Interview
+## 33. What to Remember for Interview
 
 If you remember only the core ideas, remember these:
 
@@ -1673,13 +1673,13 @@ Offline Eval
 
 ---
 
-# 34. One-Line Interview Explanation
+## 34. One-Line Interview Explanation
 
 > “I would design the self-adapting agent with a production runtime loop and a separate offline learning loop. The agent first adapts through context, memory and reusable skills, while every new capability must pass offline evaluation, shadow testing and a controlled promotion gate before production. The agent can learn how to perform tasks, but permissions and safety limits always stay in an external policy layer.”
 
 ---
 
-# 35. 30-Second Interview Summary
+## 35. 30-Second Interview Summary
 
 ```text
 User Request
