@@ -152,9 +152,9 @@ This plan turns the prototype into the production platform without writing new c
 /learn/[trackSlug]/[moduleSlug]/[lessonSlug]   Lesson page
 /design                             Casebook index → links into /modules/15-fde-case-studies/...
 /practice                           Worksheets, mocks and projects index → links into /modules/01..., /modules/14...
-/practice/mocks/[mockSlug]          Mock interview (synced from 03_/Mock_Interviews)
+/interview/mock-interviews/[lessonSlug]  Mock interview lesson with timer and scorer (T8.2 lessons; replaces /practice/mocks, 10 Oct 2026)
 /interview                          Interview hubs index
-/interview/[hubSlug]                Topic hub
+/interview/hubs/[hubSlug]           Topic hub (static `hubs` prefix: /interview/[moduleSlug] is taken by interview-practice modules)
 /interview/final-week               → existing /fde-last-day-prep (redirect, not a copy)
 /progress                           Dashboard (client-rendered from localStorage)
 /progress/revision                  Revision queue
@@ -189,8 +189,8 @@ This plan turns the prototype into the production platform without writing new c
 | Area index | `/start`, `/learn`, `/design`, `/practice`, `/interview`, `/library` |
 | Track | `/learn/[trackSlug]` |
 | Module | `/learn/[trackSlug]/[moduleSlug]` |
-| Reading (lesson, mock) | `/learn/.../[lessonSlug]`, `/practice/mocks/[mockSlug]` |
-| Hub | `/interview/[hubSlug]` |
+| Reading (lesson, mock) | `/learn/.../[lessonSlug]`, `/interview/[moduleSlug]/[lessonSlug]` |
+| Hub | `/interview/hubs/[hubSlug]` |
 | Dashboard and lists | `/progress`, `/progress/*`, `/settings` |
 | Existing worksheet and case-study templates | `/modules/...` (unchanged) |
 
@@ -225,7 +225,7 @@ This plan turns the prototype into the production platform without writing new c
 1. **Pick a path.** `/` → "Start learning" → `/start` → 10-question diagnostic (or pick persona directly) → recommended path with sequence → "Start first module". Success: path saved to `fd:v1:path`; Learn shows required/recommended/optional flags. Failure: storage blocked → path shown for the session with a "Progress won't be saved in this browser" notice.
 2. **Study a module.** `/learn` → track → module page (objective, scope, prerequisites with live status, lessons, deliverable, probe) → lesson → "Mark read" → next lesson → module rolls to In progress, then to Completed when all published lessons are read and confidence is rated. Blocked prerequisites show the check card with "Open anyway" (R12).
 3. **Hit a gap.** Module status Partly ready shows published lessons first, then a "Coming soon in this module" panel listing the gap text from `curriculum_plan.md`. Coming soon modules show objective, scope and the related modules that partly cover the topic. On hold modules say "Paused, will return" with no source paths shown publicly.
-4. **Practise.** `/practice` → worksheet (existing `/modules/01/...`) or mock → self-score on the five rubric dimensions → score saved; dashboard readiness updates (Phase 2).
+4. **Practise.** `/practice` → worksheet (existing `/modules/01/...`) or mock → self-score on the lesson's rubric (short round: five signals; full round: six dimensions; 1–5) → score saved; dashboard readiness updates (Phase 2).
 5. **Check readiness.** `/progress` → next up with reason, revision queue, readiness with weakest dimension, finish-by date from weekly hours (Phase 2).
 6. **Revise.** Revision queue item → "Review now" → rate confidence ≥ 4 → item leaves the queue (Phase 2).
 
@@ -318,7 +318,7 @@ This plan turns the prototype into the production platform without writing new c
 | PathPicker, Diagnostic | step n of 10, result | start | Demo `PathPicker.tsx` | FE-10 |
 | SearchDialog | idle, loading, results, empty | global | Yes (`SearchDialog.tsx`) | FE-12 |
 | FilterBar | chips, reset | learn, practice, interview | Demo | FE-06 |
-| RubricScorer, MockTimer | 5 dimensions × 1–4; running, paused, done | mocks | Demo `InterviewRunners.tsx` | FE-15 |
+| RubricScorer, MockTimer | short round 5 signals or full round 6 dimensions, × 1–5; running, paused, done | mocks | Demo `InterviewRunners.tsx` | FE-15 |
 | ReadinessGauge, StatCard, ActivityTimeline, RevisionQueueList | empty, populated | progress | Demo `Dashboard.tsx`, `ProgressViews.tsx` | FE-16 |
 | ConfirmDialog, Toast, EmptyState, ErrorState, Skeleton | — | all | Demo `feedback.tsx` | FE-05 |
 | SettingsView (export, import, reset) | success, invalid file | settings | Demo `SettingsView.tsx` | FE-17 |
@@ -408,10 +408,10 @@ New keys (all under the existing `fd:v1` prefix so the existing `ClearAllButton`
 | FE-12 | Search index extended with tracks, modules and lessons; index split into per-area files fetched on demand to keep each under 500 KB | M | FE-04 |
 | FE-13 | New landing page at `/` (name, tagline, personas, six areas, CTAs) | M | FE-03 |
 | FE-14 | `not-found.tsx`, `error.tsx`, `loading.tsx` for `(site)` | S | FE-03 |
-| FE-15 | `/practice/mocks/[mockSlug]` reading view with MockTimer and RubricScorer; attempts saved | M | DATA-06, FE-02 |
+| FE-15 | MockTimer and RubricScorer on the five scenario lessons at `/interview/mock-interviews/[lessonSlug]`, scored on the lessons' own 1–5 rubric; `rules.ts` updated to match; attempts saved | M | FE-02 |
 | FE-16 | `/progress` dashboard, `/progress/revision`, `/progress/history`, `/progress/bookmarks` on real data | L | FE-09, FE-15 |
 | FE-17 | `/settings`: path, weekly hours, export, import, reset with ConfirmDialog | S | FE-02 |
-| FE-18 | Interview hubs `/interview/[hubSlug]` indexing existing question sources (decomposition bank, leadership principles, hiring-manager round, scenario packs) by link, not copy | M | DATA-07 |
+| FE-18 | Interview hubs `/interview/hubs/[hubSlug]` indexing existing question sources (decomposition bank, leadership principles, hiring-manager round, scenario packs) by link, not copy | M | DATA-07 |
 | FE-19 | Retire `/demo`: redirect `/demo/*` to `/`, remove `src/demo/` and its search route | S | Phase 2 exit |
 
 **Acceptance criteria.**
@@ -534,11 +534,11 @@ Rule: material already live under `/modules/...` or `/fde-last-day-prep` is neve
 | DATA-03 | Script report of every source file listed in more than one module (the "41 entries" audit) and proposed homes | S | DATA-01 |
 | DATA-04 | `check-parse.ts` extended with the learn checks above | M | DATA-02 |
 | DATA-05 | Glossary pass: add acronyms surfaced by the new lessons to `glossary.ts` | M | DATA-02 |
-| DATA-06 | `scripts/mocks.mjs` syncing `03_.../Mock_Interviews/` (5 short + 5 full + README) to `content/mocks/`; rubric dimensions parsed from each scorecard section | M | DATA-01 |
+| DATA-06 | Retired 10 October 2026: the mocks already ship as the six T8.2 lessons at `/interview/mock-interviews/*` through `learn.mjs`; a second sync would duplicate them | M | DATA-01 |
 | DATA-07 | Interview hub definitions in `curriculum.ts`: five hubs, each listing existing question sources by link and the related modules | M | DATA-01 |
 | DATA-08 | Update CLAUDE.md "Layout" and "Content pipeline" bullets: `01_`, `05_` and `Mock_Interviews` now feed the site (DATA-06 adds its own line in Phase 2) | S | DATA-02 |
 | DATA-09 | Phase 3: restore chosen git-history folders (PM-05) into root sources and map them to T6.6, T9.1, T8.3 | M | PM-05 |
-| DATA-10 | Phase 2, only if PM-04 approves: owner-written 6–10 item checkpoints for the T2–T6 modules, stored beside `curriculum.ts` | L | PM-04, DATA-01 |
+| DATA-10 | Deferred to backlog on 10 October 2026 (readiness shows checkpoints as "not measured" until then): owner-written 6–10 item checkpoints for the T2–T6 modules, stored beside `curriculum.ts` | L | PM-04, DATA-01 |
 
 **Acceptance criteria.**
 
@@ -703,13 +703,14 @@ Exit criteria:
 
 Outcome: a learner practises mocks with a timer and rubric, sees a dashboard with next-up, revision queue and readiness, and can export and restore progress.
 
-Tasks: DATA-06, FE-15, DATA-07, FE-18, UX-07, FE-16, FE-17, DATA-10, FE-19.
+Tasks: FE-15, FE-17, DATA-07, FE-18, UX-07, FE-16, FE-19.
 
-DATA-10 runs only if PM-04 (Phase 0) approved authoring checkpoints.
+Changed on 10 October 2026, after checking the plan against the code: DATA-06 is retired (mocks already ship as T8.2 lessons under `/interview`), so FE-15 puts the timer and scorer on those lesson pages and scores them on the lessons' own 1–5 rubric instead of the 1–4 rubric in `rules.ts`. Hubs move to `/interview/hubs/[hubSlug]` because `/interview/[moduleSlug]` is taken. DATA-10 (checkpoints) moves to the backlog: PM-04 approved it, but the owner writes it later.
 
 Exit criteria:
 
-- Five short and five full mocks available at `/practice/mocks/...` with scoring; pass rule (no dimension below 2, mean ≥ 3) applied.
+- The five scenario mock lessons at `/interview/mock-interviews/...` carry a timer and a scorer for the short (five signals) and full (six dimensions) rounds, scored 1–5; pass rule (no dimension below 2, mean ≥ 3) applied; attempts saved.
+- Five topic hubs at `/interview/hubs/...` list existing question sources by link, with no copied content.
 - Dashboard shows real data only; empty state for new learners.
 - Readiness formulas from `rules.ts` drive gauges; the formula notes which inputs are missing (no checkpoints yet → dimension shown as "not measured" instead of 0).
 - Export → reset → import restores state exactly.
@@ -726,7 +727,7 @@ Exit criteria:
 - Sign-in is optional; anonymous use is unchanged.
 - Analytics are opt-in and record only the five events.
 
-**Critical path.** PM-01 → DATA-01 → DATA-02 → FE-04 → FE-07 → FE-09 → QA-02 → Phase 1 release. Owner decisions (PM-01, PM-03) are the longest-lead item; DATA-01 can start in parallel using `pending` for undecided lessons. Design-system work (DS-*), CI (OPS-*) and the AppShell move (FE-03) run in parallel with the sync work. Phase 2 mocks (DATA-06, FE-15) can start during Phase 1 once FE-02 lands.
+**Critical path.** PM-01 → DATA-01 → DATA-02 → FE-04 → FE-07 → FE-09 → QA-02 → Phase 1 release. Owner decisions (PM-01, PM-03) are the longest-lead item; DATA-01 can start in parallel using `pending` for undecided lessons. Design-system work (DS-*), CI (OPS-*) and the AppShell move (FE-03) run in parallel with the sync work. Phase 2 mocks (FE-15) can start during Phase 1 once FE-02 lands.
 
 ## 15. Risks and open questions
 
@@ -776,7 +777,7 @@ Exit criteria:
 | R15 Readiness scores | prototype_prompt §5 | 14 (Phase 2) | FE-16, DATA-10 |
 | R16 Dashboard | prototype_prompt, website_prompt §13 | 5, 14 | UX-07, FE-16 |
 | R17 Interview framework | prototype_prompt, website_prompt §10 | 4, 10 | DATA-07, FE-18, FE-15 |
-| R18 Mock interviews | curriculum_plan T8.2 | 10 | DATA-06, FE-15 |
+| R18 Mock interviews | curriculum_plan T8.2 | 10 | FE-15 |
 | R19 Projects P1–P10 | website_prompt §11 | 14 (Phase 3), 15 Q14 | Deferred: no repository source |
 | R20 Bookmarks, notes, history | prototype_prompt | 8 | FE-09, FE-16 |
 | R21 Search and filters | prototype_prompt §5 | 8, 11 | FE-12, FE-06, PERF-02 |

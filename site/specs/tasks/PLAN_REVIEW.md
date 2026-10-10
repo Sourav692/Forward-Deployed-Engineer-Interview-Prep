@@ -48,3 +48,35 @@ Warnings (4):
   - requirement R29 Profile and portfolio maps to no task (note: Deferred: needs accounts and T9 content)
   - requirement R34 No admin or community in MVP maps to no task (note: Not built by design)
 ```
+
+---
+
+# Phase 2 review
+
+Date: 10 October 2026. Scope: Phase 2 checked against the code before carding. Verdict: **Ready with fixes (applied to the plan)**
+
+## Blocking (fixed in the plan before carding)
+
+- [x] **DATA-06 duplicated live content.** The mocks already ship as six T8.2 lessons at `/interview/mock-interviews/*` through `learn.mjs`. Owner decision: retire DATA-06; FE-15 puts the timer and scorer on those lessons.
+- [x] **Mock rubric mismatch.** `rules.ts` scored five dimensions on 1–4; the lessons print a five-signal short round and a six-dimension full round on 1–5. Owner decision: use the lessons' rubric; FE-15 updates `rules.ts`.
+- [x] **FE-18 route collision.** `/interview/[moduleSlug]` already serves interview-practice modules. Owner decision: hubs at `/interview/hubs/[hubSlug]`.
+
+## Should fix
+
+- [ ] **Readiness has few measured inputs.** Checkpoints (DATA-10, now backlog), worksheet rubric means (no production scorer) and behavioural readiness are unmeasured, so only mocks feed interview readiness in Phase 2. UX-07 must settle how the score shows; card open question.
+- [ ] **FE-16 is L.** Consider splitting the three list pages (ports) from the dashboard (new readiness logic).
+- [ ] **A11Y-01 never covered `/progress` and `/settings`.** FE-16 and FE-17 add them to `e2e/a11y.spec.ts`.
+
+## Notes
+
+- DATA-10 moved to the backlog: PM-04 approved checkpoints, and the owner will write them later.
+- FE-19 must run last: the demo holds the only `InterviewRunners`, `Dashboard`, `ProgressViews`, `ProgressPages` and `SettingsView` that FE-15, FE-16 and FE-17 port.
+
+## Structural check
+
+```
+Sections: 17/17  Tasks: 71  Phases: 4
+  Phase 2 Practice, Interview and Progress (about 3 weeks): 7 tasks
+Errors (0)
+Warnings (5): DATA-06 and DATA-10 in no phase (backlog); R19, R27, R29, R34 map to no task (deferred or by design)
+```
