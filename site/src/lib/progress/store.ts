@@ -203,6 +203,12 @@ export function choosePath(
   return ok
 }
 
+/** Changes the weekly study hours on the chosen path. `false` when no path is chosen or the write fails. */
+export function setWeeklyHours(weeklyHours: number): boolean {
+  const path = getPath()
+  return path !== null && writeJson(PATH_KEY, { ...path, weeklyHours })
+}
+
 // ── Bookmarks ──────────────────────────────────────────────────────────────
 
 export function listBookmarks(): Bookmark[] {

@@ -81,6 +81,8 @@ check('confidence out of range rejected', store.setConfidence(mod.slug, 9 as 5, 
 
 store.choosePath({ pathId: 'fde', weeklyHours: 8 }, NOW)
 check('path stored', store.getPath(), { pathId: 'fde', weeklyHours: 8, chosenAt: '2026-10-05T12:00:00.000Z' })
+check('weekly hours change keeps the path', [store.setWeeklyHours(12), store.getPath()?.weeklyHours, store.getPath()?.pathId], [true, 12, 'fde'])
+store.setWeeklyHours(8)
 
 check('bookmark added', store.toggleBookmark({ kind: 'lesson', itemId: `${mod.slug}/${l1}` }, NOW), true)
 check('bookmark listed with id', store.listBookmarks().map((b) => b.id), [`lesson:${mod.slug}/${l1}`])

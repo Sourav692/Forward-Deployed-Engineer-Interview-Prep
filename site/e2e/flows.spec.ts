@@ -106,37 +106,47 @@ test('soft gating: blocked module → open anyway → remembered after reload', 
   await expect(page.getByRole('button', { name: 'Open anyway' })).toHaveCount(0)
 })
 
-test('storage portability: fd:v1 progress survives an export → clear → import round trip', async ({ page }) => {
-  // Phase 1 has no Settings page (FE-17 is Phase 2), so export/import is exercised as
-  // the same JSON shape `exportProgress` writes ({ app, version, exportedAt, data }),
-  // round-tripped through localStorage. The bad-file guard UI is tested in Phase 2.
+test('settings: export → reset → import restores progress exactly', async ({ page }) => {
   await page.goto(LESSON)
   await hydrated(page)
   await page.getByRole('button', { name: 'Mark read' }).click()
   await expect(page.getByRole('button', { name: 'Mark unread' })).toBeVisible()
+  // The storage probe key comes and goes; everything else must survive the round trip.
+  const progress = async () => Object.fromEntries(Object.entries(await fdStorage(page)).filter(([k]) => k !== 'fd:v1:probe'))
+  const before = await progress()
+  expect(Object.keys(before).some((k) => k.startsWith('fd:v1:learn:lesson:'))).toBe(true)
 
-  const exported = await page.evaluate(() => {
-    const data: Record<string, string> = {}
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)!
-      if (key.startsWith('fd:v1:') && key !== 'fd:v1:probe') data[key] = localStorage.getItem(key)!
-    }
-    return JSON.stringify({ app: 'forward-deployed', version: 1, exportedAt: new Date().toISOString(), data })
+  await page.goto('/settings')
+  await hydrated(page)
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: 'Export progress' }).click(),
+  ])
+  expect(download.suggestedFilename()).toMatch(/^forward-deployed-progress-\d{4}-\d{2}-\d{2}\.json$/)
+  const file = await download.path()
+
+  await page.getByRole('button', { name: 'Reset progress' }).click()
+  await page.getByRole('dialog').getByRole('button', { name: 'Reset progress' }).click()
+  await expect(page.getByText('Progress reset.')).toBeVisible()
+  expect(await progress()).toEqual({})
+
+  await page.locator('input[type="file"]').setInputFiles(file)
+  await page.getByRole('dialog').getByRole('button', { name: 'Replace progress' }).click()
+  await expect(page.getByText(/^Progress imported/)).toBeVisible()
+  expect(await progress()).toEqual(before)
+})
+
+test('settings: a file from elsewhere is rejected and nothing changes', async ({ page }) => {
+  await page.goto('/settings')
+  await hydrated(page)
+  await page.locator('input[type="file"]').setInputFiles({
+    name: 'notes.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({ app: 'something-else', version: 1, data: {} })),
   })
-  const file = JSON.parse(exported)
-  expect(file.app).toBe('forward-deployed')
-  expect(Object.keys(file.data).some((k) => k.startsWith('fd:v1:learn:lesson:'))).toBe(true)
-
-  await page.evaluate(() => localStorage.clear())
-  await page.reload()
-  await expect(page.getByRole('button', { name: 'Mark read' })).toBeVisible()
-
-  await page.evaluate((json) => {
-    const { data } = JSON.parse(json) as { data: Record<string, string> }
-    for (const [key, value] of Object.entries(data)) localStorage.setItem(key, value)
-  }, exported)
-  await page.reload()
-  await expect(page.getByRole('button', { name: 'Mark unread' })).toBeVisible()
+  await expect(page.getByText('Import failed. Nothing was changed.')).toBeVisible()
+  await expect(page.getByText(/was not exported from Forward Deployed/)).toBeVisible()
+  await expect(page.getByRole('dialog')).toHaveCount(0)
 })
 
 test('regression: a live worksheet still saves answers to its fd:v1 key', async ({ page }) => {

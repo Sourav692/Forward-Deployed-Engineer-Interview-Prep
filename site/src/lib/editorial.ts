@@ -141,6 +141,7 @@ export const NAV = [
 export const UTILITY_NAV = [
   { id: 'glossary', label: 'Glossary', href: '/glossary', match: ['/glossary'] },
   { id: 'library', label: 'Library', href: '/library', match: ['/library', '/learning-map'] },
+  { id: 'settings', label: 'Settings', href: '/settings', match: ['/settings'] },
 ] as const
 
 export const LAST_DAY = {
