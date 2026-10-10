@@ -4,6 +4,8 @@ import { AreaGroup, AreaHeader, AreaSection, LinkList, TextLink } from '@/compon
 import { LIVE, curriculumModules, moduleGroups, moduleHref } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { STORY_BANK } from '@/lib/editorial'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /**
  * /practice: the practice index (FE-11). Links into the existing worksheet pages
@@ -12,11 +14,12 @@ import { STORY_BANK } from '@/lib/editorial'
  * the page does not mention them (audit check FV-03).
  */
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/practice',
   title: 'Practice',
   description:
     'Worksheets you fill in and score against a model answer, behavioural questions with a story bank, and timed mock interviews.',
-}
+})
 
 const MOCKS_MODULE = 'mock-interviews'
 
@@ -29,6 +32,7 @@ export default async function PracticePage() {
 
   return (
     <div className="py-12">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Practice', path: '/practice' }])} />
       <AreaHeader eyebrow="Practice" title="Practise Under Interview Conditions">
         <p>
           Reading a strong answer is not the same as giving one. Each worksheet hands you a customer problem to work

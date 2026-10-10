@@ -13,13 +13,15 @@ import {
   type ContentMode,
 } from '@/lib/editorial'
 import { scenarioHref, type ScenarioRef } from '@/lib/scenario'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/learning-map',
   title: 'Start Here',
   description:
     'How practice, case studies and the last-day review fit together, what each numbering ' +
     'system means, and which material covers each of the eighteen review topics.',
-}
+})
 
 const LOOP: { mode: ContentMode; title: string; href: string; when: string }[] = [
   { mode: 'orientation', title: LAST_DAY_GUIDES[0].title, href: `${LAST_DAY.href}/roadmap`, when: 'First, once' },

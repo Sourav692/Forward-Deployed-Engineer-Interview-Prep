@@ -9,6 +9,7 @@ import { PathFlag } from '@/components/learn/PathFlag'
 import { ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { ChoosePathPanel } from '@/components/start/ChoosePath'
 import { Tag, cx, focusRing } from '@/components/ui'
+import { pageMetadata } from '@/lib/seo'
 
 /**
  * Path detail (FE-10). Prerendered for every path (`generateStaticParams` +
@@ -28,7 +29,7 @@ export function generateStaticParams(): Params[] {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const path = getPathById((await params).pathId)
   if (!path) return {}
-  return { title: `${path.title} Path`, description: path.summary }
+  return pageMetadata({ path: `/start/paths/${path.id}`, title: `${path.title} Path`, description: path.summary })
 }
 
 const link = cx('rounded-sm font-semibold text-accent underline underline-offset-2 hover:text-accent-hover', focusRing)

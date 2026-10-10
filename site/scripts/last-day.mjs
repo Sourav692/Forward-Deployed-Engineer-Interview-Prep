@@ -176,12 +176,21 @@ function sitebar({ label, mode, prev, next, rows = [] }) {
 }
 
 /**
- * Adds the site bar, plus the favicon and a canonical tag (audit check PR-10), to the
- * page at `path`, and drops the source's "Generated from …md" footer (PQ-07).
+ * Adds the site bar, plus the favicon, a canonical tag and Open Graph tags with the
+ * default share image (audit checks PR-02, PR-10), to the page at `path`, and drops
+ * the source's "Generated from …md" footer (PQ-07). The title is already escaped.
  */
 function injectSitebar(html, bar, what, path) {
   if (!/<body[^>]*>/.test(html)) throw new Error(`${what}: no <body> tag`)
-  const head = `<link rel="icon" href="/favicon.ico" sizes="any">\n<link rel="canonical" href="${SITE_URL}${path}">`
+  const title = html.match(/<title>([^<]*)<\/title>/)?.[1]
+  if (!title) throw new Error(`${what}: no <title>`)
+  const head = [
+    `<link rel="icon" href="/favicon.ico" sizes="any">`,
+    `<link rel="canonical" href="${SITE_URL}${path}">`,
+    `<meta property="og:title" content="${title}">`,
+    `<meta property="og:url" content="${SITE_URL}${path}">`,
+    `<meta property="og:image" content="${SITE_URL}/opengraph-image">`,
+  ].join('\n')
   return html
     .replace('</head>', `${head}\n${SITEBAR_CSS}\n</head>`)
     .replace(/<body([^>]*)>/, `<body$1>${bar}`)

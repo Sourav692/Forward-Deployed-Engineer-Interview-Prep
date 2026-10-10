@@ -6,7 +6,9 @@ import { LinkButton } from '@/components/ui'
 import { PracticePreview } from '@/components/landing/PracticePreview'
 import { LearningJourney } from '@/components/landing/LearningJourney'
 import { getAllScenarios } from '@/lib/content'
-import { NAV, REVIEWS } from '@/lib/editorial'
+import { NAV, REVIEWS, SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
+import { pageMetadata, webSiteJsonLd } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /**
  * `/`: the product landing page (FE-13). A Server Component with two interactive
@@ -22,9 +24,7 @@ import { NAV, REVIEWS } from '@/lib/editorial'
 
 const TAGLINE = 'Learn the foundations, work through real designs, and practise the decisions interviewers test.'
 
-export const metadata: Metadata = {
-  description: TAGLINE,
-}
+export const metadata: Metadata = pageMetadata({ path: '/', description: TAGLINE, ogTitle: `${SITE_NAME} — ${SITE_TAGLINE}` })
 
 const PERSONAS = [
   { who: 'Beginner', line: 'Start from the foundations and follow one path, so you always know what comes next.' },
@@ -96,6 +96,7 @@ export default async function HomePage() {
 
   return (
     <div className="py-10 sm:py-14">
+      <JsonLd data={webSiteJsonLd()} />
       <section aria-labelledby="hero-heading" className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">From the customer’s problem to production</p>

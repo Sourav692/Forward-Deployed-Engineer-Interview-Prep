@@ -10,7 +10,9 @@
  *    one it has not already seen. Redirects are not followed: a 3xx counts as
  *    reachable (intentional redirects such as /learn/interview-practice).
  * 3. Fails on any 4xx/5xx or network error, listing the page that linked to it.
- * 4. Fails when a module marked `ready` or `partly` in `src/lib/curriculum.ts` has
+ * 4. Fails when a sitemap page lacks exactly one canonical link to itself, an
+ *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10).
+ * 5. Fails when a module marked `ready` or `partly` in `src/lib/curriculum.ts` has
  *    no published or live lesson in `content/learn/manifest.json` (an empty module
  *    would be dressed up as readable), mirroring `readingList()` in `src/lib/learn.ts`.
  *
@@ -82,9 +84,23 @@ function decode(path) {
   }
 }
 
+/** Head tags and headings every public page needs. */
+function headProblems(path, html) {
+  const problems = []
+  const canonical = [...html.matchAll(/<link\b[^>]*\brel="canonical"[^>]*>/g)].map((m) => m[0].match(/\bhref="([^"]*)"/)?.[1] ?? '')
+  if (canonical.length !== 1) problems.push(`${canonical.length} canonical links`)
+  else if (decode(new URL(canonical[0], BASE).pathname) !== decode(path)) problems.push(`canonical ${canonical[0]} is another page`)
+  if (!/<meta\b[^>]*\bproperty="og:image"/.test(html)) problems.push('no og:image')
+  if (!/<link\b[^>]*\brel="(?:shortcut )?icon"/.test(html)) problems.push('no favicon')
+  const h1 = html.match(/<h1[\s>]/g)?.length ?? 0
+  if (h1 !== 1) problems.push(`${h1} <h1> elements`)
+  return problems
+}
+
 await pool(pages, async (path) => {
   const res = await get(path)
   status.set(path, res.status || res.error)
+  if (res.body) for (const p of headProblems(path, res.body)) errors.push(`${path}: ${p}`)
   for (const m of res.body.matchAll(LINK)) {
     const link = decode(m[1])
     if (SKIP.test(link) || link.startsWith('//')) continue

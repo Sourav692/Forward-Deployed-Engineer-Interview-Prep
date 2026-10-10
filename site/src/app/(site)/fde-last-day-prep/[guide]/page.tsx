@@ -13,6 +13,7 @@ import {
 } from '@/lib/editorial'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { ReadingPanel } from '@/components/CaseStudyView'
+import { pageMetadata } from '@/lib/seo'
 
 /**
  * The Roadmap (orientation) and the Rapid Revision Guide (final rehearsal): markdown
@@ -31,7 +32,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { guide } = await params
   const loaded = await getLastDayGuide(guide)
-  return loaded ? { title: `${loaded.guide.title} · ${LAST_DAY.title}`, description: loaded.guide.blurb } : {}
+  return loaded
+    ? pageMetadata({ path: `${LAST_DAY.href}/${guide}`, title: `${loaded.guide.title} · ${LAST_DAY.title}`, description: loaded.guide.blurb })
+    : {}
 }
 
 export default async function LastDayGuidePage({ params }: { params: Promise<Params> }) {

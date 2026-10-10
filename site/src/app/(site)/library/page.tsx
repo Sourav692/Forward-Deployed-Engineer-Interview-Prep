@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
 import { AreaHeader, LinkList } from '@/components/areas/Area'
+import { pageMetadata } from '@/lib/seo'
 
 /**
  * /library: the utility index (FE-11). Reference pages that support every area rather
  * than belonging to one. Credits (/library/credits) is built separately (FE-19).
  */
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/library',
   title: 'Library',
   description:
     'Reference pages for the whole site: the glossary, the learning map, how the site works, and credits for the sources it draws on.',
-}
+})
 
 const ITEMS = [
   {
