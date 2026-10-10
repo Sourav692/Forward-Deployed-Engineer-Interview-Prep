@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { AUTHOR, reportHref } from '@/lib/editorial'
+import { AUTHOR, FEEDBACK_EMAIL, reportHref } from '@/lib/editorial'
 import { getLearnManifest } from '@/lib/learn'
 import { pageMetadata } from '@/lib/seo'
 import { focusRing } from '@/components/ui'
 
 /**
- * /about (audit check PR-05): who writes the site, how its material is made and
+ * /about (audit check PR-05): who writes the site and their background, how its material is made and
  * credited, and how to report a problem. The credited count is the one /library/credits
  * shows (every credited entry in the Learn manifest), so the two pages agree.
  */
@@ -34,6 +34,25 @@ export default function AboutPage() {
       </header>
 
       <div className="max-w-3xl space-y-8 text-[0.9375rem] leading-relaxed text-muted">
+        <section aria-labelledby="author">
+          <h2 id="author" className="text-lg font-semibold text-text">
+            About the Author
+          </h2>
+          <p className="mt-2">
+            I&apos;m {AUTHOR}, a Senior Forward Deployed Engineer with more than 12 years of experience. I build AI
+            systems inside customers&apos; environments, where the model is rarely the hard part. The hard parts are access
+            control, messy data, and getting a pilot through security review and into daily use.
+          </p>
+          <p className="mt-3">
+            This site is the preparation I wish I&apos;d had: the questions FDE interviews ask, answered the way the work
+            is done. You can reach me at{' '}
+            <a href={`mailto:${FEEDBACK_EMAIL}`} className={link}>
+              {FEEDBACK_EMAIL}
+            </a>
+            .
+          </p>
+        </section>
+
         <section aria-labelledby="how-made">
           <h2 id="how-made" className="text-lg font-semibold text-text">
             How the Material Is Made
