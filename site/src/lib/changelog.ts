@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-10-11',
+    title: 'Release A: trust and first impression',
+    summary:
+      'A shorter header with Settings, Glossary and Library in the footer, and no Coming soon or On hold cards on the hubs. /start is now the one place to begin, with an "Interview this week?" shortcut, and paths no longer mark empty modules as required. Every lesson, design and worksheet shows its author, when it last changed and a Report an issue link; there are new About and Changelog pages. Repository paths, broken links and build footers are gone, unknown pages return a proper 404, every page has a share image, and long case pages load much faster.',
+  },
+  {
     date: '2026-10-10',
     title: 'Module checkpoints',
     summary:
