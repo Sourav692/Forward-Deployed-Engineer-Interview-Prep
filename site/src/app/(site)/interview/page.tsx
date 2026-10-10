@@ -58,7 +58,7 @@ export default function InterviewPage() {
       <AreaSection
         id="final-week"
         title={LAST_DAY.title}
-        description={`${REVIEWS.length} condensed reviews, a searchable trigger-to-concept reference, an orientation roadmap and a final rehearsal guide. ${MODES.revision.summary}`}
+        description={`The final-week review holds ${REVIEWS.length} condensed reviews and a searchable trigger-to-concept reference. Start with one of the two guides below, or open the review. ${MODES.revision.summary}`}
         action={{ label: 'Open the final-week review', href: LAST_DAY.href }}
       >
         <LinkList

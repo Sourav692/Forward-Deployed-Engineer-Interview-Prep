@@ -27,6 +27,7 @@ import { existsSync } from 'node:fs'
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import {
+  AUTHOR,
   LAST_DAY,
   LAST_DAY_GUIDES,
   REVIEW_DOCS,
@@ -162,7 +163,7 @@ function sitebar({ label, mode, updated, report, prev, next, rows = [] }) {
     `<div class="fd-row">${link(LAST_DAY.href, `← ${LAST_DAY.title}`)}` +
     `<span class="fd-label">${escapeHtml(label)}</span>` +
     `<span class="fd-mode">${escapeHtml(mode)}</span>` +
-    (updated ? `<span class="fd-mode">Last updated ${formatDate(updated)}</span>` : '') +
+    `<span class="fd-mode">By ${escapeHtml(AUTHOR)}${updated ? ` · Last updated ${formatDate(updated)}` : ''}</span>` +
     `<a class="fd-mode" href="${escapeHtml(reportHref(report))}">Report an issue</a>` +
     (pn ? `<span class="fd-pn">${pn}</span>` : '') +
     `</div>` +
@@ -221,9 +222,10 @@ async function transformReview(html, r, doc, oldTitle, pages, updated) {
     html = replaceRequired(html, '— One-Page Memory Card</title>', `— ${REVIEW_DOCS.card.label} · Forward Deployed</title>`, what)
     html = replaceRequired(html, 'One-Page Memory Card — FDE Discovery Protocol', `${REVIEW_DOCS.card.label} — ${LAST_DAY.title}`, what)
     html = replaceRequired(html, '>← Concise module</a>', '>← Interview review</a>', what)
-    html = html
-      .split(`ONE-PAGE MEMORY CARD — ${escapeHtml(oldTitle)}`)
-      .join(`${REVIEW_DOCS.card.label} — ${escapeHtml(r.title)}`)
+    // The heading anchors' aria-labels escape the title a second time (`&amp;amp;`).
+    for (const title of [escapeHtml(oldTitle), escapeHtml(escapeHtml(oldTitle))]) {
+      html = html.split(`ONE-PAGE MEMORY CARD — ${title}`).join(`${REVIEW_DOCS.card.label} — ${escapeHtml(r.title)}`)
+    }
   }
   html = html.replace(/(<meta name="description" content=")[^"]*"/, `$1${escapeHtml(`${reviewLabel(r.number)} — ${r.title}: ${r.blurb}`)}"`)
   html = linkReviews(html)

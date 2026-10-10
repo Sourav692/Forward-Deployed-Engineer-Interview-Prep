@@ -10,6 +10,7 @@ import { NAV, REVIEWS, SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
 import { pageMetadata, webSiteJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { ExpressLane } from '@/components/start/ExpressLane'
+import { learnTracks } from '@/lib/learn'
 
 /**
  * `/`: the product landing page (FE-13). A Server Component with two interactive
@@ -81,6 +82,8 @@ export default async function HomePage() {
   const scenarios = await getAllScenarios()
   const count = (moduleId: string) => scenarios.filter((s) => s.moduleId === moduleId).length
   const cov = coverage()
+  // /learn lists only its own tracks; the interview track lives under /interview (FV-04).
+  const learnTrackCount = learnTracks().length
 
   const stats: { value: number; label: string }[] = [
     { value: cov.byStatus.ready, label: 'modules ready' },
@@ -168,7 +171,7 @@ export default async function HomePage() {
 
       <LandingSection id="coverage" title="What Is Ready Today">
         <p className="max-w-3xl text-[0.9375rem] leading-relaxed text-muted">
-          The curriculum has {cov.tracks} tracks and {cov.modules} modules. Not all of them have material yet, and the
+          The curriculum has {learnTrackCount} tracks in Learn and {cov.tracks - learnTrackCount} in Interview, {cov.modules} modules in all. Not all of them have material yet, and the
           site says so on every module page rather than hiding the gaps.
         </p>
         <dl className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">

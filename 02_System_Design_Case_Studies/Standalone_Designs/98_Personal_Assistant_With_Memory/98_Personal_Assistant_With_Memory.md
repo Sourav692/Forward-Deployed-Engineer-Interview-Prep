@@ -4,7 +4,7 @@
 
 ◷ 24 min
 
-A memory system is not one database with a bigger context window. It is four scopes of state, each with its own key, its own write rule and its own way to go wrong. This page turns case #98 of `CASE_STUDY_INDEX.xlsx` into one read for the day before.
+A memory system is not one database with a bigger context window. It is four scopes of state, each with its own key, its own write rule and its own way to go wrong. This page turns this case into one read for the day before.
 
 | Case | What it contributes here |
 |---|---|

@@ -452,13 +452,16 @@ for (const path of staticFiles) {
   }
 }
 
-// PQ-07: the repository is private, so a link into it 404s for every visitor.
+// PQ-07: the repository is private, so a link into it 404s for every visitor, and the
+// case index spreadsheet is a build file visitors cannot open.
 const PRIVATE_REPO = 'github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep'
 for (const dir of [CONTENT, join(SITE_ROOT, 'public', 'fde-last-day-prep')]) {
   for (const file of await readdir(dir, { recursive: true })) {
     if (!/\.(md|json|html)$/.test(file)) continue
-    if ((await readFile(join(dir, file), 'utf8')).includes(PRIVATE_REPO)) {
-      failures.push(`${relative(SITE_ROOT, join(dir, file))}: links to the private repository`)
+    const text = await readFile(join(dir, file), 'utf8')
+    if (text.includes(PRIVATE_REPO)) failures.push(`${relative(SITE_ROOT, join(dir, file))}: links to the private repository`)
+    if (file.endsWith('.md') && text.includes('CASE_STUDY_INDEX.xlsx')) {
+      failures.push(`${relative(SITE_ROOT, join(dir, file))}: names CASE_STUDY_INDEX.xlsx, a build file`)
     }
   }
 }

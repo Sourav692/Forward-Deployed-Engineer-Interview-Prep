@@ -10,7 +10,7 @@ These are anonymised example stories from someone else’s work. Use them to lea
 
 ## The leadership principles, question by question
 
-If your interview loop is organised around these fourteen leadership principles, this table shows where each one is practised. Some questions appear under a principle because a question from that principle was folded into them; the worksheet shows it as an "Also asked as" line.
+If your interview loop is organised around leadership principles, this table shows where each of the thirteen below is practised, with a last row for staff-level and cross-cutting questions. Some questions appear under a principle because a question from that principle was folded into them; the worksheet shows it as an "Also asked as" line.
 
 | Principle | Where to practise it |
 |---|---|

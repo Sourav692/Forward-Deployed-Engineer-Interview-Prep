@@ -15,7 +15,7 @@ End to end, as Northwind tickets:
 
 That’s it: **name the outcome → prove each gate → ship small → own rollback.** Open-ended custom planners wait.
 
-> **Source:** [G12_Scoping_To_Deployed_Agent.md](G12_Scoping_To_Deployed_Agent.md). The [Deep Dive](G12_Scoping_To_Deployed_Agent_Deep_Dive.md) covers gate mechanics and limitations; the [Cheat Sheet](G12_Scoping_To_Deployed_Agent_Cheat_Sheet.md) is for rehearsal.
+> **Source:** [Sources and Full Design](G12_Scoping_To_Deployed_Agent.md). The [Deep Dive](G12_Scoping_To_Deployed_Agent_Deep_Dive.md) covers gate mechanics and limitations; the [Cheat Sheet](G12_Scoping_To_Deployed_Agent_Cheat_Sheet.md) is for rehearsal.
 
 ## The case in one sentence
 

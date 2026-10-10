@@ -15,7 +15,7 @@ End to end, as “Who is Acme’s CEO, with sources?”
 
 That’s it: **plan → search in isolation → cite or show the hole → stop.** External actions stay out.
 
-> **Source:** [G11_Deep_Research_Agent.md](/modules/15-fde-case-studies/knowledge-retrieval/deep-research-agent#full-pack). Use the [Deep Dive](/modules/15-fde-case-studies/knowledge-retrieval/deep-research-agent#deep-dive) for state and security mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/knowledge-retrieval/deep-research-agent#cheat-sheet) for rehearsal.
+> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/knowledge-retrieval/deep-research-agent#full-pack). Use the [Deep Dive](/modules/15-fde-case-studies/knowledge-retrieval/deep-research-agent#deep-dive) for state and security mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/knowledge-retrieval/deep-research-agent#cheat-sheet) for rehearsal.
 
 ## The case in one sentence
 

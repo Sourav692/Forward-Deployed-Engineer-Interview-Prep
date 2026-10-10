@@ -8,6 +8,7 @@ import type { ReadingDocument, ReadingSection } from '@/lib/reading'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { ReadingPanel } from '@/components/CaseStudyView'
 import { pageMetadata } from '@/lib/seo'
+import { Byline } from '@/components/Byline'
 
 /**
  * The behavioural Story Bank (CONTENT-15): markdown from
@@ -46,6 +47,7 @@ export default async function StoryBankPage({ params }: { params: Promise<Params
 
       <header className="mb-10 max-w-3xl">
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{STORY_BANK.title}</h1>
+        <Byline updated={bank.updated} report={{ title: STORY_BANK.title, path: STORY_BANK.href }} />
         <p className="mt-3 text-[1rem] leading-relaxed text-muted">{STORY_BANK.blurb}</p>
         <div className="mt-3">
           <MetaStrip meta={STORY_BANK_META} minutes={bank.minutes} />

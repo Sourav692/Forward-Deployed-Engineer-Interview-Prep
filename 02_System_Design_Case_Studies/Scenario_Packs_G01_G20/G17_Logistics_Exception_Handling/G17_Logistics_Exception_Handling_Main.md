@@ -15,7 +15,7 @@ End to end, as a missed scan in Frankfurt:
 
 That’s it: **feed → detect → policy → draft or narrow auto → audit.** “Just ping the carrier for every blip” stays out.
 
-> **Source:** [G17_Logistics_Exception_Handling.md](G17_Logistics_Exception_Handling.md), especially §§1–10. Use the [Deep Dive](G17_Logistics_Exception_Handling_Deep_Dive.md) for gate, reliability and evaluation detail and the [Cheat Sheet](G17_Logistics_Exception_Handling_Cheat_Sheet.md) for rehearsal.
+> **Source:** [Sources and Full Design](G17_Logistics_Exception_Handling.md), especially §§1–10. Use the [Deep Dive](G17_Logistics_Exception_Handling_Deep_Dive.md) for gate, reliability and evaluation detail and the [Cheat Sheet](G17_Logistics_Exception_Handling_Cheat_Sheet.md) for rehearsal.
 
 ## Anchor and related case
 

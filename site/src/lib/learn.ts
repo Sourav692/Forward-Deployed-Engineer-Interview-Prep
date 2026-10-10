@@ -259,7 +259,10 @@ export const getLessonPage = cache((trackSlug: string, moduleSlug: string, lesso
   }
 })
 
-/** Collection names for the source note. Longest prefix wins; the path itself is never shown. */
+/**
+ * Collection names for the source note. Longest prefix wins; the path itself is never shown.
+ * Consolidated lessons are written for the site, so they get no note: the author line says it.
+ */
 const SOURCE_NOTES: [prefix: string, note: string][] = [
   ['01_Concept_Tutorials/FDE_Handbook/', 'From the FDE Handbook'],
   ['01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/', 'From the RAG and Agent Topic Guides'],
@@ -267,6 +270,7 @@ const SOURCE_NOTES: [prefix: string, note: string][] = [
   ['01_Concept_Tutorials/Production_and_Platform_Judgment/', 'From the Production and Platform Judgement Guides'],
   ['01_Concept_Tutorials/GenAI_Engineering_Modules/', 'From the GenAI Engineering Modules'],
   ['01_Concept_Tutorials/Cost_and_Latency_Optimization/', 'From the Cost and Latency Optimisation Playbook'],
+  ['01_Concept_Tutorials/Consolidated_Lessons/', ''],
   ['01_Concept_Tutorials/', 'From the Concept Tutorials'],
   ['02_System_Design_Case_Studies/Classic_Design_Walkthroughs/', 'From the Classic Design Walkthroughs'],
   ['02_System_Design_Case_Studies/', 'From the System Design Case Studies'],

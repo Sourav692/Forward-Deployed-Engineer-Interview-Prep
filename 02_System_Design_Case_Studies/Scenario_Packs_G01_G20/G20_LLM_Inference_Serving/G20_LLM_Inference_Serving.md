@@ -4,7 +4,7 @@
 
 ◷ 26 min
 
-These prompts look like AI questions and are graded as distributed-systems questions: queues, batches, load balancing, health and backpressure. Treat the GPU as an expensive, stateful server with a memory budget, and the rest follows. This page consolidates group G20 of `CASE_STUDY_INDEX.xlsx` into one read for the day before.
+These prompts look like AI questions and are graded as distributed-systems questions: queues, batches, load balancing, health and backpressure. Treat the GPU as an expensive, stateful server with a memory budget, and the rest follows. This page consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|

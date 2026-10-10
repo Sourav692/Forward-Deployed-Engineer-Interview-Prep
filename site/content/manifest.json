@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T19:42:38.212Z",
+  "generatedAt": "2026-10-10T22:00:51.304Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -238,7 +238,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "nl-over-governed-data",
@@ -263,7 +263,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "document-review-copilot",
@@ -288,7 +288,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "deep-research-agent",
@@ -313,7 +313,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-07"
+              "updated": "2026-10-11"
             }
           ]
         },
@@ -345,7 +345,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "tool-using-agent-with-safety-controls",
@@ -370,7 +370,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "sre-incident-response-agent",
@@ -395,7 +395,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "sales-copilot",
@@ -420,7 +420,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "enterprise-coding-assistant",
@@ -445,7 +445,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "real-time-call-assistant",
@@ -470,7 +470,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-07"
+              "updated": "2026-10-11"
             },
             {
               "slug": "logistics-exception-handling",
@@ -495,7 +495,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             }
           ]
         },
@@ -527,7 +527,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "high-volume-batch-pipeline",
@@ -552,7 +552,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "agent-platform-for-non-technical-users",
@@ -577,7 +577,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "consumer-scale-chat-service",
@@ -602,7 +602,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "llm-inference-serving",
@@ -627,7 +627,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             }
           ]
         },
@@ -659,7 +659,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-07"
+              "updated": "2026-10-11"
             },
             {
               "slug": "evaluation-and-release-gating",
@@ -684,7 +684,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "observability-and-production-diagnosis",
@@ -709,7 +709,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             }
           ]
         },
@@ -741,7 +741,7 @@
                   "label": "Sources and Full Design"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             }
           ]
         },
@@ -900,7 +900,7 @@
                   "label": "Interview Guide"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "production-llm-gateway",
@@ -946,7 +946,7 @@
                   "label": "Interview Guide"
                 }
               ],
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -982,5 +982,6 @@
   "lastDayUpdated": {
     "roadmap": "2026-10-04",
     "rapid-revision": "2026-10-04"
-  }
+  },
+  "storyBankUpdated": "2026-10-11"
 }

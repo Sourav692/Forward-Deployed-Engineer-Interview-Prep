@@ -15,7 +15,7 @@ End to end, as Tuesday’s 6 a.m. catalog job:
 
 That’s it: **snapshot → partition → infer → validate → checkpoint → publish or hold.** Interactive Q&A is out.
 
-> **Source:** [G10_High_Volume_Batch_Pipeline.md](G10_High_Volume_Batch_Pipeline.md). This guide is the interview route through the unchanged source; use the [Deep Dive](G10_High_Volume_Batch_Pipeline_Deep_Dive.md) for mechanics and the [Cheat Sheet](G10_High_Volume_Batch_Pipeline_Cheat_Sheet.md) for rehearsal.
+> **Source:** [Sources and Full Design](G10_High_Volume_Batch_Pipeline.md). This guide is the interview route through the unchanged source; use the [Deep Dive](G10_High_Volume_Batch_Pipeline_Deep_Dive.md) for mechanics and the [Cheat Sheet](G10_High_Volume_Batch_Pipeline_Cheat_Sheet.md) for rehearsal.
 
 ## The case in one sentence
 

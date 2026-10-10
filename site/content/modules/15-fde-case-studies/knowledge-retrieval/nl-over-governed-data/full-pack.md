@@ -4,7 +4,7 @@
 
 ◷ 40 min
 
-The hard part of this system is not generating SQL. It is that a syntactically perfect query against the wrong definition of a metric is a governance failure dressed up as a working feature. So the design anchors every question on a governed definition before it touches a table. This page consolidates group G06 of `CASE_STUDY_INDEX.xlsx` into one read for the day before. Everything else in the group is a delta on it.
+The hard part of this system is not generating SQL. It is that a syntactically perfect query against the wrong definition of a metric is a governance failure dressed up as a working feature. So the design anchors every question on a governed definition before it touches a table. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group | What it contributes here |
 |---|---|

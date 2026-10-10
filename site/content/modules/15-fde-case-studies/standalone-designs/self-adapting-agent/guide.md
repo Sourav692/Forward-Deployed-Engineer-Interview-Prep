@@ -4,7 +4,7 @@
 
 ◷ 26 min
 
-"Autonomously adapt" does not mean "retrain itself". Most adaptation belongs in cheap, reversible places, such as context, memory and procedures. Each change passes the same evaluation gate a human change would. This page is the standalone day-before pack for case #80 in `CASE_STUDY_INDEX.xlsx`.
+"Autonomously adapt" does not mean "retrain itself". Most adaptation belongs in cheap, reversible places, such as context, memory and procedures. Each change passes the same evaluation gate a human change would. This page is the standalone day-before pack for this case.
 
 | Case | What it contributes here |
 |---|---|

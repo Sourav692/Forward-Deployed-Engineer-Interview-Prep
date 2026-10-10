@@ -204,6 +204,7 @@ function markFillDocument(doc: ParsedDocument): ParsedDocument {
 export type StoryBank = {
   doc: ReadingDocument
   minutes: number
+  updated: string | null
   /** `trackId/slug#index` -> the stories that can answer that question. */
   byQuestion: Map<string, StoryLink[]>
 }
@@ -236,7 +237,8 @@ export const getStoryBank = cache(async (): Promise<StoryBank | null> => {
       byQuestion.set(key, list)
     }
   }
-  return { doc: glossReading(parsed), minutes: readingMinutes(raw), byQuestion }
+  const updated = (await getManifest()).storyBankUpdated ?? null
+  return { doc: glossReading(parsed), minutes: readingMinutes(raw), updated, byQuestion }
 })
 
 export const getScenario = cache(

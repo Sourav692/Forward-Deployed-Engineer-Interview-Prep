@@ -4,7 +4,7 @@
 
 ◷ 34 min
 
-An evaluation platform is not a dashboard of scores. It is a controlled decision about whether one change is safe to ship. This page consolidates group G13 of `CASE_STUDY_INDEX.xlsx` into one read for the day before. The anchor design comes first. The neighbouring prompts, the incident and the cost pivot then come as deltas on the same gate.
+An evaluation platform is not a dashboard of scores. It is a controlled decision about whether one change is safe to ship. This page consolidates the group's prompts into one read for the day before. The anchor design comes first. The neighbouring prompts, the incident and the cost pivot then come as deltas on the same gate.
 
 | Case in the group | What it contributes here |
 |---|---|

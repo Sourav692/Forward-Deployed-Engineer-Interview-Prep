@@ -4,7 +4,7 @@
 
 ◷ 34 min
 
-"The AI is slow and sometimes wrong, and nobody knows why" is three problems wearing one sentence. This page consolidates group G14 of `CASE_STUDY_INDEX.xlsx` into one read for the day before. The anchor design comes first. Two incident walk-throughs follow, then the neighbouring prompts, then a card for every cost and latency pivot the group contains.
+"The AI is slow and sometimes wrong, and nobody knows why" is three problems wearing one sentence. This page consolidates the group's prompts into one read for the day before. The anchor design comes first. Two incident walk-throughs follow, then the neighbouring prompts, then a card for every cost and latency pivot the group contains.
 
 | Case in the group | What it contributes here |
 |---|---|

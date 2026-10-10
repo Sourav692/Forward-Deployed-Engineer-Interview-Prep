@@ -7,8 +7,8 @@ import { focusRing } from '@/components/ui'
 
 /**
  * /about (audit check PR-05): who writes the site, how its material is made and
- * credited, and how to report a problem. The counts come from the Learn manifest, so
- * they match what the site publishes.
+ * credited, and how to report a problem. The credited count is the one /library/credits
+ * shows (every credited entry in the Learn manifest), so the two pages agree.
  */
 
 export const metadata: Metadata = pageMetadata({
@@ -20,8 +20,7 @@ export const metadata: Metadata = pageMetadata({
 const link = `rounded-sm text-accent underline underline-offset-2 hover:text-accent-hover ${focusRing}`
 
 export default function AboutPage() {
-  const lessons = getLearnManifest().filter((l) => l.kind === 'sync')
-  const credited = lessons.filter((l) => l.publish === 'credited').length
+  const credited = getLearnManifest().filter((l) => l.publish === 'credited' && l.credit).length
 
   return (
     <div className="py-8 sm:py-10">
@@ -40,9 +39,8 @@ export default function AboutPage() {
             How the Material Is Made
           </h2>
           <p className="mt-2">
-            The site has {lessons.length} lessons. {lessons.length - credited} are written for this site. The other{' '}
-            {credited} draw on books, guides and courses by other authors, summarised in our own words, and each one
-            names its source in a credit line under the title.{' '}
+            Most lessons are written for this site. {credited} draw on books, guides and courses by other authors,
+            summarised in our own words, and each one names its source in a credit line under the title.{' '}
             <Link href="/library/credits" className={link}>
               Credits
             </Link>{' '}
