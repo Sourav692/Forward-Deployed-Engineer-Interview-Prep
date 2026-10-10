@@ -128,6 +128,12 @@ function count(blocks: Block[], counts: Counts): void {
 
 const failures: string[] = []
 const rows: string[] = []
+
+// PR-10: a later `#` heading becomes a section, so no page renders two H1s.
+const twoH1 = parseReading('# Title\n\n# Second\n\nText.', 'self-check')
+if (twoH1.title !== 'Title' || twoH1.sections[0]?.title !== 'Second') {
+  failures.push('reading.ts: a second # heading did not become a section')
+}
 let diagramTotal = 0
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'manifest.json'), 'utf8'))

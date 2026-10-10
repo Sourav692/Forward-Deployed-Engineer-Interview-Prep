@@ -82,7 +82,8 @@ export function parseReading(markdown: string, idPrefix: string): ReadingDocumen
       title = (token as Tokens.Heading).text
       continue
     }
-    if (token.type === 'heading' && token.depth === 2) {
+    // A later `#` heading is a section like `##`, so a page never has two H1s (PR-10).
+    if (token.type === 'heading' && token.depth <= 2) {
       flush()
       if (current.chunks.length) sections.push(current)
       const text = (token as Tokens.Heading).text
