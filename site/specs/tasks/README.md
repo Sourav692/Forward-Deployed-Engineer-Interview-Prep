@@ -127,11 +127,14 @@ Exit criteria:
 
 Critical path (estimate, S = 0.5, M = 1.5, L = 4 days): **UX-07 (1.5) → FE-16 (4) → FE-19 (0.5) = 6 days**, with FE-15 (1.5) also feeding FE-16. FE-17 and DATA-07 → FE-18 (3 days) run in parallel.
 
+Lighthouse after the Phase 2 merges (10 October 2026, production, mobile preset, Lighthouse 13.5): `/progress` performance 90, 90 and 97 over three runs (LCP 2.0 to 3.3 s; the LCP element is the server-rendered page lead), accessibility 100; `/settings` performance 100. SEO reads 63 on both because `robots.txt` blocks them on purpose.
+
 ## Backlog
 
 | Task | Outcome | Size | Status |
 |---|---|---|---|
-| [DATA-10](backlog/DATA-10-module-checkpoints.md) | Owner-written checkpoints for T2–T6 modules | L | deferred (owner writes later) |
+| [DATA-10](backlog/DATA-10-module-checkpoints.md) | Checkpoint feature and the T2.4 pilot | L | done (this PR) |
+| DATA-10 follow-up | Owner-written checkpoints for the remaining T2–T6 modules, one PR per track (T2, T3, T4, T5, T6) | M per track | todo (owner) |
 
 ## Later phases (not yet carded)
 

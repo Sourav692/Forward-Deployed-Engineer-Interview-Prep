@@ -20,6 +20,8 @@ import {
 } from '@/lib/learn'
 import type { CurriculumModule } from '@/lib/curriculum-types'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
+import { CheckpointPanel } from '@/components/learn/CheckpointPanel'
+import { getCheckpoint } from '@/lib/checkpoints'
 import { ConfidenceControl } from '@/components/learn/ConfidenceControl'
 import { COPY } from '@/components/learn/copy'
 import { GapPanel } from '@/components/learn/GapPanel'
@@ -66,6 +68,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   const section = getSection(mod)
   const list = readingList(mod)
   const input = moduleInput(mod)
+  const checkpoint = getCheckpoint(mod.slug)
   const related = relatedModules(mod)
   const gap = mod.status === 'coming-soon' || mod.status === 'on-hold'
   const prereqModules = mod.prerequisites.map((s) => getModuleBySlug(s)).filter((m): m is CurriculumModule => !!m)
@@ -201,6 +204,17 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                   )}
                 </dl>
               </section>
+
+              {checkpoint && (
+                <section aria-labelledby="checkpoint" className="mt-10 scroll-mt-20">
+                  <h2 id="checkpoint" className="text-xl font-semibold">
+                    Checkpoint
+                  </h2>
+                  <div className="mt-3">
+                    <CheckpointPanel moduleSlug={mod.slug} code={mod.code} href={learnHref.module(mod)} items={checkpoint.items} />
+                  </div>
+                </section>
+              )}
 
               <section aria-labelledby="yours" className="mt-10 rounded-lg border border-border bg-surface p-4 sm:p-5">
                 <h2 id="yours" className="text-xl font-semibold">

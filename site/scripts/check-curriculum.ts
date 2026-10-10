@@ -11,6 +11,7 @@
  * redirects that chain, point at an unpublished lesson or retire a live one, and lesson
  * slices that overlap, drop a heading or name a heading the source lacks.
  */
+import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
 import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
@@ -199,6 +200,26 @@ for (const h of INTERVIEW_HUBS) {
     const m = moduleBySlug.get(s)
     if (!m) fail(`hub ${h.slug}: unknown module "${s}"`)
     else if (m.status === 'on-hold' || m.status === 'coming-soon') fail(`hub ${h.slug}: module "${s}" is ${m.status}`)
+  }
+}
+
+// Module checkpoints (DATA-10): one per published T2–T6 module, 6 to 10 well-formed items.
+const CHECKPOINT_TRACKS = ['llm-and-retrieval', 'agentic-systems', 'production-ai', 'ai-systems-design', 'forward-deployed']
+unique('checkpoint module', CHECKPOINTS.map((c) => c.module))
+for (const c of CHECKPOINTS) {
+  const m = moduleBySlug.get(c.module)
+  if (!m) fail(`checkpoint: unknown module "${c.module}"`)
+  else if (!CHECKPOINT_TRACKS.includes(m.track)) fail(`checkpoint ${c.module}: module is in ${m.track}, not a T2–T6 track`)
+  else if (m.status !== 'ready' && m.status !== 'partly') fail(`checkpoint ${c.module}: module is ${m.status}`)
+  if (c.items.length < 6 || c.items.length > 10) fail(`checkpoint ${c.module}: has ${c.items.length} items; needs 6 to 10`)
+  const ids = new Set<string>()
+  for (const i of c.items) {
+    if (ids.has(i.id)) fail(`checkpoint ${c.module}: duplicate item id "${i.id}"`)
+    ids.add(i.id)
+    const options = i.options.map((o) => o.id)
+    if (options.length < 2 || new Set(options).size !== options.length) fail(`checkpoint ${c.module}/${i.id}: needs two or more options with unique ids`)
+    if (!options.includes(i.correctOptionId)) fail(`checkpoint ${c.module}/${i.id}: correct option "${i.correctOptionId}" is not an option`)
+    if (!i.prompt.trim() || !i.explanation.trim() || !i.skillId.trim()) fail(`checkpoint ${c.module}/${i.id}: prompt, explanation and skillId are required`)
   }
 }
 

@@ -12,6 +12,7 @@ import {
   effectiveConfidence,
   finishBy,
   behaviouralReadiness,
+  checkpointReadiness,
   interviewReadiness,
   measuredInterviewReadiness,
   mockReadiness,
@@ -126,6 +127,7 @@ check('re-weighted over measured inputs: (0.35·80 + 0.3·40) / 0.65', some.scor
 check('weakest is the lowest measured input', [some.measured, some.weakest?.id], [2, 'mocks'])
 check('scorecards: empty is unmeasured; 1, 3, 5 average to 50', [scorecardReadiness([]), scorecardReadiness([1, 3, 5])], [null, 50])
 check('mocks: none taken is unmeasured; untaken count 0', [mockReadiness([null, null]), mockReadiness([5, null, null, null, null])], [null, 20])
+check('checkpoints: none taken is unmeasured; latest results count', [checkpointReadiness([]), checkpointReadiness([true, false, true, true])], [null, 75])
 check('behavioural: not-started only is unmeasured', behaviouralReadiness(['not-started', 'not-started'], 10), null)
 check('behavioural: practised half, mastered one', behaviouralReadiness(['practiced', 'mastered', 'not-started'], 6), 25)
 

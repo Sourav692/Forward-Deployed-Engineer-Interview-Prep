@@ -10,7 +10,8 @@ import { curriculumHref, isLearnTrack } from '@/lib/curriculum-href'
 import { getPathById, type LearningPath } from '@/lib/paths'
 import {
   behaviouralReadiness,
-  effectiveConfidence,
+  checkpointId,
+  checkpointReadiness,
   finishBy,
   measuredInterviewReadiness,
   mockReadiness,
@@ -22,7 +23,7 @@ import {
 import { latestConfidence, listActivity, listAttempts, readKind, trackProgress } from '@/lib/progress/store'
 import type { ActivityEvent, PathChoice } from '@/lib/progress/types'
 import type { CompetencySheet } from '@/lib/dashboard'
-import { isRead, learnerStatus, type ModuleInput } from '@/components/learn/progress-model'
+import { isRead, learnerStatus, moduleRevision, type ModuleInput } from '@/components/learn/progress-model'
 import { MOCK_METHOD_LESSON, MOCK_MODULE, MOCK_ROUNDS, mockAssessmentId } from './mock-rubric'
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -53,13 +54,21 @@ function sheetStatuses(sheets: CompetencySheet[]): Map<string, string[]> {
   return new Map(sheets.map((s) => [s.key, Object.values(stored[s.key] ?? {})]))
 }
 
-export function interviewReadinessNow(sheets: CompetencySheet[]): MeasuredReadiness {
+/** The latest attempt of every checkpoint the learner has taken. */
+function latestCheckpoints(modules: ModuleInput[]): { module: string; passed: boolean }[] {
+  return modules.flatMap((m) => {
+    const last = m.checkpoint ? listAttempts(checkpointId(m.slug)).at(-1) : undefined
+    return last ? [{ module: m.slug, passed: last.passed }] : []
+  })
+}
+
+export function interviewReadinessNow(sheets: CompetencySheet[], modules: ModuleInput[]): MeasuredReadiness {
   const scores = Object.values(readKind<Record<string, number>>('scores')).flatMap((row) => Object.values(row))
   const statuses = [...sheetStatuses(sheets).values()].flat()
   return measuredInterviewReadiness({
     worksheets: scorecardReadiness(scores.filter((s) => typeof s === 'number')),
     mocks: mockReadiness(SCENARIO_MOCKS.map(latestMockMean)),
-    checkpoints: null,
+    checkpoints: checkpointReadiness(latestCheckpoints(modules).map((c) => c.passed)),
     behavioural: behaviouralReadiness(statuses, sheets.reduce((n, s) => n + s.questions, 0)),
   })
 }
@@ -67,12 +76,19 @@ export function interviewReadinessNow(sheets: CompetencySheet[]): MeasuredReadin
 export type Remedy = { label: string; href: string } | null
 
 /** Where to go next for one readiness input (UX-07 remedy table). */
-export function remedyFor(id: InterviewInput, sheets: CompetencySheet[]): Remedy {
+export function remedyFor(id: InterviewInput, sheets: CompetencySheet[], modules: ModuleInput[]): Remedy {
   if (id === 'worksheets') return { label: 'Case-study worksheets', href: curriculumHref('interview-practice', 'case-study-worksheets') }
   if (id === 'mocks') {
     const means = SCENARIO_MOCKS.map((slug) => ({ slug, mean: latestMockMean(slug) }))
     const pick = means.find((m) => m.mean === null) ?? means.reduce((lo, m) => ((m.mean ?? 0) < (lo.mean ?? 0) ? m : lo), means[0])
     return pick ? { label: lessonBySlug.get(pick.slug)?.title ?? 'Mock interviews', href: mockHref(pick.slug) } : null
+  }
+  if (id === 'checkpoints') {
+    const taken = new Map(latestCheckpoints(modules).map((c) => [c.module, c.passed]))
+    const withCheckpoint = modules.filter((m) => m.checkpoint)
+    const pick = withCheckpoint.find((m) => !taken.has(m.slug)) ?? withCheckpoint.find((m) => taken.get(m.slug) === false)
+    const mod = pick && moduleBySlug.get(pick.slug)
+    return mod ? { label: `${mod.code} checkpoint`, href: `${moduleHref(mod)}#checkpoint` } : null
   }
   if (id === 'behavioural') {
     const statuses = sheetStatuses(sheets)
@@ -85,34 +101,53 @@ export function remedyFor(id: InterviewInput, sheets: CompetencySheet[]): Remedy
 
 // ── Revision queue ─────────────────────────────────────────────────────────
 
-export type RevisionRow = { module: CurriculumModule; reason: 'low' | 'faded'; ratedAt: string; days: number }
+export type RevisionRow = {
+  module: CurriculumModule
+  reason: 'failed-checkpoint' | 'low' | 'faded' | 'checkpoint-due'
+  /** When the triggering rating or checkpoint attempt happened. */
+  since: string
+  days: number
+  /** Latest checkpoint score, for the checkpoint reasons. */
+  score?: number
+}
 
-/** Modules whose effective confidence is 2 or less: rated low, or faded there over time. */
+const REASON_ORDER: RevisionRow['reason'][] = ['failed-checkpoint', 'low', 'faded', 'checkpoint-due']
+
+/** Modules that need revision (`moduleRevision`), most urgent reason first, then the oldest. */
 export function revisionQueue(modules: ModuleInput[], now = Date.now()): RevisionRow[] {
   const rows: RevisionRow[] = []
   for (const input of modules) {
-    if (learnerStatus(input, now) !== 'needs-revision') continue
+    const why = moduleRevision(input, now)
     const mod = moduleBySlug.get(input.slug)
-    const rating = latestConfidence(input.slug)
-    if (!mod || !rating) continue
-    rows.push({
-      module: mod,
-      reason: rating.value <= 2 ? 'low' : 'faded',
-      ratedAt: rating.at,
-      days: Math.floor((now - Date.parse(rating.at)) / DAY_MS),
-    })
+    if (!why || !mod) continue
+    if (why === 'low-confidence') {
+      const rating = latestConfidence(input.slug)
+      if (!rating) continue
+      rows.push({ module: mod, reason: rating.value <= 2 ? 'low' : 'faded', since: rating.at, days: daysSince(rating.at, now) })
+    } else {
+      const last = listAttempts(checkpointId(input.slug)).at(-1)
+      if (!last) continue
+      rows.push({
+        module: mod,
+        reason: why === 'failed-checkpoint' ? 'failed-checkpoint' : 'checkpoint-due',
+        since: last.at,
+        days: daysSince(last.at, now),
+        score: last.score,
+      })
+    }
   }
-  // Lowest effective confidence first, then the oldest rating.
-  return rows.sort(
-    (a, b) =>
-      (effectiveConfidence(latestConfidence(a.module.slug), now) ?? 0) -
-        (effectiveConfidence(latestConfidence(b.module.slug), now) ?? 0) || b.days - a.days,
-  )
+  return rows.sort((a, b) => REASON_ORDER.indexOf(a.reason) - REASON_ORDER.indexOf(b.reason) || b.days - a.days)
 }
+
+const daysSince = (iso: string, now: number) => Math.floor((now - Date.parse(iso)) / DAY_MS)
+
+/** Where a revision row sends the learner: the checkpoint, or the confidence control. */
+export const revisionHref = (r: RevisionRow) =>
+  `${moduleHref(r.module)}#${r.reason === 'failed-checkpoint' || r.reason === 'checkpoint-due' ? 'checkpoint' : 'yours'}`
 
 // ── Next up ────────────────────────────────────────────────────────────────
 
-export type NextUp = { module: CurriculumModule; reason: string; action: string }
+export type NextUp = { module: CurriculumModule; reason: string; action: string; href: string }
 
 const remainingMinutes = (input: ModuleInput) => {
   const known = Object.values(input.minutes)
@@ -128,8 +163,14 @@ export function nextUp(modules: ModuleInput[], path: LearningPath | null, now = 
   if (revision) {
     return {
       module: revision.module,
-      reason: `${revision.module.code} needs a review: your confidence is low or out of date.`,
+      reason:
+        revision.reason === 'failed-checkpoint'
+          ? `Your last ${revision.module.code} checkpoint did not pass. Review the module, then take it again.`
+          : revision.reason === 'checkpoint-due'
+            ? `Your ${revision.module.code} checkpoint pass is due for a re-check.`
+            : `${revision.module.code} needs a review: your confidence is low or out of date.`,
       action: 'Review now',
+      href: revisionHref(revision),
     }
   }
 
@@ -137,7 +178,9 @@ export function nextUp(modules: ModuleInput[], path: LearningPath | null, now = 
     const onPath = CURRICULUM_ORDER.filter((s) => inputs.has(s))
     const nothingRead = !onPath.some((s) => inputs.get(s)!.reading.some(isRead))
     const start = moduleBySlug.get(path.startModule)
-    if (nothingRead && start) return { module: start, reason: `The first module on your ${path.title} path.`, action: 'Start module' }
+    if (nothingRead && start) {
+      return { module: start, reason: `The first module on your ${path.title} path.`, action: 'Start module', href: moduleHref(start) }
+    }
     for (const flag of ['required', 'recommended'] as const) {
       for (const slug of onPath) {
         if (path.moduleFlags[slug] !== flag) continue
@@ -147,9 +190,14 @@ export function nextUp(modules: ModuleInput[], path: LearningPath | null, now = 
         const mod = moduleBySlug.get(slug)!
         if (status === 'in-progress') {
           const hours = Math.max(1, Math.round(remainingMinutes(input) / 60))
-          return { module: mod, reason: `You have started it; finishing it moves your path ${hours} h closer.`, action: 'Continue module' }
+          return {
+            module: mod,
+            reason: `You have started it; finishing it moves your path ${hours} h closer.`,
+            action: 'Continue module',
+            href: moduleHref(mod),
+          }
         }
-        return { module: mod, reason: 'Next on your path, and its prerequisites are complete.', action: 'Start module' }
+        return { module: mod, reason: 'Next on your path, and its prerequisites are complete.', action: 'Start module', href: moduleHref(mod) }
       }
     }
     return null
@@ -159,7 +207,8 @@ export function nextUp(modules: ModuleInput[], path: LearningPath | null, now = 
     const slug = activityModule(e)
     const input = slug ? inputs.get(slug) : undefined
     if (input && learnerStatus(input, now) === 'in-progress') {
-      return { module: moduleBySlug.get(slug!)!, reason: 'You were working on this most recently.', action: 'Continue module' }
+      const mod = moduleBySlug.get(slug!)!
+      return { module: mod, reason: 'You were working on this most recently.', action: 'Continue module', href: moduleHref(mod) }
     }
   }
   return null

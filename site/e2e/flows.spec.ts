@@ -1,5 +1,7 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
+import { CHECKPOINTS } from '../src/lib/checkpoints'
 import {
+  CHECKPOINT_MODULE,
   GATED_MODULE,
   LESSON,
   LESSON_TITLE,
@@ -141,6 +143,43 @@ test('progress: empty first, then readiness and the revision queue follow what t
   await page.goto('/progress/revision')
   await hydrated(page)
   await expect(page.getByText('Nothing to revise.')).toBeVisible()
+})
+
+/** Answers the T2.4 checkpoint, correctly or with the first wrong option, and submits. */
+async function takeCheckpoint(page: Page, correct: boolean) {
+  const items = CHECKPOINTS.find((c) => c.module === 'retrieval-hybrid-rerank')!.items
+  for (const [n, item] of items.entries()) {
+    const option = correct ? item.options.find((o) => o.id === item.correctOptionId)! : item.options.find((o) => o.id !== item.correctOptionId)!
+    await page.getByRole('group', { name: `${n + 1}. ${item.prompt}`, exact: true }).getByRole('radio', { name: option.text, exact: true }).check()
+  }
+  await page.getByRole('button', { name: 'Submit checkpoint' }).click()
+}
+
+test('checkpoint: a pass feeds readiness; a fail puts the module in the revision queue', async ({ page }) => {
+  await page.goto(CHECKPOINT_MODULE)
+  await hydrated(page)
+  await page.getByRole('button', { name: 'Submit checkpoint' }).click()
+  await expect(page.getByText(/^Answer every question first/)).toBeVisible()
+
+  await takeCheckpoint(page, true)
+  await expect(page.getByText('Passed: 100 % (8 of 8)')).toBeVisible()
+
+  await page.goto('/progress')
+  await hydrated(page)
+  const readiness = page.getByRole('region', { name: 'Interview Readiness' })
+  await expect(readiness).toContainText('based on 1 of 4 inputs')
+  await expect(readiness).toContainText('Checkpoint pass rate100 %')
+
+  await page.goto(CHECKPOINT_MODULE)
+  await hydrated(page)
+  await expect(page.getByText(/^Last attempt: 100 %, passed/)).toBeVisible()
+  await takeCheckpoint(page, false)
+  await expect(page.getByText('Not passed yet: 0 % (0 of 8)')).toBeVisible()
+
+  await page.goto('/progress')
+  await hydrated(page)
+  await expect(page.getByRole('region', { name: /^Revision Queue/ })).toContainText('Checkpoint not passed (0 %)')
+  await expect(page.getByRole('region', { name: 'Next Up' })).toContainText('checkpoint did not pass')
 })
 
 test('soft gating: blocked module → open anyway → remembered after reload', async ({ page }) => {

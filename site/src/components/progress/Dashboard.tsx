@@ -18,9 +18,9 @@ import {
   describeActivity,
   finishByNow,
   interviewReadinessNow,
-  moduleHref,
   nextUp,
   remedyFor,
+  revisionHref,
   revisionQueue,
   trackRows,
   type RevisionRow,
@@ -33,7 +33,7 @@ export function Dashboard({ modules, sheets }: DashboardData) {
   const view = useProgress(() => {
     const choice = getPath()
     const path = resolveChoice(choice) ?? null
-    const readiness = interviewReadinessNow(sheets)
+    const readiness = interviewReadinessNow(sheets, modules)
     const activity = listActivity()
     const bookmarks = listBookmarks()
     return {
@@ -76,7 +76,7 @@ export function Dashboard({ modules, sheets }: DashboardData) {
             </LinkButton>
           </div>
         </Panel>
-        <ReadinessPanel readiness={view.readiness} sheets={sheets} />
+        <ReadinessPanel readiness={view.readiness} sheets={sheets} modules={modules} />
       </div>
     )
   }
@@ -89,10 +89,7 @@ export function Dashboard({ modules, sheets }: DashboardData) {
             <p className="text-xs font-semibold tabular-nums text-subtle">{view.next.module.code}</p>
             <p className="font-semibold">{view.next.module.title}</p>
             <p className="mt-1 text-sm text-muted">{view.next.reason}</p>
-            <LinkButton
-              href={view.next.action === 'Review now' ? `${moduleHref(view.next.module)}#yours` : moduleHref(view.next.module)}
-              className="mt-3"
-            >
+            <LinkButton href={view.next.href} className="mt-3">
               {view.next.action}
             </LinkButton>
           </Panel>
@@ -126,7 +123,7 @@ export function Dashboard({ modules, sheets }: DashboardData) {
       </div>
 
       <div className="min-w-0 space-y-6">
-        <ReadinessPanel readiness={view.readiness} sheets={sheets} />
+        <ReadinessPanel readiness={view.readiness} sheets={sheets} modules={modules} />
         <Panel title="Finish By">
           {view.finish ? (
             <>
@@ -191,13 +188,22 @@ export function Dashboard({ modules, sheets }: DashboardData) {
   )
 }
 
-function ReadinessPanel({ readiness, sheets }: { readiness: MeasuredReadiness; sheets: CompetencySheet[] }) {
+function ReadinessPanel({
+  readiness,
+  sheets,
+  modules,
+}: {
+  readiness: MeasuredReadiness
+  sheets: CompetencySheet[]
+  modules: DashboardData['modules']
+}) {
   const { score, measured, parts, weakest } = readiness
   return (
     <Panel title="Interview Readiness">
       {score === null ? (
         <p className="text-sm text-muted">
-          No score yet. It is built from your worksheet scorecards, mock interviews and behavioural worksheets.
+          No score yet. It is built from your worksheet scorecards, mock interviews, module checkpoints and
+          behavioural worksheets.
         </p>
       ) : (
         <>
@@ -211,7 +217,7 @@ function ReadinessPanel({ readiness, sheets }: { readiness: MeasuredReadiness; s
       )}
       <ul className="mt-4 space-y-3">
         {parts.map((p) => {
-          const remedy = p.id === 'checkpoints' ? null : remedyFor(p.id, sheets)
+          const remedy = remedyFor(p.id, sheets, modules)
           const isWeakest = weakest?.id === p.id && measured > 1
           return (
             <li key={p.id} className="text-sm">
@@ -226,7 +232,7 @@ function ReadinessPanel({ readiness, sheets }: { readiness: MeasuredReadiness; s
                   <ProgressBar value={p.value / 100} label={`${p.label} ${Math.round(p.value)} %`} tone={isWeakest ? 'warning' : 'accent'} />
                 </div>
               )}
-              {p.id === 'checkpoints' ? (
+              {p.id === 'checkpoints' && p.value === null && !remedy ? (
                 <p className="mt-1 text-xs text-muted">Module checkpoints are coming later.</p>
               ) : (
                 (p.value === null || isWeakest) &&
@@ -247,6 +253,13 @@ function ReadinessPanel({ readiness, sheets }: { readiness: MeasuredReadiness; s
   )
 }
 
+const REASON_TEXT: Record<RevisionRow['reason'], (r: RevisionRow) => string> = {
+  'failed-checkpoint': (r) => `Checkpoint not passed (${r.score} %)`,
+  low: () => 'Low confidence (rated 1 or 2)',
+  faded: (r) => `Last rated ${r.days} days ago`,
+  'checkpoint-due': (r) => `Checkpoint passed ${r.days} days ago; due for a re-check`,
+}
+
 export function RevisionRows({ rows }: { rows: RevisionRow[] }) {
   return (
     <ul className="divide-y divide-border">
@@ -257,10 +270,10 @@ export function RevisionRows({ rows }: { rows: RevisionRow[] }) {
               {r.module.code} {r.module.title}
             </p>
             <p className="text-muted">
-              {r.reason === 'low' ? 'Low confidence (rated 1 or 2)' : `Last rated ${r.days} days ago`} · since {formatDate(r.ratedAt)}
+              {REASON_TEXT[r.reason](r)} · since {formatDate(r.since)}
             </p>
           </div>
-          <LinkButton href={`${moduleHref(r.module)}#yours`} variant="secondary">
+          <LinkButton href={revisionHref(r)} variant="secondary">
             Review now
           </LinkButton>
         </li>
