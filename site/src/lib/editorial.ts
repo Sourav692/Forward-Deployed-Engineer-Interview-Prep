@@ -146,14 +146,34 @@ export const NAV = [
 export const UTILITY_NAV = [{ id: 'progress', label: 'Progress', href: '/progress', match: ['/progress'] }] as const
 
 /**
- * Links kept out of the desktop header: the footer and the mobile menu list them, so
- * Settings is reachable at every width (IA-15). The learning map sits under Library.
+ * The footer, in order (audit checks PR-05, PR-06, IA-15). The mobile menu lists the
+ * ones that have an icon (Glossary, Library, Settings), so Settings is reachable at
+ * every width. The learning map sits under Library. "Report an issue" follows these.
  */
 export const FOOTER_NAV = [
+  { id: 'guide', label: 'How this works', href: '/guide', match: ['/guide'] },
   { id: 'glossary', label: 'Glossary', href: '/glossary', match: ['/glossary'] },
   { id: 'library', label: 'Library', href: '/library', match: ['/library', '/learning-map'] },
+  { id: 'credits', label: 'Credits', href: '/library/credits', match: ['/library/credits'] },
+  { id: 'about', label: 'About', href: '/about', match: ['/about'] },
+  { id: 'changelog', label: 'Changelog', href: '/changelog', match: ['/changelog'] },
   { id: 'settings', label: 'Settings', href: '/settings', match: ['/settings'] },
 ] as const
+
+/**
+ * Where reports and suggestions go (owner decision 1). The repository is private, so
+ * a GitHub issue link would 404 for visitors.
+ * TODO(owner): replace the placeholder with the real address before merging ENH-10.
+ */
+export const FEEDBACK_EMAIL = 'feedback@example.com'
+
+/** A `mailto:` link whose subject names the page, so a report says where it came from. */
+export const reportHref = (page?: { title: string; path: string }) =>
+  `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(page ? `Report: ${page.title} (${page.path})` : 'Report an issue')}`
+
+/** A `mailto:` link for topic suggestions from the hubs. */
+export const suggestTopicHref = (hub: string) =>
+  `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(`Suggest the next topic (${hub})`)}`
 
 export const LAST_DAY = {
   title: 'Final Week Review',

@@ -7,7 +7,7 @@ import { FOOTER_NAV, NAV, UTILITY_NAV } from '@/lib/editorial'
 import { SITE } from '@/lib/registry'
 import { cx } from '@/components/ui/cx'
 import { Icon } from './Icon'
-import { isActive, type IconName } from './nav'
+import { ICONS, isActive, type IconName } from './nav'
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
@@ -114,7 +114,7 @@ export function MobileNav() {
         </nav>
         <hr className="mx-4 border-border" />
         <nav aria-label="Utility" className="flex flex-col gap-0.5 p-2">
-          {[...UTILITY_NAV, ...FOOTER_NAV].map((item) => (
+          {[...UTILITY_NAV, ...FOOTER_NAV.filter(hasIcon)].map((item) => (
             <MenuLink key={item.id} href={item.href} icon={item.id} current={isActive(pathname, item.match)} onPick={() => dialogRef.current?.close()}>
               {item.label}
             </MenuLink>
@@ -124,6 +124,9 @@ export function MobileNav() {
     </>
   )
 }
+
+/** Footer links with an icon (Glossary, Library, Settings) also go in the menu. */
+const hasIcon = <T extends { id: string }>(item: T): item is T & { id: IconName } => item.id in ICONS
 
 function MenuLink({
   href,

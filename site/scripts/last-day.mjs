@@ -34,6 +34,7 @@ import {
   SITE_URL,
   TRIGGER_SHEET,
   formatDate,
+  reportHref,
   reviewLabel,
 } from '../src/lib/editorial.ts'
 import { GLOSSARY } from '../src/lib/glossary.ts'
@@ -151,7 +152,7 @@ const SITEBAR_CSS = `
   .gloss-exp { color: var(--text-2, #555); }
 </style>`
 
-function sitebar({ label, mode, updated, prev, next, rows = [] }) {
+function sitebar({ label, mode, updated, report, prev, next, rows = [] }) {
   const link = (href, text) => `<a href="${href}">${escapeHtml(text)}</a>`
   const pn = [prev && link(prev.href, `← ${prev.text}`), next && link(next.href, `${next.text} →`)]
     .filter(Boolean)
@@ -162,6 +163,7 @@ function sitebar({ label, mode, updated, prev, next, rows = [] }) {
     `<span class="fd-label">${escapeHtml(label)}</span>` +
     `<span class="fd-mode">${escapeHtml(mode)}</span>` +
     (updated ? `<span class="fd-mode">Last updated ${formatDate(updated)}</span>` : '') +
+    `<a class="fd-mode" href="${escapeHtml(reportHref(report))}">Report an issue</a>` +
     (pn ? `<span class="fd-pn">${pn}</span>` : '') +
     `</div>` +
     rows
@@ -238,6 +240,7 @@ async function transformReview(html, r, doc, oldTitle, pages, updated) {
     label: `${reviewLabel(r.number)} of ${REVIEWS.length}`,
     mode: 'Revision — assumes you have already studied this topic',
     updated,
+    report: { title: `${reviewLabel(r.number)} — ${r.title}`, path: hrefOf(r, doc) },
     prev: prev && { href: hrefOf(prev, doc), text: reviewLabel(prev.number) },
     next: next && { href: hrefOf(next, doc), text: reviewLabel(next.number) },
     rows:
@@ -295,7 +298,12 @@ function transformTriggerSheet(html, updated) {
   html = expandAcronyms(html, new Set(), GLOSSARY)
   return injectSitebar(
     html,
-    sitebar({ label: TRIGGER_SHEET.title, mode: 'Revision — searchable index of all eighteen reviews', updated }),
+    sitebar({
+      label: TRIGGER_SHEET.title,
+      mode: 'Revision — searchable index of all eighteen reviews',
+      updated,
+      report: { title: TRIGGER_SHEET.title, path: `${LAST_DAY.href}/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}` },
+    }),
     what,
     `${LAST_DAY.href}/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}`,
   )

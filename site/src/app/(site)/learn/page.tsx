@@ -8,6 +8,7 @@ import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/lear
 import { PathBanner } from '@/components/learn/PathFlagIslands'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { TrackCard } from '@/components/learn/TrackCard'
+import { SuggestTopic } from '@/components/areas/Area'
 
 /**
  * /learn: the curriculum overview (FE-06). A static Server Component. The track cards
@@ -52,6 +53,7 @@ export default function LearnPage() {
       <Suspense fallback={<StaticTrackGrid items={items} />}>
         <TrackBrowser items={items} minutes={minutes} />
       </Suspense>
+      <SuggestTopic hub="Learn" />
     </>
   )
 }

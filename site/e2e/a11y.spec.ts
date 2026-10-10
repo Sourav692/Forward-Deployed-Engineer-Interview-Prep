@@ -29,6 +29,8 @@ const PAGES: [string, string][] = [
   ['worksheet', WORKSHEET],
   ['case study', CASE_STUDY],
   ['last-day prep', '/fde-last-day-prep'],
+  ['about', '/about'],
+  ['changelog', '/changelog'],
   ['404', '/this-page-does-not-exist'],
 ]
 
