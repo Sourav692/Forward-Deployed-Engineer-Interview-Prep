@@ -46,6 +46,8 @@ export type LearnLesson = {
   source: string
   credit?: string
   estMinutes?: number
+  /** Synced lessons: `YYYY-MM-DD` the source last changed, from git at sync time. */
+  updated?: string
   /** `/learn/...` for synced lessons, the live page for `live` ones. */
   href: string
 }

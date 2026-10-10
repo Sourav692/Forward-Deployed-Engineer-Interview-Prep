@@ -84,6 +84,7 @@ export const getAllScenarios = cache(async (): Promise<ScenarioRef[]> => {
         tag: scenario.tag,
         tabs: scenario.tabs,
         practice: scenario.practice,
+        updated: scenario.updated,
         reading: module.kind === 'reading',
       })),
     ),
@@ -335,7 +336,8 @@ export const getLastDayGuide = cache(async (id: string) => {
   const guide = LAST_DAY_GUIDES.find((g) => g.id === id)
   if (!guide) return null
   const raw = await readFile(join(CONTENT_DIR, 'last-day', `${id}.md`), 'utf8')
-  return { guide, minutes: readingMinutes(raw), doc: glossReading(parseReading(raw, id)) }
+  const updated = (await getManifest()).lastDayUpdated?.[id] ?? null
+  return { guide, minutes: readingMinutes(raw), updated, doc: glossReading(parseReading(raw, id)) }
 })
 
 /**

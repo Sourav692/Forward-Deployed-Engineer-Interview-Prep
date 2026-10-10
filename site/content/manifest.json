@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T19:07:59.712Z",
+  "generatedAt": "2026-10-10T19:42:38.212Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -12,52 +12,62 @@
             {
               "slug": "internal-knowledge-assistant",
               "order": 1,
-              "title": "Internal Knowledge Assistant for Enterprise Support"
+              "title": "Internal Knowledge Assistant for Enterprise Support",
+              "updated": "2026-10-04"
             },
             {
               "slug": "sales-copilot",
               "order": 2,
-              "title": "Sales Copilot for Account Executives"
+              "title": "Sales Copilot for Account Executives",
+              "updated": "2026-10-04"
             },
             {
               "slug": "financial-compliance-reviewer",
               "order": 3,
-              "title": "Financial Compliance Review Copilot"
+              "title": "Financial Compliance Review Copilot",
+              "updated": "2026-10-04"
             },
             {
               "slug": "healthcare-prior-auth-assistant",
               "order": 4,
-              "title": "Healthcare Prior Authorization Assistant"
+              "title": "Healthcare Prior Authorization Assistant",
+              "updated": "2026-10-04"
             },
             {
               "slug": "legal-contract-copilot",
               "order": 5,
-              "title": "Legal Contract Review Copilot"
+              "title": "Legal Contract Review Copilot",
+              "updated": "2026-10-04"
             },
             {
               "slug": "sre-triage-agent",
               "order": 6,
-              "title": "SRE Incident Triage Agent"
+              "title": "SRE Incident Triage Agent",
+              "updated": "2026-10-04"
             },
             {
               "slug": "multi-tenant-saas-support",
               "order": 7,
-              "title": "Multi-Tenant SaaS Support Assistant"
+              "title": "Multi-Tenant SaaS Support Assistant",
+              "updated": "2026-10-04"
             },
             {
               "slug": "retail-demand-explainer",
               "order": 8,
-              "title": "Retail Demand Forecast Explanation Assistant"
+              "title": "Retail Demand Forecast Explanation Assistant",
+              "updated": "2026-10-04"
             },
             {
               "slug": "service-now-ticket-agent",
               "order": 9,
-              "title": "ServiceNow Ticket Agent"
+              "title": "ServiceNow Ticket Agent",
+              "updated": "2026-10-04"
             },
             {
               "slug": "executive-dashboard-copilot",
               "order": 10,
-              "title": "Executive Dashboard Assistant"
+              "title": "Executive Dashboard Assistant",
+              "updated": "2026-10-04"
             }
           ]
         },
@@ -69,62 +79,74 @@
             {
               "slug": "enterprise-knowledge-assistant-rag",
               "order": 1,
-              "title": "Enterprise Knowledge Assistant with RAG"
+              "title": "Enterprise Knowledge Assistant with RAG",
+              "updated": "2026-10-04"
             },
             {
               "slug": "secure-multi-tenant-ai-platform",
               "order": 2,
-              "title": "Secure Multi-Tenant AI Platform"
+              "title": "Secure Multi-Tenant AI Platform",
+              "updated": "2026-10-04"
             },
             {
               "slug": "natural-language-to-sql-analytics-assistant",
               "order": 3,
-              "title": "Natural-Language-to-SQL Analytics Assistant"
+              "title": "Natural-Language-to-SQL Analytics Assistant",
+              "updated": "2026-10-04"
             },
             {
               "slug": "ai-customer-support-automation",
               "order": 4,
-              "title": "AI Customer-Support Automation"
+              "title": "AI Customer-Support Automation",
+              "updated": "2026-10-04"
             },
             {
               "slug": "ai-system-for-an-air-gapped-environment",
               "order": 5,
-              "title": "AI System for an Air-Gapped Environment"
+              "title": "AI System for an Air-Gapped Environment",
+              "updated": "2026-10-04"
             },
             {
               "slug": "llm-evaluation-and-release-gating-platform",
               "order": 6,
-              "title": "LLM Evaluation and Release-Gating Platform"
+              "title": "LLM Evaluation and Release-Gating Platform",
+              "updated": "2026-10-04"
             },
             {
               "slug": "high-volume-batch-inference-system",
               "order": 7,
-              "title": "High-Volume Batch Inference System"
+              "title": "High-Volume Batch Inference System",
+              "updated": "2026-10-04"
             },
             {
               "slug": "tool-using-ai-agent-with-safety-controls",
               "order": 8,
-              "title": "Tool-Using AI Agent with Safety Controls"
+              "title": "Tool-Using AI Agent with Safety Controls",
+              "updated": "2026-10-04"
             },
             {
               "slug": "reliable-workflow-orchestration-system",
               "order": 9,
-              "title": "Reliable Workflow Orchestration System"
+              "title": "Reliable Workflow Orchestration System",
+              "updated": "2026-10-04"
             },
             {
               "slug": "observability-customer-facing-ai-application",
               "order": 10,
-              "title": "Observability for a Customer-Facing AI Application"
+              "title": "Observability for a Customer-Facing AI Application",
+              "updated": "2026-10-04"
             },
             {
               "slug": "configurable-platform-customer-specific-workflows",
               "order": 11,
-              "title": "Configurable Platform for Customer-Specific Workflows"
+              "title": "Configurable Platform for Customer-Specific Workflows",
+              "updated": "2026-10-04"
             },
             {
               "slug": "enterprise-chatbot-platform",
               "order": 12,
-              "title": "Enterprise Chatbot Platform"
+              "title": "Enterprise Chatbot Platform",
+              "updated": "2026-10-04"
             }
           ]
         }
@@ -141,37 +163,44 @@
             {
               "slug": "customer-focus-and-discovery",
               "order": 1,
-              "title": "Customer Focus and Discovery"
+              "title": "Customer Focus and Discovery",
+              "updated": "2026-10-08"
             },
             {
               "slug": "communication-and-influence",
               "order": 2,
-              "title": "Communication and Influence"
+              "title": "Communication and Influence",
+              "updated": "2026-10-08"
             },
             {
               "slug": "pushback-and-saying-no",
               "order": 3,
-              "title": "Pushback and Saying No"
+              "title": "Pushback and Saying No",
+              "updated": "2026-10-08"
             },
             {
               "slug": "delivery-under-pressure",
               "order": 4,
-              "title": "Delivery Under Pressure"
+              "title": "Delivery Under Pressure",
+              "updated": "2026-10-08"
             },
             {
               "slug": "ownership-standards-and-failure",
               "order": 5,
-              "title": "Ownership, Standards, and Failure"
+              "title": "Ownership, Standards, and Failure",
+              "updated": "2026-10-08"
             },
             {
               "slug": "scale-beyond-yourself",
               "order": 6,
-              "title": "Scale Beyond Yourself"
+              "title": "Scale Beyond Yourself",
+              "updated": "2026-10-08"
             },
             {
               "slug": "leading-people",
               "order": 7,
-              "title": "Leading People"
+              "title": "Leading People",
+              "updated": "2026-10-08"
             }
           ]
         }
@@ -208,7 +237,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "nl-over-governed-data",
@@ -232,7 +262,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "document-review-copilot",
@@ -256,7 +287,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "deep-research-agent",
@@ -280,7 +312,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-07"
             }
           ]
         },
@@ -311,7 +344,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "tool-using-agent-with-safety-controls",
@@ -335,7 +369,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "sre-incident-response-agent",
@@ -359,7 +394,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "sales-copilot",
@@ -383,7 +419,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "enterprise-coding-assistant",
@@ -407,7 +444,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "real-time-call-assistant",
@@ -431,7 +469,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-07"
             },
             {
               "slug": "logistics-exception-handling",
@@ -455,7 +494,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             }
           ]
         },
@@ -486,7 +526,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "high-volume-batch-pipeline",
@@ -510,7 +551,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "agent-platform-for-non-technical-users",
@@ -534,7 +576,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "consumer-scale-chat-service",
@@ -558,7 +601,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "llm-inference-serving",
@@ -582,7 +626,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             }
           ]
         },
@@ -613,7 +658,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-07"
             },
             {
               "slug": "evaluation-and-release-gating",
@@ -637,7 +683,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "observability-and-production-diagnosis",
@@ -661,7 +708,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             }
           ]
         },
@@ -692,7 +740,8 @@
                   "id": "full-pack",
                   "label": "Sources and Full Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             }
           ]
         },
@@ -715,7 +764,8 @@
                   "id": "full-design",
                   "label": "Reference Design"
                 }
-              ]
+              ],
+              "updated": "2026-10-11"
             },
             {
               "slug": "travel-agent-worked-example",
@@ -731,7 +781,8 @@
                   "id": "framework-overview",
                   "label": "12-Part Framework"
                 }
-              ]
+              ],
+              "updated": "2026-10-11"
             },
             {
               "slug": "air-gapped-ai-system",
@@ -752,7 +803,8 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/ai-system-for-an-air-gapped-environment"
+              "practice": "system-design/ai-system-for-an-air-gapped-environment",
+              "updated": "2026-10-04"
             },
             {
               "slug": "reliable-workflow-orchestration",
@@ -773,7 +825,8 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/reliable-workflow-orchestration-system"
+              "practice": "system-design/reliable-workflow-orchestration-system",
+              "updated": "2026-10-04"
             },
             {
               "slug": "configurable-platform-customer-workflows",
@@ -794,7 +847,8 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/configurable-platform-customer-specific-workflows"
+              "practice": "system-design/configurable-platform-customer-specific-workflows",
+              "updated": "2026-10-04"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -815,7 +869,8 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/enterprise-chatbot-platform"
+              "practice": "system-design/enterprise-chatbot-platform",
+              "updated": "2026-10-04"
             },
             {
               "slug": "self-adapting-agent",
@@ -831,7 +886,8 @@
                   "id": "interview-template",
                   "label": "Answer Template"
                 }
-              ]
+              ],
+              "updated": "2026-10-11"
             },
             {
               "slug": "personal-assistant-with-memory",
@@ -843,7 +899,8 @@
                   "id": "guide",
                   "label": "Interview Guide"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "production-llm-gateway",
@@ -855,7 +912,8 @@
                   "id": "guide",
                   "label": "Interview Guide"
                 }
-              ]
+              ],
+              "updated": "2026-10-11"
             }
           ]
         },
@@ -874,7 +932,8 @@
                   "id": "guide",
                   "label": "Interview Guide"
                 }
-              ]
+              ],
+              "updated": "2026-10-11"
             },
             {
               "slug": "scale-prototype-to-production",
@@ -886,7 +945,8 @@
                   "id": "guide",
                   "label": "Interview Guide"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -898,7 +958,8 @@
                   "id": "guide",
                   "label": "Interview Guide"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             },
             {
               "slug": "decomposition-classics-67-68-69",
@@ -910,11 +971,16 @@
                   "id": "guide",
                   "label": "Interview Guide"
                 }
-              ]
+              ],
+              "updated": "2026-10-04"
             }
           ]
         }
       ]
     }
-  ]
+  ],
+  "lastDayUpdated": {
+    "roadmap": "2026-10-04",
+    "rapid-revision": "2026-10-04"
+  }
 }

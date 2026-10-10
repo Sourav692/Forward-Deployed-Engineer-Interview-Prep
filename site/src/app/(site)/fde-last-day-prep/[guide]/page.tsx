@@ -14,6 +14,7 @@ import {
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { ReadingPanel } from '@/components/CaseStudyView'
 import { pageMetadata } from '@/lib/seo'
+import { Byline } from '@/components/Byline'
 
 /**
  * The Roadmap (orientation) and the Rapid Revision Guide (final rehearsal): markdown
@@ -56,6 +57,7 @@ export default async function LastDayGuidePage({ params }: { params: Promise<Par
 
       <header className="mb-10 max-w-3xl">
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{loaded.guide.title}</h1>
+        <Byline updated={loaded.updated} author={false} />
         <p className="mt-3 text-[1rem] leading-relaxed text-muted">{loaded.guide.blurb}</p>
         <div className="mt-3">
           <MetaStrip meta={meta} minutes={loaded.minutes} />

@@ -33,6 +33,7 @@ import {
   REVIEWS,
   SITE_URL,
   TRIGGER_SHEET,
+  formatDate,
   reviewLabel,
 } from '../src/lib/editorial.ts'
 import { GLOSSARY } from '../src/lib/glossary.ts'
@@ -150,7 +151,7 @@ const SITEBAR_CSS = `
   .gloss-exp { color: var(--text-2, #555); }
 </style>`
 
-function sitebar({ label, mode, prev, next, rows = [] }) {
+function sitebar({ label, mode, updated, prev, next, rows = [] }) {
   const link = (href, text) => `<a href="${href}">${escapeHtml(text)}</a>`
   const pn = [prev && link(prev.href, `← ${prev.text}`), next && link(next.href, `${next.text} →`)]
     .filter(Boolean)
@@ -160,6 +161,7 @@ function sitebar({ label, mode, prev, next, rows = [] }) {
     `<div class="fd-row">${link(LAST_DAY.href, `← ${LAST_DAY.title}`)}` +
     `<span class="fd-label">${escapeHtml(label)}</span>` +
     `<span class="fd-mode">${escapeHtml(mode)}</span>` +
+    (updated ? `<span class="fd-mode">Last updated ${formatDate(updated)}</span>` : '') +
     (pn ? `<span class="fd-pn">${pn}</span>` : '') +
     `</div>` +
     rows
@@ -197,7 +199,7 @@ function injectSitebar(html, bar, what, path) {
     .replace(/\s*<(div|p) class="source-note">[^<]*<\/\1>/, '')
 }
 
-async function transformReview(html, r, doc, oldTitle, pages) {
+async function transformReview(html, r, doc, oldTitle, pages, updated) {
   const what = `${r.dir}/${REVIEW_DOCS[doc].file}`
   const oldHeading = `Module ${r.number} — ${escapeHtml(oldTitle)}`
   const newHeading = `${reviewLabel(r.number)} — ${escapeHtml(r.title)}`
@@ -235,6 +237,7 @@ async function transformReview(html, r, doc, oldTitle, pages) {
   const bar = sitebar({
     label: `${reviewLabel(r.number)} of ${REVIEWS.length}`,
     mode: 'Revision — assumes you have already studied this topic',
+    updated,
     prev: prev && { href: hrefOf(prev, doc), text: reviewLabel(prev.number) },
     next: next && { href: hrefOf(next, doc), text: reviewLabel(next.number) },
     rows:
@@ -251,7 +254,7 @@ async function transformReview(html, r, doc, oldTitle, pages) {
   return injectSitebar(html, bar, what, hrefOf(r, doc))
 }
 
-function transformTriggerSheet(html) {
+function transformTriggerSheet(html, updated) {
   const what = TRIGGER_SHEET.file
   const oldTitle = 'FDE Interview - Trigger → Concept Cheat Sheet'
   html = replaceRequired(html, `<title>${oldTitle}</title>`, `<title>${TRIGGER_SHEET.title} · Forward Deployed</title>`, what)
@@ -292,7 +295,7 @@ function transformTriggerSheet(html) {
   html = expandAcronyms(html, new Set(), GLOSSARY)
   return injectSitebar(
     html,
-    sitebar({ label: TRIGGER_SHEET.title, mode: 'Revision — searchable index of all eighteen reviews' }),
+    sitebar({ label: TRIGGER_SHEET.title, mode: 'Revision — searchable index of all eighteen reviews', updated }),
     what,
     `${LAST_DAY.href}/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}`,
   )
@@ -304,14 +307,16 @@ function transformTriggerSheet(html) {
  * `pages` maps `track/slug` to `{ title, href }` for every published page, so the
  * learn-first and go-deeper links are checked against what actually exists.
  */
-export async function syncLastDay({ repoRoot, siteDir, outDir, pages }) {
+export async function syncLastDay({ repoRoot, siteDir, outDir, pages, updatedOf }) {
   const root = join(repoRoot, '07_Last_Day_Revision')
   if (!existsSync(root)) throw new Error(`Last-Day sources not found at ${root}`)
 
   // Markdown guides -> content/last-day/
   const guideDir = join(outDir, 'last-day')
   await mkdir(guideDir, { recursive: true })
+  const updated = {}
   for (const guide of LAST_DAY_GUIDES) {
+    updated[guide.id] = updatedOf(join(root, guide.source))
     const markdown = await readFile(join(root, guide.source), 'utf8')
     await writeFile(join(guideDir, `${guide.id}.md`), transformGuide(markdown))
   }
@@ -338,11 +343,13 @@ export async function syncLastDay({ repoRoot, siteDir, outDir, pages }) {
     if (!heading) throw new Error(`${r.dir}.md: first line is not "# Module N — Title"`)
     for (const doc of Object.keys(REVIEW_DOCS)) {
       const file = join(htmlOut, r.dir, REVIEW_DOCS[doc].file)
-      await writeFile(file, await transformReview(await readFile(file, 'utf8'), r, doc, heading[1].trim(), pages))
+      const date = updatedOf(join(root, `${r.dir}.md`), join(htmlSource, r.dir, REVIEW_DOCS[doc].file))
+      await writeFile(file, await transformReview(await readFile(file, 'utf8'), r, doc, heading[1].trim(), pages, date))
     }
   }
   const sheet = join(htmlOut, TRIGGER_SHEET.dir, TRIGGER_SHEET.file)
-  await writeFile(sheet, transformTriggerSheet(await readFile(sheet, 'utf8')))
+  const sheetDate = updatedOf(join(root, `${TRIGGER_SHEET.dir}.md`), join(htmlSource, TRIGGER_SHEET.dir, TRIGGER_SHEET.file))
+  await writeFile(sheet, transformTriggerSheet(await readFile(sheet, 'utf8'), sheetDate))
 
-  return { guides: LAST_DAY_GUIDES.length, reviews: REVIEWS.length }
+  return { guides: LAST_DAY_GUIDES.length, reviews: REVIEWS.length, updated }
 }

@@ -40,6 +40,7 @@
  * sources are absent (a deploy rooted at `site/`), the committed copy is restored.
  */
 
+import { execFileSync } from 'node:child_process'
 import { existsSync, readdirSync, statSync } from 'node:fs'
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve, sep } from 'node:path'
@@ -53,6 +54,41 @@ import {
   TRIGGER_SHEET,
   WORDS_PER_MINUTE,
 } from '../src/lib/editorial.ts'
+
+/**
+ * When each source last changed, as `YYYY-MM-DD` (audit check PQ-15), from one
+ * `git log` per call: a file's newest commit author date, which survives rebases, or
+ * today when it has uncommitted edits, so a sync run before committing agrees with
+ * CI's run after it. CI needs the full history (`fetch-depth: 0`). The returned
+ * function gives the newest date of the files it is passed, or null when git knows
+ * none of them (or there is no git), and the page then shows no date.
+ */
+export function gitDates(repoRoot) {
+  const dates = new Map()
+  try {
+    const git = (...args) => execFileSync('git', ['-c', 'core.quotePath=false', ...args], { cwd: repoRoot, encoding: 'utf8', maxBuffer: 1 << 26 })
+    let date = null
+    for (const line of git('log', '--format=%x00%as', '--name-only').split('\n')) {
+      if (line.startsWith('\0')) date = line.slice(1)
+      else if (line && date && !(dates.get(line) >= date)) dates.set(line, date)
+    }
+    const today = new Date().toLocaleDateString('en-CA')
+    const status = git('status', '--porcelain', '-z', '--untracked-files=all').split('\0')
+    for (let i = 0; i < status.length; i++) {
+      if (!status[i]) continue
+      dates.set(status[i].slice(3), today)
+      if (/^[RC]/.test(status[i])) i++ // a rename is followed by its old path
+    }
+  } catch {
+    // No git (or no history): every lookup returns null.
+  }
+  return (...files) =>
+    files
+      .map((f) => dates.get(relative(repoRoot, f).split(sep).join('/')))
+      .filter(Boolean)
+      .sort()
+      .at(-1) ?? null
+}
 
 /**
  * What `rewriteHref` returns for a repository file with no page on the site.
@@ -604,6 +640,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
   }
 
   const stats = { lesson: 0, live: 0, unlinked: 0 }
+  const updatedOf = gitDates(repoRoot)
   const ctx = { repoRoot, lessonsBySource, liveUrls, retired, stats, missing: [] }
   const manifest = []
   await rm(learnDir, { recursive: true, force: true })
@@ -637,6 +674,8 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
     await writeFile(out, body.endsWith('\n') ? body : `${body}\n`)
     entry.estMinutes = minutesFor(body)
     entry.href = lessonHref(lesson)
+    const updated = updatedOf(md)
+    if (updated) entry.updated = updated
     manifest.push(entry)
   }
 

@@ -25,7 +25,7 @@ import {
   syncCompanyPrep,
 } from './company-prep.mjs'
 import { syncLastDay } from './last-day.mjs'
-import { learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
+import { gitDates, learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
 import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
 
 const SITE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -119,7 +119,7 @@ async function readMarkdownFiles(dir) {
     .sort((a, b) => sourceNumber(a) - sourceNumber(b) || a.localeCompare(b))
 }
 
-async function syncTrack(moduleId, track, sourceUrls) {
+async function syncTrack(moduleId, track, sourceUrls, updatedOf) {
   const worksheetFiles = await readMarkdownFiles(track.worksheetDir)
   const answerKeyFiles = new Set(await readMarkdownFiles(track.answerKeyDir))
 
@@ -154,6 +154,7 @@ async function syncTrack(moduleId, track, sourceUrls) {
       // keeps the site's list free of holes that would read as missing content.
       order: index + 1,
       title: TITLE_OVERRIDES[`${track.id}/${slug}`] ?? extractTitle(worksheet, slug),
+      updated: updatedOf(join(track.worksheetDir, file), join(track.answerKeyDir, keyFile)),
     })
   }
 
@@ -246,11 +247,12 @@ async function main() {
   const warnings = []
   // Absolute source path -> URL of the page that publishes it, for the Learn sync.
   const sourceUrls = new Map()
+  const updatedOf = gitDates(REPO_ROOT)
 
   for (const mod of MODULES) {
     const tracks = []
     for (const track of mod.tracks) {
-      const result = await syncTrack(mod.id, track, sourceUrls)
+      const result = await syncTrack(mod.id, track, sourceUrls, updatedOf)
       tracks.push(result.manifest)
       warnings.push(...result.warnings)
     }
@@ -301,7 +303,7 @@ async function main() {
       }
     }
   }
-  await syncLastDay({ repoRoot: REPO_ROOT, siteDir: SITE_DIR, outDir: OUT_DIR, pages })
+  const lastDay = await syncLastDay({ repoRoot: REPO_ROOT, siteDir: SITE_DIR, outDir: OUT_DIR, pages, updatedOf })
 
   // Learn lessons last: their links point at every page published above.
   try {
@@ -315,7 +317,7 @@ async function main() {
     await rm(LEARN_SNAPSHOT_DIR, { recursive: true, force: true })
   }
 
-  const manifest = { generatedAt: new Date().toISOString(), modules }
+  const manifest = { generatedAt: new Date().toISOString(), modules, lastDayUpdated: lastDay.updated }
   await writeFile(join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2))
 
   const allTracks = modules.flatMap((m) => m.tracks)

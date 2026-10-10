@@ -57,11 +57,7 @@ export const MODES: Record<ContentMode, { label: string; summary: string }> = {
 
 export type Difficulty = 'Foundation' | 'Intermediate' | 'Advanced'
 
-/**
- * Where a page's claims come from. `lastReviewed` stays null until a page has had a
- * dated fact check against primary sources — no date is shown rather than an invented
- * one.
- */
+/** Where a page's claims come from. */
 export type SourceStatus = 'original' | 'derived' | 'sourced' | 'personal'
 
 export const SOURCE_STATUS_LABELS: Record<SourceStatus, string> = {
@@ -83,7 +79,6 @@ export type EditorialMeta = {
   /** Minutes. Reading pages compute this from word count per tab instead. */
   minutes: number | null
   sourceStatus: SourceStatus
-  lastReviewed: string | null
   /** Behavioural pages: the model answers contain `[FILL: …]` slots. */
   personalisation?: boolean
 }
@@ -91,6 +86,16 @@ export type EditorialMeta = {
 // ---------------------------------------------------------------- site and nav
 
 export const SITE_NAME = 'Forward Deployed'
+
+/** Who wrote the site's own material: the author line on lessons, cases and worksheets (PQ-15). */
+export const AUTHOR = 'Sourav Banerjee'
+
+/** "2026-09-27" -> "27 Sep 2026". Parsed by hand so the server, the browser and the sync agree. */
+export function formatDate(iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number)
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  return `${d} ${months[m - 1]} ${y}`
+}
 
 /**
  * Production origin. The one place it is written down: sitemap, robots, canonical URLs
@@ -542,7 +547,6 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
     minutes: 45,
     sourceStatus: 'original',
     // Fact-check round 2 (CONTENT-18): external claims checked against official docs.
-    lastReviewed: '2026-09-27',
   },
   'system-design': {
     mode: 'practice',
@@ -562,7 +566,6 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
     minutes: 60,
     sourceStatus: 'derived',
     // Fact-check round 2 (CONTENT-18): external claims checked against official docs.
-    lastReviewed: '2026-09-27',
   },
   'fde-competencies': {
     mode: 'behavioural',
@@ -580,7 +583,6 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
       'for each question. Use the Story Bank to find a real experience that fits the question.',
     minutes: 40,
     sourceStatus: 'personal',
-    lastReviewed: null,
     personalisation: true,
   },
 }
@@ -596,7 +598,6 @@ const CASE_STUDY_BASE: Omit<EditorialMeta, 'difficulty' | 'outcomes'> = {
     'each tab as read to track the case as one unit.',
   minutes: null,
   sourceStatus: 'sourced',
-  lastReviewed: null,
 }
 
 for (const track of [
@@ -610,7 +611,6 @@ for (const track of [
     ...CASE_STUDY_BASE,
     // Round 1 of the fact check (CONTENT-18): every high- and medium-priority claim in
     // the twenty grouped cases checked against official docs and papers.
-    lastReviewed: '2026-09-27',
     difficulty: 'Advanced',
     outcomes: [
       'Explain the system end to end at interview depth, including its dangerous constraint',
@@ -622,7 +622,6 @@ for (const track of [
 FAMILY_META['standalone-designs'] = {
   ...CASE_STUDY_BASE,
   // Fact-check round 2 (CONTENT-18).
-  lastReviewed: '2026-09-27',
   difficulty: 'Advanced',
   howToUse:
     'Read the tabs left to right; a single-document case is complete on its own. Where a ' +
@@ -637,7 +636,6 @@ FAMILY_META['standalone-designs'] = {
 FAMILY_META['judgement-and-decomposition'] = {
   ...CASE_STUDY_BASE,
   // Fact-check round 2 (CONTENT-18).
-  lastReviewed: '2026-09-27',
   difficulty: 'Intermediate',
   prerequisites: ['No specific technical prerequisite — these test reasoning, not components'],
   howToUse:
@@ -679,7 +677,6 @@ export const REVISION_META: EditorialMeta = {
     'concept is new rather than rusty, open the “learn first” link instead.',
   minutes: 12,
   sourceStatus: 'original',
-  lastReviewed: '2026-09-27',
 }
 
 export const ORIENTATION_META: EditorialMeta = {
@@ -696,7 +693,6 @@ export const ORIENTATION_META: EditorialMeta = {
   minutes: null,
   sourceStatus: 'original',
   // Fact-check round 2 (CONTENT-18).
-  lastReviewed: '2026-09-27',
 }
 
 export const STORY_BANK_META: EditorialMeta = {
@@ -715,7 +711,6 @@ export const STORY_BANK_META: EditorialMeta = {
     'before the interview.',
   minutes: null,
   sourceStatus: 'personal',
-  lastReviewed: null,
 }
 
 export const FINAL_REHEARSAL_META: EditorialMeta = {
@@ -723,7 +718,6 @@ export const FINAL_REHEARSAL_META: EditorialMeta = {
   prerequisites: ['The eighteen reviews, or equivalent study'],
   outcomes: ['Walk the full interview flow from memory in one pass'],
   // Checked in fact-check round 2 (CONTENT-18), after the reviews in round 1.
-  lastReviewed: '2026-09-27',
   howToUse:
     'Read it the evening before or the morning of the interview. Anything that does not come ' +
     'back quickly points to the review to reopen.',

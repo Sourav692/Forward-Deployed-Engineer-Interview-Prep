@@ -11,7 +11,8 @@
  *    reachable (intentional redirects such as /learn/interview-practice).
  * 3. Fails on any 4xx/5xx or network error, listing the page that linked to it.
  * 4. Fails when a sitemap page lacks exactly one canonical link to itself, an
- *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10).
+ *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10),
+ *    or when a lesson, case or worksheet lacks its "By … · Last updated …" line (PQ-15).
  * 5. Fails when a module marked `ready` or `partly` in `src/lib/curriculum.ts` has
  *    no published or live lesson in `content/learn/manifest.json` (an empty module
  *    would be dressed up as readable), mirroring `readingList()` in `src/lib/learn.ts`.
@@ -20,6 +21,7 @@
  */
 import { readFileSync } from 'node:fs'
 import { MODULES } from '../src/lib/curriculum.ts'
+import { AUTHOR } from '../src/lib/editorial.ts'
 
 const BASE = (process.env.BASE_URL ?? 'http://localhost:3307').replace(/\/$/, '')
 const CONCURRENCY = 12
@@ -28,6 +30,12 @@ const errors = []
 // ── 1. Ready modules must have something to read ─────────────────────────────
 const manifest = JSON.parse(readFileSync(new URL('../content/learn/manifest.json', import.meta.url), 'utf8'))
 const published = new Set(manifest.lessons.map((l) => l.slug))
+// Pages that carry the author and date line: synced lessons, cases and worksheets.
+const siteManifest = JSON.parse(readFileSync(new URL('../content/manifest.json', import.meta.url), 'utf8'))
+const bylined = new Set([
+  ...manifest.lessons.filter((l) => l.kind === 'sync').map((l) => l.href),
+  ...siteManifest.modules.flatMap((m) => m.tracks.flatMap((t) => t.scenarios.map((sc) => `/modules/${m.id}/${t.id}/${sc.slug}`))),
+])
 let readable = 0
 for (const mod of MODULES) {
   if (mod.status !== 'ready' && mod.status !== 'partly') continue
@@ -94,6 +102,9 @@ function headProblems(path, html) {
   if (!/<link\b[^>]*\brel="(?:shortcut )?icon"/.test(html)) problems.push('no favicon')
   const h1 = html.match(/<h1[\s>]/g)?.length ?? 0
   if (h1 !== 1) problems.push(`${h1} <h1> elements`)
+  if (bylined.has(path) && !new RegExp(`By ${AUTHOR} · Last updated \\d{1,2} \\w{3} \\d{4}`).test(html)) {
+    problems.push('no "By … · Last updated …" line')
+  }
   return problems
 }
 
