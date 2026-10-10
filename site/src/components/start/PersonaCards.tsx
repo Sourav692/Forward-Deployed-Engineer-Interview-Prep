@@ -37,7 +37,8 @@ export function PersonaCards() {
                     {i > 0 && ', '}
                     <Link href={`/start/paths/${v.id}`} className={cx('rounded-sm font-semibold text-accent underline underline-offset-2', focusRing)}>
                       {v.title.replace(/^.*: /, '')}
-                    </Link>
+                    </Link>{' '}
+                    (about {v.estHours} h)
                   </span>
                 ))}
               </p>
