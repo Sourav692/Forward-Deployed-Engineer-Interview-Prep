@@ -72,7 +72,9 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   const related = relatedModules(mod)
   const gap = mod.status === 'coming-soon' || mod.status === 'on-hold'
   const prereqModules = mod.prerequisites.map((s) => getModuleBySlug(s)).filter((m): m is CurriculumModule => !!m)
-  const firstLesson = list.main[0]
+  // A module with no lessons of its own that is not ready is planned work: its list
+  // is related reading, so there is nothing to start (audit check FV-05).
+  const firstLesson = list.seeAlsoIsMain && mod.status !== 'ready' ? undefined : list.main[0]
   const trail = trackTrail(track)
   // Section anchors exist only on Learn track pages.
   const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
