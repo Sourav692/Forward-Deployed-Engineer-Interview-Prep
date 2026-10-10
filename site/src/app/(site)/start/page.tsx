@@ -3,6 +3,7 @@ import { MODULES } from '@/lib/curriculum'
 import { learnHref } from '@/lib/learn'
 import { CurrentPathNotice } from '@/components/start/ChoosePath'
 import { Diagnostic, type ModuleRef } from '@/components/start/Diagnostic'
+import { HowItWorks } from '@/components/start/HowItWorks'
 import { PersonaCards } from '@/components/start/PersonaCards'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { LinkButton } from '@/components/ui'
@@ -10,9 +11,11 @@ import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 
 /**
- * /start (FE-10): choose a learning path, by the ten-question diagnostic or by picking
- * a persona. A static Server Component; the diagnostic and the current-path notice are
- * client islands. Choosing a path is optional: every Learn page works without one.
+ * /start (FE-10): the one onboarding page (ENH-11). Choose a learning path, by the
+ * ten-question diagnostic or by picking a persona, then read how the site works. A
+ * static Server Component; the diagnostic and the current-path notice are client
+ * islands. Choosing a path is optional: every Learn page works without one. The old
+ * /guide and /learning-map pages redirect here.
  */
 
 export const metadata: Metadata = pageMetadata({
@@ -64,6 +67,8 @@ export default function StartPage() {
           <PersonaCards />
         </div>
       </section>
+
+      <HowItWorks />
     </>
   )
 }

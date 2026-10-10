@@ -5,7 +5,7 @@
  *
  * One file on purpose. The sync scripts import it (Node strips the types) to write
  * track titles into the manifest and to rename the static Last-Day pages, and the app
- * imports it to render headers, breadcrumbs, search and the learning map. A name
+ * imports it to render headers, breadcrumbs and search. A name
  * changed here changes everywhere; a name changed anywhere else is drift, and
  * `check:content` looks for it.
  *
@@ -116,7 +116,7 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * is not listed while it has no packs (audit check FV-02); its route stays.
  */
 export const NAV = [
-  { id: 'start', label: 'Choose Your Path', href: '/start', match: ['/start', '/guide'] },
+  { id: 'start', label: 'Choose Your Path', href: '/start', match: ['/start'] },
   { id: 'learn', label: 'Learn', href: '/learn', match: ['/learn'] },
   {
     id: 'design',
@@ -148,12 +148,12 @@ export const UTILITY_NAV = [{ id: 'progress', label: 'Progress', href: '/progres
 /**
  * The footer, in order (audit checks PR-05, PR-06, IA-15). The mobile menu lists the
  * ones that have an icon (Glossary, Library, Settings), so Settings is reachable at
- * every width. The learning map sits under Library. "Report an issue" follows these.
+ * every width. "Report an issue" follows these.
  */
 export const FOOTER_NAV = [
-  { id: 'guide', label: 'How this works', href: '/guide', match: ['/guide'] },
+  { id: 'guide', label: 'How this works', href: '/start#how-it-works', match: [] },
   { id: 'glossary', label: 'Glossary', href: '/glossary', match: ['/glossary'] },
-  { id: 'library', label: 'Library', href: '/library', match: ['/library', '/learning-map'] },
+  { id: 'library', label: 'Library', href: '/library', match: ['/library'] },
   { id: 'credits', label: 'Credits', href: '/library/credits', match: ['/library/credits'] },
   { id: 'about', label: 'About', href: '/about', match: ['/about'] },
   { id: 'changelog', label: 'Changelog', href: '/changelog', match: ['/changelog'] },
@@ -496,41 +496,6 @@ export const LAST_DAY_GUIDES = [
       'components, retrieval, agents and operations — for the last read before the loop.',
   },
 ] as const
-
-// ---------------------------------------------------------------- curriculum roadmap
-
-/**
- * The 15-part roadmap mixes topics, activities, libraries and career work, so it is
- * shown in these phases rather than as one numbered list. Keys are module numbers.
- */
-export const ROADMAP_PHASES: { title: string; blurb: string; modules: number[] }[] = [
-  { title: 'Core topics', blurb: 'What an FDE system-design answer has to cover.', modules: [1, 2, 3, 4, 5, 9] },
-  { title: 'Practice and assessment', blurb: 'Rehearsing under interview conditions.', modules: [6, 7, 8] },
-  { title: 'Projects and reference', blurb: 'Worked systems to read and build.', modules: [15, 10, 11] },
-  { title: 'Interview and career', blurb: 'The non-technical half of the loop.', modules: [14, 12, 13] },
-]
-
-/**
- * Where each roadmap module's topic is covered today, as review numbers. Planned modules
- * are not empty-handed: the reviews and case studies already cover much of their ground.
- */
-export const ROADMAP_COVERAGE: Record<number, number[]> = {
-  1: [1, 2, 3],
-  2: [4, 9, 10, 11, 12, 17],
-  3: [5, 6, 7, 8],
-  4: [8, 13, 16],
-  5: [10, 11, 12, 15],
-  6: [],
-  7: [18],
-  8: [18],
-  9: [7, 14],
-  10: [],
-  11: [],
-  12: [18],
-  13: [],
-  14: [],
-  15: [],
-}
 
 // ---------------------------------------------------------------- scorecard remediation
 

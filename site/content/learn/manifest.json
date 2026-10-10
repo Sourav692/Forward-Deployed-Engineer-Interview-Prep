@@ -10,31 +10,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/01_How_the_Material_Is_Built.md",
       "estMinutes": 5,
       "href": "/learn/orientation/how-the-platform-works/how-the-material-is-built",
-      "updated": "2026-10-05"
-    },
-    {
-      "slug": "choose-a-reading-path",
-      "title": "Choose a Reading Path",
-      "track": "orientation",
-      "module": "how-the-platform-works",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/02_Choose_a_Reading_Path.md",
-      "estMinutes": 4,
-      "href": "/learn/orientation/how-the-platform-works/choose-a-reading-path",
-      "updated": "2026-10-05"
-    },
-    {
-      "slug": "find-material-by-interview-area",
-      "title": "Find Material by Interview Area",
-      "track": "orientation",
-      "module": "how-the-platform-works",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.1_How_the_Platform_Works/03_Find_Material_by_Interview_Area.md",
-      "estMinutes": 5,
-      "href": "/learn/orientation/how-the-platform-works/find-material-by-interview-area",
-      "updated": "2026-10-05"
+      "updated": "2026-10-11"
     },
     {
       "slug": "three-roles-three-questions",

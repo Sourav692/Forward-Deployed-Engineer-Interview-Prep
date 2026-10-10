@@ -91,12 +91,7 @@ export default async function LastDayReviewPage() {
       </section>
 
       <section className="mt-14">
-        <div className="mb-5 flex items-baseline justify-between gap-4">
-          <h2 className="text-[1.375rem] font-semibold tracking-[-0.014em]">The {REVIEWS.length} reviews</h2>
-          <Link href="/learning-map" className="text-[0.8125rem] font-medium text-accent hover:text-accent-hover">
-            How they map to practice and case studies →
-          </Link>
-        </div>
+        <h2 className="mb-5 text-[1.375rem] font-semibold tracking-[-0.014em]">The {REVIEWS.length} reviews</h2>
 
         <div className="grid gap-4 sm:grid-cols-2">
           {REVIEWS.map((r, i) => {

@@ -8,7 +8,11 @@
 export const RENAMED_T0: Record<string, string | null> = {
   // T0.1 consolidated into three lessons (.website_spec/consolidation/T0-T1-T9.md).
   'how-the-platform-works/how-to-use-this-handbook': 'how-the-platform-works/how-the-material-is-built',
-  'how-the-platform-works/repository-coverage-guide': 'how-the-platform-works/find-material-by-interview-area',
+  'how-the-platform-works/repository-coverage-guide': 'how-the-platform-works/how-the-material-is-built',
+  // /start became the one onboarding page (ENH-11): the reading-path and folder-map
+  // lessons were retired, and the kept lesson links to /start.
+  'how-the-platform-works/choose-a-reading-path': 'how-the-platform-works/how-the-material-is-built',
+  'how-the-platform-works/find-material-by-interview-area': 'how-the-platform-works/how-the-material-is-built',
   // T0.2 consolidated into four lessons.
   'the-fde-role/the-three-roles': 'the-fde-role/three-roles-three-questions',
   'the-fde-role/senior-fde-day-to-day': 'the-fde-role/a-senior-fdes-day',

@@ -1,12 +1,14 @@
 # T0.1 How the Platform Works: Consolidated Lessons
 
-These three lessons are the site's teaching copy of module T0.1 "How the platform works and choosing a path". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/orientation/how-the-platform-works`.
+These lessons are the site's teaching copy of module T0.1 "How the platform works and choosing a path". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/orientation/how-the-platform-works`.
 
 | # | Lesson | Site slug |
 |---|---|---|
 | 1 | [How the Material Is Built](01_How_the_Material_Is_Built.md) | `how-the-material-is-built` |
-| 2 | [Choose a Reading Path](02_Choose_a_Reading_Path.md) | `choose-a-reading-path` |
-| 3 | [Find Material by Interview Area](03_Find_Material_by_Interview_Area.md) | `find-material-by-interview-area` |
+| 2 | [Choose a Reading Path](02_Choose_a_Reading_Path.md) | `choose-a-reading-path` (retired) |
+| 3 | [Find Material by Interview Area](03_Find_Material_by_Interview_Area.md) | `find-material-by-interview-area` (retired) |
+
+Lessons 2 and 3 are no longer published (11 October 2026). The site's `/start` page is the one place to choose a path, and "path" there means the role paths only, so the three reading paths in lesson 2 would contradict it. Lesson 3 maps the repository's folders, which site visitors cannot open. Their old URLs redirect to lesson 1, which links to `/start`.
 
 ## Sources
 

@@ -209,6 +209,16 @@ test('retired /demo URLs redirect home in one hop', async ({ page }) => {
   }
 })
 
+test('the old onboarding pages redirect to /start in one hop (ON-01)', async ({ page }) => {
+  for (const path of ['/guide', '/learning-map']) {
+    const res = await page.request.get(path, { maxRedirects: 0 })
+    expect(res.status()).toBe(308)
+    expect(res.headers().location).toBe('/start')
+  }
+  await page.goto('/start')
+  await expect(page.getByRole('heading', { name: 'How the Site Works' })).toBeVisible()
+})
+
 test('first visit: no module shows a blocked suggestion on paths and hubs (FV-01)', async ({ page }) => {
   for (const path of ['/start/paths/fde', '/design', '/interview']) {
     await page.goto(path)

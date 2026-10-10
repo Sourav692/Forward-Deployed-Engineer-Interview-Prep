@@ -314,7 +314,7 @@ for (const mod of manifest.modules) {
 
 const SITE_ROOT = resolve(import.meta.dirname, '..')
 const pages = new Set<string>()
-const routes = new Set<string>(['/', '/favicon.ico', '/guide', '/learning-map', '/glossary', '/fde-last-day-prep'])
+const routes = new Set<string>(['/', '/favicon.ico', '/start', '/glossary', '/fde-last-day-prep'])
 for (const g of LAST_DAY_GUIDES) routes.add(`/fde-last-day-prep/${g.id}`)
 routes.add(STORY_BANK.href)
 const tabsByPage = new Map<string, string[]>()
@@ -351,7 +351,7 @@ for (const mod of manifest.modules) {
 }
 
 // Every cross-link names a page that exists, and every practice or case page is reachable
-// from at least one review — a page no review points to is missing from the learning map.
+// from at least one review — a page no review points to is never suggested from the final-week review.
 const cited = new Set<string>()
 for (const r of REVIEWS) {
   for (const ref of [...r.learnFirst, ...r.goDeeper]) {
@@ -370,9 +370,9 @@ for (const mod of manifest.modules) {
     for (const s of track.scenarios) {
       const key = `${track.id}/${s.slug}`
       // Company packs are intentionally entered directly from Company Prep; they are
-      // not part of the general FDE learning map or its cross-company review pages.
+      // not part of the general FDE review sequence or its cross-company review pages.
       if (mod.id !== '16-company-oriented-prep' && !cited.has(key)) {
-        failures.push(`${key}: not linked from any review in REVIEWS, so it is missing from the learning map`)
+        failures.push(`${key}: not linked from any review in REVIEWS, so no final-week review points to it`)
       }
     }
   }

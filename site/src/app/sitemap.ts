@@ -28,8 +28,6 @@ const STATIC_PAGES = [
   '/library/credits',
   '/about',
   '/changelog',
-  '/guide',
-  '/learning-map',
   '/glossary',
   '/fde-last-day-prep',
 ]

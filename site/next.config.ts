@@ -137,6 +137,9 @@ const nextConfig: NextConfig = {
       ...companyPrepRedirects,
       ...retiredModuleRedirects(),
       ...behaviouralRedirects,
+      // /start is the one onboarding page (ENH-11); the two pages it absorbed redirect.
+      { source: '/guide', destination: '/start', permanent: true },
+      { source: '/learning-map', destination: '/start', permanent: true },
       // Hubs have no index page of their own: /interview lists them (FE-18).
       { source: '/interview/hubs', destination: '/interview', permanent: false },
       // The /demo prototype was retired once production covered it (FE-19). Its

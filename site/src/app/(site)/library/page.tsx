@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata({
   path: '/library',
   title: 'Library',
   description:
-    'Reference pages for the whole site: the glossary, the learning map, how the site works, and credits for the sources it draws on.',
+    'Reference pages for the whole site: the glossary, credits for the sources it draws on, who writes the site and what has changed.',
 })
 
 const ITEMS = [
@@ -21,19 +21,19 @@ const ITEMS = [
     note: 'Every acronym and term the site uses, in plain spoken words, with the line to say in an interview.',
   },
   {
-    href: '/learning-map',
-    title: 'Learning Map',
-    note: 'How the practice, case studies and final-week review fit together, and what to open when.',
-  },
-  {
-    href: '/guide',
-    title: 'How to Use This Site',
-    note: 'What each kind of page is for, how progress is saved in this browser, and where the material comes from.',
-  },
-  {
     href: '/library/credits',
     title: 'Credits',
     note: 'The sources behind the lessons and how each one is credited.',
+  },
+  {
+    href: '/about',
+    title: 'About',
+    note: 'Who writes the site, how the material is made, and how to report a problem.',
+  },
+  {
+    href: '/changelog',
+    title: 'Changelog',
+    note: 'What has changed on the site, newest first.',
   },
 ]
 
@@ -41,7 +41,7 @@ export default function LibraryPage() {
   return (
     <div className="py-12">
       <AreaHeader eyebrow="Library" title="Library">
-        <p>Reference pages that support every area: terms, maps, how the site works, and where the material comes from.</p>
+        <p>Reference pages that support every area: terms, where the material comes from, and what has changed.</p>
       </AreaHeader>
       <div className="mt-8 -mx-2 max-w-3xl">
         <LinkList items={ITEMS} columns={1} />
