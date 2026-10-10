@@ -114,3 +114,19 @@ export type CurriculumLesson = {
    */
   sections?: { include?: string[]; exclude?: string[] }
 }
+
+/**
+ * An interview topic hub (DATA-07), shown at `/interview/hubs/<slug>`. A hub is an index
+ * onto practice that already exists: it lists lessons and modules by slug, so their
+ * titles and URLs come from the curriculum and never drift. It holds no question text.
+ */
+export type InterviewHub = {
+  /** URL id. Never change one after it ships. */
+  slug: string
+  title: string
+  summary: string
+  /** Published lesson slugs to practise with, interview-question lessons first. */
+  practice: string[]
+  /** Module slugs to study when practice shows a gap. */
+  modules: string[]
+}

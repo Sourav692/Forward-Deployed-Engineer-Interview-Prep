@@ -15,7 +15,7 @@
  *   erased; runtime imports must be data-only modules imported with an explicit
  *   `.ts` extension (the per-track RENAMED files in ./consolidation/).
  */
-import type { CurriculumLesson, CurriculumModule, CurriculumTrack } from './curriculum-types'
+import type { CurriculumLesson, CurriculumModule, CurriculumTrack, InterviewHub } from './curriculum-types'
 import { RENAMED_T0 } from './consolidation/t0.ts'
 import { RENAMED_T1 } from './consolidation/t1.ts'
 import { RENAMED_T2 } from './consolidation/t2.ts'
@@ -1707,6 +1707,90 @@ export const RETIRED_MODULES: Record<string, string> = {
   'hiring-manager-round': 'building-the-story-bank',
   'executive-communication': 'telling-the-build-story',
 }
+
+/**
+ * Interview topic hubs (DATA-07): five ways into existing practice, grouped by what the
+ * interviewer tests. Practice lists point at each module's "Practise … Interview
+ * Questions" lesson and at the live worksheets, mocks and final-week guides; modules are
+ * where to study a gap. `check:curriculum` fails on an unknown or unpublished slug.
+ */
+export const INTERVIEW_HUBS: InterviewHub[] = [
+  {
+    slug: 'technical-foundations',
+    title: 'Technical Foundations',
+    summary: 'Core engineering questions on code, data, APIs and infrastructure that every applied AI loop still tests.',
+    practice: ['practise-api-and-backend', 'practise-deployment', 'module-12-reliability-and-failure-handling'],
+    modules: ['apis-and-backend', 'cloud-containers-deployment', 'distributed-systems-essentials'],
+  },
+  {
+    slug: 'ai-and-machine-learning',
+    title: 'AI and Machine Learning',
+    summary: 'Depth questions on models, retrieval, prompting, agents, evaluation and safety for LLM-based products.',
+    practice: [
+      'practise-rag-fundamentals',
+      'practise-chunking-and-indexing',
+      'practise-retrieval',
+      'practise-framework-interview-questions',
+      'practise-agent-loop-interview-questions',
+      'practise-tool-design-interview-questions',
+      'practise-context-and-orchestration-interview-questions',
+      'practise-memory-and-state',
+      'practise-robust-agents',
+      'practise-multi-agent-systems',
+      'practise-agentic-workflow-platforms',
+      'practise-evaluation-and-release-gates',
+    ],
+    modules: ['how-llms-behave', 'rag-from-first-principles', 'the-tool-calling-loop', 'evaluation-and-release-gates'],
+  },
+  {
+    slug: 'ai-systems-design',
+    title: 'AI Systems Design',
+    summary: 'Whiteboard-style design prompts that test end-to-end architecture, scale, reliability, security and cost.',
+    practice: [
+      'practise-enterprise-rag',
+      'practise-security-and-tenancy',
+      'practise-observability-and-diagnosis',
+      'practise-cost-and-latency',
+      'practise-scaling-and-reliability',
+      'practise-agentops',
+      'internal-knowledge-assistant-mock-interview',
+      'agentic-support-workflow-mock-interview',
+      'financial-compliance-and-red-team-mock-interview',
+      'sre-triage-agent-mock-interview',
+      'multi-tenant-saas-assistant-mock-interview',
+    ],
+    modules: ['design-framework', 'sixty-minute-whiteboard', 'classic-ai-designs', 'scenario-library', 'case-study-worksheets'],
+  },
+  {
+    slug: 'forward-deployed-engineering',
+    title: 'Forward Deployed Engineering',
+    summary: 'Customer-facing scenarios that test discovery, scoping, delivery under constraints and proving business impact.',
+    practice: [
+      'practise-fde-role',
+      'practise-decomposition-interview-cases',
+      'practise-the-two-week-delivery-round',
+      'module-01-fde-problem-decomposition',
+      'module-18-end-to-end-fde-interview-execution',
+    ],
+    modules: ['customer-discovery', 'scoping-an-fde-project', 'delivery-stages-and-gates', 'judgement-cases', 'adoption-and-impact'],
+  },
+  {
+    slug: 'behavioural-and-communication',
+    title: 'Behavioural and Communication',
+    summary: 'Story-based and explanation questions that test judgement, ownership and how clearly you communicate.',
+    practice: [
+      'story-bank',
+      'customer-focus-and-discovery',
+      'communication-and-influence',
+      'pushback-and-saying-no',
+      'delivery-under-pressure',
+      'ownership-standards-and-failure',
+      'scale-beyond-yourself',
+      'leading-people',
+    ],
+    modules: ['telling-the-build-story', 'building-the-story-bank'],
+  },
+]
 
 /** Credit for the T5.3 consolidated lessons that summarise ideas from the third-party Chapter 23. */
 const T5_3_CH23_CREDIT =
