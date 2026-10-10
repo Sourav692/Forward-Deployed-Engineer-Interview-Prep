@@ -452,16 +452,19 @@ for (const path of staticFiles) {
   }
 }
 
-// PQ-07: the repository is private, so a link into it 404s for every visitor, and the
-// case index spreadsheet is a build file visitors cannot open.
+// PQ-07: the repository is private, so a link into it 404s for every visitor. The other
+// phrases are authoring notes (the case index spreadsheet, how a tutorial was regenerated,
+// which viewer draws a diagram) that mean nothing to a visitor.
 const PRIVATE_REPO = 'github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep'
+const BUILD_ARTEFACTS = ['CASE_STUDY_INDEX.xlsx', 'Interview-ready v2', 'for a viewer that draws Mermaid']
 for (const dir of [CONTENT, join(SITE_ROOT, 'public', 'fde-last-day-prep')]) {
   for (const file of await readdir(dir, { recursive: true })) {
     if (!/\.(md|json|html)$/.test(file)) continue
     const text = await readFile(join(dir, file), 'utf8')
     if (text.includes(PRIVATE_REPO)) failures.push(`${relative(SITE_ROOT, join(dir, file))}: links to the private repository`)
-    if (file.endsWith('.md') && text.includes('CASE_STUDY_INDEX.xlsx')) {
-      failures.push(`${relative(SITE_ROOT, join(dir, file))}: names CASE_STUDY_INDEX.xlsx, a build file`)
+    if (!file.endsWith('.md')) continue
+    for (const phrase of BUILD_ARTEFACTS) {
+      if (text.includes(phrase)) failures.push(`${relative(SITE_ROOT, join(dir, file))}: contains "${phrase}", a build artefact`)
     }
   }
 }
