@@ -42,7 +42,9 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
   const base = path.variantOf ? getPathById(path.variantOf) : undefined
   const variants = pathVariants(path.id)
   const start = getModuleBySlug(path.startModule)
-  const tracks = getTracks().map((t) => ({ track: t, modules: trackModules(t) }))
+  // In code order (T1.3 before T1.4), whatever the curriculum's section grouping (IA-12).
+  const byCode = (a: { code: string }, b: { code: string }) => a.code.localeCompare(b.code, 'en', { numeric: true })
+  const tracks = getTracks().map((t) => ({ track: t, modules: [...trackModules(t)].sort(byCode) }))
   const counts = FLAG_ORDER.map((f) => ({ f, n: Object.values(path.moduleFlags).filter((x) => x === f).length }))
 
   return (

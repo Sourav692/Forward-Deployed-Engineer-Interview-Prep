@@ -11,6 +11,7 @@ const FLAG_CLASS: Record<ModuleFlag, string> = {
   required: 'border-accent/50 bg-accent-soft text-accent',
   recommended: 'border-border-strong bg-surface text-text',
   optional: 'border-dashed border-border-strong bg-transparent text-muted',
+  later: 'border-dotted border-border-strong bg-transparent text-muted',
   skip: 'border-dashed border-border bg-transparent text-subtle',
 }
 

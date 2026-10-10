@@ -362,3 +362,19 @@ for (const path of ['/no-such-page', '/learn/no-such-track', '/modules/15-fde-ca
     for (const hub of ['/learn', '/design', '/practice', '/interview']) expect(html).toContain(`href="${hub}"`)
   })
 }
+
+// IA-12 and ON-05: a path lists modules in code order and never asks for one with no lessons.
+test('path page: modules in code order, gap modules flagged Later', async ({ page }) => {
+  await page.goto('/start/paths/beginner')
+  // Each module row starts with its code in a span.
+  const rows = page.locator('main ol > li > ul > li')
+  const codes = await rows.evaluateAll((items) => items.map((li) => li.querySelector('span')?.textContent ?? ''))
+  const t1 = codes.filter((c) => c.startsWith('T1.'))
+  expect(t1).toEqual([...t1].sort((a, b) => a.localeCompare(b, 'en', { numeric: true })))
+  expect(t1.indexOf('T1.3')).toBeGreaterThan(-1)
+  expect(t1.indexOf('T1.3')).toBeLessThan(t1.indexOf('T1.4'))
+  const sql = rows.filter({ has: page.getByText('T1.3', { exact: true }) })
+  // PathFlag renders "Flag:" for screen readers before the visible label.
+  await expect(sql).toContainText(/Flag:\s*Later/)
+  await expect(sql).not.toContainText(/Flag:\s*Required/)
+})
