@@ -70,6 +70,3 @@ The image never changes between environments. Only the injected values do, which
 3. **How do dev, staging and production differ in this setup?**
    Only in the injected values. The code and the image are identical; each environment has its own secrets.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules), Topic 3: "How do I package a FastAPI GenAI app into Docker?" and "How do I manage API keys, endpoints and database settings securely?".

@@ -181,6 +181,3 @@ The companion project's 12 tests cover the loop, the guard, the gate, the memo, 
 3. **How does `RuleBasedBrain` know which step of a multi-step plan it is on?**
    It counts the observations so far: none means search, one means close the first hit, two means report.
 
-## References
-
-**Sources:** `04_Tool_Calling_Loop_From_Scratch.md` (FDE Handbook, LLM Systems Foundations): "Why this matters", "The two pieces of state", "The agent", "The loop, line by line", "A run, traced", "The brain contract, and swapping in an LLM", "In the code", "Interview lens" and "Checkpoint". `03_What_An_Agent_Actually_Is.md`: "Component 2 — The brain".

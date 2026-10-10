@@ -104,6 +104,3 @@ Each step maps to one decision: same model, right metric, filter during search, 
 3. **What is the risk of post-filtering?**
    Good results outside the first top-k are filtered away unseen, so a strict filter can leave few or no hits.
 
-## References
-
-**Sources:** `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): "Dense (vector) search", "Lexical (BM25) search", and "The point". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 5 "Vector Database". `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 3 "How do different vector DBs actually do the approximate nearest neighbour (ANN) search?" and "How do metadata filtering and hybrid search differ across vector DBs?". `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`: Topic 3 "How do vector databases search so fast?" and "What affects vector search speed at scale?". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.2 "Embeddings and cosine similarity", §1.3 "Vector stores", and the embedding-model and Chroma distance gotchas. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: the router metadata-filter gotcha.

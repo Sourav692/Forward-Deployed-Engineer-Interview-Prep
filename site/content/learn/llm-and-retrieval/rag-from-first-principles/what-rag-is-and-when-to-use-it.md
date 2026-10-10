@@ -102,6 +102,3 @@ The example shows the lesson's shape. The idea is simple, and the engineering li
 3. **In the Vertex Financial case, why is "the same answer with bits blacked out" the wrong mental model?**
    Each role is entitled to different evidence, so each gets a genuinely different answer. Retrieval must be shaped by permissions before anything is found.
 
-## References
-
-**Sources:** `01_What_RAG_Actually_Is.md` (FDE Handbook): "Why this matters", "The idea in one diagram", "Why 'enterprise' changes the problem", "Interview lens" and "Checkpoint". `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Overview and Topic 9 "How does the generator use retrieved context to give a grounded answer?". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §5.1 question on choosing between prompting, RAG and fine-tuning.

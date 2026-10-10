@@ -71,6 +71,3 @@ At midday the FDE meets compliance and agrees the zero-leak gate. In the afterno
 3. **The harness flags a leak that turns out to be stale test data. What do you do?**
    Trace it, then report it openly, false alarm included. Transparency builds more trust than a clean track record.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md`: "Morning", "Mid-morning", "Midday", "Afternoon" and "Late afternoon / evening". The worked example combines details from those sections into one day.

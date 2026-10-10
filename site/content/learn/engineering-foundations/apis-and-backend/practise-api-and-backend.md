@@ -94,6 +94,3 @@ A line worth keeping, in paraphrase of the handbook's interview lens: start with
 3. **In a full API design, why mention the grade check before streaming?**
    Because the decision to answer must be settled before the first token; retracting a streamed answer is worse than a clean refusal.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules): question headings in FastAPI Architecture and LLM Serving APIs. `03_Caching_Streaming_CICD_BuildVsBuy.md` (FDE Handbook, Cross-Cutting Concerns): "Interview lens", §1, §2 and §7.

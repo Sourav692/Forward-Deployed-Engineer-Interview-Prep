@@ -106,6 +106,3 @@ Every sentence names a generic concept the interviewer already heard, then the p
 3. **Describe the rollback bug that happens when only half the procedure is done.**
    Re-pointing the alias without updating the endpoint config leaves live traffic on the bad version; updating only the endpoint leaves the alias pointing at the old version.
 
-## References
-
-**Sources:** `02_AgentOps_On_Databricks.md` (FDE Handbook, AgentOps and platform): §1 to §6, the mapping table, Interview lens and Checkpoint. `04-agentops-on-databricks.md` (Production and Platform Judgment): §1 to §6, quick mapping table and "What to say" (the duplicate source, merged).

@@ -75,6 +75,3 @@ The account-brief assistant goes first: measurable outcome, available data, mana
 3. **Should an operations agent restart production services on its own?**
    Not at first. Move from read-only investigation to suggested remediation to human-approved execution. Allow autonomy only for low-risk, reversible operations, and only after evidence.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: cases 2 "Customer-Support Agent" (trade-offs and the 80% follow-up), 3 "Claims-Processing Assistant", 4 "AI-Powered Sales or Account-Research Assistant", 12 "Deploying AI in a Highly Regulated Industry", 14 "AI-Powered Operations or Incident-Response Assistant", 16 "Prioritize AI Use Cases for a Large Enterprise" and 18 "Build an AI System When the Customer's Data Is Poor".

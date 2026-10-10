@@ -87,6 +87,3 @@ The playbook frames the conversation with the sponsor the same way. The pilot sh
 3. **Why is "never optimise the model in isolation" a rule rather than a preference?**
    Latency and cost are sums over many components. If retrieval or tools dominate, a faster or cheaper model barely moves the total.
 
-## References
-
-**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §0 the two equations, §1 why cost and latency matter (executive concerns, prototype versus production), §14 "pilot failed on latency", §18 senior mental model. `CORE_8_DRIVERS_MEMORIZE.md`: the request-path ordering. Playbook content is summarised in new words.

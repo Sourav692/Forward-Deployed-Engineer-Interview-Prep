@@ -78,6 +78,3 @@ The substance is identical in all three. Only the order and the depth change, an
 3. **Where does STAR fit among the three formats?**
    Inside any of them. The deep-dive's second segment is a STAR narrative.
 
-## References
-
-**Sources:** `01_Deep_Dive_And_Conversational_Formats.md` (FDE Handbook, Telling the Story): "Why this matters", "Choosing the format" and "Building your own". The handbook's worked narratives in `11_Telling_The_Story/stories/` show each format fully dressed.

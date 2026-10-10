@@ -157,6 +157,3 @@ Three decisions, one loop and one destructive flag produced a two-step plan nobo
 3. **Finish the sentence: "The hard part of agents is not the loop, it is ___."**
    Trust: making sure the agent does only what was meant, even when the brain is wrong, a request is retried or the server crashes.
 
-## References
-
-**Sources:** `03_What_An_Agent_Actually_Is.md` (FDE Handbook, LLM Systems Foundations): "Why this matters", "The definition", "Component 1 — Tools", "Component 2 — The brain", "Component 3 — The loop", "The hard part is not the loop", "Interview lens" and "Checkpoint". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.1 "ReAct", §1.13 "Workflow patterns" and the §3 trade-off "Workflow (deterministic) vs. agent".

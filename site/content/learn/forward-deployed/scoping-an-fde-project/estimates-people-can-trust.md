@@ -81,6 +81,3 @@ Note a disagreement inside the source. The guide's later booking case study, in 
 3. **The scope grows mid-project. What should the lead say?**
    That it can be added, but it costs time, people or another item. Then re-estimate and explain the change as added work.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 2 Topic 2.2 ("Do not hide uncertainty behind confidence"), Module 3 Topic 3.3 "Turn scope into an estimate people can trust" and Module 7 Topic 7.4 "How to speak clearly when you are not certain", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.

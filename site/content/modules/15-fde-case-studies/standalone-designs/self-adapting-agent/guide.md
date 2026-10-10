@@ -406,23 +406,6 @@ The four verbs from the cost playbook generate the same answer. Measure, by attr
 
 ## References
 
-All paths are relative to the repository root unless stated.
-
-| Section | Source |
-|---|---|
-| Case prompt (#80), 14 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompt 15; section 3 Tier 2 probes; section 4 "The Framework That Wins the Round" |
-| 1, 6, 8, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md` (four learning surfaces, dynamic few-shot formula, Reflexion's three conditions, skill promotion gate and its numbers, when parameter updates earn their cost, data flywheel, the 94% case) |
-| 7 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch07_knowledge_memory_retrieval.md` (write policy, typed facts, supersession, the retracted-vendor case, decay and consolidation) |
-| 3, 11 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md` (sample-size formula, CI release gate, the 79%-to-81% segment collapse, trajectory assertions) |
-| 12, 13 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md` (tool gateway, approval gate, provenance tagging, cost governor, pattern audit) |
-| 5 | `99_Reference_Library/FDE_Interview_Book/3. GenAI_Architecture_Pattern.md` (skills and dynamic capability loading, trigger counterexamples, triggering evaluated separately) |
-| 6 | `02_Core/05_AI_Agent_Fundamentals/5. Agent Pattern/03_Reflection/02_Reflexion_Agents.ipynb` and `README_Reflexion_Agents.md` |
-| 8 | `03_Advanced/07_Advanced_Agentic_Systems/Memory_and_State/Agentic_Memory_Architectures/03_Voyager_Skill_Library.ipynb`, `04_Agent_Workflow_Memory.ipynb`; `.../LangGraph/01_Memory/memory/07_Long_Term_Procedural_Memory_SQLite.ipynb` (human-approved procedures, versioning and rollback) |
-| 9 | `03_Advanced/10_Alternative_Agent_Frameworks/DSPy/context-engineering-dspy/` (declared prompts, evaluation, pairwise Elo); it has no optimiser module, so section 9 is general knowledge |
-| 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md` (the four verbs) |
-| Related packs | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/G03_Tool_Using_Agent_With_Safety_Controls.md` (gateway and approvals), `G13_Evaluation_And_Release_Gating.md` (release gate), `G19_Model_Development_And_Post_Training.md` (rung 5 in depth) |
-| 2, 3, 4, 5, 9, 12, 14, 15, and every item marked own construction | Built for this page; all sizing numbers are assumptions |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [Prompt caching — Claude API docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — the cache is a prefix; a change invalidates that level and everything after it
@@ -434,3 +417,4 @@ All paths are relative to the repository root unless stated.
 - [MIPROv2 — DSPy docs](https://dspy.ai/api/optimizers/MIPROv2/) — optimisers that search instructions and few-shot examples against a metric
 - [Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs (Ovadia et al., 2023)](https://arxiv.org/abs/2312.05934) — retrieval beats unsupervised fine-tuning for new knowledge
 - [Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations? (Gekhman et al., 2024)](https://arxiv.org/abs/2405.05904) — new facts are learned slowly through fine-tuning and raise hallucination
+

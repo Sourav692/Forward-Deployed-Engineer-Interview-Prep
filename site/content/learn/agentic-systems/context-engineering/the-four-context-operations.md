@@ -75,6 +75,3 @@ Each operation answered a different question. What must survive? What does this 
 3. **An agent's cost spikes on long conversations, and it also forgets early facts. What single cause fits both?**
    Automatic summarisation firing silently past a threshold. Trace the summarisation event to confirm.
 
-## References
-
-**Sources:** `ch06_orchestration_context_engineering.md` (*Cracking Agentic AI System Design Interviews*, Ch. 6: "Context Engineering: The Four Operations", summarised in our own words). `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §2 gotcha "Summarization middleware runs silently".

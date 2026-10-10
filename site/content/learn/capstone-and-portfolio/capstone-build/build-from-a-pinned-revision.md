@@ -64,6 +64,3 @@ They check the provenance table: that legacy path maps to tool-calling foundatio
 3. **What changes when the companion code is revalidated, and what stays?**
    The verified revision and the current links are updated together. The legacy provenance revision stays unchanged.
 
-## References
-
-**Sources:** `00_Start_Here/COMPANION_COURSE.md`: the introduction, "Current canonical project mappings" and "Frozen source provenance". `01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md`: "Grounded in implementations".

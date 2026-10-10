@@ -107,6 +107,3 @@ The answer never says "we are careful". It names a gate at each step, which is w
 3. **What is the difference between the AWS and Databricks pipelines' release gates?**
    The Databricks build gates on evaluation, `no_leak` and SQL assertions; the AWS project built none. That reflects what each project chose to build, not the platform.
 
-## References
-
-**Sources:** `01_Prompt_Versioning_Rollout_Rollback.md`, `02_AgentOps_On_Databricks.md`, `03_Enterprise_RAG_On_Databricks.md`, `04_Multi_Channel_And_HITL_Escalation.md`, `05_Red_Teaming.md` and `06_Infra_And_CICD.md` (FDE Handbook, AgentOps and platform): Checkpoints and Interview lens sections. `04-agentops-on-databricks.md` and `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): "What to say". `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §4 questions 5 and 7 (external answers not reused), §7 skeptical staff engineer questions.

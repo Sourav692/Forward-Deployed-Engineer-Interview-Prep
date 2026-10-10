@@ -99,6 +99,3 @@ The strong design puts a tenant-aware gateway in front. Each request is authenti
 3. **Spend hit a week's budget in one day after launch. What do you do first?**
    Trip the spend circuit breaker, find the top spend paths, cap output, pause batch and evaluation jobs, cut premium routing and apply quotas. Keep cheap safe paths online, then run root-cause analysis.
 
-## References
-
-**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §13 budgeting and guardrails, §14 customer communication and the six-step narrative, §17 pre-production readiness. `CRAM_SHEET_S15_S16.md`: incident 5, cases 4 and 7. `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §1.13 token budgeting, §2 gotcha "Token budget checks an estimate, not a bill", §4 question 10 (external answer not reused), §5.1 question 5, §5.2 question 5. Playbook content is summarised in new words.

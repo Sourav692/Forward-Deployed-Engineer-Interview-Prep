@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { SITE_NAME } from './editorial'
+import { SITE_NAME, SITE_URL } from './editorial'
 
 /**
  * Search-engine helpers (plan §11, SEO-01): the production origin, canonical and Open
  * Graph metadata, and schema.org JSON-LD objects. Rendered with `<JsonLd>`.
  */
-
-/** Production origin. The one place it is written down: sitemap, robots and canonical URLs all read it. */
-export const SITE_URL = 'https://forward-deployed-sigma.vercel.app'
 
 export const absoluteUrl = (path: string) => `${SITE_URL}${path === '/' ? '' : path}`
 

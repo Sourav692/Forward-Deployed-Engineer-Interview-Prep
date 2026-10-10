@@ -191,6 +191,3 @@ Every capability played its own part. Memory resolved a reference, tools acted, 
 3. **Name the four gaps both assistant designs leave, and when to raise them.**
    Guardrails and prompt-injection defence, prompt versioning, disaster recovery and chaos testing, and explicit capacity estimation. Raise them unprompted in the cross-cutting part of the round.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/02_Customer_Support_Assistant.md`: "The prompt", Steps 1 to 4 (problem space, three peers, RAG vs tool calling, where MCP fits, multi-agent orchestration, three layers of memory, human approval workflow, scaling to 50M customers), "Trade-offs", "The detailed end-to-end design", "Summary" and "What this case does not cover". `06_Agentic_Coverage_Map.md`: "Why this matters", "The combined architecture", "Concept by concept", "What neither covers" and "How to use this map".

@@ -18,8 +18,11 @@
  *    heading after the title moves down one level;
  *  - repository links become site links: a synced lesson becomes its /learn page, an
  *    already-published page becomes that page's URL, an excluded lesson that has a
- *    RENAMED entry becomes its replacement's /learn page, and anything else in the
- *    repository becomes its GitHub URL;
+ *    RENAMED entry becomes its replacement's /learn page, and a link to anything
+ *    else in the repository becomes its plain text (the repository is private, so a
+ *    GitHub URL would 404 for visitors);
+ *  - the `## References` section loses its repository source lists
+ *    (`stripRepoReferences`); the repository copy keeps them;
  *  - raw `<script>`, `<iframe>` and `<style>` elements and `on*=` attributes are
  *    removed outside code (defence in depth: `marked` passes raw HTML through).
  * Mermaid and every other fenced block are copied through untouched.
@@ -51,8 +54,48 @@ import {
   WORDS_PER_MINUTE,
 } from '../src/lib/editorial.ts'
 
-const GITHUB_BLOB = 'https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/'
-const GITHUB_TREE = 'https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/tree/main/'
+/**
+ * What `rewriteHref` returns for a repository file with no page on the site.
+ * `unlinkRepoLinks` then turns `[text](UNLINK)` into `text`.
+ */
+export const UNLINK = '#unlink-repo-file'
+
+/** `[text](UNLINK)` becomes `text`: the private repository has no public URL. */
+export const unlinkRepoLinks = (markdown) => markdown.replace(/\[([^\]]*)\]\(#unlink-repo-file\)/g, '$1')
+
+/** A markdown link. Repository files cited only as paths, with no link, are provenance. */
+const LINK = /\]\(/
+
+/**
+ * Drops the repository provenance from a page's `## References` section (audit check
+ * PQ-07). A `**Sources:**` paragraph keeps only its sentences that hold a link, and
+ * any other paragraph, table or bullet with no link goes. Kept links are rewritten
+ * later like any other. Subsections such as "Fact-check sources" stay, and the
+ * heading goes when nothing is left under it.
+ * Third-party books are still named by the lesson's credit line.
+ */
+export function stripRepoReferences(markdown) {
+  return markdown.replace(/^## References[ \t]*\n([\s\S]*?)(?=^## |(?![\s\S]))/m, (_, body) => {
+    const sub = body.search(/^### /m)
+    const top = sub === -1 ? body : body.slice(0, sub)
+    // In subsections, a bullet with no link is repository provenance too.
+    const rest = sub === -1 ? '' : body.slice(sub).split('\n').filter((l) => !/^- /.test(l) || LINK.test(l)).join('\n').trim()
+    const kept = top
+      .split(/\n\s*\n/)
+      .map((block) => {
+        block = block.trim()
+        if (!block.startsWith('**Sources:**')) return block
+        const cited = block
+          .slice('**Sources:**'.length)
+          .split(/(?<=[.!?])\s+(?=[A-Z[`])/)
+          .filter((sentence) => LINK.test(sentence))
+        return cited.length ? `**Sources:** ${cited.join(' ').trim()}` : ''
+      })
+      .filter((block) => LINK.test(block))
+    const left = [...kept, rest].filter(Boolean).join('\n\n')
+    return left ? `## References\n\n${left}\n\n` : ''
+  })
+}
 
 /**
  * The only root folders the Learn sync may read (SEC-01). An allow-list, not a
@@ -370,7 +413,6 @@ export function headingAnchors(markdown) {
 // ------------------------------------------------------------------ links
 
 const repoPath = (repoRoot, abs) => relative(repoRoot, abs).split(sep).join('/')
-const encodePath = (rel) => rel.split('/').map(encodeURIComponent).join('/')
 
 /**
  * Site URLs of every page already published outside Learn, keyed by absolute
@@ -452,11 +494,9 @@ function rewriteHref(href, sourceFile, ctx) {
     ctx.stats.lesson++
     return replacement
   }
-  const exists = existsSync(abs)
-  if (!exists) ctx.missing.push(`${repoPath(ctx.repoRoot, sourceFile)} -> ${href}`)
-  const isDir = exists && statSync(abs).isDirectory()
-  ctx.stats.github++
-  return `${isDir ? GITHUB_TREE : GITHUB_BLOB}${encodePath(rel)}${hash && !isDir ? hash : ''}`
+  if (!existsSync(abs)) ctx.missing.push(`${repoPath(ctx.repoRoot, sourceFile)} -> ${href}`)
+  ctx.stats.unlinked++
+  return UNLINK
 }
 
 function rewriteLinks(markdown, sourceFile, ctx) {
@@ -563,7 +603,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
     }
   }
 
-  const stats = { lesson: 0, live: 0, github: 0 }
+  const stats = { lesson: 0, live: 0, unlinked: 0 }
   const ctx = { repoRoot, lessonsBySource, liveUrls, retired, stats, missing: [] }
   const manifest = []
   await rm(learnDir, { recursive: true, force: true })
@@ -589,8 +629,8 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
       manifest.push(entry)
       continue
     }
-    let body = normaliseHeadings(source, entry.title)
-    body = rewriteLinks(body, md, { ...ctx, self: lesson.sections ? slice : null })
+    let body = stripRepoReferences(normaliseHeadings(source, entry.title))
+    body = unlinkRepoLinks(rewriteLinks(body, md, { ...ctx, self: lesson.sections ? slice : null }))
     body = sanitise(body)
     const out = join(learnDir, mod.track, mod.slug, `${lesson.slug}.md`)
     await mkdir(dirname(out), { recursive: true })
@@ -616,7 +656,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
   const live = manifest.length - synced
   console.log(
     `learn sync: ${synced} lessons synced, ${live} live hrefs resolved; links rewritten: ` +
-      `${stats.lesson} to lessons, ${stats.live} to live pages, ${stats.github} to GitHub` +
+      `${stats.lesson} to lessons, ${stats.live} to live pages, ${stats.unlinked} to plain text` +
       (ctx.missing.length ? ` (${ctx.missing.length} to missing files)` : ''),
   )
   return { lessons: manifest.length, synced, live, links: stats, missing: ctx.missing.length }

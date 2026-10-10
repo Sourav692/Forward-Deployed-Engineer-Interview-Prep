@@ -85,6 +85,3 @@ Cut, do not speed up. Skip technical development and do not offer Pass 2; a list
 4. **Time is running short. What do you compress first, and what must never be rushed?**
    Compress technical development and Pass 2. Never rush the business framing or the governance segment.
 
-## References
-
-**Sources:** `01_Deep_Dive_And_Conversational_Formats.md` (FDE Handbook, Telling the Story): "Format 1 — The 15–20 minute deep-dive" (timing budget, two-pass Action, the two appendices), "Building your own" and "Checkpoint". The worked narrative is `stories/Enterprise_RAG_DeepDive_15-20min.md`.

@@ -82,6 +82,3 @@ The load balancer timeout is set to about 1.5 times the measured P99, and an LLM
 3. **Your LLM calls have a P99 of 20 seconds. Roughly what load balancer timeout do you set?**
    About 30 seconds, roughly 1.5 times P99, so normal slow responses are not cut off.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules), Topic 3: "How do I scale CPU-heavy and GPU-heavy workloads in Kubernetes?", "What should I think about when hosting a vector database next to FastAPI?", "When should I pick serverless over containers?" and "What do load balancers do for AI backends?". The 12 GB figure in the worked example scales the source's 6 GB per million vectors.

@@ -83,6 +83,3 @@ None of the three questions replaces the others. Together they describe one syst
 3. **Name two containment mechanisms and the incident each answers.**
    For example: idempotency keys answer the double refund; step budgets answer the runaway loop; confirmation gates answer the workflow that skipped a human check.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/00_Orientation/02_The_Three_Roles.md`: "Why this matters", "The three roles", "How the roles relate", "One problem, three questions" and "Checkpoint".

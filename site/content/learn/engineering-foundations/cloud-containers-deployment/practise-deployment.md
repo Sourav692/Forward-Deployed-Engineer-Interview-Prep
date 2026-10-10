@@ -107,6 +107,3 @@ An answer that fills every row shows a deployment designed around failure, which
 3. **Give a one-sentence answer to "Where do the API keys live?"**
    Never in the code or image: they are injected at runtime from Kubernetes Secrets or a secrets manager, read through a typed settings class, with separate secrets per environment.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules), Topics 3 and 4, whose section headings are phrased as the questions practised here. `03_Caching_Streaming_CICD_BuildVsBuy.md` (FDE Handbook, Cross-Cutting Concerns): §3 to §6 and the interview lens. The rubric is built from the lessons in this module.

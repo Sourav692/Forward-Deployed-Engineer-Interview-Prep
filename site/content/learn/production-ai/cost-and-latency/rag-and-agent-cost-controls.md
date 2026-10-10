@@ -101,6 +101,3 @@ The long-term design goes further. Account lookup, ticket summary and next-best-
 3. **An agent keeps calling the same CRM lookup until it times out. What kind of bug is it, and what fixes it?**
    A control-loop bug. Add a step budget, cache the tool result, improve the tool routing or schema, and set explicit stopping criteria.
 
-## References
-
-**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §4 agentic versus deterministic and batch versus live, §7 RAG cost and latency, §8 agent cost and latency (CRM worked number), §17 RAG and agent checklists. `CRAM_SHEET_S15_S16.md`: incidents 3, 4, 9 and 13; cases 3 and 5. `ADDITIONS_BEYOND_PLAYBOOK.md`: §A3 batch API, §C RAG and vector specifics, §E "the eval bill tripled". `CORE_8_DRIVERS_MEMORIZE.md`: drivers 3, 4, 5 and 8. Playbook content is summarised in new words.

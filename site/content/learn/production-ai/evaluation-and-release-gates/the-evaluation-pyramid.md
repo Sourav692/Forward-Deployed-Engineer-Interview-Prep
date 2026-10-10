@@ -79,6 +79,3 @@ In a one-number world the same drop starts a week of guessing across five subsys
 3. **Why is leak rate never averaged with groundedness or recall?**
    Averaging would let a leak hide inside an acceptable overall score. A leak is an incident, so it is scored as a pass-or-fail gate.
 
-## References
-
-**Sources:** `ch12_validation_and_measurement.md` (*Cracking Agentic AI System Design Interviews*, Ch. 12): opening section and "The Evaluation Pyramid", summarised in our own words. `07_Evaluation_Golden_Sets_Judges.md` (FDE Handbook, Enterprise RAG): "Why this matters" and "Three families, kept separate".

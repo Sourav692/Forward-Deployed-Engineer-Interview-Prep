@@ -84,6 +84,3 @@ All six outputs are present. The run passes. If the metrics had been missing, th
 3. **What is the goal of a decomposition round, in one sentence?**
    To show that an ambiguous customer problem can be turned into a measurable, safe, deployable and adoptable production solution, not to design the most sophisticated system.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: cases 1, 7, 13, 14, 15 and 17, "Cases Especially Relevant to a Cloud Data Platform Background" (A to E) and "Recommended Preparation Plan". The ten customer-discovery worksheets in the Case Study Worksheets module are the written practice for this method.

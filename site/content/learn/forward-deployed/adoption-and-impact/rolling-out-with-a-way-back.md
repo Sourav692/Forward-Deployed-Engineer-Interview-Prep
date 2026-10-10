@@ -61,6 +61,3 @@ In the first weeks, the most common failure is an answer built on an outdated po
 3. **Answers cite an outdated policy. Is that an AI behaviour problem?**
    No. It is a search and retrieval problem, stale knowledge, fixed by refreshing the knowledge base and testing lookup quality.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 5 Topics 5.1 "Choose first users and a way back", 5.3 "Turn production failures into planned work" and the pilot example in 5.4, summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course. The rollback trigger and responders in the worked example are illustrative.

@@ -119,6 +119,3 @@ Rebuild the loop from memory: one step, one checkpoint, one key per action, and 
 3. **Name two gaps you would volunteer when describing the source project.**
    Any two of: no authoring surface, the planner is a fixed step list, nothing calls resume automatically, the lock and key stores are in-process, and run history is not in plain language.
 
-## References
-
-**Sources:** `01_The_Problem_In_Plain_English.md`, `02_Canonical_Events_And_Channels.md`, `03_Determinism_Over_Free_Text.md`, `04_Durability_And_Idempotency.md`, and `05_Approvals_Spend_Caps_Staged_Rollout.md` (FDE Handbook, Agentic Workflow Platforms): each "Interview lens" and "Checkpoint". `07_Coverage_Map.md`: "The question behind the question", "The non-technical user problem", "Likely follow-ups", "The scale gap", "Punch list, by effort", and "The one-paragraph framing".

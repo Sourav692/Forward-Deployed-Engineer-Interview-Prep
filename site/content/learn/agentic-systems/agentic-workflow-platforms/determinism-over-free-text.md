@@ -119,6 +119,3 @@ The loop shape is real: plan, select a tool, call, observe, and iterate, under a
 3. **What exactly is the fixed-step-list gap, and how should you describe it?**
    The planner is a fixed list rather than a model choosing the next tool from observed state. Say that swapping in a real planner is a moderate change that keeps the same guardrails, and that the demo does not prove a model planner is safe.
 
-## References
-
-**Sources:** `03_Determinism_Over_Free_Text.md` (FDE Handbook, Agentic Workflow Platforms): "Why this matters", "Five controls, all built and tested", "The workflow is data, not code", "The tool registry: typed, scoped, flagged", "Templates, not a blank canvas", "Versioning a live workflow", "The honest gap in the 'agent runtime'", and "Interview lens". `07_Coverage_Map.md`: "Reference architecture", "The non-technical user problem", and "Likely follow-ups".

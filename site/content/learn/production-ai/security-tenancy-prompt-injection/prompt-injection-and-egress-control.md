@@ -95,6 +95,3 @@ No step relied on the model resisting the instruction. Each defence sat in the a
 3. **How can a call pass every action check and still exfiltrate?**
    The tool is allowed, but its destination came from untrusted input, such as a "cc" address in a ticket. A per-tenant, per-tool destination allow-list stops it.
 
-## References
-
-**Sources:** `04_Prompt_Injection_Egress_Tenancy.md` (FDE Handbook, Cross-Cutting Concerns): "Why this matters", "1 · Prompt injection", "2 · Egress" and "How this connects". `06_Output_Guardrails.md` (FDE Handbook, Enterprise RAG): "The deliberate absence: no prompt-injection check".

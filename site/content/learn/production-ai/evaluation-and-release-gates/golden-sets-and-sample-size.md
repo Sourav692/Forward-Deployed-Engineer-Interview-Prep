@@ -104,6 +104,3 @@ The suite did not need to be huge. It needed to be honest about what its size co
 3. **Your 200-case suite shows a 3-point gain. What do you say?**
    That it is probably noise: at this size only changes of about 11 points are detectable. Use paired evaluation or a production experiment.
 
-## References
-
-**Sources:** `07_Evaluation_Golden_Sets_Judges.md` (FDE Handbook, Enterprise RAG): "The golden set", "What the evaluation caught" (stories 1 and 2) and "The results, read honestly". `ch12_validation_and_measurement.md` (*Cracking Agentic AI System Design Interviews*, Ch. 12): "Golden Datasets and Sample Size Arithmetic", summarised in our own words. `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §8 "Golden-Set Test Structure".

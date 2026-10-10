@@ -2,7 +2,7 @@
 
 > **Level** 🔴 Design Mastery · **Module** 09 · **Doc** 4 of 6 · **Time** ~30 min
 > **Prerequisites:** Module 02, Module 04 doc 7 (judges), Module 05 doc 5 (human approval)
-> **Source material:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/8. AI Powered Recruiting Platform Design.md`
+> **Source material:** [AI Powered Recruiting Platform Design](../../Classic_Design_Walkthroughs/System_Design_Course/8.%20AI%20Powered%20Recruiting%20Platform%20Design.md)
 
 ## The prompt
 

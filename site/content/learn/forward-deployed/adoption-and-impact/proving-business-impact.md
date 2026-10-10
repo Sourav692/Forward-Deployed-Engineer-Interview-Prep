@@ -65,6 +65,3 @@ A wrap-up built on this lesson reports each metric against its target, not again
 3. **What does a falling override rate tell you?**
    Humans are correcting the agent less often, so trust is being earned and supervision can begin to relax.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 5 Topics 5.2 "Watch the workflow, not just the servers" and 5.4 "Report what changed, not only what shipped", and Module 1 Topic 1.2 (the 12-to-under-5 goal), summarised in our own words; the guide is itself based on the fdehandbook.com "Scope a Project" course. `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: "The five metrics". `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md`: the Northwind success metrics.

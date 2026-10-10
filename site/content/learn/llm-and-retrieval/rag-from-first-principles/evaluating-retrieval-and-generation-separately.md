@@ -87,6 +87,3 @@ The example shows the payoff of separate scores. Each step narrows the fault to 
 3. **Why calibrate a model judge against human labels?**
    Judges favour longer, confident answers and can be swayed by position. A human-reviewed sample shows how far to trust their scores.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Topic 7 "How do you debug poor retrieval in production?"; Topic 11 "Evaluation" (all five questions). `Module_02_RAG_Frameworks_Tools_Implementation.md` (GenAI Engineering guide): Topic 4 "How do I build an automatic evaluation pipeline instead of testing by hand?" and "How is checking the retriever different from checking the generated answer?". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: "Coverage gaps" (retrieval evaluation) and §5.1 and §5.3 questions on recall@k, building an evaluation set without labels and model-judge bias.

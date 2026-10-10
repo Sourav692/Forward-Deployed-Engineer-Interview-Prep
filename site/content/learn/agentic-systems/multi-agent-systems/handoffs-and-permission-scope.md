@@ -98,6 +98,3 @@ The package did two jobs at once. It told the next agent exactly what had happen
 3. **Why does your five-agent run cost more than five single calls?**
    Every agent receives the entire message history, so hop N pays again for every earlier hop. Pass a context summary at the handoff or filter messages by role.
 
-## References
-
-**Sources:** `02_Reference_Architecture_Handoffs.md` (FDE Handbook, Multi-Agent Systems): "A reference architecture", "The handoff is the hard part", and "Interview lens". `03_Failure_Isolation_And_Evaluation.md`: "Evaluating a multi-agent system" on handoff correctness and the security bar. `05_Case_Study_Supervisor_To_Deep_Agent.md`: "Why centralise asset resolution at the supervisor". `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: §1.3 "Handoff moves control without a central router" and the §2 gotcha "Passing full history to every agent is expensive and worse".

@@ -73,6 +73,3 @@ Later the team swaps in a self-hosted model. The question endpoint barely change
 3. **A request triggers ten minutes of indexing. What does the API return?**
    A `job_id` and a status URL, immediately. A second endpoint reports PENDING, PROGRESS or SUCCESS with progress steps, and the queue worker retries on failure.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules): Overview; FastAPI Architecture, "How do I handle lots of LLM requests without freezing the server?", "Which endpoints should be async and which sync?" and "How do I run long AI jobs like document indexing?".

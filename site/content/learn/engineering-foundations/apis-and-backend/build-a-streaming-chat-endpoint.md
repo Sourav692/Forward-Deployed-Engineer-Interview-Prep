@@ -85,6 +85,3 @@ Midway, the provider times out. The status was 200 when the stream began and can
 3. **What does context budget trimming always keep?**
    The system prompt and the newest message; the rest is filled with the most recent history that fits the token limit.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules): FastAPI Architecture, "How do I stream responses with SSE or WebSockets?"; LLM Serving APIs, "How do I build a streaming chat endpoint?" and "How do I handle multi-turn conversations through an API?". `03_Caching_Streaming_CICD_BuildVsBuy.md` (FDE Handbook, Cross-Cutting Concerns): §2 "Token streaming" and "Interview lens".

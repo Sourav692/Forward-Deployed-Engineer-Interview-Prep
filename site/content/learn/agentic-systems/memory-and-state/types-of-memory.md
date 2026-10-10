@@ -100,6 +100,3 @@ Five items, five homes. Each home was chosen by asking what the item is for and 
 3. **Give the write rule for semantic, episodic and procedural memory.**
    Semantic: update in place under a stable key. Episodic: append a fresh record per task. Procedural: versioned, and changed only through an approval or evaluation gate.
 
-## References
-
-**Sources:** `02_State_Memory_Sessions.md` (FDE Handbook): "The three layers of memory". `ch07_knowledge_memory_retrieval.md` (*Cracking Agentic AI System Design Interviews*, Ch. 7): "The Four Memory Tiers", summarised in our own words. `07_memory_and_state_INTERVIEW_TUTORIAL.md`: §1.7 "The memory taxonomy" and §1.8 "Session memory". `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`: Topic 1 "How do I design short-term and long-term memory for an agent?" and Topic 5 "How do I design persistent memory and retrieval rules for a long-running agent?" and "How do I combine vector search and structured databases for agent memory?".

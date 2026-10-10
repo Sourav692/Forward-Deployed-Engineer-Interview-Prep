@@ -116,6 +116,3 @@ Every element answered a row of the requirement table. That is the test of a goo
 3. **Which failure must fail closed, and what does every other failure do?**
    An unavailable policy engine refuses. Every other failure degrades to a weaker answer or a clean refusal, never an exception.
 
-## References
-
-**Sources:** The "Interview lens" and "Checkpoint" sections of `01_Why_Enterprise_Changes_The_Problem.md`, `02_Access_Control_ABAC.md` ("Seven things to be able to say"), `03_Ingestion_Pipeline.md`, `05_The_Query_Graph.md` and `06_Output_Guardrails.md` (FDE Handbook, Enterprise RAG), with every answer rewritten and pointed at lessons 1 to 6 of this module.

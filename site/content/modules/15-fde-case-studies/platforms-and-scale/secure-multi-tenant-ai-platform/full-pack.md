@@ -675,19 +675,6 @@ Acme uses an enterprise support copilot over customer contracts, escalation poli
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1, 2, 4, 9, 10, 11, 12 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md` and its `answer_keys/02_secure_multi_tenant_ai_platform_answer_key.md` |
-| 1 to 5, 8 to 12 (tutorial material, diagrams, isolation test, drills, rollout, trade-offs, follow-ups) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-2-secure-multi-tenant-ai-platform-tutorial_v2.md` |
-| 5, 6, 7 (SSO/OIDC, envelope encryption, per-tenant keys, fair queuing) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md` |
-| 6 (tenancy levels, the store enforces the tenant, escalation path) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/04_Prompt_Injection_Egress_Tenancy.md` |
-| 6 (two-layer enforcement, referenced not repeated) | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/G01_Enterprise_Knowledge_Assistant.md`, section 6 |
-| 13 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 4 and §15 scenario 5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons row 41 |
-| 14 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/01_cross_tenant_retrieval.md` |
-| Not included | The V1 long tutorial, the V2 section 5 request-handling code walkthrough and API contract surface, the V2 drill diagrams for queue, quota and control-plane outage (rendered as prose in section 9), and the site mirror under `site/content/` |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) — trust only verified tokens, claims or sessions, never client-set fields
@@ -701,3 +688,4 @@ All paths are relative to the repository root.
 - [ICO: Right to erasure](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-erasure/) — backups can be kept "beyond use" until overwritten on schedule
 - [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/) — the erasure duty itself
 - [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — cross-tenant leaks from missing vector access controls
+

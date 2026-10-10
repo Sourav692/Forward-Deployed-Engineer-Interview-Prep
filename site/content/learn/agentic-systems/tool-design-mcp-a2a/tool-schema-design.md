@@ -76,6 +76,3 @@ Before the rewrite, the model could send a string amount, a refund reason nobody
 3. **The prompt says "return only valid JSON", yet parsing still fails sometimes. Why, and what is the fix?**
    Instruction-following through prompt text is probabilistic. Use schema-constrained decoding where available, and keep a retry with a fallback as a backstop.
 
-## References
-
-**Sources:** `ch05_tool_use_agent_computer_interface.md` (*Cracking Agentic AI System Design Interviews*, Ch. 5: "Eight Rules of Tool Schema Design", summarised in our own words). `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.2 "Tool design — schemas and errors that teach the model to recover"; §2 gotchas "Structured output schema drift breaks silently across Pydantic versions" and "A planner that returns free-text instead of the promised JSON".

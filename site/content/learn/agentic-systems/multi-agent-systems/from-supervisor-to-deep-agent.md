@@ -160,6 +160,3 @@ That is the shape of an honest result: measured gains, a clearly labelled weak s
 3. **What triggered the second pivot, and what did the deep-agent shape cost?**
    The supervisor's own tool list grew back toward the original bloat as domains grew. The deep agent cost more Genie Spaces, serving endpoints, and moving parts, in exchange for a ceiling on tool-selection degradation.
 
-## References
-
-**Sources:** `05_Case_Study_Supervisor_To_Deep_Agent.md` (FDE Handbook, Multi-Agent Systems): all sections, from "The problem" to "What to take from it". `02_Reference_Architecture_Handoffs.md`: "Two coordination shapes". `01_When_Multi_Agent_Is_Justified.md`: "The evidence".

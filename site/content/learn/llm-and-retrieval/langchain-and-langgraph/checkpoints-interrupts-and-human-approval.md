@@ -161,6 +161,3 @@ Put `interrupt()` inside the refund tool, immediately before the payment call, n
 3. **When is `interrupt_before` a better choice than calling `interrupt()` in the node?**
    When the pause point is always "before this node", a fixed gate. `interrupt()` is for pauses that depend on data computed inside the node.
 
-## References
-
-**Sources:** `03_langgraph_fundamentals_INTERVIEW_TUTORIAL.md`: §1.9 "Checkpointing" with its anatomy deep dive, §1.10 "Human-in-the-loop" with "why the whole node re-runs on resume", §1.11 "HITL applied patterns", §2 interrupt gotcha, §3 checkpointer and interrupt-style tradeoffs, and §6 "Mock system design". `01_langchain_foundations_INTERVIEW_TUTORIAL.md`: §1.12 "Conversation memory strategies", §1.15 "Human-in-the-loop" with the parked-thread deep dive, and §3 tradeoffs on memory and human gating. `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 1 "How does LangChain remember the conversation in a chat-style RAG app?". `05_Same_Loop_In_LangGraph.md` (FDE Handbook): "What the framework buys you".

@@ -125,6 +125,3 @@ Walked mechanically, this is a checklist. Walked well, it guarantees no silent q
 3. **Why does the business problem matter in part 1?**
    It is what later justifies consistency choices. Revenue at stake on bookings argues for strong consistency; a recommendation feed can tolerate eventual consistency.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md`: "Why this matters", "The framework at a glance", §1 Problem Definition, §2 Functional Requirements, §3 Non-Functional Requirements, §4 Capacity Estimation, "A simple mental model" and "Interview lens".

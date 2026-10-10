@@ -95,6 +95,3 @@ The answer never names a framework. It names three components, a guard, a pause 
 3. **What two checks diagnose a loop that runs to the guard on a small share of requests?**
    The guard's boundary condition, and the trace for identical repeated tool calls caused by unhelpful errors.
 
-## References
-
-**Sources:** `03_What_An_Agent_Actually_Is.md` (FDE Handbook): "Interview lens" and "Checkpoint". `04_Tool_Calling_Loop_From_Scratch.md`: "Interview lens" and "Checkpoint". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.1 "Say this in an interview", §1.13, §4 questions 1, 2 and 8, §5.2 questions 1 and 2, the "Explain to a skeptical staff engineer" prompt about the 15-step cap, and §7 self-check question 13, with every answer rewritten in our own words and pointed at lessons 1 to 3 of this module.

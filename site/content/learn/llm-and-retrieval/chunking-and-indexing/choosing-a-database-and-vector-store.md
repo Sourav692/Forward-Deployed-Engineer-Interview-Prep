@@ -113,6 +113,3 @@ A regulated customer would change the answer only at the residency line. If docu
 3. **How is ANN recall measured when comparing stores?**
    Compare the ANN top-k with exact brute-force top-k for the same queries; the share that matches is Recall@K. Aim for at least 95%.
 
-## References
-
-**Sources:** `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`: Topic 2 "How do I choose between relational, document and vector databases?", "Why use a vector database instead of a normal one?", and "How do I design the database tables for RAG ingestion?". `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 3 "How do FAISS, Pinecone, Weaviate and Milvus compare?", "When should I pick a managed vector DB instead of self-hosting?", "How do metadata filtering and hybrid search differ across vector DBs?", and "How would I test and compare vector DBs before choosing?". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 5 "How do you scale a vector database to millions of embeddings?". `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: the "Chroma (in-memory) vs. PGVector" trade-off, Applied AI question 8, and the §6 mock design.

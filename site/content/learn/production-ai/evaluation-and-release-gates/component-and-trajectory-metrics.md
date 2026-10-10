@@ -84,6 +84,3 @@ The outcome said the agent was right. The path said it was right by luck. That g
 3. **Why not compare every run with a single reference trajectory?**
    Most tasks have several valid paths, so valid alternatives would fail. Assert properties instead, such as "no refund before the status check".
 
-## References
-
-**Sources:** `ch12_validation_and_measurement.md` (*Cracking Agentic AI System Design Interviews*, Ch. 12): "Component Metrics" and "Trajectory Evaluation", summarised in our own words. `07_Evaluation_Golden_Sets_Judges.md` (FDE Handbook, Enterprise RAG): "Three families, kept separate" and "The harness".

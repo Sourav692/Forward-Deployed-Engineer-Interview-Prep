@@ -198,6 +198,3 @@ Same index, same question, three correct answers. That is the requirement table 
 3. **Why must the security suite block the release instead of lowering a score?**
    A retrieval regression is a bug for next sprint, but a leak is an incident. Leak rate must be exactly 0.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md`: "Before you start", Step 1 (questions, scope, case study), Step 2, Step 3 (ingestion and query flows), Step 4A (three patterns, ABAC, the two-layer insight, the LLM is never the enforcement point), Step 4B (hybrid, RRF, techniques, reranking order), Step 5 (multi-tenancy, security, observability, evaluation and the war story, failure modes, scale), Step 6, the cheat sheet, "Questions to ask them" and "If you have a laptop".

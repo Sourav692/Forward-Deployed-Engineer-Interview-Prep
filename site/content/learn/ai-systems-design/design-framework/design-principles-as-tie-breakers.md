@@ -121,6 +121,3 @@ That is the job of a principle in a design round. It is a tie-breaker that can b
 3. **Give the fault-tolerance application for a RAG pipeline.**
    If reranking fails, return the retrieved documents in their original order instead of failing the whole request.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/02_The_15_Principles.md`: "Why this matters", "The fifteen, at a glance", "The fifteen, expanded" (§1–§15), "A mnemonic: SCALED PRINCIPLES", "How this sounds in a design conversation", "Eight lenses, in order" and "Interview lens".

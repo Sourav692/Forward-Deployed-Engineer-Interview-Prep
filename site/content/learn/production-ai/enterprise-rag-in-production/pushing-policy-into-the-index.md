@@ -142,6 +142,3 @@ Read one row aloud. `PM-2026-03-14` is a confidential EU post-mortem for enginee
 3. **Explain the `PM-2026-03-14` row in one breath.**
    Marco reads it with an audit obligation. Lena fails clearance, Sofia has no granting group, Jin and Ravi fail residency, Dana fails residency first, and the attacker fails tenant isolation.
 
-## References
-
-**Sources:** `02_Access_Control_ABAC.md` (FDE Handbook, Enterprise RAG): "First, two different layers", "Where each check runs — and why the split matters", "The LLM is never the enforcement point", "The visibility matrix" and "Four documents, every persona".

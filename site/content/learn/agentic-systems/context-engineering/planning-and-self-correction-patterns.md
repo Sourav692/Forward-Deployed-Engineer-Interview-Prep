@@ -82,6 +82,3 @@ Reflexion is Reflection plus long-term memory. Without a stream of related tasks
 3. **When is Reflexion worth building over plain Reflection?**
    Only when the same agent handles a stream of similar tasks, so persisted lessons have something to apply to.
 
-## References
-
-**Sources:** `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.3 "Plan → Execute → Replan", §1.4 "Planner → Executor → Verifier", §1.5 "Reflection and Reflexion", §2 gotchas "A flaky_web_search tool teaches you nothing" and "Loop-guard math surprises", §3 tradeoffs "ReAct vs. Plan-and-Execute", "Plain Planner-Executor vs. PEV" and "Reflection vs. Reflexion", and §7 questions 5 and 10.

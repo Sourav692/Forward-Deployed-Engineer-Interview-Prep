@@ -122,6 +122,3 @@ The guardrails were not trusted because they existed. They were trusted because 
 3. **A RAG system scores well on every quality evaluation. Is it safe to ship?**
    Not on that evidence. Quality metrics do not look for policy holes; automated red teaming with custom vulnerabilities does.
 
-## References
-
-**Sources:** `05_Red_Teaming.md` (FDE Handbook, AgentOps and platform): all sections. `12_production_and_operations_INTERVIEW_TUTORIAL.md` (RAG and Agent Topic Guides): §1.14 to §1.19 (injection defence, PII masking, output validation, moderation, automated red teaming, guardrails), §2 gotchas on moderation, rephrasing and red teaming, §3 trade-offs (rule-based versus LLM guardrail, input-only versus input and output, automated versus manual), §4 questions 5 to 7 (external answers not reused), §5.2 question 7, §7 "Explain to a skeptical staff engineer".

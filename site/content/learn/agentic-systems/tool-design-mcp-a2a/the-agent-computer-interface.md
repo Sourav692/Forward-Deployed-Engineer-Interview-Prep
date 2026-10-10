@@ -93,6 +93,3 @@ Each fix is an interface fix: a clearer description that says when not to use th
 3. **What does "the model chose a tool" mean mechanically?**
    The model was shown the registry's `specs()` list of names, descriptions and flags, and emitted one tool's name plus arguments.
 
-## References
-
-**Sources:** `ch05_tool_use_agent_computer_interface.md` (*Cracking Agentic AI System Design Interviews*, Ch. 5: "The Agent-Computer Interface", summarised in our own words). `03_What_An_Agent_Actually_Is.md` (FDE Handbook, LLM Systems Foundations): "Component 1 — Tools" and "Checkpoint". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.2 "Tool design — schemas and errors that teach the model to recover".

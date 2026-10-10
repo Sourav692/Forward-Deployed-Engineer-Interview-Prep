@@ -87,6 +87,3 @@ Every piece of that design is an index or engine LlamaIndex already ships. That 
 3. **When does LangChain win over LlamaIndex?**
    When the app needs agents calling tools and APIs, rich multi-turn memory, or several LLM features on one stack. For pure document question answering, LlamaIndex is the stronger fit.
 
-## References
-
-**Sources:** `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 2 "LlamaIndex (Indexing and Retrieval Design)", all seven questions: design differences, index types, documents to nodes, hierarchical retrieval, query transformation, built-in versus external vector storage, and when LlamaIndex beats LangChain.

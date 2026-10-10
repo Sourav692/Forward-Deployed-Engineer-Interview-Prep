@@ -117,6 +117,3 @@ When the room is ready to close, one sentence carries the whole discipline:
 4. **A project has no war stories. What does that suggest?**
    Either it has not been tested hard enough, or it is not being described honestly.
 
-## References
-
-**Sources:** `02_Proof_vs_Cheat_Sheet_Honesty.md` (FDE Handbook, Telling the Story): "Why this matters", "The distinction", "The three habits", "Why it works in the room", "The war stories are the proof", "Applying it to your own work" and "Checkpoint". `01_Deep_Dive_And_Conversational_Formats.md`: "The trust story" and the honest-limitations segment. The handbook's three project coverage maps and "Verified results" sections are the original templates.

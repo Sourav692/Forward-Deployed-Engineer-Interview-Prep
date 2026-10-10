@@ -108,6 +108,3 @@ Nobody clicked anything in a console, and every gate that could have stopped the
 3. **What does the Databricks bundle include that a typical application bundle would not?**
    The row-filter and column-mask SQL, so the security policy ships and is reviewed with the code.
 
-## References
-
-**Sources:** `06_Infra_And_CICD.md` (FDE Handbook, AgentOps and platform): "The AWS platform", "Setup order, and why", "The Databricks equivalent", "The pipeline, assembled", Interview lens and Checkpoint. `03_Enterprise_RAG_On_Databricks.md` (FDE Handbook): "Multi-tenancy and CI/CD".

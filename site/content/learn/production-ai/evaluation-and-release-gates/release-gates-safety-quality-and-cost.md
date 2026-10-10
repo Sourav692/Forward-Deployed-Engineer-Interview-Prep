@@ -98,6 +98,3 @@ The harness is offline only. For online signals, the answer the source recommend
 3. **Why is an allowed but irrelevant document not a gate failure?**
    It is a quality miss. Gating on it would create false alarms and teach people to ignore real ones.
 
-## References
-
-**Sources:** `07_Evaluation_Golden_Sets_Judges.md` (FDE Handbook, Enterprise RAG): "Why security is a gate", "What the evaluation caught" (story 3), "The results, read honestly" and "What is not built". `ch12_validation_and_measurement.md` (*Cracking Agentic AI System Design Interviews*, Ch. 12): "The CI Release Gate", including the eleven-tenant segment-collapse case, summarised in our own words. `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §8 "CI/CD Pipeline for AI Systems" and "Statistical Significance Testing for Canary". `Module_02_RAG_Frameworks_Tools_Implementation.md` (GenAI Engineering Modules): Topic 4, "Which tools can automatically score a RAG system?" and "How do I run evaluation continuously inside CI/CD?".

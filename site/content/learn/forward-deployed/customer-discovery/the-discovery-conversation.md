@@ -101,6 +101,3 @@ Then state assumptions for anything unanswered: "I'll assume agents stay in the 
 3. **What should happen to a clarifying question the interviewer declines to answer?**
    Replace it with a stated assumption, such as "I'll assume the system starts read-only", and carry on.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: "How the Round Typically Feels", "What the Interviewer Is Evaluating", "Reusable Answer Template" (business, constraint, evaluation, architecture and rollout questions) and "Biggest Mistakes to Avoid".

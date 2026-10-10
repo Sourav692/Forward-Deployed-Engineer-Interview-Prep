@@ -157,6 +157,3 @@ A related question has the same shape. A fintech client has two weeks before lau
 3. **How do you notice broken boundaries without reading chunks?**
    Run an automated boundary check per document type at ingestion, track the failure rate by type, and alert when it rises.
 
-## References
-
-**Sources:** `chunking-lab-and-drills.md`: the safe-boundary mechanism, the lab results table, the per-type strategy table, "When to use structure-aware splitting", and interview questions 1, 3, 4, and 5. `chunking-reference-by-doc-type.md`: §3 "Document-Type Breakdown", §4 "Comparison Table", §5 "Decision Framework", §6 (drift), and §7 "Pitfalls and Best Practices Checklist". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 3 "Fixed-size vs semantic vs hierarchical chunking". `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.3 "Structure-aware chunking". `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: the "Fixed chunk_size vs. structure-aware chunking" trade-off. `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): §7 "Chunking by document type".

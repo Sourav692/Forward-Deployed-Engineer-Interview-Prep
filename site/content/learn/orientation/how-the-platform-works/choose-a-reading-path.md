@@ -68,6 +68,3 @@ Each path covers the same material. Only the order changes, and the order should
 3. **Where does the runnable code live?**
    Not in this repository. Interview walkthroughs and architecture references are in a hands-on labs module; broader implementations are in the companion course at a pinned revision.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md`: "Three ways to read", "Labs and implementation references" and "What to bring".

@@ -82,6 +82,3 @@ The two moves separate a bound that is wrong from a loop that is stuck. Fixing o
 3. **Why does a vague tool error lead to repeated identical calls?**
    The error is the only signal the model gets. If it says nothing specific, the model has no reason to change its next action.
 
-## References
-
-**Sources:** `03_What_An_Agent_Actually_Is.md` (FDE Handbook): "Component 3 — The loop, and why the guards are part of the definition". `04_Tool_Calling_Loop_From_Scratch.md`: "The two pieces of state" and "The loop, line by line". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.2 "Tool design", the §2 gotcha "Loop-guard math surprises", §4 questions 2 and 8 (answers rewritten in our own words), §5.2 question 1, §6 "Mock system design" (termination) and §7 self-check question 11.

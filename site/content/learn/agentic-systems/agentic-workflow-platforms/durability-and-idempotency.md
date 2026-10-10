@@ -122,6 +122,3 @@ The FDE Handbook introduced framework checkpointers earlier. Having built one by
 3. **Explain bug 2 and state its lesson.**
    An idempotent replay skipped the refund but still passed through the guardrail and added its cost again, so a retry could trip the spend cap with no money moving. Idempotency must cover every side effect of a step, including cost accounting.
 
-## References
-
-**Sources:** `04_Durability_And_Idempotency.md` (FDE Handbook, Agentic Workflow Platforms): "Why this matters", "The loop", "Durability: the checkpoint is `next_step_index`", "Idempotency: a key on the action, not a flag on the run", "Three honest outcomes", "Two bugs that make the point", "Verified", "Where the honest gap is", and "Interview lens". `07_Coverage_Map.md`: "Reference architecture" (automatic retries) and "The scale gap".

@@ -167,6 +167,3 @@ The checkpoint keeps the thread durable, the summary keeps it affordable, and th
 3. **Which of these should an agent cache inside one task: a customer lookup, a reasoning step, a `send_email` call?**
    Only the customer lookup, if it has not changed. Reasoning depends on growing history, and side-effecting calls must run every time.
 
-## References
-
-**Sources:** `07_memory_and_state_INTERVIEW_TUTORIAL.md`: §1.1 to §1.5 (legacy memory, `RunnableWithMessageHistory`, checkpointer, trimming, summarisation); §2 gotchas "A checkpointer is not ephemeral by default", "Trimming the prompt does not trim the checkpoint" and "An un-reduced state field can be silently reset"; §3 trade-offs "Full history vs. sliding window vs. summarization", "`MemorySaver` vs. `SqliteSaver`/`PostgresSaver`" and "LangChain's `Memory` classes vs. LangGraph checkpointer + `Store`"; §6 worked answer. `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`: Topic 1 "What are the problems with storing long chat histories?" and "How do I stop memory from overflowing the context window?"; Topic 5 "How do caches work inside an agent's reasoning loop?". `02_State_Memory_Sessions.md` (FDE Handbook): "The Session, revisited".

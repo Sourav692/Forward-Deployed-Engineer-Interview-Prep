@@ -74,6 +74,3 @@ The library stayed trustworthy because entry and exit were both measured.
 3. **Give the book's reference gate numbers.**
    Beat the baseline by 5 points, at least 200 shadow attempts before promotion, and automatic removal at 4 points below baseline.
 
-## References
-
-**Sources:** `ch08_learning_in_agentic_systems.md` (Chapter 8 of *Cracking Agentic AI System Design Interviews*, third-party; summarised in our own words): "The Skill Library and Its Promotion Gate", its gate numbers and interview pointer, Cheat Sheet.

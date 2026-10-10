@@ -31,6 +31,7 @@ import {
   LAST_DAY_GUIDES,
   REVIEW_DOCS,
   REVIEWS,
+  SITE_URL,
   TRIGGER_SHEET,
   reviewLabel,
 } from '../src/lib/editorial.ts'
@@ -174,11 +175,17 @@ function sitebar({ label, mode, prev, next, rows = [] }) {
   )
 }
 
-function injectSitebar(html, bar, what) {
+/**
+ * Adds the site bar, plus the favicon and a canonical tag (audit check PR-10), to the
+ * page at `path`, and drops the source's "Generated from …md" footer (PQ-07).
+ */
+function injectSitebar(html, bar, what, path) {
   if (!/<body[^>]*>/.test(html)) throw new Error(`${what}: no <body> tag`)
+  const head = `<link rel="icon" href="/favicon.ico" sizes="any">\n<link rel="canonical" href="${SITE_URL}${path}">`
   return html
-    .replace('</head>', `${SITEBAR_CSS}\n</head>`)
+    .replace('</head>', `${head}\n${SITEBAR_CSS}\n</head>`)
     .replace(/<body([^>]*)>/, `<body$1>${bar}`)
+    .replace(/\s*<(div|p) class="source-note">[^<]*<\/\1>/, '')
 }
 
 async function transformReview(html, r, doc, oldTitle, pages) {
@@ -232,7 +239,7 @@ async function transformReview(html, r, doc, oldTitle, pages) {
   // Spell out each acronym once per page. The recall card is one printed page, so there
   // the definition goes in the hover text only.
   html = expandAcronyms(html, new Set(), GLOSSARY, { inline: doc === 'concise' })
-  return injectSitebar(html, bar, what)
+  return injectSitebar(html, bar, what, hrefOf(r, doc))
 }
 
 function transformTriggerSheet(html) {
@@ -278,6 +285,7 @@ function transformTriggerSheet(html) {
     html,
     sitebar({ label: TRIGGER_SHEET.title, mode: 'Revision — searchable index of all eighteen reviews' }),
     what,
+    `${LAST_DAY.href}/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}`,
   )
 }
 

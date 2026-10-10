@@ -96,6 +96,3 @@ The security behaviour is identical to the 22-document build. Only the storage u
 3. **How do you move 20 million documents to a new embedding model?**
    Build a new index beside the old one, backfill it, then switch traffic. Never migrate in place all at once.
 
-## References
-
-**Sources:** `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): §3 scaling the vector index, §4 scaling access control, §9 other points (multi-tenancy, noisy-neighbour limits, blue/green index, observability, drift detection, sub-linear scaling), Interview lens.

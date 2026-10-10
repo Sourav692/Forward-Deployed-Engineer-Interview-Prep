@@ -113,6 +113,3 @@ A demo that shows things working proves less than a demo that shows things being
 3. **A workflow sets its own spend cap to $200 and the tenant policy says $50. Which applies?**
    $50. The guardrail takes the tighter of the workflow's and the tenant's budgets, so a workflow can be stricter than its tenant but never looser.
 
-## References
-
-**Sources:** `05_Approvals_Spend_Caps_Staged_Rollout.md` (FDE Handbook, Agentic Workflow Platforms): "Why this matters", "The guardrail decision, in order", "Step budget vs spend cap", "Autonomous does not mean unlimited", "The tenant policy", "The negative-control demo", and "Interview lens". `01_The_Problem_In_Plain_English.md`: "The case study: Cascade Robotics". `04_Durability_And_Idempotency.md`: "Bug 1".

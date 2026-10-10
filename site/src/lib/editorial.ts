@@ -91,6 +91,12 @@ export type EditorialMeta = {
 // ---------------------------------------------------------------- site and nav
 
 export const SITE_NAME = 'Forward Deployed'
+
+/**
+ * Production origin. The one place it is written down: sitemap, robots, canonical URLs
+ * and the final-week pages' head tags (written by the sync) all read it.
+ */
+export const SITE_URL = 'https://forward-deployed-sigma.vercel.app'
 export const SITE_TAGLINE = 'FDE interview practice and system-design review'
 
 /**

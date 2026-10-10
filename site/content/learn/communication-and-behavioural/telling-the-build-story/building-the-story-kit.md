@@ -110,6 +110,3 @@ The kit is now complete, and no format has been chosen yet. [The Timed Deep-Dive
 5. **What closing lines should the kit carry?**
    One per likely final thread, such as security and trust, platform and deployment, and limitations and what comes next, plus a generic fallback.
 
-## References
-
-**Sources:** `01_Deep_Dive_And_Conversational_Formats.md` (FDE Handbook, Telling the Story): the meta-rule in "Why this matters", "The two appendices" (the crib sheet), "The cold open", "The beats", "Bridges", "The 'go deeper' menu", "Closing lines", "Building your own" and "Checkpoint". The worked narrative is `stories/Enterprise_RAG_Conversational_Guide.md`.

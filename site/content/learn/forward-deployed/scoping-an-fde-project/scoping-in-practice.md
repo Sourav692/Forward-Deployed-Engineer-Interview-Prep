@@ -132,6 +132,3 @@ The customer usually knows the outcome they want. The FDE's job is to turn it in
 3. **In the class-booking case, what should be re-estimated after short spikes?**
    Mobile apps, AI coaching and automatic door access, once a single-location web MVP is scoped at six to ten weeks.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 6 "See the Method in Action" (Topics 6.1 to 6.3) and Module 8 "The Pre-Estimate Checklist", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.

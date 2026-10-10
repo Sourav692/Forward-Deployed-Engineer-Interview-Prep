@@ -125,6 +125,3 @@ Now take "why is my data not showing up?". BM25 finds nothing, since no words ar
 3. **Hybrid search p99 latency grows with corpus size although it returns five results. Why?**
    Score-blending fusion is normalising against every document in the index on each query. Cache the score statistics or switch to rank fusion.
 
-## References
-
-**Sources:** `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): "How retrieval actually finds things" and "Reciprocal Rank Fusion". `04_Retrieval_Hybrid_Rerank.md` (FDE Handbook): "BM25 is built over the authorised pool" (tokeniser), "The enterprise strategy is deliberately asymmetric", "Fusion" and "Interview lens". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.5 "Hybrid search", §1.6 "Reciprocal Rank Fusion" (deep dive on `k`), §2 gotcha "RRF keyed by `str(doc)`" and §3 "Dense-only vs. hybrid". `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.7 "Fusion retrieval", §2 gotcha "Fusion retrieval's score normalization", §3 "Dense vector search alone vs. BM25 + vector fusion" and §6 worked answer (per-source `alpha`). `rag_retrieval_strategies.md`: §6 "Hybrid Search". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 6 (BM25 fallback) and Topic 8 "Hybrid Search and Re-Ranking".

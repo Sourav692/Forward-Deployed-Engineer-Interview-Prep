@@ -154,6 +154,3 @@ Every stage was AI-assisted, and no stage was AI-decided. The explicit weights l
 3. **What does the AI judge do, and what forces manual review?**
    It produces standardised scores with a rationale. It never makes the final decision, and confidence below a threshold makes human review mandatory.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/04_Recruiting_Platform.md`: "The prompt", Steps 1 to 5 (problem space, two intake paths, the flow, explainable ranking, scaling), "Security and fairness", "Trade-offs", "Follow-ups to have ready" and "Summary".

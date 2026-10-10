@@ -108,6 +108,3 @@ Each element answers one of the skeleton's questions: where it broke, what block
 3. **Name two checks that are recorded but deliberately not gated.**
    Distractor retrieval, which is a precision miss, and model-judged refusal wording on security cases, which is an advisory.
 
-## References
-
-**Sources:** `07_Evaluation_Golden_Sets_Judges.md` (FDE Handbook, Enterprise RAG): "Interview lens" and "Checkpoint". `ch12_validation_and_measurement.md` (*Cracking Agentic AI System Design Interviews*, Ch. 12): its interview pointers, rewritten here as questions with answers in our own words. `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §8 "Interview Answer Template". Every answer points at lessons 1 to 5 of this module.
