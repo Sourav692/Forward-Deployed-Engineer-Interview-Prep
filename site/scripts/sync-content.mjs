@@ -14,6 +14,7 @@
  * and a path change here would otherwise fail silently at build time.
  */
 
+import { execFileSync } from 'node:child_process'
 import { copyFile, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -193,6 +194,20 @@ async function sourcesPresent() {
   }
 }
 
+/**
+ * A shallow clone (Vercel's build checkout, CI's e2e job) has too little history for
+ * the dates the sync writes (`gitDates` in learn.mjs): every page would get the date
+ * of the clone's oldest commit. Those builds use the committed snapshot instead, which
+ * CI's full-history sync has already checked.
+ */
+function shallowClone() {
+  try {
+    return execFileSync('git', ['rev-parse', '--is-shallow-repository'], { cwd: REPO_ROOT, encoding: 'utf8' }).trim() === 'true'
+  } catch {
+    return false
+  }
+}
+
 async function contentPresent() {
   try {
     const manifest = JSON.parse(
@@ -205,11 +220,12 @@ async function contentPresent() {
 }
 
 async function main() {
-  if (!(await sourcesPresent())) {
+  const shallow = shallowClone()
+  if (shallow || !(await sourcesPresent())) {
     if (await contentPresent()) {
       console.log(
-        `content sync: sources not present at ${SOURCE_ROOT}\n` +
-          '  building from the committed content/ snapshot instead.',
+        (shallow ? 'content sync: shallow git clone, so page dates would be wrong;' : `content sync: sources not present at ${SOURCE_ROOT};`) +
+          '\n  building from the committed content/ snapshot instead.',
       )
       return
     }
