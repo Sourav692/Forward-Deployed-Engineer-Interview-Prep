@@ -12,19 +12,20 @@
  *
  * Module flags are keyed by curriculum module slug. Slugs never change; display codes
  * may, so nothing here depends on codes. `check:paths` fails if a slug is unknown, if
- * a path leaves a module unflagged, if an on-hold module is not `skip`, or if
- * `estHours` drifts from the flagged modules' minutes.
+ * a path leaves a module unflagged, if a module with no lessons yet is required,
+ * recommended or optional, or if `estHours` drifts from the flagged modules' minutes.
  */
 import type { PathChoice } from './progress/types'
 
-export type ModuleFlag = 'required' | 'recommended' | 'optional' | 'skip'
+export type ModuleFlag = 'required' | 'recommended' | 'optional' | 'later' | 'skip'
 
-export const FLAG_ORDER: readonly ModuleFlag[] = ['required', 'recommended', 'optional', 'skip']
+export const FLAG_ORDER: readonly ModuleFlag[] = ['required', 'recommended', 'optional', 'later', 'skip']
 
 export const FLAG_LABEL: Record<ModuleFlag, string> = {
   required: 'Required',
   recommended: 'Recommended',
   optional: 'Optional',
+  later: 'Later',
   skip: 'Skip',
 }
 
@@ -33,6 +34,7 @@ export const FLAG_HELP: Record<ModuleFlag, string> = {
   required: 'Study this module; the path assumes it.',
   recommended: 'Study it if you have time; it strengthens the core.',
   optional: 'Fill a gap only if you need it.',
+  later: 'Part of this path once it is written; it has no lessons yet.',
   skip: 'Not part of this path.',
 }
 
@@ -129,8 +131,19 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
   'capstone-and-portfolio': ['capstone-build', 'portfolio-write-up'],
 }
 
-/** On-hold modules. Every path flags them `skip` until they return. */
-export const PAUSED_MODULES: readonly string[] = ['python-for-ai-services', 'company-loops', 'coding-round-practice']
+/**
+ * Modules with no lessons yet: coming soon or on hold (`check:paths` keeps this list in
+ * step with curriculum.ts). A path never asks for one: a module the path would include
+ * is flagged `later`, and one it leaves out stays `skip` (audit check ON-05).
+ */
+export const GAP_MODULES: readonly string[] = [
+  'python-for-ai-services',
+  'sql-and-data-modelling',
+  'coding-interview-patterns',
+  'ml-fundamentals',
+  'company-loops',
+  'coding-round-practice',
+]
 
 const ALL_MODULES = Object.values(TRACK_MODULES).flat()
 
@@ -142,13 +155,14 @@ type FlagSpec = Partial<Record<ModuleFlag, string[]>>
 /**
  * Builds a full flag map. Layers apply in the order required, recommended, optional,
  * skip, so a later layer narrows an earlier one ("all of production AI is required,
- * except serving, which is optional"). Paused modules are always skipped.
+ * except serving, which is optional"). A gap module the path would include becomes
+ * `later`; one the path skips stays skipped.
  */
 function flags(fallback: ModuleFlag, spec: FlagSpec): Record<string, ModuleFlag> {
   const out: Record<string, ModuleFlag> = {}
   for (const slug of ALL_MODULES) out[slug] = fallback
   for (const level of FLAG_ORDER) for (const item of spec[level] ?? []) for (const slug of expand(item)) out[slug] = level
-  for (const slug of PAUSED_MODULES) out[slug] = 'skip'
+  for (const slug of GAP_MODULES) if (out[slug] !== 'skip') out[slug] = 'later'
   return out
 }
 
@@ -262,7 +276,7 @@ export const PATHS: LearningPath[] = [
         'capstone-and-portfolio',
       ],
     }),
-    estHours: 110,
+    estHours: 93,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -291,7 +305,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'model-adaptation-and-serving', 'capstone-and-portfolio'],
     }),
-    estHours: 133,
+    estHours: 129,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
@@ -322,7 +336,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'chunking-and-indexing', 'forward-deployed', 'capstone-and-portfolio'],
     }),
-    estHours: 116,
+    estHours: 112,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -377,7 +391,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'model-adaptation-and-serving', 'capstone-build'],
     }),
-    estHours: 138,
+    estHours: 134,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -392,7 +406,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 138,
+    estHours: 134,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -442,7 +456,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 168,
+    estHours: 164,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,
