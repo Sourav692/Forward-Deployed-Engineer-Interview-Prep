@@ -24,7 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - Every website-related design doc, spec, audit, plan, task board and QA report lives in `.website_spec/` at the repository root. Put new ones there, never in `site/` or another committed folder.
 - `.website_spec/` is gitignored: it exists only in the owner's clone, is never committed or pushed, and does not reach CI, Vercel or PRs. Nothing the build or checks need may live there.
-- Current documents: the production plan `.website_spec/2026-10-05-production-implementation-plan.md` and its task board `.website_spec/tasks/README.md` (cards in `phase-N/`, `backlog/`); the style guide, design tokens, Learn UX (wireframes, copy deck, dashboard rules), canonical homes, consolidation playbook (notes in `consolidation/`) and the Phase 1 QA report; the original briefs (`website_prompt.md`, `prototype_prompt.md`, `curriculum_plan.md`, `module_source_audit.md`). `implementation-plan.md` is the stale 5 October draft of the production plan; the dated file is current.
+- Current documents: the production plan `.website_spec/2026-10-05-production-implementation-plan.md` and its task board `.website_spec/tasks/README.md` (cards in `phase-N/`, `backlog/`); the style guide, design tokens, Learn UX (wireframes, copy deck, dashboard rules), canonical homes, consolidation playbook (notes in `consolidation/`) and the Phase 1 QA report; the original briefs (`website_prompt.md`, `prototype_prompt.md`, `curriculum_plan.md`, `module_source_audit.md`).
 - Code comments may point at these files by their `.website_spec/` path. Files moved out of `site/specs/` on 10 October 2026; git history before that commit still has them.
 
 ## Commands (from `site/`)
