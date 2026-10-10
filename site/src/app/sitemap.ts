@@ -11,8 +11,7 @@ import { absoluteUrl } from '@/lib/seo'
 
 /**
  * `/sitemap.xml` (plan §11, SEO-01): every public, static page. Learner-only pages
- * (`/progress`, `/settings`) and the `/demo` prototype are left out; `robots.ts`
- * disallows them too. Built once at build time like any other static route.
+ * (`/progress`, `/settings`) are left out; `robots.ts` disallows them too. Built once at build time like any other static route.
  */
 
 /** Top-level pages. Some are built by parallel Phase 1 workstreams. */

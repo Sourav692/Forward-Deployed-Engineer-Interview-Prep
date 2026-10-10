@@ -143,6 +143,14 @@ test('progress: empty first, then readiness and the revision queue follow what t
   await expect(page.getByText('Nothing to revise.')).toBeVisible()
 })
 
+test('retired /demo URLs redirect home in one hop', async ({ page }) => {
+  for (const path of ['/demo', '/demo/progress/history']) {
+    const res = await page.request.get(path, { maxRedirects: 0 })
+    expect(res.status()).toBe(308)
+    expect(res.headers().location).toBe('/')
+  }
+})
+
 test('soft gating: blocked module → open anyway → remembered after reload', async ({ page }) => {
   await page.goto(GATED_MODULE)
   await hydrated(page)

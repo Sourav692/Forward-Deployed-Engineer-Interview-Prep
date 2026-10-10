@@ -3,9 +3,8 @@
  *
  * Two layers live here:
  *
- * 1. Shared rule vocabulary (`Status`, `ConfidenceRating`, `AttemptBase`, …). The pure
- *    rules in `rules.ts` and the /demo prototype both use these, so `src/lib` never
- *    imports from `src/demo`. The demo re-exports them from `src/demo/types.ts`.
+ * 1. Shared rule vocabulary (`Status`, `ConfidenceRating`, `AttemptBase`, …), used by
+ *    the pure rules in `rules.ts` and the progress islands.
  * 2. Production records. Each record that version 2 sync will upload carries a stable
  *    `id` and an `updatedAt` (ISO), so a server can merge them last-writer-wins.
  *
@@ -28,20 +27,13 @@ export type Status =
 
 export type AssessmentKind = 'checkpoint' | 'mock' | 'readiness-exam'
 
-export type RubricDimension =
-  | 'structure'
-  | 'technical-depth'
-  | 'trade-offs'
-  | 'communication'
-  | 'customer-judgement'
-
 /** A dated 1–5 self-rating; decays one level per 21 days without review. */
 export interface ConfidenceRating {
   value: 1 | 2 | 3 | 4 | 5
   at: string // ISO
 }
 
-/** One checkpoint, mock or exam attempt, as the rules and the demo see it. */
+/** One checkpoint, mock or exam attempt, as the rules see it. */
 export interface AttemptBase {
   id: string
   assessmentId: string
@@ -59,8 +51,8 @@ export interface AttemptBase {
 }
 
 // ── Minimal shapes the pure rules work on ──────────────────────────────────
-// The rules accept anything with these fields, so demo entities and production
-// curriculum records both fit without the rules knowing either model.
+// The rules accept anything with these fields, so curriculum records and learner
+// state fit without the rules knowing either model.
 
 /** The attempt fields the rules read. */
 export interface RuleAttempt {
@@ -76,8 +68,6 @@ export interface RuleState<A extends RuleAttempt = RuleAttempt> {
   skipped: Record<string, string>
   /** Module or question id → latest rating. */
   confidence: Record<string, ConfidenceRating>
-  /** The settings "time travel" control, in days. */
-  clockOffsetDays: number
 }
 
 /** The module fields the rules read. */

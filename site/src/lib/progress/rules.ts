@@ -1,17 +1,15 @@
 /**
- * Learner-progress business rules (blueprint §16), shared by /demo and production, as pure functions.
+ * Learner-progress business rules (blueprint §16), as pure functions.
  *
  * Nothing here reads storage, the clock or the data files: callers pass the learner
  * state, the entities and `now`. That keeps every rule testable under plain `node`
- * (`scripts/check-progress-rules.ts`) and lets the "time travel" setting work by simply
- * passing a shifted `now`. The rules are typed against the minimal structural shapes in
- * `./types` (`RuleAttempt`, `RuleModule`, `ScorableItem`), so demo entities and production
- * records both fit. Only `import type` is allowed in this file: Node's type
+ * (`scripts/check-progress-rules.ts`). The rules are typed against the minimal structural shapes in
+ * `./types` (`RuleAttempt`, `RuleModule`, `ScorableItem`), so curriculum entities and
+ * learner records both fit. Only `import type` is allowed in this file: Node's type
  * stripping erases it, whereas a runtime import would need a resolvable path.
  */
 import type {
   ConfidenceRating,
-  RubricDimension,
   RuleAttempt,
   RuleModule,
   RuleState,
@@ -31,11 +29,6 @@ export const EXAM_PASS = 82
 
 const daysBetween = (from: string | number, to: number) =>
   (to - (typeof from === 'number' ? from : Date.parse(from))) / DAY_MS
-
-/** The learner's "now", shifted by the settings time-travel control. */
-export function effectiveNow(state: Pick<LearnerState, 'clockOffsetDays'>, realNow: number): number {
-  return realNow + state.clockOffsetDays * DAY_MS
-}
 
 // ── Attempts and confidence ────────────────────────────────────────────────
 
@@ -230,15 +223,6 @@ export function scoreCheckpoint<I extends ScorableItem>(
   return { score, passed: score >= assessment.passPercent, unanswered, skillScores, missed }
 }
 
-/** The demo's shared rubric (1–4). Production mocks use the lessons' own rubric; removed with `/demo` (FE-19). */
-export const RUBRIC_DIMENSIONS: RubricDimension[] = [
-  'structure',
-  'technical-depth',
-  'trade-offs',
-  'communication',
-  'customer-judgement',
-]
-
 export interface MockResult<D extends string = string> {
   mean: number
   passed: boolean
@@ -360,27 +344,6 @@ export function mockReadiness(latestMeans: (number | null)[]): number | null {
 export function behaviouralReadiness(statuses: string[], totalQuestions: number): number | null {
   const credit = statuses.reduce((s, v) => s + (v === 'mastered' ? 1 : v === 'practiced' ? 0.5 : 0), 0)
   return credit > 0 && totalQuestions > 0 ? Math.min(100, (credit / totalQuestions) * 100) : null
-}
-
-/**
- * Interview readiness as the demo computes it, with unmeasured inputs at 0. Demo only:
- * production uses `measuredInterviewReadiness`; removed with /demo (FE-19).
- */
-export function interviewReadiness(input: {
-  rubricMeans: number[] // latest self-scored exercise/worksheet means, 1–4
-  mockMeans: number[] // latest mean per required mock, 1–5, 0 when not taken
-  checkpointsPassed: number
-  checkpointsTotal: number
-  behavioural: number // 0–100
-}): Readiness {
-  const avg = (xs: number[]) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0)
-  const value: Record<InterviewInput, number> = {
-    worksheets: input.rubricMeans.length ? rubricToPercent(avg(input.rubricMeans)) : 0,
-    mocks: avg(input.mockMeans.map((m) => (m ? rubricToPercent(m, 5) : 0))),
-    checkpoints: input.checkpointsTotal ? (input.checkpointsPassed / input.checkpointsTotal) * 100 : 0,
-    behavioural: input.behavioural,
-  }
-  return readiness(INTERVIEW_INPUTS.map((p) => ({ ...p, value: value[p.id] })))
 }
 
 /** Portfolio readiness: 40% capstone rubric + 30% projects + 20% write-up + 10% story links. */
