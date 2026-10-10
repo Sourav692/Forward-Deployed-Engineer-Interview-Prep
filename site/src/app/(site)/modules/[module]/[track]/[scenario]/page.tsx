@@ -11,6 +11,9 @@ import { qualifiedTitle, type CaseStudy, type ScenarioRef } from '@/lib/scenario
 
 type Params = { module: string; track: string; scenario: string }
 
+// Any other param is a 404 at routing time, served as the prerendered not-found page.
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   const scenarios = await getAllScenarios()
   return scenarios.map((s) => ({

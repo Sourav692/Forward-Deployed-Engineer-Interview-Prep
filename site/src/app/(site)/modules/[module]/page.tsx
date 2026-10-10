@@ -10,6 +10,9 @@ import { STORY_BANK } from '@/lib/editorial'
 const BEHAVIORAL_MODULE = '14-behavioural-and-leadership-round'
 const COMPANY_PREP_MODULE = '16-company-oriented-prep'
 
+// Any other param is a 404 at routing time, served as the prerendered not-found page.
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return MODULES.filter((m) => m.status === 'live').map((m) => ({ module: m.id }))
 }

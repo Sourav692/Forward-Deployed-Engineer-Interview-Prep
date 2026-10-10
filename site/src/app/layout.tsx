@@ -8,7 +8,7 @@ import { BottomBar } from '@/components/shell/BottomBar'
 import { Logo } from '@/components/shell/Logo'
 import { MobileNav } from '@/components/shell/MobileNav'
 import { TopNav } from '@/components/shell/TopNav'
-import '../globals.css'
+import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
