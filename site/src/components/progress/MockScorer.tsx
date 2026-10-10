@@ -13,7 +13,7 @@ import { rubricToPercent, scoreMock } from '@/lib/progress/rules'
 import { useProgress } from '@/lib/progress/useProgress'
 import { Button, ErrorState, Input, cx, toast } from '@/components/ui'
 import { COPY } from '@/components/learn/copy'
-import { MOCK_ROUNDS, mockAssessmentId, saveBlocker, type MockDimension, type MockRound } from './mock-rubric'
+import { EVIDENCE_FROM, MOCK_ROUNDS, mockAssessmentId, saveBlocker, type MockDimension, type MockRound } from './mock-rubric'
 
 const LEVELS = ['Weak (1–2)', 'Average (3)', 'Strong (4)', 'Excellent (5)']
 // Labels are `relative` so each visually hidden radio sits inside its own label: clicks
@@ -66,8 +66,8 @@ export function MockScorer({ lessonSlug, title, href }: { lessonSlug: string; ti
         Score your round
       </h2>
       <p className="mt-1 text-sm text-muted">
-        Score each dimension from 1 to 5 and write one line of evidence quoted from your answer. Pass: no dimension
-        below 2 and a mean of 3 or more.
+        Score each dimension from 1 to 5. A score of {EVIDENCE_FROM} or 5 needs one line of evidence quoted from your
+        answer. Pass: no dimension below 2 and a mean of 3 or more.
       </p>
 
       <fieldset className="mt-4">
@@ -187,9 +187,12 @@ function DimensionField({
         ))}
       </div>
       <label className="mt-2 block text-sm">
-        <span className="text-muted">Evidence</span>
+        <span className="text-muted">
+          Evidence{(score ?? 0) >= EVIDENCE_FROM ? ', required for this score' : ''}
+        </span>
         <Input
           className="mt-1"
+          required={(score ?? 0) >= EVIDENCE_FROM}
           value={evidence}
           onChange={(e) => onEvidence(e.target.value)}
           placeholder="One line quoted from your answer"
