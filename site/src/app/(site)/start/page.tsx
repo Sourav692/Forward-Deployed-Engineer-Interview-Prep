@@ -9,6 +9,7 @@ import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { LinkButton } from '@/components/ui'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { ExpressLane } from '@/components/start/ExpressLane'
 
 /**
  * /start (FE-10): the one onboarding page (ENH-11). Choose a learning path, by the
@@ -39,6 +40,7 @@ export default function StartPage() {
           A path marks each module as required, recommended, optional, or skip for your background, so you know what
           to study first. It is optional: every lesson is open without one, and you can change it any time.
         </p>
+        <ExpressLane className="mt-3" />
         <div className="mt-4">
           <LinkButton href="/learn" variant="secondary">
             Skip and browse the curriculum

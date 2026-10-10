@@ -9,6 +9,7 @@ import { getAllScenarios } from '@/lib/content'
 import { NAV, REVIEWS, SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
 import { pageMetadata, webSiteJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { ExpressLane } from '@/components/start/ExpressLane'
 
 /**
  * `/`: the product landing page (FE-13). A Server Component with two interactive
@@ -108,6 +109,7 @@ export default async function HomePage() {
             <LinkButton href="/start" className="min-h-11 px-4 py-2.5 text-[0.9375rem]">Choose your path</LinkButton>
             <LinkButton href="/learn" variant="secondary" className="min-h-11 px-4 py-2.5 text-[0.9375rem]">Explore curriculum</LinkButton>
           </div>
+          <ExpressLane className="mt-4" />
         </div>
         <PracticePreview />
       </section>

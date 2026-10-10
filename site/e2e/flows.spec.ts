@@ -378,3 +378,20 @@ test('path page: modules in code order, gap modules flagged Later', async ({ pag
   await expect(sql).toContainText(/Flag:\s*Later/)
   await expect(sql).not.toContainText(/Flag:\s*Required/)
 })
+
+// ON-03, ON-06, ON-07: the express lane, Frontier Lab hours and diagnostic links.
+test('entry points: express lane, Frontier Lab hours, diagnostic links', async ({ page }) => {
+  for (const path of ['/', '/start']) {
+    await page.goto(path)
+    await expect(page.getByRole('link', { name: 'Go straight to the final-week review' })).toHaveAttribute('href', '/fde-last-day-prep')
+  }
+  await expect(page.getByText(/Frontier Lab Loop\s*\(about \d+ h\)/)).toBeVisible()
+  await page.goto('/learn/orientation')
+  await hydrated(page)
+  // Sections start collapsed on narrow screens.
+  const section = page.getByRole('button', { name: /^Orientation/ })
+  if ((await section.getAttribute('aria-expanded')) === 'false') await section.click()
+  await expect(page.getByRole('link', { name: 'Path diagnostic' })).toHaveAttribute('href', '/start#diagnostic')
+  await page.goto('/learn/orientation/how-the-platform-works')
+  await expect(page.getByRole('link', { name: /Complete the path diagnostic/ })).toHaveAttribute('href', '/start#diagnostic')
+})

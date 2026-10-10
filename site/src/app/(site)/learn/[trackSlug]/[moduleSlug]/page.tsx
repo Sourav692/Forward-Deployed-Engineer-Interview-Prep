@@ -32,6 +32,7 @@ import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/l
 import { ReadingList } from '@/components/learn/ReadingList'
 import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
+import { DiagnosticText } from '@/components/learn/DiagnosticText'
 
 /**
  * Module page (FE-07). Prerendered for all 53 modules (`generateStaticParams` +
@@ -192,8 +193,16 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                   Practise and Check
                 </h2>
                 <dl className="mt-3 grid gap-4 text-sm sm:grid-cols-2">
-                  {mod.deliverable && <Fact term="Deliverable">{capitalise(mod.deliverable)}</Fact>}
-                  {mod.assessment && <Fact term="Assessment">{capitalise(mod.assessment)}</Fact>}
+                  {mod.deliverable && (
+                    <Fact term="Deliverable">
+                      <DiagnosticText text={capitalise(mod.deliverable)} />
+                    </Fact>
+                  )}
+                  {mod.assessment && (
+                    <Fact term="Assessment">
+                      <DiagnosticText text={capitalise(mod.assessment)} />
+                    </Fact>
+                  )}
                   {mod.interviewProbe && <Fact term="Interview probe">{capitalise(mod.interviewProbe)}</Fact>}
                   {mod.commonMistakes.length > 0 && (
                     <Fact term="Common mistakes">

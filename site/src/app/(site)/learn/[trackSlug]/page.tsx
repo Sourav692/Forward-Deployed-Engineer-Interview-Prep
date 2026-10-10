@@ -19,6 +19,7 @@ import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { SectionAccordion } from '@/components/learn/SectionAccordion'
 import { SideNav } from '@/components/learn/SideNav'
 import { Tag } from '@/components/ui'
+import { DiagnosticText } from '@/components/learn/DiagnosticText'
 
 /**
  * Track page (FE-06). Every track is prerendered at build time: `generateStaticParams`
@@ -133,8 +134,12 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
                     ))}
                   </ul>
                   <dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">
-                    <Fact term="Exercise">{s.exercise}</Fact>
-                    <Fact term="Done when">{s.doneWhen}</Fact>
+                    <Fact term="Exercise">
+                      <DiagnosticText text={s.exercise} />
+                    </Fact>
+                    <Fact term="Done when">
+                      <DiagnosticText text={s.doneWhen} />
+                    </Fact>
                   </dl>
                 </SectionAccordion>
               )
