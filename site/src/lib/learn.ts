@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { cache } from 'react'
 import { marked } from 'marked'
+import { getCheckpoint } from './checkpoints'
 import { LESSONS, MODULES, TRACKS } from './curriculum'
 import { INTERVIEW_TRACK, curriculumHref, isLearnTrack } from './curriculum-href'
 import type {
@@ -341,5 +342,6 @@ export function moduleInput(mod: CurriculumModule): ModuleInput {
       // A prerequisite with nothing to read (Coming soon, On hold) cannot be completed,
       // so it must not block anything.
       .filter((p) => p.reading.length > 0),
+    checkpoint: !!getCheckpoint(mod.slug),
   }
 }

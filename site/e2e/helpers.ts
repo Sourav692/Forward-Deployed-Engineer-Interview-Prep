@@ -8,6 +8,8 @@ export const LESSON_TITLE = 'Three Roles, Three Questions'
 export const GATED_MODULE = '/learn/engineering-foundations/distributed-systems-essentials'
 export const COMING_SOON_MODULE = '/learn/engineering-foundations/sql-and-data-modelling'
 export const WORKSHEET = '/modules/01-customer-discovery-and-decomposition/core/internal-knowledge-assistant'
+/** Module with the T2.4 pilot checkpoint (DATA-10). */
+export const CHECKPOINT_MODULE = '/learn/llm-and-retrieval/retrieval-hybrid-rerank'
 /** A scenario mock lesson: it carries the mock timer and scorer (FE-15). */
 export const MOCK_LESSON = '/interview/mock-interviews/internal-knowledge-assistant-mock-interview'
 export const CASE_STUDY = '/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant'

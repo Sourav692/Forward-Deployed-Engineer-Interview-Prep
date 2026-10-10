@@ -4,6 +4,14 @@
 |---|---|---|---|---|
 | Backlog (moved out of Phase 2 on 10 October 2026) | L | PM-04 (done), DATA-01 (done) | Checkpoint input to readiness | §10, §15 PM-04 |
 
+Status: **built, with the T2.4 pilot** (10 October 2026, owner decision: build the feature and pilot one module; the rest stay owner-written).
+
+- Data: `site/src/lib/checkpoints.ts` (`CHECKPOINTS`, one entry per module), validated by `check:curriculum` (T2–T6 module, published, 6 to 10 items, unique ids, correct option present).
+- UI: Checkpoint section on the module page (`#checkpoint`), `CheckpointPanel`: submit, 70 % pass, explanation per question, retake.
+- Rules: attempts under `fd:v1:learn:attempts:checkpoint:<module>`; `moduleRevision` feeds failed and due checkpoints into Needs revision and the revision queue; `checkpointReadiness` measures the readiness input.
+- Pilot: T2.4, 8 questions drafted from its seven lessons, each answer resting on a quoted lesson sentence (listed in the PR). Owner review before merge.
+- Remaining: every other T2–T6 module, owner-written, one PR per track. Add an entry to `CHECKPOINTS`; nothing else changes.
+
 ## Why
 Interview readiness gives checkpoints 20 % weight, and modules reach Completed faster with a passed checkpoint. Until checkpoints exist, readiness shows the input as "not measured".
 

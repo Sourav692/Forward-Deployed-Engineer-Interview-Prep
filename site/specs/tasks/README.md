@@ -111,27 +111,32 @@ Re-scoped on 10 October 2026 after checking the plan against the code (see the n
 | 1 | [FE-15](phase-2/01-FE-15-mock-timer-and-scorer.md) | MockTimer and RubricScorer on the five scenario mock lessons, 1–5 lesson rubric, attempts saved | M | FE-02 | done (#72) |
 | 2 | [FE-17](phase-2/02-FE-17-settings-page.md) | `/settings`: weekly hours, export, import, reset with ConfirmDialog | S | FE-02 | done (#73) |
 | 3 | [DATA-07](phase-2/03-DATA-07-interview-hub-definitions.md) | Five interview hubs defined in `curriculum.ts`, linking existing sources and modules | M | DATA-01 | done (#74) |
-| 4 | [FE-18](phase-2/04-FE-18-interview-hub-pages.md) | Hub pages at `/interview/hubs/[hubSlug]` | M | DATA-07 | done (this PR) |
-| 5 | [UX-07](phase-2/05-UX-07-dashboard-wireframe.md) | Empty-first dashboard wireframes and the missing-input readiness rule | M | UX-04 | done (this PR) |
-| 6 | [FE-16](phase-2/06-FE-16-progress-dashboard.md) | `/progress` dashboard, revision, history and bookmarks on real data | L | FE-09, FE-15, UX-07 | done (this PR) |
-| 7 | [FE-19](phase-2/07-FE-19-retire-demo.md) | `/demo` retired with redirects; `src/demo/` removed | S | FE-15, FE-16, FE-17, FE-18 | done (this PR) |
+| 4 | [FE-18](phase-2/04-FE-18-interview-hub-pages.md) | Hub pages at `/interview/hubs/[hubSlug]` | M | DATA-07 | done (#75) |
+| 5 | [UX-07](phase-2/05-UX-07-dashboard-wireframe.md) | Empty-first dashboard wireframes and the missing-input readiness rule | M | UX-04 | done (#76) |
+| 6 | [FE-16](phase-2/06-FE-16-progress-dashboard.md) | `/progress` dashboard, revision, history and bookmarks on real data | L | FE-09, FE-15, UX-07 | done (#77) |
+| 7 | [FE-19](phase-2/07-FE-19-retire-demo.md) | `/demo` retired with redirects; `src/demo/` removed | S | FE-15, FE-16, FE-17, FE-18 | done (#78) |
 
 Exit criteria:
 
-- [ ] The five scenario mock lessons at `/interview/mock-interviews/...` carry a timer and a scorer for the short (five signals) and full (six dimensions) rounds, scored 1–5; pass rule (no dimension below 2, mean ≥ 3) applied; attempts saved.
+- [x] The five scenario mock lessons at `/interview/mock-interviews/...` carry a timer and a scorer for the short (five signals) and full (six dimensions) rounds, scored 1–5; pass rule (no dimension below 2, mean ≥ 3) applied; attempts saved.
 - [x] Five topic hubs at `/interview/hubs/...` list existing question sources by link, with no copied content.
 - [x] Dashboard shows real data only; empty state for new learners.
 - [x] Readiness formulas from `rules.ts` drive gauges; inputs not yet measured (checkpoints) show "not measured" instead of 0. Rule settled in UX-07: overall score re-weighted over measured inputs.
-- [ ] Export → reset → import restores state exactly.
+- [x] Export → reset → import restores state exactly.
 - [x] `/demo` retired.
 
+Phase 2 complete on 10 October 2026: all seven tasks merged, with the mock evidence rule (#79) and the DATA-10 checkpoint feature and T2.4 pilot (#80) closing its open items.
+
 Critical path (estimate, S = 0.5, M = 1.5, L = 4 days): **UX-07 (1.5) → FE-16 (4) → FE-19 (0.5) = 6 days**, with FE-15 (1.5) also feeding FE-16. FE-17 and DATA-07 → FE-18 (3 days) run in parallel.
+
+Lighthouse after the Phase 2 merges (10 October 2026, production, mobile preset, Lighthouse 13.5): `/progress` performance 90, 90 and 97 over three runs (LCP 2.0 to 3.3 s; the LCP element is the server-rendered page lead), accessibility 100; `/settings` performance 100. SEO reads 63 on both because `robots.txt` blocks them on purpose.
 
 ## Backlog
 
 | Task | Outcome | Size | Status |
 |---|---|---|---|
-| [DATA-10](backlog/DATA-10-module-checkpoints.md) | Owner-written checkpoints for T2–T6 modules | L | deferred (owner writes later) |
+| [DATA-10](backlog/DATA-10-module-checkpoints.md) | Checkpoint feature and the T2.4 pilot | L | done (#80) |
+| DATA-10 follow-up | Owner-written checkpoints for the remaining T2–T6 modules, one PR per track (T2, T3, T4, T5, T6) | M per track | todo (owner) |
 
 ## Later phases (not yet carded)
 

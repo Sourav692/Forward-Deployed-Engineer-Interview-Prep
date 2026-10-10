@@ -7,8 +7,8 @@
  */
 import { LESSONS, MODULES } from '@/lib/curriculum'
 import type { ModuleStatus } from '@/lib/curriculum-types'
-import { checkPrerequisites, revisionReason, rollup, type PrerequisiteCheck } from '@/lib/progress/rules'
-import { getModuleRecord, isLessonRead, latestConfidence, moduleProgress, type ProgressSummary } from '@/lib/progress/store'
+import { checkPrerequisites, checkpointId, revisionReason, rollup, type PrerequisiteCheck, type RevisionReason } from '@/lib/progress/rules'
+import { getModuleRecord, isLessonRead, latestConfidence, listAttempts, moduleProgress, type ProgressSummary } from '@/lib/progress/store'
 import type { RuleAttempt } from '@/lib/progress/types'
 import type { LearnerStatus } from '@/components/ui/StatusBadge'
 
@@ -22,6 +22,8 @@ export type ModuleInput = {
   minutes: Record<string, number>
   /** Prerequisite modules, each with its own main reading list. */
   prereqs: { slug: string; reading: string[] }[]
+  /** Whether the module has a checkpoint (DATA-10); its attempts then count for revision. */
+  checkpoint: boolean
 }
 
 const homeOf = new Map(LESSONS.map((l) => [l.slug, l.home]))
@@ -83,6 +85,17 @@ export function prerequisiteCheck(prereqs: ModuleInput['prereqs']): Prerequisite
 }
 
 /**
+ * Why a module needs revision, or null: low or faded confidence, and, for a module with
+ * a checkpoint (DATA-10), a failed latest attempt or a pass that is due for a re-check.
+ */
+export function moduleRevision({ slug, checkpoint }: Pick<ModuleInput, 'slug' | 'checkpoint'>, now = Date.now()): RevisionReason | null {
+  const latest = latestConfidence(slug)
+  const id = checkpoint ? checkpointId(slug) : undefined
+  const attempts: RuleAttempt[] = id ? listAttempts(id).map((a) => ({ assessmentId: a.assessmentId, at: a.at, passed: a.passed })) : []
+  return revisionReason({ attempts, confidence: latest ? { [slug]: latest } : {} }, slug, id, now)
+}
+
+/**
  * Precedence follows `rules.moduleStatus`: skipped > needs revision > completed >
  * blocked > in progress > not started. Mastered and Ready for review need checkpoints
  * and exercises, which arrive in Phase 2.
@@ -91,9 +104,7 @@ export function learnerStatus(input: ModuleInput, now = Date.now()): LearnerStat
   const record = getModuleRecord(input.slug)
   if (record.skipped) return 'skipped'
   const latest = latestConfidence(input.slug)
-  if (revisionReason({ attempts: [], confidence: latest ? { [input.slug]: latest } : {} }, input.slug, undefined, now)) {
-    return 'needs-revision'
-  }
+  if (moduleRevision(input, now)) return 'needs-revision'
   if (isCompleted(input.slug, input.reading)) return 'completed'
   if (!prerequisiteCheck(input.prereqs).ok) return 'blocked'
   if (input.reading.some(isRead) || latest) return 'in-progress'

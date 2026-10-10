@@ -22,6 +22,9 @@ type LearnerState = RuleState
 
 export const DAY_MS = 86_400_000
 export const CHECKPOINT_PASS = 70
+
+/** A module checkpoint's assessment id; attempts live under `fd:v1:learn:attempts:<id>` (DATA-10). */
+export const checkpointId = (moduleSlug: string) => `checkpoint:${moduleSlug}`
 export const MASTERY_GAP_DAYS = 7
 export const DECAY_INTERVALS = [14, 30, 60] as const
 export const CONFIDENCE_DECAY_DAYS = 21
@@ -335,6 +338,14 @@ export function scorecardReadiness(scores: number[]): number | null {
 export function mockReadiness(latestMeans: (number | null)[]): number | null {
   if (!latestMeans.some((m) => m !== null)) return null
   return latestMeans.reduce<number>((s, m) => s + (m === null ? 0 : rubricToPercent(m, 5)), 0) / latestMeans.length
+}
+
+/**
+ * Checkpoint input: of the module checkpoints the learner has taken, the share whose
+ * latest attempt passed. Unmeasured until one checkpoint is taken.
+ */
+export function checkpointReadiness(latestPassed: boolean[]): number | null {
+  return latestPassed.length ? (latestPassed.filter(Boolean).length / latestPassed.length) * 100 : null
 }
 
 /**
