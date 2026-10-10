@@ -60,14 +60,14 @@ export function MockRunner({ mockId }: { mockId: string }) {
   const [rubric, setRubric] = useState<Partial<Record<RubricDimension, number>>>({})
   const [probes, setProbes] = useState(1)
   const [error, setError] = useState('')
-  const [result, setResult] = useState<MockResult | null>(null)
+  const [result, setResult] = useState<MockResult<RubricDimension> | null>(null)
   const history = state ? attemptsFor(state, mockId) : []
 
   const submit = () => {
     const missing = dims.filter((d) => !rubric[d])
     if (missing.length) return setError(`Score every dimension: ${missing.map((d) => DIM_LABEL[d]).join(', ')}.`)
     setError('')
-    const r = scoreMock(rubric, mock.fdeRound)
+    const r = scoreMock(rubric, dims)
     update(
       (s) =>
         void s.attempts.push({ id: `att-${Date.now()}`, assessmentId: mockId, kind: 'mock', at: new Date().toISOString(), score: Math.round(r.mean * 25), passed: r.passed, rubric }),

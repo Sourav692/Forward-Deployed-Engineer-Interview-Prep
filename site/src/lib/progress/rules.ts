@@ -230,6 +230,7 @@ export function scoreCheckpoint<I extends ScorableItem>(
   return { score, passed: score >= assessment.passPercent, unanswered, skillScores, missed }
 }
 
+/** The demo's shared rubric (1–4). Production mocks use the lessons' own rubric; removed with `/demo` (FE-19). */
 export const RUBRIC_DIMENSIONS: RubricDimension[] = [
   'structure',
   'technical-depth',
@@ -238,23 +239,22 @@ export const RUBRIC_DIMENSIONS: RubricDimension[] = [
   'customer-judgement',
 ]
 
-export interface MockResult {
+export interface MockResult<D extends string = string> {
   mean: number
   passed: boolean
-  lowest: RubricDimension | null
+  lowest: D | null
 }
 
-/** Mock pass: no dimension below 2 and a mean of 3 or more. Customer judgement only on FDE rounds. */
-export function scoreMock(
-  rubric: Partial<Record<RubricDimension, number>>,
-  fdeRound: boolean,
-): MockResult {
-  const dims = RUBRIC_DIMENSIONS.filter((d) => fdeRound || d !== 'customer-judgement')
+/**
+ * Mock pass: every dimension scored, none below 2, and a mean of 3 or more. `dims` is the
+ * round's rubric: the T8.2 short round's five signals or the full round's six dimensions.
+ */
+export function scoreMock<D extends string>(rubric: Partial<Record<D, number>>, dims: readonly D[]): MockResult<D> {
   const values = dims.map((d) => rubric[d] ?? 0)
-  const mean = values.reduce((s, v) => s + v, 0) / dims.length
-  let lowest: RubricDimension | null = null
+  const mean = dims.length ? values.reduce((s, v) => s + v, 0) / dims.length : 0
+  let lowest: D | null = null
   for (const d of dims) if (lowest === null || (rubric[d] ?? 0) < (rubric[lowest] ?? 0)) lowest = d
-  const complete = values.every((v) => v >= 1)
+  const complete = dims.length > 0 && values.every((v) => v >= 1)
   return { mean, passed: complete && values.every((v) => v >= 2) && mean >= 3, lowest }
 }
 
@@ -294,8 +294,8 @@ function readiness(parts: ReadinessPart[]): Readiness {
   return { score, parts, weakest }
 }
 
-/** Rubric means (1–4) map to 0–100 so that 1 = 0 and 4 = 100. */
-export const rubricToPercent = (mean: number) => Math.max(0, Math.min(100, ((mean - 1) / 3) * 100))
+/** Rubric means map to 0–100 so that 1 = 0 and the top score = 100. Worksheets use 1–4, mocks 1–5. */
+export const rubricToPercent = (mean: number, max = 4) => Math.max(0, Math.min(100, ((mean - 1) / (max - 1)) * 100))
 
 /**
  * Interview readiness: 35% worksheet and rubric means + 30% mocks + 20% checkpoint
@@ -303,7 +303,7 @@ export const rubricToPercent = (mean: number) => Math.max(0, Math.min(100, ((mea
  */
 export function interviewReadiness(input: {
   rubricMeans: number[] // latest self-scored exercise/worksheet means, 1–4
-  mockMeans: number[] // latest mean per required mock, 0 when not taken
+  mockMeans: number[] // latest mean per required mock, 1–5, 0 when not taken
   checkpointsPassed: number
   checkpointsTotal: number
   behavioural: number // 0–100
@@ -311,7 +311,7 @@ export function interviewReadiness(input: {
   const avg = (xs: number[]) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0)
   return readiness([
     { id: 'worksheets', label: 'Worksheet and rubric scores', weight: 0.35, value: input.rubricMeans.length ? rubricToPercent(avg(input.rubricMeans)) : 0 },
-    { id: 'mocks', label: 'Mock interviews', weight: 0.3, value: avg(input.mockMeans.map((m) => (m ? rubricToPercent(m) : 0))) },
+    { id: 'mocks', label: 'Mock interviews', weight: 0.3, value: avg(input.mockMeans.map((m) => (m ? rubricToPercent(m, 5) : 0))) },
     { id: 'checkpoints', label: 'Checkpoint pass rate', weight: 0.2, value: input.checkpointsTotal ? (input.checkpointsPassed / input.checkpointsTotal) * 100 : 0 },
     { id: 'behavioural', label: 'Behavioural readiness', weight: 0.15, value: input.behavioural },
   ])

@@ -17,6 +17,7 @@ import {
   portfolioReadiness,
   revisionReason,
   rollup,
+  rubricToPercent,
   scoreCheckpoint,
   scoreExam,
   scoreMock,
@@ -96,16 +97,21 @@ check('skill breakdown', scoreCheckpoint({ passPercent: 70 }, items, answers(7))
 check('unanswered reported', scoreCheckpoint({ passPercent: 70 }, items, { q1: 'a' }).unanswered.length, 9)
 
 // Mocks
-check('mock pass: mean 3, none below 2', scoreMock({ structure: 3, 'technical-depth': 3, 'trade-offs': 3, communication: 3 }, false).passed, true)
-check('mock fail: one dimension 1', scoreMock({ structure: 4, 'technical-depth': 4, 'trade-offs': 1, communication: 4 }, false).passed, false)
-check('mock fail: FDE round missing customer judgement', scoreMock({ structure: 4, 'technical-depth': 4, 'trade-offs': 4, communication: 4 }, true).passed, false)
+const SHORT = ['discovery', 'architecture', 'evals', 'production', 'communication'] as const
+const FULL = ['discovery', 'architecture', 'security', 'evaluation', 'production', 'communication'] as const
+const all = (v: number) => Object.fromEntries([...SHORT, ...FULL].map((d) => [d, v]))
+check('mock pass: mean 3, none below 2', scoreMock(all(3), SHORT).passed, true)
+check('mock fail: one dimension 1', scoreMock({ ...all(5), security: 1 }, FULL), { mean: 26 / 6, passed: false, lowest: 'security' })
+check('mock fail: mean below 3', scoreMock({ ...all(3), evals: 2 }, SHORT).passed, false)
+check('mock fail: full round missing a dimension', scoreMock({ ...all(5), security: undefined }, FULL).passed, false)
+check('mock scale: 5 maps to 100, 3 to 50', [rubricToPercent(5, 5), rubricToPercent(3, 5)], [100, 50])
 
 // Readiness exam
 check('exam pass at 82', scoreExam({ a: 50, b: 32 }, []).passed, true)
 check('exam auto-fail caps result', scoreExam({ a: 60, b: 35 }, ['filter-after-retrieval']), { total: 81, raw: 95, passed: false, capped: true })
 
 // Readiness formulas
-const ir = interviewReadiness({ rubricMeans: [4], mockMeans: [4, 0], checkpointsPassed: 1, checkpointsTotal: 2, behavioural: 40 })
+const ir = interviewReadiness({ rubricMeans: [4], mockMeans: [5, 0], checkpointsPassed: 1, checkpointsTotal: 2, behavioural: 40 })
 check('interview readiness = 35 + 15 + 10 + 6', ir.score, 66)
 check('weakest interview dimension', ir.weakest.id, 'behavioural')
 const pr = portfolioReadiness({ capstoneRubric: undefined, projectsCompleted: 1, projectsRequired: 2, writeUpDone: true, storyProjectLinks: 3 })

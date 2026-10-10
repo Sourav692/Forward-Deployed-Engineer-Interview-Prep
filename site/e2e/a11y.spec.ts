@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
-import { CASE_STUDY, COMING_SOON_MODULE, LESSON, READY_MODULE, WORKSHEET, hydrated } from './helpers'
+import { CASE_STUDY, COMING_SOON_MODULE, LESSON, MOCK_LESSON, READY_MODULE, WORKSHEET, hydrated } from './helpers'
 
 // A11Y-01 (plan §11): zero serious or critical axe violations on every Phase 1
 // template, in both themes. Minor and moderate findings are reported, not failed.
@@ -18,6 +18,7 @@ const PAGES: [string, string][] = [
   ['design', '/design'],
   ['practice', '/practice'],
   ['interview', '/interview'],
+  ['mock lesson', MOCK_LESSON],
   ['library', '/library'],
   ['credits', '/library/credits'],
   ['worksheet', WORKSHEET],
