@@ -1,0 +1,38 @@
+name: Uptime
+
+# Hourly check that production answers (audit check PR-19, owner decision 5). A failed
+# run makes GitHub email the repository owner. About 720 Actions minutes a month.
+# GitHub disables scheduled workflows after 60 days without repository activity;
+# re-enable it on the Actions tab if that happens.
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+env:
+  # The production host, in one place for when the custom domain lands (ENH-12).
+  SITE: https://forward-deployed-sigma.vercel.app
+
+jobs:
+  check:
+    name: Production answers 200
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fetch the home page, a lesson and a case
+        run: |
+          status=0
+          for path in / \
+            /learn/orientation/the-fde-role/three-roles-three-questions \
+            /modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 10 "$SITE$path" || echo 000)
+            echo "$code $SITE$path"
+            if [ "$code" != "200" ]; then
+              echo "::error::$SITE$path returned $code"
+              status=1
+            fi
+          done
+          exit $status
