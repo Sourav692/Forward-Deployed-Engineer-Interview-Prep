@@ -19,6 +19,8 @@ export type ScenarioMeta = {
   tabs?: ReadingTab[]
   /** Reading pages only: `track/slug` of the same case's interactive worksheet in Module 01. */
   practice?: string
+  /** `YYYY-MM-DD` the sources last changed, from git at sync time. */
+  updated?: string | null
 }
 
 export type TrackMeta = {
@@ -32,6 +34,8 @@ export type Manifest = {
   generatedAt: string
   /** `kind: 'reading'` marks a module of reading pages rather than worksheets. */
   modules: { id: string; kind?: 'reading'; tracks: TrackMeta[] }[]
+  /** Final-week guide id -> `YYYY-MM-DD` its source last changed. */
+  lastDayUpdated?: Record<string, string | null>
 }
 
 export type ScenarioRef = {
@@ -46,6 +50,7 @@ export type ScenarioRef = {
   reading?: boolean
   tabs?: ReadingTab[]
   practice?: string
+  updated?: string | null
   /**
    * 'Practice Worksheet' or 'Case Study' when another page on the site has the same
    * title. Shown beside the title in search, breadcrumbs, browser titles and prev/next.

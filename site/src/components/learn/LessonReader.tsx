@@ -1,5 +1,6 @@
 import { Diagram } from '@/components/Diagram'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
+import { Byline } from '@/components/Byline'
 
 /**
  * LessonReader (FE-07). A Server Component: the markdown was parsed at build time by
@@ -7,8 +8,9 @@ import { formatMinutes, type LessonPage } from '@/lib/learn'
  * HTML ships in the static page. Only ```mermaid fences become the client `Diagram`
  * island, which loads mermaid on demand.
  *
- * Under the title: reading time, the source note ("From the FDE Handbook") and, for
- * third-party material (`publish: 'credited'`), the credit line.
+ * Under the title: the author and last-updated line, then reading time, the source
+ * note ("From the FDE Handbook") and, for third-party material (`publish: 'credited'`),
+ * the credit line.
  */
 export function LessonReader({ page }: { page: LessonPage }) {
   const { lesson, doc, sourceNote, creditHtml } = page
@@ -20,6 +22,7 @@ export function LessonReader({ page }: { page: LessonPage }) {
         <h1 id="lesson-title" className="text-balance">
           {lesson.title}
         </h1>
+        <Byline updated={lesson.updated} />
         <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
           {lesson.estMinutes ? <span>{formatMinutes(lesson.estMinutes)} read</span> : null}
           {lesson.estMinutes ? <span aria-hidden="true">·</span> : null}

@@ -14,6 +14,7 @@
  * and a path change here would otherwise fail silently at build time.
  */
 
+import { execFileSync } from 'node:child_process'
 import { copyFile, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -25,7 +26,7 @@ import {
   syncCompanyPrep,
 } from './company-prep.mjs'
 import { syncLastDay } from './last-day.mjs'
-import { learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
+import { gitDates, learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
 import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
 
 const SITE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -119,7 +120,7 @@ async function readMarkdownFiles(dir) {
     .sort((a, b) => sourceNumber(a) - sourceNumber(b) || a.localeCompare(b))
 }
 
-async function syncTrack(moduleId, track, sourceUrls) {
+async function syncTrack(moduleId, track, sourceUrls, updatedOf) {
   const worksheetFiles = await readMarkdownFiles(track.worksheetDir)
   const answerKeyFiles = new Set(await readMarkdownFiles(track.answerKeyDir))
 
@@ -154,6 +155,7 @@ async function syncTrack(moduleId, track, sourceUrls) {
       // keeps the site's list free of holes that would read as missing content.
       order: index + 1,
       title: TITLE_OVERRIDES[`${track.id}/${slug}`] ?? extractTitle(worksheet, slug),
+      updated: updatedOf(join(track.worksheetDir, file), join(track.answerKeyDir, keyFile)),
     })
   }
 
@@ -192,6 +194,20 @@ async function sourcesPresent() {
   }
 }
 
+/**
+ * A shallow clone (Vercel's build checkout, CI's e2e job) has too little history for
+ * the dates the sync writes (`gitDates` in learn.mjs): every page would get the date
+ * of the clone's oldest commit. Those builds use the committed snapshot instead, which
+ * CI's full-history sync has already checked.
+ */
+function shallowClone() {
+  try {
+    return execFileSync('git', ['rev-parse', '--is-shallow-repository'], { cwd: REPO_ROOT, encoding: 'utf8' }).trim() === 'true'
+  } catch {
+    return false
+  }
+}
+
 async function contentPresent() {
   try {
     const manifest = JSON.parse(
@@ -204,11 +220,12 @@ async function contentPresent() {
 }
 
 async function main() {
-  if (!(await sourcesPresent())) {
+  const shallow = shallowClone()
+  if (shallow || !(await sourcesPresent())) {
     if (await contentPresent()) {
       console.log(
-        `content sync: sources not present at ${SOURCE_ROOT}\n` +
-          '  building from the committed content/ snapshot instead.',
+        (shallow ? 'content sync: shallow git clone, so page dates would be wrong;' : `content sync: sources not present at ${SOURCE_ROOT};`) +
+          '\n  building from the committed content/ snapshot instead.',
       )
       return
     }
@@ -246,11 +263,12 @@ async function main() {
   const warnings = []
   // Absolute source path -> URL of the page that publishes it, for the Learn sync.
   const sourceUrls = new Map()
+  const updatedOf = gitDates(REPO_ROOT)
 
   for (const mod of MODULES) {
     const tracks = []
     for (const track of mod.tracks) {
-      const result = await syncTrack(mod.id, track, sourceUrls)
+      const result = await syncTrack(mod.id, track, sourceUrls, updatedOf)
       tracks.push(result.manifest)
       warnings.push(...result.warnings)
     }
@@ -301,7 +319,7 @@ async function main() {
       }
     }
   }
-  await syncLastDay({ repoRoot: REPO_ROOT, siteDir: SITE_DIR, outDir: OUT_DIR, pages })
+  const lastDay = await syncLastDay({ repoRoot: REPO_ROOT, siteDir: SITE_DIR, outDir: OUT_DIR, pages, updatedOf })
 
   // Learn lessons last: their links point at every page published above.
   try {
@@ -315,7 +333,7 @@ async function main() {
     await rm(LEARN_SNAPSHOT_DIR, { recursive: true, force: true })
   }
 
-  const manifest = { generatedAt: new Date().toISOString(), modules }
+  const manifest = { generatedAt: new Date().toISOString(), modules, lastDayUpdated: lastDay.updated }
   await writeFile(join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2))
 
   const allTracks = modules.flatMap((m) => m.tracks)

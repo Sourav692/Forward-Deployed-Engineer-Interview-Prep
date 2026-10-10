@@ -29,7 +29,7 @@ import { existsSync, statSync } from 'node:fs'
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { TABS, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
-import { UNLINK, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
+import { UNLINK, gitDates, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
 export const CASE_STUDY_MODULE_ID = '15-fde-case-studies'
 
@@ -290,6 +290,7 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
     }
   }
 
+  const updatedOf = gitDates(repoRoot)
   const tracks = []
   for (const theme of THEMES) {
     const scenarios = []
@@ -310,6 +311,7 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
         tag: c.tag,
         tabs: c.tabs.map(({ id, label }) => ({ id, label })),
         ...(c.practice && { practice: c.practice }),
+        updated: updatedOf(...c.tabs.map((tab) => tab.src ?? join(c.dir, tab.file))),
       })
     }
     if (scenarios.length) {

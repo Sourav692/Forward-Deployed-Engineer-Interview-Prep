@@ -10,6 +10,7 @@ import { BeforeYouStart, Fact, MetaStrip, WhereNext } from '@/components/PageInt
 import { qualifiedTitle, scenarioHref, type CaseStudy, type ScenarioRef } from '@/lib/scenario'
 import { learningResourceJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { Byline } from '@/components/Byline'
 
 type Params = { module: string; track: string; scenario: string }
 
@@ -127,6 +128,7 @@ export default async function ScenarioPage({ params }: { params: Promise<Params>
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">
           {scenario.title}
         </h1>
+        <Byline updated={scenario.ref.updated} />
         <div className="mt-3">
           <MetaStrip
             meta={meta}
@@ -190,6 +192,7 @@ async function CaseStudyPage({
           <span className="text-[0.8125rem] text-subtle">{study.ref.trackTitle}</span>
         </div>
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{study.title}</h1>
+        <Byline updated={study.ref.updated} />
         <div className="mt-3">
           <MetaStrip
             meta={meta}

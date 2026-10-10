@@ -18,7 +18,11 @@ jobs:
       run:
         working-directory: site
     steps:
+      # Full history: sync dates each page from the last commit to its source (PQ-15),
+      # and a shallow clone would date every page by its one commit.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
