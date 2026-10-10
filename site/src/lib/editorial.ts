@@ -161,11 +161,10 @@ export const FOOTER_NAV = [
 ] as const
 
 /**
- * Where reports and suggestions go (owner decision 1). The repository is private, so
- * a GitHub issue link would 404 for visitors.
- * TODO(owner): replace the placeholder with the real address before merging ENH-10.
+ * Where reports and suggestions go, and the contact on /about (owner decision 1). The
+ * repository is private, so a GitHub issue link would 404 for visitors.
  */
-export const FEEDBACK_EMAIL = 'feedback@example.com'
+export const FEEDBACK_EMAIL = 'sourav692@gmail.com'
 
 /** A `mailto:` link whose subject names the page, so a report says where it came from. */
 export const reportHref = (page?: { title: string; path: string }) =>
