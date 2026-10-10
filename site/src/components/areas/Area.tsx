@@ -125,32 +125,3 @@ export function AreaGroup({
     </div>
   )
 }
-
-/**
- * Items that are planned but have no page yet. Rendered as plain text with a
- * Coming soon pill, never as links, so nothing on an index points at a 404.
- */
-export function PlannedList({ items }: { items: { title: string; summary: string }[] }) {
-  return (
-    <ul className="grid gap-3 sm:grid-cols-2">
-      {items.map((item) => (
-        <li key={item.title} className="rounded-lg border border-dashed border-border-strong px-4 py-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[0.9375rem] font-medium">{item.title}</span>
-            <ComingSoonPill />
-          </div>
-          <p className="mt-1 text-[0.8125rem] leading-snug text-muted">{item.summary}</p>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-/** Static Coming soon label. Same look as StatusBadge's gap pill, without the client island. */
-export function ComingSoonPill() {
-  return (
-    <span className="inline-flex items-center rounded-full border border-border-strong px-2 py-0.5 text-xs font-medium text-muted">
-      Coming soon
-    </span>
-  )
-}

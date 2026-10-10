@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ModuleProgress } from '@/components/Progress'
-import { AreaGroup, AreaHeader, AreaSection, LinkList, PlannedList, TextLink } from '@/components/areas/Area'
+import { AreaGroup, AreaHeader, AreaSection, LinkList, TextLink } from '@/components/areas/Area'
 import { LIVE, curriculumModules, moduleGroups, moduleHref } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { STORY_BANK } from '@/lib/editorial'
@@ -8,8 +8,8 @@ import { STORY_BANK } from '@/lib/editorial'
 /**
  * /practice: the practice index (FE-11). Links into the existing worksheet pages
  * (/modules/01-...), the behavioural round (/modules/14-...) and its Story Bank, and
- * the mock-interview module in Learn. Projects have no repository source yet (plan
- * §15 Q14), so they are listed as Coming soon without links.
+ * the mock-interview module in Learn. Projects have no source yet (plan §15 Q14), so
+ * the page does not mention them (audit check FV-03).
  */
 
 export const metadata: Metadata = {
@@ -42,7 +42,6 @@ export default async function PracticePage() {
           ['#worksheets', 'Worksheets'],
           ['#behavioural', 'Behavioural'],
           ['#mocks', 'Mock interviews'],
-          ['#projects', 'Projects'],
         ].map(([href, label]) => (
           <a
             key={href}
@@ -111,21 +110,6 @@ export default async function PracticePage() {
             <ModuleCard key={m.slug} module={m} />
           ))}
         </div>
-      </AreaSection>
-
-      <AreaSection
-        id="projects"
-        title="Projects"
-        description="Build-it-yourself projects that turn a whiteboard answer into running code. They are planned but not written yet, so nothing here links anywhere."
-      >
-        <PlannedList
-          items={[
-            {
-              title: 'Hands-on projects',
-              summary: 'Scoped builds with a brief, acceptance checks and a rubric, from a tested API to a deployed capstone.',
-            },
-          ]}
-        />
       </AreaSection>
     </div>
   )

@@ -11,7 +11,9 @@ import { absoluteUrl } from '@/lib/seo'
 
 /**
  * `/sitemap.xml` (plan §11, SEO-01): every public, static page. Learner-only pages
- * (`/progress`, `/settings`) are left out; `robots.ts` disallows them too. Built once at build time like any other static route.
+ * (`/progress`, `/settings`) are left out; `robots.ts` disallows them too. So are
+ * `/company-prep` and planned modules, which have no content yet. Built once at build
+ * time like any other static route.
  */
 
 /** Top-level pages. Some are built by parallel Phase 1 workstreams. */
@@ -22,7 +24,6 @@ const STATIC_PAGES = [
   '/design',
   '/practice',
   '/interview',
-  '/company-prep',
   '/library',
   '/library/credits',
   '/guide',
@@ -38,7 +39,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const hub of INTERVIEW_HUBS) paths.add(hubHref(hub.slug))
   for (const track of getTracks()) {
     paths.add(learnHref.track(track.slug))
-    for (const mod of trackModules(track)) paths.add(learnHref.module(mod))
+    for (const mod of trackModules(track)) {
+      // Planned modules have no lessons yet, so they stay out of search (FV-03).
+      if (mod.status !== 'coming-soon' && mod.status !== 'on-hold') paths.add(learnHref.module(mod))
+    }
   }
   for (const lesson of getLearnManifest()) {
     if (lesson.kind === 'sync') paths.add(lesson.href)

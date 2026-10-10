@@ -25,7 +25,10 @@ export const metadata: Metadata = {
 const COMPANY_MODULE = 'company-loops'
 
 export default function InterviewPage() {
-  const practiceModules = curriculumModules(INTERVIEW_TRACK).filter((m) => m.slug !== COMPANY_MODULE)
+  // On-hold modules stay off the hub (audit check FV-03); their own pages still exist.
+  const practiceModules = curriculumModules(INTERVIEW_TRACK).filter(
+    (m) => m.slug !== COMPANY_MODULE && m.status !== 'on-hold',
+  )
 
   return (
     <div className="py-12">

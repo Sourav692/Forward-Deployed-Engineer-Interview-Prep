@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { NAV, UTILITY_NAV } from '@/lib/editorial'
+import { FOOTER_NAV, NAV, UTILITY_NAV } from '@/lib/editorial'
 import { SITE } from '@/lib/registry'
 import { cx } from '@/components/ui/cx'
 import { Icon } from './Icon'
@@ -114,7 +114,7 @@ export function MobileNav() {
         </nav>
         <hr className="mx-4 border-border" />
         <nav aria-label="Utility" className="flex flex-col gap-0.5 p-2">
-          {UTILITY_NAV.map((item) => (
+          {[...UTILITY_NAV, ...FOOTER_NAV].map((item) => (
             <MenuLink key={item.id} href={item.href} icon={item.id} current={isActive(pathname, item.match)} onPick={() => dialogRef.current?.close()}>
               {item.label}
             </MenuLink>
