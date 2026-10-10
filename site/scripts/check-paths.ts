@@ -3,7 +3,8 @@
  * via native TypeScript type stripping: `npm run check:paths`.
  *
  * Fails when: the module table in paths.ts drifts from curriculum.ts; a path flags an
- * unknown slug or leaves a module unflagged; an on-hold module is not `skip`; a
+ * unknown slug or leaves a module unflagged; a module with no lessons yet (coming soon
+ * or on hold) is required, recommended or optional instead of `later` or `skip`; a
  * path's `estHours` drifts from its required and recommended modules; a start module
  * is not required and published; a variant points at a missing base path; a diagnostic
  * option names an unknown path or module; or scoring fails to return a base path for
@@ -15,7 +16,7 @@ import {
   DIAGNOSTIC,
   FLAG_ORDER,
   PATHS,
-  PAUSED_MODULES,
+  GAP_MODULES,
   PERSONAS,
   TRACK_MODULES,
   getPathById,
@@ -36,8 +37,8 @@ for (const t of TRACKS) {
 }
 for (const slug of Object.keys(TRACK_MODULES)) if (!TRACKS.some((t) => t.slug === slug)) fail(`TRACK_MODULES has unknown track "${slug}"`)
 
-const paused = MODULES.filter((m) => m.status === 'on-hold').map((m) => m.slug)
-if ([...paused].sort().join() !== [...PAUSED_MODULES].sort().join()) fail(`PAUSED_MODULES is [${PAUSED_MODULES}] but on-hold modules are [${paused}]`)
+const gaps = MODULES.filter((m) => m.status === 'coming-soon' || m.status === 'on-hold').map((m) => m.slug)
+if ([...gaps].sort().join() !== [...GAP_MODULES].sort().join()) fail(`GAP_MODULES is [${GAP_MODULES}] but coming-soon and on-hold modules are [${gaps}]`)
 
 const ids = new Set<string>()
 for (const p of PATHS) {
@@ -52,7 +53,10 @@ for (const p of PATHS) {
   }
   for (const m of MODULES) {
     if (!(m.slug in p.moduleFlags)) fail(`${p.id}: module "${m.slug}" is not flagged`)
-    if (m.status === 'on-hold' && p.moduleFlags[m.slug] !== 'skip') fail(`${p.id}: on-hold module "${m.slug}" must be "skip"`)
+    // ON-05: a module with no lessons is never something a path asks for.
+    const gap = m.status === 'coming-soon' || m.status === 'on-hold'
+    if (gap && !['later', 'skip'].includes(p.moduleFlags[m.slug])) fail(`${p.id}: ${m.status} module "${m.slug}" is "${p.moduleFlags[m.slug]}"; it must be "later" or "skip"`)
+    if (!gap && p.moduleFlags[m.slug] === 'later') fail(`${p.id}: "${m.slug}" has lessons, so it cannot be "later"`)
   }
 
   const minutes = MODULES.filter((m) => p.moduleFlags[m.slug] === 'required' || p.moduleFlags[m.slug] === 'recommended').reduce(
