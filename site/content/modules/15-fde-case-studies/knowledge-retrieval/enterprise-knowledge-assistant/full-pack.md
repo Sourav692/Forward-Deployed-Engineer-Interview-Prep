@@ -193,7 +193,7 @@ OBSERVABILITY  (every stage writes)
                     layer-1 vs layer-2 disagreement
 ```
 
-The same flow, for a viewer that draws Mermaid:
+The same flow as a diagram:
 
 ```mermaid
 flowchart TB

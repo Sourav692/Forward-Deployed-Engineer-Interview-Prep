@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T22:00:51.304Z",
+  "generatedAt": "2026-10-10T22:55:06.779Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -804,7 +804,7 @@
                 }
               ],
               "practice": "system-design/ai-system-for-an-air-gapped-environment",
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "reliable-workflow-orchestration",
@@ -826,7 +826,7 @@
                 }
               ],
               "practice": "system-design/reliable-workflow-orchestration-system",
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "configurable-platform-customer-workflows",
@@ -848,7 +848,7 @@
                 }
               ],
               "practice": "system-design/configurable-platform-customer-specific-workflows",
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -870,7 +870,7 @@
                 }
               ],
               "practice": "system-design/enterprise-chatbot-platform",
-              "updated": "2026-10-04"
+              "updated": "2026-10-11"
             },
             {
               "slug": "self-adapting-agent",

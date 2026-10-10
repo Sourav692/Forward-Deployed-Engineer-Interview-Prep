@@ -2,8 +2,6 @@
 
 *Source: THE FORWARD DEPLOYED ENGINEER SYSTEM DESIGN INTERVIEW, Chapter 17 (locations 15134–15992)*
 
-*Tutorial format: Interview-ready v2 (bullet-only cram format) — regenerated from the original tutorial's verified content, no new source material added.*
-
 ## Table of Contents
 
 - [1. The Customer Problem and Discovery](#1-the-customer-problem-and-discovery)

@@ -1,7 +1,5 @@
 # Chapter 21 (Condensed): Enterprise Chatbot Platform — "Our Own ChatGPT"
 
-*Bullet-form companion to `chapter-21-enterprise-chatbot-platform-tutorial.md`. Same 8 sections, same diagrams and code — prose stripped to one- and two-line points for revision and in-interview recall.*
-*Tutorial format: Interview-ready v2 (bullet-only cram format) — regenerated from the condensed tutorial's verified content; no new source material added except the clearly-labelled "My Perspective on the Gaps" subsection.*
 *Scenario: custom addition to the 20-scenario set — not from the source book.*
 
 ---
