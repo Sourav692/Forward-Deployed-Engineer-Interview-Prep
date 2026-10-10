@@ -47,12 +47,13 @@ export interface AttemptBase {
   assessmentId: string
   kind: AssessmentKind
   at: string
-  /** 0–100 for checkpoints and the exam; rubric mean ×25 for mocks. */
+  /** 0–100 for checkpoints and the exam; for mocks, the rubric mean as 0–100 (`rubricToPercent`). */
   score: number
   passed: boolean
   answers?: Record<string, string>
   skillScores?: Record<string, { correct: number; total: number }>
-  rubric?: Partial<Record<RubricDimension, number>>
+  /** Mock scores by dimension id; `answers` then holds the evidence line per dimension. */
+  rubric?: Partial<Record<string, number>>
   sectionScores?: Record<string, number>
   autoFails?: string[]
 }

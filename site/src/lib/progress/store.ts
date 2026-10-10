@@ -238,11 +238,16 @@ export function listAttempts(assessmentId: string): Attempt[] {
   return Array.isArray(all) ? all : []
 }
 
-export function recordAttempt(attempt: Omit<Attempt, 'id' | 'updatedAt'>, now = Date.now()): boolean {
+/** `event` overrides the activity entry, e.g. a `mock-completed` with a readable label and link. */
+export function recordAttempt(
+  attempt: Omit<Attempt, 'id' | 'updatedAt'>,
+  event: Partial<Pick<ActivityEvent, 'kind' | 'label' | 'href'>> = {},
+  now = Date.now(),
+): boolean {
   const all = listAttempts(attempt.assessmentId)
   const record: Attempt = { ...attempt, id: `${attempt.assessmentId}:${all.length + 1}`, updatedAt: iso(now) }
   const ok = writeJson(attemptsKey(attempt.assessmentId), [...all, record])
-  if (ok) logActivity({ kind: 'attempt-recorded', itemId: attempt.assessmentId, label: `Scored ${attempt.score}` }, now)
+  if (ok) logActivity({ kind: 'attempt-recorded', itemId: attempt.assessmentId, label: `Scored ${attempt.score}`, ...event }, now)
   return ok
 }
 

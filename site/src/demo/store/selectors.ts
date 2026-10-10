@@ -19,6 +19,7 @@ import {
   portfolioReadiness,
   revisionReason,
   rollup,
+  RUBRIC_DIMENSIONS,
   scoreMock,
   type PrerequisiteCheck,
   type Readiness,
@@ -154,7 +155,7 @@ export function deriveProgress(state: LearnerState, realNow: number): Progress {
   const mockMeans = path.requiredMockIds.map((id) => {
     const a = latestAttempt(state, id)
     const mock = repo.getMock(id)
-    return a?.rubric && mock ? scoreMock(a.rubric, mock.fdeRound).mean : 0
+    return a?.rubric && mock ? scoreMock(a.rubric, RUBRIC_DIMENSIONS.filter((d) => mock.fdeRound || d !== 'customer-judgement')).mean : 0
   })
   const required = repo.listModules().filter((m) => modules[m.id].flag === 'required' && !state.skipped[m.id])
   const attempted = required.filter((m) => modules[m.id].attempts > 0)

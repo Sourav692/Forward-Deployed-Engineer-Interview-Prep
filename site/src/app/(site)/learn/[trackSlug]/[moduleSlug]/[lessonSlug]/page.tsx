@@ -9,6 +9,9 @@ import { LessonActions } from '@/components/learn/LessonActions'
 import { LessonReader } from '@/components/learn/LessonReader'
 import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { LessonSideNav } from '@/components/learn/LessonSideNav'
+import { MockScorer } from '@/components/progress/MockScorer'
+import { MockTimer } from '@/components/progress/MockTimer'
+import { MOCK_METHOD_LESSON, MOCK_MINUTES, MOCK_MODULE } from '@/components/progress/mock-rubric'
 import { cx, focusRing } from '@/components/ui'
 
 /**
@@ -49,6 +52,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const trail = trackTrail(track)
   // Section anchors exist only on Learn track pages.
   const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
+  // The scenario mocks (every T8.2 lesson after the method lesson) get a timer and a scorer (FE-15).
+  const scenarioMock = mod.slug === MOCK_MODULE && lesson.slug !== MOCK_METHOD_LESSON
 
   return (
     <>
@@ -96,7 +101,15 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
 
           <StorageNotice />
 
+          {scenarioMock && (
+            <div className="mb-6">
+              <MockTimer minutes={MOCK_MINUTES} />
+            </div>
+          )}
+
           <LessonReader page={page} />
+
+          {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} />}
 
           <div className="mt-10 border-t border-border pt-6">
             <LessonActions moduleSlug={mod.slug} lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} />

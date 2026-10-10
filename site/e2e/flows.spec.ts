@@ -3,6 +3,7 @@ import {
   GATED_MODULE,
   LESSON,
   LESSON_TITLE,
+  MOCK_LESSON,
   READY_MODULE,
   WORKSHEET,
   fdStorage,
@@ -64,6 +65,31 @@ test('learn flow: module → lesson → mark read persists → module progress',
 
   await page.goto(READY_MODULE)
   await expect(page.getByText(/^1 of \d+ read$/).first()).toBeVisible()
+})
+
+test('mock flow: score a full round → pass rule applied → result survives reload', async ({ page }) => {
+  await page.goto(MOCK_LESSON)
+  await hydrated(page)
+  await expect(page.getByRole('timer')).toHaveText('45:00')
+
+  // The radios are visually hidden inside their labels, so click the label as a user would.
+  const full = page.getByText('Full round (6 dimensions)', { exact: true })
+  await full.click()
+  const scores = { Discovery: '4', Architecture: '3', Security: '1', Evaluation: '4', Production: '5', Communication: '4' }
+  for (const [dim, value] of Object.entries(scores)) {
+    await page.getByRole('group', { name: dim, exact: true }).getByText(value, { exact: true }).click()
+  }
+  await page.getByRole('button', { name: 'Save full round score' }).click()
+  // Mean 3.5 passes the mean bar, but Security at 1 is below the floor of 2.
+  const result = page.getByText('Last saved, full round: Not yet, mean 3.5 of 5')
+  await expect(result).toBeVisible()
+  expect(Object.keys(await fdStorage(page))).toContain('fd:v1:learn:attempts:mock:internal-knowledge-assistant-mock-interview:full')
+
+  await page.reload()
+  await hydrated(page)
+  await full.click()
+  await expect(result).toBeVisible()
+  await expect(page.getByText(/^Weakest dimension:/)).toContainText('Security')
 })
 
 test('soft gating: blocked module → open anyway → remembered after reload', async ({ page }) => {
