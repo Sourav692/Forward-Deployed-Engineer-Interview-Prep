@@ -4,6 +4,8 @@
 |---|---|---|---|---|
 | 2: Practice, Interview and Progress | M | UX-04 (done) | FE-16 | §5 |
 
+Status: **done**. Wireframes, rules and copy are in `site/specs/2026-10-05-learn-ux.md` § Dashboard (UX-07). Owner decisions (10 October 2026): overall readiness re-weighted over measured inputs; behavioural from the competency worksheets; worksheets from the live scorecards; all five mocks count, untaken = 0.
+
 ## Why
 Job 3 (§3) ends at "see if I am ready". The demo dashboard (`src/demo/components/Dashboard.tsx`) was designed on seeded sample data; a real learner's first visit is empty, and most readiness inputs are not measured yet. The screen needs to be designed for that state first.
 
