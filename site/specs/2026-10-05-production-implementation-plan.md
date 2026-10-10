@@ -227,7 +227,7 @@ This plan turns the prototype into the production platform without writing new c
 3. **Hit a gap.** Module status Partly ready shows published lessons first, then a "Coming soon in this module" panel listing the gap text from `curriculum_plan.md`. Coming soon modules show objective, scope and the related modules that partly cover the topic. On hold modules say "Paused, will return" with no source paths shown publicly.
 4. **Practise.** `/practice` → worksheet (existing `/modules/01/...`) or mock → self-score on the lesson's rubric (short round: five signals; full round: six dimensions; 1–5) → score saved; dashboard readiness updates (Phase 2).
 5. **Check readiness.** `/progress` → next up with reason, revision queue, readiness with weakest dimension, finish-by date from weekly hours (Phase 2).
-6. **Revise.** Revision queue item → "Review now" → rate confidence ≥ 4 → item leaves the queue (Phase 2).
+6. **Revise.** Revision queue item → "Review now" → rate confidence ≥ 3 → item leaves the queue (Phase 2; `revisionReason` flags effective confidence ≤ 2, see `2026-10-05-learn-ux.md` § Dashboard).
 
 **Key screens.**
 

@@ -64,4 +64,4 @@ Consider splitting: (a) `/progress` dashboard with readiness and next up; (b) th
 - [ ] Plan or docs updated if a decision changed
 
 ## Open questions
-- Readiness and behavioural input rules: settled in UX-07.
+- None. Readiness, next-up, revision and finish-by rules are settled in `2026-10-05-learn-ux.md` § Dashboard (UX-07).
