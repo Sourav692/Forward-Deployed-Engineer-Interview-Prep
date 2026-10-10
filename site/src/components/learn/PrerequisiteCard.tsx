@@ -2,7 +2,7 @@
 
 /**
  * PrerequisiteCard (FE-08). Soft gating: when a prerequisite module is not complete,
- * the card shows the Blocked badge, lists what to finish, and offers "Open anyway".
+ * the card shows the suggestion badge, lists what to finish, and offers "Open anyway".
  * Nothing is ever locked; the lessons stay readable below the card.
  *
  * "Complete" is the Phase 1 rule in `progress-model.ts` (all lessons read and

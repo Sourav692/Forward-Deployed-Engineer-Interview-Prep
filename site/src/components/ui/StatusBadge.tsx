@@ -77,15 +77,16 @@ export const STATUS_META: Record<BadgeStatus, StatusMeta> = {
     ),
   },
   blocked: {
-    label: 'Blocked',
-    rule: 'A prerequisite checkpoint is missing or failed. You can still open it (soft gating).',
+    // A suggestion, not a lock (audit check FV-01): the module always opens.
+    label: 'Suggested: read the prerequisites first',
+    rule: 'An earlier module this one builds on is not complete yet. You can still open it.',
     className: 'border-warning/60 bg-warning-soft text-warning-text',
     iconClassName: 'text-warning-text',
-    // Lock
+    // Info
     icon: (
       <>
-        <rect x="3.5" y="7" width="9" height="6.5" rx="1.25" {...stroke} />
-        <path d="M5.5 7V5a2.5 2.5 0 015 0v2" {...stroke} />
+        <circle cx="8" cy="8" r="5.25" {...stroke} />
+        <path d="M8 7.5v3M8 5.25v.01" {...stroke} />
       </>
     ),
   },
@@ -167,17 +168,22 @@ export interface StatusBadgeProps {
    * overrides it, `false` renders a plain, non-focusable badge.
    */
   tooltip?: boolean | string
+  /** Title of the first unmet prerequisite; names it in the `blocked` label. */
+  prerequisite?: string
   className?: string
 }
 
-export function StatusBadge({ status, size = 'sm', tooltip = true, className }: StatusBadgeProps) {
+export function StatusBadge({ status, size = 'sm', tooltip = true, prerequisite, className }: StatusBadgeProps) {
   const meta = STATUS_META[status]
+  const label = status === 'blocked' && prerequisite ? `Suggested: read ${prerequisite} first` : meta.label
   const tipId = useId()
   const [dismissed, setDismissed] = useState(false)
   const tipText = tooltip === false ? null : typeof tooltip === 'string' ? tooltip : meta.rule
 
   const pill = cx(
-    'inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border text-xs font-semibold',
+    'inline-flex shrink-0 items-center gap-1 rounded-full border text-xs font-semibold',
+    // Long suggestion labels wrap instead of overflowing narrow cards.
+    status === 'blocked' ? 'text-left' : 'whitespace-nowrap',
     size === 'sm' ? 'px-2 py-0.5' : 'px-1.5 py-px',
     meta.className,
     className,
@@ -192,7 +198,7 @@ export function StatusBadge({ status, size = 'sm', tooltip = true, className }: 
     return (
       <span className={pill}>
         {icon}
-        {meta.label}
+        {label}
       </span>
     )
   }
@@ -209,7 +215,7 @@ export function StatusBadge({ status, size = 'sm', tooltip = true, className }: 
         className={cx(pill, 'cursor-help', focusRing)}
       >
         {icon}
-        {meta.label}
+        {label}
       </span>
       <span
         id={tipId}
