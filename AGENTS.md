@@ -11,7 +11,8 @@
 - Root directories `00_` through `09_` and `99_Reference_Library/` contain prep material. Put new material in the directory matching its kind.
 - `site/` is the only JavaScript project. It uses Next.js 16, React 19, Tailwind v4, and npm. Run npm commands from `site/` only.
 - Before changing Next.js code, read the relevant local Next documentation in `site/node_modules/next/dist/docs/`. Also follow [site/AGENTS.md](site/AGENTS.md).
-- The platform brief is `00_Start_Here/Platform_Blueprint.html`; its local source prompt is `.website_plan/website_prompt.md`.
+- The platform brief is `00_Start_Here/Platform_Blueprint.html`; its local source prompt is `.website_spec/website_prompt.md`.
+- Website design docs, specs, audits, plans, task boards and QA reports live in `.website_spec/` (gitignored, owner's clone only). Put new ones there, never in `site/` or another committed folder. The production plan is `.website_spec/2026-10-05-production-implementation-plan.md`; its board is `.website_spec/tasks/README.md`.
 
 ## Content and publishing safety
 
@@ -50,4 +51,4 @@ Run from `site/`, in this order after content, sync, editorial, glossary, or sit
 - Branch names use `<type>/<short-kebab-description>`; include the task ID for task-board work, such as `feat/FE-04-search-index`.
 - Use `feat:`, `content:`, `fix:`, `docs:`, `refactor:`, or `chore:` conventional commit prefixes.
 - Keep unrelated existing changes out of task commits. Stage only files belonging to the task.
-- Follow `site/specs/2026-09-27-content-architecture-and-editorial-style.md` for content writing.
+- Follow `.website_spec/2026-09-27-content-architecture-and-editorial-style.md` for content writing.

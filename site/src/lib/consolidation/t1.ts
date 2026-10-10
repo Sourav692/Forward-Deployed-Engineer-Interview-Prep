@@ -6,7 +6,7 @@
  * parallel consolidation PRs from editing the same lines.
  */
 export const RENAMED_T1: Record<string, string | null> = {
-  // T1.2 consolidated into seven lessons (specs/consolidation/T0-T1-T9.md).
+  // T1.2 consolidated into seven lessons (.website_spec/consolidation/T0-T1-T9.md).
   'apis-and-backend/module-10-backend-fastapi-deployment': 'apis-and-backend/keep-the-request-path-free',
   'apis-and-backend/caching-streaming-cicd-buildvsbuy': 'apis-and-backend/cache-answers-without-serving-wrong-ones',
   // T1.4 consolidated into seven lessons.

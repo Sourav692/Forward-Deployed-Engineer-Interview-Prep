@@ -11,7 +11,7 @@ The cards are only as good as the plan underneath. So check first, and do not pa
 
 ## Step 1: Find the plan
 
-Use the path the user gave. Otherwise look for `implementation-plan*.md` in `docs/`, `plans/`, `specs/`, `.website_plan/` and the project root. If several exist, pick the newest and say which. If none exist, stop and suggest running the website-implementation-plan skill first.
+Use the path the user gave. Otherwise look for `implementation-plan*.md` in `docs/`, `plans/`, `specs/`, `.website_spec/` and the project root. If several exist, pick the newest and say which. If none exist, stop and suggest running the website-implementation-plan skill first.
 
 Read the whole plan. You need the context of sections 3 to 13 to write good cards, not just the task tables.
 

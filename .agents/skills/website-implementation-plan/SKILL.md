@@ -83,7 +83,7 @@ Rules that keep the plan useful:
 
 ## Step 5: Save and report
 
-Write the plan to a markdown file. Use the path the user gave. Otherwise, if the project already has a planning folder (`docs/`, `plans/`, `.website_plan/`, `specs/`), put it there as `implementation-plan.md` (dated if one already exists); otherwise use `docs/implementation-plan.md`. Do not overwrite an existing plan without asking.
+Write the plan to a markdown file. Use the path the user gave. Otherwise, if the project already has a planning folder (`docs/`, `plans/`, `.website_spec/`, `specs/`), put it there as `implementation-plan.md` (dated if one already exists); otherwise use `docs/implementation-plan.md`. Do not overwrite an existing plan without asking.
 
 Then tell the user, briefly:
 

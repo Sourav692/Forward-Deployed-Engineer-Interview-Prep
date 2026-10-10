@@ -7,7 +7,7 @@
  *
  * OWNER REVIEW: the diagnostic questions, answer labels, weights and path copy below
  * are product copy awaiting owner review (plan assumption A2, task PM-04). They are
- * listed for review in `specs/2026-10-05-learn-ux.md` ("Path diagnostic"). Change the
+ * listed for review in `.website_spec/2026-10-05-learn-ux.md` ("Path diagnostic"). Change the
  * copy there and here together.
  *
  * Module flags are keyed by curriculum module slug. Slugs never change; display codes

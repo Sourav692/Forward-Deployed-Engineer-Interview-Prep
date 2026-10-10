@@ -23,7 +23,7 @@ export const RENAMED_T4: Record<string, string | null> = {
     'security-tenancy-prompt-injection/identity-verification-with-sso-and-oidc',
   'security-tenancy-prompt-injection/cross-cutting-system-design-quick-reference-v2':
     'security-tenancy-prompt-injection/practise-security-and-tenancy',
-  // T4.3, T4.5–T4.8 consolidated (site/specs/consolidation/T4-operations-scale.md).
+  // T4.3, T4.5–T4.8 consolidated (.website_spec/consolidation/T4-operations-scale.md).
   'observability-and-diagnosis/observability': 'observability-and-diagnosis/the-run-trace',
   'observability-and-diagnosis/observability-standards-failure-patterns':
     'observability-and-diagnosis/standard-tracing-and-customer-facing-dashboards',

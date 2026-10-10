@@ -38,8 +38,9 @@ turn an input into static text, which looks fine and is wrong.
 content modes, audience/prerequisites/outcomes per family, the Last-Day review list and
 its cross-links. The sync scripts import it too, so change a visible name there, never in
 a component or the manifest. Tab and track *ids* are separate from their labels and must
-not change: URLs and saved progress use them. See
-`specs/2026-09-27-content-architecture-and-editorial-style.md`.
+not change: URLs and saved progress use them. See the
+style guide, `.website_spec/2026-09-27-content-architecture-and-editorial-style.md` at the
+repository root (gitignored, so only in the owner's clone).
 
 **Last-Day Review is generated as well.** `scripts/last-day.mjs` copies
 `../Last_Day_Prep/html/` into `public/fde-last-day-prep/`, renaming

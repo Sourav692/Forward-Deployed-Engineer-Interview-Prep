@@ -14,7 +14,7 @@ The scan suggests; it does not decide. Every suggestion is confirmed by reading
 pages or in the browser before it goes into scores.json (see SKILL.md).
 
 Usage:
-  python3 crawl_inventory.py --base https://forward-deployed-sigma.vercel.app --out site-audits/2026-11-20
+  python3 crawl_inventory.py --base https://forward-deployed-sigma.vercel.app --out .website_spec/site-audits/2026-11-20
   python3 crawl_inventory.py --base URL --out DIR --limit 60          # quick sample
   python3 crawl_inventory.py --base URL --out DIR --legacy ../data/legacy-urls-2026-10-09.txt
 """
@@ -766,7 +766,7 @@ def write_summary(out: Path, base: str, pages: list[dict], facts: dict, sitemap:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--base", required=True, help="site root, e.g. https://forward-deployed-sigma.vercel.app")
-    ap.add_argument("--out", required=True, help="audit folder, e.g. site-audits/2026-11-20")
+    ap.add_argument("--out", required=True, help="audit folder, e.g. .website_spec/site-audits/2026-11-20")
     ap.add_argument("--limit", type=int, help="crawl at most N pages (hubs first, then a sample per URL scheme)")
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--delay", type=float, default=0.3, help="max random delay per request, seconds")

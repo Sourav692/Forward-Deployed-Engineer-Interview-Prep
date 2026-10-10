@@ -1,7 +1,7 @@
 /**
  * Form controls. Their boundary uses `--input-border`, which meets WCAG 1.4.11
  * (3:1 against `--surface`) in both themes; `--border-strong` is too faint for a
- * control's only edge. See specs/2026-10-05-design-tokens.md.
+ * control's only edge. See .website_spec/2026-10-05-design-tokens.md.
  */
 import type { ComponentProps } from 'react'
 import { cx, focusRing } from './cx'

@@ -128,7 +128,7 @@ From the shell, if Node and a local Chrome are available (Claude Code on the own
 for p in / /learn <a hub> <a lesson> <a case> <a worksheet>; do
   npx --yes lighthouse "<URL>$p" --quiet --chrome-flags="--headless" \
     --only-categories=performance,accessibility,best-practices,seo \
-    --output=json --output-path="site-audits/<DATE>/lighthouse$(echo $p | tr / _).json"
+    --output=json --output-path=".website_spec/site-audits/<DATE>/lighthouse$(echo $p | tr / _).json"
 done
 ```
 

@@ -3805,7 +3805,7 @@ export const LESSONS: CurriculumLesson[] = [
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
   },
   // T5.1 to T5.4: consolidated lessons. They replace the excluded sources that follow
-  // (see specs/consolidation/T5.md for the old-to-new mapping).
+  // (see .website_spec/consolidation/T5.md for the old-to-new mapping).
   {
     slug: 'the-twelve-part-design-framework',
     title: 'The Twelve-Part Design Framework',
