@@ -1,6 +1,6 @@
 # Audit report template
 
-Write `site-audits/<YYYY-MM-DD>/report.md` with exactly these sections, in this order. Most numbers come straight from `score-summary.md` (written by `score.py report`); copy them rather than recomputing. Lead every section with its point, keep sentences short, and give a URL for every finding.
+Write `.website_spec/site-audits/<YYYY-MM-DD>/report.md` with exactly these sections, in this order. Most numbers come straight from `score-summary.md` (written by `score.py report`); copy them rather than recomputing. Lead every section with its point, keep sentences short, and give a URL for every finding.
 
 ```markdown
 # Forward Deployed — site audit <YYYY-MM-DD>

@@ -12,13 +12,13 @@ Standard library only. Subcommands:
   trend   Print every audit in the history as one table.
 
 Examples:
-  python3 score.py seed --history site-audits/history.jsonl
-  python3 score.py new --history site-audits/history.jsonl --date 2026-11-20 \
-      --out site-audits/2026-11-20/scores.json
-  python3 score.py report --scores site-audits/2026-11-20/scores.json \
-      --history site-audits/history.jsonl --out site-audits/2026-11-20/score-summary.md
+  python3 score.py seed --history .website_spec/site-audits/history.jsonl
+  python3 score.py new --history .website_spec/site-audits/history.jsonl --date 2026-11-20 \
+      --out .website_spec/site-audits/2026-11-20/scores.json
+  python3 score.py report --scores .website_spec/site-audits/2026-11-20/scores.json \
+      --history .website_spec/site-audits/history.jsonl --out .website_spec/site-audits/2026-11-20/score-summary.md
   python3 score.py report ... --append          # record it once the report is written
-  python3 score.py trend --history site-audits/history.jsonl
+  python3 score.py trend --history .website_spec/site-audits/history.jsonl
 """
 from __future__ import annotations
 
@@ -567,7 +567,7 @@ def main(argv=None) -> int:
     n = sub.add_parser("new", help="start a new scores.json from the latest audit")
     n.add_argument("--history", required=True)
     n.add_argument("--date", required=True, help="YYYY-MM-DD of this audit")
-    n.add_argument("--out", required=True, help="e.g. site-audits/2026-11-20/scores.json")
+    n.add_argument("--out", required=True, help="e.g. .website_spec/site-audits/2026-11-20/scores.json")
     n.add_argument("--site", help="site URL if it changed")
     n.add_argument("--auditor", default="Claude")
     n.add_argument("--replace", action="store_true", help="overwrite an existing file or reuse a date")

@@ -6,7 +6,7 @@
  * parallel consolidation PRs from editing the same lines.
  */
 export const RENAMED_T5: Record<string, string | null> = {
-  // T5.1 to T5.4 consolidated (specs/consolidation/T5.md).
+  // T5.1 to T5.4 consolidated (.website_spec/consolidation/T5.md).
   'design-framework/the-12-part-framework':
     'design-framework/the-twelve-part-design-framework',
   'design-framework/the-15-principles':

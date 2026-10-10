@@ -1,6 +1,6 @@
 /**
  * Copy deck for the Learn pages (UX-06). The source of truth for wording is
- * `site/specs/2026-10-05-learn-ux.md`; keep the two in step. British English,
+ * `.website_spec/2026-10-05-learn-ux.md`; keep the two in step. British English,
  * buttons start with a verb, errors say what happened and what to do.
  */
 export const COPY = {

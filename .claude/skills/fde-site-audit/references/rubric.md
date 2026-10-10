@@ -112,7 +112,7 @@ This table is a guide. If you add a check, its `dimension` field in `data/checks
 
 ## 5. scores.json format
 
-One file per audit at `site-audits/<YYYY-MM-DD>/scores.json`. Create it with `python3 <skill>/scripts/score.py new --history site-audits/history.jsonl --date <DATE> --out <file>`: scores, targets and competitor dates are carried forward and every check starts as `not_checked`.
+One file per audit at `.website_spec/site-audits/<YYYY-MM-DD>/scores.json`. Create it with `python3 <skill>/scripts/score.py new --history .website_spec/site-audits/history.jsonl --date <DATE> --out <file>`: scores, targets and competitor dates are carried forward and every check starts as `not_checked`.
 
 ```json
 {

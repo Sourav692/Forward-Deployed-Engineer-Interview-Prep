@@ -6,6 +6,6 @@
  * parallel consolidation PRs from editing the same lines.
  */
 export const RENAMED_T9: Record<string, string | null> = {
-  // T9.1 rewritten as two capstone-guide lessons (specs/consolidation/T0-T1-T9.md).
+  // T9.1 rewritten as two capstone-guide lessons (.website_spec/consolidation/T0-T1-T9.md).
   'capstone-build/companion-course': 'capstone-build/choose-a-capstone-project',
 }

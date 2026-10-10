@@ -346,7 +346,7 @@ pre.mock{font:400 12.5px/1.45 var(--f-mono);background:var(--surface);border:1px
 </section>
 
 <section id="s19"><h2><span class="num">19</span>Content quality standards</h2>
-<p>These merge the project style guide (<code>site/specs/2026-09-27-content-architecture-and-editorial-style.md</code>) with the <code>tutorial-prose-style</code> lesson shape. Where they conflict, the project guide wins.</p>
+<p>These merge the project style guide (<code>.website_spec/2026-09-27-content-architecture-and-editorial-style.md</code>) with the <code>tutorial-prose-style</code> lesson shape. Where they conflict, the project guide wins.</p>
 <div class="tbl wide" data-t="quality"></div>
 </section>
 
@@ -417,7 +417,7 @@ D.repoFacts = [["Fact","Evidence"],
 ["01_Concept_Tutorials, 05_FDE_Delivery_and_Scoping, Problem_Decomposition_Bank, Long-Form, Classic walkthroughs and 99_ are not on the site","Sync sources listed in `CLAUDE.md` [E]"],
 ["Per-track metadata exists (mode, audience, difficulty, prerequisites, outcomes, minutes)","`EditorialMeta`, `editorial.ts:76-89`; per family, not per page [E]"],
 ["Progress is localStorage only: answers, 1/3/5 scores, 3-state status, read tabs","`site/src/lib/storage.ts`; keys `fd:v1:*` [E]"],
-["No accounts, database, dashboard, quizzes, attempts, confidence or spaced repetition","Site spec scopes these out (`specs/2026-09-17…:244-250`) [E]"],
+["No accounts, database, dashboard, quizzes, attempts, confidence or spaced repetition","Site spec scopes these out (`.website_spec/2026-09-17…:244-250`) [E]"],
 ["Runnable code lives in the companion repo, by design","`00_Start_Here/COMPANION_COURSE.md` [E]"],
 ["Mocks (11), incident logs (11), red-team fixtures (2), rendered diagrams (12) and labs were deleted on 4 Oct","Commit `56cb673`, recoverable with `git show 56cb673^:<path>` [H]"],
 ["Two reference PDFs: a third-party interview kit (66 pp, not used) and your own async handbook (kept private)","`99_Reference_Library/Study_Guides_Reference/` [E]"],
@@ -429,7 +429,7 @@ D.rules = [["Source","Rule","Effect on this blueprint"],
 ["`CLAUDE.md`","`site/content/` is generated and committed; edit root sources, then sync","Lessons stay in root markdown; Learn needs a new sync step"],
 ["`CLAUDE.md`","Material goes in the root folder matching its kind","New lessons go in `01_`, new drills in `03_`, new mocks in `03_` or a new `03_.../Mock_Interviews`"],
 ["`.claude/skills/add-module`","Every new track needs `TRACKS`, `FAMILY_META`, review citation, `EXPECTATIONS`","Budget wiring effort per track; extend `check-parse.ts` for curriculum rules"],
-["Style guide (`site/specs/2026-09-27…`)","Five content modes, claim labels in wording, one canonical owner per fact, British English","Quality standards (§19) inherit these; canonical-source rule (§4) matches"],
+["Style guide (`.website_spec/2026-09-27…`)","Five content modes, claim labels in wording, one canonical owner per fact, British English","Quality standards (§19) inherit these; canonical-source rule (§4) matches"],
 ["`CLAUDE.local.md`","Coach, don't solve, for practice drills","Practice and mock pages hide answers until the learner asks; AI feedback (roadmap) must hint first"],
 ["`CLAUDE.local.md` + `CLAUDE.md`","Branch, PR, check the Vercel preview, merge","Every step in §24 is one PR"],
 ["`.gitignore`","`06_`, `08_/Blitzy`, `08_/OpenAI_Anthropic_Pack`, `09_` stay local","Coding round and company packs can't be MVP public content without a deliberate decision [PV]"],

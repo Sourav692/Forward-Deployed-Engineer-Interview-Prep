@@ -30,18 +30,18 @@ Create a task list from these steps; a full audit takes a while and the owner ma
 ### 1. Set up
 
 1. **Site URL**: what the user gives; else the `site` of the latest history entry; else `https://forward-deployed-sigma.vercel.app`.
-2. **Folders**: `site-audits/<YYYY-MM-DD>/` at the root of the current project; history at `site-audits/history.jsonl`.
-3. **History**: `python3 <skill>/scripts/score.py seed --history site-audits/history.jsonl` (adds the baseline if missing; safe to repeat).
+2. **Folders**: `.website_spec/site-audits/<YYYY-MM-DD>/` at the root of the current project; history at `.website_spec/site-audits/history.jsonl`.
+3. **History**: `python3 <skill>/scripts/score.py seed --history .website_spec/site-audits/history.jsonl` (adds the baseline if missing; safe to repeat).
 4. **Start this audit's record**:
-   `python3 <skill>/scripts/score.py new --history site-audits/history.jsonl --date <DATE> --out site-audits/<DATE>/scores.json` (add `--site <URL>` if the site moved).
+   `python3 <skill>/scripts/score.py new --history .website_spec/site-audits/history.jsonl --date <DATE> --out .website_spec/site-audits/<DATE>/scores.json` (add `--site <URL>` if the site moved).
    It carries scores, targets and competitor dates forward and resets every check to `not_checked`, so the file only ever holds what you see today; last time's results stay in the history for comparison.
-5. **Context**: read `references/baseline-2026-10-09.md` if this conversation lacks it, and `score.py trend --history site-audits/history.jsonl` to see where things stood.
+5. **Context**: read `references/baseline-2026-10-09.md` if this conversation lacks it, and `score.py trend --history .website_spec/site-audits/history.jsonl` to see where things stood.
 6. **One question, only if it changes the work**: has the restructure shipped, and with which URLs? (It decides how to read IA-11 and where the casebook lives.) If the user isn't there, assume nothing changed and say so in the report.
 
 ### 2. Crawl and scan
 
 ```bash
-python3 <skill>/scripts/crawl_inventory.py --base <URL> --out site-audits/<DATE> \
+python3 <skill>/scripts/crawl_inventory.py --base <URL> --out .website_spec/site-audits/<DATE> \
   --legacy <skill>/data/legacy-urls-2026-10-09.txt
 ```
 
@@ -78,15 +78,15 @@ Carry competitor scores and their `scores_as_of` dates forward unless the last b
 Update the Forward Deployed dimension scores using `references/rubric.md`: start from the previous score, move it only when checks mapped to that dimension moved (or new evidence appeared), and give the reason with check IDs in `rationale`. Then:
 
 ```bash
-python3 <skill>/scripts/score.py report --scores site-audits/<DATE>/scores.json \
-  --history site-audits/history.jsonl --out site-audits/<DATE>/score-summary.md
+python3 <skill>/scripts/score.py report --scores .website_spec/site-audits/<DATE>/scores.json \
+  --history .website_spec/site-audits/history.jsonl --out .website_spec/site-audits/<DATE>/score-summary.md
 ```
 
 It refuses incomplete files (missing dimensions or checks, invalid statuses, fails without evidence). Fix the file rather than forcing it. Use the like-for-like pass rate (checks assessed in both audits) when describing progress, since the plain pass rate also moves when fewer checks were assessed.
 
 ### 8. Report, then record
 
-1. Write `site-audits/<DATE>/report.md` from `references/report-template.md`, using the numbers in `score-summary.md`. Say whether the site is ahead of or behind the 12-week plan.
+1. Write `.website_spec/site-audits/<DATE>/report.md` from `references/report-template.md`, using the numbers in `score-summary.md`. Say whether the site is ahead of or behind the 12-week plan.
 2. If the Claude Docs connector is available, publish the report as a doc and put its link in `scores.json` → `docs`.
 3. Add the audit to the history: re-run the step 7 command with `--append`. It refuses a date already in the history; use `--replace` only to redo today's audit on purpose.
 4. In chat: the verdict, overall score and its change, the top three next fixes, and the report link.
