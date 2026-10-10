@@ -9,16 +9,20 @@ import { useState } from 'react'
 import { markLessonRead, markLessonUnread, trackProgress } from '@/lib/progress/store'
 import { useProgress, useStorageAvailable } from '@/lib/progress/useProgress'
 import { ProgressBar, Skeleton, StatusBadge, cx, focusRing, toast } from '@/components/ui'
-import { isRead, learnerStatus, lessonHome, readingProgress, type ModuleInput } from './progress-model'
+import { firstUnmetPrerequisite, isRead, learnerStatus, lessonHome, readingProgress, type ModuleInput } from './progress-model'
 import { COPY } from './copy'
 
 /** Learner status for a module, or its gap label when it has nothing to read. */
 export function ModuleStatusBadge({ input, size = 'sm' }: { input: ModuleInput; size?: 'sm' | 'xs' }) {
   const gap = input.status === 'coming-soon' || input.status === 'on-hold'
-  const status = useProgress(() => (gap ? null : learnerStatus(input)))
+  const view = useProgress(() => {
+    if (gap) return null
+    const status = learnerStatus(input)
+    return { status, prerequisite: status === 'blocked' ? firstUnmetPrerequisite(input.prereqs) : undefined }
+  })
   if (gap) return <StatusBadge status={input.status as 'coming-soon' | 'on-hold'} size={size} />
-  if (!status) return <Skeleton className={cx('inline-block rounded-full', size === 'sm' ? 'h-6 w-24' : 'h-5 w-20')} />
-  return <StatusBadge status={status} size={size} />
+  if (!view) return <Skeleton className={cx('inline-block rounded-full', size === 'sm' ? 'h-6 w-24' : 'h-5 w-20')} />
+  return <StatusBadge status={view.status} prerequisite={view.prerequisite} size={size} />
 }
 
 /** Bar plus "2 of 5 read" for a module's main reading list. */

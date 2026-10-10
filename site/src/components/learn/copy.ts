@@ -30,7 +30,7 @@ export const COPY = {
   prereqTitle: 'Finish these first',
   prereqOpenedTitle: 'Opened before its prerequisites',
   prereqBody:
-    'This module builds on the modules below. You can still read it, but it shows as Blocked until they are complete: every lesson read and confidence rated 3 or more.',
+    'This module builds on the modules below, so we suggest reading them first. You can still read it now. A module counts as complete when every lesson is read and confidence is rated 3 or more.',
   prereqOpenAnyway: 'Open anyway',
   prereqSatisfied: 'Prerequisites complete',
 

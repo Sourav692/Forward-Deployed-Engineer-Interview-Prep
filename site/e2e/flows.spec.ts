@@ -198,11 +198,33 @@ test('retired /demo URLs redirect home in one hop', async ({ page }) => {
   }
 })
 
+test('first visit: no module shows a blocked suggestion on paths and hubs (FV-01)', async ({ page }) => {
+  for (const path of ['/start/paths/fde', '/design', '/interview']) {
+    await page.goto(path)
+    await hydrated(page)
+    await expect(page.getByText(/^Suggested: read /)).toHaveCount(0)
+  }
+  // The badges did render: a first visitor sees "Not started", not a skeleton.
+  await page.goto('/start/paths/fde')
+  await hydrated(page)
+  await expect(page.getByText('Not started', { exact: true }).first()).toBeVisible()
+})
+
 test('soft gating: blocked module → open anyway → remembered after reload', async ({ page }) => {
+  // Before the learner starts anything, the module is not marked blocked; the card still suggests the prerequisite.
   await page.goto(GATED_MODULE)
   await hydrated(page)
   await expect(page.getByRole('heading', { name: 'Finish these first' })).toBeVisible()
-  await expect(page.getByText('Blocked').first()).toBeVisible()
+  await expect(page.getByText('Suggested: read APIs and backend for AI apps first')).toHaveCount(0)
+
+  // After reading one lesson, the module's badge names the unmet prerequisite.
+  await page.goto(LESSON)
+  await hydrated(page)
+  await page.getByRole('button', { name: 'Mark read' }).click()
+  await expect(page.getByRole('button', { name: 'Mark unread' })).toBeVisible()
+  await page.goto(GATED_MODULE)
+  await hydrated(page)
+  await expect(page.getByText('Suggested: read APIs and backend for AI apps first').first()).toBeVisible()
 
   await page.getByRole('button', { name: 'Open anyway' }).click()
   await expect(page.getByRole('heading', { name: 'Opened before its prerequisites' })).toBeVisible()

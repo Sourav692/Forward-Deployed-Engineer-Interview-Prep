@@ -8,7 +8,7 @@
 import { LESSONS, MODULES } from '@/lib/curriculum'
 import type { ModuleStatus } from '@/lib/curriculum-types'
 import { checkPrerequisites, checkpointId, revisionReason, rollup, type PrerequisiteCheck, type RevisionReason } from '@/lib/progress/rules'
-import { getModuleRecord, isLessonRead, latestConfidence, listAttempts, moduleProgress, type ProgressSummary } from '@/lib/progress/store'
+import { getModuleRecord, isLessonRead, latestConfidence, listAttempts, moduleProgress, readKind, type ProgressSummary } from '@/lib/progress/store'
 import type { RuleAttempt } from '@/lib/progress/types'
 import type { LearnerStatus } from '@/components/ui/StatusBadge'
 
@@ -84,6 +84,13 @@ export function prerequisiteCheck(prereqs: ModuleInput['prereqs']): Prerequisite
   return checkPrerequisites({ attempts, skipped }, { prerequisites: prereqs.map((p) => p.slug) }, byId)
 }
 
+/** Title of the first prerequisite, in listed order, that is not yet satisfied. */
+export function firstUnmetPrerequisite(prereqs: ModuleInput['prereqs']): string | undefined {
+  const { missing, failed } = prerequisiteCheck(prereqs)
+  const slug = prereqs.find((p) => missing.includes(p.slug) || failed.includes(p.slug))?.slug
+  return MODULES.find((m) => m.slug === slug)?.title
+}
+
 /**
  * Why a module needs revision, or null: low or faded confidence, and, for a module with
  * a checkpoint (DATA-10), a failed latest attempt or a pass that is due for a re-check.
@@ -96,9 +103,18 @@ export function moduleRevision({ slug, checkpoint }: Pick<ModuleInput, 'slug' | 
 }
 
 /**
+ * Whether the learner has started anything: a lesson read, an attempt saved or a
+ * module record (confidence, notes, skip, open anyway). Until then no module shows
+ * as blocked, so a first visit is not a wall of warnings (audit check FV-01).
+ */
+export function hasStarted(): boolean {
+  return ['learn:lesson', 'learn:attempts', 'learn:module'].some((kind) => Object.keys(readKind(kind)).length > 0)
+}
+
+/**
  * Precedence follows `rules.moduleStatus`: skipped > needs revision > completed >
- * blocked > in progress > not started. Mastered and Ready for review need checkpoints
- * and exercises, which arrive in Phase 2.
+ * blocked > in progress > not started. Blocked waits until the learner has started (`hasStarted`).
+ * Mastered and Ready for review need checkpoints and exercises, which arrive in Phase 2.
  */
 export function learnerStatus(input: ModuleInput, now = Date.now()): LearnerStatus {
   const record = getModuleRecord(input.slug)
@@ -106,7 +122,7 @@ export function learnerStatus(input: ModuleInput, now = Date.now()): LearnerStat
   const latest = latestConfidence(input.slug)
   if (moduleRevision(input, now)) return 'needs-revision'
   if (isCompleted(input.slug, input.reading)) return 'completed'
-  if (!prerequisiteCheck(input.prereqs).ok) return 'blocked'
+  if (!prerequisiteCheck(input.prereqs).ok && hasStarted()) return 'blocked'
   if (input.reading.some(isRead) || latest) return 'in-progress'
   return 'not-started'
 }
