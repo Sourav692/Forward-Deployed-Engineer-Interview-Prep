@@ -163,6 +163,3 @@ The single store became three, each justified by one sentence. That is what part
 3. **Where should a sessions table and a payments table live, and why?**
    Sessions in Redis or NoSQL: independent, high-volume and ephemeral. Payments in SQL: transactional, audited and correct together with bookings.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md`: §5 High-Level Architecture (including "For AI systems, add" and "The integrated picture"), §6 Data Design, §7 Component Design, §8 Data Flow, and "The AI additions, collected".

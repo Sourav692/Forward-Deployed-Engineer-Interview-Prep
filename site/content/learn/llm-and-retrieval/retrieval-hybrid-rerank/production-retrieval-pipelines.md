@@ -153,6 +153,3 @@ Generation cites which source each claim came from. It refuses when nothing cros
 3. **Why must reranking run after access filtering?**
    Otherwise it ranks documents the user cannot see, wastes top-k slots and leaves them a thin context.
 
-## References
-
-**Sources:** `rag_retrieval_strategies.md`: "Putting It Together: A Production-Style Composite Retriever" and "Choosing a Strategy: Decision Checklist". `04_Retrieval_Hybrid_Rerank.md` (FDE Handbook): "Why this matters", "The six strategies", "Every LLM-dependent step degrades", "BM25 is built over the authorised pool", "The interaction worth naming", "What the numbers actually say" and "In the code". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: "Coverage gaps", §2 gotcha on contextual retrieval cost, §5.1 to §5.3 answers on parallel retrieval, partial failure, logging and citations, and §6 "Mock system design", rewritten in our own words. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §5.3 answers on investigation order and per-query cost. `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: the §2 gotcha on the ChromaDB `n_results` warning.

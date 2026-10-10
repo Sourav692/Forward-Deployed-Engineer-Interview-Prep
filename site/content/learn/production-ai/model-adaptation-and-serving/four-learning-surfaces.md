@@ -77,6 +77,3 @@ No weights changed. The fix lived on the cheapest surface that could hold it, wh
 3. **What three things must a production Reflexion loop have?**
    An external failure signal, a lesson specific enough to change behaviour, and a hard cap on attempts before escalation.
 
-## References
-
-**Sources:** `ch08_learning_in_agentic_systems.md` (Chapter 8 of *Cracking Agentic AI System Design Interviews*, third-party; summarised in our own words): "Four Learning Surfaces", "Dynamic Few-Shot Selection" and its scoring formula, "Verbal Reinforcement at Runtime (Reflexion)", Cheat Sheet.

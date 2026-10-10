@@ -8,7 +8,7 @@ This is a portfolio question, not a design question. Nothing gets drawn until th
 
 | Case | Where it comes from | What the source gives |
 |---|---|---|
-| #60 Prioritise AI Use Cases for a Large Enterprise | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Question 16 | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
+| #60 Prioritise AI Use Cases for a Large Enterprise | FDE Problem Decomposition Question Bank, Question 16 | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
 
 The source is talking points, not a worked answer. Everything marked *(own construction)* was built for this page from the arguments in the repo's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
 
@@ -417,22 +417,7 @@ The four verbs from the cost playbook still apply, one level up. Measure cost pe
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1, 12, 14 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: Question 16 (#60) and its follow-up, verbatim; the reusable answer template; the biggest mistakes to avoid |
-| 5 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: section 4, the six-step framework and "tie every design choice back to how you'd evaluate it" |
-| 1, 6, 12, 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md`: why demos die in production, the executive-concern table (ROI), the customer narrative |
-| 4, 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`: drill 7, "Customer complains the AI is too expensive" |
-| 3, 4, 11 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: the six gates, deny rules, intake refusal, SME prerequisite, week-4 retention, accelerator reuse rate |
-| 9, 10 | `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md`: the governing question, "pulled from a library, or built from scratch" |
-| 10 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/05_Cross_Team_Collaboration.md`: two-phase delivery and narrowing the first build |
-| 2, 3 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/02_End_To_End_AI_Delivery_Six_Stages.md`: anchor on business value and quantified impact |
-
 Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack) for gate mechanics; [G13 Evaluation and Release Gating](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack) for the eval harness; [#61 Scale a Prototype to Production](/modules/15-fde-case-studies/judgement-and-decomposition/scale-prototype-to-production) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](/modules/15-fde-case-studies/judgement-and-decomposition/build-when-customer-data-is-poor) for items blocked on data readiness; [Decomposition Classics #67–#69](/modules/15-fde-case-studies/judgement-and-decomposition/decomposition-classics-67-68-69) for decomposing a single chosen use case; [#100 Production LLM Gateway](/modules/15-fde-case-studies/standalone-designs/production-llm-gateway) for the gateway enabler.
-
-Sections 2, 3 (the card), 4 (the gates table), 5 to 13, 14 (script, spoken answer and follow-ups apart from the first) and 15 are own construction. They were built for this page from the sources' arguments and are not source material. The repo has no worked portfolio-prioritisation case.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
@@ -440,3 +425,4 @@ Sections 2, 3 (the card), 4 (the gates table), 5 to 13, 14 (script, spoken answe
 - [GDPR Article 22](https://gdpr-info.eu/art-22-gdpr/) — the right not to be subject to a solely automated decision, and the right to human intervention and to contest it
 - [EU AI Act, Annex III](https://artificialintelligenceact.eu/annex/3/) — AI for risk assessment and pricing in life and health insurance is high-risk
 - [NAIC chart: rate filing methods for property and casualty insurance](https://content.naic.org/sites/default/files/model-law-chart-pa-10-rate-filing-methods-for-property-casualty-insurance-workers-comp-title.pdf) — states use prior approval, file-and-use, use-and-file or no-file regimes, so rate review varies by state
+

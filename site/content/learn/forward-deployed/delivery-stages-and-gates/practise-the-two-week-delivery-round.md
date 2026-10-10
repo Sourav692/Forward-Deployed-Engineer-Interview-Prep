@@ -123,6 +123,3 @@ Then they anchor on Northwind's two metrics and note intake would refuse anythin
 3. **What is the scale question for this system?**
    Not data volume but portfolio: how many engagements one FDA can carry before gates queue behind their calendar. It needs real duration data before design.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md` (all steps, the cheat sheet, the questions to ask and the laptop advice), with the follow-up prompts drawn from the checkpoints in `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` and `04_Gates_Risks_Metrics.md`. The problem prompt is from the DevRev interview preparation guide; the script's framing is summarised in our own words.

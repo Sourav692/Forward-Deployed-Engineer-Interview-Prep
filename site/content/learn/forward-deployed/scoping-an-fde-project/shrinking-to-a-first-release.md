@@ -72,6 +72,3 @@ The six-week MVP is permission-aware chat over the documents, with enough analyt
 3. **Why build community features after testing whether people want interview feedback?**
    Feedback is the riskiest assumption. If it fails, the community features have no reason to exist.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 3 Topic 3.2 "Cut scope without losing the outcome", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.

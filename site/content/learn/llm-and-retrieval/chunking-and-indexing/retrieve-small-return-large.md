@@ -119,6 +119,3 @@ The parent document tutorial's latency budget then adds up. Query embedding take
 3. **How does the context enrichment window differ from parent document retrieval?**
    It finds neighbours by a stored sequential position instead of a docstore lookup. That is simpler but works only for chunks from one linear document.
 
-## References
-
-**Sources:** `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: §1 "Core concepts" (1.1 to 1.6), §2 "Gotchas", §3 "Tradeoffs", the cost and sizing answers in §5, and the §6 mock system design, rewritten in our own words. `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.13 "Multi-representation and parent document indexing", §1.14 "Contextual retrieval", the contextual-retrieval cost gotcha, and the matching trade-offs. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.11 "Context enrichment window". `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): rule 3, the title-and-section prefix. `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): §8 "Parent-child (small-to-big) chunking".

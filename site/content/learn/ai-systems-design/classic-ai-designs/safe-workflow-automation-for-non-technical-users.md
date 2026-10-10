@@ -184,6 +184,3 @@ Now suppose the tenant raises the cap, the workflow is autonomous, but `issue_re
 3. **Why must the idempotency check run before authorisation?**
    Otherwise a replayed action is skipped but its cost is still counted, and a safe retry can push a run over budget. A replay should be a free, pre-authorised no-op.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md`: "Before you start", Step 1 (questions, scope, case study), Step 2, Step 3, Step 4A (constrained schemas, the guardrail rules, both bug stories), Step 4B, Step 5 (multi-tenancy, security, observability, failure modes, scale), Step 6, the cheat sheet, "Questions to ask them" and "If you have a laptop".

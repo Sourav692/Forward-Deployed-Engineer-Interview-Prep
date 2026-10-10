@@ -87,6 +87,3 @@ Two weeks later, the nightly run shows groundedness slipping with no commits. Th
 3. **Why does an evaluation suite need a nightly trigger as well as a code-change hook?**
    The provider can change what a model version points to with no commit on the team's side, so quality can drift without any change to trigger the gate.
 
-## References
-
-**Sources:** `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): §3 nightly regression runs, §4 A/B testing for a RAG or agent system, §5 statistical rigour, §6 unit-level testing for prompts. `12_production_and_operations_INTERVIEW_TUTORIAL.md` (RAG and Agent Topic Guides): §1.20 unit testing with mocks. `CRAM_SHEET_S15_S16.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): incident 10. `ADDITIONS_BEYOND_PLAYBOOK.md`: §A3 token-counting endpoint for CI checks. Playbook content is summarised in new words.

@@ -111,6 +111,3 @@ The fix is chunking, not a reranker, because the fact-bearing chunk never reache
 3. **When does adding a reranker not help?**
    When the right document is not in the candidate set at all. Reranking reorders candidates; it cannot add a missing one.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering Modules): Topic 7 "Retrieval" (top-k, precision and recall, debugging steps, noise reduction). `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: "Coverage gaps" (retrieval evaluation) and §5.1 role-track answers on recall@k, eval sets and embedding upgrades, rewritten in our own words. `rag_retrieval_strategies.md`: introduction, "Basic Similarity Search" and "Choosing a Strategy: Decision Checklist". `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): "Interview lens". `04_Retrieval_Hybrid_Rerank.md` (FDE Handbook): "What the numbers actually say".

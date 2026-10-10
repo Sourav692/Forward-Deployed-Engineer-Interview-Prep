@@ -83,6 +83,3 @@ Two take-home tasks from the interview tutorial make strong practice. First, bui
 3. **How do you respond to a demand for 99% retrieval accuracy?**
    Reframe it as recall@k on the customer's own labelled examples, and say before building that open-ended queries will not reach 99%.
 
-## References
-
-**Sources:** `01_What_RAG_Actually_Is.md` (FDE Handbook): "Interview lens" and "Checkpoint". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §4 questions 1, 7 and 10 (their linked external answers from The Interview Guys, TopGenAIJobs and prachub are summarised in our own words), §5.1 and §5.3 questions and take-home tasks, rewritten in our own words and pointed at lessons 1 to 5 of this module.

@@ -111,6 +111,3 @@ Every check ran in the same order it runs for every other tool. That uniformity 
 3. **Why is a static check for `os.system` not enough for a code interpreter?**
    Nobody can predict what arbitrary code will do, so validation always has gaps. Isolation, with no network, no credentials, resource caps and a single-use container, is the real control.
 
-## References
-
-**Sources:** `ch05_tool_use_agent_computer_interface.md` (*Cracking Agentic AI System Design Interviews*, Ch. 5: "The Tool Gateway" and "Sandboxing Code Execution", summarised in our own words). `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §2 gotcha "SQL-injection-shaped input reaching a text-to-SQL tool"; §4 questions 4 and 9, with answers rewritten in our own words.

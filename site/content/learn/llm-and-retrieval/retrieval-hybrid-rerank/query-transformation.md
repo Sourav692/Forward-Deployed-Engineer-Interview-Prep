@@ -129,6 +129,3 @@ The platform's dense search uses all the rewrites and a HyDE probe. Its BM25 sea
 3. **Why does a bad parser hurt RAG-Fusion more than a single-query pipeline?**
    A junk line becomes a query, and its results still vote in the fused ranking, corrupting the merge.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering Modules): Topic 6 "Query Expansion" and Topic 7 "How do vague or underspecified questions hurt retrieval". `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): "Multi-Query", "HyDE" and "Decomposition". `04_Retrieval_Hybrid_Rerank.md` (FDE Handbook): "The six strategies" and "The enterprise strategy is deliberately asymmetric". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.2 deep dive on the default embedding model, §1.7 "Query rewriting", §1.8 "Query decomposition and routing", §1.9 "Self-querying retrieval", §2 gotchas on HyDE and free-text parsing, §3 tradeoff tables and §5.2 answers on concurrency and per-turn routing. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.4 "Query rewriting, step-back, and decomposition", §1.5 "HyDE" with its deep dive, §1.6 "HyPE", §2 HyDE and HyPE gotchas, §3 "HyDE vs. HyPE" and §5.1 on when HyDE hurts. `rag_retrieval_strategies.md`: §3 "Multi-Query", §4 "Self-Query" and §8 "HyDE".

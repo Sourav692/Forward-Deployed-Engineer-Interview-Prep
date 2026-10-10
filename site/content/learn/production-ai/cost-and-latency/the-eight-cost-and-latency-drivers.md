@@ -90,6 +90,3 @@ Finally, state what each fix costs. Less context hurts weak retrieval. Fewer chu
 3. **A nightly job's embedding bill tripled after a document refresh. What is the first comparison to make?**
    Documents changed against documents embedded. Re-embedding unchanged content means the pipeline lacks change detection.
 
-## References
-
-**Sources:** `CORE_8_DRIVERS_MEMORIZE.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): "Why these 8", drivers 1 to 8, "The two latency-only add-ons", "If they push past the 8", "The 60-second recital". `CRAM_SHEET_FULL_PLAYBOOK.md`: §2 and §3 driver tables. Playbook content is summarised in new words.

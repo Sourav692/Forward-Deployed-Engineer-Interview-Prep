@@ -83,6 +83,3 @@ In an interview, this is the closing move when asked to justify complexity. Rest
 3. **What two questions audit a pattern?**
    What metric motivated it, and what incident has it prevented? A pattern with neither answer should probably go.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md` (Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words): "Family Six: Cost and Evaluation Patterns", "Composition Rules and the Pattern Audit" (including the deep dive on the system with nine patterns nobody could justify) and the cheat sheet.

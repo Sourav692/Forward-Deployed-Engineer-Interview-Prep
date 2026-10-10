@@ -84,6 +84,3 @@ Six months in, document ingestion has grown slow and CPU-heavy, and it competes 
 3. **Apply the build-or-buy question to a vector index and to a permission policy.**
    A vector index encodes nothing customer-specific, so buy a managed one unless scale or data-residency law forces self-hosting. A permission policy exists only because of this customer, so build it.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules): FastAPI Architecture, "How do I wire up embeddings, vector search and the LLM with dependency injection?", "How do I separate routes, business logic and prompts?" and "How do I break up a big service into modules or microservices?". `03_Caching_Streaming_CICD_BuildVsBuy.md` (FDE Handbook, Cross-Cutting Concerns): §7 "Build vs buy — the one question".

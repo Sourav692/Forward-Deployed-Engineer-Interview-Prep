@@ -73,6 +73,3 @@ The reply comes back in the unified schema. Its `full_text` answers the question
 3. **Why include both `full_text` and `content_blocks` in the response?**
    Simple clients read `full_text`; rich clients use the ordered `content_blocks` to render inline citations and tool results. One schema serves both.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules): FastAPI Architecture, "How do I validate prompts and uploaded files?"; LLM Serving APIs, "How do I structure a response that has text, citations and tool results?" and "How do I enforce token and request size limits at the API?".

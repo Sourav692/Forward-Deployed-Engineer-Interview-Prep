@@ -104,6 +104,3 @@ The metrics show request volume and latency are normal, so this is not an outage
 3. **Your system calls two model providers. Is `get_openai_callback()` enough for cost tracking?**
    No. It reports cost for OpenAI models only. Keep your own per-provider token-cost table.
 
-## References
-
-**Sources:** `12_production_and_operations_INTERVIEW_TUTORIAL.md` (RAG and Agent Topic Guides): §1.3 cost tracking with a callback, §1.4 custom callback handlers, §1.5 tracing for a live run, §1.6 structured JSON logging and a metrics collector; §4 question 4 (debugging wrong answers with no error logs; the external answer is not reused); §5.3 FDE questions 1 and 4; Coverage gaps (no self-hostable tracing backend).

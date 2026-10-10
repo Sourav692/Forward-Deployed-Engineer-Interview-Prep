@@ -94,6 +94,3 @@ The answer names the evidence first, the candidates second and the fix last. Tha
 3. **What do you say when a customer's logs may not leave their network?**
    Propose a self-hostable tracing backend in their network, and state that it is a gap to build rather than something already demonstrated.
 
-## References
-
-**Sources:** `12_production_and_operations_INTERVIEW_TUTORIAL.md` (RAG and Agent Topic Guides): §4 questions 1, 4 and 8 (questions reused; answers rebuilt from repository concepts, external answers not reused); §5.1 question 8; §5.3 FDE questions 1, 4 and 8; Coverage gaps. `08_Observability.md` and `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook): Checkpoints and Interview lens. `CRAM_SHEET_S15_S16.md` (cost and latency playbook notes): incidents 1 and 2, the weak-answer pattern.

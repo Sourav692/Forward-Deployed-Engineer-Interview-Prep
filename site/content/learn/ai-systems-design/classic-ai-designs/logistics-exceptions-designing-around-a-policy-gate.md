@@ -165,6 +165,3 @@ The source includes a mock session that ran the four clarifying questions and st
 3. **What does the shared control plane and regional data plane pattern cost?**
    Cross-region reporting needs an aggregation layer that respects residency. In return, residency holds by construction and every region shares one UI and policy.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md`: "The prompt", Steps 1 to 6 (the four clarifying questions, high-level architecture, ingestion, the Policy Gate, regional deployment, scaling and reliability), "Security and governance", "Trade-offs", "Summary" and "The mock transcript".

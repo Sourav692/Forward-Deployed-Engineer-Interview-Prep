@@ -139,6 +139,3 @@ Validation stopped the bad argument, and the gate stopped the unapproved write. 
 3. **Argue, in one sentence, why no check can be dropped on the grounds that another covers it.**
    Each check sits at a different point and catches a different failure, so removing any one leaves that specific gap open and no other check sees it.
 
-## References
-
-**Sources:** `05_The_Eight_Guard_Checks.md` (FDE Handbook, Robust Agents): "Why this matters", "The eight", "1 · Argument validation", "2–4 · The guardrail trio", "5 · Retry with fallback", "7 · Disambiguation between overlapping tools", "The pipeline, in order" and "Where each check lives across the handbook". `05-guarding-tool-calls.md` (Production and Platform Judgment): "The eight checks", "1. Argument validation", "2–4. The guardrail trio", "7. Disambiguation between overlapping tools" and "The pipeline, in order".

@@ -122,6 +122,3 @@ That small table is the whole system in miniature: a rule decided by attributes,
 3. **How does the project's post-check differ from post-filtering as the only access check?**
    It runs on an already pre-filtered pool, so drops are rare and nothing allowed is crowded out. It re-runs the full policy, including rules the store cannot express, and it is the authoritative gate rather than the only one.
 
-## References
-
-**Sources:** `01_Why_Enterprise_Changes_The_Problem.md` (FDE Handbook, Enterprise RAG): "The case study: Meridian Assist", "Three patterns for access control, and why two of them are wrong", "What the project actually does", "\"Groups overlap\" — two meanings" and "Interview lens".

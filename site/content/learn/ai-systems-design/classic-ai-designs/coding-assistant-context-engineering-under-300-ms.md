@@ -166,6 +166,3 @@ Each piece of the design paid for itself in one keystroke. The funnel found the 
 3. **Why does output validation check for hallucinated APIs?**
    The model produces plausible code, not verified code. A call to a function that does not exist would compile in the developer's head and fail in their build.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/03_Coding_Assistant.md`: "The prompt", Steps 1 to 5 (problem space; cache first, retrieve on a miss, route by task; the request flow; context engineering and model routing; scaling under 300 ms), "Security", "Trade-offs", "Follow-ups to have ready" and "Summary".

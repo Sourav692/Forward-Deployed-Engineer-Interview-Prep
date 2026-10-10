@@ -141,6 +141,3 @@ Each original mistake has an airport absurdity. A second security line that lead
 3. **What does the synthesiser do that a single continuing line hides?**
    It merges the outputs of every agent that ran and resolves conflicts between them, such as Policy overriding Booking.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/04_Worked_Example_Travel_Agent.md`: "Why this matters", "The original, and what was wrong with it" (§1–§5), "The corrected architecture", "Components", "Data flow, in order", "Non-functional requirements", "Trade-offs worth naming out loud", "A mental model: the international airport" and "Interview lens".

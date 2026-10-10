@@ -91,6 +91,3 @@ The employee's answer is grounded and cited. Later, the ticket is resolved as a 
 3. **How does an escalation record become a leak, and what prevents it?**
    A note explaining why access was denied can reveal the restricted material to a wider audience. Giving the record the same permission scope as the original request prevents it.
 
-## References
-
-**Sources:** `04_Multi_Channel_And_HITL_Escalation.md` (FDE Handbook, AgentOps and platform): "Multi-channel delivery", "Human-in-the-loop escalation as a real workflow", Interview lens and Checkpoint. `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): §2 streaming as a channel-layer decision.

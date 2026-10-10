@@ -71,6 +71,3 @@ The rollout did its job. A quarter of users met the weaker version for a short t
 3. **Why is a canary usually better than blue-green for a GenAI API?**
    A bad release gives worse answers rather than crashes. A canary compares real traffic on both versions while only a small share of users is exposed.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules), Topic 3: "How do I upgrade the model version without disrupting users?"; Topic 4: "How do blue-green and canary deployments work for GenAI APIs?".

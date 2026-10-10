@@ -67,6 +67,3 @@ The fix applied all three gates. The team deduplicated to distinct problems and 
 3. **What should a datasheet record?**
    The collection window, filters, deduplication method and its effect on volume, split strategy, label source and known biases.
 
-## References
-
-**Sources:** `ch08_learning_in_agentic_systems.md` (Chapter 8 of *Cracking Agentic AI System Design Interviews*, third-party; summarised in our own words): "The Data Flywheel", its deep dive "The Fine-Tune That Scored 94% and Failed in Production" and interview pointer, Cheat Sheet.

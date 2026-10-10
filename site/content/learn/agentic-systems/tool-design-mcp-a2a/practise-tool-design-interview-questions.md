@@ -95,6 +95,3 @@ Then the failures it prevents: an unauthorised refund, a bad amount, a double re
 3. **Which result-state confusion causes retry storms?**
    Treating `UNAVAILABLE` as `EMPTY`, so the agent keeps rewording its query during an outage.
 
-## References
-
-**Sources:** `ch05_tool_use_agent_computer_interface.md` (*Cracking Agentic AI System Design Interviews*, Ch. 5: the interview pointers and design drills in each section, summarised in our own words). `03_What_An_Agent_Actually_Is.md` (FDE Handbook, LLM Systems Foundations): "Checkpoint". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §4 questions 4 and 9, with answers rewritten in our own words, and §7 self-check question 11.

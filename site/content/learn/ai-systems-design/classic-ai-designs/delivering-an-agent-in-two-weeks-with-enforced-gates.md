@@ -159,6 +159,3 @@ When the SME signs, Configure pulls five of six assets from the library and buil
 3. **Is a day-14 no-go a failure of the framework?**
    No. It is a legitimate outcome; the framework's job is to show exactly which gate stopped the engagement and why.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md`: "Before you start", Step 1 (questions, scope, case study), Step 2, Step 3, Step 4A (gates as authority, automatic risk mitigation), Step 4B (the accelerator library), Step 5 (risk mitigation table, failure modes, scale), Step 6 (summary, trade-offs, forward-deployed close), the cheat sheet, "Questions to ask them" and "If you have a laptop".

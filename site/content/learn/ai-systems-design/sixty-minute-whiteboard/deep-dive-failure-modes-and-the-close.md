@@ -92,6 +92,3 @@ Minutes 55 to 60: the three-sentence thesis, three trade-offs with what would re
 3. **Where is a design round won and where is it lost?**
    Won in step 1, with the framing sentence and scope, and step 4, with the marked insight and unfakeable detail. Lost in step 5 by waiting to be asked, and step 6 by summarising the diagram instead of the thesis.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md`: "Step 4 — Deep dive", "Step 5 — Cross-cutting, failure, scale", "Step 6 — Close deliberately", "Three artefacts to prepare in advance" and "Interview lens". `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md`: Step 4, used for the worked example.

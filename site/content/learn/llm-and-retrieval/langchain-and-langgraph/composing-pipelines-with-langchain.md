@@ -140,6 +140,3 @@ The router names `refund`, `account_closure` and `general`, with `general` as th
 3. **An orchestrator plans a variable number of report sections. Which primitive writes them, and why not `RunnableBranch`?**
    `.map()` on the worker, which runs once per list element. `RunnableBranch` picks one runnable and runs it once, so a five-section plan would produce one output.
 
-## References
-
-**Sources:** `01_langchain_foundations_INTERVIEW_TUTORIAL.md`: §1.1 to §1.7, §1.9 to §1.11, §2 "`RunnableBranch` runs one branch once", §3 tradeoff tables on legacy chains, structured output, `init_chat_model`, routing and summarisation, and §6 "Mock system design". `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 1 "What are the main parts of a LangChain RAG pipeline and how do they work together?" and "How does LangChain keep retrieval, prompting and generation separate (so I can swap parts)?".

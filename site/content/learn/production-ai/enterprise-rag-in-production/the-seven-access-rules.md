@@ -133,6 +133,3 @@ Same document, same query, three outcomes. Each came from a named rule or obliga
 3. **What is the difference between clearance, groups and compartments?**
    Clearance is a ladder that says how sensitive a document may be. Groups are the grant that says which documents. Compartments are orthogonal assignments that top clearance cannot bypass. A reader needs all three.
 
-## References
-
-**Sources:** `02_Access_Control_ABAC.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The shape of the decision", "Resource fields", "Principal fields", "The seven checks, in order", "Obligations", "Four documents, every persona" and "Seven things to be able to say".

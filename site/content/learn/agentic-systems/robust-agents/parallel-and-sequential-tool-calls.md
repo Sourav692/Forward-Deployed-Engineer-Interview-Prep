@@ -97,6 +97,3 @@ Reads fanned out, the write stayed sequential, and a slow branch degraded the an
 3. **What is a join timeout, and what does it buy you?**
    A limit on how long the fan-in waits for parallel branches. It lets the agent return a partial answer when one branch is slow, instead of blocking the whole response.
 
-## References
-
-**Sources:** `03_Parallel_vs_Sequential.md` (FDE Handbook, Robust Agents): "Why this matters", "The latency arithmetic", "Rules of thumb", "Who decides?" and "Interview lens".

@@ -20,22 +20,22 @@
  *
  * Links are rewritten here, once, so the site never renders a path into the repo:
  * a link to another group's document becomes that group's page on the site (only
- * if the group is published), and every other repo link points at the file on GitHub.
+ * if the group is published), and every other repo link becomes its plain text (the
+ * repository is private). The `## References` provenance tables are dropped too
+ * (`stripRepoReferences`); their fact-check sources stay.
  */
 
 import { existsSync, statSync } from 'node:fs'
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { TABS, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
+import { UNLINK, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
 export const CASE_STUDY_MODULE_ID = '15-fde-case-studies'
 
-const GITHUB_BLOB = 'https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/'
-const GITHUB_TREE = 'https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/tree/main/'
-
 /**
  * Groups published on the site. Extend this list to publish more; a group missing
- * from it keeps its GitHub links but gets no page. `null` publishes every group.
+ * from it gets no page, and links to it become plain text. `null` publishes every group.
  * Standalone cases are always published.
  */
 const PUBLISHED = null
@@ -84,8 +84,8 @@ const THEMES = THEME_GROUPS.map(([id, groups]) => {
  * Standalone cases, keyed by folder under `02_System_Design_Case_Studies/Standalone_Designs/`. `number`
  * orders them and is the case number from CASE_STUDY_INDEX.xlsx; `tag` is the badge.
  * `files` are `[file, tabId]`, published as tabs; `archived` are `[file, label]`,
- * superseded versions that stay in the repo and are linked on GitHub from the page but
- * are not tabs, not searched, and not counted towards read progress. Every `.md` in the
+ * superseded versions that stay in the repo only: not published, not linked, not
+ * searched. Every `.md` in the
  * folder must be in one list or the other, so a new file cannot silently go unpublished.
  * A file given as a repo-relative path (it contains `/`) is read from its canonical
  * location instead of the case folder, so a case reuses a worksheet or tutorial
@@ -165,7 +165,7 @@ async function listGroups(root) {
  */
 function rewriteHref(href, sourceFile, ctx) {
   if (/^(https?:|mailto:|#|\/)/i.test(href)) return null
-  const [pathPart, anchor = ''] = href.split('#')
+  const [pathPart] = href.split('#')
   if (!pathPart) return null
 
   let abs = resolve(dirname(sourceFile), decodeURI(pathPart))
@@ -179,16 +179,15 @@ function rewriteHref(href, sourceFile, ctx) {
 
   const isDir = existsSync(abs) && statSync(abs).isDirectory()
   // A file in a published folder that is not one of its tabs — an archived tutorial —
-  // has no place on the site, so it falls through to GitHub like any other repo file.
+  // has no place on the site, so it becomes plain text like any other repo file.
   const page = ctx.pages.get(isDir ? abs : dirname(abs))
   if (page && (isDir || page.tabsByFile.has(basename(abs)))) {
     const tab = isDir ? null : page.tabsByFile.get(basename(abs))
     return `${page.url}${tab ? `#${tab}` : ''}`
   }
 
-  const repoRel = relative(ctx.repoRoot, abs).split(/[\\/]/).map(encodeURIComponent).join('/')
-  if (repoRel.startsWith('..')) return null
-  return `${isDir ? GITHUB_TREE : GITHUB_BLOB}${repoRel}${anchor && !isDir ? `#${anchor}` : ''}`
+  if (relative(ctx.repoRoot, abs).startsWith('..')) return null
+  return UNLINK
 }
 
 function rewriteLinks(markdown, sourceFile, ctx) {
@@ -253,10 +252,6 @@ async function collectCases(root, standaloneRoot, repoRoot) {
         file: basename(file),
         src: isRepoPath(file) ? join(repoRoot, file) : join(dir, file),
       })),
-      archived: (c.archived ?? []).map(([file, label]) => ({
-        label,
-        href: `${GITHUB_BLOB}${relative(repoRoot, isRepoPath(file) ? join(repoRoot, file) : join(dir, file)).split(/[\\/]/).map(encodeURIComponent).join('/')}`,
-      })),
       practice: c.practice,
     })
   }
@@ -305,7 +300,8 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)
         if (!existsSync(file)) throw new Error(`Missing ${tab.label} document: ${file}`)
-        await writeFile(join(outBase, `${tab.id}.md`), rewriteLinks(await readFile(file, 'utf8'), file, ctx))
+        const markdown = stripRepoReferences(await readFile(file, 'utf8'))
+        await writeFile(join(outBase, `${tab.id}.md`), unlinkRepoLinks(rewriteLinks(markdown, file, ctx)))
       }
       scenarios.push({
         slug: c.slug,
@@ -313,7 +309,6 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
         title: TITLE_OVERRIDES[`${theme.id}/${c.slug}`] ?? c.title,
         tag: c.tag,
         tabs: c.tabs.map(({ id, label }) => ({ id, label })),
-        ...(c.archived?.length && { archived: c.archived }),
         ...(c.practice && { practice: c.practice }),
       })
     }

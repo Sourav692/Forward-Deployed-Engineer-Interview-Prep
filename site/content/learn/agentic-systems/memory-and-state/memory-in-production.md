@@ -110,6 +110,3 @@ Both symptoms had one root cause: the isolation key was not owned by the identit
 3. **How should a two-hour refund investigation interact with a conversation turn?**
    Reply immediately that the request was submitted, run the work in background workers with state in the durable store, and report the result in a later turn or another channel.
 
-## References
-
-**Sources:** `02_State_Memory_Sessions.md` (FDE Handbook): "Scoping and isolation", "Long-running work is not a long-running turn" and "The Session, revisited". `ch07_knowledge_memory_retrieval.md` (*Cracking Agentic AI System Design Interviews*, Ch. 7): "The Retrieval Contract", "Multi-Tenancy, Erasure, and Audit" and the GDPR Article 17 note under "Hierarchical Memory Compaction and Lifecycle Garbage Collection", summarised in our own words. `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`: Topic 1 "How do I keep memory separate for each user?"; Topic 5 "What is the risk of storing too much memory?" and "How do I design memory for several agents working together?". `07_memory_and_state_INTERVIEW_TUTORIAL.md`: §2 gotchas; §5.2 questions 4 and 6; §5.3 questions 1 to 6.

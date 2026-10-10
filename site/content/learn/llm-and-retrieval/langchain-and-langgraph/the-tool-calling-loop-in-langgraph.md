@@ -130,6 +130,3 @@ Then name what did not move. The step budget is still a clause in `should_contin
 3. **An agent's per-call cap looks right, but one long conversation ran up a large bill. Why?**
    Only `run_limit` was set. It caps one invocation; `thread_limit` caps the cumulative calls across a thread.
 
-## References
-
-**Sources:** `05_Same_Loop_In_LangGraph.md` (FDE Handbook): "The graph", "State", "The nodes", "The conditional edge", "Wiring", "Scratch ↔ LangGraph, side by side", "What the framework buys you", "Interview lens" and "Checkpoint". `03_langgraph_fundamentals_INTERVIEW_TUTORIAL.md`: §1.8 "The tool-calling loop, and letting tools fail gracefully". `01_langchain_foundations_INTERVIEW_TUTORIAL.md`: §1.13 "Agents", §1.14 "Middleware" with its trigger deep dive, §2 gotchas on `create_agent`, `PIIMiddleware` and `ModelCallLimitMiddleware`, and §3 "Message-count vs. token-count vs. context-fraction summarization triggers".

@@ -81,6 +81,3 @@ Every version of a workflow is kept, and a run pins to the version it started on
 3. **What two things does `promote` deny, and why does `u_author_wrong_hat` exist?**
    `wrong_role`, an author promoting their own work or a non-approver promoting at all, and `cannot_skip_stage`. The principal is a negative control proving an author cannot approve their own work however the request is framed.
 
-## References
-
-**Sources:** `05_Approvals_Spend_Caps_Staged_Rollout.md` (FDE Handbook, Agentic Workflow Platforms): "Staged rollout", "Why four gates, specifically", "How a non-technical user actually moves through it", "Separation of duties", and "Interview lens". `03_Determinism_Over_Free_Text.md`: "Templates, not a blank canvas" and "Versioning a live workflow". `07_Coverage_Map.md`: "Likely follow-ups".

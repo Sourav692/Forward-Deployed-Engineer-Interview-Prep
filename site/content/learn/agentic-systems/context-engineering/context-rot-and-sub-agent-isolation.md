@@ -70,6 +70,3 @@ The incident shows why both lessons matter together. Long runs are exactly where
 3. **An agent behaves well on short runs and breaks policy on long ones, while every component tests clean. What do you check first?**
    Reconstruct exactly what the model saw at the failing step, then check whether instructions were evicted, then consider context rot.
 
-## References
-
-**Sources:** `ch06_orchestration_context_engineering.md` (*Cracking Agentic AI System Design Interviews*, Ch. 6: "Context Rot and Sub-Agent Isolation" and its incident deep dive, summarised in our own words).

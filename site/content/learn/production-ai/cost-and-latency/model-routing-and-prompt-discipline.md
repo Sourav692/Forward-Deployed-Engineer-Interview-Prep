@@ -106,6 +106,3 @@ The model choice became a routing policy with a measured error rate, not a downg
 3. **How do you pick the threshold between "simple" and "complex" for a router?**
    From a labelled sample of real traffic, weighing the cost saved against the error rate of misrouting.
 
-## References
-
-**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §4 smaller versus larger model, §5 model selection and cascades, §6 prompt optimisation, §14 "model downgrade" wording. `ADDITIONS_BEYOND_PLAYBOOK.md`: §A1 cascades forfeit cache, §A2 price and latency tiers (figures as of 2026-06-24), §A3 provider levers. `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §1.11 cost-based routing, §3 `TypedDict` versus Pydantic, §5.1 question 2. `CRAM_SHEET_S15_S16.md`: incident 10. Playbook content is summarised in new words.

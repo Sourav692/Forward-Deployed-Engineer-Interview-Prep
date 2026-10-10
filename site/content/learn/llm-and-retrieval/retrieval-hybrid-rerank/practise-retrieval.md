@@ -157,6 +157,3 @@ Prepare a short spoken answer to each.
 3. **Name one thing a strong candidate should build that the source notebooks lack.**
    An offline retrieval evaluation set, measuring recall@k and mean reciprocal rank, that gates every retrieval change.
 
-## References
-
-**Sources:** `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §4 "Top 10 interview questions", §5 "Role tracks" (questions and take-home tasks), §6 "Mock system design" and §7 "Self-check". `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §4, §5, §6 "Mock system design" and §7. Several §4 answers in both tutorials draw on external interview guides (among them The Interview Guys, DesignGurus, prachub, OptyxStack, Exponent and DataCamp); every answer here is rewritten in our own words and pointed at lessons 1 to 6 of this module. `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): "Interview lens" and "Checkpoint". `04_Retrieval_Hybrid_Rerank.md` (FDE Handbook): "Interview lens" and "Checkpoint".

@@ -88,6 +88,3 @@ A month later, the dashboard shows the loop's share of traffic has doubled. No t
 3. **Why is router drift invisible without a metric?**
    Every request still gets an answer, so nothing errors. Only the share of traffic reaching the expensive loop changes, and that only shows as a time series.
 
-## References
-
-**Sources:** `ch06_orchestration_context_engineering.md` (*Cracking Agentic AI System Design Interviews*, Ch. 6: "Six Orchestration Topologies" and its composed-orchestrator deep dive, summarised in our own words). `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.12 "Orchestrator-worker with dynamic fan-out", §1.13 "Workflow patterns", §4 question 7 (answer rewritten in our own words) and §7 question 7.

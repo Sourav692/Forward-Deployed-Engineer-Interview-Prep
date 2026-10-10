@@ -496,20 +496,9 @@ The weak answer is "the model is too creative, make the prompt stricter and ask 
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1, 2, 3, 9, 10, 11, 12 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION/04_CASE_STUDY_WORKSHEET/02_sales_copilot.md` and `answer_keys/answer-keys-in-md/02_sales_copilot_answer_key.md` |
-| 1, 10, 12 (explore list, success metrics, follow-up) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 4 |
-| 6, 7 (identity, secrets, structured-data router, connector registry) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md` and `05_Structured_Data_Routers_Connectors.md` |
-| 13 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 3 (and case 6 for the G16 sibling), §4 and §5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, row 40 |
-| 10, 14 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/07_eval_regression.md` |
-| Added for this pack | The permission model column in section 3, all of section 6, the router table and fixed-operations argument in section 7, the unsupported-claim row in section 10, and the trade-offs table in section 11. None of these are in the purchased key |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [FDE problem-decomposition question bank](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md) — reusable practice cases for ambiguous enterprise problems
+- FDE problem-decomposition question bank — reusable practice cases for ambiguous enterprise problems
 - [Control Who Sees What (Salesforce Help)](https://help.salesforce.com/s/articleView?id=platform.security_data_access.htm&type=5) — record access starts from org-wide defaults; FLS controls fields
 - [Field-Level Security (Salesforce Help)](https://help.salesforce.com/s/articleView?id=sf.admin_fls.htm&language=en_US&type=5) — hiding fields such as amount by profile or permission set
 - [AWS KMS cryptography essentials (envelope encryption)](https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html) — what per-tenant data keys do and do not protect
@@ -517,3 +506,4 @@ All paths are relative to the repository root.
 - [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — treating content as data lowers but does not stop injection
 - [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — gate write tools outside the model
 - [G05 Deep Dive, latency pivot](/modules/15-fde-case-studies/agents-that-act/sales-copilot#deep-dive) — agent steps and serial tool calls are the likely driver, to confirm in traces
+

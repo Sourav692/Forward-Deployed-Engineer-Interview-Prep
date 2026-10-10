@@ -147,6 +147,3 @@ Both bugs share one root: behaviour the system relied on was implicit. Making th
 3. **Why is a hop cap not enough on its own?**
    A supervisor and worker can repeat an identical rejected request until the cap, spending the whole budget. A no-progress check on repeated identical delegations catches that on the second hop.
 
-## References
-
-**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: §1.1 "Shared state is the communication channel", §1.2 "The supervisor is a router with a schema", §1.4 "Parallel agents need reducers and a merge policy", §1.6 "Termination is harder with several agents", the §2 gotchas on missing reducers, rejection loops, non-existent agents and overwritten conclusions, and §4 questions 2, 3 and 6.

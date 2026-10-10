@@ -78,6 +78,3 @@ Saying that out loud is stronger than presenting 0.83 as a result. An interviewe
 3. **Why should week-4 retention show as empty rather than 0.0 before it is recorded?**
    A zero claims nobody uses the agent. An empty value says the measurement has not happened yet.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md`: §B.4–B.5. `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md`: Step 4A (automatic escalation), Step 4B ("What the library is honestly not"), Step 5 risk table and Step 6 summary. `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: "Risk mitigations are checks, not reminders" and "The five metrics". The risks and metrics come from the DevRev interview preparation guide's delivery-framework prompt, summarised in our own words.

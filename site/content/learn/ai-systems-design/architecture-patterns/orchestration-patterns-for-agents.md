@@ -85,6 +85,3 @@ The two requests justify two patterns, each with a number to watch. Saying "rout
 3. **What does reflection cost, and what shows it is worth it?**
    About twice the tokens. The revision acceptance rate and critic agreement show whether the critic adds value.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md` (Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words): "Why Names Matter" and "Family One: Orchestration Patterns".

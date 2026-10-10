@@ -79,6 +79,3 @@ Each decision followed one question: who controls this, and whose permissions ap
 3. **What is the confused-deputy risk in MCP?**
    The server acts with its own broad credentials. Unless the real user's identity is passed through and checked server-side, the agent can act for any user with any user's rights.
 
-## References
-
-**Sources:** `ch05_tool_use_agent_computer_interface.md` (*Cracking Agentic AI System Design Interviews*, Ch. 5: "The Model Context Protocol (MCP)", including its note on two ways MCP weakens security, summarised in our own words). No repository source covers the A2A protocol.

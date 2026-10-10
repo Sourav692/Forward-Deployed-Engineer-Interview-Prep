@@ -258,6 +258,3 @@ The forward-deployed close changes too. Week one is getting Unity Catalog and SC
 3. **What should the system do if the SQL warehouse is down but Vector Search is up?**
    Fail closed and refuse. Serving layer 1's results without layer 2 is a leak with a good excuse.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md`: "Before you start", Step 1 (Databricks-specific questions), Step 2, Step 3, Step 4A (the two facts, the split, the two-layer answer), Step 4B (the policy in SQL), Step 4C (ACL encoding, the positional OR war story, endpoint choice), Step 4D, Step 5 (identity, evaluation, observability, multi-tenancy, failure modes, scale), Step 6, the cheat sheet, "Questions to ask them", "The one artefact to bring" and "What I can say I actually ran".

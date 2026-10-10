@@ -100,6 +100,3 @@ Every threat met a control outside the model. That is the shape of a strong answ
 3. **Why must token validation run before any permission logic?**
    Every permission rule assumes the principal is genuine. Validating afterwards would mean making access decisions on an unverified claim.
 
-## References
-
-**Sources:** The "Interview lens", "Checkpoint" and quoted answer sections of `01_Identity_Secrets_Tenant_Fairness.md` and `04_Prompt_Injection_Egress_Tenancy.md` (FDE Handbook, Cross-Cutting Concerns); "What to say if asked directly" in `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgment); and the §1 and §6 "Interview Answer Template" sections of `Cross_Cutting_System_Design_Quick_Reference_v2.md`. Every answer is rewritten and pointed at lessons 1 to 5 of this module.

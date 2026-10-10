@@ -102,6 +102,3 @@ At the end of the week, compaction reclaims the space the deleted vectors left b
 3. **Switching embedding models at 100 million vectors means a full re-index. How do the sources make that safe?**
    Build a versioned index and shift traffic to it gradually with index routing, using incremental indexing for new vectors.
 
-## References
-
-**Sources:** `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`: Topic 2 "What goes wrong when storing millions of embeddings?" and "How do I update embeddings when documents change often?"; Topic 3 "What affects vector search speed at scale?" and "What can fail in production?". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 5 "How do you scale a vector database to millions of embeddings?" and "How do you handle updates, deletions, and monitoring?". `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 3 "What breaks when a vector DB grows to 100M+ embeddings?". `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: the store-drift gotcha and interview questions 3 and 4, rewritten in our own words.

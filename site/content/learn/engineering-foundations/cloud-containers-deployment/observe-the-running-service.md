@@ -82,6 +82,3 @@ The diagnosis is the provider, reached in minutes, because every signal pointed 
 3. **Why alert on P99 rather than average latency?**
    The average can look fine while a slice of users waits far longer. P95 and P99 show what the slowest requests experience.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules), Topic 4: "How do I log prompts and answers without leaking private data?", "Which metrics should I monitor for a FastAPI LLM service?", "How do I design health checks for AI services?" and "How do I catch latency spikes?".

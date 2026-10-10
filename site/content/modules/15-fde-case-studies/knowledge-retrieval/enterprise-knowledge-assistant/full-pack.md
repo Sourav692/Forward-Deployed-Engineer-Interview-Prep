@@ -781,22 +781,6 @@ Incidents and production scenarios on this system are not new designs; they are 
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section                                                                          | Source                                                                                                                                                                                                              |
-| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1, 2, 5, 10, 11                                                                  | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/01_enterprise_knowledge_assistant_rag.md` and its `answer_keys/01_enterprise_knowledge_assistant_rag_answer_key.md`                                     |
-| 1, 2, 4, 5, 10 (support persona, NFR, data model, architecture, eval thresholds) | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION/04_CASE_STUDY_WORKSHEET/answer_keys/answer-keys-in-md/01_internal_knowledge_assistant_answer_key.md`            |
-| 3 (back-of-envelope)                                                             | Own construction from the round numbers in those sources                                                                                                                                                            |
-| 2, 5, 8, 9, 11, 12 (tutorial material)                                           | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-1-enterprise-knowledge-assistant-rag-tutorial_v2.md`, sections 1 to 4 and 8                                                                       |
-| 5 to 12                                                                          | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md`                                                                                                               |
-| 13                                                                               | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/02_Enterprise_RAG_On_Databricks.md`                                                                                                                     |
-| 12 (follow-ups)                                                                  | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, questions 1 and 13                                                                                                  |
-| 14                                                                               | `01_Concept_Tutorials/FDE_Handbook/11_Telling_The_Story/stories/Enterprise_RAG_Conversational_Guide.md`; `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/01_Why_Enterprise_Changes_The_Problem.md`                                                 |
-| 15                                                                               | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 1, §4 and §5                                                                                                                          |
-| 16                                                                               | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/` (02, 09, 10); `CRAM_SHEET_S15_S16.md` §15 scenarios 3, 8, 9, 14 |
-| Not included                                                                     | The V1 long tutorial, the Meridian 15–20 minute deep-dive script, and the site mirror under`site/content/`, which repeat the above in other forms                                                                |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [OWASP Top 10 for LLM Apps 2025 – LLM08 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — permission-mapping and cache leaks are known RAG risks
@@ -822,3 +806,4 @@ All paths are relative to the repository root.
 - [databricks-ai-search on PyPI](https://pypi.org/project/databricks-ai-search/) — `DatabricksReranker` object and the SDK package rename
 - [Artificial Analysis LLM leaderboard (TTFT)](https://artificialanalysis.ai/leaderboards/models) — fastest APIs ~0.4 s to first token, so 100 ms rules out live generation
 - [Google Drive Help: Learn about folders with limited access](https://support.google.com/drive/answer/14254362?hl=en-GB) — folder permissions inherit, but a limited-access folder blocks inherited access
+

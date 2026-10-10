@@ -109,6 +109,3 @@ RAPTOR fits: its upper summaries answer the broad question and its leaves answer
 3. **When should a figure be embedded as an image instead of captioned?**
    Only when the caption provably loses what answers the question, such as exact values in a chart.
 
-## References
-
-**Sources:** `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: "Coverage gaps" (persistence and incremental updates), §1.12 "Hierarchical indices", §1.13 "RAPTOR" with its deep dive, §1.14 "GraphRAG", §1.22 "Multi-modal RAG", the RAPTOR gotcha, and the "Flat/hierarchical retrieval vs. RAPTOR" and "Plain chunk retrieval vs. GraphRAG" trade-offs. `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 3 "Fixed-size vs semantic vs hierarchical chunking".

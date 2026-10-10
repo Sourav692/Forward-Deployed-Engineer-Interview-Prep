@@ -129,6 +129,3 @@ At no step could a forbidden chunk reach the model, because every step that touc
 3. **How does the client treat a 4xx differently from a 5xx?**
    A 5xx is transient: retry with backoff and jitter, and count it toward the circuit breaker. A 4xx is a request bug: raise immediately and never trip the breaker.
 
-## References
-
-**Sources:** `05_The_Query_Graph.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The graph", "Node by node", "After retrieval, in detail", "Security checkpoints, overlaid", "The entry point", "Degradation, everywhere", "Prompts are versioned artefacts" and "Interview lens".

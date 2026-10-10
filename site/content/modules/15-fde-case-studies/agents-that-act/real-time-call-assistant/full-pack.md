@@ -440,20 +440,6 @@ Every strong cost answer comes from four verbs in order. Measure: trace latency 
 
 ## References
 
-All paths are relative to the repository root unless they start with `05_Projects/`.
-
-| Section | Source |
-|---|---|
-| 1, 2, 3, 7, 8, 9, 11 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 15 (#59): the decomposition list and the evaluation follow-up |
-| 1, 4, 5, 11, 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 Case 6 and the §4 pattern table (#43) |
-| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #43 |
-| 6, 13, 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md`, §10 Streaming and UX, and the decision table |
-| 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, the two latency-only add-ons |
-| 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, "Streaming works but users abandon mid-answer" |
-| 2, 4, 6 | `05_Projects/Realtime_Voice_AI_Agent_with_RAG/Docs/PROJECT_REPORT.md`: the voice pipeline, "<2 second response latency" (a stated aim), Silero VAD, Deepgram (the report says Nova-2; the code runs Pipecat's default, Nova-3) |
-| 3, 5, 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/G05_Sales_Copilot.md`, sections 5, 6 and 8: the snapshot, the CRM permission mirror, preview-then-approve |
-| 2 (budget), 4 (diagrams, component table), 10, 12, 13, and every item marked own construction | Built for this page from the sources' arguments; not source material |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [OpenAI API: Voice activity detection](https://developers.openai.com/api/docs/guides/realtime-vad) — server VAD silence threshold and the cost of short values
@@ -473,3 +459,4 @@ All paths are relative to the repository root unless they start with `05_Project
 - [Ng & Abrecht 2015, Better Summarization Evaluation with Word Embeddings for ROUGE (arXiv 1508.06034)](https://arxiv.org/abs/1508.06034) — word-overlap scores penalise paraphrase
 - [Kryscinski et al. 2019, Neural Text Summarization: A Critical Evaluation (arXiv 1908.08960)](https://arxiv.org/abs/1908.08960) — ROUGE correlates weakly with human judgement
 - [OpenRouter help: Which providers stop billing when a stream is cancelled](https://openrouter.zendesk.com/hc/en-us/articles/51691588409883-How-do-I-cancel-a-streaming-request-and-which-providers-stop-billing-when-I-do) — cancelling a stream stops billing only on some providers
+

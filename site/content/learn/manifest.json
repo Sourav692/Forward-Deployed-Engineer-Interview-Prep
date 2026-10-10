@@ -118,7 +118,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/02_Choose_a_Runtime_and_Scale_It.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/choose-a-runtime-and-scale-it"
     },
     {
@@ -140,7 +140,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/04_Roll_Out_Changes_Gradually.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/roll-out-changes-gradually"
     },
     {
@@ -162,7 +162,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.4_Cloud_Containers_and_Deployment/06_Degrade_Gracefully_and_Load_Test.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/engineering-foundations/cloud-containers-deployment/degrade-gracefully-and-load-test"
     },
     {
@@ -195,7 +195,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/02_Structure_the_Service_and_Decide_What_to_Build.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/engineering-foundations/apis-and-backend/structure-the-service-and-decide-what-to-build"
     },
     {
@@ -239,7 +239,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T1.2_APIs_and_Backend/06_Cache_Answers_Without_Serving_Wrong_Ones.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/engineering-foundations/apis-and-backend/cache-answers-without-serving-wrong-ones"
     },
     {
@@ -261,7 +261,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.1_How_LLMs_Behave/01_Embeddings_and_Similarity_Search.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/llm-and-retrieval/how-llms-behave/embeddings-and-similarity-search"
     },
     {
@@ -272,7 +272,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.1_How_LLMs_Behave/02_Choosing_and_Changing_Embedding_Models.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/llm-and-retrieval/how-llms-behave/choosing-and-changing-embedding-models"
     },
     {
@@ -294,7 +294,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.2_RAG_from_First_Principles/01_What_RAG_Is_and_When_to_Use_It.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/what-rag-is-and-when-to-use-it"
     },
     {
@@ -316,7 +316,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.2_RAG_from_First_Principles/03_Ingestion_and_Preprocessing.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/ingestion-and-preprocessing"
     },
     {
@@ -372,7 +372,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.3_Chunking_and_Indexing/02_Chunking_by_Document_Type.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/chunking-by-document-type"
     },
     {
@@ -405,7 +405,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.3_Chunking_and_Indexing/05_Vector_Indexes_in_Production.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/vector-indexes-in-production"
     },
     {
@@ -416,7 +416,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.3_Chunking_and_Indexing/06_Retrieve_Small_Return_Large.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/retrieve-small-return-large"
     },
     {
@@ -427,7 +427,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.3_Chunking_and_Indexing/07_Advanced_Index_Structures.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/advanced-index-structures"
     },
     {
@@ -439,7 +439,7 @@
       "publish": "credited",
       "credit": "Interview answers draw on a repository guide that cites external interview resources (DZone, Prachub, Redis, DataCamp, TopGenAIJobs and others), rewritten in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.3_Chunking_and_Indexing/08_Practise_Chunking_and_Indexing_Interview_Questions.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/chunking-and-indexing/practise-chunking-and-indexing"
     },
     {
@@ -461,7 +461,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/02_Hybrid_Search_and_Rank_Fusion.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/hybrid-search-and-rank-fusion"
     },
     {
@@ -472,7 +472,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/03_Query_Transformation.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/query-transformation"
     },
     {
@@ -484,7 +484,7 @@
       "publish": "credited",
       "credit": "Draws on interview answers in the source tutorials that cite external guides (The Interview Guys, DesignGurus, prachub, OptyxStack, Exponent, DataCamp and others), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/04_Reranking_and_Post_Retrieval_Filtering.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/reranking-and-post-retrieval-filtering"
     },
     {
@@ -496,7 +496,7 @@
       "publish": "credited",
       "credit": "Draws on interview answers in the source tutorials that cite external guides (The Interview Guys, DesignGurus, prachub, OptyxStack, Exponent, DataCamp and others), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/05_Retrieval_Control_Loops.md",
-      "estMinutes": 11,
+      "estMinutes": 10,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/retrieval-control-loops"
     },
     {
@@ -507,7 +507,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/06_Production_Retrieval_Pipelines.md",
-      "estMinutes": 11,
+      "estMinutes": 10,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/production-retrieval-pipelines"
     },
     {
@@ -519,7 +519,7 @@
       "publish": "credited",
       "credit": "Draws on interview answers in the source tutorials that cite external guides (The Interview Guys, DesignGurus, prachub, OptyxStack, Exponent, DataCamp and others), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/07_Practise_Retrieval_Interview_Questions.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/practise-retrieval"
     },
     {
@@ -563,7 +563,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.5_LangChain_and_LangGraph/04_Modelling_Workflows_as_State_Graphs.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/langchain-and-langgraph/modelling-workflows-as-state-graphs"
     },
     {
@@ -574,7 +574,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.5_LangChain_and_LangGraph/05_The_Tool_Calling_Loop_in_LangGraph.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/langchain-and-langgraph/the-tool-calling-loop-in-langgraph"
     },
     {
@@ -585,7 +585,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.5_LangChain_and_LangGraph/06_Checkpoints_Interrupts_and_Human_Approval.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/langchain-and-langgraph/checkpoints-interrupts-and-human-approval"
     },
     {
@@ -596,7 +596,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.5_LangChain_and_LangGraph/07_Retries_Fan_Out_and_Streaming.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/llm-and-retrieval/langchain-and-langgraph/retries-fan-out-and-streaming"
     },
     {
@@ -608,7 +608,7 @@
       "publish": "credited",
       "credit": "Some answers draw on external interview guides cited in the source tutorials (LangChain docs, DataCamp, Interview Coder, Interview Baba, hidekazu-konishi.com and others), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.5_LangChain_and_LangGraph/08_Practise_Framework_Interview_Questions.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/langchain-and-langgraph/practise-framework-interview-questions"
     },
     {
@@ -630,7 +630,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.1_The_Tool_Calling_Loop/02_The_Tool_Calling_Loop_From_Scratch.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/agentic-systems/the-tool-calling-loop/the-tool-calling-loop-from-scratch"
     },
     {
@@ -641,7 +641,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.1_The_Tool_Calling_Loop/03_Loop_Guards_and_Termination.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/agentic-systems/the-tool-calling-loop/loop-guards-and-termination"
     },
     {
@@ -664,7 +664,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/01_The_Agent_Computer_Interface.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/agentic-systems/tool-design-mcp-a2a/the-agent-computer-interface"
     },
     {
@@ -676,7 +676,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 5 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/02_Tool_Schema_Design.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/agentic-systems/tool-design-mcp-a2a/tool-schema-design"
     },
     {
@@ -748,7 +748,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/01_Control_Placement.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/agentic-systems/context-engineering/control-placement"
     },
     {
@@ -771,7 +771,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/03_Planning_and_Self_Correction_Patterns.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/agentic-systems/context-engineering/planning-and-self-correction-patterns"
     },
     {
@@ -783,7 +783,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/04_The_Four_Context_Operations.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/agentic-systems/context-engineering/the-four-context-operations"
     },
     {
@@ -819,7 +819,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 6 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.3_Context_Engineering_and_Orchestration/07_Practise_Context_and_Orchestration_Interview_Questions.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/agentic-systems/context-engineering/practise-context-and-orchestration-interview-questions"
     },
     {
@@ -853,7 +853,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/03_Short_Term_Memory_and_the_Context_Window.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/agentic-systems/memory-and-state/short-term-memory-and-the-context-window"
     },
     {
@@ -888,7 +888,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 7 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.4_Memory_and_State/06_Memory_in_Production.md",
-      "estMinutes": 11,
+      "estMinutes": 10,
       "href": "/learn/agentic-systems/memory-and-state/memory-in-production"
     },
     {
@@ -922,7 +922,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/02_Retries_and_Fallbacks.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/agentic-systems/robust-agents/retries-and-fallbacks"
     },
     {
@@ -988,7 +988,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/02_Multi_Agent_Coordination_Patterns.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns"
     },
     {
@@ -999,7 +999,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/03_Shared_State_Routing_and_Termination.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/agentic-systems/multi-agent-systems/shared-state-routing-and-termination"
     },
     {
@@ -1043,7 +1043,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/07_Anatomy_of_a_Deployed_Multi_Agent_Platform.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/agentic-systems/multi-agent-systems/anatomy-of-a-deployed-multi-agent-platform"
     },
     {
@@ -1054,7 +1054,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/08_Practise_Multi_Agent_Interview_Questions.md",
-      "estMinutes": 15,
+      "estMinutes": 14,
       "href": "/learn/agentic-systems/multi-agent-systems/practise-multi-agent-systems"
     },
     {
@@ -1109,7 +1109,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/05_Approvals_and_Spend_Caps.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/agentic-systems/agentic-workflow-platforms/approvals-and-spend-caps"
     },
     {
@@ -1175,7 +1175,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/04_Permission_Aware_Ingestion.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/production-ai/enterprise-rag-in-production/permission-aware-ingestion"
     },
     {
@@ -1197,7 +1197,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/06_Output_Guardrails_and_Refusals.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails-and-refusals"
     },
     {
@@ -1208,7 +1208,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/07_Practise_Enterprise_RAG_Interview_Questions.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/practise-enterprise-rag"
     },
     {
@@ -1256,7 +1256,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/04_Validating_LLM_Judges.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/production-ai/evaluation-and-release-gates/validating-llm-judges"
     },
     {
@@ -1280,7 +1280,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 12 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.2_Evaluation_and_Release_Gates/06_Practise_Evaluation_Interview_Questions.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/production-ai/evaluation-and-release-gates/practise-evaluation-and-release-gates"
     },
     {
@@ -1291,7 +1291,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/01_Identity_Verification_with_SSO_and_OIDC.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/identity-verification-with-sso-and-oidc"
     },
     {
@@ -1392,7 +1392,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.3_Observability_and_Diagnosis/04_Production_Monitoring_Metrics_Drift_and_SLOs.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/production-ai/observability-and-diagnosis/production-monitoring-metrics-drift-and-slos"
     },
     {
@@ -1440,7 +1440,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/02_The_Eight_Cost_and_Latency_Drivers.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/the-eight-cost-and-latency-drivers"
     },
     {
@@ -1452,7 +1452,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/03_Latency_Prefill_Decode_Streaming_and_the_Tail.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/production-ai/cost-and-latency/latency-prefill-decode-streaming-and-the-tail"
     },
     {
@@ -1464,7 +1464,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/04_Model_Routing_and_Prompt_Discipline.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/model-routing-and-prompt-discipline"
     },
     {
@@ -1488,7 +1488,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/06_RAG_and_Agent_Cost_Controls.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/production-ai/cost-and-latency/rag-and-agent-cost-controls"
     },
     {
@@ -1512,7 +1512,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.5_Cost_and_Latency/08_Practise_Cost_and_Latency_Interview_Questions.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/production-ai/cost-and-latency/practise-cost-and-latency"
     },
     {
@@ -1546,7 +1546,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/03_Capacity_Latency_and_Cost_at_Scale.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/production-ai/scaling-and-reliability/capacity-latency-and-cost-at-scale"
     },
     {
@@ -1568,7 +1568,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/05_Failover_Graceful_Degradation_and_Kill_Switches.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/production-ai/scaling-and-reliability/failover-graceful-degradation-and-kill-switches"
     },
     {
@@ -1579,7 +1579,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/06_Practise_Scaling_and_Reliability_Interview_Questions.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/production-ai/scaling-and-reliability/practise-scaling-and-reliability"
     },
     {
@@ -1602,7 +1602,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/02_Testing_Prompt_Changes.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/production-ai/agentops/testing-prompt-changes"
     },
     {
@@ -1646,7 +1646,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/06_Red_Teaming_and_Layered_Guardrails.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/production-ai/agentops/red-teaming-and-layered-guardrails"
     },
     {
@@ -1657,7 +1657,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/07_Infrastructure_as_Code_and_the_Release_Pipeline.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/production-ai/agentops/infrastructure-as-code-and-the-release-pipeline"
     },
     {
@@ -1692,7 +1692,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 8 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.8_Model_Adaptation_and_Serving/02_The_Skill_Library_and_Its_Promotion_Gate.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/production-ai/model-adaptation-and-serving/the-skill-library-and-its-promotion-gate"
     },
     {
@@ -1826,7 +1826,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/02_Architecture_Data_and_Request_Flow.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/ai-systems-design/design-framework/architecture-data-and-request-flow"
     },
     {
@@ -1837,7 +1837,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/03_Scale_Reliability_and_Security.md",
-      "estMinutes": 12,
+      "estMinutes": 11,
       "href": "/learn/ai-systems-design/design-framework/scale-reliability-and-security"
     },
     {
@@ -1848,7 +1848,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/ai-systems-design/design-framework/design-principles-as-tie-breakers"
     },
     {
@@ -1859,7 +1859,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/05_Reviewing_an_Agent_Architecture.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/ai-systems-design/design-framework/reviewing-an-agent-architecture"
     },
     {
@@ -1870,7 +1870,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.2_The_60_Minute_Whiteboard_Method/01_The_Six_Step_Whiteboard_Clock.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/ai-systems-design/sixty-minute-whiteboard/the-six-step-whiteboard-clock"
     },
     {
@@ -1928,7 +1928,7 @@
       "publish": "credited",
       "credit": "Draws on ideas from Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.3_Architecture_Patterns_and_Trade_Offs/04_Reliability_and_Safety_Patterns.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/ai-systems-design/architecture-patterns/reliability-and-safety-patterns"
     },
     {
@@ -1951,7 +1951,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/01_Enterprise_AI_Assistant_Integration_Layers_at_Scale.md",
-      "estMinutes": 10,
+      "estMinutes": 9,
       "href": "/learn/ai-systems-design/classic-ai-designs/enterprise-ai-assistant-integration-layers-at-scale"
     },
     {
@@ -1984,7 +1984,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/ai-systems-design/classic-ai-designs/recruiting-platform-explainable-ranking-human-decisions"
     },
     {
@@ -2017,7 +2017,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
-      "estMinutes": 19,
+      "estMinutes": 18,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks"
     },
     {
@@ -2028,7 +2028,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/08_Safe_Workflow_Automation_for_Non_Technical_Users.md",
-      "estMinutes": 15,
+      "estMinutes": 14,
       "href": "/learn/ai-systems-design/classic-ai-designs/safe-workflow-automation-for-non-technical-users"
     },
     {
@@ -2331,7 +2331,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.1_Customer_Discovery_and_Problem_Decomposition/01_The_Discovery_Conversation.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/forward-deployed/customer-discovery/the-discovery-conversation"
     },
     {
@@ -2482,7 +2482,7 @@
       "publish": "credited",
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/02_Delivery_as_a_Repeatable_Process.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/delivery-as-a-repeatable-process"
     },
     {
@@ -2494,7 +2494,7 @@
       "publish": "credited",
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/03_Role_Gated_Stage_Gates.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/role-gated-stage-gates"
     },
     {
@@ -2506,7 +2506,7 @@
       "publish": "credited",
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/04_Risk_Checks_and_Delivery_Metrics.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/risk-checks-and-delivery-metrics"
     },
     {
@@ -2540,7 +2540,7 @@
       "publish": "credited",
       "credit": "Builds on the delivery-framework prompt in the DevRev interview preparation guide, summarised in our own words.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.3_Delivery_Six_Stages_Gates_and_Two_Week_Launch/07_Practise_the_Two_Week_Delivery_Round.md",
-      "estMinutes": 11,
+      "estMinutes": 10,
       "href": "/learn/forward-deployed/delivery-stages-and-gates/practise-the-two-week-delivery-round"
     },
     {
@@ -2564,7 +2564,7 @@
       "publish": "credited",
       "credit": "Based on the fdehandbook.com \"Scope a Project\" course, summarised in our own words. Its delivery metrics build on the DevRev interview preparation guide's delivery-framework prompt.",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T6.5_Adoption_and_Business_Impact/02_Proving_Business_Impact.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/forward-deployed/adoption-and-impact/proving-business-impact"
     },
     {
@@ -3016,7 +3016,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/02_Internal_Knowledge_Assistant_Mock_Interview.md",
-      "estMinutes": 9,
+      "estMinutes": 8,
       "href": "/interview/mock-interviews/internal-knowledge-assistant-mock-interview"
     },
     {
@@ -3302,7 +3302,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T9.1_Capstone_Build/02_Build_From_a_Pinned_Revision.md",
-      "estMinutes": 4,
+      "estMinutes": 3,
       "href": "/learn/capstone-and-portfolio/capstone-build/build-from-a-pinned-revision"
     }
   ]

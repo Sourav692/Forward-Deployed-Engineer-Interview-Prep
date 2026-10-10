@@ -90,6 +90,3 @@ Split on the "Service credits" heading instead and all three tiers land in one c
 3. **Recall@K is low after a chunking change. What is the likely cause?**
    Chunks are probably too large or the boundaries cut through the answer. Check boundaries against the source and re-measure.
 
-## References
-
-**Sources:** `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): "Chunking — why you cannot just index whole documents". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 3 "Chunking". `chunking-reference-by-doc-type.md`: §1 "Why Chunking Isn't One-Size-Fits-All", §2 "Core Parameters" and §6 "Databricks RAG Considerations" (golden-set alignment). `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.10 "Chunking strategies" and the "Chunk size" trade-off. `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.2 "Chunk size".

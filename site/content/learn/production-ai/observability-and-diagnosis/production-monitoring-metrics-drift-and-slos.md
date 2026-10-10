@@ -112,6 +112,3 @@ When P99 rises with a flat P50 a month later, the queue chart shows it is load, 
 3. **Your cache hit rate is 60%, yet cost barely moved. What metric was missing?**
    A token-weighted hit rate. If the hits are small requests, a high count saves little money.
 
-## References
-
-**Sources:** `CRAM_SHEET_FULL_PLAYBOOK.md` (cost and latency playbook notes): §3 method (P95 and P99), §12 observability (metrics, five dashboards, trace event fields), §17 observability checklist. `ADDITIONS_BEYOND_PLAYBOOK.md`: §D metrics the playbook misses. `CORE_8_DRIVERS_MEMORIZE.md`: driver 7. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §3 drift and attribution. `06_Scaling_To_20M_Documents.md` (FDE Handbook): §9 drift detection. `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §7 "Failure Pattern Detection", including the monitoring dashboard figures.

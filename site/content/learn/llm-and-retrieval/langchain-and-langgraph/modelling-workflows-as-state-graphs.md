@@ -155,6 +155,3 @@ State carries the query, the retrieved chunks, the answer and a `retry_count`, w
 3. **Where should a per-request user id live so nodes can read it but it is never checkpointed?**
    In runtime context, passed with `context=` and read through a typed `Runtime[ContextSchema]` parameter, not in state or in `configurable`.
 
-## References
-
-**Sources:** `03_langgraph_fundamentals_INTERVIEW_TUTORIAL.md`: §1.1 to §1.7, §1.12, §1.17 and §1.18; §2 gotchas on `TypedDict`, overwriting nodes, subgraph key names, unguarded cycles and `configurable`; §3 tradeoffs on schemas, loop shape, subgraph composition and routing input; §7 self-check item 5. `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 1 "How do I do multi-step (multi-hop) reasoning in LangChain?"; Topic 5 "What can LangGraph do that normal LangChain chains cannot?", "How does LangGraph keep shared state between steps?", "How would I build a self-correcting RAG graph with retrieval, query rewriting and generation?" and "How does LangGraph handle branching, retries and failures?". `05_Same_Loop_In_LangGraph.md` (FDE Handbook): "State: the thing LangGraph makes explicit".

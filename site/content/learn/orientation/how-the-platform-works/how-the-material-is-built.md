@@ -72,6 +72,3 @@ They fail one question. That is the signal to reread one section, not the whole 
 3. **Why is the interview framing kept rather than stripped out?**
    An interview is a compressed version of the job. The sentences that carry an interview also carry a design review with a customer's security team.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md`: "What this is", "The four levels", "Anatomy of a document" and "Checkpoint". `01_Concept_Tutorials/FDE_Handbook/00_Orientation/README.md`: the module checkpoint.

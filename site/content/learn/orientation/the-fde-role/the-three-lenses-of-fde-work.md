@@ -63,6 +63,3 @@ Now imagine one who drops technical depth. The team stops trusting their scoping
 3. **State the senior-versus-mid-level line in one sentence.**
    The three lenses are interdependent: pull any one out and the other two get slower.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md`: "The one-line framing", "The three lenses" and "How the three lenses reinforce each other". `01_Concept_Tutorials/FDE_Handbook/00_Orientation/02_The_Three_Roles.md`: the lens table under "Forward Deployed Engineer".

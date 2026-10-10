@@ -544,20 +544,9 @@ The weak answer is "the tool was blocked, so there is no problem, I would tell t
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1, 2, 4, 5, 8, 9, 10, 11 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md` and `answer_keys/11_tool_using_ai_agent_with_safety_controls_answer_key.md` |
-| 1 to 5, 7 to 11 (tutorial material) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-11-tool-using-ai-agent-with-safety-controls-tutorial_v2.md`, sections 1 to 4 and 6 to 8 |
-| 6 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/01_Enterprise_AI_Assistant.md` |
-| 11 (follow-ups) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 6; `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 item 17 and Tier 2 "Tool use & execution" and "Safety, guardrails & human-in-the-loop" |
-| 12 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, row 22; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md` §15 scenarios 4 and 15, §4 and §5 |
-| 13 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/06_tool_call_near_miss.md` |
-| Not included | The V1 long tutorial for chapter 11, the V2 tutorial's section 5 working code and contract tests, and the site mirror under `site/content/`, which repeat the above in other forms |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [MCP specification 2025-11-25 – Transports](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) — MCP is JSON-RPC over stdio or Streamable HTTP, not REST
 - [Claude docs – Tool search tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool) — selection degrades with many tools; load tools on demand
 - [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — indirect injection from any content the model reads
+

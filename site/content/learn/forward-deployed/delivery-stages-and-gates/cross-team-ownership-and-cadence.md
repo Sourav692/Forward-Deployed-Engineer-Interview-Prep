@@ -80,6 +80,3 @@ Close on outcomes. The platform improved demand forecasting and reduced stockout
 3. **How was the speed-versus-stability conflict resolved without a loser?**
    Data contracts turned it into an interface agreement, and two-phase delivery shipped a reliable core first, then advanced features.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/05_Cross_Team_Collaboration.md` (all sections). Behavioural storytelling for this question is also practised in the communication track.

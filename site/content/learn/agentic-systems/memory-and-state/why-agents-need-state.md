@@ -109,6 +109,3 @@ Each fact lived exactly as long as its scope. That is the whole design: match ev
 3. **A session should expire 30 minutes after the user's last action. Which TTL setting do you pick, and what else do you run?**
    `refresh_on_read=True`, for a sliding expiry. Also run a TTL sweeper, because reads do not check the clock themselves.
 
-## References
-
-**Sources:** `02_State_Memory_Sessions.md` (FDE Handbook, Robust Agents): "Why this matters", "Three scopes of state", "The Session, revisited", "In the code" and "Interview lens". `07_memory_and_state_INTERVIEW_TUTORIAL.md`: §1.8 "Session memory" and the §2 gotcha "Session TTL expiry is not a read-time guarantee".

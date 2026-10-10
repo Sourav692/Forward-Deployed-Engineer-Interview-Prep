@@ -108,6 +108,3 @@ The bad change reached 5% of users for a short time and cost nothing to undo. Th
 3. **Why split an A/B test per user rather than per request?**
    So one person's experience does not flicker between versions mid-conversation, which would confuse users and muddy the outcome metrics.
 
-## References
-
-**Sources:** `01_Prompt_Versioning_Rollout_Rollback.md` (FDE Handbook, AgentOps and platform): all sections, including "The whole loop", Interview lens and Checkpoint. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook): §7 kill switch versus staged rollout.

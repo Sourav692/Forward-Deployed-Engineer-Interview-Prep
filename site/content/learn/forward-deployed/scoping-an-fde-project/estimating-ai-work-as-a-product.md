@@ -87,6 +87,3 @@ The model call is the same at all three levels. Everything that changes the esti
 3. **What should a pre-pilot test set include?**
    Clean examples, unclear requests, missing information, unsafe requests and cases that should be handed to a human.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 3 Topic 3.1 "Estimate AI as a product, not a single API call", summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.

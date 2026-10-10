@@ -117,6 +117,3 @@ Wrap every model-calling step with `.with_retry(retry_if_exception_type=(RateLim
 3. **A support team wants to see agent progress live, not a token stream. Which stream mode?**
    `stream_mode="updates"`, which yields one update per finished node, so the display shows each named step as it completes.
 
-## References
-
-**Sources:** `01_langchain_foundations_INTERVIEW_TUTORIAL.md`: "Coverage gaps"; §1.8 "Reliability" with its retry deep dive; §1.16 "Observability with LangSmith"; §2 gotchas on `.map()`, the bare agent repr and `.with_retry()`; §6 "Mock system design". `03_langgraph_fundamentals_INTERVIEW_TUTORIAL.md`: §1.13 "Async and streaming", §1.14 "Concurrency control" with the `gather` versus `TaskGroup` deep dive, §1.15 "RetryPolicy", §1.16 "Manual reliability patterns", §2 gotchas on `gather` and the circuit breaker, §3 tradeoffs on fan-out and reliability, and §5.1 question 8. `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 1 "How do I stream the answer token by token?"; Topic 5 "How does LangGraph handle branching, retries and failures?".

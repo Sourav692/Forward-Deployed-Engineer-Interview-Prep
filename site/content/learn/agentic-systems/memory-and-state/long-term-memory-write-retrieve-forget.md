@@ -136,6 +136,3 @@ Store both on every fact. At query time, filter so the target time falls inside 
 3. **A user has been active for a year. What does their episodic memory look like, and what keeps it bounded?**
    Without a policy, it grows with every task. Bound it with a TTL or a most-recent-N cap, decay by salience, and offline consolidation into semantic traits.
 
-## References
-
-**Sources:** `ch07_knowledge_memory_retrieval.md` (*Cracking Agentic AI System Design Interviews*, Ch. 7): "Memory Is a Write Problem", "The Write Policy", "The Retrieval Contract", "Consolidation, Decay, and Forgetting", "Hierarchical Memory Compaction and Lifecycle Garbage Collection" and "Bitemporal Memory", summarised in our own words. `07_memory_and_state_INTERVIEW_TUTORIAL.md`: §1.6 "Cross-thread long-term memory", §1.7 code, "Coverage gaps", §2 gotchas "A fresh random key on every write" and "Episodic memory grows without bound", §3 trade-off "Fresh-key writes vs. stable-key update-in-place", §6 worked answer. `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`: Topic 1 "How does the system remember important facts and forget the rest?"; Topic 5 "How do I design persistent memory and retrieval rules for a long-running agent?", "What is the risk of storing too much memory?" and "How do I combine vector search and structured databases for agent memory?".

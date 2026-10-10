@@ -74,6 +74,3 @@ The example shows the two halves of the lesson. Embeddings find meaning that key
 3. **Does a 1536-dimension model always beat a 768-dimension model?**
    No. Dimension changes storage, compute and index speed. Quality comes mainly from the model's architecture and training data, so test both on your own queries.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Topic 4 "What are embeddings, and how do they power search by meaning?" and "How do embedding size and model choice affect quality and speed?". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.2 "Embeddings and cosine similarity" and §2 "Gotchas" (default embedding model and Chroma's default distance metric).

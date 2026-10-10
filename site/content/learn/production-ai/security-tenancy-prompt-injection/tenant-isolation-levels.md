@@ -66,6 +66,3 @@ Three sentences cover the level, the enforcement point and the ladder. Missing a
 3. **What is the first rung of the regulated escalation path?**
    Per-tenant encryption keys, before a separate schema or a dedicated region and deployment.
 
-## References
-
-**Sources:** `04_Prompt_Injection_Egress_Tenancy.md` (FDE Handbook, Cross-Cutting Concerns): "3 · Multi-tenancy — pick a level and justify it" and "Checkpoint". `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §6 "Databricks Implementation" (Unity Catalog row-level security and dynamic views).

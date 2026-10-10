@@ -154,6 +154,3 @@ The top hit is graded. Below the threshold, the case goes to a human queue with 
 3. **What stops a retrieval-as-tool agent from searching in an endless loop?**
    Nothing in the model. Add a call cap enforced in code, separate from the overall step budget.
 
-## References
-
-**Sources:** `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.15 "Self-RAG", §1.16 "Corrective RAG" with its deep dive, §1.17 "Adaptive RAG", §1.18 "Agentic RAG", §1.19 "Router agentic RAG", §1.21 "Retrieval with a feedback loop", §2 gotchas on Self-RAG gates, the threshold, classification and the router filter, §3 "Choosing a retrieval-control loop", §5.1 and §5.2 role-track answers, and §6 worked answer, all rewritten in our own words. §4 questions 7, 9 and 10 (which cite the Exponent and DataCamp guides) inform the sections on per-source tools, Self-RAG and agentic RAG, summarised in our own words. `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §5.2 answers on timeouts, call caps and logging.

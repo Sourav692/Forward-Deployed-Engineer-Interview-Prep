@@ -153,6 +153,3 @@ Know what this design leaves out. It has no RAG, no memory, no human-approval wo
 3. **What does a tool registry do that loading every MCP server does not?**
    It loads only the servers relevant to the current task. That keeps the prompt small as the estate grows to 500+ applications.
 
-## References
-
-**Sources:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/01_Enterprise_AI_Assistant.md`: "The prompt", Steps 1 to 5 (problem space, high-level architecture, the three integration methods as layers, agent frameworks and orchestration, scaling to 500+ applications and 200,000 employees), "Trade-offs", "Summary" and "What this case does not cover".

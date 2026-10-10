@@ -84,7 +84,6 @@ export const getAllScenarios = cache(async (): Promise<ScenarioRef[]> => {
         tag: scenario.tag,
         tabs: scenario.tabs,
         practice: scenario.practice,
-        archived: scenario.archived,
         reading: module.kind === 'reading',
       })),
     ),

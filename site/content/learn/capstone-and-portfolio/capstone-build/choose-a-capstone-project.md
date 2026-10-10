@@ -69,6 +69,3 @@ They fork the project at the pinned revision. Before adding features they write 
 3. **What separates a capstone from a demo?**
    An evaluation: evidence of how often the system works and how it fails, with each claim marked as demonstrated or asserted.
 
-## References
-
-**Sources:** `00_Start_Here/COMPANION_COURSE.md`: the introduction and "Current canonical project mappings". `01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md`: the "Honest about what is proven" principle. The module's own objective and common mistake come from the course curriculum.

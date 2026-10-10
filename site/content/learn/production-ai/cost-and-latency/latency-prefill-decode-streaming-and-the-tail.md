@@ -94,6 +94,3 @@ Prefill stays short because the prompt is small. Decode stays short because the 
 3. **A cheaper model halves the cost per request but doubles retries and human corrections. Is it cheaper?**
    Not necessarily. Compare cost per successful task, which includes the extra turns, retries and corrections.
 
-## References
-
-**Sources:** `ADDITIONS_BEYOND_PLAYBOOK.md`: §B1 prefill versus decode, §B2 tail latency, §B4 cost per successful task, §E streaming abandonment. `CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §3 first-token and total-response rows, §10 streaming and UX, §16 case 6. `CORE_8_DRIVERS_MEMORIZE.md`: driver 2. `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): §2 token streaming. `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §1.2 streaming and its token-level limits. Playbook content is summarised in new words.

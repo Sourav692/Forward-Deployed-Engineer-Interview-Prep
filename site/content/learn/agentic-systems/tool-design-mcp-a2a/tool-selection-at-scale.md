@@ -65,6 +65,3 @@ The order matters. Retrieval is a patch for a large surface; façades and filter
 3. **When does retrieval over tool descriptions earn its 20 to 60 ms?**
    Only once the surface is still above about 40 tools after façades and principal filtering.
 
-## References
-
-**Sources:** `ch05_tool_use_agent_computer_interface.md` (*Cracking Agentic AI System Design Interviews*, Ch. 5: "Tool Selection at Scale", including the "200 tools" design question, summarised in our own words).

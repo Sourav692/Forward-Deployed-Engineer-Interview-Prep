@@ -76,6 +76,3 @@ That is more than a dozen tasks behind a single upload button. The estimate must
 3. **Name six items of hidden work to check before committing to a date.**
    Any six of: login and recovery, permissions, admin tools, data migration, analytics, logging and alerts, safe retries, abuse limits, security review, testing and staging, rollout and rollback, support and incident response.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 2 "Figure Out What You Are Really Building" (Topics 2.1 to 2.3), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.

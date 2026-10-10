@@ -202,6 +202,3 @@ The notebook then broke Layer 1 on purpose. Unity Catalog dropped `CT-VTX-001`, 
 3. **Which trade-off makes Layer 2 non-negotiable?**
    The index is eventually consistent with the governed table, so a newly restricted document can stay in the index until the next sync.
 
-## References
-
-**Sources:** `03_Enterprise_RAG_On_Databricks.md` (FDE Handbook, AgentOps and platform): all sections, including the two facts, the forced design, ACL encoding and the positional `OR` gotcha, the governed layer, OBO, retrieval, evaluation and observability, multi-tenancy and CI/CD, honest trade-offs and "What was actually verified". `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): §7 build versus buy.

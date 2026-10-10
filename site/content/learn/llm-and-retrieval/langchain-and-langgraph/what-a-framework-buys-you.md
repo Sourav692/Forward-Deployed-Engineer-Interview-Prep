@@ -92,6 +92,3 @@ Version three serves heavy traffic, and profiling shows the retrieval wrapper is
 3. **What is the flowchart rule of thumb for chain versus graph?**
    Decision diamonds and arrows pointing backwards mean a graph. A straight line of boxes means a chain is enough.
 
-## References
-
-**Sources:** `05_Same_Loop_In_LangGraph.md` (FDE Handbook): "Why this matters", "What the framework buys you" and "Interview lens". `Module_02_RAG_Frameworks_Tools_Implementation.md`: Overview; Topic 1 "What goes wrong when using LangChain in big production systems?" and "When should I skip LangChain and build my own pipeline?"; Topic 2 "How is LlamaIndex different from LangChain in design?"; Topic 5 "When should I choose LangGraph over plain LangChain for production RAG?". `03_langgraph_fundamentals_INTERVIEW_TUTORIAL.md`: §2 "A cycle with no iteration guard loops forever".

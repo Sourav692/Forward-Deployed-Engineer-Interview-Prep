@@ -72,6 +72,3 @@ The fix follows the migration rule. Rebuild the full index under the new model b
 3. **Why can a model change not be rolled out chunk by chunk?**
    Chunks embedded by the old model and queries embedded by the new one live in different spaces. A partial swap compares incompatible vectors and breaks retrieval.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Topic 4 "How do you choose an embedding model for a special field, and how do you test it?", "What is embedding drift, and how is it different from data drift?" and "What problems appear if you change the embedding model later?". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.2 deep dive on the default embedding model, §2 "Gotchas", and the §5.1 question on an embedding upgrade that improved offline evaluation but degraded production.
