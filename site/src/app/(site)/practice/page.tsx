@@ -42,7 +42,6 @@ export default async function PracticePage() {
           ['#worksheets', 'Worksheets'],
           ['#behavioural', 'Behavioural'],
           ['#mocks', 'Mock interviews'],
-          ['#projects', 'Projects'],
         ].map(([href, label]) => (
           <a
             key={href}
