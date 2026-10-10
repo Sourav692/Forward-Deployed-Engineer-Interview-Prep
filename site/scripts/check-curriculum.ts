@@ -11,7 +11,7 @@
  * redirects that chain, point at an unpublished lesson or retire a live one, and lesson
  * slices that overlap, drop a heading or name a heading the source lacks.
  */
-import { LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
+import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
@@ -182,6 +182,24 @@ for (const m of MODULES) {
 for (const [from, to] of Object.entries(RETIRED_MODULES)) {
   if (moduleBySlug.has(from)) fail(`RETIRED_MODULES key ${from} is still a module`)
   if (!moduleBySlug.has(to)) fail(`RETIRED_MODULES maps ${from} to ${to}, which is not a module`)
+}
+
+// Interview hubs (DATA-07). They live at /interview/hubs/<slug>, so an interview-practice
+// module called "hubs" would be shadowed by that static segment.
+unique('interview hub', INTERVIEW_HUBS.map((h) => h.slug))
+for (const m of MODULES) if (m.track === 'interview-practice' && m.slug === 'hubs') fail('module slug "hubs" is taken by /interview/hubs')
+for (const h of INTERVIEW_HUBS) {
+  if (h.practice.length < 2 || h.modules.length < 1) fail(`hub ${h.slug}: needs at least two practice lessons and one module`)
+  for (const s of h.practice) {
+    const l = lessonBySlug.get(s)
+    if (!l) fail(`hub ${h.slug}: unknown practice lesson "${s}"`)
+    else if (lessonDecision(l) !== 'publish') fail(`hub ${h.slug}: practice lesson "${s}" is not published (${lessonDecision(l)})`)
+  }
+  for (const s of h.modules) {
+    const m = moduleBySlug.get(s)
+    if (!m) fail(`hub ${h.slug}: unknown module "${s}"`)
+    else if (m.status === 'on-hold' || m.status === 'coming-soon') fail(`hub ${h.slug}: module "${s}" is ${m.status}`)
+  }
 }
 
 const cycle = findPrerequisiteCycle(MODULES)
