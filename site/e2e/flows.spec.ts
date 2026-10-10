@@ -92,6 +92,18 @@ test('mock flow: score a full round → pass rule applied → result survives re
   await expect(page.getByText(/^Weakest dimension:/)).toContainText('Security')
 })
 
+test('interview hubs: /interview → hub → a practice lesson; unknown hubs 404', async ({ page }) => {
+  await page.goto('/interview')
+  await page.getByRole('region', { name: 'Interview Topic Hubs' }).getByRole('link', { name: /^AI Systems Design/ }).click()
+  await expect(page).toHaveURL('/interview/hubs/ai-systems-design')
+  await expect(page.getByRole('heading', { level: 1, name: 'AI Systems Design' })).toBeVisible()
+
+  await page.getByRole('region', { name: 'Practise' }).getByRole('link', { name: /Internal Knowledge Assistant Mock Interview/ }).click()
+  await expect(page).toHaveURL(MOCK_LESSON)
+
+  expect((await page.request.get('/interview/hubs/no-such-hub')).status()).toBe(404)
+})
+
 test('soft gating: blocked module → open anyway → remembered after reload', async ({ page }) => {
   await page.goto(GATED_MODULE)
   await hydrated(page)

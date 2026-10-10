@@ -137,6 +137,8 @@ const nextConfig: NextConfig = {
       ...companyPrepRedirects,
       ...retiredModuleRedirects(),
       ...behaviouralRedirects,
+      // Hubs have no index page of their own: /interview lists them (FE-18).
+      { source: '/interview/hubs', destination: '/interview', permanent: false },
     ]
   },
   async headers() {

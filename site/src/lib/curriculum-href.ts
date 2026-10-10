@@ -21,6 +21,9 @@ export const AREA_TRACKS: Record<string, string> = {
 /** Whether a track is listed and served under /learn. */
 export const isLearnTrack = (track: string): boolean => !(track in AREA_TRACKS)
 
+/** An interview topic hub (FE-18). A static `hubs` segment, because /interview/[moduleSlug] is taken. */
+export const hubHref = (slug: string) => `/interview/hubs/${slug}`
+
 /** The URL of a track, a module in it, or a lesson in that module. */
 export function curriculumHref(track: string, moduleSlug?: string, lessonSlug?: string): string {
   const base = AREA_TRACKS[track] ?? `/learn/${track}`
