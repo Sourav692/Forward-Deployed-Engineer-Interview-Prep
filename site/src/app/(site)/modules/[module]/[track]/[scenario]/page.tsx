@@ -7,7 +7,9 @@ import { MODES } from '@/lib/editorial'
 import { ScenarioView } from '@/components/ScenarioView'
 import { CaseStudyView } from '@/components/CaseStudyView'
 import { BeforeYouStart, Fact, MetaStrip, WhereNext } from '@/components/PageIntro'
-import { qualifiedTitle, type CaseStudy, type ScenarioRef } from '@/lib/scenario'
+import { qualifiedTitle, scenarioHref, type CaseStudy, type ScenarioRef } from '@/lib/scenario'
+import { learningResourceJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 type Params = { module: string; track: string; scenario: string }
 
@@ -32,22 +34,30 @@ export async function generateMetadata({
   if (getModule(moduleId)?.kind === 'reading') {
     const study = await getCaseStudy(moduleId, track, slug)
     return study
-      ? {
+      ? pageMetadata({
+          path: scenarioHref(study.ref),
           title: `${study.ref.tag} · ${qualifiedTitle(study.ref)}`,
-          description:
-            moduleId === '16-company-oriented-prep'
-              ? `Company-oriented interview preparation: ${study.title}.`
-              : `FDE case study: ${study.title} — ${study.docs.map((d) => d.label.toLowerCase()).join(', ')}.`,
-        }
+          description: caseDescription(moduleId, study),
+        })
       : {}
   }
   const scenario = await getScenario(moduleId, track, slug)
   if (!scenario) return {}
-  const meta = familyMeta(track)
-  return {
+  return pageMetadata({
+    path: scenarioHref(scenario.ref),
     title: qualifiedTitle({ title: scenario.title, qualifier: scenario.ref.qualifier }),
-    description: `${MODES[meta.mode].label}: ${scenario.title}. ${meta.outcomes[0]}.`,
-  }
+    description: practiceDescription(scenario.title, track),
+  })
+}
+
+const caseDescription = (moduleId: string, study: CaseStudy) =>
+  moduleId === '16-company-oriented-prep'
+    ? `Company-oriented interview preparation: ${study.title}.`
+    : `FDE case study: ${study.title} — ${study.docs.map((d) => d.label.toLowerCase()).join(', ')}.`
+
+const practiceDescription = (title: string, track: string) => {
+  const meta = familyMeta(track)
+  return `${MODES[meta.mode].label}: ${title}. ${meta.outcomes[0]}.`
 }
 
 /** Practice and behavioural pages sit under Practice; reading pages under Case Studies. */
@@ -96,6 +106,15 @@ export default async function ScenarioPage({ params }: { params: Promise<Params>
 
   return (
     <div className="py-10">
+      <JsonLd
+        data={learningResourceJsonLd({
+          name: scenario.title,
+          description: practiceDescription(scenario.title, track),
+          path: scenarioHref(scenario.ref),
+          partOf: { name: moduleMeta?.title ?? scenario.ref.trackTitle, path: `/modules/${moduleId}` },
+          type: 'Worksheet',
+        })}
+      />
       <Breadcrumbs moduleId={moduleId} page={scenario.ref} reading={false} />
 
       <header className="mb-8 max-w-3xl">
@@ -151,6 +170,16 @@ async function CaseStudyPage({
 
   return (
     <div className="py-10">
+      <JsonLd
+        data={learningResourceJsonLd({
+          name: study.title,
+          description: caseDescription(moduleId, study),
+          path: scenarioHref(study.ref),
+          minutes,
+          partOf: { name: getModule(moduleId)?.title ?? 'Case Studies', path: `/modules/${moduleId}` },
+          type: 'Case study',
+        })}
+      />
       <Breadcrumbs moduleId={moduleId} page={study.ref} reading />
 
       <header className="mb-6 max-w-3xl">

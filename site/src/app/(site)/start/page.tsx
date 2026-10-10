@@ -6,6 +6,8 @@ import { Diagnostic, type ModuleRef } from '@/components/start/Diagnostic'
 import { PersonaCards } from '@/components/start/PersonaCards'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { LinkButton } from '@/components/ui'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /**
  * /start (FE-10): choose a learning path, by the ten-question diagnostic or by picking
@@ -13,11 +15,12 @@ import { LinkButton } from '@/components/ui'
  * client islands. Choosing a path is optional: every Learn page works without one.
  */
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/start',
   title: 'Choose Your Path',
   description:
     'Pick a learning path for your background and interview date: answer ten questions or choose one of seven starting points. Optional, and stored only in this browser.',
-}
+})
 
 export default function StartPage() {
   const modules: Record<string, ModuleRef> = Object.fromEntries(
@@ -25,6 +28,7 @@ export default function StartPage() {
   )
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Choose Your Path', path: '/start' }])} />
       <header className="mb-8 max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Start</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">Choose Your Path</h1>

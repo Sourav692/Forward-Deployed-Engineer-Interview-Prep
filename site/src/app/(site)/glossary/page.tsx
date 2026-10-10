@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import { GLOSSARY, glossaryAnchor, type GlossaryGroup } from '@/lib/glossary'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/glossary',
   title: 'Glossary',
   description:
     'Every acronym and term the site uses, in plain spoken words — and, for the big ones, ' +
     'the line you would actually say in an interview.',
-}
+})
 
 const GROUPS: GlossaryGroup[] = [
   'Interview and delivery',

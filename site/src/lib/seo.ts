@@ -8,7 +8,12 @@ import { SITE_NAME, SITE_URL } from './editorial'
 
 export const absoluteUrl = (path: string) => `${SITE_URL}${path === '/' ? '' : path}`
 
-/** Canonical URL plus Open Graph title, description and URL for one page. */
+/**
+ * Canonical URL plus Open Graph title, description, URL and image for one page.
+ * A page's `openGraph` replaces the layout's, so the default share image
+ * (`src/app/opengraph-image.tsx`) is named here or the page would have none.
+ * `title` is left out on the home page, which keeps the layout's default title.
+ */
 export function pageMetadata({
   path,
   title,
@@ -17,18 +22,36 @@ export function pageMetadata({
   type = 'website',
 }: {
   path: string
-  title: string
+  title?: string
   description: string
   ogTitle?: string
   type?: 'website' | 'article'
 }): Metadata {
   return {
-    title,
+    // An explicit `title: undefined` would wipe the layout's default title.
+    ...(title && { title }),
     description,
     alternates: { canonical: absoluteUrl(path) },
-    openGraph: { title: ogTitle, description, url: absoluteUrl(path), siteName: SITE_NAME, type, locale: 'en_GB' },
+    openGraph: {
+      title: ogTitle,
+      description,
+      url: absoluteUrl(path),
+      siteName: SITE_NAME,
+      type,
+      locale: 'en_GB',
+      images: '/opengraph-image',
+    },
   }
 }
+
+/** The home page's `WebSite` object. */
+export const webSiteJsonLd = () => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_NAME,
+  url: SITE_URL,
+  inLanguage: 'en-GB',
+})
 
 export type Crumb = { name: string; path: string }
 
@@ -67,11 +90,14 @@ export function learningResourceJsonLd({
   path,
   minutes,
   partOf,
+  type = 'Lesson',
 }: {
   name: string
   description: string
   path: string
   minutes?: number
+  /** schema.org `learningResourceType`. */
+  type?: 'Lesson' | 'Case study' | 'Worksheet'
   /** The module the lesson belongs to. */
   partOf: { name: string; path: string }
 }) {
@@ -81,7 +107,7 @@ export function learningResourceJsonLd({
     name,
     description,
     url: absoluteUrl(path),
-    learningResourceType: 'Lesson',
+    learningResourceType: type,
     inLanguage: 'en-GB',
     isAccessibleForFree: true,
     ...(minutes ? { timeRequired: `PT${minutes}M` } : {}),

@@ -4,6 +4,7 @@ import { LIVE } from '@/components/areas/data'
 import { EmptyState, LinkButton } from '@/components/ui'
 import { getAllScenarios } from '@/lib/content'
 import { MODES } from '@/lib/editorial'
+import { pageMetadata } from '@/lib/seo'
 
 /**
  * /company-prep: the company-specific prep area. Each pack is tailored to one
@@ -11,10 +12,11 @@ import { MODES } from '@/lib/editorial'
  * Packs are listed only when their synced guides are published.
  */
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/company-prep',
   title: 'Company Prep',
   description: 'Preparation packs tailored to one company’s interview loop: product context, likely exercises and questions to ask.',
-}
+})
 
 export default async function CompanyPrepPage() {
   const guides = (await getAllScenarios()).filter((s) => s.moduleId === LIVE.companyPrep && s.trackId === 'blitzy-prep')

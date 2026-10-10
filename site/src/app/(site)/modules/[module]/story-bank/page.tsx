@@ -7,6 +7,7 @@ import { getModule } from '@/lib/registry'
 import type { ReadingDocument, ReadingSection } from '@/lib/reading'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { ReadingPanel } from '@/components/CaseStudyView'
+import { pageMetadata } from '@/lib/seo'
 
 /**
  * The behavioural Story Bank (CONTENT-15): markdown from
@@ -24,7 +25,7 @@ export function generateStaticParams() {
   return [{ module: STORY_BANK.moduleId }]
 }
 
-export const metadata: Metadata = { title: STORY_BANK.title, description: STORY_BANK.blurb }
+export const metadata: Metadata = pageMetadata({ path: STORY_BANK.href, title: STORY_BANK.title, description: STORY_BANK.blurb })
 
 export default async function StoryBankPage({ params }: { params: Promise<Params> }) {
   const { module: moduleId } = await params

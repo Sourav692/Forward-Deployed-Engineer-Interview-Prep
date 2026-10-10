@@ -3,14 +3,16 @@ import type { Metadata } from 'next'
 import { MODULES, SITE } from '@/lib/registry'
 import { LAST_DAY, MODES, REVIEWS, type ContentMode } from '@/lib/editorial'
 import { ClearAllButton } from '@/components/ClearAllButton'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/guide',
   title: 'How to use this site',
   description:
     'The four learning modes on Forward Deployed — practice, case studies, behavioural ' +
     'practice and the last-day review — and the practice loop: attempt, compare with the ' +
     'model answer, score yourself honestly, repeat.',
-}
+})
 
 /** The modes, in the order most readers need them. Copy is shared with page headers. */
 const MODE_GUIDE: { mode: ContentMode; title: string; href: string; use: string }[] = [

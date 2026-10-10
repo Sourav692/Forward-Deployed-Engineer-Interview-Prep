@@ -6,6 +6,8 @@ import { LAST_DAY, LAST_DAY_GUIDES, MODES, REVIEWS } from '@/lib/editorial'
 import { INTERVIEW_HUBS } from '@/lib/curriculum'
 import { hubHref } from '@/lib/curriculum-href'
 import { INTERVIEW_TRACK } from '@/lib/learn'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /**
  * /interview: the interview prep area (FE-11). It is the home of the interview
@@ -15,11 +17,12 @@ import { INTERVIEW_TRACK } from '@/lib/learn'
  * (/interview/hubs/<hub>). Company-specific packs have their own area at /company-prep.
  */
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/interview',
   title: 'Interview',
   description:
     'Interview preparation: case-study worksheets, mock interviews and scorecards, and the final-week review.',
-}
+})
 
 /** Company loops is a company-prep module; it is surfaced under Company Prep, not here. */
 const COMPANY_MODULE = 'company-loops'
@@ -32,6 +35,7 @@ export default function InterviewPage() {
 
   return (
     <div className="py-12">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Interview', path: '/interview' }])} />
       <AreaHeader eyebrow="Interview" title="Get Ready for the Loop">
         <p>
           The last stretch before an interview: full practice rounds under time, scored against a rubric, and condensed

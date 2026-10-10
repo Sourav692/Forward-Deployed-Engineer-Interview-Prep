@@ -12,6 +12,7 @@ import {
   reviewLabel,
 } from '@/lib/editorial'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
+import { pageMetadata } from '@/lib/seo'
 
 /**
  * The eighteen reviews and the trigger sheet are static HTML, served as-is from
@@ -26,10 +27,11 @@ const BLURB =
   `roadmap and a final rehearsal guide — for the days before an FDE interview, once the ` +
   `concepts are already familiar.`
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/fde-last-day-prep',
   title: LAST_DAY.title,
   description: BLURB,
-}
+})
 
 export default async function LastDayReviewPage() {
   // Resolved here so each review card can name the practice to learn from first.

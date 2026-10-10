@@ -4,6 +4,8 @@ import { AreaGroup, AreaHeader, AreaSection, LinkList } from '@/components/areas
 import { LIVE, curriculumModules, curriculumTrack, moduleGroups, moduleHref } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { learnHref } from '@/lib/learn'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /**
  * /design: the casebook index (FE-11). A static Server Component that lists every
@@ -11,11 +13,12 @@ import { learnHref } from '@/lib/learn'
  * /modules/15-fde-case-studies. Nothing is copied here; the case pages own their content.
  */
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: '/design',
   title: 'Design',
   description:
     'The casebook: complete AI system designs grouped by theme, each readable as a spoken interview answer, a technical deep dive, or a quick review.',
-}
+})
 
 const METHOD_TRACK = 'ai-systems-design'
 
@@ -27,6 +30,7 @@ export default async function DesignPage() {
 
   return (
     <div className="py-12">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Design', path: '/design' }])} />
       <AreaHeader eyebrow="Design" title="The Casebook">
         <p>
           {scenarios.length} complete system designs, grouped by the kind of system they build. {layered} of them read

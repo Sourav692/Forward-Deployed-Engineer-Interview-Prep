@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 import { Suspense } from 'react'
 import { allMinutes, isRequired, learnTracks } from '@/lib/learn'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
@@ -31,6 +32,7 @@ export default function LearnPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Learn', path: '/learn' }])} />
       <header className="mb-8 max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Learn</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">The Curriculum</h1>

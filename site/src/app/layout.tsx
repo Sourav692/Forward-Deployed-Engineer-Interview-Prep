@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
-import { FOOTER_NAV } from '@/lib/editorial'
+import { FOOTER_NAV, SITE_URL } from '@/lib/editorial'
 import { SITE } from '@/lib/registry'
 import { SearchDialog } from '@/components/SearchDialog'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -23,11 +23,14 @@ export const metadata: Metadata = {
     template: `%s · ${SITE.name}`,
   },
   description: SITE.description,
+  // Resolves relative metadata URLs, such as the share image, against production.
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
     type: 'website',
   },
+  twitter: { card: 'summary_large_image' },
 }
 
 /**

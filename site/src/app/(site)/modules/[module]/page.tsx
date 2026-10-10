@@ -6,6 +6,7 @@ import { getModule, MODULES } from '@/lib/registry'
 import { ModuleProgress, ScenarioList } from '@/components/Progress'
 import { MetaStrip } from '@/components/PageIntro'
 import { STORY_BANK } from '@/lib/editorial'
+import { pageMetadata } from '@/lib/seo'
 
 const BEHAVIORAL_MODULE = '14-behavioural-and-leadership-round'
 const COMPANY_PREP_MODULE = '16-company-oriented-prep'
@@ -24,7 +25,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { module: moduleId } = await params
   const meta = getModule(moduleId)
-  return meta ? { title: meta.title, description: meta.blurb } : {}
+  return meta ? pageMetadata({ path: `/modules/${moduleId}`, title: meta.title, description: meta.blurb }) : {}
 }
 
 export default async function ModulePage({
