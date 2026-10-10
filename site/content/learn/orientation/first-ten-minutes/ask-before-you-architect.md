@@ -82,6 +82,3 @@ Four questions moved the design from a generic chatbot to a multi-tenant, access
 3. **Which question is most often forgotten, and what does forgetting it cost?**
    Who owns data and access quality, and whether you can get it before day one. Without it, the corpus cannot be made access-aware and the engagement stalls.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/00_Orientation/03_The_First_Ten_Minutes.md`: "Why this matters", "The five areas" and "Checkpoint". The worked example applies those areas to the module's interview prompt.

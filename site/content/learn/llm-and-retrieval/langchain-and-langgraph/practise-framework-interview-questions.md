@@ -110,6 +110,3 @@ Three take-home tasks from the source tutorials make strong portfolio pieces. Bu
 3. **Name one thing missing from the source notebooks that a strong candidate should build anyway.**
    An evaluation harness: a labelled set measuring router accuracy or loop convergence, rather than eyeballing printed output.
 
-## References
-
-**Sources:** `01_langchain_foundations_INTERVIEW_TUTORIAL.md`: "Coverage gaps", §4 "Top 10 interview questions" (questions 1, 3, 8 and 9 to 10), §5 "Role tracks" and §7 "Self-check". `03_langgraph_fundamentals_INTERVIEW_TUTORIAL.md`: "Coverage gaps", §4 "Top 10 interview questions" (checkpointer versus store, crash resume, terminal paths, nested retries, recursion limit, `TaskGroup`, stream modes), §5 "Role tracks" (questions and take-home tasks), §6 "Mock system design" and §7 "Self-check". `05_Same_Loop_In_LangGraph.md` (FDE Handbook): "Interview lens". The §4 answers in both tutorials cite external interview guides; their ideas are summarised here in our own words.

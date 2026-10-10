@@ -79,6 +79,3 @@ The team now knows three numbers it did not have before: the breaking load, the 
 3. **Which scenario finds memory leaks, and how long does it run?**
    The soak test, run for 2 to 4 hours, which also finds connection-pool exhaustion.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules), Topic 4: "What do I do when a downstream AI service fails?" and "How do I load test a FastAPI AI service?".

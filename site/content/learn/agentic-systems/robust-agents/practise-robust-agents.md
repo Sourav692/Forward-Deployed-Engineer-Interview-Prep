@@ -97,6 +97,3 @@ Each branch logs, each check has a fixed place, and nothing is swallowed. An int
 3. **Trace a proposed destructive call with a malformed argument through the pipeline. Where does it stop?**
    At argument validation. It is rejected as invalid input before it reaches the destructive gate, the cache or the tool.
 
-## References
-
-**Sources:** the "Interview lens" and "Checkpoint" sections of `01_Retry_Fallback_Memo_Confirm.md`, `03_Parallel_vs_Sequential.md`, `04_Observability_For_Tool_Calls.md` and `05_The_Eight_Guard_Checks.md` (FDE Handbook, Robust Agents). `05-guarding-tool-calls.md` (Production and Platform Judgment): "What to say if asked directly".

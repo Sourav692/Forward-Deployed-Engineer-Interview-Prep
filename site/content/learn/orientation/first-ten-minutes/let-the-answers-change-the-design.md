@@ -78,6 +78,3 @@ The candidate stops. "Then filtering after retrieval is both a quality and a sec
 3. **How long does the opening routine get in a 60-minute round, and what follows it?**
    The first eight minutes. Then entities and the happy path, architecture, a deep dive, cross-cutting concerns and failure, and a deliberate close.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/00_Orientation/03_The_First_Ten_Minutes.md`: "How to use the questions", "Interview lens" and "Checkpoint". The worked example applies the quoted adaptation and the post-filter failure from `02_The_Three_Roles.md`.

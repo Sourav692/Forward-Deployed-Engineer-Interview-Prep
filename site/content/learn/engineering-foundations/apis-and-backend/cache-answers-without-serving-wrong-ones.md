@@ -66,6 +66,3 @@ They also check placement. The cache sits before retrieval and generation, not a
 3. **Why is invalidation harder for a semantic cache?**
    It must decide when a stored answer's whole neighbourhood of similar questions is no longer trustworthy, after any relevant document change, not only the one that produced the answer.
 
-## References
-
-**Sources:** `03_Caching_Streaming_CICD_BuildVsBuy.md` (FDE Handbook, Cross-Cutting Concerns): "Why this matters", §1 "Semantic caching" and "Interview lens".

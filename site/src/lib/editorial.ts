@@ -91,6 +91,12 @@ export type EditorialMeta = {
 // ---------------------------------------------------------------- site and nav
 
 export const SITE_NAME = 'Forward Deployed'
+
+/**
+ * Production origin. The one place it is written down: sitemap, robots, canonical URLs
+ * and the final-week pages' head tags (written by the sync) all read it.
+ */
+export const SITE_URL = 'https://forward-deployed-sigma.vercel.app'
 export const SITE_TAGLINE = 'FDE interview practice and system-design review'
 
 /**
@@ -101,8 +107,8 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * Each area links to its own index page. `match` keeps the existing module pages
  * highlighting the area they belong to: the casebook (`/modules/15-…`) under Design,
  * worksheets and behavioural practice (`/modules/01-…`, `/modules/14-…`) under
- * Practice, the final-week review under Interview, and company packs
- * (`/modules/16-…`) under Company Prep. Progress joins the list in Phase 2.
+ * Practice, and the final-week review under Interview. Company Prep (`/company-prep`)
+ * is not listed while it has no packs (audit check FV-02); its route stays.
  */
 export const NAV = [
   { id: 'start', label: 'Choose Your Path', href: '/start', match: ['/start', '/guide'] },
@@ -129,19 +135,18 @@ export const NAV = [
     href: '/interview',
     match: ['/interview', '/fde-last-day-prep'],
   },
-  {
-    id: 'company-prep',
-    label: 'Company Prep',
-    href: '/company-prep',
-    match: ['/company-prep', '/modules/16-company-oriented-prep'],
-  },
 ] as const
 
-/** Utility links shown after the areas. The learning map sits under Library. */
-export const UTILITY_NAV = [
+/** Utility links shown after the areas in the header. Six header links in all (IA-01). */
+export const UTILITY_NAV = [{ id: 'progress', label: 'Progress', href: '/progress', match: ['/progress'] }] as const
+
+/**
+ * Links kept out of the desktop header: the footer and the mobile menu list them, so
+ * Settings is reachable at every width (IA-15). The learning map sits under Library.
+ */
+export const FOOTER_NAV = [
   { id: 'glossary', label: 'Glossary', href: '/glossary', match: ['/glossary'] },
   { id: 'library', label: 'Library', href: '/library', match: ['/library', '/learning-map'] },
-  { id: 'progress', label: 'Progress', href: '/progress', match: ['/progress'] },
   { id: 'settings', label: 'Settings', href: '/settings', match: ['/settings'] },
 ] as const
 

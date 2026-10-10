@@ -111,6 +111,3 @@ Everything above is real and tested, including the routing-conflict and `entity_
 3. **What does routing return when nothing runs, and why does it matter?**
    A named reason, `no_trigger_match` or `entity_locked`. A silent no-op would leave operators unable to explain why a message did nothing.
 
-## References
-
-**Sources:** `02_Canonical_Events_And_Channels.md` (FDE Handbook, Agentic Workflow Platforms): "The 30,000-foot picture", "The canonical event", "Adapters: translate once, at the edge", "Routing: which workflow runs?", "Why two mechanisms, not one", "Where the honest gap is", and "Interview lens". `07_Coverage_Map.md`: "Reference architecture" and "Likely follow-ups".

@@ -102,6 +102,3 @@ The method is the point. Per-hop accounting finds the cost, and per-agent evalua
 3. **Why does trajectory evaluation matter more for multi-agent systems?**
    A right answer reached through wasted hops is fragile. Checking routing, role discipline, and hop count shows a system that is one prompt change from failing, even when the outcome looks correct.
 
-## References
-
-**Sources:** `03_Failure_Isolation_And_Evaluation.md` (FDE Handbook, Multi-Agent Systems): "Failure isolation", "Evaluating a multi-agent system", "The evaluation shape, extended", and "Interview lens". `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: §1.4 on partial failure, the §2 gotcha "One parallel agent fails and takes the whole run with it", §4 questions 4, 5, 9 and 10, §5.2 questions 2 and 4, and §5.3 questions 2, 3 and 5.

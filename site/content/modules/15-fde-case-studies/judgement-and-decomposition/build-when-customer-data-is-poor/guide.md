@@ -396,26 +396,10 @@ I'd expect review cost to fall on its own as labels accumulate. Thresholds can t
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1, 2 (last question), 5, 14 (opening) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` — Question 18 (#62), the reusable answer template, the mistakes to avoid |
-| 10 | Same file, Question 11 and its "What if there is no labelled data?" follow-up |
-| 3, 9, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md` — dataset hygiene gates and the 94% → ~78% routing case |
-| 4, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md` — Cohen's kappa and the 0.60 floor, sample-size arithmetic, stratification, datasheets |
-| 3, 4, 5, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` and `04_Gates_Risks_Metrics.md` — data-readiness days, `data_access_granted`, "start day 1, escalate day 3", refuse at intake, shadow mode |
-| 8 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/03_Ingestion_Pipeline.md` — quarantine not default, content hash, freshness and dead-letter records |
-| 10 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md` — the false-alarm label war story |
-| 5, 10 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/04_rag_and_retrieval_INTERVIEW_TUTORIAL.md` — eval set without labelled data |
-| 8 | `05_FDE_Delivery_and_Scoping/Delivery_and_Collaboration/10. Cross Team Collaboration.md` — data contracts and two-phase delivery |
-| 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/` — the measure, route, bound, cache-safely sequence |
-
 Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack) for gates and intake refusal; [G13 Evaluation and Release Gating](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack) for the release gate; [G01 Enterprise Knowledge Assistant](/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant#full-pack) for messy enterprise documents and permission normalisation; [G06 NL Over Governed Data](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#full-pack) for governed metric definitions; [Decomposition Classics](/modules/15-fde-case-studies/judgement-and-decomposition/decomposition-classics-67-68-69) for #68, the bank-fraud case built on inconsistent labels.
-
-Sections 2 (all questions but the last), 3 (the table), 4 (procedure, scorecard, thresholds), 5 (design table, weak-supervision and not-yet rule), 6 to 9 (the warranty scenario, its numbers and architecture), 11 to 13, 14 (script, spoken answer, follow-ups) and 15 (the card) are own construction, built for this page from the sources' arguments. They are not source material.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [Snorkel: Rapid Training Data Creation with Weak Supervision (Ratner et al., 2017)](https://arxiv.org/abs/1711.10160) — labelling functions vote, and their accuracies are estimated without ground truth
 - [Cohen (1960), A Coefficient of Agreement for Nominal Scales](https://doi.org/10.1177/001316446002000104) — kappa as agreement corrected for chance
+

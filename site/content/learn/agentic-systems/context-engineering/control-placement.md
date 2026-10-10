@@ -76,6 +76,3 @@ The reasoning model now sees only the requests that need it. The common requests
 3. **When is a full tool-calling agent justified over a workflow?**
    When the model genuinely has to decide what to do next, because the set of paths cannot be listed in advance.
 
-## References
-
-**Sources:** `ch06_orchestration_context_engineering.md` (*Cracking Agentic AI System Design Interviews*, Ch. 6: "Control Is a Resource You Allocate", summarised in our own words). `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.13 "Workflow patterns", §3 "Workflow (deterministic) vs. agent (autonomous control flow)", §5.2 question 10 and §7 question 13.

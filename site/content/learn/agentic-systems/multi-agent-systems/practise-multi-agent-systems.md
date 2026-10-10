@@ -171,6 +171,3 @@ A strong answer covers all six without being asked. The point is not the diagram
 3. **What is the highest-value thing to log in a multi-agent run, and why?**
    The supervisor's routing reasoning for each hop. Most bad multi-agent outputs come from bad routing, and the reasoning is free labelled data for debugging and evaluating the router.
 
-## References
-
-**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: §1 "Say this in an interview" prompts, §3 one-liners, §4 "Top 10 interview questions" (restated in new words), §5 "Role tracks", and §6 "Self-check". FDE Handbook, Multi-Agent Systems: the "Interview lens" and "Checkpoint" sections of `01_When_Multi_Agent_Is_Justified.md`, `02_Reference_Architecture_Handoffs.md`, `03_Failure_Isolation_And_Evaluation.md`, `04_Case_Study_Research_Platform.md`, and `05_Case_Study_Supervisor_To_Deep_Agent.md`. `multi_agent_coordination_patterns.md`: "Cross-Pattern Comparison Summary". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §6 "Mock system design: a real-time customer support agent for a travel booking platform" (prompt, rubric and worked answer, restated in new words).

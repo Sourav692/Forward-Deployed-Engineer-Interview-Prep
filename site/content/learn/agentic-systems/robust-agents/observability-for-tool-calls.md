@@ -117,6 +117,3 @@ Nothing was broken. The close was waiting for a human who never approved it. The
 3. **Sketch the trace and span hierarchy for a conversation with three turns.**
    One trace keyed by `conversation_id`, holding three turn spans. Each turn span holds one child span per tool call, tagged with tool, status, tokens, cache hit, retries and latency.
 
-## References
-
-**Sources:** `04_Observability_For_Tool_Calls.md` (FDE Handbook, Robust Agents): "Why this matters", "What one record holds", "The trace", "Why it matters, three ways", "From in-memory log to production spans" and "Interview lens". `05-guarding-tool-calls.md` (Production and Platform Judgment): "8. Per-call telemetry".

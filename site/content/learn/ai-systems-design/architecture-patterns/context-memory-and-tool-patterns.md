@@ -92,6 +92,3 @@ Both fixes live in the gateway. Each has a number that would have shown the prob
 3. **Roughly where does tool selection start to degrade, and what fixes it?**
    Past about 40 tools. Tool retrieval advertises only a short, relevant list.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md` (Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words): "Family Two: Context and Memory Patterns" and "Family Three: Tool and Action Patterns".

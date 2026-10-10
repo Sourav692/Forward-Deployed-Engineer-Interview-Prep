@@ -101,6 +101,3 @@ The pipeline is what makes the slice repeatable. Week two adds file types to a p
 3. **What must every chunk carry for an answer to be traceable?**
    A metadata envelope with source URL, document ID, chunk ID, page or section, and ingestion timestamp, plus a log of which chunks each query retrieved.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Topic 1 "Data Ingestion" (all five questions) and Topic 2 "Data Preprocessing" (all five questions). `01_What_RAG_Actually_Is.md` (FDE Handbook): "Ingestion — runs on a schedule". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §5.3 questions on a 40GB corpus and on loader strategy for mixed formats.

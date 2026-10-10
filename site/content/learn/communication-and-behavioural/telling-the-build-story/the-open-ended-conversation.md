@@ -71,6 +71,3 @@ Four beats were never used, and that is fine. The listener chose the path, and e
 3. **The listener goes silent after a technical sentence. What does it mean and what do you do?**
    It went too deep too fast. Re-anchor at once with "the short version is…".
 
-## References
-
-**Sources:** `01_Deep_Dive_And_Conversational_Formats.md` (FDE Handbook, Telling the Story): "Format 2 — The open-ended conversational guide" (cold open, reading the room) and "Checkpoint". The worked narrative is `stories/Enterprise_RAG_Conversational_Guide.md`.

@@ -144,6 +144,3 @@ The answer names the starting shape, the pressures that would change it and the 
 3. **Give three pressures that justify extracting a specific service.**
    Payments needs independent compliance controls; Search needs its own scaling curve; the AI team needs to ship without waiting on a shared release train.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/03_Monolith_vs_Microservices.md`: "Why this matters", "Monolithic architecture", "Microservices architecture", "Side by side", "The same trade-off in an AI system", "When to choose which", "The evolution model" and "Interview lens".

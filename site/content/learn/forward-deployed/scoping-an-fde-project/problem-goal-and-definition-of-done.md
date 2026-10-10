@@ -74,6 +74,3 @@ Now ask about done. The customer means a pilot for about 20 agents, not a full r
 3. **Why ask about the definition of done before giving a date?**
    A prototype, an MVP and a production service differ hugely in effort. A date given before the level is agreed may be a date for a different project.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 1 "Understand the Request Before You Build Anything" (Topics 1.1 and 1.2), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.

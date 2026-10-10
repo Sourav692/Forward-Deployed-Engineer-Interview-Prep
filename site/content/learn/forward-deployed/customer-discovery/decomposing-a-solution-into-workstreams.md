@@ -79,6 +79,3 @@ Then answer the bank's follow-up, "Should the agent issue a refund automatically
 3. **When is fine-tuning the right fix?**
    When the problem is behaviour: the model has the knowledge but responds in the wrong way or format. Knowledge, freshness and permission problems are fixed in retrieval, the data pipeline or access control.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: cases 2 "Customer-Support Agent", 5 "Enterprise Document-Processing Platform", 6 "AI Agent for Enterprise Workflow Automation", 9 "Latency Regression in an LLM Application" and 10 "RAG System with Poor Answer Quality".

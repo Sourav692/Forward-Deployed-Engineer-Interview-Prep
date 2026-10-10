@@ -148,6 +148,3 @@ The availability story is separate. The search service stayed up through redunda
 3. **Whose entitlements should an agent's tool call be checked against?**
    The calling user's, never the agent's own. An agent must never act beyond the person it serves.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md`: §9 Scalability Strategy (including "Why statelessness is the prerequisite", "For AI" and "Short-circuiting in agentic design"), §10 Reliability and Availability (including "How a circuit breaker actually works" and "Reliability and availability are different targets"), §11 Security and Governance, §12 Trade-offs and Future Improvements (including "Active-active vs active-passive").

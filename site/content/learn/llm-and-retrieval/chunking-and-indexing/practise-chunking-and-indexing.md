@@ -125,6 +125,3 @@ The parent document tutorial ends with three pushbacks. Practise each aloud.
 3. **Name one thing a strong candidate should build that the source notebooks lack.**
    An evaluation harness that compares parent retrieval with naive chunking on recall@k and answer quality.
 
-## References
-
-**Sources:** `chunking-lab-and-drills.md`: "Interview Spotlight", questions 1 to 5. `02_Chunking_Retrieval_Fusion.md` (FDE Handbook): "Interview lens" and "Checkpoint". `parent_document_retrieval_INTERVIEW_TUTORIAL.md`: §4 "Top 10 interview questions", §5 "Role tracks", §6 "Mock system design", and §7 "Self-check", with every answer rewritten in our own words; that tutorial's answers cite external interview guides (DZone, Prachub, Redis, DataCamp, TopGenAIJobs, and others). `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: the Chroma distance gotcha. `Module_02_RAG_Frameworks_Tools_Implementation.md`: Topic 3 "What breaks when a vector DB grows to 100M+ embeddings?". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 5.

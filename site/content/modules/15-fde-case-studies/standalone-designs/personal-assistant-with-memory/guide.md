@@ -479,21 +479,10 @@ Every strong cost answer follows four verbs in order. Measure tokens per prompt 
 
 ## References
 
-Paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| Prompt, 5 to 11, 14 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/07_memory_and_state_INTERVIEW_TUTORIAL.md`, section 6: prompt, scoring rubric and worked strong answer (#98) |
-| 5 to 9, 12, 13, 15 | Same guide: section 1.3 to 1.12 (scopes, trimming, summarisation, taxonomy, session TTL, MemGPT, graph memory, workflow memory), section 2 (gotchas), section 3 (trade-offs), section 4 questions 1 to 10, section 5 role tracks and take-home tasks, section 7 skeptical-engineer prompts |
-| 5, 11 | `01_Concept_Tutorials/FDE_Handbook/03_Robust_Agents/02_State_Memory_Sessions.md` (three scopes of state, three layers of memory, per-user scoping) |
-| 5 | `01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/05_Case_Study_Supervisor_To_Deep_Agent.md` (thread checkpoints with 30-day retention; categorised long-term memory) |
-| Background for 5 to 9 | `03_Advanced/07_Advanced_Agentic_Systems/Memory_and_State/` (the 22 notebooks the study guide is built from) |
-| 16 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md` (input-token driver and fixes); `CRAM_SHEET_FULL_PLAYBOOK.md` (summarised state, small models for summarisation) |
-| Every table and line marked own construction, all sizing and latency figures, the cost-drill card | Built for this page from the sources' arguments; not source material |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [LangGraph `TTLConfig` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint/langgraph/store/base/__init__.py) — `refresh_on_read` gives sliding expiry; `omit_expired` defaults to off; sweeping deletes expired items
 - [LangGraph `SqliteStore` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint-sqlite/langgraph/store/sqlite/base.py) — `get` does not filter expired rows; `sweep_ttl` and `start_ttl_sweeper` delete them
 - [LangGraph `PostgresStore` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint-postgres/langgraph/store/postgres/base.py) — optional `omit_expired` read filter; the sweeper must be started explicitly
 - [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) — the model edits its own memory through function calls
+

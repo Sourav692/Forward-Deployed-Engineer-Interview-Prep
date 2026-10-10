@@ -77,6 +77,3 @@ They also check the gaps. Production-incident drills are listed as missing, so t
 3. **Name two gaps the coverage guide records.**
    Any two of: mock interviews with scorecards, production-incident drills, a final readiness assessment, engineering foundations, ML fundamentals, and model adaptation and serving.
 
-## References
-
-**Sources:** `00_Start_Here/REPOSITORY_COVERAGE_GUIDE.md`: "How to use this repository", "Folders", "Coverage at a glance" and "Known gaps". The guide's "What the site publishes" section predates the Learn section and is not repeated here.

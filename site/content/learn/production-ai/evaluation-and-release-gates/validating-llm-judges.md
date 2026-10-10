@@ -85,6 +85,3 @@ The judge did not become trustworthy when it agreed with six labels. It becomes 
 3. **A judge prefers answer A when shown first and answer B when B is shown first. What do you record?**
    A tie. An order-dependent verdict carries no preference, and the bias itself should be measured.
 
-## References
-
-**Sources:** `ch12_validation_and_measurement.md` (*Cracking Agentic AI System Design Interviews*, Ch. 12): "Designing a Judge Rubric" and "Validating the Judge", summarised in our own words. `07_Evaluation_Golden_Sets_Judges.md` (FDE Handbook, Enterprise RAG): "Calibrating the judge". `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §8 "LLM-as-Judge Evaluation".

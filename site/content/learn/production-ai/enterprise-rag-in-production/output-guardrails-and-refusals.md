@@ -109,6 +109,3 @@ A two-verdict grader would have refused the whole question. The `partial` verdic
 3. **Why does the prompt-injection test pass without a prompt-injection check?**
    The attack targets a layer that holds no secrets. The forbidden contract was never retrieved, so no instruction can make the model print it.
 
-## References
-
-**Sources:** `06_Output_Guardrails.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The three checks", "Refusal hygiene", "The deliberate absence: no prompt-injection check", "Checks outside the ACL — the full list" and "Interview lens". `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering Modules): Topic 12, "What are guardrails, and why do you need them?", "How do you keep the system on-topic and stop data leaks?" and "How do you validate outputs and audit responses in production?". The Tier-1 example comes from `01_Why_Enterprise_Changes_The_Problem.md`, "The case study: Meridian Assist".

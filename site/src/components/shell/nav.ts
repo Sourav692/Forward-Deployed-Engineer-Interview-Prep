@@ -22,7 +22,6 @@ export const ICONS = {
   design: 'M4 4h7v7H4zM13 13h7v7h-7zM13 4h7v7h-7zM4 13h7v7H4z',
   practice: 'M5 19l4-1 10-10-3-3L6 15zM14 6l3 3',
   interview: 'M4 5h16v10H9l-5 4z',
-  'company-prep': 'M4 8h16v11H4zM9 8V5h6v3M4 13h16',
   glossary: 'M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3zM5 17a3 3 0 013-3h11',
   library: 'M4 4v16M9 4v16M14 5l5 15',
   settings: 'M4 7h9M17 7h3M15 5v4M4 17h3M11 17h9M9 15v4',

@@ -74,6 +74,3 @@ The pricing questions are a knowledge gap. Pricing changes every quarter, so it 
 3. **Why keep a prompted fallback after fine-tuning?**
    The tuned model freezes the task definition. When the business changes it, the prompted path keeps working while the model is retrained.
 
-## References
-
-**Sources:** `ch08_learning_in_agentic_systems.md` (Chapter 8 of *Cracking Agentic AI System Design Interviews*, third-party; summarised in our own words): "When Parameter Updates Earn Their Cost", Cheat Sheet. `CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §2 fine-tuning and GPU or inference hosting rows, §4 fine-tune versus prompt and self-hosted versus managed. Both summarised in new words.

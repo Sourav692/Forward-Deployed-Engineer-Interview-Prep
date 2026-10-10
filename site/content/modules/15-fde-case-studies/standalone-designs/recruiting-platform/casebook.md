@@ -2,7 +2,7 @@
 
 > **Level** 🔴 Design Mastery · **Module** 09 · **Doc** 4 of 6 · **Time** ~30 min
 > **Prerequisites:** Module 02, Module 04 doc 7 (judges), Module 05 doc 5 (human approval)
-> **Source material:** `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/8. AI Powered Recruiting Platform Design.md`
+> **Source material:** AI Powered Recruiting Platform Design
 
 ## The prompt
 
@@ -126,4 +126,4 @@ An end-to-end AI workflow — structured extraction, semantic matching, explaina
 - Name three fairness mechanisms and say which is continuous.
 - Why is the personalisation answer's "similar to successful hires" a bias risk, and what mitigates it?
 
-**Next →** [Case 5 — Logistics Exception Handling](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md)
+**Next →** Case 5 — Logistics Exception Handling

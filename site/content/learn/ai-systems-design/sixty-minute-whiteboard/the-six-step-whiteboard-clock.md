@@ -96,6 +96,3 @@ At minute 20 the interviewer has heard the difficulty, the scope, the requiremen
 3. **Why narrate the request before drawing it?**
    It exposes every component to be drawn and lets the interviewer redirect before ten minutes are spent on the wrong box.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md`: "Why this matters", "The six steps and the clock", "Step 1 — Clarify and scope", "Step 2 — Entities and the happy path" and "Step 3 — Architecture". `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/01_Enterprise_RAG_With_Access_Control.md`: "Before you start" (time budget) and Step 1 questions, used for the worked example.

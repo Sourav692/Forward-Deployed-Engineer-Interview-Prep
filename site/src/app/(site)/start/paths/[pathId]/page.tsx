@@ -124,7 +124,10 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
               return (
                 <li key={track.slug}>
                   <h3 className="flex flex-wrap items-baseline gap-2 text-base font-semibold">
-                    <span className="text-xs font-semibold tabular-nums text-subtle">{isLearnTrack(track.slug) ? track.code : 'Interview'}</span>
+                    {/* Only Learn tracks have a code; the interview track's title says what it is. */}
+                    {isLearnTrack(track.slug) && (
+                      <span className="text-xs font-semibold tabular-nums text-subtle">{track.code}</span>
+                    )}
                     <Link href={learnHref.track(track.slug)} className={cx('rounded-sm hover:text-accent', focusRing)}>
                       {track.title}
                     </Link>

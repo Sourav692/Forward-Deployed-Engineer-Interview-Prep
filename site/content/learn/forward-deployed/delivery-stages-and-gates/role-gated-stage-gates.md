@@ -136,6 +136,3 @@ Each stall had a named rule and a reason. That is the difference between gates t
 3. **What happens when the success metrics are not met by day 14?**
    The go/no-go gate does not pass. No-go is a legitimate, first-class outcome, and the log shows exactly why.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md`: §B.3. `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/02-architecture-end-to-end.md`: §2. `05_FDE_Delivery_and_Scoping/Delivery_Framework/README.md`: "The six decision gates". `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md`: Steps 3, 4A and 5 (failure modes). `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md`: the state machine and the Northwind case study. `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: "The six gates" and "The negative-control demo". The gate model builds on the DevRev interview preparation guide's delivery-framework prompt, summarised in our own words.

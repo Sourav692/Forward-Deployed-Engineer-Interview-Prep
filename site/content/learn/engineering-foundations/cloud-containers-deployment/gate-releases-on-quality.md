@@ -81,6 +81,3 @@ Each rung caught a different failure: a broken template, a quality regression, a
 3. **Strategy B scores 1.000 and strategy A scores 0.958 on 22 cases. Is B better?**
    You cannot tell. Twenty-two cases are too few to separate those scores from noise; decide the meaningful effect size first and test on enough examples.
 
-## References
-
-**Sources:** `Module_10_Backend_FastAPI_Deployment.md` (GenAI Engineering Modules), Topic 3: "How do I design a CI/CD pipeline for a GenAI app?". `03_Caching_Streaming_CICD_BuildVsBuy.md` (FDE Handbook, Cross-Cutting Concerns): §3 "Nightly regression runs — a different trigger", §4 "What A/B testing means for a RAG or agent system", §5 "Statistical rigor", §6 "Unit-level testing for prompts", and the interview lens.

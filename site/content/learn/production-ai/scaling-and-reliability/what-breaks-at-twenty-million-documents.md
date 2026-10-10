@@ -82,6 +82,3 @@ Finally it labels each part. The hash skip is proven at small scale; the distrib
 3. **Why does a 20-million-document run need a per-document ledger?**
    The run will be interrupted. A ledger of queued, embedded, indexed and failed lets a restart finish only the remaining documents.
 
-## References
-
-**Sources:** `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): "Why this matters", §1 what breaks first, §2 scaling ingestion and the throughput math, §9 backpressure, Interview lens.

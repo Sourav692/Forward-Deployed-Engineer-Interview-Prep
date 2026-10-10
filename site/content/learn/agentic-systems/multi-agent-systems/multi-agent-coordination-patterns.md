@@ -176,6 +176,3 @@ A supervisor fits because the three domains are known in advance, and each needs
 4. **When is a blackboard worth a controller call before every contribution?**
    When the right next contributor cannot be known in advance, such as needing research twice before writing. If the order is fixed, a supervisor's routing table or a hardcoded pipeline is cheaper.
 
-## References
-
-**Sources:** `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: "The one idea: agents are nodes, coordination is edges", §1.2 on supervisor cost, §1.3, §1.5, the §2 gotcha "Hierarchy multiplies routing cost invisibly", §3 "Supervisor versus handoff", "Parallel versus sequential" and "Flat versus hierarchical", and §4 question 7 on hardcoding a predictable decomposition. `multi_agent_coordination_patterns.md`: "Orchestrator-Workers Pattern", "Multi-Agent Supervisor Pattern", "Evaluator-Optimizer Pattern", and "Cross-Pattern Comparison Summary". `02_Reference_Architecture_Handoffs.md` (FDE Handbook, Multi-Agent Systems): "The handoff is the hard part". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.6 "Multi-agent topology", §1.7 "Blackboard coordination", and §3 "Supervisor vs. swarm topology".

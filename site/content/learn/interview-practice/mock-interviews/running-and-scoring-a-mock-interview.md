@@ -136,6 +136,3 @@ The source debrief gives two practice targets for every candidate. First, give c
 4. **Why not remove citation verification to cut latency?**
    Where citations carry trust and compliance, verification is a safety feature. Optimise it, or make it asynchronous for low-risk answers, but keep it for high-risk outputs.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Mock_Interviews/Full_Mock_Interviews/README.md` (what each full round contains, and where the short rounds live). The shared sections of the five full mocks in that folder: "Format", "Upgrade note", "Original short-practice purpose", the Part 1 transcript, "Why this is weak", "Why this is average", the likely scores, "Final debrief for the learner" and "Final scoring rubric". The five files in `03_Practice_Worksheets_and_Keys/Mock_Interviews/Short_Practice_Mocks/`: "Format", "Strong candidate answer outline", "Transcript", "Weak candidate signals", "Interviewer follow-ups" and "Scorecard".

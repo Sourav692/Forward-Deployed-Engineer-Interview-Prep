@@ -65,6 +65,3 @@ Score it against the spine. It names all three lenses, gives one concrete moment
 3. **Name three habits for guiding an internal team.**
    Any three of: unblock before building; review designs before code; coach engineers to spot ambiguity; review with a customer-intent lens; own hard scope conversations; report failures transparently; scope the first build narrowly.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Senior_FDE_Day_to_Day.md`: "How to use this doc", "Quick-reference: pointers on guiding internal teams" and "Closing line". `01_Concept_Tutorials/FDE_Handbook/00_Orientation/02_The_Three_Roles.md`: "Interview lens".

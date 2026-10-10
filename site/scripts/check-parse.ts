@@ -128,6 +128,12 @@ function count(blocks: Block[], counts: Counts): void {
 
 const failures: string[] = []
 const rows: string[] = []
+
+// PR-10: a later `#` heading becomes a section, so no page renders two H1s.
+const twoH1 = parseReading('# Title\n\n# Second\n\nText.', 'self-check')
+if (twoH1.title !== 'Title' || twoH1.sections[0]?.title !== 'Second') {
+  failures.push('reading.ts: a second # heading did not become a section')
+}
 let diagramTotal = 0
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'manifest.json'), 'utf8'))
@@ -308,7 +314,7 @@ for (const mod of manifest.modules) {
 
 const SITE_ROOT = resolve(import.meta.dirname, '..')
 const pages = new Set<string>()
-const routes = new Set<string>(['/', '/guide', '/learning-map', '/glossary', '/fde-last-day-prep'])
+const routes = new Set<string>(['/', '/favicon.ico', '/guide', '/learning-map', '/glossary', '/fde-last-day-prep'])
 for (const g of LAST_DAY_GUIDES) routes.add(`/fde-last-day-prep/${g.id}`)
 routes.add(STORY_BANK.href)
 const tabsByPage = new Map<string, string[]>()
@@ -431,6 +437,7 @@ for (const path of staticFiles) {
     failures.push(`${path}: missing from public/`)
     continue
   }
+  if (raw.includes('class="source-note"')) failures.push(`${path}: still has the "Generated from" footer`)
   if (/\bModule\s+\d+\b/.test(raw.replace(/<[^>]+>/g, ' ').replace(/id="[^"]*"/g, ''))) {
     failures.push(`${path}: still says "Module N" — the Last-Day sequence is Review 01–18`)
   }
@@ -442,6 +449,17 @@ for (const path of staticFiles) {
     linksChecked++
     const target = join(SITE_ROOT, 'public', path, '..', href.split('#')[0])
     if (!existsSync(target)) failures.push(`${path}: broken relative link ${href}`)
+  }
+}
+
+// PQ-07: the repository is private, so a link into it 404s for every visitor.
+const PRIVATE_REPO = 'github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep'
+for (const dir of [CONTENT, join(SITE_ROOT, 'public', 'fde-last-day-prep')]) {
+  for (const file of await readdir(dir, { recursive: true })) {
+    if (!/\.(md|json|html)$/.test(file)) continue
+    if ((await readFile(join(dir, file), 'utf8')).includes(PRIVATE_REPO)) {
+      failures.push(`${relative(SITE_ROOT, join(dir, file))}: links to the private repository`)
+    }
   }
 }
 

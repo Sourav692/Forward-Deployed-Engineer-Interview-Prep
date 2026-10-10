@@ -87,6 +87,3 @@ One engineer owns booking end to end; another owns payment through reconciliatio
 3. **Name four signs a project is drifting.**
    Nobody can state the outcome; stakeholders disagree on the MVP; the estimate has no assumptions; scope arrives through chat without changing the plan.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Module 4 "Turn the Estimate Into a Build Plan" (Topics 4.1 to 4.5) and Module 7 "Run the Project Day to Day" (Topics 7.1 to 7.3 and 7.5 to 7.7), summarised in our own words. The guide is itself based on the fdehandbook.com "Scope a Project" course.

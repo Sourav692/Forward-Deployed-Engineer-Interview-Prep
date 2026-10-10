@@ -55,7 +55,6 @@ const AREA_COPY: Record<(typeof NAV)[number]['id'], { purpose: string; cta: stri
   design: { purpose: 'The casebook: complete system designs to read as interview answers or deep dives.', cta: 'Open the casebook' },
   practice: { purpose: 'Worksheets and behavioural questions you answer, then score against a model answer.', cta: 'Start practising' },
   interview: { purpose: 'Case-study worksheets, full mock rounds and the final-week review for the days before the loop.', cta: 'Get interview ready' },
-  'company-prep': { purpose: 'Product context, technical drills, and final-round preparation for a specific company’s interview loop.', cta: 'See company prep' },
 }
 
 const DIFFERENT = [
@@ -133,9 +132,6 @@ export default async function HomePage() {
             <li key={area.id} className="flex flex-col rounded-xl border border-border bg-surface p-5">
               <h3 className="text-lg font-semibold">{area.label}</h3>
               <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted">{AREA_COPY[area.id].purpose}</p>
-              {area.id === 'company-prep' && scenarios.some((s) => s.trackId === 'blitzy-prep') && (
-                <p className="mt-3 text-xs font-medium text-accent">Blitzy pack available</p>
-              )}
               <div className="mt-4">
                 <TextLink href={area.href}>{AREA_COPY[area.id].cta}</TextLink>
               </div>

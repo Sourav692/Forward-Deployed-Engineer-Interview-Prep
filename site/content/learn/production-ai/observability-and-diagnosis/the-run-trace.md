@@ -92,6 +92,3 @@ One record gave three teams their answer. The cost-by-purpose field told the eng
 3. **Why is cost tallied by purpose and not only in total?**
    A total cannot tell you what to change. A per-purpose split shows, for example, that the reranker is 60% of the cost, which justifies replacing it.
 
-## References
-
-**Sources:** `08_Observability.md` (FDE Handbook, enterprise RAG): "Three audiences, one artefact", "What a `RunTrace` holds", "Cost attribution by purpose", "Prompt version on every run", "What the trace makes possible", Interview lens. `CORE_8_DRIVERS_MEMORIZE.md` (cost and latency playbook notes): driver 7, logging, tracing and observability overhead. `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §4 question 8 (PII leak also sits in logs, traces and caches; the external answer is not reused).

@@ -574,22 +574,6 @@ Every strong answer on this page runs through four verbs in order. Measure by at
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1–9, 13, 14 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md` and `answer_keys/15_observability_customer_facing_ai_application_answer_key.md` (the anchor, #24) |
-| 1–9, 13, 14 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-15-observability-customer-facing-ai-application-tutorial.md` |
-| 4 (sampling diagram, sizing), 9 (triage diagram), 14 (gap answers) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-15-observability-customer-facing-ai-application-tutorial_v2.md`; sizing and gap answers from its supplementary "My Perspective on the Gaps" |
-| 10 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/03_latency_spike.md` (#87) |
-| 11 | Same folder, `04_cost_spike.md` (#88) |
-| 12 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, questions 9 (#53) and 10 (#54); `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompt 9 (#74) |
-| 12 (prefill, decode, utilization), 15.8 (prefix match), 15.9, 15.10 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections A1, B1, D and E (#119, #121) |
-| 15.1 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #44; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 7 |
-| 15.2–15.8 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §15 scenarios 1, 2, 6, 7, 10, 11, 12 (#104, #105, #109, #110, #113, #114, #115) and §4's four verbs |
-| 5 (ASCII diagram, "Fails how" column), 3 (owner table), 15 ("Do not" on §15 cards), and every item marked own construction | Built for this page from the sources' arguments; not source material |
-| Related | G20 (LLM inference serving) shares #74's stack walk |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [Grafana Tempo docs: Manage trace ingestion](https://grafana.com/docs/tempo/latest/operations/manage-trace-ingestion/) — typical span size (~500 bytes) behind the storage sizing
@@ -605,3 +589,4 @@ All paths are relative to the repository root.
 - [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching) — exact prefix match and minimum cacheable length
 - [OpenRouter help: Which providers stop billing when a stream is cancelled](https://openrouter.zendesk.com/hc/en-us/articles/51691588409883-How-do-I-cancel-a-streaming-request-and-which-providers-stop-billing-when-I-do) — cancelling a stream stops billing only on some providers
 - [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/) — self-hosted engines abort generation on client disconnect
+

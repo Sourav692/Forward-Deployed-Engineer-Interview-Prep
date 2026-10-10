@@ -84,6 +84,3 @@ Same model, same prompt. The typed result decided whether the agent retried, sto
 3. **What is the difference between a `TransientError` and a `NotFoundError`, and why should an agent care?**
    A transient error is temporary and safe to retry. Not-found is permanent, so retrying wastes budget; fall back instead.
 
-## References
-
-**Sources:** `ch05_tool_use_agent_computer_interface.md` (*Cracking Agentic AI System Design Interviews*, Ch. 5: "Typed Results: The Five States That Matter", including its note on never explaining a denial, summarised in our own words). `03_What_An_Agent_Actually_Is.md` (FDE Handbook, LLM Systems Foundations): "Component 1 — Tools" (the two exception types). `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.2 "Tool design — schemas and errors that teach the model to recover", §2 gotcha "A `flaky_web_search` tool teaches you nothing if the model doesn't check for the error string", and §7 self-check question 11.

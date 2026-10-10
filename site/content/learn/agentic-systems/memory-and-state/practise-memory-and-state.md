@@ -156,6 +156,3 @@ Two take-home tasks from the interview tutorial make strong portfolio pieces. Fi
 3. **Name one thing a strong candidate should build that the source notebooks do not have.**
    An evaluation harness that measures memory recall, not just conversational fluency.
 
-## References
-
-**Sources:** `02_State_Memory_Sessions.md` (FDE Handbook): "Interview lens" and "Checkpoint". `07_memory_and_state_INTERVIEW_TUTORIAL.md`: §4 "Top 10 interview questions", §5 "Role tracks" (questions and take-home tasks), §6 "Mock system design" and §7 "Self-check", with every answer rewritten in our own words and pointed at lessons 1 to 6 of this module. Supporting points come from `ch07_knowledge_memory_retrieval.md` (*Cracking Agentic AI System Design Interviews*, Ch. 7: the vector-store follow-up and valid time versus system time, summarised in our own words) and `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md` (Topic 5).

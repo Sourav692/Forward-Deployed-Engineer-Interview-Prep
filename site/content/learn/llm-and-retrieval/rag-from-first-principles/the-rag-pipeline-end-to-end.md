@@ -106,6 +106,3 @@ Each box did one job. Ingestion decided what could ever be found, and the query 
 3. **Why does ingestion refuse a document whose permissions it cannot determine?**
    Once a document is indexed it will be found. Without usable permissions there is no safe way to decide who may see it.
 
-## References
-
-**Sources:** `01_What_RAG_Actually_Is.md` (FDE Handbook): "The pipeline, end to end" (ingestion and query flows) and "The vocabulary you now own". `04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: §1.1 "Naive RAG: the four-stage pipeline". `08_advanced_rag_techniques_INTERVIEW_TUTORIAL.md`: §1.1 "Naive RAG — the baseline everything else improves on". `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Overview.

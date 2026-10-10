@@ -82,6 +82,3 @@ Note a small inconsistency in the source: the modelling stage gives the recall g
 3. **Restate the senior bar in one sentence.**
    At senior level the question moves from what was built to what changed: influence, accountability and reuse by others.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/02_End_To_End_AI_Delivery_Six_Stages.md` (all sections).

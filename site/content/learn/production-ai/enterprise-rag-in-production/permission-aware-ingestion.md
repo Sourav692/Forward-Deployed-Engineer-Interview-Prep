@@ -118,6 +118,3 @@ Ingestion is batch, not streaming change-data capture, but it is no longer full-
 3. **What makes the catalog a genuine second opinion?**
    It is a separate store, updated independently of the index and read fresh on every request. Re-reading the index's own cached copy would just repeat the same possibly stale data.
 
-## References
-
-**Sources:** `03_Ingestion_Pipeline.md` (FDE Handbook, Enterprise RAG): "Why this matters", "The 30,000-foot picture", "Step by step", "Why two stores", "Beyond the first connector", "Two real bugs, worth knowing", "What this deliberately does not do" and "Interview lens". `Module_09_Memory_Databases_Caching_for_GenAI_Systems.md` (GenAI Engineering Modules): "How do I design the database tables for RAG ingestion?". `Module_01_RAG_Fundamentals_Core_Components.md`: Topic 10, "How do vector databases and relational databases work together in companies?".

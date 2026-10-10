@@ -116,6 +116,3 @@ Interviewers rarely probe the happy path. Expect two questions: how does a user 
 3. **Why did Cascade Robotics' $500 refund not fire automatically, and why could it never fire twice?**
    `issue_refund` was not on the tenant's autonomous allow-list, and $500 exceeded the $50 spend cap, which refuses rather than clamps. A retry is a no-op because the idempotency key for that action already exists.
 
-## References
-
-**Sources:** `01_The_Problem_In_Plain_English.md` (FDE Handbook, Agentic Workflow Platforms): "The one-sentence problem", "The four phrases, unpacked", "Why it is actually hard", "The three layers every good answer covers", "A concrete example to keep in your head", "The case study: Cascade Robotics", "Why this mirrors the other two projects on purpose", and "Interview lens". `07_Coverage_Map.md`: "The question behind the question".

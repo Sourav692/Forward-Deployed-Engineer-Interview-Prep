@@ -23,6 +23,29 @@ test.describe('reflow', () => {
   }
 })
 
+// IA-01 and IA-15: six header links that fit at 1024 px, and Settings reachable at
+// every width (footer on desktop, menu on mobile).
+for (const width of [1024, 1280]) {
+  test(`${width}px header has six links and Settings is in the footer`, async ({ page }, info) => {
+    test.skip(info.project.name !== 'desktop-1280', 'viewport set per test; run once')
+    await page.setViewportSize({ width, height: 800 })
+    await page.goto('/')
+    await hydrated(page)
+    await expect(page.locator('header').getByRole('navigation').getByRole('link')).toHaveCount(6)
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+    expect(overflow, `page scrolls sideways by ${overflow}px`).toBeLessThanOrEqual(1)
+    await expect(page.locator('footer').getByRole('link', { name: 'Settings' })).toBeVisible()
+  })
+}
+
+test('the mobile menu lists Settings', async ({ page }, info) => {
+  test.skip(info.project.name !== 'mobile-375', 'the menu button shows below 1024 px')
+  await page.goto('/')
+  await hydrated(page)
+  await page.getByRole('button', { name: 'Open menu' }).click()
+  await expect(page.getByRole('dialog', { name: 'Menu' }).getByRole('link', { name: 'Settings' })).toBeVisible()
+})
+
 test('keyboard focus is visible on the skip link, nav and primary action', async ({ page }) => {
   await page.goto(LESSON)
   await hydrated(page)

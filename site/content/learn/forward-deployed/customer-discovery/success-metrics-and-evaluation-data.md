@@ -77,6 +77,3 @@ Start by narrowing what is being proved. The bank advises against promising full
 3. **The offline benchmark improved after a model upgrade, yet users say it got worse. Give two explanations.**
    The benchmark does not represent production traffic, or one segment regressed while the average rose. Slower responses or less reliable structured output are other candidates.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: cases 3 "Claims-Processing Assistant", 4 "AI-Powered Sales or Account-Research Assistant", 8 "The Model Got Worse After an Upgrade", 11 "Build an Evaluation Strategy for an AI Application" and 15 "AI Assistant for Sales or Customer-Service Calls", and "Recommended Preparation Plan".

@@ -237,21 +237,6 @@ function ReadingOrder({ study }: { study: CaseStudy }) {
             saves your answers as you type.
           </>
         )}
-        {study.ref.archived?.length ? (
-          <>
-            {' '}
-            Earlier versions, kept for reference:{' '}
-            {study.ref.archived.map((a, i) => (
-              <span key={a.href}>
-                {i > 0 && ', '}
-                <a href={a.href} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover">
-                  {a.label}
-                </a>
-              </span>
-            ))}
-            .
-          </>
-        ) : null}
       </Fact>
     </>
   )

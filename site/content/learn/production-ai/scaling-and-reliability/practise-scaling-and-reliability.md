@@ -105,6 +105,3 @@ A strong answer names the resilience chain. It puts cost control before the call
 3. **What is the honest gap in the gateway design?**
    Data residency: if data cannot go to a third-party provider, it needs an in-VPC or self-hosted model.
 
-## References
-
-**Sources:** `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): Checkpoint and Interview lens. `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook): Checkpoint. `12_production_and_operations_INTERVIEW_TUTORIAL.md` (RAG and Agent Topic Guides): §5.2 questions 1 to 3, 6 and 8; §5.3 question 5; §6 mock system design (production LLM gateway); §7 self-check items 1 to 3 and 13 to 14.

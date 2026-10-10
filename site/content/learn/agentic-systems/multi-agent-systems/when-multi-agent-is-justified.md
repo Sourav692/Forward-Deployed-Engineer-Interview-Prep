@@ -108,6 +108,3 @@ The sequence is the answer to "why multi-agent?". The default was tried first. I
 3. **When would you merge three agents back into one?**
    When they share tools, share context, and never run concurrently. Then they are three prompts, not three agents, and every extra hop is cost with no return.
 
-## References
-
-**Sources:** `01_When_Multi_Agent_Is_Justified.md` (FDE Handbook, Multi-Agent Systems): "What actually makes something multi-agent", "The default", "Not every request needs a planner", "The evidence", "The judgement, stated", and "Interview lens". `05_Case_Study_Supervisor_To_Deep_Agent.md`: "Stage 1 → 2". `07_multi_agent_systems_INTERVIEW_TUTORIAL.md`: the opening note, "Should you use multiple agents at all?", the §2 gotcha "Multi-agent is usually the wrong answer", §3 "One agent versus many", and §5.1 and §5.3 on collapsing agents and cost.

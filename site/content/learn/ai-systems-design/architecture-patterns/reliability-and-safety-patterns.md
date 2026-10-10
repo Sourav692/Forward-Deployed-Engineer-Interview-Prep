@@ -87,6 +87,3 @@ The user got a smaller, honest answer instead of an exception or a confident gue
 3. **What does a degradation ladder disclose, and why?**
    The rung selected, to the user and as a span attribute. That makes degraded traffic visible instead of silent.
 
-## References
-
-**Sources:** `01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md` (Chapter 23 of *Cracking Agentic AI System Design Interviews*, summarised in our own words): "Family Four: Reliability Patterns" (including the deep dive on the degradation ladder and circuit breaker) and "Family Five: Safety Patterns".

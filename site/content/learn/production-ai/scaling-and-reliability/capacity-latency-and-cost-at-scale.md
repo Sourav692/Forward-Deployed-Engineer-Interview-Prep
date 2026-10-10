@@ -99,6 +99,3 @@ The cost discussion centres on generation per query, not the one-time embedding 
 3. **Why does the ingest bill not dominate the cost conversation at 20 million documents?**
    It is a one-time cost in the low-to-mid four figures. Query-time generation recurs with every query, so routing, filtering and caching matter more.
 
-## References
-
-**Sources:** `06_Scaling_To_20M_Documents.md` (FDE Handbook, cross-cutting concerns): §5 latency (five levers, P50 versus the tail), §6 cost. `ADDITIONS_BEYOND_PLAYBOOK.md`: §B3 Little's Law. `CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §2 GPU and inference hosting row, §11 infrastructure and deployment and the six architecture patterns. Playbook content is summarised in new words.

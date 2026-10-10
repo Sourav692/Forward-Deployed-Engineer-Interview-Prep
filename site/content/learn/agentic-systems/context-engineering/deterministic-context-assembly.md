@@ -74,6 +74,3 @@ Overflow is now a local event with a visible footprint, not a silent change to w
 3. **What does "drop from the front when too long" do to a long-running agent?**
    It deletes the system instructions first, so the agent loses its policy and safety rules while keeping its credentials.
 
-## References
-
-**Sources:** `ch06_orchestration_context_engineering.md` (*Cracking Agentic AI System Design Interviews*, Ch. 6: "Deterministic Context Assembly" and its deep dive on truncation, summarised in our own words).

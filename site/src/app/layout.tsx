@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
+import { FOOTER_NAV } from '@/lib/editorial'
 import { SITE } from '@/lib/registry'
 import { SearchDialog } from '@/components/SearchDialog'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -92,10 +93,14 @@ export default async function RootLayout({
               <Link href="/guide" className="text-muted underline underline-offset-2 hover:text-text">
                 How this works
               </Link>
-              {' · '}
-              <Link href="/glossary" className="text-muted underline underline-offset-2 hover:text-text">
-                Glossary
-              </Link>
+              {FOOTER_NAV.map((item) => (
+                <span key={item.id}>
+                  {' · '}
+                  <Link href={item.href} className="text-muted underline underline-offset-2 hover:text-text">
+                    {item.label}
+                  </Link>
+                </span>
+              ))}
             </p>
           </div>
         </footer>

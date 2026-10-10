@@ -126,6 +126,3 @@ The read was cheap the second time, and the write never happened without a yes. 
 4. **A run that hit `NodeInterrupt` looks like it crashed. How do you tell, and what must hold before it resumes?**
    Read the saved state: `next` names the node waiting to run and the tasks carry the interrupt, which a crash does not leave. Before resuming, every side-effecting call must be idempotent, for example a refund keyed by booking ID plus a request ID, so a repeated resume cannot act twice.
 
-## References
-
-**Sources:** `01_Retry_Fallback_Memo_Confirm.md` (FDE Handbook, Robust Agents): "Why this matters", "The composed executor", "1 · The confirmation gate" and "2 · Memoization". `05_The_Eight_Guard_Checks.md`: "6 · Memoization — the ordering rule" and "The pipeline, in order". `05-guarding-tool-calls.md` (Production and Platform Judgment): "6. Memoization". `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §1.10 "Human-in-the-loop: interrupts and safe resume", the §2 gotcha "`NodeInterrupt` looks like it crashed the graph", §6 approval gate, and §7 questions 3 and 14.

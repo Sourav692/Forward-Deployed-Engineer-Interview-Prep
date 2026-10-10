@@ -78,6 +78,3 @@ The example shows why grounding is layered. No single step caught every problem,
 3. **How can a document in the knowledge base attack the system?**
    Through indirect prompt injection: it contains instructions the model follows once the document is retrieved. Label retrieved text as data and keep trusted instructions in the system role.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Topic 9 "How does the generator use retrieved context to give a grounded answer?", "How do you stop hallucinations and keep answers grounded?" and "How do you handle contradicting or repeated chunks?"; Topic 12 "How do you build a solid RAG prompt template?" and "What is prompt injection, and how do you defend against it?". `01_What_RAG_Actually_Is.md` (FDE Handbook): "Query — runs per request" (grade and verify).

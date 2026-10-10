@@ -381,21 +381,6 @@ Every strong cost answer follows four verbs in order. Measure tokens and stage t
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1, 13, 14 (Tier 2 follow-ups) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: prompt 6 "Design ChatGPT." (#71), prompt 13 "Design the Claude chat service." (#78), sections 1, 3 and 4 |
-| 3, 7, 8, 10, 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`: A1 (prefix match), A2 (tiers and routing), B1 (prefill vs decode), B3 (Little's Law), B4 (cost per successful task), E (rate limits, abandon) |
-| 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 1 and 2 |
-| 5 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/07_memory_and_state_INTERVIEW_TUTORIAL.md`, sections 1.4 to 1.8 and the section 6 mock design |
-| 6, 9, 11 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md`, sections 1.2 (streaming), 1.10 (circuit breaker), 1.17 (moderation) and the input-vs-output moderation trade-off |
-| 6, 12 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis.md`, sections 2 and 9 and card 15.10 |
-| 8, 11 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform.md`, sections 7 and 8 |
-| 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/G01_Enterprise_Knowledge_Assistant.md`, section 6 |
-| 12 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating.md` (release gate) |
-| Every table and section marked own construction, all sizing figures, the self-drill card | Built for this page from the sources' arguments; not source material |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [Artificial Analysis LLM leaderboard (TTFT column)](https://artificialanalysis.ai/leaderboards/models) — real first-token times are hundreds of ms to over a second, not milliseconds
@@ -407,3 +392,4 @@ All paths are relative to the repository root.
 - [Claude docs: Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — caches are per model, exact-prefix matched in tools → system → messages order, and broken by volatile content
 - [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching) — exact-prefix matching and per-model caches on another vendor
 - [OpenAI API docs: Moderation](https://developers.openai.com/api/docs/guides/moderation) — moderation returns category scores; thresholds and policy are the app's job
+

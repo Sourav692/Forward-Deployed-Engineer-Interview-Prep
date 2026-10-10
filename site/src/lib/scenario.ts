@@ -19,11 +19,7 @@ export type ScenarioMeta = {
   tabs?: ReadingTab[]
   /** Reading pages only: `track/slug` of the same case's interactive worksheet in Module 01. */
   practice?: string
-  /** Reading pages only: superseded versions, linked on GitHub rather than shown as tabs. */
-  archived?: ArchivedDoc[]
 }
-
-export type ArchivedDoc = { label: string; href: string }
 
 export type TrackMeta = {
   id: string
@@ -50,7 +46,6 @@ export type ScenarioRef = {
   reading?: boolean
   tabs?: ReadingTab[]
   practice?: string
-  archived?: ArchivedDoc[]
   /**
    * 'Practice Worksheet' or 'Case Study' when another page on the site has the same
    * title. Shown beside the title in search, breadcrumbs, browser titles and prev/next.

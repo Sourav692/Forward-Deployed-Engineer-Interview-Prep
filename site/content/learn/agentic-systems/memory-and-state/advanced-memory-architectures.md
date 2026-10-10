@@ -147,6 +147,3 @@ All four change what is retrieved, not the model's weights. That makes them a ch
 3. **What happens in an AWM system on a genuinely new task?**
    Retrieval finds no structural match, so the agent falls back to step-by-step planning; a success can then become a new template.
 
-## References
-
-**Sources:** `07_memory_and_state_INTERVIEW_TUTORIAL.md`: §1.9 "MemGPT-style tiered memory", §1.10 "Graph memory", §1.11 "Voyager-style skill libraries", §1.12 "Agent Workflow Memory"; §3 trade-offs "MemGPT self-editing memory vs. a fixed sliding window", "Graph memory vs. flat text/vector memory" and "Reusing a procedure/skill vs. re-planning from scratch every time"; §5.2 question 8 on workflow memory and termination.

@@ -80,6 +80,3 @@ The gate's role check was already right. These changes make its signature mean s
 3. **Why is "show me all engagements" a security question and not only a reporting one?**
    If separation is only a tag, the query depends on remembering to filter. A competitor's records could appear unless isolation is structural.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/05-security-gate-depth-and-tenant-scale.md` (all sections). `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: "Where the design is honest about its own weakness" and "Interview lens".

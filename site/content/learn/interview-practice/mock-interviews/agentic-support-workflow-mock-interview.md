@@ -121,6 +121,3 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 3. **What is the first rollout step?**
    Shadow mode on 1,000 historical tickets, before a draft-only pilot.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Mock_Interviews/Short_Practice_Mocks/02_agentic_support_workflow_mock.md` (the short round: questions, weak signals, follow-ups, scorecard) and `03_Practice_Worksheets_and_Keys/Mock_Interviews/Full_Mock_Interviews/02_agentic_support_workflow_full_mock.md` (customer scenario, ambiguous request, strong framing, full transcript prompts, weak, average and strong versions, and scores). The short-round questions are shared by all five source mocks; this lesson keeps them and words the narrowing question for this case.

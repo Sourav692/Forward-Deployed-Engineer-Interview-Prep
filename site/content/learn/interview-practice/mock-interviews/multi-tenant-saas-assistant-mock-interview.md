@@ -121,6 +121,3 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 3. **The account API is slow. What does the assistant do?**
    Degrade to documentation-only answers instead of waiting.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Mock_Interviews/Short_Practice_Mocks/05_multi_tenant_saas_mock.md` (the short round: questions, weak signals, follow-ups, scorecard) and `03_Practice_Worksheets_and_Keys/Mock_Interviews/Full_Mock_Interviews/05_multi_tenant_saas_full_mock.md` (customer scenario, ambiguous request, strong framing, full transcript prompts, weak, average and strong versions, and scores). The short-round questions are shared by all five source mocks; this lesson keeps them and words the narrowing question for this case.

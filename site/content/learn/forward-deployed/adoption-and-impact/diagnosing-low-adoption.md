@@ -61,6 +61,3 @@ The diagnosis is fit and friction, not quality. The next steps are to surface br
 3. **What does high accuracy with low adoption suggest?**
    A fit, friction, trust or incentive problem rather than a model problem.
 
-## References
-
-**Sources:** `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: case 17 "Scale a Successful AI Prototype to Production" (its adoption follow-up), case 4 "AI-Powered Sales or Account-Research Assistant" and "Rollout questions". The worked example's specific findings are illustrative.

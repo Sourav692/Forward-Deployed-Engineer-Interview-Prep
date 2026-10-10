@@ -123,6 +123,3 @@ The story lands because each step names a measurement, not an opinion.
 3. **Why is "reduce top-k" alone an incomplete answer to slow retrieval?**
    It risks recall and misses the bigger levers: filtering earlier, index parameters, duplicates and testing at real corpus size.
 
-## References
-
-**Sources:** `CRAM_SHEET_S15_S16.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*): §0 shapes A and B, §1 the 15 scenarios, §3 and §4 the 7 cases, §5 the 60-second structure. `ADDITIONS_BEYOND_PLAYBOOK.md`: §E extra scenarios, §F unsure figures. `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §5.1 question 6. Playbook content is summarised in new words.

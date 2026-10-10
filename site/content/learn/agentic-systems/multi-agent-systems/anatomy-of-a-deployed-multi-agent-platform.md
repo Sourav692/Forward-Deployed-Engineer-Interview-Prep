@@ -153,6 +153,3 @@ The two paths show the platform's priorities. Smart lookup spends nothing when t
 3. **Why does PyRIT attack through the same endpoint as a real user?**
    So a passing run proves the real authentication, rate-limit, and guardrail path holds. A separate test endpoint would only prove that a copy is safe.
 
-## References
-
-**Sources:** `04_Case_Study_Research_Platform.md` (FDE Handbook, Multi-Agent Systems): "The nine layers" and its nine subsections, "One request, end to end", and "What to take from it". `01_When_Multi_Agent_Is_Justified.md`: "What actually makes something multi-agent". `multi_agent_coordination_patterns.md`: "Evaluator-Optimizer Pattern".

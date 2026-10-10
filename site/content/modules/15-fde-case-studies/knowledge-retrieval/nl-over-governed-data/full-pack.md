@@ -631,20 +631,6 @@ Add the warehouse side in the same breath. Warehouse compute per answer is the c
 
 ## References
 
-All paths are relative to the repository root.
-
-| Section | Source |
-|---|---|
-| 1, 2, 3, 10, 11, 12 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/03_natural_language_to_sql_analytics_assistant.md` and its `answer_keys/03_natural_language_to_sql_analytics_assistant_answer_key.md` |
-| 1 to 4, 7, 9, 10, 11, 12 (tutorial material, diagrams and drills verbatim) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-3-natural-language-to-sql-analytics-assistant-tutorial_v2.md`, sections 1 to 4 and 6 to 8 |
-| 1, 3, 8, 10 (executive persona) | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION/04_CASE_STUDY_WORKSHEET/answer_keys/answer-keys-in-md/10_executive_dashboard_copilot_answer_key.md` |
-| 1, 3, 8, 10 (retail persona) | same folder, `08_retail_demand_explainer_answer_key.md` |
-| 5, 6, 8, 13 | `01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/05_Case_Study_Supervisor_To_Deep_Agent.md` |
-| 13 (story beats) | The owner's own story notes, kept privately outside the repo |
-| 5 (router, fixed operations) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/05_Structured_Data_Routers_Connectors.md` |
-| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #17 |
-| Not included | The V2 tutorial's section 5 working code, API contracts and contract tests beyond the hidden-column sketch; the V1 long tutorial; the purchased worksheets' blank templates; the insurer 15–20 minute deep-dive script, which repeats section 13 in fixed order |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
 - [Snowflake docs: Understanding row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) — row policies evaluate the role running the query
@@ -665,3 +651,4 @@ All paths are relative to the repository root.
 - [Agent Bricks Supervisor Agent is Now GA (Databricks blog)](https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents) — Supervisor Agent general availability
 - [BigQuery pricing](https://cloud.google.com/bigquery/pricing) — on-demand queries bill by bytes processed
 - [Databricks serverless billing](https://docs.databricks.com/aws/en/admin/system-tables/serverless-billing) — Databricks SQL bills compute time in DBUs
+

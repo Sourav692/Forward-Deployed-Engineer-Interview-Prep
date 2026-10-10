@@ -73,6 +73,3 @@ Each setting answered one question about the window. What fits, where the model 
 3. **What temperature suits a document Q&A system, and why?**
    0 or 0.1. Low randomness gives factual, consistent answers; higher values suit brainstorming.
 
-## References
-
-**Sources:** `Module_01_RAG_Fundamentals_Core_Components.md` (GenAI Engineering guide): Topic 9 "How do context window limits shape the design?" and "How do temperature, prompt layout, and token limits affect answers?", and Topic 11 "What is faithfulness, and why does it matter?" (temperature as a faithfulness lever).

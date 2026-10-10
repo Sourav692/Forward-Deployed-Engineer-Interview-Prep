@@ -117,6 +117,3 @@ The schedule held because almost everything was assembled. Every stage boundary 
 3. **Why does intake refuse rather than warn?**
    A clock started against an unmeasurable goal cannot reach a meaningful go/no-go. Refusing on day 0 is cheaper than discovering it on day 14.
 
-## References
-
-**Sources:** `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md`: Part A and §B.1–B.2. `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/02-architecture-end-to-end.md`: §1 and §3. `05_FDE_Delivery_and_Scoping/Delivery_Framework/README.md`. `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md`: the Northwind case study. `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` (all sections). The problem prompt is from the DevRev interview preparation guide; its framing is summarised in our own words.

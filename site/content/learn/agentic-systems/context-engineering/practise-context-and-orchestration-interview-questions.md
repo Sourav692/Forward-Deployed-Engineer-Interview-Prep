@@ -82,6 +82,3 @@ Choosing on purpose what enters a fixed-size window at each step, through four o
 3. **What must a fan-out design state before launch?**
    What a partial failure returns: partial results with a failure count, or a full abort.
 
-## References
-
-**Sources:** `ch06_orchestration_context_engineering.md` (*Cracking Agentic AI System Design Interviews*, Ch. 6: its interview pointers on control placement, composed topologies and long-run degradation, summarised in our own words). `agent_fundamentals_and_advanced_agentic_systems_INTERVIEW_TUTORIAL.md`: §3 "ReAct vs. Plan-and-Execute" one-liner, §4 question 7, §5.2 questions 6 and 10, §7 question 13 and the "explain to a skeptical staff engineer" prompt on PEV, with every answer rewritten in our own words and pointed at lessons 1 to 6 of this module.

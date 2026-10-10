@@ -505,28 +505,13 @@ Repair the common weak answers on the spot. "The answer is correct, so the citat
 
 ## References
 
-All paths are relative to the repository root. Purchased material lives under `FDE/Complete GEN AI FDE Interview System — Core + GenAI/`, abbreviated below as `FDE/Complete…/`.
-
-| Section | Source |
-|---|---|
-| 1, 2, 3, 9, 10, 11, 15 | `FDE/Complete…/01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION/04_CASE_STUDY_WORKSHEET/04_healthcare_prior_auth_assistant.md` and `answer_keys/answer-keys-in-md/04_healthcare_prior_auth_assistant_answer_key.md` |
-| 1, 2, 3, 8, 10, 11 (personas, functional and non-functional lists, workflow, red-team tests, monitoring, rollout phases, strong answer) | `FDE/Complete…/10_RRK_AND_CASE_STUDY_REFERENCE_LIBRARY/02_Healthcare Prior-Authorization Assistant.pdf`, 9 pages, untracked vendor PDF, read via pypdf |
-| 3, 7 (compliance variant) | `…/04_CASE_STUDY_WORKSHEET/03_financial_compliance_reviewer.md` and its answer key |
-| 3, 7 (contract variant) | `…/04_CASE_STUDY_WORKSHEET/05_legal_contract_copilot.md` and its answer key |
-| 12, 15 (objections, follow-ups, rubric) | `FDE/Complete…/07_MOCK_INTERVIEWS_AND_SCORECARDS/02_SHORT_PRACTICE_MOCK/03_financial_red_team_mock.md` and `03_FULL_MOCK_INTERVIEWS/03_financial_red_team_full_mock.md` |
-| 3, 10, 11, 15 (OpenAI-style Q3) and 8, 15 (OpenAI-style Q12) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, questions 3 and 12 |
-| 14 | `FDE/Complete…/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/05_bad_citations.md` and `08_ingestion_parser_failure.md` |
-| 6 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/chunking/chunking-reference-by-doc-type.md`, sections 3.4, 3.6 and 7 |
-| 13 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill for #30 |
-| This page's own construction | The end-to-end diagrams and component table in section 4, the persona table in section 3, the constraints and traceability tables in section 2, the failure table in section 9, the extraction-schema argument in section 5, the three-sentence close and the follow-up answers not attributed above |
-| Not included | The docx answer keys and the canonical combined docx, which repeat the markdown keys; the site mirror under `site/content/` |
-
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [FDE problem-decomposition question bank](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md) — claims and regulated-industry practice cases
+- FDE problem-decomposition question bank — claims and regulated-industry practice cases
 - [HL7 FHIR R5 Subscriptions framework](https://hl7.org/fhir/R5/subscriptions.html) — event-driven FHIR needs Subscriptions; otherwise you poll
 - [FINRA Books and Records (SEA 17a-4, FINRA 4511)](https://www.finra.org/rules-guidance/key-topics/books-records) — retention of advisor communications; WORM or audit-trail storage
 - [FINRA Rule 3110: Supervision](https://www.finra.org/rules-guidance/rulebooks/finra-rules/3110) — supervisory review of correspondence
 - [Unstructured partitioning (infer_table_structure)](https://docs.unstructured.io/open-source/core-functionality/partitioning) — layout-aware parsers keep table structure that plain loaders flatten
 - [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — no fool-proof prevention; limit what the model can do
 - [MSRC: How Microsoft defends against indirect prompt injection attacks (Jul 2025)](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks) — separating task from content lowers but does not remove the risk
+

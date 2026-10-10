@@ -50,7 +50,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Interview and Company Prep areas
 
 - The interview practice track (`interview-practice`: worksheets, mock interviews, final week) is not listed under `/learn`. Its pages live at `/interview/<module>/<lesson>`; `site/src/lib/curriculum-href.ts` (`AREA_TRACKS`) decides the URL and `next.config.ts` 308s the old `/learn/interview-practice/*` URLs. Track id and progress keys are unchanged.
-- Company Prep is its own nav area at `/company-prep`, currently an empty "coming soon" page.
+- Company Prep lives at `/company-prep`, currently an empty "coming soon" page. It is left out of the nav, the homepage and the sitemap until it has packs; the route stays so old module 16 URLs keep redirecting to it.
 
 ## Blitzy / module 16
 
