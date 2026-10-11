@@ -205,13 +205,13 @@ export type StoryBank = {
   doc: ReadingDocument
   minutes: number
   updated: string | null
-  /** `trackId/slug#index` -> the stories that can answer that question. */
+  /** `slug#index` -> the stories that can answer that question (slugs are unique on /practice). */
   byQuestion: Map<string, StoryLink[]>
 }
 
 /** The `**Answers:**` paragraph of a story section, as rendered by marked. */
 const ANSWERS_LINE = /<p><strong>Answers:<\/strong>([\s\S]*?)<\/p>/
-const QUESTION_HREF = new RegExp(`href="/modules/${STORY_BANK.moduleId}/([^/"]+)/([^/"#]+)#section-(\\d+)"`, 'g')
+const QUESTION_HREF = /href="\/practice\/([^/"#]+)#section-(\d+)"/g
 
 /**
  * The Story Bank page, plus the reverse map the behavioural worksheets use. Only links on
@@ -230,8 +230,8 @@ export const getStoryBank = cache(async (): Promise<StoryBank | null> => {
     const answers = html.match(ANSWERS_LINE)?.[1]
     if (!answers) continue
     const story = { title: toPlainText(section.title), href: `${STORY_BANK.href}#${section.id}` }
-    for (const [, track, slug, index] of answers.matchAll(QUESTION_HREF)) {
-      const key = `${track}/${slug}#${index}`
+    for (const [, slug, index] of answers.matchAll(QUESTION_HREF)) {
+      const key = `${slug}#${index}`
       const list = byQuestion.get(key) ?? []
       if (!list.some((l) => l.href === story.href)) list.push(story)
       byQuestion.set(key, list)
@@ -281,7 +281,7 @@ export const getScenario = cache(
       answerKey: (ANSWER_KEY_MAP[section.key] ?? [section.key])
         .map((key) => keyByKey.get(key))
         .filter((s): s is Section => Boolean(s)),
-      stories: storyBank?.byQuestion.get(`${trackId}/${slug}#${section.index}`) ?? [],
+      stories: storyBank?.byQuestion.get(`${slug}#${section.index}`) ?? [],
     }))
 
     return {

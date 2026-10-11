@@ -2829,8 +2829,8 @@
       "kind": "live",
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/story_bank.md",
-      "estMinutes": 43,
-      "href": "/modules/14-behavioural-and-leadership-round/story-bank"
+      "estMinutes": 39,
+      "href": "/practice/story-bank"
     },
     {
       "slug": "customer-focus-and-discovery",
@@ -2841,7 +2841,7 @@
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/fde_competencies/01_customer_focus_and_discovery.md",
       "estMinutes": 3,
-      "href": "/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery"
+      "href": "/practice/customer-focus-and-discovery"
     },
     {
       "slug": "communication-and-influence",
@@ -2852,7 +2852,7 @@
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/fde_competencies/02_communication_and_influence.md",
       "estMinutes": 5,
-      "href": "/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence"
+      "href": "/practice/communication-and-influence"
     },
     {
       "slug": "pushback-and-saying-no",
@@ -2863,7 +2863,7 @@
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/fde_competencies/03_pushback_and_saying_no.md",
       "estMinutes": 3,
-      "href": "/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no"
+      "href": "/practice/pushback-and-saying-no"
     },
     {
       "slug": "delivery-under-pressure",
@@ -2874,7 +2874,7 @@
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/fde_competencies/04_delivery_under_pressure.md",
       "estMinutes": 4,
-      "href": "/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure"
+      "href": "/practice/delivery-under-pressure"
     },
     {
       "slug": "ownership-standards-and-failure",
@@ -2885,7 +2885,7 @@
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/fde_competencies/05_ownership_standards_and_failure.md",
       "estMinutes": 6,
-      "href": "/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure"
+      "href": "/practice/ownership-standards-and-failure"
     },
     {
       "slug": "scale-beyond-yourself",
@@ -2896,7 +2896,7 @@
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/fde_competencies/06_scale_beyond_yourself.md",
       "estMinutes": 3,
-      "href": "/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself"
+      "href": "/practice/scale-beyond-yourself"
     },
     {
       "slug": "leading-people",
@@ -2907,7 +2907,7 @@
       "publish": "own",
       "source": "04_Behavioral_and_Leadership/fde_competencies/07_leading_people.md",
       "estMinutes": 4,
-      "href": "/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people"
+      "href": "/practice/leading-people"
     },
     {
       "slug": "module-12-reliability-and-failure-handling",
@@ -2929,7 +2929,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/01_internal_knowledge_assistant.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/internal-knowledge-assistant"
+      "href": "/practice/internal-knowledge-assistant"
     },
     {
       "slug": "sales-copilot",
@@ -2940,7 +2940,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/02_sales_copilot.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/sales-copilot"
+      "href": "/practice/sales-copilot"
     },
     {
       "slug": "financial-compliance-reviewer",
@@ -2951,7 +2951,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/03_financial_compliance_reviewer.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/financial-compliance-reviewer"
+      "href": "/practice/financial-compliance-reviewer"
     },
     {
       "slug": "healthcare-prior-auth-assistant",
@@ -2962,7 +2962,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/04_healthcare_prior_auth_assistant.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/healthcare-prior-auth-assistant"
+      "href": "/practice/healthcare-prior-auth-assistant"
     },
     {
       "slug": "legal-contract-copilot",
@@ -2973,7 +2973,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/05_legal_contract_copilot.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/legal-contract-copilot"
+      "href": "/practice/legal-contract-copilot"
     },
     {
       "slug": "sre-triage-agent",
@@ -2984,7 +2984,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/06_sre_triage_agent.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/sre-triage-agent"
+      "href": "/practice/sre-triage-agent"
     },
     {
       "slug": "multi-tenant-saas-support",
@@ -2995,7 +2995,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/07_multi_tenant_saas_support.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/multi-tenant-saas-support"
+      "href": "/practice/multi-tenant-saas-support"
     },
     {
       "slug": "retail-demand-explainer",
@@ -3006,7 +3006,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/08_retail_demand_explainer.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/retail-demand-explainer"
+      "href": "/practice/retail-demand-explainer"
     },
     {
       "slug": "service-now-ticket-agent",
@@ -3017,7 +3017,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/09_service_now_ticket_agent.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/service-now-ticket-agent"
+      "href": "/practice/service-now-ticket-agent"
     },
     {
       "slug": "executive-dashboard-copilot",
@@ -3028,7 +3028,7 @@
       "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/10_executive_dashboard_copilot.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/core/executive-dashboard-copilot"
+      "href": "/practice/executive-dashboard-copilot"
     },
     {
       "slug": "enterprise-knowledge-assistant-rag",
@@ -3040,7 +3040,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/01_enterprise_knowledge_assistant_rag.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/enterprise-knowledge-assistant-rag"
+      "href": "/practice/enterprise-knowledge-assistant-rag"
     },
     {
       "slug": "secure-multi-tenant-ai-platform",
@@ -3052,7 +3052,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/secure-multi-tenant-ai-platform"
+      "href": "/practice/secure-multi-tenant-ai-platform"
     },
     {
       "slug": "natural-language-to-sql-analytics-assistant",
@@ -3064,7 +3064,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/03_natural_language_to_sql_analytics_assistant.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/natural-language-to-sql-analytics-assistant"
+      "href": "/practice/natural-language-to-sql-analytics-assistant"
     },
     {
       "slug": "ai-customer-support-automation",
@@ -3076,7 +3076,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/04_ai_customer_support_automation.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/ai-customer-support-automation"
+      "href": "/practice/ai-customer-support-automation"
     },
     {
       "slug": "ai-system-for-an-air-gapped-environment",
@@ -3088,7 +3088,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/07_ai_system_for_an_air_gapped_environment.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/ai-system-for-an-air-gapped-environment"
+      "href": "/practice/ai-system-for-an-air-gapped-environment"
     },
     {
       "slug": "llm-evaluation-and-release-gating-platform",
@@ -3100,7 +3100,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/llm-evaluation-and-release-gating-platform"
+      "href": "/practice/llm-evaluation-and-release-gating-platform"
     },
     {
       "slug": "high-volume-batch-inference-system",
@@ -3112,7 +3112,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/high-volume-batch-inference-system"
+      "href": "/practice/high-volume-batch-inference-system"
     },
     {
       "slug": "tool-using-ai-agent-with-safety-controls",
@@ -3124,7 +3124,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/tool-using-ai-agent-with-safety-controls"
+      "href": "/practice/tool-using-ai-agent-with-safety-controls"
     },
     {
       "slug": "reliable-workflow-orchestration-system",
@@ -3136,7 +3136,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/13_reliable_workflow_orchestration_system.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/reliable-workflow-orchestration-system"
+      "href": "/practice/reliable-workflow-orchestration-system"
     },
     {
       "slug": "observability-customer-facing-ai-application",
@@ -3148,7 +3148,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/observability-customer-facing-ai-application"
+      "href": "/practice/observability-customer-facing-ai-application"
     },
     {
       "slug": "configurable-platform-customer-specific-workflows",
@@ -3160,7 +3160,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/17_configurable_platform_customer_specific_workflows.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/configurable-platform-customer-specific-workflows"
+      "href": "/practice/configurable-platform-customer-specific-workflows"
     },
     {
       "slug": "system-design-worksheets-enterprise-chatbot-platform",
@@ -3172,7 +3172,7 @@
       "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/21_enterprise_chatbot_platform.md",
       "estMinutes": 2,
-      "href": "/modules/01-customer-discovery-and-decomposition/system-design/enterprise-chatbot-platform"
+      "href": "/practice/enterprise-chatbot-platform"
     },
     {
       "slug": "running-and-scoring-a-mock-interview",

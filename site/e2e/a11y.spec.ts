@@ -27,6 +27,7 @@ const PAGES: [string, string][] = [
   ['library', '/library'],
   ['credits', '/library/credits'],
   ['worksheet', WORKSHEET],
+  ['story bank', '/practice/story-bank'],
   ['case study', CASE_STUDY],
   ['last-day prep', '/fde-last-day-prep'],
   ['about', '/about'],

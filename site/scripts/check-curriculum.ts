@@ -16,7 +16,7 @@ import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
 import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
-import { CASEBOOK_MODULE } from '../src/lib/scenario.ts'
+import { MODULE_AREAS } from '../src/lib/scenario.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -212,14 +212,20 @@ for (const [from, to] of Object.entries(RETIRED_MODULES)) {
   }
 }
 
-// Casebook designs live at /design/<slug> (ENH-16): the URL has no theme, so a slug may
-// appear in one theme only. Slugs never change (progress keys on them), so a clash
-// means renaming the new case, not the old one.
+// Area pages drop the track from the URL (/design/<slug>, /practice/<slug>; MODULE_AREAS
+// in src/lib/scenario.ts), so a slug may appear once per area. Slugs never change
+// (progress keys on them), so a clash means renaming the new page, not the old one.
+// /practice/story-bank is a static page beside the worksheets.
 {
   const site = JSON.parse(readFileSync(resolve(import.meta.dirname, '../content/manifest.json'), 'utf8'))
-  const casebook = site.modules.find((m: { id: string }) => m.id === CASEBOOK_MODULE)
-  if (!casebook) fail(`content/manifest.json has no ${CASEBOOK_MODULE} module`)
-  else unique('casebook design', casebook.tracks.flatMap((t: { scenarios: { slug: string }[] }) => t.scenarios.map((s) => s.slug)))
+  for (const area of new Set(Object.values(MODULE_AREAS))) {
+    const mods = site.modules.filter((m: { id: string }) => MODULE_AREAS[m.id] === area)
+    if (mods.length === 0) fail(`content/manifest.json has no module served at ${area}`)
+    const slugs: string[] = mods.flatMap((m: { tracks: { scenarios: { slug: string }[] }[] }) =>
+      m.tracks.flatMap((t) => t.scenarios.map((s) => s.slug)),
+    )
+    unique(`${area} page`, area === '/practice' ? [...slugs, 'story-bank'] : slugs)
+  }
 }
 
 // Interview hubs (DATA-07). They live at /interview/hubs/<slug>, so an interview-practice

@@ -101,8 +101,20 @@ export type SearchEntry = {
   text: string
 }
 
-/** The casebook module. Its pages live at /design/<slug> (ENH-16), so its slugs are unique across themes. */
+/** The casebook module. Its pages live at /design/<slug> (ENH-16). */
 export const CASEBOOK_MODULE = '15-fde-case-studies'
+
+/**
+ * Modules whose pages are served by an area instead of /modules/<id> (ENH-16, ENH-17):
+ * the casebook at /design/<slug>, the technical and behavioural worksheets at
+ * /practice/<slug>. The URL drops the track, so slugs are unique within an area
+ * (check:curriculum). Progress still keys on `<track>/<slug>`.
+ */
+export const MODULE_AREAS: Record<string, string> = {
+  [CASEBOOK_MODULE]: '/design',
+  '01-customer-discovery-and-decomposition': '/practice',
+  '14-behavioural-and-leadership-round': '/practice',
+}
 
 /**
  * The URL of a worksheet or case page. The sync scripts, the check scripts and the site
@@ -114,8 +126,8 @@ export function scenarioHref(ref: {
   trackId: string
   slug: string
 }): string {
-  if (ref.moduleId === CASEBOOK_MODULE) return `/design/${ref.slug}`
-  return `/modules/${ref.moduleId}/${ref.trackId}/${ref.slug}`
+  const area = MODULE_AREAS[ref.moduleId]
+  return area ? `${area}/${ref.slug}` : `/modules/${ref.moduleId}/${ref.trackId}/${ref.slug}`
 }
 
 /**

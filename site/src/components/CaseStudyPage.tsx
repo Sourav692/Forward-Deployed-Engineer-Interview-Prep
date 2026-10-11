@@ -87,7 +87,9 @@ export async function CaseStudyPage({
  * repeating it.
  */
 function ReadingOrder({ study }: { study: CaseStudy }) {
-  const practice = study.ref.practice
+  // `practice` is the twin worksheet's `track/slug` in module 01.
+  const [trackId, slug] = study.ref.practice?.split('/') ?? []
+  const practice = slug && scenarioHref({ moduleId: '01-customer-discovery-and-decomposition', trackId, slug })
   return (
     <>
       {study.docs.length > 1 && (
@@ -121,7 +123,7 @@ function ReadingOrder({ study }: { study: CaseStudy }) {
             {' '}
             An{' '}
             <Link
-              href={`/modules/01-customer-discovery-and-decomposition/${practice}`}
+              href={practice}
               className="text-accent hover:text-accent-hover"
             >
               interactive Practice Worksheet

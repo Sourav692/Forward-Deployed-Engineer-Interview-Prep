@@ -24,8 +24,19 @@ export const isLearnTrack = (track: string): boolean => !(track in AREA_TRACKS)
 /** An interview topic hub (FE-18). A static `hubs` segment, because /interview/[moduleSlug] is taken. */
 export const hubHref = (slug: string) => `/interview/hubs/${slug}`
 
+/**
+ * Modules whose own page moved into an area index (ENH-17): the I1 worksheet lessons are
+ * listed on /practice. The module keeps its id and lessons, so progress is unchanged, and
+ * its old URL redirects (src/lib/redirects.ts).
+ */
+export const MODULE_HOMES: Record<string, string> = {
+  [`${INTERVIEW_TRACK}/case-study-worksheets`]: '/practice',
+}
+
 /** The URL of a track, a module in it, or a lesson in that module. */
 export function curriculumHref(track: string, moduleSlug?: string, lessonSlug?: string): string {
+  const home = moduleSlug && !lessonSlug ? MODULE_HOMES[`${track}/${moduleSlug}`] : undefined
+  if (home) return home
   const base = AREA_TRACKS[track] ?? `/learn/${track}`
   return [base, moduleSlug, lessonSlug].filter(Boolean).join('/')
 }

@@ -7,7 +7,7 @@ export const LESSON_TITLE = 'Three Roles, Three Questions'
 /** Ready module whose prerequisite (apis-and-backend) a fresh browser has not completed. */
 export const GATED_MODULE = '/learn/engineering-foundations/distributed-systems-essentials'
 export const COMING_SOON_MODULE = '/learn/engineering-foundations/sql-and-data-modelling'
-export const WORKSHEET = '/modules/01-customer-discovery-and-decomposition/core/internal-knowledge-assistant'
+export const WORKSHEET = '/practice/internal-knowledge-assistant'
 /** Module with the T2.4 pilot checkpoint (DATA-10). */
 export const CHECKPOINT_MODULE = '/learn/llm-and-retrieval/retrieval-hybrid-rerank'
 /** A scenario mock lesson: it carries the mock timer and scorer (FE-15). */
