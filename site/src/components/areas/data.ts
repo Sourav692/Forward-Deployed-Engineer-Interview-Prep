@@ -1,9 +1,11 @@
 import 'server-only'
 
+import { cache } from 'react'
 import { getAllScenarios, getTracks } from '@/lib/content'
 import { MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
 import type { CurriculumModule, ModuleStatus } from '@/lib/curriculum-types'
-import { RELATED_CASE, RELATED_PRACTICE, TWIN_LABEL } from '@/lib/editorial'
+import { RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL } from '@/lib/editorial'
+import { learnTracks, trackHours } from '@/lib/learn'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import type { LinkItem } from './Area'
 
@@ -68,9 +70,40 @@ export function curriculumModules(trackSlug: string): CurriculumModule[] {
 
 export const curriculumTrack = (slug: string) => CURRICULUM_TRACKS.find((t) => t.slug === slug)
 
-/** Honest coverage numbers for the landing page, computed from the curriculum. */
-export function coverage(): { tracks: number; modules: number; byStatus: Record<ModuleStatus, number> } {
+export type SiteCounts = {
+  /** Tracks listed under /learn, and how many study hours they add up to. */
+  learnTracks: number
+  learnHours: number
+  /** Modules in the curriculum, Learn and Interview together, by status. */
+  modules: number
+  byStatus: Record<ModuleStatus, number>
+  worksheets: number
+  behavioural: number
+  designs: number
+  /** Designs that read at three depths (they have a Technical Deep Dive tab). */
+  layeredDesigns: number
+  reviews: number
+}
+
+/**
+ * Every count on the home page, /learn and the area hubs, from one place (ENH-22, FV-04),
+ * read from the curriculum and the synced manifest so the numbers agree everywhere.
+ */
+export const siteCounts = cache(async (): Promise<SiteCounts> => {
+  const scenarios = await getAllScenarios()
+  const count = (moduleId: string) => scenarios.filter((s) => s.moduleId === moduleId).length
   const byStatus: Record<ModuleStatus, number> = { ready: 0, partly: 0, 'coming-soon': 0, 'on-hold': 0 }
   for (const m of CURRICULUM_MODULES) byStatus[m.status] += 1
-  return { tracks: CURRICULUM_TRACKS.length, modules: CURRICULUM_MODULES.length, byStatus }
-}
+  const learn = learnTracks()
+  return {
+    learnTracks: learn.length,
+    learnHours: learn.reduce((sum, t) => sum + trackHours(t), 0),
+    modules: CURRICULUM_MODULES.length,
+    byStatus,
+    worksheets: count(LIVE.worksheets),
+    behavioural: count(LIVE.behavioural),
+    designs: count(LIVE.casebook),
+    layeredDesigns: scenarios.filter((s) => s.moduleId === LIVE.casebook && s.tabs?.some((t) => t.id === 'deep-dive')).length,
+    reviews: REVIEWS.length,
+  }
+})

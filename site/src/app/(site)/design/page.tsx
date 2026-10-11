@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { ModuleProgress } from '@/components/Progress'
 import { AreaGroup, AreaHeader, AreaSection, LinkList } from '@/components/areas/Area'
-import { LIVE, curriculumModules, curriculumTrack, moduleGroups } from '@/components/areas/data'
+import { LIVE, curriculumModules, curriculumTrack, moduleGroups, siteCounts } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { learnHref } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
@@ -26,14 +26,14 @@ export default async function DesignPage() {
   const { groups, scenarios } = await moduleGroups(LIVE.casebook)
   const method = curriculumModules(METHOD_TRACK)
   const methodTrack = curriculumTrack(METHOD_TRACK)
-  const layered = scenarios.filter((s) => s.tabs?.some((t) => t.id === 'deep-dive')).length
+  const counts = await siteCounts()
 
   return (
     <div className="py-12">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Design', path: '/design' }])} />
       <AreaHeader eyebrow="The casebook" title="Design">
         <p>
-          {scenarios.length} complete system designs, grouped by the kind of system they build. {layered} of them read
+          {counts.designs} complete system designs, grouped by the kind of system they build. {counts.layeredDesigns} of them read
           at three depths: the answer you would say in the interview, the technical deep dive behind it, and a quick
           review for the night before. Learn the method first, then read cases to see it applied.
         </p>

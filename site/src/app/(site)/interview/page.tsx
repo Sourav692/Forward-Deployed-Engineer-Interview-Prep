@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { AreaHeader, AreaSection, LinkList, SuggestTopic } from '@/components/areas/Area'
-import { curriculumModules } from '@/components/areas/data'
+import { curriculumModules, siteCounts } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
-import { LAST_DAY, LAST_DAY_GUIDES, MODES, REVIEWS } from '@/lib/editorial'
+import { LAST_DAY, LAST_DAY_GUIDES, MODES } from '@/lib/editorial'
 import { INTERVIEW_HUBS, LESSONS } from '@/lib/curriculum'
 import { curriculumHref, hubHref } from '@/lib/curriculum-href'
 import { INTERVIEW_TRACK } from '@/lib/learn'
@@ -35,7 +35,8 @@ const guideHref = (source: string) => {
   return curriculumHref(INTERVIEW_TRACK, FINAL_WEEK, lesson.slug)
 }
 
-export default function InterviewPage() {
+export default async function InterviewPage() {
+  const counts = await siteCounts()
   // On-hold modules stay off the hub (audit check FV-03); their own pages still exist.
   const practiceModules = curriculumModules(INTERVIEW_TRACK).filter(
     (m) => m.slug !== COMPANY_MODULE && m.status !== 'on-hold',
@@ -66,7 +67,7 @@ export default function InterviewPage() {
       <AreaSection
         id="final-week"
         title={LAST_DAY.title}
-        description={`The final week holds ${REVIEWS.length} condensed reviews, each with a one-page recall card, and a trigger-to-concept cheat sheet. Start with one of the two guides below. ${MODES.revision.summary}`}
+        description={`The final week holds ${counts.reviews} condensed reviews, each with a one-page recall card, and a trigger-to-concept cheat sheet. Start with one of the two guides below. ${MODES.revision.summary}`}
         action={{ label: 'Open the final week', href: curriculumHref(INTERVIEW_TRACK, FINAL_WEEK) }}
       >
         <LinkList items={LAST_DAY_GUIDES.map((g) => ({ href: guideHref(g.source), title: g.title, note: g.blurb }))} />

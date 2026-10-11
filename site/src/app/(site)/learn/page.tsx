@@ -3,12 +3,13 @@ import Link from 'next/link'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { Suspense } from 'react'
-import { allMinutes, isRequired, learnTracks, trackHours } from '@/lib/learn'
+import { allMinutes, isRequired, learnTracks } from '@/lib/learn'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
 import { PathBanner } from '@/components/learn/PathFlagIslands'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { TrackCard } from '@/components/learn/TrackCard'
 import { SuggestTopic } from '@/components/areas/Area'
+import { siteCounts } from '@/components/areas/data'
 
 /**
  * /learn: the curriculum overview (FE-06). A static Server Component. The track cards
@@ -21,15 +22,15 @@ export const metadata: Metadata = pageMetadata({
   description: 'The Forward Deployed curriculum: tracks from orientation to capstone, each with modules, lessons and progress you can track in this browser. Interview practice lives under Interview.',
 })
 
-export default function LearnPage() {
+export default async function LearnPage() {
   const tracks = learnTracks()
+  const counts = await siteCounts()
   const minutes = allMinutes()
   const items: TrackItem[] = tracks.map((t) => ({
     slug: t.slug,
     required: isRequired(t),
     node: <TrackCard track={t} minutes={minutes} />,
   }))
-  const hours = tracks.reduce((s, t) => s + trackHours(t), 0)
 
   return (
     <>
@@ -38,7 +39,7 @@ export default function LearnPage() {
         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">The curriculum</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">Learn</h1>
         <p className="mt-3 text-base text-muted">
-          {tracks.length} tracks, about {hours} hours in all. Required tracks build the core every Forward Deployed
+          {counts.learnTracks} tracks, about {counts.learnHours} hours in all. Required tracks build the core every Forward Deployed
           Engineer is tested on; optional tracks fill gaps. Open a track to see its sections and modules. Worksheets,
           mock interviews and final-week revision are under{' '}
           <Link href="/interview" className="text-accent underline underline-offset-2">

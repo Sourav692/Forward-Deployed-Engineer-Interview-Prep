@@ -1,5 +1,5 @@
 /**
- * The production curriculum: 10 tracks, 16 sections, 53 modules and the repository
+ * The production curriculum: its tracks, sections, modules and the repository
  * files each module teaches from (plan §9 and §10, Phase 0 task DATA-01).
  *
  * This file is the single map from module to source. It is generated once from the
@@ -1208,7 +1208,7 @@ export const MODULES: CurriculumModule[] = [
     track: 'ai-systems-design',
     section: 'casebook',
     status: 'ready',
-    objective: 'Build breadth across 20 scenario packs',
+    objective: 'Build breadth across the casebook designs',
     scope: 'Assigned reading',
     prerequisites: ['classic-ai-designs'],
     deliverable: '6 assigned cases per path',
