@@ -4,6 +4,7 @@ import { REQUIREMENT_LABEL, isRequired, learnHref, trackModules } from '@/lib/le
 import { Tag, cx, focusRing } from '@/components/ui'
 import { TrackPathSummary } from './PathFlagIslands'
 import { TrackProgress } from './ProgressIslands'
+import { trackTag } from '@/lib/curriculum-href'
 
 /**
  * TrackCard (FE-06): one track on /learn. The whole card is one link (the title),
@@ -16,7 +17,7 @@ export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes:
   return (
     <article className="relative flex w-full flex-col rounded-lg border border-border bg-surface p-4 transition-shadow duration-150 hover:shadow-[var(--shadow)] sm:p-5">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold tabular-nums text-subtle">{track.code}</span>
+        {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
         <Tag tone={isRequired(track) ? 'accent' : 'neutral'}>{REQUIREMENT_LABEL[track.required]}</Tag>
       </div>
       <h2 className="mt-2 text-lg font-semibold leading-snug">

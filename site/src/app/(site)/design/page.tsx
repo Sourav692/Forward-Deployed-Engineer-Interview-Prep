@@ -31,7 +31,7 @@ export default async function DesignPage() {
   return (
     <div className="py-12">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Design', path: '/design' }])} />
-      <AreaHeader eyebrow="Design" title="The Casebook">
+      <AreaHeader eyebrow="The casebook" title="Design">
         <p>
           {scenarios.length} complete system designs, grouped by the kind of system they build. {layered} of them read
           at three depths: the answer you would say in the interview, the technical deep dive behind it, and a quick
@@ -49,7 +49,7 @@ export default async function DesignPage() {
           <>
             The design framework, the sixty-minute whiteboard routine and the patterns every case reuses. These modules
             live in{' '}
-            {methodTrack ? `${methodTrack.code} ${methodTrack.title}` : 'the curriculum'} under Learn.
+            {methodTrack ? methodTrack.title : 'the curriculum'} under Learn.
           </>
         }
         action={methodTrack ? { label: 'Open the track', href: learnHref.track(methodTrack.slug) } : undefined}

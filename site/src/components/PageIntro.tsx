@@ -3,7 +3,6 @@ import {
   MODES,
   SOURCE_STATUS_LABELS,
   reviewHref,
-  reviewLabel,
   type EditorialMeta,
   type Review,
 } from '@/lib/editorial'
@@ -133,7 +132,7 @@ export function WhereNext({
                 <div key={r.number}>
                   {/* Plain anchors: these are static HTML pages, not app routes. */}
                   <a href={reviewHref(r)} className="font-medium text-accent hover:text-accent-hover">
-                    {reviewLabel(r.number)} · {r.title}
+                    {r.title}
                   </a>
                 </div>
               ))}

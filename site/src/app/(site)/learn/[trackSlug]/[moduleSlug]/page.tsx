@@ -33,6 +33,7 @@ import { ReadingList } from '@/components/learn/ReadingList'
 import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
+import { moduleTag } from '@/lib/curriculum-href'
 
 /**
  * Module page (FE-07). Prerendered for all 53 modules (`generateStaticParams` +
@@ -54,8 +55,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!mod) return {}
   return pageMetadata({
     path: learnHref.module(mod),
-    title: `${mod.title} · ${mod.code}`,
-    ogTitle: `${mod.code} ${mod.title}`,
+    title: `${mod.title} · ${getTrack(trackSlug)?.title ?? mod.track}`,
+    ogTitle: mod.title,
     description: capitalise(mod.objective),
   })
 }
@@ -85,18 +86,18 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
       <JsonLd
         data={breadcrumbJsonLd([
           ...trail.map((c) => ({ name: c.label, path: c.href })),
-          { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
+          { name: mod.title, path: learnHref.module(mod) },
         ])}
       />
       <Breadcrumbs
-        items={[...trail, ...sectionCrumb, { label: `${mod.code} ${mod.title}` }]}
+        items={[...trail, ...sectionCrumb, { label: mod.title }]}
       />
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <SideNav track={track} currentModule={mod.slug} />
         <div className="min-w-0 max-w-3xl">
           <header>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold tabular-nums text-subtle">{mod.code}</span>
+              {moduleTag(mod) && <span className="text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
               <ModuleStatusBadge input={input} />
               {mod.status === 'partly' && <Tag>Partly ready</Tag>}
               <ModulePathFlag moduleSlug={mod.slug} />
@@ -130,7 +131,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                     {prereqModules.map((p) => (
                       <li key={p.slug} className="flex flex-wrap items-center gap-2">
                         <Link href={learnHref.module(p)} className="text-accent underline underline-offset-2">
-                          {p.code} {p.title}
+                          {p.title}
                         </Link>
                         <ModuleStatusBadge input={moduleInput(p)} size="xs" />
                       </li>
@@ -146,7 +147,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
               <div className="mt-6">
                 <PrerequisiteCard
                   input={input}
-                  meta={prereqModules.map((p) => ({ slug: p.slug, code: p.code, title: p.title, href: learnHref.module(p) }))}
+                  meta={prereqModules.map((p) => ({ slug: p.slug, title: p.title, href: learnHref.module(p) }))}
                 />
               </div>
 
@@ -229,7 +230,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                     Checkpoint
                   </h2>
                   <div className="mt-3">
-                    <CheckpointPanel moduleSlug={mod.slug} code={mod.code} href={learnHref.module(mod)} items={checkpoint.items} />
+                    <CheckpointPanel moduleSlug={mod.slug} title={mod.title} href={learnHref.module(mod)} items={checkpoint.items} />
                   </div>
                 </section>
               )}
@@ -258,7 +259,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                       href={learnHref.module(r)}
                       className="block rounded-md border border-border bg-surface px-3 py-2 text-sm transition-colors hover:bg-surface-2"
                     >
-                      <span className="mr-2 text-xs font-semibold tabular-nums text-subtle">{r.code}</span>
+                      {moduleTag(r) && <span className="mr-2 text-xs font-semibold tabular-nums text-subtle">{moduleTag(r)}</span>}
                       <span className="font-semibold">{r.title}</span>
                     </Link>
                   </li>

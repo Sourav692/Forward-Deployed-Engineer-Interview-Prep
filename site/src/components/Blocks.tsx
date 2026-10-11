@@ -2,7 +2,7 @@
 
 import type { Block, Cell } from '@/lib/parse'
 import { AutoTextarea } from './AutoTextarea'
-import { REVIEWS, SCORECARD_REMEDIATION, reviewHref, reviewLabel } from '@/lib/editorial'
+import { REVIEWS, SCORECARD_REMEDIATION, reviewHref } from '@/lib/editorial'
 import { Diagram } from './Diagram'
 
 /**
@@ -204,8 +204,8 @@ function Remediation({ area, weak }: { area: string; weak: boolean }) {
       {reviews.map((r, i) => (
         <span key={r.number}>
           {i > 0 && ', '}
-          <a href={reviewHref(r)} title={r.title} className="font-medium text-accent hover:text-accent-hover">
-            {reviewLabel(r.number)}
+          <a href={reviewHref(r)} className="font-medium text-accent hover:text-accent-hover">
+            {r.title}
           </a>
         </span>
       ))}

@@ -14,6 +14,7 @@ import { getPath, listActivity, listBookmarks } from '@/lib/progress/store'
 import { useProgress } from '@/lib/progress/useProgress'
 import type { MeasuredReadiness } from '@/lib/progress/rules'
 import { LinkButton, ProgressBar, SkeletonCard, cx, focusRing } from '@/components/ui'
+import { moduleTag } from '@/lib/curriculum-href'
 import {
   describeActivity,
   finishByNow,
@@ -86,7 +87,7 @@ export function Dashboard({ modules, sheets }: DashboardData) {
       <div className="min-w-0 space-y-6">
         {view.next && (
           <Panel title="Next Up">
-            <p className="text-xs font-semibold tabular-nums text-subtle">{view.next.module.code}</p>
+            {moduleTag(view.next.module) && <p className="text-xs font-semibold tabular-nums text-subtle">{moduleTag(view.next.module)}</p>}
             <p className="font-semibold">{view.next.module.title}</p>
             <p className="mt-1 text-sm text-muted">{view.next.reason}</p>
             <LinkButton href={view.next.href} className="mt-3">
@@ -106,14 +107,14 @@ export function Dashboard({ modules, sheets }: DashboardData) {
                 <li key={t.code}>
                   <div className="flex items-baseline justify-between gap-3 text-sm">
                     <Link href={t.href} className={cx('rounded-sm font-medium hover:text-accent', focusRing)}>
-                      {t.code} {t.title}
+                      {t.title}
                     </Link>
                     <span className="shrink-0 tabular-nums text-muted">
                       {t.read} of {t.total}
                     </span>
                   </div>
                   <div className="mt-1.5">
-                    <ProgressBar value={t.fraction} label={`${t.code} ${t.title}: ${t.read} of ${t.total} lessons read`} />
+                    <ProgressBar value={t.fraction} label={`${t.title}: ${t.read} of ${t.total} lessons read`} />
                   </div>
                 </li>
               ))}
@@ -270,7 +271,7 @@ export function RevisionRows({ rows }: { rows: RevisionRow[] }) {
         <li key={r.module.slug} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2.5 first:pt-0 last:pb-0">
           <div className="min-w-0 text-sm">
             <p className="font-medium">
-              {r.module.code} {r.module.title}
+              {r.module.title}
             </p>
             <p className="text-muted">
               {REASON_TEXT[r.reason](r)} · since {formatDate(r.since)}

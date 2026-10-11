@@ -42,7 +42,7 @@ export async function moduleGroups(moduleId: string): Promise<{ groups: TrackGro
     href: trackAnchor(moduleId, track.id),
     items: scenarios
       .filter((s) => s.trackId === track.id)
-      .map((s) => ({ href: scenarioHref(s), title: qualifiedTitle(s), tag: s.tag })),
+      .map((s) => ({ href: scenarioHref(s), title: qualifiedTitle(s) })),
   }))
   return { groups, scenarios }
 }

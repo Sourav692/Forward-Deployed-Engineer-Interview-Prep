@@ -73,7 +73,7 @@ export default function CreditsPage() {
                       <span className="block text-[0.8125rem] text-subtle sm:inline">
                         <span className="hidden sm:inline"> · </span>
                         <Link href={learnHref.module(mod)} className={`inline-block py-1 ${link}`}>
-                          {mod.code} {mod.title}
+                          {mod.title}
                         </Link>
                       </span>
                     )}

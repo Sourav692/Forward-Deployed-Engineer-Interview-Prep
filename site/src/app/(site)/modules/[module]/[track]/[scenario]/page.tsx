@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return study
     ? pageMetadata({
         path: scenarioHref(study.ref),
-        title: `${study.ref.tag} · ${qualifiedTitle(study.ref)}`,
+        title: qualifiedTitle(study.ref),
         description: caseDescription(study),
       })
     : {}

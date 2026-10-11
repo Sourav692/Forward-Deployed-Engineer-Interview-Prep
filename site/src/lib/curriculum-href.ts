@@ -21,6 +21,14 @@ export const AREA_TRACKS: Record<string, string> = {
 /** Whether a track is listed and served under /learn. */
 export const isLearnTrack = (track: string): boolean => !(track in AREA_TRACKS)
 
+/**
+ * Codes show only as small tags on Learn cards, lists and eyebrows (ENH-20): a module's
+ * T-code ("T2.4") or a track's ("T2"). Area-served tracks show none; their I codes mean
+ * nothing on their own.
+ */
+export const moduleTag = (m: { track: string; code: string }) => (isLearnTrack(m.track) ? m.code : null)
+export const trackTag = (t: { slug: string; code: string }) => (isLearnTrack(t.slug) ? t.code : null)
+
 /** An interview topic hub (FE-18). A static `hubs` segment, because /interview/[moduleSlug] is taken. */
 export const hubHref = (slug: string) => `/interview/hubs/${slug}`
 

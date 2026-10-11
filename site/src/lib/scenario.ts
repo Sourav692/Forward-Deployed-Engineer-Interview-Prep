@@ -13,8 +13,6 @@ export type ScenarioMeta = {
   slug: string
   order: number
   title: string
-  /** Short label shown instead of the order number, e.g. `G01` in FDE Case Studies. */
-  tag?: string
   /** Reading pages only: the page's tabs, in display order. */
   tabs?: ReadingTab[]
   /** Reading pages only: `track/slug` of the same case's interactive worksheet in Module 01. */
@@ -45,7 +43,6 @@ export type ScenarioRef = {
   slug: string
   title: string
   order: number
-  tag?: string
   /** True for reading pages (FDE Case Studies): read-only, tabbed, progress by tab. */
   reading?: boolean
   tabs?: ReadingTab[]

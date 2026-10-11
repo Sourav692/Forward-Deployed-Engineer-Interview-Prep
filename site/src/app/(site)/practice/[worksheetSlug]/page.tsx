@@ -77,12 +77,7 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
       />
 
       <header className="mb-8 max-w-3xl">
-        <div className="mb-2 flex items-center gap-2.5">
-          <span className="text-[0.8125rem] font-bold tabular-nums text-accent">
-            {meta.personalisation ? 'Question set' : 'Scenario'} {String(ref.order).padStart(2, '0')}
-          </span>
-          <span className="text-[0.8125rem] text-subtle">{ref.trackTitle}</span>
-        </div>
+        <div className="mb-2 text-[0.8125rem] font-semibold text-accent">{ref.trackTitle}</div>
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{scenario.title}</h1>
         <Byline updated={ref.updated} report={{ title: scenario.title, path: scenarioHref(ref) }} />
         <div className="mt-3">

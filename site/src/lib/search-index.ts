@@ -21,7 +21,7 @@ const getLearnSearchEntries = cache((): SearchEntry[] => {
 
   for (const track of getTracks()) {
     entries.push({
-      title: isLearnTrack(track.slug) ? `${track.code} · Learn` : 'Interview',
+      title: isLearnTrack(track.slug) ? 'Learn' : 'Interview',
       section: track.title,
       kind: 'Track',
       href: learnHref.track(track.slug),
@@ -30,7 +30,7 @@ const getLearnSearchEntries = cache((): SearchEntry[] => {
     for (const mod of trackModules(track)) {
       entries.push({
         title: trackLabel(track),
-        section: `${mod.code} ${mod.title}`,
+        section: mod.title,
         kind: 'Module',
         href: learnHref.module(mod),
         text: `${mod.code} ${mod.title} ${mod.objective} ${mod.deliverable}`,
@@ -48,7 +48,7 @@ const getLearnSearchEntries = cache((): SearchEntry[] => {
     const lead = sections.map((s) => readingText(s)).find((t) => t.trim() !== '') ?? ''
     const headings = sections.flatMap((s) => (s.title ? [toPlainText(s.title)] : []))
     entries.push({
-      title: `${mod.code} ${mod.title} · ${track.title}`,
+      title: `${mod.title} · ${track.title}`,
       section: lesson.title,
       kind: 'Lesson',
       href: lesson.href,

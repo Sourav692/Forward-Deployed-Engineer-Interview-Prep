@@ -35,8 +35,8 @@ export default function LearnPage() {
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Learn', path: '/learn' }])} />
       <header className="mb-8 max-w-3xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Learn</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">The Curriculum</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">The curriculum</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">Learn</h1>
         <p className="mt-3 text-base text-muted">
           {tracks.length} tracks, about {hours} hours in all. Required tracks build the core every Forward Deployed
           Engineer is tested on; optional tracks fill gaps. Open a track to see its sections and modules. Worksheets,

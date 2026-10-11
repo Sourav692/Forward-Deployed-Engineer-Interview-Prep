@@ -20,6 +20,7 @@ import { SectionAccordion } from '@/components/learn/SectionAccordion'
 import { SideNav } from '@/components/learn/SideNav'
 import { Tag } from '@/components/ui'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
+import { trackTag } from '@/lib/curriculum-href'
 
 /**
  * Track page (FE-06). Every track is prerendered at build time: `generateStaticParams`
@@ -40,8 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!track) return {}
   return pageMetadata({
     path: learnHref.track(track.slug),
-    title: `${track.title} · ${track.code}`,
-    ogTitle: `${track.code} ${track.title}`,
+    title: track.title,
     description: track.objective,
   })
 }
@@ -61,7 +61,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
         data={[
           breadcrumbJsonLd([
             { name: 'Learn', path: learnHref.index() },
-            { name: `${track.code} ${track.title}`, path: learnHref.track(track.slug) },
+            { name: track.title, path: learnHref.track(track.slug) },
           ]),
           courseJsonLd({
             name: track.title,
@@ -71,13 +71,13 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
           }),
         ]}
       />
-      <Breadcrumbs items={[{ label: 'Learn', href: learnHref.index() }, { label: `${track.code} ${track.title}` }]} />
+      <Breadcrumbs items={[{ label: 'Learn', href: learnHref.index() }, { label: track.title }]} />
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <SideNav track={track} />
         <div className="min-w-0">
           <header className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold tabular-nums text-subtle">{track.code}</span>
+              {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
               <Tag tone={isRequired(track) ? 'accent' : 'neutral'}>{REQUIREMENT_LABEL[track.required]}</Tag>
             </div>
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">{track.title}</h1>
@@ -93,7 +93,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
                 <span key={t.slug}>
                   {i > 0 && ', '}
                   <Link href={learnHref.track(t.slug)} className="text-accent underline underline-offset-2">
-                    {t.code} {t.title}
+                    {t.title}
                   </Link>
                 </span>
               ))}

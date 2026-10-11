@@ -3254,7 +3254,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g13-evaluation-and-release-gating',
-    title: 'G13 Evaluation and Release Gating',
+    title: 'Evaluation and Release Gating',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/',
     home: 'scenario-library',
     kind: 'live',
@@ -3344,7 +3344,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g07-secure-multi-tenant-ai-platform',
-    title: 'G07 Secure Multi-Tenant AI Platform',
+    title: 'Secure Multi-Tenant AI Platform',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/',
     home: 'scenario-library',
     kind: 'live',
@@ -3430,7 +3430,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g14-observability-and-production-diagnosis',
-    title: 'G14 Observability and Production Diagnosis',
+    title: 'Observability and Production Diagnosis',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/',
     home: 'scenario-library',
     kind: 'live',
@@ -3606,7 +3606,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'scale-prototype-to-production',
-    title: 'Scale a Prototype to Production',
+    title: 'Scale a Prototype from 100 to 100,000 Users',
     source: '02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/',
     home: 'scenario-library',
     kind: 'live',
@@ -3614,7 +3614,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g18-consumer-scale-chat-service',
-    title: 'G18 Consumer-Scale Chat Service',
+    title: 'Consumer-Scale Chat Service',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/',
     home: 'scenario-library',
     kind: 'live',
@@ -3622,7 +3622,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g10-high-volume-batch-pipeline',
-    title: 'G10 High-Volume Batch Pipeline',
+    title: 'High-Volume Batch Pipeline',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/',
     home: 'scenario-library',
     kind: 'live',
@@ -3745,7 +3745,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g19-model-development-and-post-training',
-    title: 'G19 Model Development and Post-Training',
+    title: 'Model Development and Post-Training',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/',
     home: 'scenario-library',
     kind: 'live',
@@ -3753,7 +3753,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g20-llm-inference-serving',
-    title: 'G20 LLM Inference Serving',
+    title: 'LLM Inference Serving',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/',
     home: 'scenario-library',
     kind: 'live',
@@ -4103,7 +4103,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g01-enterprise-knowledge-assistant',
-    title: 'G01 Enterprise Knowledge Assistant',
+    title: 'Enterprise Knowledge Assistant',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/',
     home: 'scenario-library',
     kind: 'live',
@@ -4111,7 +4111,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g02-customer-support-automation',
-    title: 'G02 Customer Support Automation',
+    title: 'Customer Support Automation',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/',
     home: 'scenario-library',
     kind: 'live',
@@ -4119,7 +4119,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g03-tool-using-agent-with-safety-controls',
-    title: 'G03 Tool-Using Agent with Safety Controls',
+    title: 'Tool-Using Agent with Safety Controls',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/',
     home: 'scenario-library',
     kind: 'live',
@@ -4127,7 +4127,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g04-sre-incident-response-agent',
-    title: 'G04 SRE Incident Response Agent',
+    title: 'SRE Incident Response Agent',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/',
     home: 'scenario-library',
     kind: 'live',
@@ -4135,7 +4135,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g05-sales-copilot',
-    title: 'G05 Sales Copilot',
+    title: 'Sales Copilot',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/',
     home: 'scenario-library',
     kind: 'live',
@@ -4143,7 +4143,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g06-nl-over-governed-data',
-    title: 'G06 Natural Language over Governed Data',
+    title: 'Natural Language over Governed Data',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/',
     home: 'scenario-library',
     kind: 'live',
@@ -4151,7 +4151,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g08-document-review-copilot',
-    title: 'G08 Document Review Copilot',
+    title: 'Document Review Copilot',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/',
     home: 'scenario-library',
     kind: 'live',
@@ -4159,7 +4159,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g09-enterprise-coding-assistant',
-    title: 'G09 Enterprise Coding Assistant',
+    title: 'Enterprise Coding Assistant',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/',
     home: 'scenario-library',
     kind: 'live',
@@ -4167,7 +4167,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g11-deep-research-agent',
-    title: 'G11 Deep Research Agent',
+    title: 'Deep Research Agent',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/',
     home: 'scenario-library',
     kind: 'live',
@@ -4175,7 +4175,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g12-scoping-to-deployed-agent',
-    title: 'G12 Scoping to Deployed Agent',
+    title: 'Scoping to Deployed Agent',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/',
     home: 'scenario-library',
     kind: 'live',
@@ -4183,7 +4183,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g15-agent-platform-for-non-technical-users',
-    title: 'G15 Agent Platform for Non-Technical Users',
+    title: 'Agent Platform for Non-Technical Users',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/',
     home: 'scenario-library',
     kind: 'live',
@@ -4191,7 +4191,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g16-real-time-call-assistant',
-    title: 'G16 Real-Time Call Assistant',
+    title: 'Real-Time Call Assistant',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/',
     home: 'scenario-library',
     kind: 'live',
@@ -4199,7 +4199,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g17-logistics-exception-handling',
-    title: 'G17 Logistics Exception Handling',
+    title: 'Logistics Exception Handling',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/',
     home: 'scenario-library',
     kind: 'live',
@@ -4207,7 +4207,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'standalone-designs-recruiting-platform',
-    title: 'AI Recruiting Platform',
+    title: 'AI-Powered Recruiting Platform',
     source: '02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/',
     home: 'scenario-library',
     kind: 'live',
@@ -4224,7 +4224,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'travel-agent-worked-example',
-    title: 'Travel Agent Worked Example',
+    title: 'Travel Agent: the 12-Part Framework Worked Through',
     source: '02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/',
     home: 'scenario-library',
     kind: 'live',
@@ -4233,7 +4233,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'air-gapped-ai-system',
-    title: 'Air-Gapped AI System',
+    title: 'AI System for an Air-Gapped Environment',
     source: '02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/',
     home: 'scenario-library',
     kind: 'live',
@@ -4242,7 +4242,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'reliable-workflow-orchestration',
-    title: 'Reliable Workflow Orchestration',
+    title: 'Reliable Workflow Orchestration System',
     source: '02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/',
     home: 'scenario-library',
     kind: 'live',
@@ -4251,7 +4251,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'configurable-platform-customer-workflows',
-    title: 'Configurable Platform for Customer Workflows',
+    title: 'Configurable Platform for Customer-Specific Workflows',
     source: '02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/',
     home: 'scenario-library',
     kind: 'live',
@@ -4269,7 +4269,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'prioritize-ai-use-cases',
-    title: 'Prioritise AI Use Cases',
+    title: 'Prioritise AI Use Cases for a Large Enterprise',
     source: '02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/',
     home: 'scenario-library',
     kind: 'live',
@@ -4277,7 +4277,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'build-when-customer-data-is-poor',
-    title: 'Build When Customer Data Is Poor',
+    title: 'Build When the Customer’s Data Is Poor',
     source: '02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/',
     home: 'scenario-library',
     kind: 'live',
@@ -4285,7 +4285,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'self-adapting-agent',
-    title: 'Self-Adapting Agent',
+    title: 'Agent That Adapts to New Tasks',
     source: '02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/',
     home: 'scenario-library',
     kind: 'live',
@@ -4293,7 +4293,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'personal-assistant-with-memory',
-    title: 'Personal Assistant with Memory',
+    title: 'Personal Assistant That Remembers You',
     source: '02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/',
     home: 'scenario-library',
     kind: 'live',
@@ -4301,7 +4301,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'decomposition-classics-67-68-69',
-    title: 'Decomposition Classics: 911 Response Times, Bank Fraud, and Medication Errors',
+    title: 'Decomposition Classics: 911, Bank Fraud, Medication Errors',
     source: '02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/',
     home: 'scenario-library',
     kind: 'live',
@@ -4374,7 +4374,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'financial-compliance-reviewer',
-    title: 'Financial Compliance Document Reviewer',
+    title: 'Financial Compliance Review Copilot',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/03_financial_compliance_reviewer.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -4422,7 +4422,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'service-now-ticket-agent',
-    title: 'ServiceNow Ticket Automation Agent',
+    title: 'ServiceNow Ticket Agent',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/09_service_now_ticket_agent.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -4430,7 +4430,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'executive-dashboard-copilot',
-    title: 'Executive Dashboard Copilot',
+    title: 'Executive Dashboard Assistant',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/10_executive_dashboard_copilot.md',
     home: 'case-study-worksheets',
     kind: 'live',

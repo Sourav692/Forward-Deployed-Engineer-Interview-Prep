@@ -4,6 +4,7 @@ import { formatMinutes, learnHref, moduleInput } from '@/lib/learn'
 import { Tag, cx, focusRing } from '@/components/ui'
 import { ModulePathFlag } from './PathFlagIslands'
 import { ModuleProgress, ModuleStatusBadge } from './ProgressIslands'
+import { moduleTag } from '@/lib/curriculum-href'
 
 /**
  * ModuleCard (FE-06): one module row on a track page, with code, title, status,
@@ -16,7 +17,7 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
     <article className="relative flex flex-col gap-2 rounded-md border border-border bg-bg px-3 py-3 transition-colors duration-150 hover:bg-surface-2 sm:flex-row sm:items-center sm:gap-4">
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-2">
-          <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{mod.code}</span>
+          {moduleTag(mod) && <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
           <h3 className="min-w-0 text-sm font-semibold leading-snug">
             <Link href={learnHref.module(mod)} className={cx('rounded-sm after:absolute after:inset-0 after:rounded-md hover:text-accent', focusRing)}>
               {mod.title}

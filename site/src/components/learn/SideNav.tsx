@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { CurriculumTrack } from '@/lib/curriculum-types'
 import { getModuleBySlug, learnHref, trackLabel } from '@/lib/learn'
 import { cx, focusRing } from '@/components/ui'
+import { moduleTag } from '@/lib/curriculum-href'
 
 /**
  * SideNav tree (FE-03): the track's sections and modules, as nested lists.
@@ -47,7 +48,7 @@ export function SideNav({
                         focusRing,
                       )}
                     >
-                      <span className={cx('w-9 shrink-0 tabular-nums', current ? 'text-accent' : 'text-subtle')}>{m.code}</span>
+                      {moduleTag(m) && <span className={cx('w-9 shrink-0 tabular-nums', current ? 'text-accent' : 'text-subtle')}>{moduleTag(m)}</span>}
                       <span className="min-w-0 flex-1">
                         {m.title}
                         {gap && <span className="block text-xs font-normal text-muted">{gap}</span>}

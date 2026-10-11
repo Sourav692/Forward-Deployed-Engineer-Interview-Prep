@@ -18,12 +18,13 @@ const formatDate = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { 
 
 export function CheckpointPanel({
   moduleSlug,
-  code,
+  title,
   href,
   items,
 }: {
   moduleSlug: string
-  code: string
+  /** The module's title, used in the activity entry. */
+  title: string
   href: string
   items: CheckpointItem[]
 }) {
@@ -44,7 +45,7 @@ export function CheckpointPanel({
     setResult(r)
     const saved = recordAttempt(
       { assessmentId: id, kind: 'checkpoint', at: new Date().toISOString(), score: r.score, passed: r.passed, answers, skillScores: r.skillScores },
-      { kind: r.passed ? 'checkpoint-passed' : 'checkpoint-failed', label: `${r.passed ? 'Passed' : 'Did not pass'} the ${code} checkpoint (${r.score} %)`, href: `${href}#checkpoint` },
+      { kind: r.passed ? 'checkpoint-passed' : 'checkpoint-failed', label: `${r.passed ? 'Passed' : 'Did not pass'} the ${title} checkpoint (${r.score} %)`, href: `${href}#checkpoint` },
     )
     if (!saved) toast(COPY.saveFailed, 'error')
     else toast(r.passed ? `Checkpoint passed: ${r.score} %.` : `${r.score} %. The pass mark is ${CHECKPOINT_PASS} %.`, r.passed ? 'success' : 'info')
