@@ -9,6 +9,7 @@ import { LessonActions } from '@/components/learn/LessonActions'
 import { LessonReader } from '@/components/learn/LessonReader'
 import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { LessonSideNav } from '@/components/learn/LessonSideNav'
+import { ReviewLinks } from '@/components/learn/ReviewLinks'
 import { MockScorer } from '@/components/progress/MockScorer'
 import { MockTimer } from '@/components/progress/MockTimer'
 import { MOCK_METHOD_LESSON, MOCK_MINUTES, MOCK_MODULE } from '@/components/progress/mock-rubric'
@@ -100,6 +101,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
           </div>
 
           <StorageNotice />
+
+          <ReviewLinks lessonSlug={lesson.slug} />
 
           {scenarioMock && (
             <div className="mb-6">

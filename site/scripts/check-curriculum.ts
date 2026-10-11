@@ -207,7 +207,8 @@ for (const [from, to] of Object.entries(RETIRED_MODULES)) {
     if (seen.has(r.source)) fail(`redirect source ${r.source} is listed twice in src/lib/redirects.ts`)
     seen.add(r.source)
     if (r.destination.includes(':')) continue
-    const next = sources.find((s) => s.re.test(r.destination))
+    // A hash (#recall-card) opens part of the page; the path is what could chain.
+    const next = sources.find((s) => s.re.test(r.destination.split('#')[0]))
     if (next) fail(`redirect chain: ${r.source} → ${r.destination} → ${next.destination}; point ${r.source} straight at the final page`)
   }
 }

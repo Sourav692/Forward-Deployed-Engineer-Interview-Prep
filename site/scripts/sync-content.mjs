@@ -25,7 +25,6 @@ import {
   COMPANY_PREP_TRACK_ID,
   syncCompanyPrep,
 } from './company-prep.mjs'
-import { syncLastDay } from './last-day.mjs'
 import { gitDates, learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
 import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
 import { scenarioHref } from '../src/lib/scenario.ts'
@@ -307,21 +306,6 @@ async function main() {
     }
   }
 
-  // Last-Day Review: its cross-links point at the pages above, so it syncs last and
-  // is handed the list of what was actually published.
-  const pages = new Map()
-  for (const mod of modules) {
-    for (const track of mod.tracks) {
-      for (const s of track.scenarios) {
-        pages.set(`${track.id}/${s.slug}`, {
-          title: s.title,
-          href: scenarioHref({ moduleId: mod.id, trackId: track.id, slug: s.slug }),
-        })
-      }
-    }
-  }
-  const lastDay = await syncLastDay({ repoRoot: REPO_ROOT, siteDir: SITE_DIR, outDir: OUT_DIR, pages, updatedOf })
-
   // Learn lessons last: their links point at every page published above.
   try {
     await syncLearn({
@@ -337,7 +321,6 @@ async function main() {
   const manifest = {
     generatedAt: new Date().toISOString(),
     modules,
-    lastDayUpdated: lastDay.updated,
     storyBankUpdated: updatedOf(join(BEHAVIOURAL_ROOT, STORY_BANK.source)),
   }
   await writeFile(join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2))

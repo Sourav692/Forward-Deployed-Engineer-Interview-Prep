@@ -22,15 +22,12 @@ import { ANSWER_KEY_MAP } from '../src/lib/mapping.ts'
 import { parseReading } from '../src/lib/reading.ts'
 import {
   FAMILY_META,
-  LAST_DAY_GUIDES,
   RELATED_CASE,
   REQUIRED_META_FIELDS,
-  REVIEW_DOCS,
   REVIEWS,
   STORY_BANK,
   TABS,
   TRACKS,
-  TRIGGER_SHEET,
 } from '../src/lib/editorial.ts'
 import { existsSync } from 'node:fs'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
@@ -315,8 +312,7 @@ for (const mod of manifest.modules) {
 
 const SITE_ROOT = resolve(import.meta.dirname, '..')
 const pages = new Set<string>()
-const routes = new Set<string>(['/', '/favicon.ico', '/start', '/glossary', '/design', '/practice', '/fde-last-day-prep'])
-for (const g of LAST_DAY_GUIDES) routes.add(`/fde-last-day-prep/${g.id}`)
+const routes = new Set<string>(['/', '/favicon.ico', '/start', '/glossary', '/design', '/practice'])
 routes.add(STORY_BANK.href)
 const tabsByPage = new Map<string, string[]>()
 
@@ -422,44 +418,12 @@ for (const mod of manifest.modules) {
     }
   }
 }
-for (const g of LAST_DAY_GUIDES) {
-  const raw = await readFile(join(CONTENT, 'last-day', `${g.id}.md`), 'utf8').catch(() => null)
-  if (raw === null) failures.push(`last-day/${g.id}.md: missing — run npm run sync`)
-  else await checkDocument(`last-day/${g.id}`, raw, false)
-}
-
-// The static reviews: every internal link, including the ones sync added, must resolve.
-const staticFiles = [
-  ...REVIEWS.flatMap((r) => Object.values(REVIEW_DOCS).map((d) => `/fde-last-day-prep/${r.dir}/${d.file}`)),
-  `/fde-last-day-prep/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}`,
-]
-for (const path of staticFiles) {
-  const raw = await readFile(join(SITE_ROOT, 'public', path), 'utf8').catch(() => null)
-  if (raw === null) {
-    failures.push(`${path}: missing from public/`)
-    continue
-  }
-  if (raw.includes('class="source-note"')) failures.push(`${path}: still has the "Generated from" footer`)
-  if (/\bModule\s+\d+\b/.test(raw.replace(/<[^>]+>/g, ' ').replace(/id="[^"]*"/g, ''))) {
-    failures.push(`${path}: still says "Module N" — the Last-Day sequence is Review 01–18`)
-  }
-  for (const [, href] of raw.matchAll(/href="(\/[^"]*)"/g)) {
-    linksChecked++
-    if (!resolvesInternally(href)) failures.push(`${path}: broken internal link ${href}`)
-  }
-  for (const [, href] of raw.matchAll(/href="((?!https?:|#|\/|mailto:)[^"]+)"/g)) {
-    linksChecked++
-    const target = join(SITE_ROOT, 'public', path, '..', href.split('#')[0])
-    if (!existsSync(target)) failures.push(`${path}: broken relative link ${href}`)
-  }
-}
-
 // PQ-07: the repository is private, so a link into it 404s for every visitor. The other
 // phrases are authoring notes (the case index spreadsheet, how a tutorial was regenerated,
 // which viewer draws a diagram) that mean nothing to a visitor.
 const PRIVATE_REPO = 'github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep'
 const BUILD_ARTEFACTS = ['CASE_STUDY_INDEX.xlsx', 'Interview-ready v2', 'for a viewer that draws Mermaid']
-for (const dir of [CONTENT, join(SITE_ROOT, 'public', 'fde-last-day-prep')]) {
+for (const dir of [CONTENT]) {
   for (const file of await readdir(dir, { recursive: true })) {
     if (!/\.(md|json|html)$/.test(file)) continue
     const text = await readFile(join(dir, file), 'utf8')
@@ -645,9 +609,7 @@ for (const mod of manifest.modules) {
     }
   }
 }
-for (const g of LAST_DAY_GUIDES) scanFiles.push(join(CONTENT, 'last-day', `${g.id}.md`))
 scanFiles.push(join(CONTENT, 'behavioural', `${STORY_BANK.slug}.md`))
-for (const path of staticFiles) scanFiles.push(join(SITE_ROOT, 'public', path))
 scanFiles.push(...learnFiles)
 for (const file of scanFiles) {
   const raw = await readFile(file, 'utf8').catch(() => '')

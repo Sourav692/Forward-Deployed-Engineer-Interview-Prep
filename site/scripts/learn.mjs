@@ -7,8 +7,8 @@
  *  - `kind: 'sync'` lessons that may be published (`publish` is `own` or `credited`)
  *    and whose home module is neither on hold nor coming soon are copied to
  *    `content/learn/<trackSlug>/<moduleSlug>/<lessonSlug>.md`;
- *  - `kind: 'live'` lessons are already published under /modules or
- *    /fde-last-day-prep, so nothing is copied: the manifest records the live page's
+ *  - `kind: 'live'` lessons are already published elsewhere on the site (a case,
+ *    worksheet or story bank page), so nothing is copied: the manifest records the live page's
  *    URL instead, and the sync fails if that URL cannot be resolved;
  *  - `pending` and `excluded` lessons are never written anywhere.
  *
@@ -46,14 +46,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { LESSONS, MODULES, RENAMED, TRACKS } from '../src/lib/curriculum.ts'
 import { curriculumHref } from '../src/lib/curriculum-href.ts'
-import {
-  LAST_DAY,
-  LAST_DAY_GUIDES,
-  REVIEW_DOCS,
-  REVIEWS,
-  TRIGGER_SHEET,
-  WORDS_PER_MINUTE,
-} from '../src/lib/editorial.ts'
+import { WORDS_PER_MINUTE } from '../src/lib/editorial.ts'
 
 /**
  * When each source last changed, as `YYYY-MM-DD` (audit check PQ-15), from one
@@ -451,32 +444,6 @@ export function headingAnchors(markdown) {
 const repoPath = (repoRoot, abs) => relative(repoRoot, abs).split(sep).join('/')
 
 /**
- * Site URLs of every page already published outside Learn, keyed by absolute
- * source path (file or folder). Case studies, worksheets and company packs are
- * passed in by their own sync steps; the Last-Day Review is derived here.
- */
-function lastDayUrls(repoRoot) {
-  const root = join(repoRoot, '07_Last_Day_Revision')
-  const urls = new Map()
-  urls.set(root, LAST_DAY.href)
-  urls.set(join(root, 'README.md'), LAST_DAY.href)
-  for (const g of LAST_DAY_GUIDES) urls.set(join(root, g.source), `${LAST_DAY.href}/${g.id}`)
-  for (const r of REVIEWS) {
-    const concise = `${LAST_DAY.href}/${r.dir}/${REVIEW_DOCS.concise.file}`
-    urls.set(join(root, `${r.dir}.md`), concise)
-    urls.set(join(root, 'html', r.dir), concise)
-    for (const doc of Object.values(REVIEW_DOCS)) {
-      urls.set(join(root, 'html', r.dir, doc.file), `${LAST_DAY.href}/${r.dir}/${doc.file}`)
-    }
-  }
-  const sheet = `${LAST_DAY.href}/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}`
-  urls.set(join(root, `${TRIGGER_SHEET.dir}.md`), sheet)
-  urls.set(join(root, 'html', TRIGGER_SHEET.dir), sheet)
-  urls.set(join(root, 'html', TRIGGER_SHEET.dir, TRIGGER_SHEET.file), sheet)
-  return urls
-}
-
-/**
  * The lesson a link to a source file should open. A source published as slices has
  * several lessons: a link with an anchor goes to the slice holding that heading,
  * any other link to the slice without `include` (the main part), else the first.
@@ -581,7 +548,7 @@ export function slugGuard(previous, current) {
  * `liveUrls` maps absolute source paths (files and folders) to the URL of the page
  * that already publishes them, filled in by the earlier sync steps.
  */
-export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given }) {
+export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls }) {
   const learnDir = join(outDir, 'learn')
   const previous = await readFile(join(snapshotDir, 'manifest.json'), 'utf8')
     .then((raw) => JSON.parse(raw).lessons)
@@ -596,7 +563,6 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls: given
     return { lessons: previous?.length ?? 0, snapshot: true }
   }
 
-  const liveUrls = new Map([...given, ...lastDayUrls(repoRoot)])
   const lessonsBySource = new Map()
   /** Source path of a retired (excluded, RENAMED) lesson → URL of the lesson that replaced it. */
   const retired = new Map()

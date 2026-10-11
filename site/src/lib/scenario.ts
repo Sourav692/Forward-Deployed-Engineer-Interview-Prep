@@ -34,8 +34,6 @@ export type Manifest = {
   generatedAt: string
   /** `kind: 'reading'` marks a module of reading pages rather than worksheets. */
   modules: { id: string; kind?: 'reading'; tracks: TrackMeta[] }[]
-  /** Final-week guide id -> `YYYY-MM-DD` its source last changed. */
-  lastDayUpdated?: Record<string, string | null>
   /** `YYYY-MM-DD` the Story Bank source last changed. */
   storyBankUpdated?: string | null
 }

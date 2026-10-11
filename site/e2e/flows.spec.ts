@@ -388,7 +388,7 @@ test('practice: old worksheet URL redirects and saved answers still load', async
 // ENH-18a: final-week reviews are lessons at /interview/final-week/<lesson>. Progress keys
 // on module/lesson, so a review marked read before the move still shows read, and the
 // one-page memory card is a tab that #recall-card opens.
-test('final week: a review keeps saved progress and opens its recall card tab', async ({ page }) => {
+test('final week: a review keeps saved progress, opens its recall card tab, and old URLs land there', async ({ page }) => {
   const review = '/interview/final-week/module-05-rag-and-enterprise-data'
   await page.addInitScript(() => {
     localStorage.setItem('fd:v1:learn:lesson:final-week/module-05-rag-and-enterprise-data', JSON.stringify({ readAt: new Date().toISOString() }))
@@ -403,11 +403,16 @@ test('final week: a review keeps saved progress and opens its recall card tab', 
   await expect(page.locator('#recall-card h2')).toContainText('One-Page Memory Card')
   await expect(page).toHaveURL(`${review}#recall-card`)
 
+  // ENH-18b: the retired static recall card redirects to that tab; the review keeps its
+  // worksheet and design links from the old page's bar.
   await page.goto('/interview')
-  await page.goto(`${review}#recall-card`)
+  await page.goto('/fde-last-day-prep/module-05-rag-and-enterprise-data/one-page-memory-card.html')
+  await expect(page).toHaveURL(`${review}#recall-card`)
   await hydrated(page)
   await expect(page.getByRole('tab', { name: 'Recall card' })).toHaveAttribute('aria-selected', 'true')
   await expect(page.locator('#recall-card')).toBeVisible()
+  const practice = page.getByRole('complementary', { name: 'Practice for this review' })
+  await expect(practice.getByRole('link').first()).toHaveAttribute('href', /^\/practice\//)
 })
 
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
@@ -443,7 +448,7 @@ test('path page: modules in code order, gap modules flagged Later', async ({ pag
 test('entry points: express lane, Frontier Lab hours, diagnostic links', async ({ page }) => {
   for (const path of ['/', '/start']) {
     await page.goto(path)
-    await expect(page.getByRole('link', { name: 'Go straight to the final-week review' })).toHaveAttribute('href', '/fde-last-day-prep')
+    await expect(page.getByRole('link', { name: 'Go straight to the final-week review' })).toHaveAttribute('href', '/interview/final-week')
   }
   await expect(page.getByRole('link', { name: 'Forward Deployed Engineer: Frontier Lab Loop' })).toBeVisible()
   await expect(page.getByText(/Loop variant of the .+ path · about \d+ h/)).toBeVisible()
