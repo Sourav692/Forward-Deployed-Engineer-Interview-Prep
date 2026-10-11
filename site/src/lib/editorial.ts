@@ -109,9 +109,8 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * labels may change. `href` is where the area link goes; `match` lists the path
  * prefixes that also mark the area as current (`aria-current="page"`).
  *
- * Each area links to its own index page. `match` keeps the existing module pages
- * highlighting the area they belong to: worksheets and behavioural practice (`/modules/01-…`, `/modules/14-…`) under
- * Practice, and the final-week review under Interview. Company Prep (`/company-prep`)
+ * Each area links to its own index page. `match` keeps pages outside the area's path
+ * highlighting it: the final-week review under Interview. Company Prep (`/company-prep`)
  * is not listed while it has no packs (audit check FV-02); its route stays.
  */
 export const NAV = [
@@ -127,11 +126,7 @@ export const NAV = [
     id: 'practice',
     label: 'Practice',
     href: '/practice',
-    match: [
-      '/practice',
-      '/modules/01-customer-discovery-and-decomposition',
-      '/modules/14-behavioural-and-leadership-round',
-    ],
+    match: ['/practice'],
   },
   {
     id: 'interview',
@@ -290,7 +285,7 @@ export const STORY_BANK = {
     'A small set of real moments, each cut to one story you can tell in two minutes, with ' +
     'every behavioural question it can answer. Learn the stories, then pick by what the ' +
     'question tests.',
-  href: '/modules/14-behavioural-and-leadership-round/story-bank',
+  href: '/practice/story-bank',
 } as const
 
 // ---------------------------------------------------------------- reading-page tabs

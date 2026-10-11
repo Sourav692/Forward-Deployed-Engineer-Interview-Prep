@@ -3,7 +3,7 @@ import 'server-only'
 import { getAllScenarios, getTracks } from '@/lib/content'
 import { MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
 import type { CurriculumModule, ModuleStatus } from '@/lib/curriculum-types'
-import { qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
+import { MODULE_AREAS, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import type { LinkItem } from './Area'
 
 /**
@@ -21,8 +21,7 @@ export const LIVE = {
 } as const
 
 export const moduleHref = (moduleId: string) => `/modules/${moduleId}`
-export const trackAnchor = (moduleId: string, trackId: string) =>
-  moduleId === LIVE.casebook ? `/design#${trackId}` : `/modules/${moduleId}#${trackId}`
+export const trackAnchor = (moduleId: string, trackId: string) => `${MODULE_AREAS[moduleId] ?? moduleHref(moduleId)}#${trackId}`
 
 export type TrackGroup = {
   id: string

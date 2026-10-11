@@ -364,9 +364,30 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Casebook' })).toHaveAttribute('href', '/design')
 })
 
+// ENH-17: worksheets moved to /practice/<slug>. Answers key on track/slug, not the URL,
+// so an answer saved under that key loads after following the old URL.
+test('practice: old worksheet URL redirects and saved answers still load', async ({ page }) => {
+  const key = 'fd:v1:answers:core/internal-knowledge-assistant'
+  await page.goto(WORKSHEET)
+  await hydrated(page)
+  await page.locator('textarea').first().fill('saved before the move')
+  await expect.poll(async () => (await fdStorage(page))[key]).toContain('saved before the move')
+  const saved = (await fdStorage(page))[key]
+  await page.evaluate(([k, v]) => {
+    localStorage.clear()
+    localStorage.setItem(k, v)
+  }, [key, saved])
+
+  await page.goto('/modules/01-customer-discovery-and-decomposition/core/internal-knowledge-assistant')
+  await expect(page).toHaveURL(WORKSHEET)
+  await hydrated(page)
+  await expect(page.locator('textarea').first()).toHaveValue('saved before the move')
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Practice' })).toHaveAttribute('href', '/practice')
+})
+
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
 // unmatched URL and for an unknown param on a prerendered route.
-for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case']) {
+for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case', '/practice/no-such-worksheet']) {
   test(`404 HTML is server-rendered: ${path}`, async ({ request }) => {
     const res = await request.get(path)
     expect(res.status()).toBe(404)

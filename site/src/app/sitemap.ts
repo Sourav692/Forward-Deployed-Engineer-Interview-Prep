@@ -6,7 +6,7 @@ import { hubHref } from '@/lib/curriculum-href'
 import { getLearnManifest, getTracks, learnHref, trackModules } from '@/lib/learn'
 import { PATHS } from '@/lib/paths'
 import { MODULES } from '@/lib/registry'
-import { CASEBOOK_MODULE, scenarioHref } from '@/lib/scenario'
+import { MODULE_AREAS, scenarioHref } from '@/lib/scenario'
 import { absoluteUrl } from '@/lib/seo'
 
 /**
@@ -49,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   for (const mod of MODULES) {
-    if (mod.status === 'live' && mod.id !== CASEBOOK_MODULE) paths.add(`/modules/${mod.id}`)
+    if (mod.status === 'live' && !(mod.id in MODULE_AREAS)) paths.add(`/modules/${mod.id}`)
   }
   for (const ref of await getAllScenarios()) paths.add(scenarioHref(ref))
   paths.add(STORY_BANK.href)

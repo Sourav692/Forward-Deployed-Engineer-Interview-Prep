@@ -37,7 +37,7 @@ import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
-import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
+import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
@@ -315,13 +315,13 @@ for (const mod of manifest.modules) {
 
 const SITE_ROOT = resolve(import.meta.dirname, '..')
 const pages = new Set<string>()
-const routes = new Set<string>(['/', '/favicon.ico', '/start', '/glossary', '/design', '/fde-last-day-prep'])
+const routes = new Set<string>(['/', '/favicon.ico', '/start', '/glossary', '/design', '/practice', '/fde-last-day-prep'])
 for (const g of LAST_DAY_GUIDES) routes.add(`/fde-last-day-prep/${g.id}`)
 routes.add(STORY_BANK.href)
 const tabsByPage = new Map<string, string[]>()
 
 for (const mod of manifest.modules) {
-  if (mod.id !== CASEBOOK_MODULE) routes.add(`/modules/${mod.id}`)
+  if (!(mod.id in MODULE_AREAS)) routes.add(`/modules/${mod.id}`)
   for (const track of mod.tracks) {
     if (!TRACKS[track.id]) failures.push(`${track.id}: no display name in TRACKS`)
     else if (track.title !== TRACKS[track.id].title) {
@@ -683,10 +683,10 @@ for (const [token, files] of acronymPages) {
     for (const track of mod?.tracks ?? []) {
       for (const s of track.scenarios) {
         const ws = await readFile(join(CONTENT, 'modules', mod.id, track.id, 'worksheets', `${s.slug}.md`), 'utf8')
-        for (const [, n] of ws.matchAll(/^## (\d+)\./gm)) questions.add(`${track.id}/${s.slug}#${n}`)
+        for (const [, n] of ws.matchAll(/^## (\d+)\./gm)) questions.add(`${s.slug}#${n}`)
       }
     }
-    const link = new RegExp(`\\]\\(/modules/${STORY_BANK.moduleId}/([^/)]+)/([^/)#]+)#section-(\\d+)\\)`, 'g')
+    const link = /\]\(\/practice\/([^/)#]+)#section-(\d+)\)/g
     const linked = new Set<string>()
     const withStory = new Set<string>()
     let stories = 0
@@ -697,8 +697,8 @@ for (const [token, files] of acronymPages) {
       if (fenced) continue
       const answers = line.startsWith('**Answers:**')
       if (answers) stories++
-      for (const [, track, slug, n] of line.matchAll(link)) {
-        const key = `${track}/${slug}#${n}`
+      for (const [, slug, n] of line.matchAll(link)) {
+        const key = `${slug}#${n}`
         if (!questions.has(key)) failures.push(`story-bank: links to ${key}, which is not a behavioural question`)
         linked.add(key)
         if (answers) withStory.add(key)

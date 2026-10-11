@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import { Button } from '@/components/ui'
 import styles from './landing.module.css'
 
-const WORKSHEET = '/modules/01-customer-discovery-and-decomposition/core/internal-knowledge-assistant'
+const WORKSHEET = '/practice/internal-knowledge-assistant'
 
 // A shortened discovery exercise from the published knowledge-assistant worksheet.
 // The score is the reader's judgement; this preview has no evaluator or storage.

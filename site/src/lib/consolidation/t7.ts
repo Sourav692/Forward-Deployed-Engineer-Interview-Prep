@@ -12,7 +12,8 @@ export const RENAMED_T7: Record<string, string | null> = {
   // 2026-10-08: reordered to prepare-then-deliver; the honesty lessons merged.
   'telling-the-build-story/offered-honesty-and-war-stories': 'telling-the-build-story/proof-versus-knowledge',
   // 2026-10-08: T7.3 and T7.4 retired (RETIRED_MODULES in curriculum.ts). Their worksheets
-  // live under /modules/14-behavioural-and-leadership-round, redirected in next.config.ts.
+  // were merged into the FDE competency worksheets at /practice/<slug>; the old URLs
+  // redirect (src/lib/redirects.ts).
   'leadership-principle-answers/customer-obsession': null,
   'leadership-principle-answers/ownership': null,
   'leadership-principle-answers/attracts-and-retains-talent': null,

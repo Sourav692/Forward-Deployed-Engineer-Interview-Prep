@@ -12,8 +12,9 @@
  *   is its real home.
  * - No chains: when a page moves again, update every entry that pointed at it.
  *
- * Order matters (Next.js applies the first match): lesson renames, then whole areas,
- * then retired modules and one-off pages.
+ * Order matters (Next.js applies the first match): lesson renames, then pages that moved
+ * into /practice (one of them sits under an area rule), then whole areas, then retired
+ * modules, the casebook and one-off pages.
  *
  * Imported by `next.config.ts` and the check scripts, so it has no runtime imports.
  */
@@ -85,11 +86,77 @@ const retiredModuleRedirects = (): Redirect[] =>
   }))
 
 /**
+ * The worksheets moved from /modules/<module>/<track>/<slug> to /practice/<slug>, and the
+ * Story Bank to /practice/story-bank (ENH-17). The I1 module page went too: /practice
+ * lists its worksheets. Listed by hand, like the casebook, because old URLs are history.
+ */
+const WORKSHEETS_MODULE = '01-customer-discovery-and-decomposition'
+const BEHAVIOURAL_MODULE = '14-behavioural-and-leadership-round'
+const PRACTICE_BEFORE_ENH_17: Record<string, Record<string, string[]>> = {
+  [WORKSHEETS_MODULE]: {
+    core: [
+      'internal-knowledge-assistant',
+      'sales-copilot',
+      'financial-compliance-reviewer',
+      'healthcare-prior-auth-assistant',
+      'legal-contract-copilot',
+      'sre-triage-agent',
+      'multi-tenant-saas-support',
+      'retail-demand-explainer',
+      'service-now-ticket-agent',
+      'executive-dashboard-copilot',
+    ],
+    'system-design': [
+      'enterprise-knowledge-assistant-rag',
+      'secure-multi-tenant-ai-platform',
+      'natural-language-to-sql-analytics-assistant',
+      'ai-customer-support-automation',
+      'ai-system-for-an-air-gapped-environment',
+      'llm-evaluation-and-release-gating-platform',
+      'high-volume-batch-inference-system',
+      'tool-using-ai-agent-with-safety-controls',
+      'reliable-workflow-orchestration-system',
+      'observability-customer-facing-ai-application',
+      'configurable-platform-customer-specific-workflows',
+      'enterprise-chatbot-platform',
+    ],
+  },
+  [BEHAVIOURAL_MODULE]: {
+    'fde-competencies': [
+      'customer-focus-and-discovery',
+      'communication-and-influence',
+      'pushback-and-saying-no',
+      'delivery-under-pressure',
+      'ownership-standards-and-failure',
+      'scale-beyond-yourself',
+      'leading-people',
+    ],
+  },
+}
+
+const practiceRedirects: Redirect[] = [
+  { source: `/modules/${WORKSHEETS_MODULE}`, destination: '/practice', permanent: true },
+  { source: `/modules/${BEHAVIOURAL_MODULE}`, destination: '/practice', permanent: true },
+  { source: `/modules/${BEHAVIOURAL_MODULE}/story-bank`, destination: '/practice/story-bank', permanent: true },
+  { source: '/interview/case-study-worksheets', destination: '/practice', permanent: true },
+  // Ahead of areaRedirects, which would otherwise send it to the line above: two hops.
+  { source: '/learn/interview-practice/case-study-worksheets', destination: '/practice', permanent: true },
+  ...Object.entries(PRACTICE_BEFORE_ENH_17).flatMap(([moduleId, tracks]) =>
+    Object.entries(tracks).flatMap(([trackId, slugs]) =>
+      slugs.map((slug) => ({
+        source: `/modules/${moduleId}/${trackId}/${slug}`,
+        destination: scenarioHref({ moduleId, trackId, slug }),
+        permanent: true,
+      })),
+    ),
+  ),
+]
+
+/**
  * The leadership-principle and hiring-manager worksheets were merged into the FDE
  * competency worksheets (T7.2, The behavioural round). Each old worksheet goes to the new
  * one that holds most of its questions.
  */
-const BEHAVIOURAL_MODULE = '/modules/14-behavioural-and-leadership-round'
 const RETIRED_BEHAVIOURAL_WORKSHEETS: Record<string, string> = {
   'hiring-manager/ambiguity-and-discovery': 'customer-focus-and-discovery',
   'hiring-manager/delivery-under-pressure': 'delivery-under-pressure',
@@ -168,13 +235,14 @@ const casebookRedirects: Redirect[] = [
 ]
 
 const behaviouralRedirects: Redirect[] = Object.entries(RETIRED_BEHAVIOURAL_WORKSHEETS).map(([from, to]) => ({
-  source: `${BEHAVIOURAL_MODULE}/${from}`,
-  destination: `${BEHAVIOURAL_MODULE}/fde-competencies/${to}`,
+  source: `/modules/${BEHAVIOURAL_MODULE}/${from}`,
+  destination: scenarioHref({ moduleId: BEHAVIOURAL_MODULE, trackId: 'fde-competencies', slug: to }),
   permanent: true,
 }))
 
 export const REDIRECTS: Redirect[] = [
   ...lessonRedirects(),
+  ...practiceRedirects,
   ...areaRedirects(),
   ...companyPrepRedirects,
   ...retiredModuleRedirects(),

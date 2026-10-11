@@ -6,7 +6,7 @@ import { cache } from 'react'
 import { marked } from 'marked'
 import { getCheckpoint } from './checkpoints'
 import { LESSONS, MODULES, TRACKS } from './curriculum'
-import { INTERVIEW_TRACK, curriculumHref, isLearnTrack } from './curriculum-href'
+import { INTERVIEW_TRACK, MODULE_HOMES, curriculumHref, isLearnTrack } from './curriculum-href'
 import type {
   CurriculumLesson,
   CurriculumModule,
@@ -170,8 +170,11 @@ export const moduleParams = () =>
   MODULES.filter((m) => isLearnTrack(m.track)).map((m) => ({ trackSlug: m.track, moduleSlug: m.slug }))
 
 /** Module pages under /interview: the interview practice track's modules. */
+/** Module pages under /interview. A module listed on another page (MODULE_HOMES) has none. */
 export const interviewModuleParams = () =>
-  MODULES.filter((m) => m.track === INTERVIEW_TRACK).map((m) => ({ moduleSlug: m.slug }))
+  MODULES.filter((m) => m.track === INTERVIEW_TRACK && !(`${m.track}/${m.slug}` in MODULE_HOMES)).map((m) => ({
+    moduleSlug: m.slug,
+  }))
 
 /**
  * One route per synced, published lesson of a Learn track. `live` lessons have no

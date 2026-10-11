@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import { ModuleProgress } from '@/components/Progress'
 import { AreaGroup, AreaHeader, AreaSection, LinkList, SuggestTopic, TextLink } from '@/components/areas/Area'
-import { LIVE, curriculumModules, moduleGroups, moduleHref } from '@/components/areas/data'
+import { LIVE, curriculumModules, moduleGroups } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { STORY_BANK } from '@/lib/editorial'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 
 /**
- * /practice: the practice index (FE-11). Links into the existing worksheet pages
- * (/modules/01-...), the behavioural round (/modules/14-...) and its Story Bank, and
- * the mock-interview module in Learn. Projects have no source yet (plan §15 Q14), so
+ * /practice: the practice index (FE-11), the one place the worksheets are listed. Links to
+ * the technical and behavioural worksheets at /practice/<slug> and the Story Bank (ENH-17),
+ * and the mock-interview module. Projects have no source yet (plan §15 Q14), so
  * the page does not mention them (audit check FV-03).
  */
 
@@ -61,13 +61,13 @@ export default async function PracticePage() {
         id="worksheets"
         title="Technical Worksheets"
         description="Customer scenarios worked from discovery to rollout. Start with Discovery Foundations; the System Design Practice set adds one dangerous constraint to each problem."
-        action={{ label: 'Open technical practice', href: moduleHref(LIVE.worksheets) }}
       >
         <ModuleProgress scenarios={worksheets.scenarios} />
         <div className="mt-5 space-y-4">
           {worksheets.groups.map((g) => (
             <AreaGroup
               key={g.id}
+              id={g.id}
               title={g.title}
               blurb={g.blurb}
               action={{ label: `${g.items.length} worksheets`, href: g.href }}
@@ -82,7 +82,6 @@ export default async function PracticePage() {
         id="behavioural"
         title="Behavioural and Leadership"
         description="Hiring manager and leadership principle questions. Each model answer shows the shape of a strong story and marks the details only you can supply."
-        action={{ label: 'Open behavioural practice', href: moduleHref(LIVE.behavioural) }}
       >
         <ModuleProgress scenarios={behavioural.scenarios} />
         <div className="mt-5 space-y-4">
@@ -94,6 +93,7 @@ export default async function PracticePage() {
           {behavioural.groups.map((g) => (
             <AreaGroup
               key={g.id}
+              id={g.id}
               title={g.title}
               blurb={g.blurb}
               action={{ label: `${g.items.length} worksheets`, href: g.href }}

@@ -14,20 +14,20 @@ If your interview loop is organised around leadership principles, this table sho
 
 | Principle | Where to practise it |
 |---|---|
-| Customer Obsession | [Customer Focus and Discovery](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery) Q1, Q4; [Pushback and Saying No](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no) Q2; [Delivery Under Pressure](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure) Q3 |
-| Ownership | [Pushback and Saying No](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no) Q3; [Delivery Under Pressure](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure) Q7; [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q1, Q9; [Scale Beyond Yourself](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself) Q4 |
-| Attracts and Retains Talent | [Leading People](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people) Q1, Q2, Q3 (optional) |
-| Communicates with Clarity | [Communication and Influence](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence) Q1, Q2, Q5, Q8 |
-| Sets High Standards | [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q4, Q5, Q6 |
-| Focuses on Outcomes | [Pushback and Saying No](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no) Q1; [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q5, Q6 |
-| Resourceful | [Scale Beyond Yourself](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself) Q5, Q7 |
-| Makes Good Decisions Quickly | [Delivery Under Pressure](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure) Q5, Q6; [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q2 |
-| Develops People | [Communication and Influence](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence) Q6; [Scale Beyond Yourself](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself) Q3; [Leading People](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people) Q4 (optional) |
-| Creates a Culture of Accountability | [Pushback and Saying No](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no) Q4; [Delivery Under Pressure](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure) Q3; [Leading People](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people) Q5, Q6 (optional) |
-| Engenders Trust | [Communication and Influence](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence) Q4; [Pushback and Saying No](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no) Q2; [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q3, Q8 |
-| Embraces Adversity | [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q1, Q2, Q3, Q7 |
-| Never Stops Learning and Growing | [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q7, Q8, Q10 |
-| Staff-Level and Cross-Cutting | [Customer Focus and Discovery](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery) Q3; [Communication and Influence](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence) Q6, Q7; [Pushback and Saying No](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no) Q1; [Delivery Under Pressure](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure) Q1; [Ownership, Standards, and Failure](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure) Q9, Q11; [Scale Beyond Yourself](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself) Q1, Q6, Q7, Q8; [Leading People](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people) Q7 (optional) |
+| Customer Obsession | [Customer Focus and Discovery](/practice/customer-focus-and-discovery) Q1, Q4; [Pushback and Saying No](/practice/pushback-and-saying-no) Q2; [Delivery Under Pressure](/practice/delivery-under-pressure) Q3 |
+| Ownership | [Pushback and Saying No](/practice/pushback-and-saying-no) Q3; [Delivery Under Pressure](/practice/delivery-under-pressure) Q7; [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q1, Q9; [Scale Beyond Yourself](/practice/scale-beyond-yourself) Q4 |
+| Attracts and Retains Talent | [Leading People](/practice/leading-people) Q1, Q2, Q3 (optional) |
+| Communicates with Clarity | [Communication and Influence](/practice/communication-and-influence) Q1, Q2, Q5, Q8 |
+| Sets High Standards | [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q4, Q5, Q6 |
+| Focuses on Outcomes | [Pushback and Saying No](/practice/pushback-and-saying-no) Q1; [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q5, Q6 |
+| Resourceful | [Scale Beyond Yourself](/practice/scale-beyond-yourself) Q5, Q7 |
+| Makes Good Decisions Quickly | [Delivery Under Pressure](/practice/delivery-under-pressure) Q5, Q6; [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q2 |
+| Develops People | [Communication and Influence](/practice/communication-and-influence) Q6; [Scale Beyond Yourself](/practice/scale-beyond-yourself) Q3; [Leading People](/practice/leading-people) Q4 (optional) |
+| Creates a Culture of Accountability | [Pushback and Saying No](/practice/pushback-and-saying-no) Q4; [Delivery Under Pressure](/practice/delivery-under-pressure) Q3; [Leading People](/practice/leading-people) Q5, Q6 (optional) |
+| Engenders Trust | [Communication and Influence](/practice/communication-and-influence) Q4; [Pushback and Saying No](/practice/pushback-and-saying-no) Q2; [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q3, Q8 |
+| Embraces Adversity | [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q1, Q2, Q3, Q7 |
+| Never Stops Learning and Growing | [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q7, Q8, Q10 |
+| Staff-Level and Cross-Cutting | [Customer Focus and Discovery](/practice/customer-focus-and-discovery) Q3; [Communication and Influence](/practice/communication-and-influence) Q6, Q7; [Pushback and Saying No](/practice/pushback-and-saying-no) Q1; [Delivery Under Pressure](/practice/delivery-under-pressure) Q1; [Ownership, Standards, and Failure](/practice/ownership-standards-and-failure) Q9, Q11; [Scale Beyond Yourself](/practice/scale-beyond-yourself) Q1, Q6, Q7, Q8; [Leading People](/practice/leading-people) Q7 (optional) |
 
 ## The insurer: two conversations in discovery
 
@@ -42,7 +42,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** discovery before design, listening to the people who do the work and the people who sign it off, turning a vague ask into concrete rules, learning from my own sequencing
 
-**Answers:** [Customer Focus and Discovery · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-1), [Customer Focus and Discovery · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-3), [Customer Focus and Discovery · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-2), [Ownership, Standards, and Failure · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-7), [Communication and Influence · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-7)
+**Answers:** [Customer Focus and Discovery · Q1](/practice/customer-focus-and-discovery#section-1), [Customer Focus and Discovery · Q3](/practice/customer-focus-and-discovery#section-3), [Customer Focus and Discovery · Q2](/practice/customer-focus-and-discovery#section-2), [Ownership, Standards, and Failure · Q7](/practice/ownership-standards-and-failure#section-7), [Communication and Influence · Q7](/practice/communication-and-influence#section-7)
 
 ## The insurer: starting narrow when the sponsor wanted wide
 
@@ -57,7 +57,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** disagreeing with a customer without losing them, framing risk in the customer's terms, scope discipline on a fixed window, focus on the one outcome that matters
 
-**Answers:** [Pushback and Saying No · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-2), [Pushback and Saying No · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-3), [Pushback and Saying No · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-1)
+**Answers:** [Pushback and Saying No · Q2](/practice/pushback-and-saying-no#section-2), [Pushback and Saying No · Q3](/practice/pushback-and-saying-no#section-3), [Pushback and Saying No · Q1](/practice/pushback-and-saying-no#section-1)
 
 ## The insurer: one agent to a supervisor
 
@@ -72,7 +72,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** calm when my own design fails, bad news delivered early and with the mechanism, deciding fast with incomplete information, changing course when the structure is the problem
 
-**Answers:** [Delivery Under Pressure · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-2), [Delivery Under Pressure · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-3), [Ownership, Standards, and Failure · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-1), [Ownership, Standards, and Failure · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-6), [Delivery Under Pressure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-5), [Ownership, Standards, and Failure · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-2), [Ownership, Standards, and Failure · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-3), [Ownership, Standards, and Failure · Q10](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-10), [Ownership, Standards, and Failure · Q8](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-8), [Scale Beyond Yourself · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-6), [Scale Beyond Yourself · Q8](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-8)
+**Answers:** [Delivery Under Pressure · Q2](/practice/delivery-under-pressure#section-2), [Delivery Under Pressure · Q3](/practice/delivery-under-pressure#section-3), [Ownership, Standards, and Failure · Q1](/practice/ownership-standards-and-failure#section-1), [Ownership, Standards, and Failure · Q6](/practice/ownership-standards-and-failure#section-6), [Delivery Under Pressure · Q5](/practice/delivery-under-pressure#section-5), [Ownership, Standards, and Failure · Q2](/practice/ownership-standards-and-failure#section-2), [Ownership, Standards, and Failure · Q3](/practice/ownership-standards-and-failure#section-3), [Ownership, Standards, and Failure · Q10](/practice/ownership-standards-and-failure#section-10), [Ownership, Standards, and Failure · Q8](/practice/ownership-standards-and-failure#section-8), [Scale Beyond Yourself · Q6](/practice/scale-beyond-yourself#section-6), [Scale Beyond Yourself · Q8](/practice/scale-beyond-yourself#section-8)
 
 ## The insurer: seeing the next ceiling coming
 
@@ -87,7 +87,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** delivering short-term without closing off the long-term, learning a mechanism from my own failure, refactoring when the pressure is real rather than speculative, innovation as finding the ceiling first
 
-**Answers:** [Delivery Under Pressure · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-7), [Ownership, Standards, and Failure · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-2), [Scale Beyond Yourself · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-7)
+**Answers:** [Delivery Under Pressure · Q7](/practice/delivery-under-pressure#section-7), [Ownership, Standards, and Failure · Q2](/practice/ownership-standards-and-failure#section-2), [Scale Beyond Yourself · Q7](/practice/scale-beyond-yourself#section-7)
 
 ## The insurer: hand-building the supervisor
 
@@ -102,7 +102,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** build-versus-buy judgement, the company's real interest over my own profile, resourcefulness with a small team, honest attribution, explaining a risk to an executive in their terms
 
-**Answers:** [Communication and Influence · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-2), [Communication and Influence · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-3), [Pushback and Saying No · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-5), [Scale Beyond Yourself · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-4), [Ownership, Standards, and Failure · Q9](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-9), [Ownership, Standards, and Failure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-5), [Scale Beyond Yourself · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-5), [Scale Beyond Yourself · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-7), [Pushback and Saying No · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-2), [Customer Focus and Discovery · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-3), [Scale Beyond Yourself · Q8](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-8)
+**Answers:** [Communication and Influence · Q2](/practice/communication-and-influence#section-2), [Communication and Influence · Q3](/practice/communication-and-influence#section-3), [Pushback and Saying No · Q5](/practice/pushback-and-saying-no#section-5), [Scale Beyond Yourself · Q4](/practice/scale-beyond-yourself#section-4), [Ownership, Standards, and Failure · Q9](/practice/ownership-standards-and-failure#section-9), [Ownership, Standards, and Failure · Q5](/practice/ownership-standards-and-failure#section-5), [Scale Beyond Yourself · Q5](/practice/scale-beyond-yourself#section-5), [Scale Beyond Yourself · Q7](/practice/scale-beyond-yourself#section-7), [Pushback and Saying No · Q2](/practice/pushback-and-saying-no#section-2), [Customer Focus and Discovery · Q3](/practice/customer-focus-and-discovery#section-3), [Scale Beyond Yourself · Q8](/practice/scale-beyond-yourself#section-8)
 
 ## The insurer: building the data foundation nobody owned
 
@@ -117,7 +117,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** ownership outside my lane, influence without authority, ramping up on a domain by building in it, winning over a sceptical team, knowing the cost of my own habits
 
-**Answers:** [Communication and Influence · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-3), [Communication and Influence · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-4), [Ownership, Standards, and Failure · Q9](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-9), [Communication and Influence · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-5), [Scale Beyond Yourself · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-5), [Customer Focus and Discovery · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-3), [Ownership, Standards, and Failure · Q11](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-11)
+**Answers:** [Communication and Influence · Q3](/practice/communication-and-influence#section-3), [Communication and Influence · Q4](/practice/communication-and-influence#section-4), [Ownership, Standards, and Failure · Q9](/practice/ownership-standards-and-failure#section-9), [Communication and Influence · Q5](/practice/communication-and-influence#section-5), [Scale Beyond Yourself · Q5](/practice/scale-beyond-yourself#section-5), [Customer Focus and Discovery · Q3](/practice/customer-focus-and-discovery#section-3), [Ownership, Standards, and Failure · Q11](/practice/ownership-standards-and-failure#section-11)
 
 ## The insurer: two checkpoints, in plain words
 
@@ -132,7 +132,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** clear communication to a non-technical audience, turning a platform constraint into a design, naming what the platform isn't good for, learning by building
 
-**Answers:** [Communication and Influence · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-2), [Communication and Influence · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-4), [Scale Beyond Yourself · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-4), [Communication and Influence · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-1), [Scale Beyond Yourself · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-7), [Ownership, Standards, and Failure · Q10](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-10)
+**Answers:** [Communication and Influence · Q2](/practice/communication-and-influence#section-2), [Communication and Influence · Q4](/practice/communication-and-influence#section-4), [Scale Beyond Yourself · Q4](/practice/scale-beyond-yourself#section-4), [Communication and Influence · Q1](/practice/communication-and-influence#section-1), [Scale Beyond Yourself · Q7](/practice/scale-beyond-yourself#section-7), [Ownership, Standards, and Failure · Q10](/practice/ownership-standards-and-failure#section-10)
 
 ## The lender: a couple of hundred tickets, three problems
 
@@ -147,7 +147,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** letting the customer's data overrule my assumptions, ramping up fast on an unfamiliar system, grounded-by-construction design, being clear about what isn't solved yet
 
-**Answers:** [Customer Focus and Discovery · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-1), [Customer Focus and Discovery · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-3), [Customer Focus and Discovery · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-2), [Scale Beyond Yourself · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-5), [Delivery Under Pressure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-5), [Ownership, Standards, and Failure · Q8](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-8), [Ownership, Standards, and Failure · Q10](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-10), [Scale Beyond Yourself · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-7)
+**Answers:** [Customer Focus and Discovery · Q1](/practice/customer-focus-and-discovery#section-1), [Customer Focus and Discovery · Q3](/practice/customer-focus-and-discovery#section-3), [Customer Focus and Discovery · Q2](/practice/customer-focus-and-discovery#section-2), [Scale Beyond Yourself · Q5](/practice/scale-beyond-yourself#section-5), [Delivery Under Pressure · Q5](/practice/delivery-under-pressure#section-5), [Ownership, Standards, and Failure · Q8](/practice/ownership-standards-and-failure#section-8), [Ownership, Standards, and Failure · Q10](/practice/ownership-standards-and-failure#section-10), [Scale Beyond Yourself · Q7](/practice/scale-beyond-yourself#section-7)
 
 ## The lender: no unreviewed writes to production
 
@@ -162,7 +162,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** the customer's interest over my own headline metric, judging what can and can't be undone, saying no with a better alternative, explaining risk in the customer's terms
 
-**Answers:** [Communication and Influence · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-2), [Pushback and Saying No · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-1), [Customer Focus and Discovery · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-4), [Delivery Under Pressure · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-6)
+**Answers:** [Communication and Influence · Q2](/practice/communication-and-influence#section-2), [Pushback and Saying No · Q1](/practice/pushback-and-saying-no#section-1), [Customer Focus and Discovery · Q4](/practice/customer-focus-and-discovery#section-4), [Delivery Under Pressure · Q6](/practice/delivery-under-pressure#section-6)
 
 ## The lender: the metric I couldn't prove
 
@@ -177,7 +177,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** honesty about limits, refusing to claim a number I can't prove, owning a shortfall, a lasting change in practice
 
-**Answers:** [Ownership, Standards, and Failure · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-1), [Ownership, Standards, and Failure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-5), [Ownership, Standards, and Failure · Q9](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-9)
+**Answers:** [Ownership, Standards, and Failure · Q1](/practice/ownership-standards-and-failure#section-1), [Ownership, Standards, and Failure · Q5](/practice/ownership-standards-and-failure#section-5), [Ownership, Standards, and Failure · Q9](/practice/ownership-standards-and-failure#section-9)
 
 ## Meridian: the zero-leak gate
 
@@ -192,7 +192,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** setting a high bar and making it mechanical, letting the customer set the standard, refusing "mostly passes" for things that fail silently, earning trust with security and compliance
 
-**Answers:** [Communication and Influence · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-5), [Ownership, Standards, and Failure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-5), [Ownership, Standards, and Failure · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-6), [Leading People · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-6), [Communication and Influence · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-4), [Ownership, Standards, and Failure · Q8](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-8), [Ownership, Standards, and Failure · Q9](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-9)
+**Answers:** [Communication and Influence · Q5](/practice/communication-and-influence#section-5), [Ownership, Standards, and Failure · Q5](/practice/ownership-standards-and-failure#section-5), [Ownership, Standards, and Failure · Q6](/practice/ownership-standards-and-failure#section-6), [Leading People · Q6](/practice/leading-people#section-6), [Communication and Influence · Q4](/practice/communication-and-influence#section-4), [Ownership, Standards, and Failure · Q8](/practice/ownership-standards-and-failure#section-8), [Ownership, Standards, and Failure · Q9](/practice/ownership-standards-and-failure#section-9)
 
 ## Meridian: the false-alarm leak
 
@@ -207,7 +207,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** holding myself to my own bar, admitting a mistake in the open, incident discipline — contain, diagnose, communicate, prevent — and trust built through disclosure
 
-**Answers:** [Ownership, Standards, and Failure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-5), [Leading People · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-6), [Ownership, Standards, and Failure · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-3), [Communication and Influence · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-4)
+**Answers:** [Ownership, Standards, and Failure · Q5](/practice/ownership-standards-and-failure#section-5), [Leading People · Q6](/practice/leading-people#section-6), [Ownership, Standards, and Failure · Q3](/practice/ownership-standards-and-failure#section-3), [Communication and Influence · Q4](/practice/communication-and-influence#section-4)
 
 ## Meridian: 22 out of 22 on 22 documents
 
@@ -222,7 +222,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** letting data overrule my own preference, saying no to the impressive option, honest limits on a good-looking result, fast decisions where the call is easy to undo
 
-**Answers:** [Ownership, Standards, and Failure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-5), [Pushback and Saying No · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-1), [Ownership, Standards, and Failure · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-6), [Delivery Under Pressure · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-6), [Ownership, Standards, and Failure · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-2), [Ownership, Standards, and Failure · Q8](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-8)
+**Answers:** [Ownership, Standards, and Failure · Q5](/practice/ownership-standards-and-failure#section-5), [Pushback and Saying No · Q1](/practice/pushback-and-saying-no#section-1), [Ownership, Standards, and Failure · Q6](/practice/ownership-standards-and-failure#section-6), [Delivery Under Pressure · Q6](/practice/delivery-under-pressure#section-6), [Ownership, Standards, and Failure · Q2](/practice/ownership-standards-and-failure#section-2), [Ownership, Standards, and Failure · Q8](/practice/ownership-standards-and-failure#section-8)
 
 ## The guardrail engine: shipping the gap in writing
 
@@ -237,7 +237,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** imperfection that's chosen, bounded and written down, doing right when nobody would notice, proving a claim rather than asserting it, learning by building
 
-**Answers:** [Ownership, Standards, and Failure · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-5), [Ownership, Standards, and Failure · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-4), [Ownership, Standards, and Failure · Q10](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-10), [Ownership, Standards, and Failure · Q9](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-9)
+**Answers:** [Ownership, Standards, and Failure · Q5](/practice/ownership-standards-and-failure#section-5), [Ownership, Standards, and Failure · Q4](/practice/ownership-standards-and-failure#section-4), [Ownership, Standards, and Failure · Q10](/practice/ownership-standards-and-failure#section-10), [Ownership, Standards, and Failure · Q9](/practice/ownership-standards-and-failure#section-9)
 
 ## Financial services: red-teaming before saying no
 
@@ -252,7 +252,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** a "no" backed by evidence I generated rather than opinion, always bringing an alternative with the no, keeping the relationship while declining scope
 
-**Answers:** [Pushback and Saying No · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-1)
+**Answers:** [Pushback and Saying No · Q1](/practice/pushback-and-saying-no#section-1)
 
 ## Beyond one engagement: patterns that travel
 
@@ -267,33 +267,33 @@ If your interview loop is organised around leadership principles, this table sho
 
 **What it proves:** multiplying other people rather than just executing, teaching the why so others can design the next one, carrying field learning back to the product, impact beyond a single project
 
-**Answers:** [Communication and Influence · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-4), [Pushback and Saying No · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-5), [Scale Beyond Yourself · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-1), [Scale Beyond Yourself · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-2), [Scale Beyond Yourself · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-3), [Scale Beyond Yourself · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-4), [Scale Beyond Yourself · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-6)
+**Answers:** [Communication and Influence · Q4](/practice/communication-and-influence#section-4), [Pushback and Saying No · Q5](/practice/pushback-and-saying-no#section-5), [Scale Beyond Yourself · Q1](/practice/scale-beyond-yourself#section-1), [Scale Beyond Yourself · Q2](/practice/scale-beyond-yourself#section-2), [Scale Beyond Yourself · Q3](/practice/scale-beyond-yourself#section-3), [Scale Beyond Yourself · Q4](/practice/scale-beyond-yourself#section-4), [Scale Beyond Yourself · Q6](/practice/scale-beyond-yourself#section-6)
 
 ## Questions that need a story of your own
 
 None of the stories above answers these honestly. Most are failure-shaped or about managing people, and a loop that hears only successes scores you as evasive. Find a real moment of your own for each.
 
-- [Customer Focus and Discovery · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/customer-focus-and-discovery#section-5) — a project you really did mis-scope, told as "I didn't ask X", not "they didn't tell me X". A multi-region migration is a likely home.
-- [Delivery Under Pressure · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-1) — a real incident at a customer site, with the hour, the decision, the recovery time and the lasting fix. A near-miss you name beats a spotless record.
-- [Delivery Under Pressure · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-3) (asked another way) — a deadline that slipped, which you raised early, with options and your own escalation path. Not a weekend rescue.
-- [Delivery Under Pressure · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-4) — a customer who went over your head, where you agreed with part of the complaint and the account recovered.
-- [Ownership, Standards, and Failure · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-2) (asked another way) — an approach you killed after real invested effort, with the evidence and the rebuild cost. The insurer's first-architecture pivot may fit if you can say how much was built and what the rebuild cost.
-- [Leading People · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-1) — a hiring loop you changed, ideally towards "prove it, don't assert it".
-- [Leading People · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-3) — a strong person at risk of leaving, and what you changed. Usually it's scope or growth, not money.
-- [Leading People · Q2](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-2) — the real channels you've sourced from, and a debrief where fixed criteria changed the outcome.
-- [Communication and Influence · Q8](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-8) — a handover that carried the task but not the customer's intent, and what you changed in how you write tickets.
-- [Leading People · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-4) — an engineer whose "technical" questions were really unresolved scope, and what changed once you coached the skill.
-- [Leading People · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-4) (asked another way) — someone you gave real blast radius, put in front of a customer, and sponsored, and where they are now.
-- [Scale Beyond Yourself · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/scale-beyond-yourself#section-3) (asked another way) — a real new joiner you brought up to speed: customer intent first, then the success bar, then design review before code.
-- [Communication and Influence · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-6) (asked another way) — hard feedback to a peer or senior, backed by a trace, a benchmark or ticket data rather than opinion.
-- [Leading People · Q5](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-5) — a direct conversation about work against an agreed bar. If you've only led as a senior IC, say so, then give the closest real example.
-- [Delivery Under Pressure · Q3](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-3) (asked another way) — a commitment you missed and raised before anyone found out. If nothing fits, the lender's unproven metric is the honest adjacent example.
-- [Pushback and Saying No · Q4](/modules/14-behavioural-and-leadership-round/fde-competencies/pushback-and-saying-no#section-4) — a customer-side dependency that really slipped, and how you showed which work was blocked instead of absorbing it.
-- [Ownership, Standards, and Failure · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/ownership-standards-and-failure#section-7) (asked another way) — harsh criticism you checked for truth before deciding how you felt about it.
-- [Communication and Influence · Q6](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-6) — a disagreement with a person, not with your own first design, settled with evidence.
-- [Leading People · Q7](/modules/14-behavioural-and-leadership-round/fde-competencies/leading-people#section-7) — work you'd rather have kept and handed over, made safe by a design review before the code existed.
-- [Delivery Under Pressure · Q1](/modules/14-behavioural-and-leadership-round/fde-competencies/delivery-under-pressure#section-1) (asked another way) — a real production incident and what you did in the first hour. The false-alarm leak is only an adjacent fallback.
-- [Communication and Influence · Q9](/modules/14-behavioural-and-leadership-round/fde-competencies/communication-and-influence#section-9) — one project of your own, told to a CFO in three minutes: translate each term as you say it, give the analogy first, and add the technical layer only if they ask for it.
+- [Customer Focus and Discovery · Q5](/practice/customer-focus-and-discovery#section-5) — a project you really did mis-scope, told as "I didn't ask X", not "they didn't tell me X". A multi-region migration is a likely home.
+- [Delivery Under Pressure · Q1](/practice/delivery-under-pressure#section-1) — a real incident at a customer site, with the hour, the decision, the recovery time and the lasting fix. A near-miss you name beats a spotless record.
+- [Delivery Under Pressure · Q3](/practice/delivery-under-pressure#section-3) (asked another way) — a deadline that slipped, which you raised early, with options and your own escalation path. Not a weekend rescue.
+- [Delivery Under Pressure · Q4](/practice/delivery-under-pressure#section-4) — a customer who went over your head, where you agreed with part of the complaint and the account recovered.
+- [Ownership, Standards, and Failure · Q2](/practice/ownership-standards-and-failure#section-2) (asked another way) — an approach you killed after real invested effort, with the evidence and the rebuild cost. The insurer's first-architecture pivot may fit if you can say how much was built and what the rebuild cost.
+- [Leading People · Q1](/practice/leading-people#section-1) — a hiring loop you changed, ideally towards "prove it, don't assert it".
+- [Leading People · Q3](/practice/leading-people#section-3) — a strong person at risk of leaving, and what you changed. Usually it's scope or growth, not money.
+- [Leading People · Q2](/practice/leading-people#section-2) — the real channels you've sourced from, and a debrief where fixed criteria changed the outcome.
+- [Communication and Influence · Q8](/practice/communication-and-influence#section-8) — a handover that carried the task but not the customer's intent, and what you changed in how you write tickets.
+- [Leading People · Q4](/practice/leading-people#section-4) — an engineer whose "technical" questions were really unresolved scope, and what changed once you coached the skill.
+- [Leading People · Q4](/practice/leading-people#section-4) (asked another way) — someone you gave real blast radius, put in front of a customer, and sponsored, and where they are now.
+- [Scale Beyond Yourself · Q3](/practice/scale-beyond-yourself#section-3) (asked another way) — a real new joiner you brought up to speed: customer intent first, then the success bar, then design review before code.
+- [Communication and Influence · Q6](/practice/communication-and-influence#section-6) (asked another way) — hard feedback to a peer or senior, backed by a trace, a benchmark or ticket data rather than opinion.
+- [Leading People · Q5](/practice/leading-people#section-5) — a direct conversation about work against an agreed bar. If you've only led as a senior IC, say so, then give the closest real example.
+- [Delivery Under Pressure · Q3](/practice/delivery-under-pressure#section-3) (asked another way) — a commitment you missed and raised before anyone found out. If nothing fits, the lender's unproven metric is the honest adjacent example.
+- [Pushback and Saying No · Q4](/practice/pushback-and-saying-no#section-4) — a customer-side dependency that really slipped, and how you showed which work was blocked instead of absorbing it.
+- [Ownership, Standards, and Failure · Q7](/practice/ownership-standards-and-failure#section-7) (asked another way) — harsh criticism you checked for truth before deciding how you felt about it.
+- [Communication and Influence · Q6](/practice/communication-and-influence#section-6) — a disagreement with a person, not with your own first design, settled with evidence.
+- [Leading People · Q7](/practice/leading-people#section-7) — work you'd rather have kept and handed over, made safe by a design review before the code existed.
+- [Delivery Under Pressure · Q1](/practice/delivery-under-pressure#section-1) (asked another way) — a real production incident and what you did in the first hour. The false-alarm leak is only an adjacent fallback.
+- [Communication and Influence · Q9](/practice/communication-and-influence#section-9) — one project of your own, told to a CFO in three minutes: translate each term as you say it, give the analogy first, and add the technical layer only if they ask for it.
 
 ## Build your own story bank
 

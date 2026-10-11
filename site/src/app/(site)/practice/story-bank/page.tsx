@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getStoryBank, getTracks } from '@/lib/content'
 import { STORY_BANK, STORY_BANK_META } from '@/lib/editorial'
-import { getModule } from '@/lib/registry'
+import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import type { ReadingDocument, ReadingSection } from '@/lib/reading'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { ReadingPanel } from '@/components/CaseStudyView'
@@ -14,36 +14,20 @@ import { Byline } from '@/components/Byline'
  * The behavioural Story Bank (CONTENT-15): markdown from
  * `04_Behavioral_and_Leadership/story_bank.md`, synced to
  * `content/behavioural/` and rendered with the same reading panel as the case studies.
- * It lives under the behavioural module, beside its two tracks; the static `story-bank`
- * segment takes precedence over the `[track]` route.
+ * It lives at /practice/story-bank beside the worksheets it answers (ENH-17); the static
+ * `story-bank` segment takes precedence over the `[worksheetSlug]` route.
  */
-
-type Params = { module: string }
-
-export const dynamicParams = false
-
-export function generateStaticParams() {
-  return [{ module: STORY_BANK.moduleId }]
-}
 
 export const metadata: Metadata = pageMetadata({ path: STORY_BANK.href, title: STORY_BANK.title, description: STORY_BANK.blurb })
 
-export default async function StoryBankPage({ params }: { params: Promise<Params> }) {
-  const { module: moduleId } = await params
-  const mod = getModule(moduleId)
+export default async function StoryBankPage() {
   const bank = await getStoryBank()
-  if (moduleId !== STORY_BANK.moduleId || !mod || !bank) notFound()
-  const tracks = await getTracks(moduleId)
+  if (!bank) notFound()
+  const tracks = await getTracks(STORY_BANK.moduleId)
 
   return (
     <div className="py-10">
-      <nav aria-label="Breadcrumb" className="no-print mb-6 flex flex-wrap items-center gap-1.5 text-[0.8125rem] text-subtle">
-        <Link href={`/modules/${moduleId}`} className="transition-colors hover:text-text">
-          {mod.title}
-        </Link>
-        <span aria-hidden>/</span>
-        <span className="text-muted">{STORY_BANK.title}</span>
-      </nav>
+      <Breadcrumbs items={[{ label: 'Practice', href: '/practice' }, { label: STORY_BANK.title }]} />
 
       <header className="mb-10 max-w-3xl">
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{STORY_BANK.title}</h1>
@@ -98,7 +82,7 @@ export default async function StoryBankPage({ params }: { params: Promise<Params
           {tracks.map((track) => (
             <Link
               key={track.id}
-              href={`/modules/${moduleId}#${track.id}`}
+              href={`/practice#${track.id}`}
               className="text-accent hover:text-accent-hover"
             >
               {track.title} →

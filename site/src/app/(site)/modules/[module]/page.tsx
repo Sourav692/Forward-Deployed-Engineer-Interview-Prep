@@ -7,7 +7,7 @@ import { ModuleProgress, ScenarioList } from '@/components/Progress'
 import { MetaStrip } from '@/components/PageIntro'
 import { STORY_BANK } from '@/lib/editorial'
 import { pageMetadata } from '@/lib/seo'
-import { CASEBOOK_MODULE } from '@/lib/scenario'
+import { MODULE_AREAS } from '@/lib/scenario'
 
 const BEHAVIORAL_MODULE = '14-behavioural-and-leadership-round'
 const COMPANY_PREP_MODULE = '16-company-oriented-prep'
@@ -15,9 +15,10 @@ const COMPANY_PREP_MODULE = '16-company-oriented-prep'
 // Any other param is a 404 at routing time, served as the prerendered not-found page.
 export const dynamicParams = false
 
-// The casebook's index is /design (ENH-16); /modules/15-… redirects there.
+// Modules served by an area (/design, /practice) have no page here; their old URLs
+// redirect. Only company prep (module 16) would render here once published.
 export function generateStaticParams() {
-  return MODULES.filter((m) => m.status === 'live' && m.id !== CASEBOOK_MODULE).map((m) => ({ module: m.id }))
+  return MODULES.filter((m) => m.status === 'live' && !(m.id in MODULE_AREAS)).map((m) => ({ module: m.id }))
 }
 
 export async function generateMetadata({
@@ -37,7 +38,7 @@ export default async function ModulePage({
 }) {
   const { module: moduleId } = await params
   const meta = getModule(moduleId)
-  if (!meta || meta.status !== 'live' || moduleId === CASEBOOK_MODULE) notFound()
+  if (!meta || meta.status !== 'live' || moduleId in MODULE_AREAS) notFound()
 
   const tracks = await getTracks(moduleId)
   // Scoped to this module: `getAllScenarios()` spans every live module, and the
@@ -49,7 +50,7 @@ export default async function ModulePage({
   return (
     <div className="py-12">
       <Link
-        href={meta.kind === 'reading' ? '/' : '/#practice'}
+        href={meta.kind === 'reading' ? '/' : '/practice'}
         className="mb-6 inline-flex items-center gap-1.5 text-[0.8125rem] text-subtle transition-colors hover:text-text"
       >
         ← {meta.kind === 'reading' ? 'Home' : 'All practice'}
