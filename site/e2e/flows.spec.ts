@@ -415,6 +415,23 @@ test('final week: a review keeps saved progress, opens its recall card tab, and 
   await expect(practice.getByRole('link').first()).toHaveAttribute('href', /^\/practice\//)
 })
 
+// ENH-21: design and worksheet twins, and a Learn classic design and its case, link both
+// ways under the same labels, which also mark twins on the list pages.
+test('twins: designs, worksheets and classic designs link both ways', async ({ page }) => {
+  const twin = (label: string) => page.locator('p', { hasText: `${label}:` }).getByRole('link')
+  const classic = '/learn/ai-systems-design/classic-ai-designs/logistics-exceptions-designing-around-a-policy-gate'
+  await page.goto('/design/sales-copilot')
+  await expect(twin('Practise this as a worksheet')).toHaveAttribute('href', '/practice/sales-copilot')
+  await page.goto('/practice/sales-copilot')
+  await expect(twin('Read the worked design')).toHaveAttribute('href', '/design/sales-copilot')
+  await page.goto('/design/logistics-exception-handling')
+  await expect(twin('Read the classic design')).toHaveAttribute('href', classic)
+  await page.goto(classic)
+  await expect(twin('Read the worked design')).toHaveAttribute('href', '/design/logistics-exception-handling')
+  await page.goto('/design')
+  await expect(page.getByRole('link', { name: 'Practise this as a worksheet →' }).first()).toHaveAttribute('href', /^\/practice\//)
+})
+
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
 // unmatched URL and for an unknown param on a prerendered route.
 for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case', '/practice/no-such-worksheet']) {

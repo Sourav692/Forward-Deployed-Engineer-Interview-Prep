@@ -3,7 +3,8 @@ import type { Metadata } from 'next'
 import { familyMeta, getAllScenarios, getRelated, getScenario } from '@/lib/content'
 import { MODES } from '@/lib/editorial'
 import { ScenarioView } from '@/components/ScenarioView'
-import { BeforeYouStart, MetaStrip, WhereNext } from '@/components/PageIntro'
+import { BeforeYouStart, MetaStrip, TwinLinks, WhereNext } from '@/components/PageIntro'
+import { pageTwins } from '@/lib/twins'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref } from '@/lib/scenario'
 import { learningResourceJsonLd, pageMetadata } from '@/lib/seo'
@@ -55,7 +56,7 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
   if (!scenario) notFound()
   const { ref } = scenario
   const meta = familyMeta(ref.trackId)
-  const related = await getRelated(ref)
+  const [related, twins] = await Promise.all([getRelated(ref), pageTwins(ref)])
 
   return (
     <div className="py-10">
@@ -80,6 +81,7 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
         <div className="mb-2 text-[0.8125rem] font-semibold text-accent">{ref.trackTitle}</div>
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{scenario.title}</h1>
         <Byline updated={ref.updated} report={{ title: scenario.title, path: scenarioHref(ref) }} />
+        <TwinLinks links={twins} />
         <div className="mt-3">
           <MetaStrip
             meta={meta}

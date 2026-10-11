@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { familyMeta, getRelated } from '@/lib/content'
 import { scenarioHref, type CaseStudy } from '@/lib/scenario'
 import { learningResourceJsonLd } from '@/lib/seo'
@@ -6,7 +5,8 @@ import { JsonLd } from '@/components/JsonLd'
 import { Byline } from '@/components/Byline'
 import { CaseStudyView } from '@/components/CaseStudyView'
 import { Breadcrumbs, type Crumb } from '@/components/learn/Breadcrumbs'
-import { BeforeYouStart, Fact, MetaStrip, WhereNext } from '@/components/PageIntro'
+import { BeforeYouStart, Fact, MetaStrip, TwinLinks, WhereNext } from '@/components/PageIntro'
+import { pageTwins } from '@/lib/twins'
 
 export const caseDescription = (study: CaseStudy) =>
   study.ref.moduleId === '16-company-oriented-prep'
@@ -27,7 +27,7 @@ export async function CaseStudyPage({
   partOf: { name: string; path: string }
 }) {
   const meta = familyMeta(study.ref.trackId)
-  const related = await getRelated(study.ref)
+  const [related, twins] = await Promise.all([getRelated(study.ref), pageTwins(study.ref)])
   const minutes = study.docs.reduce((sum, d) => sum + d.minutes, 0)
 
   return (
@@ -48,6 +48,7 @@ export async function CaseStudyPage({
         <div className="mb-2 text-[0.8125rem] font-semibold text-accent">{study.ref.trackTitle}</div>
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{study.title}</h1>
         <Byline updated={study.ref.updated} report={{ title: study.title, path: scenarioHref(study.ref) }} />
+        <TwinLinks links={twins} />
         <div className="mt-3">
           <MetaStrip
             meta={meta}
@@ -82,9 +83,6 @@ export async function CaseStudyPage({
  * repeating it.
  */
 function ReadingOrder({ study }: { study: CaseStudy }) {
-  // `practice` is the twin worksheet's `track/slug` in module 01.
-  const [trackId, slug] = study.ref.practice?.split('/') ?? []
-  const practice = slug && scenarioHref({ moduleId: '01-customer-discovery-and-decomposition', trackId, slug })
   return (
     <>
       {study.docs.length > 1 && (
@@ -112,19 +110,6 @@ function ReadingOrder({ study }: { study: CaseStudy }) {
           </>
         ) : (
           'This case does not cite external sources; treat vendor-specific details as illustrative.'
-        )}
-        {practice && (
-          <>
-            {' '}
-            An{' '}
-            <Link
-              href={practice}
-              className="text-accent hover:text-accent-hover"
-            >
-              interactive Practice Worksheet
-            </Link>{' '}
-            saves your answers as you type.
-          </>
         )}
       </Fact>
     </>

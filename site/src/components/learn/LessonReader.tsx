@@ -3,6 +3,8 @@ import { formatMinutes, type LessonPage } from '@/lib/learn'
 import type { ReadingSection } from '@/lib/reading'
 import { Byline } from '@/components/Byline'
 import { LessonTabs } from '@/components/learn/LessonTabs'
+import { TwinLinks } from '@/components/PageIntro'
+import type { TwinLink } from '@/lib/twins'
 
 /**
  * A final-week review's "One-Page Memory Card" H2 opens a second tab, Recall card (owner
@@ -22,7 +24,7 @@ const RECALL_CARD = /^One-Page Memory Card\b/
  * note ("From the FDE Handbook") and, for third-party material (`publish: 'credited'`),
  * the credit line.
  */
-export function LessonReader({ page }: { page: LessonPage }) {
+export function LessonReader({ page, twins = [] }: { page: LessonPage; twins?: TwinLink[] }) {
   const { lesson, doc, sourceNote, creditHtml } = page
   const card = doc.sections.findIndex((s) => s.title && RECALL_CARD.test(s.title))
   return (
@@ -34,6 +36,7 @@ export function LessonReader({ page }: { page: LessonPage }) {
           {lesson.title}
         </h1>
         <Byline updated={lesson.updated} report={{ title: lesson.title, path: lesson.href }} />
+        <TwinLinks links={twins} />
         <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
           {lesson.estMinutes ? <span>{formatMinutes(lesson.estMinutes)} read</span> : null}
           {lesson.estMinutes && sourceNote ? <span aria-hidden="true">·</span> : null}

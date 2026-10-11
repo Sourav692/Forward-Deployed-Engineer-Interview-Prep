@@ -10,6 +10,7 @@ import { LessonReader } from '@/components/learn/LessonReader'
 import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { LessonSideNav } from '@/components/learn/LessonSideNav'
 import { ReviewLinks } from '@/components/learn/ReviewLinks'
+import { lessonTwins } from '@/lib/twins'
 import { MockScorer } from '@/components/progress/MockScorer'
 import { MockTimer } from '@/components/progress/MockTimer'
 import { MOCK_METHOD_LESSON, MOCK_MINUTES, MOCK_MODULE } from '@/components/progress/mock-rubric'
@@ -110,7 +111,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             </div>
           )}
 
-          <LessonReader page={page} />
+          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} />
 
           {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} />}
 

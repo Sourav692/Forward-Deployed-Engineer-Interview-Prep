@@ -77,7 +77,6 @@ export const getAllScenarios = cache(async (): Promise<ScenarioRef[]> => {
         title: scenario.title,
         order: scenario.order,
         tabs: scenario.tabs,
-        practice: scenario.practice,
         updated: scenario.updated,
         reading: module.kind === 'reading',
       })),

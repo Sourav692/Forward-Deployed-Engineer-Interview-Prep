@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T13:03:06.569Z",
+  "generatedAt": "2026-10-11T13:14:38.714Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -780,7 +780,6 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/ai-system-for-an-air-gapped-environment",
               "updated": "2026-10-11"
             },
             {
@@ -801,7 +800,6 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/reliable-workflow-orchestration-system",
               "updated": "2026-10-11"
             },
             {
@@ -822,7 +820,6 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/configurable-platform-customer-specific-workflows",
               "updated": "2026-10-11"
             },
             {
@@ -843,7 +840,6 @@
                   "label": "Tutorial"
                 }
               ],
-              "practice": "system-design/enterprise-chatbot-platform",
               "updated": "2026-10-11"
             },
             {

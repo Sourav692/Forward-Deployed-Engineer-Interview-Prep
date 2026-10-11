@@ -3,6 +3,7 @@ import 'server-only'
 import { getAllScenarios, getTracks } from '@/lib/content'
 import { MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
 import type { CurriculumModule, ModuleStatus } from '@/lib/curriculum-types'
+import { RELATED_CASE, RELATED_PRACTICE, TWIN_LABEL } from '@/lib/editorial'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import type { LinkItem } from './Area'
 
@@ -35,6 +36,12 @@ export type TrackGroup = {
 export async function moduleGroups(moduleId: string): Promise<{ groups: TrackGroup[]; scenarios: ScenarioRef[] }> {
   const [tracks, all] = await Promise.all([getTracks(moduleId), getAllScenarios()])
   const scenarios = all.filter((s) => s.moduleId === moduleId)
+  // A design or worksheet with a twin names it under the same label as its page (ENH-21).
+  const twinOf = (s: ScenarioRef): LinkItem['twin'] => {
+    const other = RELATED_CASE[`${s.trackId}/${s.slug}`] ?? RELATED_PRACTICE[`${s.trackId}/${s.slug}`]
+    const twin = other && all.find((t) => `${t.trackId}/${t.slug}` === other)
+    return twin ? { href: scenarioHref(twin), label: twin.reading ? TWIN_LABEL.design : TWIN_LABEL.worksheet } : undefined
+  }
   const groups = tracks.map((track) => ({
     id: track.id,
     title: track.title,
@@ -42,7 +49,7 @@ export async function moduleGroups(moduleId: string): Promise<{ groups: TrackGro
     href: trackAnchor(moduleId, track.id),
     items: scenarios
       .filter((s) => s.trackId === track.id)
-      .map((s) => ({ href: scenarioHref(s), title: qualifiedTitle(s) })),
+      .map((s) => ({ href: scenarioHref(s), title: qualifiedTitle(s), twin: twinOf(s) })),
   }))
   return { groups, scenarios }
 }

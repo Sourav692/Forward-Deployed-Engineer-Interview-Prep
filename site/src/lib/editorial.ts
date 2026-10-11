@@ -710,10 +710,11 @@ export function reviewsFor(ref: string): Review[] {
 }
 
 /**
- * Practice worksheets and the case study that works the same problem space in full.
- * Keyed by practice `track/slug`, valued by case-study `track/slug`. The first five
- * are the same scenario published twice; the rest are close relatives. Each page
- * links to the other.
+ * Practice worksheets and the case study that works the same problem space in full: the
+ * one list of design–worksheet twins. Keyed by practice `track/slug`, valued by
+ * case-study `track/slug`. The first five are the same scenario published twice; the
+ * rest are close relatives. Each page, and each list page, links to the other under
+ * TWIN_LABEL (ENH-21).
  */
 export const RELATED_CASE: Record<string, string> = {
   'system-design/secure-multi-tenant-ai-platform': 'platforms-and-scale/secure-multi-tenant-ai-platform',
@@ -735,6 +736,22 @@ export const RELATED_CASE: Record<string, string> = {
 export const RELATED_PRACTICE: Record<string, string> = Object.fromEntries(
   Object.entries(RELATED_CASE).map(([p, c]) => [c, p]),
 )
+
+/** The twin links' labels: the same words on the pages, their foot and the list pages. */
+export const TWIN_LABEL = {
+  worksheet: 'Practise this as a worksheet',
+  design: 'Read the worked design',
+  classic: 'Read the classic design',
+} as const
+
+/**
+ * Classic designs in Learn (T5.4) that a casebook case works in full: lesson slug → case
+ * `track/slug`. The lesson and the case link to each other (ENH-21).
+ */
+export const CLASSIC_DESIGN_CASE: Record<string, string> = {
+  'recruiting-platform-explainable-ranking-human-decisions': 'standalone-designs/recruiting-platform',
+  'logistics-exceptions-designing-around-a-policy-gate': 'agents-that-act/logistics-exception-handling',
+}
 
 /**
  * Content-type qualifier appended where a scenario name is not unique across the site —
