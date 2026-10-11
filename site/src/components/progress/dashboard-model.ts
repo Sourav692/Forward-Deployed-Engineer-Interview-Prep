@@ -88,7 +88,7 @@ export function remedyFor(id: InterviewInput, sheets: CompetencySheet[], modules
     const withCheckpoint = modules.filter((m) => m.checkpoint)
     const pick = withCheckpoint.find((m) => !taken.has(m.slug)) ?? withCheckpoint.find((m) => taken.get(m.slug) === false)
     const mod = pick && moduleBySlug.get(pick.slug)
-    return mod ? { label: `${mod.code} checkpoint`, href: `${moduleHref(mod)}#checkpoint` } : null
+    return mod ? { label: `${mod.title} checkpoint`, href: `${moduleHref(mod)}#checkpoint` } : null
   }
   if (id === 'behavioural') {
     const statuses = sheetStatuses(sheets)
@@ -165,10 +165,10 @@ export function nextUp(modules: ModuleInput[], path: LearningPath | null, now = 
       module: revision.module,
       reason:
         revision.reason === 'failed-checkpoint'
-          ? `Your last ${revision.module.code} checkpoint did not pass. Review the module, then take it again.`
+          ? `Your last ${revision.module.title} checkpoint did not pass. Review the module, then take it again.`
           : revision.reason === 'checkpoint-due'
-            ? `Your ${revision.module.code} checkpoint pass is due for a re-check.`
-            : `${revision.module.code} needs a review: your confidence is low or out of date.`,
+            ? `Your ${revision.module.title} checkpoint pass is due for a re-check.`
+            : `${revision.module.title} needs a review: your confidence is low or out of date.`,
       action: 'Review now',
       href: revisionHref(revision),
     }
@@ -256,12 +256,12 @@ export function describeActivity(e: ActivityEvent): { text: string; href?: strin
   switch (e.kind) {
     case 'lesson-read': {
       const lesson = e.itemId.split('/')[1]
-      return { text: `Read “${e.label ?? lesson}”${mod ? ` · ${mod.code}` : ''}`, href: mod && curriculumHref(mod.track, mod.slug, lesson) }
+      return { text: `Read “${e.label ?? lesson}”${mod ? ` · ${mod.title}` : ''}`, href: mod && curriculumHref(mod.track, mod.slug, lesson) }
     }
     case 'confidence-set':
-      return { text: `${mod ? `${mod.code} ${mod.title}` : e.itemId}: ${e.label ?? 'confidence rated'}`, href: mod && moduleHref(mod) }
+      return { text: `${mod ? mod.title : e.itemId}: ${e.label ?? 'confidence rated'}`, href: mod && moduleHref(mod) }
     case 'module-opened-anyway':
-      return { text: `Opened ${mod ? mod.code : e.itemId} before its prerequisites`, href: mod && moduleHref(mod) }
+      return { text: `Opened ${mod ? mod.title : e.itemId} before its prerequisites`, href: mod && moduleHref(mod) }
     case 'path-chosen': {
       const path = getPathById(e.itemId)
       return { text: `Chose the ${path?.title ?? e.itemId} path`, href: `/start/paths/${e.itemId}` }

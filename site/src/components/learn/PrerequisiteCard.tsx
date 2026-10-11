@@ -18,7 +18,7 @@ import { isCompleted, isRead, prerequisiteCheck, type ModuleInput } from './prog
 import { COPY } from './copy'
 import { Tick } from './ProgressIslands'
 
-export type PrereqMeta = { slug: string; code: string; title: string; href: string }
+export type PrereqMeta = { slug: string; title: string; href: string }
 
 export function PrerequisiteCard({ input, meta }: { input: ModuleInput; meta: PrereqMeta[] }) {
   const state = useProgress(() => {
@@ -71,7 +71,7 @@ export function PrerequisiteCard({ input, meta }: { input: ModuleInput; meta: Pr
           return (
             <li key={p.slug} className="flex flex-wrap items-baseline gap-x-2 text-sm">
               <Link href={m.href} className="font-semibold text-text underline underline-offset-2 hover:text-accent">
-                {m.code} {m.title}
+                {m.title}
               </Link>
               <span className="text-muted">
                 {p.total ? `${p.read} of ${p.total} lessons read` : 'No lessons yet'}

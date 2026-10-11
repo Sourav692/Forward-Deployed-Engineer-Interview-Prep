@@ -14,9 +14,9 @@
  */
 import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
 import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
-import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
+import { REVIEWS, TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
-import { MODULE_AREAS } from '../src/lib/scenario.ts'
+import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -226,6 +226,24 @@ for (const [from, to] of Object.entries(RETIRED_MODULES)) {
       m.tracks.flatMap((t) => t.scenarios.map((s) => s.slug)),
     )
     unique(`${area} page`, area === '/practice' ? [...slugs, 'story-bank'] : slugs)
+  }
+
+  // One name per thing (ENH-20): a listing shows the same title as the page it opens.
+  // A `live` lesson is listed under its curriculum title but opens a case or worksheet,
+  // and a review is listed under its REVIEWS title but opens its final-week lesson.
+  const pageTitle = new Map<string, string>()
+  for (const m of site.modules) {
+    for (const t of m.tracks) for (const sc of t.scenarios) pageTitle.set(scenarioHref({ moduleId: m.id, trackId: t.id, slug: sc.slug }), sc.title)
+  }
+  const learn = JSON.parse(readFileSync(resolve(import.meta.dirname, '../content/learn/manifest.json'), 'utf8')).lessons as { slug: string; kind: string; href: string; title: string }[]
+  for (const l of learn) {
+    const title = l.kind === 'live' ? pageTitle.get(l.href.split('#')[0]) : undefined
+    if (title && title !== l.title) fail(`lesson ${l.slug}: listed as "${l.title}" but its page is titled "${title}"; use the page title in curriculum.ts`)
+  }
+  for (const r of REVIEWS) {
+    const lesson = lessonBySlug.get(r.dir)
+    if (!lesson) fail(`review ${r.number}: no lesson "${r.dir}"`)
+    else if (lesson.title !== r.title) fail(`review ${r.number}: titled "${r.title}" in editorial.ts but its lesson is "${lesson.title}"`)
   }
 }
 

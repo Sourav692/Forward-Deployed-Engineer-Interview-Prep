@@ -106,7 +106,7 @@ export function Diagnostic({ modules }: { modules: Record<string, ModuleRef> }) 
                 .map((slug) => (
                   <li key={slug}>
                     <Link href={modules[slug].href} className={cx('rounded-sm text-accent underline underline-offset-2', focusRing)}>
-                      {modules[slug].code} {modules[slug].title}
+                      {modules[slug].title}
                     </Link>
                   </li>
                 ))}
@@ -137,7 +137,7 @@ export function Diagnostic({ modules }: { modules: Record<string, ModuleRef> }) 
         )}
 
         <div className="mt-6 flex flex-wrap gap-2">
-          <Button onClick={follow}>{start ? `Start first module: ${start.code}` : 'Choose this path'}</Button>
+          <Button onClick={follow}>{start ? `Start first module: ${start.title}` : 'Choose this path'}</Button>
           <LinkButton href={`/start/paths/${path.id}`} variant="secondary">
             See the full path
           </LinkButton>

@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   // The root layout's template appends "· Forward Deployed".
   return pageMetadata({
     path: page.lesson.href,
-    title: `${page.lesson.title} · ${page.module.code}`,
+    title: `${page.lesson.title} · ${page.module.title}`,
     ogTitle: page.lesson.title,
     description: capitalise(page.module.objective),
     type: 'article',
@@ -62,7 +62,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
         data={[
           breadcrumbJsonLd([
             ...trail.map((c) => ({ name: c.label, path: c.href })),
-            { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
+            { name: mod.title, path: learnHref.module(mod) },
             { name: lesson.title, path: lesson.href },
           ]),
           learningResourceJsonLd({
@@ -70,7 +70,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             description: capitalise(mod.objective),
             path: lesson.href,
             minutes: lesson.estMinutes,
-            partOf: { name: `${mod.code} ${mod.title}`, path: learnHref.module(mod) },
+            partOf: { name: mod.title, path: learnHref.module(mod) },
           }),
         ]}
       />
@@ -78,7 +78,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
         items={[
           ...trail,
           ...sectionCrumb,
-          { label: `${mod.code} ${mod.title}`, href: learnHref.module(mod) },
+          { label: mod.title, href: learnHref.module(mod) },
           { label: lesson.title },
         ]}
       />
@@ -87,7 +87,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
         <div className="min-w-0">
           <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg border border-border bg-surface px-3 py-2">
             <Link href={learnHref.module(mod)} className={cx('rounded-sm text-[0.8125rem] font-semibold hover:text-accent', focusRing)}>
-              {mod.code} {mod.title}
+              {mod.title}
             </Link>
             {index >= 0 && (
               <span className="text-[0.8125rem] text-subtle">
@@ -133,12 +133,12 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             {prev ? (
               <NavLink href={prev.href} dir="prev" label={prev.title} />
             ) : (
-              <NavLink href={learnHref.module(mod)} dir="prev" label={`${mod.code} overview`} />
+              <NavLink href={learnHref.module(mod)} dir="prev" label={`${mod.title} overview`} />
             )}
             {next ? (
               <NavLink href={next.href} dir="next" label={next.title} />
             ) : (
-              <NavLink href={learnHref.module(mod)} dir="next" label={`Back to ${mod.code}`} />
+              <NavLink href={learnHref.module(mod)} dir="next" label={`Back to ${mod.title}`} />
             )}
           </nav>
         </div>

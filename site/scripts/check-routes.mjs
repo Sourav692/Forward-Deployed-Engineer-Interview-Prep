@@ -12,7 +12,8 @@
  *    one it has not already seen. Redirects are not followed: a 3xx counts as
  *    reachable (intentional redirects such as /learn/interview-practice).
  * 3. Fails on any 4xx/5xx or network error, listing the page that linked to it.
- * 4. Fails when a sitemap page lacks exactly one canonical link to itself, an
+ * 4. Fails when a sitemap page's <title> or <h1> carries a code (T2.4, I3, G07, #19,
+ *    Review 05; ENH-20), or lacks exactly one canonical link to itself, an
  *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10),
  *    or when a lesson, case or worksheet lacks its "By … · Last updated …" line (PQ-15),
  *    or one of those content pages lacks a report link (PR-15).
@@ -103,9 +104,22 @@ function decode(path) {
   }
 }
 
+/**
+ * Codes that must not reach a page's <title> or <h1> (ENH-20, PQ-08): track and module
+ * codes (T2.4, I3), scenario packs (G07), case numbers (#19) and review numbers. Codes
+ * stay as small tags on Learn cards and module eyebrows only. `&#8217;` is an entity.
+ */
+const CODE = /\bT\d+\.\d+\b|\bI\d\b|\bG\d\d\b|(?<![&\w])#\d+|\bReview \d+/
+
 /** Head tags and headings every public page needs. */
 function headProblems(path, html) {
   const problems = []
+  const title = html.match(/<title>([^<]*)<\/title>/)?.[1] ?? ''
+  const heading = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? '').replace(/<[^>]+>/g, '')
+  for (const [tag, text] of [['<title>', title], ['<h1>', heading]]) {
+    const code = text.match(CODE)?.[0]
+    if (code) problems.push(`${tag} carries the code "${code}" (${text.trim().slice(0, 80)})`)
+  }
   const canonical = [...html.matchAll(/<link\b[^>]*\brel="canonical"[^>]*>/g)].map((m) => m[0].match(/\bhref="([^"]*)"/)?.[1] ?? '')
   if (canonical.length !== 1) problems.push(`${canonical.length} canonical links`)
   else if (decode(new URL(canonical[0], BASE).pathname) !== decode(path)) problems.push(`canonical ${canonical[0]} is another page`)

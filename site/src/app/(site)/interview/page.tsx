@@ -44,7 +44,7 @@ export default function InterviewPage() {
   return (
     <div className="py-12">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Interview', path: '/interview' }])} />
-      <AreaHeader eyebrow="Interview" title="Get Ready for the Loop">
+      <AreaHeader eyebrow="Get ready for the loop" title="Interview">
         <p>
           The last stretch before an interview: full practice rounds under time, scored against a rubric, and condensed
           revision of what you already know.

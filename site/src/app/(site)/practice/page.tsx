@@ -33,7 +33,7 @@ export default async function PracticePage() {
   return (
     <div className="py-12">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Practice', path: '/practice' }])} />
-      <AreaHeader eyebrow="Practice" title="Practise Under Interview Conditions">
+      <AreaHeader eyebrow="Practise under interview conditions" title="Practice">
         <p>
           Reading a strong answer is not the same as giving one. Each worksheet hands you a customer problem to work
           section by section, then shows what a strong answer covers so you can score yourself honestly. Behavioural

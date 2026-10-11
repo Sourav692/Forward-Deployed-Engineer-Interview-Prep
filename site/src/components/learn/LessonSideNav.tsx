@@ -4,6 +4,7 @@ import { learnHref, trackLabel, type LearnLesson } from '@/lib/learn'
 import type { ReadingDocument } from '@/lib/reading'
 import { cx, focusRing } from '@/components/ui'
 import { LessonToc, type TocHeading } from './LessonToc'
+import { moduleTag } from '@/lib/curriculum-href'
 
 /**
  * Lesson-page sidebar: the module's lessons in order, with the current lesson
@@ -32,7 +33,7 @@ export function LessonSideNav({
     .map((s) => ({ id: s.id, html: s.title }))
 
   const body = (
-    <nav aria-label={`${mod.code} ${mod.title}: lessons and contents`} className="text-[0.8125rem]">
+    <nav aria-label={`${mod.title}: lessons and contents`} className="text-[0.8125rem]">
       <Link
         href={learnHref.track(track.slug)}
         className={cx('inline-flex rounded-sm px-2 py-1 text-xs text-muted hover:text-accent', focusRing)}
@@ -44,7 +45,7 @@ export function LessonSideNav({
         href={learnHref.module(mod)}
         className={cx('mt-1 flex items-start gap-2 rounded-md px-2 py-1 font-semibold hover:text-accent', focusRing)}
       >
-        <span className="w-9 shrink-0 tabular-nums text-subtle">{mod.code}</span>
+        {moduleTag(mod) && <span className="w-9 shrink-0 tabular-nums text-subtle">{moduleTag(mod)}</span>}
         <span className="min-w-0 flex-1">{mod.title}</span>
       </Link>
 
@@ -83,7 +84,7 @@ export function LessonSideNav({
     <>
       <details className="no-print mb-6 rounded-lg border border-border bg-surface lg:hidden">
         <summary className={cx('cursor-pointer rounded-lg px-4 py-3 text-sm font-semibold', focusRing)}>
-          {mod.code} lessons and contents
+          Lessons and contents
         </summary>
         <div className="border-t border-border p-3">{body}</div>
       </details>

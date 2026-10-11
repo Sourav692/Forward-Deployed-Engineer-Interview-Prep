@@ -76,7 +76,6 @@ export const getAllScenarios = cache(async (): Promise<ScenarioRef[]> => {
         slug: scenario.slug,
         title: scenario.title,
         order: scenario.order,
-        tag: scenario.tag,
         tabs: scenario.tabs,
         practice: scenario.practice,
         updated: scenario.updated,
@@ -388,7 +387,7 @@ export const getContentSearchEntries = cache(async (): Promise<ContentSearchEntr
         for (const section of doc.sections) {
           if (!section.title) continue
           area.push({
-            title: `${ref.tag} · ${qualifiedTitle(ref)}`,
+            title: qualifiedTitle(ref),
             section: toPlainText(section.title),
             kind: label,
             href: `${href}#${section.id}`,

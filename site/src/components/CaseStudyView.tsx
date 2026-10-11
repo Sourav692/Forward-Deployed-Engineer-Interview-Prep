@@ -196,7 +196,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
             href={scenarioHref(study.prev)}
             className="group rounded-lg border border-border bg-surface p-4 transition-colors hover:border-border-strong"
           >
-            <div className="mb-1 text-[0.75rem] text-subtle">← Previous · {study.prev.tag}</div>
+            <div className="mb-1 text-[0.75rem] text-subtle">← Previous</div>
             <div className="text-[0.9375rem] font-medium group-hover:text-accent">
               {qualifiedTitle(study.prev)}
             </div>
@@ -209,7 +209,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
             href={scenarioHref(study.next)}
             className="group rounded-lg border border-border bg-surface p-4 text-right transition-colors hover:border-border-strong sm:col-start-2"
           >
-            <div className="mb-1 text-[0.75rem] text-subtle">Next · {study.next.tag} →</div>
+            <div className="mb-1 text-[0.75rem] text-subtle">Next →</div>
             <div className="text-[0.9375rem] font-medium group-hover:text-accent">
               {qualifiedTitle(study.next)}
             </div>

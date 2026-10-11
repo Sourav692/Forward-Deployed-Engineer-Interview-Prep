@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { FLAG_HELP, FLAG_ORDER, PATHS, getPathById, pathVariants, personaFor } from '@/lib/paths'
-import { isLearnTrack } from '@/lib/curriculum-href'
+import { moduleTag, trackTag } from '@/lib/curriculum-href'
 import { getModuleBySlug, getTracks, learnHref, moduleInput, trackModules } from '@/lib/learn'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { PathFlag } from '@/components/learn/PathFlag'
@@ -83,7 +83,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
         </div>
 
         {start && (
-          <ChoosePathPanel pathId={path.id} startHref={learnHref.module(start)} startLabel={`${start.code} ${start.title}`} />
+          <ChoosePathPanel pathId={path.id} startHref={learnHref.module(start)} startLabel={start.title} />
         )}
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -128,9 +128,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
                 <li key={track.slug}>
                   <h3 className="flex flex-wrap items-baseline gap-2 text-base font-semibold">
                     {/* Only Learn tracks have a code; the interview track's title says what it is. */}
-                    {isLearnTrack(track.slug) && (
-                      <span className="text-xs font-semibold tabular-nums text-subtle">{track.code}</span>
-                    )}
+                    {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
                     <Link href={learnHref.track(track.slug)} className={cx('rounded-sm hover:text-accent', focusRing)}>
                       {track.title}
                     </Link>
@@ -146,7 +144,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
                         return (
                           <li key={m.slug} className="flex flex-col gap-1.5 px-3 py-2.5 sm:flex-row sm:items-center sm:gap-3">
                             <div className="flex min-w-0 flex-1 items-baseline gap-2">
-                              <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{m.code}</span>
+                              {moduleTag(m) && <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(m)}</span>}
                               <Link
                                 href={learnHref.module(m)}
                                 className={cx('min-w-0 rounded-sm text-sm hover:text-accent', flag === 'skip' ? 'text-muted' : 'font-medium', focusRing)}

@@ -45,12 +45,7 @@ export async function CaseStudyPage({
       <Breadcrumbs items={crumbs} />
 
       <header className="mb-6 max-w-3xl">
-        <div className="mb-2 flex items-center gap-2.5">
-          <span className="rounded bg-accent px-1.5 py-0.5 text-[0.6875rem] font-bold tabular-nums text-white dark:text-bg">
-            {study.ref.tag}
-          </span>
-          <span className="text-[0.8125rem] text-subtle">{study.ref.trackTitle}</span>
-        </div>
+        <div className="mb-2 text-[0.8125rem] font-semibold text-accent">{study.ref.trackTitle}</div>
         <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{study.title}</h1>
         <Byline updated={study.ref.updated} report={{ title: study.title, path: scenarioHref(study.ref) }} />
         <div className="mt-3">

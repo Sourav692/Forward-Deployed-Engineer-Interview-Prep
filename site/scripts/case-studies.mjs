@@ -83,7 +83,7 @@ const THEMES = THEME_GROUPS.map(([id, groups]) => {
 
 /**
  * Standalone cases, keyed by folder under `02_System_Design_Case_Studies/Standalone_Designs/`. `number`
- * orders them and is the case number from CASE_STUDY_INDEX.xlsx; `tag` is the badge.
+ * orders them and is the case number from CASE_STUDY_INDEX.xlsx.
  * `files` are `[file, tabId]`, published as tabs; `archived` are `[file, label]`,
  * superseded versions that stay in the repo only: not published, not linked, not
  * searched. Every `.md` in the
@@ -134,7 +134,7 @@ const STANDALONE = [
   { folder: '60_Prioritize_AI_Use_Cases', theme: 'judgement-and-decomposition', number: 60, title: 'Prioritise AI Use Cases for a Large Enterprise', files: guide('60_Prioritize_AI_Use_Cases.md') },
   { folder: '61_Scale_Prototype_To_Production', theme: 'judgement-and-decomposition', number: 61, title: 'Scale a Prototype from 100 to 100,000 Users', files: guide('61_Scale_Prototype_To_Production.md') },
   { folder: '62_Build_When_Customer_Data_Is_Poor', theme: 'judgement-and-decomposition', number: 62, title: 'Build When the Customer\u2019s Data Is Poor', files: guide('62_Build_When_Customer_Data_Is_Poor.md') },
-  { folder: 'Decomposition_Classics_67_68_69', theme: 'judgement-and-decomposition', number: 67, tag: '#67\u201369', title: 'Decomposition Classics: 911, Bank Fraud, Medication Errors',
+  { folder: 'Decomposition_Classics_67_68_69', theme: 'judgement-and-decomposition', number: 67, title: 'Decomposition Classics: 911, Bank Fraud, Medication Errors',
     files: guide('Decomposition_Classics_67_68_69.md') },
 ]
 
@@ -217,7 +217,7 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       const dir = join(root, folder)
       const tabs = DOC_TABS.map((t) => ({ id: t.id, label: labelOf(t.id), file: `${folder}${t.suffix}.md` }))
       const main = await readFile(join(dir, tabs[0].file), 'utf8')
-      cases.push({ theme: theme.id, dir, slug: slugOf(folder), tag: g, order: Number(g.slice(1)), title: nameFrom(main, folder), tabs })
+      cases.push({ theme: theme.id, dir, slug: slugOf(folder), order: Number(g.slice(1)), title: nameFrom(main, folder), tabs })
     }
   }
 
@@ -244,7 +244,6 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       theme: c.theme,
       dir,
       slug: c.folder.replace(/^\d+_/, '').replace(/_/g, '-').toLowerCase(),
-      tag: c.tag ?? `#${c.number}`,
       order: c.number,
       title: c.title,
       tabs: c.files.map(([file, id]) => ({
@@ -311,7 +310,6 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
         slug: c.slug,
         order: c.order,
         title: TITLE_OVERRIDES[`${theme.id}/${c.slug}`] ?? c.title,
-        tag: c.tag,
         tabs: c.tabs.map(({ id, label }) => ({ id, label })),
         ...(c.practice && { practice: c.practice }),
         updated: updatedOf(...c.tabs.map((tab) => tab.src ?? join(c.dir, tab.file))),

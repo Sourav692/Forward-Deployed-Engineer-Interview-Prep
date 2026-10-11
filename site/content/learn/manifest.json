@@ -1849,7 +1849,7 @@
     },
     {
       "slug": "g13-evaluation-and-release-gating",
-      "title": "G13 Evaluation and Release Gating",
+      "title": "Evaluation and Release Gating",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1860,7 +1860,7 @@
     },
     {
       "slug": "g07-secure-multi-tenant-ai-platform",
-      "title": "G07 Secure Multi-Tenant AI Platform",
+      "title": "Secure Multi-Tenant AI Platform",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1871,7 +1871,7 @@
     },
     {
       "slug": "g14-observability-and-production-diagnosis",
-      "title": "G14 Observability and Production Diagnosis",
+      "title": "Observability and Production Diagnosis",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1882,7 +1882,7 @@
     },
     {
       "slug": "scale-prototype-to-production",
-      "title": "Scale a Prototype to Production",
+      "title": "Scale a Prototype from 100 to 100,000 Users",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1893,7 +1893,7 @@
     },
     {
       "slug": "g18-consumer-scale-chat-service",
-      "title": "G18 Consumer-Scale Chat Service",
+      "title": "Consumer-Scale Chat Service",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1904,7 +1904,7 @@
     },
     {
       "slug": "g10-high-volume-batch-pipeline",
-      "title": "G10 High-Volume Batch Pipeline",
+      "title": "High-Volume Batch Pipeline",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1915,7 +1915,7 @@
     },
     {
       "slug": "g19-model-development-and-post-training",
-      "title": "G19 Model Development and Post-Training",
+      "title": "Model Development and Post-Training",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -1926,7 +1926,7 @@
     },
     {
       "slug": "g20-llm-inference-serving",
-      "title": "G20 LLM Inference Serving",
+      "title": "LLM Inference Serving",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2193,7 +2193,7 @@
     },
     {
       "slug": "g01-enterprise-knowledge-assistant",
-      "title": "G01 Enterprise Knowledge Assistant",
+      "title": "Enterprise Knowledge Assistant",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2204,7 +2204,7 @@
     },
     {
       "slug": "g02-customer-support-automation",
-      "title": "G02 Customer Support Automation",
+      "title": "Customer Support Automation",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2215,7 +2215,7 @@
     },
     {
       "slug": "g03-tool-using-agent-with-safety-controls",
-      "title": "G03 Tool-Using Agent with Safety Controls",
+      "title": "Tool-Using Agent with Safety Controls",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2226,7 +2226,7 @@
     },
     {
       "slug": "g04-sre-incident-response-agent",
-      "title": "G04 SRE Incident Response Agent",
+      "title": "SRE Incident Response Agent",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2237,7 +2237,7 @@
     },
     {
       "slug": "g05-sales-copilot",
-      "title": "G05 Sales Copilot",
+      "title": "Sales Copilot",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2248,7 +2248,7 @@
     },
     {
       "slug": "g06-nl-over-governed-data",
-      "title": "G06 Natural Language over Governed Data",
+      "title": "Natural Language over Governed Data",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2259,7 +2259,7 @@
     },
     {
       "slug": "g08-document-review-copilot",
-      "title": "G08 Document Review Copilot",
+      "title": "Document Review Copilot",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2270,7 +2270,7 @@
     },
     {
       "slug": "g09-enterprise-coding-assistant",
-      "title": "G09 Enterprise Coding Assistant",
+      "title": "Enterprise Coding Assistant",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2281,7 +2281,7 @@
     },
     {
       "slug": "g11-deep-research-agent",
-      "title": "G11 Deep Research Agent",
+      "title": "Deep Research Agent",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2292,7 +2292,7 @@
     },
     {
       "slug": "g12-scoping-to-deployed-agent",
-      "title": "G12 Scoping to Deployed Agent",
+      "title": "Scoping to Deployed Agent",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2303,7 +2303,7 @@
     },
     {
       "slug": "g15-agent-platform-for-non-technical-users",
-      "title": "G15 Agent Platform for Non-Technical Users",
+      "title": "Agent Platform for Non-Technical Users",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2314,7 +2314,7 @@
     },
     {
       "slug": "g16-real-time-call-assistant",
-      "title": "G16 Real-Time Call Assistant",
+      "title": "Real-Time Call Assistant",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2325,7 +2325,7 @@
     },
     {
       "slug": "g17-logistics-exception-handling",
-      "title": "G17 Logistics Exception Handling",
+      "title": "Logistics Exception Handling",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2336,7 +2336,7 @@
     },
     {
       "slug": "standalone-designs-recruiting-platform",
-      "title": "AI Recruiting Platform",
+      "title": "AI-Powered Recruiting Platform",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2359,7 +2359,7 @@
     },
     {
       "slug": "travel-agent-worked-example",
-      "title": "Travel Agent Worked Example",
+      "title": "Travel Agent: the 12-Part Framework Worked Through",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2371,7 +2371,7 @@
     },
     {
       "slug": "air-gapped-ai-system",
-      "title": "Air-Gapped AI System",
+      "title": "AI System for an Air-Gapped Environment",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2383,7 +2383,7 @@
     },
     {
       "slug": "reliable-workflow-orchestration",
-      "title": "Reliable Workflow Orchestration",
+      "title": "Reliable Workflow Orchestration System",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2395,7 +2395,7 @@
     },
     {
       "slug": "configurable-platform-customer-workflows",
-      "title": "Configurable Platform for Customer Workflows",
+      "title": "Configurable Platform for Customer-Specific Workflows",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2419,7 +2419,7 @@
     },
     {
       "slug": "prioritize-ai-use-cases",
-      "title": "Prioritise AI Use Cases",
+      "title": "Prioritise AI Use Cases for a Large Enterprise",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2430,7 +2430,7 @@
     },
     {
       "slug": "build-when-customer-data-is-poor",
-      "title": "Build When Customer Data Is Poor",
+      "title": "Build When the Customer’s Data Is Poor",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2441,7 +2441,7 @@
     },
     {
       "slug": "self-adapting-agent",
-      "title": "Self-Adapting Agent",
+      "title": "Agent That Adapts to New Tasks",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2452,7 +2452,7 @@
     },
     {
       "slug": "personal-assistant-with-memory",
-      "title": "Personal Assistant with Memory",
+      "title": "Personal Assistant That Remembers You",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2463,7 +2463,7 @@
     },
     {
       "slug": "decomposition-classics-67-68-69",
-      "title": "Decomposition Classics: 911 Response Times, Bank Fraud, and Medication Errors",
+      "title": "Decomposition Classics: 911, Bank Fraud, Medication Errors",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -2945,7 +2945,7 @@
     },
     {
       "slug": "financial-compliance-reviewer",
-      "title": "Financial Compliance Document Reviewer",
+      "title": "Financial Compliance Review Copilot",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -3011,7 +3011,7 @@
     },
     {
       "slug": "service-now-ticket-agent",
-      "title": "ServiceNow Ticket Automation Agent",
+      "title": "ServiceNow Ticket Agent",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -3022,7 +3022,7 @@
     },
     {
       "slug": "executive-dashboard-copilot",
-      "title": "Executive Dashboard Copilot",
+      "title": "Executive Dashboard Assistant",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",

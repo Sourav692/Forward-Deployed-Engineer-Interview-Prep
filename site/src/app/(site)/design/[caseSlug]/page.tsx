@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return study
     ? pageMetadata({
         path: scenarioHref(study.ref),
-        title: `${study.ref.tag} · ${qualifiedTitle(study.ref)}`,
+        title: qualifiedTitle(study.ref),
         description: caseDescription(study),
       })
     : {}
@@ -48,11 +48,11 @@ export default async function CasePage({ params }: { params: Promise<Params> }) 
     <CaseStudyPage
       study={study}
       crumbs={[
-        { label: 'Casebook', href: '/design' },
+        { label: 'Design', href: '/design' },
         { label: study.ref.trackTitle, href: `/design#${study.ref.trackId}` },
         { label: qualifiedTitle(study.ref) },
       ]}
-      partOf={{ name: 'The Casebook', path: '/design' }}
+      partOf={{ name: 'Design', path: '/design' }}
     />
   )
 }

@@ -72,11 +72,11 @@ export const learnHref = {
 export { INTERVIEW_TRACK }
 
 /**
- * A track's name with its code ("T2 LLM and Retrieval"). Area-served tracks drop the
- * code: their `I` code only prefixes module codes (I1, I2) and reads badly on its own.
+ * A track's name. Codes stay off names and labels (ENH-20); a track's code shows only
+ * as the small tag on its card and its page's eyebrow.
  */
-export const trackLabel = (track: Pick<CurriculumTrack, 'slug' | 'code' | 'title'>) =>
-  isLearnTrack(track.slug) ? `${track.code} ${track.title}` : track.title
+export const trackLabel = (track: Pick<CurriculumTrack, 'title'>) =>
+  track.title
 
 /**
  * The breadcrumb trail above a module: Learn and the track for a Learn track, or just
