@@ -9,8 +9,8 @@
  *   change one after it ships; labels and codes may change.
  * - Every lesson has exactly one home module (`Lesson.home`). Other modules that
  *   use it list it under `seeAlso` and link to the home lesson.
- * - `kind: 'live'` lessons are already published under /modules or
- *   /fde-last-day-prep; Learn links to them instead of syncing a copy.
+ * - `kind: 'live'` lessons are already published as a case, worksheet or Story Bank
+ *   page; Learn links to them instead of syncing a copy.
  * - The .mjs sync scripts import this file under plain `node`. Type imports are
  *   erased; runtime imports must be data-only modules imported with an explicit
  *   `.ts` extension (the per-track RENAMED files in ./consolidation/).

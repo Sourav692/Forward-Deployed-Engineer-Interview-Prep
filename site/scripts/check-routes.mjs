@@ -13,7 +13,7 @@
  * 4. Fails when a sitemap page lacks exactly one canonical link to itself, an
  *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10),
  *    or when a lesson, case or worksheet lacks its "By … · Last updated …" line (PQ-15),
- *    or a content page (those, plus final-week pages) lacks a report link (PR-15).
+ *    or one of those content pages lacks a report link (PR-15).
  * 5. Fails when a fixed source in `src/lib/redirects.ts` does not answer with exactly
  *    one 308 (307 when temporary) to its destination, or that destination is not a 200
  *    page (IA-11).
@@ -112,7 +112,7 @@ function headProblems(path, html) {
   if (bylined.has(path) && !new RegExp(`By ${AUTHOR} · Last updated \\d{1,2} \\w{3} \\d{4}`).test(html)) {
     problems.push('no "By … · Last updated …" line')
   }
-  const content = bylined.has(path) || path.startsWith('/fde-last-day-prep/')
+  const content = bylined.has(path)
   if (content && !/<a\b[^>]*\bhref="mailto:[^"]*\?subject=[^"]*"[^>]*>Report an issue<\/a>/.test(html)) {
     problems.push('no "Report an issue" link')
   }
@@ -152,7 +152,9 @@ await pool(fixed, async ({ source, destination, permanent }) => {
     return
   }
   const location = res.headers.get('location')
-  const landed = location ? decode(new URL(location, BASE).pathname) : null
+  const url = location ? new URL(location, BASE) : null
+  // Pathname plus any hash: the recall cards redirect to their lesson's #recall-card tab.
+  const landed = url ? decode(url.pathname) + url.hash : null
   if (res.status !== want || landed !== destination) {
     errors.push(`redirect ${source}: expected ${want} → ${destination}, got ${res.status}${landed ? ` → ${landed}` : ''}`)
     return

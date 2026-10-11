@@ -11,18 +11,13 @@ import { GLOSSARY, glossaryAnchor } from './glossary'
 import { qualifiedTitle, scenarioHref } from './scenario'
 import {
   FAMILY_META,
-  LAST_DAY_GUIDES,
-  REVIEWS,
   RELATED_CASE,
   RELATED_PRACTICE,
   STORY_BANK,
   TABS,
-  TRIGGER_SHEET,
   WORDS_PER_MINUTE,
   normaliseTitle,
   qualifierFor,
-  reviewHref,
-  reviewLabel,
   reviewsFor,
   type EditorialMeta,
   type Review,
@@ -333,15 +328,6 @@ function findSources(docs: { tab: string; label: string; doc: ReadingDocument }[
   return null
 }
 
-/** One of the two Last-Day markdown guides, parsed for display. */
-export const getLastDayGuide = cache(async (id: string) => {
-  const guide = LAST_DAY_GUIDES.find((g) => g.id === id)
-  if (!guide) return null
-  const raw = await readFile(join(CONTENT_DIR, 'last-day', `${id}.md`), 'utf8')
-  const updated = (await getManifest()).lastDayUpdated?.[id] ?? null
-  return { guide, minutes: readingMinutes(raw), updated, doc: glossReading(parseReading(raw, id)) }
-})
-
 /**
  * A reading page: one group's four documents, each parsed for display. prev/next stay
  * inside the module, so the last case study does not lead into a worksheet.
@@ -443,21 +429,7 @@ export const getContentSearchEntries = cache(async (): Promise<ContentSearchEntr
     }
   }
 
-  // Last-Day Review: the two markdown guides by section, and each static review by title.
-  for (const guide of LAST_DAY_GUIDES) {
-    const loaded = await getLastDayGuide(guide.id)
-    if (!loaded) continue
-    for (const section of loaded.doc.sections) {
-      if (!section.title) continue
-      reference.push({
-        title: guide.title,
-        section: toPlainText(section.title),
-        kind: 'Revision',
-        href: `/fde-last-day-prep/${guide.id}#${section.id}`,
-        text: `${toPlainText(section.title)} ${readingText(section)}`.slice(0, SEARCH_TEXT_CAP),
-      })
-    }
-  }
+  // The final-week guides and reviews are Learn lessons (ENH-18), indexed in the learn area.
   const storyBank = await getStoryBank()
   for (const section of storyBank?.doc.sections ?? []) {
     if (!section.title) continue
@@ -469,15 +441,6 @@ export const getContentSearchEntries = cache(async (): Promise<ContentSearchEntr
       text: `${toPlainText(section.title)} ${readingText(section)}`.slice(0, SEARCH_TEXT_CAP),
     })
   }
-  for (const r of REVIEWS) {
-    reference.push({
-      title: 'Last-Day Review',
-      section: `${reviewLabel(r.number)} — ${r.title}`,
-      kind: 'Revision',
-      href: reviewHref(r),
-      text: `${r.title} ${r.blurb}`,
-    })
-  }
   for (const g of GLOSSARY) {
     reference.push({
       title: 'Glossary',
@@ -487,13 +450,6 @@ export const getContentSearchEntries = cache(async (): Promise<ContentSearchEntr
       text: `${g.term} ${g.expansion ?? ''} ${g.plain} ${g.sayIt ?? ''}`,
     })
   }
-  reference.push({
-    title: 'Last-Day Review',
-    section: TRIGGER_SHEET.title,
-    kind: 'Revision',
-    href: `/fde-last-day-prep/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}`,
-    text: TRIGGER_SHEET.blurb,
-  })
 
   return { practice, interview, design, company, reference }
 })

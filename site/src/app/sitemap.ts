@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getAllScenarios } from '@/lib/content'
-import { LAST_DAY_GUIDES, REVIEW_DOCS, REVIEWS, STORY_BANK, TRIGGER_SHEET, reviewHref } from '@/lib/editorial'
+import { STORY_BANK } from '@/lib/editorial'
 import { INTERVIEW_HUBS } from '@/lib/curriculum'
 import { hubHref } from '@/lib/curriculum-href'
 import { getLearnManifest, getTracks, learnHref, trackModules } from '@/lib/learn'
@@ -29,7 +29,6 @@ const STATIC_PAGES = [
   '/about',
   '/changelog',
   '/glossary',
-  '/fde-last-day-prep',
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -54,11 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const ref of await getAllScenarios()) paths.add(scenarioHref(ref))
   paths.add(STORY_BANK.href)
 
-  for (const guide of LAST_DAY_GUIDES) paths.add(`/fde-last-day-prep/${guide.id}`)
-  for (const review of REVIEWS) {
-    for (const doc of Object.keys(REVIEW_DOCS) as (keyof typeof REVIEW_DOCS)[]) paths.add(reviewHref(review, doc))
-  }
-  paths.add(`/fde-last-day-prep/${TRIGGER_SHEET.dir}/${TRIGGER_SHEET.file}`)
 
   return [...paths].map((path) => ({ url: absoluteUrl(path) }))
 }

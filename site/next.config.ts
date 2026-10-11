@@ -19,13 +19,13 @@ import { REDIRECTS } from './src/lib/redirects.ts'
  */
 const isDev = process.env.NODE_ENV === 'development'
 
-const csp = (extra: { style?: string; font?: string } = {}) =>
+const CSP =
   [
     "default-src 'self'",
     `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
-    `style-src 'self' 'unsafe-inline'${extra.style ? ` ${extra.style}` : ''}`,
+    "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data:",
-    `font-src 'self'${extra.font ? ` ${extra.font}` : ''}`,
+    "font-src 'self'",
     "connect-src 'self'",
     "object-src 'none'",
     "frame-ancestors 'none'",
@@ -42,21 +42,10 @@ const nextConfig: NextConfig = {
       {
         source: '/:path*',
         headers: [
-          { key: 'Content-Security-Policy', value: csp() },
+          { key: 'Content-Security-Policy', value: CSP },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-        ],
-      },
-      {
-        // The static Last-Day Review pages under public/ load their typefaces from Google
-        // Fonts. Later rules override earlier ones for the same header key.
-        source: '/fde-last-day-prep/:dir/:file(.*\\.html)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: csp({ style: 'https://fonts.googleapis.com', font: 'https://fonts.gstatic.com' }),
-          },
         ],
       },
     ]

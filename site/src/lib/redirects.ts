@@ -14,7 +14,7 @@
  *
  * Order matters (Next.js applies the first match): lesson renames, then pages that moved
  * into /practice (one of them sits under an area rule), then whole areas, then retired
- * modules, the casebook and one-off pages.
+ * modules, the casebook, the final week and one-off pages.
  *
  * Imported by `next.config.ts` and the check scripts, so it has no runtime imports.
  */
@@ -240,6 +240,48 @@ const behaviouralRedirects: Redirect[] = Object.entries(RETIRED_BEHAVIOURAL_WORK
   permanent: true,
 }))
 
+/**
+ * The final-week review moved from static HTML under /fde-last-day-prep into the I3
+ * lessons at /interview/final-week (ENH-18). A review's one-page memory card is the
+ * Recall card tab of its lesson (panel id `recall-card`). Listed by hand: history.
+ */
+const FINAL_WEEK = curriculumHref('interview-practice', 'final-week')
+const REVIEW_LESSONS_BEFORE_ENH_18 = [
+  'module-01-fde-problem-decomposition',
+  'module-02-functional-requirements',
+  'module-03-non-functional-requirements',
+  'module-04-core-architecture-building-blocks',
+  'module-05-rag-and-enterprise-data',
+  'module-06-agentic-architecture',
+  'module-07-tools-actions-and-enterprise-integration',
+  'module-08-guardrails-policy-and-human-approval',
+  'module-09-scaling-ai-systems',
+  'module-10-latency-optimization',
+  'module-11-cost-optimization',
+  'module-12-reliability-and-failure-handling',
+  'module-13-ai-evaluation',
+  'module-14-release-and-change-management',
+  'module-15-observability-and-production-operations',
+  'module-16-security-and-enterprise-multi-tenancy',
+  'module-17-trade-off-thinking',
+  'module-18-end-to-end-fde-interview-execution',
+]
+
+const finalWeekRedirects: Redirect[] = [
+  { source: '/fde-last-day-prep', destination: FINAL_WEEK, permanent: true },
+  { source: '/fde-last-day-prep/roadmap', destination: `${FINAL_WEEK}/roadmap`, permanent: true },
+  { source: '/fde-last-day-prep/rapid-revision', destination: `${FINAL_WEEK}/rapid-revision-guide`, permanent: true },
+  {
+    source: '/fde-last-day-prep/trigger-to-concept-cheat-sheet/trigger-to-concept-cheat-sheet.html',
+    destination: `${FINAL_WEEK}/trigger-to-concept-cheat-sheet`,
+    permanent: true,
+  },
+  ...REVIEW_LESSONS_BEFORE_ENH_18.flatMap((lesson) => [
+    { source: `/fde-last-day-prep/${lesson}/concise-interview-module.html`, destination: `${FINAL_WEEK}/${lesson}`, permanent: true },
+    { source: `/fde-last-day-prep/${lesson}/one-page-memory-card.html`, destination: `${FINAL_WEEK}/${lesson}#recall-card`, permanent: true },
+  ]),
+]
+
 export const REDIRECTS: Redirect[] = [
   ...lessonRedirects(),
   ...practiceRedirects,
@@ -248,6 +290,7 @@ export const REDIRECTS: Redirect[] = [
   ...retiredModuleRedirects(),
   ...casebookRedirects,
   ...behaviouralRedirects,
+  ...finalWeekRedirects,
   // /start is the one onboarding page (ENH-11); the two pages it absorbed redirect.
   { source: '/guide', destination: '/start', permanent: true },
   { source: '/learning-map', destination: '/start', permanent: true },

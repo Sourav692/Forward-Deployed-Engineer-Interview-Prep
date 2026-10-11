@@ -109,8 +109,8 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * labels may change. `href` is where the area link goes; `match` lists the path
  * prefixes that also mark the area as current (`aria-current="page"`).
  *
- * Each area links to its own index page. `match` keeps pages outside the area's path
- * highlighting it: the final-week review under Interview. Company Prep (`/company-prep`)
+ * Each area links to its own index page, and every area page now lives under its own
+ * path (ENH-16 to ENH-18), so `match` is just that path. Company Prep (`/company-prep`)
  * is not listed while it has no packs (audit check FV-02); its route stays.
  */
 export const NAV = [
@@ -132,7 +132,7 @@ export const NAV = [
     id: 'interview',
     label: 'Interview',
     href: '/interview',
-    match: ['/interview', '/fde-last-day-prep'],
+    match: ['/interview'],
   },
 ] as const
 
@@ -168,10 +168,11 @@ export const reportHref = (page?: { title: string; path: string }) =>
 export const suggestTopicHref = (hub: string) =>
   `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(`Suggest the next topic (${hub})`)}`
 
+/** The final week: the I3 lessons at /interview/final-week (ENH-18). */
 export const LAST_DAY = {
   title: 'Final Week Review',
   eyebrow: 'Focused interview-week review',
-  href: '/fde-last-day-prep',
+  href: '/interview/final-week',
 } as const
 
 // ---------------------------------------------------------------- tracks
@@ -365,6 +366,7 @@ export const WORDS_PER_MINUTE = 180
 
 export type Review = {
   number: number
+  /** The review's lesson slug in the final week (I3). */
   dir: string
   title: string
   blurb: string
@@ -373,20 +375,6 @@ export type Review = {
   /** Case studies that show the concept in a complete system: `track/slug`. */
   goDeeper: string[]
 }
-
-export const REVIEW_DOCS = {
-  concise: { file: 'concise-interview-module.html', label: 'Interview Review' },
-  card: { file: 'one-page-memory-card.html', label: 'One-Page Recall Card' },
-} as const
-
-export const TRIGGER_SHEET = {
-  title: 'Trigger-to-Concept Quick Reference',
-  dir: 'trigger-to-concept-cheat-sheet',
-  file: 'trigger-to-concept-cheat-sheet.html',
-  blurb:
-    'Every trigger phrase from the eighteen reviews in one searchable table — what to ' +
-    'think, what to ask next, and which review covers it.',
-} as const
 
 export const REVIEWS: Review[] = [
   { number: 1, dir: 'module-01-fde-problem-decomposition', title: 'Problem Framing and Decomposition',
@@ -465,10 +453,10 @@ export const REVIEWS: Review[] = [
 
 export const reviewLabel = (n: number) => `Review ${String(n).padStart(2, '0')}`
 
-export const reviewHref = (r: Review, doc: keyof typeof REVIEW_DOCS = 'concise') =>
-  `/fde-last-day-prep/${r.dir}/${REVIEW_DOCS[doc].file}`
+/** A review's lesson page. Its one-page memory card is the lesson's Recall card tab (`#recall-card`). */
+export const reviewHref = (r: Review) => `${LAST_DAY.href}/${r.dir}`
 
-/** The two Last-Day documents that are Next.js reading pages rather than static HTML. */
+/** The final week's two guides, its first two lessons (found by `source`). */
 export const LAST_DAY_GUIDES = [
   {
     id: 'roadmap',

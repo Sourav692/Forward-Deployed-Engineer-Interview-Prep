@@ -16,7 +16,7 @@ export type TrackRequirement = 'yes' | 'no' | 'fde-path' | 'candidates'
  *  lessons are never written to site/content. */
 export type PublishDecision = 'own' | 'credited' | 'pending' | 'excluded'
 
-/** `live`: already published under /modules or /fde-last-day-prep, so Learn links
+/** `live`: already published elsewhere (a case, worksheet or Story Bank page), so Learn links
  *  to that page. `sync`: copied into content/learn by the Learn sync (DATA-02). */
 export type LessonKind = 'live' | 'sync'
 

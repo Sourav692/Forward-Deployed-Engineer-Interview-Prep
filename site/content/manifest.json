@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T22:55:06.779Z",
+  "generatedAt": "2026-10-11T11:11:23.125Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -979,9 +979,5 @@
       ]
     }
   ],
-  "lastDayUpdated": {
-    "roadmap": "2026-10-04",
-    "rapid-revision": "2026-10-04"
-  },
   "storyBankUpdated": "2026-10-11"
 }

@@ -4,9 +4,8 @@
  *   RAG  ->  <abbr title="retrieval-augmented generation: Fetch the relevant…">RAG</abbr> (retrieval-augmented generation)
  *
  * Later uses on the same page get nothing, the way a careful writer would do it. The
- * caller owns the `seen` set, so "the same page" can mean one tab, one worksheet, or one
- * static review. Sources are never edited — this runs on rendered HTML, in the app for
- * markdown pages and in `scripts/last-day.mjs` for the static reviews.
+ * caller owns the `seen` set, so "the same page" can mean one tab or one worksheet.
+ * Sources are never edited — this runs on rendered HTML, in the app.
  *
  * Deliberately left alone: headings, links, code, existing <abbr>, and any use that is
  * already spelled out nearby ("retrieval-augmented generation (RAG)"). In table cells

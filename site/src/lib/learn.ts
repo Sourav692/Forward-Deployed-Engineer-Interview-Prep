@@ -178,7 +178,7 @@ export const interviewModuleParams = () =>
 
 /**
  * One route per synced, published lesson of a Learn track. `live` lessons have no
- * Learn page: they link to their existing `/modules/...` or `/fde-last-day-prep` page
+ * Learn page: they link to their existing case, worksheet or Story Bank page
  * instead. Lessons of area-served tracks get their routes from that area.
  *
  * A manifest entry whose markdown file is missing fails the build here, instead of
