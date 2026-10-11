@@ -1,6 +1,6 @@
 # G16 — Real-Time Call Assistant: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/agents-that-act/real-time-call-assistant#main) · [Deep Dive](/modules/15-fde-case-studies/agents-that-act/real-time-call-assistant#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/agents-that-act/real-time-call-assistant#full-pack)
+[Main](/design/real-time-call-assistant#main) · [Deep Dive](/design/real-time-call-assistant#deep-dive) · [Unchanged source](/design/real-time-call-assistant#full-pack)
 
 ## Ask first
 

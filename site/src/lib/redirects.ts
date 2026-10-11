@@ -19,6 +19,7 @@
  */
 import { MODULES, RENAMED, RETIRED_MODULES } from './curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from './curriculum-href.ts'
+import { CASEBOOK_MODULE, scenarioHref } from './scenario.ts'
 
 export type Redirect = { source: string; destination: string; permanent: boolean }
 
@@ -111,6 +112,61 @@ const RETIRED_BEHAVIOURAL_WORKSHEETS: Record<string, string> = {
   'leadership-principles/staff-level-and-cross-cutting': 'scale-beyond-yourself',
 }
 
+/**
+ * The casebook moved from /modules/15-fde-case-studies/<theme>/<slug> to /design/<slug>
+ * (ENH-16). The old URLs are history, so they are listed rather than read from the
+ * manifest: a case that later changes theme must still answer at its old address.
+ */
+const CASEBOOK_BEFORE_ENH_16: Record<string, string[]> = {
+  'knowledge-retrieval': ['enterprise-knowledge-assistant', 'nl-over-governed-data', 'document-review-copilot', 'deep-research-agent'],
+  'agents-that-act': [
+    'customer-support-automation',
+    'tool-using-agent-with-safety-controls',
+    'sre-incident-response-agent',
+    'sales-copilot',
+    'enterprise-coding-assistant',
+    'real-time-call-assistant',
+    'logistics-exception-handling',
+  ],
+  'platforms-and-scale': [
+    'secure-multi-tenant-ai-platform',
+    'high-volume-batch-pipeline',
+    'agent-platform-for-non-technical-users',
+    'consumer-scale-chat-service',
+    'llm-inference-serving',
+  ],
+  'delivery-evaluation-operations': ['scoping-to-deployed-agent', 'evaluation-and-release-gating', 'observability-and-production-diagnosis'],
+  'model-development': ['model-development-and-post-training'],
+  'standalone-designs': [
+    'recruiting-platform',
+    'travel-agent-worked-example',
+    'air-gapped-ai-system',
+    'reliable-workflow-orchestration',
+    'configurable-platform-customer-workflows',
+    'enterprise-chatbot-platform',
+    'self-adapting-agent',
+    'personal-assistant-with-memory',
+    'production-llm-gateway',
+  ],
+  'judgement-and-decomposition': [
+    'prioritize-ai-use-cases',
+    'scale-prototype-to-production',
+    'build-when-customer-data-is-poor',
+    'decomposition-classics-67-68-69',
+  ],
+}
+
+const casebookRedirects: Redirect[] = [
+  { source: `/modules/${CASEBOOK_MODULE}`, destination: '/design', permanent: true },
+  ...Object.entries(CASEBOOK_BEFORE_ENH_16).flatMap(([trackId, slugs]) =>
+    slugs.map((slug) => ({
+      source: `/modules/${CASEBOOK_MODULE}/${trackId}/${slug}`,
+      destination: scenarioHref({ moduleId: CASEBOOK_MODULE, trackId, slug }),
+      permanent: true,
+    })),
+  ),
+]
+
 const behaviouralRedirects: Redirect[] = Object.entries(RETIRED_BEHAVIOURAL_WORKSHEETS).map(([from, to]) => ({
   source: `${BEHAVIOURAL_MODULE}/${from}`,
   destination: `${BEHAVIOURAL_MODULE}/fde-competencies/${to}`,
@@ -122,6 +178,7 @@ export const REDIRECTS: Redirect[] = [
   ...areaRedirects(),
   ...companyPrepRedirects,
   ...retiredModuleRedirects(),
+  ...casebookRedirects,
   ...behaviouralRedirects,
   // /start is the one onboarding page (ENH-11); the two pages it absorbed redirect.
   { source: '/guide', destination: '/start', permanent: true },

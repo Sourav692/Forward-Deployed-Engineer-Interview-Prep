@@ -16,6 +16,7 @@ import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
 import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
+import { CASEBOOK_MODULE } from '../src/lib/scenario.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -209,6 +210,16 @@ for (const [from, to] of Object.entries(RETIRED_MODULES)) {
     const next = sources.find((s) => s.re.test(r.destination))
     if (next) fail(`redirect chain: ${r.source} → ${r.destination} → ${next.destination}; point ${r.source} straight at the final page`)
   }
+}
+
+// Casebook designs live at /design/<slug> (ENH-16): the URL has no theme, so a slug may
+// appear in one theme only. Slugs never change (progress keys on them), so a clash
+// means renaming the new case, not the old one.
+{
+  const site = JSON.parse(readFileSync(resolve(import.meta.dirname, '../content/manifest.json'), 'utf8'))
+  const casebook = site.modules.find((m: { id: string }) => m.id === CASEBOOK_MODULE)
+  if (!casebook) fail(`content/manifest.json has no ${CASEBOOK_MODULE} module`)
+  else unique('casebook design', casebook.tracks.flatMap((t: { scenarios: { slug: string }[] }) => t.scenarios.map((s) => s.slug)))
 }
 
 // Interview hubs (DATA-07). They live at /interview/hubs/<slug>, so an interview-practice

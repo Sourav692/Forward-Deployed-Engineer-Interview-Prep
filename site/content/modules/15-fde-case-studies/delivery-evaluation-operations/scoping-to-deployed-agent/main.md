@@ -15,7 +15,7 @@ End to end, as Northwind tickets:
 
 That’s it: **name the outcome → prove each gate → ship small → own rollback.** Open-ended custom planners wait.
 
-> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack). The [Deep Dive](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#deep-dive) covers gate mechanics and limitations; the [Cheat Sheet](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#cheat-sheet) is for rehearsal.
+> **Source:** [Sources and Full Design](/design/scoping-to-deployed-agent#full-pack). The [Deep Dive](/design/scoping-to-deployed-agent#deep-dive) covers gate mechanics and limitations; the [Cheat Sheet](/design/scoping-to-deployed-agent#cheat-sheet) is for rehearsal.
 
 ## The case in one sentence
 

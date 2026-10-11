@@ -1,6 +1,6 @@
 # G13 — Evaluation and Release Gating: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#main) · [Deep Dive](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack)
+[Main](/design/evaluation-and-release-gating#main) · [Deep Dive](/design/evaluation-and-release-gating#deep-dive) · [Unchanged source](/design/evaluation-and-release-gating#full-pack)
 
 ## Ask first
 

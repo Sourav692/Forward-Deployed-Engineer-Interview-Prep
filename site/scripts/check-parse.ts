@@ -37,6 +37,7 @@ import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
+import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
@@ -314,13 +315,13 @@ for (const mod of manifest.modules) {
 
 const SITE_ROOT = resolve(import.meta.dirname, '..')
 const pages = new Set<string>()
-const routes = new Set<string>(['/', '/favicon.ico', '/start', '/glossary', '/fde-last-day-prep'])
+const routes = new Set<string>(['/', '/favicon.ico', '/start', '/glossary', '/design', '/fde-last-day-prep'])
 for (const g of LAST_DAY_GUIDES) routes.add(`/fde-last-day-prep/${g.id}`)
 routes.add(STORY_BANK.href)
 const tabsByPage = new Map<string, string[]>()
 
 for (const mod of manifest.modules) {
-  routes.add(`/modules/${mod.id}`)
+  if (mod.id !== CASEBOOK_MODULE) routes.add(`/modules/${mod.id}`)
   for (const track of mod.tracks) {
     if (!TRACKS[track.id]) failures.push(`${track.id}: no display name in TRACKS`)
     else if (track.title !== TRACKS[track.id].title) {
@@ -340,8 +341,9 @@ for (const mod of manifest.modules) {
     for (const s of track.scenarios) {
       const key = `${track.id}/${s.slug}`
       pages.add(key)
-      routes.add(`/modules/${mod.id}/${key}`)
-      tabsByPage.set(`/modules/${mod.id}/${key}`, (s.tabs ?? []).map((t: { id: string }) => t.id))
+      const href = scenarioHref({ moduleId: mod.id, trackId: track.id, slug: s.slug })
+      routes.add(href)
+      tabsByPage.set(href, (s.tabs ?? []).map((t: { id: string }) => t.id))
       for (const tab of s.tabs ?? []) {
         if (!TABS[tab.id]) failures.push(`${key}: tab "${tab.id}" has no label or purpose in TABS`)
         else if (tab.label !== TABS[tab.id].label) failures.push(`${key}: tab label "${tab.label}" has drifted from TABS`)

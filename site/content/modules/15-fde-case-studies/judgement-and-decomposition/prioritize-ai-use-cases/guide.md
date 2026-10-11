@@ -242,7 +242,7 @@ flowchart TB
 | Observability | Cost per successful outcome and adoption are the portfolio's scoreboard | #7 | All of them |
 | Portfolio office | Holds the card register, re-scores quarterly, records kill decisions | Wave 0 | The next thirty ideas |
 
-The platform view is *(own construction)*. Its gateway pieces come from the repo's gateway material. [#100 Production LLM Gateway](/modules/15-fde-case-studies/standalone-designs/production-llm-gateway) designs that component in full. [G13 Evaluation and Release Gating](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack) covers the harness.
+The platform view is *(own construction)*. Its gateway pieces come from the repo's gateway material. [#100 Production LLM Gateway](/design/production-llm-gateway) designs that component in full. [G13 Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) covers the harness.
 
 ## 10. Sequence the Portfolio in Waves
 
@@ -274,7 +274,7 @@ The stage gates reuse the delivery framework's shape: a named, checkable conditi
 
 The gate names and roles adapt Handbook Module 10's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio *(own construction)*. The delivery framework's week-4 retention metric is the adoption kill signal. It is recorded as "none" until measured, never as a fake zero. Its accelerator reuse rate becomes the portfolio's platform health metric.
 
-Re-score the whole register every quarter. Pilot data replaces estimates, so the portfolio corrects itself. A Later item whose data problem was solved by an enabler moves up without anyone lobbying for it. [G12 Scoping to Deployed Agent](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack) covers the gate mechanics in depth.
+Re-score the whole register every quarter. Pilot data replaces estimates, so the portfolio corrects itself. A Later item whose data problem was solved by an enabler moves up without anyone lobbying for it. [G12 Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) covers the gate mechanics in depth.
 
 ## 12. Say No to the Executive's Pet Project Without Losing the Executive
 
@@ -319,7 +319,7 @@ Each row is a way prioritisation programmes fail in practice, with the signal th
 | Score theatre | Scores tuned until the favourite wins | Weights changed after scoring | Weights agreed before cards are scored; sensitivity rerun |
 | Zombie pilots | Pilots never killed, never scaled | Kill criteria missing from cards | Kill criteria mandatory at card stage; quarterly re-score |
 | Value never measured | Launch declared a success with no baseline | Card baseline field empty | Measurable-outcome gate |
-| Data surprise | Top item's data turns out to be unusable | Discovery overruns | Data readiness scored before ranking; [#62](/modules/15-fde-case-studies/judgement-and-decomposition/build-when-customer-data-is-poor) for the playbook |
+| Data surprise | Top item's data turns out to be unusable | Discovery overruns | Data readiness scored before ranking; [#62](/design/build-when-customer-data-is-poor) for the playbook |
 | Portfolio monoculture | All wave-1 items are summarisation | No item exercises retrieval or extraction | One slot reserved per pattern |
 
 ## 14. Deliver It in Forty-Five Minutes
@@ -350,7 +350,7 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 | "Two items tie. How do you break it?" | Platform reuse, then evaluability. The one that makes later items cheaper, or can be proven faster, goes first |
 | "What if a business unit builds its own anyway?" | Offer the gateway and eval harness as the cheaper path. Shadow AI is a symptom of a slow front door, not a policy problem |
 | "What if leadership changes the priorities mid-programme?" | The register absorbs it. Re-score with new weights in public, and show what moves and what it costs to switch |
-| "How do you prioritise with no data at all?" | Score data readiness honestly, fund discovery for the top value items, and let wave 0 produce the data. [#62](/modules/15-fde-case-studies/judgement-and-decomposition/build-when-customer-data-is-poor) covers the playbook |
+| "How do you prioritise with no data at all?" | Score data readiness honestly, fund discovery for the top value items, and let wave 0 produce the data. [#62](/design/build-when-customer-data-is-poor) covers the playbook |
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
@@ -417,7 +417,7 @@ The four verbs from the cost playbook still apply, one level up. Measure cost pe
 
 ## References
 
-Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack) for gate mechanics; [G13 Evaluation and Release Gating](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack) for the eval harness; [#61 Scale a Prototype to Production](/modules/15-fde-case-studies/judgement-and-decomposition/scale-prototype-to-production) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](/modules/15-fde-case-studies/judgement-and-decomposition/build-when-customer-data-is-poor) for items blocked on data readiness; [Decomposition Classics #67–#69](/modules/15-fde-case-studies/judgement-and-decomposition/decomposition-classics-67-68-69) for decomposing a single chosen use case; [#100 Production LLM Gateway](/modules/15-fde-case-studies/standalone-designs/production-llm-gateway) for the gateway enabler.
+Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) for gate mechanics; [G13 Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) for the eval harness; [#61 Scale a Prototype to Production](/design/scale-prototype-to-production) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](/design/build-when-customer-data-is-poor) for items blocked on data readiness; [Decomposition Classics #67–#69](/design/decomposition-classics-67-68-69) for decomposing a single chosen use case; [#100 Production LLM Gateway](/design/production-llm-gateway) for the gateway enabler.
 
 ### Fact-check sources (checked 27 Sep 2026)
 

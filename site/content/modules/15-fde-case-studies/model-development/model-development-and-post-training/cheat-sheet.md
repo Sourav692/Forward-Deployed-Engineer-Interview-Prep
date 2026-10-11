@@ -1,6 +1,6 @@
 # G19 — Model Development and Post-Training: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/model-development/model-development-and-post-training#main) · [Deep Dive](/modules/15-fde-case-studies/model-development/model-development-and-post-training#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/model-development/model-development-and-post-training#full-pack)
+[Main](/design/model-development-and-post-training#main) · [Deep Dive](/design/model-development-and-post-training#deep-dive) · [Unchanged source](/design/model-development-and-post-training#full-pack)
 
 ## Ask first
 

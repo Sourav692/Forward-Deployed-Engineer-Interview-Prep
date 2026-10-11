@@ -1,6 +1,6 @@
 # G18 — Consumer-Scale Chat Service: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/platforms-and-scale/consumer-scale-chat-service#main) · [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/consumer-scale-chat-service#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/platforms-and-scale/consumer-scale-chat-service#full-pack)
+[Main](/design/consumer-scale-chat-service#main) · [Deep Dive](/design/consumer-scale-chat-service#deep-dive) · [Unchanged source](/design/consumer-scale-chat-service#full-pack)
 
 ## Ask first
 

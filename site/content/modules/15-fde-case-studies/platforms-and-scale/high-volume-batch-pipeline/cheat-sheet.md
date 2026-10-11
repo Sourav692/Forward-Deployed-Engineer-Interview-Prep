@@ -1,6 +1,6 @@
 # G10 — High-Volume Batch Pipeline: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#main) · [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#full-pack)
+[Main](/design/high-volume-batch-pipeline#main) · [Deep Dive](/design/high-volume-batch-pipeline#deep-dive) · [Unchanged source](/design/high-volume-batch-pipeline#full-pack)
 
 ## Open with the contract
 

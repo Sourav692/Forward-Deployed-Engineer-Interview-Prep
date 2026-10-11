@@ -5,9 +5,9 @@ import { familyMeta, getAllScenarios, getCaseStudy, getRelated, getScenario } fr
 import { getModule } from '@/lib/registry'
 import { MODES } from '@/lib/editorial'
 import { ScenarioView } from '@/components/ScenarioView'
-import { CaseStudyView } from '@/components/CaseStudyView'
-import { BeforeYouStart, Fact, MetaStrip, WhereNext } from '@/components/PageIntro'
-import { qualifiedTitle, scenarioHref, type CaseStudy, type ScenarioRef } from '@/lib/scenario'
+import { CaseStudyPage, caseDescription } from '@/components/CaseStudyPage'
+import { BeforeYouStart, MetaStrip, WhereNext } from '@/components/PageIntro'
+import { CASEBOOK_MODULE, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import { learningResourceJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { Byline } from '@/components/Byline'
@@ -17,8 +17,9 @@ type Params = { module: string; track: string; scenario: string }
 // Any other param is a 404 at routing time, served as the prerendered not-found page.
 export const dynamicParams = false
 
+// The casebook lives at /design/<slug> (ENH-16); its old URLs redirect there.
 export async function generateStaticParams() {
-  const scenarios = await getAllScenarios()
+  const scenarios = (await getAllScenarios()).filter((s) => s.moduleId !== CASEBOOK_MODULE)
   return scenarios.map((s) => ({
     module: s.moduleId,
     track: s.trackId,
@@ -38,7 +39,7 @@ export async function generateMetadata({
       ? pageMetadata({
           path: scenarioHref(study.ref),
           title: `${study.ref.tag} · ${qualifiedTitle(study.ref)}`,
-          description: caseDescription(moduleId, study),
+          description: caseDescription(study),
         })
       : {}
   }
@@ -51,36 +52,23 @@ export async function generateMetadata({
   })
 }
 
-const caseDescription = (moduleId: string, study: CaseStudy) =>
-  moduleId === '16-company-oriented-prep'
-    ? `Company-oriented interview preparation: ${study.title}.`
-    : `FDE case study: ${study.title} — ${study.docs.map((d) => d.label.toLowerCase()).join(', ')}.`
-
 const practiceDescription = (title: string, track: string) => {
   const meta = familyMeta(track)
   return `${MODES[meta.mode].label}: ${title}. ${meta.outcomes[0]}.`
 }
 
-/** Practice and behavioural pages sit under Practice; reading pages under Case Studies. */
-function Breadcrumbs({ moduleId, page, reading }: { moduleId: string; page: ScenarioRef; reading: boolean }) {
+/** Practice and behavioural pages sit under Practice. */
+function Breadcrumbs({ moduleId, page }: { moduleId: string; page: ScenarioRef }) {
   const meta = getModule(moduleId)
   return (
     <nav aria-label="Breadcrumb" className="no-print mb-6 flex flex-wrap items-center gap-1.5 text-[0.8125rem] text-subtle">
-      {reading ? (
-        <Link href={`/modules/${moduleId}`} className="transition-colors hover:text-text">
-          {moduleId === '16-company-oriented-prep' ? 'Company Prep' : 'Case Studies'}
-        </Link>
-      ) : (
-        <>
-          <Link href="/#practice" className="transition-colors hover:text-text">
-            Practice
-          </Link>
-          <span aria-hidden>/</span>
-          <Link href={`/modules/${moduleId}`} className="transition-colors hover:text-text">
-            {meta?.title ?? moduleId}
-          </Link>
-        </>
-      )}
+      <Link href="/#practice" className="transition-colors hover:text-text">
+        Practice
+      </Link>
+      <span aria-hidden>/</span>
+      <Link href={`/modules/${moduleId}`} className="transition-colors hover:text-text">
+        {meta?.title ?? moduleId}
+      </Link>
       <span aria-hidden>/</span>
       <Link href={`/modules/${moduleId}#${page.trackId}`} className="transition-colors hover:text-text">
         {page.trackTitle}
@@ -98,7 +86,22 @@ function Breadcrumbs({ moduleId, page, reading }: { moduleId: string; page: Scen
 export default async function ScenarioPage({ params }: { params: Promise<Params> }) {
   const { module: moduleId, track, scenario: slug } = await params
   const moduleMeta = getModule(moduleId)
-  if (moduleMeta?.kind === 'reading') return <CaseStudyPage moduleId={moduleId} track={track} slug={slug} />
+  if (moduleMeta?.kind === 'reading') {
+    // Company prep guides (module 16, unpublished). The casebook has its own route.
+    const study = await getCaseStudy(moduleId, track, slug)
+    if (!study) notFound()
+    return (
+      <CaseStudyPage
+        study={study}
+        crumbs={[
+          { label: moduleMeta.title, href: `/modules/${moduleId}` },
+          { label: study.ref.trackTitle, href: `/modules/${moduleId}#${track}` },
+          { label: qualifiedTitle(study.ref) },
+        ]}
+        partOf={{ name: moduleMeta.title, path: `/modules/${moduleId}` }}
+      />
+    )
+  }
 
   const scenario = await getScenario(moduleId, track, slug)
   if (!scenario) notFound()
@@ -116,7 +119,7 @@ export default async function ScenarioPage({ params }: { params: Promise<Params>
           type: 'Worksheet',
         })}
       />
-      <Breadcrumbs moduleId={moduleId} page={scenario.ref} reading={false} />
+      <Breadcrumbs moduleId={moduleId} page={scenario.ref} />
 
       <header className="mb-8 max-w-3xl">
         <div className="mb-2 flex items-center gap-2.5">
@@ -152,124 +155,5 @@ export default async function ScenarioPage({ params }: { params: Promise<Params>
 
       <WhereNext reviews={related.reviews} counterpart={related.counterpart} next={null} />
     </div>
-  )
-}
-
-async function CaseStudyPage({
-  moduleId,
-  track,
-  slug,
-}: {
-  moduleId: string
-  track: string
-  slug: string
-}) {
-  const study = await getCaseStudy(moduleId, track, slug)
-  if (!study) notFound()
-  const meta = familyMeta(track)
-  const related = await getRelated(study.ref)
-  const minutes = study.docs.reduce((sum, d) => sum + d.minutes, 0)
-
-  return (
-    <div className="py-10">
-      <JsonLd
-        data={learningResourceJsonLd({
-          name: study.title,
-          description: caseDescription(moduleId, study),
-          path: scenarioHref(study.ref),
-          minutes,
-          partOf: { name: getModule(moduleId)?.title ?? 'Case Studies', path: `/modules/${moduleId}` },
-          type: 'Case study',
-        })}
-      />
-      <Breadcrumbs moduleId={moduleId} page={study.ref} reading />
-
-      <header className="mb-6 max-w-3xl">
-        <div className="mb-2 flex items-center gap-2.5">
-          <span className="rounded bg-accent px-1.5 py-0.5 text-[0.6875rem] font-bold tabular-nums text-white dark:text-bg">
-            {study.ref.tag}
-          </span>
-          <span className="text-[0.8125rem] text-subtle">{study.ref.trackTitle}</span>
-        </div>
-        <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{study.title}</h1>
-        <Byline updated={study.ref.updated} report={{ title: study.title, path: scenarioHref(study.ref) }} />
-        <div className="mt-3">
-          <MetaStrip
-            meta={meta}
-            minutes={study.docs.length === 1 ? minutes : null}
-            extra={
-              study.docs.length > 1 && (
-                <>
-                  <span aria-hidden>·</span>
-                  <span>
-                    {study.docs.length} documents, {minutes} min in total
-                  </span>
-                </>
-              )
-            }
-          />
-        </div>
-        <BeforeYouStart meta={meta}>
-          <ReadingOrder study={study} />
-        </BeforeYouStart>
-      </header>
-
-      <CaseStudyView study={study} />
-
-      <WhereNext reviews={related.reviews} counterpart={related.counterpart} next={null} />
-    </div>
-  )
-}
-
-/**
- * The tabs in the order worth reading them, with time per tab, plus where the sources
- * live and any superseded versions — so every tab can reach the provenance without
- * repeating it.
- */
-function ReadingOrder({ study }: { study: CaseStudy }) {
-  const practice = study.ref.practice
-  return (
-    <>
-      {study.docs.length > 1 && (
-        <Fact term="Reading order">
-          <ol className="list-decimal space-y-0.5 pl-4 marker:text-subtle">
-            {study.docs.map((d) => (
-              <li key={d.tab}>
-                <a href={`#${d.tab}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
-                  {d.label}
-                </a>{' '}
-                <span className="text-subtle">· {d.minutes} min</span>
-              </li>
-            ))}
-          </ol>
-        </Fact>
-      )}
-      <Fact term="Sources">
-        {study.sources ? (
-          <>
-            The references for every tab are in{' '}
-            <a href={`#${study.sources.anchor}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
-              {study.sources.label} → {study.sources.title}
-            </a>
-            .
-          </>
-        ) : (
-          'This case does not cite external sources; treat vendor-specific details as illustrative.'
-        )}
-        {practice && (
-          <>
-            {' '}
-            An{' '}
-            <Link
-              href={`/modules/01-customer-discovery-and-decomposition/${practice}`}
-              className="text-accent hover:text-accent-hover"
-            >
-              interactive Practice Worksheet
-            </Link>{' '}
-            saves your answers as you type.
-          </>
-        )}
-      </Fact>
-    </>
   )
 }

@@ -17,7 +17,7 @@ That’s it: **verify → facts → draft → gate → answer, approve, or escal
 
 > **Core idea:** Build a routed decision pipeline that knows when to answer, when to ask for approval, and when to hand off. The model can draft and recommend; verified identity and a deterministic policy gateway decide whether an account action may happen.
 
-The unchanged [source case](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#full-pack) is the full reference. Use this guide for the spoken design, the [Deep Dive](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#deep-dive) for follow-ups, and the [Cheat Sheet](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#cheat-sheet) for last-minute recall.
+The unchanged [source case](/design/customer-support-automation#full-pack) is the full reference. Use this guide for the spoken design, the [Deep Dive](/design/customer-support-automation#deep-dive) for follow-ups, and the [Cheat Sheet](/design/customer-support-automation#cheat-sheet) for last-minute recall.
 
 ## 1. Open with the risk
 
@@ -27,7 +27,7 @@ Use a double-charge request as the running example. A fluent reply is not enough
 
 ### Questions to ask the interviewer
 
-These questions set the first-release boundary. The [source case, §1](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#full-pack) has the complete discovery table.
+These questions set the first-release boundary. The [source case, §1](/design/customer-support-automation#full-pack) has the complete discovery table.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -93,7 +93,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture you can draw
 
-This simplifies the [source architecture, §4](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#full-pack) for a whiteboard explanation.
+This simplifies the [source architecture, §4](/design/customer-support-automation#full-pack) for a whiteboard explanation.
 
 ```mermaid
 flowchart LR

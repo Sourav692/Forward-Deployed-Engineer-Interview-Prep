@@ -1,6 +1,6 @@
 # G15 — Agent Platform for Non-Technical Users: Deep Dive
 
-> Read with the unchanged [source](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#full-pack). The [Main guide](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#main) is the interview path; the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#cheat-sheet) is the recall card.
+> Read with the unchanged [source](/design/agent-platform-for-non-technical-users#full-pack). The [Main guide](/design/agent-platform-for-non-technical-users#main) is the interview path; the [Cheat Sheet](/design/agent-platform-for-non-technical-users#cheat-sheet) is the recall card.
 
 ## 1. The contract between authoring and runtime
 

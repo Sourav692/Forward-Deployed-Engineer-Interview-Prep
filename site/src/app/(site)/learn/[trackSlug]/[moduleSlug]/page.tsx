@@ -166,7 +166,14 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                   <ModuleProgress input={input} />
                 </div>
                 <div className="mt-3">
-                  {list.main.length ? (
+                  {mod.listedOn ? (
+                    <p className="text-sm text-muted">
+                      {mod.listedOn.lead}{' '}
+                      <Link href={mod.listedOn.href} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
+                        {mod.listedOn.label}
+                      </Link>
+                    </p>
+                  ) : list.main.length ? (
                     <ReadingList lessons={list.main} />
                   ) : (
                     <EmptyState title={COPY.emptyReadingList} body={COPY.comingSoonNoRelated} />

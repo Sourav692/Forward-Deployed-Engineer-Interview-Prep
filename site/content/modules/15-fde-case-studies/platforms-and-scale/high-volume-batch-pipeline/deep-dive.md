@@ -1,6 +1,6 @@
 # G10 — High-Volume Batch Pipeline: Deep Dive
 
-> Read with the unchanged [source](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#full-pack). The [Main guide](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#main) is the interview path; the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#cheat-sheet) is the quick recall card.
+> Read with the unchanged [source](/design/high-volume-batch-pipeline#full-pack). The [Main guide](/design/high-volume-batch-pipeline#main) is the interview path; the [Cheat Sheet](/design/high-volume-batch-pipeline#cheat-sheet) is the quick recall card.
 
 ## 1. Contract before machinery
 

@@ -15,7 +15,7 @@ End to end, as Tuesday’s 6 a.m. catalog job:
 
 That’s it: **snapshot → partition → infer → validate → checkpoint → publish or hold.** Interactive Q&A is out.
 
-> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#full-pack). This guide is the interview route through the unchanged source; use the [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#deep-dive) for mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline#cheat-sheet) for rehearsal.
+> **Source:** [Sources and Full Design](/design/high-volume-batch-pipeline#full-pack). This guide is the interview route through the unchanged source; use the [Deep Dive](/design/high-volume-batch-pipeline#deep-dive) for mechanics and the [Cheat Sheet](/design/high-volume-batch-pipeline#cheat-sheet) for rehearsal.
 
 ## The case in one sentence
 

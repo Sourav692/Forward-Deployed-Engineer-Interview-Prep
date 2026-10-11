@@ -15,7 +15,7 @@ End to end, as free-tier user Sam:
 
 That’s it: **admit → load state → infer stream → moderate → persist.** “We’ll train a new model in this round” stays out unless they ask.
 
-> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/platforms-and-scale/consumer-scale-chat-service#full-pack), especially §§1–12. Use the [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/consumer-scale-chat-service#deep-dive) for sizing and trade-offs and the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/consumer-scale-chat-service#cheat-sheet) for rehearsal. The source builds its design from one-line “Design ChatGPT/Claude” prompts; all scale figures are explicit whiteboard assumptions, not measured service facts.
+> **Source:** [Sources and Full Design](/design/consumer-scale-chat-service#full-pack), especially §§1–12. Use the [Deep Dive](/design/consumer-scale-chat-service#deep-dive) for sizing and trade-offs and the [Cheat Sheet](/design/consumer-scale-chat-service#cheat-sheet) for rehearsal. The source builds its design from one-line “Design ChatGPT/Claude” prompts; all scale figures are explicit whiteboard assumptions, not measured service facts.
 
 ## The anchor and variant
 

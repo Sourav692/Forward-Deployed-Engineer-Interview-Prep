@@ -1,6 +1,6 @@
 # G17 — Logistics Exception Handling: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#main) · [Deep Dive](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#full-pack)
+[Main](/design/logistics-exception-handling#main) · [Deep Dive](/design/logistics-exception-handling#deep-dive) · [Unchanged source](/design/logistics-exception-handling#full-pack)
 
 ## Ask first
 

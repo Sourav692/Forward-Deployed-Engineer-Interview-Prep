@@ -1,6 +1,6 @@
 # G07 — Secure Multi-Tenant AI Platform: Cheat Sheet
 
-Use the [Main guide](/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform#main) for the spoken design, the [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform#deep-dive) for mechanics, and the unchanged [source](/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform#full-pack) for the full case.
+Use the [Main guide](/design/secure-multi-tenant-ai-platform#main) for the spoken design, the [Deep Dive](/design/secure-multi-tenant-ai-platform#deep-dive) for mechanics, and the unchanged [source](/design/secure-multi-tenant-ai-platform#full-pack) for the full case.
 
 ## One sentence
 

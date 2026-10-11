@@ -29,9 +29,10 @@ import { existsSync, statSync } from 'node:fs'
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { TABS, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
+import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
 import { UNLINK, gitDates, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
-export const CASE_STUDY_MODULE_ID = '15-fde-case-studies'
+export const CASE_STUDY_MODULE_ID = CASEBOOK_MODULE
 
 /**
  * Groups published on the site. Extend this list to publish more; a group missing
@@ -258,6 +259,8 @@ async function collectCases(root, standaloneRoot, repoRoot) {
   return cases
 }
 
+const caseUrl = (c) => scenarioHref({ moduleId: CASE_STUDY_MODULE_ID, trackId: c.theme, slug: c.slug })
+
 /**
  * `sourceUrls`, when given, is filled with the site URL of every published case:
  * absolute folder path -> page URL, absolute tab file -> page URL with its tab. The
@@ -274,14 +277,14 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
   const pages = new Map()
   for (const c of cases) {
     pages.set(c.dir, {
-      url: `/modules/${CASE_STUDY_MODULE_ID}/${c.theme}/${c.slug}`,
+      url: caseUrl(c),
       tabsByFile: new Map(c.tabs.map((t) => [t.file, t.id])),
     })
   }
   const ctx = { root, repoRoot, pages }
   if (sourceUrls) {
     for (const c of cases) {
-      const url = `/modules/${CASE_STUDY_MODULE_ID}/${c.theme}/${c.slug}`
+      const url = caseUrl(c)
       sourceUrls.set(c.dir, url)
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)

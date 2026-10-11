@@ -17,7 +17,7 @@ That’s it: **verify tenant once → enforce everywhere → meter and isolate.*
 
 The promise is one affordable AI platform for many customers **without a cross-tenant read, write, cache hit, or model context leak**. A tenant ID on a row is insufficient. Derive tenant context from verified identity once, keep it immutable, and enforce it independently at every storage and inference boundary.
 
-G07 is the [source study](/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform#full-pack)’s anchor for the shared platform, per-tenant budget, noisy-neighbor, and cross-tenant retrieval cases.
+G07 is the [source study](/design/secure-multi-tenant-ai-platform#full-pack)’s anchor for the shared platform, per-tenant budget, noisy-neighbor, and cross-tenant retrieval cases.
 
 | Variant | Shared foundation | What changes |
 |---|---|---|
@@ -79,7 +79,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This condenses the [source architecture, §4](/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform#full-pack). The platform hosts LLM inference, but the model receives only tenant-scoped inputs and never decides tenant membership or authorization.
+This condenses the [source architecture, §4](/design/secure-multi-tenant-ai-platform#full-pack). The platform hosts LLM inference, but the model receives only tenant-scoped inputs and never decides tenant membership or authorization.
 
 ```mermaid
 flowchart LR
@@ -167,4 +167,4 @@ Roll out internal tenants → negative isolation suite → small shared tenants 
 
 > “I would default to a shared platform for 500 tenants, but derive tenant context from verified identity once and make it immutable. The control plane sets membership, policy, region, keys, and quotas; the data plane enforces scope independently in rows, objects, caches, queues, logs, indexes, and keys. I would meter before LLM inference and use fair queues so a large tenant cannot starve the rest. A missing tenant predicate or cross-tenant retrieved chunk fails closed. I would prove that with an adversarial suite before external rollout, then offer dedicated capacity only when the customer’s risk, residency, or SLO requires it.”
 
-Use the [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform#deep-dive) for the leak drill and isolation mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform#cheat-sheet) for last-minute recall.
+Use the [Deep Dive](/design/secure-multi-tenant-ai-platform#deep-dive) for the leak drill and isolation mechanics and the [Cheat Sheet](/design/secure-multi-tenant-ai-platform#cheat-sheet) for last-minute recall.

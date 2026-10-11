@@ -17,7 +17,7 @@ That’s it: **metric first → permitted SQL → bounded run → explain from t
 
 The failure to design against is **valid SQL that answers the wrong business question**. “Revenue” can mean booked, recognized, or collected revenue; the model cannot choose that definition on the business’s behalf. Anchor the question to a versioned metric before exposing a physical schema, then bound and audit every query.
 
-This is the anchor for the related executive-dashboard and retail-forecast explanation cases in the [source study](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#full-pack). Learn the governed query path once; change the final explanation and review workflow for each variant.
+This is the anchor for the related executive-dashboard and retail-forecast explanation cases in the [source study](/design/nl-over-governed-data#full-pack). Learn the governed query path once; change the final explanation and review workflow for each variant.
 
 | Case                             | Shared foundation                                                | What changes                                                                                                                   |
 | -------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -82,7 +82,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is the interview-size view of the [source architecture, §4](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#full-pack). The LLM interprets and explains; registry, policy, warehouse, and analysts keep authority.
+This is the interview-size view of the [source architecture, §4](/design/nl-over-governed-data#full-pack). The LLM interprets and explains; registry, policy, warehouse, and analysts keep authority.
 
 ```mermaid
 flowchart LR
@@ -168,4 +168,4 @@ Roll out in order: ten governed metrics with owners → golden replay on every c
 
 **Memory line:** “The semantic layer defines the answer; the LLM translates and explains it.”
 
-For parser mechanics, the insurer two-pivot agent story, the incident drills, and the detailed evaluation signals, use the [Deep Dive](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#deep-dive). For a final-minute pass, use the [Cheat Sheet](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#cheat-sheet).
+For parser mechanics, the insurer two-pivot agent story, the incident drills, and the detailed evaluation signals, use the [Deep Dive](/design/nl-over-governed-data#deep-dive). For a final-minute pass, use the [Cheat Sheet](/design/nl-over-governed-data#cheat-sheet).

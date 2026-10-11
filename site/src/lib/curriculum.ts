@@ -1226,6 +1226,11 @@ export const MODULES: CurriculumModule[] = [
     assessment: 'Recall checks',
     interviewProbe: 'Follow-up depth',
     commonMistakes: ['Reading Deep Dive stubs as complete'],
+    listedOn: {
+      href: '/design',
+      label: 'Open the casebook',
+      lead: 'The designs are listed once, grouped by theme, in the casebook.',
+    },
     lessons: [
       'g01-enterprise-knowledge-assistant',
       'g02-customer-support-automation',

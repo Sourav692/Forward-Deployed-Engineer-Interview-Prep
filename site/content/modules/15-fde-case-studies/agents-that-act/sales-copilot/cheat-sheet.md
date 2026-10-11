@@ -1,6 +1,6 @@
 # G05 — Sales Copilot: Cheat Sheet
 
-Use the [Main guide](/modules/15-fde-case-studies/agents-that-act/sales-copilot#main) to practice speaking and the [Deep Dive](/modules/15-fde-case-studies/agents-that-act/sales-copilot#deep-dive) for mechanisms. The [source](/modules/15-fde-case-studies/agents-that-act/sales-copilot#full-pack) is the full reference.
+Use the [Main guide](/design/sales-copilot#main) to practice speaking and the [Deep Dive](/design/sales-copilot#deep-dive) for mechanisms. The [source](/design/sales-copilot#full-pack) is the full reference.
 
 ## One sentence
 

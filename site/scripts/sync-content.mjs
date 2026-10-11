@@ -28,6 +28,7 @@ import {
 import { syncLastDay } from './last-day.mjs'
 import { gitDates, learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
 import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
+import { scenarioHref } from '../src/lib/scenario.ts'
 
 const SITE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const REPO_ROOT = resolve(SITE_DIR, '..')
@@ -144,7 +145,7 @@ async function syncTrack(moduleId, track, sourceUrls, updatedOf) {
     await mkdir(join(outBase, 'answer-keys'), { recursive: true })
     await writeFile(join(outBase, 'worksheets', `${slug}.md`), worksheet)
     await writeFile(join(outBase, 'answer-keys', `${slug}.md`), answerKey)
-    const href = `/modules/${moduleId}/${track.id}/${slug}`
+    const href = scenarioHref({ moduleId, trackId: track.id, slug })
     sourceUrls.set(join(track.worksheetDir, file), href)
     sourceUrls.set(join(track.answerKeyDir, keyFile), href)
 
@@ -314,7 +315,7 @@ async function main() {
       for (const s of track.scenarios) {
         pages.set(`${track.id}/${s.slug}`, {
           title: s.title,
-          href: `/modules/${mod.id}/${track.id}/${s.slug}`,
+          href: scenarioHref({ moduleId: mod.id, trackId: track.id, slug: s.slug }),
         })
       }
     }

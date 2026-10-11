@@ -1,6 +1,6 @@
 # G04 — SRE Incident Response Agent: Deep Dive
 
-The [Main guide](/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent#main) is the spoken answer. This is its technical backup; the unchanged [source case](/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent#full-pack) has the complete reference and interview scripts.
+The [Main guide](/design/sre-incident-response-agent#main) is the spoken answer. This is its technical backup; the unchanged [source case](/design/sre-incident-response-agent#full-pack) has the complete reference and interview scripts.
 
 **Model and agent roles:** Rules or a small model collapse alerts before the strong LLM synthesizes ranked hypotheses from bounded, read-only telemetry. The incident agent may propose a mitigation, but only human approval plus the gateway permits a write.
 
@@ -77,4 +77,4 @@ Week one: one alert class, named source owners, historical incidents and SME lab
 - **“Too expensive?”** Rules/small model for correlation, one strong synthesis, bounded lookback, cached versioned catalog/runbooks. Track cost per resolved investigation.
 - **“Wrong citation?”** Verify against the actual retrieved signal/runbook span; reject or repair before a proposal.
 
-The [source](/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent#full-pack) retains the full diagrams, 45-minute script, leveling rubric, recovery moves, and references.
+The [source](/design/sre-incident-response-agent#full-pack) retains the full diagrams, 45-minute script, leveling rubric, recovery moves, and references.

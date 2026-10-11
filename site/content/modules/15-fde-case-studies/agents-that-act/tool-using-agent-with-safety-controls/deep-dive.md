@@ -1,6 +1,6 @@
 # G03 — Tool-Using Agent with Safety Controls: Deep Dive
 
-The [Main guide](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#main) is the spoken design. This is its technical backup; the unchanged [source case](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#full-pack) keeps the complete synthesis and references.
+The [Main guide](/design/tool-using-agent-with-safety-controls#main) is the spoken design. This is its technical backup; the unchanged [source case](/design/tool-using-agent-with-safety-controls#full-pack) keeps the complete synthesis and references.
 
 **Model and agent roles:** The LLM agent planner produces one bounded `ActionProposal` from task state and tool observations. The registry, validator, policy point, approver, broker, and idempotent gateway remain separate deterministic authorities; the planner never executes directly.
 
@@ -88,4 +88,4 @@ Contain by disabling bulk refund planning, forcing VIP refunds into review-ticke
 | Auto execution vs approval delay | Low-risk auto, medium conditional/reviewed, high-risk explicit approval or block. |
 | Central gateway vs direct write integrations | Centralize auth, validation, audit, and idempotency in one write path. |
 
-The [source](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#full-pack) retains the original 50-minute script, full diagrams, trace excerpt, and reference table.
+The [source](/design/tool-using-agent-with-safety-controls#full-pack) retains the original 50-minute script, full diagrams, trace excerpt, and reference table.

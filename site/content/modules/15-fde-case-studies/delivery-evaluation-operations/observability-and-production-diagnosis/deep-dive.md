@@ -1,6 +1,6 @@
 # G14 — Observability and Production Diagnosis: Deep Dive
 
-> Read with the unchanged [source](/modules/15-fde-case-studies/delivery-evaluation-operations/observability-and-production-diagnosis#full-pack). The [Main guide](/modules/15-fde-case-studies/delivery-evaluation-operations/observability-and-production-diagnosis#main) is the interview path; the [Cheat Sheet](/modules/15-fde-case-studies/delivery-evaluation-operations/observability-and-production-diagnosis#cheat-sheet) is the recall card.
+> Read with the unchanged [source](/design/observability-and-production-diagnosis#full-pack). The [Main guide](/design/observability-and-production-diagnosis#main) is the interview path; the [Cheat Sheet](/design/observability-and-production-diagnosis#cheat-sheet) is the recall card.
 
 ## 1. Collection policy is the first capacity decision
 

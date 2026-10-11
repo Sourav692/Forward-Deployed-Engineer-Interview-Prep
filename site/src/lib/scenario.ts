@@ -101,11 +101,20 @@ export type SearchEntry = {
   text: string
 }
 
+/** The casebook module. Its pages live at /design/<slug> (ENH-16), so its slugs are unique across themes. */
+export const CASEBOOK_MODULE = '15-fde-case-studies'
+
+/**
+ * The URL of a worksheet or case page. The sync scripts, the check scripts and the site
+ * all build page URLs here, so a page that moves changes in one place (and gets an entry
+ * in src/lib/redirects.ts).
+ */
 export function scenarioHref(ref: {
   moduleId: string
   trackId: string
   slug: string
 }): string {
+  if (ref.moduleId === CASEBOOK_MODULE) return `/design/${ref.slug}`
   return `/modules/${ref.moduleId}/${ref.trackId}/${ref.slug}`
 }
 

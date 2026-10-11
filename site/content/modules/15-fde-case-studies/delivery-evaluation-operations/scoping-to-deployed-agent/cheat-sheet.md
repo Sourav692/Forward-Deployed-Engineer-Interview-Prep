@@ -1,6 +1,6 @@
 # G12 — Scoping to Deployed Agent: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#main) · [Deep Dive](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack)
+[Main](/design/scoping-to-deployed-agent#main) · [Deep Dive](/design/scoping-to-deployed-agent#deep-dive) · [Unchanged source](/design/scoping-to-deployed-agent#full-pack)
 
 ## Ask first
 

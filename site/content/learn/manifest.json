@@ -1856,7 +1856,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating"
+      "href": "/design/evaluation-and-release-gating"
     },
     {
       "slug": "g07-secure-multi-tenant-ai-platform",
@@ -1867,7 +1867,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/",
       "estMinutes": 11,
-      "href": "/modules/15-fde-case-studies/platforms-and-scale/secure-multi-tenant-ai-platform"
+      "href": "/design/secure-multi-tenant-ai-platform"
     },
     {
       "slug": "g14-observability-and-production-diagnosis",
@@ -1878,7 +1878,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/",
       "estMinutes": 9,
-      "href": "/modules/15-fde-case-studies/delivery-evaluation-operations/observability-and-production-diagnosis"
+      "href": "/design/observability-and-production-diagnosis"
     },
     {
       "slug": "scale-prototype-to-production",
@@ -1889,7 +1889,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/",
       "estMinutes": 37,
-      "href": "/modules/15-fde-case-studies/judgement-and-decomposition/scale-prototype-to-production"
+      "href": "/design/scale-prototype-to-production"
     },
     {
       "slug": "g18-consumer-scale-chat-service",
@@ -1900,7 +1900,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/platforms-and-scale/consumer-scale-chat-service"
+      "href": "/design/consumer-scale-chat-service"
     },
     {
       "slug": "g10-high-volume-batch-pipeline",
@@ -1911,7 +1911,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/platforms-and-scale/high-volume-batch-pipeline"
+      "href": "/design/high-volume-batch-pipeline"
     },
     {
       "slug": "g19-model-development-and-post-training",
@@ -1922,7 +1922,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/",
       "estMinutes": 7,
-      "href": "/modules/15-fde-case-studies/model-development/model-development-and-post-training"
+      "href": "/design/model-development-and-post-training"
     },
     {
       "slug": "g20-llm-inference-serving",
@@ -1933,7 +1933,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving"
+      "href": "/design/llm-inference-serving"
     },
     {
       "slug": "the-twelve-part-design-framework",
@@ -2200,7 +2200,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/",
       "estMinutes": 21,
-      "href": "/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant"
+      "href": "/design/enterprise-knowledge-assistant"
     },
     {
       "slug": "g02-customer-support-automation",
@@ -2211,7 +2211,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
       "estMinutes": 16,
-      "href": "/modules/15-fde-case-studies/agents-that-act/customer-support-automation"
+      "href": "/design/customer-support-automation"
     },
     {
       "slug": "g03-tool-using-agent-with-safety-controls",
@@ -2222,7 +2222,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/",
       "estMinutes": 14,
-      "href": "/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls"
+      "href": "/design/tool-using-agent-with-safety-controls"
     },
     {
       "slug": "g04-sre-incident-response-agent",
@@ -2233,7 +2233,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/",
       "estMinutes": 13,
-      "href": "/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent"
+      "href": "/design/sre-incident-response-agent"
     },
     {
       "slug": "g05-sales-copilot",
@@ -2244,7 +2244,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/",
       "estMinutes": 14,
-      "href": "/modules/15-fde-case-studies/agents-that-act/sales-copilot"
+      "href": "/design/sales-copilot"
     },
     {
       "slug": "g06-nl-over-governed-data",
@@ -2255,7 +2255,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/",
       "estMinutes": 12,
-      "href": "/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data"
+      "href": "/design/nl-over-governed-data"
     },
     {
       "slug": "g08-document-review-copilot",
@@ -2266,7 +2266,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/",
       "estMinutes": 11,
-      "href": "/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot"
+      "href": "/design/document-review-copilot"
     },
     {
       "slug": "g09-enterprise-coding-assistant",
@@ -2277,7 +2277,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/",
       "estMinutes": 11,
-      "href": "/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant"
+      "href": "/design/enterprise-coding-assistant"
     },
     {
       "slug": "g11-deep-research-agent",
@@ -2288,7 +2288,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/knowledge-retrieval/deep-research-agent"
+      "href": "/design/deep-research-agent"
     },
     {
       "slug": "g12-scoping-to-deployed-agent",
@@ -2299,7 +2299,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent"
+      "href": "/design/scoping-to-deployed-agent"
     },
     {
       "slug": "g15-agent-platform-for-non-technical-users",
@@ -2310,7 +2310,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users"
+      "href": "/design/agent-platform-for-non-technical-users"
     },
     {
       "slug": "g16-real-time-call-assistant",
@@ -2321,7 +2321,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/",
       "estMinutes": 9,
-      "href": "/modules/15-fde-case-studies/agents-that-act/real-time-call-assistant"
+      "href": "/design/real-time-call-assistant"
     },
     {
       "slug": "g17-logistics-exception-handling",
@@ -2332,7 +2332,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/",
       "estMinutes": 8,
-      "href": "/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling"
+      "href": "/design/logistics-exception-handling"
     },
     {
       "slug": "standalone-designs-recruiting-platform",
@@ -2344,7 +2344,7 @@
       "credit": "Includes material adapted from iGrace course pages.",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/",
       "estMinutes": 7,
-      "href": "/modules/15-fde-case-studies/standalone-designs/recruiting-platform"
+      "href": "/design/recruiting-platform"
     },
     {
       "slug": "production-llm-gateway",
@@ -2355,7 +2355,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/",
       "estMinutes": 39,
-      "href": "/modules/15-fde-case-studies/standalone-designs/production-llm-gateway"
+      "href": "/design/production-llm-gateway"
     },
     {
       "slug": "travel-agent-worked-example",
@@ -2367,7 +2367,7 @@
       "credit": "Includes material adapted from iGrace course pages.",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/",
       "estMinutes": 10,
-      "href": "/modules/15-fde-case-studies/standalone-designs/travel-agent-worked-example"
+      "href": "/design/travel-agent-worked-example"
     },
     {
       "slug": "air-gapped-ai-system",
@@ -2379,7 +2379,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
       "estMinutes": 86,
-      "href": "/modules/15-fde-case-studies/standalone-designs/air-gapped-ai-system"
+      "href": "/design/air-gapped-ai-system"
     },
     {
       "slug": "reliable-workflow-orchestration",
@@ -2391,7 +2391,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
       "estMinutes": 87,
-      "href": "/modules/15-fde-case-studies/standalone-designs/reliable-workflow-orchestration"
+      "href": "/design/reliable-workflow-orchestration"
     },
     {
       "slug": "configurable-platform-customer-workflows",
@@ -2403,7 +2403,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
       "estMinutes": 82,
-      "href": "/modules/15-fde-case-studies/standalone-designs/configurable-platform-customer-workflows"
+      "href": "/design/configurable-platform-customer-workflows"
     },
     {
       "slug": "enterprise-chatbot-platform",
@@ -2415,7 +2415,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
       "estMinutes": 64,
-      "href": "/modules/15-fde-case-studies/standalone-designs/enterprise-chatbot-platform"
+      "href": "/design/enterprise-chatbot-platform"
     },
     {
       "slug": "prioritize-ai-use-cases",
@@ -2426,7 +2426,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/",
       "estMinutes": 37,
-      "href": "/modules/15-fde-case-studies/judgement-and-decomposition/prioritize-ai-use-cases"
+      "href": "/design/prioritize-ai-use-cases"
     },
     {
       "slug": "build-when-customer-data-is-poor",
@@ -2437,7 +2437,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/",
       "estMinutes": 36,
-      "href": "/modules/15-fde-case-studies/judgement-and-decomposition/build-when-customer-data-is-poor"
+      "href": "/design/build-when-customer-data-is-poor"
     },
     {
       "slug": "self-adapting-agent",
@@ -2448,7 +2448,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/",
       "estMinutes": 38,
-      "href": "/modules/15-fde-case-studies/standalone-designs/self-adapting-agent"
+      "href": "/design/self-adapting-agent"
     },
     {
       "slug": "personal-assistant-with-memory",
@@ -2459,7 +2459,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/",
       "estMinutes": 36,
-      "href": "/modules/15-fde-case-studies/standalone-designs/personal-assistant-with-memory"
+      "href": "/design/personal-assistant-with-memory"
     },
     {
       "slug": "decomposition-classics-67-68-69",
@@ -2470,7 +2470,7 @@
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/",
       "estMinutes": 37,
-      "href": "/modules/15-fde-case-studies/judgement-and-decomposition/decomposition-classics-67-68-69"
+      "href": "/design/decomposition-classics-67-68-69"
     },
     {
       "slug": "the-discovery-conversation",

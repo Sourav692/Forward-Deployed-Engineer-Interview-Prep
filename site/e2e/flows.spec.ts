@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { CHECKPOINTS } from '../src/lib/checkpoints'
 import {
+  CASE_STUDY,
   CHECKPOINT_MODULE,
   GATED_MODULE,
   LESSON,
@@ -350,9 +351,22 @@ test('theme toggle persists across reloads', async ({ page }) => {
   await expect(html).not.toHaveClass(/\bdark\b/)
 })
 
+// ENH-16: the casebook moved to /design/<slug>. The old URL lands on the new page, and
+// progress saved before the move still shows: it keys on theme/slug, not on the URL.
+test('casebook: old case URL redirects and saved progress survives the move', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('fd:v1:read:knowledge-retrieval/enterprise-knowledge-assistant', JSON.stringify(['main']))
+  })
+  await page.goto('/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant')
+  await expect(page).toHaveURL(CASE_STUDY)
+  await hydrated(page)
+  await expect(page.getByRole('button', { name: 'Interview Guide marked as read' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Casebook' })).toHaveAttribute('href', '/design')
+})
+
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
 // unmatched URL and for an unknown param on a prerendered route.
-for (const path of ['/no-such-page', '/learn/no-such-track', '/modules/15-fde-case-studies/core/no-such-case']) {
+for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case']) {
   test(`404 HTML is server-rendered: ${path}`, async ({ request }) => {
     const res = await request.get(path)
     expect(res.status()).toBe(404)

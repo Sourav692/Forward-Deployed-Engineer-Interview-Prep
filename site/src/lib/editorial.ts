@@ -110,8 +110,7 @@ export const SITE_TAGLINE = 'FDE interview practice and system-design review'
  * prefixes that also mark the area as current (`aria-current="page"`).
  *
  * Each area links to its own index page. `match` keeps the existing module pages
- * highlighting the area they belong to: the casebook (`/modules/15-…`) under Design,
- * worksheets and behavioural practice (`/modules/01-…`, `/modules/14-…`) under
+ * highlighting the area they belong to: worksheets and behavioural practice (`/modules/01-…`, `/modules/14-…`) under
  * Practice, and the final-week review under Interview. Company Prep (`/company-prep`)
  * is not listed while it has no packs (audit check FV-02); its route stays.
  */
@@ -122,7 +121,7 @@ export const NAV = [
     id: 'design',
     label: 'Design',
     href: '/design',
-    match: ['/design', '/modules/15-fde-case-studies'],
+    match: ['/design'],
   },
   {
     id: 'practice',

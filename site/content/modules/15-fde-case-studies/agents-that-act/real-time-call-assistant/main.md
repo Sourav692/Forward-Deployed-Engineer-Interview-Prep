@@ -15,7 +15,7 @@ End to end, as Sara on an Acme call:
 
 That’s it: **prep before → tiny live suggest → rich after, with a human on writes.** Voice-out and auto-send are out (that’s a different product).
 
-> **Full source:** [Sources and Full Design](/modules/15-fde-case-studies/agents-that-act/real-time-call-assistant#full-pack), especially §§1–11 for the design and §14 for the sub-3-second pivot. Use the [Deep Dive](/modules/15-fde-case-studies/agents-that-act/real-time-call-assistant#deep-dive) for budgets and evaluation and the [Cheat Sheet](/modules/15-fde-case-studies/agents-that-act/real-time-call-assistant#cheat-sheet) for rehearsal. Much of the source design is explicitly its author's construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
+> **Full source:** [Sources and Full Design](/design/real-time-call-assistant#full-pack), especially §§1–11 for the design and §14 for the sub-3-second pivot. Use the [Deep Dive](/design/real-time-call-assistant#deep-dive) for budgets and evaluation and the [Cheat Sheet](/design/real-time-call-assistant#cheat-sheet) for rehearsal. Much of the source design is explicitly its author's construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
 
 ## One call, three clocks
 
