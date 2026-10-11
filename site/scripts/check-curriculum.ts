@@ -8,12 +8,14 @@
  * Fails on: duplicate or malformed slugs, track slugs that collide with the live
  * site's track ids, dangling references, a lesson without exactly one home,
  * prerequisite cycles, module statuses that contradict their lessons, RENAMED
- * redirects that chain, point at an unpublished lesson or retire a live one, and lesson
- * slices that overlap, drop a heading or name a heading the source lacks.
+ * redirects that chain, point at an unpublished lesson or retire a live one, chains or
+ * repeated sources anywhere in src/lib/redirects.ts, and lesson slices that overlap,
+ * drop a heading or name a heading the source lacks.
  */
 import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
 import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
+import { REDIRECTS } from '../src/lib/redirects.ts'
 import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-types.ts'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -183,6 +185,30 @@ for (const m of MODULES) {
 for (const [from, to] of Object.entries(RETIRED_MODULES)) {
   if (moduleBySlug.has(from)) fail(`RETIRED_MODULES key ${from} is still a module`)
   if (!moduleBySlug.has(to)) fail(`RETIRED_MODULES maps ${from} to ${to}, which is not a module`)
+}
+
+// The whole redirect map (ENH-15). A destination that another entry's source matches
+// would cost a second hop, and a repeated source never applies. Sources match as Next.js
+// matches them (`:p*` zero or more segments, `:p+` one or more, `:p` one); a destination
+// that is itself a pattern is left to check:routes.
+{
+  const matcher = (source: string) =>
+    new RegExp(
+      `^${source
+        .replace(/\./g, '\\.')
+        .replace(/\/:\w+\*/g, '(?:/.*)?')
+        .replace(/\/:\w+\+/g, '/.+')
+        .replace(/:\w+/g, '[^/]+')}$`,
+    )
+  const sources = REDIRECTS.map((r) => ({ ...r, re: matcher(r.source) }))
+  const seen = new Set<string>()
+  for (const r of REDIRECTS) {
+    if (seen.has(r.source)) fail(`redirect source ${r.source} is listed twice in src/lib/redirects.ts`)
+    seen.add(r.source)
+    if (r.destination.includes(':')) continue
+    const next = sources.find((s) => s.re.test(r.destination))
+    if (next) fail(`redirect chain: ${r.source} → ${r.destination} → ${next.destination}; point ${r.source} straight at the final page`)
+  }
 }
 
 // Interview hubs (DATA-07). They live at /interview/hubs/<slug>, so an interview-practice

@@ -14,7 +14,10 @@
  *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10),
  *    or when a lesson, case or worksheet lacks its "By … · Last updated …" line (PQ-15),
  *    or a content page (those, plus final-week pages) lacks a report link (PR-15).
- * 5. Fails when a module marked `ready` or `partly` in `src/lib/curriculum.ts` has
+ * 5. Fails when a fixed source in `src/lib/redirects.ts` does not answer with exactly
+ *    one 308 (307 when temporary) to its destination, or that destination is not a 200
+ *    page (IA-11).
+ * 6. Fails when a module marked `ready` or `partly` in `src/lib/curriculum.ts` has
  *    no published or live lesson in `content/learn/manifest.json` (an empty module
  *    would be dressed up as readable), mirroring `readingList()` in `src/lib/learn.ts`.
  *
@@ -23,6 +26,7 @@
 import { readFileSync } from 'node:fs'
 import { MODULES } from '../src/lib/curriculum.ts'
 import { AUTHOR, STORY_BANK } from '../src/lib/editorial.ts'
+import { REDIRECTS } from '../src/lib/redirects.ts'
 
 const BASE = (process.env.BASE_URL ?? 'http://localhost:3307').replace(/\/$/, '')
 const CONCURRENCY = 12
@@ -131,6 +135,31 @@ await pool(extra, async (path) => {
   status.set(path, res.status || res.error)
 })
 
+// ── 3. Redirect map (ENH-15, IA-11) ──────────────────────────────────────────
+// Every fixed source answers with one redirect (308, or 307 when temporary) straight to
+// its destination, and that page answers 200. Pattern sources (`:path*`) have no single
+// URL to request; check:curriculum rejects their chains.
+const fixed = REDIRECTS.filter((r) => !r.source.includes(':'))
+await pool(fixed, async ({ source, destination, permanent }) => {
+  const want = permanent ? 308 : 307
+  let res
+  try {
+    res = await fetch(BASE + encodeURI(source), { redirect: 'manual' })
+    await res.body?.cancel()
+  } catch (err) {
+    errors.push(`redirect ${source}: ${err.cause?.code ?? err.message}`)
+    return
+  }
+  const location = res.headers.get('location')
+  const landed = location ? decode(new URL(location, BASE).pathname) : null
+  if (res.status !== want || landed !== destination) {
+    errors.push(`redirect ${source}: expected ${want} → ${destination}, got ${res.status}${landed ? ` → ${landed}` : ''}`)
+    return
+  }
+  const end = await get(encodeURI(destination))
+  if (end.status !== 200) errors.push(`redirect ${source} → ${destination}, which returns ${end.status || end.error}`)
+})
+
 let redirects = 0
 for (const [path, code] of status) {
   if (typeof code === 'number' && code >= 300 && code < 400) redirects++
@@ -141,7 +170,7 @@ for (const [path, code] of status) {
 }
 
 console.log(
-  `check-routes: ${pages.length} sitemap URLs, ${extra.length} more internal links, ${status.size} fetched (${redirects} redirects), ${readable} ready/partly modules checked`,
+  `check-routes: ${pages.length} sitemap URLs, ${extra.length} more internal links, ${status.size} fetched (${redirects} redirects), ${fixed.length} mapped redirects, ${readable} ready/partly modules checked`,
 )
 if (errors.length) {
   console.error(`\n${errors.length} problem(s):`)
