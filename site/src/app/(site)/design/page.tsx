@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import { ModuleProgress } from '@/components/Progress'
 import { AreaGroup, AreaHeader, AreaSection, LinkList } from '@/components/areas/Area'
-import { LIVE, curriculumModules, curriculumTrack, moduleGroups, moduleHref } from '@/components/areas/data'
+import { LIVE, curriculumModules, curriculumTrack, moduleGroups } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { learnHref } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 
 /**
- * /design: the casebook index (FE-11). A static Server Component that lists every
- * worked system design by theme and links into the existing case-study pages under
- * /modules/15-fde-case-studies. Nothing is copied here; the case pages own their content.
+ * /design: the casebook index (FE-11), the one place the designs are listed. A static
+ * Server Component that lists every worked system design by theme and links to its page
+ * at /design/<slug> (ENH-16). Nothing is copied here; the case pages own their content.
  */
 
 export const metadata: Metadata = pageMetadata({
@@ -65,7 +65,6 @@ export default async function DesignPage() {
         id="cases"
         title="Cases by Theme"
         description="One line per case. Open a case to choose its depth from the tabs at the top of the page."
-        action={{ label: 'Open the full casebook', href: moduleHref(LIVE.casebook) }}
       >
         <div className="space-y-4">
           {groups.map((g) => (

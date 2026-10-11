@@ -15,7 +15,7 @@ End to end, as Cascade’s “small refunds without a human”:
 
 That’s it: **event → one spec → guardrail → execute once → recover.** Authors cannot secretly approve their own live refunds.
 
-> **Full source:** [Sources and Full Design](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#full-pack), especially §§1–12 for the anchor and §13 for Cascade Robotics. Use the [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#deep-dive) for guardrail and recovery mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#cheat-sheet) for rehearsal.
+> **Full source:** [Sources and Full Design](/design/agent-platform-for-non-technical-users#full-pack), especially §§1–12 for the anchor and §13 for Cascade Robotics. Use the [Deep Dive](/design/agent-platform-for-non-technical-users#deep-dive) for guardrail and recovery mechanics and the [Cheat Sheet](/design/agent-platform-for-non-technical-users#cheat-sheet) for rehearsal.
 
 ## The anchor and its related case
 

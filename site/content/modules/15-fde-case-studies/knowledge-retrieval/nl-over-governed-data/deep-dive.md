@@ -1,6 +1,6 @@
 # G06 — Natural Language over Governed Data: Deep Dive
 
-The [Main guide](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#main) is the spoken design. This is the technical backup to the unchanged [source study](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#full-pack), especially §§3–14.
+The [Main guide](/design/nl-over-governed-data#main) is the spoken design. This is the technical backup to the unchanged [source study](/design/nl-over-governed-data#full-pack), especially §§3–14.
 
 ## 1. Authority, state, and versions
 
@@ -45,7 +45,7 @@ The rollout is ten owned metrics, then golden replay, then analyst shadowing, th
 
 ## 6. When a supervisor is justified
 
-The [source §13](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#full-pack) tells an engagement story, not the default architecture for every NL-to-SQL product. At a large Asian life insurer, a BI question queue that took days and weeks for a dashboard led to a governed self-service assistant. A monolithic agent with **20+ tools** and full history failed through context bloat and tool confusion. The shipped supervisor used a fixed **eight-node LangGraph** flow: classify → clarify below 60% → resolve endorsed assets from a **16-asset Context Index** → route → compose. It routed to a managed Genie (now Genie One) text-to-SQL specialist, a narrower generated-SQL/RAG worker, deterministic analysis for Z-scores and trends, and a Lakeview visualization worker.
+The [source §13](/design/nl-over-governed-data#full-pack) tells an engagement story, not the default architecture for every NL-to-SQL product. At a large Asian life insurer, a BI question queue that took days and weeks for a dashboard led to a governed self-service assistant. A monolithic agent with **20+ tools** and full history failed through context bloat and tool confusion. The shipped supervisor used a fixed **eight-node LangGraph** flow: classify → clarify below 60% → resolve endorsed assets from a **16-asset Context Index** → route → compose. It routed to a managed Genie (now Genie One) text-to-SQL specialist, a narrower generated-SQL/RAG worker, deterministic analysis for Z-scores and trends, and a Lakeview visualization worker.
 
 Governance used **a handful of governed metric views** rather than raw fact tables, conversation state in a custom Delta-backed checkpointer with **short retention** (Databricks now documents a Lakebase checkpointer), versioned base-plus-overlay prompts with a five-minute cache, MLflow traces per node, and an AI Gateway (now Unity Gateway) for rate limits and PII filtering on the model endpoints the agent calls; as of 2026 it can't guardrail the agent endpoint itself. As domains grew, the supervisor’s tool list approached the same bloat; an orchestrator delegated to customer, channels, policy, and claims domain agents, each with a small toolset, while a memory manager owned categorized long-term memory. The managed multi-agent feature (now Agent Bricks Supervisor Agent, GA in 2026) wasn't an option for this customer at the time, so I hand-built the supervisor. In that engagement, the team reported time-to-insight falling from days to minutes, and adoption grew after rollout, though I can't attribute it cleanly. The source’s “if rebuilt” lesson is to measure resolution-time and accuracy from day one.
 

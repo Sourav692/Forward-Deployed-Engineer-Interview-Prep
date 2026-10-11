@@ -4,7 +4,7 @@
 
 ◷ 26 min
 
-Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [G12](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack) and the gating discipline of [G13](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack) without repeating them.
+Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [G12](/design/scoping-to-deployed-agent#full-pack) and the gating discipline of [G13](/design/evaluation-and-release-gating#full-pack) without repeating them.
 
 | Case | What the page adds |
 |---|---|
@@ -396,7 +396,7 @@ I'd expect review cost to fall on its own as labels accumulate. Thresholds can t
 
 ## References
 
-Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack) for gates and intake refusal; [G13 Evaluation and Release Gating](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack) for the release gate; [G01 Enterprise Knowledge Assistant](/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant#full-pack) for messy enterprise documents and permission normalisation; [G06 NL Over Governed Data](/modules/15-fde-case-studies/knowledge-retrieval/nl-over-governed-data#full-pack) for governed metric definitions; [Decomposition Classics](/modules/15-fde-case-studies/judgement-and-decomposition/decomposition-classics-67-68-69) for #68, the bank-fraud case built on inconsistent labels.
+Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) for gates and intake refusal; [G13 Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) for the release gate; [G01 Enterprise Knowledge Assistant](/design/enterprise-knowledge-assistant#full-pack) for messy enterprise documents and permission normalisation; [G06 NL Over Governed Data](/design/nl-over-governed-data#full-pack) for governed metric definitions; [Decomposition Classics](/design/decomposition-classics-67-68-69) for #68, the bank-fraud case built on inconsistent labels.
 
 ### Fact-check sources (checked 27 Sep 2026)
 

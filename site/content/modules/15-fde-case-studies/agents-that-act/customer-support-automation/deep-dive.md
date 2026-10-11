@@ -1,6 +1,6 @@
 # G02 — Customer Support Automation: Deep Dive
 
-This is the technical backup for the [Main Interview Guide](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#main). The unchanged [source case](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#full-pack) contains the full synthesis and references.
+This is the technical backup for the [Main Interview Guide](/design/customer-support-automation#main). The unchanged [source case](/design/customer-support-automation#full-pack) contains the full synthesis and references.
 
 **Model and agent roles:** Rules or a small model route intent and risk. The LLM response generator drafts a reply or proposed action; a bounded planner is reserved for multi-system requests. The policy gateway and approver, not the model, authorize effects.
 
@@ -132,4 +132,4 @@ For a 60-minute round, give the outcome and constraints first, draw the gates, s
 
 ## Source trace
 
-The [source case](/modules/15-fde-case-studies/agents-that-act/customer-support-automation#full-pack) retains the detailed comparison table, original interview scripts, check-yourself prompts, and references to casebook, FDE, OpenAI Applied, and study-guide material. This Deep Dive relocates their mechanisms and scenario-specific figures; consult the source when quoting a particular mock or original reference path.
+The [source case](/design/customer-support-automation#full-pack) retains the detailed comparison table, original interview scripts, check-yourself prompts, and references to casebook, FDE, OpenAI Applied, and study-guide material. This Deep Dive relocates their mechanisms and scenario-specific figures; consult the source when quoting a particular mock or original reference path.

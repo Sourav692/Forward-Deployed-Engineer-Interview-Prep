@@ -12,7 +12,7 @@ export const WORKSHEET = '/modules/01-customer-discovery-and-decomposition/core/
 export const CHECKPOINT_MODULE = '/learn/llm-and-retrieval/retrieval-hybrid-rerank'
 /** A scenario mock lesson: it carries the mock timer and scorer (FE-15). */
 export const MOCK_LESSON = '/interview/mock-interviews/internal-knowledge-assistant-mock-interview'
-export const CASE_STUDY = '/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant'
+export const CASE_STUDY = '/design/enterprise-knowledge-assistant'
 
 /**
  * Waits until client islands have hydrated. Progress islands render a skeleton on the

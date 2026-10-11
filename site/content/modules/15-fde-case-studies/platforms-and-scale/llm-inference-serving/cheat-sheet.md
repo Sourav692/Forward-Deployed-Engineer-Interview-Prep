@@ -1,6 +1,6 @@
 # G20 — LLM Inference Serving: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#main) · [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#full-pack)
+[Main](/design/llm-inference-serving#main) · [Deep Dive](/design/llm-inference-serving#deep-dive) · [Unchanged source](/design/llm-inference-serving#full-pack)
 
 ## Ask first
 

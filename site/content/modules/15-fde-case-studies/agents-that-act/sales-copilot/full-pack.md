@@ -505,5 +505,5 @@ The weak answer is "the model is too creative, make the prompt stricter and ask 
 - [Stripe API reference: Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency keys stop a retried write from running twice
 - [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — treating content as data lowers but does not stop injection
 - [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — gate write tools outside the model
-- [G05 Deep Dive, latency pivot](/modules/15-fde-case-studies/agents-that-act/sales-copilot#deep-dive) — agent steps and serial tool calls are the likely driver, to confirm in traces
+- [G05 Deep Dive, latency pivot](/design/sales-copilot#deep-dive) — agent steps and serial tool calls are the likely driver, to confirm in traces
 

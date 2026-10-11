@@ -13,6 +13,7 @@ import {
 } from '@/lib/editorial'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { pageMetadata } from '@/lib/seo'
+import { scenarioHref } from '@/lib/scenario'
 
 /**
  * The eighteen reviews and the trigger sheet are static HTML, served as-is from
@@ -109,7 +110,7 @@ export default async function LastDayReviewPage() {
                 {practice && (
                   <p className="mt-3 text-[0.8125rem] text-subtle">
                     New to this? Learn first:{' '}
-                    <Link href={`/modules/${practice.moduleId}/${practice.trackId}/${practice.slug}`} className="font-medium text-accent hover:text-accent-hover">
+                    <Link href={scenarioHref(practice)} className="font-medium text-accent hover:text-accent-hover">
                       {practice.title}
                     </Link>
                   </p>

@@ -15,7 +15,7 @@ End to end, as the refund-bot prompt change:
 
 That’s it: **pin candidate → eval vs baseline → pass/block/hold → learn.** Shipping on vibes stays out.
 
-> **Source:** [Sources and Full Design](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack). The [Deep Dive](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#deep-dive) expands the gate, graders and incident; the [Cheat Sheet](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#cheat-sheet) is for rehearsal.
+> **Source:** [Sources and Full Design](/design/evaluation-and-release-gating#full-pack). The [Deep Dive](/design/evaluation-and-release-gating#deep-dive) expands the gate, graders and incident; the [Cheat Sheet](/design/evaluation-and-release-gating#cheat-sheet) is for rehearsal.
 
 ## The case in one sentence
 

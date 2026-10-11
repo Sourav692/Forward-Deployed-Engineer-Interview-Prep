@@ -17,7 +17,7 @@ That’s it: **evidence → rule → cited draft → human.** Autonomous clinica
 
 **Extraction is cheap; judgment is expensive.** The copilot extracts evidence, compares it with the governing rule, cites the exact supporting span, and drafts. A named clinician, compliance reviewer, or lawyer makes the material decision. Missing evidence, a broken citation, or uncertain access stops the path.
 
-The [source study](/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot#full-pack) treats three cases as variations of one spine:
+The [source study](/design/document-review-copilot#full-pack) treats three cases as variations of one spine:
 
 | Case | Shared foundation | What changes |
 |---|---|---|
@@ -77,7 +77,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This diagram condenses the [source architecture, §4](/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot#full-pack) into the ingest and review lanes. It names where the cheap model and strong LLM run and where they lose authority.
+This diagram condenses the [source architecture, §4](/design/document-review-copilot#full-pack) into the ingest and review lanes. It names where the cheap model and strong LLM run and where they lose authority.
 
 ```mermaid
 flowchart LR
@@ -161,4 +161,4 @@ Roll out one document type and rule source → offline golden cases → red-team
 
 > “I would first clarify which decision the reviewer makes and what the assistant must never decide. I would ingest the right rule version and case evidence under patient or matter permissions, with a parser gate for critical tables. A small model extracts typed fields and spans, deterministic checks compare them to criteria and flag gaps, and a strong LLM drafts only flagged cases. Every claim cites the exact span used; a separate verifier blocks a mismatched or forbidden citation. A named human approves material cases, and versioned evidence and edits go into the audit. I would launch on one document type, shadow real reviewers, and gate on extraction, citation, escalation, and zero privacy violations. Cost is controlled by cheap screening and strong-model routing, not by skipping review.”
 
-Use the [Deep Dive](/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot#deep-dive) for incident and schema details and the [Cheat Sheet](/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot#cheat-sheet) for recall.
+Use the [Deep Dive](/design/document-review-copilot#deep-dive) for incident and schema details and the [Cheat Sheet](/design/document-review-copilot#cheat-sheet) for recall.

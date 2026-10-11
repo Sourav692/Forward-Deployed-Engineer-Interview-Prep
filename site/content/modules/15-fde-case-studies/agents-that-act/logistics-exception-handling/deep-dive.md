@@ -1,6 +1,6 @@
 # G17 — Logistics Exception Handling: Deep Dive
 
-> Read with the unchanged [source](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#full-pack). The [Main guide](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#main) gives the interview flow; the [Cheat Sheet](/modules/15-fde-case-studies/agents-that-act/logistics-exception-handling#cheat-sheet) is the recall card.
+> Read with the unchanged [source](/design/logistics-exception-handling#full-pack). The [Main guide](/design/logistics-exception-handling#main) gives the interview flow; the [Cheat Sheet](/design/logistics-exception-handling#cheat-sheet) is the recall card.
 
 ## 1. Event rate, exception rate and feed freshness
 

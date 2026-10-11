@@ -1,6 +1,6 @@
 # G08 — Document Review Copilot: Cheat Sheet
 
-Use the [Main guide](/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot#main) for the spoken answer, the [Deep Dive](/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot#deep-dive) for mechanisms, and the unchanged [source](/modules/15-fde-case-studies/knowledge-retrieval/document-review-copilot#full-pack) for the full case.
+Use the [Main guide](/design/document-review-copilot#main) for the spoken answer, the [Deep Dive](/design/document-review-copilot#deep-dive) for mechanisms, and the unchanged [source](/design/document-review-copilot#full-pack) for the full case.
 
 ## One sentence
 

@@ -17,7 +17,7 @@ That’s it: **dedupe → read → hypothesize → propose → human → maybe w
 
 > **Core idea:** Dedupe the alert storm, investigate with read-only tools, show evidence and missing sources, then stage any mitigation for human approval. The agent runs outside the failure it is investigating.
 
-Use this guide for the interview. The [Deep Dive](/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent#deep-dive) contains the technical drills, and the unchanged [source case](/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent#full-pack) is the full reference.
+Use this guide for the interview. The [Deep Dive](/design/sre-incident-response-agent#deep-dive) contains the technical drills, and the unchanged [source case](/design/sre-incident-response-agent#full-pack) is the full reference.
 
 ## 1. Open with the read-only boundary
 
@@ -27,7 +27,7 @@ The dependency inversion is the distinctive risk: the observability stack the ag
 
 ### Questions to ask the interviewer
 
-The [source discovery, §1](/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent#full-pack) gives the full set. Ask these before choosing tools:
+The [source discovery, §1](/design/sre-incident-response-agent#full-pack) gives the full set. Ask these before choosing tools:
 
 | Question to ask                                                                         | What it's really asking                                                                              | What you then decide                                                       |
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -90,7 +90,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This diagram condenses the [source architecture, §4](/modules/15-fde-case-studies/agents-that-act/sre-incident-response-agent#full-pack).
+This diagram condenses the [source architecture, §4](/design/sre-incident-response-agent#full-pack).
 
 ```mermaid
 flowchart LR

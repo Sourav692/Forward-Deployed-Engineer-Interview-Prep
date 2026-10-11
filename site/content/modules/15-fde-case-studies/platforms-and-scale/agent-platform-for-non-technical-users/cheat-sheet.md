@@ -1,6 +1,6 @@
 # G15 — Agent Platform for Non-Technical Users: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#main) · [Deep Dive](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/platforms-and-scale/agent-platform-for-non-technical-users#full-pack)
+[Main](/design/agent-platform-for-non-technical-users#main) · [Deep Dive](/design/agent-platform-for-non-technical-users#deep-dive) · [Unchanged source](/design/agent-platform-for-non-technical-users#full-pack)
 
 ## Ask first
 

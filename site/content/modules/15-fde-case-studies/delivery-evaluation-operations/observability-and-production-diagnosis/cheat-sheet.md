@@ -1,6 +1,6 @@
 # G14 — Observability and Production Diagnosis: Cheat Sheet
 
-[Main](/modules/15-fde-case-studies/delivery-evaluation-operations/observability-and-production-diagnosis#main) · [Deep Dive](/modules/15-fde-case-studies/delivery-evaluation-operations/observability-and-production-diagnosis#deep-dive) · [Unchanged source](/modules/15-fde-case-studies/delivery-evaluation-operations/observability-and-production-diagnosis#full-pack)
+[Main](/design/observability-and-production-diagnosis#main) · [Deep Dive](/design/observability-and-production-diagnosis#deep-dive) · [Unchanged source](/design/observability-and-production-diagnosis#full-pack)
 
 ## Ask first
 

@@ -1,6 +1,6 @@
 # G20 — LLM Inference Serving: Deep Dive
 
-> Read with the unchanged [source](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#full-pack). The [Main guide](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#main) gives the interview route; the [Cheat Sheet](/modules/15-fde-case-studies/platforms-and-scale/llm-inference-serving#cheat-sheet) is the recall card. Serving-engine mechanisms and all numeric rates in the source are its own illustrative construction.
+> Read with the unchanged [source](/design/llm-inference-serving#full-pack). The [Main guide](/design/llm-inference-serving#main) gives the interview route; the [Cheat Sheet](/design/llm-inference-serving#cheat-sheet) is the recall card. Serving-engine mechanisms and all numeric rates in the source are its own illustrative construction.
 
 ## 1. Two phases and two capacity checks
 

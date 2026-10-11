@@ -27,6 +27,7 @@ import { readFileSync } from 'node:fs'
 import { MODULES } from '../src/lib/curriculum.ts'
 import { AUTHOR, STORY_BANK } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
+import { scenarioHref } from '../src/lib/scenario.ts'
 
 const BASE = (process.env.BASE_URL ?? 'http://localhost:3307').replace(/\/$/, '')
 const CONCURRENCY = 12
@@ -39,7 +40,7 @@ const published = new Set(manifest.lessons.map((l) => l.slug))
 const siteManifest = JSON.parse(readFileSync(new URL('../content/manifest.json', import.meta.url), 'utf8'))
 const bylined = new Set([
   ...manifest.lessons.filter((l) => l.kind === 'sync').map((l) => l.href),
-  ...siteManifest.modules.flatMap((m) => m.tracks.flatMap((t) => t.scenarios.map((sc) => `/modules/${m.id}/${t.id}/${sc.slug}`))),
+  ...siteManifest.modules.flatMap((m) => m.tracks.flatMap((t) => t.scenarios.map((sc) => scenarioHref({ moduleId: m.id, trackId: t.id, slug: sc.slug })))),
   STORY_BANK.href,
 ])
 let readable = 0

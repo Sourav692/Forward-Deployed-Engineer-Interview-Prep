@@ -1,6 +1,6 @@
 # G13 — Evaluation and Release Gating: Deep Dive
 
-> Read with the unchanged [source](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#full-pack). The [Main guide](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#main) gives the interview flow; the [Cheat Sheet](/modules/15-fde-case-studies/delivery-evaluation-operations/evaluation-and-release-gating#cheat-sheet) is the recall card.
+> Read with the unchanged [source](/design/evaluation-and-release-gating#full-pack). The [Main guide](/design/evaluation-and-release-gating#main) gives the interview flow; the [Cheat Sheet](/design/evaluation-and-release-gating#cheat-sheet) is the recall card.
 
 ## 1. Decision contract and stakeholders
 

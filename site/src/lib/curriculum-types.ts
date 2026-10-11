@@ -74,6 +74,11 @@ export type CurriculumModule = {
   lessons: string[]
   /** Lesson slugs homed in another module that this module also uses. */
   seeAlso: string[]
+  /**
+   * Another page lists this module's lessons, so the module page links there instead of
+   * repeating the list (T5.5 and the casebook, ENH-16). The lessons still count for progress.
+   */
+  listedOn?: { href: string; label: string; lead: string }
   /** What is still missing (Partly ready) or why nothing exists (Coming soon). */
   gapNote?: string
   /** Owner-facing reason a module is on hold. Not for public display. */

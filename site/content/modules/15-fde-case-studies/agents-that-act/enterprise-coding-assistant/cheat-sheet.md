@@ -1,6 +1,6 @@
 # G09 — Enterprise Coding Assistant: Cheat Sheet
 
-Use the [Main guide](/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant#main) for the interview, the [Deep Dive](/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant#deep-dive) for mechanisms, and the unchanged [source](/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant#full-pack) for the full design.
+Use the [Main guide](/design/enterprise-coding-assistant#main) for the interview, the [Deep Dive](/design/enterprise-coding-assistant#deep-dive) for mechanisms, and the unchanged [source](/design/enterprise-coding-assistant#full-pack) for the full design.
 
 ## One sentence
 

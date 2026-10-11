@@ -21,7 +21,8 @@ export const LIVE = {
 } as const
 
 export const moduleHref = (moduleId: string) => `/modules/${moduleId}`
-export const trackAnchor = (moduleId: string, trackId: string) => `/modules/${moduleId}#${trackId}`
+export const trackAnchor = (moduleId: string, trackId: string) =>
+  moduleId === LIVE.casebook ? `/design#${trackId}` : `/modules/${moduleId}#${trackId}`
 
 export type TrackGroup = {
   id: string

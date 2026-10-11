@@ -1,6 +1,6 @@
 # G12 — Scoping to Deployed Agent: Deep Dive
 
-> Read with the unchanged [source](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#full-pack). The [Main guide](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#main) is the interview route; the [Cheat Sheet](/modules/15-fde-case-studies/delivery-evaluation-operations/scoping-to-deployed-agent#cheat-sheet) is the recall card.
+> Read with the unchanged [source](/design/scoping-to-deployed-agent#full-pack). The [Main guide](/design/scoping-to-deployed-agent#main) is the interview route; the [Cheat Sheet](/design/scoping-to-deployed-agent#cheat-sheet) is the recall card.
 
 ## 1. Two distinct systems
 

@@ -17,7 +17,7 @@ That’s it: **propose → validate → decide → maybe approve → execute onc
 
 > **Core idea:** The model proposes one bounded action. Deterministic services validate, authorize, approve, execute, and record it. The agent never holds broad credentials or decides whether its own action is allowed.
 
-Use this for the spoken design. The [Deep Dive](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#deep-dive) holds the mechanics, and the unchanged [source case](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#full-pack) holds the full reference.
+Use this for the spoken design. The [Deep Dive](/design/tool-using-agent-with-safety-controls#deep-dive) holds the mechanics, and the unchanged [source case](/design/tool-using-agent-with-safety-controls#full-pack) holds the full reference.
 
 ## 1. Open with the authority boundary
 
@@ -27,7 +27,7 @@ The same request matters differently to operations, security, finance, and tool 
 
 ### Questions to ask the interviewer
 
-The [source discovery table, §1](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#full-pack) gives the full set. These seven change the controls. Email and tool output stay untrusted either way, so that is assumed rather than asked.
+The [source discovery table, §1](/design/tool-using-agent-with-safety-controls#full-pack) gives the full set. These seven change the controls. Email and tool output stay untrusted either way, so that is assumed rather than asked.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -92,7 +92,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is a whiteboard version of the [source architecture, §4](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#full-pack).
+This is a whiteboard version of the [source architecture, §4](/design/tool-using-agent-with-safety-controls#full-pack).
 
 ```mermaid
 flowchart TB
@@ -173,7 +173,7 @@ Roll out in layers: read-only triage and drafting → narrow reversible CRM writ
 
 ## 8. Refund near-miss drill
 
-In the [source incident, §13](/modules/15-fde-case-studies/agents-that-act/tool-using-agent-with-safety-controls#full-pack), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorized money moved; the planner still failed by proposing a risky bulk action.
+In the [source incident, §13](/design/tool-using-agent-with-safety-controls#full-pack), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorized money moved; the planner still failed by proposing a risky bulk action.
 
 **Detect:** read planned, blocked, and allowed calls with amount, role, approval state, policy version. **Contain:** disable bulk refund planning, route VIP refunds to review tickets, and audit the 12 allowed calls. **Root cause:** action-oriented planner examples omitted bulk approval boundaries; the gateway policy still worked. **Prevent:** risk-aware tool schemas, policy simulation, a separate action-risk check, and non-bypassable gateway enforcement.
 

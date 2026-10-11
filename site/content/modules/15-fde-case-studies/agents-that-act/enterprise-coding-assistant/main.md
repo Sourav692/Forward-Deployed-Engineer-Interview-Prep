@@ -17,7 +17,7 @@ That’s it: **tiny permitted context → fast suggest → validate or stay sile
 
 An inline completion must arrive before the developer’s next keystroke **and** respect a private repository’s permissions. Design the context funnel and latency budget first. Do not send the whole repository to a large model, and do not let a cached or retrieved snippet cross an access boundary.
 
-The [source study](/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant#full-pack) combines the under-300 ms coding-assistant anchor with the enterprise private-repository variant. The latter adds incremental indexing, repository ACLs, licensing and productivity proof; it keeps the same fast completion spine.
+The [source study](/design/enterprise-coding-assistant#full-pack) combines the under-300 ms coding-assistant anchor with the enterprise private-repository variant. The latter adds incremental indexing, repository ACLs, licensing and productivity proof; it keeps the same fast completion spine.
 
 ## 1. Questions to ask the interviewer
 
@@ -63,7 +63,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is the whiteboard version of the [source architecture, §4](/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant#full-pack). The hot path uses a small LLM; slower explicit tasks use a larger reasoning model. Neither model decides access or whether unsafe code may be shown.
+This is the whiteboard version of the [source architecture, §4](/design/enterprise-coding-assistant#full-pack). The hot path uses a small LLM; slower explicit tasks use a larger reasoning model. Neither model decides access or whether unsafe code may be shown.
 
 ```mermaid
 flowchart LR
@@ -144,4 +144,4 @@ Roll out one repository with real permissions and three developers with differen
 
 **Memory line:** “Cache first, retrieve on a miss, route by task, validate before display.”
 
-Use the [Deep Dive](/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant#deep-dive) for budget and permission mechanics and the [Cheat Sheet](/modules/15-fde-case-studies/agents-that-act/enterprise-coding-assistant#cheat-sheet) for a final pass.
+Use the [Deep Dive](/design/enterprise-coding-assistant#deep-dive) for budget and permission mechanics and the [Cheat Sheet](/design/enterprise-coding-assistant#cheat-sheet) for a final pass.
