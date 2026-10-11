@@ -91,8 +91,7 @@ const THEMES = THEME_GROUPS.map(([id, groups]) => {
  * A file given as a repo-relative path (it contains `/`) is read from its canonical
  * location instead of the case folder, so a case reuses a worksheet or tutorial
  * without keeping a copy.
- * `practice` names the same case's interactive worksheet in Module 01 (`track/slug`),
- * which the page links to — the Worksheet tab here is read-only.
+ * A case's interactive worksheet twin is listed in RELATED_CASE (src/lib/editorial.ts).
  */
 const SYSTEM_DESIGN_WORKSHEETS = '03_Practice_Worksheets_and_Keys/System_Design_Worksheets'
 const LONG_FORM_V1 = '02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1'
@@ -113,20 +112,19 @@ const STANDALONE = [
     files: [['1_Handbook_Worked_Example_Travel_Agent.md', 'worked-example'], ['2_FDE_System_Design_Overview_source.md', 'framework-overview']] },
   { folder: '19_Air_Gapped_AI_System', theme: 'standalone-designs', number: 19, title: 'AI System for an Air-Gapped Environment',
     files: worksheetSet('07_ai_system_for_an_air_gapped_environment'),
-    archived: v1Archive('chapter-7-ai-system-for-an-air-gapped-environment-tutorial'), practice: 'system-design/ai-system-for-an-air-gapped-environment' },
+    archived: v1Archive('chapter-7-ai-system-for-an-air-gapped-environment-tutorial') },
   { folder: '23_Reliable_Workflow_Orchestration', theme: 'standalone-designs', number: 23, title: 'Reliable Workflow Orchestration System',
     files: worksheetSet('13_reliable_workflow_orchestration_system'),
-    archived: v1Archive('chapter-13-reliable-workflow-orchestration-system-tutorial'), practice: 'system-design/reliable-workflow-orchestration-system' },
+    archived: v1Archive('chapter-13-reliable-workflow-orchestration-system-tutorial') },
   { folder: '25_Configurable_Platform_Customer_Workflows', theme: 'standalone-designs', number: 25, title: 'Configurable Platform for Customer-Specific Workflows',
     files: worksheetSet('17_configurable_platform_customer_specific_workflows'),
-    archived: v1Archive('chapter-17-configurable-platform-customer-specific-workflows-tutorial'), practice: 'system-design/configurable-platform-customer-specific-workflows' },
+    archived: v1Archive('chapter-17-configurable-platform-customer-specific-workflows-tutorial') },
   { folder: '26_Enterprise_Chatbot_Platform', theme: 'standalone-designs', number: 26, title: 'Enterprise Chatbot Platform',
     files: worksheetSet('21_enterprise_chatbot_platform'),
     archived: [
       ...v1Archive('chapter-21-enterprise-chatbot-platform-tutorial-condensed'),
       [`${LONG_FORM_V1}/chapter-21-enterprise-chatbot-platform-tutorial.md`, 'Original uncondensed tutorial'],
-    ],
-    practice: 'system-design/enterprise-chatbot-platform' },
+    ] },
   { folder: '80_Self_Adapting_Agent', theme: 'standalone-designs', number: 80, title: 'Agent That Adapts to New Tasks',
     files: [['80_Self_Adapting_Agent.md', 'guide'], ['self_adapting_agent_fde_interview_template.md', 'interview-template']] },
   { folder: '98_Personal_Assistant_With_Memory', theme: 'standalone-designs', number: 98, title: 'Personal Assistant That Remembers You', files: guide('98_Personal_Assistant_With_Memory.md') },
@@ -252,7 +250,6 @@ async function collectCases(root, standaloneRoot, repoRoot) {
         file: basename(file),
         src: isRepoPath(file) ? join(repoRoot, file) : join(dir, file),
       })),
-      practice: c.practice,
     })
   }
   return cases
@@ -311,7 +308,6 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
         order: c.order,
         title: TITLE_OVERRIDES[`${theme.id}/${c.slug}`] ?? c.title,
         tabs: c.tabs.map(({ id, label }) => ({ id, label })),
-        ...(c.practice && { practice: c.practice }),
         updated: updatedOf(...c.tabs.map((tab) => tab.src ?? join(c.dir, tab.file))),
       })
     }

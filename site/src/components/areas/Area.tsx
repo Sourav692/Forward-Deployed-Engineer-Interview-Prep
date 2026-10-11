@@ -65,10 +65,10 @@ export function TextLink({ href, children }: { href: string; children: ReactNode
 export type LinkItem = {
   href: string
   title: string
-  /** Short code shown before the title, such as a scenario tag (`G01`). */
-  tag?: string
   /** One line under the title. */
   note?: string
+  /** A second link under the row: a design's worksheet or a worksheet's design (ENH-21). */
+  twin?: { href: string; label: string }
 }
 
 /**
@@ -87,14 +87,19 @@ export function LinkList({ items, columns = 2 }: { items: LinkItem[]; columns?: 
               focusRing,
             )}
           >
-            {item.tag && (
-              <span className="min-w-12 shrink-0 whitespace-nowrap text-xs font-semibold tabular-nums text-subtle">{item.tag}</span>
-            )}
             <span className="min-w-0">
               <span className="text-[0.9375rem] font-medium group-hover:text-accent">{item.title}</span>
               {item.note && <span className="mt-0.5 block text-[0.8125rem] leading-snug text-muted">{item.note}</span>}
             </span>
           </Link>
+          {item.twin && (
+            <Link
+              href={item.twin.href}
+              className={cx('-mt-1 ml-2 inline-block rounded-sm px-0.5 pb-1 text-[0.8125rem] text-accent hover:text-accent-hover', focusRing)}
+            >
+              {item.twin.label} →
+            </Link>
+          )}
         </li>
       ))}
     </ul>

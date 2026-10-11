@@ -22,6 +22,7 @@ import { ANSWER_KEY_MAP } from '../src/lib/mapping.ts'
 import { parseReading } from '../src/lib/reading.ts'
 import {
   FAMILY_META,
+  CLASSIC_DESIGN_CASE,
   RELATED_CASE,
   REQUIRED_META_FIELDS,
   REVIEWS,
@@ -464,6 +465,11 @@ let learnManifest: LearnEntry[] = []
   else learnManifest = JSON.parse(raw).lessons
 }
 const learnByKey = new Map(learnManifest.map((l) => [`${l.module}/${l.slug}`, l]))
+// ENH-21: each classic design in Learn links to its casebook case and back.
+for (const [lesson, study] of Object.entries(CLASSIC_DESIGN_CASE)) {
+  if (!learnManifest.some((l) => l.slug === lesson && l.kind === 'sync')) failures.push(`CLASSIC_DESIGN_CASE: lesson "${lesson}" is not published`)
+  if (!pages.has(study)) failures.push(`CLASSIC_DESIGN_CASE: "${study}" is not a published page`)
+}
 for (const l of learnManifest) if (l.kind === 'sync') routes.add(l.href)
 // Every track and module page is prerendered (generateStaticParams), so lessons may link to them.
 for (const m of CURRICULUM_MODULES) {

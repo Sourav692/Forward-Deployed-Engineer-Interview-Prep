@@ -2,11 +2,13 @@ import Link from 'next/link'
 import {
   MODES,
   SOURCE_STATUS_LABELS,
+  TWIN_LABEL,
   reviewHref,
   type EditorialMeta,
   type Review,
 } from '@/lib/editorial'
 import { qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
+import type { TwinLink } from '@/lib/twins'
 
 /**
  * The editorial contract, rendered: every page says near its top what it is, who it is
@@ -113,7 +115,7 @@ export function WhereNext({
         {counterpart && (
           <div>
             <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-subtle">
-              {counterpart.reading ? 'See it as a case study' : 'Practise it yourself'}
+              {counterpart.reading ? TWIN_LABEL.design : TWIN_LABEL.worksheet}
             </dt>
             <dd className="mt-1">
               <Link href={scenarioHref(counterpart)} className="font-medium text-accent hover:text-accent-hover">
@@ -130,10 +132,9 @@ export function WhereNext({
             <dd className="mt-1 space-y-1">
               {reviews.map((r) => (
                 <div key={r.number}>
-                  {/* Plain anchors: these are static HTML pages, not app routes. */}
-                  <a href={reviewHref(r)} className="font-medium text-accent hover:text-accent-hover">
+                  <Link href={reviewHref(r)} className="font-medium text-accent hover:text-accent-hover">
                     {r.title}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </dd>
@@ -153,5 +154,26 @@ export function WhereNext({
         )}
       </dl>
     </section>
+  )
+}
+
+/**
+ * The page's twins, named under its title (ENH-21): a design's worksheet, a worksheet's
+ * design, a classic design's casebook case and back. The same links close the page in
+ * `WhereNext`.
+ */
+export function TwinLinks({ links }: { links: TwinLink[] }) {
+  if (!links.length) return null
+  return (
+    <p className="no-print mt-3 flex flex-wrap gap-x-5 gap-y-1 text-[0.875rem]">
+      {links.map((l) => (
+        <span key={l.href}>
+          <span className="text-muted">{l.label}: </span>
+          <Link href={l.href} className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
+            {l.title}
+          </Link>
+        </span>
+      ))}
+    </p>
   )
 }
