@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { PrevNext } from '@/components/PrevNext'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { Block, Section } from '@/lib/parse'
 import type { Scenario } from '@/lib/scenario'
@@ -302,32 +303,10 @@ export function ScenarioView({
 
       {scenario.closing && <ClosingCard section={scenario.closing} />}
 
-      <nav className="no-print mt-16 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
-        {scenario.prev ? (
-          <Link
-            href={scenarioHref(scenario.prev)}
-            className="group rounded-lg border border-border bg-surface p-4 transition-colors hover:border-border-strong"
-          >
-            <div className="mb-1 text-[0.75rem] text-subtle">← Previous</div>
-            <div className="text-[0.9375rem] font-medium group-hover:text-accent">
-              {qualifiedTitle(scenario.prev)}
-            </div>
-          </Link>
-        ) : (
-          <div />
-        )}
-        {scenario.next && (
-          <Link
-            href={scenarioHref(scenario.next)}
-            className="group rounded-lg border border-border bg-surface p-4 text-right transition-colors hover:border-border-strong sm:col-start-2"
-          >
-            <div className="mb-1 text-[0.75rem] text-subtle">Next →</div>
-            <div className="text-[0.9375rem] font-medium group-hover:text-accent">
-              {qualifiedTitle(scenario.next)}
-            </div>
-          </Link>
-        )}
-      </nav>
+      <PrevNext
+        prev={scenario.prev && { href: scenarioHref(scenario.prev), title: qualifiedTitle(scenario.prev) }}
+        next={scenario.next && { href: scenarioHref(scenario.next), title: qualifiedTitle(scenario.next) }}
+      />
     </article>
   )
 }

@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { getStoryBank, getTracks } from '@/lib/content'
+import { getAllScenarios, getStoryBank, getTracks } from '@/lib/content'
+import { PrevNext } from '@/components/PrevNext'
+import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
 import { STORY_BANK, STORY_BANK_META } from '@/lib/editorial'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import type { ReadingDocument, ReadingSection } from '@/lib/reading'
@@ -24,6 +26,8 @@ export default async function StoryBankPage() {
   const bank = await getStoryBank()
   if (!bank) notFound()
   const tracks = await getTracks(STORY_BANK.moduleId)
+  // The Story Bank comes before the behavioural worksheets it answers (ENH-22, PQ-05).
+  const first = (await getAllScenarios()).find((s) => s.moduleId === STORY_BANK.moduleId)
 
   return (
     <div className="py-10">
@@ -90,6 +94,8 @@ export default async function StoryBankPage() {
           ))}
         </div>
       </section>
+
+      <PrevNext next={first && { href: scenarioHref(first), title: qualifiedTitle(first) }} />
     </div>
   )
 }

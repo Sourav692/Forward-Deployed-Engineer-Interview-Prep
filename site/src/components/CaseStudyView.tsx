@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { PrevNext } from '@/components/PrevNext'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { CaseStudy } from '@/lib/scenario'
 import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
@@ -190,32 +190,10 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
         )
       })}
 
-      <nav className="no-print mt-16 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
-        {study.prev ? (
-          <Link
-            href={scenarioHref(study.prev)}
-            className="group rounded-lg border border-border bg-surface p-4 transition-colors hover:border-border-strong"
-          >
-            <div className="mb-1 text-[0.75rem] text-subtle">← Previous</div>
-            <div className="text-[0.9375rem] font-medium group-hover:text-accent">
-              {qualifiedTitle(study.prev)}
-            </div>
-          </Link>
-        ) : (
-          <div />
-        )}
-        {study.next && (
-          <Link
-            href={scenarioHref(study.next)}
-            className="group rounded-lg border border-border bg-surface p-4 text-right transition-colors hover:border-border-strong sm:col-start-2"
-          >
-            <div className="mb-1 text-[0.75rem] text-subtle">Next →</div>
-            <div className="text-[0.9375rem] font-medium group-hover:text-accent">
-              {qualifiedTitle(study.next)}
-            </div>
-          </Link>
-        )}
-      </nav>
+      <PrevNext
+        prev={study.prev && { href: scenarioHref(study.prev), title: qualifiedTitle(study.prev) }}
+        next={study.next && { href: scenarioHref(study.next), title: qualifiedTitle(study.next) }}
+      />
     </article>
   )
 }

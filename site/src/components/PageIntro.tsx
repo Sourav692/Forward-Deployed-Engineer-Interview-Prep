@@ -56,7 +56,7 @@ export function BeforeYouStart({ meta, children }: { meta: EditorialMeta; childr
       <Fact term="Assumes">
         <List items={meta.prerequisites} />
       </Fact>
-      <Fact term="You will be able to">
+      <Fact term="Objectives">
         <List items={meta.outcomes} />
       </Fact>
       <Fact term="How to use it">{meta.howToUse}</Fact>
