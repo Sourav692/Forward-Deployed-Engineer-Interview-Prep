@@ -432,6 +432,17 @@ test('twins: designs, worksheets and classic designs link both ways', async ({ p
   await expect(page.getByRole('link', { name: 'Practise this as a worksheet →' }).first()).toHaveAttribute('href', /^\/practice\//)
 })
 
+// ENH-22b: pages in a sequence link to their neighbours; "Objectives" is the one label.
+test('sequences: module pages and the Story Bank have prev and next', async ({ page }) => {
+  const nav = page.getByRole('navigation', { name: 'Previous and next' })
+  await page.goto(READY_MODULE)
+  await expect(nav.locator('a[rel="next"]')).toHaveAttribute('href', /^\/learn\/orientation\//)
+  await page.goto('/practice/story-bank')
+  await expect(nav.locator('a[rel="next"]')).toHaveAttribute('href', /^\/practice\//)
+  await page.goto('/learn/orientation')
+  await expect(page.getByRole('heading', { name: 'Objectives' })).toBeVisible()
+})
+
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
 // unmatched URL and for an unknown param on a prerendered route.
 for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case', '/practice/no-such-worksheet']) {

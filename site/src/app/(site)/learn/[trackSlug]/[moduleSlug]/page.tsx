@@ -17,6 +17,7 @@ import {
   moduleParams,
   readingList,
   relatedModules,
+  trackModules,
   trackTrail,
 } from '@/lib/learn'
 import type { CurriculumModule } from '@/lib/curriculum-types'
@@ -33,6 +34,7 @@ import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/l
 import { ReadingList } from '@/components/learn/ReadingList'
 import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
+import { PrevNext } from '@/components/PrevNext'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { moduleTag } from '@/lib/curriculum-href'
 
@@ -80,6 +82,11 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   // is related reading, so there is nothing to start (audit check FV-05).
   const firstLesson = list.seeAlsoIsMain && mod.status !== 'ready' ? undefined : list.main[0]
   const trail = trackTrail(track)
+  // Modules in track order; the overview links to its neighbours (ENH-22, PQ-05).
+  const order = trackModules(track)
+  const at = order.findIndex((m) => m.slug === mod.slug)
+  const prevModule = at > 0 ? order[at - 1] : null
+  const nextModule = at >= 0 && at < order.length - 1 ? order[at + 1] : null
   // Section anchors exist only on Learn track pages.
   const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
 
@@ -271,6 +278,11 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
             </section>
           )}
           {gap && related.length === 0 && <p className="mt-8 text-sm text-muted">{COPY.comingSoonNoRelated}</p>}
+
+          <PrevNext
+            prev={prevModule && { href: learnHref.module(prevModule), title: prevModule.title }}
+            next={nextModule && { href: learnHref.module(nextModule), title: nextModule.title }}
+          />
         </div>
       </div>
     </>

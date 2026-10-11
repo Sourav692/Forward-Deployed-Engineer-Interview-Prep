@@ -105,7 +105,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
 
           <section aria-labelledby="exit" className="mt-6">
             <h2 id="exit" className="text-sm font-semibold">
-              By the end you can
+              Objectives
             </h2>
             <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-text marker:text-subtle">
               {track.exitCompetencies.map((c) => (
