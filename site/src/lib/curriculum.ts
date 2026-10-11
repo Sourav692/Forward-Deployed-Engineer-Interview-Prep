@@ -2115,7 +2115,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Reliability and Failure Handling',
     source: '07_Last_Day_Revision/module-12-reliability-and-failure-handling.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   // T2.1 How LLMs behave and T2.2 RAG from first principles: consolidated lessons.
@@ -4990,7 +4990,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Interview Learning Roadmap',
     source: '07_Last_Day_Revision/Roadmap.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -4998,7 +4998,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Rapid Revision Guide',
     source: '07_Last_Day_Revision/Rapid_Revision_Guide.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5006,7 +5006,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Trigger-to-Concept Cheat Sheet',
     source: '07_Last_Day_Revision/trigger-to-concept-cheat-sheet.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5014,7 +5014,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'FDE Problem Decomposition',
     source: '07_Last_Day_Revision/module-01-fde-problem-decomposition.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5022,7 +5022,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Functional Requirements',
     source: '07_Last_Day_Revision/module-02-functional-requirements.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5030,7 +5030,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Non-Functional Requirements',
     source: '07_Last_Day_Revision/module-03-non-functional-requirements.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5038,7 +5038,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Core Architecture Building Blocks',
     source: '07_Last_Day_Revision/module-04-core-architecture-building-blocks.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5046,7 +5046,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'RAG and Enterprise Data',
     source: '07_Last_Day_Revision/module-05-rag-and-enterprise-data.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5054,7 +5054,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Agentic Architecture',
     source: '07_Last_Day_Revision/module-06-agentic-architecture.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5062,7 +5062,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Tools, Actions and Enterprise Integration',
     source: '07_Last_Day_Revision/module-07-tools-actions-and-enterprise-integration.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5070,7 +5070,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Guardrails, Policy and Human Approval',
     source: '07_Last_Day_Revision/module-08-guardrails-policy-and-human-approval.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5078,7 +5078,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Scaling AI Systems',
     source: '07_Last_Day_Revision/module-09-scaling-ai-systems.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5086,7 +5086,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Latency Optimisation',
     source: '07_Last_Day_Revision/module-10-latency-optimization.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5094,7 +5094,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Cost Optimisation',
     source: '07_Last_Day_Revision/module-11-cost-optimization.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5102,7 +5102,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'AI Evaluation',
     source: '07_Last_Day_Revision/module-13-ai-evaluation.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5110,7 +5110,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Release and Change Management',
     source: '07_Last_Day_Revision/module-14-release-and-change-management.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5118,7 +5118,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Observability and Production Operations',
     source: '07_Last_Day_Revision/module-15-observability-and-production-operations.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5126,7 +5126,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Security and Enterprise Multi-Tenancy',
     source: '07_Last_Day_Revision/module-16-security-and-enterprise-multi-tenancy.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5134,7 +5134,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'Trade-Off Thinking',
     source: '07_Last_Day_Revision/module-17-trade-off-thinking.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {
@@ -5142,7 +5142,7 @@ export const LESSONS: CurriculumLesson[] = [
     title: 'End-to-End FDE Interview Execution',
     source: '07_Last_Day_Revision/module-18-end-to-end-fde-interview-execution.md',
     home: 'final-week',
-    kind: 'live',
+    kind: 'sync',
     publish: 'own',
   },
   {

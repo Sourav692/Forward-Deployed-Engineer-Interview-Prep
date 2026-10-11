@@ -1,6 +1,6 @@
 # Module 3 — Non-Functional Requirements
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -234,7 +234,7 @@ Cache         → Cost/latency ↓, freshness risk ↑
 
 ---
 
-## ONE-PAGE MEMORY CARD — Non-Functional Requirements
+## One-Page Memory Card: Non-Functional Requirements
 
 **Core question:** How well must the system work, for which workload, and within what limits?
 

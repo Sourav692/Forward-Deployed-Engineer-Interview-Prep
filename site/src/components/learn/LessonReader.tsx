@@ -1,6 +1,16 @@
 import { Diagram } from '@/components/Diagram'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
+import type { ReadingSection } from '@/lib/reading'
 import { Byline } from '@/components/Byline'
+import { LessonTabs } from '@/components/learn/LessonTabs'
+
+/**
+ * A final-week review's "One-Page Memory Card" H2 opens a second tab, Recall card (owner
+ * decision, ENH-18), so the card reads as a page of its own. Its panel id `recall-card` is
+ * where the retired memory-card pages redirect. Sections after the card (Sources) show
+ * under both tabs.
+ */
+const RECALL_CARD = /^One-Page Memory Card\b/
 
 /**
  * LessonReader (FE-07). A Server Component: the markdown was parsed at build time by
@@ -14,6 +24,7 @@ import { Byline } from '@/components/Byline'
  */
 export function LessonReader({ page }: { page: LessonPage }) {
   const { lesson, doc, sourceNote, creditHtml } = page
+  const card = doc.sections.findIndex((s) => s.title && RECALL_CARD.test(s.title))
   return (
     // `break-words` lets long unbroken tokens (file paths in inline code, URLs) wrap
     // instead of pushing the page sideways; tables and code blocks scroll in their own box.
@@ -36,22 +47,45 @@ export function LessonReader({ page }: { page: LessonPage }) {
         )}
       </header>
 
-      <div className="mt-6 space-y-8">
-        {doc.sections.map((section) => (
-          <section key={section.id} id={section.id} className="scroll-mt-24" aria-label={section.title ? undefined : 'Introduction'}>
-            {section.title && <h2 className="mt-0" dangerouslySetInnerHTML={{ __html: section.title }} />}
-            <div className="space-y-4">
-              {section.chunks.map((chunk, i) =>
-                chunk.kind === 'diagram' ? (
-                  <Diagram key={i} code={chunk.code} />
-                ) : (
-                  <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
-                ),
-              )}
+      <div className="mt-6">
+        {card > 0 ? (
+          <>
+            <LessonTabs
+              label="Review and recall card"
+              tabs={[
+                { id: 'review', label: 'Review', panel: <Sections sections={doc.sections.slice(0, card)} /> },
+                { id: 'recall-card', label: 'Recall card', panel: <Sections sections={[doc.sections[card]]} /> },
+              ]}
+            />
+            <div className="mt-8">
+              <Sections sections={doc.sections.slice(card + 1)} />
             </div>
-          </section>
-        ))}
+          </>
+        ) : (
+          <Sections sections={doc.sections} />
+        )}
       </div>
     </article>
+  )
+}
+
+function Sections({ sections }: { sections: ReadingSection[] }) {
+  return (
+    <div className="space-y-8">
+      {sections.map((section) => (
+        <section key={section.id} id={section.id} className="scroll-mt-24" aria-label={section.title ? undefined : 'Introduction'}>
+          {section.title && <h2 className="mt-0" dangerouslySetInnerHTML={{ __html: section.title }} />}
+          <div className="space-y-4">
+            {section.chunks.map((chunk, i) =>
+              chunk.kind === 'diagram' ? (
+                <Diagram key={i} code={chunk.code} />
+              ) : (
+                <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
+              ),
+            )}
+          </div>
+        </section>
+      ))}
+    </div>
   )
 }

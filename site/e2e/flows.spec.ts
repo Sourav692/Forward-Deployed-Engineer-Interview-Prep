@@ -385,6 +385,31 @@ test('practice: old worksheet URL redirects and saved answers still load', async
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Practice' })).toHaveAttribute('href', '/practice')
 })
 
+// ENH-18a: final-week reviews are lessons at /interview/final-week/<lesson>. Progress keys
+// on module/lesson, so a review marked read before the move still shows read, and the
+// one-page memory card is a tab that #recall-card opens.
+test('final week: a review keeps saved progress and opens its recall card tab', async ({ page }) => {
+  const review = '/interview/final-week/module-05-rag-and-enterprise-data'
+  await page.addInitScript(() => {
+    localStorage.setItem('fd:v1:learn:lesson:final-week/module-05-rag-and-enterprise-data', JSON.stringify({ readAt: new Date().toISOString() }))
+  })
+  await page.goto(review)
+  await hydrated(page)
+  await expect(page.getByRole('button', { name: 'Mark unread' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('tab', { name: 'Review' })).toHaveAttribute('aria-selected', 'true')
+  await expect(page.locator('#recall-card')).toBeHidden()
+
+  await page.getByRole('tab', { name: 'Recall card' }).click()
+  await expect(page.locator('#recall-card h2')).toContainText('One-Page Memory Card')
+  await expect(page).toHaveURL(`${review}#recall-card`)
+
+  await page.goto('/interview')
+  await page.goto(`${review}#recall-card`)
+  await hydrated(page)
+  await expect(page.getByRole('tab', { name: 'Recall card' })).toHaveAttribute('aria-selected', 'true')
+  await expect(page.locator('#recall-card')).toBeVisible()
+})
+
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
 // unmatched URL and for an unknown param on a prerendered route.
 for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case', '/practice/no-such-worksheet']) {

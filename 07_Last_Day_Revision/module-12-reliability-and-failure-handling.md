@@ -1,6 +1,6 @@
 # Module 12 — Reliability & Failure Handling
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -171,7 +171,7 @@ Model fallback belongs at the model-call boundary when appropriate. Tool failure
 
 ---
 
-## ONE-PAGE MEMORY CARD — Reliability & Failure Handling
+## One-Page Memory Card: Reliability & Failure Handling
 
 **Core question:** What happens when a dependency fails, and how do we recover without making the business result worse?
 

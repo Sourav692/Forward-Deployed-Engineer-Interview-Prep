@@ -1,6 +1,6 @@
 # Module 14 — Release & Change Management
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -166,7 +166,7 @@ Track candidate/baseline versions, segment outcomes, errors, escalations, delaye
 
 ---
 
-## ONE-PAGE MEMORY CARD — Release & Change Management
+## One-Page Memory Card: Release & Change Management
 
 **Core question:** How do we expose a candidate gradually, detect regressions, and retain control over behavior and actions?
 

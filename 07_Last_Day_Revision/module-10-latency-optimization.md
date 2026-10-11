@@ -1,6 +1,6 @@
 # Module 10 — Latency Optimization
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -205,7 +205,7 @@ Async reduces blocking for the client, not necessarily task completion time. Per
 
 ---
 
-## ONE-PAGE MEMORY CARD — Latency Optimization
+## One-Page Memory Card: Latency Optimization
 
 **Core question:** Where does the user wait, and what change improves that experience without breaking quality or safe execution?
 

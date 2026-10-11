@@ -1,6 +1,6 @@
 # Module 17 — Trade-Off Thinking
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -193,7 +193,7 @@ Provisional choice → Observe metric → Threshold / requirement changes
 
 ---
 
-## ONE-PAGE MEMORY CARD — Trade-Off Thinking
+## One-Page Memory Card: Trade-Off Thinking
 
 **Core question:** Why this choice, what does it cost, and what evidence would change the decision?
 

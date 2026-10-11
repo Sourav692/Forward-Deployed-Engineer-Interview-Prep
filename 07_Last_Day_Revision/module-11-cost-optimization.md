@@ -1,6 +1,6 @@
 # Module 11 — Cost Optimization
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -212,7 +212,7 @@ The Model Gateway can centralize model routing and usage tracking. User/tenant q
 
 ---
 
-## ONE-PAGE MEMORY CARD — Cost Optimization
+## One-Page Memory Card: Cost Optimization
 
 **Core question:** What does a successful task cost, and which work can we reduce while maintaining required quality?
 
