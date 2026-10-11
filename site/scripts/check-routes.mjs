@@ -5,7 +5,9 @@
  *   npx next start -p 3307 &
  *   BASE_URL=http://localhost:3307 npm run check:routes
  *
- * 1. Fetches `/sitemap.xml` and every URL in it (rewritten onto BASE_URL).
+ * 1. Fetches `/sitemap.xml` and every URL in it (rewritten onto BASE_URL). Fails when a
+ *    sitemap URL redirects (it must list canonical URLs only) or an entry has no
+ *    `<lastmod>` (ENH-19).
  * 2. Collects every internal link (`href="/..."`) on those pages and fetches each
  *    one it has not already seen. Redirects are not followed: a 3xx counts as
  *    reachable (intentional redirects such as /learn/interview-practice).
@@ -84,6 +86,8 @@ if (pages.length === 0) {
   console.error('check-routes: sitemap.xml lists no URLs')
   process.exit(1)
 }
+const lastmods = sitemapXml.match(/<lastmod>\d{4}-\d{2}-\d{2}/g)?.length ?? 0
+if (lastmods !== pages.length) errors.push(`sitemap.xml: ${lastmods} <lastmod> dates for ${pages.length} URLs; every entry needs one`)
 
 const status = new Map() // path → status
 const linkedFrom = new Map() // path → first page linking to it
@@ -129,6 +133,11 @@ await pool(pages, async (path) => {
     if (!linkedFrom.has(link)) linkedFrom.set(link, path)
   }
 })
+
+for (const path of pages) {
+  const code = status.get(path)
+  if (typeof code === 'number' && code >= 300 && code < 400) errors.push(`${path}: in the sitemap but redirects (${code}); list the page it redirects to`)
+}
 
 const extra = [...linkedFrom.keys()].filter((p) => !status.has(p))
 await pool(extra, async (path) => {

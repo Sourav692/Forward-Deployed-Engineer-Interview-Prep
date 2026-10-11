@@ -1,58 +1,70 @@
 import type { MetadataRoute } from 'next'
-import { getAllScenarios } from '@/lib/content'
+import { getAllScenarios, getStoryBank } from '@/lib/content'
+import { CHANGELOG } from '@/lib/changelog'
 import { STORY_BANK } from '@/lib/editorial'
 import { INTERVIEW_HUBS } from '@/lib/curriculum'
+import type { CurriculumModule } from '@/lib/curriculum-types'
 import { hubHref } from '@/lib/curriculum-href'
-import { getLearnManifest, getTracks, learnHref, trackModules } from '@/lib/learn'
+import { getLearnManifest, getTracks, learnHref, learnTracks, trackModules } from '@/lib/learn'
 import { PATHS } from '@/lib/paths'
-import { MODULES } from '@/lib/registry'
 import { MODULE_AREAS, scenarioHref } from '@/lib/scenario'
 import { absoluteUrl } from '@/lib/seo'
 
 /**
- * `/sitemap.xml` (plan §11, SEO-01): every public, static page. Learner-only pages
- * (`/progress`, `/settings`) are left out; `robots.ts` disallows them too. So are
- * `/company-prep` and planned modules, which have no content yet. Built once at build
- * time like any other static route.
+ * `/sitemap.xml` (plan §11, SEO-01; ENH-19): every public page at its canonical URL,
+ * never a redirected one (`check:routes` fails on a sitemap URL that redirects).
+ * Learner-only pages (`/progress`, `/settings`) are left out; `robots.ts` disallows them
+ * too. So are `/company-prep` and planned modules, which have no content yet.
+ *
+ * Every entry has `lastModified`: a page's own source date from the sync (`updated`),
+ * the newest date among its items for an index (module, track, path, hub, area), and the
+ * newest changelog date for a page with no source of its own.
  */
 
-/** Top-level pages. Some are built by parallel Phase 1 workstreams. */
-const STATIC_PAGES = [
-  '/',
-  '/start',
-  '/learn',
-  '/design',
-  '/practice',
-  '/interview',
-  '/library',
-  '/library/credits',
-  '/about',
-  '/changelog',
-  '/glossary',
-]
+const newest = (dates: (string | null | undefined)[]): string | undefined =>
+  dates.filter((d): d is string => !!d).sort().at(-1)
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const paths = new Set<string>(STATIC_PAGES)
+  const dated = new Map<string, string | undefined>()
+  // A path can be added twice (the I1 module's page is /practice); keep the newer date.
+  const add = (path: string, date?: string | null) => dated.set(path, newest([dated.get(path), date]))
 
-  for (const path of PATHS) paths.add(`/start/paths/${path.id}`)
-  for (const hub of INTERVIEW_HUBS) paths.add(hubHref(hub.slug))
+  // Pages with a source: cases and worksheets, the Story Bank, synced lessons.
+  const scenarios = await getAllScenarios()
+  for (const ref of scenarios) add(scenarioHref(ref), ref.updated)
+  add(STORY_BANK.href, (await getStoryBank())?.updated)
+  const lessons = getLearnManifest()
+  for (const lesson of lessons) if (lesson.kind === 'sync') add(lesson.href, lesson.updated)
+  // A `live` lesson is a case or worksheet page; it changes when that page does.
+  const lessonDate = new Map(lessons.map((l) => [l.slug, l.updated ?? dated.get(l.href)]))
+
+  // Indexes: the newest date among their items.
+  const moduleDate = new Map<string, string | undefined>()
+  const dateOf = (m: CurriculumModule) => newest([...m.lessons, ...m.seeAlso].map((s) => lessonDate.get(s)))
   for (const track of getTracks()) {
-    paths.add(learnHref.track(track.slug))
-    for (const mod of trackModules(track)) {
+    const mods = trackModules(track)
+    for (const mod of mods) {
+      moduleDate.set(mod.slug, dateOf(mod))
       // Planned modules have no lessons yet, so they stay out of search (FV-03).
-      if (mod.status !== 'coming-soon' && mod.status !== 'on-hold') paths.add(learnHref.module(mod))
+      if (mod.status !== 'coming-soon' && mod.status !== 'on-hold') add(learnHref.module(mod), moduleDate.get(mod.slug))
     }
+    add(learnHref.track(track.slug), newest(mods.map((m) => moduleDate.get(m.slug))))
   }
-  for (const lesson of getLearnManifest()) {
-    if (lesson.kind === 'sync') paths.add(lesson.href)
+  add('/learn', newest(learnTracks().map((t) => dated.get(learnHref.track(t.slug)))))
+  for (const hub of INTERVIEW_HUBS) {
+    add(hubHref(hub.slug), newest([...hub.practice.map((s) => lessonDate.get(s)), ...hub.modules.map((s) => moduleDate.get(s))]))
   }
-
-  for (const mod of MODULES) {
-    if (mod.status === 'live' && !(mod.id in MODULE_AREAS)) paths.add(`/modules/${mod.id}`)
+  for (const path of PATHS) add(`/start/paths/${path.id}`, newest(Object.keys(path.moduleFlags).map((s) => moduleDate.get(s))))
+  add('/start', newest([...moduleDate.values()]))
+  for (const area of new Set(Object.values(MODULE_AREAS))) {
+    add(area, newest(scenarios.filter((s) => MODULE_AREAS[s.moduleId] === area).map((s) => s.updated)))
   }
-  for (const ref of await getAllScenarios()) paths.add(scenarioHref(ref))
-  paths.add(STORY_BANK.href)
+  add('/practice', dated.get(STORY_BANK.href))
 
+  // Pages with no source of their own change with a release.
+  const release = newest(CHANGELOG.map((e) => e.date))
+  for (const path of ['/library', '/library/credits', '/about', '/changelog', '/glossary']) add(path, release)
+  add('/', newest([...dated.values()]))
 
-  return [...paths].map((path) => ({ url: absoluteUrl(path) }))
+  return [...dated].map(([path, date]) => ({ url: absoluteUrl(path), lastModified: date ?? release }))
 }
