@@ -2,8 +2,6 @@
 
 *An agent is easy to build and hard to trust, because the same loop that lets it act also lets it act wrongly.*
 
-◷ 9 min
-
 An agent is not a framework, a model or a clever prompt; it is a loop with a stopping rule. Learn the three parts of that loop here, then build it line by line in [The Tool-Calling Loop From Scratch](/learn/agentic-systems/the-tool-calling-loop/the-tool-calling-loop-from-scratch).
 
 **Objectives:**

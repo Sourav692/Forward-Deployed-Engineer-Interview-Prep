@@ -2,8 +2,6 @@
 
 *The most valuable use case is often the riskiest, and the first build has to earn trust without giving up the value that justified the project.*
 
-◷ 5 min
-
 The first use case is not the most impressive demo on the list. It is the one with a measurable outcome, available data and a risk the customer can live with, chosen after the metrics in [Success Metrics and Evaluation Data](/learn/forward-deployed/customer-discovery/success-metrics-and-evaluation-data) are clear.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *One box labelled "the AI" is quick to draw, but a system that cannot be split into parts cannot be estimated, owned, tested or debugged.*
 
-◷ 5 min
-
 Decomposition is not listing technologies; it is cutting the workflow into steps that each have one job, one owner and one way to fail. It starts only after [The Discovery Conversation](/learn/forward-deployed/customer-discovery/the-discovery-conversation) has fixed the user and the outcome.
 
 **Objectives:**

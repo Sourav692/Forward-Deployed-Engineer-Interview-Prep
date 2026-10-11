@@ -2,8 +2,6 @@
 
 *Describing a release process sounds easy until the follow-up asks what stops a bad change, so rehearse answers that name the gate at every step.*
 
-◷ 7 min
-
 AgentOps questions test whether a candidate has shipped changes to a live AI system, not just built one. Answer each question aloud first, then compare; every answer uses only concepts from the earlier lessons in this module.
 
 **Objectives:**

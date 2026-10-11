@@ -2,8 +2,6 @@
 
 *Each new request feels unique, but the same scoping steps repeat every time, and judgement grows from running them on many requests rather than memorising one design.*
 
-◷ 9 min
-
 Two worked cases and one timed exercise show the whole method from [Problem, Goal, and Definition of Done](/learn/forward-deployed/scoping-an-fde-project/problem-goal-and-definition-of-done) onwards in one pass. A checklist closes the module: run it before giving anyone a date.
 
 **Objectives:**

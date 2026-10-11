@@ -2,8 +2,6 @@
 
 *An impressive multi-agent design loses marks if it never says why one agent was not enough, or what stops the agents looping, leaking, or overspending.*
 
-◷ 12 min
-
 Most multi-agent questions test judgement before mechanics: interviewers want the simpler design named first. Answer each prompt below out loud, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

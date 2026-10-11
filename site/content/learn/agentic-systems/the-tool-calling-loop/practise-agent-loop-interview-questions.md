@@ -2,8 +2,6 @@
 
 *An answer that names a framework sounds fluent, but only an answer that names the mechanism shows it was ever built.*
 
-◷ 7 min
-
 "What is an agent?" is asked to see whether a candidate reaches for a framework name or for the mechanism. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

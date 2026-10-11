@@ -2,8 +2,6 @@
 
 *The use case that impresses the executive is rarely the one that survives contact with the data, the regulator and the users.*
 
-◷ 24 min
-
 This is a portfolio question, not a design question. Nothing gets drawn until the list has been cut. The answer is a repeatable way to turn thirty enthusiastic one-liners into a funded sequence with kill criteria, and the architecture only appears as the shared platform that makes later items cheaper. The page is the standalone pack for this case.
 
 | Case | Where it comes from | What the source gives |

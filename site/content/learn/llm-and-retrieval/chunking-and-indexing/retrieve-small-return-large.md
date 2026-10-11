@@ -2,8 +2,6 @@
 
 *Searching small units keeps vectors sharp and returning large units keeps answers grounded, but decoupling them adds a second store that must stay in sync.*
 
-◷ 8 min
-
 When the best unit to search and the best unit to read disagree in size, stop compromising on one chunk size and decouple them. This lesson covers parent document retrieval and its relatives, which resolve the size dial from [Why Retrieval Needs Chunks](/learn/llm-and-retrieval/chunking-and-indexing/why-retrieval-needs-chunks) instead of tuning it.
 
 **Objectives:**

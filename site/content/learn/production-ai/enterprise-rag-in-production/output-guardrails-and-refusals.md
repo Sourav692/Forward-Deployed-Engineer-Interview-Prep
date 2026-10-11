@@ -2,8 +2,6 @@
 
 *Refusing whenever the context is imperfect is safe and useless, while answering whenever possible is useful and leaks, so the output checks sit between the two.*
 
-◷ 8 min
-
 Correct retrieval is not enough to make an answer honest. A model given six authorised passages can still answer beyond them, cite a document it never saw, or refuse in a way that reveals what it was not shown. Add three checks on the way out, one rule for refusing, and one deliberate absence.
 
 **Objectives:**

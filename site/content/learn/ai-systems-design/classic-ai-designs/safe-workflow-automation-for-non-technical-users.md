@@ -2,8 +2,6 @@
 
 *Letting non-technical users configure automations that take real actions widens who can build, while every dangerous decision must stay deterministic and out of the model's hands.*
 
-◷ 12 min
-
 Wiring an LLM to a tool call is easy; letting someone who has never seen a stack trace configure it safely is not. Make the system take the dangerous decisions itself, in code, and pace the round with [the six-step whiteboard clock](/learn/ai-systems-design/sixty-minute-whiteboard/the-six-step-whiteboard-clock).
 
 **Objectives:**

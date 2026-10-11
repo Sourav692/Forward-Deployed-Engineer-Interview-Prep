@@ -2,8 +2,6 @@
 
 *A container image should carry everything the service needs to run and nothing an attacker could use, so configuration and secrets arrive at runtime, never at build time.*
 
-◷ 4 min
-
 A working service on a laptop is not a deployable artefact. Package it as a small, safe image first, then read [Choose a Runtime and Scale It](/learn/engineering-foundations/cloud-containers-deployment/choose-a-runtime-and-scale-it) for where that image runs.
 
 **Objectives:**

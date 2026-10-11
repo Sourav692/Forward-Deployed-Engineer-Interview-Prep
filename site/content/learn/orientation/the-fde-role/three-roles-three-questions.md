@@ -2,8 +2,6 @@
 
 *The same knowledge serves three jobs, but each job asks a different question of it, so preparing for the wrong one means answering the wrong question well.*
 
-◷ 5 min
-
 A senior FDE is not "a better AI engineer"; the three roles are judged on different questions. Learn the unit of work and the question for each role here, then read [The Three Lenses of FDE Work](/learn/orientation/the-fde-role/the-three-lenses-of-fde-work) for how the FDE role splits its time.
 
 **Objectives:**

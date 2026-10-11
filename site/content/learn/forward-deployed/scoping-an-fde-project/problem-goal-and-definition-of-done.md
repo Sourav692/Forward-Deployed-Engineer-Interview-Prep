@@ -2,8 +2,6 @@
 
 *Starting to build on day one feels productive, but a team that never agreed what the work is will argue about whether it is finished.*
 
-◷ 5 min
-
 Scoping is not predicting the future; it is writing down what is in, what is assumed and what is still open, so everyone shares one picture. The first three things to pin down are the real problem, a goal with a number in it, and which kind of "done" is being bought.
 
 **Objectives:**

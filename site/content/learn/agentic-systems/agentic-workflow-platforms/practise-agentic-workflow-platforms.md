@@ -2,8 +2,6 @@
 
 *A platform answer that describes the model in detail still fails if it never says what stops a refund firing twice or firing without authority.*
 
-◷ 9 min
-
 Interviewers rarely ask how the model picks a tool; they ask what happens on a retry, a restart, or an oversized refund. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

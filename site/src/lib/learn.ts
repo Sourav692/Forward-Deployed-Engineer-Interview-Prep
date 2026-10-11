@@ -16,6 +16,7 @@ import type {
   PublishDecision,
 } from './curriculum-types'
 import { parseReading, type ReadingDocument } from './reading'
+import { studyTime, type StudyTime } from './study-time'
 import type { ModuleInput } from '@/components/learn/progress-model'
 
 /**
@@ -161,6 +162,13 @@ export function minutesFor(lessons: LearnLesson[]): Record<string, number> {
 export const allMinutes = cache(() => minutesFor(getLearnManifest()))
 
 export const totalMinutes = (lessons: LearnLesson[]) => lessons.reduce((s, l) => s + (l.estMinutes ?? 0), 0)
+
+/** A module's study time (ENH-22): its lessons' reading plus its practice allowance. */
+export const moduleTime = (mod: CurriculumModule): StudyTime => studyTime(mod, allMinutes())
+
+/** A track's study hours: its modules' study time, summed. */
+export const trackHours = (track: CurriculumTrack): number =>
+  Math.round(trackModules(track).reduce((sum, m) => sum + moduleTime(m).total, 0) / 60)
 
 // ── Static params ──────────────────────────────────────────────────────────
 

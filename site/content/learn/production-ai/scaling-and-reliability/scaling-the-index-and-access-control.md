@@ -2,8 +2,6 @@
 
 *Approximate search buys orders of magnitude of speed for a small recall loss, and only filtering inside the index keeps that speed without losing the documents a user is allowed to see.*
 
-◷ 5 min
-
 Going from 22 documents to 20 million does not require re-architecting security. It requires swapping the storage and index layer underneath it, while the mechanisms that made the small system correct carry over.
 
 **Objectives:**

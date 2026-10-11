@@ -2,8 +2,6 @@
 
 *A reasoning model can handle any request, but every decision it owns is paid for on every request and resists testing.*
 
-◷ 5 min
-
 Orchestration is not about which framework runs the agent. It is about where each "what happens next?" decision lives, so audit those decisions before choosing a topology in [Orchestration Topologies](/learn/agentic-systems/context-engineering/orchestration-topologies).
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Covering every part of a design evenly feels thorough, but a timed round rewards spending most of the clock on the one part that matters.*
 
-◷ 7 min
-
 The twelve-part framework is complete but not timed, and a 60-minute round punishes completeness without priority. Write a six-step budget on the board before speaking, then use the first twenty minutes to frame, anchor and draw, as this lesson shows, so that [the deep dive and the close](/learn/ai-systems-design/sixty-minute-whiteboard/deep-dive-failure-modes-and-the-close) get the time they need.
 
 **Objectives:**

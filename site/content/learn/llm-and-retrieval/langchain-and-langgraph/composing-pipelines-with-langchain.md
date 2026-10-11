@@ -2,8 +2,6 @@
 
 *One shared interface makes every part swappable and every pipeline batchable, but it adds a layer of primitives to learn before the first line of real logic.*
 
-◷ 8 min
-
 LangChain's value is not the pipe symbol. It is that every part of a pipeline answers the same calls, so a model, a retriever or a parser can be swapped, batched, streamed or retried without special cases. This lesson builds on [What a Framework Buys You](/learn/llm-and-retrieval/langchain-and-langgraph/what-a-framework-buys-you).
 
 **Objectives:**

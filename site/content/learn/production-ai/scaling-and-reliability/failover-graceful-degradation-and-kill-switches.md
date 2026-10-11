@@ -2,8 +2,6 @@
 
 *Degrading quietly keeps the system up and hides that answers got worse, so every fallback must be planned in advance and announced when it fires.*
 
-◷ 7 min
-
 A circuit breaker knows when to stop calling a provider, but not where to go instead. Plan the next rung down before the outage, label every answer that came from it, and keep one blunt control that stops everything when no rung is safe.
 
 **Objectives:**

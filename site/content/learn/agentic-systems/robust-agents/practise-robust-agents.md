@@ -2,8 +2,6 @@
 
 *An answer that lists every safeguard still fails if it cannot say in what order they run and which failure each one stops.*
 
-◷ 7 min
-
 Interviewers rarely ask "what is memoization?"; they ask what stops the agent doing damage, and wait for an order and a reason. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

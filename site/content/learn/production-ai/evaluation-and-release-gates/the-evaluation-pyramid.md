@@ -2,8 +2,6 @@
 
 *One headline number is cheap to report and useless for repair, so measure every layer separately and never let a safety failure hide inside an average.*
 
-◷ 5 min
-
 "It works on my question" is not evidence, and a single success rate is barely more. Measure each layer of the system on its own, cheapest first, and keep quality and security in separate columns; [Component and Trajectory Metrics](/learn/production-ai/evaluation-and-release-gates/component-and-trajectory-metrics) then names the metric for each layer.
 
 **Objectives:**

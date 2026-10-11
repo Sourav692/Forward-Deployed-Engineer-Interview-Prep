@@ -2,8 +2,6 @@
 
 *Filtering after retrieval is the cheapest change to a demo, and it costs both answer quality and secrecy.*
 
-◷ 7 min
-
 Enterprise RAG is not ordinary RAG with a permissions check bolted on. Decide where the permission check runs relative to retrieval first, because that one choice fixes the shape of everything after it.
 
 **Objectives:**

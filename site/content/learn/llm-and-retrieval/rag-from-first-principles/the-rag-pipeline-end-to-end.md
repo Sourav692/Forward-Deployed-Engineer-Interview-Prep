@@ -2,8 +2,6 @@
 
 *Splitting RAG into an offline flow and a per-request flow lets ingestion be slow and thorough, but anything ingestion gets wrong is served to every later query.*
 
-◷ 6 min
-
 RAG is two flows that run at different times, not one script. Learn both, and the positions in the query flow that carry its security, building on [What RAG Is and When to Use It](/learn/llm-and-retrieval/rag-from-first-principles/what-rag-is-and-when-to-use-it).
 
 **Objectives:**

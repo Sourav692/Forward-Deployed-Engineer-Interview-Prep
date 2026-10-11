@@ -2,8 +2,6 @@
 
 *A tool should tell the agent exactly what went wrong so it can recover, but never so much about a refusal that it learns to work around the rule.*
 
-◷ 6 min
-
 A tool that returns a bare string forces the agent to guess what happened. Return one of five typed states instead, write errors that change the agent's next move, and keep [Tool Schema Design](/learn/agentic-systems/tool-design-mcp-a2a/tool-schema-design) rule 7 in mind throughout.
 
 **Objectives:**

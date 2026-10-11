@@ -2,8 +2,6 @@
 
 *A memory answer that names every technology still fails if it never says which scope a fact belongs to and how it is bounded.*
 
-◷ 12 min
-
 Interviewers rarely ask "what is episodic memory?"; they describe a symptom and wait for a scope, a key and a bound. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

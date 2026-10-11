@@ -2,8 +2,6 @@
 
 *An answer that names a pattern sounds fluent, but only an answer that says where each decision lives and what the model saw can be checked.*
 
-◷ 5 min
-
 Interviewers rarely ask for a definition here; they describe a symptom or a cost and wait for a mechanism. Answer each prompt out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

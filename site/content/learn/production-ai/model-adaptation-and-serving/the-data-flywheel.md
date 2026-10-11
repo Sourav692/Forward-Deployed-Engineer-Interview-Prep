@@ -2,8 +2,6 @@
 
 *Production traces are the most valuable training data a team has, and the easiest to turn into offline numbers that look great and mean nothing.*
 
-◷ 4 min
-
 Every production run with an outcome is a potential training or evaluation example. Pass traces through three gates before they become a dataset, and when an offline gain looks surprisingly large, suspect leakage before celebrating.
 
 **Objectives:**

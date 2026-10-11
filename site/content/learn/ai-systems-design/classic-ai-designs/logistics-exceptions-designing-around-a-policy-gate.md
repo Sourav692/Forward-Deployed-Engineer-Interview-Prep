@@ -2,8 +2,6 @@
 
 *Auto-resolving disruptions clears the backlog faster, while every action the assistant takes without a person has to stay inside a boundary the customer will be held accountable for.*
 
-◷ 9 min
-
 Work this design the way a forward-deployed round runs: clarifying questions first, then the design they force. Here the questions are the design, and one component, the Policy Gate, carries the system.
 
 **Objectives:**

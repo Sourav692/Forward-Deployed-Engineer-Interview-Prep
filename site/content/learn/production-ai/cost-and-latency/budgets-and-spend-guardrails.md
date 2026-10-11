@@ -2,8 +2,6 @@
 
 *A budget checked after the call only reports what was already spent, while a budget checked before the call can refuse, but it must refuse the right requests.*
 
-◷ 7 min
-
 Treat spend as an engineering constraint, not a monthly surprise. Put limits at every level where money can run away, check them before the paid call, and explain them to the customer as predictability rather than restriction.
 
 **Objectives:**

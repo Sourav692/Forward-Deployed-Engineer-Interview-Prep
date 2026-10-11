@@ -2,8 +2,6 @@
 
 *A technically ready system invites more technical fixes, but when nobody uses it the cause is usually workflow, trust or incentives, not the model.*
 
-◷ 3 min
-
 "It launched; nobody uses it" is an interview prompt and a common field reality. Investigate whether the product solves a pain worth solving, inside the way people already work, before touching the model.
 
 **Objectives:**

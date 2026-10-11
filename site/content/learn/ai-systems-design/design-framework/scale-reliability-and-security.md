@@ -2,8 +2,6 @@
 
 *Every technique that removes a bottleneck or contains a failure adds its own cost, so name the cost in the same breath as the technique.*
 
-◷ 10 min
-
 The last four parts of a design are not a list of best practices; they are answers to "what breaks first?" and "what happens when it fails?". Name the bottleneck before the technique, assume every dependency fails, and close every choice with its trade, building on [Architecture, Data, and Request Flow](/learn/ai-systems-design/design-framework/architecture-data-and-request-flow).
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *A design that survives an outage but blows the budget, or scales but leaks, has not answered the question, so practise answers that hold all the constraints at once.*
 
-◷ 7 min
-
 "What breaks at 100 times the load?" and "your provider is down" are the two shapes of this round. Answer each question aloud first, then compare; every answer uses only concepts from the earlier lessons in this module.
 
 **Objectives:**

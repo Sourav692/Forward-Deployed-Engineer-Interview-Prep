@@ -2,8 +2,6 @@
 
 *Buying the platform removes most of the code to write and defend, but the one gap it leaves in access control decides the whole physical design.*
 
-◷ 14 min
-
 On a lakehouse, most of a hand-built enterprise RAG system becomes platform primitives, while the permission policy stays yours. Buy the undifferentiated layers, build the customer-specific logic, and design around the one fact the platform will not do for you: the vector index does not enforce row-level security.
 
 **Objectives:**

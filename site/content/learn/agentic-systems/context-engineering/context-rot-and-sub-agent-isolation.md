@@ -2,8 +2,6 @@
 
 *More context feels safer, but accuracy falls as the window fills, so giving subtasks their own window trades auditability for quality and cost.*
 
-◷ 4 min
-
 A fuller window is not a better-informed model. Keep the parent's context small by isolating subtasks, and keep their traces so nothing becomes unexplainable; [Deterministic Context Assembly](/learn/agentic-systems/context-engineering/deterministic-context-assembly) covers the layout this protects.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *A central coordinator gives a plan that is easy to audit, but every routing decision it makes is another model call before any real work happens.*
 
-◷ 10 min
-
 Every coordination pattern answers one question: who decides which agent runs next. Pick the pattern from the shape of the work, after [When Multi-Agent Is Justified](/learn/agentic-systems/multi-agent-systems/when-multi-agent-is-justified) has confirmed that a split is worth it at all.
 
 **Objectives:**

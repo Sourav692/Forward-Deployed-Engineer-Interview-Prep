@@ -2,8 +2,6 @@
 
 *Shared state makes agents easy to connect, but every key two agents write and every routing choice they make is a new way to lose work or loop forever.*
 
-◷ 8 min
-
 Agents in a graph do not call each other; they read and write one shared state, and the graph decides who runs next. Make the merge rules, the routing choice, and the stop condition explicit values in that state, using the patterns from [Multi-Agent Coordination Patterns](/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns).
 
 **Objectives:**

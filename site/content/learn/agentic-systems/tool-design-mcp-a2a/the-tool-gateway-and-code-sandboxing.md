@@ -2,8 +2,6 @@
 
 *Letting each tool enforce its own rules is faster to build, but only one shared doorway can guarantee every call is checked the same way.*
 
-◷ 6 min
-
 Safety that depends on the model choosing well is not safety. Route every tool call through one gateway that enforces the checks in a fixed order, and isolate any tool that runs code, because no check can predict what code will do.
 
 **Objectives:**

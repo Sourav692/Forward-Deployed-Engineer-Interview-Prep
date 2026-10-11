@@ -2,8 +2,6 @@
 
 *Letting the platform enforce access deletes code that had to be proven correct, but the vector index sits outside that enforcement and forces a split design.*
 
-◷ 16 min
-
 On Databricks, most access control is Unity Catalog's job, not application code's. Two Vector Search facts decide the whole physical architecture, so lead with them and reuse the platform-agnostic design from [Access-Controlled Enterprise RAG](/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag) for everything else.
 
 **Objectives:**

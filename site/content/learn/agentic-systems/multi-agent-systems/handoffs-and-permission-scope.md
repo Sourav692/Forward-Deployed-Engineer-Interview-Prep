@@ -2,8 +2,6 @@
 
 *Handing the next agent the whole conversation saves design work, but it costs tokens, dilutes focus, and can give an agent access the original request never had.*
 
-◷ 7 min
-
 The handoff, not the choice of specialists, is the hard part of multi-agent design. Pass a small, defined package that carries its permission scope, and treat each handoff as a durable step, building on the patterns in [Multi-Agent Coordination Patterns](/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns).
 
 **Objectives:**

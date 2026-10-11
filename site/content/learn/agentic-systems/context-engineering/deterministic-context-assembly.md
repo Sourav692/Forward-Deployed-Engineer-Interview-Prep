@@ -2,8 +2,6 @@
 
 *A context that is rebuilt freely each step adapts to anything, but only a fixed layout can be cached, reconstructed and protected from losing its own instructions.*
 
-◷ 4 min
-
 The order of a prompt is not cosmetic. Assemble each step's context in fixed sections with fixed budgets, and apply the four operations from [The Four Context Operations](/learn/agentic-systems/context-engineering/the-four-context-operations) inside those sections only.
 
 **Objectives:**

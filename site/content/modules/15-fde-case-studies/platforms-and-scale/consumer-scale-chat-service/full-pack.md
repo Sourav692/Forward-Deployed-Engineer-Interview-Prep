@@ -2,8 +2,6 @@
 
 *Every user expects the first token instantly and the whole history remembered, while every remembered token is paid for again on the next turn.*
 
-◷ 24 min
-
 "Design ChatGPT" is not a model question. It is a distributed-systems question about conversation state, token streaming, admission control and cost at hundreds of millions of users. This page consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |

@@ -2,8 +2,6 @@
 
 *The context window is the only thing the model sees, but it is small, so every token in it should be there by decision rather than by default.*
 
-◷ 4 min
-
 Context engineering is not about writing a better prompt. It is about deciding what enters the model's window at each step, under a fixed token budget, and every technique for that reduces to four operations.
 
 **Objectives:**

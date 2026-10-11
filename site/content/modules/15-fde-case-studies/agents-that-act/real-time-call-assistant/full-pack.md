@@ -2,8 +2,6 @@
 
 *A suggestion has to land while the customer is still talking, and a CRM record has to be right long after the call ends.*
 
-◷ 26 min
-
 A call assistant is a workflow-timing problem before it is a model problem. The same call needs a three-second answer during the conversation and a careful, reviewed record after it. This group has one question-bank prompt and one latency drill and no worked design anywhere in the repo, so most of this page is built here. It consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |

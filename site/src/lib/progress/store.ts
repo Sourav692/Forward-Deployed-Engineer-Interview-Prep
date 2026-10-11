@@ -17,6 +17,7 @@
 import { LESSONS, MODULES } from '../curriculum.ts'
 import { notifyProgress, storageAvailable } from '../storage.ts'
 import { rollup } from './rules.ts'
+import { studyTime } from '../study-time.ts'
 import type {
   ActivityEvent,
   Attempt,
@@ -329,7 +330,8 @@ export function moduleProgress(moduleSlug: string, minutes?: Readonly<Record<str
 }
 
 /**
- * A track's progress: its modules' fractions weighted by module `estMinutes`.
+ * A track's progress: its modules' fractions weighted by their study time (`studyTime`).
+ * Without lesson `minutes`, every module weighs the same.
  * Modules with no home lessons yet (Coming soon) are left out, because there is
  * nothing to read.
  */
@@ -340,7 +342,7 @@ export function trackProgress(trackSlug: string, minutes?: Readonly<Record<strin
     const p = moduleProgress(m.slug, minutes)
     lessonsRead += p.lessonsRead
     lessonsTotal += p.lessonsTotal
-    return { minutes: m.estMinutes > 0 ? m.estMinutes : 1, fraction: p.fraction }
+    return { minutes: (minutes && studyTime(m, minutes).total) || 1, fraction: p.fraction }
   })
   return { fraction: rollup(parts), lessonsRead, lessonsTotal }
 }

@@ -2,8 +2,6 @@
 
 *A design that worked first time is easy to present, but a technical listener learns more about judgement from the designs that failed.*
 
-◷ 8 min
-
 A technical peer does not want the pitch. They want the evolution: what was tried, why it broke, and why each tool won. Tell the build as a sequence of stages and pivots, not as a finished diagram, and keep the results honest in the way [Proof versus Knowledge](/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge) describes.
 
 **Objectives:**

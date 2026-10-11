@@ -2,8 +2,6 @@
 
 *Guardrails verified once are a belief and guardrails attacked every week are evidence, so test them on the real path, on a schedule, as every persona.*
 
-◷ 8 min
-
 A system can score well on every quality evaluation and still ship with an exploitable policy hole. Red teaming asks a different question from evaluation: not "is the output good?" but "can the system be made to misbehave on purpose before an attacker does it?"
 
 **Objectives:**

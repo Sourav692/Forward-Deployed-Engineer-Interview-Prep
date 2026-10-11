@@ -2,8 +2,6 @@
 
 *Each extra retrieval stage lifts quality on hard queries but adds latency, cost and a new way to fail, so every stage must earn its place and be safe to lose.*
 
-◷ 9 min
-
 Real systems rarely use one retrieval strategy alone. Compose hybrid search, reranking and optional rewriting into one pipeline, keep the strategies swappable, and make every model-dependent step degrade instead of failing.
 
 **Objectives:**

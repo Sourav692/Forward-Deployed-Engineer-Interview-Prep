@@ -2,8 +2,6 @@
 
 *Knowing every signal is not the same as using them under pressure, so rehearse answers that name the signal, the reason, and the next step.*
 
-◷ 6 min
-
 Interviewers probe observability through incidents, not definitions. Answer each question below aloud first, then compare with the answer, which uses only the concepts from the earlier lessons in this module.
 
 **Objectives:**

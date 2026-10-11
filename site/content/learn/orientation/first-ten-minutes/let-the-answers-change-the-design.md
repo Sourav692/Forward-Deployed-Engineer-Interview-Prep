@@ -2,8 +2,6 @@
 
 *More questions look thorough, but the signal is an answer that visibly moves a box on the whiteboard, so ask fewer and adapt out loud.*
 
-◷ 4 min
-
 The question count is not the signal; the adaptation is. Ask three or four of the questions from [Ask Before You Architect](/learn/orientation/first-ten-minutes/ask-before-you-architect), then say out loud how each answer changes the drawing.
 
 **Objectives:**

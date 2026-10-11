@@ -2,8 +2,6 @@
 
 *Pushing permissions into retrieval makes every answer safe, but a check that is only cheap and approximate can never be the final word on who sees what.*
 
-◷ 14 min
-
 Multi-source RAG is easy; giving three people three different correct answers to the same question is the hard part. Design around access control from the first minute, and pace the round with [the six-step whiteboard clock](/learn/ai-systems-design/sixty-minute-whiteboard/the-six-step-whiteboard-clock).
 
 **Objectives:**

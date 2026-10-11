@@ -2,8 +2,6 @@
 
 *Letting the most senior person sign anything keeps an engagement moving, but a gate only means something if the wrong role cannot pass it however senior they are.*
 
-◷ 7 min
-
 A stage is not done because time passed; it is done because a specific, checkable fact is true and the right role has said so with evidence. The six gates between the stages of [Delivery as a Repeatable Process](/learn/forward-deployed/delivery-stages-and-gates/delivery-as-a-repeatable-process) are where that rule lives.
 
 **Objectives:**

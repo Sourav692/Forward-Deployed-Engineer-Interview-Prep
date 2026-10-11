@@ -2,8 +2,6 @@
 
 *Serverless removes servers to manage but adds cold starts and limits, while containers keep models warm at the price of running the cluster yourself.*
 
-◷ 6 min
-
 No single runtime suits every part of an AI backend. Choose the runtime per workload, scale each on the signal that actually measures its load, and place the vector database and load balancer around it with the same care as the API from [Package the Service and Keep Secrets Out](/learn/engineering-foundations/cloud-containers-deployment/package-the-service-and-keep-secrets-out).
 
 **Objectives:**

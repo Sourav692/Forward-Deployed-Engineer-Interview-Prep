@@ -2,8 +2,6 @@
 
 *Streaming makes an answer feel faster without making it faster, and the price is that once the first token leaves, the response can no longer change its mind.*
 
-◷ 5 min
-
 Streaming fixes perceived latency, not total latency: generation takes exactly as long either way. Decide whether to answer before the first token, carry errors inside the stream, and keep the conversation on the server, using the contract from [Define the API Contract With Typed Schemas](/learn/engineering-foundations/apis-and-backend/define-the-api-contract-with-typed-schemas).
 
 **Objectives:**

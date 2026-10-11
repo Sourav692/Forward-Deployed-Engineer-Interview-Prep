@@ -2,8 +2,6 @@
 
 *Clicking through a console is fast once and impossible to repeat, so define the environment as code and let the pipeline, not a person, decide whether a change ships.*
 
-◷ 5 min
-
 Everything the earlier lessons describe runs somewhere, and every new version has to get there. Make the environment a reviewable text file, make every change flow through automatic gates, and make every stop and rollback automatic.
 
 **Objectives:**

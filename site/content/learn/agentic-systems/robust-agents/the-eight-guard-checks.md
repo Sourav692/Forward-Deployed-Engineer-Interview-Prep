@@ -2,8 +2,6 @@
 
 *One big gate is simpler to describe, but each failure mode needs its own check, and none of them covers for another.*
 
-◷ 7 min
-
 A model deciding to call a tool is a proposal, never an authorisation. Check every proposed call at several independent points in one pipeline, then use [Practise Robust Agent Interview Questions](/learn/agentic-systems/robust-agents/practise-robust-agents) to say it out loud.
 
 **Objectives:**

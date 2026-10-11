@@ -2,8 +2,6 @@
 
 *A model may choose which value goes into an argument, but the moment it improvises what happens next, nobody can review the automation they approved.*
 
-◷ 7 min
-
 The signal the agent-platform prompt tests is not clever reasoning; it is whether deterministic control flow is split from probabilistic reasoning. Make the workflow a document the orchestrator walks, and read [Canonical Events and Routing](/learn/agentic-systems/agentic-workflow-platforms/canonical-events-and-routing) first for how a run is chosen.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Every token and every tool call an agent spends buys capability, but unbudgeted context degrades the model and unguarded tools expose the environment.*
 
-◷ 5 min
-
 The context window is a scarce resource that degrades sharply when overloaded, and the boundary between a probabilistic model and deterministic systems is where most damage happens. Budget the window with context and memory patterns, then put every action behind tool patterns, after choosing a shape from [Orchestration Patterns for Agents](/learn/ai-systems-design/architecture-patterns/orchestration-patterns-for-agents).
 
 **Objectives:**

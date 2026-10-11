@@ -2,8 +2,6 @@
 
 *Saving state after every step lets a run pause for a human and survive a crash, but a resumed run can repeat any side effect that was not made safe to repeat.*
 
-◷ 9 min
-
 A pause is only as good as the state it can resume from. A checkpointer lets a graph stop, wait for a person or a restart, and continue. This lesson applies it to the graphs from [Modelling Workflows as State Graphs](/learn/llm-and-retrieval/langchain-and-langgraph/modelling-workflows-as-state-graphs) and [The Tool-Calling Loop in LangGraph](/learn/llm-and-retrieval/langchain-and-langgraph/the-tool-calling-loop-in-langgraph).
 
 **Objectives:**

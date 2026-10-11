@@ -2,8 +2,6 @@
 
 *One chat box for all company knowledge sounds like the fastest win, but one leaked contract clause ends the pilot.*
 
-◷ 6 min
-
 The demo did not fail because the model was weak. It failed on stale pages and a permission leak, so practise answering with scope and access control first, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
 **Objectives:**

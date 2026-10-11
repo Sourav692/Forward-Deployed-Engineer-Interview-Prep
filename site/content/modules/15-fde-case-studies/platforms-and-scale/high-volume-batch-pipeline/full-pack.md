@@ -2,8 +2,6 @@
 
 *Finish a hundred million records before the business day starts, without paying twice for any of them or losing the ability to replay the night.*
 
-◷ 35 min
-
 Throughput is not the hard part of this system. The hard part is the decision at 4 a.m., when the job is behind and someone has to choose what ships. This page consolidates the group's prompts into one read for the day before. The anchor is the nightly classification batch, and every other member is a delta on it.
 
 | Case in the group | What it contributes here |

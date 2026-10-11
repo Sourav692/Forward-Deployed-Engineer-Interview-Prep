@@ -2,8 +2,6 @@
 
 *Security attention naturally goes to the system being deployed, but the process that deploys it holds live credentials and real customer data first.*
 
-◷ 5 min
-
 A gate can be structurally real and still prove almost nothing. The right role must sign it, yet a free-text "reviewed" cannot show what was checked, and the delivery process itself handles credentials and data that need the same protection as the product.
 
 **Objectives:**

@@ -85,7 +85,7 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
         <div className="mt-3">
           <MetaStrip
             meta={meta}
-            minutes={null}
+            minutes={ref.minutes ?? null}
             extra={
               meta.personalisation && (
                 <>

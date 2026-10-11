@@ -2,8 +2,6 @@
 
 *A semantic cache answers far more questions from memory than an exact-match cache, but every extra hit is a bet that two different questions deserve the same answer.*
 
-◷ 4 min
-
 A cache that misses is slow; a cache that hits wrongly is worse, because it serves a confident wrong answer. Start with exact-match caching, move to semantic caching only when the hit rate justifies the risk, and place either one in front of the expensive path.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *One application serving 500 tenants: shared enough to be affordable, isolated enough that a missing predicate is impossible rather than unlikely.*
 
-◷ 43 min
-
 The dangerous failure is not a bad answer. It is a query, cache lookup, queue message or export that runs without a tenant predicate and reads whatever matches. This page consolidates the group's prompts into one read for the day before. It holds the chapter 2 worksheet and answer key, the tutorial's high-yield sections, the two cost scenarios and the cross-tenant leak incident. The two-layer enforcement mechanics are owned by G01 section 6 and referenced here rather than repeated.
 
 | Case in the group | What it contributes here |

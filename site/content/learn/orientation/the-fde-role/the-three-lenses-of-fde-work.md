@@ -2,8 +2,6 @@
 
 *Technical depth, customer time and team time all compete for the same day, yet each one is what makes the other two fast.*
 
-◷ 3 min
-
 An FDE's work is not three jobs stapled together. Weigh the three lenses here, then follow them through one day in [A Senior FDE's Day](/learn/orientation/the-fde-role/a-senior-fdes-day).
 
 **Objectives:**

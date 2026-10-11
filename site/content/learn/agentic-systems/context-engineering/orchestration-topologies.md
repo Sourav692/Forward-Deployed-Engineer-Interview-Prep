@@ -2,8 +2,6 @@
 
 *Each topology is cheap for the cases it fits and expensive for the rest, so real systems compose several and watch how traffic moves between them.*
 
-◷ 5 min
-
 No single orchestration shape fits a whole production system. Learn the six shapes, then compose them, placing each decision as [Control Placement](/learn/agentic-systems/context-engineering/control-placement) describes.
 
 **Objectives:**

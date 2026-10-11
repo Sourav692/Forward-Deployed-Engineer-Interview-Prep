@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { Suspense } from 'react'
-import { allMinutes, isRequired, learnTracks } from '@/lib/learn'
+import { allMinutes, isRequired, learnTracks, trackHours } from '@/lib/learn'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
 import { PathBanner } from '@/components/learn/PathFlagIslands'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
@@ -29,7 +29,7 @@ export default function LearnPage() {
     required: isRequired(t),
     node: <TrackCard track={t} minutes={minutes} />,
   }))
-  const hours = tracks.reduce((s, t) => s + t.estHours, 0)
+  const hours = tracks.reduce((s, t) => s + trackHours(t), 0)
 
   return (
     <>

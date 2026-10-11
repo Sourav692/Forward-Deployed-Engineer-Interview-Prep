@@ -2,8 +2,6 @@
 
 *A strong answer names the failure first and the technique second, while a weak one reaches for a bigger embedding model or a different chunk size without saying what broke.*
 
-◷ 8 min
-
 Interviewers rarely ask "what is chunking?"; they describe a broken system and watch how the candidate isolates the stage that failed. These questions are grouped by the lesson that teaches each idea, with a model answer for each.
 
 **Objectives:**

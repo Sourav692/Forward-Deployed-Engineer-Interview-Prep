@@ -2,8 +2,6 @@
 
 *The first model call takes an afternoon, which makes AI work look cheap, but controlling and proving judgement-based behaviour is most of the project.*
 
-◷ 4 min
-
 "The model can do it" marks the start of an AI project, not its end. AI adds two jobs ordinary software estimates leave out: keeping unpredictable behaviour within bounds, and proving that behaviour is good enough, on top of the hidden work in [The System Behind the Screens](/learn/forward-deployed/scoping-an-fde-project/the-system-behind-the-screens).
 
 **Objectives:**

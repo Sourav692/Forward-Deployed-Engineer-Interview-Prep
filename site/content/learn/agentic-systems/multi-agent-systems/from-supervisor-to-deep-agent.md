@@ -2,8 +2,6 @@
 
 *Splitting a supervisor into self-contained sub-agents puts a ceiling on tool confusion, but it buys that ceiling with more endpoints and more moving parts.*
 
-◷ 9 min
-
 This case study is the judgement from [When Multi-Agent Is Justified](/learn/agentic-systems/multi-agent-systems/when-multi-agent-is-justified) exercised twice in production. Read it as an architecture that evolved, and note that each pivot had a different, named cause.
 
 **Objectives:**

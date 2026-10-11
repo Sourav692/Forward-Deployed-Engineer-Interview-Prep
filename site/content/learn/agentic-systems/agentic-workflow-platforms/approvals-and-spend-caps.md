@@ -2,8 +2,6 @@
 
 *Autonomy is what makes automation worth having, but a workflow that may act alone must still never act past its money limit or without the approval it was not granted.*
 
-◷ 6 min
-
 A guardrail that runs only when someone remembers to call it is not a guardrail. Run one decision on every step of every run, with deny overriding allow, and pair it with [Staged Rollout](/learn/agentic-systems/agentic-workflow-platforms/staged-rollout), which decides whether a workflow may act at all.
 
 **Objectives:**

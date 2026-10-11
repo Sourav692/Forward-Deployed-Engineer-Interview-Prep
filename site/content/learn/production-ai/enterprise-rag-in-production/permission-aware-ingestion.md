@@ -2,8 +2,6 @@
 
 *Defaulting an unclassified document to "internal" keeps the pipeline moving, and it is exactly how a latent leak gets indexed.*
 
-◷ 8 min
-
 Ingestion is the offline half of RAG, and it is where enterprise RAG leaks are born. Refuse what cannot be classified, and keep permissions and content in separate stores, because they change for different reasons.
 
 **Objectives:**

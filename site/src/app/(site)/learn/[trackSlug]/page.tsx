@@ -10,6 +10,8 @@ import {
   getTrack,
   isRequired,
   learnHref,
+  moduleTime,
+  trackHours,
   trackParams,
 } from '@/lib/learn'
 import type { CurriculumModule } from '@/lib/curriculum-types'
@@ -86,7 +88,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
 
           <dl className="mt-6 grid gap-4 rounded-lg border border-border bg-surface p-4 text-sm sm:grid-cols-3 sm:p-5">
             <Fact term="For whom">{track.forWhom}</Fact>
-            <Fact term="Time">About {track.estHours} hours</Fact>
+            <Fact term="Time">About {trackHours(track)} hours</Fact>
             <Fact term="Before this track">
               {prereqTracks.length === 0 && !track.prerequisiteNote && 'Nothing; start here'}
               {prereqTracks.map((t, i) => (
@@ -117,7 +119,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
           <div className="mt-8 space-y-4">
             {track.sections.map((s) => {
               const modules = s.modules.map((slug) => getModuleBySlug(slug)).filter((m): m is CurriculumModule => !!m)
-              const minutes = modules.reduce((sum, m) => sum + m.estMinutes, 0)
+              const minutes = modules.reduce((sum, m) => sum + moduleTime(m).total, 0)
               return (
                 <SectionAccordion
                   key={s.slug}

@@ -2,8 +2,6 @@
 
 *Splitting work across specialist agents can fix context and tool overload, but every split adds coordination that has to be designed, tested, and paid for.*
 
-◷ 7 min
-
 Multi-agent is an escalation, not a mark of a complete design. Start with one agent and a tight tool set, and split only when a named trigger has fired; [Multi-Agent Coordination Patterns](/learn/agentic-systems/multi-agent-systems/multi-agent-coordination-patterns) covers what to build once it has.
 
 **Objectives:**

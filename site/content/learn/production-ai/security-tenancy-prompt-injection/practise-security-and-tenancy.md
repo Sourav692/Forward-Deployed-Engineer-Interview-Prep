@@ -2,8 +2,6 @@
 
 *A security answer that names a vault, a firewall and a filter still fails if it never says which layer enforces each rule.*
 
-◷ 6 min
-
 Interviewers rarely ask "what is OIDC?"; they ask how prompt injection is stopped, or what happens when storage is breached, and wait for a mechanism. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

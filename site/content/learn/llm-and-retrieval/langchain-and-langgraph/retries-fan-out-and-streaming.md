@@ -2,8 +2,6 @@
 
 *Retrying, parallelising and streaming make a pipeline feel fast and resilient, but each one multiplies side effects, cost or failure surface when it is applied without a scope.*
 
-◷ 8 min
-
 A pipeline that works once in a notebook is not a production pipeline. Both frameworks ship primitives for retries, fallbacks, parallel work and streaming, and each has one trap that the sources demonstrate on purpose.
 
 **Objectives:**

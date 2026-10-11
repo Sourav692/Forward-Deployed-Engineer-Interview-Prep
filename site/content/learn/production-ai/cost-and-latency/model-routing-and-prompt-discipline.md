@@ -2,8 +2,6 @@
 
 *The strongest model is the safest default for quality and the most expensive one for everything else, so send each request to the weakest model that reliably handles it.*
 
-◷ 7 min
-
 The senior question is not "which model is best?" but "which is the weakest model that is reliable for this task, risk level, latency target and budget?" Route requests by that answer, and treat every prompt as a versioned production artefact whose size is a cost.
 
 **Objectives:**

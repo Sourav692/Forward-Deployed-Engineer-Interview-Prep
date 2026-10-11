@@ -2,8 +2,6 @@
 
 *Reshaping a question before search closes the gap between how users ask and how documents answer, but every rewrite costs a model call and can add assumptions the user never made.*
 
-◷ 10 min
-
 The user's question is only one guess at a search string, and often a poor one. Rewrite, expand, split or route it before retrieval, but only when [Measuring and Diagnosing Retrieval](/learn/llm-and-retrieval/retrieval-hybrid-rerank/measuring-and-diagnosing-retrieval) shows the wording gap is the real bottleneck.
 
 **Objectives:**

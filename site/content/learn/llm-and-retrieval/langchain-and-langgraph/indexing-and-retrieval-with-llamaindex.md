@@ -2,8 +2,6 @@
 
 *Rich nodes and built-in query engines make hard document retrieval easy to express, but they tie the index design to one framework's vocabulary.*
 
-◷ 5 min
-
 LlamaIndex is not a second LangChain. It is specialised for organising documents and retrieving from them. LangChain is a general application framework where RAG is one use case, and [What a Framework Buys You](/learn/llm-and-retrieval/langchain-and-langgraph/what-a-framework-buys-you) places the two side by side.
 
 **Objectives:**

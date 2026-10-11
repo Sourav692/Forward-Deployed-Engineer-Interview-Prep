@@ -2,8 +2,6 @@
 
 *The model is the most interesting part to talk about, but an end-to-end story that lingers on modelling leaves out the five stages that show ownership.*
 
-◷ 5 min
-
 "Walk me through an end-to-end AI project you delivered" is a storytelling question in disguise. It checks ownership from business problem to measured impact, and a six-stage structure keeps the answer from becoming either a chronology or an algorithm lecture.
 
 **Objectives:**

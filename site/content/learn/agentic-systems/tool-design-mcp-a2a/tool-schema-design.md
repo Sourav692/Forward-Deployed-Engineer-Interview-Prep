@@ -2,8 +2,6 @@
 
 *A loose schema is quicker to write, but every constraint left out is a mistake the model is still free to make.*
 
-◷ 5 min
-
 Most tool failures are fixed in the schema, not the prompt. Apply eight rules to every tool, building on [The Agent-Computer Interface](/learn/agentic-systems/tool-design-mcp-a2a/the-agent-computer-interface), and let structure do the work that instructions cannot guarantee.
 
 **Objectives:**

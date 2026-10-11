@@ -2,8 +2,6 @@
 
 *The customer wants value this quarter, and the data can only prove what it actually contains.*
 
-◷ 26 min
-
 Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [G12](/design/scoping-to-deployed-agent#full-pack) and the gating discipline of [G13](/design/evaluation-and-release-gating#full-pack) without repeating them.
 
 | Case | What the page adds |

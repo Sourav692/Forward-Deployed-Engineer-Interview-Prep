@@ -41,6 +41,7 @@ win.addEventListener('fd:progress', () => events++)
 
 const store = await import('../src/lib/progress/store.ts')
 const { MODULES, LESSONS } = await import('../src/lib/curriculum.ts')
+const { studyTime } = await import('../src/lib/study-time.ts')
 
 let failures = 0
 let passes = 0
@@ -131,9 +132,17 @@ check('module progress complete', store.moduleProgress(mod.slug).fraction, 1)
 check('unknown module', store.moduleProgress('no-such-module'), { fraction: 0, lessonsRead: 0, lessonsTotal: 0 })
 
 const trackModules = MODULES.filter((m) => m.track === mod.track && m.lessons.length > 0)
-const trackMinutes = trackModules.reduce((s, m) => s + m.estMinutes, 0)
+// Without lesson minutes every module weighs the same; with them, by study time (ENH-22).
 const tp = store.trackProgress(mod.track)
-check('track progress weighted by module minutes', Math.abs(tp.fraction - mod.estMinutes / trackMinutes) < 1e-9, true)
+check('track progress: equal module weights without minutes', Math.abs(tp.fraction - 1 / trackModules.length) < 1e-9, true)
+const tenEach = Object.fromEntries(LESSONS.map((l) => [l.slug, 10]))
+const weight = (m: (typeof MODULES)[number]) => studyTime(m, tenEach).total || 1
+const trackWeight = trackModules.reduce((s, m) => s + weight(m), 0)
+check(
+  'track progress weighted by study time',
+  Math.abs(store.trackProgress(mod.track, tenEach).fraction - weight(mod) / trackWeight) < 1e-9,
+  true,
+)
 check('track lessons read', tp.lessonsRead, mod.lessons.length)
 
 // ── Export, import guard, reset ────────────────────────────────────────────

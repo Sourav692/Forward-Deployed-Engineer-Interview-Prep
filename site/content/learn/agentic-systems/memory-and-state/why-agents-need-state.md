@@ -2,8 +2,6 @@
 
 *Each agent turn can be stateless, but a conversation cannot, so the real design question is where every piece of state lives and how long it lasts.*
 
-◷ 7 min
-
 An agent turn is stateless in isolation; a conversation is not. Name the scope of each piece of state before choosing where to store it, then read [Types of Memory](/learn/agentic-systems/memory-and-state/types-of-memory) for what belongs inside each scope.
 
 **Objectives:**

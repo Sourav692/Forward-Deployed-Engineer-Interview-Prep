@@ -2,8 +2,6 @@
 
 *Naming every retrieval technique is easy, but interviewers reward the candidate who names the failure first and can justify each added model call with a measurement.*
 
-◷ 10 min
-
 Retrieval questions rarely ask for a definition. They describe a symptom and wait to see whether the answer starts from the failure or from a favourite technique. Each answer below is short enough to say aloud and points at the lesson that teaches it.
 
 **Objectives:**

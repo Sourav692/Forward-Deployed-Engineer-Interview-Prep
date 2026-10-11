@@ -2,8 +2,6 @@
 
 *Retries and restarts must be allowed to happen freely, yet no customer may ever be refunded twice because one happened.*
 
-◷ 8 min
-
 Two questions decide whether an agent platform is safe to point at real money: what happens when the orchestrator restarts mid-run, and what happens when a refund step is retried. Answer both with one loop and one key per action, after reading [Determinism Over Free Text](/learn/agentic-systems/agentic-workflow-platforms/determinism-over-free-text) for the step list the loop walks.
 
 **Objectives:**

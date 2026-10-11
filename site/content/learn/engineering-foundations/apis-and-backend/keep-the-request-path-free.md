@@ -2,8 +2,6 @@
 
 *An API that waits well can serve thousands of model calls at once, but one blocking call inside it stalls every request on the server.*
 
-◷ 5 min
-
 A FastAPI service in front of a model spends most of its time waiting, not computing. Decide where each kind of work runs before writing the first endpoint, then read [Structure the Service and Decide What to Build](/learn/engineering-foundations/apis-and-backend/structure-the-service-and-decide-what-to-build) for how the pieces fit together.
 
 **Objectives:**

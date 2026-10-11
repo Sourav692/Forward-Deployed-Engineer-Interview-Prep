@@ -2,8 +2,6 @@
 
 *Expressing the agent loop as a graph gives native message shapes and free checkpointing, but the budget and the safety policy are still code the framework will never write.*
 
-◷ 7 min
-
 The framework version of an agent is not a different algorithm. It is the same think, act and observe loop taught in [T3.1 The tool-calling loop](/learn/agentic-systems/the-tool-calling-loop), mapped onto two nodes and one conditional edge, using the primitives from [Modelling Workflows as State Graphs](/learn/llm-and-retrieval/langchain-and-langgraph/modelling-workflows-as-state-graphs).
 
 **Objectives:**

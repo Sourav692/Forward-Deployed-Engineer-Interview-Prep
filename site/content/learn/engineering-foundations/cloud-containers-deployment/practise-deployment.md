@@ -2,8 +2,6 @@
 
 *A deployment answer that lists every tool still fails if it never says how a bad release is caught and undone.*
 
-◷ 7 min
-
 Interviewers rarely ask "what is Kubernetes?"; they ask how the system just designed would ship and run. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

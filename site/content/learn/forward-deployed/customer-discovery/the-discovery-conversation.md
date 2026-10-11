@@ -2,8 +2,6 @@
 
 *Asking questions first feels slow in a 45-minute round, but an architecture drawn before the user and outcome are known solves a problem nobody confirmed.*
 
-◷ 5 min
-
 A vague prompt is not an invitation to draw a RAG diagram. It is a test of whether the candidate can turn an ambiguous ask into a user, an outcome and a set of constraints before proposing anything.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Clean layers and a single codebase keep a service easy to change, while every extra service or home-built component adds work that the customer never asked for.*
 
-◷ 5 min
-
 Most AI backends do not need microservices or home-grown infrastructure. Give each layer one job, create shared clients once, and spend engineering time only on what is specific to the customer; [Keep the Request Path Free](/learn/engineering-foundations/apis-and-backend/keep-the-request-path-free) covers what runs where at request time.
 
 **Objectives:**

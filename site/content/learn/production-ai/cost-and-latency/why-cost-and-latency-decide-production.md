@@ -2,8 +2,6 @@
 
 *A demo can afford to ignore spend and speed, but a production rollout that ignores them gets cancelled even when the answers are good.*
 
-◷ 5 min
-
 Most GenAI pilots that fail in production do not fail on quality. They fail because the bill and the wait grew faster than anyone planned, so measure the whole workflow and remove its largest bottleneck before touching the model.
 
 **Objectives:**

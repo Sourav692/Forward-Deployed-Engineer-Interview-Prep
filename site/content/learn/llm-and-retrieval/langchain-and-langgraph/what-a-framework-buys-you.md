@@ -2,8 +2,6 @@
 
 *A framework writes the plumbing, but every layer it hides is a layer nobody can see when the hot path is slow or wrong.*
 
-◷ 6 min
-
 "Everyone uses it" is not a reason to adopt LangChain or LangGraph. Name what the framework adds, name what stays application code, and decide per pipeline whether the trade is worth it.
 
 **Objectives:**

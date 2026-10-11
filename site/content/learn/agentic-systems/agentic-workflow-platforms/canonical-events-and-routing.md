@@ -2,8 +2,6 @@
 
 *Every channel wants its own logic, but letting that logic travel past the first layer makes every later component learn every channel forever.*
 
-◷ 6 min
-
 Channel handling is not a feature to spread through the system; it is a translation to finish at the edge. Normalise each payload into one event, then choose exactly one workflow with two independent checks, building on the layers named in [Why Workflow Automation Is a Trust Problem](/learn/agentic-systems/agentic-workflow-platforms/why-workflow-automation-is-a-trust-problem).
 
 **Objectives:**

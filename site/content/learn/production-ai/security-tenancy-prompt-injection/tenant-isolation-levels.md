@@ -2,8 +2,6 @@
 
 *Stronger isolation means fewer shared resources and lower leak risk, and it also means more deployments to build, run and pay for.*
 
-◷ 4 min
-
 Every multi-tenant platform is asked how strongly tenants are isolated, and "we filter by tenant id" is not an answer. Pick a level, make the data layer enforce it, and know how a regulated customer moves up.
 
 **Objectives:**

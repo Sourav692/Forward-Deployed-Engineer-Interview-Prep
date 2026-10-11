@@ -2,8 +2,6 @@
 
 *More meetings feel like more alignment, but coupled teams stay aligned through clear ownership, a tiered cadence and interfaces, not through volume of contact.*
 
-◷ 5 min
-
 The hard part of a cross-team AI platform is rarely the technology; it is aligning teams with different priorities and tightly coupled dependencies. Naming that first, then showing three mechanisms that address it, is what separates a senior answer from "we had a lot of syncs".
 
 **Objectives:**

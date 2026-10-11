@@ -2,8 +2,6 @@
 
 *A reading list is easy to start and hard to finish, so this material is built as a sequence where each lesson assumes the one before.*
 
-◷ 4 min
-
 A handbook is not a reading list. Learn the three principles and the four levels first. Then [choose your path](/start): it marks which modules matter for your background and interview date.
 
 **Objectives:**

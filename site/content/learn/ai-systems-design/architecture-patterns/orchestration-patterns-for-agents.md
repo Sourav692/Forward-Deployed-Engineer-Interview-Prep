@@ -2,8 +2,6 @@
 
 *Fixed control flow is cheap and predictable, while model-driven control flow adapts at the price of variable cost and harder failures.*
 
-◷ 5 min
-
 Naming a pattern is not the senior signal; naming it together with the number that proves it is working is. Learn the eight orchestration patterns as answers to a shape of work, each paired with one measurement, before the context, tool and reliability patterns in the lessons that follow.
 
 **Objectives:**

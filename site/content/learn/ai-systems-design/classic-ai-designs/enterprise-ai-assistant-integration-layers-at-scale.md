@@ -2,8 +2,6 @@
 
 *Every integration method the model can see costs prompt space and selection accuracy, while every method it cannot see needs code that already knows what to call.*
 
-◷ 9 min
-
 REST, function calling, MCP and agent frameworks are not rival choices. Treat them as four layers of one stack, and use the [twelve-part framework](/learn/ai-systems-design/design-framework/the-twelve-part-design-framework) to place each one.
 
 **Objectives:**

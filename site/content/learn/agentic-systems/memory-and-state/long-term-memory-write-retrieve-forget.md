@@ -2,8 +2,6 @@
 
 *A stored fact can help a later answer or quietly contradict it, so long-term memory is won or lost when it is written, not when it is searched.*
 
-◷ 11 min
-
 Most teams start long-term memory at the vector index; start at the write policy instead. This lesson follows a fact through its life, written, read and eventually forgotten, using the memory kinds from [Types of Memory](/learn/agentic-systems/memory-and-state/types-of-memory).
 
 **Objectives:**

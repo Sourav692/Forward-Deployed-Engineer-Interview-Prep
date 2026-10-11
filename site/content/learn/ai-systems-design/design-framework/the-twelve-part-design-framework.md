@@ -2,8 +2,6 @@
 
 *Covering every part of a design proves structure, but covering them evenly spends time on boxes that do not matter.*
 
-◷ 7 min
-
 A design round is not a drawing exercise; it is a sequence of questions the interviewer asks silently. Learn the twelve questions in order, then answer the first four before drawing anything, because they decide every later choice.
 
 **Objectives:**

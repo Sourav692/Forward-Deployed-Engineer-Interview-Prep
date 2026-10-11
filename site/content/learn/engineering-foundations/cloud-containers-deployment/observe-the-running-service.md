@@ -2,8 +2,6 @@
 
 *Logs and metrics must capture enough to explain every slow or wrong answer without storing the private data inside the prompts.*
 
-◷ 5 min
-
 A running process is not proof of a healthy service. Log the structure of every request, measure quality and cost beside latency, and probe the dependencies the service cannot work without.
 
 **Objectives:**

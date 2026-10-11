@@ -2,8 +2,6 @@
 
 *Strict schemas reject some requests a lenient API would accept, but every bad request stopped at the door is a model call nobody pays for.*
 
-◷ 4 min
-
 Validation is not politeness; it is the cheapest cost control an LLM API has. Check the shape and size of every request before it reaches the model, and promise clients one response shape, building on the `models/schemas` layer from [Structure the Service and Decide What to Build](/learn/engineering-foundations/apis-and-backend/structure-the-service-and-decide-what-to-build).
 
 **Objectives:**

@@ -5,12 +5,15 @@
  * Fails when: the module table in paths.ts drifts from curriculum.ts; a path flags an
  * unknown slug or leaves a module unflagged; a module with no lessons yet (coming soon
  * or on hold) is required, recommended or optional instead of `later` or `skip`; a
- * path's `estHours` drifts from its required and recommended modules; a start module
+ * path's `estHours` drifts from its required and recommended modules' study time
+ * (lesson reading plus practice, `studyTime`, ENH-22); a start module
  * is not required and published; a variant points at a missing base path; a diagnostic
  * option names an unknown path or module; or scoring fails to return a base path for
  * the all-first, all-last or any single-question answer set.
  */
+import { readFileSync } from 'node:fs'
 import { MODULES, TRACKS } from '../src/lib/curriculum.ts'
+import { studyTime } from '../src/lib/study-time.ts'
 import {
   BASE_PATHS,
   DIAGNOSTIC,
@@ -22,6 +25,11 @@ import {
   getPathById,
   scoreDiagnostic,
 } from '../src/lib/paths.ts'
+
+/** Lesson slug -> reading minutes, from the Learn sync manifest (`npm run sync` first). */
+const lessonMinutes: Record<string, number> = Object.fromEntries(
+  (JSON.parse(readFileSync(new URL('../content/learn/manifest.json', import.meta.url), 'utf8')).lessons as { slug: string; estMinutes?: number }[]).map((l) => [l.slug, l.estMinutes ?? 0]),
+)
 
 const errors: string[] = []
 const fail = (msg: string) => errors.push(msg)
@@ -60,7 +68,7 @@ for (const p of PATHS) {
   }
 
   const minutes = MODULES.filter((m) => p.moduleFlags[m.slug] === 'required' || p.moduleFlags[m.slug] === 'recommended').reduce(
-    (s, m) => s + m.estMinutes,
+    (s, m) => s + studyTime(m, lessonMinutes).total,
     0,
   )
   const hours = Math.round(minutes / 60)

@@ -2,8 +2,6 @@
 
 *Every extra search round makes the answer better grounded and the run slower and dearer, and the web pages that ground it are also the attack surface.*
 
-◷ 25 min
-
 A research agent does not fail because it is hard to call a model. It fails when an unbounded fan-out quietly spends the budget. It also fails when a fetched page reaches data it should never have seen. This page covers the group's prompts in one read for the day before. It pairs one worked whiteboard design with one deployed system and one mock prompt.
 
 | Case in the group | What it contributes here |

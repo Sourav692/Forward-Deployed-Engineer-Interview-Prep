@@ -2,8 +2,6 @@
 
 *More context gives the model more evidence to use, but every token competes for a fixed window and the middle of a long prompt is read least reliably.*
 
-◷ 5 min
-
 A bigger context window is not a licence to send everything. Budget the window, set randomness for the job, and cap the answer, because these three settings decide much of what the model does with the text it receives.
 
 **Objectives:**

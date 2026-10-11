@@ -2,8 +2,6 @@
 
 *Reviewing every advisor message catches more risk, but every false positive lands on an analyst and every embedded instruction is an attack.*
 
-◷ 6 min
-
 Compliance review is not a classification task to hand to a model. Frame it as regulated decision support with an audit trail, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
 **Objectives:**

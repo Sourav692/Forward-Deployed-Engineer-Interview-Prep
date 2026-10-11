@@ -13,6 +13,7 @@ import {
   inlineHtml,
   learnHref,
   moduleInput,
+  moduleTime,
   moduleParams,
   readingList,
   relatedModules,
@@ -69,6 +70,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
 
   const section = getSection(mod)
   const list = readingList(mod)
+  const time = moduleTime(mod)
   const input = moduleInput(mod)
   const checkpoint = getCheckpoint(mod.slug)
   const related = relatedModules(mod)
@@ -105,7 +107,8 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
             <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">{mod.title}</h1>
             <p className="mt-3 text-lg text-muted">{capitalise(mod.objective)}.</p>
             <p className="mt-2 text-sm text-muted">
-              About {formatMinutes(mod.estMinutes)}
+              About {formatMinutes(time.total)}
+              {time.practice > 0 && `: ${formatMinutes(time.reading)} reading + ${formatMinutes(time.practice)} practice`}
               {list.main.length > 0 && ` · ${list.main.length} ${list.main.length === 1 ? 'lesson' : 'lessons'}`}
             </p>
           </header>

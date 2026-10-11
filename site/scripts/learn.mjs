@@ -24,7 +24,9 @@
  *  - the `## References` section loses its repository source lists
  *    (`stripRepoReferences`); the repository copy keeps them;
  *  - raw `<script>`, `<iframe>` and `<style>` elements and `on*=` attributes are
- *    removed outside code (defence in depth: `marked` passes raw HTML through).
+ *    removed outside code (defence in depth: `marked` passes raw HTML through);
+ *  - a hand-typed "◷ N min" line is dropped: the page shows the computed reading
+ *    time (`readingMinutes` in editorial.ts), and the two disagreed (ENH-22).
  * Mermaid and every other fenced block are copied through untouched.
  *
  * Lesson slices: a lesson with `sections` publishes only some `## ` sections of its
@@ -46,7 +48,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { LESSONS, MODULES, RENAMED, TRACKS } from '../src/lib/curriculum.ts'
 import { curriculumHref } from '../src/lib/curriculum-href.ts'
-import { WORDS_PER_MINUTE } from '../src/lib/editorial.ts'
+import { readingMinutes } from '../src/lib/editorial.ts'
 
 /**
  * When each source last changed, as `YYYY-MM-DD` (audit check PQ-15), from one
@@ -525,8 +527,8 @@ function rewriteLinks(markdown, sourceFile, ctx) {
 
 // ------------------------------------------------------------------ entry point
 
-const wordCount = (markdown) => (markdown.replace(/[#>*_`|[\]()-]/g, ' ').match(/\S+/g) ?? []).length
-const minutesFor = (markdown) => Math.max(1, Math.round(wordCount(markdown) / WORDS_PER_MINUTE))
+/** A source's own "◷ 5 min" line, which the computed reading time replaces. */
+export const stripClockLine = (markdown) => markdown.replace(/^◷ \d+ min[ \t]*\n(?:[ \t]*\n)?/gm, '')
 
 /** Fails if a lesson key present in the previous manifest has gone without a RENAMED entry. */
 export function slugGuard(previous, current) {
@@ -546,9 +548,10 @@ export function slugGuard(previous, current) {
 
 /**
  * `liveUrls` maps absolute source paths (files and folders) to the URL of the page
- * that already publishes them, filled in by the earlier sync steps.
+ * that already publishes them, filled in by the earlier sync steps; `liveMinutes` maps
+ * such a page's URL to its reading time, so a live lesson lists the page's time.
  */
-export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls }) {
+export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveMinutes }) {
   const learnDir = join(outDir, 'learn')
   const previous = await readFile(join(snapshotDir, 'manifest.json'), 'utf8')
     .then((raw) => JSON.parse(raw).lessons)
@@ -627,18 +630,18 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls }) {
       const href = liveUrls.get(abs.replace(/[\\/]$/, ''))
       if (!href) throw new Error(`${lesson.slug}: live lesson source ${lesson.source} matches no published page`)
       const main = mainFileOf(abs)
-      entry.estMinutes = main ? minutesFor(await readFile(main, 'utf8')) : 1
+      entry.estMinutes = liveMinutes?.get(href.split('#')[0]) ?? (main ? readingMinutes(await readFile(main, 'utf8')) : 1)
       entry.href = href
       manifest.push(entry)
       continue
     }
-    let body = stripRepoReferences(normaliseHeadings(source, entry.title))
+    let body = stripRepoReferences(normaliseHeadings(stripClockLine(source), entry.title))
     body = unlinkRepoLinks(rewriteLinks(body, md, { ...ctx, self: lesson.sections ? slice : null }))
     body = sanitise(body)
     const out = join(learnDir, mod.track, mod.slug, `${lesson.slug}.md`)
     await mkdir(dirname(out), { recursive: true })
     await writeFile(out, body.endsWith('\n') ? body : `${body}\n`)
-    entry.estMinutes = minutesFor(body)
+    entry.estMinutes = readingMinutes(body)
     entry.href = lessonHref(lesson)
     const updated = updatedOf(md)
     if (updated) entry.updated = updated

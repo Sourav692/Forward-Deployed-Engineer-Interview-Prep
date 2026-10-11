@@ -2,8 +2,6 @@
 
 *Every stage slows a workflow's path to acting alone, but each one removes a doubt that would otherwise be settled by a real customer.*
 
-◷ 6 min
-
 A workflow does not earn trust by being written carefully; it earns it by answering one question at a time. Move it through four gates, each promoted by someone other than its author, with the per-step guardrail from [Approvals and Spend Caps](/learn/agentic-systems/agentic-workflow-platforms/approvals-and-spend-caps) still applying at every stage.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *An ANN index is built for fast reads, not frequent edits, so keeping it current, affordable, and consistent as documents change is most of the operating work.*
 
-◷ 6 min
-
 Most vector index failures in production raise no error; answers just get worse. This lesson covers how to keep an index fresh as documents change, what breaks as it grows, and which silent failures to watch for, after the store choice in [Choosing a Database and Vector Store](/learn/llm-and-retrieval/chunking-and-indexing/choosing-a-database-and-vector-store).
 
 **Objectives:**

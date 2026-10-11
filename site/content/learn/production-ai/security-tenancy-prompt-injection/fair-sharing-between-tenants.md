@@ -2,8 +2,6 @@
 
 *Serving requests first come, first served is simple and keeps the hardware busy, but it lets one tenant's burst make everyone else wait.*
 
-◷ 6 min
-
 A rate limit does not make a shared platform fair; it only stops a tenant exceeding its own budget. Add a fair queue for ordering under load, then spend caps, timeouts and per-tenant cost attribution so one tenant's runaway work cannot starve the rest.
 
 **Objectives:**
