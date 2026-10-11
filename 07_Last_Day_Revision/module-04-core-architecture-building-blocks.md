@@ -1,6 +1,6 @@
 # Module 4 — Core Architecture Building Blocks
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -213,7 +213,7 @@ A cache or queue is added only if repetition, freshness, task duration, or traff
 
 ---
 
-## ONE-PAGE MEMORY CARD — Core Architecture Building Blocks
+## One-Page Memory Card: Core Architecture Building Blocks
 
 **Core question:** Which responsibility does this requirement create, and what component should own it?
 

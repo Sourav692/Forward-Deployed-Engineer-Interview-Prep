@@ -1,6 +1,6 @@
 # Module 15 — Observability & Production Operations
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -170,7 +170,7 @@ Correlate delayed task outcomes, reopened tickets, human overrides, and version 
 
 ---
 
-## ONE-PAGE MEMORY CARD — Observability & Production Operations
+## One-Page Memory Card: Observability & Production Operations
 
 **Core question:** Can we explain the system's behavior and act on customer-impacting problems?
 

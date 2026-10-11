@@ -1,6 +1,6 @@
 # Module 1 — FDE Problem Decomposition
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -280,7 +280,7 @@ Open questions / assumptions: _______________
 
 ---
 
-## ONE-PAGE MEMORY CARD — FDE Problem Decomposition
+## One-Page Memory Card: FDE Problem Decomposition
 
 **Core question:** How do I turn a vague customer request into clear requirements?
 

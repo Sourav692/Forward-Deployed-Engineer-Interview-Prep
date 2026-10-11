@@ -1,6 +1,6 @@
 # Module 7 — Tools, Actions & Enterprise Integration
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -200,7 +200,7 @@ Tool layer    = Controlled enterprise operations
 
 ---
 
-## ONE-PAGE MEMORY CARD — Tools, Actions & Enterprise Integration
+## One-Page Memory Card: Tools, Actions & Enterprise Integration
 
 **Core question:** How do we execute enterprise operations safely and establish their actual outcome?
 

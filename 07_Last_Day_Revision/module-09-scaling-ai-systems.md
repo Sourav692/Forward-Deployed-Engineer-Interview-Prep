@@ -1,6 +1,6 @@
 # Module 9 — Scaling AI Systems
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -203,7 +203,7 @@ User/tenant entry limits belong at the application boundary; model-call limits b
 
 ---
 
-## ONE-PAGE MEMORY CARD — Scaling AI Systems
+## One-Page Memory Card: Scaling AI Systems
 
 **Core question:** How do we serve the workload within capacity while protecting tasks and tenants?
 

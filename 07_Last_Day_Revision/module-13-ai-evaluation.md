@@ -1,6 +1,6 @@
 # Module 13 — AI Evaluation
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -165,7 +165,7 @@ Compare candidates on the same task set with quality, policy, latency, and cost 
 
 ---
 
-## ONE-PAGE MEMORY CARD — AI Evaluation
+## One-Page Memory Card: AI Evaluation
 
 **Core question:** Did the system complete the right task, using permitted operations and acceptable evidence, within operating limits?
 

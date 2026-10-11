@@ -1,6 +1,6 @@
 # Module 2 — Functional Requirements
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -289,7 +289,7 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
 
 ---
 
-## ONE-PAGE MEMORY CARD — Functional Requirements
+## One-Page Memory Card: Functional Requirements
 
 **Core question:** What must the system DO, based on the customer needs discovered in Module 1?
 

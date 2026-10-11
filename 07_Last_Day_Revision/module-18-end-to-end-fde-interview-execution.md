@@ -1,6 +1,6 @@
 # Module 18 — End-to-End FDE Interview Execution
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -214,7 +214,7 @@ How we prove success and operate the release?
 
 ---
 
-## ONE-PAGE MEMORY CARD — End-to-End FDE Interview Execution
+## One-Page Memory Card: End-to-End FDE Interview Execution
 
 **Core question:** Can I take a vague customer prompt through a justified, testable, operable design?
 

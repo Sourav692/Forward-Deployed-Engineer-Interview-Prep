@@ -1,6 +1,6 @@
 # Module 16 — Security & Enterprise Multi-Tenancy
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -195,7 +195,7 @@ Application-entry checks establish identity and tenant context. Model-call contr
 
 ---
 
-## ONE-PAGE MEMORY CARD — Security & Enterprise Multi-Tenancy
+## One-Page Memory Card: Security & Enterprise Multi-Tenancy
 
 **Core question:** Who may access which data and operations, and how do those boundaries survive every stage of the task?
 

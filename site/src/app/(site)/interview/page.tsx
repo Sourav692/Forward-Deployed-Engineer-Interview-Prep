@@ -3,8 +3,8 @@ import { AreaHeader, AreaSection, LinkList, SuggestTopic } from '@/components/ar
 import { curriculumModules } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { LAST_DAY, LAST_DAY_GUIDES, MODES, REVIEWS } from '@/lib/editorial'
-import { INTERVIEW_HUBS } from '@/lib/curriculum'
-import { hubHref } from '@/lib/curriculum-href'
+import { INTERVIEW_HUBS, LESSONS } from '@/lib/curriculum'
+import { curriculumHref, hubHref } from '@/lib/curriculum-href'
 import { INTERVIEW_TRACK } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
@@ -13,7 +13,7 @@ import { JsonLd } from '@/components/JsonLd'
  * /interview: the interview prep area (FE-11). It is the home of the interview
  * practice track (worksheets, mock interviews, final week), whose module and lesson
  * pages live at /interview/<module>/<lesson> rather than under /learn, and it links
- * to the final-week review (/fde-last-day-prep) and the five topic hubs
+ * to the final week (/interview/final-week, ENH-18) and the five topic hubs
  * (/interview/hubs/<hub>). Company-specific packs have their own area at /company-prep.
  */
 
@@ -26,6 +26,14 @@ export const metadata: Metadata = pageMetadata({
 
 /** Company loops is a company-prep module; it is surfaced under Company Prep, not here. */
 const COMPANY_MODULE = 'company-loops'
+const FINAL_WEEK = 'final-week'
+
+/** The final week's two guides are its first lessons; found by source file. */
+const guideHref = (source: string) => {
+  const lesson = LESSONS.find((l) => l.source === `07_Last_Day_Revision/${source}`)
+  if (!lesson) throw new Error(`No final-week lesson for 07_Last_Day_Revision/${source}`)
+  return curriculumHref(INTERVIEW_TRACK, FINAL_WEEK, lesson.slug)
+}
 
 export default function InterviewPage() {
   // On-hold modules stay off the hub (audit check FV-03); their own pages still exist.
@@ -58,12 +66,10 @@ export default function InterviewPage() {
       <AreaSection
         id="final-week"
         title={LAST_DAY.title}
-        description={`The final-week review holds ${REVIEWS.length} condensed reviews and a searchable trigger-to-concept reference. Start with one of the two guides below, or open the review. ${MODES.revision.summary}`}
-        action={{ label: 'Open the final-week review', href: LAST_DAY.href }}
+        description={`The final week holds ${REVIEWS.length} condensed reviews, each with a one-page recall card, and a trigger-to-concept cheat sheet. Start with one of the two guides below. ${MODES.revision.summary}`}
+        action={{ label: 'Open the final week', href: curriculumHref(INTERVIEW_TRACK, FINAL_WEEK) }}
       >
-        <LinkList
-          items={LAST_DAY_GUIDES.map((g) => ({ href: `${LAST_DAY.href}/${g.id}`, title: g.title, note: g.blurb }))}
-        />
+        <LinkList items={LAST_DAY_GUIDES.map((g) => ({ href: guideHref(g.source), title: g.title, note: g.blurb }))} />
       </AreaSection>
 
       <AreaSection

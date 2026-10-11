@@ -1,6 +1,6 @@
 # Module 8 — Guardrails, Policy & Human Approval
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -190,7 +190,7 @@ Input → Data/tool scopes → Policy → Approval → Executor
 
 ---
 
-## ONE-PAGE MEMORY CARD — Guardrails, Policy & Human Approval
+## One-Page Memory Card: Guardrails, Policy & Human Approval
 
 **Core question:** Who has authority to permit an action, and what happens when that authority or its checks are unavailable?
 

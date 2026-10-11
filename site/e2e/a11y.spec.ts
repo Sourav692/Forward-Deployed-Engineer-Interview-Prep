@@ -30,6 +30,7 @@ const PAGES: [string, string][] = [
   ['story bank', '/practice/story-bank'],
   ['case study', CASE_STUDY],
   ['last-day prep', '/fde-last-day-prep'],
+  ['final-week review', '/interview/final-week/module-05-rag-and-enterprise-data'],
   ['about', '/about'],
   ['changelog', '/changelog'],
   ['404', '/this-page-does-not-exist'],

@@ -1,6 +1,6 @@
 # Module 5 — RAG & Enterprise Data
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -238,7 +238,7 @@ RAG supplies evidence; it does not authorize or execute the refund.
 
 ---
 
-## ONE-PAGE MEMORY CARD — RAG & Enterprise Data
+## One-Page Memory Card: RAG & Enterprise Data
 
 **Core question:** How do we get the right authorized evidence into the answer and verify that it was used correctly?
 

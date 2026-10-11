@@ -2914,11 +2914,12 @@
       "title": "Reliability and Failure Handling",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-12-reliability-and-failure-handling.md",
       "estMinutes": 8,
-      "href": "/fde-last-day-prep/module-12-reliability-and-failure-handling/concise-interview-module.html"
+      "href": "/interview/final-week/module-12-reliability-and-failure-handling",
+      "updated": "2026-10-11"
     },
     {
       "slug": "internal-knowledge-assistant",
@@ -3251,220 +3252,240 @@
       "title": "Interview Learning Roadmap",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/Roadmap.md",
       "estMinutes": 22,
-      "href": "/fde-last-day-prep/roadmap"
+      "href": "/interview/final-week/roadmap",
+      "updated": "2026-10-04"
     },
     {
       "slug": "rapid-revision-guide",
       "title": "Rapid Revision Guide",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/Rapid_Revision_Guide.md",
       "estMinutes": 13,
-      "href": "/fde-last-day-prep/rapid-revision"
+      "href": "/interview/final-week/rapid-revision-guide",
+      "updated": "2026-10-04"
     },
     {
       "slug": "trigger-to-concept-cheat-sheet",
       "title": "Trigger-to-Concept Cheat Sheet",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/trigger-to-concept-cheat-sheet.md",
       "estMinutes": 12,
-      "href": "/fde-last-day-prep/trigger-to-concept-cheat-sheet/trigger-to-concept-cheat-sheet.html"
+      "href": "/interview/final-week/trigger-to-concept-cheat-sheet",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-01-fde-problem-decomposition",
       "title": "FDE Problem Decomposition",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-01-fde-problem-decomposition.md",
       "estMinutes": 12,
-      "href": "/fde-last-day-prep/module-01-fde-problem-decomposition/concise-interview-module.html"
+      "href": "/interview/final-week/module-01-fde-problem-decomposition",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-02-functional-requirements",
       "title": "Functional Requirements",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-02-functional-requirements.md",
       "estMinutes": 13,
-      "href": "/fde-last-day-prep/module-02-functional-requirements/concise-interview-module.html"
+      "href": "/interview/final-week/module-02-functional-requirements",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-03-non-functional-requirements",
       "title": "Non-Functional Requirements",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-03-non-functional-requirements.md",
       "estMinutes": 10,
-      "href": "/fde-last-day-prep/module-03-non-functional-requirements/concise-interview-module.html"
+      "href": "/interview/final-week/module-03-non-functional-requirements",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-04-core-architecture-building-blocks",
       "title": "Core Architecture Building Blocks",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-04-core-architecture-building-blocks.md",
-      "estMinutes": 10,
-      "href": "/fde-last-day-prep/module-04-core-architecture-building-blocks/concise-interview-module.html"
+      "estMinutes": 9,
+      "href": "/interview/final-week/module-04-core-architecture-building-blocks",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-05-rag-and-enterprise-data",
       "title": "RAG and Enterprise Data",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-05-rag-and-enterprise-data.md",
       "estMinutes": 11,
-      "href": "/fde-last-day-prep/module-05-rag-and-enterprise-data/concise-interview-module.html"
+      "href": "/interview/final-week/module-05-rag-and-enterprise-data",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-06-agentic-architecture",
       "title": "Agentic Architecture",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-06-agentic-architecture.md",
       "estMinutes": 12,
-      "href": "/fde-last-day-prep/module-06-agentic-architecture/concise-interview-module.html"
+      "href": "/interview/final-week/module-06-agentic-architecture",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-07-tools-actions-and-enterprise-integration",
       "title": "Tools, Actions and Enterprise Integration",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-07-tools-actions-and-enterprise-integration.md",
       "estMinutes": 9,
-      "href": "/fde-last-day-prep/module-07-tools-actions-and-enterprise-integration/concise-interview-module.html"
+      "href": "/interview/final-week/module-07-tools-actions-and-enterprise-integration",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-08-guardrails-policy-and-human-approval",
       "title": "Guardrails, Policy and Human Approval",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-08-guardrails-policy-and-human-approval.md",
       "estMinutes": 9,
-      "href": "/fde-last-day-prep/module-08-guardrails-policy-and-human-approval/concise-interview-module.html"
+      "href": "/interview/final-week/module-08-guardrails-policy-and-human-approval",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-09-scaling-ai-systems",
       "title": "Scaling AI Systems",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-09-scaling-ai-systems.md",
       "estMinutes": 9,
-      "href": "/fde-last-day-prep/module-09-scaling-ai-systems/concise-interview-module.html"
+      "href": "/interview/final-week/module-09-scaling-ai-systems",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-10-latency-optimization",
       "title": "Latency Optimisation",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-10-latency-optimization.md",
       "estMinutes": 9,
-      "href": "/fde-last-day-prep/module-10-latency-optimization/concise-interview-module.html"
+      "href": "/interview/final-week/module-10-latency-optimization",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-11-cost-optimization",
       "title": "Cost Optimisation",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-11-cost-optimization.md",
       "estMinutes": 10,
-      "href": "/fde-last-day-prep/module-11-cost-optimization/concise-interview-module.html"
+      "href": "/interview/final-week/module-11-cost-optimization",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-13-ai-evaluation",
       "title": "AI Evaluation",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-13-ai-evaluation.md",
       "estMinutes": 8,
-      "href": "/fde-last-day-prep/module-13-ai-evaluation/concise-interview-module.html"
+      "href": "/interview/final-week/module-13-ai-evaluation",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-14-release-and-change-management",
       "title": "Release and Change Management",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-14-release-and-change-management.md",
       "estMinutes": 8,
-      "href": "/fde-last-day-prep/module-14-release-and-change-management/concise-interview-module.html"
+      "href": "/interview/final-week/module-14-release-and-change-management",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-15-observability-and-production-operations",
       "title": "Observability and Production Operations",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-15-observability-and-production-operations.md",
-      "estMinutes": 9,
-      "href": "/fde-last-day-prep/module-15-observability-and-production-operations/concise-interview-module.html"
+      "estMinutes": 8,
+      "href": "/interview/final-week/module-15-observability-and-production-operations",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-16-security-and-enterprise-multi-tenancy",
       "title": "Security and Enterprise Multi-Tenancy",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-16-security-and-enterprise-multi-tenancy.md",
       "estMinutes": 10,
-      "href": "/fde-last-day-prep/module-16-security-and-enterprise-multi-tenancy/concise-interview-module.html"
+      "href": "/interview/final-week/module-16-security-and-enterprise-multi-tenancy",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-17-trade-off-thinking",
       "title": "Trade-Off Thinking",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-17-trade-off-thinking.md",
       "estMinutes": 10,
-      "href": "/fde-last-day-prep/module-17-trade-off-thinking/concise-interview-module.html"
+      "href": "/interview/final-week/module-17-trade-off-thinking",
+      "updated": "2026-10-11"
     },
     {
       "slug": "module-18-end-to-end-fde-interview-execution",
       "title": "End-to-End FDE Interview Execution",
       "track": "interview-practice",
       "module": "final-week",
-      "kind": "live",
+      "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-18-end-to-end-fde-interview-execution.md",
       "estMinutes": 10,
-      "href": "/fde-last-day-prep/module-18-end-to-end-fde-interview-execution/concise-interview-module.html"
+      "href": "/interview/final-week/module-18-end-to-end-fde-interview-execution",
+      "updated": "2026-10-11"
     },
     {
       "slug": "choose-a-capstone-project",

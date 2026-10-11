@@ -1,6 +1,6 @@
 # Module 6 — Agentic Architecture
 
-## CONCISE INTERVIEW MODULE
+## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
@@ -249,7 +249,7 @@ Neither gateway grants unrestricted agent access to enterprise tools.
 
 ---
 
-## ONE-PAGE MEMORY CARD — Agentic Architecture
+## One-Page Memory Card: Agentic Architecture
 
 **Core question:** Where do we need flexible reasoning, and how do we keep execution controlled, recoverable, and useful?
 
