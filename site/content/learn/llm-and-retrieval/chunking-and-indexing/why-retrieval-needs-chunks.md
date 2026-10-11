@@ -2,8 +2,6 @@
 
 *Small chunks give a sharp search vector but starve the model of context, while large chunks give context but blur the search, so chunking is a dial to tune, not a default to copy.*
 
-◷ 6 min
-
 A retriever can only return what a single chunk contains, so chunking decides what the system can possibly find. This lesson explains why documents are split, what goes wrong at each end of the size dial, and the few rules that matter more than the exact number. It assumes the pipeline from [T2.2 RAG from first principles](/learn/llm-and-retrieval/rag-from-first-principles).
 
 **Objectives:**

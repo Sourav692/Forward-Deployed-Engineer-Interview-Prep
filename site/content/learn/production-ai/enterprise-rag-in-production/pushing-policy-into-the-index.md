@@ -2,8 +2,6 @@
 
 *The vector store's filter makes retrieval cheap but can only express part of the policy, so a second check after retrieval has to make it correct.*
 
-◷ 7 min
-
 A filter inside the vector search is not the access control; it is an optimisation that is allowed to overshoot. Split the seven rules from [The Seven Access Rules](/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules) by what the store can express, and treat the post-retrieval check as the authority.
 
 **Objectives:**

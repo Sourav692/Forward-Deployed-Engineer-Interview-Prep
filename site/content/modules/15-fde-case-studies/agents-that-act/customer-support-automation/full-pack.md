@@ -2,8 +2,6 @@
 
 *Resolve the routine ticket fast enough to matter, without letting a fluent model take an action or make a promise it was never authorised to make.*
 
-◷ 40 min
-
 The product is not a chatbot that answers everything. It is a routed service that must decide when to act, when to ask for approval, and when to stop. A fluent model is one input to that decision, never its authority. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group                                              | What it contributes here                                                               |

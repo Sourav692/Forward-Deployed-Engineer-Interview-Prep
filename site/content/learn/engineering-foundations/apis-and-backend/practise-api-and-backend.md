@@ -2,8 +2,6 @@
 
 *A backend answer that names FastAPI, Redis and SSE still fails if it never says what each piece protects against.*
 
-◷ 6 min
-
 Interviewers rarely ask what `Depends()` does; they ask you to design the API for an LLM feature and listen for where cost, failure and latency are handled. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

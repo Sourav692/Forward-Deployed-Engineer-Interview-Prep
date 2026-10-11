@@ -2,8 +2,6 @@
 
 *A single confident number sounds decisive, but an estimate others can check is a range with its assumptions and risks in plain view.*
 
-◷ 5 min
-
 Precision early in a project is usually invented. A trustworthy estimate is one another engineer can read, question and challenge, built from the scoped first release in [Shrinking to a First Release](/learn/forward-deployed/scoping-an-fde-project/shrinking-to-a-first-release).
 
 **Objectives:**

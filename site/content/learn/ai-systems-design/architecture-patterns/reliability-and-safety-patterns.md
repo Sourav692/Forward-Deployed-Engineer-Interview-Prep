@@ -2,8 +2,6 @@
 
 *An agent that degrades and refuses honestly gives up some capability, but it never trades correctness or security for an answer.*
 
-◷ 6 min
-
 In a multi-step agent run, partial failure is the normal operating condition, and prompt-level instructions cannot stop injection or exfiltration. Turn compounding failure into bounded, recoverable steps with reliability patterns, and enforce security with architecture rather than by asking the model to behave.
 
 **Objectives:**

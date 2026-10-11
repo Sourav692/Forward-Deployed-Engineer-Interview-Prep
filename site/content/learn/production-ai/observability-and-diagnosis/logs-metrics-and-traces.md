@@ -2,8 +2,6 @@
 
 *Each signal is cheap to add on its own, but only the three together say what happened, how often, and why.*
 
-◷ 6 min
-
 Observability is not one log file. A log answers "what happened to this request", a metric answers "how often does it happen", and a trace answers "why, step by step".
 
 **Objectives:**

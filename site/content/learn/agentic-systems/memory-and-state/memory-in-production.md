@@ -2,8 +2,6 @@
 
 *Memory is what makes an agent feel personal, and the same memory leaks, lingers, and fails an audit when isolation and deletion come last.*
 
-◷ 9 min
-
 Most memory incidents are not model failures; they are namespace and lifecycle bugs. Design isolation, deletion and audit into the memory store from day one, using the scopes from [Why Agents Need State](/learn/agentic-systems/memory-and-state/why-agents-need-state) and the write path from [Long-Term Memory: Write, Retrieve, and Forget](/learn/agentic-systems/memory-and-state/long-term-memory-write-retrieve-forget).
 
 **Objectives:**

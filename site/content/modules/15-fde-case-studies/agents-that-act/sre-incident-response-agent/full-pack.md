@@ -2,8 +2,6 @@
 
 *A write-capable agent under a 30-second latency ceiling: fast enough to matter mid-incident, never fast enough to skip the human.*
 
-◷ 29 min
-
 The hard part of this system is not correlating logs with deploys. It is that the agent depends on the same observability stack that is most likely to be degraded during the incident it is investigating. And it can propose changes to production while the people who would catch a wrong hypothesis are the busiest they will ever be. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group                                                           | What it contributes here                                                                                                       |

@@ -2,8 +2,6 @@
 
 *Automating more of the hiring funnel makes recruiters faster, while every decision the AI takes alone carries legal and ethical risk.*
 
-◷ 8 min
-
 A recruiting platform is an AI-assisted workflow, not an autonomous hiring system. Let the AI extract, match, rank and score, and keep a person in charge of every final decision.
 
 **Objectives:**

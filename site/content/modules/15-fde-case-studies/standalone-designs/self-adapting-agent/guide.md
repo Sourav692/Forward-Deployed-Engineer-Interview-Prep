@@ -2,8 +2,6 @@
 
 *An agent that adapts to new tasks without supervision needs the freedom to change its own behaviour, and every change it makes is a regression nobody reviewed.*
 
-◷ 26 min
-
 "Autonomously adapt" does not mean "retrain itself". Most adaptation belongs in cheap, reversible places, such as context, memory and procedures. Each change passes the same evaluation gate a human change would. This page is the standalone day-before pack for this case.
 
 | Case | What it contributes here |

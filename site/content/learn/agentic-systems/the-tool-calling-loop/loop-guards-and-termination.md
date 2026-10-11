@@ -2,8 +2,6 @@
 
 *A loop that is too tightly bounded gives up on solvable tasks, and one that is too loosely bounded spends money on unsolvable ones.*
 
-◷ 6 min
-
 "The model will figure out when it is done" is not a stopping rule. Give every run explicit budgets and a named ending for each way it can stop, building on the max-iteration guard from [The Tool-Calling Loop From Scratch](/learn/agentic-systems/the-tool-calling-loop/the-tool-calling-loop-from-scratch).
 
 **Objectives:**

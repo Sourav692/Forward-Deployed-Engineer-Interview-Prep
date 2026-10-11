@@ -2,8 +2,6 @@
 
 *A two-week delivery clock rewards speed, while every gate that can be ticked by whoever is in a hurry turns speed into unverified risk.*
 
-◷ 12 min
-
 Taking a customer from scoping doc to deployed agent in two weeks is an operating-model question, not a software architecture question. Design the pipeline so each gate is a decision enforced in code, signed by a named authority, and pace the round with [the six-step whiteboard clock](/learn/ai-systems-design/sixty-minute-whiteboard/the-six-step-whiteboard-clock).
 
 **Objectives:**

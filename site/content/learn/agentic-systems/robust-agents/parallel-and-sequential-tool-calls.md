@@ -2,8 +2,6 @@
 
 *Running independent calls at once cuts latency to the slowest call, but it also concentrates load on rate limits and makes failures harder to handle.*
 
-◷ 5 min
-
 Parallelism is a decision the system makes, not one the model makes alone. Fan out only independent reads, keep dependent steps and writes sequential, and route every branch through the executor from [Retries and Fallbacks](/learn/agentic-systems/robust-agents/retries-and-fallbacks).
 
 **Objectives:**

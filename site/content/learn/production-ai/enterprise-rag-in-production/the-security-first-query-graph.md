@@ -2,8 +2,6 @@
 
 *A pipeline that relies on developers remembering the order of checks is fragile, so the order is encoded in the graph's edges at the price of a stricter structure.*
 
-◷ 7 min
-
 The per-request pipeline is not a chain of helper calls but a state machine whose edges enforce security. Draw its nodes from memory, then learn how each failure degrades rather than crashes.
 
 **Objectives:**

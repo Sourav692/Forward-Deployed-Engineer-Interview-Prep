@@ -2,8 +2,6 @@
 
 *Saving every successful run as a reusable skill grows the library fast, and fills it with skills that worked exactly once unless a gate stands between success and trust.*
 
-◷ 4 min
-
 A skill is a learned procedure, the third of the [Four Learning Surfaces](/learn/production-ai/model-adaptation-and-serving/four-learning-surfaces). The whole design problem is the gate between "a run succeeded once" and "this is now a trusted skill", and the gate has to work in both directions.
 
 **Objectives:**

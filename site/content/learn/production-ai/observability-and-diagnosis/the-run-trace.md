@@ -2,8 +2,6 @@
 
 *A trace rich enough to replay any run is also rich enough to leak, so capture everything the three audiences need and redact the rest.*
 
-◷ 6 min
-
 A per-step trace is a debugging aid; a run trace is the system's record of what it did. Build one replayable record per request, on top of the signals from [Logs, Metrics, and Traces](/learn/production-ai/observability-and-diagnosis/logs-metrics-and-traces), and treat a run without one as a run that did not happen.
 
 **Objectives:**

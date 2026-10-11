@@ -2,8 +2,6 @@
 
 *Counting screens gives a quick estimate, but effort lives in the states, integrations and failure paths underneath them and in the work no demo shows.*
 
-◷ 5 min
-
 A page count is a poor proxy for effort; a small booking flow can be harder than a large content site. Once the goal and level of done are set, as in [Problem, Goal, and Definition of Done](/learn/forward-deployed/scoping-an-fde-project/problem-goal-and-definition-of-done), dig below the screens to find the real system.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Working faster can rescue one engagement, but two weeks is only repeatable when most of each stage already exists before the customer arrives.*
 
-◷ 7 min
-
 "Take a customer from scoping doc to deployed AI agent in under two weeks" is not a scheduling question. It asks for the assembly line that produces the agent, and speed must come out of reuse and hard gates, not out of corners cut under deadline.
 
 **Objectives:**

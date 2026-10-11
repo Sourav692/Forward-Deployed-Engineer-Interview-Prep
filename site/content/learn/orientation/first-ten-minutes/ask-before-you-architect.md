@@ -2,8 +2,6 @@
 
 *Drawing early looks decisive, but every unasked question is a design assumption that can cost weeks, so spend the opening minutes on five areas first.*
 
-◷ 5 min
-
 Interviewers are not testing whether a candidate can design a system; they are testing whether the candidate would spend three months building the wrong one. Question five areas before touching the whiteboard, then read [Let the Answers Change the Design](/learn/orientation/first-ten-minutes/let-the-answers-change-the-design) for how to use what you hear.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Most of what anyone can say about a system is knowledge rather than proof, and both are legitimate until one is presented as the other.*
 
-◷ 7 min
-
 Honesty about a project is not modesty. It is a set of written habits. They separate what has been shown running from what is merely known, and they put the limits first. Build them before scripting anything, so every format in [Three Formats for One Project](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) carries claims that survive one hard question.
 
 **Objectives:**

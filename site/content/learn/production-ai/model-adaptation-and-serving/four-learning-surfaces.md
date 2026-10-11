@@ -2,8 +2,6 @@
 
 *Retraining feels like the serious fix, but each step down from context to weights costs about ten times more to change and to undo.*
 
-◷ 5 min
-
 An agent that improves over months is not necessarily being retrained. Improvement can live in four places, so try the cheap ones first and reach for model weights last.
 
 **Objectives:**

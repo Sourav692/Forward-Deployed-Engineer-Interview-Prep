@@ -2,8 +2,6 @@
 
 *A business user must be able to switch on an automation that moves real money, without being able to read the code that decides whether it should.*
 
-◷ 30 min
-
 An agent platform is a safety and orchestration problem wearing an AI costume. The model can choose which value goes into an argument; everything that decides whether a destructive action runs is code. This page consolidates the group's prompts into one read for the day before. The group has one whiteboard script and one handbook module that teaches the same built project in prose.
 
 | Case in the group | What it contributes here |

@@ -2,8 +2,6 @@
 
 *An answer that names a framework sounds fluent, but only an answer that names the mechanism shows you have debugged a tool layer.*
 
-◷ 6 min
-
 Interviewers ask about tools to see whether a candidate blames the model or the interface. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

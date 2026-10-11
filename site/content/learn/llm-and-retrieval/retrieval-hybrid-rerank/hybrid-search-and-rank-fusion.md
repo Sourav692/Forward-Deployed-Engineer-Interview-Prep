@@ -2,8 +2,6 @@
 
 *Meaning-based search handles paraphrase and keyword search handles exact identifiers, and neither alone survives a corpus that mixes the two, so the real work is merging two lists whose scores mean different things.*
 
-◷ 8 min
-
 Dense search is not "the modern option" and keyword search "the legacy one". Run both, merge them by rank, and tune the merge on labelled queries, using the failure map in [Measuring and Diagnosing Retrieval](/learn/llm-and-retrieval/retrieval-hybrid-rerank/measuring-and-diagnosing-retrieval) to decide when this is the fix.
 
 **Objectives:**

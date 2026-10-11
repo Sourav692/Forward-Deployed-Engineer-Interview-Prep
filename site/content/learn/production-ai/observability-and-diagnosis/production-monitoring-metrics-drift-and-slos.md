@@ -2,8 +2,6 @@
 
 *A trace explains one run after the fact, while monitoring watches thousands of runs for the change that comes before an incident.*
 
-◷ 7 min
-
 Per-run traces do not answer "is the system getting worse?" Aggregate the fields from [The Run Trace](/learn/production-ai/observability-and-diagnosis/the-run-trace) into metrics, compare them to a baseline, and set targets that page someone before a customer notices.
 
 **Objectives:**

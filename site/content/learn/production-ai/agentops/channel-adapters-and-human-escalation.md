@@ -2,8 +2,6 @@
 
 *A separate agent per channel fits each channel perfectly and splits the security model four ways, so keep one core and let only the edge change.*
 
-◷ 5 min
-
 Chat, team messaging, email and a raw API are not the same problem in different clothes, but they do not need different systems. Keep one core pipeline behind a thin adapter, and make "escalate to a human" a concrete workflow rather than a message shown before the user gives up.
 
 **Objectives:**

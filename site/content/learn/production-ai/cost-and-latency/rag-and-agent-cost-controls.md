@@ -2,8 +2,6 @@
 
 *Every extra chunk, candidate and agent step buys a little quality at a measurable price, so bound each one by evidence rather than by habit.*
 
-◷ 7 min
-
 RAG cost is not a vector-database tuning problem, and agent cost is not a model problem. Both are pipelines, so control them stage by stage, using the drivers from [The Eight Cost and Latency Drivers](/learn/production-ai/cost-and-latency/the-eight-cost-and-latency-drivers).
 
 **Objectives:**

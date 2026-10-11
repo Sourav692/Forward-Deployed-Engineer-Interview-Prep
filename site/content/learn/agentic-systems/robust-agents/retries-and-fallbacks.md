@@ -2,8 +2,6 @@
 
 *Retrying absorbs a brief outage, but retrying the wrong failure, or retrying without a bound, turns a blip into a storm against a dependency that is already down.*
 
-◷ 8 min
-
 A failed tool call is not one kind of event. Classify the failure first, retry only what is transient and only a bounded number of times, then fall back or escalate; [The Confirmation Gate and Memoization](/learn/agentic-systems/robust-agents/the-confirmation-gate-and-memoization) covers the checks that run before any of this.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Launching to everyone at once is the fastest route to value, but a rollout without chosen first users and a tested way back turns the first real failure into an incident.*
 
-◷ 4 min
-
 Shipping is not the finish line; delivery is the result the system produces in real use. That result starts with a deliberate rollout and continues as a loop that turns production failures into planned work.
 
 **Objectives:**

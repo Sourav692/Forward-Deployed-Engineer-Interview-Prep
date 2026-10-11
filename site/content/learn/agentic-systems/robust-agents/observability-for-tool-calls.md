@@ -2,8 +2,6 @@
 
 *A record of every call costs storage and effort, but without one, "why did the agent close the wrong ticket?" has no answer except "the model decided".*
 
-◷ 6 min
-
 An agent whose actions cannot be explained is a liability, not a product. Log every tool call with its arguments, status and latency, one status per executor branch, so the trace is complete by construction; [The Eight Guard Checks](/learn/agentic-systems/robust-agents/the-eight-guard-checks) shows where this check sits among the others.
 
 **Objectives:**

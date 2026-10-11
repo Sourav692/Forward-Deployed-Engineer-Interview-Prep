@@ -2,8 +2,6 @@
 
 *An enterprise RAG answer that lists components without saying where the permission check runs has missed the only hard part.*
 
-◷ 7 min
-
 Interviewers rarely ask "what is ABAC?"; they say "users are seeing documents they shouldn't" and wait. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

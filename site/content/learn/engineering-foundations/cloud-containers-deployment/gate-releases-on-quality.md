@@ -2,8 +2,6 @@
 
 *Every extra quality gate slows a release and costs money, yet a GenAI change can make answers worse without failing a single unit test.*
 
-◷ 6 min
-
 Passing tests do not prove a GenAI release is safe. Add an evaluation stage to the pipeline, then stack cheaper and broader checks around it so each kind of regression meets the gate that catches it.
 
 **Objectives:**

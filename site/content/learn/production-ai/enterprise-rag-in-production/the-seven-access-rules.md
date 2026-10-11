@@ -2,8 +2,6 @@
 
 *Roles are easy to explain but cannot express real entitlements, while attributes can express them at the cost of a policy that must be learned rule by rule.*
 
-◷ 8 min
-
 Role-based access control cannot say "EU engineers on the vuln-response team may read restricted advisories, but only after the embargo lifts." Attribute-based access control (ABAC) says it in one rule, so learn the attributes, the seven rules in order, and the obligations that ride on an allow.
 
 **Objectives:**

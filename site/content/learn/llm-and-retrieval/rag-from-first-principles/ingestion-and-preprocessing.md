@@ -2,8 +2,6 @@
 
 *Careful parsing and cleaning make every later stage better, but each extra check is pipeline work that must keep running as the documents change.*
 
-◷ 7 min
-
 Retrieval quality is decided before the first query, because garbage in means garbage out. Build ingestion as a resilient pipeline and clean text for the search it will face. Record enough about every chunk to trace an answer back, following the offline flow in [The RAG Pipeline End to End](/learn/llm-and-retrieval/rag-from-first-principles/the-rag-pipeline-end-to-end).
 
 **Objectives:**

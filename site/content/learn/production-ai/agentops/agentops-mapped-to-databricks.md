@@ -2,8 +2,6 @@
 
 *Leading with product names sounds like name-dropping and leading only with architecture sounds untested, so design generically first and then name the primitive that implements each step.*
 
-◷ 6 min
-
 "Have you actually done this?" is a different question from "how would you design it?" Answer the design in generic terms, as in [Prompt Versioning, Rollout, and Rollback](/learn/production-ai/agentops/prompt-versioning-rollout-and-rollback), then map each step to the Databricks mechanism that implements it.
 
 **Objectives:**

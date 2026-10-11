@@ -2,8 +2,6 @@
 
 *An explicit graph makes branches, loops and state inspectable, but every field's merge rule and every loop's exit must now be declared rather than assumed.*
 
-◷ 9 min
-
 A chain is a straight line, and real workflows are not. LangGraph replaces an implicit call stack with an explicit data structure of state, nodes and edges; [What a Framework Buys You](/learn/llm-and-retrieval/langchain-and-langgraph/what-a-framework-buys-you) covers when that trade is worth making.
 
 **Objectives:**

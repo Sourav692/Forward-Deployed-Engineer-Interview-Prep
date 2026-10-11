@@ -2,8 +2,6 @@
 
 *A local user table is quick to build and easy to reason about, but it cannot prove that a caller is who their token claims.*
 
-◷ 5 min
-
 Production identity is not a bigger lookup table; it is a verification problem. Verify the token before any permission logic runs, then hand a trusted principal to the access rules from [The Seven Access Rules](/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules).
 
 **Objectives:**

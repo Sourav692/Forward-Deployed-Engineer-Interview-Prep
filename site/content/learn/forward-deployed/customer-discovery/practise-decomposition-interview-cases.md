@@ -2,8 +2,6 @@
 
 *Memorising one sophisticated design is tempting, but decomposition rounds reward a repeatable method applied to a case nobody has seen before.*
 
-◷ 6 min
-
 Decomposition skill comes from repetition on varied cases, not from one rehearsed answer. Run each case below with the method from [The Discovery Conversation](/learn/forward-deployed/customer-discovery/the-discovery-conversation), out loud and against a clock, then compare with the outline.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *A small corpus keeps security cheap to prove, but scaling it a millionfold breaks ingestion, the index, and query cost in different places that each need their own fix.*
 
-◷ 5 min
-
 "What if the customer has 20 million documents?" is not one scaling question. It is three: ingestion throughput, query-time latency and per-tenant isolation overhead, so name what breaks first in each before proposing fixes.
 
 **Objectives:**

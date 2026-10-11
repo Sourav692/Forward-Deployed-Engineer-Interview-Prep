@@ -2,8 +2,6 @@
 
 *A design round is won in the deep dive and lost by waiting to be asked, so the last forty minutes need more discipline than the first twenty.*
 
-◷ 6 min
-
 The deep dive is not a tour of every component; it is twenty minutes on the hardest part, announced in advance. Spend steps 4 to 6 of [the six-step clock](/learn/ai-systems-design/sixty-minute-whiteboard/the-six-step-whiteboard-clock) on one marked insight, unprompted cross-cutting concerns and a deliberate close.
 
 **Objectives:**

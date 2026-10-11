@@ -2,8 +2,6 @@
 
 *Exact nearest-neighbour search always finds the true closest match but is too slow at scale, so vector indexes give up a little recall for millisecond queries.*
 
-◷ 8 min
-
 Vector search is not keyword matching; it ranks stored chunks by how close their meaning sits to the question. This lesson follows a query from embedding to top-k result, through the index structures that make it fast and the filters that keep it scoped. What an embedding is and why similar meanings land close together is taught in [T2.1 How LLMs behave](/learn/llm-and-retrieval/how-llms-behave).
 
 **Objectives:**

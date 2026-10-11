@@ -2,8 +2,6 @@
 
 *One fixed splitter is fast to ship and works on anything, but it cuts through the headers, functions, rows, and turns that give each document type its meaning.*
 
-◷ 10 min
-
 No single splitter suits every document. Route each document to a splitter that cuts only at that type's safe boundaries, using the size and overlap ideas from [Why Retrieval Needs Chunks](/learn/llm-and-retrieval/chunking-and-indexing/why-retrieval-needs-chunks).
 
 **Objectives:**

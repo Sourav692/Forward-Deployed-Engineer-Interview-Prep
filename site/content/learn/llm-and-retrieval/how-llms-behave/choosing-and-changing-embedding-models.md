@@ -2,8 +2,6 @@
 
 *A better embedding model can lift retrieval quality, but every stored vector belongs to the old model, so switching costs a full re-index.*
 
-◷ 5 min
-
 An embedding model is not a setting to tune casually. Pick it with real queries, watch it for drift, and treat a model change as a migration, building on [Embeddings and Similarity Search](/learn/llm-and-retrieval/how-llms-behave/embeddings-and-similarity-search).
 
 **Objectives:**

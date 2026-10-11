@@ -2,8 +2,6 @@
 
 *More repository context makes suggestions better, while every extra token and model hop eats a latency budget of 300 milliseconds.*
 
-◷ 8 min
-
 A coding assistant is not one call to a big model. It is a retrieval-augmented, context-engineered system that spends latency and money only where they buy accuracy.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *One key and credentials passed around in plain arguments are simple to operate, but a single leak then exposes every customer at once.*
 
-◷ 4 min
-
 "Store secrets in a vault" is the right instinct but not yet an answer. Hold references rather than values, wrap keys in keys, and give every tenant its own data key so a breach stops at one customer.
 
 **Objectives:**

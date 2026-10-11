@@ -2,8 +2,6 @@
 
 *Tracking the latest code keeps a capstone current, but a moving base makes every link and claim unverifiable, so build from one recorded revision and move it on purpose.*
 
-◷ 3 min
-
 A link to a branch is a promise that the code behind it will not change; branches break that promise. Build from the verified revision recorded below, and use the legacy revision only to trace where a lesson came from.
 
 **Objectives:**

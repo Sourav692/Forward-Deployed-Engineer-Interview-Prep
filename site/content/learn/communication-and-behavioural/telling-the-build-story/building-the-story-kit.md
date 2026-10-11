@@ -2,8 +2,6 @@
 
 *A script written for one room breaks in every other room, but a kit of short prepared pieces can be assembled for any of them.*
 
-◷ 6 min
-
 The unit of preparation is not the speech. It is a small kit of pieces written once per project and reused in every format. Build it after [Proof versus Knowledge](/learn/communication-and-behavioural/telling-the-build-story/proof-versus-knowledge), because the kit's honesty pieces come from there.
 
 **Objectives:**

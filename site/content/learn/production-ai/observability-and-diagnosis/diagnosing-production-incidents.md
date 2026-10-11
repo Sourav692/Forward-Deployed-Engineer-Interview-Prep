@@ -2,8 +2,6 @@
 
 *Guessing at a fix is fast and usually wrong, while a fixed debugging sequence feels slower and finds the real cause first.*
 
-◷ 5 min
-
 An incident answer is scored on its sequence, not on the fix it lands on. Clarify, measure, isolate, mitigate, prevent and communicate, using the traces and metrics from [Production Monitoring](/learn/production-ai/observability-and-diagnosis/production-monitoring-metrics-drift-and-slos) as evidence.
 
 **Objectives:**

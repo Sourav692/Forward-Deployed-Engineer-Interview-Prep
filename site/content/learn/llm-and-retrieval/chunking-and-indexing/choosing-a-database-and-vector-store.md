@@ -2,8 +2,6 @@
 
 *A managed vector database ships in minutes with little operations work, but cost, data residency, and tuning control push larger or regulated deployments toward self-hosting.*
 
-◷ 7 min
-
 There is no single "RAG database". A GenAI system usually needs several stores, each for its own job, and the vector store is only one of them. This lesson builds on the index families from [How Vector Search Works](/learn/llm-and-retrieval/chunking-and-indexing/how-vector-search-works).
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Usage is easy to count and looks like success, but delivery is only done when the original problem measurably improved and the team can run the system.*
 
-◷ 4 min
-
 Healthy servers do not mean a healthy product, and a busy product does not mean the business moved. Prove impact by watching three kinds of signal and by reporting the result against the target set at scoping.
 
 **Objectives:**

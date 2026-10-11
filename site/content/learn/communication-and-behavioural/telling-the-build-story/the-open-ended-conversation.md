@@ -2,8 +2,6 @@
 
 *An open conversation lets the listener choose what matters to them, but only if the speaker stops talking long enough for them to choose.*
 
-◷ 4 min
-
 An open-ended conversation is not a deep-dive delivered in pieces. It is the [story kit](/learn/communication-and-behavioural/telling-the-build-story/building-the-story-kit) deployed in whatever order the listener steers, so the kit's beats, bridges, follow-up map and closing lines all come from there.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *An agent that reads untrusted text is useful precisely because that text shapes its next step, and dangerous for the same reason.*
 
-◷ 6 min
-
 A system that only reads can defend prompt injection by never holding the secret; a system that acts cannot. Keep untrusted text out of the instruction channel, let trusted fields supply tool arguments, and check where data may go as well as whether a tool may run.
 
 **Objectives:**

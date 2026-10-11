@@ -2,8 +2,6 @@
 
 *A fixed slot rewards a tight script, but a senior listener remembers the governance and the honesty, not the architecture detail rushed in to fill the slot.*
 
-◷ 5 min
-
 A deep-dive is not a lecture with questions at the end. It is the [story kit](/learn/communication-and-behavioural/telling-the-build-story/building-the-story-kit) laid out against a timing budget, with two passes at the hard part and appendices that are never read aloud. Read [Three Formats for One Project](/learn/communication-and-behavioural/telling-the-build-story/three-formats-for-one-project) first for when to choose it.
 
 **Objectives:**

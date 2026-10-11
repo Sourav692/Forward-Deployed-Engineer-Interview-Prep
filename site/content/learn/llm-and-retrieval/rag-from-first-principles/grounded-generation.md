@@ -2,8 +2,6 @@
 
 *Telling the model to answer only from retrieved text makes answers checkable, but the model still fills gaps unless the prompt, the retriever and a validator all refuse to let it.*
 
-◷ 5 min
-
 Retrieval hands the model evidence; generation decides whether the model uses it. Write the prompt as a contract and refuse before calling the model when evidence is missing. Check the answer against its sources after, using the budget rules in [Context Windows, Temperature, and Token Limits](/learn/llm-and-retrieval/how-llms-behave).
 
 **Objectives:**

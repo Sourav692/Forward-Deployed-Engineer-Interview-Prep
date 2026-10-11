@@ -2,8 +2,6 @@
 
 *A shared protocol saves writing one integration per pair of app and tool, but it also connects systems that were never meant to share data.*
 
-◷ 5 min
-
 The Model Context Protocol (MCP) is not just "a way to plug in tools". Explain it by who controls each kind of capability, then check the two ways it quietly weakens security.
 
 **Objectives:**

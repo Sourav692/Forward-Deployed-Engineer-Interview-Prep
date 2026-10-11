@@ -15,7 +15,7 @@ import {
   RELATED_PRACTICE,
   STORY_BANK,
   TABS,
-  WORDS_PER_MINUTE,
+  readingMinutes,
   normaliseTitle,
   qualifierFor,
   reviewsFor,
@@ -77,6 +77,7 @@ export const getAllScenarios = cache(async (): Promise<ScenarioRef[]> => {
         title: scenario.title,
         order: scenario.order,
         tabs: scenario.tabs,
+        minutes: scenario.minutes,
         updated: scenario.updated,
         reading: module.kind === 'reading',
       })),
@@ -301,15 +302,6 @@ export type ContentSearchEntries = {
   design: SearchEntry[]
   company: SearchEntry[]
   reference: SearchEntry[]
-}
-
-/** Whole minutes to read a markdown document, rounded up; never zero. */
-export function readingMinutes(markdown: string): number {
-  const words = markdown
-    .replace(/```[\s\S]*?```/g, ' ')
-    .split(/\s+/)
-    .filter((w) => /[A-Za-z0-9]/.test(w)).length
-  return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))
 }
 
 /**

@@ -2,8 +2,6 @@
 
 *Richer memory structures answer harder questions or skip repeated work, but each adds a step that can misjudge what to keep or what to reuse.*
 
-◷ 7 min
-
 A fixed window and a key-value store cover most agents; these four architectures earn their cost only on specific questions. Learn each by the question it answers, building on the write and read rules in [Long-Term Memory: Write, Retrieve, and Forget](/learn/agentic-systems/memory-and-state/long-term-memory-write-retrieve-forget).
 
 **Objectives:**

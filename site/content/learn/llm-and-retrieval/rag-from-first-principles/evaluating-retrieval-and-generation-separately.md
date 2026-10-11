@@ -2,8 +2,6 @@
 
 *One end-to-end score is cheap to compute, but it cannot say whether the search or the model caused a bad answer.*
 
-◷ 6 min
-
 A RAG system has two boxes, so it needs two report cards. Score retrieval with labelled chunks and generation against the context it received. Only then trust an end-to-end number, keeping the two-box picture from [What RAG Is and When to Use It](/learn/llm-and-retrieval/rag-from-first-principles/what-rag-is-and-when-to-use-it).
 
 **Objectives:**

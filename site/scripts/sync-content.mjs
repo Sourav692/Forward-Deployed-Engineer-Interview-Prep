@@ -26,7 +26,7 @@ import {
   syncCompanyPrep,
 } from './company-prep.mjs'
 import { gitDates, learnSnapshotDir, snapshotLearn, syncLearn } from './learn.mjs'
-import { STORY_BANK, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
+import { STORY_BANK, TITLE_OVERRIDES, TRACKS, readingMinutes } from '../src/lib/editorial.ts'
 import { scenarioHref } from '../src/lib/scenario.ts'
 
 const SITE_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -155,6 +155,7 @@ async function syncTrack(moduleId, track, sourceUrls, updatedOf) {
       // keeps the site's list free of holes that would read as missing content.
       order: index + 1,
       title: TITLE_OVERRIDES[`${track.id}/${slug}`] ?? extractTitle(worksheet, slug),
+      minutes: readingMinutes(worksheet),
       updated: updatedOf(join(track.worksheetDir, file), join(track.answerKeyDir, keyFile)),
     })
   }
@@ -313,6 +314,12 @@ async function main() {
       outDir: OUT_DIR,
       snapshotDir: LEARN_SNAPSHOT_DIR,
       liveUrls: sourceUrls,
+      // A live lesson's listing shows its page's reading time (ENH-22).
+      liveMinutes: new Map(
+        modules.flatMap((m) =>
+          m.tracks.flatMap((t) => t.scenarios.map((s) => [scenarioHref({ moduleId: m.id, trackId: t.id, slug: s.slug }), s.minutes])),
+        ),
+      ),
     })
   } finally {
     await rm(LEARN_SNAPSHOT_DIR, { recursive: true, force: true })

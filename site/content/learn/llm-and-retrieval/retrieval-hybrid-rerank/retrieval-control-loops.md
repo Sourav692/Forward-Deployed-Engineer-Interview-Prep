@@ -2,8 +2,6 @@
 
 *Wrapping retrieval in checks and decisions catches bad context before it becomes a bad answer, but each check is another model call that adds latency and its own way to fail.*
 
-◷ 10 min
-
 Plain RAG trusts whatever retrieval returns. Wrap a control loop around retrieval only when it fixes a failure the system actually has, because stacking loops by default just stacks latency.
 
 **Objectives:**

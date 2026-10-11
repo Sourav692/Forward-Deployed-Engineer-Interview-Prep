@@ -2,8 +2,6 @@
 
 *A broad capstone shows range but rarely finishes, so pick one companion project that matches the interview area most in need of proof.*
 
-◷ 3 min
-
 This repository teaches the theory; the runnable systems live in a separate companion repository. Pick one of its seven projects as the capstone base. Then read [Build From a Pinned Revision](/learn/capstone-and-portfolio/capstone-build/build-from-a-pinned-revision) before writing any code.
 
 **Objectives:**

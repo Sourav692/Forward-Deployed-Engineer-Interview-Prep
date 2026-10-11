@@ -2,8 +2,6 @@
 
 *A cache hit is the cheapest and fastest answer the system can give, and a wrong or cross-tenant hit is the most confident mistake it can make.*
 
-◷ 9 min
-
 A cache in a GenAI system is not a performance detail; it is a security and correctness decision. Cache what is expensive and stable, key it on everything that could change the answer, and clear it the moment the source changes.
 
 **Objectives:**

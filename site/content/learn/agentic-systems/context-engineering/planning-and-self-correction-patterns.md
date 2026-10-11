@@ -2,8 +2,6 @@
 
 *Planning ahead saves model calls and checking every step catches failures, but each extra structure costs latency and only pays off for the right kind of task.*
 
-◷ 5 min
-
 ReAct is the default loop, not the only one. Add a plan, a verifier or a critique step only when the task's shape asks for it, and keep the loop guards from [Control Placement](/learn/agentic-systems/context-engineering/control-placement) in every variant.
 
 **Objectives:**

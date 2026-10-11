@@ -2,8 +2,6 @@
 
 *An assistant that knows the account better than the rep, without ever seeing more of the CRM than the rep may.*
 
-◷ 28 min
-
 The hard part of a sales copilot is not summarising an account. It is that every useful answer touches CRM records, call transcripts and pricing policy permissioned by territory, role and deal stage. One invented customer fact or unapproved claim can reach a customer's inbox. This page consolidates the group's prompts into one read for the day before. The group has no bespoke worked design, only a templated purchased worksheet, so the CRM-permission and account-data detail here is added for this pack and marked where it appears.
 
 | Case in the group | What it contributes here |

@@ -2,8 +2,6 @@
 
 *A bespoke trace format is quick to build and costs a custom integration for every customer, while a standard span format costs nothing extra in data and plugs into tools that already exist.*
 
-◷ 5 min
-
 A trace that only one project's code can read stops being useful the moment it leaves the laptop. Keep the fields of [The Run Trace](/learn/production-ai/observability-and-diagnosis/the-run-trace) and change only the wire format, then give each customer a scoped view of the same data.
 
 **Objectives:**

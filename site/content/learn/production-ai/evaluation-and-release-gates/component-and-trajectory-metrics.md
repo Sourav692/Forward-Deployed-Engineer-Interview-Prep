@@ -2,8 +2,6 @@
 
 *An outcome score says whether the answer was right; only component and path metrics say why, and whether it was right by luck.*
 
-◷ 5 min
-
 A correct final answer is not proof of a healthy system. Score each component with a metric that points at one subsystem, then assert properties of the path the agent took, building on the layers in [The Evaluation Pyramid](/learn/production-ai/evaluation-and-release-gates/the-evaluation-pyramid).
 
 **Objectives:**

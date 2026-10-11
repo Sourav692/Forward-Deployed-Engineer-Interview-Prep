@@ -2,8 +2,6 @@
 
 *Editing a prompt in place is the fastest way to change behaviour and the slowest way to recover from a bad change, so ship prompts like code with gates and a pointer to flip back.*
 
-◷ 5 min
-
 A prompt change is not a config tweak; it changes the behaviour of a system that may move money or answer contractual questions. Version every prompt, gate it on the same bar as a full release, stage it through shadow and canary, and keep rollback a pointer flip.
 
 **Objectives:**

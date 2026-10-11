@@ -2,8 +2,6 @@
 
 *Commit to a plan early enough to show progress, and late enough that the mission, not the model, has chosen it.*
 
-◷ 26 min
-
 These three prompts are not system-design questions with a hidden right architecture. They test whether the mission gets pinned down before anything is drawn. This page teaches the method once, then runs it three times. The scoping mechanics come from G12 and the evaluation-first habit from G17, and both are named here rather than repeated.
 
 | Case | Prompt (verbatim from the source) | What it tests, per the source |

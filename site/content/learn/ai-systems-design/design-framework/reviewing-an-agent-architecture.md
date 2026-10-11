@@ -2,8 +2,6 @@
 
 *A multi-agent diagram that looks complete can still waste every cache hit and force work on agents that never needed it.*
 
-◷ 8 min
-
 The framework and principles stay abstract until they correct a real diagram. Spotting structural mistakes in a first-draft agent architecture is worth more than memorising a corrected one, because the same five mistakes appear in most drafts, including ones drawn under time pressure.
 
 **Objectives:**

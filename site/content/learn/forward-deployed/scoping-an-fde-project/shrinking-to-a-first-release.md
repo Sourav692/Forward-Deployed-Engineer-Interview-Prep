@@ -2,8 +2,6 @@
 
 *Accepting the whole wish list keeps every stakeholder happy for a week, but the first release should be the smallest thing that delivers value and retires the biggest risk.*
 
-◷ 4 min
-
 A large number attached to a large wish list is not a plan. The lead's job is to find the narrowest release that delivers the core outcome safely, using the sizes from [Estimating AI Work as a Product](/learn/forward-deployed/scoping-an-fde-project/estimating-ai-work-as-a-product) to show what each cut saves.
 
 **Objectives:**

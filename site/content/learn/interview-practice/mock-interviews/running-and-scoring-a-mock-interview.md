@@ -2,8 +2,6 @@
 
 *A mock only trains judgement when it is timed and scored against evidence, yet the easiest mock to run is an untimed read of the strong answer.*
 
-◷ 10 min
-
 A mock interview is not a reading exercise. Answer under a timer first, then compare, then score against a rubric with evidence. Five scenario mocks follow this lesson, and each one uses the same arc, answer moves and rubric taught here.
 
 **Objectives:**

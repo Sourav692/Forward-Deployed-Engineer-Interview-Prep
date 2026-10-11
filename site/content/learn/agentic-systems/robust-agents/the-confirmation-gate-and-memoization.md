@@ -2,8 +2,6 @@
 
 *A cache saves time and money on repeated calls, but a cache that answers before the safety check can quietly approve an action nobody approved.*
 
-◷ 9 min
-
 A tool call is not a black box the loop can trust; it is where a toy loop becomes a real agent. Put the confirmation gate in front of everything else, then add a memo behind it, and read [Retries and Fallbacks](/learn/agentic-systems/robust-agents/retries-and-fallbacks) for what happens when the call itself fails.
 
 **Objectives:**

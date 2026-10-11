@@ -2,8 +2,6 @@
 
 *Capture enough to explain every failure without turning the telemetry into a second copy of the customer's data.*
 
-◷ 34 min
-
 "The AI is slow and sometimes wrong, and nobody knows why" is three problems wearing one sentence. This page consolidates the group's prompts into one read for the day before. The anchor design comes first. Two incident walk-throughs follow, then the neighbouring prompts, then a card for every cost and latency pivot the group contains.
 
 | Case in the group | What it contributes here |

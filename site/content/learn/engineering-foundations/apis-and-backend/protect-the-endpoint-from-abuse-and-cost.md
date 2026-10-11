@@ -2,8 +2,6 @@
 
 *A public LLM endpoint should be easy for real users to call, yet every call spends real money, so its limits must count cost rather than requests.*
 
-◷ 5 min
-
 Request counts are the wrong unit for an LLM API, because one huge request can cost as much as fifty small ones. Layer authentication, token-aware limits and abuse checks on top of the contract from [Define the API Contract With Typed Schemas](/learn/engineering-foundations/apis-and-backend/define-the-api-contract-with-typed-schemas), and keep every counter where all instances can see it.
 
 **Objectives:**

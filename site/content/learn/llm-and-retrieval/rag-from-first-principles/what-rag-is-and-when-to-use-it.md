@@ -2,8 +2,6 @@
 
 *Retrieval closes the gap between what a model learned and what a company knows, but in an enterprise the right answer depends on who is asking.*
 
-◷ 5 min
-
 RAG is not a clever model trick. It is two boxes, find then answer, and the enterprise version is hard because different people may read different documents.
 
 **Objectives:**

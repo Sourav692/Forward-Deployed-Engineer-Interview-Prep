@@ -2,8 +2,6 @@
 
 *A short definition of RAG answers the warm-up, but the follow-ups test whether a candidate can name the failing box, the constraint, and the measurement.*
 
-◷ 6 min
-
 RAG fundamentals questions are rarely about the definition. They probe whether a candidate can locate a failure, respect a customer's constraints, and prove a change helped, using lessons 1 to 5 of this module.
 
 **Objectives:**

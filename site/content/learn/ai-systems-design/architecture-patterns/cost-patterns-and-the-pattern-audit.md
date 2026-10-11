@@ -2,8 +2,6 @@
 
 *Each pattern can cut cost or catch a regression, but a pattern nobody can justify is cost paid by whoever is on call.*
 
-◷ 5 min
-
 Agent workloads compound token use over long trajectories, so cost needs governing patterns of its own, and quality needs checking in production, not only offline. Learn the cost and evaluation patterns, then audit every pattern in a system against the metric that motivated it and the incident it prevented.
 
 **Objectives:**

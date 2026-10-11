@@ -2,8 +2,6 @@
 
 *Caching makes the typical request fast, but only timeouts, circuit breakers, and fallbacks protect the slow tail, and capacity planning has to pay for both.*
 
-◷ 6 min
-
 At scale, the median and the tail have different causes. Move the median with routing, early filtering and caching; bound the tail with timeouts and fallbacks; and size capacity from throughput and latency together.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *Seven boxes in a row are easy to draw in an hour, but the round is won by showing which boxes are enforced gates and naming honestly which parts are not built.*
 
-◷ 9 min
-
 The two-week delivery prompt rewards a candidate who treats it as an operating-model question in the first two minutes and spends the deep dive on gates and reuse. This lesson lays out a 60-minute plan, then a set of practice prompts to answer aloud before checking the outline.
 
 **Objectives:**

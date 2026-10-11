@@ -2,8 +2,6 @@
 
 *A framework builds an agent in ten lines, but only the hand-written loop shows what those lines hide when the agent misbehaves.*
 
-◷ 7 min
-
 Ten framework lines build an agent, and none of them explain a failure in a design review. Write the ReAct loop in plain Python here, with every moving part explicit, after reading [What an Agent Is](/learn/agentic-systems/the-tool-calling-loop/what-an-agent-is) for the three components.
 
 **Objectives:**

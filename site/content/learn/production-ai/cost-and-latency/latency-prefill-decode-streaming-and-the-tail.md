@@ -2,8 +2,6 @@
 
 *Streaming makes an answer feel fast without making it finish sooner, so know which kind of slow is hurting before choosing the fix.*
 
-◷ 6 min
-
 "It is slow" names at least three different problems. A frozen screen, an answer that starts and then drags, and a multi-step agent with an awful worst case each have a different cause and a different fix.
 
 **Objectives:**

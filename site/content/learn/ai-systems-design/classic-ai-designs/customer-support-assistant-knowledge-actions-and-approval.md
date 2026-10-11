@@ -2,8 +2,6 @@
 
 *Letting the assistant answer and act autonomously cuts response time, while routing risky actions to a person keeps money and compliance under control.*
 
-◷ 10 min
-
 A support assistant is not one LLM doing everything. Give it separate capabilities for knowledge, actions and memory, and put a human between it and the actions that cost real money.
 
 **Objectives:**

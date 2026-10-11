@@ -45,7 +45,6 @@ export type CurriculumTrack = {
   /** Free-text prerequisite when it is not a track, e.g. "Basic programming". */
   prerequisiteNote?: string
   required: TrackRequirement
-  estHours: number
   exitCompetencies: string[]
   sections: CurriculumSection[]
 }
@@ -60,7 +59,14 @@ export type CurriculumModule = {
   /** Section slug within the track. */
   section: string
   status: ModuleStatus
-  estMinutes: number
+  /**
+   * Hand estimate in minutes, only for a module with no lessons of its own (planned, on
+   * hold, or one that lists another module's lessons). Every other module's time is its
+   * lessons' reading time plus `practiceMinutes` (`studyTime` in study-time.ts).
+   */
+  estMinutes?: number
+  /** Minutes of practice beyond reading: worksheets, mocks, a build (ENH-22). */
+  practiceMinutes?: number
   objective: string
   /** The boundary: what this module does not teach, and where that lives. */
   scope: string

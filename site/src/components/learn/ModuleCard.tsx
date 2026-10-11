@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { CurriculumModule } from '@/lib/curriculum-types'
-import { formatMinutes, learnHref, moduleInput } from '@/lib/learn'
+import { formatMinutes, learnHref, moduleInput, moduleTime } from '@/lib/learn'
 import { Tag, cx, focusRing } from '@/components/ui'
 import { ModulePathFlag } from './PathFlagIslands'
 import { ModuleProgress, ModuleStatusBadge } from './ProgressIslands'
@@ -25,7 +25,7 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
           </h3>
         </div>
         <p className="mt-0.5 pl-11 text-xs text-muted">
-          {formatMinutes(mod.estMinutes)}
+          {formatMinutes(moduleTime(mod).total)}
           {input.reading.length > 0 && ` · ${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`}
         </p>
       </div>

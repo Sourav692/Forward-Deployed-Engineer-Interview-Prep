@@ -2,8 +2,6 @@
 
 *A gradual rollout limits how many users meet a bad release, but it only works when the deployed version is pinned and the old one is a switch away.*
 
-◷ 4 min
-
 A bad GenAI release rarely crashes; it gives worse answers. Pin every model version, expose a new one to a small, measured share of users first, and keep the old version one switch away.
 
 **Objectives:**

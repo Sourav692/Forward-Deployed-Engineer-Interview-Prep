@@ -2,8 +2,6 @@
 
 *Give executives an answer in seconds without ever letting the model decide what "revenue" means: the semantic layer, not the model, is the product.*
 
-◷ 40 min
-
 The hard part of this system is not generating SQL. It is that a syntactically perfect query against the wrong definition of a metric is a governance failure dressed up as a working feature. So the design anchors every question on a governed definition before it touches a table. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group | What it contributes here |

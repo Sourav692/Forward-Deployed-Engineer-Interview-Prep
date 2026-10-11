@@ -2,8 +2,6 @@
 
 *The same project has to land with a director who has fifteen minutes and a peer who wants every design decision, and one script cannot serve both.*
 
-◷ 4 min
-
 A project story is not one speech. Prepare the material once, then pick the shape from the room.
 
 **Objectives:**

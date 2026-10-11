@@ -2,8 +2,6 @@
 
 *One table for everything the agent remembers is simple to build, but facts, events and instructions each need their own store, write rule, and way of failing.*
 
-◷ 6 min
-
 "Long-term memory" is not one thing. Sort every remembered item by what it is for, then give each kind its own write rule and store, building on the scopes in [Why Agents Need State](/learn/agentic-systems/memory-and-state/why-agents-need-state).
 
 **Objectives:**

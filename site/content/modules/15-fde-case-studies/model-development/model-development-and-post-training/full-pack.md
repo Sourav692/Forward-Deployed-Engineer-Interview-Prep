@@ -2,8 +2,6 @@
 
 *Every model-building prompt spends one fixed budget of compute and data, and the constraint decides which stage of the pipeline gets the money.*
 
-◷ 24 min
-
 These four prompts are one pipeline asked four ways, not four different systems. Each question fixes a different constraint, and that constraint changes exactly one stage: data, SFT, post-training, evaluation or deployment. This page consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |

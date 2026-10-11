@@ -15,6 +15,8 @@ export type ScenarioMeta = {
   title: string
   /** Reading pages only: the page's tabs, in display order. */
   tabs?: ReadingTab[]
+  /** Reading time (`readingMinutes`): a case's tabs summed, or a worksheet. */
+  minutes?: number
   /** `YYYY-MM-DD` the sources last changed, from git at sync time. */
   updated?: string | null
 }
@@ -44,6 +46,7 @@ export type ScenarioRef = {
   /** True for reading pages (FDE Case Studies): read-only, tabbed, progress by tab. */
   reading?: boolean
   tabs?: ReadingTab[]
+  minutes?: number
   updated?: string | null
   /**
    * 'Practice Worksheet' or 'Case Study' when another page on the site has the same

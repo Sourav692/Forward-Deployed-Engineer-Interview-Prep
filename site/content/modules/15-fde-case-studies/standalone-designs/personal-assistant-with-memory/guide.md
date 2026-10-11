@@ -2,8 +2,6 @@
 
 *The assistant has to remember enough to feel personal and forget enough to stay fast, correct and private.*
 
-◷ 24 min
-
 A memory system is not one database with a bigger context window. It is four scopes of state, each with its own key, its own write rule and its own way to go wrong. This page turns this case into one read for the day before.
 
 | Case | What it contributes here |

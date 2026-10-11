@@ -2,8 +2,6 @@
 
 *A bigger model is the tempting fix for a failing agent, but most tool failures are interface bugs that no model can reason its way around.*
 
-◷ 6 min
-
 A failing tool call is rarely the model's fault. Fix the surface the agent sees before touching the model, and read [Tool Schema Design](/learn/agentic-systems/tool-design-mcp-a2a/tool-schema-design) for the concrete rules.
 
 **Objectives:**

@@ -2,8 +2,6 @@
 
 *A fine-tuned model can match a much larger prompted one at a fraction of the serving cost, and it freezes the task definition until the next retraining.*
 
-◷ 4 min
-
 Fine-tuning is proposed far more often than it is the right call. Use it in three specific situations, never to fill a knowledge gap, and compare it against prompting and RAG on real traffic and total cost before committing.
 
 **Objectives:**

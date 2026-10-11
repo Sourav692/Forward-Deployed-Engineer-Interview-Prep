@@ -2,8 +2,6 @@
 
 *Replaying the whole conversation loses nothing but costs more every turn, while windows and summaries cap the cost by choosing what to lose.*
 
-◷ 10 min
-
 Short-term memory is not a store; it is what reaches the model on the next call. Persist the thread with a checkpointer, as set up in [Why Agents Need State](/learn/agentic-systems/memory-and-state/why-agents-need-state), then decide separately how much of it the model sees.
 
 **Objectives:**

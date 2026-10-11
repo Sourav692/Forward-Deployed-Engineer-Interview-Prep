@@ -2,8 +2,6 @@
 
 *An AI plane adds powerful components to a design, but every one of them must sit beside the traditional core, never replace it.*
 
-◷ 9 min
-
 The middle of a design answer is not a box diagram; it is proof that the boxes interact. Draw the request path, choose a store per access pattern, give each service an owner, and then trace one real request through all of it, as set up in [The Twelve-Part Design Framework](/learn/ai-systems-design/design-framework/the-twelve-part-design-framework).
 
 **Objectives:**

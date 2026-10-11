@@ -2,8 +2,6 @@
 
 *An evaluation answer that lists metrics still fails if it never says which number blocks a release and how big the test set must be.*
 
-◷ 7 min
-
 "How do you know it works?" is rarely a request for metric names. Interviewers want layers, a gate and a sample size. Answer each prompt below out loud first, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

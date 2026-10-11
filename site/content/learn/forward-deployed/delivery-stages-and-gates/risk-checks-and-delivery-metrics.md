@@ -2,8 +2,6 @@
 
 *A risk register is quick to write, but a mitigation that relies on memory fails in the busiest week, so each must run by itself.*
 
-◷ 4 min
-
 A risk mitigation that lives as a reminder on a tracker is not a mitigation. The delivery framework answers each named risk with a mechanism. It then measures the process with five numbers, the last of which asks whether delivery is productised or heroic.
 
 **Objectives:**

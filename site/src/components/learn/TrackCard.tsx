@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { CurriculumTrack } from '@/lib/curriculum-types'
-import { REQUIREMENT_LABEL, isRequired, learnHref, trackModules } from '@/lib/learn'
+import { REQUIREMENT_LABEL, isRequired, learnHref, trackHours, trackModules } from '@/lib/learn'
 import { Tag, cx, focusRing } from '@/components/ui'
 import { TrackPathSummary } from './PathFlagIslands'
 import { TrackProgress } from './ProgressIslands'
@@ -30,7 +30,7 @@ export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes:
       </h2>
       <p className="mt-1 text-sm text-muted">{track.objective}</p>
       <p className="mt-3 text-xs text-muted">
-        About {track.estHours} h · {modules.length} modules
+        About {trackHours(track)} h · {modules.length} modules
       </p>
       <TrackPathSummary trackSlug={track.slug} />
       <div className="mt-auto pt-4">

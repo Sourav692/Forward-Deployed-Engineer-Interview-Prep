@@ -2,8 +2,6 @@
 
 *A gate strict enough to stop a bad release is slow enough that teams route around it.*
 
-◷ 34 min
-
 An evaluation platform is not a dashboard of scores. It is a controlled decision about whether one change is safe to ship. This page consolidates the group's prompts into one read for the day before. The anchor design comes first. The neighbouring prompts, the incident and the cost pivot then come as deltas on the same gate.
 
 | Case in the group | What it contributes here |

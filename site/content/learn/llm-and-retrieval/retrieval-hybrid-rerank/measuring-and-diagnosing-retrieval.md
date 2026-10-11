@@ -2,8 +2,6 @@
 
 *A wider net catches more of the right passages but also more noise, so every retrieval change has to be judged by what it found and what it missed, not by how the answer reads.*
 
-◷ 7 min
-
 A better embedding model is the weak answer to "how would you improve retrieval?". Name the failure first, measure it, and only then pick the technique that targets it; the pipeline itself is covered in [RAG from first principles](/learn/llm-and-retrieval/rag-from-first-principles).
 
 **Objectives:**

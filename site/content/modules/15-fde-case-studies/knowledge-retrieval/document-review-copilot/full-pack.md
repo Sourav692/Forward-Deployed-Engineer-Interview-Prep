@@ -2,8 +2,6 @@
 
 *Extraction is cheap and judgement is expensive, and the copilot must never let the cheap step stand in for the expensive one.*
 
-◷ 31 min
-
 The three personas in this group look like three products: a prior-authorization assistant, a compliance reviewer, a contract copilot. They are one system with one spine. A document comes in. Structure is extracted and compared against a policy, a playbook or clinical criteria. Gaps are flagged, risk is classified, and material cases go to a human who decides. This page consolidates the group's prompts into one read for the day before. The purchased answer keys are templated. So the argument here is built from their workflows, records, risks and rollout, plus the vendor's prior-authorization case. Anything constructed for this page rather than taken from a source is labelled as such.
 
 | Case in the group | What it contributes here |

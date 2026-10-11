@@ -28,9 +28,9 @@
 import { existsSync, statSync } from 'node:fs'
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
-import { TABS, TITLE_OVERRIDES, TRACKS } from '../src/lib/editorial.ts'
+import { TABS, TITLE_OVERRIDES, TRACKS, readingMinutes } from '../src/lib/editorial.ts'
 import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
-import { UNLINK, gitDates, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
+import { UNLINK, gitDates, stripClockLine, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
 export const CASE_STUDY_MODULE_ID = CASEBOOK_MODULE
 
@@ -297,17 +297,20 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
     for (const c of inTheme) {
       const outBase = join(outDir, 'modules', CASE_STUDY_MODULE_ID, theme.id, c.slug)
       await mkdir(outBase, { recursive: true })
+      let minutes = 0
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)
         if (!existsSync(file)) throw new Error(`Missing ${tab.label} document: ${file}`)
-        const markdown = stripRepoReferences(await readFile(file, 'utf8'))
-        await writeFile(join(outBase, `${tab.id}.md`), unlinkRepoLinks(rewriteLinks(markdown, file, ctx)))
+        const markdown = unlinkRepoLinks(rewriteLinks(stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file, ctx))
+        await writeFile(join(outBase, `${tab.id}.md`), markdown)
+        minutes += readingMinutes(markdown)
       }
       scenarios.push({
         slug: c.slug,
         order: c.order,
         title: TITLE_OVERRIDES[`${theme.id}/${c.slug}`] ?? c.title,
         tabs: c.tabs.map(({ id, label }) => ({ id, label })),
+        minutes,
         updated: updatedOf(...c.tabs.map((tab) => tab.src ?? join(c.dir, tab.file))),
       })
     }

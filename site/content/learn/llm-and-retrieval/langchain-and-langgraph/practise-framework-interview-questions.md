@@ -2,8 +2,6 @@
 
 *Framework questions reward naming the exact primitive and its trap, but an answer that stops at the API name sounds like a tour rather than judgement.*
 
-◷ 7 min
-
 Interviewers rarely ask what a class is called. They describe a symptom, such as a slow chat, a runaway loop or a refund sent twice, and listen for the mechanism. Every answer below points back to the lesson that teaches it.
 
 **Objectives:**

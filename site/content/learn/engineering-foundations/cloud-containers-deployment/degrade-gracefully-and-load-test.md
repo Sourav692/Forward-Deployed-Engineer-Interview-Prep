@@ -2,8 +2,6 @@
 
 *A fallback answer is worse than the full one but better than an error, so plan the drop in quality before a dependency fails and measure where the service breaks before users find it.*
 
-◷ 4 min
-
 Every AI backend depends on services it does not control. Decide in advance what the service does when one of them fails, then load test to learn the load at which it stops meeting its targets.
 
 **Objectives:**

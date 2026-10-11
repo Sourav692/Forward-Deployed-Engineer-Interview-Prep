@@ -2,8 +2,6 @@
 
 *A ticket list is easy to produce, but a plan has to cut risk in order, keep the blocking work visible, and make every change of scope carry its cost.*
 
-◷ 6 min
-
 An estimate says how much work exists; a plan says how the team will remove risk step by step until a usable release ships. The plan rests on the range from [Estimates People Can Trust](/learn/forward-deployed/scoping-an-fde-project/estimates-people-can-trust) and is run with a few light documents and decision-making meetings.
 
 **Objectives:**

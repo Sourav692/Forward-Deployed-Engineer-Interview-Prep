@@ -2,8 +2,6 @@
 
 *A release gate must be strict enough that one leak blocks a ship, yet calm enough that people still believe it when it fires.*
 
-◷ 8 min
-
 Every layer of evaluation ends in one decision: does this change ship? Gate safety absolutely, quality against a baseline per segment, and cost as a visible trade. The gate draws on the sets and judges from [Golden Sets and Sample Size](/learn/production-ai/evaluation-and-release-gates/golden-sets-and-sample-size) and [Validating LLM Judges](/learn/production-ai/evaluation-and-release-gates/validating-llm-judges).
 
 **Objectives:**

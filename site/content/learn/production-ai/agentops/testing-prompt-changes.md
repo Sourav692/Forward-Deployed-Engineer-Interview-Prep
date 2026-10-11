@@ -2,8 +2,6 @@
 
 *A full evaluation suite catches every kind of regression slowly, while cheap unit checks catch the common ones in seconds, so run the cheap layer first and the expensive one on a schedule too.*
 
-◷ 6 min
-
 Evaluation is not one gate run once. Layer fast deterministic tests in front of the expensive suite, compare live versions with enough samples to trust the result, and rerun the suite nightly because the model can change without a commit.
 
 **Objectives:**

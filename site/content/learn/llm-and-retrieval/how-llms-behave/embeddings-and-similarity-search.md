@@ -2,8 +2,6 @@
 
 *Searching by meaning finds text that shares no words with the question, but only when the question and the documents were turned into numbers the same way.*
 
-◷ 5 min
-
 Keyword search cannot see that two sentences mean the same thing. An embedding can, so learn what it is, how two embeddings are compared, and what silently breaks the comparison.
 
 **Objectives:**

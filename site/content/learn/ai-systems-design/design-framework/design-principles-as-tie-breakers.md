@@ -2,8 +2,6 @@
 
 *Principles justify decisions only when they are applied in the moment; recited as a list, they justify nothing.*
 
-◷ 7 min
-
 The framework says what to cover; principles decide what to choose inside each part. Learn the fifteen through their AI-system applications, then narrate them inside the decisions made while walking [The Twelve-Part Design Framework](/learn/ai-systems-design/design-framework/the-twelve-part-design-framework).
 
 **Objectives:**

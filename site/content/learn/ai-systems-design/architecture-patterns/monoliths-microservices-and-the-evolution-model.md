@@ -2,8 +2,6 @@
 
 *A monolith buys simplicity and speed at the cost of shared fate, while microservices buy independence at the cost of a network between every part.*
 
-◷ 8 min
-
 "Monolith or microservices?" is not a loyalty test; it is a sequencing question. Start as a modular monolith and extract a service only when a named pressure justifies it, the same restraint the simplicity principle asks for in [Design Principles as Tie-Breakers](/learn/ai-systems-design/design-framework/design-principles-as-tie-breakers).
 
 **Objectives:**

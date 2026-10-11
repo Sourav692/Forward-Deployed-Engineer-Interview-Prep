@@ -2,8 +2,6 @@
 
 *Each agent needs its own limits and its own score, which multiplies the work of operating the system but keeps one failure from hiding in another.*
 
-◷ 7 min
-
 A multi-agent system promises that one agent's failure degrades the others rather than crashing them, and that a wrong answer can be traced to the agent that caused it. Neither promise holds by accident, so build the limits and the per-agent evaluation that [Handoffs and Permission Scope](/learn/agentic-systems/multi-agent-systems/handoffs-and-permission-scope) assumed.
 
 **Objectives:**

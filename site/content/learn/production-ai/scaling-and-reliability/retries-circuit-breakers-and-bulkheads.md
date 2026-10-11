@@ -2,8 +2,6 @@
 
 *Retrying recovers from a blip and makes a real outage worse, so pair per-call retries with a cross-call breaker and isolate slow dependencies.*
 
-◷ 6 min
-
 A retry decides about one call; a circuit breaker remembers the last hundred. Use retries for transient failures, a breaker for a dependency that is down, and a bulkhead for one that is merely slow, and know which is which.
 
 **Objectives:**

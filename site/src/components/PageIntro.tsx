@@ -26,16 +26,15 @@ export function MetaStrip({
   minutes: number | null
   extra?: React.ReactNode
 }) {
-  const time = minutes ?? meta.minutes
   return (
     <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[0.8125rem] text-subtle">
       <span className="font-semibold text-accent">{MODES[meta.mode].label}</span>
       <Dot />
       <span>{meta.difficulty}</span>
-      {time !== null && (
+      {minutes !== null && (
         <>
           <Dot />
-          <span>{meta.mode === 'practice' || meta.mode === 'behavioural' ? `About ${time} min` : `${time} min read`}</span>
+          <span>{minutes} min read</span>
         </>
       )}
       {extra}

@@ -2,8 +2,6 @@
 
 *A golden set makes evaluation possible, but its labels and its size decide what the numbers can mean, and most suites are too small to see the gains they report.*
 
-◷ 6 min
-
 The dataset, not the harness, decides what an evaluation number means. Label each case so security and quality failures cannot be confused. Shape the set like real traffic, and size it for the smallest change it must detect; [Validating LLM Judges](/learn/production-ai/evaluation-and-release-gates/validating-llm-judges) then covers the cases no label can score.
 
 **Objectives:**

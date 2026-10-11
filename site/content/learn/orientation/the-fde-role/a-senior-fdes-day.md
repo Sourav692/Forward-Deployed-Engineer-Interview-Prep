@@ -2,8 +2,6 @@
 
 *Deep technical time and availability to customers and the team pull against each other, so order the day by who is blocked, not by what is fun to build.*
 
-◷ 5 min
-
 A senior FDE's day does not start with their own tickets. Walk through the five parts of one day below, each tied to a lens from [The Three Lenses of FDE Work](/learn/orientation/the-fde-role/the-three-lenses-of-fde-work).
 
 **Objectives:**

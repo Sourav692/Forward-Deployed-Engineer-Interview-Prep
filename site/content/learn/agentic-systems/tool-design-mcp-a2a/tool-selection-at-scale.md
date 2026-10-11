@@ -2,8 +2,6 @@
 
 *Advertising every tool feels complete, but each extra option makes the agent worse at picking the right one.*
 
-◷ 3 min
-
 More tools do not make an agent more capable past a point. Collapse and filter the tool surface first, and add retrieval only once the surface is still too large.
 
 **Objectives:**

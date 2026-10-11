@@ -2,8 +2,6 @@
 
 *A day-in-the-life answer that lists every task still fails if it never says why the parts depend on each other.*
 
-◷ 4 min
-
 "Walk me through a typical week" is not a request for a calendar. Answer each prompt below out loud first, pick the three or four lines that fit, then compare with the outline and reread the lesson it points to.
 
 **Objectives:**

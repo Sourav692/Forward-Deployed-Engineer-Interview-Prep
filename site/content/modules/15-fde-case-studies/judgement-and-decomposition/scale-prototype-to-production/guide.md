@@ -2,8 +2,6 @@
 
 *The prototype proved the answer is useful to a hundred forgiving users, and nothing about how it behaves for a hundred thousand who did not ask for it.*
 
-◷ 26 min
-
 Scaling a prototype a thousandfold is not a bigger deployment of the same system. It is a different system that happens to share a prompt. This page is the day-before pack for this case, a standalone case with no group.
 
 | Source | What it contributes here |

@@ -2,8 +2,6 @@
 
 *A careful relevance judgement is too slow to run over a whole corpus and too valuable to skip, so retrieve wide and cheap, then judge narrow and expensive.*
 
-◷ 8 min
-
 The six passages the model sees should be the six best, not merely the six nearest. Over-fetch candidates with the searches in [Hybrid Search and Rank Fusion](/learn/llm-and-retrieval/retrieval-hybrid-rerank/hybrid-search-and-rank-fusion), then rerank, diversify, filter and trim them before generation.
 
 **Objectives:**

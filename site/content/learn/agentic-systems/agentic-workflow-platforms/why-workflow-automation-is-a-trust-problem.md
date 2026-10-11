@@ -2,8 +2,6 @@
 
 *A non-programmer wants to hand the system a button that moves real money, and the platform must make that button safe without asking them to read a line of code.*
 
-◷ 7 min
-
 An agent platform is not hard because a model has to pick a tool; that was solved years ago. Spend the design on trust, and read [Canonical Events and Routing](/learn/agentic-systems/agentic-workflow-platforms/canonical-events-and-routing) for the first of the three layers that deliver it.
 
 **Objectives:**

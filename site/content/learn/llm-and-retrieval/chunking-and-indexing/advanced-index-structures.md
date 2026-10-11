@@ -2,8 +2,6 @@
 
 *Trees, graphs, and image indexes answer questions a flat chunk index cannot, but each adds a construction pipeline that must be rebuilt or maintained as the corpus changes.*
 
-◷ 7 min
-
 A flat index of equal chunks answers questions whose answer sits inside one chunk; some questions do not. This lesson covers the index structures that add levels, links, or images, and how to tell when a corpus has earned one, building on [Retrieve Small, Return Large](/learn/llm-and-retrieval/chunking-and-indexing/retrieve-small-return-large).
 
 **Objectives:**

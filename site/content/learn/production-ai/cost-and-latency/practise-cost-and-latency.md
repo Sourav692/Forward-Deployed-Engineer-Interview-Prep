@@ -2,8 +2,6 @@
 
 *Every incident and case reuses the same few moves, so practise the moves rather than memorising fifteen separate answers.*
 
-◷ 7 min
-
 Cost and latency questions come as incidents ("it got slow") and as design cases ("build it under a budget"). Answer each one below aloud, then compare; every answer uses only the concepts from the earlier lessons in this module.
 
 **Objectives:**

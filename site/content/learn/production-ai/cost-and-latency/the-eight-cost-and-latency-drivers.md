@@ -2,8 +2,6 @@
 
 *Every lever that cuts cost or latency also cuts something else, so learn each driver together with what its fix puts at risk.*
 
-◷ 7 min
-
 The playbook lists 18 cost drivers and 17 latency drivers, but only a few deserve memory. Seven appear on both lists, and one more runs silently in the background; learn those eight in the order a request travels, as set out in [Why Cost and Latency Decide Production](/learn/production-ai/cost-and-latency/why-cost-and-latency-decide-production).
 
 **Objectives:**

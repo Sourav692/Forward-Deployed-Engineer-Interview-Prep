@@ -2,8 +2,6 @@
 
 *A model judge is often the only scalable way to score open-ended output, yet until it is checked against humans it is an unmeasured instrument producing confident numbers.*
 
-◷ 5 min
-
 An LLM judge is a classifier, and an unvalidated classifier is not ground truth. Design the rubric so the judge must show its evidence. Then calibrate it against human labels before trusting any score; the gate in [Release Gates: Safety, Quality, and Cost](/learn/production-ai/evaluation-and-release-gates/release-gates-safety-quality-and-cost) depends on it.
 
 **Objectives:**

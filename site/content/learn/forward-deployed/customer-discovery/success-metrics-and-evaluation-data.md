@@ -2,8 +2,6 @@
 
 *A model benchmark is easy to quote, but the customer judges the whole workflow, so success has to be defined on the application before anything is built.*
 
-◷ 5 min
-
 Accuracy is not a success metric until someone has said accurate at what, on which data, compared with whom. Define the metrics and the evaluation set during discovery, straight after [The Discovery Conversation](/learn/forward-deployed/customer-discovery/the-discovery-conversation), because they decide what the decomposition must produce.
 
 **Objectives:**

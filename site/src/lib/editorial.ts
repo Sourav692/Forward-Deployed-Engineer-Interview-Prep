@@ -76,8 +76,6 @@ export type EditorialMeta = {
   prerequisites: string[]
   outcomes: string[]
   howToUse: string
-  /** Minutes. Reading pages compute this from word count per tab instead. */
-  minutes: number | null
   sourceStatus: SourceStatus
   /** Behavioural pages: the model answers contain `[FILL: …]` slots. */
   personalisation?: boolean
@@ -362,6 +360,20 @@ export const TABS: Record<string, { label: string; purpose: string }> = {
 /** Reading speed used for expected-time estimates. Dense technical prose, so slow. */
 export const WORDS_PER_MINUTE = 180
 
+/**
+ * Whole minutes to read a markdown document: words outside code fences (diagrams and
+ * code are not read word by word) at WORDS_PER_MINUTE, rounded up, never zero. The one
+ * reading-time rule (ENH-22): the Learn and casebook syncs and the pages all call it, so
+ * a page and its listing show the same time.
+ */
+export function readingMinutes(markdown: string): number {
+  const words = markdown
+    .replace(/```[\s\S]*?```/g, ' ')
+    .split(/\s+/)
+    .filter((w) => /[A-Za-z0-9]/.test(w)).length
+  return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))
+}
+
 // ---------------------------------------------------------------- Last-Day Review
 
 export type Review = {
@@ -508,7 +520,6 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
     howToUse:
       'Time-box it to about 45 minutes. Draft each section before opening its model answer — ' +
       'a rough attempt teaches more than a blank one, and you do not need to fill every cell.',
-    minutes: 45,
     sourceStatus: 'original',
     // Fact-check round 2 (CONTENT-18): external claims checked against official docs.
   },
@@ -527,7 +538,6 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
     howToUse:
       'Allow about an hour. Work the discovery sections properly — they decide the design — ' +
       'then compare each section with the model answer and score yourself honestly.',
-    minutes: 60,
     sourceStatus: 'derived',
     // Fact-check round 2 (CONTENT-18): external claims checked against official docs.
   },
@@ -545,7 +555,6 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
     howToUse:
       'Read the sample answer, practise the structure in your own words, and choose a status ' +
       'for each question. Use the Story Bank to find a real experience that fits the question.',
-    minutes: 40,
     sourceStatus: 'personal',
     personalisation: true,
   },
@@ -560,7 +569,6 @@ const CASE_STUDY_BASE: Omit<EditorialMeta, 'difficulty' | 'outcomes'> = {
   howToUse:
     'Read the tabs in order. The Interview Guide stands alone; later tabs assume it. Mark ' +
     'each tab as read to track the case as one unit.',
-  minutes: null,
   sourceStatus: 'sourced',
 }
 
@@ -639,7 +647,6 @@ export const REVISION_META: EditorialMeta = {
   howToUse:
     'Read the Interview Review once, then test yourself with the One-Page Recall Card. If a ' +
     'concept is new rather than rusty, open the “learn first” link instead.',
-  minutes: 12,
   sourceStatus: 'original',
 }
 
@@ -654,7 +661,6 @@ export const ORIENTATION_META: EditorialMeta = {
   howToUse:
     'Read it once end to end before the reviews. Come back to the mental model whenever a ' +
     'review feels disconnected from the rest.',
-  minutes: null,
   sourceStatus: 'original',
   // Fact-check round 2 (CONTENT-18).
 }
@@ -673,7 +679,6 @@ export const STORY_BANK_META: EditorialMeta = {
     'Learn the one-liners first. Then take a worksheet question, choose a story from ' +
     '"Stories that fit" and say it out loud. Replace the examples with your own stories ' +
     'before the interview.',
-  minutes: null,
   sourceStatus: 'personal',
 }
 
@@ -685,7 +690,6 @@ export const FINAL_REHEARSAL_META: EditorialMeta = {
   howToUse:
     'Read it the evening before or the morning of the interview. Anything that does not come ' +
     'back quickly points to the review to reopen.',
-  minutes: null,
 }
 
 /**
