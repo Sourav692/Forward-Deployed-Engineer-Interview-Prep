@@ -23,6 +23,7 @@ import { parseReading } from '../src/lib/reading.ts'
 import {
   FAMILY_META,
   CLASSIC_DESIGN_CASE,
+  LEVELS,
   RELATED_CASE,
   REQUIRED_META_FIELDS,
   REVIEWS,
@@ -358,6 +359,9 @@ for (const r of REVIEWS) {
     if (!pages.has(ref)) failures.push(`Review ${r.number}: links to "${ref}", which is not a published page`)
   }
 }
+// ENH-23: every case and worksheet has a level for the /design and /practice filters.
+for (const key of pages) if (!LEVELS[key]) failures.push(`LEVELS: "${key}" has no level in editorial.ts`)
+for (const key of Object.keys(LEVELS)) if (!pages.has(key)) failures.push(`LEVELS: "${key}" is not a published page`)
 for (const [practice, study] of Object.entries(RELATED_CASE)) {
   for (const ref of [practice, study]) {
     if (!pages.has(ref)) failures.push(`RELATED_CASE: "${ref}" is not a published page`)

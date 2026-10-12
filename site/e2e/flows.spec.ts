@@ -443,6 +443,27 @@ test('sequences: module pages and the Story Bank have prev and next', async ({ p
   await expect(page.getByRole('heading', { name: 'Objectives' })).toBeVisible()
 })
 
+// ENH-23: /design filters by theme, level and time; chips count, the URL keeps the choice.
+test('casebook filters: count, filter, survive a reload and clear', async ({ page }) => {
+  await page.goto('/design')
+  await hydrated(page)
+  const filters = page.getByRole('group', { name: 'Filter designs' })
+  const advanced = filters.getByRole('group', { name: 'Level' }).getByRole('button', { name: /^Advanced \(\d+\)$/ })
+  const n = Number((await advanced.textContent())!.match(/\((\d+)\)/)![1])
+  await advanced.click()
+  await expect(page).toHaveURL(/level=advanced/)
+  await expect(page.locator('#cases a[href^="/design/"]')).toHaveCount(n)
+  await page.reload()
+  await hydrated(page)
+  await expect(advanced).toHaveAttribute('aria-pressed', 'true')
+
+  await page.goto('/design?theme=model-development&level=foundation')
+  await hydrated(page)
+  await expect(page.getByText('No designs match these filters')).toBeVisible()
+  await page.getByRole('button', { name: 'Clear filters' }).click()
+  await expect(page).toHaveURL(/\/design$/)
+})
+
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
 // unmatched URL and for an unknown param on a prerendered route.
 for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case', '/practice/no-such-worksheet']) {

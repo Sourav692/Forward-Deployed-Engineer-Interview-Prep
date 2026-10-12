@@ -757,6 +757,92 @@ export const CLASSIC_DESIGN_CASE: Record<string, string> = {
   'logistics-exceptions-designing-around-a-policy-gate': 'agents-that-act/logistics-exception-handling',
 }
 
+/** How demanding a case or worksheet is, for the /design and /practice filters (ENH-23). */
+export type Level = 'foundation' | 'core' | 'advanced'
+
+export const LEVEL_LABEL: Record<Level, string> = { foundation: 'Foundation', core: 'Core', advanced: 'Advanced' }
+
+/**
+ * The level of every case and worksheet, keyed by `track/slug` (ENH-23; the owner reviews
+ * these). Foundation: a single well-known system, a first worksheet. Core: the usual
+ * interview depth. Advanced: scale, isolation, platforms or staff-level judgement.
+ * check:content fails when a published case or worksheet has no level.
+ */
+export const LEVELS: Record<string, Level> = {
+  // core
+  'core/internal-knowledge-assistant': 'foundation',
+  'core/sales-copilot': 'foundation',
+  'core/financial-compliance-reviewer': 'foundation',
+  'core/healthcare-prior-auth-assistant': 'foundation',
+  'core/legal-contract-copilot': 'foundation',
+  'core/sre-triage-agent': 'foundation',
+  'core/multi-tenant-saas-support': 'foundation',
+  'core/retail-demand-explainer': 'foundation',
+  'core/service-now-ticket-agent': 'foundation',
+  'core/executive-dashboard-copilot': 'foundation',
+  // system-design
+  'system-design/enterprise-knowledge-assistant-rag': 'core',
+  'system-design/secure-multi-tenant-ai-platform': 'advanced',
+  'system-design/natural-language-to-sql-analytics-assistant': 'core',
+  'system-design/ai-customer-support-automation': 'core',
+  'system-design/ai-system-for-an-air-gapped-environment': 'advanced',
+  'system-design/llm-evaluation-and-release-gating-platform': 'advanced',
+  'system-design/high-volume-batch-inference-system': 'core',
+  'system-design/tool-using-ai-agent-with-safety-controls': 'core',
+  'system-design/reliable-workflow-orchestration-system': 'core',
+  'system-design/observability-customer-facing-ai-application': 'core',
+  'system-design/configurable-platform-customer-specific-workflows': 'core',
+  'system-design/enterprise-chatbot-platform': 'core',
+  // fde-competencies
+  'fde-competencies/customer-focus-and-discovery': 'foundation',
+  'fde-competencies/communication-and-influence': 'core',
+  'fde-competencies/pushback-and-saying-no': 'core',
+  'fde-competencies/delivery-under-pressure': 'core',
+  'fde-competencies/ownership-standards-and-failure': 'core',
+  'fde-competencies/scale-beyond-yourself': 'advanced',
+  'fde-competencies/leading-people': 'advanced',
+  // knowledge-retrieval
+  'knowledge-retrieval/enterprise-knowledge-assistant': 'foundation',
+  'knowledge-retrieval/nl-over-governed-data': 'core',
+  'knowledge-retrieval/document-review-copilot': 'core',
+  'knowledge-retrieval/deep-research-agent': 'advanced',
+  // agents-that-act
+  'agents-that-act/customer-support-automation': 'foundation',
+  'agents-that-act/tool-using-agent-with-safety-controls': 'core',
+  'agents-that-act/sre-incident-response-agent': 'core',
+  'agents-that-act/sales-copilot': 'foundation',
+  'agents-that-act/enterprise-coding-assistant': 'advanced',
+  'agents-that-act/real-time-call-assistant': 'advanced',
+  'agents-that-act/logistics-exception-handling': 'core',
+  // platforms-and-scale
+  'platforms-and-scale/secure-multi-tenant-ai-platform': 'advanced',
+  'platforms-and-scale/high-volume-batch-pipeline': 'core',
+  'platforms-and-scale/agent-platform-for-non-technical-users': 'advanced',
+  'platforms-and-scale/consumer-scale-chat-service': 'advanced',
+  'platforms-and-scale/llm-inference-serving': 'advanced',
+  // delivery-evaluation-operations
+  'delivery-evaluation-operations/scoping-to-deployed-agent': 'core',
+  'delivery-evaluation-operations/evaluation-and-release-gating': 'core',
+  'delivery-evaluation-operations/observability-and-production-diagnosis': 'core',
+  // model-development
+  'model-development/model-development-and-post-training': 'advanced',
+  // standalone-designs
+  'standalone-designs/recruiting-platform': 'core',
+  'standalone-designs/travel-agent-worked-example': 'foundation',
+  'standalone-designs/air-gapped-ai-system': 'advanced',
+  'standalone-designs/reliable-workflow-orchestration': 'core',
+  'standalone-designs/configurable-platform-customer-workflows': 'core',
+  'standalone-designs/enterprise-chatbot-platform': 'foundation',
+  'standalone-designs/self-adapting-agent': 'advanced',
+  'standalone-designs/personal-assistant-with-memory': 'core',
+  'standalone-designs/production-llm-gateway': 'core',
+  // judgement-and-decomposition
+  'judgement-and-decomposition/prioritize-ai-use-cases': 'foundation',
+  'judgement-and-decomposition/scale-prototype-to-production': 'core',
+  'judgement-and-decomposition/build-when-customer-data-is-poor': 'core',
+  'judgement-and-decomposition/decomposition-classics-67-68-69': 'foundation',
+}
+
 /**
  * Content-type qualifier appended where a scenario name is not unique across the site —
  * search results, breadcrumbs, browser titles and prev/next. The canonical title itself
