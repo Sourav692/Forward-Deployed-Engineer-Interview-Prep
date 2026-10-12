@@ -1,4 +1,4 @@
-# G11 — Deep Research Agent: Main Interview Guide
+# Deep Research Agent: Main Interview Guide
 
 **Research process** is: a question, hunt on the web and in *your* files, a cited brief. Failed hunt should look incomplete, not confident-fake.
 

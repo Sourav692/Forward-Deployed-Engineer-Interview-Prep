@@ -1,4 +1,4 @@
-# G13 — Evaluation and Release Gating: Main Interview Guide
+# Evaluation and Release Gating: Main Interview Guide
 
 **Release process** is: you want to change a prompt or model on a live app. A dashboard is not a decision. **Pass, block, or hold** is.
 

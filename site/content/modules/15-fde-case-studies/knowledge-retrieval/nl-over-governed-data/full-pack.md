@@ -7,7 +7,7 @@ The hard part of this system is not generating SQL. It is that a syntactically p
 | Case in the group | What it contributes here |
 |---|---|
 | #17 Natural-Language-to-SQL Analytics Assistant (anchor) | Sections 1 to 12: the design, requirements, validation, failure drills, evaluation, rollout and delivery |
-| #36 Executive Dashboard Copilot | The executive persona and variance explanation in sections 1 and 8; its escalate-to-analyst rule |
+| #36 Executive Dashboard Assistant | The executive persona and variance explanation in sections 1 and 8; its escalate-to-analyst rule |
 | #34 Retail Demand Forecast Explanation Assistant | The planner persona, driver attribution and the correlation-versus-causation risk in section 8 |
 | #13 From Supervisor to Deep Agent (governed data assistant at a large Asian life insurer) | The governed metric views, the Genie-versus-Multi-Tool split, the clarify-below-60% gate, and section 13's story |
 | Self-drill for #17 | Section 14, the cost pivot |
@@ -44,7 +44,7 @@ Map the people, because the three groups want different things and the architect
 | Data / platform engineer | Bounded blast radius: no whole-warehouse scans, no restricted-column leaks, no company-wide budget blowups | One ambiguous question exhausting concurrency | Read-only gateway, scan budgets, warehouse-native policies reused |
 | Metric owner | One versioned definition every consumer shares | Two answers to one question | The registry as the single artefact, with approval on change |
 
-The same design arrives with two more personas from the purchased worksheets. The Executive Dashboard Copilot user asks natural-language KPI questions. The copilot translates them to governed metrics, retrieves dashboard and data context, explains variance, cites metric definitions, and escalates uncertain answers to analysts. The Retail Demand Forecast Explanation Assistant user is a planner reviewing forecast variance who asks why demand changed. The assistant explains drivers using sales history, promotions, weather, inventory and events, and recommends human-reviewed planning actions. Neither changes the architecture. Both add a variance-explanation step after the query, which section 8 covers.
+The same design arrives with two more personas from the practice worksheets. The Executive Dashboard Assistant user asks natural-language KPI questions. The assistant translates them to governed metrics, retrieves dashboard and data context, explains variance, cites metric definitions, and escalates uncertain answers to analysts. The Retail Demand Forecast Explanation Assistant user is a planner reviewing forecast variance who asks why demand changed. The assistant explains drivers using sales history, promotions, weather, inventory and events, and recommends human-reviewed planning actions. Neither changes the architecture. Both add a variance-explanation step after the query, which section 8 covers.
 
 Declare the non-goals as a scope fence. This is not a system that lets users author write queries or modify data. It is not a general-purpose exploration tool for every table in the warehouse; it answers a governed set of business questions. And it is not responsible for defining what "revenue" means. That is a business decision the semantic layer records, not one the assistant makes on the fly.
 

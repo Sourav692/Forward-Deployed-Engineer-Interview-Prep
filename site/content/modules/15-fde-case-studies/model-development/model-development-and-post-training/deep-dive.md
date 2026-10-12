@@ -1,4 +1,4 @@
-# G19 — Model Development and Post-Training: Deep Dive
+# Model Development and Post-Training: Deep Dive
 
 > Read with the unchanged [source](/design/model-development-and-post-training#full-pack). The [Main guide](/design/model-development-and-post-training#main) is the interview path; the [Cheat Sheet](/design/model-development-and-post-training#cheat-sheet) is the recall card. Most design choices in the source are constructed from prompts and general practice, so distinguish assumptions from measured results.
 

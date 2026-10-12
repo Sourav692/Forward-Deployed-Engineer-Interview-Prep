@@ -1,4 +1,4 @@
-# G18 — Consumer-Scale Chat Service: Cheat Sheet
+# Consumer-Scale Chat Service: Cheat Sheet
 
 [Main](/design/consumer-scale-chat-service#main) · [Deep Dive](/design/consumer-scale-chat-service#deep-dive) · [Unchanged source](/design/consumer-scale-chat-service#full-pack)
 

@@ -71,7 +71,7 @@ All paths are relative to the repository root.
 | 13 (story beats) | The owner's own story notes, kept privately outside the repo |
 | 5 (router, fixed operations) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/05_Structured_Data_Routers_Connectors.md` |
 | 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #17 |
-| Not included | The V2 tutorial's section 5 working code, API contracts and contract tests beyond the hidden-column sketch; the V1 long tutorial; the purchased worksheets' blank templates; the insurer 15–20 minute deep-dive script, which repeats section 13 in fixed order |
+| Not included | The V2 tutorial's section 5 working code, API contracts and contract tests beyond the hidden-column sketch; the V1 long tutorial; the practice worksheets' blank templates; the insurer 15–20 minute deep-dive script, which repeats section 13 in fixed order |
 
 ### Fact-check sources (checked 27 Sep 2026)
 

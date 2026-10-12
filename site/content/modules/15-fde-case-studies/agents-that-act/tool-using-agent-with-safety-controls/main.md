@@ -1,4 +1,4 @@
-# G03 — Tool-Using Agent with Safety Controls: Main Interview Guide
+# Tool-Using Agent with Safety Controls: Main Interview Guide
 
 **Ops automation** is turning a messy email into a real system change: CRM note, refund, lookup.
 
@@ -41,7 +41,7 @@ The [source discovery table, §1](/design/tool-using-agent-with-safety-controls#
 
 If approval policy is unspecified, assume a human gate for irreversible actions; do not invent a permissive refund threshold.
 
-### G03 is the anchor for its variants
+### The anchor for its variants
 
 | Related case                                                   | What changes from G03                                                                                  |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |

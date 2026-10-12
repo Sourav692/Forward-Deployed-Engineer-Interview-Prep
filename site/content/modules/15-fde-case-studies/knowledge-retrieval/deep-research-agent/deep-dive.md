@@ -1,4 +1,4 @@
-# G11 — Deep Research Agent: Deep Dive
+# Deep Research Agent: Deep Dive
 
 > Read with the unchanged [source](/design/deep-research-agent#full-pack). The [Main guide](/design/deep-research-agent#main) gives the interview flow; the [Cheat Sheet](/design/deep-research-agent#cheat-sheet) is the recall card.
 

@@ -1,4 +1,4 @@
-# G09 — Enterprise Coding Assistant: Main Interview Guide
+# Enterprise Coding Assistant: Main Interview Guide
 
 **Coding in an IDE** is type, get a suggestion, keep going. If the ghost text is late, you already typed past it. If it used a repo you cannot clone, that’s a leak.
 

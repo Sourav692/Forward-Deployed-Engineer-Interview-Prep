@@ -1,4 +1,4 @@
-# G06 — Natural Language over Governed Data: Cheat Sheet
+# Natural Language over Governed Data: Cheat Sheet
 
 Use the [Main guide](/design/nl-over-governed-data#main) for the spoken answer, the [Deep Dive](/design/nl-over-governed-data#deep-dive) for mechanisms, and the unchanged [source](/design/nl-over-governed-data#full-pack) for the full case.
 

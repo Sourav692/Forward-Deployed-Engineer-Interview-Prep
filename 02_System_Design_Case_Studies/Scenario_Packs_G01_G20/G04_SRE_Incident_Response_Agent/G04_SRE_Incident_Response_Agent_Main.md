@@ -42,7 +42,7 @@ The [source discovery, §1](G04_SRE_Incident_Response_Agent.md#1-name-the-read-o
 
 If the interviewer cannot provide all numbers, state assumptions for throughput, latency, horizon, accuracy, cost, autonomy, data class, and recovery. Name the oracle: post-incident review of the hypothesis and outcome.
 
-### G04 is the anchor for its incident variants
+### The anchor for its incident variants
 
 | Related case                                    | What changes from G04                                                                                           |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |

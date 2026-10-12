@@ -1,4 +1,4 @@
-# G16 — Real-Time Call Assistant: Deep Dive
+# Real-Time Call Assistant: Deep Dive
 
 > Read with the unchanged [source](/design/real-time-call-assistant#full-pack). The [Main guide](/design/real-time-call-assistant#main) is the interview path; the [Cheat Sheet](/design/real-time-call-assistant#cheat-sheet) is the recall card. The source marks much of the architecture and the 2-second stage budget as its own construction; validate those assumptions with production measurements.
 

@@ -16,7 +16,7 @@ Use the [Main guide](G05_Sales_Copilot_Main.md) for the spoken answer. This is t
 | Support history | Account tickets/escalations | Account/tenant scope; severity can be mis-summarized. |
 | Warehouse | Usage, ROI pilots, renewals; often daily | Row-level account/role scope; internal ROI is not an approved external claim. |
 
-Each record needs stable ID, owner, updated time, and ACL metadata; exclude unmapped sources. User feedback is not ground truth until SME approval. The source notes that its detailed CRM permission model and structured router are additions to the pack based on cross-cutting references, not claims made by the purchased worksheet alone.
+Each record needs stable ID, owner, updated time, and ACL metadata; exclude unmapped sources. User feedback is not ground truth until SME approval. The source notes that its detailed CRM permission model and structured router are additions to the pack based on cross-cutting references, not claims made by the practice worksheet alone.
 
 ## 2. Identity and CRM sharing mirror
 

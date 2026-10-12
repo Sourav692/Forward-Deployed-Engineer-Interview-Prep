@@ -1,4 +1,4 @@
-# G04 — SRE Incident Response Agent: Deep Dive
+# SRE Incident Response Agent: Deep Dive
 
 The [Main guide](/design/sre-incident-response-agent#main) is the spoken answer. This is its technical backup; the unchanged [source case](/design/sre-incident-response-agent#full-pack) has the complete reference and interview scripts.
 

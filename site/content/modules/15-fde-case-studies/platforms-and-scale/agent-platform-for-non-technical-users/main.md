@@ -1,4 +1,4 @@
-# G15 — Agent Platform for Non-Technical Users: Main Interview Guide
+# Agent Platform for Non-Technical Users: Main Interview Guide
 
 **No-code agent process** is: a support lead draws a workflow — reply, tag, refund — without writing Python. The hard part is a real refund happening **once**, and stopping if the box crashes.
 

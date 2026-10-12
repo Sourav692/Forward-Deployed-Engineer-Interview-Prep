@@ -166,6 +166,23 @@ function nameFrom(mainMarkdown, folder) {
   return match ? match[1] : folder.replace(/^G\d+_/, '').replace(/_/g, ' ')
 }
 
+/**
+ * Case headings drop the internal codes authors work with (audit check PQ-08): the pack
+ * code in `# G01 — Enterprise Knowledge Assistant: Interview Guide` and a trailing problem
+ * number like `(#73)`. The sources keep them. Lines inside code fences are left alone.
+ */
+function stripHeadingCodes(markdown) {
+  let fenced = false
+  return markdown
+    .split('\n')
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) fenced = !fenced
+      if (fenced || !/^#{1,6} /.test(line)) return line
+      return line.replace(/^(#{1,6} )G\d{2} [—–-] /, '$1').replace(/ \(#\d+\)\s*$/, '')
+    })
+    .join('\n')
+}
+
 async function listGroups(root) {
   const entries = await readdir(root, { withFileTypes: true })
   const groups = new Map()
@@ -317,7 +334,7 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)
         if (!existsSync(file)) throw new Error(`Missing ${tab.label} document: ${file}`)
-        const markdown = unlinkRepoLinks(rewriteLinks(stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file, ctx))
+        const markdown = stripHeadingCodes(unlinkRepoLinks(rewriteLinks(stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file, ctx)))
         await writeFile(join(outBase, `${tab.id}.md`), markdown)
         minutes += readingMinutes(markdown)
       }

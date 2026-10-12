@@ -124,7 +124,7 @@ All paths are relative to the repository root.
 | 6, 7 (identity, secrets, structured-data router, connector registry) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md` and `05_Structured_Data_Routers_Connectors.md` |
 | 13 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 3 (and case 6 for the G16 sibling), §4 and §5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, row 40 |
 | 10, 14 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/07_eval_regression.md` |
-| Added for this pack | The permission model column in section 3, all of section 6, the router table and fixed-operations argument in section 7, the unsupported-claim row in section 10, and the trade-offs table in section 11. None of these are in the purchased key |
+| Added for this pack | The permission model column in section 3, all of section 6, the router table and fixed-operations argument in section 7, the unsupported-claim row in section 10, and the trade-offs table in section 11. None of these are in the answer key |
 
 ### Fact-check sources (checked 27 Sep 2026)
 

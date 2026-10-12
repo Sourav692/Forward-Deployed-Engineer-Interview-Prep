@@ -1,4 +1,4 @@
-# G08 — Document Review Copilot: Deep Dive
+# Document Review Copilot: Deep Dive
 
 The [Main guide](/design/document-review-copilot#main) is the spoken design; the unchanged [source study](/design/document-review-copilot#full-pack) holds the full cases. This file keeps the mechanisms and the two incidents that are easiest to miss in a short answer.
 

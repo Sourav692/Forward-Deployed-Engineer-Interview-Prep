@@ -1,4 +1,4 @@
-# G18 — Consumer-Scale Chat Service: Main Interview Guide
+# Consumer-Scale Chat Service: Main Interview Guide
 
 **Consumer chat** is ChatGPT-shaped: many people, many turns, stream tokens, remember the thread, don’t go bankrupt on GPUs. The **model is stateless**; the **product is not**.
 

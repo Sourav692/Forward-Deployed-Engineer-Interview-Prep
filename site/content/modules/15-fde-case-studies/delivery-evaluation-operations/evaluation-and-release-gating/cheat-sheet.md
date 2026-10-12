@@ -1,4 +1,4 @@
-# G13 — Evaluation and Release Gating: Cheat Sheet
+# Evaluation and Release Gating: Cheat Sheet
 
 [Main](/design/evaluation-and-release-gating#main) · [Deep Dive](/design/evaluation-and-release-gating#deep-dive) · [Unchanged source](/design/evaluation-and-release-gating#full-pack)
 

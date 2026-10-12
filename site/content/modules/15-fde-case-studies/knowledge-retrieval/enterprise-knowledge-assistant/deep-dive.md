@@ -1,4 +1,4 @@
-# G01 — Enterprise Knowledge Assistant: Deep Dive
+# Enterprise Knowledge Assistant: Deep Dive
 
 This is the technical backup for the Main Interview Guide. It keeps the details you may need when the interviewer goes deeper.
 

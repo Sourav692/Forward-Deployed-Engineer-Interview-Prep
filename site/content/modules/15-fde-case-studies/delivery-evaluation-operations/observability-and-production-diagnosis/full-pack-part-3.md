@@ -1,6 +1,6 @@
 # Observability and Production Diagnosis for a Customer-Facing AI Application, part 3
 
-## 11. Walk Through the Cost Spike (#88)
+## 11. Walk Through the Cost Spike
 
 Production GenAI systems fail economically as well as technically. Incident #88 produced no quality complaint at all. The only symptom was a budget alert.
 

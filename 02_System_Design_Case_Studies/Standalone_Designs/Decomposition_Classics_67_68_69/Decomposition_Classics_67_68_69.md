@@ -69,7 +69,7 @@ The G12 pack carries the matching delivery mechanics: stage gates, named sign-of
 
 ---
 
-## 5. Decompose #67: Define "Faster" Before Touching the Data
+## 5. Decompose the 911 Problem: Define "Faster" Before Touching the Data
 
 *Everything in this section is (own construction). Numbers are assumptions.*
 

@@ -66,7 +66,7 @@ The question bank's second failure mode is hand-waving evaluation. Tie every des
 
 Ship model and prompt changes through a release gate with a canary slice, as G13 designs it. A system prompt change is a release, because it also changes the cache prefix and the cost line.
 
-## 13. Answer the Anthropic Wording the Same Way (#78)
+## 13. Answer the Anthropic Wording the Same Way
 
 "Design the Claude chat service" is the same prompt as "Design ChatGPT", and the design above answers it unchanged. The sheet records no content delta. The emphasis differs, and saying so shows the candidate read the room *(own construction)*.
 

@@ -42,7 +42,7 @@ The [source discovery, §1](G05_Sales_Copilot.md#1-name-the-workflow-and-the-ris
 
 If these answers are missing, keep the first release read-only, restrict sources to approved accounts, and treat external drafts and CRM writes as gated.
 
-### G05 is the anchor for its sales-assistant variants
+### The anchor for its sales-assistant variants
 
 | Related case                          | What changes from G05                                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- |

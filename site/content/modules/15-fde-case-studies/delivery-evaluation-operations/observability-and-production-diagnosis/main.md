@@ -1,4 +1,4 @@
-# G14 — Observability and Production Diagnosis: Main Interview Guide
+# Observability and Production Diagnosis: Main Interview Guide
 
 **Diagnosis process** is: a user says “it’s slow and sometimes wrong.” You need the hop that hurt — without turning traces into a second copy of their tickets.
 

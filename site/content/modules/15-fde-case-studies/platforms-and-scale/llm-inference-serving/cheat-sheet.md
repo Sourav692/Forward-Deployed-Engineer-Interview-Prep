@@ -1,4 +1,4 @@
-# G20 — LLM Inference Serving: Cheat Sheet
+# LLM Inference Serving: Cheat Sheet
 
 [Main](/design/llm-inference-serving#main) · [Deep Dive](/design/llm-inference-serving#deep-dive) · [Unchanged source](/design/llm-inference-serving#full-pack)
 

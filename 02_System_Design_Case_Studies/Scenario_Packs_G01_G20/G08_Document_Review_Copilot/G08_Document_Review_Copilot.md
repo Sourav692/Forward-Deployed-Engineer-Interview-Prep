@@ -4,12 +4,12 @@
 
 ◷ 31 min
 
-The three personas in this group look like three products: a prior-authorisation assistant, a compliance reviewer, a contract copilot. They are one system with one spine. A document comes in. Structure is extracted and compared against a policy, a playbook or clinical criteria. Gaps are flagged, risk is classified, and material cases go to a human who decides. This page consolidates the group's prompts into one read for the day before. The purchased answer keys are templated. So the argument here is built from their workflows, records, risks and rollout, plus the vendor's prior-authorisation case. Anything constructed for this page rather than taken from a source is labelled as such.
+The three personas in this group look like three products: a prior-authorisation assistant, a compliance reviewer, a contract copilot. They are one system with one spine. A document comes in. Structure is extracted and compared against a policy, a playbook or clinical criteria. Gaps are flagged, risk is classified, and material cases go to a human who decides. This page consolidates the group's prompts into one read for the day before. The answer keys are templated. So the argument here is built from their workflows, records, risks and rollout, plus the vendor's prior-authorisation case. Anything constructed for this page rather than taken from a source is labelled as such.
 
 | Case in the group | What it contributes here |
 |---|---|
 | #30 Healthcare Prior Authorisation Assistant (anchor) | Sections 1 to 10: the design, the PHI boundary, the payer-rule versioning, the spoken answer; the vendor PDF's personas, workflow, red-team list and rollout phases |
-| #29 Financial Compliance Document Reviewer | The rule-citation and risk-classification variant in sections 3 and 7; the red-team mock in section 12 |
+| #29 Financial Compliance Review Copilot | The rule-citation and risk-classification variant in sections 3 and 7; the red-team mock in section 12 |
 | #31 Legal Contract Review Copilot | The clause-versus-playbook variant and fallback language in sections 3 and 7 |
 | #47 OpenAI-style Q3 Claims-Processing Assistant (practice case) | The lower-risk-first ordering in section 10 and its follow-up in section 11 |
 | #56 OpenAI-style Q12 Deploying AI in a Highly Regulated Industry (practice case) | The governance checklist in section 8 and its follow-up in section 11 |

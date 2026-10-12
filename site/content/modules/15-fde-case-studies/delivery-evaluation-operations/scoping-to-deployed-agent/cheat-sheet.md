@@ -1,4 +1,4 @@
-# G12 — Scoping to Deployed Agent: Cheat Sheet
+# Scoping to Deployed Agent: Cheat Sheet
 
 [Main](/design/scoping-to-deployed-agent#main) · [Deep Dive](/design/scoping-to-deployed-agent#deep-dive) · [Unchanged source](/design/scoping-to-deployed-agent#full-pack)
 

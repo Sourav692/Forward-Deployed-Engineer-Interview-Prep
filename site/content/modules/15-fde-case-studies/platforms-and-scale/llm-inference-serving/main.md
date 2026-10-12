@@ -1,4 +1,4 @@
-# G20 — LLM Inference Serving: Main Interview Guide
+# LLM Inference Serving: Main Interview Guide
 
 > **Source:** [Sources and Full Design](/design/llm-inference-serving#full-pack), especially §§1–11 for the anchor and §§12–15 for variants. Use the [Deep Dive](/design/llm-inference-serving#deep-dive) for scheduling, KV and failover mechanics and the [Cheat Sheet](/design/llm-inference-serving#cheat-sheet) for rehearsal. The source states that its serving design and all capacity figures are constructed examples, not measurements of an actual engine.
 

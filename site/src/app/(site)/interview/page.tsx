@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMetadata({
   path: '/interview',
   title: 'Interview',
   description:
-    'Interview preparation: case-study worksheets, mock interviews and scorecards, and the final-week review.',
+    'Interview preparation: technical worksheets, mock interviews and scorecards, and the final-week review.',
 })
 
 /** Company loops is a company-prep module; it is surfaced under Company Prep, not here. */
@@ -56,7 +56,7 @@ export default async function InterviewPage() {
       <AreaSection
         id="practice-modules"
         title="Interview Practice and Revision"
-        description="Prove readiness under realistic conditions: case-study worksheets, mock interviews with scorecards, and the final week."
+        description="Prove readiness under realistic conditions: technical worksheets, mock interviews with scorecards, and the final week."
       >
         <div className="space-y-2">
           {practiceModules.map((m) => (

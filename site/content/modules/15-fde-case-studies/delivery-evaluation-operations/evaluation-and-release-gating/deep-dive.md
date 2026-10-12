@@ -1,4 +1,4 @@
-# G13 — Evaluation and Release Gating: Deep Dive
+# Evaluation and Release Gating: Deep Dive
 
 > Read with the unchanged [source](/design/evaluation-and-release-gating#full-pack). The [Main guide](/design/evaluation-and-release-gating#main) gives the interview flow; the [Cheat Sheet](/design/evaluation-and-release-gating#cheat-sheet) is the recall card.
 
@@ -18,7 +18,7 @@ Pin a production baseline and compare deltas, not only absolute scores. Quality 
 
 LLM-as-judge is itself release logic. Pin its version and rubric hash, calibrate against human labels and audit disagreement, especially concise-correct versus verbose-wrong outputs. Use repeated trials and outcome equivalence for nondeterministic application behaviour. Keep a hidden holdout and refresh suites when they stop distinguishing candidates. Online thumbs-down and corrections are leads for new cases, not labels by themselves.
 
-## 4. Incident #91: aggregate success, slice failure
+## 4. Incident: aggregate success, slice failure
 
 A sales copilot changed its model route while a claim policy changed from block to warn-only. Its 120-case offline suite passed at 96.7%, but only six cases tested regulated claims; that slice passed at 83.3%. Online unsupported claims rose to 8.7% from 1.2%, including unapproved security-certification and internal-pilot ROI claims. The failure is in release coverage and policy control, not simply “the model is creative.”
 

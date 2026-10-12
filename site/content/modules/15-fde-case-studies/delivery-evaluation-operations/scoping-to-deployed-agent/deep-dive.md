@@ -1,4 +1,4 @@
-# G12 — Scoping to Deployed Agent: Deep Dive
+# Scoping to Deployed Agent: Deep Dive
 
 > Read with the unchanged [source](/design/scoping-to-deployed-agent#full-pack). The [Main guide](/design/scoping-to-deployed-agent#main) is the interview route; the [Cheat Sheet](/design/scoping-to-deployed-agent#cheat-sheet) is the recall card.
 

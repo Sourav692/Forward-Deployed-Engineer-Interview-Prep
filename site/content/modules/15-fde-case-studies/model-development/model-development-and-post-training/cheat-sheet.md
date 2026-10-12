@@ -1,4 +1,4 @@
-# G19 — Model Development and Post-Training: Cheat Sheet
+# Model Development and Post-Training: Cheat Sheet
 
 [Main](/design/model-development-and-post-training#main) · [Deep Dive](/design/model-development-and-post-training#deep-dive) · [Unchanged source](/design/model-development-and-post-training#full-pack)
 

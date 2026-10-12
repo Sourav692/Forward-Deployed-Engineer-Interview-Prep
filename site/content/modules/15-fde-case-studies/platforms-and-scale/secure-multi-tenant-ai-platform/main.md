@@ -1,4 +1,4 @@
-# G07 — Secure Multi-Tenant AI Platform: Main Interview Guide
+# Secure Multi-Tenant AI Platform: Main Interview Guide
 
 **Multi-tenant AI** is one platform, many customers. Cheaper than a stack per customer. The failure is **Acme seeing Globex’s docs**, in a cache, a log, or a prompt.
 

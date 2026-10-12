@@ -17,7 +17,7 @@ That’s it: **who you are → what you may read → cited answer or stop.** Bui
 
 > **Core idea:** This is not primarily a vector-search problem. It is a permission-aware RAG problem. Different employees can ask the same question and legitimately need different answers.
 
-## G01 is the anchor case study
+## The anchor case study
 
 Use this guide as the **master case study** for enterprise RAG and knowledge-assistant interviews. Learn the shared architecture here, then adapt it to each variant's dominant constraint.
 

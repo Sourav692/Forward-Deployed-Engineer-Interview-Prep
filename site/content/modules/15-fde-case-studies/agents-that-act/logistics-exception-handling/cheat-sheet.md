@@ -1,4 +1,4 @@
-# G17 — Logistics Exception Handling: Cheat Sheet
+# Logistics Exception Handling: Cheat Sheet
 
 [Main](/design/logistics-exception-handling#main) · [Deep Dive](/design/logistics-exception-handling#deep-dive) · [Unchanged source](/design/logistics-exception-handling#full-pack)
 

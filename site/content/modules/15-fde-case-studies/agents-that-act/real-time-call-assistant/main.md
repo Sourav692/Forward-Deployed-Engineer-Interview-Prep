@@ -1,4 +1,4 @@
-# G16 — Real-Time Call Assistant: Main Interview Guide
+# Real-Time Call Assistant: Main Interview Guide
 
 **A sales call** has three clocks: hours before, three seconds while they talk, minutes after. Mixing those clocks makes the live panel freeze.
 
