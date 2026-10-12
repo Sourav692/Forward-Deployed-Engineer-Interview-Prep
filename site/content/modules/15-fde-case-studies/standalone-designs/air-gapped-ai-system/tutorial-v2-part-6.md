@@ -1,12 +1,12 @@
-# Chapter 7: Design an AI System for an Air-Gapped Environment, part 6
+# Design an AI System for an Air-Gapped Environment, part 6
 
 ## 7. Delivery Plan, Observability, and Business Impact
 
 ### From Prototype to Trusted Production
-- The prototype working is not the milestone — the milestone is the customer asking, with a straight face, when it can be trusted in production.
-- That question shifts the interview answer from architecture-only to delivery discipline: phased rollout, measurable gates, explicit owners, and a support model that survives the first incident.
-- In an air-gapped environment, delivery is part of the system design: if software cannot be moved, verified, installed, observed, and rolled back without improvisation, it's a promising demo, not a deployable solution.
-- The FDE answer: turn the prototype into an operational path that is safe enough for the enclave, boring enough for operators, and useful enough for users.
+- A working demo is only the start. The milestone is the customer seriously asking when they can rely on it in production.
+- Once that question lands, the interview moves past architecture into delivery. You now need a phased rollout, gates you can measure, named owners and a support model that holds up when the first incident hits.
+- Inside an air gap, delivery belongs to the design itself. If the team must improvise to move, verify, install, watch or roll back the software, what they have is an encouraging demo, not something they can deploy.
+- The FDE's job is to turn the prototype into an operating path: safe enough for the enclave, dull enough for operators, valuable enough for users.
 
 ### Four Phases That Move Risk Out of the Dark
 
@@ -24,128 +24,128 @@ flowchart LR
     style P4 fill:#efe,stroke:#464
 ```
 
-1. **Build a hardware-identical staging environment.**
-   - **Owner:** infrastructure/platform engineering, with security review from the enclave team.
-   - **Exit criteria:** staging node class, storage layout, GPU/CPU profile, OS image, and trust roots match production closely enough that install and runtime behaviour are representative.
-   - **Why it matters:** convenient staging hides the failures that matter later — package incompatibility, driver mismatch, disk layout issues, upgrade friction.
-2. **Practice signed transfer.**
-   - **Owner:** release engineering, with security and operations jointly observing the drill.
-   - **Exit criteria:** the team can move a release bundle across the controlled transfer path, verify signatures offline, and install it without reaching outside the boundary.
-   - **Why it matters:** the transfer process is often where the real system breaks — "someone will hand-carry it" is not enough unless the handoff is documented, repeatable, and auditable.
-3. **Canary on one node.**
-   - **Owner:** operations, with the product owner and incident responder on call.
-   - **Exit criteria:** one production node accepts the new release, serves real traffic, and meets agreed health thresholds for a defined observation window.
-   - **Why it matters:** the canary isolates risk — in a closed network you cannot rely on cloud-scale rollback shortcuts, so the first live node is proof that bundle, model, dependencies, and configuration all behave together.
-4. **Retain the tested rollback bundle and runbooks.**
-   - **Owner:** operations for execution, release engineering for artifact retention, technical lead for approval.
-   - **Exit criteria:** the previous known-good bundle, its signatures, rollback steps, operator checklist, and escalation path are stored, tested, and immediately usable.
-   - **Why it matters:** rollback is a prepared artifact, not a concept — if a release is bad, the team needs a trusted way back that doesn't require rebuilding confidence under pressure.
-- Each phase has an owner, a gate, and a way to stop before the problem spreads — that's the difference between staged rollout and wishful deployment.
+1. **Stand up a staging environment on identical hardware.**
+   - **Owner:** infrastructure or platform engineering, with a security review by the enclave team.
+   - **Exit criteria:** trust roots, OS image, GPU/CPU profile, storage layout and node class all match production, so install and runtime results are representative.
+   - **Why it matters:** a staging setup built for convenience masks the problems that bite later, such as package incompatibility, driver mismatch, disk layout surprises and painful upgrades.
+2. **Rehearse the signed transfer.**
+   - **Owner:** release engineering runs it; security and operations watch the drill together.
+   - **Exit criteria:** the team carries a release bundle along the controlled transfer path, checks its signatures offline and installs it with no call beyond the boundary.
+   - **Why it matters:** real systems often fail at the transfer step. A plan of "someone will hand-carry it" falls short unless the handoff is written down, repeatable and auditable.
+3. **Run a canary on a single node.**
+   - **Owner:** operations runs it, while the product owner and an incident responder stay on call.
+   - **Exit criteria:** a single production node takes the new release, handles real traffic and stays within the agreed health thresholds for a set observation window.
+   - **Why it matters:** the canary contains the risk. No cloud-scale rollback shortcut exists on a closed network. So the first live node must show that configuration, dependencies, model and bundle behave well together.
+4. **Keep a tested rollback bundle and its runbooks.**
+   - **Owner:** operations carries out a rollback, release engineering keeps the artifacts, and the technical lead approves.
+   - **Exit criteria:** the last known-good bundle sits stored, tested and ready for immediate use, along with its escalation path, operator checklist, rollback steps and signatures.
+   - **Why it matters:** treat rollback as a prepared artifact rather than an idea. When a release goes wrong, the team needs a trusted route back, not a scramble to rebuild confidence under pressure.
+- Each phase gets an owner, a gate and a stopping point before damage spreads. That separates a staged rollout from deployment by hope.
 
 ### Technical Health Metrics
 - **Offline install success rate**
-  - *Calculation:* successful offline installs / attempted offline installs over the same release window.
-  - *Source:* release logs, installer logs, node boot records.
+  - *Calculation:* offline installs that succeed divided by offline installs attempted, both counted over the same release window.
+  - *Data from:* installer logs, release logs and node boot records.
   - *Owner:* release engineering.
-  - *Alert threshold:* rate drops below baseline or fails on more than one staging/production node in a release cycle → stop expansion, investigate bundle integrity, dependency drift, environment mismatch.
+  - *Alert threshold:* a rate under baseline, or failures on more than one staging or production node in one release cycle, halts expansion. Check bundle integrity, dependency drift and environment mismatch.
 - **Signature verification failures**
-  - *Calculation:* count of bundle/artifact/manifest signature checks that fail during transfer or installation.
-  - *Source:* transfer logs and install-time verification logs.
-  - *Owner:* security engineering or release engineering, depending on local operating model.
-  - *Alert threshold:* any unexpected failure is a go/no-go blocker until root cause is understood.
+  - *Calculation:* how many signature checks on bundles, artifacts or manifests fail in transfer or at install.
+  - *Data from:* transfer logs, plus the verification logs written at install time.
+  - *Owner:* security engineering or release engineering, whichever the local operating model assigns.
+  - *Alert threshold:* treat any unexpected failure as a go/no-go blocker until the root cause is clear.
 - **Model throughput and latency**
-  - *Calculation:* documents/pages processed per unit time, plus request latency at the chosen percentile for user-facing paths.
-  - *Source:* service telemetry and local performance counters.
+  - *Calculation:* documents or pages handled per unit of time, together with request latency at the chosen percentile on user-facing paths.
+  - *Data from:* local performance counters and service telemetry.
   - *Owner:* platform or ML operations.
-  - *Alert threshold:* latency crosses the user-acceptable band or throughput falls below demand forecast → consider batching changes, model quantisation, hardware saturation, or queue limits.
+  - *Alert threshold:* when latency leaves the band users accept, or throughput drops under the demand forecast, look at queue limits, hardware saturation, model quantisation or batching changes.
 - **Capacity saturation**
-  - *Calculation:* fraction of CPU, GPU, memory, disk I/O, queue depth, or token budget consumed relative to safe operating headroom.
-  - *Source:* host metrics and service queues.
+  - *Calculation:* how much of the safe operating headroom is in use, across token budget, queue depth, disk I/O, memory, GPU or CPU.
+  - *Data from:* service queues and host metrics.
   - *Owner:* infrastructure or SRE.
-  - *Alert threshold:* sustained operation near ceiling capacity → trigger scaling action, load shedding, or workflow throttling before the system becomes unstable.
+  - *Alert threshold:* if the system runs close to its ceiling for a sustained period, scale up, shed load or throttle workflows before it turns unstable.
 - **Mean time to repair**
-  - *Calculation:* average elapsed time from incident declaration to service restoration.
-  - *Source:* incident timeline records.
-  - *Owner:* incident management and the primary on-call team.
-  - *Alert threshold:* repair time trending upward release over release → team likely lacks documentation, automation, or spare capacity.
+  - *Calculation:* the average time between declaring an incident and restoring service.
+  - *Data from:* incident timelines.
+  - *Owner:* incident management together with the primary on-call team.
+  - *Alert threshold:* if repair times climb from one release to the next, the team probably lacks documentation, automation or spare capacity.
 - **Release age**
-  - *Calculation:* elapsed time since the currently running approved bundle was signed off and deployed.
-  - *Source:* release registry and deployment records.
+  - *Calculation:* time elapsed since the approved bundle now running was signed off and deployed.
+  - *Data from:* deployment records and the release registry.
   - *Owner:* release manager.
-  - *Alert threshold:* release age too old → drift from latest security fixes/operational learnings; changing too quickly → not enough soak time.
+  - *Alert threshold:* a release that is too old has drifted away from the latest security fixes and operational lessons. Releases that change too fast get too little soak time.
 
 ### User and Business Metrics
-- Not the same as technical health — a system can be healthy and still not be adopted.
-- **Adoption metrics:** active users, documents submitted, repeat use, percentage of workflows completed without manual workarounds.
-- **Business outcome metrics:** time saved per case, reduction in manual review burden, increased throughput for analysts, fewer missed deadlines or rework cycles.
-- **Outcome owner:** usually the business sponsor or operations manager, with product and FDE support.
-- Connect the layers explicitly: if throughput improves but analysts don't trust the output, the product has not succeeded; if users adopt it but the process still needs manual correction, the workflow benefit is smaller than the demo suggests.
+- These are distinct from technical health. A perfectly healthy system can still go unused.
+- **Adoption metrics:** repeat use, active users, documents submitted, and the share of workflows done with no manual workaround.
+- **Business outcome metrics:** time saved on each case, a lighter manual review load, more analyst throughput, and fewer missed deadlines or rework cycles.
+- **Outcome owner:** normally the business sponsor or the operations manager, backed by product and the FDE.
+- Tie the layers together. Faster throughput means little if analysts distrust the output. And if users adopt it but still correct results by hand, the workflow gain is smaller than the demo implied.
 
 ### A Dashboard That Tells One Story
-- Not a wall of green indicators — it should show how user value flows through the stack.
+- Avoid a wall of green lights. The dashboard should trace how value for users depends on each layer of the stack.
 - **Top row: user outcome.**
-  - Documents processed per shift.
-  - Average turnaround time for a case.
-  - Share of cases completed with no manual fallback.
+  - Documents handled in each shift.
+  - Mean turnaround time per case.
+  - Proportion of cases finished without any manual fallback.
 - **Middle row: service behaviour.**
-  - Offline install success rate by release.
-  - Signature verification failures by transfer event.
-  - Model latency and throughput by node.
-  - Queue depth and saturation indicators.
+  - Offline install success rate for each release.
+  - Signature verification failures for each transfer event.
+  - Model latency and throughput per node.
+  - Indicators of queue depth and saturation.
 - **Bottom row: operational control.**
-  - Current release age.
-  - Rollback bundle availability.
-  - Open incidents and mean time to repair.
-  - Last successful signed transfer.
-- This structure answers the one question that matters in a closed network: is the user problem improving because the system is healthy, or is the system merely surviving while the workflow remains painful?
+  - Age of the release now running.
+  - Whether a rollback bundle is available.
+  - Mean time to repair, alongside open incidents.
+  - The most recent successful signed transfer.
+- Laid out this way, the dashboard settles the question that counts most in a closed network. Is the user's problem getting better because the system is healthy? Or is the system just staying alive while the workflow stays painful?
 
-> 🎯 **Interview Pointer:** Interviewers often ask "how would you dashboard this?" — the strongest answer is the three-row layout (user outcome / service behaviour / operational control), not a flat metrics list. It signals you think in terms of causal layers, not a wall of green.
+> 🎯 **Interview Pointer:** "How would you dashboard this?" comes up often. Answer with three rows (user outcome, service behaviour, operational control) rather than a flat list of metrics. It shows you reason in causal layers instead of collecting green lights.
 
 ### Ownership, Gates, and Rollback Triggers
-- **Product or business owner:** defines the case-review workflow and success criteria.
-- **Release engineering:** packages artifacts, signs bundles, manages release records.
-- **Security:** approves trust-root handling, transfer process, and audit evidence.
-- **Operations or SRE:** watches health metrics, runs the canary, executes rollback.
-- **ML or platform engineering:** owns model performance, runtime efficiency, and compatibility.
-- **Help desk or support lead:** triages user issues, training gaps, and documentation defects.
-- **Go/no-go gates:**
-  - The bundle verifies offline.
-  - The bundle is complete and compatible with the target node class.
-  - The staging run reproduces expected behaviour on hardware identical enough to production.
-  - The canary node stays inside latency, throughput, and saturation thresholds.
-  - The rollback bundle has been tested, not merely archived.
-- **Rollback triggers:** repeated signature failures, unexplained install failure, canary latency regression, rising error rate, or any evidence the release is compromising enclave integrity. "We'll debug it live" is not a strategy in an air-gapped setting — it's an admission the rollback path was never real.
+- **Product or business owner:** sets the case-review workflow and decides what success means.
+- **Release engineering:** packages the artifacts, signs the bundles and keeps the release records.
+- **Security:** signs off on trust-root handling, audit evidence and the transfer process.
+- **Operations or SRE:** monitors health metrics, runs the canary and carries out rollback.
+- **ML or platform engineering:** answers for model performance, runtime efficiency and compatibility.
+- **Help desk or support lead:** sorts user problems, training gaps and documentation defects.
+- **Go/no-go gates:** the first two apply the rule that no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible.
+  - Offline verification of the bundle passes.
+  - The bundle is complete and fits the target node class.
+  - On hardware close enough to production, the staging run shows the expected behaviour.
+  - Latency, throughput and saturation on the canary node stay within thresholds.
+  - Someone has actually tested the rollback bundle; archiving it is not enough.
+- **Rollback triggers:** signature failures that repeat, an install failure nobody can explain, a latency regression on the canary, a climbing error rate, or any sign that the release puts enclave integrity at risk. In an air-gapped setting, "we'll debug it live" is no plan. Saying it means the team never had a working way back.
 
 ### Standardisation Strategy
-- Clarifies what should be standardised across customers vs. remain local:
-  - **Configuration:** document types, retention rules, approval thresholds, queue limits, model choice among approved offline options, workflow routing rules.
-  - **Adapter:** importers for the customer's document sources, export connectors for case systems, translation layers mapping local formats into the analysis pipeline.
-  - **Shared service:** signature verification, bundle validation, audit logging, model serving primitives, the release registry — good candidates for reuse across enclaves.
-  - **Core product:** the document analysis engine, health-check framework, offline package manager, and rollback discipline — leverage points that improve every deployment.
-- Shows product thinking, not just implementation thinking — the FDE is not asked to handcraft one-off integrations forever; they turn repeated local pain into reusable product capability without breaking the customer's boundaries.
+- This sorts what should be the same for every customer from what should stay local:
+  - **Configuration:** approval thresholds, retention rules, document types, queue limits, which approved offline model to use, and the rules that route workflows.
+  - **Adapter:** importers that read the customer's document sources, connectors that export to case systems, and translation layers that map local formats into the analysis pipeline.
+  - **Shared service:** the release registry, audit logging, bundle validation, signature verification and model serving primitives. These are strong candidates to reuse across enclaves.
+  - **Core product:** the document analysis engine, the health-check framework, the offline package manager and the discipline of rollback. Improve these and every deployment benefits.
+- This split shows product thinking, not only implementation. The FDE should not hand-build one-off integrations forever. The goal is to turn repeated local pain into reusable product capability while respecting every customer boundary.
 
 ### Risk Register
-- **Risk:** missing transitive package in the offline bundle.
+- **Risk:** the offline bundle lacks a transitive package.
   - *Owner:* release engineering.
-  - *Mitigation:* dependency lockfiles, preflight bundle validation, staging install rehearsal.
-  - *Trigger:* install failure or unresolved import at boot.
-- **Risk:** signature mismatch during transfer.
+  - *Mitigation:* dependency lockfiles, a preflight check that validates the bundle, and an install rehearsed in staging.
+  - *Trigger:* an install fails, or an import cannot be resolved at boot.
+- **Risk:** signatures do not match during transfer.
   - *Owner:* security engineering.
-  - *Mitigation:* offline trust root validation, signed manifest checks, dual-control transfer steps.
-  - *Trigger:* any unexpected verification failure.
-- **Risk:** model latency exceeds user tolerance on one node.
+  - *Mitigation:* validating the trust root offline, checking signed manifests, and transfer steps that need dual control.
+  - *Trigger:* any verification failure nobody expected.
+- **Risk:** on one node, model latency goes beyond what users will tolerate.
   - *Owner:* platform or ML operations.
-  - *Mitigation:* smaller model variant, batching adjustment, or hardware reassignment.
-  - *Trigger:* canary latency regression or queue growth.
-- **Risk:** operators cannot support the workflow without tribal knowledge.
+  - *Mitigation:* a smaller variant of the model, adjusted batching, or moving the work to other hardware.
+  - *Trigger:* the canary shows a latency regression or queues keep growing.
+- **Risk:** operators need tribal knowledge to support the workflow.
   - *Owner:* support lead and technical lead.
-  - *Mitigation:* training, runbooks, alert explanations, incident drills.
-  - *Trigger:* repeated questions, stalled escalations, or inconsistent human handling.
+  - *Mitigation:* incident drills, runbooks, training, and explanations attached to alerts.
+  - *Trigger:* the same questions keep coming, escalations stall, or people handle cases inconsistently.
 
 ### The Delivery Story the Interviewer Wants to Hear
-- The prototype works, but the customer asks when it can be trusted in production; the answer is not "after more model tuning."
-- It is: move from prototype to staged rollout through a hardware-identical staging environment, a practised signed transfer, a one-node canary, and a tested rollback bundle with runbooks.
-- Measure offline install success rate, signature verification failures, throughput, latency, saturation, mean time to repair, and release age.
-- Keep technical health, model quality, adoption, and business outcome separate so you can see whether the product is actually improving the workflow.
-- Assign owners and gates so a bad release stops before it becomes an incident.
-- Measurable customer impact statement: the system is successful only when analysts adopt it, document handling gets faster and more consistent, and the operating team can keep it running inside the enclave without violating network, artifact, identity, or audit boundaries.
+- The prototype runs, and the customer wants to know when it will be production-ready. "After we tune the model some more" is the wrong reply.
+- The right reply takes four steps from prototype to staged rollout. Build staging on hardware identical to production, rehearse the signed transfer, run a canary on one node, and keep a tested rollback bundle with runbooks.
+- Track release age, mean time to repair, saturation, latency, throughput, signature verification failures and offline install success rate.
+- Track business outcome, adoption, model quality and technical health as separate layers. Only then can you tell whether the product really makes the workflow better.
+- Name owners and set gates, so a bad release halts before it turns into an incident.
+- Measurable customer impact statement: the system counts as a success only when analysts use it, documents are handled faster and more consistently, and the operating team keeps it running as maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries.

@@ -1,91 +1,91 @@
-# Chapter 17: Design a Configurable Platform for Customer-Specific Workflows, part 2
+# Design a Configurable Platform for Customer-Specific Workflows, part 2
 
 ## 3. Scale Estimates, SLOs, and Capacity
 
 ### Load Shape, Not Marketing Shape
 
-- The elegant first pass (one shared workflow engine, one config store, one validator, one deployment pipeline) is plausible at average load and breaks once you put a deadline on it.
-- The right estimate is not "how many customers do we have?" but "how many config changes, validations, activations, and approval events do we have at once, and what happens near a deadline?"
-- Illustrative assumption: 100 tenants, 50 workflow templates, 1,000 configuration versions per day — a mix of small edits, bulk template updates, and bursty release windows.
-  - Average: ~42 versions/hour.
-  - Peak (half of daily changes land in a 2-hour business window): ~250 versions/hour, before retries, validation failures, or approval re-submissions.
-  - Design for materially more than the average — often several times more — with a growth factor and headroom target, to survive release-day spikes without turning configuration into an outage.
+- A tidy first sketch has a single workflow engine, config store, validator and deployment pipeline, all shared. It holds up at average load. Add a deadline and it falls over.
+- Customer count is the wrong thing to estimate. Ask instead how many edits, validation runs, activations and approval events land together, and what happens to them as a deadline nears.
+- A working assumption: 100 tenants and 50 workflow templates, producing 1,000 configuration versions per day. That traffic mixes small edits, bulk template updates and bursts around release windows.
+  - Spread evenly, that is ~42 versions/hour.
+  - If half the day's changes arrive inside a 2-hour business window, the peak is ~250 versions/hour. Retries, failed validations and resubmissions come on top.
+  - Size well above the average, often by several times, with a growth factor and a headroom target. Then a release-day spike does not turn configuration into an outage.
 
 ### The Four-Step Capacity Envelope
 
-- Estimate in the order that changes architecture:
-  1. **Version intake and validation throughput.** Schema checks, policy checks, dependency checks, simulation/dry-run — if these add up to (my rough guess) 2–10 seconds of CPU-bound work or a few network calls, synchronous user feedback must be separated from asynchronous deeper checks. Immediate SLO: "did the edit save and return a clear result quickly?" Deeper guarantee: "did validation complete and promote/reject the version before the deployment window closes?"
-  2. **Deployment throughput.** Even if only a fraction of the 1,000 versions/day are promoted, deployments fan out across tenants, regions, or integrations — a single promoted template update might touch dozens of workflow instances or enqueue downstream sync jobs. Deployment capacity is driven by fan-out, not just the count of human edits.
-  3. **Limits for expressive power.** Hard limits on rules, custom fields, and plugin execution shape runtime cost early — e.g., a moderate field count per form, a bounded number of rule clauses per transition, short plugin execution windows with memory/network restrictions. These limits prevent one customer's customisation from consuming everyone else's shared service budget.
-  4. **State growth and retention.** Configuration history grows more slowly than event history but still matters — the question isn't just "how many records?" but "what must be retained for audit, rollback, and support, and for how long?" Keep the version graph compact, store deltas where useful, make rollback metadata first-class.
+- Work through the estimate in the order that moves the architecture:
+  1. **Version intake and validation throughput.** Validation means schema, policy and dependency checks plus a dry run. Say they cost 2–10 seconds of CPU-bound work (my rough guess) or a few network calls. Quick user feedback must then split from slower checks that run asynchronously. The near-term SLO: the edit saved and came back with a clear result, fast. The deeper promise: validation finished, and promoted or rejected the version, before the deployment window shut.
+  2. **Deployment throughput.** Perhaps only some of the 1,000 versions/day get promoted, but each promotion fans out across tenants, regions or integrations. One template update can reach dozens of workflow instances or queue downstream sync jobs. Fan-out sets deployment capacity, not the number of human edits.
+  3. **Limits for expressive power.** Hard caps on rules, custom fields and plugins pin down runtime cost early. Think of a moderate number of fields per form, a bounded count of rule clauses per transition, and short plugin runs with memory and network limits. Caps stop one customer's customisation from eating the shared budget every other tenant relies on.
+  4. **State growth and retention.** Event history outgrows configuration history, yet config history still counts. Record volume is half the question. The other half is what audit, rollback and support require you to keep, and for what period. Keep the version graph small, store deltas where they pay off, and treat rollback metadata as a first-class record.
 
 ### SLOs Tied to Customer Pain
 
-- **Availability:** Can users load the workflow editor, validate changes, and activate a version when they need to?
-- **Latency:** How long does the editor wait for save, validation preview, or approval routing results?
-- **Freshness:** After a configuration is approved, how quickly does the new version become active in the runtime path?
-- **Quality:** What fraction of deployments are rejected by validation, rolled back, or require manual intervention?
-- **Security:** Are tenant boundaries, approval permissions, plugin permissions, and audit trails enforced at the right control points?
-- **Cost:** What is the cost per validated version, per activated template, or per thousand workflow executions, and how does that change when customers add rules or plugins?
-- Latency budget is partitioned, not one number: save feels interactive, validation preview tolerates a little more delay, full deployment can be slower as long as it is reliable and observable. Making every step synchronous "because it feels simpler" is the wrong design.
+- **Availability:** When users need to, can they open the workflow editor, validate a change and activate a version?
+- **Latency:** How long does the editor sit waiting on a save, a validation preview or an approval routing result?
+- **Freshness:** Once a configuration is approved, how soon does the runtime path start using it?
+- **Quality:** What share of deployments fail validation, get rolled back, or need someone to step in by hand?
+- **Security:** Are audit trails, plugin and approval permissions, and tenant boundaries enforced at the right control points?
+- **Cost:** What does each validated version, activated template or thousand workflow executions cost, and how does adding rules or plugins change that?
+- Split the latency budget by step instead of quoting one figure. A save should feel instant and a validation preview may lag a little. Full deployment may take longer, provided you can trust and watch it. Making every step synchronous because it seems simpler is a mistake.
 
 ### Leverage and What Belongs in Core
 
-- Leverage decides whether a capability belongs in shared product code, in configuration, or in an adapter around a customer-specific integration:
+- Leverage tells you where a capability lives: shared product code, configuration, or an adapter around one customer's integration.
 
 $$ Leverage=\frac{Customers\ served\ by\ shared\ capability}{Engineering\ effort} $$
 
-- High leverage (e.g., an approval model used by 80 tenants) → deserves first-class core support.
-- Low leverage (one customer's fragile edge-case approval chain) → belongs in configuration, an adapter, or a narrowly scoped extension — do not drag the whole platform into that shape.
-- Support-cost matters too: a feature that seems reusable but creates expensive onboarding, debugging, or upgrade friction may have worse real leverage than a simpler, narrower design.
+- High leverage earns first-class core support. An approval model that 80 tenants use is an example.
+- Low leverage, such as one customer's brittle edge-case approval chain, goes into configuration, an adapter or a tightly scoped extension. Don't bend the whole platform around it.
+- Count support cost as well. A feature can look reusable yet bring costly onboarding, hard debugging or painful upgrades. Its real leverage may then trail a simpler, narrower design.
 
 ### A Whiteboard Estimate That Changes Component Choice
 
-- Naively keeping validation inside the same API that saves configuration seems fine until peak load is estimated: worst-case request time grows with the slowest rule set or plugin call, producing a brittle control plane where one slow tenant ties up capacity everyone else needs.
-- Once peak validation throughput and deployment fan-out are estimated, the architecture shifts:
+- The naive plan validates inside the API that also saves the configuration. That looks fine until you estimate peak load. Worst-case request time then tracks the slowest rule set or plugin call, and one slow tenant holds capacity everyone else needs. The control plane turns brittle.
+- With peak validation throughput and deployment fan-out on the board, the design changes:
   - Save → fast and durable.
   - Validation → queued, bounded, observable.
-  - Deployment → idempotent, retryable, separated from authoring traffic.
-- The rate and cost of validation/deployment — not the raw count of tenants — is the estimate that most strongly affects component selection and partitioning.
+  - Deployment → idempotent and retryable, kept apart from authoring traffic.
+- Tenant count matters less than you might think. Component choice and partitioning depend most on how often validation and deployment run, and what each run costs.
 
 ### Sensitivity Table Across Growth Scenarios
 
-These volumes and peak factors are illustrative numbers I'd pick for this case, not industry figures — defend them, don't quote them.
+I picked these volumes and peak factors for this case. They are not industry benchmarks: justify them, don't cite them.
 
 | Scenario | Daily config versions | Peak factor | Operational implication |
 |---|---|---|---|
-| Baseline | 1,000 | ~6x (the 2-hour window above) | Single shared validator may be enough if work is mostly asynchronous |
-| Moderate growth | 10,000 | 3x–5x | Queue separation, worker pools, stricter limits on plugin time |
-| Aggressive growth | 100,000 (100x baseline) | 5x+ | Stronger tenant isolation, sharded queues, explicit per-tenant quotas |
+| Baseline | 1,000 | ~6x (the 2-hour window above) | One shared validator can cope if most of the work runs asynchronously |
+| Moderate growth | 10,000 | 3x–5x | Separate queues, pools of workers, tighter caps on plugin run time |
+| Aggressive growth | 100,000 (100x baseline) | 5x+ | Explicit quotas per tenant, sharded queues, firmer tenant isolation |
 
-- 10x growth does not just increase cost — it can force a different partitioning strategy. The same is true for custom fields/rules: highly branched forms with many calculated fields may need compile-time validation, partial evaluation, or cached execution plans; common plugin execution may need sandboxing or an adapter boundary instead of direct in-process execution.
+- Growth of 10x raises more than cost; it can demand a new partitioning strategy. Custom fields and rules behave the same way. Deeply branched forms full of computed fields may call for cached execution plans, partial evaluation, or checks done at compile time. Plugins that run often may need a sandbox or an adapter boundary instead of running in-process.
 
-> 🎯 **Interview Pointer:** Be ready to explain *why* 10x growth forces a partitioning change rather than just "more servers" — the answer is tenant noisy-neighbour risk crossing a threshold where a shared validator/queue can no longer contain one bad tenant's blast radius. This is the kind of qualitative reasoning interviewers reward over spreadsheet precision.
+> 🎯 **Interview Pointer:** Expect a follow-up on *why* 10x growth calls for new partitioning and not just extra servers. The reason is noisy-neighbour risk. Past a certain point, a shared validator or queue can no longer keep one misbehaving tenant's blast radius contained. Interviewers value that reasoning more than a precise spreadsheet.
 
 ### Average vs. Peak: Headroom as a Product Feature
 
-- Average load tells you whether the system is economically plausible. Peak load tells you whether customers trust it on their worst day.
-- Headroom (the gap between average and peak) is not wasted capacity — it is what keeps a release window, approval rush, or large tenant onboarding from becoming the moment the platform betrays its promise.
-- Unit economics question: not just "can we afford to run this?" but "can we afford to run this with the support burden it creates?" A design with low runtime cost but high operational toil may lose to a slightly more expensive design that is easier to support, roll back, and explain.
+- Average load shows whether the system makes economic sense. Peak load shows whether customers can rely on it on their worst day.
+- Headroom is the gap between average and peak, and it is not waste. It stops a release window, a rush of approvals or a big tenant onboarding from becoming the day the platform breaks its promise.
+- Widen the unit economics question. Running cost is one part; the support load the design creates is the other. A cheap design that needs constant hands-on work can lose to a slightly dearer one that is simpler to roll back, explain and support.
 
 ### Decision Rule to Carry Forward
 
-- Treat every estimate as a design lever. If a number does not change a component boundary, a queue, a quota, a latency budget, or a support process, it is probably trivia. If it does, write it down and defend it.
+- Every estimate should act as a design lever. Does the number move a queue, a quota, a latency budget, a support process or a component boundary? If not, it is likely trivia. If so, record it and be ready to defend it.
 
 ## 4. Architecture and End-to-End Flow
 
 ### Control Plane vs. Data Plane
 
-- The cleanest way to explain this system: walk one tenant request all the way through, then replay it when a dependency is unhealthy.
-- Hidden constraint: one customer's custom approval logic may be dangerous if it can alter shared runtime behaviour.
-- The design splits into a **control plane** (authors, validates, versions, and promotes configuration) and a **data plane** (executes live workflow instances) — this separation keeps risky change management out of the hot path.
-  - Control plane owns: config editing, schema checks, tenant contract tests, release promotion.
-  - Data plane owns: workflow execution, UI rendering at runtime, connector calls, audit events.
-- This split is the first place to point when an interviewer asks where the trust boundary sits.
+- To present this system, follow one tenant request end to end, then replay it with a dependency in poor health.
+- A hidden constraint: a customer's own approval logic becomes dangerous if it can change how the shared runtime behaves.
+- So the design has two halves. The **control plane** is where configuration gets written, checked, versioned and promoted. The **data plane** runs live workflow instances. Keeping them apart moves risky change management off the hot path.
+  - Control plane duties: editing configs, checking schemas, running tenant contract tests, promoting releases.
+  - Data plane duties: workflow execution, runtime UI rendering, connector calls and audit events.
+- Asked where the trust boundary sits? Point at this split first.
 
 ### Architecture Diagram and Trust Boundaries
 
-- Top-down flow: tenant-authored change requests → control plane (config editor → schema/rule validator + tenant test harness → configuration registry as system of record → feature flag service for gated exposure) → data plane (workflow runtime, UI renderer, integration adapter SDK, sandboxed approved extensions) → external systems (customer APIs, identity provider, notification services).
+- Read the diagram top to bottom. A tenant's change request enters the control plane. It passes the config editor, then the schema/rule validator and tenant test harness, then the configuration registry (the system of record), then the feature flag service that gates exposure. The data plane follows: workflow runtime, UI renderer, integration adapter SDK, and approved extensions in a sandbox. External systems sit last: customer APIs, the identity provider and notification services.
 
 ```mermaid
 flowchart TB
@@ -125,32 +125,32 @@ flowchart TB
   REGISTRY -.-> MIGRATE
 ```
 
-- Trust boundaries sit (a) between tenant-authored content and platform-owned execution, and (b) between platform execution and external dependencies.
-  - Tenant-authored config is never treated like code with full platform trust.
-  - Approved extensions are still untrusted enough to deserve isolation and quotas.
-  - External systems are not under your control — every adapter call needs timeouts, retries, idempotency where applicable, and a backoff policy that does not amplify failures.
+- There are two trust boundaries. One lies between content a tenant writes and execution the platform owns. The other lies between platform execution and outside dependencies.
+  - Config written by a tenant never runs as code with full platform trust.
+  - Even approved extensions stay untrusted enough to need isolation and quotas.
+  - You do not control external systems. Give every adapter call timeouts, retries, idempotency where it applies, and a backoff policy that does not make a failure worse.
 
 ### Core Components in Dependency Order
 
-- Components are introduced in the order they depend on one another, not in the order they are easiest to name.
+- The components below follow their dependencies, not the order in which they come to mind.
 
 | Component | Responsibility | State ownership | Typical boundary |
 |---|---|---|---|
-| Workflow runtime | Executes workflow instances, step transitions, timers, and retries | Runtime state, execution history | Data plane; synchronous for step decisions, asynchronous for long-running work |
-| Configuration registry | Stores versioned configs, schemas, and release metadata | Immutable config versions | Control plane; system of record for published config |
-| Schema and rule validator | Checks syntax, semantic constraints, permissions, and compatibility | Validation results only | Control plane; synchronous on save/publish |
-| UI renderer | Generates tenant-specific forms, labels, and layouts from approved config | None beyond cache | Mostly data plane; synchronous render, cached descriptors |
-| Integration adapter SDK | Standard interface for CRM, ERP, ticketing, and webhook adapters | Adapter definitions, credentials references | Data plane edge to external systems |
-| Feature flag service | Gates rollout by tenant, cohort, or percentage | Flag state | Cross-cutting control plane to data plane |
-| Sandbox for approved extensions | Runs narrowly scoped customer logic or plugins with hard limits | Ephemeral execution only | Isolated boundary; synchronous if small, otherwise async |
-| Migration service | Rewrites older configs into new schema versions or migrates instances forward | Migration jobs, compatibility mappings | Control plane; usually asynchronous |
-| Tenant test harness | Replays tenant-specific contract tests before release | Test fixtures, expected outcomes | Control plane; synchronous approval gate or async batch |
+| Workflow runtime | Runs workflow instances, moves between steps, fires timers and retries | Execution history, runtime state | Data plane; step decisions are synchronous, long-running work is asynchronous |
+| Configuration registry | Keeps every config and schema version with its release metadata | Immutable config versions | Control plane; the system of record once a config is published |
+| Schema and rule validator | Verifies syntax, semantic rules, permissions and compatibility | Only its check results | Control plane; blocks on save/publish |
+| UI renderer | Turns approved config into each tenant's forms, labels and layouts | Cache only | Mostly data plane; renders synchronously from cached descriptors |
+| Integration adapter SDK | A common contract for webhook, ticketing, ERP and CRM adapters | Adapter definitions, credentials references | Data plane edge facing external systems |
+| Feature flag service | Controls rollout per tenant, cohort or percentage | Flag state | Spans both planes |
+| Sandbox for approved extensions | Executes tightly scoped customer logic or plugins under hard limits | Ephemeral execution only | Isolated; synchronous when small, async otherwise |
+| Migration service | Upgrades older configs to new schema versions, or moves instances forward | Migration jobs, compatibility mappings | Control plane; mostly asynchronous |
+| Tenant test harness | Re-runs each tenant's contract tests ahead of release | Test fixtures, expected outcomes | Control plane; a synchronous approval gate or an async batch |
 
-- Every box earns its place: the validator exists so the registry never becomes a junk drawer; the flag service exists because "publish" and "expose to every tenant" are not the same action; the sandbox exists because approved extensions are useful but arbitrary runtime execution is how customizability turns into incident response.
+- Each box earns its place. The validator keeps junk out of the registry. The flag service exists because publishing a version and showing it to every tenant are two different actions. The sandbox exists because approved extensions are valuable, yet letting arbitrary code run at runtime is how customisation ends in incident response.
 
 ### Failure-Path Overlay: Infinite Approval Loop
 
-- The same architecture, annotated for the infinite-approval-loop failure drill, makes the blast radius visible — the validator, test harness, and flags each reduce blast radius at a different stage, so if one layer misses the defect, later layers still prevent a tenant-wide incident.
+- Here the architecture is marked up for the infinite-approval-loop failure drill, so the blast radius is visible. The validator, the test harness and the flags each shrink it at a separate stage. If one layer misses the defect, a later one still prevents a tenant-wide incident.
 
 ```mermaid
 sequenceDiagram
@@ -179,16 +179,16 @@ sequenceDiagram
 
 ### Happy-Path Sequence: Author to Promotion
 
-- Step-by-step live release path:
-  1. **Author config against a versioned schema** — product manager, implementation engineer, or customer admin edits the workflow definition, field layout, approval graph, and adapter mappings.
-  2. **Validate syntax and semantic constraints** — checks structure, allowed field types, approval graph sanity, reference integrity, permissions, compatibility with enabled features.
-  3. **Run tenant contract tests** — replays representative scenarios: form submission, approval routing, edge-case inputs, integration stubs.
-  4. **Publish an immutable version** — the registry stores the exact artifact, version tag, schema version, author, and release metadata; system of record for what was approved.
-  5. **Roll out behind a tenant flag** — exposed to a single tenant, then a cohort, then broader traffic if stable.
-  6. **Observe behaviour** — validation failures, step latency, adapter error rates, approval-loop detection, user completion metrics.
-  7. **Promote or rollback** — if the release meets the acceptance gate it becomes active; otherwise the flag moves back or the tenant is pinned to the prior immutable version.
-- Key nuance: "publish" does not mean "activate everywhere" — that separation is what keeps a bad config from becoming a broad outage.
-- Synchronous vs. asynchronous: validation and contract testing are synchronous gates (must block promotion); migration, bulk replay, and some integration recovery are better asynchronous (should not hold the user's request open). The runtime itself often mixes both — quick step decisions synchronously, external side effects asynchronously when a dependency is slow or unreliable.
+- The live release path, one step at a time:
+  1. **Author config against a versioned schema.** The workflow definition, approval graph, field layout and adapter mappings are edited by a customer admin, an implementation engineer or a product manager.
+  2. **Validate syntax and semantic constraints.** Checks cover structure, permitted field types, whether the approval graph makes sense, reference integrity, permissions, and fit with the features switched on.
+  3. **Run tenant contract tests.** It replays typical scenarios: form submission, approval routing, odd edge inputs and integration stubs.
+  4. **Publish an immutable version.** The registry keeps that precise artifact plus its version tag, schema version, release metadata and who wrote it, so it records exactly what was approved.
+  5. **Roll out behind a tenant flag.** One tenant sees it first, then a cohort, then wider traffic once it proves stable.
+  6. **Observe behaviour.** Watch step latency, failed validations, adapter errors, approval-loop detection and how often users finish the workflow.
+  7. **Promote or rollback.** A release that clears the acceptance gate goes active. A release that fails has its flag switched back, or its tenant stays pinned to the earlier immutable version.
+- The subtle point: publishing a version is not switching it on everywhere. Keeping those apart stops one bad config from causing a wide outage.
+- Some steps should block and some should not. Validation and contract tests are synchronous gates, because they must hold back promotion. Bulk replay, migration and some integration recovery suit async work, so the user's request does not stay open. The runtime usually does both: quick step decisions inline, and external side effects pushed to async work when a dependency is slow or flaky.
 
 ```mermaid
 flowchart TD
@@ -205,17 +205,17 @@ flowchart TD
 
 ### Systems of Record, Caches, Queues, and Backpressure
 
-- **System of record:** the configuration registry for published versions; usually the workflow audit store for execution history.
-- **Caches:** compiled schema descriptors, rendered form layouts, adapter metadata, recent flag decisions.
-- **Queues:** adapter jobs, retries, event delivery, migration tasks, test harness batches.
-- **Backpressure and flow control:** the runtime should shed or delay noncritical work when adapter queues grow, rather than allowing retries to stampede external systems.
-- Partitioning key: usually tenant ID, sometimes combined with workflow definition ID or environment — keeps noisy tenants from corrupting everyone else's latency profile, eases replay, and provides a natural quota-enforcement point. An unusually heavy approval storm should be contained within its partition.
+- **System of record:** published versions belong to the configuration registry; execution history normally belongs to the workflow audit store.
+- **Caches:** recent flag decisions, adapter metadata, form layouts once rendered, and compiled schema descriptors.
+- **Queues:** test harness batches, migration tasks, event delivery, retries and adapter jobs.
+- **Backpressure and flow control:** as adapter queues grow, the runtime should drop or defer noncritical work, not let retries stampede external systems.
+- The partitioning key is normally tenant ID, sometimes paired with workflow definition ID or environment. It stops a noisy tenant from spoiling latency for the rest, makes replay easier, and gives quotas an obvious place to be enforced. A surge of approvals from one tenant should stay inside its partition.
 
 ### MVP vs. Later Evolution
 
-- MVP: keep it brutally simple — versioned registry, validator, runtime, feature flags, tenant test harness, small adapter SDK, and only the smallest sandbox needed for approved extensions. Favour immutable config versions and clear rollback over a more exotic live-edit system.
-- Later: cross-tenant config templates, richer migration automation, a broader plugin marketplace, deeper observability into tenant behaviour — only after the core release path is stable and supportable.
+- For the MVP, stay ruthlessly simple: the runtime, a versioned registry, the validator, feature flags, the tenant test harness, a small adapter SDK, and only as much sandbox as approved extensions strictly need. Prefer immutable config versions and an obvious rollback over a fancier live-editing system.
+- Leave for later: config templates shared across tenants, more automated migration, a wider plugin marketplace and deeper visibility into tenant behaviour. Add them once the core release path is stable and easy to support.
 
 ### 90-Second Interview Summary
 
-- "I would separate a control plane from a data plane. The control plane handles authoring, schema and rule validation, tenant contract tests, immutable versioning, and rollout through feature flags. The data plane runs the workflow runtime, UI rendering, and adapter calls. The configuration registry is the system of record for published versions, and the runtime reads only approved releases. Tenant ID is the main partitioning key, with queues and backpressure protecting external dependencies. The riskiest trade-off is how much customer logic to allow in approved extensions versus keeping everything in declarative config. For an MVP, I would keep extensions narrow, require versioned configs, and gate every release behind a tenant test harness and staged flag rollout. The first production rollout gate is a single tenant with a rollback path that can be executed immediately."
+- "I'd split the system into two planes. The control plane is where people write configs, where schemas and rules get checked, where tenant contract tests run, and where versions are frozen and rolled out with feature flags. The data plane runs workflows, renders the UI and calls adapters. Published versions live in the configuration registry, which is the system of record, and the runtime only reads approved releases. I'd partition mainly by tenant ID, with queues and backpressure shielding external dependencies. The hardest trade-off is how far customer logic may go inside approved extensions, versus keeping it all as declarative config. For the MVP I'd keep extensions narrow, insist on versioned configs, and send every release through a tenant test harness and a staged flag rollout. My first production gate is one tenant, with a rollback I can run straight away."

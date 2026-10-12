@@ -1,58 +1,58 @@
-# Chapter 7: Design an AI System for an Air-Gapped Environment, part 5
+# Design an AI System for an Air-Gapped Environment, part 5
 
 ## 6. Security, Reliability, and Failure Handling
 
 ### Lead With the Failure, Not the Model
-- Security and operations open the review by injecting the failure that matters most: the update package arrives, but a transitive package is missing from the offline mirror.
-- Reaching for "just retry" already misses the core issue — in a disconnected environment, retries do not manufacture missing artifacts.
-- The right answer: stop the promotion, preserve the manifest, preserve the evidence, and contain the impact to the smallest possible slice of the system.
+- Open the way a security and operations reviewer would: with the incident that hurts most. The update package lands, yet one transitive package never made it into the offline mirror.
+- "Just retry" is the wrong reflex. With no network, a retry cannot conjure an artifact nobody copied in.
+- A good answer does something else. It halts the promotion, keeps the manifest and the evidence intact, and shrinks the damage to the smallest slice of the system it can.
 
 ### Threat-Model the Offline Control Plane
-- The design problem is broader than inference — you're protecting a local AI capability that depends on package repositories, model artifacts, signing keys, update workflows, index files, and privileged admin actions.
-- **Control 1 — pin and attest every dependency** before anything reaches the air-gapped network: the release manifest enumerates exact versions and hashes, the installer verifies signatures against offline trust roots, and deployment rejects anything not already known-good.
-- **Control 2 — avoid telemetry egress assumptions.** In connected products, teams often lean on crash reporting, remote metrics, and cloud diagnostics as harmless defaults; here those assumptions are wrong. Every observability path must be local-first and explicitly approved. Metrics go to an internal collector; support artifacts export through a controlled operator workflow. Never let a library quietly "phone home" and call it monitoring.
-- **Control 3 — treat privileged administration as a high-risk interface.** Keep admin commands separate from normal user workflow, require role-based approvals locally, and make sensitive actions deliberate: key rotation, index rebuilds, trust-root updates, rollback promotion should all be explicit operations with audit records.
+- Inference is only one thing you defend. The local AI capability depends on a chain of signing keys, model artifacts, index files, package repositories, privileged admin actions and update workflows. Any link can be attacked.
+- **Control 1 — pin and attest every dependency.** Nothing crosses into the air-gapped network without it. The release manifest lists each exact version and hash. The installer checks signatures against offline trust roots. Anything outside the known-good set is turned away at deployment.
+- **Control 2 — avoid telemetry egress assumptions.** In a connected product, teams switch on cloud diagnostics, remote metrics and crash reporting without a second thought. Inside the enclave that habit is wrong. Each observability path has to be local-first and approved on purpose. Metrics flow to an internal collector. Support bundles leave only through a controlled operator workflow. A library that silently calls home is a leak, not monitoring.
+- **Control 3 — treat privileged administration as a high-risk interface.** Admin commands live apart from the everyday user flow. Demand local role-based approval for them. Key rotation, index rebuilds, trust-root updates and rollback promotion should each run as a deliberate, explicit operation that leaves an audit record.
 
-> 🎯 **Interview Pointer:** The "avoid telemetry egress assumptions" control is an easy trap — interviewers listen for whether you casually mention "ship logs to our SaaS dashboard" out of habit. Explicitly say every observability path is local-first and approved.
+> 🎯 **Interview Pointer:** Telemetry egress is where candidates slip. Interviewers wait to hear "we'll send logs to our SaaS dashboard", said out of habit. Say plainly that every observability path stays local-first and approved.
 
 ### Failure Policy: Fail Open, Fail Closed, Degrade, Queue
-- An FDE answer gets stronger when it states plainly what fails open, what fails closed, what degrades, what queues, and what demands a human:
-  - Authentication and signature verification fail closed.
-  - Document ingestion may queue if the downstream classifier is down, but only within a bounded local buffer.
-  - Search over stale indexes can degrade with a visible freshness warning.
-  - Model serving should degrade to a smaller approved model if memory is insufficient, but only if that fallback is pre-verified.
-  - Trust-root updates and bundle promotion require human approval.
-- That is the difference between a system that is merely unavailable and a system that is unsafe.
+- A strong FDE answer sorts each failure into a bucket: fail open, fail closed, degrade, queue, or hand to a human. For example:
+  - Authentication and signature checks fail closed.
+  - When the downstream classifier is down, document ingestion can queue, but only inside a bounded local buffer.
+  - Search on a stale index can degrade, as long as users see a freshness warning.
+  - If memory runs short, model serving can drop to a smaller approved model, provided that fallback was verified in advance.
+  - Promoting a bundle or updating a trust root needs a human to approve it.
+- This split is what separates a system that is simply down from one that is dangerous.
 
 ### Five-Condition Decision Table
 
 | Condition | Policy | User-visible behaviour | Recovery path |
 |---|---|---|---|
-| Missing transitive package | Fail closed | Block promotion, keep current release running | Restore mirrored artifact, re-run verification |
-| Artifact corrupted during transfer | Fail closed | Reject bundle before install | Re-copy from source, verify hash and signature |
-| Model exceeds GPU memory | Degrade or queue | Use smaller approved model or wait for capacity | Adjust routing or retrain packaging policy |
-| Local certificate expires | Fail closed for admin actions, degrade for read-only flows if allowed by policy | Admin operations blocked; limited reads may continue | Rotate cert from offline trust anchor |
-| Update breaks stored-index compatibility | Queue or rollback | Pause promotion, keep old index active | Rebuild index offline, or roll back both model and index |
+| Missing transitive package | Fail closed | Promotion is blocked; the current release keeps running | Put the mirrored artifact back, then repeat verification |
+| Artifact corrupted during transfer | Fail closed | Bundle is refused before installation | Copy it again from the release origin; check hash and signature |
+| Model exceeds GPU memory | Degrade or queue | A smaller approved model answers, or the request waits for capacity | Rework routing, or retrain the packaging policy |
+| Local certificate expires | Admin actions fail closed; read-only flows degrade where policy permits | Admin operations stop; some reads may carry on | Rotate the cert from the offline trust anchor |
+| Update breaks stored-index compatibility | Queue or rollback | Promotion pauses; the old index stays live | Rebuild the index offline, or roll back model and index together |
 
 ### Blast Radius
-- Blast radius must be stated by tenant, region (enclave/site), workflow, and dependency.
-- In an air-gapped government network, "region" may mean a physical enclave or site rather than a cloud geography.
-- A bad index rebuild should not take down document search for the entire enclave if tenants/workspaces can be isolated.
-- A failed model rollout should not invalidate the audit service.
-- A certificate problem in the admin plane should not break read-only document lookup if policy allows read continuation.
-- Each dependency deserves its own containment boundary.
+- Spell out the blast radius per workflow, per tenant, per dependency and per region (enclave/site).
+- On an air-gapped government network, a "region" is often a physical enclave or site, not a cloud geography.
+- Where tenants or workspaces can be isolated, one bad index rebuild must not knock out document search across the whole enclave.
+- A rollout of a model that fails must leave the audit service valid.
+- If policy lets reads continue, a certificate fault in the admin plane must not stop read-only document lookup.
+- Give every dependency a containment boundary of its own.
 
 ### Critical Incident Drill: Missing Transitive Package
-- This is the required drill because it exposes whether the candidate understands offline reality: the bundle is signed, but operations finds the installer cannot resolve a transitive dependency from the local mirror.
-- The instinctive failure — letting the install continue "just this once" — is exactly the wrong move.
+- This drill is mandatory because it tests whether a candidate grasps what offline really means. The bundle carries a valid signature, yet operations finds that the installer cannot pull one transitive dependency from the local mirror.
+- The tempting mistake is to let the install go ahead "just this once". That is exactly what not to do.
 - **Containment (immediate):**
-  1. Stop the promotion before any partial state is written.
-  2. Record the exact manifest version, bundle hash, and dependency graph that failed.
-  3. Preserve the artifact, logs, and signer metadata as evidence.
-  4. Confirm the currently running release remains untouched.
-  5. Notify the operator that the issue is an incomplete mirrored set, not a runtime defect.
-- **Recovery:** reconstruct the offline mirror from the source of truth, validate the complete dependency closure, re-run signature and hash verification.
-- **Prevention:** add a preflight that checks dependency closure before the bundle reaches the enclave — if the release process cannot prove completeness, it should never reach the installer.
+  1. Halt the promotion before it writes any partial state.
+  2. Capture the failing dependency graph, plus its exact bundle hash and manifest version.
+  3. Save signer metadata, logs and the artifact itself as evidence.
+  4. Check that the release now in service has not been touched.
+  5. Let the operator know this is not a runtime defect: the mirrored set is incomplete.
+- **Recovery:** use the source of truth to rebuild the offline mirror, prove the dependency closure is whole, and verify hashes and signatures again.
+- **Prevention:** run a dependency-closure preflight before the bundle ever reaches the enclave. A release process that cannot prove completeness must never hand the bundle to the installer.
 
 ```mermaid
 flowchart TD
@@ -80,13 +80,13 @@ flowchart TD
 ```
 
 ### Other Failure Paths
-- **Artifact corruption during transfer:** verify cryptographic hashes and signatures after every transfer hop, not just at the source; a bundle that passes source verification but fails at the enclave boundary must be treated as hostile or damaged; preserve the bad artifact separately for investigation, don't overwrite it.
-- **Model exceeds GPU memory:** a capacity/packaging problem, not a runtime surprise; route to a smaller approved model, queue until a compatible worker is available, or reject with a clear operational error — never crash the node and hope the scheduler recovers. Detect memory pressure before admission when possible; maintain an explicit compatibility map between model size, quantisation format, and hardware profiles.
-- **Local certificate expiring:** an availability/administration issue that can become a security issue if the system bypasses checks to stay alive. Use a short-lived operational certificate with monitored expiry, local renewal from an offline trust anchor, and an escalation path if rotation is overdue. Read-only workflows may degrade under policy; privileged actions should stop.
-- **Update breaks stored-index compatibility:** version the index format alongside the model and reader code, promoting the new trio together only after the new reader can interpret the old index or rebuild it deterministically. If the new release cannot read the existing index, pause promotion and keep the old path serving. Human intervention is appropriate if the compatibility matrix is unclear or a rebuild would exceed the recovery objective.
+- **Artifact corruption during transfer:** check cryptographic hashes and signatures at every hop, not only where the bundle was built. A bundle that verifies at its origin but fails at the enclave boundary is hostile or damaged until shown otherwise. Set the bad artifact aside for investigation; do not overwrite it.
+- **Model exceeds GPU memory:** this is a capacity and packaging problem, and it should never surprise you at runtime. Send the request to a smaller approved model, hold it until a compatible worker frees up, or reject it with a clear operational error. Never let the node crash in the hope that the scheduler sorts it out. Where you can, spot memory pressure before admission. Keep an explicit compatibility map that ties model size, quantisation format and hardware profile together.
+- **Local certificate expiring:** at first this is about availability and administration. It turns into a security problem the moment the system skips checks just to stay up. Issue a short-lived operational certificate, watch its expiry, renew it locally from an offline trust anchor, and keep an escalation path for overdue rotation. Privileged actions should halt, while read-only workflows may keep going in degraded form if policy says so.
+- **Update breaks stored-index compatibility:** give the index format a version that moves with the model and the reader code. The three ship as one unit. They ship only when the new reader can read the old index, or can rebuild it deterministically. If the new release cannot read the current index, pause promotion and let the old path keep serving. A human should step in if nobody is sure what the compatibility matrix says, or if rebuilding would take longer than the recovery objective allows.
 
 ### Code: Proving One Security Invariant
-- The interview code should demonstrate a security invariant, not a toy success path: a tampered bundle is rejected before deployment.
+- Interview code should prove a security invariant rather than walk a toy happy path. The invariant here: a tampered bundle is refused before it is deployed.
 
 ```python
 from __future__ import annotations
@@ -233,19 +233,19 @@ def test_tampered_model_is_rejected():
         raise AssertionError("tampered bundle should be rejected")
 ```
 
-- This is intentionally an interview-sized sketch. In production, keep the same control flow but replace the teaching scaffold with a hardened release verifier, validate the manifest schema explicitly, record structured audit events to local storage, and test negative cases for missing files, malformed manifests, signer mismatch, and dependency-closure failure.
-- The point of the test is not merely that the code runs — it proves the system refuses to install a bundle whose integrity cannot be established.
+- The sketch is sized for an interview on purpose. For production, keep this control flow but swap the teaching scaffold for a hardened release verifier. Check the manifest schema explicitly, write structured audit events to local storage, and add tests for the negative cases: signer mismatch, a malformed manifest, a missing file and a broken dependency closure.
+- Running cleanly is not what the test is for. It shows that the system will not install a bundle whose integrity it cannot establish.
 
 ### Evidence, Runbooks, and Operational Readiness
-- Before launch, the team should have runbooks for verification failure, rollback, trust-root rotation, certificate renewal, index rebuild, and node replacement.
-- Each runbook should say who can execute it, what evidence is preserved, what systems are paused, and what success looks like.
-- Audit evidence should include the signed manifest, hash list, trust-root fingerprint, operator identity, approval record, installation logs, and any rollback decision.
-- If the customer later asks why a release was blocked, the answer should be reconstructible from the evidence alone.
-- Without this discipline, every incident becomes a forensic guessing game; with it, operations can prove a release was rejected for a legitimate integrity reason, not because the installer was flaky.
+- Runbooks must exist before go-live for node replacement, index rebuild, rollback, certificate renewal, trust-root rotation and verification failure.
+- Every runbook names who may run it, which evidence it keeps, which systems it pauses and how success is judged.
+- The audit trail captures the operator's identity and approval record, the signed manifest with its hash list, the trust-root fingerprint, installation logs and any rollback decision.
+- Later, a customer may ask why a release was blocked. The evidence by itself should be enough to rebuild the answer.
+- Skip this discipline and each incident turns into forensic guesswork. Keep it, and operations can show that a release was rejected for a real integrity reason rather than a flaky installer.
 
 ### Why This Matters for the Job
-- A strong FDE does not stop at a happy-path architecture — they show they can survive malicious input, partial failure, retries that do not help, stale state, dependency outages, and political pressure to "just make it work."
-- They know when to queue, when to degrade, when to fail closed, and when to involve a human; they can articulate blast radius, preserve evidence, and write a test that proves a safety invariant.
-- **90-second interview summary:** treat the offline release pipeline as a high-trust control plane; every dependency is pinned and attested; signatures verified against offline trust roots; telemetry never assumes egress; privileged administration is separated from normal use; the riskiest failure is an incomplete or corrupted bundle, so the system must fail closed, preserve evidence, and keep the currently running release intact; runtime issues get clear failure policies (some queue, some degrade to approved fallbacks, some require human intervention); first production gate — if the bundle cannot prove integrity, completeness, and compatibility offline, it does not enter the enclave.
+- A strong FDE goes past the happy-path diagram. They show the design survives stale state, partial failure, dependency outages, hostile input, retries that change nothing, and political pressure to "just make it work."
+- They know which failures should queue, which should degrade, which must fail closed and which need a person. They can explain the blast radius, hold on to evidence and back a safety invariant with a test.
+- **90-second interview summary:** "The offline release pipeline is a high-trust control plane, and I guard it that way. Every dependency is pinned and attested. Signatures are checked against offline trust roots. Telemetry never assumes it can leave the network. Privileged admin is kept apart from normal use. The riskiest failure is a bundle that is incomplete or corrupted. So the system fails closed, keeps the evidence and leaves the running release alone. Runtime problems each get a clear policy: some queue, some degrade to an approved fallback, some need a human. My first production gate: no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible."
 
-> 🎯 **Interview Pointer:** If asked "what's your first production gate," this chapter's answer is consistently the same sentence across sections — memorise it: the bundle must prove integrity, completeness, and compatibility offline before it enters the enclave.
+> 🎯 **Interview Pointer:** When someone asks for your first production gate, give the same sentence every time, in every section, and learn it by heart: no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible.

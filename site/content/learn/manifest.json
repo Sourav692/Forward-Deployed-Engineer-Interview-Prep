@@ -2427,11 +2427,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes material adapted from iGrace course pages.",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/",
-      "estMinutes": 18,
+      "estMinutes": 22,
       "href": "/design/recruiting-platform"
     },
     {
@@ -2451,11 +2449,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes material adapted from iGrace course pages.",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/",
-      "estMinutes": 18,
+      "estMinutes": 20,
       "href": "/design/travel-agent-worked-example"
     },
     {
@@ -2464,11 +2460,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
-      "estMinutes": 86,
+      "estMinutes": 94,
       "href": "/design/air-gapped-ai-system"
     },
     {
@@ -2477,11 +2471,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
-      "estMinutes": 91,
+      "estMinutes": 103,
       "href": "/design/reliable-workflow-orchestration"
     },
     {
@@ -2490,11 +2482,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
-      "estMinutes": 82,
+      "estMinutes": 90,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -2503,11 +2493,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
-      "estMinutes": 65,
+      "estMinutes": 72,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
