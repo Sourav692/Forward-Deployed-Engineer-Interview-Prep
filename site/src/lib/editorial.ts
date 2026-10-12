@@ -815,6 +815,9 @@ export const TWIN_LABEL = {
 export const CLASSIC_DESIGN_CASE: Record<string, string> = {
   'recruiting-platform-explainable-ranking-human-decisions': 'standalone-designs/recruiting-platform',
   'logistics-exceptions-designing-around-a-policy-gate': 'agents-that-act/logistics-exception-handling',
+  'access-controlled-enterprise-rag': 'knowledge-retrieval/enterprise-knowledge-assistant',
+  'customer-support-assistant-knowledge-actions-and-approval': 'agents-that-act/customer-support-automation',
+  'coding-assistant-context-engineering-under-300-ms': 'agents-that-act/enterprise-coding-assistant',
 }
 
 /** How demanding a case or worksheet is, for the /design and /practice filters (ENH-23). */

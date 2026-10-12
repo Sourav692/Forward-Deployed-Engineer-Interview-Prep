@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T18:13:12.138Z",
+  "generatedAt": "2026-10-12T20:22:47.903Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -14,70 +14,70 @@
               "order": 1,
               "title": "Internal Knowledge Assistant for Enterprise Support",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-13"
             },
             {
               "slug": "sales-copilot",
               "order": 2,
               "title": "Sales Copilot for Account Executives",
-              "minutes": 3,
-              "updated": "2026-10-04"
+              "minutes": 2,
+              "updated": "2026-10-13"
             },
             {
               "slug": "financial-compliance-reviewer",
               "order": 3,
               "title": "Financial Compliance Review Copilot",
               "minutes": 2,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "healthcare-prior-auth-assistant",
               "order": 4,
               "title": "Healthcare Prior Authorisation Assistant",
               "minutes": 2,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "legal-contract-copilot",
               "order": 5,
               "title": "Legal Contract Review Copilot",
               "minutes": 2,
-              "updated": "2026-10-04"
+              "updated": "2026-10-13"
             },
             {
               "slug": "sre-triage-agent",
               "order": 6,
               "title": "SRE Incident Triage Agent",
               "minutes": 2,
-              "updated": "2026-10-04"
+              "updated": "2026-10-13"
             },
             {
               "slug": "multi-tenant-saas-support",
               "order": 7,
               "title": "Multi-Tenant SaaS Support Assistant",
               "minutes": 2,
-              "updated": "2026-10-04"
+              "updated": "2026-10-13"
             },
             {
               "slug": "retail-demand-explainer",
               "order": 8,
               "title": "Retail Demand Forecast Explanation Assistant",
-              "minutes": 3,
-              "updated": "2026-10-04"
+              "minutes": 2,
+              "updated": "2026-10-13"
             },
             {
               "slug": "service-now-ticket-agent",
               "order": 9,
               "title": "ServiceNow Ticket Agent",
               "minutes": 2,
-              "updated": "2026-10-04"
+              "updated": "2026-10-13"
             },
             {
               "slug": "executive-dashboard-copilot",
               "order": 10,
               "title": "Executive Dashboard Assistant",
               "minutes": 2,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             }
           ]
         },
@@ -119,7 +119,7 @@
               "order": 5,
               "title": "AI System for an Air-Gapped Environment",
               "minutes": 3,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "llm-evaluation-and-release-gating-platform",
@@ -147,7 +147,7 @@
               "order": 9,
               "title": "Reliable Workflow Orchestration System",
               "minutes": 3,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "observability-customer-facing-ai-application",
@@ -1112,7 +1112,7 @@
                 }
               ],
               "minutes": 96,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "reliable-workflow-orchestration",
@@ -1165,7 +1165,7 @@
                 }
               ],
               "minutes": 105,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "configurable-platform-customer-workflows",
