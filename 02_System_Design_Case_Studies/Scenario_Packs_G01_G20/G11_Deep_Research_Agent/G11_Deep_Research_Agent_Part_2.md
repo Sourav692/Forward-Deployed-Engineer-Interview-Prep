@@ -108,14 +108,6 @@ The follow-up bank, with the shape of a strong answer:
 | What would you cut for a 2-week version? | A specific reduced scope that still has an oracle and a failure ladder — and what you would NOT cut, and why |
 | How do you handle a bad actor? | Rate limits, a cost governor per principal, anomalous tool-sequence detection — and that prompt defenses are rate-reducers, not boundaries |
 
-The leveling rubric describes what to say, not who the candidate is.
-
-| Level | Sounds like | Missing |
-|---|---|---|
-| Mid | Correct components, names a framework, describes a working happy path | Numbers, failure design, trade-offs stated as choices |
-| Senior | Requirements as numbers, names the control pattern *and the rejected alternative*, walks a degradation ladder, does cost arithmetic | Organisational consequences, migration path, second-order effects |
-| Staff | All of the above, plus: what to build first and why, what to deliberately *not* build, how the design changes at 10x, the measurement that would falsify it | Little — at this level differences are about scope of influence |
-
 Recover a round that goes sideways out loud. Behind on time: say so and reprioritise aloud. The interviewer keeps redirecting: stop defending the path, follow, and ask what they want to assess. A wrong number: correct it immediately. Self-correction is a strong signal, and an uncorrected error that was noticed is a weak one. An unfamiliar domain: say so and ask two questions that make it reasonable. The failure is not running out of time. It is running out of time without saying so.
 
 The two-minute spoken answer *(own construction from the source's design)*:
