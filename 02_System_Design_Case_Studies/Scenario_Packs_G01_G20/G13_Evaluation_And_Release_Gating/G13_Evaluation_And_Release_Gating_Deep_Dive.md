@@ -4,19 +4,19 @@
 
 ## 1. Decision contract and stakeholders
 
-An engineer asks whether a change worsened behavior; an evaluator asks what to score; a safety lead asks if it is safe; a release manager needs an auditable decision. The shared platform supplies artifact lineage, execution and evidence, while each app owns its rubric and thresholds. A pass needs a named policy, a pinned baseline and a complete validated run. Block means a known limit failed or required evidence is unavailable; hold means the evidence is too thin or disputed to decide. Every override has an authorized owner and reason.
+An engineer asks whether a change worsened behaviour; an evaluator asks what to score; a safety lead asks if it is safe; a release manager needs an auditable decision. The shared platform supplies artifact lineage, execution and evidence, while each app owns its rubric and thresholds. A pass needs a named policy, a pinned baseline and a complete validated run. Block means a known limit failed or required evidence is unavailable; hold means the evidence is too thin or disputed to decide. Every override has an authorised owner and reason.
 
 ## 2. Data model and load
 
 Store immutable `EvalArtifact`, `EvalCase`, `EvalRun` and `EvalResult` records. Artifact hashes cover model, prompt, retrieval, tools and policy. Case and rubric versions prevent silent benchmark drift. Results include the grader version, raw trace reference, score, deterministic outcomes and tenant scope. API writes are idempotent; conditional updates protect reviews and decisions. A superseding record is safer than mutating an old result.
 
-Thirty apps × twenty candidates/day × five thousand cases means three million executions/day and six to fifteen million model/evaluator calls at two to five calls per case. Concentration into six hours implies 278–694 calls/s. With 2.5 calls/s per worker, 112–278 workers are a rough pre-headroom range. Use suite tiers, per-tenant quotas and elastic workers. Cache immutable fixtures, but do not cache away a stochastic judgment the release needs to re-measure.
+Thirty apps × twenty candidates/day × five thousand cases means three million executions/day and six to fifteen million model/evaluator calls at two to five calls per case. Concentration into six hours implies 278–694 calls/s. With 2.5 calls/s per worker, 112–278 workers are a rough pre-headroom range. Use suite tiers, per-tenant quotas and elastic workers. Cache immutable fixtures, but do not cache away a stochastic judgement the release needs to re-measure.
 
 ## 3. Evaluation design
 
 Pin a production baseline and compare deltas, not only absolute scores. Quality should represent task completion and can use a bootstrapped lower confidence bound for the delta. Safety has a separate floor; p95 latency and cost each have their own limits. Apply gates per critical slice, since an average hides rare harm. Golden sets should include representative flows, known hard cases, prior incidents, policy-sensitive cases, retrieval misses, malformed tool calls and convincing-but-wrong responses.
 
-LLM-as-judge is itself release logic. Pin its version and rubric hash, calibrate against human labels and audit disagreement, especially concise-correct versus verbose-wrong outputs. Use repeated trials and outcome equivalence for nondeterministic application behavior. Keep a hidden holdout and refresh suites when they stop distinguishing candidates. Online thumbs-down and corrections are leads for new cases, not labels by themselves.
+LLM-as-judge is itself release logic. Pin its version and rubric hash, calibrate against human labels and audit disagreement, especially concise-correct versus verbose-wrong outputs. Use repeated trials and outcome equivalence for nondeterministic application behaviour. Keep a hidden holdout and refresh suites when they stop distinguishing candidates. Online thumbs-down and corrections are leads for new cases, not labels by themselves.
 
 ## 4. Incident #91: aggregate success, slice failure
 

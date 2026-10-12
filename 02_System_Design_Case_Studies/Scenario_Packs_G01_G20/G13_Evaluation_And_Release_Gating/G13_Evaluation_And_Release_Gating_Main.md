@@ -93,7 +93,7 @@ flowchart LR
 
 1. A release request pins the full candidate artifact bundle and the current production baseline, including model, prompt, retrieval, tool and policy versions.
 2. The scheduler chooses versioned suites and app-specific rubrics, applies tenant quotas, and sends cases to sandboxed runners with timeouts and limited egress/secrets.
-3. Runners execute the whole application workflow; deterministic checks score schemas, policy rules and measurable outcomes, while a versioned LLM grader evaluates rubric dimensions that require judgment.
+3. Runners execute the whole application workflow; deterministic checks score schemas, policy rules and measurable outcomes, while a versioned LLM grader evaluates rubric dimensions that require judgement.
 4. Validated results are written immutably with run, case, grader and rubric hashes; incomplete runs cannot masquerade as complete evidence.
 5. The policy engine computes candidate-minus-baseline deltas for quality, safety, p95 latency and cost, checks critical slices independently, and issues pass, block or hold.
 6. Humans review disputed or statistically thin cases and record overrides with reasons. Production signals are redacted and labelled before joining future suites.

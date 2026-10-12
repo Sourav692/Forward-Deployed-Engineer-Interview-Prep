@@ -56,7 +56,7 @@ Trace model steps and tool latency; route common tasks deterministically; cap st
 
 ## Near-miss card
 
-Planner proposed **18 refunds**; six blocked, 12 allowed; **€740** exceeded **€250** no-approval threshold. Gateway prevented unauthorized transfer, but planner bulk-action behavior failed. Disable bulk path, audit allowed calls, add risk-aware schemas and simulation, keep gateway enforcement.
+Planner proposed **18 refunds**; six blocked, 12 allowed; **€740** exceeded **€250** no-approval threshold. Gateway prevented unauthorised transfer, but planner bulk-action behaviour failed. Disable bulk path, audit allowed calls, add risk-aware schemas and simulation, keep gateway enforcement.
 
 ## Interview close
 

@@ -108,7 +108,7 @@ Engagement · Stage · Gate · Principal (role) · Artifact · AcceleratorAsset 
 
 Narrate one engagement end to end before drawing:
 
-> *"A scoping request comes in. Intake checks it's actually measurable and has an SME assigned, or refuses it outright. Accepted, it enters day 1 at the Scoping stage. Each of the next six stages is blocked behind a named gate, signed off only by the role authorized for that gate — the FDA cannot sign the security gate, no matter how senior. Every stage pulls what it needs from a reusable accelerator library before building anything custom. On day 14, if the agreed success metrics were actually met, the sponsor signs the go/no-go gate and the engagement deploys with a runbook and dashboards handed over."*
+> *"A scoping request comes in. Intake checks it's actually measurable and has an SME assigned, or refuses it outright. Accepted, it enters day 1 at the Scoping stage. Each of the next six stages is blocked behind a named gate, signed off only by the role authorised for that gate — the FDA cannot sign the security gate, no matter how senior. Every stage pulls what it needs from a reusable accelerator library before building anything custom. On day 14, if the agreed success metrics were actually met, the sponsor signs the go/no-go gate and the engagement deploys with a runbook and dashboards handed over."*
 
 The source's pipeline, kept verbatim. Label every gate with who signs it.
 

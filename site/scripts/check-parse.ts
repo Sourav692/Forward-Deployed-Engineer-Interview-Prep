@@ -675,7 +675,7 @@ for (const [token, files] of acronymPages) {
 //
 // Published prose and site copy are British English (style guide). The rule flags the
 // American forms of five word families as whole words. Skipped: code, inline code, link
-// targets, HTML tags, paths and identifiers, and the block after a
+// targets, external link titles, HTML tags, paths and identifiers, and the block after a
 // `<!-- spelling: source -->` marker (a quote from an American source). SPELLING_ALLOWED
 // names the product, title and pattern names that keep their own spelling. Site copy is
 // read from src/ as string literals and JSX text that contain a space, so ids, slugs,
@@ -698,6 +698,8 @@ const proseOf = (markdown: string): string =>
     .replace(/<!--[\s\S]*?-->/g, ' ')
     .replace(/(```|~~~)[\s\S]*?\1/g, ' ')
     .replace(/`[^`\n]*`/g, ' ')
+    // An external link's text is the title of its source (a paper, a vendor page).
+    .replace(/\[[^\]]*\]\(https?:\/\/[^)]*\)/g, ' ')
     .replace(/\]\([^)]*\)/g, ']')
     .replace(/<\/?[A-Za-z][^>]*>/g, ' ')
     .replace(/https?:\/\/\S+/g, ' ')

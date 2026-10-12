@@ -40,7 +40,7 @@ The sixty-second line: reduce cost by workflow, not across the board. Cache the 
 - The product is a routed decision pipeline that decides when to act, ask, or stop; the harm case, not the architecture, opens the round.
 - Requirements are constraints a test can fail: risk-tiered p95 targets, the NetValue equation, and a component owner for every line.
 - The automation layer owns workflow state and evidence; CRM, billing, orders and identity remain the systems of record, and every write carries an idempotency key.
-- One diagram separates the data plane that carries the conversation from the control plane that decides whether it may continue, with the authorization boundary at the tool policy gateway.
+- One diagram separates the data plane that carries the conversation from the control plane that decides whether it may continue, with the authorisation boundary at the tool policy gateway.
 - Identity is verified before any account tool, and security is a four-seam chain: untrusted text, least-privilege tools, identity, immutable audit.
 - A deterministic gateway decides; the model proposes. Planners earn their cost only on multi-system requests, and memory is three separate layers.
 - The handoff carries intent, evidence, attempted actions and the reason automation stopped, and the human queue prioritises by risk.
@@ -54,7 +54,7 @@ The sixty-second line: reduce cost by workflow, not across the board. Cache the 
 
 ## Check Yourself
 
-1. **Why is "the tool policy gateway is the authorization boundary" a stronger claim than "we require human approval for refunds"?** Because it names where every action is decided, deterministically, on assurance level, allowlist, threshold and freshness, and it makes the model's confidence irrelevant to whether an action may execute.
+1. **Why is "the tool policy gateway is the authorisation boundary" a stronger claim than "we require human approval for refunds"?** Because it names where every action is decided, deterministically, on assurance level, allowlist, threshold and freshness, and it makes the model's confidence irrelevant to whether an action may execute.
 2. **A refund call was issued and the response timed out. What happens next?** Treat the action as potentially successful, never blind-retry, query the ledger or action record to confirm completion, then return success, keep waiting, or escalate; `args_hash` deduplication prevents the repeat.
 3. **What are the three risk tiers and their p95 targets?** Routine under 3 s automated by default; ambiguous under 8 s with retrieval plus a second pass; high-risk under 15 s for a handoff bundle where the final decision is never automated.
 4. **Why does deflection rate fail as a launch gate?** It measures whether work moved, not whether it was resolved; safe automation rate, incorrect resolutions and repeat contact measure whether the customer was helped, and NetValue subtracts wrong-resolution and recontact cost.

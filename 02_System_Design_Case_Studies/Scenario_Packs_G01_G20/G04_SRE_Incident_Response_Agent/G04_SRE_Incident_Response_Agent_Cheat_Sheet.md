@@ -4,7 +4,7 @@ Use the [Main guide](G04_SRE_Incident_Response_Agent_Main.md) to practice speaki
 
 ## One sentence
 
-**Query anything authorized, change nothing autonomously; dedupe first, show evidence and source gaps, stage mitigation for human approval.**
+**Query anything authorised, change nothing autonomously; dedupe first, show evidence and source gaps, stage mitigation for human approval.**
 
 ## Flow
 
@@ -42,7 +42,7 @@ Telemetry down → report `UNAVAILABLE` and lower confidence. Alert storm → at
 
 ## Release and rollout
 
-**Hypothesis precision from post-incident review** is the falsifying metric. Track <30 s under burst, coverage on every run, reversal rate, citations, zero unauthorized tools/permission violations. Historical golden set → shadow → live read-only → approved low-risk actions.
+**Hypothesis precision from post-incident review** is the falsifying metric. Track <30 s under burst, coverage on every run, reversal rate, citations, zero unauthorised tools/permission violations. Historical golden set → shadow → live read-only → approved low-risk actions.
 
 ## Latency answer
 

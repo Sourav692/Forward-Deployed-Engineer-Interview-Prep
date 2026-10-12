@@ -79,7 +79,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This condenses the [source architecture, §4](G07_Secure_Multi_Tenant_AI_Platform.md#4-draw-the-architecture-end-to-end). The platform hosts LLM inference, but the model receives only tenant-scoped inputs and never decides tenant membership or authorization.
+This condenses the [source architecture, §4](G07_Secure_Multi_Tenant_AI_Platform.md#4-draw-the-architecture-end-to-end). The platform hosts LLM inference, but the model receives only tenant-scoped inputs and never decides tenant membership or authorisation.
 
 ```mermaid
 flowchart LR

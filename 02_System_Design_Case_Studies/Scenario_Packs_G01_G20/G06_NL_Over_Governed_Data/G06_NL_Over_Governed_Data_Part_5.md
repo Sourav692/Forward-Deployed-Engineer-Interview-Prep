@@ -26,7 +26,7 @@ Add the warehouse side in the same breath. Warehouse compute per answer is the c
 - Ambiguity triggers a clarifying question, with a numeric confidence threshold, never a guess.
 - SQL is validated as a tree against policy and a scan budget, executed read-only under warehouse-native row and column security.
 - Explanations are generated from the structured result, cross-checked against the table, and built on deterministic statistics.
-- Authorization fails closed and everything else degrades, with five rehearsed drills from wrong definition to summary drift.
+- Authorisation fails closed and everything else degrades, with five rehearsed drills from wrong definition to summary drift.
 - The release gate is semantic correctness judged by analysts, not execution success.
 - Rollout runs ten metrics, golden cases, shadow analysts, then domain by domain with named owners.
 - The fifty minutes are spent in proportion to risk, with the 90-second summary, the 2-minute answer and nine carrying lines ready.
@@ -41,7 +41,7 @@ Add the warehouse side in the same breath. Warehouse compute per answer is the c
 4. **Why parse SQL instead of regex-filtering it?** Regex cannot understand aliases, nested selects, CTEs, comments or obfuscation; a parser inspects statements, tables, columns, joins, functions, limits and aggregate semantics.
 5. **Where is row-level security enforced, and what is re-checked at execution?** In the warehouse, natively, with the read-only query run as the user so the policies apply to them, not to a shared service account; entitlement and policy are re-checked at the moment of execution so a user who lost access between planning and execution is refused.
 6. **How is a summary that contradicts its table handled?** The summary is generated from the structured result and cross-checked; a mismatch returns the table alone and alerts the review queue.
-7. **State the fail-open versus fail-closed pattern by category.** Authorization closed; connectivity degrade or queue; ambiguity human; suspicious scan closed and alert.
+7. **State the fail-open versus fail-closed pattern by category.** Authorisation closed; connectivity degrade or queue; ambiguity human; suspicious scan closed and alert.
 8. **What is the release gate, and what is it not?** Semantic correctness against the governed definition judged by analyst review; not execution success on the golden set, which only proves the SQL ran.
 9. **Name the four rollout phases and the exit of the third.** Ten governed metrics, golden cases, shadow analysts, domain-by-domain expansion; the assistant advances from shadowing when it consistently matches analyst-reviewed answers and escalation works.
 10. **Why did the insurer monolith fail, and why did the same fix apply twice?** Context bloat and tool confusion from 20-plus tool schemas in one prompt; the supervisor's own tool list later re-approached the same bloat, so specialisation was applied again at the next level.

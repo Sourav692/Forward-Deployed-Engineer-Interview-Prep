@@ -25,7 +25,7 @@
 3. **Why must the sensitivity classifier run before storage?** Once a raw value is written, every system that reads the store has it; classification after storage protects nothing.
 4. **Why a keyed hash (HMAC) rather than a plain hash?** It keeps correlation and deduplication while resisting brute-force reversal of common prompts, as long as the secret key stays secret; a missing key must raise an error.
 5. **Walk the "sampling drops the only bad trace" drill.** Detect by comparing complaints with sampled trace volume; contain by raising fidelity for the affected slice; recover from neighbouring evidence and mark the gap; prevent with error-class overrides, exemplars and escalation hooks.
-6. **When does a failure fail closed rather than degrade?** When integrity, privacy or authorization would be compromised: a missing auth token, an unavailable audit sink, a lookup outside tenant scope.
+6. **When does a failure fail closed rather than degrade?** When integrity, privacy or authorisation would be compromised: a missing auth token, an unavailable audit sink, a lookup outside tenant scope.
 7. **How do you tell a retrieval fault from a model fault?** Compare retrieved evidence with the answer. Empty, stale or off-topic evidence points upstream; good evidence contradicted by the answer points at the model or prompt; a one-tenant failure points at configuration, access or integration state.
 8. **In #87, which spans stacked up, and what was the process failure?** Retrieval 4200 ms, reranker 3100 ms, gateway queue 2800 ms and provider 9360 ms; the canary never tested peak GPU queue depth.
 9. **In #88, why was the cost spike also a security incident?** The v5 cache key dropped `role_scope`, so one role's summary could be served to another.
