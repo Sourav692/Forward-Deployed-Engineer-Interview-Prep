@@ -82,6 +82,22 @@ export function Diagram({ code }: { code: string }) {
   const [svg, setSvg] = useState('')
   const [failed, setFailed] = useState(false)
   const placeholder = useRef<HTMLDivElement>(null)
+  const box = useRef<HTMLDivElement>(null)
+  // The SVG's natural width when it is too wide for its column to read (see FullSize), else 0.
+  const [natural, setNatural] = useState(0)
+
+  useEffect(() => {
+    const el = box.current
+    if (!svg || !el) return
+    const measure = () => {
+      const width = el.querySelector('svg')?.viewBox.baseVal?.width ?? 0
+      setNatural(width > el.clientWidth * 1.5 ? Math.round(width) : 0)
+    }
+    measure()
+    const resize = new ResizeObserver(measure)
+    resize.observe(el)
+    return () => resize.disconnect()
+  }, [svg])
 
   useEffect(() => {
     let cancelled = false
@@ -103,11 +119,8 @@ export function Diagram({ code }: { code: string }) {
           fontFamily: 'inherit',
           theme: 'base',
           themeVariables: themeVariables(theme === 'dark'),
-          // Mermaid's default is to fit the SVG to its container. A wide `flowchart
-          // LR` then scales down far enough that its labels are unreadable — the one
-          // here is 2200px of diagram in a 900px column. Draw it at its natural size
-          // and let the container scroll instead.
-          flowchart: { useMaxWidth: false },
+          // Mermaid's default fits the SVG to its column (ENH-24, PQ-13). A diagram that
+          // shrinks too far to read gets an "Open full size" dialog instead (FullSize).
         })
         const result = await mermaid.render(`mmd-${seed}-${theme}`, code)
         if (!cancelled) {
@@ -180,15 +193,75 @@ export function Diagram({ code }: { code: string }) {
   }
 
   return (
-    <div
-      // Wide diagrams scroll sideways; tabIndex lets keyboard users scroll them too (WCAG 2.1.1).
-      role="figure"
-      aria-label="Diagram"
-      tabIndex={0}
-      className="mermaid-figure overflow-x-auto rounded-lg border border-border bg-surface p-3 outline-none focus-visible:ring-4 focus-visible:ring-accent-ring"
-      // Mermaid output is generated from the markdown we ship, and is sanitised by
-      // its own `securityLevel: 'strict'` before it gets here.
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
+    <div className="space-y-1.5">
+      <div
+        ref={box}
+        role="figure"
+        aria-label="Diagram"
+        className="mermaid-figure rounded-lg border border-border bg-surface p-3"
+        // Mermaid output is generated from the markdown we ship, and is sanitised by
+        // its own `securityLevel: 'strict'` before it gets here.
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
+      {natural > 0 && <FullSize svg={svg} width={natural} />}
+    </div>
+  )
+}
+
+/**
+ * A diagram whose natural width is more than 1.5 times its column shrinks below about
+ * two thirds of its size, where labels stop being readable. Such a diagram offers its
+ * full size in a dialog (ENH-24). The native <dialog> traps focus and closes on Escape;
+ * focus returns to the button. The SVG copy exists only while the dialog is open, so the
+ * page never holds two SVGs with the same ids.
+ */
+function FullSize({ svg, width }: { svg: string; width: number }) {
+  const dialog = useRef<HTMLDialogElement>(null)
+  const opener = useRef<HTMLButtonElement>(null)
+  const titleId = useId()
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (open && !dialog.current?.open) dialog.current?.showModal()
+  }, [open])
+
+  return (
+    <>
+      <button
+        ref={opener}
+        type="button"
+        onClick={() => setOpen(true)}
+        className="no-print rounded-sm text-[0.8125rem] font-medium text-accent hover:text-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-ring"
+      >
+        Open full size
+      </button>
+      <dialog
+        ref={dialog}
+        aria-labelledby={titleId}
+        onClose={() => {
+          setOpen(false)
+          opener.current?.focus()
+        }}
+        className="m-auto max-h-[90vh] w-[95vw] max-w-none overflow-hidden rounded-xl border border-border bg-bg p-0 text-text backdrop:bg-black/60"
+      >
+        <div className="flex items-center justify-between gap-4 border-b border-border px-4 py-2">
+          <h2 id={titleId} className="text-sm font-semibold">
+            Diagram at full size
+          </h2>
+          <button
+            type="button"
+            onClick={() => dialog.current?.close()}
+            className="rounded-md px-2 py-1 text-sm font-medium text-muted hover:bg-surface-2 hover:text-text focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-ring"
+          >
+            Close
+          </button>
+        </div>
+        {open && (
+          <div className="max-h-[calc(90vh-3rem)] overflow-auto p-4" tabIndex={0} aria-label="Diagram, scroll to see all of it">
+            <div className="mermaid-full" style={{ width }} dangerouslySetInnerHTML={{ __html: svg }} />
+          </div>
+        )}
+      </dialog>
+    </>
   )
 }
