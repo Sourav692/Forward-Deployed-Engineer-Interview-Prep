@@ -364,7 +364,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'llm-and-retrieval', 'capstone-and-portfolio'],
     }),
-    estHours: 154,
+    estHours: 155,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
