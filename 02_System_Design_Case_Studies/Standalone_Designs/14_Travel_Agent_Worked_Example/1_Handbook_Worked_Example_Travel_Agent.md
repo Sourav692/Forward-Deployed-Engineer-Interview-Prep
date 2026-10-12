@@ -1,8 +1,6 @@
-# Worked Example — The Travel Agent
+# The Travel Agent: Worked Example
 
-> **Level** 🟢 Foundations · **Module** 02 · **Doc** 4 of 5 · **Time** ~30 min
-> **Prerequisites:** [The 12-Part Framework](../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md), [The 15 Principles](../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/02_The_15_Principles.md)
-> **Source material:** [System Design Overview](../../../01_Concept_Tutorials/System_Design_Fundamentals/1.%20System%20Design%20Overview.md)
+> **Before this:** [The Twelve-Part Design Framework](../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/01_The_Twelve_Part_Design_Framework.md) and [Design Principles as Tie-Breakers](../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md)
 
 ## Why this matters
 
@@ -156,6 +154,23 @@ Each of the five fixes turns into a question you can put to any multi-agent diag
 - When teams argue shared versus per-agent RAG, what mistake actually matters?
 - Which job of the synthesiser is hidden when a diagram just "carries on as one line"?
 - Redraw the corrected architecture without looking.
+
+## Key Takeaways
+
+- The first draft was a rigid pipeline in which five agents squeezed through one shared cache, one retrieval stage, one LLM step and one tool-calling stage, and it needed five structural fixes.
+- Rate limiting is a rule the API gateway applies to every request, not a separate box off the load balancer that leads nowhere.
+- The supervisor looks in the semantic cache before doing anything else, and on a hit the answer goes back with no agent spawned.
+- The cache's placement decides whether it saves money or nothing, because a cache consulted after all five agents have run avoids no work.
+- A semantic cache also matches near-duplicate queries, so it can skip the entire fan-out rather than save a single call downstream.
+- On a miss, the supervisor spawns only the specialists this query calls for, not all five by default.
+- Each agent calls retrieval inside its own loop, because Search and Recommendation need regional travel content while Booking and Policy rarely do.
+- The LLM, the MCP registry, the external APIs and the vector DBs form a shared backend that each agent calls on demand, so Booking reaches the Flight and Payment servers during its own work.
+- A named synthesiser gathers the output of every agent that ran and settles clashes, such as a Policy ruling that overrides a Booking choice, before the user sees anything.
+- The synthesised reply is written back to the cache so the next similar query can reuse it.
+- Shared retrieval puts residency and guardrails in one place while per-agent retrieval risks duplicate embedding stacks, and the real mistake is drawing RAG as a peer of the agents.
+- Extra agents add coordination and synthesis costs, which pay off only when sub-tasks differ in tools, guardrails or scaling, as Booking and Policy plainly do.
+- Regional stores for AMER, EMEA and APJ ease data residency and cut latency, while one global store is simpler to run and keeps regions consistent.
+- Monitoring spans every stage with latency, token usage, cache hit rate and a trace per agent.
 
 ## Level calibration
 

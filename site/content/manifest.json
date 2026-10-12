@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T20:22:47.903Z",
+  "generatedAt": "2026-10-12T20:33:21.572Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1045,8 +1045,8 @@
                   "label": "Reference Design"
                 }
               ],
-              "minutes": 22,
-              "updated": "2026-10-12"
+              "minutes": 24,
+              "updated": "2026-10-13"
             },
             {
               "slug": "travel-agent-worked-example",
@@ -1062,8 +1062,8 @@
                   "label": "12-Part Framework"
                 }
               ],
-              "minutes": 20,
-              "updated": "2026-10-12"
+              "minutes": 22,
+              "updated": "2026-10-13"
             },
             {
               "slug": "air-gapped-ai-system",
@@ -1111,7 +1111,7 @@
                   "label": "Tutorial 8"
                 }
               ],
-              "minutes": 96,
+              "minutes": 98,
               "updated": "2026-10-13"
             },
             {
@@ -1164,7 +1164,7 @@
                   "label": "Tutorial 9"
                 }
               ],
-              "minutes": 105,
+              "minutes": 107,
               "updated": "2026-10-13"
             },
             {
@@ -1209,8 +1209,8 @@
                   "label": "Tutorial 7"
                 }
               ],
-              "minutes": 91,
-              "updated": "2026-10-12"
+              "minutes": 93,
+              "updated": "2026-10-13"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -1246,8 +1246,8 @@
                   "label": "Tutorial 5"
                 }
               ],
-              "minutes": 74,
-              "updated": "2026-10-12"
+              "minutes": 76,
+              "updated": "2026-10-13"
             },
             {
               "slug": "self-adapting-agent",

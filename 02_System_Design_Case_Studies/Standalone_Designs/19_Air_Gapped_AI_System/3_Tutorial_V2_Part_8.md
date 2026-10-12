@@ -53,6 +53,24 @@ We ran no second review, since the first found no other gap this design could ac
 - If the workload handles export-controlled technical data, ITAR/EAR rules could limit which analysts may see some documents at all. The compliance officer would then bring a new constraint into the stakeholder table in Section 1.
 - Live, I'd put it like this: "I don't know yet which framework governs this enclave. But what I've already described (append-only audit, signed provenance, fail-closed promotion) maps cleanly onto the CM and AU families in NIST 800-53. So once we learn the exact framework, the architecture stays put. Only the format of the evidence changes."
 
+## Key Takeaways
+
+- The boundary is the design, so hold every choice to one outcome: maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries.
+- Defend the no-internet-at-runtime assumption first, because relaxing it later simplifies the design while assuming the reverse breaks the whole architecture.
+- Measure success with analyst turnaround time per case, which the customer can check from inside the enclave without trusting a vendor-reported figure.
+- Size against the fixed GPU pool: 20 QPS at 2,000 tokens a request, 120 tokens a second per replica and 70% utilisation gives 477 replicas, a sign to challenge the request mix rather than ask for hardware.
+- Split the design into a connected build world and an offline runtime, with signing and the transfer staging zone as the only bridge between them.
+- Make the offline registry the one system of record for deployable artifacts, and never let a runtime fall back to an older cached copy.
+- The first production gate is that no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible.
+- Ship each release as a signed manifest that lists every artifact hash and declares every dependency, so a missing package fails validation before installation, not at runtime.
+- A missing transitive package fails closed: promotion stops, the evidence is kept, the running release stays untouched, and a dependency-closure preflight prevents a repeat.
+- Sort every failure into a policy: signature and authentication checks fail closed, a stale index degrades with a freshness warning, ingestion queues in a bounded buffer, and trust-root updates need a human.
+- Keep every observability path local-first and approved, because a library that silently calls home is a leak, not monitoring.
+- Version the model and the retrieval index as a compatible pair, since new weights that change embeddings or tokenisation force a rebuild or a parallel index.
+- Roll out in four phases: staging on identical hardware, a rehearsed signed transfer, a one-node canary and a tested rollback bundle with runbooks.
+- Pick the smallest model that clears the quality bar on the customer's own documents, because each step up competes for enclave hardware and adds latency and accreditation work.
+- Favour fewer releases that you trust more, with urgent security patches on a separate track from new features.
+
 ## Level calibration
 
 On this design the levels separate on how far the answer treats the boundary as the system itself, not on how many boxes sit inside the enclave.

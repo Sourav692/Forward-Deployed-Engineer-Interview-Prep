@@ -1,8 +1,4 @@
-# Case 4 — AI-Powered Recruiting Platform
-
-> **Level** 🔴 Design Mastery · **Module** 09 · **Doc** 4 of 6 · **Time** ~30 min
-> **Prerequisites:** Module 02, Module 04 doc 7 (judges), Module 05 doc 5 (human approval)
-> **Source material:** [AI Powered Recruiting Platform Design](../../Classic_Design_Walkthroughs/System_Design_Course/8.%20AI%20Powered%20Recruiting%20Platform%20Design.md)
+# AI-Powered Recruiting Platform: Casebook
 
 ## The prompt
 
@@ -125,6 +121,24 @@ The design is one AI workflow from end to end: structured extraction, matching b
 - What is the AI judge allowed to do, what is it barred from doing, and what triggers manual review?
 - Give three fairness mechanisms and say which one runs all the time.
 - In the personalisation answer, why is "similar to successful hires" a bias risk, and how do you contain it?
+
+## Key Takeaways
+
+- The recruiter makes the final call, so the platform is a tool that helps people hire, not one that hires on its own.
+- Because the system helps a person decide rather than deciding, explainability drives every later choice.
+- Structured extraction is the line between documents and data: every resume layout must come out as one profile shape that can be compared and ranked.
+- Run matching in two modes: batches for bulk intake, and close to live when a recruiter searches.
+- Embeddings match on meaning, so a search for "LLM Engineer" can surface people who list RAG, prompt engineering or agentic AI.
+- Rank on explicit weighted signals, opening at semantic similarity ~30%, skills ~25%, experience ~20% and domain ~15%, with ~10% for the rest.
+- Explicit weights let a recruiter follow the ranking and an auditor accept it, and one opaque score allows neither.
+- The AI judge scores against a fixed rubric and explains each score, but the decision is never its to make.
+- When confidence falls below a set threshold, a person must review the case.
+- Human review only adds accountability and a bias check if the reviewer has real power to overrule the ranking.
+- Parse and embed as asynchronous, event-driven background jobs, so thousands of resumes an hour never block an upload.
+- Absorb bursts from a popular posting with GPU-backed inference, cached embeddings and queues.
+- Deploy in several regions to cut latency and keep candidate PII where it has to stay.
+- Audit-log every AI suggestion and hiring action, and monitor bias across protected groups all the time, not once at launch.
+- Lifting candidates who resemble past successful hires can learn past bias, so that step needs close fairness monitoring.
 
 ## Level calibration
 
