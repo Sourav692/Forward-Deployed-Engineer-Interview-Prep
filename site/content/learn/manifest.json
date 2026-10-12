@@ -1947,7 +1947,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/",
-      "estMinutes": 33,
+      "estMinutes": 34,
       "href": "/design/scale-prototype-to-production"
     },
     {
@@ -2431,7 +2431,7 @@
       "credit": "Includes material adapted from iGrace course pages.",
       "rights": "rewrite",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/",
-      "estMinutes": 17,
+      "estMinutes": 18,
       "href": "/design/recruiting-platform"
     },
     {
@@ -2442,7 +2442,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/",
-      "estMinutes": 35,
+      "estMinutes": 37,
       "href": "/design/production-llm-gateway"
     },
     {
@@ -2455,7 +2455,7 @@
       "credit": "Includes material adapted from iGrace course pages.",
       "rights": "rewrite",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/",
-      "estMinutes": 17,
+      "estMinutes": 18,
       "href": "/design/travel-agent-worked-example"
     },
     {
@@ -2468,7 +2468,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "rights": "rewrite",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
-      "estMinutes": 85,
+      "estMinutes": 86,
       "href": "/design/air-gapped-ai-system"
     },
     {
@@ -2481,7 +2481,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "rights": "rewrite",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
-      "estMinutes": 90,
+      "estMinutes": 91,
       "href": "/design/reliable-workflow-orchestration"
     },
     {
@@ -2494,7 +2494,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "rights": "rewrite",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
-      "estMinutes": 81,
+      "estMinutes": 82,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -2507,7 +2507,7 @@
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "rights": "rewrite",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
-      "estMinutes": 63,
+      "estMinutes": 65,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
@@ -2518,7 +2518,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/",
-      "estMinutes": 33,
+      "estMinutes": 34,
       "href": "/design/prioritize-ai-use-cases"
     },
     {
@@ -2529,7 +2529,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/",
-      "estMinutes": 34,
+      "estMinutes": 35,
       "href": "/design/build-when-customer-data-is-poor"
     },
     {
@@ -2540,7 +2540,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/",
-      "estMinutes": 46,
+      "estMinutes": 47,
       "href": "/design/self-adapting-agent"
     },
     {
@@ -2551,7 +2551,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/",
-      "estMinutes": 32,
+      "estMinutes": 34,
       "href": "/design/personal-assistant-with-memory"
     },
     {
@@ -2562,7 +2562,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/",
-      "estMinutes": 34,
+      "estMinutes": 37,
       "href": "/design/decomposition-classics-67-68-69"
     },
     {

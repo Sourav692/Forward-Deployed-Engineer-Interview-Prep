@@ -63,6 +63,16 @@ The playbook's own case says the same: "reduce cost **by workflow**, not across 
 
 ---
 
+## Level calibration
+
+The levels split on whether the four constraints are met one at a time, traded against each other, or turned into a platform choice the customer lives with for years.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Names the full chain of retry inside a breaker, warm fallback and labelled degradation, runs rule-based guards before the LLM guard in both directions, and caps each request before the paid call. Prices the day at about $245 against $500 and sees complex turns carry 96% of spend. | The collisions: a five-call agent path cannot finish in 3 s, retries overrun the budget during an outage, and the LLM output check fights streaming. |
+| Staff | Splits the gateway into an edge face and a model face, holds agent turns to first token under 3 s, runs router and input guard in parallel, and gives retries a deadline instead of an attempt count. Adds a pacer that tightens routing at 80% and 95% of spend, version-keyed cache entries, and one trace per request with cost, model and guard decision. | What happens when data cannot leave the region, and which other agents will route through this gateway next. |
+| Principal | Makes residency a routing rule with its own in-region fallback pool, because a fallback across the boundary is a breach, not a recovery. Positions the gateway as the shared function-to-model layer for every agent, and says plainly that a self-hosted pool turns the $500 into a GPU-hour budget on a weaker model. | The real traffic, complex-turn share and residency policy, which decide whether $500 still holds past about 61,000 turns a day. |
+
 ## Key Takeaways
 
 - The gateway has two faces: the edge face screens the customer, and the model face sits under every call the agent makes.
