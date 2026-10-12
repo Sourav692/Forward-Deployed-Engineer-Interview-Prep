@@ -37,7 +37,7 @@ SCALE → LATENCY → RELIABILITY → QUALITY
               OBSERVABILITY → AUDIT
 ```
 
-These are a checklist, not an execution sequence. Prioritize what the customer cannot afford to get wrong.
+These are a checklist, not an execution sequence. Prioritise what the customer cannot afford to get wrong.
 
 ### 3. Essential Concepts
 
@@ -191,7 +191,7 @@ over [window / dataset], including [failure / peak cases].
 2. **Availability vs successful completion:** a live server can still deliver unusable answers or failed actions.
 3. **Security vs safety:** who may access or act differs from whether the permitted action meets business policy.
 4. **Observability vs audit:** “Why was it slow?” differs from “Why was this refund issued?”
-5. **Target vs assumption:** customer-approved thresholds are requirements; invented numbers must be labeled provisional assumptions.
+5. **Target vs assumption:** customer-approved thresholds are requirements; invented numbers must be labelled provisional assumptions.
 
 ```text
 Smaller model → Cost ↓, latency may ↓, quality must be checked

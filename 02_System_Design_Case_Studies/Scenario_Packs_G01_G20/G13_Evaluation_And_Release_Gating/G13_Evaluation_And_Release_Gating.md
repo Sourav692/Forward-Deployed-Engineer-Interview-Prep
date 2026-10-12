@@ -104,7 +104,7 @@ The headline workload is not "30 apps". It is 30 applications × 20 candidate re
 | Window | Calls/sec needed | Approx. workers at 2.5 calls/sec each | Practical implication |
 |---|---|---|---|
 | 24-hour batch | 69–174 | 28–70 | Shared elastic pool is sufficient if backlog is allowed |
-| 6-hour release gate | 278–694 | 112–278 | Requires aggressive parallelism, admission control, and prioritization |
+| 6-hour release gate | 278–694 | 112–278 | Requires aggressive parallelism, admission control, and prioritisation |
 
 The worker figure assumes one call every 400 ms, about 2.5 calls a second per worker at full utilisation. Real deployments add headroom for retries, tail latency and bursts.
 

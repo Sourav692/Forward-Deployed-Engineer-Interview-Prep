@@ -267,7 +267,7 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
 
 ### 7. Interview Phrases
 
-> “Based on discovery, I’ll summarize what the system must do before choosing the architecture.”
+> “Based on discovery, I’ll summarise what the system must do before choosing the architecture.”
 
 > “I’ll separate policy knowledge from live order data because they need different access paths.”
 

@@ -305,7 +305,7 @@ Auditability
 
 1. The customer says, **"The system should be fast."** How would you turn that into a measurable NFR?
 2. The system serves **50 enterprise customers and 100K total users**. Which NFRs become especially important?
-3. A refund agent handles financial actions. Which NFRs would you prioritize and why?
+3. A refund agent handles financial actions. Which NFRs would you prioritise and why?
 4. How would the NFRs differ between a **real-time voice agent** and a **10-minute deep-research agent**?
 5. What AI-quality NFRs would you define beyond traditional uptime and latency?
 
@@ -639,7 +639,7 @@ Total Latency
 - P50/P95/P99
 - TTFT
 - Streaming
-- Parallelization
+- Parallelisation
 - Sequential LLM hops
 - Retrieval latency
 - Tool latency
@@ -1197,9 +1197,9 @@ At this stage:
 
 # 🔥 Trigger → Concept Cheat Sheet
 
-The objective is not to memorize definitions.
+The objective is not to memorise definitions.
 
-Train yourself to hear a customer/interviewer statement and automatically recognize the architecture concern.
+Train yourself to hear a customer/interviewer statement and automatically recognise the architecture concern.
 
 | Interviewer Says                               | Your Brain Should Trigger                                  |
 | ---------------------------------------------- | ---------------------------------------------------------- |
@@ -1210,7 +1210,7 @@ Train yourself to hear a customer/interviewer statement and automatically recogn
 | **"Multiple enterprise customers"**      | Multi-tenancy, isolation, quotas, cost attribution         |
 | **"Request sometimes takes 20 seconds"** | Stage tracing, P95/P99                                     |
 | **"Chat feels slow"**                    | Streaming, TTFT, fewer sequential hops                     |
-| **"Three independent APIs"**             | Parallelization                                            |
+| **"Three independent APIs"**             | Parallelisation                                            |
 | **"External API is slow"**               | Timeout, cache, async, fallback                            |
 | **"External API keeps failing"**         | Retry, backoff, circuit breaker                            |
 | **"Action happened twice"**              | Idempotency                                                |
@@ -1221,7 +1221,7 @@ Train yourself to hear a customer/interviewer statement and automatically recogn
 | **"Human approves tomorrow"**            | Durable state + HITL                                       |
 | **"Need conversation history"**          | Session state                                              |
 | **"Need long-term preferences"**         | Memory                                                     |
-| **"Prompt keeps growing"**               | Bounded context + summarization                            |
+| **"Prompt keeps growing"**               | Bounded context + summarisation                            |
 | **"Repeated questions"**                 | Cache                                                      |
 | **"Information changes frequently"**     | TTL / freshness                                            |
 | **"Need company documents"**             | RAG                                                        |
@@ -1349,9 +1349,9 @@ Before finishing any architecture, mentally ask:
 
 # The Core FDE Principle
 
-Do **not** memorize architectures.
+Do **not** memorise architectures.
 
-Memorize:
+Memorise:
 
 ```text
 Customer says X

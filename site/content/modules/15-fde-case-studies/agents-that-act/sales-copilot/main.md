@@ -47,7 +47,7 @@ If these answers are missing, keep the first release read-only, restrict sources
 | Related case                          | What changes from G05                                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | Account-research assistant question   | Broader CRM/email/usage/support/public-source integration, entity resolution, seller adoption and time saved. |
-| Slow agentic CRM assistant            | Serial tool calls and agent steps likely dominate (confirm in traces); precompute, cache, parallelize reads, and bound the graph.        |
+| Slow agentic CRM assistant            | Serial tool calls and agent steps likely dominate (confirm in traces); precompute, cache, parallelise reads, and bound the graph.        |
 | Sales email model-regression incident | Claim-level release gates, online unsupported-claim monitoring, and block-mode policy enforcement dominate.   |
 
 ## 2. Requirements: Functional + Non-Functional
@@ -136,7 +136,7 @@ flowchart LR
 - **Step 6.** **Ground and verify.** The LLM copilot builds the brief, risks, questions, or draft from authorised evidence; verify citations and approved claims, or refuse and escalate.
 - **Step 7.** **Control CRM write-back.** Preview exact proposed fields, require the rep's approval, and send approved updates through the allowlisted idempotent gateway; discard and log rejected changes.
 
-**Model and agent role:** The LLM copilot summarizes and drafts from permission-checked evidence. A bounded agent can coordinate ambiguous next steps, but common CRM counts and lookups stay on reviewed deterministic routes. The model cannot approve an external claim or write to CRM.
+**Model and agent role:** The LLM copilot summarises and drafts from permission-checked evidence. A bounded agent can coordinate ambiguous next steps, but common CRM counts and lookups stay on reviewed deterministic routes. The model cannot approve an external claim or write to CRM.
 
 **Three boundaries:** precompute keeps slow source fan-out off the question path; the permission post-check protects a snapshot after a territory change; preview and approval protect every CRM write. Precomputation speeds access but never grants access.
 
@@ -148,7 +148,7 @@ Mirror source ACLs at ingest and compile tenant/territory/role filters into retr
 
 ## 5. Route questions to the right evidence
 
-Use **semantic/hybrid search** for “summarize the last three calls,” a **fixed structured CRM operation** for “how many open opportunities missed the close date?”, and **direct ID lookup** for a named opportunity. Mixed questions filter CRM records first, then summarize related prose. A vector search cannot compute an authoritative count; a generated database query may invent fields or scan outside the rep’s scope. Use reviewed operations behind the same allowlist as tool calls.
+Use **semantic/hybrid search** for “summarise the last three calls,” a **fixed structured CRM operation** for “how many open opportunities missed the close date?”, and **direct ID lookup** for a named opportunity. Mixed questions filter CRM records first, then summarise related prose. A vector search cannot compute an authoritative count; a generated database query may invent fields or scan outside the rep’s scope. Use reviewed operations behind the same allowlist as tool calls.
 
 Opportunity risks come from fetched fields: old stage, slipped close date, competitor mention, unanswered follow-up, open escalation, and relevant playbook objection. Cite each. If fields are absent or transcripts stale, say what could not be checked; do not infer what a typical deal “probably” looks like.
 
@@ -167,9 +167,9 @@ A CRM update is a proposal: exact fields previewed → policy check → human ap
 | Missing/stale evidence                   | Disclose gap, abstain or escalate; never fill from model memory.     |
 | Unapproved price/certification/ROI claim | Block external draft.                                                |
 | Prompt injection in transcript/email     | Untrusted data; tools and claim policy are gated outside the model. |
-| Model or vector path down                | Narrow labeled fallback or queue with progress.                      |
+| Model or vector path down                | Narrow labelled fallback or queue with progress.                      |
 
-At 10× accounts, shard snapshot jobs by territory and isolate connectors by source. If account prep takes 30–45 s, trace steps and tool latency first. Precompute on the calendar event; use deterministic routes, cache the permission-scoped snapshot, parallelize remaining read-only calls, cap steps/top-k, and reserve an agent for ambiguous work. Measure cache hit rate, p95, steps, tool time, and cost per workflow.
+At 10× accounts, shard snapshot jobs by territory and isolate connectors by source. If account prep takes 30–45 s, trace steps and tool latency first. Precompute on the calendar event; use deterministic routes, cache the permission-scoped snapshot, parallelise remaining read-only calls, cap steps/top-k, and reserve an agent for ambiguous work. Measure cache hit rate, p95, steps, tool time, and cost per workflow.
 
 ## 8. Evaluation, rollout, and regression drill
 

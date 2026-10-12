@@ -68,7 +68,7 @@ Only a total miss enters the pipeline with no prior context. The cache sits in f
 
 ## Read the Agent Pipeline Precisely
 
-The pipeline is a LangGraph state machine of four agents. The Search agent takes the topic and the last four turns of session history, and finds five key facts. The Summarize agent condenses the raw findings into structured bullets. The Writer agent drafts the report, with an executive summary, findings, analysis, and conclusion, adding any related prior report from smart lookup. The Critic agent rereads the report for factual consistency and coherence, and answers yes or no with a reason.
+The pipeline is a LangGraph state machine of four agents. The Search agent takes the topic and the last four turns of session history, and finds five key facts. The Summarise agent condenses the raw findings into structured bullets. The Writer agent drafts the report, with an executive summary, findings, analysis, and conclusion, adding any related prior report from smart lookup. The Critic agent rereads the report for factual consistency and coherence, and answers yes or no with a reason.
 
 ```mermaid
 flowchart LR
@@ -119,7 +119,7 @@ Terraform provisions everything as versioned, reviewable text: the VPC, subnets,
 
 ## Worked Example: Two Topics, Two Paths
 
-A user asks for a report on a topic the platform researched last week under different wording. Entry checks pass. The semantic cache misses, because the similarity is below 0.85. Exact long-term memory misses too, below 0.88. The related-memory check finds last week's report in the 0.50 to 0.88 band, so it travels to the Writer as context. Search, Summarize, and Writer run, each through the gateway. The Critic says no once, citing an inconsistent figure, and the loop runs again within `agent_max_iterations`. The second draft passes. The output guardrail clears it, it is saved to both stores, and the judge scores it in the background.
+A user asks for a report on a topic the platform researched last week under different wording. Entry checks pass. The semantic cache misses, because the similarity is below 0.85. Exact long-term memory misses too, below 0.88. The related-memory check finds last week's report in the 0.50 to 0.88 band, so it travels to the Writer as context. Search, Summarise, and Writer run, each through the gateway. The Critic says no once, citing an inconsistent figure, and the loop runs again within `agent_max_iterations`. The second draft passes. The output guardrail clears it, it is saved to both stores, and the judge scores it in the background.
 
 A second user then asks almost the same question. The semantic cache hits at 0.85 or above and returns the stored report with no model call at all.
 

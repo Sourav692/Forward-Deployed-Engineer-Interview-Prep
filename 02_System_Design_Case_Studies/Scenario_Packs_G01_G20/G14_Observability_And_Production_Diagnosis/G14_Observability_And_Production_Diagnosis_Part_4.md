@@ -101,8 +101,8 @@ Ten members of this group are the same system asked a cost or latency question. 
 
 | | |
 |---|---|
-| Dominant driver | A new prompt version invalidated the cache, a short TTL, changed normalization, document churn |
-| Cheapest lever first | Roll back the key change, adjust TTL, normalize queries, pre-warm a safe cache |
+| Dominant driver | A new prompt version invalidated the cache, a short TTL, changed normalisation, document churn |
+| Cheapest lever first | Roll back the key change, adjust TTL, normalise queries, pre-warm a safe cache |
 | Metric that proves it | Hit rate by cache type; invalidations; TTL; key cardinality; traffic mix |
 | Do not | Scale capacity before inspecting the key |
 | 60-second line | A cache hit drop is usually a keying, versioning, traffic, or invalidation issue; I would inspect those before scaling. |

@@ -48,7 +48,7 @@ If the interviewer cannot provide all numbers, state assumptions for throughput,
 | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | SRE triage worksheet and mocks                  | Requirements, source ownership, golden set, and rollout probes become more explicit.                            |
 | Operations/incident-response assistant question | Tests the progression from read-only investigation to suggested, approved, then narrowly autonomous mitigation. |
-| Latency self-drill                              | Raw telemetry and serial diagnostics become the dominant bottleneck; pre-aggregate and parallelize.             |
+| Latency self-drill                              | Raw telemetry and serial diagnostics become the dominant bottleneck; pre-aggregate and parallelise.             |
 
 ## 2. Requirements: Functional + Non-Functional
 
@@ -138,7 +138,7 @@ The mitigation is always a proposal first. Compute blast radius from the service
 
 At the source’s burst of **400 alerts/90 s**, one investigation per alert would overload the telemetry stack and produce noisy summaries. Dedupe/correlation should take under a second; context building ~1–2 s; parallel telemetry fan-out ~5–10 s for the slowest source; strong-model synthesis ~10–15 s in this budget, streamed; verification completes the under-30-second first output. Track time to first useful hypothesis, not only final response time.
 
-At 10×, provider quotas and telemetry rate limits likely bind first. Per-service caps and pre-aggregation keep strong-model calls tied to real incidents rather than alert count. Profile input tokens and serial steps before choosing a faster model. Cache versioned service catalogs/runbooks, shrink lookback and top-k, and parallelize independent read-only calls. Spend is per resolved investigation; it remains visible even when a SEV-1 justifies a larger budget.
+At 10×, provider quotas and telemetry rate limits likely bind first. Per-service caps and pre-aggregation keep strong-model calls tied to real incidents rather than alert count. Profile input tokens and serial steps before choosing a faster model. Cache versioned service catalogs/runbooks, shrink lookback and top-k, and parallelise independent read-only calls. Spend is per resolved investigation; it remains visible even when a SEV-1 justifies a larger budget.
 
 ## 6. Failure and safety playbook
 
@@ -171,7 +171,7 @@ For a 45-minute round: requirements and oracle (8), records/action space (4), ar
 | Restart automatically?         | Read-only first, then suggestions, then human-approved execution; autonomy only for proven low-risk reversible work. |
 | What breaks at 10×?           | Telemetry quotas and provider limits; cap per service and pre-aggregate.                                             |
 | What if a source says nothing? | Show whether it was`EMPTY` or `UNAVAILABLE`; never infer from a missing source.                                  |
-| Slow prototype?                | Decompose stages, parallelize reads, send less telemetry, stream, keep verification.                                 |
+| Slow prototype?                | Decompose stages, parallelise reads, send less telemetry, stream, keep verification.                                 |
 | How do you know it helps?      | Post-incident hypothesis precision, source coverage, responder acceptance, reversal rate.                            |
 
 **Final mental model:** Dedupe → read-only evidence → ranked hypothesis + coverage → proposal → human approval → safe gateway → verified outcome.

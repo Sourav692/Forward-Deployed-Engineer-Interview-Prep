@@ -49,11 +49,11 @@ Clarify the business outcome and current workflow. Let customer answers guide qu
                  → Refund actions?
 ```
 
-#### 2. Summarize Requirements — Confirm Before Designing
+#### 2. Summarise Requirements — Confirm Before Designing
 
 State capabilities and measurable operating limits separately. Include access boundaries, permitted writes, approvals, and safe failure behaviour.
 
-> “Let me summarize what the system must do, the operating limits, and the assumptions we still need to confirm.”
+> “Let me summarise what the system must do, the operating limits, and the assumptions we still need to confirm.”
 
 ```text
 Must do: Policy answers + order reads + approved refunds
@@ -77,7 +77,7 @@ User → API Gateway → Router / workflow
 
 > “This component exists because the customer needs ___.”
 
-API Gateway = User → Application control. Model Gateway = Application → Model control. Add centralized model-call control when provider routing, limits, fallback, or tracking requires it.
+API Gateway = User → Application control. Model Gateway = Application → Model control. Add centralised model-call control when provider routing, limits, fallback, or tracking requires it.
 
 #### 4. Walk One Real Request — Make the Diagram Concrete
 
@@ -139,7 +139,7 @@ Observe latency, cost, errors, usage, and outcomes; audit business actions. Shad
 
 #### 9. Close With Trade-Offs and Next Evidence
 
-Summarize how the design meets the problem, why it is appropriately simple, and which assumptions require validation.
+Summarise how the design meets the problem, why it is appropriately simple, and which assumptions require validation.
 
 > “I’m choosing X because of requirement Y. The trade-off is Z, and I’d verify it using W.”
 
@@ -170,7 +170,7 @@ Name what would change the design: new workload, stricter residency, failed qual
 | Hear… | Think… | Next move |
 |---|---|---|
 | “Design an AI system” | Discovery | Outcome and current workflow |
-| “What must it do?” | FRs | Summarize capabilities and permitted actions |
+| “What must it do?” | FRs | Summarise capabilities and permitted actions |
 | “Now 100K users” | Workload/scale | Rates, concurrency, bottleneck |
 | “Too slow / expensive” | Measurement | Critical path / total cost per success |
 | “Can it act automatically?” | Autonomy/policy | Permission, rule, review, executor |
@@ -281,4 +281,4 @@ State customer-confirmed targets or label assumptions. Check data/tenant permiss
 
 ### 30-Second Opening
 
-> “I’d first clarify the business outcome and current workflow, then users and scale, data and integrations, autonomy, success criteria, and constraints. I’d summarize the requirements and assumptions, sketch the minimum architecture, and walk one request. Then I’d test it against scale, latency, cost, and failures, and explain evaluation, rollout, observability, security, and trade-offs.”
+> “I’d first clarify the business outcome and current workflow, then users and scale, data and integrations, autonomy, success criteria, and constraints. I’d summarise the requirements and assumptions, sketch the minimum architecture, and walk one request. Then I’d test it against scale, latency, cost, and failures, and explain evaluation, rollout, observability, security, and trade-offs.”

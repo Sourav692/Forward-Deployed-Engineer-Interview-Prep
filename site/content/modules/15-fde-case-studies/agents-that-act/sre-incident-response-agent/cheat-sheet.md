@@ -46,7 +46,7 @@ Telemetry down → report `UNAVAILABLE` and lower confidence. Alert storm → at
 
 ## Latency answer
 
-Send less raw telemetry: pre-aggregate, cap lookback, parallelize reads, stream ranked hypotheses, reserve the strong model for synthesis. At 10×, telemetry quotas and provider limits bind before average daily alert count.
+Send less raw telemetry: pre-aggregate, cap lookback, parallelise reads, stream ranked hypotheses, reserve the strong model for synthesis. At 10×, telemetry quotas and provider limits bind before average daily alert count.
 
 ## Interview close
 

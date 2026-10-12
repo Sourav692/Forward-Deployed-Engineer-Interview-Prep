@@ -7,7 +7,7 @@
 - Can you turn a vague customer request into a clear engineering problem?
 - Can you find the business outcome and current bottleneck before choosing technology?
 - Can you connect customer answers to requirements, risks, and design decisions?
-- Can you lead a natural conversation, then summarize what you learned?
+- Can you lead a natural conversation, then summarise what you learned?
 
 ### 2. Core Mental Model
 
@@ -33,7 +33,7 @@ Architecture
 
 Use this as a coverage checklist. The customer's answer decides the next question.
 
-### 3. Essential Concepts — Ten Questions to Memorize
+### 3. Essential Concepts — Ten Questions to Memorise
 
 #### 1. Business — Why does the customer need this?
 
@@ -193,7 +193,7 @@ You:      Which refunds need approval, and what should
           happen when approval or the order API is unavailable?
 ```
 
-Then cover remaining gaps in scale, success, security, and operating limits. Summarize your understanding and let the customer correct it.
+Then cover remaining gaps in scale, success, security, and operating limits. Summarise your understanding and let the customer correct it.
 
 ### 4. Requirement → Component Reasoning
 
@@ -216,7 +216,7 @@ Model Gateway = Application → Model control
 
 **Transition into Module 2:**
 
-> “Based on discovery, I’ll summarize what the system must do and how well it must do it before choosing components.”
+> “Based on discovery, I’ll summarise what the system must do and how well it must do it before choosing components.”
 
 ```text
 Problem / outcome: __________________________
@@ -268,7 +268,7 @@ Open questions / assumptions: _______________
 
 > “When you say 100K users, what peak request volume and concurrent work should we expect?”
 
-> “Let me summarize the requirements and open questions so we can confirm I’m solving the right problem.”
+> “Let me summarise the requirements and open questions so we can confirm I’m solving the right problem.”
 
 ### 8. Practice Questions
 
@@ -353,7 +353,7 @@ Do not invent numbers. Confirm a baseline and target. A timeout after a write ne
 
 ### 30-Second Opening
 
-> “I’d first clarify the business outcome and current workflow, then users and scale, data and integrations, and whether AI should answer, recommend, or act. I’d agree on measurable success and boundaries around security, failures, latency, availability, and cost. Then I’d summarize the requirements before choosing components. What problem matters most, and how is it handled today?”
+> “I’d first clarify the business outcome and current workflow, then users and scale, data and integrations, and whether AI should answer, recommend, or act. I’d agree on measurable success and boundaries around security, failures, latency, availability, and cost. Then I’d summarise the requirements before choosing components. What problem matters most, and how is it handled today?”
 
 ## Sources (checked 27 Sep 2026)
 

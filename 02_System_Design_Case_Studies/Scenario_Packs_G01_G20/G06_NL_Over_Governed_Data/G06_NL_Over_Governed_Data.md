@@ -18,7 +18,7 @@ The hard part of this system is not generating SQL. It is that a syntactically p
 
 ## 1. Name the Wrong-Answer Risk Before Drawing Anything
 
-Open with the failure, not the pipeline. Executives ask analysts the same handful of questions every week, and each time someone hand-translates English into SQL, runs it and sanity-checks the result. The naive pitch, "let an LLM write the SQL", loses the interview immediately, because generation is not the hard part. "Revenue" might mean booked, recognized or cash collected. The system must never produce valid SQL that confidently answers the wrong business question. That failure is more dangerous than an outright error, because the SQL ran, the chart rendered, and the number looks plausible.
+Open with the failure, not the pipeline. Executives ask analysts the same handful of questions every week, and each time someone hand-translates English into SQL, runs it and sanity-checks the result. The naive pitch, "let an LLM write the SQL", loses the interview immediately, because generation is not the hard part. "Revenue" might mean booked, recognised or cash collected. The system must never produce valid SQL that confidently answers the wrong business question. That failure is more dangerous than an outright error, because the SQL ran, the chart rendered, and the number looks plausible.
 
 Reframe the ask from "build a text-to-SQL model" to "build a governed decision-support system that only speaks in terms the business has already agreed to". That framing implies three things from day one. A semantic layer of governed metric definitions. A safety boundary around the warehouse that is read-only and cost-bounded. And an explicit way to say "I don't know which definition you mean" instead of guessing.
 
@@ -34,7 +34,7 @@ Then ask the questions that change the architecture, before sketching a box. Eac
 | What is the tolerance for latency versus cost? Synchronous, or async and cached? | Where the sync/async boundary sits |
 | Is row-level and column-level security already enforced by the warehouse, or would the assistant reimplement it? | Whether authorisation is reused or rebuilt, which is the classic bug |
 | What happens when the assistant is unsure: ask, refuse, or escalate to an analyst? | The ambiguity gate's three modes |
-| Which ten metrics matter most, and what does "revenue" actually mean: booked, recognized, or collected? | The MVP scope and the first golden cases |
+| Which ten metrics matter most, and what does "revenue" actually mean: booked, recognised, or collected? | The MVP scope and the first golden cases |
 | What audit evidence must exist so someone can reconstruct why a number was produced? | The query-run record's schema |
 
 Map the people, because the three groups want different things and the architecture has to satisfy all three at once. That tension is exactly why the semantic layer and the policy and cost validator are first-class components rather than afterthoughts bolted onto a chat UI.
@@ -98,7 +98,7 @@ Every must-have then needs an owner in the architecture.
 | Dialect-specific generation from narrowed context | SQL generator, stateless |
 | Policy against the tree | AST parser, policy and cost validator |
 | Bounded, read-only execution | Read-only execution gateway with the narrowest credentials |
-| Answer with SQL, lineage, caveats | Result summarizer with cross-check against the table |
+| Answer with SQL, lineage, caveats | Result summariser with cross-check against the table |
 | Reconstruct any number | Append-only query-run store, versioned metrics, schema snapshots and policy bundles |
 
 ## 3. Map Every Source and Who Owns Its Definition

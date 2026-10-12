@@ -65,7 +65,7 @@ The source’s **illustrative** requirements are routine p95 <3 s, ambiguous p95
 
 With a 70/20/10 routine/ambiguous/escalated split and 2/3/1 model calls: `1.4M × 2 + 0.4M × 3 + 0.2M × 1 = 4.2M` monthly model calls before retries, moderation, and tools. Retrieval is roughly 2.2M–2.4M calls on the source assumptions. These are planning calculations, not measured traffic.
 
-At 10× conversations, use stateless gateways and orchestration, retrieval partitions by product/region/language/business unit, regional deployment where residency requires it, asynchronous long-running actions, rate limits by user/tenant/tool, and circuit breakers. Isolate offline summarization and human escalation from routine classification. A semantic FAQ cache near ingress can avoid expensive orchestration only when tenant, permission, and content version are in the key. Identity assertions, account status, authorisation decisions, and money state require live authority.
+At 10× conversations, use stateless gateways and orchestration, retrieval partitions by product/region/language/business unit, regional deployment where residency requires it, asynchronous long-running actions, rate limits by user/tenant/tool, and circuit breakers. Isolate offline summarisation and human escalation from routine classification. A semantic FAQ cache near ingress can avoid expensive orchestration only when tenant, permission, and content version are in the key. Identity assertions, account status, authorisation decisions, and money state require live authority.
 
 Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong_resolution − C_recontact` (and account for retrieval/operations when pricing it). Measure cost per **resolved** issue and by intent. A shorter cheap answer that drives recontact can lose money.
 
@@ -75,7 +75,7 @@ Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong
 |---|---|---|
 | FAQ evidence weak | Queue or answer with a clear limitation where safe. | Retrieved article/version and confidence signals. |
 | Malformed order lookup | Fail the lookup closed. | Validation error and original request. |
-| Order tool unavailable | Degrade or hand off; do not invent status. | Tool timeout and latest known snapshot labeled stale. |
+| Order tool unavailable | Degrade or hand off; do not invent status. | Tool timeout and latest known snapshot labelled stale. |
 | Refund/address change over threshold | Human approval before tool execution. | Gateway rule, approver, action record. |
 | Identity unavailable | No account tools. | Assurance check and outage reason. |
 | Language detection uncertain | Language-neutral intake and escalation. | Detection scores and chosen fallback. |
@@ -112,7 +112,7 @@ These are **example implementations**, not mandatory product choices:
 
 1. **Multilingual triage (#95):** detect language → classify → route → draft → translate back. An intent branch needs a default arm. Example p95 <3 s allocation: 200 ms detection, 300 ms classification, 1.5 s streamed drafting, 500 ms translation (2.5 s total). Bound retries and provide a classifier fallback.
 2. **Human-gated graph (#96):** structured `{category, risk_level}` output; interrupt inside refund/deletion tool; durable Postgres checkpoint keyed by ticket; idempotent side effect keyed by ticket and action; concurrent read-only lookups; at most three self-correction iterations before escalation.
-3. **Agentic RAG (#97):** separate product-doc and runbook indexes, each hybrid BM25/vector for exact error codes; cheap router; retrieve 20/source concurrently, rerank merged candidates to five when scores are close; 400 ms retrieval budget; cite source and abstain below relevance threshold; weekly labeled recall@k gate.
+3. **Agentic RAG (#97):** separate product-doc and runbook indexes, each hybrid BM25/vector for exact error codes; cheap router; retrieve 20/source concurrently, rerank merged candidates to five when scores are close; 400 ms retrieval budget; cite source and abstain below relevance threshold; weekly labelled recall@k gate.
 4. **Growing support search (#99):** wiki, ticket, and release-note sources with per-source hybrid weights; incremental append and source metadata; coverage-gap grading and human fallback for new error codes; cross-encoder rerank of fused top 20 under a 1.5 s p95 target; track fallback rate.
 5. **Travel booking (#101):** supervisor with read-only booking lookup, RAG policy QA, and one write-capable change/cancel specialist. Compute refund amount with pure logic; example >$200 approval interrupt; idempotency by booking and request ID; durable conversation checkpoint, separate customer memory, 15-step and cost ceilings; direct workflow for simple baggage FAQ.
 6. **Parent-document retrieval (#102):** example child chunks of about 400 characters and parents of about 2,000 (LangChain's example sizes; tune on your data); shared Postgres vector/doc store, HNSW once exact scans start to eat the latency budget, idempotent daily append keyed by article ID and modification time; p95 <2 s budget dominated by streamed generation; cap final `k` at 3–4 and abstain below similarity threshold.
@@ -124,7 +124,7 @@ Keep these mock-specific thresholds attached to their scenarios. They are not gl
 - **“80% autonomous in six months?”** Define denominator and safe resolution window. Expand by intent only while incorrect resolutions, recontact, and harm remain within gates.
 - **“Confident but wrong?”** External evidence, policy, live state, and gateway rules can block a confident model. Preserve the record and hand off.
 - **“Duplicate refund?”** Idempotent action, immutable record, state check, ledger reconciliation after timeout.
-- **“18-second prototype?”** Profile auth, retrieval, rerank, generation, tools, and verification; route simple intents directly, parallelize independent reads, stream where useful, run permitted actions async. Preserve high-risk checks.
+- **“18-second prototype?”** Profile auth, retrieval, rerank, generation, tools, and verification; route simple intents directly, parallelise independent reads, stream where useful, run permitted actions async. Preserve high-risk checks.
 - **“Prompt injection in a ticket?”** Ticket text is data; tools and retrieval enforce scope; test malicious instructions in documents, tickets, emails, and tenant data.
 - **“Launch next Monday?”** Controlled shadow/draft pilot and narrow reversible actions with rollback, rather than broad unsupervised release.
 

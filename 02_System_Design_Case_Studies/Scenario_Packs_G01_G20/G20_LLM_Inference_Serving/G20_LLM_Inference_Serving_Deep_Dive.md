@@ -4,7 +4,7 @@
 
 ## 1. Two phases and two capacity checks
 
-Prefill processes input tokens and drives time to first token (TTFT); decode adds output tokens one at a time and drives time per output token (TPOT) and total duration. Size with replica-seconds: under assumed H100-class rates, 1,000 input/20,000 prefill + 250 output/2,500 aggregate decode = 0.15 replica-seconds. At 1,000 rps and 70% utilization, ~214 replicas. Little's Law gives ~7,000 concurrent sequences for a seven-second stream; 64 slots/replica suggests ~110 replicas by slots, so the larger compute estimate binds. Both calculations depend on actual model, hardware, batch occupancy and token distributions.
+Prefill processes input tokens and drives time to first token (TTFT); decode adds output tokens one at a time and drives time per output token (TPOT) and total duration. Size with replica-seconds: under assumed H100-class rates, 1,000 input/20,000 prefill + 250 output/2,500 aggregate decode = 0.15 replica-seconds. At 1,000 rps and 70% utilisation, ~214 replicas. Little's Law gives ~7,000 concurrent sequences for a seven-second stream; 64 slots/replica suggests ~110 replicas by slots, so the larger compute estimate binds. Both calculations depend on actual model, hardware, batch occupancy and token distributions.
 
 CPU tokenization at the gateway permits token-weighted admission and estimated KV placement, and rejects huge prompts before the GPU queue. Incremental detokenization buffers incomplete characters and checks stop sequences on assembled text. Measure queue wait separately from service time or a peak overload will masquerade as a slow model.
 
@@ -34,4 +34,4 @@ For #79, review a junior design by ranking the top risks: static batches for var
 
 TTFT regression: inspect client/network, CPU tokenization, queue, long-prompt prefill and KV preemption. TPOT regression: inspect batch size, decode saturation and prefill interference. Slow after last token: detokenization, safety/schema post-process or a buffering proxy. Peak-only high p99 with flat p50 points toward queueing. Goodput is requests finished within SLO; raw throughput can rise while useful throughput falls.
 
-For a high GPU bill, measure goodput/GPU-hour, occupancy, KV utilization and tokens generated after disconnect. Continuous batching, output caps, identical-prefix reuse, appropriate quantization and off-peak batch work are levers. Changing the model or buying GPUs before measuring occupancy may leave the bottleneck untouched.
+For a high GPU bill, measure goodput/GPU-hour, occupancy, KV utilisation and tokens generated after disconnect. Continuous batching, output caps, identical-prefix reuse, appropriate quantization and off-peak batch work are levers. Changing the model or buying GPUs before measuring occupancy may leave the bottleneck untouched.

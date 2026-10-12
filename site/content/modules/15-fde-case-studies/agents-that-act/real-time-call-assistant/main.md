@@ -23,7 +23,7 @@ Before the call, hours are available to prepare permission-scoped account contex
 
 | Related case | Shared foundation | What changes |
 |---|---|---|
-| #59 Call assistant question-bank prompt | Transcribe, diarize, summarize, extract actions and propose CRM updates | Drives end-to-end components and summary-evaluation follow-up. |
+| #59 Call assistant question-bank prompt | Transcribe, diarize, summarise, extract actions and propose CRM updates | Drives end-to-end components and summary-evaluation follow-up. |
 | #43 Sub-3-second sales drill | Same call context | Focuses on precompute, small prompt/model, streaming and timeout. |
 | Realtime voice project / G05 Sales Copilot | Streaming ASR/RAG; CRM snapshot and approval pattern | Voice output is replaced by a rep-facing panel; CRM writes remain reviewed. |
 
@@ -50,7 +50,7 @@ The easiest way to frame requirements in an interview is:
 2. **Diarize speakers and stream ASR.**
 3. **Redact PII** before transcript storage or model use.
 4. **Show short live suggestions** in time.
-5. **Summarize asynchronously** and extract cited action items.
+5. **Summarise asynchronously** and extract cited action items.
 6. **Propose CRM field updates** with confidence; the rep corrects or approves.
 7. **Enforce retention** and record corrections for evaluation.
 

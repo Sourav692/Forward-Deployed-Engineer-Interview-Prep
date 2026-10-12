@@ -227,7 +227,7 @@ Use one framework: **measure the workload, find the bottleneck, then bound or ro
 | Concern | What drives it | Production choices | What to measure |
 |---|---|---|---|
 | **Scalability** | Corpus size, peak QPS, ACL/group cardinality, ingestion churn | Separate asynchronous ingestion from serving; partition/shard by tenant or useful scope; incremental indexing and tombstones; bounded candidate sets; scale stateless serving independently | Peak and sustained QPS, queue lag, index freshness, retrieval capacity, error rate |
-| **Latency** | Identity/policy lookup, retrieval, reranking, generation and verification | Apply authorisation in retrieval; keep top-k bounded; rerank selectively; parallelize independent safe work; use permission-aware caches; stream when useful; set stage deadlines and degrade to safe partial results or abstention | p50/p95/p99 per stage, timeout rate, cache hit rate, time to first token |
+| **Latency** | Identity/policy lookup, retrieval, reranking, generation and verification | Apply authorisation in retrieval; keep top-k bounded; rerank selectively; parallelise independent safe work; use permission-aware caches; stream when useful; set stage deadlines and degrade to safe partial results or abstention | p50/p95/p99 per stage, timeout rate, cache hit rate, time to first token |
 | **Cost** | Embedding/index refresh, search, reranking, model calls and context tokens | Incremental/batched embeddings; route simple tasks to smaller models; compress evidence; cap top-k/context; rerank only when expected quality gain justifies it; cache only with permission/version-aware keys | Cost per request and tenant, tokens, embedding/index spend, rerank rate, cost by route |
 
 ### How to reason through it in an interview
@@ -390,7 +390,7 @@ Five beats:
 
 1. **Problem:** multiple roles need different slices of the same information.
 2. **Decision:** authorisation becomes a retrieval constraint.
-3. **Design:** normalize ACLs → pre-filter → retrieve → post-check → rerank → evidence → generate → verify.
+3. **Design:** normalise ACLs → pre-filter → retrieve → post-check → rerank → evidence → generate → verify.
 4. **Lessons:** bad test labels, untested security rules and model-based security decisions can all mislead you.
 5. **Limitation:** a small corpus can make retrieval strategies look similar; large-scale retrieval claims need a representative corpus.
 

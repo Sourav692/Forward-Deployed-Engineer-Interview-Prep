@@ -22,7 +22,7 @@ Workflow and decision? Who uses/reviews? Which tasks read/draft/write? Which sou
 
 **Write:** proposed exact fields → preview → human approval → allowlisted idempotent gateway → CRM receipt.
 
-**LLM/agent role:** The copilot LLM summarizes and drafts; a bounded agent handles ambiguous steps. Common CRM lookups are deterministic, and the model cannot approve claims or writes.
+**LLM/agent role:** The copilot LLM summarises and drafts; a bounded agent handles ambiguous steps. Common CRM lookups are deterministic, and the model cannot approve claims or writes.
 
 ## Rules
 
@@ -39,7 +39,7 @@ Interactive **3–8 s**. Example gates: ≥90% grounded claims, ≥95% citations
 
 ## Failure card
 
-CRM down → authorised stale snapshot labeled, no writes. Territory changed → invalidate and reauthorise. Missing fact → say so. Price/certification unapproved → block draft. Injected email/transcript → untrusted data; write tools stay gated outside the model.
+CRM down → authorised stale snapshot labelled, no writes. Territory changed → invalidate and reauthorise. Missing fact → say so. Price/certification unapproved → block draft. Injected email/transcript → untrusted data; write tools stay gated outside the model.
 
 ## Rollout
 

@@ -34,7 +34,7 @@ The [source study](/design/document-review-copilot#full-pack) treats three cases
 | What is read-only, draft-only, or externally submitted? | Can it only highlight a clause, draft a letter, or actually send it to the payer? | Tool allowlist and whether write-back exists at launch. |
 | What is the governing source: payer rule, regulation, or playbook? How is its effective version selected? | Which year’s payer rule applies to this procedure date? | Rule ingestion, versioning, and retrieval. |
 | Which fields or tables are crucial, and what extraction coverage is acceptable? | If the table on page 7 is unreadable, do we still draft an approval? | Typed schema, parser mode, and the ingest gate. |
-| Which PHI, privileged, or financial fields may enter prompts, logs, and the model provider? | Can diagnosis codes go to a US cloud model, or only a redacted summary? | Minimization, redaction, and where the model runs. |
+| Which PHI, privileged, or financial fields may enter prompts, logs, and the model provider? | Can diagnosis codes go to a US cloud model, or only a redacted summary? | Minimisation, redaction, and where the model runs. |
 | What must the assistant refuse or escalate? What evidence must the reviewer see? | If the cited span does not support “meets medical necessity,” does the reviewer still see a green draft? | Risk tiers, span verifier, and review UI. |
 | How much false-positive burden can the reviewer absorb, and what cost per true issue is acceptable? | If we flag 50 harmless files to catch one real issue, will reviewers ignore the tool? | Screening tiers and eval thresholds. |
 
@@ -59,7 +59,7 @@ The easiest way to frame requirements in an interview is:
 
 | Requirement | Example target / constraint |
 |---|---|
-| **Security** | Source ACL and patient/matter scope before generation; PHI/privilege minimized in prompts and redacted from logs; no customer-data training without agreement. |
+| **Security** | Source ACL and patient/matter scope before generation; PHI/privilege minimised in prompts and redacted from logs; no customer-data training without agreement. |
 | **Latency** | **3–8 s** interactive; **10–20 s** packet generation; overnight batch for bulk surveillance; analyst drill-down <**10 s**. |
 | **Fail-closed** | Access fail, stale governing rule, missing citation, or missing material approval. |
 | **Degradation** | Non-authoritative formatting and source outages degrade visibly. |
@@ -144,7 +144,7 @@ flowchart LR
 | Step therapy or other clinical evidence absent | Flag the gap; do not invent a treatment history. |
 | Citation does not support claim | Reject output and send to review, regardless of overall groundedness score. |
 | Wrong patient or privileged matter | Access check fails closed before retrieval. |
-| LLM or retrieval unavailable | Partial packet with labeled gaps or refusal; bulk work may queue. |
+| LLM or retrieval unavailable | Partial packet with labelled gaps or refusal; bulk work may queue. |
 | Approval unavailable | Nothing external leaves. |
 
 Bulk surveillance is a screening funnel: rules and small classifiers process all documents; the strong model sees only borderline or flagged risk. Dedupe templated packets by content hash, batch non-urgent work off-peak, cap context and top-k, and watch the **flagged fraction** because it drives strong-model spend. Keep the citation verifier on the path that a material draft takes.

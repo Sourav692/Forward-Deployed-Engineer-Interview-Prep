@@ -48,7 +48,7 @@ The should-haves make it operable. Per-tenant quotas and priorities. Cancellatio
 | First-token latency (TTFT) | p95 ≤ 500 ms at peak for interactive traffic |
 | Per-token latency (TPOT) | p95 ≤ 50 ms between streamed tokens |
 | Throughput | 1,000 rps sustained at peak with the anchor request shape |
-| Utilization target | ≤ 70% of measured replica capacity, because queueing delay climbs steeply past roughly 70–80% utilization (rule of thumb) *(additions file, section D)* |
+| Utilisation target | ≤ 70% of measured replica capacity, because queueing delay climbs steeply past roughly 70–80% utilisation (rule of thumb) *(additions file, section D)* |
 | Availability | 99.9% of requests complete or fail explicitly; none vanish |
 | Failover | Loss of one GPU loses no un-streamed request; loss of one zone keeps service at reduced headroom |
 | Fairness | No tenant above its quota can raise another tenant's p95 |
@@ -84,7 +84,7 @@ That chapter also warns that a candidate who talks GPU count without throughput 
 | Decode rate per replica | 2,500 output tokens/s aggregate, at ~64 concurrent sequences |
 | Anchor request | 1,000 input, 250 output tokens |
 | Peak arrival | 1,000 rps |
-| Utilization target | 70% |
+| Utilisation target | 70% |
 
 One request costs 1,000 ÷ 20,000 + 250 ÷ 2,500 = 0.05 + 0.10 = **0.15 replica-seconds**. At 1,000 rps that is 150 replicas of pure work. Divided by 0.70, provision **about 214 replicas**. Decode is two-thirds of the bill, so output tokens are the lever that matters most.
 

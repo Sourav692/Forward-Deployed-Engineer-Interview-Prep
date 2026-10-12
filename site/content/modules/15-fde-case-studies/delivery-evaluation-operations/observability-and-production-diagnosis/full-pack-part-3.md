@@ -4,7 +4,7 @@
 
 Production GenAI systems fail economically as well as technically. Incident #88 produced no quality complaint at all. The only symptom was a budget alert.
 
-**Setting.** An executive dashboard copilot summarises revenue, pipeline, customer-risk notes and operational metrics. The path is UI → metrics API → CRM-note retrieval → prompt assembler → semantic cache → LLM gateway → cost attribution. The cache key should include tenant, dashboard type, date range, normalized query and data snapshot ID. The router picks a mid-tier or larger model by context size and sensitivity.
+**Setting.** An executive dashboard copilot summarises revenue, pipeline, customer-risk notes and operational metrics. The path is UI → metrics API → CRM-note retrieval → prompt assembler → semantic cache → LLM gateway → cost attribution. The cache key should include tenant, dashboard type, date range, normalised query and data snapshot ID. The router picks a mid-tier or larger model by context size and sensitivity.
 
 **Symptom.** On 2026-07-08 the daily budget alert fired at 14:20. The CFO asked why the assistant had consumed almost four days of budget before lunch.
 
@@ -19,7 +19,7 @@ Production GenAI systems fail economically as well as technically. Incident #88 
 | Cache | Hit rate 4% against a 67% baseline; key v5 = `[tenant_id, query_text]`; missing date range, snapshot ID, role scope |
 | Routing | GPT-4-class because `context_tokens>12000`; 21384 tokens in, 1288 out; about 9× the per-request cost of before (the case's illustrative $2.74 against $0.31, not list prices) |
 
-**What changed.** The `exec_summary_v6` upgrade added "more supporting context" after executives asked for richer explanations. The same release changed cache-key normalization and dropped the date-range and snapshot fields. It also disabled compression while debugging a formatting issue.
+**What changed.** The `exec_summary_v6` upgrade added "more supporting context" after executives asked for richer explanations. The same release changed cache-key normalisation and dropped the date-range and snapshot fields. It also disabled compression while debugging a formatting issue.
 
 **Root cause.** Three effects multiplied. The template expanded context. The larger context crossed the routing threshold into the expensive model. The cache-key regression collapsed the hit rate, so the system paid full price for every large prompt.
 
@@ -39,7 +39,7 @@ Three prompts in the group look different and use the same instrument. Each one 
 
 **#53, latency regression.** "An enterprise customer reports that responses have become slow." First clarify which latency: time to first token, time between tokens, total completion time, or user-perceived latency. Then decompose across ten stages: client and network, authentication, middleware, retrieval, prompt construction, model prefill, token generation, tool calls, post-processing and streaming. Check input and output token counts and retrieval p95 and p99. Then check retry rates, rate-limit throttling and traffic patterns. Finish with model version, prompt changes, cache hit rates and regional routing. Incident #87 is this prompt with real numbers.
 
-The follow-up is "it only happens at peak traffic." Peak-only latency points at queueing, not a slower model. Separate queue wait from service time. Queueing delay climbs steeply as utilization nears 100%; for a simple queue the wait is about 4× service time at 80% and 9× at 90%. A rising p99 with a flat p50 usually means queueing. Add admission control and shed non-interactive work to batch *(the utilization point comes from the additions file, section D; the multiples are simple single-queue arithmetic)*.
+The follow-up is "it only happens at peak traffic." Peak-only latency points at queueing, not a slower model. Separate queue wait from service time. Queueing delay climbs steeply as utilisation nears 100%; for a simple queue the wait is about 4× service time at 80% and 9× at 90%. A rising p99 with a flat p50 usually means queueing. Add admission control and shed non-interactive work to batch *(the utilisation point comes from the additions file, section D; the multiples are simple single-queue arithmetic)*.
 
 **#54, RAG with poor answer quality.** Separate seven failure classes: retrieval, context assembly, reasoning or synthesis, prompt or instruction, output format, evaluation, and user experience. Measure each separately. Use recall@k, precision@k and MRR or nDCG for retrieval. Use citation correctness and context sufficiency for assembly. Use answer faithfulness, answer relevance and abstention quality for generation. Use end-to-end task success for the whole. The section 9 flowchart is the first cut; these metrics are the second.
 

@@ -52,7 +52,7 @@ The levelling rubric describes what to say, not who the candidate is.
 
 1. **What are the eight numbers, and which one makes an approval subsystem unnecessary here?** Throughput, latency, horizon, accuracy, cost, autonomy, data class, recovery. Autonomy: the agent is read-only.
 2. **Why must the evidence list use a concatenating merge?** Parallel branches writing one key under last-write-wins lose all results but one. LangGraph raises `InvalidUpdateError` when the key has no reducer; a hand-rolled merge loses them silently.
-3. **Derive the concurrency number.** 40K/day peaked 3x ≈ 100 runs/min; at ~70 s mean time in system, Little's Law gives ~120 in flight; at a 70% utilization target, provision around 170.
+3. **Derive the concurrency number.** 40K/day peaked 3x ≈ 100 runs/min; at ~70 s mean time in system, Little's Law gives ~120 in flight; at a 70% utilisation target, provision around 170.
 4. **What is the single largest cost lever, and what does it give up?** Sub-agent isolation; it gives up auditability across the boundary unless sub-agent traces are stored and linked.
 5. **The agent has no email or webhook tool. Why is the trifecta still live?** The rendered answer is a channel: a Markdown image URL can carry private text out when the client fetches it. Filter rendering.
 6. **A hop cap is in place. Why add a no-progress check?** A cap only bounds the burn; the signature check catches an identical rejected retry on hop two instead of hop eight.

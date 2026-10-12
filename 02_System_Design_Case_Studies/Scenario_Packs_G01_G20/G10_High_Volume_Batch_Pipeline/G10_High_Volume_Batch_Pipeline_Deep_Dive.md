@@ -30,7 +30,7 @@ At 4 a.m. with 45% complete, calculate the throughput still required, then ident
 
 For bank documents, the pipeline expands to file validation, OCR/multimodal parsing, document classification and schema extraction, followed by confidence checks and human review. Lineage must point from output fields to source pages. Reprocessing by model version is necessary when a model improves or formats drift.
 
-For nightly PDF summarization, deduplicate by content hash and process only changed documents; a cheaper batch model may handle routine summaries, with stronger-model audits. For an embedding-cost spike, incremental indexing and avoiding unchanged content are the first levers. None of these shortcuts should hide permanent failures or erase provenance.
+For nightly PDF summarisation, deduplicate by content hash and process only changed documents; a cheaper batch model may handle routine summaries, with stronger-model audits. For an embedding-cost spike, incremental indexing and avoiding unchanged content are the first levers. None of these shortcuts should hide permanent failures or erase provenance.
 
 ## 6. Evidence to collect
 

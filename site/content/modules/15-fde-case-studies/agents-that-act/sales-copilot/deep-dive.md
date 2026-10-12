@@ -2,7 +2,7 @@
 
 Use the [Main guide](/design/sales-copilot#main) for the spoken answer. This is the technical backup; the unchanged [source case](/design/sales-copilot#full-pack) keeps the full synthesis, interview script, and references.
 
-**Model and agent roles:** Deterministic routes handle common snapshots, CRM counts, and exact lookups; a bounded agent path handles ambiguous multi-step asks. The LLM copilot summarizes and drafts from authorised evidence, while the claim verifier and approval gateway control external claims and CRM writes.
+**Model and agent roles:** Deterministic routes handle common snapshots, CRM counts, and exact lookups; a bounded agent path handles ambiguous multi-step asks. The LLM copilot summarises and drafts from authorised evidence, while the claim verifier and approval gateway control external claims and CRM writes.
 
 ## 1. Source and permission map
 
@@ -13,7 +13,7 @@ Use the [Main guide](/design/sales-copilot#main) for the spoken answer. This is 
 | Email/calendar | Threads, invites; near real time | Mailbox owner or explicit delegation; never read another rep’s mailbox. |
 | Product docs | Approved feature descriptions; updated by product marketing | Some partner-only; superseded features and roadmap claims are dangerous. |
 | Pricing/discount policy | Deal-desk rules, versioned | Regional variants and thresholds; no out-of-policy promise. |
-| Support history | Account tickets/escalations | Account/tenant scope; severity can be mis-summarized. |
+| Support history | Account tickets/escalations | Account/tenant scope; severity can be mis-summarised. |
 | Warehouse | Usage, ROI pilots, renewals; often daily | Row-level account/role scope; internal ROI is not an approved external claim. |
 
 Each record needs stable ID, owner, updated time, and ACL metadata; exclude unmapped sources. User feedback is not ground truth until SME approval. The source notes that its detailed CRM permission model and structured router are additions to the pack based on cross-cutting references, not claims made by the practice worksheet alone.
@@ -26,7 +26,7 @@ Connector credentials are vault references, resolved at use time, never written 
 
 ## 3. Snapshot as a materialized view
 
-Calendar trigger or on-demand job builds summary, open opportunities/stage/next step, recent calls and emails, support escalations, segment objections, and approved claims. Run the job **as the rep**, key cache on account plus permission signature, and stamp source/index/policy versions. A manager and rep on the same account may get different snapshots. On role or territory change, invalidate affected snapshots. At serve time, reauthorise with current attributes; if the CRM is down, show a permitted last snapshot with staleness labeling or refuse. Precompute improves p95 but cannot preserve access after revocation by itself.
+Calendar trigger or on-demand job builds summary, open opportunities/stage/next step, recent calls and emails, support escalations, segment objections, and approved claims. Run the job **as the rep**, key cache on account plus permission signature, and stamp source/index/policy versions. A manager and rep on the same account may get different snapshots. On role or territory change, invalidate affected snapshots. At serve time, reauthorise with current attributes; if the CRM is down, show a permitted last snapshot with staleness labelling or refuse. Precompute improves p95 but cannot preserve access after revocation by itself.
 
 At 10× accounts, shard jobs by territory and make connector schedules independent so one rate-limited source does not block others. Interactive load should scale with snapshot hit rate rather than live CRM fan-out.
 
@@ -34,10 +34,10 @@ At 10× accounts, shard jobs by territory and make connector schedules independe
 
 | Question | Route |
 |---|---|
-| “Summarize the last three calls” | Semantic/hybrid retrieval on authorised transcripts. |
+| “Summarise the last three calls” | Semantic/hybrid retrieval on authorised transcripts. |
 | “How many open opportunities missed close date?” | Fixed structured CRM query over authorised rows. |
 | “Status of opportunity ID 0065g00000?” | Direct exact-ID lookup. |
-| “Objections across late-stage deals this quarter?” | Structured filter first, then summarize matching prose. |
+| “Objections across late-stage deals this quarter?” | Structured filter first, then summarise matching prose. |
 
 Use reviewed operations such as get account by ID, opportunities by stage, interactions since a date. Free-form natural-language query generation can invent fields or scan too broadly. Opportunity risk logic uses fetched stage age, moved close date, competitor mention, unanswered emails, open escalations, and playbook objections; each risk carries a source. Missing fields or stale transcripts become explicit gaps.
 
@@ -51,7 +51,7 @@ Use reviewed operations such as get account by ID, opportunities by stage, inter
 
 | Failure | Decision |
 |---|---|
-| CRM unavailable | Labeled authorised snapshot if within allowed staleness; no writes. |
+| CRM unavailable | Labelled authorised snapshot if within allowed staleness; no writes. |
 | Policy engine, ACL mapping, or approval down | Fail closed. |
 | Missing evidence or stale source | List what was not checked; abstain or escalate. |
 | Unapproved claim or price | Block external draft, not merely warn. |
@@ -71,7 +71,7 @@ Rollout: one CRM connector and territory matrix; historical golden set; offline 
 
 ## 8. Latency pivot
 
-The source drill starts with 30–45 s account prep. The likely driver is serial tool calls and agent steps, not necessarily model inference. Trace the graph, then precompute the account snapshot, route common questions deterministically, parallelize independent read-only calls, cache permission-scoped state, cap steps/top-k/timeouts, and use the agent only for ambiguous next steps. Track agent step count, tool latency, snapshot hit rate, timeout rate, p95, and cost/workflow. A real-time in-call assistant is a distinct G16 problem with stronger precompute/stream/async split.
+The source drill starts with 30–45 s account prep. The likely driver is serial tool calls and agent steps, not necessarily model inference. Trace the graph, then precompute the account snapshot, route common questions deterministically, parallelise independent read-only calls, cache permission-scoped state, cap steps/top-k/timeouts, and use the agent only for ambiguous next steps. Track agent step count, tool latency, snapshot hit rate, timeout rate, p95, and cost/workflow. A real-time in-call assistant is a distinct G16 problem with stronger precompute/stream/async split.
 
 ## 9. Model regression incident
 

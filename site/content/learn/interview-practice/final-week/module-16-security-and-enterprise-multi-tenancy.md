@@ -95,7 +95,7 @@ Manage credentials through controlled secret storage and scoped runtime access. 
 
 Define rotation and access ownership appropriate to the integration.
 
-#### 7. Sensitive Data — Minimize Across the Whole Lifecycle
+#### 7. Sensitive Data — Minimise Across the Whole Lifecycle
 
 Confirm what data is necessary, which providers may process it, and retention/access requirements for prompts, outputs, caches, logs, and backups. Mask or redact where it preserves required functionality.
 

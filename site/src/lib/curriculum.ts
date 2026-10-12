@@ -2214,7 +2214,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'core-8-drivers-memorize',
-    title: 'The 8 Drivers to Actually Memorize',
+    title: 'The 8 Drivers to Actually Memorise',
     source: '01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md',
     home: 'cost-and-latency',
     kind: 'sync',

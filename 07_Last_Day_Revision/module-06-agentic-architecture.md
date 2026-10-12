@@ -272,7 +272,7 @@ Select step → Controlled tool → Observe
 | Concept | Remember |
 |---|---|
 | Workflow vs agent | Defined sequence vs observation-driven step selection |
-| Single vs multi-agent | Require a benefit from context, permissions, specialization, or independent work |
+| Single vs multi-agent | Require a benefit from context, permissions, specialisation, or independent work |
 | Routing | Choose retrieval, tool, workflow, agent, or human; define ambiguity behaviour |
 | Tools | Approved interfaces; validate arguments, authorise, timeout, return clear results |
 | Bounds | Steps, tools, tokens, retries, elapsed time, cost, no-progress stop |
@@ -321,7 +321,7 @@ Inspect observable operations and evidence rather than private model chain-of-th
 
 ### 30-Second Answer
 
-> “I’d keep known rules in a workflow and use a bounded agent where observations need to guide the next step. I’d justify multiple agents only if specialization or independent work improves the result. Tools would be validated and authorised, actions would pass policy and approval, and long tasks would preserve state for safe recovery. I’d evaluate task success, the observable path, latency, and cost.”
+> “I’d keep known rules in a workflow and use a bounded agent where observations need to guide the next step. I’d justify multiple agents only if specialisation or independent work improves the result. Tools would be validated and authorised, actions would pass policy and approval, and long tasks would preserve state for safe recovery. I’d evaluate task success, the observable path, latency, and cost.”
 
 ## Sources (checked 27 Sep 2026)
 

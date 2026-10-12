@@ -81,7 +81,7 @@ Every requirement then needs an owner in the architecture *(own construction)*.
 | Requirement | Primary component(s) |
 |---|---|
 | Complaint to request family, unaided | Support and access gateway, tenant-scoped views, outcome tags |
-| Correlation across services and queues | Trace collector, queue serialization contract |
+| Correlation across services and queues | Trace collector, queue serialisation contract |
 | Per-hop timing | Spans emitted at every hop into the collector |
 | Structured evidence without raw content | Sensitivity classifier, keyed hash (HMAC) |
 | Global versus tenant views | Two consumers of one store, with a permission boundary |

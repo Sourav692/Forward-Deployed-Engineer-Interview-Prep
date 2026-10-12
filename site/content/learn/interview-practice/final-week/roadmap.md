@@ -305,7 +305,7 @@ Auditability
 
 1. The customer says, **"The system should be fast."** How would you turn that into a measurable NFR?
 2. The system serves **50 enterprise customers and 100K total users**. Which NFRs become especially important?
-3. A refund agent handles financial actions. Which NFRs would you prioritize and why?
+3. A refund agent handles financial actions. Which NFRs would you prioritise and why?
 4. How would the NFRs differ between a **real-time voice agent** and a **10-minute deep-research agent**?
 5. What AI-quality NFRs would you define beyond traditional uptime and latency?
 
@@ -639,7 +639,7 @@ Total Latency
 - P50/P95/P99
 - TTFT
 - Streaming
-- Parallelization
+- Parallelisation
 - Sequential LLM hops
 - Retrieval latency
 - Tool latency
