@@ -1,4 +1,4 @@
-# G10 — High-Volume Batch Pipeline: Main Interview Guide
+# G10 — High-Volume Batch Inference Pipeline: Main Interview Guide
 
 **Overnight batch** is: a huge file must be classified before morning. Miss the window and the site publishes nothing — or publishes a partial, if they allow it.
 

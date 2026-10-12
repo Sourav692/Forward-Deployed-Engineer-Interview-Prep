@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T21:04:17.699Z",
+  "generatedAt": "2026-10-12T21:28:40.023Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -110,9 +110,9 @@
             {
               "slug": "ai-customer-support-automation",
               "order": 4,
-              "title": "AI Customer-Support Automation",
+              "title": "Customer Support Automation",
               "minutes": 3,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "ai-system-for-an-air-gapped-environment",
@@ -124,23 +124,23 @@
             {
               "slug": "llm-evaluation-and-release-gating-platform",
               "order": 6,
-              "title": "LLM Evaluation and Release-Gating Platform",
+              "title": "Evaluation and Release Gating",
               "minutes": 4,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "high-volume-batch-inference-system",
               "order": 7,
-              "title": "High-Volume Batch Inference System",
+              "title": "High-Volume Batch Inference Pipeline",
               "minutes": 4,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "tool-using-ai-agent-with-safety-controls",
               "order": 8,
-              "title": "Tool-Using AI Agent with Safety Controls",
+              "title": "Tool-Using Agent with Safety Controls",
               "minutes": 4,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "reliable-workflow-orchestration-system",
@@ -721,7 +721,7 @@
             {
               "slug": "high-volume-batch-pipeline",
               "order": 10,
-              "title": "High-Volume Batch Pipeline",
+              "title": "High-Volume Batch Inference Pipeline",
               "tabs": [
                 {
                   "id": "main",

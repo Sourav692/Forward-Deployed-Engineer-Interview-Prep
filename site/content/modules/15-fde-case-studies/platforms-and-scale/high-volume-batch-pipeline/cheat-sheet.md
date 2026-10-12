@@ -1,4 +1,4 @@
-# High-Volume Batch Pipeline: Cheat Sheet
+# High-Volume Batch Inference Pipeline: Cheat Sheet
 
 [Main](/design/high-volume-batch-pipeline#main) · [Deep Dive](/design/high-volume-batch-pipeline#deep-dive) · [Unchanged source](/design/high-volume-batch-pipeline#full-pack)
 

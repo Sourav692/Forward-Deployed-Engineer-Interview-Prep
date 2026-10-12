@@ -265,6 +265,12 @@ export const TITLE_OVERRIDES: Record<string, string> = {
   // Drafts remediation notes for a human to approve — the same shape as G08 and the
   // legal contract copilot, so the same noun.
   'core/financial-compliance-reviewer': 'Financial Compliance Review Copilot',
+  // Worksheet and casebook twins name the same system the same way (audit check IA-13).
+  'system-design/tool-using-ai-agent-with-safety-controls': 'Tool-Using Agent with Safety Controls',
+  'system-design/ai-customer-support-automation': 'Customer Support Automation',
+  'system-design/high-volume-batch-inference-system': 'High-Volume Batch Inference Pipeline',
+  'platforms-and-scale/high-volume-batch-pipeline': 'High-Volume Batch Inference Pipeline',
+  'system-design/llm-evaluation-and-release-gating-platform': 'Evaluation and Release Gating',
 }
 export const BEHAVIOURAL_TRACKS = ['fde-competencies']
 
