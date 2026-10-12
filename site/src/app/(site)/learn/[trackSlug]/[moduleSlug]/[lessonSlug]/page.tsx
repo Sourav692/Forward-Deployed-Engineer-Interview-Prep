@@ -13,7 +13,7 @@ import { ReviewLinks } from '@/components/learn/ReviewLinks'
 import { lessonTwins } from '@/lib/twins'
 import { MockScorer } from '@/components/progress/MockScorer'
 import { MockTimer } from '@/components/progress/MockTimer'
-import { MOCK_METHOD_LESSON, MOCK_MINUTES, MOCK_MODULE } from '@/components/progress/mock-rubric'
+import { MOCK_MINUTES, MOCK_MODULE, mockRoundsFor } from '@/components/progress/mock-rubric'
 import { cx, focusRing } from '@/components/ui'
 
 /**
@@ -55,7 +55,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   // Section anchors exist only on Learn track pages.
   const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
   // The scenario mocks (every T8.2 lesson after the method lesson) get a timer and a scorer (FE-15).
-  const scenarioMock = mod.slug === MOCK_MODULE && lesson.slug !== MOCK_METHOD_LESSON
+  const mockRounds = mod.slug === MOCK_MODULE ? mockRoundsFor(lesson.slug) : []
+  const scenarioMock = mockRounds.length > 0
 
   return (
     <>
@@ -113,7 +114,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
 
           <LessonReader page={page} twins={await lessonTwins(lesson.slug)} />
 
-          {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} />}
+          {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} rounds={mockRounds} />}
 
           <div className="mt-10 border-t border-border pt-6">
             <LessonActions moduleSlug={mod.slug} lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} />

@@ -3,10 +3,11 @@
  * the tables the learner just read: the short round's five signals ("Score the Round",
  * lessons 02–06) and the full round's six dimensions with anchors ("Score With the
  * Six-Dimension Rubric", lesson 01). Both are scored 1–5. Edit the lessons first, then
- * this file.
+ * this file. The client-simulation round (ENH-30) scores a role-play where the interviewer
+ * plays the customer and reveals constraints only when asked.
  */
 
-export type MockRound = 'short' | 'full'
+export type MockRound = 'short' | 'full' | 'client-sim'
 
 export interface MockDimension {
   id: string
@@ -22,6 +23,17 @@ export const MOCK_MINUTES = 45
 /** Lesson 01 teaches the method; the five lessons after it are the scenario mocks. */
 export const MOCK_MODULE = 'mock-interviews'
 export const MOCK_METHOD_LESSON = 'running-and-scoring-a-mock-interview'
+
+/** Client-simulation mocks (ENH-30): scored on the `client-sim` round only. */
+export const CLIENT_SIM_LESSONS: ReadonlySet<string> = new Set<string>([])
+/** Lessons in the mock module with no scorer: the method lesson and briefs to practise against. */
+export const UNSCORED_MOCK_LESSONS: ReadonlySet<string> = new Set([MOCK_METHOD_LESSON])
+
+/** The rounds a lesson in the mock module is scored on, in picker order; none means no scorer. */
+export function mockRoundsFor(lessonSlug: string): MockRound[] {
+  if (UNSCORED_MOCK_LESSONS.has(lessonSlug)) return []
+  return CLIENT_SIM_LESSONS.has(lessonSlug) ? ['client-sim'] : ['short', 'full']
+}
 
 export const MOCK_ROUNDS: Record<MockRound, { label: string; dims: MockDimension[] }> = {
   short: {
@@ -95,6 +107,71 @@ export const MOCK_ROUNDS: Record<MockRound, { label: string; dims: MockDimension
           'Understandable but shallow',
           'Clear trade-offs and customer framing',
           'Executive-ready, technically precise, honest about limits',
+        ],
+      },
+    ],
+  },
+  'client-sim': {
+    label: 'Client simulation',
+    dims: [
+      {
+        id: 'discovery-questions',
+        label: 'Discovery questions',
+        anchors: [
+          'Jumps to a solution before asking anything',
+          'Asks a few workflow questions',
+          'Asks about users, workflow, data and success before designing',
+          'Probes risk, owners and edge cases until the hidden constraints surface',
+        ],
+      },
+      {
+        id: 'constraint-handling',
+        label: 'Handling constraints',
+        anchors: [
+          'Ignores or argues with a constraint once it is revealed',
+          'Notes the constraint but keeps the original plan',
+          'Adapts the design to each constraint and says what changed',
+          'Turns constraints into explicit trade-offs and options for the customer',
+        ],
+      },
+      {
+        id: 'framing-back',
+        label: 'Framing back to the customer',
+        anchors: [
+          'Never checks understanding',
+          'Restates the request in its own words',
+          'Summarises the problem in the customer’s terms and confirms it',
+          'Names the outcome, the risk and the success measure, and gets agreement',
+        ],
+      },
+      {
+        id: 'scoping',
+        label: 'Scoping',
+        anchors: [
+          'Promises everything',
+          'Rough phases with no cut line',
+          'A first slice with clear in and out of scope',
+          'A staged plan with a measurable first milestone, owners and exit criteria',
+        ],
+      },
+      {
+        id: 'next-steps',
+        label: 'Next steps',
+        anchors: [
+          'Ends without a plan',
+          'Vague follow-up',
+          'Clear next steps with owners and dates',
+          'Next steps tied to the open risks, with what the customer must provide',
+        ],
+      },
+      {
+        id: 'communication',
+        label: 'Communication',
+        anchors: [
+          'Jargon or a monologue',
+          'Clear but one-way',
+          'Plain language; listens and adjusts',
+          'Calm and honest about limits; builds trust with each stakeholder',
         ],
       },
     ],

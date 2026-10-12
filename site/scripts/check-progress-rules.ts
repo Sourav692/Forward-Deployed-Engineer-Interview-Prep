@@ -26,6 +26,7 @@ import {
   scoreExam,
   scoreMock,
 } from '../src/lib/progress/rules.ts'
+import { MOCK_METHOD_LESSON, MOCK_ROUNDS, mockAssessmentId, mockRoundsFor } from '../src/components/progress/mock-rubric.ts'
 import type { AttemptBase as Attempt, RuleModule, RuleState, ScorableItem } from '../src/lib/progress/types.ts'
 
 let failures = 0
@@ -109,6 +110,13 @@ check('mock fail: one dimension 1', scoreMock({ ...all(5), security: 1 }, FULL),
 check('mock fail: mean below 3', scoreMock({ ...all(3), evals: 2 }, SHORT).passed, false)
 check('mock fail: full round missing a dimension', scoreMock({ ...all(5), security: undefined }, FULL).passed, false)
 check('mock scale: 5 maps to 100, 3 to 50', [rubricToPercent(5, 5), rubricToPercent(3, 5)], [100, 50])
+
+// Client-simulation round (ENH-30): its own six dimensions, scored like the others.
+const CLIENT_SIM = MOCK_ROUNDS['client-sim'].dims.map((d) => d.id)
+check('client-sim: six dimensions, each with four anchors', [CLIENT_SIM.length, MOCK_ROUNDS['client-sim'].dims.every((d) => d.anchors?.length === 4)], [6, true])
+check('client-sim: scored on its own dimensions', scoreMock(Object.fromEntries(CLIENT_SIM.map((d) => [d, 4])), CLIENT_SIM).passed, true)
+check('client-sim: attempt key', mockAssessmentId('a-client-sim-mock', 'client-sim'), 'mock:a-client-sim-mock:client-sim')
+check('mock rounds: method lesson unscored, scenario mocks short and full', [mockRoundsFor(MOCK_METHOD_LESSON), mockRoundsFor('any-scenario-mock')], [[], ['short', 'full']])
 
 // Readiness exam
 check('exam pass at 82', scoreExam({ a: 50, b: 32 }, []).passed, true)
