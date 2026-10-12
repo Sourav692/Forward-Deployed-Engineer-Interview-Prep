@@ -13,6 +13,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-10-12',
+    title: 'Release B: level calibration, client simulations and rights',
+    summary:
+      'Every one of the 33 system designs now ends with a level calibration: what a Senior, a Staff and a Principal answer covers for that problem. Mock interviews gain five client simulations, each with a customer, an opening brief and hidden constraints to uncover, and one take-home brief with a scoring guide. The 12 system-design worksheets and six design pages that were derived from a book and a course have been rewritten in our own words, and the credits page now shows the rights status of every credited lesson.',
+  },
+  {
+    date: '2026-10-12',
     title: 'Release B: one home and one name for every page',
     summary:
       'The 33 system designs now live under /design, and the worksheets and story bank under /practice. The final-week review is part of the site instead of separate HTML copies, and every old address redirects once to the new one. Pages use the same name in the menu, on the hub, in the breadcrumb and on the card, with no internal codes in titles. Designs and worksheets on the same problem link to each other, and /design and /practice can be filtered by theme, level and reading time. Every page shows one reading time, and module, track and path times are the sum of their parts. Diagrams fit their column and arrive as part of the page, long pages are split into parts of at most 2,500 words, and the text follows British spelling.',
