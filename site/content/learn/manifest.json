@@ -2199,7 +2199,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/",
-      "estMinutes": 78,
+      "estMinutes": 79,
       "href": "/design/enterprise-knowledge-assistant"
     },
     {
@@ -2210,7 +2210,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
-      "estMinutes": 83,
+      "estMinutes": 84,
       "href": "/design/customer-support-automation"
     },
     {
@@ -2354,7 +2354,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/",
-      "estMinutes": 33,
+      "estMinutes": 35,
       "href": "/design/production-llm-gateway"
     },
     {
@@ -2378,7 +2378,7 @@
       "publish": "credited",
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
-      "estMinutes": 81,
+      "estMinutes": 85,
       "href": "/design/air-gapped-ai-system"
     },
     {
@@ -2390,7 +2390,7 @@
       "publish": "credited",
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
-      "estMinutes": 86,
+      "estMinutes": 90,
       "href": "/design/reliable-workflow-orchestration"
     },
     {
@@ -2402,7 +2402,7 @@
       "publish": "credited",
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
-      "estMinutes": 77,
+      "estMinutes": 81,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -2414,7 +2414,7 @@
       "publish": "credited",
       "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
-      "estMinutes": 61,
+      "estMinutes": 63,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
@@ -2436,7 +2436,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/",
-      "estMinutes": 32,
+      "estMinutes": 34,
       "href": "/design/build-when-customer-data-is-poor"
     },
     {
@@ -2447,7 +2447,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/",
-      "estMinutes": 44,
+      "estMinutes": 46,
       "href": "/design/self-adapting-agent"
     },
     {
@@ -2458,7 +2458,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/",
-      "estMinutes": 31,
+      "estMinutes": 32,
       "href": "/design/personal-assistant-with-memory"
     },
     {
@@ -2469,7 +2469,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/",
-      "estMinutes": 33,
+      "estMinutes": 34,
       "href": "/design/decomposition-classics-67-68-69"
     },
     {
