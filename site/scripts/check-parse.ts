@@ -33,6 +33,7 @@ import {
   wordCount,
 } from '../src/lib/editorial.ts'
 import { existsSync } from 'node:fs'
+import ts from 'typescript'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
@@ -668,6 +669,73 @@ for (const [token, files] of acronymPages) {
   if (files.size >= 3 && !lowerWords.has(token.toLowerCase())) {
     failures.push(`acronym ${token} appears on ${files.size} pages but is not in the glossary (src/lib/glossary.ts) or NOT_ACRONYMS`)
   }
+}
+
+// ------------------------------------------------------------------ British spelling (ENH-26)
+//
+// Published prose and site copy are British English (style guide). The rule flags the
+// American forms of five word families as whole words. Skipped: code, inline code, link
+// targets, HTML tags, paths and identifiers, and the block after a
+// `<!-- spelling: source -->` marker (a quote from an American source). SPELLING_ALLOWED
+// names the product, title and pattern names that keep their own spelling. Site copy is
+// read from src/ as string literals and JSX text that contain a space, so ids, slugs,
+// paths, identifiers and comments never count.
+const SPELLING_IS_ERROR = false
+const AMERICAN =
+  /^(?:un|re|pre|de|mis)?(?:behaviors?|behavioral(?:ly)?|authoriz(?:e|es|ed|ing|ation|ations|er|ers)|optimiz(?:e|es|ed|ing|ation|ations|er|ers)|organiz(?:e|es|ed|ing|ation|ations|ational|er|ers)|judgments?)$/i
+const SPELLING_ALLOWED: [RegExp, string][] = [
+  [/(?:Cost and )?Latency Optimization Playbook/g, 'title of a third-party playbook'],
+  [/storage-optimized/gi, 'Databricks Vector Search endpoint type'],
+  [/evaluator-optimizer/gi, "Anthropic's name for a workflow pattern"],
+]
+const americanWords = (text: string): string[] => {
+  for (const [re] of SPELLING_ALLOWED) text = text.replace(re, ' ')
+  return [...text.replace(/\S*[_/\\]\S*/g, ' ').matchAll(/[A-Za-z]+/g)].map((m) => m[0]).filter((w) => AMERICAN.test(w))
+}
+const proseOf = (markdown: string): string =>
+  markdown
+    .replace(/<!-- spelling: source -->[\s\S]*?(?:\n[ \t]*\n|$)/g, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/(```|~~~)[\s\S]*?\1/g, ' ')
+    .replace(/`[^`\n]*`/g, ' ')
+    .replace(/\]\([^)]*\)/g, ']')
+    .replace(/<\/?[A-Za-z][^>]*>/g, ' ')
+    .replace(/https?:\/\/\S+/g, ' ')
+{
+  const hits: { area: string; file: string; word: string }[] = []
+  for (const file of new Set(scanFiles)) {
+    const raw = await readFile(file, 'utf8').catch(() => '')
+    const rel = relative(CONTENT, file).split(sep)
+    const area = rel[0] === 'behavioural' ? 'behavioural' : rel.slice(0, 2).join('/')
+    for (const word of americanWords(proseOf(raw))) hits.push({ area, file: relative(CONTENT, file), word })
+  }
+  const copyFiles = async (dir: string): Promise<string[]> => {
+    const out: string[] = []
+    for (const e of await readdir(dir, { withFileTypes: true })) {
+      const path = join(dir, e.name)
+      if (e.isDirectory()) out.push(...(await copyFiles(path)))
+      else if (/\.tsx?$/.test(e.name)) out.push(path)
+    }
+    return out
+  }
+  for (const file of await copyFiles(join(SITE_ROOT, 'src'))) {
+    const source = ts.createSourceFile(file, await readFile(file, 'utf8'), ts.ScriptTarget.Latest, true)
+    const visit = (node: ts.Node) => {
+      if (ts.isStringLiteralLike(node) || ts.isTemplateLiteralToken(node) || ts.isJsxText(node)) {
+        if (/\s/.test(node.text.trim())) {
+          for (const word of americanWords(node.text)) hits.push({ area: 'site copy', file: relative(SITE_ROOT, file), word })
+        }
+      }
+      ts.forEachChild(node, visit)
+    }
+    visit(source)
+  }
+  const byArea = new Map<string, number>()
+  for (const h of hits) byArea.set(h.area, (byArea.get(h.area) ?? 0) + 1)
+  rows.push(
+    `\n  spelling: ${hits.length} American spelling(s)${hits.length ? ` — ${[...byArea].map(([a, n]) => `${a} ${n}`).join(', ')}` : ''}`,
+  )
+  if (SPELLING_IS_ERROR) for (const h of hits) failures.push(`spelling: ${h.file} uses "${h.word}"; write it in British English (ENH-26)`)
 }
 
 // Story Bank (CONTENT-15). Every question link must name a real behavioural question,
