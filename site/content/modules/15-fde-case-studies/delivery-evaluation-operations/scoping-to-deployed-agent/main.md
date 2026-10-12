@@ -49,7 +49,7 @@ The easiest way to frame requirements in an interview is:
 3. **Configure the agent and sign a golden set.**
 4. **Baseline evaluation, shadow, tested rollback.**
 5. **Limited production, sponsor go/no-go, handover** — runbook, dashboard, owner.
-6. **Advance only after each gate** — authorized role and evidence recorded.
+6. **Advance only after each gate** — authorised role and evidence recorded.
 
 **Northwind agent (demo)**
 
@@ -109,7 +109,7 @@ flowchart TB
 1. Intake records target outcome, baseline, sponsor, SME and data sources; incomplete intake does not start the delivery clock.
 2. Security and data-access reviewers sign their own gates with evidence before the agent touches customer data.
 3. The team pulls reusable connectors, prompts, evals and dashboards, then builds only the customer-specific escalation policy; the SME signs the golden set.
-4. A baseline evaluation tests quality and safety. Shadow mode compares agent behavior without granting unrestricted sending, and the team proves rollback.
+4. A baseline evaluation tests quality and safety. Shadow mode compares agent behaviour without granting unrestricted sending, and the team proves rollback.
 5. Limited production measures agreed success metrics. The sponsor makes the day-14 go/no-go decision; the team hands over a runbook, dashboard, owner and credentials plan.
 6. At runtime, a Zendesk ticket is redacted, classified by a model, enriched with scoped KB/CRM context, drafted by an LLM, checked for grounding and escalation, and sent only under the chosen human approval policy.
 

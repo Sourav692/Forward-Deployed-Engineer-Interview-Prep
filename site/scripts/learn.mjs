@@ -624,6 +624,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveM
       kind: lesson.kind,
       publish: lesson.publish,
       ...(lesson.credit && { credit: lesson.credit }),
+      ...(lesson.rights && { rights: lesson.rights }),
       source: lesson.source,
     }
     if (lesson.kind === 'live') {

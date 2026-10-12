@@ -141,4 +141,4 @@ Validation stopped the bad argument, and the gate stopped the unapproved write. 
 
 ## References
 
-**Sources:** `05_The_Eight_Guard_Checks.md` (FDE Handbook, Robust Agents): "Why this matters", "The eight", "1 · Argument validation", "2–4 · The guardrail trio", "5 · Retry with fallback", "7 · Disambiguation between overlapping tools", "The pipeline, in order" and "Where each check lives across the handbook". `05-guarding-tool-calls.md` (Production and Platform Judgment): "The eight checks", "1. Argument validation", "2–4. The guardrail trio", "7. Disambiguation between overlapping tools" and "The pipeline, in order".
+**Sources:** `05_The_Eight_Guard_Checks.md` (FDE Handbook, Robust Agents): "Why this matters", "The eight", "1 · Argument validation", "2–4 · The guardrail trio", "5 · Retry with fallback", "7 · Disambiguation between overlapping tools", "The pipeline, in order" and "Where each check lives across the handbook". `05-guarding-tool-calls.md` (Production and Platform Judgement): "The eight checks", "1. Argument validation", "2–4. The guardrail trio", "7. Disambiguation between overlapping tools" and "The pipeline, in order".

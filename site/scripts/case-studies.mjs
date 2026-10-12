@@ -10,6 +10,9 @@
  *   Gxx_Name_Cheat_Sheet.md -> cheat-sheet
  *   Gxx_Name.md             -> full-pack   (the original consolidated, sourced pack)
  *
+ * A document over the page-length limit is split at its H2s into `<name>_Part_2.md`,
+ * `<name>_Part_3.md`, … beside it, and each part is a tab of its own (`withParts`).
+ *
  * The standalone cases under `02_System_Design_Case_Studies/Standalone_Designs/` have no fixed shape — one to
  * five documents each — so they are declared in `STANDALONE` with a label per file, and
  * each file becomes a tab. The manifest carries each page's tab list, so the app never
@@ -28,7 +31,7 @@
 import { existsSync, statSync } from 'node:fs'
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
-import { TABS, TITLE_OVERRIDES, TRACKS, readingMinutes } from '../src/lib/editorial.ts'
+import { TITLE_OVERRIDES, TRACKS, readingMinutes, tabMeta } from '../src/lib/editorial.ts'
 import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
 import { UNLINK, gitDates, stripClockLine, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
@@ -55,10 +58,25 @@ export const DOC_TABS = [
   { id: 'full-pack', suffix: '' },
 ]
 
-function labelOf(id) {
-  const tab = TABS[id]
+function labelOf(id, parts = 1) {
+  const tab = tabMeta(id, parts)
   if (!tab) throw new Error(`Tab id "${id}" has no entry in TABS (src/lib/editorial.ts)`)
   return tab.label
+}
+
+/**
+ * A tab too long for one page is split at its H2s into part files (ENH-25): `<name>.md`,
+ * then `<name>_Part_2.md`, `<name>_Part_3.md`, … beside it. Part 1 keeps the tab's id, so
+ * links and saved read state hold; later parts become tabs `<id>-part-<n>`.
+ */
+const partFile = (file, n) => file.replace(/\.md$/, `_Part_${n}.md`)
+function withParts(tab) {
+  const parts = [tab]
+  while (existsSync(partFile(tab.src, parts.length + 1))) {
+    const src = partFile(tab.src, parts.length + 1)
+    parts.push({ id: `${tab.id}-part-${parts.length + 1}`, file: basename(src), src })
+  }
+  return parts.map((p) => ({ ...p, label: labelOf(p.id, parts.length) }))
 }
 
 /**
@@ -213,7 +231,7 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       if (!groups.has(g) || !isPublished(g)) continue
       const folder = groups.get(g)
       const dir = join(root, folder)
-      const tabs = DOC_TABS.map((t) => ({ id: t.id, label: labelOf(t.id), file: `${folder}${t.suffix}.md` }))
+      const tabs = DOC_TABS.flatMap((t) => withParts({ id: t.id, file: `${folder}${t.suffix}.md`, src: join(dir, `${folder}${t.suffix}.md`) }))
       const main = await readFile(join(dir, tabs[0].file), 'utf8')
       cases.push({ theme: theme.id, dir, slug: slugOf(folder), order: Number(g.slice(1)), title: nameFrom(main, folder), tabs })
     }
@@ -234,7 +252,8 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       ...declaredFiles.filter((f) => !files.includes(f)),
       ...declared.filter((f) => isRepoPath(f) && !existsSync(join(repoRoot, f))),
     ]
-    const extra = files.filter((f) => !declaredFiles.includes(f))
+    const isPart = (f) => declaredFiles.some((d) => /^_Part_\d+\.md$/.test(f.slice(d.length - 3)) && f.startsWith(d.slice(0, -3)))
+    const extra = files.filter((f) => !declaredFiles.includes(f) && !isPart(f))
     if (missing.length || extra.length) {
       throw new Error(`${c.folder}: declared files do not match disk (missing: ${missing.join(', ') || '—'}; undeclared: ${extra.join(', ') || '—'})`)
     }
@@ -244,12 +263,9 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       slug: c.folder.replace(/^\d+_/, '').replace(/_/g, '-').toLowerCase(),
       order: c.number,
       title: c.title,
-      tabs: c.files.map(([file, id]) => ({
-        id,
-        label: labelOf(id),
-        file: basename(file),
-        src: isRepoPath(file) ? join(repoRoot, file) : join(dir, file),
-      })),
+      tabs: c.files.flatMap(([file, id]) =>
+        withParts({ id, file: basename(file), src: isRepoPath(file) ? join(repoRoot, file) : join(dir, file) }),
+      ),
     })
   }
   return cases

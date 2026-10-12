@@ -99,4 +99,4 @@ Each branch logs, each check has a fixed place, and nothing is swallowed. An int
 
 ## References
 
-**Sources:** the "Interview lens" and "Checkpoint" sections of `01_Retry_Fallback_Memo_Confirm.md`, `03_Parallel_vs_Sequential.md`, `04_Observability_For_Tool_Calls.md` and `05_The_Eight_Guard_Checks.md` (FDE Handbook, Robust Agents). `05-guarding-tool-calls.md` (Production and Platform Judgment): "What to say if asked directly".
+**Sources:** the "Interview lens" and "Checkpoint" sections of `01_Retry_Fallback_Memo_Confirm.md`, `03_Parallel_vs_Sequential.md`, `04_Observability_For_Tool_Calls.md` and `05_The_Eight_Guard_Checks.md` (FDE Handbook, Robust Agents). `05-guarding-tool-calls.md` (Production and Platform Judgement): "What to say if asked directly".

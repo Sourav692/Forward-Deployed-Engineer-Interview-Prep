@@ -65,7 +65,7 @@ export default async function ModulePage({
             : meta.kind === 'reading'
               ? 'Worked system designs'
               : meta.id.includes('behavioural')
-                ? 'Behavioral preparation'
+                ? 'Behavioural preparation'
                 : 'Technical practice'}
         </div>
         <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em]">

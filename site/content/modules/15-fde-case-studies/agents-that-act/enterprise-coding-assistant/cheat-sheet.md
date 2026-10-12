@@ -4,7 +4,7 @@ Use the [Main guide](/design/enterprise-coding-assistant#main) for the interview
 
 ## One sentence
 
-**A private-code completion is a context and latency product: cache early, retrieve only authorized snippets, use a small LLM, validate, then show.**
+**A private-code completion is a context and latency product: cache early, retrieve only authorised snippets, use a small LLM, validate, then show.**
 
 ## Ask first
 
@@ -12,7 +12,7 @@ Real-time p95? IDEs/languages/tasks? Whole-repo context? Code-host ACL? Private/
 
 ## Flow
 
-**On push:** code host + ACL → symbol/dependency chunks → embedding/index. **On keystroke:** extension → auth → context funnel → scoped cache hit or authorized retrieval → small LLM → syntax/API/secret/license/unsafe validation → editor. **Explicit tasks:** larger reasoning model on a separate slow lane.
+**On push:** code host + ACL → symbol/dependency chunks → embedding/index. **On keystroke:** extension → auth → context funnel → scoped cache hit or authorised retrieval → small LLM → syntax/API/secret/license/unsafe validation → editor. **Explicit tasks:** larger reasoning model on a separate slow lane.
 
 **Agent role:** core completion is a routed LLM assistant. Tool-using chat mode is a separate acting-agent surface, with G03-style tool and approval controls if introduced.
 
@@ -22,7 +22,7 @@ Real-time p95? IDEs/languages/tasks? Whole-repo context? Code-host ACL? Private/
 
 ## Five rules
 
-1. Funnel repository → signals → ranked authorized snippets → prompt. Never send the repo.
+1. Funnel repository → signals → ranked authorised snippets → prompt. Never send the repo.
 2. Exact cache first; semantic cache only with conservative threshold and tenant/permission/version key.
 3. Small model for completion; large model for explicit explain/test/fix/refactor.
 4. Symbol-index and security validation happen before display; validator down means no suggestion.
@@ -30,7 +30,7 @@ Real-time p95? IDEs/languages/tasks? Whole-repo context? Code-host ACL? Private/
 
 ## Failure card
 
-Backend slow/down → silence. Index down → authorized local context or safe cache. ACL stale → refuse affected snippet. Cache crosses scope → incident, disable and purge. Secret output or validation failure → suppress. Large model down → visible slow-task queue; hot path protected.
+Backend slow/down → silence. Index down → authorised local context or safe cache. ACL stale → refuse affected snippet. Cache crosses scope → incident, disable and purge. Secret output or validation failure → suppress. Large model down → visible slow-task queue; hot path protected.
 
 ## Evaluation and rollout
 

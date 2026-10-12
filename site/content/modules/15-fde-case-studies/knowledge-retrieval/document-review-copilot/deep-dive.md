@@ -6,7 +6,7 @@ The [Main guide](/design/document-review-copilot#main) is the spoken design; the
 
 | Persona | Typed extraction | Governing rule and version | Evidence-to-rule record | Human |
 |---|---|---|---|---|
-| Prior authorization | Payer, plan, procedure, diagnosis, date of service, prior therapies, labs, imaging | Payer rule by payer/plan/procedure/diagnosis/date | `EvidenceLink` from clinical fact to requirement, missing-document and denial-risk flags | Clinician approves packet. |
+| Prior authorisation | Payer, plan, procedure, diagnosis, date of service, prior therapies, labs, imaging | Payer rule by payer/plan/procedure/diagnosis/date | `EvidenceLink` from clinical fact to requirement, missing-document and denial-risk flags | Clinician approves packet. |
 | Financial compliance | Document type, jurisdiction, product, obligation, evidence span | Current regulation and internal policy | `Finding` with rule citation, risk/severity and remediation note | Analyst; supervisor or legal for high risk. |
 | Contract review | Clause type, normalized text, counterparty, jurisdiction, confidentiality | Negotiation playbook and preferred clause | `RiskFinding` with deviation and approved fallback language | Counsel for material changes. |
 

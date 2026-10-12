@@ -8,7 +8,7 @@ The primary system is a deterministic delivery state machine: intake, gated prog
 
 ## 2. Entry contract and stages
 
-Intake requires a measurable target and baseline, named SME and named sources. Ask whether the two-week SLA is a target or commitment; who owns go/no-go; what is reused; what a failed gate means; and whether scaling is per team or across an organization. These answers change staffing, access and the schedule. A missing SME or data source is an intake failure, not a hidden implementation task.
+Intake requires a measurable target and baseline, named SME and named sources. Ask whether the two-week SLA is a target or commitment; who owns go/no-go; what is reused; what a failed gate means; and whether scaling is per team or across an organisation. These answers change staffing, access and the schedule. A missing SME or data source is an intake failure, not a hidden implementation task.
 
 The seven-stage sequence is security review, data access, configuration/golden set, baseline evaluation, shadow/rollback, limited-production success metrics and go/no-go. The source's day ranges are 1–2, 3–4, 5–7, 8–9, 10–11, 12–13 and day 14. Data access still pending on day 3 auto-escalates. Each gate records signer role and evidence, and advances only to the next stage when the previous gate is complete. A deny overrides an earlier optimistic state. Audit every attempt, including rejected sign-offs.
 
@@ -28,6 +28,6 @@ The source calls out missing scope-change sponsor approval, real provisioning, e
 
 ## 5. Evaluation, cost and operations
 
-Build a golden set with top ticket classes, ambiguous cases, PII, retrieval gaps, escalation triggers and policy exceptions. Test classification, grounded replies, refusal/escalation behavior, response latency and human-edit rate. Shadow mode collects evidence without broad sending. Limited production uses a defined approval policy and rollback trigger. Track cost per resolved ticket, token/step budget, human review load and post-handover retention separately from demo results.
+Build a golden set with top ticket classes, ambiguous cases, PII, retrieval gaps, escalation triggers and policy exceptions. Test classification, grounded replies, refusal/escalation behaviour, response latency and human-edit rate. Shadow mode collects evidence without broad sending. Limited production uses a defined approval policy and rollback trigger. Track cost per resolved ticket, token/step budget, human review load and post-handover retention separately from demo results.
 
 Credentials should be scoped during the engagement and transferred or revoked at handover. A runbook should name the ongoing owner, how to inspect dashboards, how to stop sends, and which version to roll back to. Measure override reasons: a high rate can reveal weak retrieval, an overly conservative policy or poor classification.

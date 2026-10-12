@@ -2,13 +2,13 @@
 
 This is the technical backup for the [Main Interview Guide](G02_Customer_Support_Automation_Main.md). The unchanged [source case](G02_Customer_Support_Automation.md) contains the full synthesis and references.
 
-**Model and agent roles:** Rules or a small model route intent and risk. The LLM response generator drafts a reply or proposed action; a bounded planner is reserved for multi-system requests. The policy gateway and approver, not the model, authorize effects.
+**Model and agent roles:** Rules or a small model route intent and risk. The LLM response generator drafts a reply or proposed action; a bounded planner is reserved for multi-system requests. The policy gateway and approver, not the model, authorise effects.
 
 ## 1. Source authority and freshness
 
 | Source | Authority | Query-time rule | Cache boundary |
 |---|---|---|---|
-| Identity provider | Who the customer is and assurance level | Verify for the session and at account-action boundary | Do not cache an assertion as authorization. |
+| Identity provider | Who the customer is and assurance level | Verify for the session and at account-action boundary | Do not cache an assertion as authorisation. |
 | CRM | Profile, entitlement, case history | Check live before account changes | References or non-authoritative summaries only. |
 | Orders | Order and shipping state | Check live before refund/replacement or a current-status promise | Summaries may guide search, not override the system of record. |
 | Billing ledger | Charge and refund state | Check live before every money movement and reconcile uncertainty after timeout | Do not cache money state. |
@@ -39,7 +39,7 @@ The boundaries are deliberately narrow:
 
 1. **Untrusted text:** customer messages, retrieved articles, and copied tickets are data. Prompt injection cannot become a tool instruction or policy change.
 2. **Identity:** pre-auth traffic stays in a limited generic mode. Account-specific data and tools require an approved identity path and sufficient assurance.
-3. **Policy gateway:** checks action allowlist, identity assurance, current facts, value threshold, account/tenant scope, and review rule on each proposal. The model’s confidence is never authorization.
+3. **Policy gateway:** checks action allowlist, identity assurance, current facts, value threshold, account/tenant scope, and review rule on each proposal. The model’s confidence is never authorisation.
 4. **Tool service:** scoped credentials, typed arguments, idempotency key, immutable record, and reconciliation on uncertain outcomes.
 5. **Human approval:** the interrupt is placed at the risky tool call so read-only work does not wait needlessly.
 
@@ -61,11 +61,11 @@ Rules can tag simple cases. Small models can handle classification and routine F
 
 ## 5. Risk-tiered budgets and sizing
 
-The source’s **illustrative** requirements are routine p95 <3 s, ambiguous p95 <8 s, and high-risk handoff bundle p95 <15 s. The last tier does not authorize automated final decisions. A sample 2M-ticket/month, 100-QPS-peak, 20-language workload yields about 67k tickets/day on average, but bursts drive gateway, queue, and escalation capacity.
+The source’s **illustrative** requirements are routine p95 <3 s, ambiguous p95 <8 s, and high-risk handoff bundle p95 <15 s. The last tier does not authorise automated final decisions. A sample 2M-ticket/month, 100-QPS-peak, 20-language workload yields about 67k tickets/day on average, but bursts drive gateway, queue, and escalation capacity.
 
 With a 70/20/10 routine/ambiguous/escalated split and 2/3/1 model calls: `1.4M × 2 + 0.4M × 3 + 0.2M × 1 = 4.2M` monthly model calls before retries, moderation, and tools. Retrieval is roughly 2.2M–2.4M calls on the source assumptions. These are planning calculations, not measured traffic.
 
-At 10× conversations, use stateless gateways and orchestration, retrieval partitions by product/region/language/business unit, regional deployment where residency requires it, asynchronous long-running actions, rate limits by user/tenant/tool, and circuit breakers. Isolate offline summarization and human escalation from routine classification. A semantic FAQ cache near ingress can avoid expensive orchestration only when tenant, permission, and content version are in the key. Identity assertions, account status, authorization decisions, and money state require live authority.
+At 10× conversations, use stateless gateways and orchestration, retrieval partitions by product/region/language/business unit, regional deployment where residency requires it, asynchronous long-running actions, rate limits by user/tenant/tool, and circuit breakers. Isolate offline summarization and human escalation from routine classification. A semantic FAQ cache near ingress can avoid expensive orchestration only when tenant, permission, and content version are in the key. Identity assertions, account status, authorisation decisions, and money state require live authority.
 
 Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong_resolution − C_recontact` (and account for retrieval/operations when pricing it). Measure cost per **resolved** issue and by intent. A shorter cheap answer that drives recontact can lose money.
 
@@ -104,7 +104,7 @@ Rollout: agent-assist first; prove retrieval, routing, handoff, and audit; autom
 
 **Multi-tenant SaaS support:** `Tenant`, `Entitlement`, and `RetrievalACL` data constrain every retrieval and tool call. Test the same question under different tenants and roles. Look for cross-tenant evidence, wrong entitlement advice, exposed internal logs, and credits without approval. A red-team ACL suite has a zero-violation release gate.
 
-**ServiceNow/ITSM:** classify category and priority, retrieve an approved KB article/runbook, request missing information, suggest assignment, and apply workflow actions only within policy. The `Ticket`, CMDB `Asset`, `KBArticle`, `AssignmentRule`, and `WorkflowAction` records let the system explain a decision. Risks include wrong priority/group, premature closure, unauthorized access changes, requester PII, and injection in ticket text. Configuration-item changes follow the customer’s existing ITIL change process; the agent proposes a change record.
+**ServiceNow/ITSM:** classify category and priority, retrieve an approved KB article/runbook, request missing information, suggest assignment, and apply workflow actions only within policy. The `Ticket`, CMDB `Asset`, `KBArticle`, `AssignmentRule`, and `WorkflowAction` records let the system explain a decision. Risks include wrong priority/group, premature closure, unauthorised access changes, requester PII, and injection in ticket text. Configuration-item changes follow the customer’s existing ITIL change process; the agent proposes a change record.
 
 ## 9. Implementation details from the six source mocks
 

@@ -89,4 +89,4 @@ Only now does the access engine see a principal. Every attribute it reads came f
 
 ## References
 
-**Sources:** `01_Identity_Secrets_Tenant_Fairness.md` (FDE Handbook, Cross-Cutting Concerns): "Why this matters" and "1 · Real identity". `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgment): §1 "Real identity". `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §1 "Real Identity: SSO/OIDC vs. Local User Tables", including "The Three Verification Steps", "Token Structure Example", "Interview Red Flags to Avoid" and "Interview Answer Template".
+**Sources:** `01_Identity_Secrets_Tenant_Fairness.md` (FDE Handbook, Cross-Cutting Concerns): "Why this matters" and "1 · Real identity". `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgement): §1 "Real identity". `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §1 "Real Identity: SSO/OIDC vs. Local User Tables", including "The Three Verification Steps", "Token Structure Example", "Interview Red Flags to Avoid" and "Interview Answer Template".

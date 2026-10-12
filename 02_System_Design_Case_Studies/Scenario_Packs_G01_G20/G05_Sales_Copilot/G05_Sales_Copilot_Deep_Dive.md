@@ -2,7 +2,7 @@
 
 Use the [Main guide](G05_Sales_Copilot_Main.md) for the spoken answer. This is the technical backup; the unchanged [source case](G05_Sales_Copilot.md) keeps the full synthesis, interview script, and references.
 
-**Model and agent roles:** Deterministic routes handle common snapshots, CRM counts, and exact lookups; a bounded agent path handles ambiguous multi-step asks. The LLM copilot summarizes and drafts from authorized evidence, while the claim verifier and approval gateway control external claims and CRM writes.
+**Model and agent roles:** Deterministic routes handle common snapshots, CRM counts, and exact lookups; a bounded agent path handles ambiguous multi-step asks. The LLM copilot summarizes and drafts from authorised evidence, while the claim verifier and approval gateway control external claims and CRM writes.
 
 ## 1. Source and permission map
 
@@ -22,11 +22,11 @@ Each record needs stable ID, owner, updated time, and ACL metadata; exclude unma
 
 Validate the customer IdP token’s signature, issuer, audience, and expiry, then map customer groups into local roles. Alert on group-mapping drift; provision a new user only to their own tenant with minimal rights. The CRM mirror carries `owner_id`, `territory_ids`, role visibility, sharing rules, and field masks for sensitive fields such as amount. Compile tenant, territory, and role into the retrieval pre-filter. Recheck live attributes and field masks after retrieval and before generation or serving a snapshot. A count or aggregate containing forbidden rows violates the same zero-leak gate as a document excerpt.
 
-Connector credentials are vault references, resolved at use time, never written into model prompts or traces. Scope each connection to one customer and use per-tenant encryption boundaries where required. Embeddings and snapshots are derived state, not authorization authority.
+Connector credentials are vault references, resolved at use time, never written into model prompts or traces. Scope each connection to one customer and use per-tenant encryption boundaries where required. Embeddings and snapshots are derived state, not authorisation authority.
 
 ## 3. Snapshot as a materialized view
 
-Calendar trigger or on-demand job builds summary, open opportunities/stage/next step, recent calls and emails, support escalations, segment objections, and approved claims. Run the job **as the rep**, key cache on account plus permission signature, and stamp source/index/policy versions. A manager and rep on the same account may get different snapshots. On role or territory change, invalidate affected snapshots. At serve time, reauthorize with current attributes; if the CRM is down, show a permitted last snapshot with staleness labeling or refuse. Precompute improves p95 but cannot preserve access after revocation by itself.
+Calendar trigger or on-demand job builds summary, open opportunities/stage/next step, recent calls and emails, support escalations, segment objections, and approved claims. Run the job **as the rep**, key cache on account plus permission signature, and stamp source/index/policy versions. A manager and rep on the same account may get different snapshots. On role or territory change, invalidate affected snapshots. At serve time, reauthorise with current attributes; if the CRM is down, show a permitted last snapshot with staleness labeling or refuse. Precompute improves p95 but cannot preserve access after revocation by itself.
 
 At 10× accounts, shard jobs by territory and make connector schedules independent so one rate-limited source does not block others. Interactive load should scale with snapshot hit rate rather than live CRM fan-out.
 
@@ -34,8 +34,8 @@ At 10× accounts, shard jobs by territory and make connector schedules independe
 
 | Question | Route |
 |---|---|
-| “Summarize the last three calls” | Semantic/hybrid retrieval on authorized transcripts. |
-| “How many open opportunities missed close date?” | Fixed structured CRM query over authorized rows. |
+| “Summarize the last three calls” | Semantic/hybrid retrieval on authorised transcripts. |
+| “How many open opportunities missed close date?” | Fixed structured CRM query over authorised rows. |
 | “Status of opportunity ID 0065g00000?” | Direct exact-ID lookup. |
 | “Objections across late-stage deals this quarter?” | Structured filter first, then summarize matching prose. |
 
@@ -51,12 +51,12 @@ Use reviewed operations such as get account by ID, opportunities by stage, inter
 
 | Failure | Decision |
 |---|---|
-| CRM unavailable | Labeled authorized snapshot if within allowed staleness; no writes. |
+| CRM unavailable | Labeled authorised snapshot if within allowed staleness; no writes. |
 | Policy engine, ACL mapping, or approval down | Fail closed. |
 | Missing evidence or stale source | List what was not checked; abstain or escalate. |
 | Unapproved claim or price | Block external draft, not merely warn. |
 | Transcript/email injection | Content is untrusted evidence; it may still sway the model, so tools and policy stay gated outside it. |
-| Vector path unavailable | Use authorized keyword/structured path where supported and label limitation. |
+| Vector path unavailable | Use authorised keyword/structured path where supported and label limitation. |
 | Model route down | Queue draft/long work with progress, or use approved fallback. |
 
 Trace source IDs, retrieval/policy versions, field masks, citations, model/prompt versions, claim verdict, approval, and write receipt. Control-plane settings include connector registry, ACL mirror, approved claims, pricing policy, tool allowlist, evaluation suites, and budgets.
@@ -83,8 +83,8 @@ On the source’s 2026-07-08 scenario, `llm_standard_v2` changed to `llm_premium
 
 | Choice | Reason | Revisit if |
 |---|---|
-| Precompute snapshot, reauthorize at serve | Removes source fan-out from hot path without freezing permissions. | Most meetings unscheduled; build a fast partial snapshot on open. |
-| Fixed CRM operations | Bounds fields, rows, and authorization. | Validated open-ended query layer is genuinely needed. |
+| Precompute snapshot, reauthorise at serve | Removes source fan-out from hot path without freezing permissions. | Most meetings unscheduled; build a fast partial snapshot on open. |
+| Fixed CRM operations | Bounds fields, rows, and authorisation. | Validated open-ended query layer is genuinely needed. |
 | Block unapproved external claims | Legal/commercial risk exceeds draft convenience. | Internal-only notes may use warnings; external drafts still block. |
 | Preview and approve writes | Changes are consequential and auditable. | Proven low-risk field update earns a narrower automated route. |
 

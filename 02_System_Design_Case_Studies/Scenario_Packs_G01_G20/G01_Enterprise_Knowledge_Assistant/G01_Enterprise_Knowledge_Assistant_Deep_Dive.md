@@ -2,7 +2,7 @@
 
 This is the technical backup for the Main Interview Guide. It keeps the details you may need when the interviewer goes deeper.
 
-**Model and agent roles:** The query planner may split a multi-hop question, while the LLM gateway generates from the final authorized evidence set. The assistant is primarily a RAG workflow; ACL/ABAC enforcement and citation verification remain deterministic.
+**Model and agent roles:** The query planner may split a multi-hop question, while the LLM gateway generates from the final authorised evidence set. The assistant is primarily a RAG workflow; ACL/ABAC enforcement and citation verification remain deterministic.
 
 ## 1. ACL normalization
 
@@ -23,15 +23,15 @@ Normalize to an internal representation containing:
 - ACL version
 - index version
 
-**Do not:** default missing ACLs to internal, use embeddings as authorization, or let the LLM decide access.
+**Do not:** default missing ACLs to internal, use embeddings as authorisation, or let the LLM decide access.
 
 ---
 
-## 2. Two authorization layers
+## 2. Two authorisation layers
 
 ### Pre-filter
 
-Search only the user's authorized candidate space.
+Search only the user's authorised candidate space.
 
 Benefits: recall, top-k utilization, latency.
 
@@ -43,7 +43,7 @@ Catches: live revocation, stale ACLs, time embargoes, need-to-know, redaction ob
 
 The interview sentence:
 
-> “I don't want unauthorized content retrieved and discarded. I want it excluded from the search competition and then checked again before generation.”
+> “I don't want unauthorised content retrieved and discarded. I want it excluded from the search competition and then checked again before generation.”
 
 ---
 
@@ -108,7 +108,7 @@ Reconciliation detects missing documents, stale versions, stale ACLs, missed del
 
 ---
 
-## 6. Freshness vs authorization
+## 6. Freshness vs authorisation
 
 Ask two different questions:
 
@@ -117,7 +117,7 @@ Ask two different questions:
 
 A document can have correct permissions but be obsolete or deleted.
 
-Use source-specific freshness SLOs and explicit behavior when they are exceeded.
+Use source-specific freshness SLOs and explicit behaviour when they are exceeded.
 
 ---
 
@@ -139,7 +139,7 @@ Reranking adds quality and latency.
 
 Correct flow:
 
-**authorized retrieval → candidate pool → reranker → final evidence**
+**authorised retrieval → candidate pool → reranker → final evidence**
 
 Use selective reranking when:
 
@@ -166,7 +166,7 @@ Consider:
 - diversity
 - source authority
 - freshness
-- authorization
+- authorisation
 - contradictions
 - token budget
 
@@ -178,7 +178,7 @@ If authoritative policy conflicts with an old wiki, use the declared authority r
 
 A citation must:
 
-1. belong to authorized evidence
+1. belong to authorised evidence
 2. support the claim
 3. point to the intended granularity
 4. not reference deleted/revoked content
@@ -191,10 +191,10 @@ A fluent answer can still fail citation correctness.
 
 Abstain when:
 
-- no authorized evidence exists
+- no authorised evidence exists
 - evidence conflicts materially
 - freshness is outside SLO
-- authorization cannot be verified
+- authorisation cannot be verified
 - retrieval confidence is insufficient
 - risk requires human review
 
@@ -209,7 +209,7 @@ Retrieved content is untrusted data.
 Use:
 
 - instruction/data separation
-- deterministic authorization
+- deterministic authorisation
 - tool gateway
 - allowlists
 - schema validation
@@ -218,7 +218,7 @@ Use:
 
 For write tools:
 
-**LLM proposes → policy gateway authorizes → schema/idempotency checks → approval if needed → tool executes.**
+**LLM proposes → policy gateway authorises → schema/idempotency checks → approval if needed → tool executes.**
 
 ---
 
@@ -226,8 +226,8 @@ For write tools:
 
 Include:
 
-- positive authorized questions
-- questions whose answers exist but are unauthorized
+- positive authorised questions
+- questions whose answers exist but are unauthorised
 - revocation cases
 - deletion cases
 - conflicting-source cases
@@ -244,15 +244,15 @@ Build a persona × document visibility matrix.
 
 Test:
 
-- unauthorized retrieval
-- unauthorized citation
+- unauthorised retrieval
+- unauthorised citation
 - result-count leakage
 - cache leakage
 - citation leakage
 - trace/audit leakage
 - cross-tenant access
 
-**One unauthorized exposure blocks release.**
+**One unauthorised exposure blocks release.**
 
 ---
 
@@ -313,7 +313,7 @@ Generation cannot remain on the hot path.
 Use:
 
 - cached embeddings
-- cached authorized retrieval
+- cached authorised retrieval
 - verified semantic answer cache
 - selective reranking
 - precomputation
@@ -372,11 +372,11 @@ A governed source does not automatically mean a derived search index has identic
 Verify:
 
 - identity propagation
-- row/column control behavior
+- row/column control behaviour
 - index construction restrictions
 - revocation timing
 - deletion propagation
-- query-time authorization
+- query-time authorisation
 
 A persona-by-document visibility matrix is strong evidence.
 

@@ -96,7 +96,7 @@ Embedding similarity is a relevance signal, not proof that a statement is correc
 
 Use trusted identity, tenant, and access scope to constrain retrieval. Metadata can also select the correct region, product, language, or policy version.
 
-> “Only authorized evidence should enter context, and the policy version must match the customer's case.”
+> “Only authorised evidence should enter context, and the policy version must match the customer's case.”
 
 ```text
 Trusted identity → Allowed scope → Search eligible content
@@ -173,7 +173,7 @@ Model used it correctly?
 | Answer from maintained documents | Ingestion + searchable index | Make knowledge available for retrieval | Refresh and parsing effort |
 | Match varied wording | Embeddings + vector search | Find related meanings | Exact terms may need another signal |
 | Find exact IDs and names | Keyword or hybrid search | Preserve lexical matching | Ranking configuration |
-| Respect tenant/user access | Trusted access filtering/enforcement | Keep unauthorized evidence out | Identity and permission integration |
+| Respect tenant/user access | Trusted access filtering/enforcement | Keep unauthorised evidence out | Identity and permission integration |
 | Use the right policy version | Metadata/version selection | Match context to case | Correct metadata maintenance |
 | Reduce noisy candidates | Reranking + context selection | Improve evidence ordering | Extra latency/cost |
 | Check current refund status | Live API/tool | Read current system state | Dependency failure |
@@ -194,7 +194,7 @@ Model used it correctly?
        Policy decides → Executor acts if allowed
 ```
 
-RAG supplies evidence; it does not authorize or execute the refund.
+RAG supplies evidence; it does not authorise or execute the refund.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -240,7 +240,7 @@ RAG supplies evidence; it does not authorize or execute the refund.
 
 ## One-Page Memory Card: RAG & Enterprise Data
 
-**Core question:** How do we get the right authorized evidence into the answer and verify that it was used correctly?
+**Core question:** How do we get the right authorised evidence into the answer and verify that it was used correctly?
 
 ### Recall Flow
 
@@ -267,7 +267,7 @@ RAG means retrieval-augmented generation. It supplies evidence for generation; i
 | Filters | Trusted user/tenant scope plus applicable product, region, version |
 | Reranking | Reorder retrieved candidates; cannot find missing evidence |
 | Context | Select relevant evidence, exceptions, and source links within budget |
-| Evaluation | Recall, precision, claim support, correctness, missing-answer behavior |
+| Evaluation | Recall, precision, claim support, correctness, missing-answer behaviour |
 
 ### Trigger → Concept
 
@@ -312,7 +312,7 @@ Retrieve refund policy and read live order data, then produce an evidence-based 
 
 ### 30-Second Answer
 
-> “I’d first separate reference knowledge from live transactional data. For RAG, I’d build a maintained ingestion path with useful chunks, metadata, permissions, and versions. At query time I’d retrieve authorized evidence, rerank if useful, select context, and require supported claims. I’d evaluate retrieval separately from generation and trace failures from the source to the final answer.”
+> “I’d first separate reference knowledge from live transactional data. For RAG, I’d build a maintained ingestion path with useful chunks, metadata, permissions, and versions. At query time I’d retrieve authorised evidence, rerank if useful, select context, and require supported claims. I’d evaluate retrieval separately from generation and trace failures from the source to the final answer.”
 
 ## Sources (checked 27 Sep 2026)
 

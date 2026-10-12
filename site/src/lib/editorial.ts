@@ -287,6 +287,45 @@ export const STORY_BANK = {
   href: '/practice/story-bank',
 } as const
 
+/**
+ * The Story Bank's customer groups, in display order. Each is a tab on the page (ENH-25),
+ * holding the stories whose H2 starts with one of its `prefixes`; stories that match none
+ * share a last "Build your own" tab. The page-length check groups the same way.
+ */
+export const STORY_GROUPS = [
+  {
+    id: 'asian-life-insurer',
+    title: 'Asian life insurer',
+    context: 'A short project to help insurance teams ask questions about sensitive company data safely.',
+    bestFor: 'Understanding a customer, keeping the first launch small, handling a problem, and earning trust.',
+    prefixes: ['The insurer:'],
+  },
+  {
+    id: 'consumer-lender',
+    title: 'Indian consumer lender',
+    context: 'A project to help an IT team investigate lead-routing issues without making risky automatic changes.',
+    bestFor: 'Learning a new customer system, making safe choices, and being honest about results.',
+    prefixes: ['The lender:'],
+  },
+  {
+    id: 'meridian-assist',
+    title: 'Meridian Assist reference build',
+    context: 'A small reference system used to prove that answers are safe, checked, and backed by evidence.',
+    bestFor: 'High standards, testing, owning mistakes, and explaining safety to non-technical people.',
+    prefixes: ['Meridian:'],
+  },
+  {
+    id: 'cross-engagement',
+    title: 'Guardrails and reusable patterns',
+    context: 'Stories about saying no safely, writing down known gaps, and sharing useful lessons with other teams.',
+    bestFor: 'Making a difficult call, keeping people safe, and having impact beyond one customer.',
+    prefixes: ['The guardrail engine:', 'Financial services:', 'Beyond one engagement:'],
+  },
+] as const
+
+/** The Story Bank group a story belongs to, from its H2 title; undefined for "Build your own". */
+export const storyGroupOf = (title: string) => STORY_GROUPS.find((g) => g.prefixes.some((p) => title.startsWith(p)))
+
 // ---------------------------------------------------------------- reading-page tabs
 
 /**
@@ -294,7 +333,7 @@ export const STORY_BANK = {
  * changes; `label` is what the reader sees; `purpose` is the one line shown at the top
  * of the tab. The source file names in `scripts/case-studies.mjs` point at these ids.
  */
-export const TABS: Record<string, { label: string; purpose: string }> = {
+export const TABS: Record<string, { label: string; purpose: string; short?: string }> = {
   'company-guide': {
     label: 'Company Guide',
     purpose: 'A company-specific preparation guide for this interview loop.',
@@ -315,6 +354,7 @@ export const TABS: Record<string, { label: string; purpose: string }> = {
   },
   'full-pack': {
     label: 'Sources and Full Design',
+    short: 'Full Design',
     purpose:
       'The complete, referenced write-up behind the other tabs. The sources for every tab live here.',
   },
@@ -357,21 +397,41 @@ export const TABS: Record<string, { label: string; purpose: string }> = {
   },
 }
 
+/**
+ * A tab's label and purpose, including a tab split into parts (ENH-25). A tab too long
+ * for one page is split at its H2s: part 1 keeps the tab's id, so saved read state holds;
+ * later parts are `<id>-part-<n>`. Every part is labelled "<short label> <n>". `parts`
+ * is how many parts the tab has on its page.
+ */
+export function tabMeta(id: string, parts = 1): { label: string; purpose: string } | undefined {
+  const part = id.match(/^(.+)-part-(\d+)$/)
+  const tab = TABS[part ? part[1] : id]
+  if (!tab) return undefined
+  return parts > 1 ? { label: `${tab.short ?? tab.label} ${part ? part[2] : 1}`, purpose: tab.purpose } : tab
+}
+
 /** Reading speed used for expected-time estimates. Dense technical prose, so slow. */
 export const WORDS_PER_MINUTE = 180
 
 /**
- * Whole minutes to read a markdown document: words outside code fences (diagrams and
- * code are not read word by word) at WORDS_PER_MINUTE, rounded up, never zero. The one
- * reading-time rule (ENH-22): the Learn and casebook syncs and the pages all call it, so
- * a page and its listing show the same time.
+ * Words a reader reads in a markdown document: words outside code fences (diagrams and
+ * code are not read word by word). Reading time and the page-length limit (ENH-25) both
+ * count with it, so "2,500 words" and "14 min read" measure the same thing.
  */
-export function readingMinutes(markdown: string): number {
-  const words = markdown
+export function wordCount(markdown: string): number {
+  return markdown
     .replace(/```[\s\S]*?```/g, ' ')
     .split(/\s+/)
     .filter((w) => /[A-Za-z0-9]/.test(w)).length
-  return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))
+}
+
+/**
+ * Whole minutes to read a markdown document: its `wordCount` at WORDS_PER_MINUTE,
+ * rounded up, never zero. The one reading-time rule (ENH-22): the Learn and casebook
+ * syncs and the pages all call it, so a page and its listing show the same time.
+ */
+export function readingMinutes(markdown: string): number {
+  return Math.max(1, Math.ceil(wordCount(markdown) / WORDS_PER_MINUTE))
 }
 
 // ---------------------------------------------------------------- Last-Day Review

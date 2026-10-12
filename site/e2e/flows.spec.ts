@@ -360,7 +360,7 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await page.goto('/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant')
   await expect(page).toHaveURL(CASE_STUDY)
   await hydrated(page)
-  await expect(page.getByRole('button', { name: 'Interview Guide marked as read' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('button', { name: 'Interview Guide 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Design' })).toHaveAttribute('href', '/design')
 })
 

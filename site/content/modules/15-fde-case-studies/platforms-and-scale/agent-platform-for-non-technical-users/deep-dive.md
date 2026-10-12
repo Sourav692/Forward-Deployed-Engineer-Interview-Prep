@@ -6,7 +6,7 @@
 
 The source's `WorkflowSpec` is a versioned declaration with triggers, fixed steps, max steps and max cost. `Event` carries channel, event type, tenant, target entity, payload and raw reference. `Tool` registration declares typed arguments, scopes and whether it is destructive. A non-technical builder or eventual natural-language compiler produces a reviewable draft spec; the runtime does not execute free text as code. Runs pin a workflow version, so editing a spec cannot alter a run mid-flight.
 
-The runnable project has no LLM. That is intentional for deterministic proof. A future LLM might propose values or produce a draft spec, but schema validation, policy and human promotion must remain deterministic. An open-ended planning loop would be a separate change, bounded by the same step, spend and authorization controls.
+The runnable project has no LLM. That is intentional for deterministic proof. A future LLM might propose values or produce a draft spec, but schema validation, policy and human promotion must remain deterministic. An open-ended planning loop would be a separate change, bounded by the same step, spend and authorisation controls.
 
 ## 2. Routing and concurrency
 
@@ -16,7 +16,7 @@ Adapters normalize once at the edge. The router matches tenant, `LIVE` status an
 
 `run_workflow()` and `resume()` enter the same loop at `next_step_index`. After each completed step, the run checkpoints the next index. A crash after step 0 resumes at step 1, so step 0 is not deliberately re-run. At-least-once delivery can still replay an action around a crash, so its external side effect needs an idempotency key like `{run_id}:{step_name}` and a durable shared store. The same key must be passed to a provider when the provider supports it.
 
-Check the action's applied key before authorization. The source found that a refund replay skipped the second refund but charged the spend budget again, causing a false cap denial. Idempotency must cover all side effects, including cost accounting and audit semantics, not just the visible API call. A replay of an already-applied action is a free no-op and may advance the checkpoint.
+Check the action's applied key before authorisation. The source found that a refund replay skipped the second refund but charged the spend budget again, causing a false cap denial. Idempotency must cover all side effects, including cost accounting and audit semantics, not just the visible API call. A replay of an already-applied action is a free no-op and may advance the checkpoint.
 
 ## 4. Guardrail order and the $500 story
 
@@ -26,7 +26,7 @@ The first discovered bug used a nominal tool invocation fee to evaluate a $500 r
 
 ## 5. Promotion and negative evidence
 
-The states are `DRAFT → TESTING → SHADOW → LIVE → AUTONOMOUS`; promotion moves one stage at a time, only by an approver/admin who is not the author. Testing uses historical input; shadow observes live traffic with writes mocked; live can require human approval per action; autonomous can skip approval only for tenant-allow-listed tools. The source demo has 21 deterministic tests covering wrong role, skipped stage, bad typed arguments, not-live action, cap denial, step limit, entity lock, crash resume and no duplicate effect. Those tests prove this engine's rules, not the behavior of an unbuilt planner.
+The states are `DRAFT → TESTING → SHADOW → LIVE → AUTONOMOUS`; promotion moves one stage at a time, only by an approver/admin who is not the author. Testing uses historical input; shadow observes live traffic with writes mocked; live can require human approval per action; autonomous can skip approval only for tenant-allow-listed tools. The source demo has 21 deterministic tests covering wrong role, skipped stage, bad typed arguments, not-live action, cap denial, step limit, entity lock, crash resume and no duplicate effect. Those tests prove this engine's rules, not the behaviour of an unbuilt planner.
 
 ## 6. Product and production gaps
 

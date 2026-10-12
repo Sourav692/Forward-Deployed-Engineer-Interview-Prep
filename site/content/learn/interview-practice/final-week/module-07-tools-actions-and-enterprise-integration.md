@@ -47,7 +47,7 @@ Tool results are data, not permission to bypass policy. The model must not be ab
 
 #### 2. Integration Contract — Discover the Real Constraints
 
-Ask about API availability, authentication, schemas, limits, synchronous vs asynchronous behavior, ownership, and error semantics.
+Ask about API availability, authentication, schemas, limits, synchronous vs asynchronous behaviour, ownership, and error semantics.
 
 > “Does this API confirm completion, or only accept the operation for later processing?”
 
@@ -97,7 +97,7 @@ refund_request_123 → First call: refund created
 refund_request_123 → Retry: existing result / same operation
 ```
 
-Do not generate a new key for every retry. Idempotency scope, retention, and changed-input behavior must match the downstream contract.
+Do not generate a new key for every retry. Idempotency scope, retention, and changed-input behaviour must match the downstream contract.
 
 #### 6. Timeout — Stop Waiting Without Assuming Failure
 
@@ -139,13 +139,13 @@ Repeated failures → Open breaker → Fast failure / defer
                         Recovery probe
 ```
 
-A breaker does not repair the API, confirm an unknown write, or replace authorization.
+A breaker does not repair the API, confirm an unknown write, or replace authorisation.
 
 ### 4. Requirement → Component Reasoning
 
 | Requirement | Pattern / component | Why | Trade-off |
 |---|---|---|---|
-| Safe enterprise access | Validated tool layer + scoped authorization | Restrict operations | Integration effort |
+| Safe enterprise access | Validated tool layer + scoped authorisation | Restrict operations | Integration effort |
 | Execute approved refunds | Policy + executor | Separate reasoning and side effects | More workflow state |
 | Prevent duplicate refunds | Idempotency + action records | Safe repeated operation | Downstream support and retention |
 | Handle slow dependencies | Deadlines + async work where acceptable | Bound waiting | Deferred completion |
@@ -158,7 +158,7 @@ Model Gateway = Application → Model control
 Tool layer    = Controlled enterprise operations
 ```
 
-**Support example:** retrieve refund policy, read live order state, propose the refund, authorize and check policy, execute with one action identifier, then confirm status and audit the result.
+**Support example:** retrieve refund policy, read live order state, propose the refund, authorise and check policy, execute with one action identifier, then confirm status and audit the result.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -222,7 +222,7 @@ Timeout after write → Reconcile → Safe recovery
 |---|---|
 | Tool layer | Specific approved operations; clear schemas; trusted access scope |
 | Contract | Authentication, limits, errors, sync/async, accepted vs completed |
-| Reads | Authorization, sensitive data, freshness, cost |
+| Reads | Authorisation, sensitive data, freshness, cost |
 | Writes | Policy, approval where required, scoped execution, confirmation |
 | Executor | Performs the validated business operation; secrets stay outside context |
 | Idempotency | Same logical action uses the same identifier across retries |
@@ -267,7 +267,7 @@ Check the API's idempotency scope, retention, and treatment of changed inputs. A
 
 API Gateway = User → Application control.
 Model Gateway = Application → Model control.
-The controlled tool layer owns enterprise operations; downstream authorization remains necessary.
+The controlled tool layer owns enterprise operations; downstream authorisation remains necessary.
 
 ### 30-Second Answer
 

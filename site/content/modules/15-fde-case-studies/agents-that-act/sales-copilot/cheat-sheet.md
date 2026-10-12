@@ -18,7 +18,7 @@ Workflow and decision? Who uses/reviews? Which tasks read/draft/write? Which sou
 
 **Precompute:** sources → ACL/territory mirror → structured store + hybrid index → snapshot as rep → permission-keyed cache.
 
-**Ask:** SSO/role/territory → route → authorized evidence → fresh post-check → cited answer/draft → claim verifier.
+**Ask:** SSO/role/territory → route → authorised evidence → fresh post-check → cited answer/draft → claim verifier.
 
 **Write:** proposed exact fields → preview → human approval → allowlisted idempotent gateway → CRM receipt.
 
@@ -26,7 +26,7 @@ Workflow and decision? Who uses/reviews? Which tasks read/draft/write? Which sou
 
 ## Rules
 
-1. Snapshot is a materialized view, not an authorization decision; recheck after territory change.
+1. Snapshot is a materialized view, not an authorisation decision; recheck after territory change.
 2. CRM org-wide defaults, owner, role hierarchy, territory, sharing rules, and field masks all matter.
 3. Structured counts and ID lookups use reviewed CRM operations, not vector similarity.
 4. Opportunity risk comes from fetched fields and interactions, not model memory.
@@ -39,7 +39,7 @@ Interactive **3–8 s**. Example gates: ≥90% grounded claims, ≥95% citations
 
 ## Failure card
 
-CRM down → authorized stale snapshot labeled, no writes. Territory changed → invalidate and reauthorize. Missing fact → say so. Price/certification unapproved → block draft. Injected email/transcript → untrusted data; write tools stay gated outside the model.
+CRM down → authorised stale snapshot labeled, no writes. Territory changed → invalidate and reauthorise. Missing fact → say so. Price/certification unapproved → block draft. Injected email/transcript → untrusted data; write tools stay gated outside the model.
 
 ## Rollout
 
@@ -55,4 +55,4 @@ Aggregate **96.7%/120** concealed regulated claims **83.3%/6**. Online unsupport
 
 ## Interview close
 
-“The system is useful only when the rep trusts both the account facts and the boundary around them: authorized evidence, approved claims, and approved writes.”
+“The system is useful only when the rep trusts both the account facts and the boundary around them: authorised evidence, approved claims, and approved writes.”

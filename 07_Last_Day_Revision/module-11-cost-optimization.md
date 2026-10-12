@@ -1,4 +1,4 @@
-# Module 11 — Cost Optimization
+# Module 11 — Cost Optimisation
 
 ## Concise Interview Module
 
@@ -49,7 +49,7 @@ Pricing units differ across providers and tools. Use observed usage and applicab
 
 #### 2. Model Routing — Use Sufficient Capability
 
-Use cheaper models for tasks they can reliably handle and stronger models when evaluation shows a need. Route by task and risk, with verified fallback behavior.
+Use cheaper models for tasks they can reliably handle and stronger models when evaluation shows a need. Route by task and risk, with verified fallback behaviour.
 
 > “I’d use the least expensive model that meets this task's quality and safety requirements.”
 
@@ -60,7 +60,7 @@ Complex task          → Stronger model when justified
 
 Routing and fallback add their own calls and complexity. Cheap attempts followed by repeated expensive recovery may not save money.
 
-#### 3. Context Optimization — Send What the Task Needs
+#### 3. Context Optimisation — Send What the Task Needs
 
 Select relevant evidence, remove duplication, and preserve essential facts. For long conversations, combine recent turns with reliable summaries and structured task state.
 
@@ -87,7 +87,7 @@ Do not truncate essential evidence, structured tool arguments, or a required use
 
 #### 5. Caching — Reuse Eligible Work
 
-Cache repeated retrieval, tool, or response results only within correct tenant/access scope and freshness limits. Provider prompt caching is a separate reuse mechanism with provider-specific billing behavior.
+Cache repeated retrieval, tool, or response results only within correct tenant/access scope and freshness limits. Provider prompt caching is a separate reuse mechanism with provider-specific billing behaviour.
 
 > “I’d first identify repeated safe work, then define cache keys, expiry, and permission scope.”
 
@@ -95,7 +95,7 @@ Cache repeated retrieval, tool, or response results only within correct tenant/a
 Eligible repeat → Valid scoped cache hit → Avoid repeated work
 ```
 
-Current order state may need fresh reads. Cache hit rate alone is not success if reused results are stale or unauthorized.
+Current order state may need fresh reads. Cache hit rate alone is not success if reused results are stale or unauthorised.
 
 #### 6. Reduce Calls and Use Deterministic Logic
 
@@ -113,7 +113,7 @@ Fewer calls can reduce both cost and latency. Preserve controls and check whethe
 
 #### 7. Agent and Retry Bounds — Cap Amplification
 
-Set budgets for steps, tools, tokens, retries, time, and cost. Stop repeated no-progress behavior with a defined status or escalation.
+Set budgets for steps, tools, tokens, retries, time, and cost. Stop repeated no-progress behaviour with a defined status or escalation.
 
 > “I’d cap total work per task, not just the tokens in one model response.”
 
@@ -176,8 +176,8 @@ The Model Gateway can centralize model routing and usage tracking. User/tenant q
 1. **Cost/request vs cost/success:** cheaper failed requests can worsen business economics.
 2. **Token cost vs total cost:** tools, retrieval, compute, retries, and review may dominate.
 3. **Cheaper model vs cheaper task:** extra retries or escalation can erase per-call savings.
-4. **Cache reuse vs freshness:** lower spend cannot justify stale or unauthorized data.
-5. **Optimization vs quality loss:** measure the quality floor and important segments after each change.
+4. **Cache reuse vs freshness:** lower spend cannot justify stale or unauthorised data.
+5. **Optimisation vs quality loss:** measure the quality floor and important segments after each change.
 
 ### 6. Trigger → Concept Table
 
@@ -194,9 +194,9 @@ The Model Gateway can centralize model routing and usage tracking. User/tenant q
 
 ### 7. Interview Phrases
 
-> “I’d attribute cost before optimizing, separating traffic growth from higher cost per task.”
+> “I’d attribute cost before optimising, separating traffic growth from higher cost per task.”
 
-> “I’d choose the cheapest model that meets the required quality, rather than optimizing price alone.”
+> “I’d choose the cheapest model that meets the required quality, rather than optimising price alone.”
 
 > “I’d reduce irrelevant context and redundant calls while preserving state, evidence, and controls.”
 
@@ -212,7 +212,7 @@ The Model Gateway can centralize model routing and usage tracking. User/tenant q
 
 ---
 
-## One-Page Memory Card: Cost Optimization
+## One-Page Memory Card: Cost Optimisation
 
 **Core question:** What does a successful task cost, and which work can we reduce while maintaining required quality?
 
@@ -262,7 +262,7 @@ Define accounting scope and window. Token charges belong inside model cost; do n
 | “Endless history” | Relevant context and durable state |
 | “Repeated policy lookup” | Permission-safe, fresh cache reuse |
 | “Five calls every time” | Call purpose and deterministic alternatives |
-| “Agent keeps looping” | Whole-task budget and stop behavior |
+| “Agent keeps looping” | Whole-task budget and stop behaviour |
 | “Can wait until later” | Batch eligibility |
 | “Cheap request, failed task” | Cost per successful outcome |
 
@@ -271,11 +271,11 @@ Define accounting scope and window. Token charges belong inside model cost; do n
 1. **Cost/request vs cost/success:** failed cheap attempts and human rework still cost money.
 2. **Model spend vs total spend:** retrieval, tools, compute, retries, and review matter.
 3. **Cheaper call vs cheaper outcome:** fallback and failures can erase savings.
-4. **Cache hit vs valid reuse:** stale or cross-permission data is not an acceptable optimization.
+4. **Cache hit vs valid reuse:** stale or cross-permission data is not an acceptable optimisation.
 
 ### Quality Rules
 
-Agree on acceptable task quality first. Evaluate each cost change against task success, critical segments, safety, latency, and manual rework. Summaries can lose facts; keep authoritative action and approval state separately. Remove redundant reasoning calls, not authorization, policy, or duplicate-action controls.
+Agree on acceptable task quality first. Evaluate each cost change against task success, critical segments, safety, latency, and manual rework. Summaries can lose facts; keep authoritative action and approval state separately. Remove redundant reasoning calls, not authorisation, policy, or duplicate-action controls.
 
 API Gateway = User → Application control.
 Model Gateway = Application → Model control.

@@ -87,7 +87,7 @@ Request + identity → Evidence + policy → Approval → Action/result
 
 #### 6. SLI / SLO / SLA — Measurement, Target, Commitment
 
-A service-level indicator (SLI) is the measured service behavior. An SLO is its target. A service-level agreement (SLA) is an agreed service commitment, often including consequences.
+A service-level indicator (SLI) is the measured service behaviour. An SLO is its target. A service-level agreement (SLA) is an agreed service commitment, often including consequences.
 
 ```text
 SLI: Measured share of eligible tasks completed within X
@@ -125,14 +125,14 @@ Correlate delayed task outcomes, reopened tickets, human overrides, and version 
 | Detect broad degradation | Metrics + workload/version views | Observe patterns | Aggregation can hide segments |
 | Diagnose specific failures | Structured logs | Inspect exact events | Sensitive-data and retention limits |
 | Attribute AI cost/behavior | Model/tool/retrieval telemetry | Link usage and outcome | Collection/label effort |
-| Explain business action | Controlled audit records | Reconstruct authorization and result | Storage and privacy |
+| Explain business action | Controlled audit records | Reconstruct authorisation and result | Storage and privacy |
 | Respond consistently | Alerts + owned runbooks | Connect detection to mitigation | Maintenance and alert fatigue |
 
 **Support example:** an eighteen-second case may show twelve seconds of queue wait and a tool retry. A disputed refund separately needs policy, approval, action identifier, and payment result. A reopened case links delayed failure to its release version and original task.
 
 ### 5. Important Distinctions and Gotchas
 
-1. **Logs vs metrics vs traces:** specific events vs aggregate behavior vs one correlated path.
+1. **Logs vs metrics vs traces:** specific events vs aggregate behaviour vs one correlated path.
 2. **Observability vs audit:** system diagnosis vs explanation of a business decision/action.
 3. **SLI vs SLO vs SLA:** measurement vs internal target vs agreed commitment.
 4. **Response success vs task success:** a successful HTTP response can contain a failed or unconfirmed business operation.
@@ -156,7 +156,7 @@ Correlate delayed task outcomes, reopened tickets, human overrides, and version 
 
 > “I’d correlate usage and operations with actual task outcomes.”
 
-> “Observability explains system behavior; audit explains the business action.”
+> “Observability explains system behaviour; audit explains the business action.”
 
 > “I’d define measurement boundaries, owners, and mitigation steps alongside the targets.”
 
@@ -172,7 +172,7 @@ Correlate delayed task outcomes, reopened tickets, human overrides, and version 
 
 ## One-Page Memory Card: Observability & Production Operations
 
-**Core question:** Can we explain the system's behavior and act on customer-impacting problems?
+**Core question:** Can we explain the system's behaviour and act on customer-impacting problems?
 
 ### Recall Flow
 
@@ -210,7 +210,7 @@ INSTRUMENT → CORRELATE → MEASURE → DETECT
 ### Do Not Confuse
 
 1. **Logs/metrics/traces:** events / trends / correlated execution path.
-2. **Observability/audit:** system behavior / business decision and action.
+2. **Observability/audit:** system behaviour / business decision and action.
 3. **SLI/SLO/SLA:** measured indicator / target / agreed service commitment.
 4. **HTTP success/task success:** returning a response does not prove an action completed.
 

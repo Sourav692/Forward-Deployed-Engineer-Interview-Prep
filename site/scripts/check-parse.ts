@@ -28,18 +28,21 @@ import {
   REQUIRED_META_FIELDS,
   REVIEWS,
   STORY_BANK,
-  TABS,
+  storyGroupOf,
   TRACKS,
+  tabMeta,
+  wordCount,
 } from '../src/lib/editorial.ts'
 import { existsSync } from 'node:fs'
+import ts from 'typescript'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
 import { diagramKey } from '../src/lib/diagram-key.ts'
 import { mermaidFences } from './render-diagrams.mjs'
-import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
-import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
+import { CASEBOOK_MODULE, MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
+import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard, splitH2 } from './learn.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
 
@@ -155,6 +158,8 @@ async function checkReading(mod: {
       if (tabs.length === 0) failures.push(`${track.id}/${slug}: no tabs in the manifest`)
       let sections = 0
       let diagrams = 0
+      // Every tab is in the page's DOM at once, so an anchor id must be unique across tabs.
+      const ids = new Set<string>()
       for (const tab of tabs) {
         const label = `${track.id}/${slug}/${tab.id}`
         const raw = await readFile(join(CONTENT, 'modules', mod.id, track.id, slug, `${tab.id}.md`), 'utf8').catch(() => null)
@@ -163,6 +168,13 @@ async function checkReading(mod: {
           continue
         }
         const doc = parseReading(raw, tab.id)
+        const htmlIds = doc.sections.flatMap((x) =>
+          x.chunks.flatMap((c) => (c.kind === 'html' ? [...c.html.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]) : [])),
+        )
+        for (const id of [...doc.sections.map((x) => x.id), ...htmlIds]) {
+          if (ids.has(id)) failures.push(`${label}: anchor #${id} is used twice on the page`)
+          ids.add(id)
+        }
         if (!doc.title) failures.push(`${label}: no # title`)
         const titled = doc.sections.filter((x) => x.title).length
         if (titled === 0) failures.push(`${label}: no ## sections — the tab would have no contents list`)
@@ -344,9 +356,12 @@ for (const mod of manifest.modules) {
       const href = scenarioHref({ moduleId: mod.id, trackId: track.id, slug: s.slug })
       routes.add(href)
       tabsByPage.set(href, (s.tabs ?? []).map((t: { id: string }) => t.id))
+      const baseOf = (id: string) => id.replace(/-part-\d+$/, '')
       for (const tab of s.tabs ?? []) {
-        if (!TABS[tab.id]) failures.push(`${key}: tab "${tab.id}" has no label or purpose in TABS`)
-        else if (tab.label !== TABS[tab.id].label) failures.push(`${key}: tab label "${tab.label}" has drifted from TABS`)
+        const parts = (s.tabs ?? []).filter((t: { id: string }) => baseOf(t.id) === baseOf(tab.id)).length
+        const meta = tabMeta(tab.id, parts)
+        if (!meta) failures.push(`${key}: tab "${tab.id}" has no label or purpose in TABS`)
+        else if (tab.label !== meta.label) failures.push(`${key}: tab label "${tab.label}" has drifted from TABS`)
       }
     }
   }
@@ -650,13 +665,83 @@ for (const file of scanFiles) {
   for (const [token] of text.matchAll(/\b[A-Z][A-Z0-9]{1,6}\b/g)) {
     if (defined.has(token) || NOT_ACRONYMS.has(token) || /^(G\d{2}|[A-Z]\d{1,3}|LLM\d{2})$/.test(token)) continue
     if (!acronymPages.has(token)) acronymPages.set(token, new Set())
-    acronymPages.get(token)!.add(file)
+    // A tab split into parts (ENH-25) still counts once, as the tab it was.
+    acronymPages.get(token)!.add(file.replace(/-part-\d+\.md$/, '.md'))
   }
 }
 for (const [token, files] of acronymPages) {
   if (files.size >= 3 && !lowerWords.has(token.toLowerCase())) {
     failures.push(`acronym ${token} appears on ${files.size} pages but is not in the glossary (src/lib/glossary.ts) or NOT_ACRONYMS`)
   }
+}
+
+// ------------------------------------------------------------------ British spelling (ENH-26)
+//
+// Published prose and site copy are British English (style guide). The rule flags the
+// American forms of five word families as whole words. Skipped: code, inline code, link
+// targets, external link titles, HTML tags, paths and identifiers, and the block after a
+// `<!-- spelling: source -->` marker (a quote from an American source). SPELLING_ALLOWED
+// names the product, title and pattern names that keep their own spelling. Site copy is
+// read from src/ as string literals and JSX text that contain a space, so ids, slugs,
+// paths, identifiers and comments never count.
+const SPELLING_IS_ERROR = true
+const AMERICAN =
+  /^(?:un|re|pre|de|mis)?(?:behaviors?|behavioral(?:ly)?|authoriz(?:e|es|ed|ing|ation|ations|er|ers)|optimiz(?:e|es|ed|ing|ation|ations|er|ers)|organiz(?:e|es|ed|ing|ation|ations|ational|er|ers)|judgments?)$/i
+const SPELLING_ALLOWED: [RegExp, string][] = [
+  [/(?:Cost and )?Latency Optimization Playbook/g, 'title of a third-party playbook'],
+  [/storage-optimized/gi, 'Databricks Vector Search endpoint type'],
+  [/evaluator-optimizer/gi, "Anthropic's name for a workflow pattern"],
+]
+const americanWords = (text: string): string[] => {
+  for (const [re] of SPELLING_ALLOWED) text = text.replace(re, ' ')
+  return [...text.replace(/\S*[_/\\]\S*/g, ' ').matchAll(/[A-Za-z]+/g)].map((m) => m[0]).filter((w) => AMERICAN.test(w))
+}
+const proseOf = (markdown: string): string =>
+  markdown
+    .replace(/<!-- spelling: source -->[\s\S]*?(?:\n[ \t]*\n|$)/g, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/(```|~~~)[\s\S]*?\1/g, ' ')
+    .replace(/`[^`\n]*`/g, ' ')
+    // An external link's text is the title of its source (a paper, a vendor page).
+    .replace(/\[[^\]]*\]\(https?:\/\/[^)]*\)/g, ' ')
+    .replace(/\]\([^)]*\)/g, ']')
+    .replace(/<\/?[A-Za-z][^>]*>/g, ' ')
+    .replace(/https?:\/\/\S+/g, ' ')
+{
+  const hits: { area: string; file: string; word: string }[] = []
+  for (const file of new Set(scanFiles)) {
+    const raw = await readFile(file, 'utf8').catch(() => '')
+    const rel = relative(CONTENT, file).split(sep)
+    const area = rel[0] === 'behavioural' ? 'behavioural' : rel.slice(0, 2).join('/')
+    for (const word of americanWords(proseOf(raw))) hits.push({ area, file: relative(CONTENT, file), word })
+  }
+  const copyFiles = async (dir: string): Promise<string[]> => {
+    const out: string[] = []
+    for (const e of await readdir(dir, { withFileTypes: true })) {
+      const path = join(dir, e.name)
+      if (e.isDirectory()) out.push(...(await copyFiles(path)))
+      else if (/\.tsx?$/.test(e.name)) out.push(path)
+    }
+    return out
+  }
+  for (const file of await copyFiles(join(SITE_ROOT, 'src'))) {
+    const source = ts.createSourceFile(file, await readFile(file, 'utf8'), ts.ScriptTarget.Latest, true)
+    const visit = (node: ts.Node) => {
+      if (ts.isStringLiteralLike(node) || ts.isTemplateLiteralToken(node) || ts.isJsxText(node)) {
+        if (/\s/.test(node.text.trim())) {
+          for (const word of americanWords(node.text)) hits.push({ area: 'site copy', file: relative(SITE_ROOT, file), word })
+        }
+      }
+      ts.forEachChild(node, visit)
+    }
+    visit(source)
+  }
+  const byArea = new Map<string, number>()
+  for (const h of hits) byArea.set(h.area, (byArea.get(h.area) ?? 0) + 1)
+  rows.push(
+    `\n  spelling: ${hits.length} American spelling(s)${hits.length ? ` — ${[...byArea].map(([a, n]) => `${a} ${n}`).join(', ')}` : ''}`,
+  )
+  if (SPELLING_IS_ERROR) for (const h of hits) failures.push(`spelling: ${h.file} uses "${h.word}"; write it in British English (ENH-26)`)
 }
 
 // Story Bank (CONTENT-15). Every question link must name a real behavioural question,
@@ -705,6 +790,54 @@ for (const [token, files] of acronymPages) {
 }
 
 rows.push(`\n  editorial: ${pages.size} pages with metadata, ${cited.size} cited by reviews, ${linksChecked} internal links resolved`)
+
+// ------------------------------------------------------------------ page length (ENH-25)
+//
+// No page or case tab over WORD_LIMIT words (audit check PQ-12): past that, readers lose
+// their place, and the page is hard to use on a phone. Words count as reading time counts
+// them (`wordCount`). Answer keys are listed but not held to the limit: a worksheet shows
+// them one question at a time, behind "Show the model answer".
+const WORD_LIMIT = 2500
+const LONG_PAGE_IS_ERROR = true
+{
+  const sizes: { label: string; words: number; key: boolean }[] = []
+  for (const file of await listMarkdown(CONTENT)) {
+    const rel = relative(CONTENT, file).split(sep)
+    const name = rel.at(-1)!.replace(/\.md$/, '')
+    const key = rel.includes('answer-keys')
+    const label =
+      rel[0] === 'learn'
+        ? `lesson ${rel.slice(1).join('/').replace(/\.md$/, '')}`
+        : rel[0] === 'behavioural'
+          ? name
+          : rel[1] === CASEBOOK_MODULE
+            ? `case ${rel[3]} · ${name}`
+            : `${key ? 'answer key' : 'worksheet'} ${name}`
+    const raw = await readFile(file, 'utf8')
+    if (rel[0] === 'behavioural' && name === STORY_BANK.slug) {
+      // The Story Bank shows one customer group per tab, under a shared lead-in.
+      const { preamble, sections } = splitH2(raw)
+      const tabs = new Map<string, string[]>()
+      for (const sec of sections) {
+        const tab = storyGroupOf(sec.heading)?.id ?? 'build-your-own'
+        tabs.set(tab, [...(tabs.get(tab) ?? []), ...sec.lines])
+      }
+      for (const [tab, lines] of tabs) sizes.push({ label: `${name} · ${tab}`, words: wordCount([...preamble, ...lines].join('\n')), key })
+      continue
+    }
+    sizes.push({ label, words: wordCount(raw), key })
+  }
+  const over = sizes.filter((s) => s.words > WORD_LIMIT).sort((a, b) => b.words - a.words)
+  const pagesOver = over.filter((s) => !s.key)
+  rows.push(
+    `\n  page length: ${sizes.length} pages and tabs, ${pagesOver.length} over ${WORD_LIMIT.toLocaleString('en-GB')} words` +
+      ` (${over.length - pagesOver.length} answer keys over, not held to the limit)`,
+  )
+  for (const s of over) rows.push(`    ${s.key ? '·' : '⚠'} ${s.words.toLocaleString('en-GB')}  ${s.label}`)
+  if (LONG_PAGE_IS_ERROR) {
+    for (const s of pagesOver) failures.push(`page length: ${s.label} has ${s.words} words, over ${WORD_LIMIT}; split it at an H2 (ENH-25)`)
+  }
+}
 
 // ------------------------------------------------------------------ search index budget
 //

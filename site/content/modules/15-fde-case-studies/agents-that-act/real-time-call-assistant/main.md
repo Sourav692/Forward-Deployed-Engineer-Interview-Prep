@@ -74,7 +74,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The live suggestion LLM reads a small, redacted prompt; the post-call LLM produces structured summary and action proposals. Neither model authorizes a CRM write. Consent, redaction, permission-scoped snapshot reads and human approval are explicit boundaries.
+The live suggestion LLM reads a small, redacted prompt; the post-call LLM produces structured summary and action proposals. Neither model authorises a CRM write. Consent, redaction, permission-scoped snapshot reads and human approval are explicit boundaries.
 
 ```mermaid
 flowchart TB

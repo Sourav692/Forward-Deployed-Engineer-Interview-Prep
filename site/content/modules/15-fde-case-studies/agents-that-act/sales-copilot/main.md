@@ -128,12 +128,12 @@ flowchart LR
 
 ### Step-by-step architecture
 
-- **Step 1.** **Prepare authorized data.** Connect CRM and other sources, mirror their ACLs, and exclude records whose permissions cannot be represented.
+- **Step 1.** **Prepare authorised data.** Connect CRM and other sources, mirror their ACLs, and exclude records whose permissions cannot be represented.
 - **Step 2.** **Precompute a rep-scoped snapshot.** Keep structured facts and searchable prose; a calendar trigger builds a meeting snapshot as the rep and caches it with a permission signature.
 - **Step 3.** **Resolve the current rep context.** At question time, check SSO identity, role, territory, and deal stage.
 - **Step 4.** **Route and fetch.** Use deterministic snapshot, structured lookup, or prose routes for common asks; reserve a bounded agent path for ambiguous multi-step asks.
 - **Step 5.** **Recheck access.** Apply fresh permission checks and field redaction before using cached or live evidence; a snapshot never grants access.
-- **Step 6.** **Ground and verify.** The LLM copilot builds the brief, risks, questions, or draft from authorized evidence; verify citations and approved claims, or refuse and escalate.
+- **Step 6.** **Ground and verify.** The LLM copilot builds the brief, risks, questions, or draft from authorised evidence; verify citations and approved claims, or refuse and escalate.
 - **Step 7.** **Control CRM write-back.** Preview exact proposed fields, require the rep's approval, and send approved updates through the allowlisted idempotent gateway; discard and log rejected changes.
 
 **Model and agent role:** The LLM copilot summarizes and drafts from permission-checked evidence. A bounded agent can coordinate ambiguous next steps, but common CRM counts and lookups stay on reviewed deterministic routes. The model cannot approve an external claim or write to CRM.
@@ -162,7 +162,7 @@ A CRM update is a proposal: exact fields previewed → policy check → human ap
 
 | Failure                                  | Safe response                                                        |
 | ---------------------------------------- | -------------------------------------------------------------------- |
-| CRM down                                 | Last authorized snapshot with staleness label where safe; no writes. |
+| CRM down                                 | Last authorised snapshot with staleness label where safe; no writes. |
 | Permission or approval service down      | Fail closed; no answer from uncertain access and no write.           |
 | Missing/stale evidence                   | Disclose gap, abstain or escalate; never fill from model memory.     |
 | Unapproved price/certification/ROI claim | Block external draft.                                                |
@@ -183,7 +183,7 @@ The [source regression, §14](/design/sales-copilot#full-pack) shows why: a mode
 
 Spend the hour on workflow and risk (8 min), sources/permissions (7), architecture (10), CRM and evidence/claim boundaries (15), failure/evaluation/rollout (10), close and follow-ups (10).
 
-> “I’d design around the rep’s pre-meeting workflow. I’d build an account snapshot ahead of time as that rep, keyed by their permission signature, but recheck current territory and field access before serving it. A router chooses the snapshot, reviewed CRM operations, or hybrid search. Every fact and opportunity risk comes from fetched, authorized evidence. External drafts pass a blocking approved-claims check; CRM changes are previewed and approved before an idempotent tool call. I’d start read-only, test cross-territory access and claim-level failures, then expand only when critical slices, adoption, latency, and cost hold.”
+> “I’d design around the rep’s pre-meeting workflow. I’d build an account snapshot ahead of time as that rep, keyed by their permission signature, but recheck current territory and field access before serving it. A router chooses the snapshot, reviewed CRM operations, or hybrid search. Every fact and opportunity risk comes from fetched, authorised evidence. External drafts pass a blocking approved-claims check; CRM changes are previewed and approved before an idempotent tool call. I’d start read-only, test cross-territory access and claim-level failures, then expand only when critical slices, adoption, latency, and cost hold.”
 
 | Follow-up                            | Short answer                                                                              |
 | ------------------------------------ | ----------------------------------------------------------------------------------------- |
@@ -193,4 +193,4 @@ Spend the hour on workflow and risk (8 min), sources/permissions (7), architectu
 | Why not direct write?                | Exact-field preview, approval, idempotency, audit.                                        |
 | Slow account prep?                   | Calendar precompute and bounded deterministic ask path.                                   |
 
-**Final mental model:** Authorized sources → precompute as rep → reauthorize at ask → route evidence → cite and verify claims → preview and approve any write.
+**Final mental model:** Authorised sources → precompute as rep → reauthorise at ask → route evidence → cite and verify claims → preview and approve any write.

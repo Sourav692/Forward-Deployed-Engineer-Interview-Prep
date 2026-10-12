@@ -10,25 +10,25 @@ Primary constraint:
 
 ## Core architecture
 
-**Identity → Authorization → Pre-filter → Hybrid Retrieval → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate**
+**Identity → Authorisation → Pre-filter → Hybrid Retrieval → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate**
 
 Security loop:
 
 **Source events → ACL + Version + Tombstone → Index → Reconciliation**
 
-**LLM/agent role:** LLM gateway generates from authorized evidence; optional multi-hop planning never decides access. This is a RAG assistant, not an autonomous write agent.
+**LLM/agent role:** LLM gateway generates from authorised evidence; optional multi-hop planning never decides access. This is a RAG assistant, not an autonomous write agent.
 
 ## Five rules
 
 1. Permission first, retrieval second, generation third.
-2. Unauthorized content never enters the LLM context.
-3. Authorization is deterministic, not LLM-based.
+2. Unauthorised content never enters the LLM context.
+3. Authorisation is deterministic, not LLM-based.
 4. Fail closed on security.
 5. **Leak count = 0** is a release gate.
 
 ## Pre-filter vs post-check
 
-**Pre-filter:** search only authorized documents; improves recall, latency and top-k utilization.
+**Pre-filter:** search only authorised documents; improves recall, latency and top-k utilization.
 
 **Post-check:** final authoritative boundary; catches revocation, stale ACLs, embargoes and policy changes.
 
@@ -46,7 +46,7 @@ Security loop:
 
 Correct order:
 
-**Authorize → Retrieve → Fuse → Rerank → Evidence → Generate**
+**Authorise → Retrieve → Fuse → Rerank → Evidence → Generate**
 
 ## Freshness
 
@@ -56,7 +56,7 @@ Missed deletion?
 
 Remember:
 
-> Authorization correctness ≠ freshness correctness.
+> Authorisation correctness ≠ freshness correctness.
 
 ## RAG quality
 
@@ -150,7 +150,7 @@ Five beats:
 | ACL changes? | Query-time enforcement |
 | Deletion missed? | Tombstone + reconciliation |
 | Why hybrid? | Semantic + exact match |
-| Rerank when? | After authorization |
+| Rerank when? | After authorisation |
 | Hallucination? | Evidence + citation + abstain |
 | Prompt injection? | Data ≠ instructions |
 | Scale? | Peak QPS + refresh |

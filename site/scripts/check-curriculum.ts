@@ -108,6 +108,15 @@ for (const l of LESSONS) {
   const retired = l.publish === 'excluded' && listed.length === 0
   if (!retired && (listed.length !== 1 || listed[0] !== l.home)) fail(`lesson ${l.slug}: home is ${l.home} but listed as a home lesson in [${listed.join(', ')}]`)
   if (l.publish === 'credited' && !l.credit) fail(`lesson ${l.slug}: credited without a credit line`)
+  // Decision 7 (ENH-28): every credit line records whether we may publish it.
+  if (l.credit && !l.rights) fail(`lesson ${l.slug}: credit line without rights ('licensed', 'permitted' or 'rewrite')`)
+  if (l.rights && !l.credit) fail(`lesson ${l.slug}: rights without a credit line`)
+}
+// Lessons that share a credit line share its rights status (one status per line on /library/credits).
+{
+  const byCredit = new Map<string, Set<string>>()
+  for (const l of LESSONS) if (l.credit) byCredit.set(l.credit, (byCredit.get(l.credit) ?? new Set()).add(l.rights ?? '—'))
+  for (const [credit, rights] of byCredit) if (rights.size > 1) fail(`credit line "${credit.slice(0, 60)}…" has mixed rights: ${[...rights].join(', ')}`)
 }
 
 // Status agrees with content
@@ -151,7 +160,8 @@ for (const m of MODULES) {
     const owner = new Map<string, string>()
     for (const l of sliced) {
       for (const h of unknownHeadings(l, headings)) fail(`lesson ${l.slug}: heading "${h}" is not a "## " heading of ${source}`)
-      for (const h of publishedHeadings(l, headings)) {
+      // A heading repeated within one lesson (the roadmap's "## Goal" per topic) is one owner.
+      for (const h of new Set(publishedHeadings(l, headings))) {
         if (owner.has(h)) fail(`source ${source}: "## ${h}" is published by both ${owner.get(h)} and ${l.slug}`)
         else owner.set(h, l.slug)
       }

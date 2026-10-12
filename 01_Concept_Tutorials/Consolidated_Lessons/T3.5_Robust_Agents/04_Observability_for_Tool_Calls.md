@@ -119,4 +119,4 @@ Nothing was broken. The close was waiting for a human who never approved it. The
 
 ## References
 
-**Sources:** `04_Observability_For_Tool_Calls.md` (FDE Handbook, Robust Agents): "Why this matters", "What one record holds", "The trace", "Why it matters, three ways", "From in-memory log to production spans" and "Interview lens". `05-guarding-tool-calls.md` (Production and Platform Judgment): "8. Per-call telemetry".
+**Sources:** `04_Observability_For_Tool_Calls.md` (FDE Handbook, Robust Agents): "Why this matters", "What one record holds", "The trace", "Why it matters, three ways", "From in-memory log to production spans" and "Interview lens". `05-guarding-tool-calls.md` (Production and Platform Judgement): "8. Per-call telemetry".

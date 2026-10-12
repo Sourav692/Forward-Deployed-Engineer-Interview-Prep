@@ -19,9 +19,20 @@ const LEVELS = ['Weak (1–2)', 'Average (3)', 'Strong (4)', 'Excellent (5)']
 // Labels are `relative` so each visually hidden radio sits inside its own label: clicks
 // and focus scrolling then land on the right option.
 
-export function MockScorer({ lessonSlug, title, href }: { lessonSlug: string; title: string; href: string }) {
+export function MockScorer({
+  lessonSlug,
+  title,
+  href,
+  rounds,
+}: {
+  lessonSlug: string
+  title: string
+  href: string
+  /** The rounds this mock offers (`mockRoundsFor`); a single round needs no picker. */
+  rounds: MockRound[]
+}) {
   const uid = useId()
-  const [round, setRound] = useState<MockRound>('short')
+  const [round, setRound] = useState<MockRound>(rounds[0])
   const [scores, setScores] = useState<Record<string, number>>({})
   const [evidence, setEvidence] = useState<Record<string, string>>({})
   const [error, setError] = useState('')
@@ -70,29 +81,31 @@ export function MockScorer({ lessonSlug, title, href }: { lessonSlug: string; ti
         answer. Pass: no dimension below 2 and a mean of 3 or more.
       </p>
 
-      <fieldset className="mt-4">
-        <legend className="text-sm font-semibold">Which round did you run?</legend>
-        <div className="mt-2 inline-flex rounded-md border border-border p-0.5">
-          {(Object.keys(MOCK_ROUNDS) as MockRound[]).map((r) => (
-            <label
-              key={r}
-              className={cx(
-                'relative cursor-pointer rounded-sm px-3 py-1.5 text-sm font-medium focus-within:ring-4 focus-within:ring-accent-ring',
-                round === r ? 'bg-accent-soft text-accent' : 'text-muted hover:text-text',
-              )}
-            >
-              <input
-                type="radio"
-                name={`${uid}-round`}
-                className="sr-only"
-                checked={round === r}
-                onChange={() => (setRound(r), setError(''))}
-              />
-              {MOCK_ROUNDS[r].label} ({MOCK_ROUNDS[r].dims.length} dimensions)
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      {rounds.length > 1 && (
+        <fieldset className="mt-4">
+          <legend className="text-sm font-semibold">Which round did you run?</legend>
+          <div className="mt-2 inline-flex rounded-md border border-border p-0.5">
+            {rounds.map((r) => (
+              <label
+                key={r}
+                className={cx(
+                  'relative cursor-pointer rounded-sm px-3 py-1.5 text-sm font-medium focus-within:ring-4 focus-within:ring-accent-ring',
+                  round === r ? 'bg-accent-soft text-accent' : 'text-muted hover:text-text',
+                )}
+              >
+                <input
+                  type="radio"
+                  name={`${uid}-round`}
+                  className="sr-only"
+                  checked={round === r}
+                  onChange={() => (setRound(r), setError(''))}
+                />
+                {MOCK_ROUNDS[r].label} ({MOCK_ROUNDS[r].dims.length} dimensions)
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
 
       <div className="mt-6 space-y-6">
         {dims.map((d) => (

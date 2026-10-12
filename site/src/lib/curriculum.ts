@@ -1073,6 +1073,7 @@ export const MODULES: CurriculumModule[] = [
       'testing-prompt-changes',
       'agentops-mapped-to-databricks',
       'enterprise-rag-on-a-governed-lakehouse',
+      'enterprise-rag-on-a-governed-lakehouse-running-and-auditing',
       'channel-adapters-and-human-escalation',
       'red-teaming-and-layered-guardrails',
       'infrastructure-as-code-and-the-release-pipeline',
@@ -1195,7 +1196,9 @@ export const MODULES: CurriculumModule[] = [
       'recruiting-platform-explainable-ranking-human-decisions',
       'logistics-exceptions-designing-around-a-policy-gate',
       'access-controlled-enterprise-rag',
+      'access-controlled-enterprise-rag-retrieval-and-release',
       'access-controlled-rag-on-databricks',
+      'access-controlled-rag-on-databricks-testing-and-operations',
       'safe-workflow-automation-for-non-technical-users',
       'delivering-an-agent-in-two-weeks-with-enforced-gates',
     ],
@@ -1549,6 +1552,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: ['Cramming new material'],
     lessons: [
       'roadmap',
+      'roadmap-full-practice-and-checklists',
       'rapid-revision-guide',
       'trigger-to-concept-cheat-sheet',
       'module-01-fde-problem-decomposition',
@@ -2181,6 +2185,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T2_2_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'module-01-rag-fundamentals-core-components',
@@ -2208,6 +2213,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'excluded',
     credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
+    rights: 'permitted',
   },
   {
     slug: 'what-rag-actually-is',
@@ -2291,6 +2297,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T2_3_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'chunking-lab-and-drills',
@@ -2357,6 +2364,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T2_4_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'retrieval-control-loops',
@@ -2366,6 +2374,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T2_4_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'production-retrieval-pipelines',
@@ -2383,6 +2392,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T2_4_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'rag-and-retrieval-interview-tutorial',
@@ -2481,6 +2491,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T2_5_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'langchain-foundations-interview-tutorial',
@@ -2573,6 +2584,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_2_CH05_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'tool-schema-design',
@@ -2582,6 +2594,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_2_CH05_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'typed-tool-results-and-teachable-errors',
@@ -2591,6 +2604,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_2_CH05_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'the-tool-gateway-and-code-sandboxing',
@@ -2600,6 +2614,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_2_CH05_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'the-model-context-protocol',
@@ -2609,6 +2624,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_2_CH05_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'tool-selection-at-scale',
@@ -2618,6 +2634,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_2_CH05_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'practise-tool-design-interview-questions',
@@ -2627,6 +2644,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_2_CH05_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'ch05-tool-use-agent-computer-interface',
@@ -2645,6 +2663,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_3_CH06_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'orchestration-topologies',
@@ -2654,6 +2673,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_3_CH06_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'planning-and-self-correction-patterns',
@@ -2671,6 +2691,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_3_CH06_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'deterministic-context-assembly',
@@ -2680,6 +2701,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_3_CH06_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'context-rot-and-sub-agent-isolation',
@@ -2689,6 +2711,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_3_CH06_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'practise-context-and-orchestration-interview-questions',
@@ -2698,6 +2721,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_3_CH06_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'ch06-orchestration-context-engineering',
@@ -2726,6 +2750,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_4_CH07_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'short-term-memory-and-the-context-window',
@@ -2743,6 +2768,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_4_CH07_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'advanced-memory-architectures',
@@ -2760,6 +2786,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_4_CH07_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'practise-memory-and-state',
@@ -2769,6 +2796,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T3_4_CH07_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'state-memory-sessions',
@@ -2818,6 +2846,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'excluded',
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
+    rights: 'permitted',
   },
   // T3.5 Robust agents: six consolidated lessons replacing the five Handbook and
   // guard-check sources. Two keep their old slugs; the retired sources follow below.
@@ -3179,6 +3208,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T4_2_CH12_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'component-and-trajectory-metrics',
@@ -3188,6 +3218,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T4_2_CH12_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'golden-sets-and-sample-size',
@@ -3197,6 +3228,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T4_2_CH12_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'validating-llm-judges',
@@ -3206,6 +3238,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T4_2_CH12_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'release-gates-safety-quality-and-cost',
@@ -3215,6 +3248,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T4_2_CH12_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'practise-evaluation-and-release-gates',
@@ -3224,6 +3258,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T4_2_CH12_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'evaluation-golden-sets-judges',
@@ -3357,6 +3392,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'standard-tracing-and-customer-facing-dashboards',
@@ -3374,6 +3410,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'diagnosing-production-incidents',
@@ -3383,6 +3420,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'practise-observability-and-diagnosis',
@@ -3392,6 +3430,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'observability-standards-failure-patterns',
@@ -3435,6 +3474,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'the-eight-cost-and-latency-drivers',
@@ -3444,6 +3484,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'latency-prefill-decode-streaming-and-the-tail',
@@ -3453,6 +3494,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'model-routing-and-prompt-discipline',
@@ -3462,6 +3504,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'caching-in-genai-systems',
@@ -3471,6 +3514,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'rag-and-agent-cost-controls',
@@ -3480,6 +3524,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'budgets-and-spend-guardrails',
@@ -3489,6 +3534,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'practise-cost-and-latency',
@@ -3498,6 +3544,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'cram-sheet-full-playbook',
@@ -3507,6 +3554,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'excluded',
     credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
+    rights: 'permitted',
   },
   {
     slug: 'cram-sheet-s15-s16',
@@ -3516,6 +3564,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'excluded',
     credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
+    rights: 'permitted',
   },
   {
     slug: 'additions-beyond-playbook',
@@ -3525,6 +3574,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'excluded',
     credit: 'Condensed from the third-party *GenAI FDE Cost and Latency Optimization Playbook*.',
+    rights: 'permitted',
   },
   {
     slug: 'cost-latency-cicd-rigor-and-build-vs-buy',
@@ -3560,6 +3610,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'retries-circuit-breakers-and-bulkheads',
@@ -3635,6 +3686,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann), summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'agentops-mapped-to-databricks',
@@ -3651,6 +3703,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'agentops',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['Run the Query as the User', 'Retrieve, Evaluate, and Audit on the Platform', 'Weigh the Trade-Offs Honestly', 'Worked Example: What the Live Run Proved', 'Key Takeaways', 'Check Yourself', 'References'] },
+  },
+  {
+    slug: 'enterprise-rag-on-a-governed-lakehouse-running-and-auditing',
+    title: 'Enterprise RAG on a Governed Lakehouse: Running and Auditing',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md',
+    home: 'agentops',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['Run the Query as the User', 'Retrieve, Evaluate, and Audit on the Platform', 'Weigh the Trade-Offs Honestly', 'Worked Example: What the Live Run Proved', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {
     slug: 'channel-adapters-and-human-escalation',
@@ -3758,6 +3821,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from Chapter 8 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'the-skill-library-and-its-promotion-gate',
@@ -3767,6 +3831,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from Chapter 8 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'when-fine-tuning-earns-its-cost',
@@ -3776,6 +3841,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from Chapter 8 of *Cracking Agentic AI System Design Interviews* and the third-party *GenAI FDE Cost and Latency Optimization Playbook*, summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'the-data-flywheel',
@@ -3785,6 +3851,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: 'Draws on ideas from Chapter 8 of *Cracking Agentic AI System Design Interviews*, summarised in our own words.',
+    rights: 'permitted',
   },
   {
     slug: 'ch08-learning-in-agentic-systems',
@@ -3794,6 +3861,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'excluded',
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
+    rights: 'permitted',
   },
   // T5.1 to T5.4: consolidated lessons. They replace the excluded sources that follow
   // (see .website_spec/consolidation/T5.md for the old-to-new mapping).
@@ -3869,6 +3937,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T5_3_CH23_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'context-memory-and-tool-patterns',
@@ -3878,6 +3947,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T5_3_CH23_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'reliability-and-safety-patterns',
@@ -3887,6 +3957,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T5_3_CH23_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'cost-patterns-and-the-pattern-audit',
@@ -3896,6 +3967,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T5_3_CH23_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'enterprise-ai-assistant-integration-layers-at-scale',
@@ -3944,6 +4016,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'classic-ai-designs',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['Retrieve Hybrid, Then Rerank After Enforcement', 'Gate Releases on Zero Leaks', 'Degrade Everywhere Except Authorisation', 'Close With the Thesis and Week One', 'Worked Example: One Question, Three Personas', 'Key Takeaways', 'Check Yourself', 'References'] },
+  },
+  {
+    slug: 'access-controlled-enterprise-rag-retrieval-and-release',
+    title: 'Access-Controlled Enterprise RAG: Retrieval and Release',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['Retrieve Hybrid, Then Rerank After Enforcement', 'Gate Releases on Zero Leaks', 'Degrade Everywhere Except Authorisation', 'Close With the Thesis and Week One', 'Worked Example: One Question, Three Personas', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {
     slug: 'access-controlled-rag-on-databricks',
@@ -3952,6 +4035,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'classic-ai-designs',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['Test Leaks Where Enforcement Happens', 'Observe, Isolate Tenants, and Fail Closed', 'Separate What Ran From What Was Designed', 'Worked Example: A Tier-1 Agent Asks About Vertex', 'Close on Unity Catalog and SCIM', 'Key Takeaways', 'Check Yourself', 'References'] },
+  },
+  {
+    slug: 'access-controlled-rag-on-databricks-testing-and-operations',
+    title: 'Access-Controlled RAG on Databricks: Testing and Operations',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['Test Leaks Where Enforcement Happens', 'Observe, Isolate Tenants, and Fail Closed', 'Separate What Ran From What Was Designed', 'Worked Example: A Tier-1 Agent Asks About Vertex', 'Close on Unity Catalog and SCIM', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {
     slug: 'safe-workflow-automation-for-non-technical-users',
@@ -4017,6 +4111,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'excluded',
     credit: 'Selected chapter from *Cracking Agentic AI System Design Interviews*.',
+    rights: 'permitted',
   },
   {
     slug: 'enterprise-ai-assistant',
@@ -4202,6 +4297,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Includes material adapted from iGrace course pages.',
+    rights: 'rewrite',
   },
   {
     slug: 'production-llm-gateway',
@@ -4219,6 +4315,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Includes material adapted from iGrace course pages.',
+    rights: 'rewrite',
   },
   {
     slug: 'air-gapped-ai-system',
@@ -4228,6 +4325,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'reliable-workflow-orchestration',
@@ -4237,6 +4335,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'configurable-platform-customer-workflows',
@@ -4246,6 +4345,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'enterprise-chatbot-platform',
@@ -4255,6 +4355,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'prioritize-ai-use-cases',
@@ -4371,7 +4472,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'healthcare-prior-auth-assistant',
-    title: 'Healthcare Prior Authorization Assistant',
+    title: 'Healthcare Prior Authorisation Assistant',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/04_healthcare_prior_auth_assistant.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -4435,6 +4536,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'the-system-behind-the-screens',
@@ -4444,6 +4546,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'estimating-ai-work-as-a-product',
@@ -4453,6 +4556,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'shrinking-to-a-first-release',
@@ -4462,6 +4566,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'estimates-people-can-trust',
@@ -4471,6 +4576,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'from-estimate-to-build-plan',
@@ -4480,6 +4586,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'scoping-in-practice',
@@ -4489,6 +4596,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'telling-a-delivery-story-in-six-stages',
@@ -4506,6 +4614,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_DEVREV_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'role-gated-stage-gates',
@@ -4515,6 +4624,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_DEVREV_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'risk-checks-and-delivery-metrics',
@@ -4524,6 +4634,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_DEVREV_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'securing-the-delivery-process',
@@ -4549,6 +4660,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_DEVREV_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'rolling-out-with-a-way-back',
@@ -4558,6 +4670,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: T6_SCOPING_CREDIT,
+    rights: 'permitted',
   },
   {
     slug: 'proving-business-impact',
@@ -4567,6 +4680,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'credited',
     credit: `${T6_SCOPING_CREDIT} Its delivery metrics build on the DevRev interview preparation guide's delivery-framework prompt.`,
+    rights: 'permitted',
   },
   {
     slug: 'diagnosing-low-adoption',
@@ -4803,6 +4917,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'secure-multi-tenant-ai-platform',
@@ -4812,6 +4927,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'natural-language-to-sql-analytics-assistant',
@@ -4821,6 +4937,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'ai-customer-support-automation',
@@ -4830,6 +4947,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'ai-system-for-an-air-gapped-environment',
@@ -4839,6 +4957,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'llm-evaluation-and-release-gating-platform',
@@ -4848,6 +4967,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'high-volume-batch-inference-system',
@@ -4857,6 +4977,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'tool-using-ai-agent-with-safety-controls',
@@ -4866,6 +4987,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'reliable-workflow-orchestration-system',
@@ -4875,6 +4997,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'observability-customer-facing-ai-application',
@@ -4884,6 +5007,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'configurable-platform-customer-specific-workflows',
@@ -4893,6 +5017,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   {
     slug: 'system-design-worksheets-enterprise-chatbot-platform',
@@ -4902,6 +5027,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'live',
     publish: 'credited',
     credit: 'Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).',
+    rights: 'rewrite',
   },
   // T8.2 Mock interviews: a how-to lesson plus one practice lesson per scenario.
   // They replace the two excluded folder lessons below.
@@ -4981,6 +5107,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'final-week',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['🎯 Full Case-Study Practice', 'Phase 1 — Problem Decomposition', 'Phase 2 — Architecture', 'Phase 3 — Production Scale', 'Phase 4 — Production Quality', 'Phase 5 — Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
+  },
+  {
+    slug: 'roadmap-full-practice-and-checklists',
+    title: 'Interview Learning Roadmap: Full Practice and Checklists',
+    source: '07_Last_Day_Revision/Roadmap.md',
+    home: 'final-week',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['🎯 Full Case-Study Practice', 'Phase 1 — Problem Decomposition', 'Phase 2 — Architecture', 'Phase 3 — Production Scale', 'Phase 4 — Production Quality', 'Phase 5 — Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
   },
   {
     slug: 'rapid-revision-guide',

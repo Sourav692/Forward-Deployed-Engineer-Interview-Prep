@@ -203,9 +203,9 @@ These are possible design consequences of discovery. Confirm the requirement bef
 |---|---|---|---|
 | Answer from approved policies | RAG | Ground answers in maintained knowledge | Freshness and retrieval quality |
 | Check current order state | Order API/tool | Query the system of record | Dependency latency and failure |
-| Different users have different access | Authorization + permission-aware retrieval/tools | Enforce access at the data and action boundaries | More integration work |
+| Different users have different access | Authorisation + permission-aware retrieval/tools | Enforce access at the data and action boundaries | More integration work |
 | Enforce user/tenant request limits | API Gateway | Control traffic entering the application | Limits may reject valid bursts |
-| Use multiple model providers with fallback | Model Gateway | Control application calls to models | Fallback may change quality or behavior |
+| Use multiple model providers with fallback | Model Gateway | Control application calls to models | Fallback may change quality or behaviour |
 | Execute refunds with approval rules | Policy + executor + HITL where required | Separate recommendation from permitted execution | Approval adds delay |
 | Long work or traffic bursts | Queue + durable workflow state, if needed | Process accepted work outside the immediate response | Queue wait and more state to manage |
 
@@ -252,7 +252,7 @@ Open questions / assumptions: _______________
 | “Agents spend time searching policies” | Knowledge retrieval | Sources, freshness, permissions |
 | “Where is my order right now?” | Live data | System of record, API availability |
 | “It should issue refunds” | Action and risk | Allowed writes, policy, approval, duplicate prevention |
-| “Managers must approve” | HITL | Approval rules, context, wait/failure behavior |
+| “Managers must approve” | HITL | Approval rules, context, wait/failure behaviour |
 | “100K users” | Workload discovery | Active users, request rate, peaks, concurrency |
 | “Different companies use it” | Tenant boundaries | Data isolation, permissions, fair resource use |
 | “It should be fast and cheap” | Measurable NFRs | Workload-specific latency and cost targets |
@@ -347,7 +347,7 @@ These are design consequences to confirm, not boxes to add automatically.
 
 ### Handoff to Requirements
 
-State the business outcome, users, required capabilities, data/integrations, allowed actions, approval rules, safe failure behavior, workload, operating limits, security boundaries, success targets, and open assumptions.
+State the business outcome, users, required capabilities, data/integrations, allowed actions, approval rules, safe failure behaviour, workload, operating limits, security boundaries, success targets, and open assumptions.
 
 Do not invent numbers. Confirm a baseline and target. A timeout after a write needs status checking and duplicate prevention before a retry.
 

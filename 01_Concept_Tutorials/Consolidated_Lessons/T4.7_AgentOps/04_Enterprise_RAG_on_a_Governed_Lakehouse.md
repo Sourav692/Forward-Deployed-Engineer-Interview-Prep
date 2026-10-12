@@ -204,4 +204,4 @@ The notebook then broke Layer 1 on purpose. Unity Catalog dropped `CT-VTX-001`, 
 
 ## References
 
-**Sources:** `03_Enterprise_RAG_On_Databricks.md` (FDE Handbook, AgentOps and platform): all sections, including the two facts, the forced design, ACL encoding and the positional `OR` gotcha, the governed layer, OBO, retrieval, evaluation and observability, multi-tenancy and CI/CD, honest trade-offs and "What was actually verified". `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): §7 build versus buy.
+**Sources:** `03_Enterprise_RAG_On_Databricks.md` (FDE Handbook, AgentOps and platform): all sections, including the two facts, the forced design, ACL encoding and the positional `OR` gotcha, the governed layer, OBO, retrieval, evaluation and observability, multi-tenancy and CI/CD, honest trade-offs and "What was actually verified". `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgement): §7 build versus buy.

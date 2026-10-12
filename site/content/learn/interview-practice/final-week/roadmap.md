@@ -332,7 +332,7 @@ AI Application
 Handles:
 
 - Authentication
-- Authorization
+- Authorisation
 - Tenant context
 - Rate limits
 - Quotas
@@ -461,7 +461,7 @@ LLM
 1. Your RAG system frequently **fails to retrieve the correct document**. What would you investigate?
 2. It retrieves the correct document but also returns **many irrelevant chunks**. What problem is this and how would you improve it?
 3. Why should **current order status** normally come from an API instead of RAG?
-4. Two employees have different document permissions. How would you prevent unauthorized information from entering the LLM context?
+4. Two employees have different document permissions. How would you prevent unauthorised information from entering the LLM context?
 5. The customer says, **"The model is hallucinating."** What parts of the RAG pipeline would you investigate before simply changing the model?
 
 ---
@@ -615,11 +615,11 @@ Handle:
 
 ---
 
-## Module 10 — Latency Optimization ⚡
+## Module 10 — Latency Optimisation ⚡
 
 ### Goal
 
-Diagnose latency before optimizing.
+Diagnose latency before optimising.
 
 ### Latency Decomposition
 
@@ -649,14 +649,14 @@ Total Latency
 ### 🎯 Practice Questions
 
 1. Average latency is 3 seconds but P99 is 25 seconds. What does this tell you?
-2. Your agent calls CRM, order and ticket APIs sequentially. Each takes 1 second. What obvious optimization would you consider?
+2. Your agent calls CRM, order and ticket APIs sequentially. Each takes 1 second. What obvious optimisation would you consider?
 3. The model itself takes only 2 seconds but total latency is 12 seconds. How would you investigate?
 4. When does **streaming** improve perceived latency without actually reducing total compute time?
-5. A research task takes five minutes. Would you continue optimizing it as a synchronous API request or change the interaction model?
+5. A research task takes five minutes. Would you continue optimising it as a synchronous API request or change the interaction model?
 
 ---
 
-## Module 11 — Cost Optimization 💰
+## Module 11 — Cost Optimisation 💰
 
 ### Goal
 
@@ -679,7 +679,7 @@ Cost / Task
 ### Topics
 
 - Model routing
-- Context optimization
+- Context optimisation
 - Caching
 - Reduce model calls
 - Deterministic logic
@@ -892,7 +892,7 @@ Make the system enterprise-ready.
 ### Topics
 
 - Authentication
-- Authorization
+- Authorisation
 - RBAC
 - Permission-aware RAG
 - Least privilege
@@ -923,7 +923,7 @@ Audit
 ### 🎯 Practice Questions
 
 1. Employee A can access HR documents while Employee B cannot. How should this affect retrieval?
-2. Why is filtering unauthorized documents **after generation** a weak security design?
+2. Why is filtering unauthorised documents **after generation** a weak security design?
 3. What permissions would you give a refund agent following least-privilege principles?
 4. A shared platform serves 50 enterprise tenants. What needs tenant isolation?
 5. A European customer says their data cannot leave a particular region. What architectural concerns does this introduce?
@@ -1011,409 +1011,3 @@ Combine everything into one repeatable interview flow.
         ↓
 17. Trade-Offs
 ```
-
-### 🎯 Full Case-Study Practice
-
-These should be solved **without looking at the earlier modules**.
-
-#### Case 1 — Customer Support Agent
-
-> A large e-commerce company wants an AI customer-support system that can answer questions, check orders and issue refunds.
-
-Cover:
-
-```text
-Discovery
-→ Requirements
-→ Architecture
-→ RAG
-→ Tools
-→ Policy
-→ Scale
-→ Cost/Latency
-→ Evaluation
-```
-
----
-
-#### Case 2 — Enterprise Knowledge Assistant
-
-> A multinational company wants a ChatGPT-style assistant over millions of internal documents, but employees have different access permissions.
-
-Focus on:
-
-```text
-RAG
-Permission-aware retrieval
-Scale
-Latency
-Security
-Evaluation
-```
-
----
-
-#### Case 3 — Logistics Exception Agent
-
-> A logistics company wants AI to detect shipment exceptions and automatically resolve routine cases.
-
-Focus on:
-
-```text
-Events
-Agents
-Tools
-Policy
-HITL
-Idempotency
-Reliability
-Audit
-```
-
----
-
-#### Case 4 — SRE Incident Agent
-
-> An enterprise wants an AI agent that investigates production incidents and can execute remediation actions.
-
-Focus on:
-
-```text
-Tools
-Observability
-Agent reasoning
-Permissions
-Policy
-HITL
-Kill switch
-Audit
-```
-
----
-
-#### Case 5 — Deep Research Agent
-
-> Build an enterprise research agent that searches multiple sources and may run for 10–20 minutes.
-
-Focus on:
-
-```text
-Async execution
-Queue
-Checkpoint
-Agent bounds
-Cost
-Long-running state
-Evaluation
-```
-
----
-
-#### Case 6 — Multi-Tenant AI Platform
-
-> Build a shared AI platform supporting 100 enterprise customers and multiple LLM providers.
-
-Focus on:
-
-```text
-API Gateway
-Model Gateway
-Multi-tenancy
-Quotas
-Fairness
-Model routing
-Cost attribution
-Observability
-```
-
----
-
-## Recommended Learning Sequence
-
-### Phase 1 — Problem Decomposition
-
-```text
-Module 1 — Discovery
-Module 2 — Functional Requirements
-Module 3 — Non-Functional Requirements
-```
-
-**Outcome:** Understand before designing.
-
----
-
-### Phase 2 — Architecture
-
-```text
-Module 4 — Core Components
-Module 5 — RAG
-Module 6 — Agents
-Module 7 — Tools
-Module 8 — Policy / HITL
-```
-
-**Outcome:** Build the right system.
-
----
-
-### Phase 3 — Production Scale
-
-```text
-Module 9  — Scaling
-Module 10 — Latency
-Module 11 — Cost
-Module 12 — Reliability
-```
-
-**Outcome:** Turn the POC into production.
-
----
-
-### Phase 4 — Production Quality
-
-```text
-Module 13 — Evaluation
-Module 14 — Release
-Module 15 — Observability
-Module 16 — Security
-```
-
-**Outcome:** Safely operate the system.
-
----
-
-### Phase 5 — Interview Mastery
-
-```text
-Module 17 — Trade-Offs
-Module 18 — Full Case Studies
-```
-
-At this stage:
-
-> **Stop adding terminology. Start solving cases.**
-
----
-
-## 🔥 Trigger → Concept Cheat Sheet
-
-The objective is not to memorize definitions.
-
-Train yourself to hear a customer/interviewer statement and automatically recognize the architecture concern.
-
-| Interviewer Says                               | Your Brain Should Trigger                                  |
-| ---------------------------------------------- | ---------------------------------------------------------- |
-| **"100K users"**                         | Horizontal scaling, stateless workers, rate limits, queues |
-| **"Traffic suddenly spikes"**            | Queue, admission control, backpressure                     |
-| **"One tenant generates huge traffic"**  | Noisy neighbor, quota, fair queue                          |
-| **"Traffic exceeds capacity"**           | Admission control, load shedding                           |
-| **"Multiple enterprise customers"**      | Multi-tenancy, isolation, quotas, cost attribution         |
-| **"Request sometimes takes 20 seconds"** | Stage tracing, P95/P99                                     |
-| **"Chat feels slow"**                    | Streaming, TTFT, fewer sequential hops                     |
-| **"Three independent APIs"**             | Parallelization                                            |
-| **"External API is slow"**               | Timeout, cache, async, fallback                            |
-| **"External API keeps failing"**         | Retry, backoff, circuit breaker                            |
-| **"Action happened twice"**              | Idempotency                                                |
-| **"Message may arrive twice"**           | At-least-once + idempotent consumer                        |
-| **"Background job keeps failing"**       | Retry → DLQ                                               |
-| **"Agent runs 10 minutes"**              | Async + queue + durable state                              |
-| **"Agent crashes halfway"**              | Checkpoint + resume, reconcile uncertain actions           |
-| **"Human approves tomorrow"**            | Durable state + HITL                                       |
-| **"Need conversation history"**          | Session state                                              |
-| **"Need long-term preferences"**         | Memory                                                     |
-| **"Prompt keeps growing"**               | Bounded context + summarization                            |
-| **"Repeated questions"**                 | Cache                                                      |
-| **"Information changes frequently"**     | TTL / freshness                                            |
-| **"Need company documents"**             | RAG                                                        |
-| **"Need current order status"**          | Live API/tool                                              |
-| **"RAG can't find answer"**              | Recall, chunking, hybrid search                            |
-| **"RAG retrieves junk"**                 | Precision, filtering, reranking                            |
-| **"Different document permissions"**     | Permission-aware retrieval                                 |
-| **"Unsupported AI claims"**              | Grounding, citations, fallback                             |
-| **"Different request types"**            | Router                                                     |
-| **"Multiple workflow steps"**            | Orchestrator                                               |
-| **"Routing is deterministic"**           | Code/rules before LLM                                      |
-| **"Agent keeps calling tools"**          | Execution bounds                                           |
-| **"Agent accesses production"**          | Controlled tools                                           |
-| **"Agent modifies customer data"**       | Policy + executor + audit                                  |
-| **"Large refund needs approval"**        | Deterministic policy + HITL                                |
-| **"Agent has powerful credentials"**     | Least privilege                                            |
-| **"Policy unavailable"**                 | Fail-closed for risky actions                              |
-| **"Agent behaving dangerously"**         | Kill switch                                                |
-| **"Multiple models/providers"**          | Model gateway                                              |
-| **"Model provider unavailable"**         | Provider fallback                                          |
-| **"AI bill exploded"**                   | Model routing, context, cache, calls                       |
-| **"Who caused the spend?"**              | Cost attribution                                           |
-| **"Need cheaper AI"**                    | Cost per successful task                                   |
-| **"New prompt/model"**                   | Offline eval + release gate                                |
-| **"Test on real traffic safely"**        | Shadow                                                     |
-| **"Gradual production rollout"**         | Canary                                                     |
-| **"Only some tenants get feature"**      | Feature flag                                               |
-| **"New version performs badly"**         | Rollback                                                   |
-| **"Is the agent good?"**                 | Offline + online evaluation                                |
-| **"Good answer, task failed"**           | Task success                                               |
-| **"Wrong tool used"**                    | Trajectory/tool evaluation                                 |
-| **"Exact pass/fail checks"**             | Deterministic evaluator                                    |
-| **"Semantic quality"**                   | LLM/human judge                                            |
-| **"Why was this slow?"**                 | Observability/tracing                                      |
-| **"Why did AI take this action?"**       | Audit                                                      |
-| **"Latency commitment"**                 | SLI → SLO → SLA                                          |
-| **"Worker dies"**                        | Stateless compute + durable state                          |
-| **"Failure shouldn't affect everyone"**  | Blast-radius reduction                                     |
-| **"Sensitive enterprise data"**          | AuthN, AuthZ, least privilege, audit                       |
-| **"Safe enterprise agent"**              | Defense in depth                                           |
-
----
-
-## Final Interview Mental Model
-
-```text
-                 CUSTOMER
-                    ↓
-            WHY ARE WE BUILDING?
-                    ↓
-                DISCOVERY
-                    ↓
-              REQUIREMENTS
-                    ↓
-               HAPPY PATH
-                    ↓
-         ┌──────────┼──────────┐
-         ↓          ↓          ↓
-        DATA        AI       ACTION
-        RAG       Agents      Tools
-                              ↓
-                       Policy / Human
-                    ↓
-              PRESSURE TEST
-                    ↓
-         ┌──────────┼──────────┐
-         ↓          ↓          ↓
-       Scale      Latency     Cost
-         └──────────┼──────────┘
-                    ↓
-               FAILURES
-                    ↓
-              EVALUATION
-                    ↓
-                RELEASE
-                    ↓
-          OBSERVE + OPERATE
-                    ↓
-               TRADE-OFFS
-```
-
----
-
-## Final Interview Checklist
-
-Before finishing any architecture, mentally ask:
-
-```text
-□ Did I understand the BUSINESS problem?
-
-□ Did I understand the CURRENT workflow?
-
-□ Did I define FUNCTIONAL requirements?
-
-□ Did I define measurable NFRs?
-
-□ Is every major architecture box JUSTIFIED?
-
-□ Where does DATA come from?
-
-□ Does AI ANSWER, RECOMMEND or ACT?
-
-□ What requires HUMAN approval?
-
-□ Does it SCALE?
-
-□ What makes it SLOW?
-
-□ What makes it EXPENSIVE?
-
-□ What happens when dependencies FAIL?
-
-□ How is it SECURED?
-
-□ How do I measure AI QUALITY?
-
-□ How do I RELEASE changes safely?
-
-□ How do I OBSERVE it in production?
-
-□ What are my major TRADE-OFFS?
-```
-
----
-
-## The Core FDE Principle
-
-Do **not** memorize architectures.
-
-Memorize:
-
-```text
-Customer says X
-      ↓
-Requirement Y
-      ↓
-Problem / Constraint Z
-      ↓
-Component / Pattern A
-      ↓
-Trade-off B
-```
-
-Example:
-
-```text
-"Refunds above $500 are risky."
-              ↓
-High-risk actions need approval
-              ↓
-LLM cannot be final authority
-              ↓
-Policy Engine + HITL
-              ↓
-Safer execution
-but additional latency
-```
-
-Another example:
-
-```text
-"We expect 100K users."
-          ↓
-High concurrency
-          ↓
-Finite model capacity
-          ↓
-Rate Limit + Queue
-+ Horizontal Scaling
-          ↓
-Better resilience
-but more infrastructure
-```
-
-> **Interview rule:** Don't name a component until you can explain which requirement caused you to introduce it.
-
----
-
-## One-Line FDE Framework
-
-> **Start from the customer problem, turn discovery into measurable requirements, build the simplest happy-path architecture, and then pressure-test it across scale, latency, cost, reliability, security, AI quality and operations—adding components only when a requirement justifies them.**
-
----
-
-### Sources (checked 27 Sep 2026)
-
-- [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/) — SLI, SLO and SLA definitions
-- [Google SRE Workbook - Canarying Releases](https://sre.google/workbook/canarying-releases/) — canary as a partial, time-limited rollout that is evaluated
-- [AWS Builders' Library - Timeouts, retries and backoff with jitter](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter) — retries can amplify an outage; backoff and jitter
-- [Azure Architecture Center - Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) — stop calling a failing dependency for a while
-- [Amazon SQS Developer Guide - Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) — retry, then move to a DLQ
-- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency keys prevent a double refund on retry
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — at-least-once delivery; checkpoints don't stop duplicate side effects
-- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — permission-aware retrieval
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — least privilege and controlled tools for agents

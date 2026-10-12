@@ -176,6 +176,8 @@ export const GLOSSARY: GlossaryEntry[] = [
     sayIt: 'I filter by the user\'s permissions before retrieval, not after — the model should never see what the user can\'t.' },
   { term: 'RBAC', expansion: 'role-based access control', group: 'Security and compliance',
     plain: 'Permissions given by role: managers can do this, agents can do that.' },
+  { term: 'OBO', expansion: 'on-behalf-of', group: 'Security and compliance',
+    plain: 'A service acting with the signed-in user\'s own permissions, by forwarding their token, rather than with a service account of its own.' },
   { term: 'ABAC', expansion: 'attribute-based access control', group: 'Security and compliance',
     plain: 'Permissions decided by attributes — region, department, data sensitivity — not just role. Finer-grained than RBAC.' },
   { term: 'SSO', expansion: 'single sign-on', group: 'Security and compliance',
@@ -416,6 +418,8 @@ export const GLOSSARY: GlossaryEntry[] = [
  * names and ids. `check:content` ignores these when it looks for undefined acronyms.
  */
 export const NOT_ACRONYMS = new Set([
+  // SQL keywords that reach prose as inline code (`SET ROW FILTER`).
+  'SET',
   'NEEDS', 'YOUR', 'INPUT', 'PARTLY', 'GROUNDED', 'FILL', 'EMPTY', 'MEASURE', 'THE', 'POST',
   'GEN', 'WHAT', 'WHY', 'HOW', 'WHO', 'SHADOW', 'DESIGN', 'AUDIT', 'SUCCESS', 'LIVE', 'GET',
   'DRAFT', 'SCALE', 'QUALITY', 'DENIED', 'INVALID', 'TESTING', 'FAILURE', 'DO', 'TODAY', 'COST',

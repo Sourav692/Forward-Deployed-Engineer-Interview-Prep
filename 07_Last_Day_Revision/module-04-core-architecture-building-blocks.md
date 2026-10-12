@@ -7,7 +7,7 @@
 - Can you explain what each component owns and why it is needed?
 - Can you separate request control, routing, workflow control, and model access?
 - Can you choose a small architecture that meets the requirements?
-- Can you identify the state and failure behavior behind your boxes?
+- Can you identify the state and failure behaviour behind your boxes?
 
 ### 2. Core Mental Model
 
@@ -41,7 +41,7 @@ These are logical responsibilities. A small implementation can combine some in o
 
 #### 1. API Gateway — User → Application Control
 
-Own application-entry authentication, request validation, tenant context, and user/tenant rate limits or quotas. Coordinate with authorization services; downstream data and tools still enforce their own access checks.
+Own application-entry authentication, request validation, tenant context, and user/tenant rate limits or quotas. Coordinate with authorisation services; downstream data and tools still enforce their own access checks.
 
 > “We need a controlled application boundary for user identity, tenant context, and request limits.”
 
@@ -89,7 +89,7 @@ Read order → Check policy → Approval needed?
                         Wait / execute / stop
 ```
 
-The orchestrator coordinates; policy authorizes; the executor performs the business write.
+The orchestrator coordinates; policy authorises; the executor performs the business write.
 
 #### 5. State Store — Preserve Context and Progress
 
@@ -166,7 +166,7 @@ A cache or queue is added only if repetition, freshness, task duration, or traff
 
 ### 5. Important Distinctions and Gotchas
 
-1. **API vs Model Gateway:** user-to-application control vs application-to-model control. Neither replaces tool-level authorization.
+1. **API vs Model Gateway:** user-to-application control vs application-to-model control. Neither replaces tool-level authorisation.
 2. **Router vs orchestrator:** choose the path vs coordinate steps along the path.
 3. **State store vs cache:** authoritative progress must be durable; cached results are reusable data that can expire or be recomputed.
 4. **Queue vs event bus:** distribute work to processors vs distribute event notifications. Redelivery may occur; consumers must handle duplicates where relevant.
@@ -284,7 +284,7 @@ Use the Model Gateway for centralized model-call control when justified. Add cac
 
 > “It does ___. We need it because ___. The customer requirement is ___. Its main trade-off is ___.”
 
-Check failure behavior too: a queue does not add capacity, a checkpoint does not guarantee safe external retries, and a cache does not make stale data correct.
+Check failure behaviour too: a queue does not add capacity, a checkpoint does not guarantee safe external retries, and a cache does not make stale data correct.
 
 ### 30-Second Answer
 
