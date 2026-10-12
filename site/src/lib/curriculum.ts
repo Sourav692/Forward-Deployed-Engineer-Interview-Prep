@@ -1073,6 +1073,7 @@ export const MODULES: CurriculumModule[] = [
       'testing-prompt-changes',
       'agentops-mapped-to-databricks',
       'enterprise-rag-on-a-governed-lakehouse',
+      'enterprise-rag-on-a-governed-lakehouse-running-and-auditing',
       'channel-adapters-and-human-escalation',
       'red-teaming-and-layered-guardrails',
       'infrastructure-as-code-and-the-release-pipeline',
@@ -1195,7 +1196,9 @@ export const MODULES: CurriculumModule[] = [
       'recruiting-platform-explainable-ranking-human-decisions',
       'logistics-exceptions-designing-around-a-policy-gate',
       'access-controlled-enterprise-rag',
+      'access-controlled-enterprise-rag-retrieval-and-release',
       'access-controlled-rag-on-databricks',
+      'access-controlled-rag-on-databricks-testing-and-operations',
       'safe-workflow-automation-for-non-technical-users',
       'delivering-an-agent-in-two-weeks-with-enforced-gates',
     ],
@@ -1549,6 +1552,7 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: ['Cramming new material'],
     lessons: [
       'roadmap',
+      'roadmap-full-practice-and-checklists',
       'rapid-revision-guide',
       'trigger-to-concept-cheat-sheet',
       'module-01-fde-problem-decomposition',
@@ -3651,6 +3655,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'agentops',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['Run the Query as the User', 'Retrieve, Evaluate, and Audit on the Platform', 'Weigh the Trade-Offs Honestly', 'Worked Example: What the Live Run Proved', 'Key Takeaways', 'Check Yourself', 'References'] },
+  },
+  {
+    slug: 'enterprise-rag-on-a-governed-lakehouse-running-and-auditing',
+    title: 'Enterprise RAG on a Governed Lakehouse: Running and Auditing',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md',
+    home: 'agentops',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['Run the Query as the User', 'Retrieve, Evaluate, and Audit on the Platform', 'Weigh the Trade-Offs Honestly', 'Worked Example: What the Live Run Proved', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {
     slug: 'channel-adapters-and-human-escalation',
@@ -3944,6 +3959,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'classic-ai-designs',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['Retrieve Hybrid, Then Rerank After Enforcement', 'Gate Releases on Zero Leaks', 'Degrade Everywhere Except Authorisation', 'Close With the Thesis and Week One', 'Worked Example: One Question, Three Personas', 'Key Takeaways', 'Check Yourself', 'References'] },
+  },
+  {
+    slug: 'access-controlled-enterprise-rag-retrieval-and-release',
+    title: 'Access-Controlled Enterprise RAG: Retrieval and Release',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['Retrieve Hybrid, Then Rerank After Enforcement', 'Gate Releases on Zero Leaks', 'Degrade Everywhere Except Authorisation', 'Close With the Thesis and Week One', 'Worked Example: One Question, Three Personas', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {
     slug: 'access-controlled-rag-on-databricks',
@@ -3952,6 +3978,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'classic-ai-designs',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['Test Leaks Where Enforcement Happens', 'Observe, Isolate Tenants, and Fail Closed', 'Separate What Ran From What Was Designed', 'Worked Example: A Tier-1 Agent Asks About Vertex', 'Close on Unity Catalog and SCIM', 'Key Takeaways', 'Check Yourself', 'References'] },
+  },
+  {
+    slug: 'access-controlled-rag-on-databricks-testing-and-operations',
+    title: 'Access-Controlled RAG on Databricks: Testing and Operations',
+    source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md',
+    home: 'classic-ai-designs',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['Test Leaks Where Enforcement Happens', 'Observe, Isolate Tenants, and Fail Closed', 'Separate What Ran From What Was Designed', 'Worked Example: A Tier-1 Agent Asks About Vertex', 'Close on Unity Catalog and SCIM', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {
     slug: 'safe-workflow-automation-for-non-technical-users',
@@ -4981,6 +5018,17 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'final-week',
     kind: 'sync',
     publish: 'own',
+    // Split for length (ENH-25): the closing sections are the next lesson.
+    sections: { exclude: ['🎯 Full Case-Study Practice', 'Phase 1 — Problem Decomposition', 'Phase 2 — Architecture', 'Phase 3 — Production Scale', 'Phase 4 — Production Quality', 'Phase 5 — Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
+  },
+  {
+    slug: 'roadmap-full-practice-and-checklists',
+    title: 'Interview Learning Roadmap: Full Practice and Checklists',
+    source: '07_Last_Day_Revision/Roadmap.md',
+    home: 'final-week',
+    kind: 'sync',
+    publish: 'own',
+    sections: { include: ['🎯 Full Case-Study Practice', 'Phase 1 — Problem Decomposition', 'Phase 2 — Architecture', 'Phase 3 — Production Scale', 'Phase 4 — Production Quality', 'Phase 5 — Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
   },
   {
     slug: 'rapid-revision-guide',

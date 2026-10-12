@@ -4,11 +4,12 @@ import type { Metadata } from 'next'
 import { getAllScenarios, getStoryBank, getTracks } from '@/lib/content'
 import { PrevNext } from '@/components/PrevNext'
 import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
-import { STORY_BANK, STORY_BANK_META } from '@/lib/editorial'
+import { STORY_BANK, STORY_BANK_META, STORY_GROUPS, storyGroupOf } from '@/lib/editorial'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import type { ReadingDocument, ReadingSection } from '@/lib/reading'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { ReadingPanel } from '@/components/CaseStudyView'
+import { LessonTabs } from '@/components/learn/LessonTabs'
 import { pageMetadata } from '@/lib/seo'
 import { Byline } from '@/components/Byline'
 
@@ -28,6 +29,9 @@ export default async function StoryBankPage() {
   const tracks = await getTracks(STORY_BANK.moduleId)
   // The Story Bank comes before the behavioural worksheets it answers (ENH-22, PQ-05).
   const first = (await getAllScenarios()).find((s) => s.moduleId === STORY_BANK.moduleId)
+  const doc = structureStoryBank(bank.doc)
+  const leadIn = doc.sections.find((s) => s.title === null)
+  const groups = doc.sections.filter((s) => s.title !== null)
 
   return (
     <div className="py-10">
@@ -60,7 +64,7 @@ export default async function StoryBankPage() {
                 Customer engagement
               </span>
               <h3 className="mt-1.5 text-[1.125rem] font-semibold transition-colors group-hover:text-accent">
-                {group.shortTitle}
+                {group.title}
               </h3>
               <p className="mt-1.5 flex-1 text-[0.875rem] leading-relaxed text-muted">{group.context}</p>
               <div className="mt-4 border-t border-border pt-3 text-[0.8125rem] leading-relaxed text-muted">
@@ -74,7 +78,16 @@ export default async function StoryBankPage() {
         </div>
       </section>
 
-      <ReadingPanel doc={structureStoryBank(bank.doc)} drawDiagrams />
+      <ReadingPanel doc={{ ...doc, sections: leadIn ? [leadIn] : [] }} drawDiagrams />
+      {/* One tab per customer group, so no view runs past the page-length limit (ENH-25). */}
+      <LessonTabs
+        label="Customer stories"
+        tabs={groups.map((section) => ({
+          id: section.id,
+          label: STORY_GROUPS.find((g) => g.id === section.id)?.title ?? 'Build your own',
+          panel: <ReadingPanel doc={{ ...doc, title: '', sections: [section] }} drawDiagrams />,
+        }))}
+      />
 
       <section className="no-print mt-14 rounded-xl border border-border bg-surface p-5">
         <h2 className="text-[1.0625rem] font-semibold">Where next</h2>
@@ -100,59 +113,12 @@ export default async function StoryBankPage() {
   )
 }
 
-type StoryGroup = {
-  id: string
-  title: string
-  shortTitle: string
-  context: string
-  bestFor: string
-  matches: (title: string) => boolean
-}
-
-const STORY_GROUPS: StoryGroup[] = [
-  {
-    id: 'asian-life-insurer',
-    title: 'Asian life insurer',
-    shortTitle: 'Asian life insurer',
-    context: 'A short project to help insurance teams ask questions about sensitive company data safely.',
-    bestFor: 'Understanding a customer, keeping the first launch small, handling a problem, and earning trust.',
-    matches: (title) => title.startsWith('The insurer:'),
-  },
-  {
-    id: 'consumer-lender',
-    title: 'Indian consumer lender',
-    shortTitle: 'Indian consumer lender',
-    context: 'A project to help an IT team investigate lead-routing issues without making risky automatic changes.',
-    bestFor: 'Learning a new customer system, making safe choices, and being honest about results.',
-    matches: (title) => title.startsWith('The lender:'),
-  },
-  {
-    id: 'meridian-assist',
-    title: 'Meridian Assist reference build',
-    shortTitle: 'Meridian Assist reference build',
-    context: 'A small reference system used to prove that answers are safe, checked, and backed by evidence.',
-    bestFor: 'High standards, testing, owning mistakes, and explaining safety to non-technical people.',
-    matches: (title) => title.startsWith('Meridian:'),
-  },
-  {
-    id: 'cross-engagement',
-    title: 'Guardrails and reusable patterns',
-    shortTitle: 'Guardrails and reusable patterns',
-    context: 'Stories about saying no safely, writing down known gaps, and sharing useful lessons with other teams.',
-    bestFor: 'Making a difficult call, keeping people safe, and having impact beyond one customer.',
-    matches: (title) =>
-      title.startsWith('The guardrail engine:') ||
-      title.startsWith('Financial services:') ||
-      title.startsWith('Beyond one engagement:'),
-  },
-]
-
 function structureStoryBank(doc: ReadingDocument): ReadingDocument {
   const leadIn = doc.sections.find((section) => section.title === null)
   const stories = doc.sections.filter((section) => section.title !== null)
   const used = new Set<ReadingSection>()
   const groups = STORY_GROUPS.map((group) => {
-    const members = stories.filter((section) => section.title && group.matches(stripHtml(section.title)))
+    const members = stories.filter((section) => section.title && storyGroupOf(stripHtml(section.title))?.id === group.id)
     members.forEach((member) => used.add(member))
     return toGroupSection(group, members)
   })
@@ -176,7 +142,7 @@ function structureStoryBank(doc: ReadingDocument): ReadingDocument {
   }
 }
 
-function toGroupSection(group: StoryGroup, stories: ReadingSection[]): ReadingSection {
+function toGroupSection(group: (typeof STORY_GROUPS)[number], stories: ReadingSection[]): ReadingSection {
   return {
     id: group.id,
     title: group.title,

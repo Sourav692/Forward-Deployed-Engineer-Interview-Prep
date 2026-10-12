@@ -151,7 +151,8 @@ for (const m of MODULES) {
     const owner = new Map<string, string>()
     for (const l of sliced) {
       for (const h of unknownHeadings(l, headings)) fail(`lesson ${l.slug}: heading "${h}" is not a "## " heading of ${source}`)
-      for (const h of publishedHeadings(l, headings)) {
+      // A heading repeated within one lesson (the roadmap's "## Goal" per topic) is one owner.
+      for (const h of new Set(publishedHeadings(l, headings))) {
         if (owner.has(h)) fail(`source ${source}: "## ${h}" is published by both ${owner.get(h)} and ${l.slug}`)
         else owner.set(h, l.slug)
       }
