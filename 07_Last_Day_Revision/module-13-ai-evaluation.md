@@ -97,7 +97,7 @@ Keep judged content separate from judge instructions. Track judge/rubric version
 
 #### 8. Offline vs Online — Test Before and Observe After Release
 
-Offline evaluation supports repeatable candidate comparisons. Online evaluation uses production traces, outcomes, overrides, and user feedback to detect real behavior and drift.
+Offline evaluation supports repeatable candidate comparisons. Online evaluation uses production traces, outcomes, overrides, and user feedback to detect real behaviour and drift.
 
 ```text
 Offline cases → Candidate comparison → Release gate
@@ -108,7 +108,7 @@ User ratings are useful but biased and incomplete. Reopened tickets or incorrect
 
 #### 9. Compare and Diagnose — Quality Within Operating Limits
 
-Compare candidates on the same task set with quality, policy, latency, and cost criteria. Repeat or quantify uncertainty for variable behavior where needed.
+Compare candidates on the same task set with quality, policy, latency, and cost criteria. Repeat or quantify uncertainty for variable behaviour where needed.
 
 > “I’d locate the failing stage and critical segment before claiming an overall improvement.”
 
@@ -129,8 +129,8 @@ Compare candidates on the same task set with quality, policy, latency, and cost 
 
 1. **Retrieval vs generation:** missing evidence and mishandled evidence need different fixes.
 2. **Groundedness vs correctness:** evidence support does not establish freshness or applicability.
-3. **Deterministic vs semantic:** explicit assertions vs rubric-based judgment.
-4. **Offline vs online:** controlled comparisons vs actual production behavior; neither replaces the other.
+3. **Deterministic vs semantic:** explicit assertions vs rubric-based judgement.
+4. **Offline vs online:** controlled comparisons vs actual production behaviour; neither replaces the other.
 5. **Response quality vs completion:** polished language cannot prove a cancelled order or issued refund.
 
 ### 6. Trigger → Concept Table
@@ -158,7 +158,7 @@ Compare candidates on the same task set with quality, policy, latency, and cost 
 ### 8. Practice Questions
 
 1. Design evaluation for policy answers and an action-taking refund workflow.
-2. Which assertions can be deterministic, and which need semantic judgment?
+2. Which assertions can be deterministic, and which need semantic judgement?
 3. A model cites the wrong policy but sounds correct. How do retrieval and answer checks catch it?
 4. The response says an order was cancelled, but it remains active. What evidence proves failure?
 5. A candidate improves overall scores but fails more high-risk cases. How do you make the release decision?
@@ -215,11 +215,11 @@ Offline comparison → Release gate → Online outcomes
 
 ### Evaluation Rules
 
-Define success and unacceptable behavior with the customer first. Include missing-answer, denied-access, tool-failure, and uncertain-action cases. Use the same benchmark for candidate comparisons; report task/risk segments, not only averages. Inspect variable outcomes when conclusions depend on small differences.
+Define success and unacceptable behaviour with the customer first. Include missing-answer, denied-access, tool-failure, and uncertain-action cases. Use the same benchmark for candidate comparisons; report task/risk segments, not only averages. Inspect variable outcomes when conclusions depend on small differences.
 
 Capture observable tools, results, state transitions, decision summaries, and evidence. I don't rely on private model reasoning: it is often hidden and not always faithful. Different trajectories can be valid; evaluate constraints and outcomes rather than forcing one exact sequence.
 
-Model-assisted judging needs a clear rubric, versioning, and calibration against expert judgments. A model's confidence and a thumbs-up are not sufficient proof. Add production failures and overrides to future regression cases while maintaining a held-out assessment boundary.
+Model-assisted judging needs a clear rubric, versioning, and calibration against expert judgements. A model's confidence and a thumbs-up are not sufficient proof. Add production failures and overrides to future regression cases while maintaining a held-out assessment boundary.
 
 ### 30-Second Answer
 

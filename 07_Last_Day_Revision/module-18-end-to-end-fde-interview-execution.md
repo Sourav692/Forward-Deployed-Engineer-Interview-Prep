@@ -51,7 +51,7 @@ Clarify the business outcome and current workflow. Let customer answers guide qu
 
 #### 2. Summarize Requirements — Confirm Before Designing
 
-State capabilities and measurable operating limits separately. Include access boundaries, permitted writes, approvals, and safe failure behavior.
+State capabilities and measurable operating limits separately. Include access boundaries, permitted writes, approvals, and safe failure behaviour.
 
 > “Let me summarize what the system must do, the operating limits, and the assumptions we still need to confirm.”
 
@@ -111,7 +111,7 @@ Latency → Trace critical path → Independent parallel work
 Cost    → Attribute usage → Cost per successful task
 ```
 
-> “I’d optimize the measured bottleneck while preserving the agreed quality and safety floor.”
+> “I’d optimise the measured bottleneck while preserving the agreed quality and safety floor.”
 
 #### 7. Explain Failure and Recovery — Include Unknown Writes
 
@@ -127,7 +127,7 @@ Policy down    → Sensitive action blocked/deferred
 
 #### 8. Evaluate, Release, Operate — Close the Production Loop
 
-Evaluate retrieval, supported answers, tool arguments, policy compliance, and confirmed task outcomes. Version behavior, gate candidates, and limit exposure with appropriate rollout controls.
+Evaluate retrieval, supported answers, tool arguments, policy compliance, and confirmed task outcomes. Version behaviour, gate candidates, and limit exposure with appropriate rollout controls.
 
 ```text
 Offline evaluation → Gate → Shadow and/or canary
@@ -174,7 +174,7 @@ Name what would change the design: new workload, stricter residency, failed qual
 | “Now 100K users” | Workload/scale | Rates, concurrency, bottleneck |
 | “Too slow / expensive” | Measurement | Critical path / total cost per success |
 | “Can it act automatically?” | Autonomy/policy | Permission, rule, review, executor |
-| “What if it fails?” | Recovery | Dependency-specific behavior and unknown writes |
+| “What if it fails?” | Recovery | Dependency-specific behaviour and unknown writes |
 | “How would you ship it?” | Evaluation/release | Gate, cohort, monitor, rollback |
 | “Why this design?” | Trade-offs | Requirement, simpler option, evidence |
 
@@ -195,7 +195,7 @@ Name what would change the design: new workload, stricter residency, failed qual
 Solve without opening earlier modules. Use the five-stage flow and explain one request, one failure, and one trade-off.
 
 1. **Customer support:** answer policies, check orders, issue permitted refunds. Cover discovery, requirements, RAG/tools, approval, duplicate prevention, scale, and confirmed outcomes.
-2. **Enterprise knowledge:** millions of documents with employee-specific permissions. Cover ingestion, authorized retrieval, freshness, latency, and answer evaluation.
+2. **Enterprise knowledge:** millions of documents with employee-specific permissions. Cover ingestion, authorised retrieval, freshness, latency, and answer evaluation.
 3. **Logistics or SRE operations:** investigate exceptions/incidents and perform allowed remediation. Cover events, tools, scoped access, bounded reasoning, policy/HITL, recovery, kill switch, and audit.
 4. **Deep research:** work lasts 10–20 minutes across several sources. Cover async status, durable progress, evidence quality, task budgets, cost, and recovery.
 5. **Multi-tenant platform:** enterprise customers share multiple model providers. Cover the two gateways, isolation, fairness, quotas, attribution, provider compatibility, and rollout.

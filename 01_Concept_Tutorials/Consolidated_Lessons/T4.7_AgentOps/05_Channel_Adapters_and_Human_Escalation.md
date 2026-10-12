@@ -93,4 +93,4 @@ The employee's answer is grounded and cited. Later, the ticket is resolved as a 
 
 ## References
 
-**Sources:** `04_Multi_Channel_And_HITL_Escalation.md` (FDE Handbook, AgentOps and platform): "Multi-channel delivery", "Human-in-the-loop escalation as a real workflow", Interview lens and Checkpoint. `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): §2 streaming as a channel-layer decision.
+**Sources:** `04_Multi_Channel_And_HITL_Escalation.md` (FDE Handbook, AgentOps and platform): "Multi-channel delivery", "Human-in-the-loop escalation as a real workflow", Interview lens and Checkpoint. `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgement): §2 streaming as a channel-layer decision.

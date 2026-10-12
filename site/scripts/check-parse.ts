@@ -680,7 +680,7 @@ for (const [token, files] of acronymPages) {
 // names the product, title and pattern names that keep their own spelling. Site copy is
 // read from src/ as string literals and JSX text that contain a space, so ids, slugs,
 // paths, identifiers and comments never count.
-const SPELLING_IS_ERROR = false
+const SPELLING_IS_ERROR = true
 const AMERICAN =
   /^(?:un|re|pre|de|mis)?(?:behaviors?|behavioral(?:ly)?|authoriz(?:e|es|ed|ing|ation|ations|er|ers)|optimiz(?:e|es|ed|ing|ation|ations|er|ers)|organiz(?:e|es|ed|ing|ation|ations|ational|er|ers)|judgments?)$/i
 const SPELLING_ALLOWED: [RegExp, string][] = [

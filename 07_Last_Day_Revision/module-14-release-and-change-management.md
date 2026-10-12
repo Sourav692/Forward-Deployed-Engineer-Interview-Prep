@@ -23,17 +23,17 @@ Use a rollout path appropriate to the change. Shadow and canary serve different 
 
 ### 3. Essential Concepts
 
-#### 1. Version the Behavior — More Than the Model
+#### 1. Version the Behaviour — More Than the Model
 
 Track prompts, model/configuration, tools and schemas, routing, retrieval settings, corpus/index versions where feasible, policy, and evaluation artifacts.
 
-> “I’d record the versions that produced each task's behavior so we can reproduce and compare changes.”
+> “I’d record the versions that produced each task's behaviour so we can reproduce and compare changes.”
 
 ```text
 Release identity → Prompt + model + tools + retrieval + policy
 ```
 
-Include workflow/state-schema compatibility for long-running tasks. A model rollback alone may not restore previous behavior.
+Include workflow/state-schema compatibility for long-running tasks. A model rollback alone may not restore previous behaviour.
 
 #### 2. Offline Evaluation — Compare Before Exposure
 
@@ -82,7 +82,7 @@ Use consistent assignment where conversation/workflow continuity matters. A tiny
 
 #### 6. Feature Flags — Control Scope
 
-Enable behavior by tenant, cohort, capability, or version. Flags can support limited exposure and fast disabling without a full deployment.
+Enable behaviour by tenant, cohort, capability, or version. Flags can support limited exposure and fast disabling without a full deployment.
 
 > “For two pilot enterprises, I’d scope the flag to those tenants and track their outcomes separately.”
 
@@ -98,7 +98,7 @@ Regression → Stop expansion → Route new work to baseline
                          Handle active tasks explicitly
 ```
 
-> “Rollback restores software behavior; completed refunds need separate business reconciliation.”
+> “Rollback restores software behaviour; completed refunds need separate business reconciliation.”
 
 #### 8. Kill Switch — Stop Execution Quickly
 
@@ -118,19 +118,19 @@ Track candidate/baseline versions, segment outcomes, errors, escalations, delaye
 
 | Requirement | Pattern / component | Why | Trade-off |
 |---|---|---|---|
-| Explain behavior changes | Versioned release artifacts | Reproduce and compare | Artifact coordination |
+| Explain behaviour changes | Versioned release artifacts | Reproduce and compare | Artifact coordination |
 | Prevent known regressions | Offline evaluation + gate | Check before exposure | Coverage/label effort |
-| Compare on real requests safely | Shadow path with isolated writes | Observe candidate behavior | Extra cost and incomplete user feedback |
+| Compare on real requests safely | Shadow path with isolated writes | Observe candidate behaviour | Extra cost and incomplete user feedback |
 | Limit real exposure | Canary routing | Control rollout impact | Cohort bias and small samples |
-| Pilot selected tenants | Feature flags | Scope behavior explicitly | Configuration complexity |
-| Recover from regression | Compatible rollback + kill switch | Restore/stop behavior | In-flight state and actions |
+| Pilot selected tenants | Feature flags | Scope behaviour explicitly | Configuration complexity |
+| Recover from regression | Compatible rollback + kill switch | Restore/stop behaviour | In-flight state and actions |
 
 **Support example:** evaluate a new refund prompt and tool schema offline, shadow without payment writes, canary eligible pilot tenants, and monitor confirmed refunds, approval compliance, errors, latency, and cost. Keep the previous version and an execution switch available.
 
 ### 5. Important Distinctions and Gotchas
 
 1. **Shadow vs canary:** evaluation-only candidate vs candidate serving real users and actions.
-2. **Deploy vs release:** code can be present before a flag exposes behavior.
+2. **Deploy vs release:** code can be present before a flag exposes behaviour.
 3. **Rollback vs undo:** reverting software does not reverse external business effects.
 4. **Flag vs complete isolation:** ensure tools, workers, and resume paths follow the intended version/scope.
 5. **Good small sample vs release evidence:** include important segments and rare/high-impact failure cases.
@@ -148,7 +148,7 @@ Track candidate/baseline versions, segment outcomes, errors, escalations, delaye
 
 ### 7. Interview Phrases
 
-> “I’d version the behavior, not just the model name.”
+> “I’d version the behaviour, not just the model name.”
 
 > “Shadow compares without candidate business writes; canary tests limited real exposure.”
 
@@ -168,7 +168,7 @@ Track candidate/baseline versions, segment outcomes, errors, escalations, delaye
 
 ## One-Page Memory Card: Release & Change Management
 
-**Core question:** How do we expose a candidate gradually, detect regressions, and retain control over behavior and actions?
+**Core question:** How do we expose a candidate gradually, detect regressions, and retain control over behaviour and actions?
 
 ### Recall Flow
 
@@ -208,7 +208,7 @@ VERSION → EVALUATE → GATE
 ### Do Not Confuse
 
 1. **Shadow vs canary:** evaluation-only vs real candidate exposure.
-2. **Deployment vs release:** code present vs behavior enabled.
+2. **Deployment vs release:** code present vs behaviour enabled.
 3. **Rollback vs undo:** software routing changes do not reverse payments.
 4. **Feature flag vs boundary enforcement:** UI flags alone cannot stop a worker's write.
 
@@ -222,4 +222,4 @@ On regression, stop expansion, disable dangerous execution where needed, and res
 
 ### 30-Second Answer
 
-> “I’d version all behavior-changing artifacts, evaluate against the baseline, and apply agreed quality, policy, latency, and cost gates. I’d use shadow where comparison must avoid real actions and canary for controlled live exposure. Flags would scope the rollout, versioned telemetry would guide expansion, and tested rollback and execution switches would control regressions and in-flight work.”
+> “I’d version all behaviour-changing artifacts, evaluate against the baseline, and apply agreed quality, policy, latency, and cost gates. I’d use shadow where comparison must avoid real actions and canary for controlled live exposure. Flags would scope the rollout, versioned telemetry would guide expansion, and tested rollback and execution switches would control regressions and in-flight work.”

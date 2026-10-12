@@ -332,7 +332,7 @@ AI Application
 Handles:
 
 - Authentication
-- Authorization
+- Authorisation
 - Tenant context
 - Rate limits
 - Quotas
@@ -461,7 +461,7 @@ LLM
 1. Your RAG system frequently **fails to retrieve the correct document**. What would you investigate?
 2. It retrieves the correct document but also returns **many irrelevant chunks**. What problem is this and how would you improve it?
 3. Why should **current order status** normally come from an API instead of RAG?
-4. Two employees have different document permissions. How would you prevent unauthorized information from entering the LLM context?
+4. Two employees have different document permissions. How would you prevent unauthorised information from entering the LLM context?
 5. The customer says, **"The model is hallucinating."** What parts of the RAG pipeline would you investigate before simply changing the model?
 
 ---
@@ -615,11 +615,11 @@ Handle:
 
 ---
 
-# Module 10 — Latency Optimization ⚡
+# Module 10 — Latency Optimisation ⚡
 
 ## Goal
 
-Diagnose latency before optimizing.
+Diagnose latency before optimising.
 
 ## Latency Decomposition
 
@@ -649,14 +649,14 @@ Total Latency
 ## 🎯 Practice Questions
 
 1. Average latency is 3 seconds but P99 is 25 seconds. What does this tell you?
-2. Your agent calls CRM, order and ticket APIs sequentially. Each takes 1 second. What obvious optimization would you consider?
+2. Your agent calls CRM, order and ticket APIs sequentially. Each takes 1 second. What obvious optimisation would you consider?
 3. The model itself takes only 2 seconds but total latency is 12 seconds. How would you investigate?
 4. When does **streaming** improve perceived latency without actually reducing total compute time?
-5. A research task takes five minutes. Would you continue optimizing it as a synchronous API request or change the interaction model?
+5. A research task takes five minutes. Would you continue optimising it as a synchronous API request or change the interaction model?
 
 ---
 
-# Module 11 — Cost Optimization 💰
+# Module 11 — Cost Optimisation 💰
 
 ## Goal
 
@@ -679,7 +679,7 @@ Cost / Task
 ## Topics
 
 - Model routing
-- Context optimization
+- Context optimisation
 - Caching
 - Reduce model calls
 - Deterministic logic
@@ -892,7 +892,7 @@ Make the system enterprise-ready.
 ## Topics
 
 - Authentication
-- Authorization
+- Authorisation
 - RBAC
 - Permission-aware RAG
 - Least privilege
@@ -923,7 +923,7 @@ Audit
 ## 🎯 Practice Questions
 
 1. Employee A can access HR documents while Employee B cannot. How should this affect retrieval?
-2. Why is filtering unauthorized documents **after generation** a weak security design?
+2. Why is filtering unauthorised documents **after generation** a weak security design?
 3. What permissions would you give a refund agent following least-privilege principles?
 4. A shared platform serves 50 enterprise tenants. What needs tenant isolation?
 5. A European customer says their data cannot leave a particular region. What architectural concerns does this introduce?

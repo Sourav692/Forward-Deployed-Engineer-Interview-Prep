@@ -65,7 +65,7 @@ The narration exposes every component about to be drawn. It also lets the interv
 
 Step 3 draws two flows: usually an offline one, such as ingestion or a pipeline's setup phase, and an online one per request. Label every arrow. Then say the one or two sentences per flow that show judgement.
 
-For the RAG scripts those sentences are "the connector's real job is translating each source's permission model into ours" and "authorize is first, enforce runs before the model sees anything — I encode that ordering in the graph's edges, not in a code convention someone can forget." Eight minutes is enough for two flows if they are not decorated. Save the detail for the deep dive.
+For the RAG scripts those sentences are "the connector's real job is translating each source's permission model into ours" and "authorise is first, enforce runs before the model sees anything — I encode that ordering in the graph's edges, not in a code convention someone can forget." Eight minutes is enough for two flows if they are not decorated. Save the detail for the deep dive.
 
 ## Worked Example: The First Twenty Minutes of Enterprise RAG
 

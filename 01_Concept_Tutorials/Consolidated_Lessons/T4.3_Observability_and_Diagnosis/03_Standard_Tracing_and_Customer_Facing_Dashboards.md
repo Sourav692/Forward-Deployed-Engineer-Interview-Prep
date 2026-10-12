@@ -77,4 +77,4 @@ Nothing about what was captured changed. Choosing the standard format turned an 
 
 ## References
 
-**Sources:** `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §1 standard tracing, §2 per-tenant dashboards. `02-observability-standards-and-failure-patterns.md` (Production and Platform Judgment): §1 and §2. `08_Observability.md` (FDE Handbook, enterprise RAG): "From here to production". `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgment): §7 build versus buy, monitoring row.
+**Sources:** `02_Observability_Standards_Failure_Patterns.md` (FDE Handbook, cross-cutting concerns): §1 standard tracing, §2 per-tenant dashboards. `02-observability-standards-and-failure-patterns.md` (Production and Platform Judgement): §1 and §2. `08_Observability.md` (FDE Handbook, enterprise RAG): "From here to production". `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgement): §7 build versus buy, monitoring row.

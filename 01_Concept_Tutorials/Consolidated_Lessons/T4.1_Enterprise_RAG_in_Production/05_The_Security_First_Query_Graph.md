@@ -43,7 +43,7 @@ flowchart TB
 
 | # | Node | What it does | The detail that matters |
 |---|---|---|---|
-| ① | **authorize** | Compiles the principal's policy into a Chroma `where` clause (Layer 1), then ANDs on any optional caller filter such as source, type or recency | `merge_filters` is safe by construction: `$and` can only narrow a result set, so a caller's filter can never see past the access clause |
+| ① | **authorise** | Compiles the principal's policy into a Chroma `where` clause (Layer 1), then ANDs on any optional caller filter such as source, type or recency | `merge_filters` is safe by construction: `$and` can only narrow a result set, so a caller's filter can never see past the access clause |
 | ② | **plan** | A cheap regex for "and", "also" or ";" decides whether the question looks multi-hop; only then, and only under the `enterprise` strategy, does an LLM decompose it | Saves a model call on the common single-hop path |
 | ③ | **retrieve** | Runs the selected strategy; every store call carries the compiled filter | If expansion fails with `LLMUnavailable`, it falls back to `dense` and marks the run `degraded` |
 | ④ | **enforce** | Re-runs the full policy on every candidate against the fresh catalog (Layer 2), applies redaction and audit obligations, **then** reranks survivors to `rerank_k` | Denied chunks are dropped and logged and never reach the reranker; disagreements with Layer 1 become security events |

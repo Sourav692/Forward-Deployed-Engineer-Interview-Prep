@@ -37,7 +37,7 @@ Most of these are failure-shaped. A loop where nothing ever went wrong reads as 
 
 > "Go-live is in three days and you know it won't be ready. What do you do?"
 
-Hypothetical — testing judgment and instinct, not memory. Answer in order:
+Hypothetical — testing judgement and instinct, not memory. Answer in order:
 
 -
 -

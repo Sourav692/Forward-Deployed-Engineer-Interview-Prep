@@ -152,7 +152,7 @@ Autoscaling takes time and cannot remove external quotas. Preserve critical work
 | Buffer short bursts | Bounded queue | Smooth temporary mismatch | Wait time |
 | Fair service across tenants | Fair scheduling + tenant concurrency limits | Prevent monopolization | Scheduling complexity |
 | Handle sustained overload | Backpressure + load shedding | Stop unbounded backlog | Some work delayed or refused |
-| Track scaling behavior | Queue/worker/dependency metrics | Locate actual bottleneck | Monitoring effort |
+| Track scaling behaviour | Queue/worker/dependency metrics | Locate actual bottleneck | Monitoring effort |
 
 ```text
 API Gateway   = User → Application control

@@ -108,4 +108,4 @@ Every sentence names a generic concept the interviewer already heard, then the p
 
 ## References
 
-**Sources:** `02_AgentOps_On_Databricks.md` (FDE Handbook, AgentOps and platform): §1 to §6, the mapping table, Interview lens and Checkpoint. `04-agentops-on-databricks.md` (Production and Platform Judgment): §1 to §6, quick mapping table and "What to say" (the duplicate source, merged).
+**Sources:** `02_AgentOps_On_Databricks.md` (FDE Handbook, AgentOps and platform): §1 to §6, the mapping table, Interview lens and Checkpoint. `04-agentops-on-databricks.md` (Production and Platform Judgement): §1 to §6, quick mapping table and "What to say" (the duplicate source, merged).
