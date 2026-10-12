@@ -21,7 +21,7 @@ Use this guide for the interview. The [Deep Dive](/design/sre-incident-response-
 
 ## 1. Open with the read-only boundary
 
-> “The agent may query anything it is authorized to read and change nothing on its own. A ten-second approval is acceptable during an incident; an autonomous rollback based on a wrong hypothesis is not. I’ll optimize for a useful, evidence-backed summary within 30 seconds, even when telemetry is degraded.”
+> “The agent may query anything it is authorised to read and change nothing on its own. A ten-second approval is acceptable during an incident; an autonomous rollback based on a wrong hypothesis is not. I’ll optimise for a useful, evidence-backed summary within 30 seconds, even when telemetry is degraded.”
 
 The dependency inversion is the distinctive risk: the observability stack the agent queries may be degraded by the same incident. It must disclose source coverage and distinguish “nothing found” from “source unavailable.”
 
@@ -60,7 +60,7 @@ The easiest way to frame requirements in an interview is:
 
 1. **Correlate the alert** — logs, metrics, traces, deploys, flags, and approved runbooks.
 2. **Rank hypotheses** — evidence, uncertainty, and source coverage.
-3. **Run read-only diagnostics** — only authorized tools, automatically.
+3. **Run read-only diagnostics** — only authorised tools, automatically.
 4. **Propose a mitigation** — exact command, blast radius, evidence, runbook, freeze, simulation where possible.
 5. **Route writes through humans** — service owner / incident commander, then one tool gateway.
 6. **Record the timeline** — policy decisions, source gaps, and outcomes for replay.
@@ -120,7 +120,7 @@ flowchart LR
 - **Step 4.** **Form an evidence-backed view.** The strong LLM synthesizes ranked hypotheses from bounded telemetry; the agent presents a cited first summary with source coverage.
 - **Step 5.** **Prepare a mitigation.** If action is warranted, propose the exact command, blast radius, runbook, and simulation result.
 - **Step 6.** **Get the right approval.** Apply read/propose/execute and freeze policies, then ask the owner and commander; a declined proposal is recorded without a write.
-- **Step 7.** **Execute and check.** Route an approved command through the authorized tool gateway, execute idempotently, verify its effect, and add the decision to the incident timeline.
+- **Step 7.** **Execute and check.** Route an approved command through the authorised tool gateway, execute idempotently, verify its effect, and add the decision to the incident timeline.
 
 **Model and agent role:** The incident agent uses read-only tools to gather evidence. Rules or a small model handle alert clustering, while a strong LLM synthesizes hypotheses and proposes mitigation. The agent cannot execute a production change without the human approval and tool gateway shown above.
 
@@ -132,7 +132,7 @@ Collapse related alerts into one incident before spending model calls. Attach ne
 
 Every tool returns one typed state: **SUCCESS, EMPTY, UNAVAILABLE, DENIED, INVALID**. `EMPTY` means the query worked and found nothing; `UNAVAILABLE` means the source did not answer. Neither is evidence for the same conclusion. `DENIED` is a dead end to the model; details go into the human audit, not a workaround hint.
 
-The mitigation is always a proposal first. Compute blast radius from the service catalog/topology, cite evidence and runbook, check change freeze and simulation, then route to the right humans. Approval is bound to the proposal and expires. The gateway authorizes before validating arguments so unauthorized callers cannot learn a protected tool schema from validation errors.
+The mitigation is always a proposal first. Compute blast radius from the service catalog/topology, cite evidence and runbook, check change freeze and simulation, then route to the right humans. Approval is bound to the proposal and expires. The gateway authorises before validating arguments so unauthorised callers cannot learn a protected tool schema from validation errors.
 
 ## 5. Latency, scale, and cost
 

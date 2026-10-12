@@ -8,11 +8,11 @@ The [Main guide](/design/tool-using-agent-with-safety-controls#main) is the spok
 
 `AgentTask(id, actor, goal, state, step_budget)` tracks the workflow, not customer or financial truth. `ToolDefinition(name, schema, data_class, scopes)` limits the legal tool space. `ActionProposal(id, task_id, tool, args_hash, policy_decision)` is the model’s recommendation. `PolicyDecision(proposal_id, verdict, scopes, reason)` is the deterministic verdict. `ActionReceipt(proposal_id, idempotency_key, outcome)` is proof of the side effect. Canonicalize arguments before hashing, and return the stored receipt when the same business action is retried.
 
-Keep the order explicit: authenticate → propose → resolve registered tool → validate typed arguments/data class/limits → evaluate policy → obtain approval if required → mint scoped credential → execute through the gateway → persist receipt → decide whether to continue. In this case, validation runs before policy so malformed or over-limit proposals never enter authorization. If the policy or broker cannot be reached, a write cannot proceed.
+Keep the order explicit: authenticate → propose → resolve registered tool → validate typed arguments/data class/limits → evaluate policy → obtain approval if required → mint scoped credential → execute through the gateway → persist receipt → decide whether to continue. In this case, validation runs before policy so malformed or over-limit proposals never enter authorisation. If the policy or broker cannot be reached, a write cannot proceed.
 
 An approval is a durable record of reviewer, time, rationale, exact payload, tenant, record version, amount, and expiry. A later state change invalidates it. The gateway, not the planner, owns exactly-once effect semantics within the idempotency contract. A lost response is an unknown outcome that needs reconciliation; neither a prompt nor a generic retry makes it safe.
 
-## 2. Nine components and their failure behavior
+## 2. Nine components and their failure behaviour
 
 | Component | Control it owns | If unavailable |
 |---|---|
@@ -48,7 +48,7 @@ The model never receives a broad API key. A trusted service propagates enterpris
 
 The four controls are a set: untrusted tool observations, no broad long-lived credentials, validation of proposals, and ceilings on steps/spend/amount/destinations. Add defense in depth: policy, broker, idempotent gateway, ledger, and kill switch. Scope failures by tenant, region, workflow, and dependency.
 
-| Drill | Expected behavior |
+| Drill | Expected behaviour |
 |---|---|
 | Injection hidden in email or CRM row | Treat content as data; policy rejects requested scope change; preserve evidence; quarantine or hand off. |
 | Tool succeeded, response lost | Check idempotency key/transaction record; return stored receipt or mark uncertain for reconciliation. Never blindly repeat a write. |
@@ -75,7 +75,7 @@ For a **tool loop**, inspect the trace for repeated tool/observation pairs and m
 
 ## 8. Refund near miss: planner failure, gateway success
 
-The source incident’s support agent asked to handle delayed VIP shipments. The planner selected `refund_customer` for 18 orders. A €740 request exceeded a €250 no-approval threshold; six calls were blocked, 12 allowed, and no unauthorized money moved. A planner prompt designed to be “more action-oriented” omitted bulk approval boundaries. The unchanged gateway policy blocked the high-value actions.
+The source incident’s support agent asked to handle delayed VIP shipments. The planner selected `refund_customer` for 18 orders. A €740 request exceeded a €250 no-approval threshold; six calls were blocked, 12 allowed, and no unauthorised money moved. A planner prompt designed to be “more action-oriented” omitted bulk approval boundaries. The unchanged gateway policy blocked the high-value actions.
 
 Contain by disabling bulk refund planning, forcing VIP refunds into review-ticket mode, adding user confirmation, and auditing the 12 allowed actions. Prevent with threshold-aware schemas, policy simulation, a separate action-risk check, better planner examples, and non-bypassable gateway enforcement. Treat it as a near miss even though the money gate held; the proposal distribution deteriorated.
 

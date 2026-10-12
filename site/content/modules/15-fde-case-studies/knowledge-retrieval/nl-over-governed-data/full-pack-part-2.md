@@ -129,7 +129,7 @@ Four controls make up the boundary, and each reduces risk differently, so togeth
 |---|---|---|
 | Least privilege | A read-only identity that can inspect only approved datasets and only the operations needed for analysis | A prompt injection or bad plan becoming a write, delete or privilege escalation. A request for hidden customer emails is rejected because the identity cannot read that column, not because the model probably refuses |
 | Warehouse-native row and column policies | Let the warehouse enforce which tenant, region or role sees which slice, instead of reimplementing it in application code | The classic bug where the application filters one path and forgets another; an error in one tenant's policy exposing another tenant |
-| Parse, do not regex | Inspect the AST for writes, unbounded cross joins, unauthorized tables, unexpected functions, missing limits and scan-budget violations | Obfuscated or nested SQL that passes a string filter |
+| Parse, do not regex | Inspect the AST for writes, unbounded cross joins, unauthorised tables, unexpected functions, missing limits and scan-budget violations | Obfuscated or nested SQL that passes a string filter |
 | Result hygiene | Mask sensitive fields on the response path; log hashes or redacted fingerprints instead of raw data | A second leakage channel through logs; a replayable copy of sensitive output |
 
 The hidden-column invariant is worth proving in front of the interviewer. It shows that a valid SQL string is still rejected when it requests a column outside the actor's permissions. A production version uses a dialect-aware parser and a policy source from the warehouse or a central registry, and logs the decision with redacted evidence.

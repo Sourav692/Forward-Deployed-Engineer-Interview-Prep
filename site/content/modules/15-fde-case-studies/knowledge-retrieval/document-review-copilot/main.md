@@ -15,13 +15,13 @@ End to end, as prior auth for a procedure:
 
 That’s it: **evidence → rule → cited draft → human.** Autonomous clinical or legal yes is out.
 
-**Extraction is cheap; judgment is expensive.** The copilot extracts evidence, compares it with the governing rule, cites the exact supporting span, and drafts. A named clinician, compliance reviewer, or lawyer makes the material decision. Missing evidence, a broken citation, or uncertain access stops the path.
+**Extraction is cheap; judgement is expensive.** The copilot extracts evidence, compares it with the governing rule, cites the exact supporting span, and drafts. A named clinician, compliance reviewer, or lawyer makes the material decision. Missing evidence, a broken citation, or uncertain access stops the path.
 
 The [source study](/design/document-review-copilot#full-pack) treats three cases as variations of one spine:
 
 | Case | Shared foundation | What changes |
 |---|---|---|
-| Healthcare prior authorization, the anchor | Document → typed evidence → versioned rule → gap/risk → cited draft → human approval | Patient/PHI boundary, payer/plan/procedure/date rule, clinician decision |
+| Healthcare prior authorisation, the anchor | Document → typed evidence → versioned rule → gap/risk → cited draft → human approval | Patient/PHI boundary, payer/plan/procedure/date rule, clinician decision |
 | Financial compliance reviewer | Same extraction, rule mapping, exact citation, review | Jurisdiction/product obligations, severity, high-recall surveillance, false-positive burden |
 | Legal contract copilot | Same clause-to-rule comparison and review | Playbook position, fallback language, privilege, material deviation to counsel |
 | Claims-processing assistant | Same triage and evidence controls | Claim-type rollout, anomaly signals, adjudication held for later governance |

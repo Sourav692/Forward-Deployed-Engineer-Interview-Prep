@@ -15,7 +15,7 @@ End to end, as a “refund this VIP” email:
 
 That’s it: **propose → validate → decide → maybe approve → execute once → record.** Shell access and unrestricted refunds stay out.
 
-> **Core idea:** The model proposes one bounded action. Deterministic services validate, authorize, approve, execute, and record it. The agent never holds broad credentials or decides whether its own action is allowed.
+> **Core idea:** The model proposes one bounded action. Deterministic services validate, authorise, approve, execute, and record it. The agent never holds broad credentials or decides whether its own action is allowed.
 
 Use this for the spoken design. The [Deep Dive](/design/tool-using-agent-with-safety-controls#deep-dive) holds the mechanics, and the unchanged [source case](/design/tool-using-agent-with-safety-controls#full-pack) holds the full reference.
 
@@ -37,7 +37,7 @@ The [source discovery table, §1](/design/tool-using-agent-with-safety-controls#
 | Which systems own customer, identity, and refund truth? | If the agent's todo list says "refunded" but billing says "not refunded," which one do we trust? | Read live from CRM, identity, and refund systems. Task state is progress, not money. |
 | What must be logged and retained for an audit or dispute? | If a customer later disputes a refund, can you prove exactly what happened — and how long do you keep that proof? | Ledger fields (who, proposal, policy, approval, receipt) and how long they are kept. |
 | How can operators stop an in-flight task? | If a bad refund loop is already running, how do we stop work that started — not only the next chat? | Kill switch must halt new tool calls, cancel queued work, and revoke tokens. |
-| What workload and business outcome matter? | How busy is peak, and are we optimizing for faster handling or fewer wrong refunds? | Planner/tool size, how many approvers you need, and how much autonomy you ship. |
+| What workload and business outcome matter? | How busy is peak, and are we optimising for faster handling or fewer wrong refunds? | Planner/tool size, how many approvers you need, and how much autonomy you ship. |
 
 If approval policy is unspecified, assume a human gate for irreversible actions; do not invent a permissive refund threshold.
 
@@ -173,7 +173,7 @@ Roll out in layers: read-only triage and drafting → narrow reversible CRM writ
 
 ## 8. Refund near-miss drill
 
-In the [source incident, §13](/design/tool-using-agent-with-safety-controls#full-pack), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorized money moved; the planner still failed by proposing a risky bulk action.
+In the [source incident, §13](/design/tool-using-agent-with-safety-controls#full-pack), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorised money moved; the planner still failed by proposing a risky bulk action.
 
 **Detect:** read planned, blocked, and allowed calls with amount, role, approval state, policy version. **Contain:** disable bulk refund planning, route VIP refunds to review tickets, and audit the 12 allowed calls. **Root cause:** action-oriented planner examples omitted bulk approval boundaries; the gateway policy still worked. **Prevent:** risk-aware tool schemas, policy simulation, a separate action-risk check, and non-bypassable gateway enforcement.
 
@@ -188,7 +188,7 @@ Spend roughly 50 minutes: opening/scope (12), architecture and one-request walk 
 | Can the model hold credentials?      | No; a trusted broker mints one scoped token for an approved action.                   |
 | How do you avoid duplicate refunds?  | Durable business-action key, stored receipt, reconciliation after uncertainty.        |
 | What if an email instructs a refund? | Email is data; policy and gateway decide, never the email or model.                   |
-| Why not direct integrations?         | One gateway centralizes authorization, validation, audit, and idempotency.            |
+| Why not direct integrations?         | One gateway centralizes authorisation, validation, audit, and idempotency.            |
 | When do you stop?                    | On risk, ambiguity, missing state, stale approval, policy failure, or budget ceiling. |
 
 **Final mental model:** Propose → validate → decide → approve if needed → scope credential → execute once → record → stop or repeat within budget.

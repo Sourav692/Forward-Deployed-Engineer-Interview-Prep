@@ -212,7 +212,7 @@ Read the components in dependency order. The fourteen are the source's; the fail
 | 06 | Embedding Service | Converts code into vector embeddings | Degrades: cache and local context only |
 | 07 | Vector Database | Stores embeddings for semantic retrieval | Degrades: no retrieved snippets, say so in telemetry |
 | 08 | Semantic Search | Retrieves relevant code and documentation | Closed on permission check; degrades on availability |
-| 09 | Prompt Builder | Constructs optimized prompts | Closed: a broken template fails the prompt unit test before release |
+| 09 | Prompt Builder | Constructs optimised prompts | Closed: a broken template fails the prompt unit test before release |
 | 10 | Semantic Cache | Reuses responses for similar requests | Degrades to a miss; never serves across permission scopes |
 | 11 | Model Router | Selects the best model based on task complexity | Degrades to the small model |
 | 12 | LLM Inference Service | Generates code and explanations | Degrades: fail over region or model; suppress on timeout |

@@ -32,7 +32,7 @@ Pre-aggregate before prompting: bucket metrics, count log signatures, sample tra
 
 Use five typed states: `SUCCESS` (data), `EMPTY` (query succeeded, no match), `UNAVAILABLE` (source did not answer), `DENIED` (caller lacks authority), `INVALID` (bad arguments). A string result hides the difference. `EMPTY` versus `UNAVAILABLE` prevents false confidence and retry storms. `DENIED` must not reveal a workaround; log the human-readable reason outside model context.
 
-An approved write takes one route: **authorize → validate → execute with timeout and idempotency key → classify → trim to declared fields → log**. Authorization comes first to avoid revealing a protected schema to a denied caller. An example idempotency seed is a hash of run ID, tool name, and canonical arguments. Read tools use scoped read-only credentials. Write tools appear only for the current rollout stage and remain behind approval.
+An approved write takes one route: **authorise → validate → execute with timeout and idempotency key → classify → trim to declared fields → log**. Authorisation comes first to avoid revealing a protected schema to a denied caller. An example idempotency seed is a hash of run ID, tool name, and canonical arguments. Read tools use scoped read-only credentials. Write tools appear only for the current rollout stage and remain behind approval.
 
 ## 4. Proposal and human boundary
 
@@ -48,7 +48,7 @@ For a slow prototype, trace auth, retrieval, rerank, model, tools, verification.
 
 ## 6. Failure ladder
 
-| Source/guard failure | Visible behavior |
+| Source/guard failure | Visible behaviour |
 |---|---|
 | Metrics down | `UNAVAILABLE` by deadline, metrics omitted from evidence, lower confidence. |
 | Logs rate-limited | Sampled signatures, logs marked partial. |

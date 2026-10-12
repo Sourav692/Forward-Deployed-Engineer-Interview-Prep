@@ -26,9 +26,9 @@ Use this guide as the **master case study** for enterprise RAG and knowledge-ass
 | **Enterprise Support Assistant** | Support knowledge, tickets and runbooks become central; add workflow integrations, escalation paths and customer-specific visibility. |
 | **Legal RAG** | Increase citation precision, source authority, version tracking, auditability and review; control cost while handling high-risk answers. |
 | **Sub-100ms Search** | Latency dominates; use permission-aware precomputation and caches, bounded retrieval and often remove live generation from the hot path. |
-| **Enterprise / LLM Search** | Emphasize broad source coverage, relevance, freshness, scale and search UX; preserve the same authorization boundary. |
+| **Enterprise / LLM Search** | Emphasize broad source coverage, relevance, freshness, scale and search UX; preserve the same authorisation boundary. |
 | **Meridian Assist** | Keep the enterprise-assistant foundation, then adapt source systems, users, workflows and domain-specific policies to the scenario. |
-| **Security / incident cases** | Focus on threat model, blast radius, detection, containment, revocation, recovery and evidence that no unauthorized data escaped. |
+| **Security / incident cases** | Focus on threat model, blast radius, detection, containment, revocation, recovery and evidence that no unauthorised data escaped. |
 
 ~~~text
                          G01
@@ -70,13 +70,13 @@ Citation / policy verification
 Answer / Abstain / Escalate
 ~~~
 
-**The LLM is never the authorization system.** If the user cannot see a document, that document must not enter the model context.
+**The LLM is never the authorisation system.** If the user cannot see a document, that document must not enter the model context.
 
 ---
 
 ## 1. How I would open
 
-> “Anyone can build multi-source RAG. The difficult part is that a Tier-1 agent, a Tier-3 engineer and an account manager may ask the same question but should see different information. So I’ll treat permission fidelity as the primary constraint and optimize retrieval quality inside that boundary.”
+> “Anyone can build multi-source RAG. The difficult part is that a Tier-1 agent, a Tier-3 engineer and an account manager may ask the same question but should see different information. So I’ll treat permission fidelity as the primary constraint and optimise retrieval quality inside that boundary.”
 
 ### Questions to ask the interviewer
 
@@ -93,9 +93,9 @@ Ask the questions that change a design decision. The [source case, §1](/design/
 | What are p95 latency, scale, residency, retention, and cost limits? | How fast, how many users, which country the data must stay in, and what we can spend? | Latency budget, partitioning, region, and how long logs are kept. |
 | Who may inspect traces, and what must an audit reconstruct? | After a leak scare, can we prove which docs went into the model and who was allowed to see them? | Logged IDs, versions, policy, evidence, and citation set. |
 
-If answers are unavailable, state the assumptions before drawing: read-only, query-time permission checks, passage citations, and fail-closed behavior on uncertain access.
+If answers are unavailable, state the assumptions before drawing: read-only, query-time permission checks, passage citations, and fail-closed behaviour on uncertain access.
 
-**Default MVP:** read-only Q&A; Drive, SharePoint, Slack, wiki and tickets; multi-tenant; ABAC/ACL-aware; query-time authorization; passage citations; sub-3-second chat target; no write-back, personal files, unapproved web, cross-tenant search or persistent memory.
+**Default MVP:** read-only Q&A; Drive, SharePoint, Slack, wiki and tickets; multi-tenant; ABAC/ACL-aware; query-time authorisation; passage citations; sub-3-second chat target; no write-back, personal files, unapproved web, cross-tenant search or persistent memory.
 
 ---
 
@@ -108,10 +108,10 @@ The easiest way to frame requirements in an interview is:
 ### Functional requirements — what the system must do
 
 1. **Ingest enterprise sources** — Drive, SharePoint, Slack, Confluence/wiki, Jira/tickets, etc.
-2. **Normalize permissions** — convert source-specific ACLs/groups into a common authorization model.
-3. **Retrieve authorized content** — unauthorized chunks must never enter model context.
+2. **Normalize permissions** — convert source-specific ACLs/groups into a common authorisation model.
+3. **Retrieve authorised content** — unauthorised chunks must never enter model context.
 4. **Answer questions** — use retrieved evidence rather than unsupported model knowledge.
-5. **Provide citations** — citations should point to the actual supporting, authorized evidence.
+5. **Provide citations** — citations should point to the actual supporting, authorised evidence.
 6. **Abstain when necessary** — if evidence is weak or unavailable, do not guess.
 7. **Handle changes** — propagate document updates, deletions, ACL changes and revocations.
 8. **Support different personas/tenants** — the same query can legitimately produce different results.
@@ -121,21 +121,21 @@ The easiest way to frame requirements in an interview is:
 
 | Requirement | Example target / constraint |
 |---|---|
-| **Security** | Zero unauthorized disclosure; fail closed on authorization failure |
+| **Security** | Zero unauthorised disclosure; fail closed on authorisation failure |
 | **Latency** | Chat target around p95 <3s; tighter targets need caching/precomputation |
 | **Freshness** | ACL changes/deletions reflected within a defined SLO |
 | **Scalability** | Example: 100k employees, 50M chunks, 100 QPS peak |
 | **Availability** | Degrade safely when retrieval/reranking/LLM components fail |
 | **Cost** | Define a cost/request budget and control model + retrieval spend |
-| **Auditability** | Replay why an answer and authorization decision occurred |
+| **Auditability** | Replay why an answer and authorisation decision occurred |
 | **Reliability** | Idempotent ingestion, retries, backfill and reconciliation |
-| **Maintainability** | Centralized, deterministic authorization rather than scattered permission logic |
+| **Maintainability** | Centralized, deterministic authorisation rather than scattered permission logic |
 
 ### Interview shortcut
 
 If asked **“What are the requirements?”**, say:
 
-> **“Functionally, I need to ingest enterprise data, understand permissions, retrieve only authorized evidence, and generate a cited answer or abstain. Non-functionally, the big constraints are zero data leakage, permission freshness, latency, scalability, cost, and auditability.”**
+> **“Functionally, I need to ingest enterprise data, understand permissions, retrieve only authorised evidence, and generate a cited answer or abstain. Non-functionally, the big constraints are zero data leakage, permission freshness, latency, scalability, cost, and auditability.”**
 
 ---
 
@@ -149,7 +149,7 @@ Identity mapping, ACL/ABAC policy, source configuration, retrieval configuration
 
 ### Data plane
 
-Ingestion, normalization, indexing, query authorization, retrieval, reranking, evidence selection, generation, citation verification and response/escalation.
+Ingestion, normalization, indexing, query authorisation, retrieval, reranking, evidence selection, generation, citation verification and response/escalation.
 
 ### Architecture diagram
 
@@ -191,8 +191,8 @@ flowchart LR
 - **Step 3.** **Build the search indexes.** Put eligible content into keyword and vector indexes for hybrid retrieval.
 - **Step 4.** **Establish the user's scope.** Authenticate the user, resolve groups and attributes, compile the ACL/ABAC permission filter, and plan a multi-hop question only when needed.
 - **Step 5.** **Retrieve and check.** Run hybrid search with that filter, then apply a live policy post-check before any candidate reaches reranking or the model.
-- **Step 6.** **Select evidence.** Rerank only authorized candidates and decide whether the evidence is sufficient; abstain or escalate if it is not.
-- **Step 7.** **Answer and verify.** The LLM gateway generates a cited answer from authorized evidence; citation and output checks run before returning it.
+- **Step 6.** **Select evidence.** Rerank only authorised candidates and decide whether the evidence is sufficient; abstain or escalate if it is not.
+- **Step 7.** **Answer and verify.** The LLM gateway generates a cited answer from authorised evidence; citation and output checks run before returning it.
 
 
 **Model and agent role:** This is an LLM-powered RAG assistant. A query planner may decompose a multi-hop question, but it does not grant access; deterministic ACL/ABAC checks decide what the LLM may see. The LLM gateway handles generation and model routing after those checks. It is not a free-running write agent.
@@ -259,13 +259,13 @@ Use change events where possible, idempotent processing, backfill, tombstones an
 
 Important distinction:
 
-> **Authorization correctness and freshness correctness are different checks.**
+> **Authorisation correctness and freshness correctness are different checks.**
 
 A connector can miss a delete while the ACL still looks valid. If freshness is outside the agreed SLO, fail closed or clearly withhold/label the answer.
 
 ---
 
-## 6. Authorization: two layers
+## 6. Authorisation: two layers
 
 ### Layer 1 — Pre-filter
 
@@ -290,7 +290,7 @@ This catches:
 
 ### Why not only post-filter?
 
-If top-10 contains six forbidden documents, filtering afterward leaves only four useful candidates. The user may miss relevant authorized evidence.
+If top-10 contains six forbidden documents, filtering afterward leaves only four useful candidates. The user may miss relevant authorised evidence.
 
 > **Pre-filter for efficiency and recall. Post-check for correctness.**
 

@@ -16,7 +16,7 @@ What must fit in 3 seconds? Can context be precomputed? Is streaming okay? Which
 
 - No consent: no recording, transcription or suggestion.
 - Failed redaction: no transcript storage or model call.
-- The model proposes CRM changes; the rep authorizes the write.
+- The model proposes CRM changes; the rep authorises the write.
 - Snapshot permissions mirror the rep; live facts use a timed allowlist.
 
 ## Numbers and evaluation

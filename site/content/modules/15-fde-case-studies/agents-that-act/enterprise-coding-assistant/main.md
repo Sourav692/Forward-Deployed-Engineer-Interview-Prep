@@ -104,7 +104,7 @@ flowchart LR
 - **Step 2.** The IDE extension sends the keystroke context over a persistent connection; authenticate the developer and check their license.
 - **Step 3.** Funnel current function/file, imports, cursor, tabs, edits, and relevant diagnostics into a small context; never send the whole repository.
 - **Step 4.** Check an exact or conservatively tuned semantic cache keyed by tenant, permission scope, code and prompt version. A safe hit goes to output validation; a miss triggers retrieval.
-- **Step 5.** On a miss, retrieve only authorized snippets from the symbol/vector index, recheck freshness and access, and assemble a bounded prompt.
+- **Step 5.** On a miss, retrieve only authorised snippets from the symbol/vector index, recheck freshness and access, and assemble a bounded prompt.
 - **Step 6.** Route inline completion to a small fast LLM with a short output cap. Explicit explanation, test, fix, and refactor tasks use a larger reasoning LLM on a slower, isolated path.
 - **Step 7.** Validate syntax, known APIs against the symbol index, secrets, license, and unsafe patterns before display. Suppress invalid or late output.
 - **Step 8.** Stream the accepted suggestion to the editor and record latency, cache, model, validation, and acceptance events without saving source code.
@@ -140,7 +140,7 @@ Roll out one repository with real permissions and three developers with differen
 
 ## 7. Interview answer to rehearse
 
-> “I would start with two constraints: inline completion needs p95 under 300 milliseconds, and private repository code must never cross permission boundaries. I would index on push by symbol and mirror the code host’s ACLs. On a keystroke, a context funnel keeps only the current function, imports, nearby files, and relevant edits. An early permission-scoped cache can end the request; on a miss, authorized retrieval builds a small prompt for a fast LLM. A larger reasoning model handles explicit explain, test, and refactor tasks away from the hot path. Every output is checked for syntax, nonexistent APIs, secrets, license, and unsafe patterns before the editor sees it. I would measure acceptance and a controlled productivity outcome, plus p95 and zero leak gates, then roll out one repository at a time.”
+> “I would start with two constraints: inline completion needs p95 under 300 milliseconds, and private repository code must never cross permission boundaries. I would index on push by symbol and mirror the code host’s ACLs. On a keystroke, a context funnel keeps only the current function, imports, nearby files, and relevant edits. An early permission-scoped cache can end the request; on a miss, authorised retrieval builds a small prompt for a fast LLM. A larger reasoning model handles explicit explain, test, and refactor tasks away from the hot path. Every output is checked for syntax, nonexistent APIs, secrets, license, and unsafe patterns before the editor sees it. I would measure acceptance and a controlled productivity outcome, plus p95 and zero leak gates, then roll out one repository at a time.”
 
 **Memory line:** “Cache first, retrieve on a miss, route by task, validate before display.”
 

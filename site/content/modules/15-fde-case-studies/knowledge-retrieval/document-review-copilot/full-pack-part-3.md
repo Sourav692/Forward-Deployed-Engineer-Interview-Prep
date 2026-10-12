@@ -62,7 +62,7 @@ Week one is not the whole diagram. It is one document type and one policy source
 | Week 2-3 | Golden dataset from historical cases and SME-approved answers; red-team and permission tests |
 | Week 3-4 | Shadow mode: drafts generated, compared with human decisions, never shown to end users; thresholds calibrated by risk category |
 | Week 5 | Read-only pilot with citations, confidence, feedback capture and an escalation path; coordinators use drafts, every request needs the approver |
-| Week 6-8 | Draft-only workflow actions behind human approval; one high-volume low-risk category first, such as imaging authorization or one business unit |
+| Week 6-8 | Draft-only workflow actions behind human approval; one high-volume low-risk category first, such as imaging authorisation or one business unit |
 | After | Outcome measurement: approval rate, denial reasons, preparation time, override rate. Expand payers, categories or document types only while eval metrics, incident rate, latency and cost hold; keep the rollback plan |
 
 The OpenAI-style claims practice prompt gives the ordering rule for what to automate. Extraction, triage, summarisation and missing-information detection come first. Adjudication comes only after evaluation and governance. That is the risk tiers, applied over time.

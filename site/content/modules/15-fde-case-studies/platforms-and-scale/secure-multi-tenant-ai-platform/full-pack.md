@@ -17,7 +17,7 @@ The dangerous failure is not a bad answer. It is a query, cache lookup, queue me
 
 Open with the outcome, not the topology. The feature asked for is one AI application for 500 enterprise tenants. The business result is a cost-efficient shared platform with defensible isolation, plus a dedicated path for the exceptions. Opening with Kubernetes, a vector database and a model gateway signals feature-first thinking, and that is the tell an FDE interviewer listens for.
 
-> *"Support 500 enterprise tenants preserving isolation, predictable performance and regional controls. I'd clarify shared versus dedicated tenants, cross-region data limits, and success criteria per stakeholder. Default: a shared control plane with tenant-aware data and inference paths, strong authorization at every boundary, and an escape hatch for premium tenants that need dedicated infrastructure."*
+> *"Support 500 enterprise tenants preserving isolation, predictable performance and regional controls. I'd clarify shared versus dedicated tenants, cross-region data limits, and success criteria per stakeholder. Default: a shared control plane with tenant-aware data and inference paths, strong authorisation at every boundary, and an escape hatch for premium tenants that need dedicated infrastructure."*
 
 The headline ask hides a disagreement between four stakeholders about what isolation and success mean. Map the people before the boxes.
 
@@ -41,7 +41,7 @@ Only about six questions fit a forty-five-minute interview, so ask the ones that
 | Do customers bring their own identity provider and their own keys, and is deletion hard or best-effort? | Federation, key management and the deletion workflow |
 | What is the workload shape, steady, bursty, skewed or mixed, and what noisy-neighbour tolerance is acceptable? | Quotas, admission control, queue isolation, reserved capacity |
 
-The three answer tiers show what the opening buys. The weak answer uses microservices and Kubernetes, puts a tenant_id column on every row and adds row-level security. It is solution-first, names no customer outcome, and treats one row label as the whole enforcement stack. The average answer builds a shared platform with per-tenant authorization, quotas, regional routing, audit logging and per-tenant latency monitoring. It never says where tenant context originates, never makes every isolation layer agree, and never defines when a customer graduates to dedicated infrastructure. The strong answer defaults to shared because pooled economics are the point across 500 tenants. It derives tenant context once from verified identity, never from the request body, and makes it immutable. The control plane decides policy, region, quota and key; the data plane enforces at the gateway, the services and every store. Seven layers enforce independently, a missing predicate fails closed, and an adversarial isolation suite gates every external tenant.
+The three answer tiers show what the opening buys. The weak answer uses microservices and Kubernetes, puts a tenant_id column on every row and adds row-level security. It is solution-first, names no customer outcome, and treats one row label as the whole enforcement stack. The average answer builds a shared platform with per-tenant authorisation, quotas, regional routing, audit logging and per-tenant latency monitoring. It never says where tenant context originates, never makes every isolation layer agree, and never defines when a customer graduates to dedicated infrastructure. The strong answer defaults to shared because pooled economics are the point across 500 tenants. It derives tenant context once from verified identity, never from the request body, and makes it immutable. The control plane decides policy, region, quota and key; the data plane enforces at the gateway, the services and every store. Seven layers enforce independently, a missing predicate fails closed, and an adversarial isolation suite gates every external tenant.
 
 State assumptions if the interviewer withholds answers, and choose the ones that protect the most dangerous failure. Assume tenants bring their own identity provider. Assume regional restrictions apply to stored data and inference logs. Assume premium customers may pay for dedicated capacity. Assume model selection is already approved. Have the line for interviewer silence ready:
 
@@ -54,7 +54,7 @@ Split the conversation into four buckets, functional requirements, non-functiona
 The functional requirements are ordered by value, and the order matters: the control plane is foundational and the dedicated tier is an escape hatch, not a default.
 
 1. **Tenant-aware control plane.** Onboard tenants, assign policies, provision configuration, manage keys, record admin actions.
-2. **Isolated data-plane request path.** Every request carries tenant identity, policy context and authorization through the whole call chain.
+2. **Isolated data-plane request path.** Every request carries tenant identity, policy context and authorisation through the whole call chain.
 3. **Per-tenant policy, quotas, keys and configuration** without bespoke code paths per customer.
 4. **Regional routing and retention controls.** Direct requests and artifacts to the correct region; retain or delete per tenant policy.
 5. **Auditable administration.** Answer who changed what, when, under which tenant context.
@@ -75,7 +75,7 @@ The safety goals are stated as measurable constraints, and so are the operating 
 
 | Constraint | Stated so it can be tested |
 |---|---|
-| Zero cross-tenant reads or writes | No exposure of another tenant's data, prompts, embeddings, outputs, logs or admin state through authorized or accidental paths. Tenant context derives from verified identity, never the request body |
+| Zero cross-tenant reads or writes | No exposure of another tenant's data, prompts, embeddings, outputs, logs or admin state through authorised or accidental paths. Tenant context derives from verified identity, never the request body |
 | Bounded resource contention | One tenant's workload cannot cause unbounded latency or throughput collapse for others. Shared infrastructure shares constraints |
 | Tenant-scoped blast radius | A failed deploy, bad policy or revoked credential affects only the minimum necessary tenant set |
 | Latency | Per-tenant p95 measured and alerted separately. A 2-second budget forces fewer hops and more caching; a 15-second budget permits durable queues and async work |
@@ -93,7 +93,7 @@ Every requirement then needs the component that enforces it. If a requirement ha
 | Regional routing and retention controls | Traffic router, region-aware storage, retention scheduler |
 | Auditable administration | Append-only audit log, admin event pipeline |
 | Dedicated deployment tier | Separate cluster or namespace boundary with tenant-specific capacity |
-| Zero cross-tenant reads or writes | Authorization checks, row-level or object-level isolation, test gates |
+| Zero cross-tenant reads or writes | Authorisation checks, row-level or object-level isolation, test gates |
 | Bounded resource contention | Quotas, admission control, queue isolation, autoscaling limits |
 | Tenant-scoped blast radius | Deployment partitions, scoped rollout, tenant-level feature flags |
 | Safe onboarding and offboarding | Provisioning workflows, deletion jobs, verification checks |
@@ -112,7 +112,7 @@ Anchor SLOs in the customer workflow rather than in what the platform team prefe
 - latency as end-to-end response time or completion time
 - freshness as time from source update to model-visible update
 - quality as task success rate and grounded-answer rate
-- security indicators as authorization failures, policy denials and blocked cross-tenant attempts
+- security indicators as authorisation failures, policy denials and blocked cross-tenant attempts
 - cost per request, per tenant and per successful task
 
 Tie one to a workflow aloud. If this powers support agents, the latency budget must preserve the agent's interaction loop, or a technically successful response arrives functionally useless.

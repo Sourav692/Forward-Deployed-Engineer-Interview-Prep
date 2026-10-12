@@ -37,7 +37,7 @@ The first move under this injection is to contain impact, preserve evidence and 
 
 ## 8. Name the Failure Policy for Every Layer
 
-Every dependency needs an explicit answer to one question: what happens when it is gone? Five terms carry that answer consistently. Fail open continues with reduced visibility. Fail closed refuses the action when integrity, privacy or authorization would be compromised. Degrade serves a reduced but safe experience. Queue buffers with explicit bounds and retention. Human intervention escalates when risk or ambiguity is too high for automation.
+Every dependency needs an explicit answer to one question: what happens when it is gone? Five terms carry that answer consistently. Fail open continues with reduced visibility. Fail closed refuses the action when integrity, privacy or authorisation would be compromised. Degrade serves a reduced but safe experience. Queue buffers with explicit bounds and retention. Human intervention escalates when risk or ambiguity is too high for automation.
 
 | Failure | Policy |
 |---|---|

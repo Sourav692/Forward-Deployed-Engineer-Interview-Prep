@@ -2,7 +2,7 @@
 
 ## 12. Deliver It in Sixty Minutes
 
-Spend the hour on the riskiest everything, not on everything. Authorization, escalation and failure recovery deserve more minutes than the model.
+Spend the hour on the riskiest everything, not on everything. Authorisation, escalation and failure recovery deserve more minutes than the model.
 
 | Minutes | Phase                                                                                                            |
 | ------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -22,17 +22,17 @@ The 90-second architecture summary:
 
 The two-minute spoken answer:
 
-> *I would not start with the model. The ask sounds like "automate routine support," but the product is not a chatbot that answers everything. It is a routed service that must decide when to act, when to ask for approval, and when to stop. Take a customer saying they were charged twice and need it fixed today. The naive design sends that to a model and resolves the ticket. The real design starts earlier: verify who the user is, determine whether the request touches money, decide whether it is safe to act on the account, and preserve enough context for a human to take over. So the pipeline is a gateway that normalizes the channel, identity verification that assigns an assurance level, a router that tags intent and risk, retrieval that grounds the draft in approved policy, and then a deterministic tool policy gateway that decides whether any action may execute. That gateway, not the model, is the authorization boundary. Model output is one input to a controlled workflow, never truth. Latency is tiered by risk, and if billing times out or the policy check fails, the system degrades into a safe handoff carrying the conversation, the attempted actions, and the reason. I would launch agent-assist only, then automate narrow reversible intents, then add one tool class at a time, each with its own gate and kill switch. Success is lower handling cost with no increase in incorrect or harmful resolutions.*
+> *I would not start with the model. The ask sounds like "automate routine support," but the product is not a chatbot that answers everything. It is a routed service that must decide when to act, when to ask for approval, and when to stop. Take a customer saying they were charged twice and need it fixed today. The naive design sends that to a model and resolves the ticket. The real design starts earlier: verify who the user is, determine whether the request touches money, decide whether it is safe to act on the account, and preserve enough context for a human to take over. So the pipeline is a gateway that normalizes the channel, identity verification that assigns an assurance level, a router that tags intent and risk, retrieval that grounds the draft in approved policy, and then a deterministic tool policy gateway that decides whether any action may execute. That gateway, not the model, is the authorisation boundary. Model output is one input to a controlled workflow, never truth. Latency is tiered by risk, and if billing times out or the policy check fails, the system degrades into a safe handoff carrying the conversation, the attempted actions, and the reason. I would launch agent-assist only, then automate narrow reversible intents, then add one tool class at a time, each with its own gate and kill switch. Success is lower handling cost with no increase in incorrect or harmful resolutions.*
 
 The concise close:
 
-> *"My design optimizes for the customer outcome of reducing handling time and cost without increasing incorrect or harmful resolutions. I would begin with the highest-volume, lowest-risk intents, route risky or ambiguous cases to humans with full context, and use explicit policy gates so confidence never overrides safety. The riskiest trade-off is automation rate versus harmful mistakes, so the first production gate is a limited rollout on low-risk intents with idempotent actions, human review, and rollback if incorrect-resolution or duplicate-action rates rise."*
+> *"My design optimises for the customer outcome of reducing handling time and cost without increasing incorrect or harmful resolutions. I would begin with the highest-volume, lowest-risk intents, route risky or ambiguous cases to humans with full context, and use explicit policy gates so confidence never overrides safety. The riskiest trade-off is automation rate versus harmful mistakes, so the first production gate is a limited rollout on low-risk intents with idempotent actions, human review, and rollback if incorrect-resolution or duplicate-action rates rise."*
 
 The lines that carry the round:
 
 1. *"This is a routed decision pipeline, not a chatbot."*
 2. *"Model output is one input to a controlled workflow, never truth."*
-3. *"The tool policy gateway, not the model, is the authorization boundary."*
+3. *"The tool policy gateway, not the model, is the authorisation boundary."*
 4. *"Confidence is not a release criterion. Separate model confidence from action permission."*
 5. *"Verify identity before any account tool. Sounding right is not authentication."*
 6. *"Maximise safe automation, not the automation percentage."*
@@ -58,7 +58,7 @@ Four trade-offs are worth a twenty-second verdict each. Automation rate versus r
 | Weak answer                                                                                           | Repair                                                                                             |
 | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | "I'd just use an LLM agent and let it solve tickets."                                                 | Add explicit intent routing, action gating and escalation thresholds                               |
-| "I'd optimize for full automation."                                                                   | Prioritise safe automation and reversible actions                                                  |
+| "I'd optimise for full automation."                                                                   | Prioritise safe automation and reversible actions                                                  |
 | "The model will know when it's unsure."                                                               | Introduce external signals: retrieval quality, policy rules, account state, confidence calibration |
 | "The agent can read the chat."                                                                        | Require a structured handoff summary with reasons, not just the transcript                         |
 | "I'd start with the hardest ticket, because it matters most."                                         | Choose the most repetitive, lowest-risk, highest-confidence intent first                           |

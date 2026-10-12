@@ -80,7 +80,7 @@ The follow-up is "what if there is no labelled data?" Sample production traffic.
 
 Every external dependency and every irreversible action needs an explicit failure policy. Otherwise the default becomes "guess", and a guessing gate approves things.
 
-| Condition | Recommended behavior | Why |
+| Condition | Recommended behaviour | Why |
 |---|---|---|
 | Grader service times out | Fail closed for release decisions; queue a retry for analysis runs | Do not approve on missing evidence |
 | Metrics backend is delayed | Degrade dashboards, not gate decisions, if the decision record is already durable | Preserve the control plane |

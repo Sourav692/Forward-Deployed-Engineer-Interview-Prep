@@ -118,7 +118,7 @@ Components, in the order they exist and the order they fail:
 | Connectors and queue          | Pull change events, run backfill, reconcile missed events                                                  | Degrades: stale source is labeled, not hidden          |
 | ACL normaliser                | Translate each source's permission model into one attribute model                                          | Closed: no usable ACL, nothing indexed                 |
 | Indexes and metadata store    | Keyword and vector per tenant; versions, tombstones, event IDs                                             | Degrades: vector down, keyword serves a labeled answer |
-| Authorize and pre-filter      | Resolve groups, compile attributes into the search filter                                                  | Closed                                                 |
+| Authorise and pre-filter      | Resolve groups, compile attributes into the search filter                                                  | Closed                                                 |
 | Retriever and fusion          | Hybrid search inside the filter, RRF                                                                       | Degrades: fusion order without rerank                  |
 | Policy post-check             | Re-run the full ABAC policy on fresh attributes; redact as an obligation                                   | Closed: policy engine down, refuse                     |
 | Reranker and grader           | 20 to 6, then decide if the evidence is enough                                                             | Degrades or refuses                                    |
@@ -147,7 +147,7 @@ Say both lines while drawing: the connector translates permissions, and nothing 
 
 ## 7. Enforce Before the Model Sees Anything
 
-Authorize first and enforce before generation, and encode that order in the graph's edges rather than in a code convention someone can forget. A model cannot leak text that never entered its context.
+Authorise first and enforce before generation, and encode that order in the graph's edges rather than in a code convention someone can forget. A model cannot leak text that never entered its context.
 
 ```
   ┌─────────┐  ┌──────┐  ┌──────────┐  ┌─────────┐  ┌────────┐  ┌───────┐  ┌────────┐  ┌────────┐
@@ -284,7 +284,7 @@ Design the failure path with the happy path, because a design that only describe
 | Reranker unavailable                  | fall back to fusion order; trace records it                                                                                                                  |
 | Low retrieval confidence              | refuse and escalate to a human                                                                                                                               |
 | Stale ACL cache serves a revoked user | short-lived permission cache with a versioned identity snapshot, revocation on IdP change events, a bounded and stated stale window; layer 2 catches it      |
-| Fabricated citation                   | citation verifier against the retrieval set and live authorization; the response is rejected or rewritten                                                    |
+| Fabricated citation                   | citation verifier against the retrieval set and live authorisation; the response is rejected or rewritten                                                    |
 | Prompt injection in a ticket or wiki  | retrieved content is evidence, never instructions; it cannot alter the system prompt or unlock tools, and unauthorised text never entered the context anyway |
 | Policy engine unavailable             | fail closed. Refuse. Never fail open on authorisation                                                                                                        |
 

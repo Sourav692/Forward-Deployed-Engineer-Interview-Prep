@@ -73,7 +73,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The AI request path may use retrieval, an LLM and tools; the observability path describes those steps but cannot authorize, alter or stall them. A bounded asynchronous export separates the two. Nothing raw crosses the classifier boundary into the trace store.
+The AI request path may use retrieval, an LLM and tools; the observability path describes those steps but cannot authorise, alter or stall them. A bounded asynchronous export separates the two. Nothing raw crosses the classifier boundary into the trace store.
 
 ```mermaid
 flowchart TB
@@ -90,7 +90,7 @@ flowchart TB
 
 ### Step-by-step architecture
 
-- Give each authorized request a correlation ID and tenant scope; propagate both across services, queues and integrations.
+- Give each authorised request a correlation ID and tenant scope; propagate both across services, queues and integrations.
 - Trace retrieval, model/LLM, tool and post-processing timings with structured version, error and outcome metadata while the request continues to the user.
 - Export spans asynchronously through a bounded buffer. If export fails, serve the user and alert on the diagnostic gap.
 - Classify and redact sensitive fields before storage; use an HMAC fingerprint with a secret key where correlation is needed, and cap attribute cardinality.
@@ -116,4 +116,4 @@ Roll out in four phases: agree on user-facing SLOs; instrument one critical path
 
 ## Two-minute interview answer
 
-“I would first define what slow and wrong mean for this customer and write the no-capture list. Every request gets a correlation ID and structured spans through retrieval, model and tools, but full prompts and raw documents stay out of telemetry by default. Spans export asynchronously through redaction and bounded sampling into a retention-limited store. Global dashboards show aggregate health; authorized support gets tenant-scoped evidence, with a separate audit trail. I diagnose from the complaint down: user outcome, then the slow or failing span, then retrieval evidence versus final answer. I retain error and slow traces preferentially so the rare incident is still visible, and I prove the instrumentation itself does not hurt latency or privacy before expanding.”
+“I would first define what slow and wrong mean for this customer and write the no-capture list. Every request gets a correlation ID and structured spans through retrieval, model and tools, but full prompts and raw documents stay out of telemetry by default. Spans export asynchronously through redaction and bounded sampling into a retention-limited store. Global dashboards show aggregate health; authorised support gets tenant-scoped evidence, with a separate audit trail. I diagnose from the complaint down: user outcome, then the slow or failing span, then retrieval evidence versus final answer. I retain error and slow traces preferentially so the rare incident is still visible, and I prove the instrumentation itself does not hurt latency or privacy before expanding.”

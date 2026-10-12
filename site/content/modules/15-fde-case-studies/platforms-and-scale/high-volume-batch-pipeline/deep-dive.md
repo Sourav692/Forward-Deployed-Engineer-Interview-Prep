@@ -6,7 +6,7 @@
 
 The question is recovery under a deadline. Get the output contract first: complete-only or partial publish; what to do with permanently bad records; acceptable fallback models; who approves changes. A queue cannot answer those product decisions. Store the policy with the job so an operator cannot improvise under pressure.
 
-Job creation should be idempotent. Expose create, status, pause and replay-failures operations, guarded by authorization. Use ETags or equivalent conditional updates for operator actions. The job record pins snapshot ID, partition manifest, model/prompt/schema versions, deadline and publication rule. Preserve enough lineage to reproduce an individual result and the whole run.
+Job creation should be idempotent. Expose create, status, pause and replay-failures operations, guarded by authorisation. Use ETags or equivalent conditional updates for operator actions. The job record pins snapshot ID, partition manifest, model/prompt/schema versions, deadline and publication rule. Preserve enough lineage to reproduce an individual result and the whole run.
 
 ## 2. Capacity arithmetic and cost
 
