@@ -9,7 +9,7 @@
 | #80 Anthropic MLE: design an agentic AI system that can autonomously adapt to new tasks | Sections 1 to 14: the whole design on one running example |
 | Cost self-drill | Section 15 |
 
-**Much of this page is own construction, but its backbone is sourced.** The repo holds no worked answer to #80. The prompt comes from the decomposition question bank, Tier 1 prompt 15. The spine comes from the Cracking book's learning chapter. Its four learning surfaces, skill promotion gate and data flywheel answer most of this prompt directly. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
+**Much of this page is own construction, but its backbone is sourced.** No worked answer exists for this prompt. The prompt comes from the decomposition question bank, Tier 1 prompt 15. The spine comes from the Cracking book's learning chapter. Its four learning surfaces, skill promotion gate and data flywheel answer most of this prompt directly. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
 
 The running example is the Cracking book's own: an internal operations agent. It handles requests such as "restart service X" and "roll back flag Y". New request types appear every week as teams ship new systems.
 
@@ -215,4 +215,4 @@ One cost follows. Examples sit above the user's turn, so swapping them per reque
 
 **Reflexion.** A failed attempt becomes a written lesson placed in context for the next attempt. The model itself does not change. The book says it works reliably only with three conditions: an external failure signal, a lesson specific enough to change behaviour, and a hard cap on attempts. "Expected ISO 8601 UTC, I sent local time" is a lesson. "Be more careful" is not. A model grading its own attempt without an external signal tends to produce confidently wrong lessons. Those lessons then contaminate every retry after them.
 
-The repo's Reflexion notebook implements the pattern as actor, evaluator and self-reflection roles. For #80, one design rule sits on top: the evaluator must be external. A validator, a test or an API response counts. The same model's opinion does not.
+A Reflexion implementation splits the pattern into actor, evaluator and self-reflection roles. For #80, one design rule sits on top: the evaluator must be external. A validator, a test or an API response counts. The same model's opinion does not.

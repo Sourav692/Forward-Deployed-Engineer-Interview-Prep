@@ -119,7 +119,7 @@ flowchart TB
 | Observability | Cost per successful outcome and adoption are the portfolio's scoreboard | #7 | All of them |
 | Portfolio office | Holds the card register, re-scores quarterly, records kill decisions | Wave 0 | The next thirty ideas |
 
-The platform view is *(own construction)*. Its gateway pieces come from the repo's gateway material. [#100 Production LLM Gateway](/design/production-llm-gateway) designs that component in full. [G13 Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) covers the harness.
+The platform view is *(own construction)*. Its gateway pieces come from this site's gateway material. [#100 Production LLM Gateway](/design/production-llm-gateway) designs that component in full. [G13 Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) covers the harness.
 
 ## 10. Sequence the Portfolio in Waves
 

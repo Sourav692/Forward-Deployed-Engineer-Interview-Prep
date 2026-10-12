@@ -12,7 +12,7 @@ These four prompts are one pipeline asked four ways, not four different systems.
 | #83 Google: design a small LLM that runs on a phone while staying polite | Section 11: the deploy stage under a device constraint |
 | Compute-cost self-drill | Section 14 |
 
-**Most of this page is own construction.** The repo holds no worked design for any of these four prompts. The prompts themselves come from the OpenAI decomposition question bank. The grounding comes from the Foundations fine-tuning labs, the Cracking book's chapter on learning surfaces, and the quantisation arithmetic in the air-gapped chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is an illustration for the whiteboard, not a sourced figure.
+**Most of this page is own construction.** No worked design exists for any of these four prompts. The prompts themselves come from the OpenAI decomposition question bank. The grounding comes from hands-on fine-tuning labs, the Cracking book's chapter on learning surfaces, and the quantisation arithmetic in the air-gapped chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is an illustration for the whiteboard, not a sourced figure.
 
 ---
 
@@ -180,4 +180,4 @@ The Foundations labs make the contrast concrete. They compare a base model with 
 
 Three rules follow *(own construction)*. Keep SFT short, because a model that over-fits the worked solutions reproduces their exact wording and loses flexibility. Mix general instruction data in, so the model does not forget how to follow ordinary requests. Include examples that decline an ill-posed problem, or the model will never learn that "this has no unique answer" is a legal output.
 
-Parameter-efficient fine-tuning is the default for iteration. An adapter method such as LoRA trains a small set of added weights and leaves the base model frozen. QLoRA does the same on a base model loaded at 4-bit precision. The repo's Llama 2 AutoTrain notebook uses `--use_peft` and `--use_int4` (current AutoTrain calls them `--peft` and `--quantization int4`) to fit a 7B model on modest hardware. Use adapters for fast experiments. Move to a full fine-tune only when an adapter demonstrably plateaus below the target.
+Parameter-efficient fine-tuning is the default for iteration. An adapter method such as LoRA trains a small set of added weights and leaves the base model frozen. QLoRA does the same on a base model loaded at 4-bit precision. A typical Llama 2 AutoTrain run uses `--use_peft` and `--use_int4` (current AutoTrain calls them `--peft` and `--quantization int4`) to fit a 7B model on modest hardware. Use adapters for fast experiments. Move to a full fine-tune only when an adapter demonstrably plateaus below the target.

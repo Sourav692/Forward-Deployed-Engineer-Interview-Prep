@@ -12,7 +12,7 @@ During call → small prompt → fast model → streamed suggestion.
 After call → async summary + CRM update.
 ```
 
-The voice project's streaming pipeline, kept verbatim as the nearest built system in the repo:
+The voice project's streaming pipeline, kept verbatim as the nearest system built end to end:
 
 ```
 User Voice → VAD (Silero) → STT (Deepgram) → LLM (Groq)

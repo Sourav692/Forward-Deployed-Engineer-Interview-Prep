@@ -18,9 +18,9 @@ The pipeline runs in six steps. Extract a candidate from successful traces and g
 
 Demotion matters as much as promotion. Environments drift. A skill that encodes last quarter's API shape must leave production before a human notices. A library that only grows becomes a liability within about two quarters, in the book's estimate.
 
-The repo shows two versions of the mechanism. The Voyager-style notebook first checks the library for a skill that can be reused or composed. Only if nothing fits does it write new code. It runs the code in a sandbox, checks it against test cases, and saves it only if they pass. The Agent Workflow Memory notebook stores tool-call sequences rather than code. It abstracts a successful trajectory into a template with placeholders, then fills the template for structurally similar tasks. Choose code skills when the tool surface is programmable. Choose workflow templates when the reusable unit is the order of tool calls.
+There are two versions of the mechanism. The Voyager-style version first checks the library for a skill that can be reused or composed. Only if nothing fits does it write new code. It runs the code in a sandbox, checks it against test cases, and saves it only if they pass. The Agent Workflow Memory version stores tool-call sequences rather than code. It abstracts a successful trajectory into a template with placeholders, then fills the template for structurally similar tasks. Choose code skills when the tool surface is programmable. Choose workflow templates when the reusable unit is the order of tool calls.
 
-Procedures change behaviour, so they are the highest-risk memory layer. The repo's procedural-memory notebook makes approval happen outside the model's reasoning loop. The agent may propose a procedure, but the graph pauses for a human decision. Rollback re-approves an older version. Keep that rule for anything that widens what a skill may do.
+Procedures change behaviour, so they are the highest-risk memory layer. A sound procedural-memory design makes approval happen outside the model's reasoning loop. The agent may propose a procedure, but the graph pauses for a human decision. Rollback re-approves an older version. Keep that rule for anything that widens what a skill may do.
 
 ## 9. Optimise Prompts as Experiments, Not Edits
 
@@ -30,7 +30,7 @@ It sits between procedure and parameters on the ladder for a reason. It changes 
 
 Three rules keep it honest. Hold out a test set the optimiser never sees, because a search over hundreds of variants will overfit a small dev set. Report the win per stratum, because a planner prompt tuned on common tasks can quietly break rare ones. And treat the winning prompt as a candidate like any other: eval gate, shadow, owner review.
 
-The repo's DSPy course covers declared prompts, multi-step programs, evaluation and pairwise Elo scoring. It does not include an optimiser module, so this section rests on general knowledge rather than repo content.
+The sources behind this page cover DSPy's declared prompts, multi-step programs, evaluation and pairwise Elo scoring, but not its optimisers. This section rests on general knowledge.
 
 ## 10. Update Weights Last, and Only for the Three Cases That Earn It
 
@@ -44,7 +44,7 @@ If training does happen, the flywheel gates decide whether the data is honest. D
 
 ## 11. Gate Every Self-Modification Like a Human Pull Request
 
-A self-modifying system without a release gate is an unreviewed deploy pipeline with a model holding the merge button. The gate is where #80 is won or lost. It is also where I'd expect the panel to probe hardest. The repo's OpenAI decomposition question bank, compiled from candidate reports, calls evaluation a deliberate differentiator in that round. I'm assuming the same holds here, but no public source says so for this prompt.
+A self-modifying system without a release gate is an unreviewed deploy pipeline with a model holding the merge button. The gate is where #80 is won or lost. It is also where I'd expect the panel to probe hardest. Reported interview questions from the OpenAI decomposition round call evaluation a deliberate differentiator there. I'm assuming the same holds here, but no public source says so for this prompt.
 
 Apply the validation chapter's CI gate to every learned artefact, whichever rung it came from. Safety assertions gate absolutely: any failure blocks. Quality gates against the baseline with a paired significance test, per stratum, not just on the mean. Cost is reported, and a ceiling breach blocks. A gain that triples spend must be a visible decision.
 
@@ -64,7 +64,7 @@ Evaluate the whole trajectory, not just the final answer. Several paths can be v
 
 ## 12. Bound the Autonomy the Agent Has Over Itself
 
-"Autonomously" is the most dangerous word in the prompt. The agent may learn how to do things. It may never learn that it is allowed to do more *(own construction throughout this section, built on the repo's tool-gateway and approval patterns)*.
+"Autonomously" is the most dangerous word in the prompt. The agent may learn how to do things. It may never learn that it is allowed to do more *(own construction throughout this section, built on standard tool-gateway and approval patterns)*.
 
 Draw the line in a table and say it aloud.
 

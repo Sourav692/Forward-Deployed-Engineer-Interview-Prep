@@ -120,7 +120,7 @@ Assume the interviewer says system C's vendor will not release data for 60 days.
 
 ## 7. Decompose Medication Errors: Start Medication Safety at the Human Check
 
-*Everything in this section is (own construction). Numbers are assumptions. Clinical practice named here is general knowledge, not repo material.*
+*Everything in this section is (own construction). Numbers are assumptions. Clinical practice named here is general knowledge, not sourced material.*
 
 ### 7.1 Clarify the mission
 

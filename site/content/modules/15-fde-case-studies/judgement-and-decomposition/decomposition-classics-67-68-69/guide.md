@@ -10,7 +10,7 @@ These three prompts are not system-design questions with a hidden right architec
 | #68 | "A regional bank wants to unify fraud detection across three legacy systems acquired through M&A. None of the data is labelled consistently. How do you scope the first 90 days?" | Data quality realism, phased scoping, regulatory constraints |
 | #69 | "A hospital network wants to reduce medication errors in post-surgery care. They have patient records, pharmacy dispensing logs, and nurse assignment schedules. Where do you start?" | High-stakes HITL design, safety-first decomposition |
 
-The repo holds the three prompts, the six-step framework and the Tier 2 probes. It holds no worked answer for any of the three. Every case section is therefore *(own construction)*, built from the framework's arguments. Every number in those sections is an assumption to state aloud, not a sourced fact. Domain facts are general knowledge and are marked where they appear.
+The source gives the three prompts, the six-step framework and the Tier 2 probes. It gives no worked answer for any of the three. Every case section is therefore *(own construction)*, built from the framework's arguments. Every number in those sections is an assumption to state aloud, not a sourced fact. Domain facts are general knowledge and are marked where they appear.
 
 ---
 

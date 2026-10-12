@@ -19,7 +19,7 @@ That’s it: **admit → load state → infer stream → moderate → persist.**
 
 ## The anchor and variant
 
-“Design ChatGPT” asks for a **stateful product around a stateless model**: conversations, streaming, admission, moderation and token cost at consumer scale. The “Design the Claude chat service” variant uses the same architecture, with more emphasis on batching, GPU capacity, queues and failover. There is no separate worked design for either prompt in the repository.
+“Design ChatGPT” asks for a **stateful product around a stateless model**: conversations, streaming, admission, moderation and token cost at consumer scale. The “Design the Claude chat service” variant uses the same architecture, with more emphasis on batching, GPU capacity, queues and failover. There is no separate worked design for either prompt.
 
 ## Questions to ask the interviewer
 

@@ -15,7 +15,7 @@ These prompts look like AI questions and are graded as distributed-systems quest
 | #74 OpenAI favourite: diagnose high latency in an LLM inference pipeline | Section 15: the stack walk, shared with G14 |
 | Self-drill for G20 *(own construction)* | Section 17 |
 
-**Read this first.** The repo has no worked design for this group and no notes on continuous batching, paged attention or any serving engine. The design on this page is therefore *own construction*. It is built from general serving practice. It is grounded where the repo does speak: the air-gapped chapter's replica memory and sizing formula, and the cost playbook additions on prefill, decode, Little's Law and goodput. Every number below is a stated assumption, never a benchmark. In the room, say "I would replace these with a load test of the actual model."
+**Read this first.** No worked design exists for this group, and the sources have no notes on continuous batching, paged attention or any serving engine. The design on this page is therefore *own construction*. It is built from general serving practice. It is grounded where the sources do speak: the air-gapped chapter's replica memory and sizing formula, and the cost playbook additions on prefill, decode, Little's Law and goodput. Every number below is a stated assumption, never a benchmark. In the room, say "I would replace these with a load test of the actual model."
 
 ---
 
