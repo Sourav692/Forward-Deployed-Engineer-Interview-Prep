@@ -14,7 +14,7 @@ import {
   RELATED_CASE,
   RELATED_PRACTICE,
   STORY_BANK,
-  TABS,
+  tabMeta,
   readingMinutes,
   normaliseTitle,
   qualifierFor,
@@ -336,7 +336,7 @@ export const getCaseStudy = cache(
         return {
           tab: tab.id,
           label: tab.label,
-          purpose: TABS[tab.id]?.purpose ?? '',
+          purpose: tabMeta(tab.id)?.purpose ?? '',
           minutes: readingMinutes(raw),
           doc: glossReading(parseReading(raw, tab.id)),
         }

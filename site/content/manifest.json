@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T14:46:33.990Z",
+  "generatedAt": "2026-10-12T09:42:54.484Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -263,11 +263,27 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
+                },
+                {
+                  "id": "full-pack-part-5",
+                  "label": "Full Design 5"
                 }
               ],
-              "minutes": 75,
-              "updated": "2026-10-11"
+              "minutes": 78,
+              "updated": "2026-10-12"
             },
             {
               "slug": "nl-over-governed-data",
@@ -288,11 +304,27 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
+                },
+                {
+                  "id": "full-pack-part-5",
+                  "label": "Full Design 5"
                 }
               ],
-              "minutes": 70,
-              "updated": "2026-10-11"
+              "minutes": 73,
+              "updated": "2026-10-12"
             },
             {
               "slug": "document-review-copilot",
@@ -313,11 +345,23 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
                 }
               ],
-              "minutes": 59,
-              "updated": "2026-10-11"
+              "minutes": 61,
+              "updated": "2026-10-12"
             },
             {
               "slug": "deep-research-agent",
@@ -338,11 +382,19 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
                 }
               ],
-              "minutes": 45,
-              "updated": "2026-10-11"
+              "minutes": 47,
+              "updated": "2026-10-12"
             }
           ]
         },
@@ -370,11 +422,27 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
+                },
+                {
+                  "id": "full-pack-part-5",
+                  "label": "Full Design 5"
                 }
               ],
-              "minutes": 81,
-              "updated": "2026-10-11"
+              "minutes": 83,
+              "updated": "2026-10-12"
             },
             {
               "slug": "tool-using-agent-with-safety-controls",
@@ -395,11 +463,23 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
                 }
               ],
-              "minutes": 72,
-              "updated": "2026-10-11"
+              "minutes": 73,
+              "updated": "2026-10-12"
             },
             {
               "slug": "sre-incident-response-agent",
@@ -420,11 +500,23 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
                 }
               ],
-              "minutes": 60,
-              "updated": "2026-10-11"
+              "minutes": 62,
+              "updated": "2026-10-12"
             },
             {
               "slug": "sales-copilot",
@@ -445,11 +537,23 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
                 }
               ],
-              "minutes": 62,
-              "updated": "2026-10-11"
+              "minutes": 64,
+              "updated": "2026-10-12"
             },
             {
               "slug": "enterprise-coding-assistant",
@@ -470,11 +574,23 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
                 }
               ],
-              "minutes": 52,
-              "updated": "2026-10-11"
+              "minutes": 53,
+              "updated": "2026-10-12"
             },
             {
               "slug": "real-time-call-assistant",
@@ -495,11 +611,23 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
                 }
               ],
-              "minutes": 48,
-              "updated": "2026-10-11"
+              "minutes": 49,
+              "updated": "2026-10-12"
             },
             {
               "slug": "logistics-exception-handling",
@@ -520,11 +648,19 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
                 }
               ],
-              "minutes": 44,
-              "updated": "2026-10-11"
+              "minutes": 45,
+              "updated": "2026-10-12"
             }
           ]
         },
@@ -552,11 +688,27 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
+                },
+                {
+                  "id": "full-pack-part-5",
+                  "label": "Full Design 5"
                 }
               ],
-              "minutes": 71,
-              "updated": "2026-10-11"
+              "minutes": 73,
+              "updated": "2026-10-12"
             },
             {
               "slug": "high-volume-batch-pipeline",
@@ -577,11 +729,27 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
+                },
+                {
+                  "id": "full-pack-part-5",
+                  "label": "Full Design 5"
                 }
               ],
-              "minutes": 58,
-              "updated": "2026-10-11"
+              "minutes": 60,
+              "updated": "2026-10-12"
             },
             {
               "slug": "agent-platform-for-non-technical-users",
@@ -602,11 +770,23 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
                 }
               ],
               "minutes": 50,
-              "updated": "2026-10-11"
+              "updated": "2026-10-12"
             },
             {
               "slug": "consumer-scale-chat-service",
@@ -627,11 +807,19 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
                 }
               ],
               "minutes": 42,
-              "updated": "2026-10-11"
+              "updated": "2026-10-12"
             },
             {
               "slug": "llm-inference-serving",
@@ -652,11 +840,19 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
                 }
               ],
-              "minutes": 45,
-              "updated": "2026-10-11"
+              "minutes": 46,
+              "updated": "2026-10-12"
             }
           ]
         },
@@ -684,11 +880,19 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
                 }
               ],
               "minutes": 44,
-              "updated": "2026-10-11"
+              "updated": "2026-10-12"
             },
             {
               "slug": "evaluation-and-release-gating",
@@ -709,11 +913,27 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
+                },
+                {
+                  "id": "full-pack-part-5",
+                  "label": "Full Design 5"
                 }
               ],
-              "minutes": 56,
-              "updated": "2026-10-11"
+              "minutes": 59,
+              "updated": "2026-10-12"
             },
             {
               "slug": "observability-and-production-diagnosis",
@@ -734,11 +954,27 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
+                },
+                {
+                  "id": "full-pack-part-4",
+                  "label": "Full Design 4"
+                },
+                {
+                  "id": "full-pack-part-5",
+                  "label": "Full Design 5"
                 }
               ],
-              "minutes": 60,
-              "updated": "2026-10-11"
+              "minutes": 62,
+              "updated": "2026-10-12"
             }
           ]
         },
@@ -766,11 +1002,19 @@
                 },
                 {
                   "id": "full-pack",
-                  "label": "Sources and Full Design"
+                  "label": "Full Design 1"
+                },
+                {
+                  "id": "full-pack-part-2",
+                  "label": "Full Design 2"
+                },
+                {
+                  "id": "full-pack-part-3",
+                  "label": "Full Design 3"
                 }
               ],
-              "minutes": 43,
-              "updated": "2026-10-11"
+              "minutes": 44,
+              "updated": "2026-10-12"
             }
           ]
         },
