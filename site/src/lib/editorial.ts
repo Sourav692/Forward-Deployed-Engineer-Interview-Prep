@@ -294,7 +294,7 @@ export const STORY_BANK = {
  * changes; `label` is what the reader sees; `purpose` is the one line shown at the top
  * of the tab. The source file names in `scripts/case-studies.mjs` point at these ids.
  */
-export const TABS: Record<string, { label: string; purpose: string }> = {
+export const TABS: Record<string, { label: string; purpose: string; short?: string }> = {
   'company-guide': {
     label: 'Company Guide',
     purpose: 'A company-specific preparation guide for this interview loop.',
@@ -315,6 +315,7 @@ export const TABS: Record<string, { label: string; purpose: string }> = {
   },
   'full-pack': {
     label: 'Sources and Full Design',
+    short: 'Full Design',
     purpose:
       'The complete, referenced write-up behind the other tabs. The sources for every tab live here.',
   },
@@ -355,6 +356,19 @@ export const TABS: Record<string, { label: string; purpose: string }> = {
     label: 'Answer Template',
     purpose: 'A reusable structure for answering this question under time pressure.',
   },
+}
+
+/**
+ * A tab's label and purpose, including a tab split into parts (ENH-25). A tab too long
+ * for one page is split at its H2s: part 1 keeps the tab's id, so saved read state holds;
+ * later parts are `<id>-part-<n>`. Every part is labelled "<short label> <n>". `parts`
+ * is how many parts the tab has on its page.
+ */
+export function tabMeta(id: string, parts = 1): { label: string; purpose: string } | undefined {
+  const part = id.match(/^(.+)-part-(\d+)$/)
+  const tab = TABS[part ? part[1] : id]
+  if (!tab) return undefined
+  return parts > 1 ? { label: `${tab.short ?? tab.label} ${part ? part[2] : 1}`, purpose: tab.purpose } : tab
 }
 
 /** Reading speed used for expected-time estimates. Dense technical prose, so slow. */

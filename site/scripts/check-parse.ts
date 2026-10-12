@@ -27,8 +27,8 @@ import {
   REQUIRED_META_FIELDS,
   REVIEWS,
   STORY_BANK,
-  TABS,
   TRACKS,
+  tabMeta,
   wordCount,
 } from '../src/lib/editorial.ts'
 import { existsSync } from 'node:fs'
@@ -155,6 +155,8 @@ async function checkReading(mod: {
       if (tabs.length === 0) failures.push(`${track.id}/${slug}: no tabs in the manifest`)
       let sections = 0
       let diagrams = 0
+      // Every tab is in the page's DOM at once, so an anchor id must be unique across tabs.
+      const ids = new Set<string>()
       for (const tab of tabs) {
         const label = `${track.id}/${slug}/${tab.id}`
         const raw = await readFile(join(CONTENT, 'modules', mod.id, track.id, slug, `${tab.id}.md`), 'utf8').catch(() => null)
@@ -163,6 +165,13 @@ async function checkReading(mod: {
           continue
         }
         const doc = parseReading(raw, tab.id)
+        const htmlIds = doc.sections.flatMap((x) =>
+          x.chunks.flatMap((c) => (c.kind === 'html' ? [...c.html.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]) : [])),
+        )
+        for (const id of [...doc.sections.map((x) => x.id), ...htmlIds]) {
+          if (ids.has(id)) failures.push(`${label}: anchor #${id} is used twice on the page`)
+          ids.add(id)
+        }
         if (!doc.title) failures.push(`${label}: no # title`)
         const titled = doc.sections.filter((x) => x.title).length
         if (titled === 0) failures.push(`${label}: no ## sections — the tab would have no contents list`)
@@ -344,9 +353,12 @@ for (const mod of manifest.modules) {
       const href = scenarioHref({ moduleId: mod.id, trackId: track.id, slug: s.slug })
       routes.add(href)
       tabsByPage.set(href, (s.tabs ?? []).map((t: { id: string }) => t.id))
+      const baseOf = (id: string) => id.replace(/-part-\d+$/, '')
       for (const tab of s.tabs ?? []) {
-        if (!TABS[tab.id]) failures.push(`${key}: tab "${tab.id}" has no label or purpose in TABS`)
-        else if (tab.label !== TABS[tab.id].label) failures.push(`${key}: tab label "${tab.label}" has drifted from TABS`)
+        const parts = (s.tabs ?? []).filter((t: { id: string }) => baseOf(t.id) === baseOf(tab.id)).length
+        const meta = tabMeta(tab.id, parts)
+        if (!meta) failures.push(`${key}: tab "${tab.id}" has no label or purpose in TABS`)
+        else if (tab.label !== meta.label) failures.push(`${key}: tab label "${tab.label}" has drifted from TABS`)
       }
     }
   }
@@ -647,7 +659,8 @@ for (const file of scanFiles) {
   for (const [token] of text.matchAll(/\b[A-Z][A-Z0-9]{1,6}\b/g)) {
     if (defined.has(token) || NOT_ACRONYMS.has(token) || /^(G\d{2}|[A-Z]\d{1,3}|LLM\d{2})$/.test(token)) continue
     if (!acronymPages.has(token)) acronymPages.set(token, new Set())
-    acronymPages.get(token)!.add(file)
+    // A tab split into parts (ENH-25) still counts once, as the tab it was.
+    acronymPages.get(token)!.add(file.replace(/-part-\d+\.md$/, '.md'))
   }
 }
 for (const [token, files] of acronymPages) {
