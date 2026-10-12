@@ -8,7 +8,7 @@ The [Main guide](/design/document-review-copilot#main) is the spoken design; the
 |---|---|---|---|---|
 | Prior authorisation | Payer, plan, procedure, diagnosis, date of service, prior therapies, labs, imaging | Payer rule by payer/plan/procedure/diagnosis/date | `EvidenceLink` from clinical fact to requirement, missing-document and denial-risk flags | Clinician approves packet. |
 | Financial compliance | Document type, jurisdiction, product, obligation, evidence span | Current regulation and internal policy | `Finding` with rule citation, risk/severity and remediation note | Analyst; supervisor or legal for high risk. |
-| Contract review | Clause type, normalized text, counterparty, jurisdiction, confidentiality | Negotiation playbook and preferred clause | `RiskFinding` with deviation and approved fallback language | Counsel for material changes. |
+| Contract review | Clause type, normalised text, counterparty, jurisdiction, confidentiality | Negotiation playbook and preferred clause | `RiskFinding` with deviation and approved fallback language | Counsel for material changes. |
 
 The claims-processing variant adds OCR, anomaly signals, and claim-type rollout, but extraction and missing-information detection precede any adjudication. Do not infer a clinical fact from a “rule out” note. Do not invent step therapy when the EHR has no record. Low-confidence extraction is marked missing because a wrong field corrupts comparison, risk, and citation downstream.
 
@@ -18,7 +18,7 @@ Map EHR/FHIR, payer PDFs, regulatory library, advisor communications, CLM/playbo
 
 PDF layout is a correctness boundary. Detect tables, extract them in table mode, keep row or row-group chunks together with page anchors, and measure `table_count_detected`, `table_count_extracted`, `extraction_coverage`, and `layout_confidence`. Validate reading order; apply OCR/table fallback where needed. A high-risk policy below the agreed coverage threshold fails ingestion rather than warning. Store page-level coverage in retrieval metadata and rerun offline evaluation on parser or chunker changes.
 
-Minimize PHI and privileged material before prompts, redact logs, retain evidence IDs and policy versions, and audit break-the-glass access where allowed. The retrieval filter checks role plus patient/matter/tenant scope; the output verifier checks it again for each cited span. A retrieved email, clause, or payer PDF is untrusted evidence; keeping it apart from the task lowers injection risk but does not stop it, so retrieved text can never trigger an action or widen access.
+Minimise PHI and privileged material before prompts, redact logs, retain evidence IDs and policy versions, and audit break-the-glass access where allowed. The retrieval filter checks role plus patient/matter/tenant scope; the output verifier checks it again for each cited span. A retrieved email, clause, or payer PDF is untrusted evidence; keeping it apart from the task lowers injection risk but does not stop it, so retrieved text can never trigger an action or widen access.
 
 ## 3. Models, verification, and decisions
 
@@ -40,6 +40,6 @@ Reprocess with OCR/table fallback, manually check the missing pages, and block a
 
 ## 6. Release, rollout, and cost detail
 
-Use historical cases with SME-labeled fields and human decisions. Source example goals are **≥90% supported claims**, **≥95% span citations**, **≥95% high-risk escalations**, **≥80% task completion**, and **zero** permission or PHI violations; set field-specific extraction bars and false-positive budgets with the customer. Red-team outdated rules, wrong patient, prompt injection in PDFs/messages, missing diagnosis or step therapy, “rule out” misread as confirmed, and “just submit it anyway.” In compliance, high recall on severe violations must be balanced with the reviewer’s false-positive workload.
+Use historical cases with SME-labelled fields and human decisions. Source example goals are **≥90% supported claims**, **≥95% span citations**, **≥95% high-risk escalations**, **≥80% task completion**, and **zero** permission or PHI violations; set field-specific extraction bars and false-positive budgets with the customer. Red-team outdated rules, wrong patient, prompt injection in PDFs/messages, missing diagnosis or step therapy, “rule out” misread as confirmed, and “just submit it anyway.” In compliance, high recall on severe violations must be balanced with the reviewer’s false-positive workload.
 
 Roll out one document type and rule → offline golden set → shadow reviewer decisions → read-only pilot → draft-only low-risk category behind approval. Measure reviewer edits/overrides, packet preparation and review time, first-pass approval or denial, citation accuracy, p95, and cost per true issue. Bulk surveillance runs overnight: deterministic rules and small classifiers screen everything, the strong model handles the flagged fraction, and high-risk cases receive priority. Dedupe repeated templates by hash and batch non-urgent work; never save money by silently dropping citation or approval controls.

@@ -17,7 +17,7 @@ The anchor is “design a model that solves math problems,” walking from data 
 
 | Ask | Design consequence |
 |---|---|
-| Which math level and task distribution? | Determines datasets and what counts as generalization. |
+| Which math level and task distribution? | Determines datasets and what counts as generalisation. |
 | Final answer only or correct working/proofs too? | Chooses final-answer verifier versus step-level review. |
 | Calculator/code tools allowed? | Moves arithmetic outside weights and changes SFT examples. |
 | Who uses it and what does a wrong answer cost? | Sets abstention and human-check requirements. |

@@ -50,7 +50,7 @@ Learn the shared decision pipeline here, then change the boundary that dominates
 | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | Customer Support Assistant at 1M conversations/day          | Planner only for multi-system requests; three distinct memory layers; model routing and large-scale serving.         |
 | Multi-Tenant SaaS Support Assistant                         | Add a tenant predicate to every retrieval and tool call; test for cross-tenant leakage.                              |
-| ServiceNow Ticket Automation Agent                          | Classify, prioritize, assign, and request missing details; obey the existing ITIL change process.                    |
+| ServiceNow Ticket Automation Agent                          | Classify, prioritise, assign, and request missing details; obey the existing ITIL change process.                    |
 | Agentic Support Workflow / customer-support interview mocks | Probe handoff quality, wrong refunds, stale facts, confidence, rollout, and the requested automation target.         |
 | Study-guide implementations                                 | Show how branches, interrupts, retrieval, durable state, and specialist tools implement the same control boundaries. |
 
@@ -62,7 +62,7 @@ The easiest way to frame requirements in an interview is:
 
 ### Functional requirements — what the system must do
 
-1. **Normalize intake** — chat, email, web, or voice transcripts into one case envelope.
+1. **Normalise intake** — chat, email, web, or voice transcripts into one case envelope.
 2. **Classify intent and risk** — before choosing an answer or action path.
 3. **Verify identity** — before account data or account tools.
 4. **Retrieve live facts** — approved policy and current customer/order state; draft from evidence.
@@ -130,7 +130,7 @@ flowchart LR
 
 ### Step-by-step architecture
 
-- **Step 1.** **Receive the request.** The channel gateway normalizes chat, email, web, or voice into a support case.
+- **Step 1.** **Receive the request.** The channel gateway normalises chat, email, web, or voice into a support case.
 - **Step 2.** **Verify the customer.** Check identity and assurance; failed verification permits only generic help or handoff, not account actions.
 - **Step 3.** **Route by intent and risk.** Rules or a small model classify the request; only a multi-system case invokes a bounded support-agent planner.
 - **Step 4.** **Gather facts.** Retrieve approved policy and live account facts; the LLM response generator then drafts a reply or proposed tool action.

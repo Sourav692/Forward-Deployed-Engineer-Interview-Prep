@@ -53,7 +53,7 @@ User → API Gateway → Application
 
 #### 2. Model Gateway — Application → Model Control
 
-Centralize model routing, provider abstraction, compatible fallback, bounded retries, provider limits, and token/cost tracking when those needs justify it.
+Centralise model routing, provider abstraction, compatible fallback, bounded retries, provider limits, and token/cost tracking when those needs justify it.
 
 > “Because we need provider fallback and consistent model-call controls, I’d introduce a Model Gateway.”
 
@@ -136,7 +136,7 @@ These are patterns, not necessarily separate products. Queues buffer bursts but 
 | Requirement | Component / pattern | Why | Main trade-off |
 |---|---|---|---|
 | User/tenant request controls | API Gateway | Enforce application entry rules | Extra boundary and operational dependency |
-| Multiple model providers and fallback | Model Gateway | Standardize model calls | Capability differences and retry overhead |
+| Multiple model providers and fallback | Model Gateway | Standardise model calls | Capability differences and retry overhead |
 | Different request categories | Router | Choose the correct path | Misrouting and classification cost |
 | Multi-step task with branches | Orchestrator | Coordinate transitions | Workflow complexity |
 | Resume after crash or approval | Durable state store | Preserve task progress | Consistency and retention management |
@@ -278,7 +278,7 @@ User → API Gateway → Router
                         Durable approval state
 ```
 
-Use the Model Gateway for centralized model-call control when justified. Add cache or queue only when requirements warrant them. Capture audit evidence and action results across the flow.
+Use the Model Gateway for centralised model-call control when justified. Add cache or queue only when requirements warrant them. Capture audit evidence and action results across the flow.
 
 ### Component Defense
 

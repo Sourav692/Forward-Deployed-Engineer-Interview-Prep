@@ -44,7 +44,7 @@ The easiest way to frame requirements in an interview is:
 
 ### Functional requirements — what the system must do
 
-1. **Normalize channels** into a canonical event with tenant id.
+1. **Normalise channels** into a canonical event with tenant id.
 2. **Choose one live workflow** or a named non-selection.
 3. **Store versioned declarative workflows.**
 4. **Validate typed tool arguments.**

@@ -1,6 +1,6 @@
 # Trigger-to-Concept Cheat Sheet
 
-Use this to recognize what an interviewer is testing and decide your next move. A trigger suggests a question or requirement; it does not automatically justify a component.
+Use this to recognise what an interviewer is testing and decide your next move. A trigger suggests a question or requirement; it does not automatically justify a component.
 
 ```text
 HEAR THE TRIGGER → RECALL THE CONCEPT
@@ -16,7 +16,7 @@ HEAR THE TRIGGER → RECALL THE CONCEPT
 |---|---|---|---|
 | “We need an AI agent” | Proposed solution vs business problem | “What outcome matters, and what is painful today?” | 1 |
 | “People waste time on this” | Current workflow and bottleneck | “Walk me through the steps and where time is spent.” | 1 |
-| “What should the system do?” | Functional requirements | Summarize capabilities, actions, approvals, and failures | 2 |
+| “What should the system do?” | Functional requirements | Summarise capabilities, actions, approvals, and failures | 2 |
 | “Follow-up questions” | Relevant context | What must persist across turns or tasks? | 2 |
 | “Recommend the next action” | Reason, not necessarily act | Who decides and who executes? | 2 |
 | “Fast, reliable, cheap” | Measurable NFRs | Workload, metric, target, window, quality floor | 3 |

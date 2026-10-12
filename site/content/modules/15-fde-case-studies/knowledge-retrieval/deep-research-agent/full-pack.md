@@ -214,7 +214,7 @@ Numbers said out loud are the senior signal. Derive them in front of the intervi
 | Mean rate | 40K runs ÷ 1,440 minutes | ~28 runs/min *(own derivation)* |
 | Peak rate | ~28 × 3 ≈ 84, rounded up for headroom | ≈ 100 runs/min at peak |
 | In flight (Little's Law) | 100 runs/min × ~70 s mean time in system ÷ 60 | ~120 in-flight |
-| Concurrency to provision | 120 ÷ 0.70 utilization target | around 170 |
+| Concurrency to provision | 120 ÷ 0.70 utilisation target | around 170 |
 | Naive cost | 7 steps, ≈ 30K input tokens plus output, all on the premium model | Blows the $0.20 budget |
 
 Little's Law says work in flight equals arrival rate times mean time in system. It is the one formula that turns a throughput number into a capacity number. Name it by name.

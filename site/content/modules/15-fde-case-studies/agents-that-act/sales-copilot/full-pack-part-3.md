@@ -20,7 +20,7 @@ Design the failure path with the happy path. Authorisation and approval fail clo
 | Unsafe tool call or write-back action | Allowlist, preview, approval, idempotency key; nothing above the threshold executes |
 | Stale documents or bad sync | Staleness label on the snapshot; nightly reconciliation; connector health alert |
 | Cost or latency spike | Step caps, snapshot cache, deterministic routes; see section 13 |
-| CRM down | Serve the last snapshot, labeled; no writes |
+| CRM down | Serve the last snapshot, labelled; no writes |
 | Model provider down | Fail over to a secondary route; drafts queue with progress state |
 | Prompt injection in a transcript or inbound email | Retrieved content is untrusted evidence; it may still sway the model, so write tools stay gated outside it and text cannot unlock them |
 | Policy engine or approval service down | Fail closed. Refuse. Never fail open on authorisation or approval |
@@ -37,7 +37,7 @@ An eval suite that measures grammar, tone and general groundedness will pass a m
 | Permission violations | 0 | > 0 | Red-team set: same question from users with different roles, territories, tenants | Security |
 | Citation accuracy | ≥ 95% correct citations | < 85% | Source-span audit of sampled drafts | SME |
 | Task completion | ≥ 80% of target workflows completed with less manual effort | < 65% | Workflow replay tests | Product |
-| Escalation quality | ≥ 95% correct escalation on high-risk cases | Missed high-risk case | Risk-labeled scenarios | Product / support |
+| Escalation quality | ≥ 95% correct escalation on high-risk cases | Missed high-risk case | Risk-labelled scenarios | Product / support |
 | Unsupported-claim rate (added, from the incident) | Zero critical failures on regulated-claim slices; online rate at baseline | Any pending-approval or internal-only claim in an external draft | Claim-level suite: security certifications, ROI numbers, customer references, with negative examples the model must refuse | Legal / enablement |
 | Latency and cost | p95 within target; cost per workflow below budget | Breach at peak | Load test plus production telemetry | Platform |
 

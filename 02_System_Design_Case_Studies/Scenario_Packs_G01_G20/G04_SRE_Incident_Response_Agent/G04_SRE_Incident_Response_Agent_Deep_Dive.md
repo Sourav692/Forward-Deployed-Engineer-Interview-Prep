@@ -44,7 +44,7 @@ The agent’s timeline records alert IDs, queried signals, reached/missed source
 
 First useful output target is **under 30 s** from alert receipt; interactive follow-up **3–8 s**. Example slices from the source: dedupe/correlation <1 s, context ~1–2 s, parallel queries ~5–10 s for the slowest source, strong synthesis ~10–15 s with streaming. Pre-aggregation runs as results arrive. Citation verification stays inline for proposals; explanatory text can use an async check if policy allows it.
 
-For a slow prototype, trace auth, retrieval, rerank, model, tools, verification. Parallelize independent reads, cache versioned catalog/deploy context, reduce candidate count, stream useful partials, and remove diagnostics that do not change the hypothesis. Avoid serial reasoning loops in a live incident. At 10× alert volume, correlation load rises but strong-model calls should follow incident clusters, not raw alert count. Provider quota and telemetry rate limits likely bind; source coverage exposes degradation early.
+For a slow prototype, trace auth, retrieval, rerank, model, tools, verification. Parallelise independent reads, cache versioned catalog/deploy context, reduce candidate count, stream useful partials, and remove diagnostics that do not change the hypothesis. Avoid serial reasoning loops in a live incident. At 10× alert volume, correlation load rises but strong-model calls should follow incident clusters, not raw alert count. Provider quota and telemetry rate limits likely bind; source coverage exposes degradation early.
 
 ## 6. Failure ladder
 
@@ -73,8 +73,8 @@ Week one: one alert class, named source owners, historical incidents and SME lab
 
 - **“Should it restart production?”** Read-only investigation → proposed remediation → approved execution → limited autonomous low-risk reversible actions after proof. Never start with auto rollback.
 - **“What breaks first?”** Example: metrics returns `EMPTY` during a partial outage, assistant infers “nothing wrong” and cites nothing. Distinguish `EMPTY` from `UNAVAILABLE`; track citation-free hypothesis rate.
-- **“18-second prototype?”** Decompose the stack, parallelize independent telemetry, pre-aggregate and stream; keep verification for proposals.
+- **“18-second prototype?”** Decompose the stack, parallelise independent telemetry, pre-aggregate and stream; keep verification for proposals.
 - **“Too expensive?”** Rules/small model for correlation, one strong synthesis, bounded lookback, cached versioned catalog/runbooks. Track cost per resolved investigation.
 - **“Wrong citation?”** Verify against the actual retrieved signal/runbook span; reject or repair before a proposal.
 
-The [source](G04_SRE_Incident_Response_Agent.md) retains the full diagrams, 45-minute script, leveling rubric, recovery moves, and references.
+The [source](G04_SRE_Incident_Response_Agent.md) retains the full diagrams, 45-minute script, levelling rubric, recovery moves, and references.

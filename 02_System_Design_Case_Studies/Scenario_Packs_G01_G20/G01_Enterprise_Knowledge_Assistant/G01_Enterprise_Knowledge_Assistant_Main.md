@@ -26,7 +26,7 @@ Use this guide as the **master case study** for enterprise RAG and knowledge-ass
 | **Enterprise Support Assistant** | Support knowledge, tickets and runbooks become central; add workflow integrations, escalation paths and customer-specific visibility. |
 | **Legal RAG** | Increase citation precision, source authority, version tracking, auditability and review; control cost while handling high-risk answers. |
 | **Sub-100ms Search** | Latency dominates; use permission-aware precomputation and caches, bounded retrieval and often remove live generation from the hot path. |
-| **Enterprise / LLM Search** | Emphasize broad source coverage, relevance, freshness, scale and search UX; preserve the same authorisation boundary. |
+| **Enterprise / LLM Search** | Emphasise broad source coverage, relevance, freshness, scale and search UX; preserve the same authorisation boundary. |
 | **Meridian Assist** | Keep the enterprise-assistant foundation, then adapt source systems, users, workflows and domain-specific policies to the scenario. |
 | **Security / incident cases** | Focus on threat model, blast radius, detection, containment, revocation, recovery and evidence that no unauthorised data escaped. |
 
@@ -108,7 +108,7 @@ The easiest way to frame requirements in an interview is:
 ### Functional requirements — what the system must do
 
 1. **Ingest enterprise sources** — Drive, SharePoint, Slack, Confluence/wiki, Jira/tickets, etc.
-2. **Normalize permissions** — convert source-specific ACLs/groups into a common authorisation model.
+2. **Normalise permissions** — convert source-specific ACLs/groups into a common authorisation model.
 3. **Retrieve authorised content** — unauthorised chunks must never enter model context.
 4. **Answer questions** — use retrieved evidence rather than unsupported model knowledge.
 5. **Provide citations** — citations should point to the actual supporting, authorised evidence.
@@ -129,7 +129,7 @@ The easiest way to frame requirements in an interview is:
 | **Cost** | Define a cost/request budget and control model + retrieval spend |
 | **Auditability** | Replay why an answer and authorisation decision occurred |
 | **Reliability** | Idempotent ingestion, retries, backfill and reconciliation |
-| **Maintainability** | Centralized, deterministic authorisation rather than scattered permission logic |
+| **Maintainability** | Centralised, deterministic authorisation rather than scattered permission logic |
 
 ### Interview shortcut
 
@@ -149,7 +149,7 @@ Identity mapping, ACL/ABAC policy, source configuration, retrieval configuration
 
 ### Data plane
 
-Ingestion, normalization, indexing, query authorisation, retrieval, reranking, evidence selection, generation, citation verification and response/escalation.
+Ingestion, normalisation, indexing, query authorisation, retrieval, reranking, evidence selection, generation, citation verification and response/escalation.
 
 ### Architecture diagram
 
@@ -187,7 +187,7 @@ flowchart LR
 ### Step-by-step architecture
 
 - **Step 1.** **Ingest sources.** Source events and backfills bring enterprise documents into an asynchronous pipeline.
-- **Step 2.** **Normalize permissions.** Convert content and source ACLs into a consistent form; refuse to index an item if it has no usable ACL.
+- **Step 2.** **Normalise permissions.** Convert content and source ACLs into a consistent form; refuse to index an item if it has no usable ACL.
 - **Step 3.** **Build the search indexes.** Put eligible content into keyword and vector indexes for hybrid retrieval.
 - **Step 4.** **Establish the user's scope.** Authenticate the user, resolve groups and attributes, compile the ACL/ABAC permission filter, and plan a multi-hop question only when needed.
 - **Step 5.** **Retrieve and check.** Run hybrid search with that filter, then apply a live policy post-check before any candidate reaches reranking or the model.
@@ -211,7 +211,7 @@ Forbidden content must stay outside the model context.
 
 ---
 
-## 4. Ingestion: normalize permissions first
+## 4. Ingestion: normalise permissions first
 
 A connector does more than download documents. It translates each source's permission model into one internal representation.
 

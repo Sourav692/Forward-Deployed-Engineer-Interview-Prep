@@ -71,7 +71,7 @@ Rollout: read-only triage/draft → narrow reversible CRM writes with owner/reve
 
 Agent steps and tool calls, including retries after rejected or failed actions, are the common cost driver. Profile model planning versus downstream tool wait versus approval. If planner-heavy, route common intents deterministically and combine safe reads; if tool-heavy, cache safe reads in-request and prefetch; if approval-heavy, improve proposal clarity and risk classification, never bypass approval.
 
-For a **tool loop**, inspect the trace for repeated tool/observation pairs and missing state transitions, then impose max steps, result cache, clear stopping criteria, and tool-selection tests. For a **tool timeout**, find the critical path, parallelize independent reads, set per-tool deadlines, and move slow side effects to an async job with status. Measure steps, tool latency, retries, timeouts, and cost before and after.
+For a **tool loop**, inspect the trace for repeated tool/observation pairs and missing state transitions, then impose max steps, result cache, clear stopping criteria, and tool-selection tests. For a **tool timeout**, find the critical path, parallelise independent reads, set per-tool deadlines, and move slow side effects to an async job with status. Measure steps, tool latency, retries, timeouts, and cost before and after.
 
 ## 8. Refund near miss: planner failure, gateway success
 
@@ -86,6 +86,6 @@ Contain by disabling bulk refund planning, forcing VIP refunds into review-ticke
 | Flexible agent vs deterministic workflow | Flexible interpretation, deterministic action control. |
 | Fine scopes vs integration effort | Scope irreversible effects first; reuse shared auth wrappers. |
 | Auto execution vs approval delay | Low-risk auto, medium conditional/reviewed, high-risk explicit approval or block. |
-| Central gateway vs direct write integrations | Centralize auth, validation, audit, and idempotency in one write path. |
+| Central gateway vs direct write integrations | Centralise auth, validation, audit, and idempotency in one write path. |
 
 The [source](/design/tool-using-agent-with-safety-controls#full-pack) retains the original 50-minute script, full diagrams, trace excerpt, and reference table.

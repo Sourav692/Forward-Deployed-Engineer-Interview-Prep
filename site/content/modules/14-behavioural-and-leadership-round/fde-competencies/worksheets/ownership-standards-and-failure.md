@@ -151,7 +151,7 @@ Write the mechanism first, then one proof.
 
 > "Tell me about a time you did the right thing when nobody would have noticed if you hadn't."
 
-**Also asked as:** "Give an example of a time you prioritized the company's interests over what was best for your own team or career."
+**Also asked as:** "Give an example of a time you prioritised the company's interests over what was best for your own team or career."
 
 **Also asked as:** "Tell me about a task that fell outside your job description but you took on anyway because it needed to get done."
 

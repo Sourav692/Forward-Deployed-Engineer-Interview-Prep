@@ -73,7 +73,7 @@ Record model/provider/configuration, token usage, call count, retrieval source i
 
 > “I’d connect model and tool usage to the task outcome, not just monitor CPU and HTTP status.”
 
-Capture evidence references and decision summaries, not private model chain-of-thought, which is often hidden and not always faithful. Apply minimization or redaction to sensitive fields.
+Capture evidence references and decision summaries, not private model chain-of-thought, which is often hidden and not always faithful. Apply minimisation or redaction to sensitive fields.
 
 #### 5. Audit — Reconstruct Business Decisions
 
@@ -228,7 +228,7 @@ Confirm X, the workload, window, and exclusions. Track first useful output and f
 
 Start with impact, scope, and version changes. Inspect queue wait separately from processing. Follow async task IDs and retries. Parallel spans overlap; nested durations cannot be summed blindly. Sampling may mean the exact historical trace is unavailable, so preserve enough metrics and events for useful diagnosis.
 
-Minimize sensitive data in telemetry and restrict retention/access. Use evidence references and decision summaries rather than private model reasoning, which is often hidden and not always faithful. Avoid request IDs as unbounded metric dimensions. After mitigation, verify recovery and add validated failure cases to regression coverage.
+Minimise sensitive data in telemetry and restrict retention/access. Use evidence references and decision summaries rather than private model reasoning, which is often hidden and not always faithful. Avoid request IDs as unbounded metric dimensions. After mitigation, verify recovery and add validated failure cases to regression coverage.
 
 ### 30-Second Answer
 

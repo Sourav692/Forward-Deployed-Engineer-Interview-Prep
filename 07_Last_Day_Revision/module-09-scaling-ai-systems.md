@@ -130,7 +130,7 @@ A noisy neighbor consumes shared resources and degrades others. Equal request co
 
 #### 8. Autoscaling and Load Shedding — Add Capacity or Refuse Work
 
-Scale from signals that reflect the bottleneck, such as active work, queue age, and worker utilization. When capacity cannot grow fast enough, reject or defer work according to a clear priority policy.
+Scale from signals that reflect the bottleneck, such as active work, queue age, and worker utilisation. When capacity cannot grow fast enough, reject or defer work according to a clear priority policy.
 
 > “I’d scale where it helps and shed or defer excess load before it causes a system-wide slowdown.”
 

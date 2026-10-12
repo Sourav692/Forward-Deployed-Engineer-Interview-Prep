@@ -8,7 +8,7 @@
 |---|---|---|---|
 | Tokenization | Slow before the request reaches a queue | Long inputs tokenized on a starved CPU pool | Gateway span time; CPU saturation |
 | Network | Slow for one region or client | Cross-region hop, TLS setup, a buffering proxy | Client-to-gateway span; TTFT by region |
-| Queue wait | TTFT slow only at peak; p99 up, p50 flat | Utilization past the knee | Queue wait against service time |
+| Queue wait | TTFT slow only at peak; p99 up, p50 flat | Utilisation past the knee | Queue wait against service time |
 | Batch size | TPOT slow while throughput looks healthy | Batches too large for the per-token SLO | TPOT against running sequences |
 | Prefill | TTFT slow on long prompts | Prompt growth, prefills stalling decode | TTFT by input tokens; chunked prefill on or off |
 | KV cache | Latency spikes, preemptions | Pool full; low prefix-cache hit rate | KV use, preemption count, prefix hit rate |
@@ -44,7 +44,7 @@ The pivot after a good design is "the GPU bill is too high." There is no playboo
 |---|---|
 | Dominant driver | GPU time wasted in half-empty batches, long outputs, and KV memory that caps concurrency |
 | Cheapest lever first | Continuous batching to raise occupancy; cap `max_tokens`; prefix caching for shared prompts; quantize to fit more sequences per GPU; move non-interactive traffic to an off-peak batch tier |
-| Metric that proves it | Goodput per GPU-hour; cost per million output tokens; batch occupancy; KV utilization; queue wait p95 |
+| Metric that proves it | Goodput per GPU-hour; cost per million output tokens; batch occupancy; KV utilisation; queue wait p95 |
 | Do not | Buy more GPUs before measuring batch occupancy and KV use |
 | 60-second line | A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantize to fit more sequences, and push anything non-interactive to a cheaper tier. Prove it with goodput per GPU-hour. |
 
@@ -65,7 +65,7 @@ Every level can draw a queue in front of GPUs; the level shows in whether each G
 ## Key Takeaways
 
 - Request shape comes first, because prefill and decode price input and output tokens differently.
-- Requirements name TTFT, TPOT, goodput and a utilization ceiling, each with a number a test can fail.
+- Requirements name TTFT, TPOT, goodput and a utilisation ceiling, each with a number a test can fail.
 - Sizing converts requests to replica-seconds, then cross-checks concurrency with Little's Law, and the larger answer wins.
 - The architecture admits globally, routes by capacity, and batches locally where memory is visible.
 - Tokenization runs on CPU at the gateway so admission and routing can use real token counts.
@@ -105,7 +105,7 @@ All paths are relative to the repository root.
 |---|---|
 | Member prompts | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompts 9 (#74), 10 (#75), 11 (#76), 12 (#77) and 14 (#79); the section C note that these test "batching, queuing, load balancing" |
 | 3 (formula, memory budget, "challenge the request profile"), 13 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md`, "Memory and Throughput per Replica" and "The Replica Sizing Formula" |
-| 1, 3, 10, 11, 15, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections B1 (prefill vs decode), B3 (Little's Law), D (goodput, TTFT vs TPOT, utilization knee) and E (rate limits, cancellation) |
+| 1, 3, 10, 11, 15, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections B1 (prefill vs decode), B3 (Little's Law), D (goodput, TTFT vs TPOT, utilisation knee) and E (rate limits, cancellation) |
 | 9, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, driver 2 and the latency-only add-ons (cold starts) |
 | 15 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 9 (latency decomposition and "which latency" split) |
 | Cross-references | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis.md` section 12 (#74 from the application's traces); `G10_High_Volume_Batch_Pipeline.md` (admission before the quota breach); `G11_Deep_Research_Agent.md` (Little's Law used for provisioning); `G07_Secure_Multi_Tenant_AI_Platform.md` (quotas and noisy neighbours) |

@@ -2,7 +2,7 @@
 
 > **Purpose:** Last-day revision for an AI/Agentic FDE problem-decomposition interview.
 >
-> Don't memorize architectures. Memorize the **decision process**.
+> Don't memorise architectures. Memorise the **decision process**.
 
 ---
 
@@ -1026,7 +1026,7 @@ This is the section to revise immediately before the interview.
 | **Multiple customers**          | Multi-tenancy, isolation                      |
 | **Slow requests**               | P95/P99 + trace stages                        |
 | **Slow chat experience**        | TTFT + streaming                              |
-| **Independent APIs**            | Parallelize                                   |
+| **Independent APIs**            | Parallelise                                   |
 | **Slow dependency**             | Timeout, cache, async                         |
 | **Flaky dependency**            | Retry, backoff, circuit breaker               |
 | **Action happened twice**       | Idempotency                                   |

@@ -51,7 +51,7 @@ It has nine layers, and one request passes through them top to bottom.
 |---|---|---|
 | 1 · Entry and security | API-key check, rate limit, input guardrail, then a job on a queue | Wrong key → 401; a Redis counter per client IP, 10 requests per 60 s; Bedrock Guardrails screen raw input *before any LLM sees the text*; Redis Stream queue decouples accepted from processed |
 | 2 · Smart lookup | Three progressively looser checks before any agent runs | Semantic cache ≥ 0.85; exact long-term-memory match ≥ 0.88; related LTM 0.50–0.88 passed to the Writer as context |
-| 3 · Agent pipeline | Search → Summarize → Writer → Critic | Search finds 5 key facts using the last four turns of history; a Critic NO under `agent_max_iterations` loops back to Search |
+| 3 · Agent pipeline | Search → Summarise → Writer → Critic | Search finds 5 key facts using the last four turns of history; a Critic NO under `agent_max_iterations` loops back to Search |
 | 4 · LLM gateway | Every call goes through one sidecar, TensorZero (archived and unmaintained since June 2026) | Agents name a *function*, not a model; primary OpenAI GPT-4o, fallback Groq `llama-3.1-8b-instant` (as built; Groq retired that model for free and developer tiers in Aug 2026) |
 | 5 · Output, save, evaluate | Output guardrail, persist, score | Bedrock again on generated content; LLM-as-judge on relevance, completeness, hallucination and quality, in parallel and non-blocking |
 | 6 · Storage | Redis for fast and short-lived, Postgres for durable | RDS PostgreSQL 15 + pgvector; every report as a 384-dimension embedding |
@@ -81,7 +81,7 @@ Four costs belong in the answer *(from #103)*. A supervisor adds one model call 
 
 ## 13. Deliver It in Forty-Five Minutes
 
-The binding constraint in the round is time. Miss the first 8 minutes and every later answer is guesswork. Miss the last 5 and the leveling signal is gone.
+The binding constraint in the round is time. Miss the first 8 minutes and every later answer is guesswork. Miss the last 5 and the levelling signal is gone.
 
 | Minutes | Phase | Sections |
 |---|---|---|
@@ -93,7 +93,7 @@ The binding constraint in the round is time. Miss the first 8 minutes and every 
 | 35-41 | Measurement and rollout | 10 |
 | 41-45 | Questions for the interviewer | — |
 
-Cover the whole design at consistent depth first, then offer depth explicitly: "I can go deeper on the evaluation layer or the cost model — which is more useful to you?" Candidates who go deep unprompted usually pick the component they know best. They then run out of time before the failure and measurement sections, where the leveling signal lives.
+Cover the whole design at consistent depth first, then offer depth explicitly: "I can go deeper on the evaluation layer or the cost model — which is more useful to you?" Candidates who go deep unprompted usually pick the component they know best. They then run out of time before the failure and measurement sections, where the levelling signal lives.
 
 The follow-up bank, with the shape of a strong answer:
 

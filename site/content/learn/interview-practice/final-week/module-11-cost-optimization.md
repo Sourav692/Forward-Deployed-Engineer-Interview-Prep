@@ -160,14 +160,14 @@ Check quality by important task/tenant segments, not only a global average. For 
 | Known deterministic decisions | Code/policy | Avoid unnecessary reasoning calls | Rule maintenance |
 | Runaway agent work | Shared task budget + stop rules | Cap amplification | More escalation for hard tasks |
 | Flexible background deadline | Batch execution | Potential efficiency gains | Added delay |
-| Preserve customer value | Outcome-linked cost metrics | Compare successful results | Outcome labeling |
+| Preserve customer value | Outcome-linked cost metrics | Compare successful results | Outcome labelling |
 
 ```text
 API Gateway   = User → Application control
 Model Gateway = Application → Model control
 ```
 
-The Model Gateway can centralize model routing and usage tracking. User/tenant quotas control demand at the application boundary; neither replaces full task-cost attribution.
+The Model Gateway can centralise model routing and usage tracking. User/tenant quotas control demand at the application boundary; neither replaces full task-cost attribution.
 
 **Support example:** use a verified cheaper path for simple policy questions, reuse eligible policy retrieval, fetch current order state when required, keep refund policy in code, and cap investigation loops. Compare cost per resolved case, including retries and manual rework.
 

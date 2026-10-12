@@ -18,7 +18,7 @@ Three tests turn the design into executable contracts:
 
 The last test protects the chapter's central failure drill directly. Sampling and redaction must never make a failure invisible.
 
-Telemetry attributes are schema-validated at ingestion. Unknown high-cardinality fields are rejected or collapsed into a bounded "other" bucket. Queue serialization contracts carry trace context, idempotency key and tenant scope explicitly, or traces break silently at async handoffs.
+Telemetry attributes are schema-validated at ingestion. Unknown high-cardinality fields are rejected or collapsed into a bounded "other" bucket. Queue serialisation contracts carry trace context, idempotency key and tenant scope explicitly, or traces break silently at async handoffs.
 
 ## 7. Sample Toward the Failures
 
@@ -58,7 +58,7 @@ Four more named failures get the same drill.
 
 | Failure | Detection | Containment | Recovery | Prevention |
 |---|---|---|---|---|
-| Tenant ID has a high-cardinality bug | Cardinality budgets and exporter rejections; a spike in unique tenant labels is itself an incident | Strip or normalize untrusted attributes at ingestion; collapse unknowns into "other" | Fix the mapper; backfill only the minimal aggregates for the review | Schema-validate attributes; reject unknown high-cardinality fields before export |
+| Tenant ID has a high-cardinality bug | Cardinality budgets and exporter rejections; a spike in unique tenant labels is itself an incident | Strip or normalise untrusted attributes at ingestion; collapse unknowns into "other" | Fix the mapper; backfill only the minimal aggregates for the review | Schema-validate attributes; reject unknown high-cardinality fields before export |
 | Logs store a raw prompt | Scanners and red-team tests search logs, traces and support transcripts for PII and secret formats | Revoke sink access, rotate exposed credentials, quarantine the log set | Delete or redact per retention policy and contract; notify owners | Enforce redaction in code, in the collector and in review |
 | Trace context breaks at a queue | A trace starts, then vanishes after async handoff; orphan spans; a spike in "unknown root" events | Propagate a minimal correlation envelope through the queue | Stitch spans by correlation ID and timestamp; mark the join as reconstructed | Queue contracts carry trace context, idempotency key and tenant scope, and are tested |
 | Quality metric improves while adoption falls | Pair technical metrics with completion rate, retries, abandonment, support contacts | Treat it as a product problem, not a hotfix | Product review, metric reset, possibly roll back the latest change | Track task completion and business outcome, not usage volume alone |

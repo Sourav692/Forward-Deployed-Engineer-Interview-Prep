@@ -49,7 +49,7 @@ Real task mix + edge/failure cases + critical segments
 
 #### 3. Retrieval Evaluation — Did We Find the Evidence?
 
-Check relevance and recall against labeled evidence, with a defined retrieval cutoff. Inspect whether relevant content survives into final context.
+Check relevance and recall against labelled evidence, with a defined retrieval cutoff. Inspect whether relevant content survives into final context.
 
 ```text
 Correct evidence absent → Retrieval/data problem
@@ -116,7 +116,7 @@ Compare candidates on the same task set with quality, policy, latency, and cost 
 
 | Requirement | Evaluation pattern | Why | Trade-off |
 |---|---|---|---|
-| Verify enterprise knowledge answers | Evidence labels + claim rubric | Separate retrieval and generation | Labeling effort |
+| Verify enterprise knowledge answers | Evidence labels + claim rubric | Separate retrieval and generation | Labelling effort |
 | Confirm business actions | Tool/state assertions | Check real completion | Test-system integration |
 | Detect policy violations | Boundary and permission cases | Check critical constraints | Maintaining realistic cases |
 | Assess open-ended quality | Calibrated human/model rubric | Score semantic properties | Judge variability |

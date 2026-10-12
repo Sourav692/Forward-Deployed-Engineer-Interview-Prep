@@ -14,9 +14,9 @@ Use a planner only when the request truly spans systems, such as refunding an or
 
 ## 5. Make actions and handoffs reliable
 
-Keep a versioned `Case`, an immutable `ProposedAction`, and a `Handoff`. Every write boundary needs an idempotency key; the action record can use an argument hash to recognize a duplicate without storing raw sensitive arguments. Check `Case.version` so automation cannot overwrite a human’s newer decision. A duplicate customer message should return the existing case, not create a second one.
+Keep a versioned `Case`, an immutable `ProposedAction`, and a `Handoff`. Every write boundary needs an idempotency key; the action record can use an argument hash to recognise a duplicate without storing raw sensitive arguments. Check `Case.version` so automation cannot overwrite a human’s newer decision. A duplicate customer message should return the existing case, not create a second one.
 
-A useful handoff contains: original message; identity status; parsed intent and risk; retrieved evidence; policy checks; tool outputs and error codes; attempted or pending actions; and the exact reason automation stopped. Prioritize the human queue by risk and impact. A transcript alone makes the agent repeat work and hides the failed control.
+A useful handoff contains: original message; identity status; parsed intent and risk; retrieved evidence; policy checks; tool outputs and error codes; attempted or pending actions; and the exact reason automation stopped. Prioritise the human queue by risk and impact. A transcript alone makes the agent repeat work and hides the failed control.
 
 ## 6. Failure playbook
 
@@ -54,7 +54,7 @@ Before launch, require stable retrieval on target intents, representative human 
 
 ## 9. Roll out by intent and tool class
 
-1. **Agent-assist:** draft and summarize; a human sends every reply.
+1. **Agent-assist:** draft and summarise; a human sends every reply.
 2. **Prove the controls:** use real traffic and historical tickets to validate retrieval, risk routing, handoff completeness, and audit.
 3. **Narrow automation:** enable high-volume, low-harm, reversible intents such as order status or shipping ETA.
 4. **Add one tool class at a time:** ticket tagging, read-only lookup, then increasingly sensitive actions with explicit approval gates.
@@ -75,7 +75,7 @@ Spend the hour roughly as follows: opening and requirements (10 min), architectu
 
 **90-second answer:**
 
-> “I would design support automation as a routed decision pipeline. The gateway normalizes the message, identity verification establishes what account data and tools are available, and an intent router tags risk. Approved policy and current account facts ground a draft or proposed action. A deterministic gateway checks authorisation, freshness, thresholds, and whether a human must approve; the model cannot grant itself permission. Simple, low-risk requests can be answered quickly. Money-moving or ambiguous cases go to an agent with evidence, attempted actions, and a reason. Every write is idempotent, and an uncertain side effect is reconciled before retry. I’d launch in agent-assist, then automate narrow reversible intents, adding tools one class at a time with per-intent rollback. I’d judge it by safe automation, incorrect resolutions, repeat contact, CSAT, latency, and cost per resolved case.”
+> “I would design support automation as a routed decision pipeline. The gateway normalises the message, identity verification establishes what account data and tools are available, and an intent router tags risk. Approved policy and current account facts ground a draft or proposed action. A deterministic gateway checks authorisation, freshness, thresholds, and whether a human must approve; the model cannot grant itself permission. Simple, low-risk requests can be answered quickly. Money-moving or ambiguous cases go to an agent with evidence, attempted actions, and a reason. Every write is idempotent, and an uncertain side effect is reconciled before retry. I’d launch in agent-assist, then automate narrow reversible intents, adding tools one class at a time with per-intent rollback. I’d judge it by safe automation, incorrect resolutions, repeat contact, CSAT, latency, and cost per resolved case.”
 
 ### Interviewer trigger → short answer
 

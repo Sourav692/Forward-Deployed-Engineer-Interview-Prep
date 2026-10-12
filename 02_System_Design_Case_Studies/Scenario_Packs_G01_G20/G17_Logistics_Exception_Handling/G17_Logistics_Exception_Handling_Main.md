@@ -24,7 +24,7 @@ This is a modest-user, high-stakes exception system. It watches carrier feeds, d
 | Case | Shared foundation | What changes |
 |---|---|---|
 | #5 Logistics exception assistant (anchor) | Two feed types, one detection path, resolution draft, independent policy gate | 150 ops agents; value/confidence boundary; EU residency. |
-| #66 Shipment rerouting over SAP and weather | Same event normalization, gate, action and audit pattern | SAP becomes source and target, weather adds a predictive signal, 500 regional managers expand the approval surface. |
+| #66 Shipment rerouting over SAP and weather | Same event normalisation, gate, action and audit pattern | SAP becomes source and target, weather adds a predictive signal, 500 regional managers expand the approval surface. |
 
 ## Questions to ask the interviewer
 
@@ -45,7 +45,7 @@ The easiest way to frame requirements in an interview is:
 ### Functional requirements — what the system must do
 
 1. **Ingest webhooks and CSV/EDI drops.**
-2. **Normalize and deduplicate.**
+2. **Normalise and deduplicate.**
 3. **Detect disruptions.**
 4. **Propose a resolution** with signals and confidence.
 5. **Enforce customs-first, value, and confidence policy.**
@@ -104,7 +104,7 @@ flowchart TB
 ### Step-by-step architecture
 
 - Validate and deduplicate webhook events; parse scheduled files and emit only shipment-state differences. Both paths become one regional event schema, with batch detection lag visible.
-- Queue normalized events to absorb storms, then use rules or a small classifier to find customs, missed-scan and weather exceptions. Routine scans only update state.
+- Queue normalised events to absorb storms, then use rules or a small classifier to find customs, missed-scan and weather exceptions. Routine scans only update state.
 - Send exceptions to the resolution agent for an action draft, confidence and supporting signals. The agent cannot call carrier write APIs directly.
 - The independent gate checks customs/regulatory status **first**, using detection's type rather than the agent's label. Any customs or unknown case goes to a human.
 - For non-customs cases, only shipment value under $500 and confidence above the agreed threshold may auto-resolve; all others enter the regional approval queue.
@@ -117,10 +117,10 @@ flowchart TB
 
 **Two feed clocks:** polling a batch-only carrier every few seconds cannot make its 2–6-hour file arrive sooner. Keep separate time-to-detect p50/p95 for webhook and batch feeds. Show lateness on the draft. Queue depth and approval age are separate operational SLOs.
 
-**Release evidence:** replay labeled historical exceptions for recall and precision per type; adversarial customs cases must produce **zero auto-resolutions**; calibrate confidence above the auto threshold; test duplicate execution, EU-to-US access denial and audit completeness. Start offline, then shadow with all human actions, then one region/one integrated carrier for known-route missed scans. For rerouting benefit, use a matched holdout: the route not taken is not directly observable.
+**Release evidence:** replay labelled historical exceptions for recall and precision per type; adversarial customs cases must produce **zero auto-resolutions**; calibrate confidence above the auto threshold; test duplicate execution, EU-to-US access denial and audit completeness. Start offline, then shadow with all human actions, then one region/one integrated carrier for known-route missed scans. For rerouting benefit, use a matched holdout: the route not taken is not directly observable.
 
-**Cost and latency:** keep model calls behind detection; template common missed-scan rebooks; cap agent steps, carrier calls and retries; route difficult human-read drafts to a stronger model only when useful. Cost scales with exceptions, not routine scan volume. During a weather burst, prioritize backlog by value and deadline and scale stateless detection; the human approval queue may become the real bottleneck.
+**Cost and latency:** keep model calls behind detection; template common missed-scan rebooks; cap agent steps, carrier calls and retries; route difficult human-read drafts to a stronger model only when useful. Cost scales with exceptions, not routine scan volume. During a weather burst, prioritise backlog by value and deadline and scale stateless detection; the human approval queue may become the real bottleneck.
 
 ## Two-minute interview answer
 
-“I would ask about feed freshness, the human boundary, shipment value rules and regional residency first. Webhook and batch carriers get different adapters but converge on one normalized, regional queue; batch changes are diffed and their lateness is surfaced. Cheap detection finds exceptions, and only then does a resolution agent draft an action with confidence and reasons. An independent gate checks customs first and always sends it to a human. For other cases, only under-$500, high-confidence actions may auto-resolve. Execution is idempotent, scoped and circuit-broken, with every verdict and action audited in-region. I would prove the customs invariant offline, shadow all actions, then enable one narrow auto-resolve cohort while watching outcome, delay and reversal rates.”
+“I would ask about feed freshness, the human boundary, shipment value rules and regional residency first. Webhook and batch carriers get different adapters but converge on one normalised, regional queue; batch changes are diffed and their lateness is surfaced. Cheap detection finds exceptions, and only then does a resolution agent draft an action with confidence and reasons. An independent gate checks customs first and always sends it to a human. For other cases, only under-$500, high-confidence actions may auto-resolve. Execution is idempotent, scoped and circuit-broken, with every verdict and action audited in-region. I would prove the customs invariant offline, shadow all actions, then enable one narrow auto-resolve cohort while watching outcome, delay and reversal rates.”

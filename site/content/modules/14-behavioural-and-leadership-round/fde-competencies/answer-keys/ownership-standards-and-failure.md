@@ -40,7 +40,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Deliver them in your own cadence
 
 **CEO-ready answer.**
 
-> "The failure you volunteer builds more trust than a clean record. On my own governed retrieval build, the evaluation harness flagged a leak. A claims manager saw a case outside their assignment. I stopped everything and treated it as real. It was a false alarm. The manager had just been reassigned, and my test data was stale. That was my mistake. I had labeled data carelessly. I wrote up the whole thing, false alarm included, and added a check so it can't recur. The team started reporting their own misses earlier. A false security alarm is dangerous, because people learn to ignore it."
+> "The failure you volunteer builds more trust than a clean record. On my own governed retrieval build, the evaluation harness flagged a leak. A claims manager saw a case outside their assignment. I stopped everything and treated it as real. It was a false alarm. The manager had just been reassigned, and my test data was stale. That was my mistake. I had labelled data carelessly. I wrote up the whole thing, false alarm included, and added a check so it can't recur. The team started reporting their own misses earlier. A false security alarm is dangerous, because people learn to ignore it."
 
 **Technical-interviewer answer.**
 
@@ -50,7 +50,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Deliver them in your own cadence
 
 *"Two, and I'll take the one that's more uncomfortable. On my own reference build — Meridian Assist, a 22-document governed RAG system — my evaluation harness flagged a leak: a claims manager shown a case outside their assignment. I stopped everything and treated it as real before I'd fully diagnosed it. It turned out the manager had actually just been reassigned that case: my test data was stale, not the system.*
 
-*I wrote up the whole thing — the alarm, the false alarm, and the fact that I'd mislabeled my own test data by confusing 'not relevant to this question' with 'not allowed to see it.' Then I added a check so those two ideas can never be conflated again, because a false security alarm is worse than no alarm — people learn to ignore it.*
+*I wrote up the whole thing — the alarm, the false alarm, and the fact that I'd mislabelled my own test data by confusing 'not relevant to this question' with 'not allowed to see it.' Then I added a check so those two ideas can never be conflated again, because a false security alarm is worse than no alarm — people learn to ignore it.*
 
 *The response `[FILL: from the team — e.g., how people reacted when you owned the false alarm]` was more trust, not less. And on a customer engagement I'd already told the sponsor mid-build that my first architecture didn't work and why. What I've found is that the failure you volunteer builds more trust than the clean track record you present."*
 
@@ -132,7 +132,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Deliver them in your own cadence
 
 **Technical-interviewer answer.**
 
-> "First change: access moved out of the prompt. My retrieval work had a security test that passed or failed almost at random. The model's judgement was inside the security decision. Now access control is attribute-based and enforced before generation. The model only receives documents the user may see. Leak or no leak is a deterministic check, and tone is evaluated separately as a soft check. Second change: tool count. At the insurer, twenty-plus tool schemas in one context made selection worse. Now each agent gets a small, specialized toolset. At the lender, a triage layer narrows the toolset before the agent runs. The model decides tone and phrasing, never access or scope."
+> "First change: access moved out of the prompt. My retrieval work had a security test that passed or failed almost at random. The model's judgement was inside the security decision. Now access control is attribute-based and enforced before generation. The model only receives documents the user may see. Leak or no leak is a deterministic check, and tone is evaluated separately as a soft check. Second change: tool count. At the insurer, twenty-plus tool schemas in one context made selection worse. Now each agent gets a small, specialised toolset. At the lender, a triage layer narrows the toolset before the agent runs. The model decides tone and phrasing, never access or scope."
 
 **GROUNDED — prompt-based security → hard rules; one big agent → specialists**
 

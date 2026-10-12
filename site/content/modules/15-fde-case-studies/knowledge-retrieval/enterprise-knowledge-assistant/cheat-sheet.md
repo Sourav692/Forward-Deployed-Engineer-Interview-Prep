@@ -28,7 +28,7 @@ Security loop:
 
 ## Pre-filter vs post-check
 
-**Pre-filter:** search only authorised documents; improves recall, latency and top-k utilization.
+**Pre-filter:** search only authorised documents; improves recall, latency and top-k utilisation.
 
 **Post-check:** final authoritative boundary; catches revocation, stale ACLs, embargoes and policy changes.
 

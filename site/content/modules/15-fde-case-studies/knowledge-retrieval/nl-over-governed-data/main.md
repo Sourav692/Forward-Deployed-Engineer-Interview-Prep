@@ -15,7 +15,7 @@ End to end, as an exec asking “What’s Q3 revenue?”
 
 That’s it: **metric first → permitted SQL → bounded run → explain from the result.** Writes and inventing KPIs stay out.
 
-The failure to design against is **valid SQL that answers the wrong business question**. “Revenue” can mean booked, recognized, or collected revenue; the model cannot choose that definition on the business’s behalf. Anchor the question to a versioned metric before exposing a physical schema, then bound and audit every query.
+The failure to design against is **valid SQL that answers the wrong business question**. “Revenue” can mean booked, recognised, or collected revenue; the model cannot choose that definition on the business’s behalf. Anchor the question to a versioned metric before exposing a physical schema, then bound and audit every query.
 
 This is the anchor for the related executive-dashboard and retail-forecast explanation cases in the [source study](/design/nl-over-governed-data#full-pack). Learn the governed query path once; change the final explanation and review workflow for each variant.
 
@@ -24,13 +24,13 @@ This is the anchor for the related executive-dashboard and retail-forecast expla
 | NL-to-SQL analytics assistant    | Governed metric → permitted schema → validated read-only query | General business questions and SQL safety                                                                                      |
 | Executive Dashboard Assistant      | Same metric registry and query evidence                          | KPI variance narrative, dashboard freshness, analyst escalation                                                                |
 | Retail Demand Forecast Explainer | Same governed evidence and result checks                         | Deterministic driver statistics from sales, promotions, inventory, weather, and events; human review of planning actions       |
-| Insurer governed data assistant  | Governed metric views and auditable asset resolution             | Supervisor routes to Genie (now Genie One), a narrow SQL/RAG worker, deterministic analysis, or visualization; later specialized domain agents |
+| Insurer governed data assistant  | Governed metric views and auditable asset resolution             | Supervisor routes to Genie (now Genie One), a narrow SQL/RAG worker, deterministic analysis, or visualisation; later specialised domain agents |
 
 ## 1. Questions to ask the interviewer
 
 | Question to ask                                                                                                   | What it's really asking                                                                                        | What you then decide                                                            |
 | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Who owns “revenue,” “active customer,” and the other first ten metrics? Is a semantic layer already approved? | If Finance means recognized revenue and Sales means booked, who wins — or does that dictionary already exist? | Registry scope, owners, and whether you wire to an existing layer or build one. |
+| Who owns “revenue,” “active customer,” and the other first ten metrics? Is a semantic layer already approved? | If Finance means recognised revenue and Sales means booked, who wins — or does that dictionary already exist? | Registry scope, owners, and whether you wire to an existing layer or build one. |
 | Which warehouse, dialect, and approved datasets are in scope?                                                     | Are we on Snowflake over approved finance views, or every table in the lake?                                   | SQL generator, catalog adapter, parser, and policy rules.                       |
 | Where are row and column permissions enforced today?                                                              | If a regional manager asks for all salaries, does the warehouse already hide those rows?                       | Reuse warehouse ACLs, or build the missing layer.                               |
 | When a term maps to two metrics or grains, should we clarify, refuse, or send it to an analyst?                   | If “active customer” could mean 30-day or 90-day, do we ask, refuse, or hand it to an analyst?               | Ambiguity gate and review queue.                                                |
@@ -123,10 +123,10 @@ flowchart LR
 - **Step 4.** Generate dialect-specific SQL from that narrow context. The model proposes a query; it does not approve one.
 - **Step 5.** Parse the SQL into an AST, enforce table/column/join and read-only rules, recheck entitlements, and estimate scan cost. Reject or narrow anything unsafe or over budget.
 - **Step 6.** Execute through a bounded read-only gateway, running the query as the user (on-behalf-of) so warehouse-native row and column security applies to them, with timeout and row limits.
-- **Step 7.** Summarize the structured result and verify every number against the table. On mismatch, return the table alone and alert reviewers.
+- **Step 7.** Summarise the structured result and verify every number against the table. On mismatch, return the table alone and alert reviewers.
 - **Step 8.** Return the definition, SQL, lineage, freshness caveats, and answer; record the versions, decision, and bytes scanned for replay.
 
-**Agent role:** the default design is a governed LLM query workflow. A supervisor/agent is useful only when one question needs multiple approved specialists, as in the insurer variant. It routes among Genie, a restricted SQL/RAG worker, deterministic analysis, and visualization; neither that agent nor its LLMs may define metrics or bypass the query gate.
+**Agent role:** the default design is a governed LLM query workflow. A supervisor/agent is useful only when one question needs multiple approved specialists, as in the insurer variant. It routes among Genie, a restricted SQL/RAG worker, deterministic analysis, and visualisation; neither that agent nor its LLMs may define metrics or bypass the query gate.
 
 ## 4. Three decisions to defend
 

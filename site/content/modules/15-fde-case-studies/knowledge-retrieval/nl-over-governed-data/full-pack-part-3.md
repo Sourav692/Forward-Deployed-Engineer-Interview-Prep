@@ -2,7 +2,7 @@
 
 ## 9. Fail Closed on Policy, Degrade on Everything Else
 
-A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human. Not every incident deserves the same reaction: a policy engine outage differs from a visualization glitch, and a query scan that explodes cost differs from a benign cache miss. Memorise the pattern by category: authorisation closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
+A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human. Not every incident deserves the same reaction: a policy engine outage differs from a visualisation glitch, and a query scan that explodes cost differs from a benign cache miss. Memorise the pattern by category: authorisation closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
 
 | Situation | Preferred policy | Why |
 |---|---|---|
@@ -103,7 +103,7 @@ A query that runs is not a query that is right. So the evaluation separates two 
 | User trust score | ≥ launch target (4.2/5 or 80% positive) | Two consecutive review periods of decline, even if usage rises | In-product feedback and periodic survey | Product |
 | p95 latency and escalation volume | Within target; escalations trending down | Breach or rising escalations | Request traces plus analyst ticket counts | Platform / SRE |
 | Groundedness and citation accuracy (copilot personas) | ≥ 90% supported claims; ≥ 95% correct citations | Below | Golden Q&A with SME review; source-span audit | ML / eval |
-| Escalation quality (copilot personas) | ≥ 95% correct escalation on high-risk cases | Missed high-risk case | Risk-labeled scenarios | Product / support |
+| Escalation quality (copilot personas) | ≥ 95% correct escalation on high-risk cases | Missed high-risk case | Risk-labelled scenarios | Product / support |
 
 Measure in four buckets, so model quality is never confused with operational health or business value:
 

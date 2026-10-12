@@ -4,11 +4,11 @@ This is the technical backup for the Main Interview Guide. It keeps the details 
 
 **Model and agent roles:** The query planner may split a multi-hop question, while the LLM gateway generates from the final authorised evidence set. The assistant is primarily a RAG workflow; ACL/ABAC enforcement and citation verification remain deterministic.
 
-## 1. ACL normalization
+## 1. ACL normalisation
 
 Different systems use direct grants, groups, nested groups, inheritance, item overrides, classifications and time windows.
 
-Normalize to an internal representation containing:
+Normalise to an internal representation containing:
 
 - tenant
 - document ID
@@ -33,7 +33,7 @@ Normalize to an internal representation containing:
 
 Search only the user's authorised candidate space.
 
-Benefits: recall, top-k utilization, latency.
+Benefits: recall, top-k utilisation, latency.
 
 ### Post-check
 
@@ -346,7 +346,7 @@ For legal/high-risk RAG, keep mandatory citations and escalation while routing s
 ## 20. Failure playbook
 
 ### Stale index
-Detect with freshness/reconciliation metrics. Contain by refusing or labeling stale data. Prevent with events, tombstones and reconciliation.
+Detect with freshness/reconciliation metrics. Contain by refusing or labelling stale data. Prevent with events, tombstones and reconciliation.
 
 ### Prompt injection
 Treat retrieved text as data. Block unsafe tool calls at the gateway.
@@ -386,7 +386,7 @@ A persona-by-document visibility matrix is strong evidence.
 
 Useful lessons to discuss if asked about mistakes:
 
-- test data can be mislabeled and create false leak signals
+- test data can be mislabelled and create false leak signals
 - a stricter policy can mask another untested policy
 - model-based security decisions can be nondeterministic
 - copied search state does not automatically inherit source governance

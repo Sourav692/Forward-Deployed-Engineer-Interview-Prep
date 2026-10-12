@@ -10,7 +10,7 @@ The pivot after a good design is "sales users complain account prep takes 30 to 
 | Likely driver (confirm in traces) | Agent steps and serial tool calls |
 | Weak move | Switch to a faster model without inspecting agent traces |
 | Strong move | Trace the agent, cap steps, cache account data, parallelise read-only calls, precompute account summaries, route common requests to deterministic workflows |
-| Path | user → deterministic intent route → account cache → parallel CRM/tool calls → summarization → optional agent for ambiguous next steps |
+| Path | user → deterministic intent route → account cache → parallel CRM/tool calls → summarisation → optional agent for ambiguous next steps |
 | Trade-offs | Agent flexibility is useful, but common CRM operations should be deterministic and cache-backed |
 | Metrics that prove it | Agent step count, tool latency, cache hit rate, timeout rate, cost per request |
 | Recommendation | Replace the open-ended agent loop with a bounded execution graph |
@@ -55,7 +55,7 @@ Contain. Roll back to `llm_standard_v2`. Restore block mode for external claims.
 
 Root cause. The eval suite over-measured writing quality and under-measured unsupported business claims. It had 120 cases and only 6 about regulated claims, and lacked cases for pending security certifications, internal-only ROI numbers and unapproved customer references. The model upgrade increased persuasive extrapolation. The policy evaluator had been switched from block to warn-only during the experiment to reduce false positives, so the risky drafts went through. Three changes lined up. A stronger model. A weaker gate. A suite blind to the slice that mattered.
 
-Prevent. Build a claim-level eval suite with labeled approval status. Add slice-based release gates and require zero critical failures on regulated claims. Monitor the unsupported-claim rate online against baseline. Add negative examples where the model must refuse to use internal-only claims. Never run a policy evaluator in warn-only mode for external drafts, whatever the false-positive rate.
+Prevent. Build a claim-level eval suite with labelled approval status. Add slice-based release gates and require zero critical failures on regulated claims. Monitor the unsupported-claim rate online against baseline. Add negative examples where the model must refuse to use internal-only claims. Never run a policy evaluator in warn-only mode for external drafts, whatever the false-positive rate.
 
 The strong answer in the room:
 

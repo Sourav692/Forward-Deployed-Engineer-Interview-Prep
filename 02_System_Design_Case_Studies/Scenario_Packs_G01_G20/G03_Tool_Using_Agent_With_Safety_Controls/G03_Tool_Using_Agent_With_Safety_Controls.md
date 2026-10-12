@@ -73,7 +73,7 @@ The constraints are the lines that cannot be crossed, and each is stated so a te
 | Constraint | Stated so it can be tested |
 |---|---|
 | Latency | Model-planning time budgeted separately from tool time; p95 completion under about 15 seconds for low-risk tasks; approval queue time bounded by an escalation rule, for example 99.5% of approval requests leave the queue within 2 minutes |
-| Availability | At 50,000 users and 20 QPS peak, 10 actions per task means roughly 200 tool actions per second. Reads parallelize; writes and approvals do not. Concurrency capped per user, per tool and globally |
+| Availability | At 50,000 users and 20 QPS peak, 10 actions per task means roughly 200 tool actions per second. Reads parallelise; writes and approvals do not. Concurrency capped per user, per tool and globally |
 | Cost | Hard ceilings on tool calls per task, per-task spend, refund amount and allowable destinations. These are guardrails, not tuning knobs |
 | Security | Short-lived, narrowly scoped credentials minted per workflow; the model never holds a reusable API key or admin token. No arbitrary command execution. Tool observations are untrusted input |
 | Audit and compliance | A tamper-evident ledger records intent, policy decision, approval and outcome for every action. Every decision is replayable from versioned prompts, policies, proposals and outcomes |
@@ -102,7 +102,7 @@ One request is not one unit of work. Use the planning anchor of 50,000 users, 10
 | Estimate | Number | What it forces |
 |---|---|---|
 | Planning decisions | 20 per second at peak; 40 to 60 model calls per second under iterative planning bursts | The planner is a queueing problem before it is a throughput problem; size planner and tool adapters separately |
-| Tool actions | roughly 200 per second at peak | Reads parallelize; writes and approvals do not; concurrency caps must assume worst-case composition |
+| Tool actions | roughly 200 per second at peak | Reads parallelise; writes and approvals do not; concurrency caps must assume worst-case composition |
 | Audit storage | ~5 KB decision record and ~20 KB audit trail per task, so 100 KB/s to 400 KB/s | About 8.6 GB to 34.6 GB per day of raw append-only data before indexing and replication |
 | Planner compute | ~1 second of planner time per task, so about 20 core-seconds per second at peak | Reasoned about as a throughput-constrained service with slack for tail latency |
 

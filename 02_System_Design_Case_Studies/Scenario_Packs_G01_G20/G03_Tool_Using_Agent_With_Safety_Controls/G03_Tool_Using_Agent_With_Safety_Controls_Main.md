@@ -72,7 +72,7 @@ The first usable version also needs a tool registry, a real approval record, and
 | Requirement | Example target / constraint |
 |---|---|
 | **Latency** | Budget planner time separately from tool time; low-risk completion around p95 <15 s; approval queue needs an escalation rule. |
-| **Capacity** | 50,000 users, 20 QPS peak, 10 actions/task ≈ 200 tool actions/s; reads parallelize, writes do not. |
+| **Capacity** | 50,000 users, 20 QPS peak, 10 actions/task ≈ 200 tool actions/s; reads parallelise, writes do not. |
 | **Security** | No broad reusable secret in the model; tool observations untrusted; tokens scoped by tenant, workflow, action, expiry. |
 | **Reliability** | Policy or broker failure closes writes; uncertain side effects reconcile before retry. |
 | **Cost and safety** | Hard ceilings on steps, tool calls, spend, refund amount, destinations, and concurrency. |
@@ -188,7 +188,7 @@ Spend roughly 50 minutes: opening/scope (12), architecture and one-request walk 
 | Can the model hold credentials?      | No; a trusted broker mints one scoped token for an approved action.                   |
 | How do you avoid duplicate refunds?  | Durable business-action key, stored receipt, reconciliation after uncertainty.        |
 | What if an email instructs a refund? | Email is data; policy and gateway decide, never the email or model.                   |
-| Why not direct integrations?         | One gateway centralizes authorisation, validation, audit, and idempotency.            |
+| Why not direct integrations?         | One gateway centralises authorisation, validation, audit, and idempotency.            |
 | When do you stop?                    | On risk, ambiguity, missing state, stale approval, policy failure, or budget ceiling. |
 
 **Final mental model:** Propose → validate → decide → approve if needed → scope credential → execute once → record → stop or repeat within budget.

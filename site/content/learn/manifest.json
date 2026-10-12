@@ -334,7 +334,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.2_RAG_from_First_Principles/04_Grounded_Generation.md",
       "estMinutes": 6,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/grounded-generation",
-      "updated": "2026-10-05"
+      "updated": "2026-10-13"
     },
     {
       "slug": "evaluating-retrieval-and-generation-separately",
@@ -1136,7 +1136,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/07_Anatomy_of_a_Deployed_Multi_Agent_Platform.md",
       "estMinutes": 11,
       "href": "/learn/agentic-systems/multi-agent-systems/anatomy-of-a-deployed-multi-agent-platform",
-      "updated": "2026-10-05"
+      "updated": "2026-10-13"
     },
     {
       "slug": "practise-multi-agent-systems",
@@ -3411,7 +3411,7 @@
       "source": "07_Last_Day_Revision/Roadmap.md",
       "estMinutes": 13,
       "href": "/interview/final-week/roadmap",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "roadmap-full-practice-and-checklists",
@@ -3423,7 +3423,7 @@
       "source": "07_Last_Day_Revision/Roadmap.md",
       "estMinutes": 5,
       "href": "/interview/final-week/roadmap-full-practice-and-checklists",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "rapid-revision-guide",
@@ -3435,7 +3435,7 @@
       "source": "07_Last_Day_Revision/Rapid_Revision_Guide.md",
       "estMinutes": 8,
       "href": "/interview/final-week/rapid-revision-guide",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "trigger-to-concept-cheat-sheet",
@@ -3447,7 +3447,7 @@
       "source": "07_Last_Day_Revision/trigger-to-concept-cheat-sheet.md",
       "estMinutes": 10,
       "href": "/interview/final-week/trigger-to-concept-cheat-sheet",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-01-fde-problem-decomposition",
@@ -3459,7 +3459,7 @@
       "source": "07_Last_Day_Revision/module-01-fde-problem-decomposition.md",
       "estMinutes": 10,
       "href": "/interview/final-week/module-01-fde-problem-decomposition",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-02-functional-requirements",
@@ -3471,7 +3471,7 @@
       "source": "07_Last_Day_Revision/module-02-functional-requirements.md",
       "estMinutes": 11,
       "href": "/interview/final-week/module-02-functional-requirements",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-03-non-functional-requirements",
@@ -3483,7 +3483,7 @@
       "source": "07_Last_Day_Revision/module-03-non-functional-requirements.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-03-non-functional-requirements",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-04-core-architecture-building-blocks",
@@ -3495,7 +3495,7 @@
       "source": "07_Last_Day_Revision/module-04-core-architecture-building-blocks.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-04-core-architecture-building-blocks",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-05-rag-and-enterprise-data",
@@ -3519,7 +3519,7 @@
       "source": "07_Last_Day_Revision/module-06-agentic-architecture.md",
       "estMinutes": 10,
       "href": "/interview/final-week/module-06-agentic-architecture",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-07-tools-actions-and-enterprise-integration",
@@ -3555,7 +3555,7 @@
       "source": "07_Last_Day_Revision/module-09-scaling-ai-systems.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-09-scaling-ai-systems",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-10-latency-optimization",
@@ -3567,7 +3567,7 @@
       "source": "07_Last_Day_Revision/module-10-latency-optimization.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-10-latency-optimization",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-11-cost-optimization",
@@ -3579,7 +3579,7 @@
       "source": "07_Last_Day_Revision/module-11-cost-optimization.md",
       "estMinutes": 9,
       "href": "/interview/final-week/module-11-cost-optimization",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-13-ai-evaluation",
@@ -3591,7 +3591,7 @@
       "source": "07_Last_Day_Revision/module-13-ai-evaluation.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-13-ai-evaluation",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-14-release-and-change-management",
@@ -3615,7 +3615,7 @@
       "source": "07_Last_Day_Revision/module-15-observability-and-production-operations.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-15-observability-and-production-operations",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-16-security-and-enterprise-multi-tenancy",
@@ -3627,7 +3627,7 @@
       "source": "07_Last_Day_Revision/module-16-security-and-enterprise-multi-tenancy.md",
       "estMinutes": 9,
       "href": "/interview/final-week/module-16-security-and-enterprise-multi-tenancy",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-17-trade-off-thinking",
@@ -3639,7 +3639,7 @@
       "source": "07_Last_Day_Revision/module-17-trade-off-thinking.md",
       "estMinutes": 9,
       "href": "/interview/final-week/module-17-trade-off-thinking",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "module-18-end-to-end-fde-interview-execution",
@@ -3651,7 +3651,7 @@
       "source": "07_Last_Day_Revision/module-18-end-to-end-fde-interview-execution.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-18-end-to-end-fde-interview-execution",
-      "updated": "2026-10-12"
+      "updated": "2026-10-13"
     },
     {
       "slug": "choose-a-capstone-project",

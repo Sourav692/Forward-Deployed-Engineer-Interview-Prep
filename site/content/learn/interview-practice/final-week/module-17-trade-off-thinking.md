@@ -146,7 +146,7 @@ Provisional choice → Observe metric → Threshold / requirement changes
 | Lower simple-task cost | Evaluated model routing | Avoid unnecessary expensive calls | Check segment quality and fallback cost |
 | Better evidence coverage | More candidates or hybrid retrieval | Improve retrieval recall | Measure noise, latency, answer support |
 | Repeated safe questions | Scoped cache | Avoid repeated work | Verify freshness/access behaviour |
-| Complex independent subtasks | Specialist agents if justified | Separate or parallelize work | Measure coordination cost and outcome |
+| Complex independent subtasks | Specialist agents if justified | Separate or parallelise work | Measure coordination cost and outcome |
 | High-impact actions | Policy + approval workflow | Control execution risk | Approval time and reviewer load |
 | Long research task | Async job + durable state | Fit interaction to duration | Status/result delivery complexity |
 | Strong tenant guarantees | Isolation + fairness controls | Protect data and service | Resource cost and operational effort |
@@ -214,7 +214,7 @@ REQUIREMENT → OPTIONS → BENEFIT / COST
 | Smaller sufficient model | Lower cost, possibly lower latency | Quality by task/risk segment; fallback and rework |
 | More retrieval | Better evidence coverage | Noise, processing, context cost |
 | Reranking / critic | Better selection or error detection | Extra calls, latency, measured value |
-| More agents | Specialization or independent work | Handoffs, coordination, failure paths |
+| More agents | Specialisation or independent work | Handoffs, coordination, failure paths |
 | Cache | Less repeated work | Freshness, access scope, invalidation |
 | More autonomy | Less human work and waiting | Policy, safe writes, recovery, impact |
 | Human approval | Contextual review | Delay, reviewer workload, durable state |

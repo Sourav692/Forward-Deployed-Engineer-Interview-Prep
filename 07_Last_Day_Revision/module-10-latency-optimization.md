@@ -72,11 +72,11 @@ Streamed:     Wait → Partial output → Full response
 
 Do not stream an action as successful before execution is confirmed. Partial output must remain safe and not expose unverified sensitive information.
 
-#### 4. Parallelization — Overlap Independent Work
+#### 4. Parallelisation — Overlap Independent Work
 
 Run independent retrieval or read-tool calls together when permissions, dependency limits, and correctness allow it.
 
-> “I’d parallelize independent order and policy reads, but preserve sequencing where one result is needed for another.”
+> “I’d parallelise independent order and policy reads, but preserve sequencing where one result is needed for another.”
 
 ```text
 Sequential: Read A → Read B → Combine
@@ -178,7 +178,7 @@ Async reduces blocking for the client, not necessarily task completion time. Per
 | Hear… | Think… | Inspect… |
 |---|---|---|
 | “Average 3s, P99 25s” | Tail latency | Slow traces, tenants, workload classes |
-| “Three independent APIs sequentially” | Parallelization | Dependencies and limits |
+| “Three independent APIs sequentially” | Parallelisation | Dependencies and limits |
 | “Model fast, task slow” | Critical path | Queue, tools, retrieval, overhead |
 | “Long silent wait” | First useful output | TTFT, streaming, progress |
 | “Five model calls” | Sequential hops | Necessity of each reasoning step |
@@ -198,7 +198,7 @@ Async reduces blocking for the client, not necessarily task completion time. Per
 ### 8. Practice Questions
 
 1. Average latency is three seconds but P99 is 25 seconds. What traces and segments do you inspect?
-2. CRM, order, and ticket reads are sequential. When can you parallelize them, and when can you not?
+2. CRM, order, and ticket reads are sequential. When can you parallelise them, and when can you not?
 3. Model time is two seconds but total time is twelve. How do you locate the bottleneck?
 4. Streaming starts quickly but completion remains slow. Which experience improved, and what remains unresolved?
 5. A five-minute task has useful progress updates. Design its request, state, status, and result interaction.
@@ -265,4 +265,4 @@ Optimise retrieval candidate counts and reranking against evidence quality. Cach
 
 ### 30-Second Answer
 
-> “I’d define workload-specific first-output and completion targets, inspect P95/P99 traces, and find the critical path. I’d then stream safe output, parallelize independent work, reduce unnecessary model hops, and optimise measured retrieval, tool, or queue delays. For genuinely long tasks, I’d use asynchronous delivery. I’d verify quality, action safety, and cost after each change.”
+> “I’d define workload-specific first-output and completion targets, inspect P95/P99 traces, and find the critical path. I’d then stream safe output, parallelise independent work, reduce unnecessary model hops, and optimise measured retrieval, tool, or queue delays. For genuinely long tasks, I’d use asynchronous delivery. I’d verify quality, action safety, and cost after each change.”

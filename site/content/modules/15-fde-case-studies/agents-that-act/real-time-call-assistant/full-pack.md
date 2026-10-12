@@ -17,7 +17,7 @@ A call assistant is a workflow-timing problem before it is a model problem. The 
 
 ## 1. Split the Call Into Before, During and After Before Drawing Anything
 
-The prompt sounds like one system: "A company wants to transcribe calls, summarize them, extract actions, and update its CRM." It is really three systems with three clocks. A sub-3-second answer cannot wait on work that takes ten seconds. So the first move is to sort every task by when its answer is needed.
+The prompt sounds like one system: "A company wants to transcribe calls, summarise them, extract actions, and update its CRM." It is really three systems with three clocks. A sub-3-second answer cannot wait on work that takes ten seconds. So the first move is to sort every task by when its answer is needed.
 
 The drill's framing settles it: "a sub-3s target is a **workflow design** problem, not only a model choice." Before the call there are hours, so precompute the account context. During the call there are three seconds, so send a small prompt to a fast model and stream the suggestion. After the call there are minutes, so summarise, extract actions and propose the CRM update asynchronously.
 

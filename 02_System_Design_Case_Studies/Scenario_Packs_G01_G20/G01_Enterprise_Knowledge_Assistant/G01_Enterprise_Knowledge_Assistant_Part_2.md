@@ -115,9 +115,9 @@ Components, in the order they exist and the order they fail:
 | Component                     | Responsibility                                                                                             | Fails how                                              |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | Identity and gateway          | Authenticate via the IdP, load role, tenant and region, classify the request as read-only or action-taking | Closed: no identity, no answer                         |
-| Connectors and queue          | Pull change events, run backfill, reconcile missed events                                                  | Degrades: stale source is labeled, not hidden          |
+| Connectors and queue          | Pull change events, run backfill, reconcile missed events                                                  | Degrades: stale source is labelled, not hidden          |
 | ACL normaliser                | Translate each source's permission model into one attribute model                                          | Closed: no usable ACL, nothing indexed                 |
-| Indexes and metadata store    | Keyword and vector per tenant; versions, tombstones, event IDs                                             | Degrades: vector down, keyword serves a labeled answer |
+| Indexes and metadata store    | Keyword and vector per tenant; versions, tombstones, event IDs                                             | Degrades: vector down, keyword serves a labelled answer |
 | Authorise and pre-filter      | Resolve groups, compile attributes into the search filter                                                  | Closed                                                 |
 | Retriever and fusion          | Hybrid search inside the filter, RRF                                                                       | Degrades: fusion order without rerank                  |
 | Policy post-check             | Re-run the full ABAC policy on fresh attributes; redact as an obligation                                   | Closed: policy engine down, refuse                     |
