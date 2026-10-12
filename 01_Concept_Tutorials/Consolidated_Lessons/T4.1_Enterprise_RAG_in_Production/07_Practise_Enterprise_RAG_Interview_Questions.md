@@ -59,7 +59,7 @@ Permissions live in their own catalog, apart from the vectors. A document grant 
 ## Practise the Pipeline Questions
 
 **11. "Draw the request path."**
-Authorize, plan, retrieve, enforce, grade, then generate or refuse, then verify. The order is in the graph's edges, not a convention. Enforcement runs before reranking. → [The Security-First Query Graph](05_The_Security_First_Query_Graph.md)
+Authorise, plan, retrieve, enforce, grade, then generate or refuse, then verify. The order is in the graph's edges, not a convention. Enforcement runs before reranking. → [The Security-First Query Graph](05_The_Security_First_Query_Graph.md)
 
 **12. "What happens when the model provider goes down?"**
 Each failure degrades: expansion falls back to dense, the reranker to fusion order, synthesis to a refusal. A circuit breaker opens after 3 consecutive outage exhaustions, for 30 s. The policy engine is the exception: it fails closed. → [The Security-First Query Graph](05_The_Security_First_Query_Graph.md)
@@ -90,7 +90,7 @@ Choose the pattern: partition by tenant, pre-filter within it, and an authoritat
 
 List the seven rules and the two obligations. Show the visibility matrix as the artefact. Then trace ingestion: two feeds, refuse what cannot be mapped, and a separate catalog so revocation is one row.
 
-Draw the graph and say "authorize first, enforce before anything reaches the model". Finish with the outputs: three sufficiency verdicts, citation re-checks, generic refusals, and a leak gate that must read zero.
+Draw the graph and say "authorise first, enforce before anything reaches the model". Finish with the outputs: three sufficiency verdicts, citation re-checks, generic refusals, and a leak gate that must read zero.
 
 Every element answered a row of the requirement table. That is the test of a good design answer here: nothing is added that the table does not justify.
 

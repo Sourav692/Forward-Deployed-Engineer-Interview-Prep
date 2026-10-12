@@ -95,7 +95,7 @@ The weak answer starts from tools instead of workflow and risk. The average answ
 
 Asked for a concise answer, the strong candidate says:
 
-> "I would frame this as regulated decision support, not autonomous compliance judgment. The system should extract evidence, map it to policy clauses, propose risk labels with confidence, and preserve an audit trail. Launch requires high recall on severe violations, controlled false positives, and explicit resistance to adversarial instructions inside reviewed communications."
+> "I would frame this as regulated decision support, not autonomous compliance judgement. The system should extract evidence, map it to policy clauses, propose risk labels with confidence, and preserve an audit trail. Launch requires high recall on severe violations, controlled false positives, and explicit resistance to adversarial instructions inside reviewed communications."
 
 The strong answer changes what the system outputs: evidence mapped to policy clauses, not a verdict. That keeps the regulatory decision with a person and gives audit something to check.
 

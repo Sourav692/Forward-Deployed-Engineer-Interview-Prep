@@ -71,11 +71,11 @@ Refund approval pending → Resume after decision
 
 Conversation context supports follow-up questions. Workflow state tracks progress and pending work.
 
-#### 3. FR3 Retrieve + FR4 Permissions — Use Authorized Knowledge
+#### 3. FR3 Retrieve + FR4 Permissions — Use Authorised Knowledge
 
 Retrieve relevant information from approved enterprise sources, within the current user's access scope. Retrieval-augmented generation (RAG) uses retrieved knowledge to support an answer.
 
-> “The system must retrieve the relevant refund policy and only expose information the user is authorized to access.”
+> “The system must retrieve the relevant refund policy and only expose information the user is authorised to access.”
 
 ```text
 User identity + permission scope
@@ -152,7 +152,7 @@ Agent recommends → Policy checks
 
 Give the reviewer the request, evidence, recommendation, and policy reason. Approval does not remove permission checks or safe execution requirements.
 
-#### 8. FR10 Failure — Define Uncertainty and Failure Behavior
+#### 8. FR10 Failure — Define Uncertainty and Failure Behaviour
 
 Define what the user or operator experiences when the system cannot complete the task safely.
 
@@ -191,7 +191,7 @@ Write the capability first. Then justify the design that supports it.
 | -------------------------------------- | ------------------------------------------------ | ------------------------------------------ | ------------------------------------ |
 | Continue a conversation or paused task | Context/state store                              | Preserve relevant task information         | Retention and state complexity       |
 | Answer from company policy             | RAG retrieval path                               | Supply approved evidence                   | Freshness and retrieval quality      |
-| Respect different access rights        | Authorization + permission-aware retrieval/tools | Enforce access at each boundary            | Integration effort                   |
+| Respect different access rights        | Authorisation + permission-aware retrieval/tools | Enforce access at each boundary            | Integration effort                   |
 | Handle different request types         | Router or workflow branching                     | Select the required capability             | Misrouting and routing overhead      |
 | Read current order status              | Controlled order API/tool                        | Query current source-of-truth data         | Dependency latency and failure       |
 | Issue refunds under approval rules     | Policy + executor + approval workflow            | Separate proposal from permitted execution | Approval delay and durable state     |
@@ -229,7 +229,7 @@ Across the flow: permissions + safe failure + audit + outcomes
 Start with 6–8 grouped requirements in the interview, rather than reciting all twelve labels:
 
 1. Understand requests and maintain relevant context.
-2. Answer policy questions using authorized enterprise knowledge.
+2. Answer policy questions using authorised enterprise knowledge.
 3. Read current order information through permitted tools.
 4. Route requests and produce grounded answers or recommendations.
 5. Execute allowed refunds with policy checks and approval where required.
@@ -239,7 +239,7 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
 
 ### 5. Important Distinctions and Gotchas
 
-1. **FR vs NFR:** “Fetch order status” is a capability. “Fetch it within an agreed latency target” adds a performance constraint. Security can include both permission-enforcement behavior and broader constraints.
+1. **FR vs NFR:** “Fetch order status” is a capability. “Fetch it within an agreed latency target” adds a performance constraint. Security can include both permission-enforcement behaviour and broader constraints.
 2. **RAG vs tool:** “What is the refund policy?” → retrieve knowledge. “Has my refund completed?” → query live state.
 3. **Reason vs act:** “Customer appears eligible” is a recommendation. Calling the payment API causes the business change.
 
@@ -247,7 +247,7 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
    Agent recommends → Policy decides → Executor acts
    ```
 4. **Route vs multi-agent:** multiple request types require routing; they do not automatically require multiple agents.
-5. **Observability vs audit:** “Why was it slow?” concerns system behavior. “Why was this refund issued?” needs the evidence, policy, approval, and action record. A good answer also does not prove successful task completion.
+5. **Observability vs audit:** “Why was it slow?” concerns system behaviour. “Why was this refund issued?” needs the evidence, policy, approval, and action record. A good answer also does not prove successful task completion.
 
 ### 6. Trigger → Concept Table
 
@@ -258,7 +258,7 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
 | “Different users see different data” | FR4 Permissions | Access-aware retrieval and tools               |
 | “Several request types”              | FR5 Route       | Capability selection; agents only if justified |
 | “Recommend the next step”            | FR6 Reason      | Evidence and decision proposal                 |
-| “Current order status”               | FR7 Tool        | Authorized live API access                     |
+| “Current order status”               | FR7 Tool        | Authorised live API access                     |
 | “Issue a refund”                     | FR8 Act         | Policy, controlled execution, confirmation     |
 | “Manager must approve”               | FR9 HITL        | Approval context and resumable workflow        |
 | “AI lacks evidence / API fails”      | FR10 Failure    | Clarification, safe fallback, escalation       |
@@ -282,9 +282,9 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
 ### 8. Practice Questions
 
 1. Define 6–8 functional requirements for a support system that answers policies, checks orders, and issues eligible refunds. Which require retrieval, tools, or actions?
-2. A user says, “Can I cancel it?” after asking about an order. What requirements handle context, ambiguity, and authorization?
+2. A user says, “Can I cancel it?” after asking about an order. What requirements handle context, ambiguity, and authorisation?
 3. The customer changes the scope from recommending refunds to executing them. Which requirements become necessary or more explicit?
-4. Manager approval may take hours, and the payment API can time out. What behavior must the system support while waiting and when action status is unknown?
+4. Manager approval may take hours, and the payment API can time out. What behaviour must the system support while waiting and when action status is unknown?
 5. A response gets a thumbs-up, but the ticket reopens the next day. What should feedback capture, and how does that differ from audit?
 
 ---
@@ -336,7 +336,7 @@ RAG = retrieval-augmented generation. HITL = human-in-the-loop.
 | “Current order state”                  | Live tool/API            |
 | “Recommend / issue refund”             | Reason / act             |
 | “Manager approval”                     | HITL + workflow state    |
-| “No evidence / API unavailable”        | Failure behavior         |
+| “No evidence / API unavailable”        | Failure behaviour         |
 | “Why did it refund? / Did it resolve?” | Audit / outcome feedback |
 
 ### Do Not Confuse
@@ -344,7 +344,7 @@ RAG = retrieval-augmented generation. HITL = human-in-the-loop.
 1. **FR vs NFR:** capability vs how well it must work. “Read order status” vs an agreed latency target.
 2. **RAG vs live tool:** maintained policy knowledge vs current transactional state.
 3. **Recommend vs act:** agent recommends → policy decides → executor acts. Human approval applies where required.
-4. **Audit vs observability:** business decision/action trace vs system behavior. Response quality is also not proof of task success.
+4. **Audit vs observability:** business decision/action trace vs system behaviour. Response quality is also not proof of task success.
 
 ### Requirement → Component
 
@@ -364,7 +364,7 @@ Do not force every component into the design. Routing does not automatically mea
 
 ### 30-Second Requirements Summary
 
-> “For this support use case, the system must understand requests and retain relevant context, retrieve authorized policy knowledge, and access live order data. It should route requests, produce grounded answers or recommendations, and execute allowed refunds with policy checks and approval where required. It must clarify or escalate failures, record important decisions and actions, and capture resolution outcomes. I’ll select the requirements that apply, then define the non-functional targets.”
+> “For this support use case, the system must understand requests and retain relevant context, retrieve authorised policy knowledge, and access live order data. It should route requests, produce grounded answers or recommendations, and execute allowed refunds with policy checks and approval where required. It must clarify or escalate failures, record important decisions and actions, and capture resolution outcomes. I’ll select the requirements that apply, then define the non-functional targets.”
 
 For action failures, never claim completion without confirmation. Unknown status requires reconciliation; retries must prevent duplicate side effects.
 

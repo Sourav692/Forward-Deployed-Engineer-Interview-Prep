@@ -4408,7 +4408,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'healthcare-prior-auth-assistant',
-    title: 'Healthcare Prior Authorization Assistant',
+    title: 'Healthcare Prior Authorisation Assistant',
     source: '03_Practice_Worksheets_and_Keys/Customer_Discovery_Worksheets/04_healthcare_prior_auth_assistant.md',
     home: 'case-study-worksheets',
     kind: 'live',

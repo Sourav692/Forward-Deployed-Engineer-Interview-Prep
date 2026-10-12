@@ -127,7 +127,7 @@ export const MODULES: ModuleMeta[] = [
   {
     id: '14-behavioural-and-leadership-round',
     number: 14,
-    title: 'Behavioral and Leadership Stories',
+    title: 'Behavioural and Leadership Stories',
     blurb:
       'The non-technical half of the loop: customer-facing competencies for the hiring ' +
       'manager, and leadership-principle answers. The model answers are a personal ' +

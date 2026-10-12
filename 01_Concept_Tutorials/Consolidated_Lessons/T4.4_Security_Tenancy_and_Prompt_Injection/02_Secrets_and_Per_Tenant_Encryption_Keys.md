@@ -75,4 +75,4 @@ The same envelope pattern that made rotation cheap is what makes per-tenant keys
 
 ## References
 
-**Sources:** `01_Identity_Secrets_Tenant_Fairness.md` (FDE Handbook, Cross-Cutting Concerns): "2 · Secrets management" and "3 · Per-tenant encryption keys". `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgment): §2 "Secrets management" and §3 "Per-tenant encryption keys".
+**Sources:** `01_Identity_Secrets_Tenant_Fairness.md` (FDE Handbook, Cross-Cutting Concerns): "2 · Secrets management" and "3 · Per-tenant encryption keys". `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgement): §2 "Secrets management" and §3 "Per-tenant encryption keys".

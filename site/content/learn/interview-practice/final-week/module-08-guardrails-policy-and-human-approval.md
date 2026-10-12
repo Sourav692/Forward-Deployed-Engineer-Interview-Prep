@@ -84,7 +84,7 @@ Review is not automatically a guarantee of correctness. Make the decision clear 
 
 #### 5. Durable Approval — Wait Without Losing State
 
-Persist the proposed action and approval status. Resume through an authorized approval event or lookup; define rejection, expiration, and unavailable-approver behavior.
+Persist the proposed action and approval status. Resume through an authorised approval event or lookup; define rejection, expiration, and unavailable-approver behaviour.
 
 > “For an approval that may take hours, I’d store the pending task and resume after a valid decision.”
 
@@ -102,7 +102,7 @@ Bind approval to the action and relevant inputs. If the amount, recipient, or fa
 
 Fail-open permits an operation when a check fails; fail-closed blocks it. For sensitive writes, missing policy or permission checks should stop execution.
 
-> “If refund authorization is unavailable, I’d stop or defer the refund rather than bypass the check.”
+> “If refund authorisation is unavailable, I’d stop or defer the refund rather than bypass the check.”
 
 ```text
 Policy unavailable → Sensitive write blocked / deferred
@@ -141,11 +141,11 @@ Input → Data/tool scopes → Policy → Approval → Executor
 | Requirement | Component / pattern | Why | Trade-off |
 |---|---|---|---|
 | Enforce refund rules | Deterministic policy | Stable business decision | Rule ownership/versioning |
-| Limit access | Scoped authorization | Restrict data and operations | Identity integration |
+| Limit access | Scoped authorisation | Restrict data and operations | Identity integration |
 | Review high-impact action | Approval workflow + review packet | Human decision with context | Delay and reviewer workload |
 | Wait hours for approval | Durable state + resume event | Preserve pending task | Expiry and consistency handling |
 | Never bypass failed checks | Fail-closed execution | Avoid unchecked writes | Deferred service |
-| Stop harmful behavior quickly | Kill switch at executor | Disable specific capability | In-flight work needs handling |
+| Stop harmful behaviour quickly | Kill switch at executor | Disable specific capability | In-flight work needs handling |
 | Explain the business action | Audit record | Link evidence, policy, approval, result | Retention and privacy |
 
 **Support example:** customer refund rules classify the proposal as allow, review, or deny. A valid manager decision resumes the stored task; execution rechecks the action, permissions, policy, and kill switch before issuing the refund.
@@ -153,7 +153,7 @@ Input → Data/tool scopes → Policy → Approval → Executor
 ### 5. Important Distinctions and Gotchas
 
 1. **Prompt vs enforcement:** instructions guide the model; trusted controls decide actual access and execution.
-2. **Model confidence vs permission:** confidence cannot authorize a financial action.
+2. **Model confidence vs permission:** confidence cannot authorise a financial action.
 3. **Approval vs unconditional execution:** approved actions still need current access, policy, and action validity checks.
 4. **Fail-closed action vs total outage:** block the sensitive write while preserving safe unaffected functionality.
 5. **Kill switch vs rollback:** stopping new execution does not reverse completed transactions.
@@ -216,7 +216,7 @@ Agent recommends → Policy decides → Executor acts.
 | Risk | Impact, reversibility, sensitive data, uncertainty; customer-defined classes |
 | Least privilege | Only the data, tools, and operations needed for user/task scope |
 | HITL | Human-in-the-loop with action, evidence, reason, recommendation, choices |
-| Durable approval | Persist proposal/status; approve, reject, expire; authorized resume |
+| Durable approval | Persist proposal/status; approve, reject, expire; authorised resume |
 | Revalidation | Approval matches action; check changed facts, policy, access |
 | Fail-closed | Missing sensitive-action checks block or defer writes |
 | Kill switch | Disable selected execution capability; handle queued/in-flight work |
@@ -228,7 +228,7 @@ Agent recommends → Policy decides → Executor acts.
 |---|---|
 | “Amount limit” | Deterministic rule, exact threshold boundaries |
 | “High-risk action” | Review or stronger controls |
-| “Only authorized customers” | Scoped permissions |
+| “Only authorised customers” | Scoped permissions |
 | “Manager tomorrow” | Durable approval and expiry |
 | “Policy down” | Block/defer sensitive writes |
 | “Disable refunds” | Execution kill switch |
@@ -237,7 +237,7 @@ Agent recommends → Policy decides → Executor acts.
 ### Do Not Confuse
 
 1. **Prompt vs control:** telling a model to follow policy does not enforce permission at the API.
-2. **Confidence vs authorization:** certainty about a recommendation is not permission to act.
+2. **Confidence vs authorisation:** certainty about a recommendation is not permission to act.
 3. **Approval vs automatic execution:** changed inputs need revalidation and possibly renewed approval.
 4. **Kill switch vs undo:** stopping new writes does not reverse completed ones.
 
@@ -255,11 +255,11 @@ Bind the decision to the proposed action. Restrict who can approve. Handle dupli
 
 ### Failure Rules
 
-Sensitive write without successful authorization or required policy check → stop or defer. Unaffected policy answers or permitted reads may continue. Missing approval → remain pending, expire, or escalate according to customer rules. A kill switch should cover execution even when a task has already passed earlier checks; already submitted actions need outcome tracking.
+Sensitive write without successful authorisation or required policy check → stop or defer. Unaffected policy answers or permitted reads may continue. Missing approval → remain pending, expire, or escalate according to customer rules. A kill switch should cover execution even when a task has already passed earlier checks; already submitted actions need outcome tracking.
 
 ### 30-Second Answer
 
-> “I’d separate recommendation from authority: the agent proposes, policy and permissions decide, and a controlled executor acts. High-impact cases would use a durable human approval workflow tied to the exact action. Before execution I’d revalidate inputs, authorization, and policy. Missing checks would block sensitive writes, and a kill switch would disable the relevant action path while audit records preserve what happened.”
+> “I’d separate recommendation from authority: the agent proposes, policy and permissions decide, and a controlled executor acts. High-impact cases would use a durable human approval workflow tied to the exact action. Before execution I’d revalidate inputs, authorisation, and policy. Missing checks would block sensitive writes, and a kill switch would disable the relevant action path while audit records preserve what happened.”
 
 ## Sources (checked 27 Sep 2026)
 

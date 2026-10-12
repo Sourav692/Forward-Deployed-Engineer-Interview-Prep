@@ -104,11 +104,11 @@ Identity → Authorized data → Authorized tools
                         + tenant boundary
 ```
 
-Permission enforcement is a functional behavior too. NFR discussions clarify how consistently and within which boundaries it must hold.
+Permission enforcement is a functional behaviour too. NFR discussions clarify how consistently and within which boundaries it must hold.
 
 #### 6. Safety — Keep Actions Within Policy
 
-Agree on prohibited actions, approval rules, safe stopping behavior, and the ability to disable execution.
+Agree on prohibited actions, approval rules, safe stopping behaviour, and the ability to disable execution.
 
 > “Which actions require approval, and what must happen if the policy check is unavailable?”
 
@@ -168,15 +168,15 @@ Capture decision summaries and evidence, not private model reasoning, which is o
 | Survive provider failures | Model Gateway fallback | Control provider calls | Different fallback quality |
 | Resume long tasks | Durable state + checkpoints | Recover completed progress | State-management complexity |
 | Prevent duplicate refunds | Idempotent execution + reconciliation | Retry without duplicate effects | Dependency support and bookkeeping |
-| Prevent unauthorized access/actions | Authorization + policy checks | Enforce boundaries | Integration and approval overhead |
-| Diagnose incidents and decisions | Traces + audit records | Link behavior and business actions | Storage, access, retention |
+| Prevent unauthorised access/actions | Authorisation + policy checks | Enforce boundaries | Integration and approval overhead |
+| Diagnose incidents and decisions | Traces + audit records | Link behaviour and business actions | Storage, access, retention |
 
 ```text
 API Gateway   = User → Application control
 Model Gateway = Application → Model control
 ```
 
-**Support example:** agree on peak workload, interactive latency, policy-answer quality, permitted refunds, failure behavior, and cost per resolved case. Then use those constraints to choose components.
+**Support example:** agree on peak workload, interactive latency, policy-answer quality, permitted refunds, failure behaviour, and cost per resolved case. Then use those constraints to choose components.
 
 Write each important NFR as:
 
@@ -208,7 +208,7 @@ Cache         → Cost/latency ↓, freshness risk ↑
 | “Never refund twice” | Reliability | Idempotency and unknown-status handling |
 | “Answers must be trustworthy” | Quality | Correctness, evidence, scoring method |
 | “Several companies use it” | Security | Tenant isolation and access boundaries |
-| “Refunds need approval” | Safety | Policy, approval, unavailable-service behavior |
+| “Refunds need approval” | Safety | Policy, approval, unavailable-service behaviour |
 | “Too expensive” | Cost | Cost per successful task and quality floor |
 | “Why did this happen?” | Observability / audit | System fault or business decision? |
 
@@ -220,7 +220,7 @@ Cache         → Cost/latency ↓, freshness risk ↑
 
 > “For an action-taking system, availability is not enough; retries and recovery must preserve correct business outcomes.”
 
-> “I’d agree on acceptable quality first, then optimize latency and cost within that boundary.”
+> “I’d agree on acceptable quality first, then optimise latency and cost within that boundary.”
 
 > “These targets are provisional until the customer confirms the baseline, workload, and acceptable trade-offs.”
 
@@ -258,7 +258,7 @@ SECURITY / SAFETY / COST / OBSERVABILITY / AUDIT
 | Reliability | Usable availability, correct completion, recovery, duplicate prevention |
 | Quality | Correctness, groundedness, retrieval/tool quality, task success |
 | Security | Identity, permissions, tenant isolation, sensitive data, residency/retention |
-| Safety | Allowed actions, policy, approval, safe stopping behavior |
+| Safety | Allowed actions, policy, approval, safe stopping behaviour |
 | Cost | Total cost per successful task, including retries and rework |
 | Observability | Correlated traces, latency, errors, tokens, cost, outcomes |
 | Audit | Evidence, policy, approval, action result, versions, controlled retention |
@@ -272,7 +272,7 @@ An SLO is a service-level objective. Specify the workload, metric, target, and m
 | “100K users” | Clarify rates, concurrency, and peaks |
 | “Fast chat / long research” | Separate latency expectations |
 | “Never charge twice” | Safe execution, idempotency, reconciliation |
-| “Cannot expose another company's data” | Tenant isolation and authorization |
+| “Cannot expose another company's data” | Tenant isolation and authorisation |
 | “Manager approval” | Safety policy and durable approval state |
 | “Too expensive” | Cost per successful outcome |
 | “Why slow / why refund?” | Observability / business audit |
@@ -295,7 +295,7 @@ Model Gateway = Application → Model control.
 
 1. **FR vs NFR:** capability vs performance and operating limits.
 2. **Available vs successful:** responding does not prove correct task completion.
-3. **Observability vs audit:** system behavior vs business decision and action.
+3. **Observability vs audit:** system behaviour vs business decision and action.
 4. **Average vs tail:** acceptable averages can hide slow requests. Use relevant percentiles and define what is measured.
 
 ### Fill-in Target
@@ -306,7 +306,7 @@ Confirm targets with the customer. Label assumptions. For quality, specify the r
 
 ### 30-Second Answer
 
-> “I’d define the workload first, then agree on latency, availability, quality, security, safety, and cost targets. I’d measure both system behavior and successful task completion, including peak traffic and dependency failures. For business actions, I’d require safe retries and recovery. These targets would drive the architecture and evaluation criteria.”
+> “I’d define the workload first, then agree on latency, availability, quality, security, safety, and cost targets. I’d measure both system behaviour and successful task completion, including peak traffic and dependency failures. For business actions, I’d require safe retries and recovery. These targets would drive the architecture and evaluation criteria.”
 
 ## Sources (checked 27 Sep 2026)
 

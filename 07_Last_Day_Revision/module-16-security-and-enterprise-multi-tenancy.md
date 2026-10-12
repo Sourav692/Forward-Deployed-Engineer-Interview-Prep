@@ -5,7 +5,7 @@
 ### 1. What the Interviewer Is Testing
 
 - Can you enforce user and tenant boundaries across data, tools, and actions?
-- Can you separate authentication, authorization, and business policy?
+- Can you separate authentication, authorisation, and business policy?
 - Can you protect secrets and sensitive data throughout the request path?
 - Can you identify deployment constraints such as approved providers and residency?
 
@@ -35,11 +35,11 @@ Verify who or what is calling, including users, services, and workers. Derive tr
 Verified identity → Trusted tenant membership → Request context
 ```
 
-#### 2. Authorization and RBAC — Decide Permitted Operations
+#### 2. Authorisation and RBAC — Decide Permitted Operations
 
-Authorization asks what that identity may do. Role-based access control (RBAC) assigns permissions through roles; resource ownership and tenant scope may require additional checks.
+Authorisation asks what that identity may do. Role-based access control (RBAC) assigns permissions through roles; resource ownership and tenant scope may require additional checks.
 
-> “An authenticated support user is not automatically authorized to read every account or issue every refund.”
+> “An authenticated support user is not automatically authorised to read every account or issue every refund.”
 
 ```text
 Identity + role + resource + operation + tenant → Allow / deny
@@ -59,7 +59,7 @@ Employee identity → Allowed document scope
 
 > “Employee B's prompt should never receive HR evidence that only Employee A may access.”
 
-Update permissions, deletions, and cache scope; filtering the final answer is too late to prevent unauthorized context exposure.
+Update permissions, deletions, and cache scope; filtering the final answer is too late to prevent unauthorised context exposure.
 
 #### 4. Least-Privilege Tools — Limit Enterprise Reach
 
@@ -125,7 +125,7 @@ Do not infer a universal legal requirement from geography; translate the stated 
 
 Treat user text, retrieved documents, and tool outputs as untrusted input. Use validation, permissions, policy, and execution controls outside model discretion.
 
-> “A document telling the agent to expose secrets cannot change the user's authorization.”
+> “A document telling the agent to expose secrets cannot change the user's authorisation.”
 
 ```text
 Input checks + scoped retrieval + tool authorization
@@ -140,7 +140,7 @@ Test denied-access, cross-tenant, credential-exposure, and instruction-bypass ca
 |---|---|---|---|
 | Verified user/tenant context | Authentication + membership resolution | Trusted identity boundary | Identity integration |
 | Enforce resource access | Authorization/RBAC + resource checks | Limit permitted operations | Permission-model maintenance |
-| Restricted document access | Permission-aware retrieval | Keep unauthorized context out | Source ACL integration |
+| Restricted document access | Permission-aware retrieval | Keep unauthorised context out | Source ACL integration |
 | Scoped enterprise writes | Controlled tools + policy/executor | Limit actions and authority | Integration and approval overhead |
 | Prevent cross-tenant leaks | Scoped storage, caches, jobs, logs/results | Preserve boundaries across copies | Isolation complexity |
 | Protect credentials | Trusted secret management | Keep secrets outside model context | Rotation and runtime access |
@@ -157,8 +157,8 @@ Application-entry checks establish identity and tenant context. Model-call contr
 
 ### 5. Important Distinctions and Gotchas
 
-1. **Authentication vs authorization:** established identity vs permitted resource and operation.
-2. **Authorization vs policy:** allowed to request an action vs action meets business rules; both can be required.
+1. **Authentication vs authorisation:** established identity vs permitted resource and operation.
+2. **Authorisation vs policy:** allowed to request an action vs action meets business rules; both can be required.
 3. **Pre-context access vs final-output filtering:** keeping restricted evidence out is stronger than asking the model not to reveal it.
 4. **Tenant isolation vs fairness:** preventing data leaks vs preventing capacity monopolization.
 5. **Regional hosting vs end-to-end residency:** remote models, logs, backups, or fallback can cross the boundary.
@@ -167,7 +167,7 @@ Application-entry checks establish identity and tenant context. Model-call contr
 
 | Hear… | Think… | Inspect… |
 |---|---|---|
-| “HR access differs by employee” | Resource authorization | Retrieval permissions and updates |
+| “HR access differs by employee” | Resource authorisation | Retrieval permissions and updates |
 | “Model hides restricted content” | Weak boundary | Access before context construction |
 | “Refund agent needs credentials” | Least privilege/secrets | Scoped executor, no prompt secrets |
 | “Fifty enterprise tenants” | End-to-end isolation | Cache, state, jobs, logs, outputs |
@@ -177,7 +177,7 @@ Application-entry checks establish identity and tenant context. Model-call contr
 
 ### 7. Interview Phrases
 
-> “Authentication establishes identity; authorization decides access to this resource and operation.”
+> “Authentication establishes identity; authorisation decides access to this resource and operation.”
 
 > “I’d enforce document access before evidence enters model context.”
 
@@ -188,7 +188,7 @@ Application-entry checks establish identity and tenant context. Model-call contr
 ### 8. Practice Questions
 
 1. Employee A can read HR documents and B cannot. How do ingestion, retrieval, caches, and permission updates preserve this?
-2. Why is final-answer filtering insufficient after unauthorized documents enter context?
+2. Why is final-answer filtering insufficient after unauthorised documents enter context?
 3. What operations, credentials, and resource checks should a refund executor receive?
 4. A shared platform serves fifty tenants. Which data and execution surfaces need isolation, and which need fairness?
 5. A customer requires all processing in one region. How do model fallback, logging, backups, and tool dependencies affect the design?
@@ -216,7 +216,7 @@ Agent recommends → Policy decides → Executor acts.
 | Concept | Remember |
 |---|---|
 | Authentication | Verify user/service identity; establish trusted tenant membership |
-| Authorization | Check role, resource, operation, ownership, tenant |
+| Authorisation | Check role, resource, operation, ownership, tenant |
 | RBAC | Role-based access control; resource-level scope may need extra checks |
 | RAG permissions | Enforce before model context; update source access/deletion changes |
 | Least privilege | Specific necessary read/write operations, scoped credentials |
@@ -224,14 +224,14 @@ Agent recommends → Policy decides → Executor acts.
 | Secrets | Trusted runtime storage/use; never unrestricted prompt or telemetry content |
 | Sensitive data | Necessary collection, approved providers, retention/access for every copy |
 | Residency | Application, models, retrieval, tools, logs, backups, failover |
-| Defense in depth | Validation + authorization + policy + execution controls + audit |
+| Defense in depth | Validation + authorisation + policy + execution controls + audit |
 
 ### Trigger → Concept
 
 | Hear… | Think… |
 |---|---|
-| “Different employee access” | Resource authorization and scoped retrieval |
-| “Filter secrets after answer” | Unauthorized context already exposed |
+| “Different employee access” | Resource authorisation and scoped retrieval |
+| “Filter secrets after answer” | Unauthorised context already exposed |
 | “Agent needs production access” | Specific tools and least privilege |
 | “Shared tenants” | Scope every data/execution surface |
 | “Noisy neighbor” | Resource fairness, separate from data isolation |
@@ -240,14 +240,14 @@ Agent recommends → Policy decides → Executor acts.
 
 ### Do Not Confuse
 
-1. **Authentication vs authorization:** who you are vs what you may access or do.
-2. **Authorization vs business policy:** resource permission vs whether this action meets the rule.
+1. **Authentication vs authorisation:** who you are vs what you may access or do.
+2. **Authorisation vs business policy:** resource permission vs whether this action meets the rule.
 3. **Isolation vs fairness:** no cross-tenant data exposure vs no shared-capacity monopolization.
 4. **Regional app vs residency:** external model, logging, backup, or failover can still cross the boundary.
 
 ### Enforcement Rules
 
-Derive tenant scope from trusted identity, not caller/model claims alone. Authorize the specific resource and operation. Do not retrieve restricted evidence and rely on a prompt to hide it. Keep permissions and cache scope current when access changes.
+Derive tenant scope from trusted identity, not caller/model claims alone. Authorise the specific resource and operation. Do not retrieve restricted evidence and rely on a prompt to hide it. Keep permissions and cache scope current when access changes.
 
 Use scoped tool credentials outside model context. Approval must refer to the action, and execution still rechecks access and business policy. Carry trusted scope through background workers and result retrieval. Review logs, audit, backups, and caches as additional sensitive-data copies.
 

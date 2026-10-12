@@ -1,10 +1,10 @@
-# Module 10 — Latency Optimization
+# Module 10 — Latency Optimisation
 
 ## Concise Interview Module
 
 ### 1. What the Interviewer Is Testing
 
-- Can you measure the actual waiting experience before optimizing?
+- Can you measure the actual waiting experience before optimising?
 - Can you find the critical path across queues, retrieval, models, and tools?
 - Can you distinguish streaming, parallelism, and asynchronous delivery?
 - Can you reduce latency while preserving quality and safe actions?
@@ -35,7 +35,7 @@ Do not double-count time already included inside another measured span. Parallel
 
 #### 1. P50/P95/P99 — Inspect the Distribution
 
-P50 is the median. P95 and P99 show slower-tail behavior: 95% or 99% of measured requests complete at or below those values.
+P50 is the median. P95 and P99 show slower-tail behaviour: 95% or 99% of measured requests complete at or below those values.
 
 > “I’d segment latency by workload and inspect the tail, not just the average.”
 
@@ -98,9 +98,9 @@ Five model hops → Identify required functions
                 Fewer justified calls
 ```
 
-Do not remove policy, authorization, or evaluation controls merely to reduce latency.
+Do not remove policy, authorisation, or evaluation controls merely to reduce latency.
 
-#### 6. Retrieval — Optimize the Evidence Path
+#### 6. Retrieval — Optimise the Evidence Path
 
 Measure query embedding, search, filtering, reranking, and context construction. Tune candidate counts, indexing, and caching against quality requirements.
 
@@ -110,7 +110,7 @@ Measure query embedding, search, filtering, reranking, and context construction.
 Search candidates → Rerank if useful → Select context
 ```
 
-Permission-safe cache reuse can help; stale or unauthorized evidence is not an acceptable speed improvement.
+Permission-safe cache reuse can help; stale or unauthorised evidence is not an acceptable speed improvement.
 
 #### 7. Tools — Control Slow Dependencies
 
@@ -149,7 +149,7 @@ Submit → Acknowledge task ID → Background execution
                               Status / result / notification
 ```
 
-Async reduces blocking for the client, not necessarily task completion time. Persist state and define cancellation or timeout behavior.
+Async reduces blocking for the client, not necessarily task completion time. Persist state and define cancellation or timeout behaviour.
 
 ### 4. Requirement → Component Reasoning
 
@@ -187,13 +187,13 @@ Async reduces blocking for the client, not necessarily task completion time. Per
 
 ### 7. Interview Phrases
 
-> “I’d trace latency end to end before deciding what to optimize.”
+> “I’d trace latency end to end before deciding what to optimise.”
 
 > “I’d measure first useful output and final completion separately.”
 
 > “I’d overlap independent work and reduce unnecessary sequential hops.”
 
-> “I’d recheck quality and safety after any latency optimization.”
+> “I’d recheck quality and safety after any latency optimisation.”
 
 ### 8. Practice Questions
 
@@ -205,7 +205,7 @@ Async reduces blocking for the client, not necessarily task completion time. Per
 
 ---
 
-## One-Page Memory Card: Latency Optimization
+## One-Page Memory Card: Latency Optimisation
 
 **Core question:** Where does the user wait, and what change improves that experience without breaking quality or safe execution?
 
@@ -261,8 +261,8 @@ Sequential stages add. Parallel branches overlap; do not sum all branch times as
 
 Preserve ordering where results depend on one another. Parallel calls increase concurrent load. Do not reorder business writes merely to save time, remove required policy checks, or stream unconfirmed action success.
 
-Optimize retrieval candidate counts and reranking against evidence quality. Cache only when permissions and freshness hold. For tool write timeouts, reconcile status before retry. For queues, use bounded waiting and clear overload behavior; more workers help only if the bottleneck can scale.
+Optimise retrieval candidate counts and reranking against evidence quality. Cache only when permissions and freshness hold. For tool write timeouts, reconcile status before retry. For queues, use bounded waiting and clear overload behaviour; more workers help only if the bottleneck can scale.
 
 ### 30-Second Answer
 
-> “I’d define workload-specific first-output and completion targets, inspect P95/P99 traces, and find the critical path. I’d then stream safe output, parallelize independent work, reduce unnecessary model hops, and optimize measured retrieval, tool, or queue delays. For genuinely long tasks, I’d use asynchronous delivery. I’d verify quality, action safety, and cost after each change.”
+> “I’d define workload-specific first-output and completion targets, inspect P95/P99 traces, and find the critical path. I’d then stream safe output, parallelize independent work, reduce unnecessary model hops, and optimise measured retrieval, tool, or queue delays. For genuinely long tasks, I’d use asynchronous delivery. I’d verify quality, action safety, and cost after each change.”

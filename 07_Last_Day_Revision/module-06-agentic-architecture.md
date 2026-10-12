@@ -82,7 +82,7 @@ Routing to a capability differs from model-provider routing at the Model Gateway
 
 #### 4. Tool Calling — Make Model Requests Controlled Operations
 
-Expose approved tools with clear inputs and outputs. Validate arguments, authorize operations, apply timeouts, and return usable results or errors.
+Expose approved tools with clear inputs and outputs. Validate arguments, authorise operations, apply timeouts, and return usable results or errors.
 
 > “The model can request a tool operation; the application validates whether that operation may execute.”
 
@@ -173,7 +173,7 @@ Different valid paths can exist. Evaluate required constraints and outcomes rath
 | Dynamic investigation | Bounded agent loop | Select next steps from observations | Variable paths and cost |
 | Multiple capabilities | Router + clear interfaces | Assign work appropriately | Routing errors |
 | Independent specialist work | Multiple agents if justified | Separate contexts or parallel subtasks | Coordination and integration |
-| Live enterprise access | Controlled tool layer | Validate and authorize operations | Integration effort |
+| Live enterprise access | Controlled tool layer | Validate and authorise operations | Integration effort |
 | Prevent runaway execution | Shared budget + stop rules | Bound resource use and loops | Some tasks need escalation |
 | Resume long tasks | Durable state + checkpoints | Preserve progress | State consistency |
 | Execute sensitive writes | Policy + approval + executor | Keep authority outside free-form reasoning | Delay and approval workflow |
@@ -197,7 +197,7 @@ User: “Investigate this order issue.”
       Policy / approval → Executor if allowed
 ```
 
-If the task is always “check status, apply known rule, update ticket,” a fixed workflow may be sufficient. Preserve permissions, state, failure behavior, audit, and outcome capture in either design.
+If the task is always “check status, apply known rule, update ticket,” a fixed workflow may be sufficient. Preserve permissions, state, failure behaviour, audit, and outcome capture in either design.
 
 ```text
 API Gateway   = User → Application control
@@ -210,7 +210,7 @@ Neither gateway grants unrestricted agent access to enterprise tools.
 
 1. **Agent vs workflow:** flexible step selection vs defined sequence; a model can be used inside either.
 2. **Capability vs separate agent:** policy lookup and order lookup can be tools in one workflow, not separate agents.
-3. **Recommendation vs authorization:** reasoning proposes; policy, permissions, and approval control execution.
+3. **Recommendation vs authorisation:** reasoning proposes; policy, permissions, and approval control execution.
 4. **Checkpoint vs safe replay:** saved state helps recovery but does not alone prevent duplicate external writes.
 5. **Trajectory vs success:** a plausible path can still fail the task. Measure outcome, permitted operations, and efficiency; do not require private model reasoning.
 
@@ -221,7 +221,7 @@ Neither gateway grants unrestricted agent access to enterprise tools.
 | “Same steps every time” | Workflow | Fixed branches and rules |
 | “Steps depend on what we discover” | Agent | Observation-driven selection |
 | “Separate agent for every feature” | Architecture justification | Benefit vs coordination overhead |
-| “Twenty tool calls for a simple task” | Bounds / no progress | Budgets, repeated calls, stop behavior |
+| “Twenty tool calls for a simple task” | Bounds / no progress | Budgets, repeated calls, stop behaviour |
 | “Crash after step eight” | Durability | Checkpoints and uncertain actions |
 | “Approval takes hours” | Durable approval workflow | Persist, resume, revalidate |
 | “Why did it choose that tool?” | Trajectory evaluation | Tool request, inputs, evidence, result |
@@ -233,9 +233,9 @@ Neither gateway grants unrestricted agent access to enterprise tools.
 
 > “I’d add multiple agents only for a clear benefit that outweighs coordination and model-call overhead.”
 
-> “Each tool request must pass validation and authorization before execution.”
+> “Each tool request must pass validation and authorisation before execution.”
 
-> “I’d bound the whole task by steps, time, tools, retries, tokens, and cost, with explicit stop behavior.”
+> “I’d bound the whole task by steps, time, tools, retries, tokens, and cost, with explicit stop behaviour.”
 
 > “Recovery must preserve progress and reconcile external side effects, not blindly replay writes.”
 
@@ -273,13 +273,13 @@ Select step → Controlled tool → Observe
 |---|---|
 | Workflow vs agent | Defined sequence vs observation-driven step selection |
 | Single vs multi-agent | Require a benefit from context, permissions, specialization, or independent work |
-| Routing | Choose retrieval, tool, workflow, agent, or human; define ambiguity behavior |
-| Tools | Approved interfaces; validate arguments, authorize, timeout, return clear results |
+| Routing | Choose retrieval, tool, workflow, agent, or human; define ambiguity behaviour |
+| Tools | Approved interfaces; validate arguments, authorise, timeout, return clear results |
 | Bounds | Steps, tools, tokens, retries, elapsed time, cost, no-progress stop |
 | Durable state | Task/context, completed steps, results, pending approval, action status |
 | Actions | Recommendation → policy/access check → approval if needed → executor |
 | Trajectory | Observable steps, tools, results, state transitions, final outcome |
-| Evaluation | Correct task result, permitted path, efficiency, failure and recovery behavior |
+| Evaluation | Correct task result, permitted path, efficiency, failure and recovery behaviour |
 
 ### Trigger → Concept
 
@@ -297,7 +297,7 @@ Select step → Controlled tool → Observe
 
 1. **Workflow vs agent:** a model call alone does not imply agentic execution. Both can coexist in one design.
 2. **Capability vs agent:** multiple tools or request types do not automatically need multiple agents.
-3. **Propose vs authorize:** the agent is not the final authority for business writes. Tie approval to the specific action and revalidate changed inputs.
+3. **Propose vs authorise:** the agent is not the final authority for business writes. Tie approval to the specific action and revalidate changed inputs.
 4. **Checkpoint vs safe replay:** durable progress does not guarantee exactly-once external effects. Use action identifiers, idempotency, and status checks where needed.
 
 ### Control Rules
@@ -313,7 +313,7 @@ Retrieved text and tool outputs are data, not permission to bypass these control
 
 API Gateway = User → Application control.
 Model Gateway = Application → Model control.
-Tool authorization remains separate.
+Tool authorisation remains separate.
 
 ### Evaluation Reminder
 
@@ -321,7 +321,7 @@ Inspect observable operations and evidence rather than private model chain-of-th
 
 ### 30-Second Answer
 
-> “I’d keep known rules in a workflow and use a bounded agent where observations need to guide the next step. I’d justify multiple agents only if specialization or independent work improves the result. Tools would be validated and authorized, actions would pass policy and approval, and long tasks would preserve state for safe recovery. I’d evaluate task success, the observable path, latency, and cost.”
+> “I’d keep known rules in a workflow and use a bounded agent where observations need to guide the next step. I’d justify multiple agents only if specialization or independent work improves the result. Tools would be validated and authorised, actions would pass policy and approval, and long tasks would preserve state for safe recovery. I’d evaluate task success, the observable path, latency, and cost.”
 
 ## Sources (checked 27 Sep 2026)
 

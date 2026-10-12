@@ -1,7 +1,7 @@
-# Healthcare Prior Authorization Assistant - Case Study Worksheet
+# Healthcare Prior Authorisation Assistant - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for **Healthcare Prior Authorization Assistant**. The customer has ambiguous requirements, sensitive data, and expects a production rollout, not a demo.
+Design a GenAI FDE solution for **Healthcare Prior Authorisation Assistant**. The customer has ambiguous requirements, sensitive data, and expects a production rollout, not a demo.
 
 ## 2. Clarify the customer problem
 - What business process is broken today?

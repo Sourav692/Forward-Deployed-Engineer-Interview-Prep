@@ -120,7 +120,7 @@ Separate capacity, permissions, and execution paths where justified. Tenant limi
 | No duplicate refunds | Idempotency + reconciliation | Preserve business correctness | State and API support |
 | Resume long tasks | Durable checkpoints | Recover progress | State consistency |
 | Contain failed messages | DLQ + recovery owner | Separate diagnosis from normal processing | Operational backlog |
-| Keep safe features running | Capability-specific degradation | Reduce blast radius | More explicit behavior paths |
+| Keep safe features running | Capability-specific degradation | Reduce blast radius | More explicit behaviour paths |
 
 ```text
 API Gateway   = User → Application control
@@ -153,7 +153,7 @@ Model fallback belongs at the model-call boundary when appropriate. Tool failure
 
 ### 7. Interview Phrases
 
-> “I’d define the failure behavior for each dependency, not just draw a fallback arrow.”
+> “I’d define the failure behaviour for each dependency, not just draw a fallback arrow.”
 
 > “Retries must be bounded, transient-error aware, and safe for side effects.”
 

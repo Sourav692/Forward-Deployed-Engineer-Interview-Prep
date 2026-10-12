@@ -53,14 +53,14 @@ State store: Where did the task stop?
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
 | “Company policies / manuals” | RAG knowledge | Approved sources, ingestion, freshness, access | 5 |
-| “Current order or refund status” | Live API/tool | Query the system of record within authorized scope | 5, 7 |
+| “Current order or refund status” | Live API/tool | Query the system of record within authorised scope | 5, 7 |
 | “Correct document never appears” | Recall / ingestion | Does it exist, parse correctly, pass filters, and get retrieved? | 5 |
 | “Too many unrelated chunks” | Precision / ranking | Search signals, chunking, reranking, final context | 5 |
 | “Exact product code” | Keyword / hybrid matching | Compare exact-term and meaning-based retrieval | 5 |
 | “Old policy answer” | Freshness and version | Update pipeline, metadata, applicability | 5 |
 | “Right evidence, wrong answer” | Context use / generation | Was evidence retained, and do claims follow it? | 5, 13 |
 | “Includes citations” | Evidence support | Do sources actually support the important claims? | 5, 13 |
-| “Different document permissions” | Authorized retrieval | Enforce before context; update permissions and cache scope | 5, 16 |
+| “Different document permissions” | Authorised retrieval | Enforce before context; update permissions and cache scope | 5, 16 |
 
 ```text
 Debug RAG:
@@ -79,9 +79,9 @@ RAG = retrieval-augmented generation. Recall concerns finding relevant evidence;
 | “Separate agent for every feature” | Complexity justification | What specialization/parallel benefit exceeds coordination cost? | 6, 17 |
 | “Twenty calls for a simple task” | Bounds / no progress | Shared step/tool/token/time/cost/retry budget | 6, 11 |
 | “Access production CRM/ERP” | Controlled tool layer | Specific operations, validated inputs, scoped credentials | 7 |
-| “Issue refund / cancel order” | Write action | Authorization, policy, safe execution, confirmation | 7, 8 |
+| “Issue refund / cancel order” | Write action | Authorisation, policy, safe execution, confirmation | 7, 8 |
 | “Amount threshold” | Deterministic policy | Exact boundaries, trusted facts, rule ownership/version | 8 |
-| “Manager must approve” | HITL | Action/evidence packet, authorized reviewer, durable state | 8 |
+| “Manager must approve” | HITL | Action/evidence packet, authorised reviewer, durable state | 8 |
 | “Approval takes hours” | Durable approval workflow | Persist, expire/reject, resume and revalidate | 8 |
 | “Action changes after approval” | Approval binding | Check policy and obtain fresh approval where required | 8 |
 | “Policy service unavailable” | Fail-closed sensitive writes | Stop/defer action; safe unaffected assistance may continue | 8 |
@@ -109,7 +109,7 @@ HITL = human-in-the-loop. High model confidence is not permission to act. Approv
 | “Long silence before output” | First useful output / streaming | Separate first output from final completion | 10 |
 | “Five-minute research” | Async interaction | Task ID, durable state, progress, results | 10 |
 | “Bill doubled” | Attribution | Volume, task mix, model/tokens, calls, retries, rework | 11 |
-| “History grows forever” | Context optimization | Relevant turns/evidence, summaries, authoritative state | 11 |
+| “History grows forever” | Context optimisation | Relevant turns/evidence, summaries, authoritative state | 11 |
 | “Five model calls every time” | Call reduction | What reasoning does each call add? | 10, 11 |
 | “Same strong model for all tasks” | Evaluated model routing | Cheapest capable path at required quality | 11 |
 | “Background work can wait” | Batch eligibility | Deadline and measured billing/processing benefit | 11 |
@@ -178,7 +178,7 @@ Observe tool operations, state transitions, decision summaries, and evidence, no
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
-| “Logged-in user” | Authentication, then authorization | Which resource/operation is permitted? | 16 |
+| “Logged-in user” | Authentication, then authorisation | Which resource/operation is permitted? | 16 |
 | “Roles differ” | RBAC + resource scope | Role-based access plus ownership and tenant checks | 16 |
 | “Filter secrets after generation” | Weak boundary | Restricted evidence must stay out of context | 16 |
 | “Agent needs credentials” | Least privilege / secrets | Trusted executor uses scoped secrets outside model context | 16 |
@@ -186,7 +186,7 @@ Observe tool operations, state transitions, decision summaries, and evidence, no
 | “Data cannot leave this region” | Residency | Models, telemetry, backups, failover, tools | 16 |
 | “Document/tool says ignore checks” | Untrusted data | Text cannot change authority | 16 |
 
-**Distinguish:** authentication = who; authorization = allowed resource/operation; business policy = whether this action meets the rule; tenant fairness = shared-capacity allocation.
+**Distinguish:** authentication = who; authorisation = allowed resource/operation; business policy = whether this action meets the rule; tenant fairness = shared-capacity allocation.
 
 ## 9. Trade-Offs and Interview Execution — Modules 17–18
 
@@ -223,7 +223,7 @@ Restricted data?→ Enforce resource/tenant boundaries
 Why this choice?→ Requirement + trade-off + verification
 ```
 
-**Closing check:** every important box should have a customer requirement, a failure behavior, and a way to verify that it worked.
+**Closing check:** every important box should have a customer requirement, a failure behaviour, and a way to verify that it worked.
 
 ## Sources (checked 27 Sep 2026)
 

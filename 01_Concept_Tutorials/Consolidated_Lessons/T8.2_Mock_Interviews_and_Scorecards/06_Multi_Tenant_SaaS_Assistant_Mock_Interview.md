@@ -95,7 +95,7 @@ The weak answer starts from tools instead of workflow and risk. The average answ
 
 Asked for a concise answer, the strong candidate says:
 
-> "I would treat tenant isolation as a hard system invariant, not a prompt instruction. Every retrieval query, tool call, cache key, log, and evaluation fixture must carry tenant and user authorization context. A single cross-tenant answer is a launch blocker, even if the answer quality is otherwise excellent."
+> "I would treat tenant isolation as a hard system invariant, not a prompt instruction. Every retrieval query, tool call, cache key, log, and evaluation fixture must carry tenant and user authorisation context. A single cross-tenant answer is a launch blocker, even if the answer quality is otherwise excellent."
 
 The strong answer names every place tenant context must travel, including the cache key that caused the demo's leak. Making one cross-tenant answer a launch blocker turns isolation from a goal into a gate.
 

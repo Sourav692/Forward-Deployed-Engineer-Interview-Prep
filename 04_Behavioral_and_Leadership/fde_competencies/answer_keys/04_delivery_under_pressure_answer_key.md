@@ -35,7 +35,7 @@ Spoken answers - 5 grounded, 1 partly grounded, 1 needing your input. Deliver th
 
 > "First I separate blockers from incomplete work, using the release gate, not opinion. A blocker fails a hard criterion: an access or security test, data reconciliation, or a rollback path that has not been rehearsed. Everything else is incomplete work: polish, secondary reports, optional integrations. Then I shape the options technically. Reduced scope means a subset of workloads behind a feature flag. A phased go-live means one cutover wave with a tested rollback. A new date means naming the exact gate that is failing and when it will pass. I never ship around a failing security gate to hold a date. Upstream, I track gate pass rate, open defects by severity and reconciliation trend weekly. Those show the slip at week two."
 
-Hypothetical — testing judgment and instinct, not memory. Answer in order:
+Hypothetical — testing judgement and instinct, not memory. Answer in order:
 
 - Raise it the same day. The cost of a late warning compounds; the cost of an early one is a conversation.
 - Go with options, not a problem — reduced scope for the date, full scope on a new date, or a phased go-live with a subset of workloads.
@@ -132,12 +132,12 @@ To draft this, supply:
 
 **Technical-interviewer answer.**
 
-> "I shipped a known ceiling and kept the exit open. The supervisor worked: four specialists, confidence-gated routing. But its own tool list grew with each domain. That would recreate the context bloat that broke version one, one level up the stack. I didn't re-architect before the deadline. I made two cheap design choices instead. Prompts lived in a governed Delta table with a five-minute cache, so behavior was tunable without a redeploy. The context index was resolved centrally, so specialists were already loosely coupled. When domain growth made the ceiling concrete, I moved to a deep agent pattern. Self-contained subagents, plus a memory-manager subagent. Loose coupling made that a refactor, not a rewrite."
+> "I shipped a known ceiling and kept the exit open. The supervisor worked: four specialists, confidence-gated routing. But its own tool list grew with each domain. That would recreate the context bloat that broke version one, one level up the stack. I didn't re-architect before the deadline. I made two cheap design choices instead. Prompts lived in a governed Delta table with a five-minute cache, so behaviour was tunable without a redeploy. The context index was resolved centrally, so specialists were already loosely coupled. When domain growth made the ceiling concrete, I moved to a deep agent pattern. Self-contained subagents, plus a memory-manager subagent. Loose coupling made that a refactor, not a rewrite."
 
 **GROUNDED — insurer (Supervisor now, Deep Agent later)**
 
 *"At the insurer I had about two months to deliver a working MVP, and partway through, the Supervisor architecture was working — four specialist agents, confidence-gated routing, all fine. But I could see the long-term problem: as domains grew, the Supervisor's own tool list was going to re-approach the exact context-bloat failure that killed my first single-agent design, one level up the stack.*
 
-*The tension was: re-architect now into a Deep Agent pattern and risk the deadline, or ship the Supervisor and accept a known ceiling. I did neither purely. I shipped the Supervisor on time — the customer got days-to-minutes time-to-insight — but I made two choices that kept the long-term path open: prompts lived in a governed Delta table with a five-minute cache so behavior could be tuned without a redeploy, and the Context Index was resolved centrally so specialists were already loosely coupled. Then, once domain growth made the ceiling concrete rather than theoretical, I evolved it into the Deep Agent pattern with self-contained subagents and a memory-manager subagent.*
+*The tension was: re-architect now into a Deep Agent pattern and risk the deadline, or ship the Supervisor and accept a known ceiling. I did neither purely. I shipped the Supervisor on time — the customer got days-to-minutes time-to-insight — but I made two choices that kept the long-term path open: prompts lived in a governed Delta table with a five-minute cache so behaviour could be tuned without a redeploy, and the Context Index was resolved centrally so specialists were already loosely coupled. Then, once domain growth made the ceiling concrete rather than theoretical, I evolved it into the Deep Agent pattern with self-contained subagents and a memory-manager subagent.*
 
 *The principle: ship the deliverable, but don't let it foreclose the strategic direction — and refactor when the pressure is real, not speculative."*
