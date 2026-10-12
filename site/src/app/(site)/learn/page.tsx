@@ -8,7 +8,7 @@ import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/lear
 import { PathBanner } from '@/components/learn/PathFlagIslands'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { TrackCard } from '@/components/learn/TrackCard'
-import { SuggestTopic } from '@/components/areas/Area'
+import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { siteCounts } from '@/components/areas/data'
 
 /**

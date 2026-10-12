@@ -54,6 +54,16 @@ Acme uses an enterprise support copilot over customer contracts, escalation poli
 
 ---
 
+## Level calibration
+
+On this design the levels separate on how many boundaries enforce the tenant scope on their own, and who proves it, not on how the model is served.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Derives tenant context once from the verified token, never the request body, and makes it immutable. Enforces it with row-level security, tenant-keyed caches and a vector filter plus the post-retrieval tenant check, and meters budget before inference so a tenant over quota degrades alone. | Everything past the request path: queue and dead-letter envelopes, logs, per-tenant keys, verified offboarding, and an adversarial suite that blocks promotion on one unexplained failure. |
+| Staff | Adds the queue, log and key layers so all seven enforce independently, weighted fair queuing behind per-tenant token buckets, and an isolation suite Security engineering owns as the release gate. Rolls out internal tenants first, then small shared tenants on conservative quotas, with named owners and rollback by tenant and region. | What breaks at 10x, 5,000 tenants and 2,000 QPS: cache churn and noisy neighbours push pooled-plus-quotas towards partitioning, and nobody has said when shared stops being the right default. |
+| Principal | Turns the dedicated tier into a policy with measurable thresholds and an exception review path, priced by `C_tenant = C_fixed/N + C_usage + C_isolation`, never "big customers get dedicated". Keeps policy central and enforcement regional, so residency covers logs, backups and derived indexes, and a control-plane outage never carries stale state into an irreversible action. | The actual dedicated-tier thresholds, RPO and RTO per region, and the backup erasure window depend on the customers' contracts and residency rules, so they wait for discovery. |
+
 ## Key Takeaways
 
 - The feature is one application for 500 tenants; the business result is a cost-efficient shared platform with defensible isolation and a dedicated path for exceptions.
