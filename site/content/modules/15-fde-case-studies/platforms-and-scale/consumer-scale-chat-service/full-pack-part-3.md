@@ -59,6 +59,16 @@ Every strong cost answer follows four verbs in order. Measure tokens and stage t
 
 ---
 
+## Level calibration
+
+Every level can put a gateway in front of a model pool; the level shows in how the answer handles conversation state, cost and failure at this size.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Says the model is stateless and the product is not, sizes 100M daily users down to about 280,000 open streams, and walks admit, assemble, stream, persist: gateway quotas and input moderation, a durable conversation store, a bounded context builder, and SSE that cancels on abandon. | Fairness between tiers under overload, cache-aware routing, and what a regional failover really costs. |
+| Staff | Adds the operational judgement: a rate limit decides whether and a fair queue decides when, a byte-exact stable prefix with soft session affinity, a cascade weighed against the cache it forfeits, and cold failover that sheds the free tier first. Treats a system-prompt change as a release that also moves cache and cost. | Who owns quotas, prompts and moderation thresholds as policy, and how deletion and residency hold across every store. |
+| Principal | Keeps policy central and enforcement regional, steers by cost per daily active user and cost per successful conversation, and makes memory the user can inspect and erase a product commitment. Plans how files, search, a code sandbox and later voice join without widening the trust boundary. | Real per-replica throughput, KV memory and traffic shape; every sizing figure here is a placeholder until measured. |
+
 ## Key Takeaways
 
 - Clarify the product and state the assumptions before drawing, because "Design ChatGPT" gives nothing else.

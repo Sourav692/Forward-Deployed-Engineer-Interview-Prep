@@ -108,14 +108,6 @@ The follow-ups arrive from a known bank, and each has a prepared shape.
 | The prototype takes 18 seconds                                                         | Section 7: decompose the budget, parallelise, cache, stream, route, keep verification                                                                                                                                                                                                                                                                      |
 | The system becomes too expensive after launch                                          | Cost per resolved investigation, tiered routing, cached catalog and runbooks; never a global model downgrade                                                                                                                                                                                                                                               |
 
-The levelling rubric describes what to say, not who anyone is.
-
-| Level  | Sounds like                                                                                                                                                | Missing                                                           |
-| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| Mid    | Correct components, names a framework, describes a working happy path                                                                                      | Numbers, failure design, trade-offs stated as choices             |
-| Senior | Requirements as numbers, names the control pattern and the rejected alternative, walks a degradation ladder, does cost arithmetic                          | Organisational consequences, migration path, second-order effects |
-| Staff  | All of the above, plus: what to build first and why, what to deliberately not build, how the design changes at 10×, the measurement that would falsify it | Little; at this level differences are about scope of influence    |
-
 Cover the whole design at consistent depth first, then offer depth explicitly: "I can go deeper on the evaluation layer or the cost model, which is more useful to you?" Candidates who go deep unprompted pick the component they know best. They run out of time before failure and measurement, which is where the levelling signal lives.
 
 Recover a round that has gone sideways with a named move for each failure.

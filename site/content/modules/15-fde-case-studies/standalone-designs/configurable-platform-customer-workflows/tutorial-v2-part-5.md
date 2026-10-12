@@ -1,33 +1,33 @@
-# Chapter 17: Design a Configurable Platform for Customer-Specific Workflows, part 5
+# Design a Configurable Platform for Customer-Specific Workflows, part 5
 
 ## 7. Delivery Plan, Observability, and Business Impact
 
 ### Rollout as a Series of Proofs
 
-- Once the prototype works, the real customer question changes from "can it?" to "can we trust it in production, with our data, our approvals, and our support team?" — this is where an FDE stops being a builder of a clever demo and becomes the person who converts architecture into staged delivery with measurable gates.
-- Treat rollout as a series of proofs, not a single go-live event:
-  - Extract one recurring workflow that already appears across several customers — pick the version with the least controversy (one approval path, one integration, one set of fields, one brand surface). Goal: prove the platform can represent a real customer need without a fork, not breadth.
-  - Onboard one willing customer who can tolerate ambiguity and give fast feedback — named owner on your side, single production gate, rollback path known before the first publish. Run a canary release to a narrow slice of traffic or one low-risk tenant segment first. The first launch should be narrow enough that support can see every event, every config validation error, and every downstream integration call.
-  - Expand configuration only after repeated evidence that the existing surface handles real demand, reduces duplication, and does not raise incident risk — the difference between shipping a platform and accumulating tenant-specific debt.
+- When the prototype works, the customer stops asking whether the platform can do the job. They start asking whether they can trust it in production, with their own data, their own approval chains and their own support staff. Here the FDE's role shifts. The clever demo is done; the work now is to turn the architecture into staged delivery, with a measurable gate at every stage.
+- Do not plan one big go-live. Plan a sequence of proofs:
+  - Start with a workflow that several customers already share. Pick its least contested form: a single approval path, a single integration, a single field set and a single brand surface. The aim is depth, not breadth. Show that a real customer need fits the platform with no fork.
+  - Next, bring on one willing customer who copes with loose ends and gives feedback quickly. Name an owner on your side, keep a single production gate, and know the rollback path before the first publish. Release as a canary first, to a thin slice of traffic or to one low-risk group of tenants. The opening launch stays tiny on purpose: support should be able to trace each event, each rejected config and each request sent to a downstream system.
+  - Widen the configuration surface only when evidence keeps showing three things: the current surface meets real demand, it cuts duplicated work, and it adds no incident risk. That discipline is what separates a platform from a growing pile of tenant-specific debt.
 
 ### The Four-Phase Rollout Plan
 
 1. **Extract one recurring workflow.**
-   - Owner: product engineer with FDE support.
-   - Exit criteria: the workflow can be described in shared primitives, not a one-off fork.
-   - Go/no-go gate: the team agrees the recurring pattern is stable enough to encode.
+   - Owner: a product engineer, with the FDE in support.
+   - Exit criteria: shared primitives can express the workflow, so no one-off fork is needed.
+   - Go/no-go gate: the team judges the pattern settled enough to build into the platform.
 2. **Onboard a willing customer.**
-   - Owner: FDE plus customer admin.
-   - Exit criteria: the customer can configure the workflow, complete a pilot run, and report issues through the support channel.
-   - Go/no-go gate: the customer accepts the support model and rollback procedure.
+   - Owner: the FDE together with the customer admin.
+   - Exit criteria: the customer configures the workflow, finishes a pilot run and raises issues through the support channel.
+   - Go/no-go gate: the customer signs up to the support model and the rollback procedure.
 3. **Measure delivery time and defects.**
-   - Owner: platform lead for telemetry; support lead for incident classification.
-   - Exit criteria: baseline numbers for launch speed, defect rate, and validation failures before expanding scope.
-   - Go/no-go gate: the platform shows configuration is reducing custom work rather than creating hidden rework.
+   - Owner: the platform lead for telemetry, and the support lead for classifying incidents.
+   - Exit criteria: starting figures exist for how fast tenants launch, how many defects appear and how often validation fails, all captured before any scope is added.
+   - Go/no-go gate: the data shows configuration is cutting custom work, not hiding rework somewhere else.
 4. **Expand configuration only after repeated evidence.**
-   - Owner: product and platform jointly.
-   - Exit criteria: a second and third customer can reuse the same mechanism with predictable effort.
-   - Go/no-go gate: the new config type is approved only when it lowers forks or support burden without raising upgrade risk.
+   - Owner: product and platform, deciding together.
+   - Exit criteria: a second and a third customer reuse the same mechanism, and the effort is predictable.
+   - Go/no-go gate: a new config type is approved only if it reduces forks or support load without adding upgrade risk.
 
 ```mermaid
 flowchart LR
@@ -41,53 +41,54 @@ flowchart LR
   P4 -->|"go/no-go:<br/>2nd/3rd customer reuse works"| DONE["Reusable product pattern"]
 ```
 
-> 🎯 **Interview Pointer:** Each phase's go/no-go gate is the part interviewers probe — be ready to state all four gates from memory (pattern stability, customer acceptance of support/rollback, evidence that config reduces custom work, repeatable reuse by a 2nd/3rd customer) since this is the mechanism that keeps rollout from becoming "we shipped it because the demo worked."
+> 🎯 **Interview Pointer:** Interviewers tend to push on the gates between phases, so know all four by heart. The pattern is stable. The customer accepts the support and rollback model. The evidence shows config cuts custom work. Customers two and three reuse it with no fresh build. These gates are what stop a rollout from becoming "we shipped because the demo went well."
 
 ### The Six-Metric Scorecard
 
-- **Time to launch customer** — from approved request to first successful production workflow for a tenant. Source: release tracking/ticket timestamps. Owner: delivery lead. Alert: lead time drifts upward across multiple customers (brittle config, slow approvals, manual intervention).
-- **Percentage handled by configuration** — share of customer-specific changes expressed through config instead of code. Source: release classification/change-request tagging. Owner: product/platform lead. Alert: percentage stalls (team silently reverting to forks).
-- **Config validation failure rate** — failed publishes ÷ total publish attempts. Source: config service logs. Owner: platform engineering. Alert: failures rise (confusing UX, poor schema, unsafe requests).
-- **Fork count** — number of customer-specific code branches, conditionals, or exceptions that cannot be removed. Source: architecture review/repo analysis. Owner: engineering manager. Alert: forks grow (each fork weakens the stable core).
-- **Upgrade time** — effort to move one customer/tenant to a new platform version. Source: release records/migration tickets. Owner: release manager. Alert: upgrades require one-off scripts or extended freeze windows.
-- **Tenant incident rate** — incidents per tenant over a rolling period, separated from platform-wide outages. Source: incident management system. Owner: support and SRE jointly. Alert: incidents cluster around a specific config type or adapter.
+- **Time to launch customer:** the time from an approved request to a tenant's first successful production workflow. Data from: release tracking and ticket timestamps. Owner: delivery lead. Alert when: lead time creeps up across several customers, a sign of brittle config, slow approvals or manual steps.
+- **Percentage handled by configuration:** of all customer-specific changes, the share delivered as config rather than code. Data from: tags on releases and change requests. Owner: product or platform lead. Alert when: the share stops rising, which usually means the team is quietly going back to forks.
+- **Config validation failure rate:** failed publishes divided by all publish attempts. Data from: config service logs. Owner: platform engineering. Alert when: the rate climbs, which points to a confusing UX, a weak schema or unsafe requests.
+- **Fork count:** how many customer-specific code branches, conditionals or exceptions exist that cannot be removed. Data from: architecture reviews and repository analysis. Owner: engineering manager. Alert when: the count grows, since every fork erodes the stable core.
+- **Upgrade time:** the effort to move one customer or tenant onto a new platform version. Data from: release records and migration tickets. Owner: release manager. Alert when: an upgrade needs one-off scripts or a long freeze window.
+- **Tenant incident rate:** a rolling count of each tenant's incidents, kept separate from outages that hit the whole platform. Data from: the incident management system. Owner: support and SRE together. Alert when: incidents bunch around one config type or one adapter.
 
 ### Four Layers of Metrics
 
-- **Technical health:** publish success rate, validation failures, rollback frequency, latency, incident rate.
-- **Model/config quality:** whether workflow primitives actually match customer reality, often inferred from how often customers ask for exceptions.
-- **Adoption:** how many customers are using the configured workflow, how often they return to it, how much of their process it covers.
-- **Business outcome:** launch speed, reduced custom engineering, fewer support escalations, faster tenant expansion.
-- This separation matters in interviews: a platform can be technically healthy and still fail commercially without adoption, or be adopted and still fail operationally if support cannot keep it stable.
+- **Technical health:** how often publishes succeed, validation failures, how often rollbacks happen, latency and incident rate.
+- **Model/config quality:** do the workflow primitives fit how customers really work? The usual clue is how often customers ask for exceptions.
+- **Adoption:** customer count on the configured workflow, how frequently each one returns, and the share of each customer's process it now handles.
+- **Business outcome:** faster launches, less custom engineering, fewer support escalations and quicker growth into new tenants.
+- Keep the layers apart in an interview. A platform can pass every technical check and still fail commercially because nobody adopts it. It can also be widely adopted and still fail in operation because support cannot keep it stable.
 
 ### Dashboard in the Language of the User
 
-- Start with the customer story, then drill into the machinery. Example (illustrative numbers): "Customer onboarding completed in under two days, with zero manual config edits, one validation retry, and no post-launch incident." Beneath that: schema validation failures, adapter errors, approval-loop blocks, publish latency, and rollout status by tenant.
-- Answers "what do we watch after launch?" — not just CPU, logs, or queue depth, but the relationship between customer-facing success and internal failure modes.
+- Lead with the customer's story, then drill down into the machinery. A headline might read, with illustrative numbers: "Onboarding for this customer took under two days. It needed zero manual config edits and one validation retry, and there was no incident after launch."
+- Under that headline sit the internal signals, broken out by tenant: rollout status, publish latency, adapter errors, blocked approval loops and failed schema validations.
+- This is how to answer "what do we watch after launch?". CPU, logs and queue depth are not enough. The dashboard should link what the customer sees as success to the failure modes inside the system.
 
 ### Ownership Before Launch
 
-- **Product owner:** decides which recurring workflow becomes the first platformised path.
-- **Platform owner:** maintains the shared core, config schema, and publish service.
-- **FDE:** translates the customer workflow into supported configuration, validates assumptions, coordinates rollout.
-- **Support lead:** owns customer communication, triage, and escalation during pilot.
-- **SRE / operations lead:** owns monitoring, rollback execution, and release health.
-- **Customer admin / champion:** validates the workflow in their environment and signs off on readiness.
+- **Product owner:** picks the first repeated workflow to turn into a platformised path.
+- **Platform owner:** looks after the shared core, the config schema and the publish service.
+- **FDE:** turns the customer's workflow into supported configuration, checks the assumptions and runs the rollout.
+- **Support lead:** handles customer communication, triage and escalation during the pilot.
+- **SRE / operations lead:** is responsible for monitoring, carrying out rollbacks and release health.
+- **Customer admin / champion:** tests the workflow in their own environment and signs off that it is ready.
 
 ### Go/No-Go and Rollback Triggers
 
-- Go/no-go gate: the config is allowed to publish only if validation passes, dependency adapters are healthy, the rollback plan is rehearsed, and the customer champion confirms the workflow still matches the business process.
-- Rollback trigger: repeated validation failures, unexpected integration errors, a growing incident rate in the first tenant cohort, or any sign that a new config pattern is producing unstable approval behaviour.
-- If the workflow is stateful, migration and rollback must be written down separately — moving state is not the same as reverting code.
-- Launch package documentation: a short admin guide, a support runbook, a rollback checklist, and a change log stating exactly what is configurable, what is fixed, and what requires engineering review.
+- Go/no-go gate: a config may publish only when four things hold. Validation passes. The adapters it depends on are healthy. The rollback plan has been rehearsed. And the customer champion agrees that their business process and the configured workflow still line up.
+- Rollback trigger: roll back on any one of these. Validation keeps failing. Integrations throw errors nobody predicted. Incidents climb among the earliest group of tenants. A new config pattern starts to make approvals unstable.
+- For a stateful workflow, write the migration plan and the rollback plan separately. Moving state is a different job from reverting code.
+- Ship a launch package of four documents: a short guide for admins, a runbook for support, a rollback checklist and a change log. The change log lists which parts customers may configure, which stay fixed, and which go to engineering for review.
 
 ### Config vs. Adapter vs. Shared Service vs. Core
 
-- **Configuration** for customer-specific fields, routing choices, branding, approver lists, threshold values.
-- **Adapter** for integrations that differ by customer but share a common interface: CRM, ticketing, email, identity, document systems.
-- **Shared service** for capabilities reused across tenants that need uniform policy: validation, audit logging, workflow execution, publish orchestration.
-- **Core product** for primitives that define the stable business model and should not be renegotiated for every tenant.
-- When tempted to add "just one exception," ask whether it changes the core product, belongs in an adapter, or should be modelled as config — protects the platform from drifting into unmaintainable per-customer branching.
+- **Configuration:** fields, routing choices, branding, approver lists and threshold values that differ per customer.
+- **Adapter:** integrations that vary by customer behind one common interface, such as CRM, ticketing, email, identity and document systems.
+- **Shared service:** capabilities every tenant reuses under one uniform policy, such as validation, audit logging, workflow execution and publish orchestration.
+- **Core product:** the building blocks the business model rests on. They stay put, and no new tenant gets to reopen them.
+- When someone asks for "just one exception", test it against these four homes. Does it change the core product? Does it belong in an adapter? Can it be modelled as config? Asking this keeps the platform from sliding into per-customer branches that nobody can maintain.
 
 ```mermaid
 flowchart TD
@@ -104,10 +105,10 @@ flowchart TD
 
 | Risk | Owner | Mitigation | Trigger |
 |---|---|---|---|
-| Infinite approval loop | Platform engineer | Cycle detection and publish-time validation | Repeated re-entry into the same approval state |
-| Adapter mismatch | Integration engineer | Contract tests and explicit adapter versioning | Failed calls after publish or schema drift |
-| Customer confusion during rollout | FDE | Training, playbooks, and guided setup | High support volume or repeated validation errors |
-| Unsupported fork pressure | Product manager | Refusal criteria for bespoke code and a review board for exceptions | Requests that cannot be represented in configuration |
+| Infinite approval loop | Platform engineer | Detect cycles and validate at publish time | The same approval state is entered again and again |
+| Adapter mismatch | Integration engineer | Contract tests plus explicit adapter versions | Calls fail after a publish, or the schema drifts |
+| Customer confusion during rollout | FDE | Training, playbooks and guided setup | Support volume is high, or validation errors keep repeating |
+| Unsupported fork pressure | Product manager | Clear grounds for refusing bespoke code, plus a review board for exceptions | A request cannot be expressed in configuration |
 
-- This risk register is part of the operating model, not an appendix.
-- Job-market signal: forward-deployed teams need someone who can carry the work from prototype to adoption, then turn customer feedback into a reusable product pattern. The platform is finished when customers adopt it, the workflow improves, and the operating team can support it without heroics — that is the point "customisable" becomes "supportable."
+- Treat this register as part of how the platform is run, not as an appendix.
+- What this shows an employer: a forward-deployed team wants people who carry a piece of work past the prototype until customers adopt it, and who then distil what customers said into a pattern the product can reuse. Call the platform finished once three things are true: customers rely on it, the workflow keeps improving, and operations can run it with no heroics needed. That is the moment "customisable" turns into "supportable".

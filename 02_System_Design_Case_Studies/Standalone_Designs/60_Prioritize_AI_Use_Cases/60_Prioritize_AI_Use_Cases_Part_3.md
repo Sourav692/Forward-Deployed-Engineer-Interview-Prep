@@ -46,6 +46,16 @@ The four verbs from the cost playbook still apply, one level up. Measure cost pe
 
 ---
 
+## Level calibration
+
+On the use-case portfolio, the levels split on whether the candidate ranks thirty ideas once or builds a register the organisation can keep re-ranking.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "I won't pick the most impressive demo. Each idea becomes a card, the four gates run first, and the rest are scored on seven dimensions with stated weights. Value is volume × saving × unit cost × adoption. #7 call wrap-up goes first: high volume, low risk, cheap to evaluate." | Where the weighted sum breaks: compensation, starved enablers, false precision and a top five that is all summarisation. |
+| Staff | "I'd distrust the sum. Every dimension needs at least 3 to make Now, the gateway, eval harness and ingestion get their own enabler bucket, and a rerun under value-, risk- and speed-heavy weightings shows #7, #1 and #6 are decided. Each card gets kill criteria and named signers, and pilots in flight are capped." | How the register survives a new sponsor or shifting priorities, and the route that turns the executive's pet project into a destination. |
+| Principal | "A portfolio office re-scores the register quarterly with pilot data and reports cost per use case to production falling wave on wave. Autonomous settlement (#29) becomes the two-year destination, reached through decision support, shadow mode and go/no-go gates. The gateway is the cheaper front door, so business units don't build shadow AI." | Whether the value bands hold. That needs the insurer's real volumes, baselines and adoption rates from wave 1. |
+
 ## Key Takeaways
 
 - Refuse to pick the most impressive demo; lead with a method, because the demo hides production cost.

@@ -59,6 +59,34 @@ The four verbs still generate the answer. Measure human-review minutes and model
 
 ---
 
+## Level calibration
+
+In all three cases the levels split on reach: the data and the lever at Senior, owners and gates at Staff, the organisation's long-term choices at Principal.
+
+### #67: Faster 911 Response
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Splits time to scene into answer, triage, dispatch and travel, joins call records to GPS tracks, and lets the slow segment choose the lever. | Who owns each feed, who signs off on moving units, and what happens when the GPS feed drops. |
+| Staff | Names the EMS operations chief and the council as owners, guards the worst district's 90th percentile, caps utilisation, and keeps the standard dispatch view live in an outage. | Whether placement alone can close the gap, or the city needs more than software. |
+| Principal | Treats the outcome log as the city's evidence base: override rates and district tails decide when to widen automation, and when to argue for new stations once the no-new-budget year ends. | Whether placement or capacity is the binding limit needs the city's own segment data. |
+
+### #68: Unified Bank Fraud
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Ships a single investigator queue on entity resolution, then a shadow model on one fraud type, and treats unlabelled cases as unknown, not legitimate. | The label is three teams' definitions, so reconciliation needs owners and a sign-off, not just a script. |
+| Staff | Makes label reconciliation a workstream signed by senior investigators, gates each phase of the 90 days, and lets nothing change a decision until model risk signs. | What happens to the three legacy systems and their teams after day 90. |
+| Principal | Frames the reconciled label as a bank-wide asset: one fraud definition, a reusable holdout, and a path to retire legacy rules as validated models earn trust. | Which system retires first depends on [losses by system] and vendor terms the design cannot see. |
+
+### #69: Fewer Medication Errors
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Reconciles ordered, dispensed and administered doses retrospectively, with weight-based and time-window rules that pharmacists review for precision. | Alert fatigue and governance: who approves thresholds, and how many alerts a nurse can take per shift. |
+| Staff | Brings in the pharmacy and therapeutics committee, caps alerts per nurse per shift, pilots one ward against a matched ward, and keeps schedules aggregated by ward and shift. | Whether software is the right fix at all when administration records are missing. |
+| Principal | Says plainly that bedside scanning may beat any model, protects honest incident reporting, and plans how flags spread across the network's wards. | The rollout order needs each ward's [baseline error rate], which only the first slice produces. |
+
 ## Key Takeaways
 
 - The round scores clarifying and narrated reasoning, and it fails architecture-first answers and hand-waved evaluation.

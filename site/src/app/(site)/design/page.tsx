@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import { FilteredGroups } from '@/components/areas/FilteredGroups'
+import { LEVEL_LABEL } from '@/lib/editorial'
 import { ModuleProgress } from '@/components/Progress'
 import { AreaGroup, AreaHeader, AreaSection, LinkList } from '@/components/areas/Area'
 import { LIVE, curriculumModules, curriculumTrack, moduleGroups, siteCounts } from '@/components/areas/data'
@@ -64,21 +67,27 @@ export default async function DesignPage() {
       <AreaSection
         id="cases"
         title="Cases by Theme"
-        description="One line per case. Open a case to choose its depth from the tabs at the top of the page."
+        description="One line per case; filter by theme, level or reading time. Open a case to choose its depth from the tabs at the top of the page."
       >
-        <div className="space-y-4">
-          {groups.map((g) => (
-            <AreaGroup
-              key={g.id}
-              id={g.id}
-              title={g.title}
-              blurb={g.blurb}
-              action={{ label: `${g.items.length} ${g.items.length === 1 ? 'case' : 'cases'}`, href: g.href }}
-            >
-              <LinkList items={g.items} />
-            </AreaGroup>
-          ))}
-        </div>
+        <Suspense
+          fallback={
+            <div className="space-y-4">
+              {groups.map((g) => (
+                <AreaGroup
+                  key={g.id}
+                  id={g.id}
+                  title={g.title}
+                  blurb={g.blurb}
+                  action={{ label: `${g.items.length} ${g.items.length === 1 ? 'case' : 'cases'}`, href: g.href }}
+                >
+                  <LinkList items={g.items} />
+                </AreaGroup>
+              ))}
+            </div>
+          }
+        >
+          <FilteredGroups groups={groups} levels={LEVEL_LABEL} noun="designs" unit={['case', 'cases']} time />
+        </Suspense>
       </AreaSection>
     </div>
   )

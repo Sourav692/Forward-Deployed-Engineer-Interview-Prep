@@ -24,6 +24,16 @@ Every strong cost answer runs through four verbs in order. Measure eval spend pe
 
 ---
 
+## Level calibration
+
+Every level can draw the pass, block or hold gate; the level shows in who trusts it, who may override it and whether teams can afford it.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Pins the candidate and the production baseline, judges Δ on quality, safety, p95 latency and cost separately, and fails closed: missing evidence blocks, thin evidence holds. Sizes 3,000,000 executions a day against a six-hour release window. | Who owns rubrics and overrides, and why the LLM grader needs calibration against humans before it may gate. |
+| Staff | Adds the trust path: app teams own rubrics, an authorised owner records every override, the grader stays advisory until human agreement holds, and critical slices pass on their own, as incident #91 shows. Tracks escape rate, override reasons and eval cost per release. | How the gate becomes the standard for all 30 apps without teams routing around it, and what changes at 10x. |
+| Principal | Treats the gate as the organisation's release contract: a shared schema with app-specific rubrics, policy mode as a versioned artifact nobody can bypass, and tiered suites that keep the gate affordable. Plans for 10x, where storage, retention and human-review routing dominate, with compliance mapping and per-segment fairness as later dimensions. | Each team's real release cadence, label quality and acceptable eval spend, which need their own data before thresholds are set. |
+
 ## Key Takeaways
 
 - The ask is a controlled release decision for four stakeholders with four different questions, not a dashboard of scores.

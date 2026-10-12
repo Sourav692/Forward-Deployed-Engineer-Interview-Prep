@@ -6,23 +6,23 @@
 
 ## The prompt
 
-Design an AI-powered recruiting platform that screens resumes, matches candidates to job descriptions, generates interview questions, scores candidates, schedules interviews and assists hiring managers — end to end, from upload to hiring decision.
+You are asked to build a recruiting platform with AI at every step. It reads resumes, matches people to open roles, drafts interview questions, scores candidates, books interviews and supports the hiring manager. The scope runs the whole way, from the first upload to the hiring decision.
 
 ## Step 1 — Define the problem space
 
-Recruiters upload a job description, receive resumes in bulk, get candidates ranked by fit, generate questions and scorecards, schedule interviews, receive a recommendation — **while remaining in control of the final decision.** That last clause is the whole design constraint: an AI-*assisted* workflow, not an autonomous hiring system.
+A recruiter posts a job description and a large batch of resumes arrives. The platform has to rank those candidates by fit, draft questions and scorecards, book interviews and suggest a decision. **The recruiter still makes the final call.** That one requirement shapes everything else. We are building a tool that helps people hire, not one that hires on its own.
 
-The answers below are the ones this case assumes. In the room, confirm each one with the interviewer.
+This case works from the answers in the table. Check each one with the interviewer before you rely on it.
 
-| Question                                     | Answer                                                        | What it decides                                     |
-| -------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------- |
-| Enterprise hiring or staffing agencies?      | Differs                                                       | Multi-tenancy and volume assumptions                |
-| Real-time or batch matching?                 | Batch for bulk ingestion; near-real-time for recruiter search | Two processing modes                                |
-| Can recruiters override AI recommendations?  | Yes, always                                                   | Human-in-the-loop is first-class                    |
-| Fully automated or human-assisted decisions? | Human-assisted                                                | Every downstream choice bends toward explainability |
-| Compliance — GDPR, EEOC?                    | Yes                                                           | Fairness monitoring and audit are non-negotiable    |
+| Question | Answer | What it decides |
+| --- | --- | --- |
+| Who is the customer: an enterprise hiring team or a staffing agency? | It varies | How many tenants and how much volume to plan for |
+| Does matching run in batches or live? | Batches for bulk intake; close to live when a recruiter searches | The system needs two processing modes |
+| May a recruiter overrule the AI? | Always | Human review is a core feature, not an add-on |
+| Does the system decide, or help a person decide? | It helps a person decide | Explainability drives every later choice |
+| Do GDPR and EEOC rules apply? | Yes | Fairness checks and an audit trail are mandatory |
 
-**Functional:** upload JD and resumes; extract structured info; rank by fit; semantic search across profiles; generate questions and scorecards; recommend decisions; schedule; summarise feedback; recruiter chatbot; learn from past decisions. **Non-functional:** thousands of resumes/hour; accuracy; low hallucination; secure PII; scale; **explainable rankings**; compliance; cost.
+**Functional:** take in a JD and resumes; turn them into structured data; rank candidates by fit; search profiles by meaning; draft interview questions and scorecards; suggest a decision; book interviews; summarise interviewer feedback; give recruiters a chatbot; improve from past hiring decisions. **Non-functional:** handle thousands of resumes an hour; match accurately; keep hallucination low; protect PII; scale out; **make every ranking explainable**; stay compliant; control cost.
 
 ## Step 2 — High-level architecture: two intake paths, one ranked pipeline
 
@@ -57,73 +57,83 @@ flowchart TD
     R --> S[Candidate Portal]
 ```
 
-**Structured extraction is the seam between "documents" and "data":** everything before it deals with PDFs and free text; everything after deals with comparable, rankable profiles. Module 06's chunking-by-format lesson — resumes vary wildly, and the parser has to produce one consistent shape.
+**The extraction service is where documents turn into data.** Upstream of it, the system handles PDFs and loose text. Downstream, it handles profiles that share one shape, so they can be compared and ranked. This is the chunking-by-format lesson from Module 06 again. Resumes come in every layout, and the parser must still emit one consistent structure.
 
 ## Step 3 — The flow
 
-1. **JD upload** — parsed into required and preferred skills, experience, education, certifications, location, salary.
-2. **Resume upload** — PDF, DOCX, a LinkedIn profile, an ATS record.
-3. **Structured extraction** — structured fields, not raw text; that is what makes search and ranking reliable.
-4. **Embeddings** — for the JD, the profile, skills, projects, experience, certifications — semantic meaning, not keywords.
-5. **Similarity search** — *"LLM Engineer"* retrieves candidates mentioning Generative AI, RAG, prompt engineering, agentic AI.
-6. **Ranking** — multiple weighted signals; an explainable list, not pass/fail.
-7. **Interview questions** — role-specific, based on the JD, the candidate's experience, missing skills, past projects.
-8. **AI judge** — after interviews or assessments: technical correctness, communication, problem-solving, alignment — structured feedback and preliminary scores.
-9. **Human review** — a recruiter or hiring manager reviews ranking, scores, summaries and recommendations, and **makes the final decision** — accountability and a human check on bias, provided the reviewer can really override.
-10. **Scheduling** — availability, slots, invites, notifications, ATS update.
+1. **JD upload.** The parser pulls out must-have and nice-to-have skills, years of experience, education, certifications, location and salary band.
+2. **Resume upload.** Input can be a PDF, a DOCX file, a LinkedIn profile or a record from the ATS.
+3. **Structured extraction.** Each resume becomes a set of fields rather than a block of text. Search and ranking need those fields to be reliable.
+4. **Embeddings.** The system embeds the JD and the profile, plus skills, projects, experience and certifications. Embeddings capture meaning, so matching is not tied to exact words.
+5. **Similarity search.** A query for *"LLM Engineer"* can surface people who list Generative AI, RAG, prompt engineering or agentic AI.
+6. **Ranking.** Several weighted signals feed one ordered list. Each place in the list comes with a reason, which beats a bare pass or fail.
+7. **Interview questions.** Questions fit the role. They draw on the JD, the candidate's background, the skills they lack and the projects they have done.
+8. **AI judge.** Once an interview or assessment is over, the judge rates technical accuracy, communication, problem-solving and fit with the role. It returns structured feedback and a provisional score.
+9. **Human review.** A recruiter or hiring manager looks at the ranking, scores, summaries and suggestion, then **takes the final decision**. That gives clear accountability and a human check on bias, but only if the reviewer can genuinely overrule the system.
+10. **Scheduling.** The platform reads calendars, finds free slots, sends invites, notifies the candidate and updates the ATS.
 
 ## Step 4 — The deep dive: explainable ranking
 
-The ranking engine combines several signals rather than one similarity number: semantic similarity, required-skills match, experience level, domain expertise, location, certifications, availability, historical hiring success where applicable. **Weighting the signals explicitly, rather than letting one opaque score decide, is what makes a ranking explainable to a recruiter and defensible in an audit.**
+The ranking does not rest on a single similarity number. It blends semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. **Explicit weights are what let a recruiter follow the ranking and let an auditor accept it.** One opaque score allows neither.
 
-An illustrative weighting, my starting point rather than a standard: semantic similarity ~30% · skills match ~25% · experience ~20% · domain expertise ~15% · other signals ~10%. A recruiter can see *why* a candidate ranked where they did, not just that they did.
+Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience ~20% · domain expertise ~15% · everything else ~10%. With weights like these on show, a recruiter can see the reasons behind a candidate's place, not just the place.
 
-The AI judge follows the same principle: standardised scoring with rationale — and **it does not make the final decision.** The evaluation pipeline combines similarity, completeness, judge scores, interview feedback, recruiter and hiring-manager input, with **confidence thresholds that make manual review mandatory** below a bar. Module 04's rule — never gate a consequential decision on an LLM judge alone — applied to people's careers.
+The AI judge works the same way. It scores against a fixed rubric and explains each score, and **the decision is never its to make.** The evaluation pipeline pulls together similarity, profile completeness, judge scores, interview feedback and input from the recruiter and hiring manager. **When confidence falls below a set threshold, a person must review the case.** Module 04 warned against letting an LLM judge alone gate a high-stakes outcome. Here the outcome is someone's career.
 
 ## Step 5 — Scaling to thousands of resumes an hour
 
-Stateless application servers; **asynchronous document processing** (parsing and embedding as background jobs, never blocking the upload); distributed vector databases; GPU-backed inference absorbing the burst when a new posting triggers thousands of comparisons; **event-driven ingestion** decoupling upload from parse, extract, embed and rank; multi-region for latency and candidate-PII residency; caching embeddings and generated outputs; queue-based processing for peak seasons.
+Keep the application servers stateless so they scale out. **Process documents asynchronously**: parsing and embedding run as background jobs, and an upload never waits on them. Spread the vector database across nodes. Use GPU-backed inference to soak up bursts, such as a new posting that sets off thousands of comparisons at once. **Drive ingestion with events**, so upload is decoupled from parsing, extraction, embedding and ranking. Deploy in several regions to cut latency and keep candidate PII where it has to stay. Cache embeddings and generated text, and lean on queues during peak hiring periods.
 
 ## Security and fairness — candidate data is sensitive; hiring decisions carry legal weight
 
-Encrypt at rest and in transit; protect PII; RBAC for recruiters and hiring managers; **audit logs for every AI recommendation and hiring action**; GDPR, CCPA, EEOC; candidate deletion requests; **monitor models for fairness and bias across protected groups — continuously, not once.**
+Encrypt data both when stored and when moving. Guard PII. Give recruiters and hiring managers role-based access through RBAC. **Write an audit record for every AI suggestion and every hiring action.** Meet GDPR, CCPA and EEOC duties, and honour candidates who ask for their data to be deleted. **Watch the models for bias across protected groups, all the time, not once at launch.**
 
 ```
 AI Ranking & Scores → Human Recruiter Review → Approve or Override → Final Hiring Decision
                         (continuous bias and fairness monitoring over the whole path)
 ```
 
-AI ranking never bypasses a human.
+No AI ranking reaches a decision without a person in between.
 
 ## Trade-offs
 
-| Decision               | Pros                           | Cons                                   |
-| ---------------------- | ------------------------------ | -------------------------------------- |
-| Keyword matching       | Fast, simple                   | Misses semantically similar candidates |
-| Embedding-based search | Better discovery               | Compute cost                           |
-| Fully automated hiring | Faster                         | Legal and ethical risk                 |
-| Human-in-the-loop      | Oversight, fairness            | Slower                                 |
-| Large reasoning model  | Better summaries and questions | Latency, cost                          |
-| Smaller model          | Faster, cheaper                | Lower reasoning                        |
+| Decision | Pros | Cons |
+| --- | --- | --- |
+| Keyword matching | Quick and easy to build | Misses people who describe the same skill in other words |
+| Embedding-based search | Finds more good candidates | Costs more compute |
+| Fully automated hiring | Decisions come sooner | Carries legal and ethical exposure |
+| Human-in-the-loop | Keeps oversight and fairness | Takes longer |
+| Large reasoning model | Stronger summaries and questions | Slower and dearer |
+| Smaller model | Quicker and cheaper | Weaker reasoning |
 
 ## Follow-ups to have ready
 
-**How do you reduce bias?** Remove or mask demographic information where appropriate; diverse training and evaluation data; continuous fairness metrics; human approval required; transparent explanations for rankings; regular audits.
+**How do you reduce bias?** Hide or mask demographic details where that makes sense. Train and test on varied data. Track fairness metrics without a break. Keep a human sign-off on every hire. Explain each ranking openly. Audit on a regular schedule.
 
-**How do you improve matching accuracy?** Semantic embeddings over keywords; multiple ranking signals; recruiter feedback into the ranking model; precision and recall against historical outcomes; prompt and retrieval tuning on feedback.
+**How do you improve matching accuracy?** Match on embeddings, not keywords. Blend several ranking signals. Feed recruiter feedback back into the ranker. Measure precision and recall against past hiring outcomes. Tune prompts and retrieval using that same feedback.
 
-**How do you personalise for recruiters?** Learn from previous decisions; prioritise candidates similar to successful hires *while monitoring for bias*; question difficulty by seniority; team-specific skills; recruiter-configurable weights.
+**How do you personalise for recruiters?** Learn from each recruiter's earlier decisions. Lift candidates who resemble past successful hires, *and watch that step closely for bias*. Set question difficulty by the seniority of the role. Reflect the skills a given team needs. Let recruiters adjust the weights themselves.
 
 ## Summary
 
-An end-to-end AI workflow — structured extraction, semantic matching, explainable ranking, AI-judged evaluation — with a human in control of the final decision and fairness, PII protection and compliance treated as design constraints rather than checkboxes. **Every stage is AI-assisted; no stage is AI-decided.**
+The design is one AI workflow from end to end: structured extraction, matching by meaning, ranking you can explain, and evaluation by an AI judge. A person keeps the final decision. Fairness, PII protection and compliance are built into the design from the start, not ticked off at the end. **AI helps at every stage and decides at none.**
 
 ## Checkpoint
 
-- Why is structured extraction the most important seam in the architecture?
-- Why is an explicit weighted ranking more defensible than a single model score?
-- What does the AI judge do and not do, and what forces manual review?
-- Name three fairness mechanisms and say which is continuous.
-- Why is the personalisation answer's "similar to successful hires" a bias risk, and what mitigates it?
+- What makes structured extraction the most important boundary in this architecture?
+- Why is an explicit weighted ranking easier to defend than one model score?
+- What is the AI judge allowed to do, what is it barred from doing, and what triggers manual review?
+- Give three fairness mechanisms and say which one runs all the time.
+- In the personalisation answer, why is "similar to successful hires" a bias risk, and how do you contain it?
+
+## Level calibration
+
+On the recruiting platform, the levels split on how far an answer takes "AI-assisted, never AI-decided" beyond a slogan.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "Parse JDs and resumes into structured profiles, embed them, and rank on explicit weighted signals, semantic similarity ~30% and skills ~25% and so on. Parsing and embedding run as async jobs, so thousands of resumes an hour never block an upload, and every shortlist goes to a recruiter." | Who owns the weights, the confidence threshold that forces manual review, and how bias gets caught once the system is live. |
+| Staff | "The recruiter review needs real power to override. Below a [confidence threshold], review is mandatory, and every recommendation and override is audit-logged. Fairness monitoring across protected groups runs continuously and is owned with legal and hiring leadership, and deletion requests and candidate PII stay in their region." | How recruiter feedback flows back into ranking, and the risk that "similar to successful hires" learns past bias. |
+| Principal | "Personalised weights and learning from past decisions only ship behind continuous fairness audits and demographic masking. No stage ever becomes autonomous, because AI that filters candidates is classed as high-risk. I'd also set the organisation-wide rule for who may change weights, prompts and judge rubrics." | Whether historical hiring outcomes are clean enough to learn from. That needs the customer's own data and an audit of past decisions. |
 
 **Next →** Case 5 — Logistics Exception Handling

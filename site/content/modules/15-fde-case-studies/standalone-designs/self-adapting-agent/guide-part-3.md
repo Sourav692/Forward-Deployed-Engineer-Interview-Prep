@@ -50,6 +50,16 @@ The four verbs from the cost playbook generate the same answer. Measure, by attr
 
 ---
 
+## Level calibration
+
+On this design the levels separate on who owns the evaluation gate and what the agent may change about itself, not on how many learning mechanisms get drawn.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "I'd score novelty and send unknown requests to a fallback with tighter bounds, adapt through outcome-ranked examples and a memory write policy, and promote a skill only once it beats baseline by 5 points and survives 200 shadow attempts." | Gating per task type rather than on the mean, the sample-size point that 200 attempts prove "not much worse" rather than a 5-point gain, and who owns and rolls back each skill. |
+| Staff | "Every skill, memory and prompt is a registry version with a team owner. The gate holds a 3-point floor per task type, demotes at 4 points below baseline, and a learning budget stops candidate volume outrunning serving spend." | Goal drift and metric gaming across the teams that own skills, and when the organisation should fund weight updates at all. |
+| Principal | "The agent learns how but never gains authority, so permission changes stay human-only for good. Training is funded only for format at volume, missing vocabulary or a latency ceiling, and a second independent outcome signal guards against gaming." | Real traffic per task type and which outcome signals the customer trusts; those decide whether the 14-day time to competence and the 10% learning cap are realistic. |
+
 ## Key Takeaways
 
 - "Adapt" means five rungs, from context to weights, each about ten times costlier and harder to undo; design from the cheap end.

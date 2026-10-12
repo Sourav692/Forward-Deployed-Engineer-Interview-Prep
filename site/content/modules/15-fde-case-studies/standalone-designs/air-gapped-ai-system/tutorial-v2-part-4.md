@@ -1,45 +1,45 @@
-# Chapter 7: Design an AI System for an Air-Gapped Environment, part 4
+# Design an AI System for an Air-Gapped Environment, part 4
 
 ## 5. Data Model, APIs, and Working Code
 
 ### Three Governable Records
-- `ReleaseManifest(version, artifact_hashes, signatures, dependencies)` — the deployable contract for a bundle.
-  - Primary key: `version` — must be referable, repeatable, promotable by a stable identifier.
-  - Lifecycle: drafted in connected build environment → signed → transferred into offline boundary → validated → staged → promoted or rejected.
-  - Retention: preserve the manifest, signature material, and enough dependency metadata to reconstruct why a release was accepted or refused — driven by audit needs and local policy, not a universal standard.
-- `ModelDeployment(model_id, version, hardware, status)` — the operational view of what is actually running.
-  - Preferred primary key: `deployment_id`, with a unique constraint across `(model_id, version, hardware)` if the same model family can exist in multiple release states on different targets.
-  - If no separate deployment identifier exists, `(model_id, version, hardware)` becomes the natural composite key — choose one explicitly.
+- `ReleaseManifest(version, artifact_hashes, signatures, dependencies)` — the promise a bundle makes, and so the contract you deploy against.
+  - Primary key: `version`. Operators need one stable name they can cite, rebuild against and promote.
+  - Lifecycle: written in the connected build environment, then signed, carried into the offline side, validated and staged. Finally it is promoted or turned away.
+  - Retention: keep the manifest, its signature material and enough dependency detail to show later why the release passed or failed. Audit needs and local policy set the period; no universal standard applies.
+- `ModelDeployment(model_id, version, hardware, status)` — the runtime truth about which model is live, and where.
+  - Preferred primary key: `deployment_id`. When one model family can sit in several release states across different targets, add a unique constraint over `(model_id, version, hardware)`.
+  - Without a dedicated deployment identifier, the composite `(model_id, version, hardware)` is the natural key. Pick one on purpose.
   - Lifecycle states: `staged`, `validated`, `active`, `draining`, `retired`.
-  - Retention: preserve deployment history long enough to answer, *"What was running when this document was analysed?"*
-- `OfflineAuditEvent(actor, action, artifact_hash, time)` — the system's memory of who did what, to which artifact, and when.
-  - Primary key: often an event ID; business key is the `(actor, action, artifact_hash, time)` tuple.
-  - Lifecycle: append-only — audit rows should not be edited in place.
-  - Retention: aligned to customer audit policy — deleting too aggressively destroys trust, keeping too much can violate local retention rules.
-- **Ownership boundaries:** the build team owns signed release material until handoff into offline validation; the offline runtime owns its deployment state; security/operations owns the audit trail. Not cosmetic — this is how you keep a government network from becoming one giant mutable blob.
+  - Retention: hold enough history to answer *"Which model served this document when we analysed it?"*
+- `OfflineAuditEvent(actor, action, artifact_hash, time)` — which actor took which action, on which artifact, at what moment.
+  - Primary key: usually an event ID. The `(actor, action, artifact_hash, time)` tuple serves as the business key.
+  - Lifecycle: append-only. Nobody rewrites an audit row once it exists.
+  - Retention: follow the customer's audit policy. Purge too eagerly and trust goes; hoard too much and you may break local retention rules.
+- **Ownership boundaries:** the build team holds signed release material up to the handoff into offline validation. The offline runtime holds deployment state. Security/operations holds the audit trail. This split stops a government network from turning into one huge mutable blob.
 
 ### API Contracts
-- **`POST /v1/documents/analyze`** — user-facing data-plane call.
-  - Request: authenticated document payload plus optional metadata (idempotency key, analysis profile).
-  - Response: analysis result object with typed fields, model version reference, request identifier.
-  - Authentication local to the boundary (offline identity provider or a network-minted service token) — never hand-wave with "just use OAuth."
-  - Idempotency: same idempotency key + same request body arriving twice → return the same result or a stable "already processed" response.
-  - Errors distinguish malformed input, unauthorised access, unavailable model capacity, and policy rejection.
-- **`GET /v1/models/status`** — operational read path.
-  - Returns current model deployment state, active version, hardware target readiness.
-  - Safe to call repeatedly, does not mutate state; still requires authentication because status can leak operational details.
-  - Error semantics distinguish "unknown model," "not deployed," "temporarily unavailable."
-- **`POST /v1/admin/releases/validate`** — control-plane gate.
-  - Accepts a bundle reference or uploaded bundle; verifies manifest signature, checks artifact hashes, confirms declared dependencies are present; returns a structured pass/fail result or validation report.
-  - Idempotent with respect to the same release identifier — validating the same bundle twice should not create a second logical validation record unless content changed.
-- **`POST /v1/admin/releases/{id}/promote`** — state transition from validated to active.
-  - Guarded by authorisation, policy checks, and optimistic concurrency.
-  - Fails if the release is not in a promotable state, if the target deployment changed since the client last read it, or if the current active release differs from what the client assumed.
-  - Accepts versioned request/response shapes so a future manifest/validation-output change doesn't break older tooling overnight.
-- Contract versioning applies to the bundle format, manifest schema, and audit event schema too, not just public APIs — if the offline environment cannot be updated arbitrarily, every breaking change is a migration event, not a casual refactor.
+- **`POST /v1/documents/analyze`** — the data-plane call that users hit.
+  - Request: an authenticated document payload, plus optional metadata such as an idempotency key or an analysis profile.
+  - Response: a typed analysis result with a pointer to the model version and a request identifier.
+  - Authentication stays inside the boundary, through an offline identity provider or a token minted on the network itself. "Just use OAuth" is not an answer.
+  - Idempotency: if one idempotency key arrives twice with an identical body, the caller gets the same result, or a stable "already processed" reply.
+  - Errors separate bad input, unauthorised access, no free model capacity and a policy rejection.
+- **`GET /v1/models/status`** — the read path for operators.
+  - It reports each model's deployment state, the live version and whether each hardware target is ready.
+  - Repeated calls change nothing, so they are harmless. Callers still authenticate, because status data can reveal operational details.
+  - Its errors tell apart "unknown model", "not deployed" and "temporarily unavailable".
+- **`POST /v1/admin/releases/validate`** — the gate in the control plane.
+  - It takes a pointer to a bundle or the uploaded bundle itself. It checks the manifest signature, compares artifact hashes and confirms every declared dependency is on hand. It returns a structured pass/fail result or a validation report.
+  - It is idempotent per release identifier. Two runs on one bundle yield a single logical validation record, unless the content changed in between.
+- **`POST /v1/admin/releases/{id}/promote`** — moves a release from validated to active.
+  - Three guards protect it: authorisation, policy checks and optimistic concurrency.
+  - It refuses when the release cannot be promoted from its current state, when the target deployment moved since the client last read it, or when the live release is not the one the client expected.
+  - Request and response shapes carry versions, so a later change to the manifest or to validation output cannot break older tooling overnight.
+- Versioning does not stop at public APIs. The bundle format, the manifest schema and the audit event schema need it too. When nobody can update the offline environment at will, each breaking change must be planned as a migration, never treated as a light refactor.
 
 ### Release Verification: The Highest-Risk Code Path
-- This is the highest-risk component: release verification. If the system cannot validate a release bundle offline, everything else is theater.
+- No component carries more risk than release verification. If the system cannot check a bundle offline, the rest is theatre. Hence the first production gate: no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible.
 
 ```python
 from __future__ import annotations
@@ -147,14 +147,14 @@ def verify_bundle(bundle, trusted_public_key: bytes) -> VerifiedManifest:
     )
 ```
 
-- Walk it line by line:
-  - `canonical_json` serialises the manifest deterministically before signature verification, so the same logical manifest doesn't hash differently.
-  - `sha256_hex` gives a stable digest for artifact comparison.
-  - `verify_signature` is intentionally labelled a sketch — real code would use a real asymmetric primitive, not an HMAC stand-in.
-  - Three exception classes let the caller distinguish signature failure, malformed manifest, and content integrity failure — the operator response differs for each.
-  - `VerifiedManifest` is immutable so a successful validation result cannot be accidentally mutated later.
-  - `_require_str`/`_require_list` are typed boundary validation: reject malformed input early, before any state changes.
-  - Inside `verify_bundle`: reads manifest and signature, parses JSON safely, validates required fields, verifies signature over canonicalised content, checks every artifact hash with `hmac.compare_digest` to avoid timing leaks, returns a normalised typed result a later promote step can trust.
+- Walk through it piece by piece:
+  - `canonical_json` turns the manifest into deterministic bytes before the signature check, so one logical manifest always hashes the same way.
+  - `sha256_hex` produces a stable digest to compare artifacts against.
+  - `verify_signature` is labelled a sketch on purpose. Production code needs a genuine asymmetric primitive where this HMAC stand-in sits.
+  - Three exception classes tell the caller what broke: the signature, the shape of the manifest or the integrity of the content. Each calls for a different operator response.
+  - `VerifiedManifest` is frozen, so nothing can quietly alter a successful validation result afterwards.
+  - `_require_str`/`_require_list` check types at the boundary. Malformed input fails early, before any state moves.
+  - `verify_bundle` reads the manifest and signature, parses the JSON defensively and checks the required fields. It verifies the signature over the canonical form, then compares each artifact hash with `hmac.compare_digest` to avoid timing leaks. It returns a normalised, typed result that a later promote step can rely on.
 
 ### Verify-Bundle Flow
 
@@ -179,18 +179,18 @@ flowchart TD
 ```
 
 ### What the Snippet Omits on Purpose
-- No concurrency, retries, or observability — those are production concerns around the core path.
-- **Concurrency:** the control plane should use optimistic concurrency on promotion. A release object carries a version/revision token; the promote call includes it; the server rejects the write if someone else already advanced the deployment state — avoids two operators promoting incompatible releases at once.
-- **Retries:** only safe read and validation operations should be retried automatically. Promotion should be retried only if idempotent by design and guarded by a write token. Document analysis requests should accept an idempotency key so a client retry doesn't create duplicate work or duplicate audit rows.
-- **Observability:** wrap with logs, counters, structured audit events. A validation pass should emit who validated what, what hash was checked, and why a bundle failed if it failed — in an air-gapped environment this is the only practical way to reconstruct incidents without an external vendor console.
+- The sketch leaves out concurrency, retries and observability. They belong to the production layer around the core path.
+- **Concurrency:** promotion should rely on optimistic concurrency in the control plane. Each release object holds a version/revision token that the promote call sends back. If another operator has already moved the deployment state on, the server refuses the write. Two people cannot then push incompatible releases live at once.
+- **Retries:** retry safe reads and validation calls automatically, and nothing else by default. Retry a promotion only when it was built to be idempotent and a write token guards it. Document analysis requests should take an idempotency key, so a client retry creates neither duplicate work nor duplicate audit rows.
+- **Observability:** surround the path with logs, counters and structured audit events. Each validation pass should record who validated which bundle, which hash it checked and, on failure, the reason. An air gap has no external vendor console, so these records are the only practical way to rebuild an incident.
 
 ### Failure Behaviour to State Explicitly
-- A duplicate request tests whether the design understands idempotency: if an operator submits the same validated bundle twice (e.g., first response timed out) and the idempotency key/bundle hash are the same, the second call should return the same validation outcome rather than advancing state twice.
-- If a promote request is repeated after a transient issue inside the boundary, the server should either return the already-promoted state or reject the repeat with a clear, stable error saying the version is no longer pending promotion.
-- The critical failure drill is the missing transitive package: if a manifest declares a dependency not available in the offline artifact store, validation should fail before installation, not during runtime — that's why `dependencies` lives in the manifest, not tribal knowledge.
+- Duplicate requests reveal whether a design truly handles idempotency. Say an operator submits one validated bundle twice because the first response timed out. With a matching idempotency key and bundle hash, the second call returns the same validation outcome and does not move state forward again.
+- If a promote request is resent after a transient fault inside the boundary, the server either returns the state already reached or rejects the repeat with a clear, stable error: this version is not waiting for promotion any more.
+- The key drill is a missing transitive package. When a manifest names a dependency the offline artifact store lacks, validation must fail before installation, not at runtime. That is why `dependencies` sits in the manifest rather than in someone's head.
 
 ### Contract and Failure-Injection Tests
-- Tests don't need to be exhaustive — they need to show the candidate understands how the deployment gate behaves on success and on failure.
+- Full coverage is not the goal. The tests only need to show the candidate knows how the deployment gate acts on a pass and on a failure.
 
 ```python
 class BundleStub:
@@ -251,11 +251,11 @@ def test_verify_bundle_rejects_corrupted_artifact_hash():
         assert str(exc) == "model.bin"
 ```
 
-- Test 1 (contract test): a valid manifest, valid signature, matching artifact hashes should produce a normalised `VerifiedManifest` with the intended version and dependency list.
-- Test 2 (failure-injection test): simulates corruption via a wrong hash and tampered artifact bytes, then asserts the verifier raises `IntegrityError` on the exact failing path.
-- A third useful test in a real repo would corrupt `manifest.sig` and assert `SignatureError` (signature failure and artifact failure are operationally distinct) — but one contract test plus one failure-injection test is enough for a whiteboard-friendly sketch.
+- Test 1 (contract test): with a valid manifest, a valid signature and matching artifact hashes, the verifier returns a normalised `VerifiedManifest` holding the expected version and dependency list.
+- Test 2 (failure-injection test): it fakes corruption with a wrong hash and altered artifact bytes, then checks that `IntegrityError` names the exact path that failed.
+- A real repository would add a third test that damages `manifest.sig` and expects `SignatureError`, since a bad signature and a bad artifact need different operational responses. For a whiteboard sketch, one contract test and one failure-injection test are enough.
 
 ### Why This Is a Strong FDE Answer
-- An FDE is not just drawing architecture — they translate architecture into production-grade implementation details a customer can trust.
-- The takeaway: a design answer becomes credible when its state transitions, API contracts, and failure-safe code are concrete.
-- **90-second implementation summary:** make the deployable unit a signed release manifest with explicit artifact hashes and dependency declarations; store deployment state separately from audit state; expose versioned endpoints for analysis, status, validation, and promotion; every write boundary gets idempotency and optimistic concurrency; release verification is the highest-risk component, so implement and test it first with typed manifest validation, signature verification, artifact hash checks, and structured failure modes — that gives the customer maintainable local AI capability without violating network, artifact, identity, or audit boundaries.
+- An FDE does more than draw the architecture. The job is to turn it into production-grade detail a customer can trust.
+- The lesson: an answer earns credibility once its state changes, API contracts and failure-safe code are spelled out.
+- **90-second implementation summary:** I'd ship each release as a signed manifest that lists every artifact hash and declares every dependency. Deployment state lives apart from audit state. Versioned endpoints cover analysis, status, validation and promotion. Every write path is idempotent and uses optimistic concurrency. Release verification is the riskiest part, so I'd build and test it first: typed checks on the manifest, a signature check, a hash check per artifact, and clearly structured failure modes. The result is maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries.

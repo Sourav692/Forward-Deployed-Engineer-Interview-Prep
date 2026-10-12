@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { AreaHeader, AreaSection, LinkList, SuggestTopic } from '@/components/areas/Area'
+import { AreaHeader, AreaSection, LinkList } from '@/components/areas/Area'
+import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { curriculumModules, siteCounts } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
 import { LAST_DAY, LAST_DAY_GUIDES, MODES } from '@/lib/editorial'

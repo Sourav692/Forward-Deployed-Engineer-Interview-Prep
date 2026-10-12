@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import { FilteredGroups } from '@/components/areas/FilteredGroups'
 import { ModuleProgress } from '@/components/Progress'
-import { AreaGroup, AreaHeader, AreaSection, LinkList, SuggestTopic, TextLink } from '@/components/areas/Area'
+import { AreaGroup, AreaHeader, AreaSection, LinkList, TextLink } from '@/components/areas/Area'
+import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { LIVE, curriculumModules, moduleGroups } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
-import { STORY_BANK } from '@/lib/editorial'
+import { LEVEL_LABEL, STORY_BANK } from '@/lib/editorial'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 
@@ -63,18 +66,26 @@ export default async function PracticePage() {
         description="Customer scenarios worked from discovery to rollout. Start with Discovery Foundations; the System Design Practice set adds one dangerous constraint to each problem."
       >
         <ModuleProgress scenarios={worksheets.scenarios} />
-        <div className="mt-5 space-y-4">
-          {worksheets.groups.map((g) => (
-            <AreaGroup
-              key={g.id}
-              id={g.id}
-              title={g.title}
-              blurb={g.blurb}
-              action={{ label: `${g.items.length} worksheets`, href: g.href }}
-            >
-              <LinkList items={g.items} />
-            </AreaGroup>
-          ))}
+        <div className="mt-5">
+          <Suspense
+            fallback={
+              <div className="space-y-4">
+                {worksheets.groups.map((g) => (
+                  <AreaGroup
+                    key={g.id}
+                    id={g.id}
+                    title={g.title}
+                    blurb={g.blurb}
+                    action={{ label: `${g.items.length} worksheets`, href: g.href }}
+                  >
+                    <LinkList items={g.items} />
+                  </AreaGroup>
+                ))}
+              </div>
+            }
+          >
+            <FilteredGroups groups={worksheets.groups} levels={LEVEL_LABEL} noun="worksheets" unit={['worksheet', 'worksheets']} />
+          </Suspense>
         </div>
       </AreaSection>
 

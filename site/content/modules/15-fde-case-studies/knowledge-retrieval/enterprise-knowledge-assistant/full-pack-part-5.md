@@ -35,6 +35,16 @@ Incidents and production scenarios on this system are not new designs; they are 
 
 ---
 
+## Level calibration
+
+On this design the levels separate on how far the permission boundary reaches beyond the query path, not on how clever the retrieval is.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Partitions by tenant and pre-filters inside hybrid search, re-checks policy live before generation, reranks 20 to 6 after enforcement and abstains on weak evidence. Authorisation fails closed; everything else degrades. | The ingest half and the proof: how each source's ACLs get translated, how a missed deletion is caught, and what shows zero leaks before release. |
+| Staff | Adds the ACL normaliser that refuses anything without a usable ACL, tombstones and reconciliation for missed deletes, and a leak suite Security owns as the release gate. Rolls out one corpus at a time, with an owner and a rollback trigger per source. | What happens as sources, tenants and pivots multiply: index and embedding migrations, cost per answer at 100 QPS peak, and whether governance survives a copied index. |
+| Principal | Makes permission translation a platform contract every connector meets, and versions the index so a chunking or embedding change is a staged cutover with rollback. Keeps the legal cost pivot and the 100 ms pivot on the same trust path, and checks that Unity Catalog governance does not silently drop at the index boundary. | The freshness SLO per content class and the stated stale window for revocation depend on the customer's IdP sync and risk appetite, so they wait for discovery. |
+
 ## Key Takeaways
 
 - Permission fidelity is the load-bearing constraint, named in the first two minutes, because an assistant that leaks is worse than none.
