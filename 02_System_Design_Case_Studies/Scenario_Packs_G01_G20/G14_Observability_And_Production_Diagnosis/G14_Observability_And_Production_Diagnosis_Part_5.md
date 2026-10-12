@@ -1,5 +1,15 @@
 # Observability and Production Diagnosis for a Customer-Facing AI Application, part 5
 
+## Level calibration
+
+Every level traces the request; the level shows in what the answer refuses to collect and who may read what is left.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | One correlation ID through auth, retrieval, model and tools, spans exported asynchronously so telemetry never blocks the user, and a classifier that redacts before storage. Diagnoses from the complaint down, splitting incident #87 into retrieval, reranker, queue and provider time. | Who may see which tenant's traces, and what happens when sampling drops the only bad trace. |
+| Staff | Adds access and ownership: tenant-scoped support views, a separate durable audit log, error-class overrides and exemplars, and a four-phase rollout with named owners and a go/no-go on trace coverage and overhead. Reads the missing `role_scope` in incident #88 as a permission incident, not only a cost one. | What is shared service versus per-customer configuration, and how retention and deletion requests follow each customer's agreement. |
+| Principal | Splits the system into core product, shared service, adapters and configuration, so per-customer sampling, retention and thresholds stay out of the core. Buys the span plumbing but builds the redaction boundary, because what counts as sensitive is business logic, and makes cost and latency gates on prompt and route changes a rule for every team. | The real failure distribution, overhead budget and retention window, which need the customer's traffic and data-processing agreement to set. |
+
 ## Key Takeaways
 
 - "Slow and sometimes wrong" is three problems, latency, correctness and diagnosability, and each is made measurable before any design.

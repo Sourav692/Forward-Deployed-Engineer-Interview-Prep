@@ -102,6 +102,16 @@ Every strong cost answer follows four verbs in order. Measure cost per resolved 
 
 ---
 
+## Level calibration
+
+In this round the level shows in whether each gate is a decision with a named authority, and in how far the answer reaches past one engagement.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Seven stages in fixed order, each behind a role-gated sign-off with evidence, and intake that refuses an unmeasurable metric or a missing SME. The Northwind agent drafts, a human sends, and rollback is tested in shadow before limited production. | Who acts when the SME misses a deadline, what free-text evidence fails to prove, and the customer credentials the delivery process itself holds. |
+| Staff | Adds the people around the gates: the day-3 auto-escalation, an explicit override path for a strategic customer, a checklist evidence bar for the security gate, and credentials vaulted and revoked at handover. Reads the Northwind numbers as scripted and says so before being asked. | The portfolio view: one FDA running six engagements, where gates queue behind a person's calendar rather than the customer. |
+| Principal | Treats the accelerator library as an owned, versioned asset shared across teams, and the reuse rate across engagements as the test of whether delivery is productised. Decides which engagements should not be two weeks, and whether customers' gate evidence and test sets are separated by a tag or physically. | Real engagement-duration data from a portfolio of deliveries, which is needed before sizing how many engagements one FDA can carry. |
+
 ## Key Takeaways
 
 - The round is an operating-model question, and speed is a side effect of reuse and hard gates.

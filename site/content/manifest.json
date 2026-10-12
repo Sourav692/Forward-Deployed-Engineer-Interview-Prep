@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T11:34:53.091Z",
+  "generatedAt": "2026-10-12T15:31:10.658Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -634,7 +634,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 49,
+              "minutes": 51,
               "updated": "2026-10-12"
             },
             {
@@ -667,7 +667,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 45,
+              "minutes": 46,
               "updated": "2026-10-12"
             }
           ]
@@ -793,7 +793,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 50,
+              "minutes": 52,
               "updated": "2026-10-12"
             },
             {
@@ -826,7 +826,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 42,
+              "minutes": 43,
               "updated": "2026-10-12"
             },
             {
@@ -859,7 +859,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 46,
+              "minutes": 48,
               "updated": "2026-10-12"
             }
           ]
@@ -899,7 +899,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 44,
+              "minutes": 45,
               "updated": "2026-10-12"
             },
             {
@@ -940,7 +940,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 59,
+              "minutes": 60,
               "updated": "2026-10-12"
             },
             {
@@ -981,7 +981,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 62,
+              "minutes": 64,
               "updated": "2026-10-12"
             }
           ]
@@ -1021,7 +1021,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 44,
+              "minutes": 45,
               "updated": "2026-10-12"
             }
           ]

@@ -1914,7 +1914,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/",
-      "estMinutes": 59,
+      "estMinutes": 60,
       "href": "/design/evaluation-and-release-gating"
     },
     {
@@ -1936,7 +1936,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/",
-      "estMinutes": 62,
+      "estMinutes": 64,
       "href": "/design/observability-and-production-diagnosis"
     },
     {
@@ -1958,7 +1958,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
-      "estMinutes": 42,
+      "estMinutes": 43,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -1980,7 +1980,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/",
-      "estMinutes": 44,
+      "estMinutes": 45,
       "href": "/design/model-development-and-post-training"
     },
     {
@@ -1991,7 +1991,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/",
-      "estMinutes": 46,
+      "estMinutes": 48,
       "href": "/design/llm-inference-serving"
     },
     {
@@ -2385,7 +2385,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
-      "estMinutes": 44,
+      "estMinutes": 45,
       "href": "/design/scoping-to-deployed-agent"
     },
     {
@@ -2396,7 +2396,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/",
-      "estMinutes": 50,
+      "estMinutes": 52,
       "href": "/design/agent-platform-for-non-technical-users"
     },
     {
@@ -2407,7 +2407,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/",
-      "estMinutes": 49,
+      "estMinutes": 51,
       "href": "/design/real-time-call-assistant"
     },
     {
@@ -2418,7 +2418,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/",
-      "estMinutes": 45,
+      "estMinutes": 46,
       "href": "/design/logistics-exception-handling"
     },
     {
