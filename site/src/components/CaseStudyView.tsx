@@ -201,8 +201,9 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
 /** One reading document with its contents list. Also used by the Last-Day guides. */
 export function ReadingPanel({ doc, drawDiagrams }: { doc: ReadingDocument; drawDiagrams: boolean }) {
   const toc = doc.sections.filter((s) => s.title)
+  // No contents list for a single section, and no empty column where it would be.
   return (
-    <div className="lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10">
+    <div className={toc.length > 1 ? 'lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10' : undefined}>
       <aside className="no-print hidden lg:block">
         {toc.length > 1 && (
           <nav aria-label="On this page" className="sticky top-[8.5rem] max-h-[calc(100vh-10rem)] overflow-y-auto">

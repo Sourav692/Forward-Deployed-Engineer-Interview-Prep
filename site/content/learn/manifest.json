@@ -1743,8 +1743,20 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md",
-      "estMinutes": 15,
+      "estMinutes": 8,
       "href": "/learn/production-ai/agentops/enterprise-rag-on-a-governed-lakehouse",
+      "updated": "2026-10-05"
+    },
+    {
+      "slug": "enterprise-rag-on-a-governed-lakehouse-running-and-auditing",
+      "title": "Enterprise RAG on a Governed Lakehouse: Running and Auditing",
+      "track": "production-ai",
+      "module": "agentops",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md",
+      "estMinutes": 7,
+      "href": "/learn/production-ai/agentops/enterprise-rag-on-a-governed-lakehouse-running-and-auditing",
       "updated": "2026-10-05"
     },
     {
@@ -2151,8 +2163,20 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
-      "estMinutes": 15,
+      "estMinutes": 7,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag",
+      "updated": "2026-10-05"
+    },
+    {
+      "slug": "access-controlled-enterprise-rag-retrieval-and-release",
+      "title": "Access-Controlled Enterprise RAG: Retrieval and Release",
+      "track": "ai-systems-design",
+      "module": "classic-ai-designs",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
+      "estMinutes": 9,
+      "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag-retrieval-and-release",
       "updated": "2026-10-05"
     },
     {
@@ -2163,8 +2187,20 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
-      "estMinutes": 15,
+      "estMinutes": 7,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks",
+      "updated": "2026-10-05"
+    },
+    {
+      "slug": "access-controlled-rag-on-databricks-testing-and-operations",
+      "title": "Access-Controlled RAG on Databricks: Testing and Operations",
+      "track": "ai-systems-design",
+      "module": "classic-ai-designs",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
+      "estMinutes": 9,
+      "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks-testing-and-operations",
       "updated": "2026-10-05"
     },
     {
@@ -3255,8 +3291,20 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/Roadmap.md",
-      "estMinutes": 17,
+      "estMinutes": 13,
       "href": "/interview/final-week/roadmap",
+      "updated": "2026-10-04"
+    },
+    {
+      "slug": "roadmap-full-practice-and-checklists",
+      "title": "Interview Learning Roadmap: Full Practice and Checklists",
+      "track": "interview-practice",
+      "module": "final-week",
+      "kind": "sync",
+      "publish": "own",
+      "source": "07_Last_Day_Revision/Roadmap.md",
+      "estMinutes": 5,
+      "href": "/interview/final-week/roadmap-full-practice-and-checklists",
       "updated": "2026-10-04"
     },
     {

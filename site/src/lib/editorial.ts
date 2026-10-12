@@ -287,6 +287,45 @@ export const STORY_BANK = {
   href: '/practice/story-bank',
 } as const
 
+/**
+ * The Story Bank's customer groups, in display order. Each is a tab on the page (ENH-25),
+ * holding the stories whose H2 starts with one of its `prefixes`; stories that match none
+ * share a last "Build your own" tab. The page-length check groups the same way.
+ */
+export const STORY_GROUPS = [
+  {
+    id: 'asian-life-insurer',
+    title: 'Asian life insurer',
+    context: 'A short project to help insurance teams ask questions about sensitive company data safely.',
+    bestFor: 'Understanding a customer, keeping the first launch small, handling a problem, and earning trust.',
+    prefixes: ['The insurer:'],
+  },
+  {
+    id: 'consumer-lender',
+    title: 'Indian consumer lender',
+    context: 'A project to help an IT team investigate lead-routing issues without making risky automatic changes.',
+    bestFor: 'Learning a new customer system, making safe choices, and being honest about results.',
+    prefixes: ['The lender:'],
+  },
+  {
+    id: 'meridian-assist',
+    title: 'Meridian Assist reference build',
+    context: 'A small reference system used to prove that answers are safe, checked, and backed by evidence.',
+    bestFor: 'High standards, testing, owning mistakes, and explaining safety to non-technical people.',
+    prefixes: ['Meridian:'],
+  },
+  {
+    id: 'cross-engagement',
+    title: 'Guardrails and reusable patterns',
+    context: 'Stories about saying no safely, writing down known gaps, and sharing useful lessons with other teams.',
+    bestFor: 'Making a difficult call, keeping people safe, and having impact beyond one customer.',
+    prefixes: ['The guardrail engine:', 'Financial services:', 'Beyond one engagement:'],
+  },
+] as const
+
+/** The Story Bank group a story belongs to, from its H2 title; undefined for "Build your own". */
+export const storyGroupOf = (title: string) => STORY_GROUPS.find((g) => g.prefixes.some((p) => title.startsWith(p)))
+
 // ---------------------------------------------------------------- reading-page tabs
 
 /**
