@@ -2462,7 +2462,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
-      "estMinutes": 94,
+      "estMinutes": 96,
       "href": "/design/air-gapped-ai-system"
     },
     {
@@ -2473,7 +2473,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
-      "estMinutes": 103,
+      "estMinutes": 105,
       "href": "/design/reliable-workflow-orchestration"
     },
     {
@@ -2484,7 +2484,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
-      "estMinutes": 90,
+      "estMinutes": 91,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -2495,7 +2495,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
-      "estMinutes": 72,
+      "estMinutes": 74,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
@@ -3131,11 +3131,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/01_enterprise_knowledge_assistant_rag.md",
-      "estMinutes": 3,
+      "estMinutes": 4,
       "href": "/practice/enterprise-knowledge-assistant-rag"
     },
     {
@@ -3144,9 +3142,7 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md",
       "estMinutes": 3,
       "href": "/practice/secure-multi-tenant-ai-platform"
@@ -3157,11 +3153,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/03_natural_language_to_sql_analytics_assistant.md",
-      "estMinutes": 3,
+      "estMinutes": 4,
       "href": "/practice/natural-language-to-sql-analytics-assistant"
     },
     {
@@ -3170,9 +3164,7 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/04_ai_customer_support_automation.md",
       "estMinutes": 3,
       "href": "/practice/ai-customer-support-automation"
@@ -3183,9 +3175,7 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/07_ai_system_for_an_air_gapped_environment.md",
       "estMinutes": 3,
       "href": "/practice/ai-system-for-an-air-gapped-environment"
@@ -3196,11 +3186,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md",
-      "estMinutes": 3,
+      "estMinutes": 4,
       "href": "/practice/llm-evaluation-and-release-gating-platform"
     },
     {
@@ -3209,11 +3197,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md",
-      "estMinutes": 3,
+      "estMinutes": 4,
       "href": "/practice/high-volume-batch-inference-system"
     },
     {
@@ -3222,11 +3208,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md",
-      "estMinutes": 3,
+      "estMinutes": 4,
       "href": "/practice/tool-using-ai-agent-with-safety-controls"
     },
     {
@@ -3235,9 +3219,7 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/13_reliable_workflow_orchestration_system.md",
       "estMinutes": 3,
       "href": "/practice/reliable-workflow-orchestration-system"
@@ -3248,9 +3230,7 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md",
       "estMinutes": 3,
       "href": "/practice/observability-customer-facing-ai-application"
@@ -3261,9 +3241,7 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/17_configurable_platform_customer_specific_workflows.md",
       "estMinutes": 3,
       "href": "/practice/configurable-platform-customer-specific-workflows"
@@ -3274,9 +3252,7 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/21_enterprise_chatbot_platform.md",
       "estMinutes": 3,
       "href": "/practice/enterprise-chatbot-platform"
