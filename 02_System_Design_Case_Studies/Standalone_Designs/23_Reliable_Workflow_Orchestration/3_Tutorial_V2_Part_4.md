@@ -1,44 +1,44 @@
-# Chapter 13: Design a Reliable Workflow Orchestration System, part 4
+# Design a Reliable Workflow Orchestration System, part 4
 
 ## 4. Architecture and End-to-End Flow
 
 ### System Boundary and Customer Outcome
 
-- Start from the customer outcome and work backward: **execute long-running business processes exactly once at the business-effect level with visible state and compensation**.
-- "Exactly once" is not a promise that no retry ever happens — it's a promise that the business never double-charges, double-sends, or silently loses a step, made observable.
+- Start with what the customer needs and design back from it. The outcome: **apply each business effect of a long-running process exactly once, keep its state visible, and compensate when a step fails**.
+- Retries still happen. "Exactly once" means nobody is charged twice or sent the same message twice, no step goes missing unnoticed, and you can show all of that.
 
 ### Component Map: Control Plane vs Data Plane
 
-- The system decomposes cleanly only if you distinguish the control plane from the data plane.
+- Draw a line between the control plane and the data plane before anything else. Without it, the parts never fall into place.
 - Components:
-  - **Workflow definition registry** — source of truth for approved workflow templates, step order, retry rules, timeout rules, and compensation mappings.
-  - **Durable history store** — system of record for every state transition, signal, attempt, receipt, and terminal outcome.
-  - **Workflow scheduler** — reads durable history, decides the next runnable transition, assigns it to execution.
-  - **Activity task queues** — buffered handoff between scheduling decisions and worker execution.
-  - **Workers** — perform external calls, internal side effects, and local validation.
-  - **Timer service** — wakes workflows after a delay, deadline, or human waiting period.
-  - **Signal/approval gateway** — accepts explicit human or system signals that unblock a waiting workflow.
-  - **Compensation engine** — coordinates rollback-like business actions for already-completed steps when a terminal failure occurs.
-  - **Operations UI** — shows live state, who is waiting on whom, retry history, and operator controls (pause, resume, override).
-- **Control plane** = registry, scheduler, timer service, signal gateway, compensation engine, operations UI — decides what should happen next.
-- **Data plane** = the queue-plus-worker path that actually performs work.
-- That split is the heart of the design: it lets you scale decision-making separately from side-effect execution.
+  - **Workflow definition registry** — holds the approved workflow templates. It is the source of truth for their step order, their retry and timeout rules, and which compensation undoes which step.
+  - **Durable history store** — the system of record. It logs every attempt, signal, state transition, receipt and final outcome.
+  - **Workflow scheduler** — derives the next runnable transition from durable history and hands it off to run.
+  - **Activity task queues** — buffer the handoff from scheduler decisions to the workers.
+  - **Workers** — make external calls, apply internal side effects and run local validation.
+  - **Timer service** — brings a workflow back after a delay, at a deadline, or when a human wait ends.
+  - **Signal/approval gateway** — takes explicit signals from people or systems and releases the workflow waiting on them.
+  - **Compensation engine** — after a terminal failure, runs business actions that undo, as far as they can, the steps already finished.
+  - **Operations UI** — shows live state, who is blocking whom, and the retry history, with pause, resume and override controls.
+- **Control plane** = the scheduler, the registry, the timer service, the signal gateway, the operations UI and the compensation engine. They decide what happens next.
+- **Data plane** = the queues and the workers. They do the work.
+- Everything rests on this split. It lets decision-making scale apart from side-effect execution.
 
 ### Top-Down Architecture and Trust Boundaries
 
 - Top-down flow:
-  - Customer/Internal Caller sends an HTTP/API request with an idempotency key.
-  - Request enters the Workflow API.
-  - API consults the Workflow Definition Registry for the allowed workflow template and policy.
-  - API writes the first event to the Durable History Store.
-  - API may notify the Workflow Scheduler that a new instance is ready.
-  - Workflow Scheduler consults durable history and dispatches runnable work into the Activity Task Queues.
-  - Workers consume from the queue and call the External Payment System, the Approval/Document Service, and Internal Systems A/B/C.
-  - Workers append results and receipts back to the Durable History Store.
-  - Timer Service watches deadlines and reawakens workflows that must continue later.
-  - Signal/Approval Gateway accepts human approvals, rejections, or external system signals and forwards them to the scheduler.
-  - Compensation Engine issues business compensations back through the queues when a workflow must unwind completed work.
-  - Operations UI reads the store and scheduler state so operators can observe, pause, resume, or override safely.
+  - A customer or internal caller sends an HTTP/API request carrying an idempotency key.
+  - The Workflow API receives it.
+  - The API looks up the permitted workflow template and policy in the Workflow Definition Registry.
+  - It writes the opening event into the Durable History Store.
+  - It may also tell the Workflow Scheduler that a fresh instance can run.
+  - The Workflow Scheduler reads durable history and pushes runnable work onto the Activity Task Queues.
+  - Workers pull from the queue and call Internal Systems A/B/C, the External Payment System and the Approval/Document Service.
+  - Workers write their results and receipts into the Durable History Store.
+  - The Timer Service tracks deadlines and wakes workflows that must carry on later.
+  - The Signal/Approval Gateway passes human approvals, rejections and outside-system signals on to the scheduler.
+  - When finished work must be unwound, the Compensation Engine sends business compensations out through the queues.
+  - The Operations UI reads the store and scheduler state, so operators can watch, pause, override or resume a workflow without risk.
 
 ```mermaid
 flowchart TB
@@ -76,34 +76,34 @@ flowchart TB
   OPS --> SCHED
 ```
 
-- Three trust boundaries, each needing its own authentication, authorisation, and logging policy (do not blur into one generic "service layer"):
-  - **Public/customer-facing API** — accepts the workflow start request and an idempotency key, but must not trust that the caller will retry carefully.
-  - **Worker edge** — external systems can fail, time out, or partially complete.
-  - **Human approval path** — slow, fallible, and auditable.
+- Three trust boundaries exist. Each needs its own authentication, authorisation and logging policy; do not merge them into one generic "service layer":
+  - **Public/customer-facing API** — takes the start request and its idempotency key, but cannot count on the caller retrying with care.
+  - **Worker edge** — the outside systems here may fail, time out or only partly finish.
+  - **Human approval path** — slow, error-prone, and every decision on it must be auditable.
 
 ### State Ownership and Consistency
 
-- The **durable history store** owns the canonical progression of the workflow.
-- Queues do not own truth — they own delivery.
-- Workers do not own truth — they propose effects.
-- The scheduler does not "remember" through memory alone — it recomputes from durable history.
-- This is the key consistency point: after each accepted event, the history store is the record that drives recovery.
+- Only the **durable history store** owns the canonical progress of a workflow.
+- Queues handle delivery. The truth does not live in them.
+- Workers suggest effects. They hold no truth either.
+- The scheduler does not rely on what it keeps in memory. It rebuilds its view from durable history each time.
+- That gives the central consistency rule: once an event is accepted, recovery runs off the history store's record of it.
 
 ### Sequence Diagram: Happy Path
 
-- Happy-path sequence, read top-to-bottom as order of events, left-to-right as actors:
-  1. Caller → Workflow API: start workflow with idempotency key.
-  2. Workflow API → Durable History Store: append scheduled transition.
-  3. Workflow API → Workflow Scheduler: notify that a new runnable instance exists.
-  4. Workflow Scheduler → Activity Task Queues: dispatch activity and record attempt.
-  5. Activity Task Queues → Worker: deliver the activity.
-  6. Worker → External System(s): execute payment, approval lookup, email, or internal side effect.
-  7. Worker → Durable History Store: commit completion receipt.
-  8. Workflow Scheduler → Timer Service or Signal Gateway: wait on timer or human signal.
-  9. Timer Service or Signal Gateway → Workflow Scheduler: wake or resume the workflow.
-  10. Workflow Scheduler → Activity Task Queues: retry transient failure when policy allows.
-  11. Workflow Scheduler → Compensation Engine: compensate completed steps on terminal failure.
-  12. Workflow Scheduler → Durable History Store: close with audit summary.
+- The happy path in order. Time runs from top to bottom; the actors sit left to right:
+  1. Caller → Workflow API: start a workflow, passing an idempotency key.
+  2. Workflow API → Durable History Store: record the scheduled transition.
+  3. Workflow API → Workflow Scheduler: flag the fresh instance as runnable.
+  4. Workflow Scheduler → Activity Task Queues: send out the activity and log the attempt.
+  5. Activity Task Queues → Worker: hand over the activity.
+  6. Worker → External System(s): carry out the side effect, such as a payment, an approval lookup, an email or an internal change.
+  7. Worker → Durable History Store: write the completion receipt.
+  8. Workflow Scheduler → Signal Gateway or Timer Service: pause until a timer fires or a human signals.
+  9. Signal Gateway or Timer Service → Workflow Scheduler: wake the workflow or let it go on.
+  10. Workflow Scheduler → Activity Task Queues: if policy permits, try a transient failure again.
+  11. Workflow Scheduler → Compensation Engine: on terminal failure, compensate the steps already done.
+  12. Workflow Scheduler → Durable History Store: close the workflow and write an audit summary.
 
 ```mermaid
 sequenceDiagram
@@ -136,24 +136,24 @@ sequenceDiagram
   Sched->>Hist: close with audit summary
 ```
 
-- Narrate the sequence in order without skipping handoffs — the interviewer should hear control move from the model to deterministic services and back again.
+- Walk through every step in order and skip no handoff. The interviewer should hear control leave the model, reach deterministic services, and return.
 
 ### Failure-Path Overlay: Worker Crash After Payment
 
-- The most important failure drill in this chapter: the **worker crashes after payment succeeds**.
+- Rehearse this failure above all others: the payment goes through, and then the **worker crashes**.
 - Event sequence:
-  - Caller starts the workflow with an idempotency key.
-  - API appends the scheduled transition to history.
-  - Scheduler dispatches the payment activity and records an attempt.
-  - Activity queue delivers the attempt to a worker.
-  - Worker calls the external payment system.
-  - Payment system returns success.
-  - **Worker crashes before it records the completion receipt.**
-  - Scheduler detects the missing completion or a timeout.
-  - Scheduler decides whether to redeliver the activity or reconcile from recorded state.
-  - If transient/recoverable → queue redelivers the activity, worker records the completion receipt.
-  - If terminal failure after partial completion → compensation engine triggers compensation for completed steps, sends compensating actions through the queue.
-  - History store closes the workflow with an audit summary.
+  - The caller starts the workflow and supplies an idempotency key.
+  - The API records the scheduled transition in history.
+  - The scheduler sends out the payment activity and logs an attempt.
+  - The activity queue hands that attempt to a worker.
+  - The worker sends the charge to the payment system.
+  - The payment system reports success.
+  - **The worker dies before the completion receipt is written.**
+  - The scheduler notices that no completion arrived, or that a timeout expired.
+  - It then picks a path: redeliver the activity, or reconcile from the state already on record.
+  - Transient or recoverable → the queue redelivers the activity and the worker writes the completion receipt.
+  - Terminal once some steps are done → the compensation engine starts compensation for the finished steps and routes the compensating actions through the queue.
+  - Last, the history store closes the workflow and writes an audit summary.
 
 ```mermaid
 flowchart TD
@@ -173,45 +173,45 @@ flowchart TD
   style K fill:#a63d40,stroke:#5c1f22,color:#fff
 ```
 
-- The payment may have succeeded before the worker died, so the system must never equate "worker lost" with "business action lost."
-- The durable history store and completion receipt are what prevent a double charge on retry — the scheduler either reissues the step safely or escalates to compensation based on what history says already happened.
+- The charge may have gone through before the worker died. So "worker lost" must never be read as "business action lost".
+- Only the record prevents a double charge on retry: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does. The scheduler reads the history to see what already happened. Depending on that, it safely reissues the step or hands the case to compensation.
 
-> 🎯 **Interview Pointer:** This exact drill — worker crash after payment succeeds, before the receipt is recorded — is the follow-up I'd most expect in this chapter's interview. Memorise the resolution: durable history + completion receipt decide "redeliver" vs. "compensate," never worker memory.
+> 🎯 **Interview Pointer:** This is the follow-up to expect most: the payment succeeds, then the worker dies before the receipt is written. Know the answer cold: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does.
 
 ### End-to-End Flow, Step by Step
 
-- The happy path as a numbered sequence, not a vague story:
-  1. Caller starts the workflow with an **idempotency key** so a retry does not create a duplicate business process.
-  2. API validates the request and **appends a scheduled transition** to durable history.
-  3. Scheduler reads that transition and **dispatches an activity** to the queue, recording that an attempt has begun.
-  4. A worker picks up the activity, performs the side effect, and **records a completion receipt** back to durable history.
-  5. Workflow moves into a **wait state** for either a timer or a human signal.
-  6. If the activity fails transiently, scheduler arranges a **retry** per policy rather than escalating immediately.
-  7. If the workflow reaches a terminal failure after some steps have already completed, the compensation engine invokes **compensating actions** for those completed steps.
-  8. Workflow closes with an **audit summary** showing the path taken, waits, retries, manual interventions, and final effect.
-- This flow is a chain of consistency points: the request becomes durable before any downstream side effect; the side effect happens before the workflow claims success; the audit summary comes last because it is derived from history, not worker memory.
+- Give the happy path as numbered steps, not as a loose story:
+  1. An **idempotency key** comes with the start request, so a retry cannot spawn a second business process.
+  2. The API checks the request, then adds a **scheduled transition** to durable history.
+  3. The scheduler picks up that transition, puts an **activity** on the queue and logs the attempt.
+  4. A worker takes the activity, carries out the side effect and writes a **completion receipt** to durable history.
+  5. The workflow then enters a **wait state** until a timer fires or a human sends a signal.
+  6. A transient failure gets a **retry** under policy, not an instant escalation.
+  7. If the workflow fails terminally after some steps are done, the compensation engine runs **compensating actions** for those steps.
+  8. The workflow ends with an **audit summary**: the route it took, its waits and retries, any manual interventions, and the final effect.
+- Read the flow as a series of consistency points. The request is durable before anything downstream changes. The side effect lands before the workflow reports success. The audit summary comes last, because it is built from history rather than from worker memory.
 
 ### Synchronous and Asynchronous Boundaries
 
-- **Synchronous**: start request validation, authentication, permission checks, writing the initial history event, returning the workflow ID, most operations UI reads.
-- **Asynchronous**: dispatching activities, waiting for approvals, timer wakeups, retries, compensation, most downstream integrations.
-- This boundary is not cosmetic — it's how the API stays responsive while a business process waits for days.
-- Everything-synchronous design → brittle request chain that breaks under human delay.
-- Everything-asynchronous without a strong history model → loses explainability and operator control.
+- **Synchronous**: validating the start request, authentication, permission checks, writing the first history event, handing back the workflow ID, and most reads from the operations UI.
+- **Asynchronous**: activity dispatch, approval waits, timer wakeups, retries, compensation, and most calls to downstream integrations.
+- The boundary does real work. It keeps the API quick to answer while the business process behind it waits for days.
+- Make everything synchronous → a fragile chain of requests that snaps as soon as a human is slow.
+- Make everything asynchronous without a solid history model → nobody can explain what happened, and operators lose control.
 
 ### Queues, Backpressure, Caches, and Policy Placement
 
-- Queues belong at the edge between scheduling and execution, not inside the state store — they absorb bursty demand and isolate slow workers.
-- Backpressure belongs in the scheduler and queue admission path: if a tenant, partition, or dependency is congested, slow new dispatches rather than let retries flood the whole fleet.
-- Caches belong only for read-heavy, low-risk data (workflow definitions, UI summaries) — never the only place execution state lives.
-- Policy enforcement belongs close to decision points: retry limits in the scheduler, approval requirements in the signal gateway, permission checks before compensation or manual override.
-- Partitioning key (workflow ID, tenant ID, or customer/process key) determines how history and queue load spread — goal is reducing hot spots and preserving causal order where the business requires it, not just raw sharding for scale. If two steps must never race for the same process instance, the partitioning key should keep them together.
+- Queues sit at the seam between scheduling and execution; they do not belong in the state store. There they soak up bursts of demand and stop slow workers from holding up the rest.
+- Apply backpressure in the scheduler and on the queue admission path. If one tenant, partition or dependency backs up, throttle new dispatches so retries cannot swamp the fleet.
+- Use caches only for data that is read often and carries little risk, such as workflow definitions and UI summaries. A cache must never be the sole home of execution state.
+- Enforce each policy near the point where its decision is made: retry limits in the scheduler, approval rules in the signal gateway, and permission checks ahead of any compensation or manual override.
+- How history and queue load spread out depends on the partitioning key: tenant ID, workflow ID, or a customer/process key. The aim is fewer hot spots, plus causal order wherever the business needs it; sharding for raw scale alone misses the point. When two steps for one process instance must never race, choose a key that puts them in the same partition.
 
 ### Why This Decomposition Matters
 
-- The same architecture must be understandable to a product owner (invoices, approvals) and an engineering team (retries, locks, queue depth) — that dual-language ability is a strong job-market signal.
-- Narrate **data, identity, state, and failure** through the diagram:
-  - Data flows from caller → history → scheduler → worker and back.
-  - Identity flows through auth, idempotency keys, and approval context.
-  - State lives in durable history.
-  - Failure is handled by retries, timers, and compensation, rather than optimism.
+- A product owner thinks in invoices and approvals. An engineering team thinks in retries, locks and queue depth. Both must be able to follow this one architecture, and being able to speak to both is a strong signal in the job market.
+- Use the diagram to tell four stories: **data, identity, state and failure**.
+  - Data moves from the caller to history, on to the scheduler and the worker, and back.
+  - Identity is carried by auth, by idempotency keys and by approval context.
+  - State is kept in durable history.
+  - Failure is met with retries, timers and compensation, not with optimism.

@@ -1,61 +1,61 @@
-# Chapter 13: Design a Reliable Workflow Orchestration System, part 9
+# Design a Reliable Workflow Orchestration System, part 9
 
 ## Coverage Notes
 
-This tutorial was self-reviewed against the fixed 20-item decomposition rubric across two passes. The second pass narrowed, but didn't close, the gaps in unit-economics framing (cost SLI and cost-per-workflow language) and in regulatory/compliance breadth. Both are still marked Partial below.
+We scored this tutorial twice against our fixed 20-item decomposition rubric. On the second review the weak spots got smaller but did not disappear. Two still fall short: how much each workflow costs (the cost SLI and cost-per-workflow wording) and how widely the design deals with regulation and compliance. The list below marks both as Partial.
 
 **Phase 1 — Problem Framing & Discovery**
-- **Item 1 (Feature → business-outcome reframing):** Fully covered — Section 1 outcome-first restatement.
-- **Item 2 (Stakeholder/persona mapping):** Fully covered — Section 1 stakeholder map, jobs-to-be-done.
-- **Item 3 (Clarifying questions that change architecture):** Fully covered — Section 2 question tree.
-- **Item 4 (Requirements split + prioritisation):** Fully covered — Section 2 must/should/could, functional vs nonfunctional.
-- **Item 5 (Explicit non-goals/scope fence):** Fully covered — Section 2 "What the MVP Will Not Support."
+- **Item 1 (turning a feature request into a business outcome):** Full. Section 1 opens by stating the outcome first.
+- **Item 2 (who the stakeholders and personas are):** Full. Section 1 maps each stakeholder to the job they need done.
+- **Item 3 (questions whose answers reshape the architecture):** Full. Section 2 lays them out as a question tree.
+- **Item 4 (splitting and ranking requirements):** Full. Section 2 sorts them into must, should and could, and separates functional from nonfunctional.
+- **Item 5 (a clear fence around scope):** Full. Section 2 lists the non-goals under "What the MVP Will Not Support."
 
 **Phase 2 — Estimation & Architecture**
-- **Item 6 (Back-of-envelope scale & capacity math):** Fully covered — Section 3 workflow/activity/storage/throughput estimates.
-- **Item 7 (Unit economics/cost-driver breakdown):** Partial — cost treated as one of the six SLIs in Section 3, no worked infra cost-per-workflow calculation.
-- **Item 8 (End-to-end architecture & data flow):** Fully covered — Section 4 component map, trust boundaries, sequence diagrams.
-- **Item 9 (Data model & API contracts):** Fully covered — Section 5 four core records, four API endpoints.
-- **Item 10 (Build-vs-buy/vendor & model-selection trade-offs):** Absent — only a passing aside in Section 8's follow-up drills, not developed.
+- **Item 6 (rough sizing of scale and capacity):** Full. Section 3 estimates workflows, activities, storage and throughput.
+- **Item 7 (what drives unit cost):** Partial. Section 3 counts cost among its six SLIs, yet never works out an infrastructure figure per workflow.
+- **Item 8 (the architecture and data flow from start to finish):** Full. Section 4 gives the component map, the trust boundaries and the sequence diagrams.
+- **Item 9 (records and API contracts):** Full. Section 5 defines four core records and four API endpoints.
+- **Item 10 (build or buy, vendor and model choice):** Absent. Section 8's follow-up drills touch on it once and move on.
 
 **Phase 3 — Trade-offs, Security & Reliability**
-- **Item 11 (Named trade-off pairs with balanced verdict):** Fully covered — Section 8, four trade-off pairs.
-- **Item 12 (Threat model/security controls):** Fully covered — Section 6, four security controls.
-- **Item 13 (Failure-mode & reliability drills):** Fully covered — Section 6, five named drills with detect/contain/recover/prevent.
-- **Item 14 (Testing strategy):** Fully covered — Sections 5 and 6, idempotency contract test and crash-replay failure-injection test.
+- **Item 11 (named trade-offs, each with a fair verdict):** Full. Section 8 weighs four pairs.
+- **Item 12 (threats and the controls against them):** Full. Section 6 sets out four security controls.
+- **Item 13 (drills for failure and reliability):** Full. Section 6 runs five named drills, each with detect, contain, recover and prevent steps.
+- **Item 14 (how we test it):** Full. Section 5 has a contract test for idempotency, and Section 6 injects a crash and checks the replay.
 
 **Phase 4 — Delivery, Governance & Communication**
-- **Item 15 (Layered evaluation metrics & observability):** Fully covered — Section 7, six-layer scorecard.
-- **Item 16 (Phased rollout/risk register/rollback gates):** Fully covered — Section 7, four-phase plan with owner/exit-criteria/rollback-trigger, plus risk register.
-- **Item 17 (Regulatory/governance depth):** Partial — audit evidence, retention, residency/data-minimisation covered; no named external regulatory framework (SOX, GDPR, etc.).
-- **Item 18 (Responsible-AI/risk framing beyond obvious failure mode):** Partial — one aside on LLM-step policy checks in Section 5, not a developed theme.
-- **Item 19 (Change-management/adoption narrative):** Fully covered — Section 7, operator training, adoption metrics, versioned migration.
-- **Item 20 (Structured communication plan + self-scoring rubric):** Fully covered — Section 8, 50-minute plan, scoring rubric, 90-second summary, practice loop.
+- **Item 15 (metrics in layers, plus observability):** Full. Section 7 builds a scorecard with six layers.
+- **Item 16 (staged rollout, risks and rollback gates):** Full. Section 7 plans four phases, each with an owner, exit criteria and a rollback trigger, and adds a risk register.
+- **Item 17 (depth on regulation and governance):** Partial. We handle audit evidence, retention, residency and data minimisation, but we never name an outside framework such as SOX or GDPR.
+- **Item 18 (responsible AI and risks past the obvious failure):** Partial. Section 5 mentions policy checks on LLM steps in passing and leaves it there.
+- **Item 19 (adoption and managing change):** Full. Section 7 covers operator training, adoption metrics and versioned migration.
+- **Item 20 (a planned talk track and a way to score yourself):** Full. Section 8 gives the 50-minute plan, a scoring rubric, a 90-second summary and a practice loop.
 
-**Overall**: 16/20 items fully covered, 3 partial (unit economics, regulatory/governance depth, responsible-AI framing), 1 absent (build-vs-buy/vendor trade-offs). These gaps reflect the source chapter's own emphasis — a deep dive on durable execution, idempotency, and crash recovery for a workflow orchestrator, not a cost-modelling or compliance-framework chapter — and the tutorial does not fabricate content the source does not support.
+**Overall**: Of the 20 items, 16 are full, 3 are partial (unit economics, depth on regulation and governance, responsible-AI framing) and 1 is absent (build or buy and vendor choice). The gaps follow where this design puts its weight. It goes deep on durable execution, idempotency and recovery after a crash. Cost modelling and compliance frameworks are not its subject, so we do not invent detail the design does not back up.
 
 ### My Perspective on the Gaps
 
-*The following is supplementary perspective from this reformatting pass — not sourced from the original chapter. It is offered as one way to address each gap live in an interview, grounded in this chapter's own architecture.*
+*What follows is my own view, separate from the design above. It shows one way to close each gap live in an interview, using only the architecture this tutorial has already built.*
 
-**Item 7 — Unit economics / cost-driver breakdown (Partial).**
-- I'd build a rough cost-per-workflow number directly from components this chapter already named: `HistoryEvent` storage (Section 5) at the base-case ~400GB raw (Section 3) is a small monthly storage bill before replication: about $9 on S3 Standard or about $32 on gp3 block storage at AWS US East list prices (checked Sep 2026) — cheap relative to the "manual repair count" line already in the scorecard (Section 7).
-- I'd expect the real cost driver in this system to be operator time, not infrastructure: `cost per workflow ≈ infra marginal cost + (manual repair rate × loaded operator cost per incident)`.
-- That formula ties directly to the compensation-rate and manual-repair-count SLIs the chapter already tracks, so I would present it as "we already have the inputs to compute this, we just haven't multiplied them yet" rather than inventing a new metric.
+**Item 7: what each workflow costs (Partial).**
+- I'd get a rough cost per workflow from parts we already have. Section 3 puts raw history at ~400GB in the base case, held as `HistoryEvent` rows (Section 5). Priced at what AWS lists for US East (checked Sep 2026), it makes a small monthly bill before replication. S3 Standard comes to about $9; gp3 block storage comes to about $32. That is small next to the "manual repair count" line the scorecard in Section 7 already shows.
+- My bet is that people, not machines, drive the cost here. The formula: `cost per workflow ≈ infra marginal cost + (manual repair rate × loaded operator cost per incident)`.
+- Both inputs come from SLIs we already track: compensation rate and manual repair count. So I'd say, "We already have the inputs. We just haven't multiplied them yet." No new metric is needed.
 
-**Item 10 — Build vs. buy / vendor and model-selection trade-offs (Absent).**
-- I would say explicitly: the durable-execution core (state machine, history store, replay engine) is the kind of infrastructure a managed durable-execution product already solves well, so "buy the execution runtime, build the workflow definitions and activities" is a defensible default for most teams.
-- Reserve build effort for what's genuinely differentiated: the compensation policy per business action (Section 6's fail-closed/degrade/queue/human-intervention table), the idempotency-key boundary choices (Section 5), and the domain-specific saga logic (the `order_workflow` function itself).
-- General heuristic to say out loud: buy commodity execution infrastructure that a vendor is accountable for keeping durable and available; build only the business-specific state machine and policy layer that no vendor can define correctly on your behalf.
+**Item 10: building, buying and picking vendors or models (Absent).**
+- I'd state it plainly. The state machine, the history store and the replay engine form the durable-execution core. Managed durable-execution products already do that job well. For most teams the sensible default is to buy the execution runtime and build the workflow definitions and activities.
+- Spend build effort only where we differ from everyone else. That means three things: the compensation policy for each business action (the fail-closed, degrade, queue and human-intervention table in Section 6), where each idempotency key's boundary sits (Section 5), and the saga logic for our domain, which is the `order_workflow` function itself.
+- A rule worth saying out loud: buy the commodity execution layer, and let the vendor answer for keeping it durable and up. Build only the business state machine and the policy layer, because no vendor can get those right for you.
 
-**Item 17 — Regulatory / governance depth (Partial).**
-- I'd name concrete frameworks the interviewer is likely probing for, each tied to a component this chapter already built: PCI-DSS scope reduction if the orchestrator ever touches card data (push that to the payment gateway and keep only opaque references, consistent with Section 6's "keep secrets out of history" control).
-- SOX-style controls if approval is a financial authorisation step — the `ActivityReceipt` record and audit-log fields from Section 5 already give the evidentiary trail a SOX auditor would ask for.
-- GDPR/data-minimisation if any internal system touches customer PII — the retention policy on `HistoryEvent` (Section 5) is the natural enforcement point, so I'd frame governance as "policy applied to records we already have," not a separate workstream.
+**Item 17: going deeper on regulation and governance (Partial).**
+- I'd name the frameworks an interviewer is probably fishing for and pin each one to a part we already built. First, PCI-DSS. If the orchestrator would ever handle card data, push that data to the payment gateway and hold only opaque references. This matches the "keep secrets out of history" control in Section 6 and shrinks PCI scope.
+- Second, SOX-style controls, if an approval counts as a financial authorisation. The `ActivityReceipt` record and the audit-log fields in Section 5 already give a SOX auditor the evidence trail they would request.
+- Third, GDPR and data minimisation, if an internal system handles customer PII. We would enforce it through the retention policy that Section 5 sets on `HistoryEvent`. My framing: governance is just rules on records we already keep, not a new stream of work.
 
-**Item 18 — Responsible-AI / risk framing beyond the obvious failure mode (Partial).**
-- The chapter's only AI-adjacent point is that LLM-driven steps need "typed validation and policy checks" before changing state (Section 5). I'd extend that concretely: an LLM misclassifying or mis-routing an approval could silently auto-approve something that should have gone to a human — an irreversible business effect exactly like the ones Section 6's failure-policy table already says to fail closed on.
-- So the responsible-AI framing bolts directly onto the existing decision table rather than needing a new framework: any model output that could trigger payment, approval completion, or repair mutations gets treated as untrusted input, gated behind the same human-review lane the chapter already reserves for irreversible or ambiguous compensation.
+**Item 18: responsible AI, past the failure everyone expects (Partial).**
+- Our design touches AI in just one place: before an LLM-driven step changes state, it must pass "typed validation and policy checks" (Section 5). I'd take that further with a concrete case. Suppose an LLM misreads or misroutes an approval. It could quietly approve something a human should have seen. That is an irreversible business effect, the same kind the failure-policy table in Section 6 already tells us to fail closed on.
+- So responsible AI needs no new framework. It plugs into the decision table we already have. Treat any model output that could start a payment, finish an approval or trigger a repair as untrusted input. Route it through the same human-review lane we already keep for irreversible or ambiguous compensation.
 
 ## Level calibration
 

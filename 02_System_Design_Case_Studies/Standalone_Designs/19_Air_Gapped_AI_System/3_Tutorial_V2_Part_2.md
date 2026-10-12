@@ -1,51 +1,51 @@
-# Chapter 7: Design an AI System for an Air-Gapped Environment, part 2
+# Design an AI System for an Air-Gapped Environment, part 2
 
 ## 3. Scale Estimates, SLOs, and Capacity
 
 ### Anchor the Load Envelope to Customer Reality
-- A common first-pass mistake: sketching an on-prem document-analysis service, assuming a few dozen active users, and concluding one model replica plus a queue is enough — plausible at average load, but fails the moment the customer asks for a deadline, a peak day, or a backlog catch-up window.
-- In an air-gapped environment, elasticity is limited or nonexistent, so the capacity plan has to be correct up front.
-- Anchor to the customer's operating reality. The case gives us 1,000 users, 20 QPS at peak, 50 million pages in the corpus, and a fixed GPU pool.
-  - These numbers shape the architecture: batch vs. online interactive extraction vs. a split design with asynchronous indexing and a smaller interactive layer.
-  - They determine whether the failure mode is "slow response" or "missed mission deadline."
-- State average load, peak load, growth, and headroom separately:
-  - Average load → day-to-day behaviour.
-  - Peak load → protects against queued bursts.
-  - Growth → whether the design survives a year of adoption.
-  - Headroom → keeps you from operating at the edge of collapse when a large document arrives.
+- Candidates often slip on the first pass. They picture an on-prem service that analyses documents, guess at a few dozen active users, and settle on one model replica behind a queue. That holds up on an average day. Then the customer names a deadline, their busiest day or a date by which the backlog must be gone, and the plan falls over.
+- An enclave gives you little or no room to scale out later. Get the capacity plan right before anything ships.
+- Start from how the customer really works. The case fixes four facts: 1,000 users, 20 QPS at peak, a corpus of 50 million pages, and a GPU pool that cannot grow.
+  - Those figures pick the architecture for you. The options are batch processing, online interactive extraction, or a split where indexing runs asynchronously under a smaller interactive layer.
+  - They also decide what failure looks like: a "slow response", or a "missed mission deadline".
+- Keep four figures apart, since each answers its own question:
+  - Average load → describes ordinary daily behaviour.
+  - Peak load → guards you when bursts pile up in the queue.
+  - Growth → tells you whether the design lasts through a year of adoption.
+  - Headroom → stops you running on the brink of collapse when a large document lands.
 
 ### Storage Sketch
-- Model weights and runtime packages: one primary release plus two rollback versions.
-- Vector or search indexes for 50 million pages, plus metadata and sharding overhead.
-- Logs, audit trails, and operational metrics retained under the customer's local policy.
-- Temporary staging for signed updates, validation artifacts, and canary rollout packages.
-- Exact sizes depend on model choice, chunking strategy, embedding dimension, retention policy, and compression — false precision isn't needed, but storage is never "just the model."
-- Rollback copies matter because in an air-gapped environment a bad deployment can remain bad for a long time if reversion is slow or blocked by the approval process.
+- Model weights and runtime packages, kept as one primary release and two versions you can roll back to.
+- Vector or search indexes covering 50 million pages, with room for metadata and sharding overhead.
+- Logs, audit trails and operational metrics, held for as long as the customer's local policy requires.
+- Short-lived staging space for signed updates, validation artifacts and the packages behind a canary rollout.
+- Real sizes hinge on the model you pick, how you chunk, the embedding dimension, the retention policy and compression. Skip false precision, but show that storage is never "just the model".
+- Keep those rollback copies. Inside an enclave, reverting can be slow, or the approval process can hold it up, so a bad release may stay live for a long time.
 
 ### Memory and Throughput per Replica
-- Estimate both memory per replica and throughput per replica.
-  - Memory must cover model weights, KV cache or equivalent state, framework overhead, and batch buffers.
-  - Throughput is usually tokens per second per replica under the chosen model, quantisation, and batch size.
-  - A candidate who only talks GPU count without throughput misses the bottleneck; one who only talks memory without throughput misses the placement constraint.
-- Concrete interview-scale memory estimate (my own illustrative numbers, not measured on real hardware):
-  - Quantised model weights: 12 GB.
-  - Serving stack runtime/framework overhead: 2 GB.
-  - KV cache and transient activations at target context length: 6 GB.
-  - Batch buffers plus fragmentation slack: 2 GB.
-  - Total: roughly 22 GB of GPU memory per replica.
-  - On a 24 GB card, that leaves too little safety margin for noisy batches or longer-than-expected contexts — the design would likely move to a 32 GB GPU, a smaller model, tighter context limits, or more aggressive quantisation.
-  - This is a decision tool, not a precise promise: it tells you whether the current hardware class can host the workload at all.
+- Work out two figures for each replica: the memory it needs and the work it can serve.
+  - Memory has to fit model weights, the KV cache (or an equivalent state), framework overhead and batch buffers.
+  - Throughput normally means tokens per second for one replica, given the model, quantisation and batch size you settled on.
+  - Quote GPU count with no throughput and you miss the bottleneck. Quote memory with no throughput and you miss the placement constraint.
+- A memory estimate at interview scale (my own illustrative figures; none come from real hardware):
+  - Weights after quantisation: 12 GB.
+  - Runtime and framework overhead in the serving stack: 2 GB.
+  - KV cache plus transient activations at the target context length: 6 GB.
+  - Batch buffers, with slack for fragmentation: 2 GB.
+  - Sum: about 22 GB of GPU memory for each replica.
+  - A 24 GB card leaves too thin a margin for a noisy batch or a context longer than planned. You would probably step up to a 32 GB GPU, or else pick a smaller model, cap context harder, or quantise further.
+  - Treat the estimate as a way to decide, not an exact promise. Its job is to show whether today's class of hardware can carry the workload at all.
 
 ### The Replica Sizing Formula
-- The key sizing equation:
+- One equation drives the sizing:
 
 $$
 Replicas = \left\lceil \frac{QPS \times Tokens_{request}}{TokensPerSecond_{replica} \times UtilizationTarget} \right\rceil
 $$
 
-- *QPS* = request arrival rate; *Tokens_request* = average token work per request; *TokensPerSecond_replica* = sustained throughput of one replica; *UtilizationTarget* = fraction of peak capacity you're willing to burn before latency degrades too much.
-- The numerator converts request rate into token demand; the denominator converts one replica into usable service capacity after reserving headroom.
-- If the result exceeds the fixed GPU pool, the response is not "hope harder" — reduce token work per request, shrink the model, batch more aggressively, lower the SLO, move work to offline preprocessing, or accept a smaller interactive feature set.
+- Terms: *QPS* is how fast requests arrive. *Tokens_request* is the mean token work in one request. *TokensPerSecond_replica* is what a single replica can sustain. *UtilizationTarget* is the share of peak capacity you will spend before latency gets too bad.
+- The top of the fraction turns request rate into token demand. The bottom turns one replica into the capacity it can really offer once headroom is set aside.
+- Suppose the answer is larger than the fixed GPU pool. Hoping harder is not a plan. Cut the token work in each request, use a smaller model, batch harder, relax the SLO, shift work into offline preprocessing, or agree to a smaller interactive feature set.
 
 ```mermaid
 flowchart TD
@@ -62,51 +62,51 @@ flowchart TD
 ```
 
 ### Worked Example: 1,000 Users, 20 QPS
-- The case gives us 1,000 users generating a 20 QPS peak during a surge window. The rest are my own assumptions: an average request needs 2,000 tokens of model work (retrieval augmentation + output generation), one replica sustains 120 tokens/sec at the desired batch shape, and I'd set a 70% utilisation target:
+- The case supplies 1,000 users who drive a peak of 20 QPS in a surge window. Everything else is my assumption. A typical request costs 2,000 tokens of model work, covering retrieval augmentation and the generated output. At our chosen batch shape, a replica holds 120 tokens/sec. I'd aim for 70% utilisation:
 
 $$
 Replicas = \left\lceil \frac{20 \times 2000}{120 \times 0.70} \right\rceil = \left\lceil \frac{40000}{84} \right\rceil = 477
 $$
 
-- That number is intentionally uncomfortable — it signals the assumption set is probably wrong for an air-gapped government deployment with a fixed GPU pool.
-- The response is to challenge the request profile, not defend the number:
-  - Maybe 20 QPS is not all LLM inference — most requests may be retrieval or metadata lookup.
-  - Maybe average model work per request is lower after chunking, caching, or form-based extraction.
-  - Maybe the customer's workflow is actually batch-first, where a queue and a nightly SLA fit better.
-- That is the point of the estimate: it pressures the design into realism.
+- The result is meant to feel wrong. It says the assumptions are likely wrong for a government deployment behind an air gap, where the GPU pool is fixed.
+- Do not defend 477. Question the request profile:
+  - Not all of the 20 QPS may be LLM inference. Much of it could be retrieval or metadata lookups.
+  - Chunking, caching or form-based extraction might shrink the average model work behind each request.
+  - The customer's workflow could really be batch-first. Then a queue with a nightly SLA is the better fit.
+- This is why you estimate at all: the arithmetic forces the design towards something real.
 
-> 🎯 **Interview Pointer:** Expect the interviewer to hand you numbers that produce an absurd replica count on purpose — the test is whether you defend the number or challenge the request-mix assumption. Say the formula, get the uncomfortable answer, then pivot to "what changes in the workload shape" rather than asking for more hardware.
+> 🎯 **Interview Pointer:** Interviewers often choose numbers that give a ridiculous replica count on purpose. They want to see whether you cling to the result or question the assumed request mix. State the formula, reach the awkward number, then move to how the workload shape could change. Do not ask for more hardware.
 
 ### Sensitivity Analysis: Baseline vs. 10x Growth
-- A strong interview answer shows ranges, not fake exactness — sensitivity is more useful than a single heroic number because it exposes the design lever that matters most.
+- Strong answers give ranges instead of fake exactness. A sensitivity view beats one heroic number because it shows which design lever matters most.
 
 | Scenario | QPS | Avg tokens/request | Effective token demand | Replica implication | Design pressure |
 |---|---|---|---|---|---|
-| Baseline illustrative case | 20 | 2,000 | 40,000 tokens/sec demand before headroom | 477 replicas by the toy formula, which signals the request mix is unrealistic for the fixed GPU pool | Pushes you toward batch/offline processing, narrower per-request work, or a much smaller model fraction |
-| 10x growth case | 200 | 2,000 | 400,000 tokens/sec demand before headroom | Roughly 4,760 replicas under the same toy assumptions | Confirms the same architecture would fail hard; you would need workload partitioning, precomputation, or a different serving strategy |
+| Baseline illustrative case | 20 | 2,000 | 40,000 tokens/sec of demand, counted before headroom | The toy formula gives 477 replicas, a sign that this request mix cannot fit the fixed GPU pool | Steers you to batch or offline processing, less work in each request, or a far smaller model fraction |
+| 10x growth case | 200 | 2,000 | 400,000 tokens/sec of demand, counted before headroom | About 4,760 replicas on the same toy assumptions | Shows the same architecture would break badly; you would need to partition the workload, precompute, or serve it another way |
 
-- The exact numbers matter less than the direction: a 10x load increase is not a linear "buy more of the same" problem in an air-gapped environment, because the fixed GPU pool, storage, and operational process do not scale elastically.
+- Direction matters more than the exact figures. In an enclave, ten times the load is not fixed by buying more of the same. The fixed GPU pool, the storage and the operational process cannot stretch on demand.
 
 ### What Changes First at 10x Growth
-- More users? Identity, audit, and queueing load expand before raw inference does.
-- More pages? Index size, storage bandwidth, and rebuild time may dominate.
-- Longer documents? Token count and context length become the bottleneck.
-- More stringent SLOs? Headroom must rise and the fixed GPU pool gets tight.
-- Communicate uncertainty cleanly: *"These are illustrative estimates. I would size the initial deployment against the 20 QPS peak, then add a growth factor and a rollback margin. If the customer's real request mix is more batch-heavy, the interactive pool shrinks; if the average request is longer, we need either more replicas or a narrower per-request contract."*
-- I'd expect token demand per request to have the most leverage over component selection and partitioning:
-  - Light requests → a single general-purpose inference tier plus retrieval may be enough.
-  - Heavy requests → design often splits into a cheap preprocessor, a retrieval/rules layer, and a smaller number of expensive inference workers.
-  - In an air-gapped environment, every extra replica consumes scarce offline capacity and every extra dependency increases update and audit burden.
+- More users? Identity, audit and queueing feel the strain before raw inference does.
+- More pages? The index grows, and its rebuild time or storage bandwidth may become the limit.
+- Longer documents? The bottleneck moves to token count and context length.
+- Stricter SLOs? You need more headroom, and the fixed GPU pool runs short.
+- State uncertainty plainly: *"These numbers are illustrative. I'd build the first deployment around the 20 QPS peak, plus a growth factor and some rollback margin. If the real request mix leans towards batch, the interactive pool gets smaller. If the average request is longer, we either add replicas or narrow what each request may ask for."*
+- I expect per-request token demand to steer component choice and partitioning more than anything else:
+  - Light requests → one general-purpose inference tier with retrieval may do the job.
+  - Heavy requests → the design tends to split three ways: cheap preprocessing up front, a retrieval/rules layer in the middle, and a small set of expensive inference workers.
+  - Inside an enclave, each added replica eats scarce offline capacity. Each added dependency makes updates and audits heavier.
 
 ### SLIs Tied to the Workflow
-- Define SLIs in terms the customer can feel:
-  - **Availability:** the fraction of working hours when the system accepts jobs and returns results.
-  - **Latency:** time from document submission to first useful result, and separately time to complete a batch.
-  - **Freshness:** time from approved content arrival to searchability or model use.
-  - **Quality:** extraction accuracy, retrieval relevance, or analyst acceptance rate.
-  - **Security:** adherence to network, identity, signing, and audit boundaries.
-  - **Cost:** GPU hours, storage footprint, support burden, and rollback cost.
-- Set objectives that match the workflow: interactive analyst review → interactive latency budget is the critical SLO; nightly ingestion run → freshness and completion time matter more than per-request latency.
-- A latency budget decomposes an end-to-end target into controllable pieces: upload, preprocessing, retrieval, inference, validation, response rendering.
-  - If inference consumes most of the budget, you probably need a smaller model, shorter context, or precomputed retrieval.
-- **What to say in the interview:** size the system from peak request rate, average token work, and fixed GPU throughput; translate into replica count, storage footprint, and headroom; separate average load from peak load; define SLOs around customer workflow; use sensitivity ranges to see which assumption most changes the design; change the workload shape before asking for infinite hardware.
+- Pick SLIs whose movement a customer would notice:
+  - **Availability:** share of working hours in which the system takes jobs and hands back results.
+  - **Latency:** how soon a submitted document yields its first useful result; separately, how long a whole batch takes.
+  - **Freshness:** time from the arrival of approved content until it can be searched or used by the model.
+  - **Quality:** accuracy of extraction, relevance of retrieval, or the rate at which analysts accept output.
+  - **Security:** whether the network, identity, signing and audit boundaries hold.
+  - **Cost:** GPU hours, storage footprint, support load and what a rollback costs.
+- Fit objectives to the workflow. If analysts review results interactively, the interactive latency budget is the SLO that matters most. If ingestion runs nightly, freshness and completion time outrank latency per request.
+- A latency budget breaks the end-to-end target into parts you can control: upload, preprocessing, retrieval, inference, validation and rendering the response.
+  - When inference eats most of that budget, you likely need a smaller model, a shorter context or retrieval done ahead of time.
+- **What to say in the interview:** work out size from the peak request rate, the average token work and the throughput of the fixed GPU pool. Turn that into a replica count, a storage footprint and headroom. Keep average load apart from peak load. Build SLOs around the customer's workflow. Use sensitivity ranges to find the assumption that moves the design most. Reshape the workload before you ask for unlimited hardware.

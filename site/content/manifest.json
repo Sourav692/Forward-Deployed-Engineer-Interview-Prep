@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T15:39:22.159Z",
+  "generatedAt": "2026-10-12T15:48:24.819Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1045,7 +1045,7 @@
                   "label": "Reference Design"
                 }
               ],
-              "minutes": 18,
+              "minutes": 22,
               "updated": "2026-10-12"
             },
             {
@@ -1062,7 +1062,7 @@
                   "label": "12-Part Framework"
                 }
               ],
-              "minutes": 18,
+              "minutes": 20,
               "updated": "2026-10-12"
             },
             {
@@ -1111,7 +1111,7 @@
                   "label": "Tutorial 8"
                 }
               ],
-              "minutes": 86,
+              "minutes": 94,
               "updated": "2026-10-12"
             },
             {
@@ -1164,7 +1164,7 @@
                   "label": "Tutorial 9"
                 }
               ],
-              "minutes": 91,
+              "minutes": 103,
               "updated": "2026-10-12"
             },
             {
@@ -1209,7 +1209,7 @@
                   "label": "Tutorial 7"
                 }
               ],
-              "minutes": 82,
+              "minutes": 90,
               "updated": "2026-10-12"
             },
             {
@@ -1246,7 +1246,7 @@
                   "label": "Tutorial 5"
                 }
               ],
-              "minutes": 65,
+              "minutes": 72,
               "updated": "2026-10-12"
             },
             {

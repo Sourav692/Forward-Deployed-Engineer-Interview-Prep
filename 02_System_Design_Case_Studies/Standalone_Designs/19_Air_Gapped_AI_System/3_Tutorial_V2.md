@@ -1,6 +1,4 @@
-# Chapter 7: Design an AI System for an Air-Gapped Environment
-
-*Source: THE FORWARD DEPLOYED ENGINEER SYSTEM DESIGN INTERVIEW*
+# Design an AI System for an Air-Gapped Environment
 
 ## Table of Contents
 - [1. The Customer Problem and Discovery](#1-the-customer-problem-and-discovery)
@@ -88,41 +86,40 @@
 ## 1. The Customer Problem and Discovery
 
 ### The Core Tension and Outcome Statement
-- The customer wants AI capability delivered *inside* a network that cannot talk to the outside world; every design decision must be argued against that constraint, not around it.
-- The customer wants a maintainable local AI capability that never violates the network, artifact, identity, or audit boundaries of an air-gapped enclave.
-- The outcome restatement that anchors the rest of the design: **provide maintainable local AI capability without violating network, artifact, identity, or audit boundaries.**
-  - Every later architecture decision gets tested against that sentence.
-- **What to carry forward:** the boundary is not a limitation layered on top of an otherwise-normal AI system — it *is* the system design.
-  - Every subsequent section (requirements, architecture, data model, security, delivery) treats the boundary as the organising constraint, not an afterthought.
+- The enclave has no route to the outside world, yet the customer wants AI inside it, kept running by their own people. Every design choice must hold up against that fact, not work around it.
+- State the outcome in one line and hold the rest of the design to it: **maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries.**
+  - Test each later architecture choice against this line.
+- **Key takeaway:** do not treat the boundary as a restriction bolted onto an ordinary AI system. The boundary is the design.
+  - Requirements, architecture, data model, security and delivery all start from it.
 
-> 🎯 **Interview Pointer:** Memorise the outcome sentence verbatim — "maintainable local AI capability without violating network, artifact, identity, or audit boundaries" — and reuse it as the closing line of your 90-second summaries in later sections; interviewers notice when a candidate ties every section back to one stated goal.
+> 🎯 **Interview Pointer:** Learn the outcome line word for word: "maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries". End each later 90-second summary with it. Interviewers notice when every section points back to one goal.
 
 ### Stakeholder Map
-- Stakeholders disagree on different axes: what they care about vs. what they fear — map both before designing anything.
+- Each stakeholder wants one thing and dreads another, and they pull in different directions. Fill in both columns before you draw a box.
 
-| Stakeholder | What they care about | What they fear |
+| Stakeholder | What they want | What worries them |
 |---|---|---|
-| Security/compliance officer | Provable boundary integrity, auditable updates | A "temporary" workaround that becomes permanent |
-| Operations/IT admin | Supportability without vendor hand-holding | A system nobody on-site can fix at 2 a.m. |
-| End users (analysts) | Fast, accurate answers on their documents | A tool that is slower or less trustworthy than manual work |
-| Program sponsor | Delivering measurable value on schedule | The program stalling in accreditation review |
-| External vendor/build team | A clean handoff process | Being blamed for issues after the network boundary is crossed |
+| Security/compliance officer | Proof that the boundary holds and that every update can be audited | A stopgap that quietly becomes permanent |
+| Operations/IT admin | A system the local team can support without calling the vendor | An outage at 2 a.m. that no one on-site can fix |
+| End users (analysts) | Quick, correct answers about their own documents | A tool that is slower than doing the work by hand, or harder to trust |
+| Program sponsor | Measurable value, delivered when promised | Accreditation review stalling the program |
+| External vendor/build team | A clear, clean handoff | Taking the blame for problems that appear once releases cross the boundary |
 
 ### Six-Bucket Discovery Framework
-- Organise discovery into six buckets rather than asking scattered questions:
-  - **Workflow** — what job the user is actually trying to do.
-  - **Risk** — what happens if the system is wrong, slow, or compromised.
-  - **Boundary** — what exactly is inside vs. outside the enclave.
-  - **Update process** — how new capability legally and safely enters the network.
-  - **Identity and audit** — who is allowed to act, and how that's proven after the fact.
-  - **Operations** — who keeps the system running day to day.
+- Sort your discovery questions into six buckets instead of firing them off at random:
+  - **Workflow**: the real job the user needs done.
+  - **Risk**: the cost of an answer that is wrong, slow or compromised.
+  - **Boundary**: precisely what sits inside the enclave and what stays outside.
+  - **Update process**: the lawful, safe route by which new capability gets in.
+  - **Identity and audit**: who may act, and how you prove it afterwards.
+  - **Operations**: who keeps the system up from one day to the next.
 
 ### Scope, Risks, Owners, Success
-- Four practical questions structure the outcome of discovery:
-  - **Scope:** What is explicitly in vs. out of the first release?
-  - **Risks:** What is the single riskiest assumption, and who owns mitigating it?
-  - **Owners:** Which team is accountable for each moving part (build, transfer, operate)?
-  - **Success:** What does "working" look like to the customer, in terms they can independently verify?
+- Discovery should end with clear answers to four questions:
+  - **Scope:** Which capabilities ship in the first release, and which are deliberately left out?
+  - **Risks:** Which assumption is most dangerous, and who is responsible for reducing it?
+  - **Owners:** Which team answers for each part: build, transfer and operate?
+  - **Success:** How will the customer check, on their own terms, that the system works?
 
 ```mermaid
 flowchart TD
@@ -137,49 +134,49 @@ flowchart TD
 ```
 
 ### Choosing a Business-Outcome Metric
-- A good business-outcome metric is one the customer can verify without violating the boundary itself.
-- Example: analyst turnaround time on a case — observable locally — rather than a vendor-reported number that requires trusting an external system.
+- Pick a business metric the customer can check from inside the enclave, without opening the boundary.
+- Analyst turnaround time per case works: the customer sees it locally. A vendor-reported figure is weaker, because believing it means trusting an outside system.
 
 ## 2. Clarifying Questions, Requirements, and Constraints
 
 ### Six Architecture-Changing Questions
-- Six questions matter more than any others in this scenario:
-  1. What classification level is the data, and what handling rules apply?
-  2. What hardware is available locally?
-  3. What quality target does the customer need, and what latency is acceptable for a human workflow?
-  4. How are software artifacts imported, approved, scanned, signed, and rolled into the enclave?
-  5. What identity system exists locally, and what storage or directory services can the application rely on?
-  6. What are the logging, retention, backup, and disaster recovery limits inside the network?
-- Why each question matters:
-  - Classification/handling rules determine whether the system may store document text, retain prompts, cache intermediate outputs, or generate audit records containing sensitive content.
-  - Hardware determines whether you can run a single smaller model, a larger model with batching, or only a retrieval-heavy workflow with a lightweight model.
-  - Quality/latency targets decide whether the solution is a human-assist tool, a batch analyst, or a near-interactive copilot.
-  - The import process shapes how quickly the customer can patch vulnerabilities or update the model.
-  - Identity and storage define whether you can integrate with local SSO, file shares, object storage, or directory-backed authorisation.
-  - Logging and recovery limits determine whether you can observe failures without exposing classified data, and whether the organisation can survive a node or site outage without violating policy.
+- In this scenario, six questions shape the architecture more than all the rest:
+  1. How is the data classified, and which handling rules follow from that?
+  2. What compute hardware sits inside the enclave?
+  3. How good must answers be, and how long can a person wait for one?
+  4. What path does a software artifact follow to be imported, approved, scanned, signed and rolled in?
+  5. Which identity system runs locally, and which storage and directory services can the application depend on?
+  6. Inside the network, what limits apply to logging, retention, backup and disaster recovery?
+- What each answer changes:
+  - Handling rules decide whether you may store document text, keep prompts, cache intermediate results, or write audit records that hold sensitive content.
+  - The hardware picks one of three shapes: a single smaller model, a bigger model with batching, or a workflow that leans on retrieval and pairs it with a light model.
+  - Quality and latency targets set the product's role: a tool that assists a person, a batch analyst, or a copilot that feels close to interactive.
+  - The import process sets how fast the customer can patch a vulnerability or refresh the model.
+  - Identity and storage decide whether you can plug into local SSO, file shares, object storage or authorisation backed by a directory.
+  - Logging and recovery limits settle two things. Can you see failures without exposing classified data? Can the organisation ride out a lost node or a lost site and still stay within policy?
 
 ### From Discovery to Requirements
-- Once the interviewer has answered half the questions, a strong candidate stops fishing for perfection, states reasonable assumptions explicitly, and converts them into requirements — separating functional from nonfunctional requirements and from constraints.
-- **Functional requirements** (what the system must do):
-  - Offline model and service packaging so the full runtime can be deployed without internet access.
-  - Signed, versioned artifacts so every model, container, and dependency can be traced to an approved release.
-  - A local registry and dependency mirror so installs and redeploys do not reach outside the enclave.
-  - Local identity integration so access control follows the customer's approved accounts and groups.
-  - Offline observability, backups, and restore procedures so operations continue without external telemetry.
-  - An auditable update and rollback ceremony so every promotion into production can be reviewed and reversed.
-- **Nonfunctional requirements** (how well the system must behave):
-  - No runtime internet dependency.
-  - Reproducible installs from approved artifacts.
-  - A verifiable supply chain for code, model files, and packaged dependencies.
-  - Supportable under long update intervals — the system remains operable even when patches and model refreshes are infrequent.
+- Once about half the questions have answers, stop chasing a complete picture. State your assumptions and turn them into requirements, kept in three lists: functional, nonfunctional and constraints.
+- **Functional requirements** (what the system has to do):
+  - Package the model and services for offline use, so the whole runtime deploys with no internet connection.
+  - Sign and version every artifact, so each model, container and dependency traces back to an approved release.
+  - Run a local registry and a dependency mirror, so installs and redeploys never reach beyond the enclave.
+  - Integrate with local identity, so access follows the customer's approved accounts and groups.
+  - Provide observability, backups and restore procedures that work offline, so operations need no outside telemetry.
+  - Run an update and rollback ceremony that leaves an audit trail, so each promotion to production can be reviewed and undone.
+- **Nonfunctional requirements** (how well it has to behave):
+  - Nothing depends on the internet at runtime.
+  - Installs from approved artifacts are reproducible.
+  - Every code file, model file and packaged dependency has provenance you can check.
+  - The system stays supportable when patches and model refreshes arrive only rarely.
 
 ### Constraints vs. Preferences
-- Constraints are the walls around the design, not nice-to-haves: e.g., all compute must remain on-premises, logs retained only locally, updates enter only through a manual approval path.
-- Preferences are softer choices, such as preferring one storage engine over another.
-- A strong interview answer distinguishes the two so the team does not optimise a convenience and accidentally violate a boundary.
+- A constraint is a wall the design must stay inside, not a nice extra. Examples: all compute stays on-premises, logs are kept only locally, and updates arrive only through a manual approval path.
+- A preference is softer, such as favouring one storage engine over another.
+- Keep the two apart in your answer. Otherwise the team may optimise for convenience and break a boundary by accident.
 
 ### A Compact Interview Question Tree
-- A simple decision tree demonstrates how to think under ambiguity — narrowing the design around the hardest unknowns first, and signalling that you are protecting delivery, not just collecting facts.
+- A small decision tree shows how you reason when facts are missing. It settles the hardest unknowns first, which tells the interviewer you are protecting delivery, not just gathering facts.
 
 ```mermaid
 flowchart TD
@@ -196,49 +193,49 @@ flowchart TD
 ```
 
 ### MVP Prioritisation: Must, Should, Could
-- Must-have capabilities for the MVP:
-  - Offline model and service packaging.
-  - Signed versioned artifacts.
-  - Local registry and dependency mirror.
-  - Local identity integration.
+- The MVP must have:
+  - Offline packaging for the model and services.
+  - Signed, versioned artifacts.
+  - A local registry and dependency mirror.
+  - Integration with local identity.
   - Offline observability and backups.
-  - An auditable update and rollback ceremony.
-- That list is intentionally short — it's the minimum that makes the system operationally credible in a controlled network.
-- Could-have items: richer analytics dashboards, multiple model choices, automatic canary release flows, or cross-site replication — attractive but can distract from the core problem in an air-gapped environment.
+  - An update and rollback ceremony that can be audited.
+- The list is short on purpose. It is the least the system needs to be operationally credible on a controlled network.
+- Could-haves include richer analytics dashboards, a choice of models, automatic canary releases and replication across sites. In an air-gapped setting they pull attention from the core problem.
 
 ### What the MVP Will Not Support
-- No live internet model calls.
-- No unmanaged package installation or ad hoc dependency fetching.
-- No self-updating agents that bypass the approved import process.
-- No promise of unlimited model size or arbitrary plugin execution.
-- No assumption that logs can be shipped to a cloud observability stack.
-- "Backup" is not a vague aspiration — it relies only on the storage and restore paths the customer already permits.
-- These exclusions protect the design from scope creep and make the candidate look more trustworthy.
+- Calls to a live model on the internet.
+- Unmanaged package installs, or fetching dependencies on the fly.
+- Agents that update themselves and skip the approved import process.
+- Any promise of unlimited model size or of running arbitrary plugins.
+- Any assumption that logs can go to a cloud observability stack.
+- Backup as a vague promise. Every backup runs through a storage and restore path the customer has already approved.
+- Naming these exclusions guards against scope creep and makes you look more trustworthy.
 
 ### Requirement-to-Component Traceability
-- A simple requirement-to-component mapping keeps the design honest — if a requirement has no component, you have written a wish list, not a system.
+- Map every requirement to a component. A requirement with nothing behind it is a wish, not part of a system.
 
 | Requirement | Component or mechanism |
 |---|---|
-| Offline model and service packaging | Build pipeline that produces a single deployable bundle for model, service, and runtime assets |
-| Signed versioned artifacts | Signing process, artifact registry, release manifest, and promotion record |
-| Local registry and dependency mirror | On-prem registry for containers and package mirrors for language dependencies |
-| Local identity integration | Directory or SSO bridge with role mapping and authorisation checks |
-| Offline observability and backups | Local logs, metrics store, backup jobs, and restore validation |
-| Auditable update and rollback ceremony | Change approval workflow, release ledger, and rollback runbook |
-| No runtime internet dependency | Network policy, egress denial, and dependency allowlist |
-| Reproducible installs | Pinned versions, locked manifests, and deterministic build inputs |
-| Verifiable supply chain | Provenance records, signatures, scanning, and approval evidence |
-| Supportable under long update intervals | Conservative dependency choices, compatibility checks, and documented restore paths |
+| Offline model and service packaging | A build pipeline that emits one deployable bundle holding the model, the service and the runtime assets |
+| Signed versioned artifacts | Signing step, artifact registry, release manifest and a record of each promotion |
+| Local registry and dependency mirror | A container registry on-premises, plus package mirrors for each language's dependencies |
+| Local identity integration | A bridge to the directory or SSO, with role mapping and authorisation checks |
+| Offline observability and backups | Logs and a metrics store kept locally, backup jobs, and checks that restores work |
+| Auditable update and rollback ceremony | A workflow for approving changes, a ledger of releases and a rollback runbook |
+| No runtime internet dependency | Network policy that denies egress, plus an allowlist of dependencies |
+| Reproducible installs | Every version pinned, every manifest locked, and build inputs that never vary |
+| Verifiable supply chain | Provenance records, signatures, scan results and evidence of approval |
+| Supportable under long update intervals | Cautious dependency choices, compatibility checks and written restore paths |
 
 ### The One Assumption to Protect First
-- If you can only protect one assumption, protect the network boundary first: the system must remain fully functional with no runtime internet access.
-- That assumption influences artifact packaging, dependency management, model deployment, observability, and rollback.
-- If the customer later relaxes it, you can simplify; if you assume the opposite and are wrong, the entire architecture collapses.
+- If you can defend only one assumption, defend the network boundary. The system has to work completely with no internet access at runtime.
+- It shapes packaging, dependency management, model deployment, observability and rollback.
+- If the customer relaxes it later, the design gets simpler. If you assume the reverse and are wrong, the whole architecture falls apart.
 
-> 🎯 **Interview Pointer:** When an interviewer says "assume whatever you need," anchor on the no-runtime-internet-access assumption before anything else — it's the assumption I'd expect an interviewer to check first that you protected correctly.
+> 🎯 **Interview Pointer:** If the interviewer says "assume whatever you need", pin down the no-internet-at-runtime assumption first. I would expect an interviewer to check that one before any other.
 
 ### Why This Is a Strong FDE Signal
-- A hiring team wants someone who can discover the constraints that matter, prioritise requirements under ambiguity, and keep the solution shippable — customer empathy, engineering judgement, and delivery discipline.
-- It shows you can protect the highest-risk constraint instead of overfitting to the easiest feature.
-- **What to say in the interview:** clarify classification/handling rules, compute, latency/quality targets, artifact approval workflow, local identity/storage, and logging/recovery limits; convert answers into must-have capabilities (offline packaging, signed versioned artifacts, local registry/mirror, local identity integration, offline observability/backups, auditable update-and-rollback); state nonfunctional requirements explicitly (no runtime internet dependency, reproducible installs, verifiable supply chain, supportability under long update intervals); declare MVP exclusions.
+- The panel wants to see three habits at once. You care about the customer, you judge well as an engineer, and you deliver. Here that means finding the constraints that matter, prioritising while facts are missing, and keeping the solution shippable.
+- You also guard the riskiest constraint rather than tuning the design to the easiest feature.
+- **What to say in the interview:** ask the six questions: data handling rules, compute, latency and quality, artifact approval, local identity and storage, and logging and recovery limits. Turn the answers into the six must-haves listed above. Name the four nonfunctional requirements out loud. Finish with what the MVP leaves out.

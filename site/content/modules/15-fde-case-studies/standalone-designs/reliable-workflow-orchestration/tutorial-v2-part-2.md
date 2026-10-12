@@ -1,75 +1,75 @@
-# Chapter 13: Design a Reliable Workflow Orchestration System, part 2
+# Design a Reliable Workflow Orchestration System, part 2
 
 ## 2. Clarifying Questions, Requirements, and Constraints
 
 ### Choosing Which Unknowns to Pay For
 
-- The first design move is not architecture — it's choosing which unknowns are worth paying for in the interview.
-- The interviewer may answer only half your questions; the best candidate does not try to eliminate all ambiguity. Instead:
-  - Identify the few decisions that would materially change the design.
-  - Protect the highest-risk constraint: preventing duplicate business effects when steps fail, wait, or resume out of order.
+- Skip the boxes and arrows at first. Start by picking which open questions deserve scarce interview time.
+- Expect the interviewer to answer only some of what you ask. Strong candidates live with some ambiguity and instead:
+  - Find the handful of choices that would reshape the design if they went the other way.
+  - Guard the riskiest constraint first: no business effect may happen twice when a step fails, pauses, or comes back in the wrong order.
 
 ### The Question Tree for Discovery
 
-- A compact question tree keeps the conversation sharp, and each question maps to a concrete design consequence:
-  - What is the exact step order, and which steps can branch or be skipped? → determines whether you're building a straight-line job runner or a true state machine.
-  - Which actions are reversible, and which are irreversible once they succeed? → tells you where compensation is safe vs. where retries need care.
-  - How long can a workflow remain active before it must time out, archive, or be cancelled? → shapes storage and timer design (in-memory state or a short-lived queue can't support week-long waits).
-  - Where does human approval enter, and how long can that approval reasonably wait? → affects how suspended states, reminders, escalations, and abandoned cases are modelled.
-  - Do the external systems support idempotency keys, replay protection, or a unique business reference? → decides whether retries are safe or the orchestration layer must build its own deduplication envelope.
-  - Can workflow definitions change while older instances are still running, and if so, how do we keep those instances compatible? → becomes critical the moment a new approval step is requested while 10,000 old workflows are in flight.
-- When the interviewer answers only half the questions, do not freeze — make explicit assumptions and attach them to risk.
-  - Safest anchor assumption for this prompt: payment is the highest-risk irreversible action, so the design must defend against duplicate payment even if everything else degrades.
+- Keep discovery questions few and pointed, each tied to a concrete design choice:
+  - In what order do the steps run, and can any of them branch or be skipped? → The answer tells you if a simple sequential runner will do, or if you need a real state machine.
+  - Which steps can be undone after they succeed, and which cannot? → This marks where compensation is safe and where retries need extra caution.
+  - What is the longest a workflow may stay open before it times out, gets archived or is cancelled? → Storage and timers follow from this; week-long waits rule out in-memory state and short-lived queues.
+  - At what point does a person approve, and how long may that approval sit? → This drives how you model paused states, reminders, escalations and cases nobody comes back to.
+  - Do the downstream systems accept idempotency keys, block replays, or take a unique business reference? → If yes, retries are safe; if not, the orchestrator has to wrap each call in its own deduplication layer.
+  - If a definition changes mid-flight, how do older running instances stay compatible? → This bites the moment someone wants a new approval step while 10,000 old workflows are live.
+- Partial answers are no reason to stall. State your assumptions out loud and tie each one to the risk it covers.
+  - The safest anchor here: payment is the riskiest step and cannot be reversed. Whatever else degrades, the design must still block a second payment.
 
 ### From Discovery to Requirements
 
-- Convert the conversation into a prioritised set of requirements, not a shopping list — must/should/could framing:
+- Turn what you learned into a ranked list, not a wish list, sorted into must, should and could:
   - **Must**: durable state machine, persisted transition history, idempotent activity execution, retry and timeout policies, human signals and timers, saga compensation, operator recovery.
-  - **Should**: workflow-definition versioning that allows compatible evolution of running instances.
-  - **Could**: richer analytics, custom dashboards, or user-configurable branching rules if they do not threaten correctness.
-- Why each must-have exists:
-  - Durable state machine — survives process death and pauses across long gaps.
-  - Persisted transition history — lets an operator inspect what happened, and a restarted worker reconstruct intent without guessing.
-  - Idempotent activity execution — retries are inevitable, and retries without deduplication are duplicate side effects with better branding.
-  - Retry and timeout policies — external systems fail, slow down, and sometimes never answer.
-  - Human signals and timers — approval is often a business event, not an API callback.
-  - Saga compensation and operator recovery — some steps can be undone and some must make that difference explicit.
+  - **Should**: versioned workflow definitions, so running instances can evolve without breaking.
+  - **Could**: deeper analytics, bespoke dashboards, or branching rules users configure themselves, as long as none of them puts correctness at risk.
+- The reason behind each must-have:
+  - Durable state machine — the workflow outlives a crashed process and waits out long pauses.
+  - Persisted transition history — operators can see what happened, and a restarted worker recovers its intent from the record instead of guessing.
+  - Idempotent activity execution — retries will happen. A retry with no deduplication is just a duplicate side effect under a nicer name.
+  - Retry and timeout policies — outside systems break, slow down, and sometimes stay silent forever.
+  - Human signals and timers — an approval usually arrives as a business event, not as an API callback.
+  - Saga compensation and operator recovery — some steps can be reversed and some cannot, and the design has to show which is which.
 
 ### Functional vs Nonfunctional Requirements
 
-- Functional: the system moves through approval, payment, notification, and internal updates.
-- Nonfunctional: it must keep running through process crashes and even region failures, preserve inspectable history, avoid duplicate payment, and evolve without breaking workflows already in progress.
-- Mixing the two categories blurs trade-offs; separating them clarifies what the system does vs. how safely it must do it.
-- Nonfunctional requirements stated as measurable outcomes:
-  - "Survive process and region failures" = workflow resumes after worker loss and site-level outage without losing committed state.
-  - "No duplicate payment" = the payment effect is protected by a business key, durable deduplication, or a provider-side idempotency mechanism used consistently.
-  - "Inspectable history" = every transition, retry, approval signal, timeout, and compensation event is persisted in queryable form.
-  - "Compatible evolution of running instances" = a workflow definition change must not strand older executions or reinterpret their state machines mid-flight.
+- Functional: each case goes from approval to payment, then on to notifications and internal record updates.
+- Nonfunctional: it keeps going through process crashes and even a lost region, keeps a history people can inspect, never pays twice, and changes without breaking workflows already under way.
+- Keep the two lists apart. Mixed, they hide trade-offs; split, they show what the system does and how safely it must do it.
+- Each nonfunctional requirement, restated as an outcome you can measure:
+  - "Survive process and region failures" = after losing a worker or a whole site, the workflow picks up again with no committed state lost.
+  - "No duplicate payment" = a business key, durable deduplication or the provider's idempotency mechanism guards the payment, and the same guard is used every time.
+  - "Inspectable history" = transitions, retries, approval signals, timeouts and compensation events all land in durable, queryable storage.
+  - "Compatible evolution of running instances" = changing a workflow definition leaves no older execution stranded, and no running state machine gets reinterpreted halfway through.
 
 ### Constraints vs Preferences
 
-- A constraint narrows the safe design space; a preference improves usability but can bend.
-- In this prompt:
-  - Irreversible payment handling — constraint, not preference.
-  - Human approval latency — constraint if the business genuinely waits days, preference if approvals normally happen within hours.
-  - Workflow versioning — constraint once the customer admits in-flight cases will survive a deployment.
-  - A nice dashboard — preference.
-- Naming which is which out loud shows the candidate can protect the architecture from scope creep.
+- Constraints shrink the set of safe designs. Preferences make the system nicer to use, but they can give way.
+- For this prompt:
+  - Irreversible payment handling — a constraint.
+  - Human approval latency — a constraint if the business really waits days, a preference if approvals usually land within hours.
+  - Workflow versioning — a constraint as soon as the customer confirms that in-flight cases will outlive a deployment.
+  - A polished dashboard — a preference.
+- Saying the label aloud for each item shows you can keep scope creep out of the architecture.
 
-> 🎯 **Interview Pointer:** When interviewers introduce a new "nice to have" mid-interview, explicitly classify it as constraint or preference before reacting — this single habit is one of the clearest signals of architectural discipline under pressure.
+> 🎯 **Interview Pointer:** If the interviewer adds a "nice to have" partway through, label it as a constraint or a preference before you respond to it. Few habits signal architectural discipline under pressure as clearly.
 
 ### What the MVP Will Not Support
 
-- Explicit non-goals prevent solution sprawl:
-  - No arbitrary user-authored branching logic, multi-tenant visual rule builders, or global exactly-once delivery across every downstream system.
-  - No attempt to make all actions reversible — payment and some external writes are not safely reversible in the general case.
-  - No infinite retention for transition history — retention should be explicit and policy-driven.
-  - No single universal compensation strategy — some steps will need manual recovery.
-- A reliable orchestration system earns trust by doing a few hard things well, not by pretending to be a full business-process platform on day one.
+- Stating non-goals up front stops the solution from spreading:
+  - No branching logic written freely by users, no multi-tenant visual rule builders, and no promise of exactly-once delivery to every downstream system.
+  - No effort to make every action reversible. In general, payment and some external writes cannot be safely undone.
+  - No keeping transition history forever. A clear policy sets how long it is retained.
+  - No one compensation strategy that fits every step. Some failures will need a person to recover them.
+- Trust in an orchestration system comes from handling a few hard problems well. Posing as a complete business-process platform on day one does not earn it.
 
 ### Requirement-to-Component Traceability
 
-- A concise traceability table is the bridge from requirements to architecture, and later from architecture to implementation and operations:
+- A short traceability table links each requirement to the parts that deliver it. Later it links those parts to implementation and operations:
 
 | Requirement | Primary component(s) |
 |---|---|
@@ -86,6 +86,6 @@
 
 ### The Assumption Discipline an FDE Needs
 
-- Best interview answer does not pretend certainty where none exists: "I am assuming payment is irreversible, approvals may wait for days, and workflow definitions will change while old instances remain active. Under those assumptions, I will optimise for durable state, explicit history, idempotent side effects, and version compatibility."
-- A strong FDE shows discovery, prioritisation, and delivery discipline at the same time — translating incomplete customer input into a system that is safe enough to ship, narrow enough to reason about, and flexible enough to grow.
-- Next step: requirements turn into scale estimates and SLOs, where the architecture starts to harden.
+- A strong answer admits what it does not know: "My assumptions are that payment can't be reversed, approvals can sit for days, and definitions will change while old instances are still live. Given that, I'll optimise for durable state, a clear history, idempotent side effects and version compatibility."
+- Strong FDEs discover, prioritise and keep delivery disciplined all at once. From patchy customer input they build a system that is safe to ship, small enough to reason about, and open to growth.
+- What comes next: the requirements become scale estimates and SLOs, and the architecture begins to firm up.
