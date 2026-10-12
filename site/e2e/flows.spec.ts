@@ -531,6 +531,11 @@ test('diagrams are in the served HTML', async ({ request }) => {
   expect(html).not.toContain('Drawing diagram')
   expect(html.match(/<img[^>]*src="\/diagrams\/[0-9a-f]+-light\.svg"[^>]*>/g)?.length).toBeGreaterThan(0)
   expect(html).toMatch(/<img[^>]*alt="Diagram: [^"]+"/)
+  // Every tab's diagrams, not only the first tab's: the air-gapped case keeps its
+  // diagrams on tutorial tabs that are hidden on load.
+  const tabbed = await (await request.get('/design/air-gapped-ai-system')).text()
+  expect(tabbed).not.toContain('h-40 rounded-lg border border-dashed')
+  expect(new Set(tabbed.match(/\/diagrams\/[0-9a-f]+-light\.svg/g)).size).toBeGreaterThanOrEqual(8)
 })
 
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
