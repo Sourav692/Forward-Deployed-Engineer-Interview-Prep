@@ -23,6 +23,16 @@ Every strong cost answer comes from four verbs in order. Measure: trace latency 
 
 ---
 
+## Level calibration
+
+Every level can put a bullet on the rep's panel; the level shows in how cleanly the three clocks are split and who owns consent, redaction and the CRM record.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Three lanes on three clocks: a snapshot built as the rep before the call, a small prompt to a fast model streaming bullets inside the ~2.0 s budget, and a larger model after hang-up. Silence on timeout, and the rep approves every CRM write. | Consent per region, where redaction sits, retention, and how to score a summary with no single right answer. |
+| Staff | Adds the boundaries and the evidence: consent before recording, redaction on the stream before storage or any model, deletion that alerts on failure, and summaries scored by action-item precision and recall per call type and language. Launches post-call first so rep corrections build the golden set. | Who sets per-region consent and retention policy, and when a field earns auto-apply. |
+| Principal | Treats the snapshot, the permission mirror and preview-then-approve as patterns shared with the G05 sales copilot, not one-off parts. Plans the path from review-only proposals to narrow auto-apply on fields with proven accuracy, and the order in which languages and call types join. | Real stage latencies under real accents, networks and model load; the budget is a planning assumption that only the customer's own calls can confirm. |
+
 ## Key Takeaways
 
 - The call is three systems on three clocks: hours before, three seconds during, minutes after.

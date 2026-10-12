@@ -35,6 +35,16 @@ The sixty-second line: reduce cost by workflow, not across the board. Cache the 
 
 ---
 
+## Level calibration
+
+On this design the levels separate on how the right to act is earned and widened, not on how fluent the drafted reply is.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Verifies identity before any account tool, routes by intent and risk, grounds the draft in approved policy and live billing, and lets the deterministic tool policy gateway, not model confidence, decide on assurance, allowlist, threshold and freshness. Tiers latency at p95 under 3 s, 8 s and 15 s, and reconciles a timed-out refund against the ledger instead of retrying. | How the system earns the right to act: the rollout order, who signs off each tool class, and what proves customers were helped rather than work deflected. |
+| Staff | Launches agent-assist first, then narrow reversible intents, then one tool class at a time with a kill switch and rollback per intent. Gates release on safe automation rate, incorrect resolutions and repeat contact, with named owners: support operations for escalation, security and legal for each tool class, product for go/no-go. Answers "80 percent autonomy" by asking 80 percent of what. | What happens as customers and volume multiply: approval logic rewritten per deployment, the tenant predicate, regional policy variants, and cost per resolved case at 10× growth. |
+| Principal | Makes the trust boundary, escalation framework, safe tool-execution model and metrics pipeline a shared core, with thresholds and intents as configuration and CRM, ticketing and identity as adapters, so a new customer is wiring, not a consulting script. Plans 10× by partitioning retrieval and isolating escalation, and judges each expansion on NetValue, where wrong-resolution and recontact cost can outweigh the model bill. | The refund approval threshold, its policy owner and the intent-specific baseline for incorrect resolutions all come from the customer, so they wait for discovery. |
+
 ## Key Takeaways
 
 - The product is a routed decision pipeline that decides when to act, ask, or stop; the harm case, not the architecture, opens the round.

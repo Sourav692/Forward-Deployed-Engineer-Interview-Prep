@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T11:34:18.734Z",
+  "generatedAt": "2026-10-12T15:31:10.658Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -286,7 +286,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 79,
+              "minutes": 80,
               "updated": "2026-10-12"
             },
             {
@@ -327,7 +327,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 73,
+              "minutes": 75,
               "updated": "2026-10-12"
             },
             {
@@ -364,7 +364,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 61,
+              "minutes": 62,
               "updated": "2026-10-12"
             },
             {
@@ -449,7 +449,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 84,
+              "minutes": 86,
               "updated": "2026-10-12"
             },
             {
@@ -486,7 +486,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 73,
+              "minutes": 74,
               "updated": "2026-10-12"
             },
             {
@@ -560,7 +560,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 64,
+              "minutes": 65,
               "updated": "2026-10-12"
             },
             {
@@ -597,7 +597,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 53,
+              "minutes": 55,
               "updated": "2026-10-12"
             },
             {
@@ -634,7 +634,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 49,
+              "minutes": 51,
               "updated": "2026-10-12"
             },
             {
@@ -667,7 +667,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 45,
+              "minutes": 46,
               "updated": "2026-10-12"
             }
           ]
@@ -715,7 +715,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 73,
+              "minutes": 74,
               "updated": "2026-10-12"
             },
             {
@@ -756,7 +756,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 60,
+              "minutes": 61,
               "updated": "2026-10-12"
             },
             {
@@ -793,7 +793,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 50,
+              "minutes": 52,
               "updated": "2026-10-12"
             },
             {
@@ -826,7 +826,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 42,
+              "minutes": 43,
               "updated": "2026-10-12"
             },
             {
@@ -859,7 +859,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 46,
+              "minutes": 48,
               "updated": "2026-10-12"
             }
           ]
@@ -899,7 +899,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 44,
+              "minutes": 45,
               "updated": "2026-10-12"
             },
             {
@@ -940,7 +940,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 59,
+              "minutes": 60,
               "updated": "2026-10-12"
             },
             {
@@ -981,7 +981,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 62,
+              "minutes": 64,
               "updated": "2026-10-12"
             }
           ]
@@ -1021,7 +1021,7 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 44,
+              "minutes": 45,
               "updated": "2026-10-12"
             }
           ]
@@ -1045,8 +1045,8 @@
                   "label": "Reference Design"
                 }
               ],
-              "minutes": 18,
-              "updated": "2026-10-12"
+              "minutes": 17,
+              "updated": "2026-10-11"
             },
             {
               "slug": "travel-agent-worked-example",
@@ -1062,8 +1062,8 @@
                   "label": "12-Part Framework"
                 }
               ],
-              "minutes": 18,
-              "updated": "2026-10-12"
+              "minutes": 17,
+              "updated": "2026-10-11"
             },
             {
               "slug": "air-gapped-ai-system",
@@ -1111,7 +1111,7 @@
                   "label": "Tutorial 8"
                 }
               ],
-              "minutes": 86,
+              "minutes": 85,
               "updated": "2026-10-12"
             },
             {
@@ -1164,7 +1164,7 @@
                   "label": "Tutorial 9"
                 }
               ],
-              "minutes": 91,
+              "minutes": 90,
               "updated": "2026-10-12"
             },
             {
@@ -1209,7 +1209,7 @@
                   "label": "Tutorial 7"
                 }
               ],
-              "minutes": 82,
+              "minutes": 81,
               "updated": "2026-10-12"
             },
             {
@@ -1246,7 +1246,7 @@
                   "label": "Tutorial 5"
                 }
               ],
-              "minutes": 65,
+              "minutes": 63,
               "updated": "2026-10-12"
             },
             {
@@ -1271,7 +1271,7 @@
                   "label": "Answer Template"
                 }
               ],
-              "minutes": 47,
+              "minutes": 46,
               "updated": "2026-10-12"
             },
             {
@@ -1292,7 +1292,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 34,
+              "minutes": 32,
               "updated": "2026-10-12"
             },
             {
@@ -1317,7 +1317,7 @@
                   "label": "Interview Guide 4"
                 }
               ],
-              "minutes": 37,
+              "minutes": 35,
               "updated": "2026-10-12"
             }
           ]
@@ -1345,7 +1345,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 34,
+              "minutes": 33,
               "updated": "2026-10-12"
             },
             {
@@ -1366,7 +1366,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 34,
+              "minutes": 33,
               "updated": "2026-10-12"
             },
             {
@@ -1387,7 +1387,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 35,
+              "minutes": 34,
               "updated": "2026-10-12"
             },
             {
@@ -1408,7 +1408,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 37,
+              "minutes": 34,
               "updated": "2026-10-12"
             }
           ]

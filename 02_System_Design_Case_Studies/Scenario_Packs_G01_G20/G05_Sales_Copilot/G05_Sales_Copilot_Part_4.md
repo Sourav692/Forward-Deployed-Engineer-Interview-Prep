@@ -75,6 +75,16 @@ The weak answer is "the model is too creative, make the prompt stricter and ask 
 
 ---
 
+## Level calibration
+
+On this design the levels separate on how long the boundary around the brief holds, through territory changes, model upgrades and release gates, not on how well the brief reads.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Builds the brief on the calendar trigger as the rep, caches it on account plus permission signature and rechecks access at serve time. Sends counts and ID lookups to fixed CRM operations and prose to hybrid search, blocks unapproved claims and previews every CRM write. | The release proof: claim-level slices that gate on their own, what keeps the verifier in block mode, and who signs off each source and write tool. |
+| Staff | Adds a claim-level suite where regulated claims pass independently, so 96.7% over 120 cases cannot hide 83.3% on six, plus an online unsupported-claim monitor against baseline. Security owns the permission red team, and rollout runs from one CRM connector and three reps through shadow mode and a read-only pilot before drafts and write-back. | How the claim, pricing and permission contracts hold as tenants, sources and model routes multiply, and which writes ever earn a narrower automated route. |
+| Principal | Runs the approved-claims playbook, versioned pricing policy, CRM sharing mirror and model routes as control-plane releases, each with an owner, a canary and a rollback, so nobody quietly flips the verifier to warn-only again. Makes IdP group mapping, per-tenant keys and per-connection vault credentials the contract every new customer onboards through, and keeps the in-call assistant a separate G16 system. | The allowed snapshot staleness, the cost per workflow budget and whether a field such as last contacted ever earns auto-approval wait on the customer's pilot data and risk appetite. |
+
 ## Key Takeaways
 
 - The workflow is the pre-meeting hour, and its five outputs sit on three sides of a risk boundary: read-only, draft-only, approved write-back.

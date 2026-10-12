@@ -443,6 +443,27 @@ test('sequences: module pages and the Story Bank have prev and next', async ({ p
   await expect(page.getByRole('heading', { name: 'Objectives' })).toBeVisible()
 })
 
+// ENH-23: /design filters by theme, level and time; chips count, the URL keeps the choice.
+test('casebook filters: count, filter, survive a reload and clear', async ({ page }) => {
+  await page.goto('/design')
+  await hydrated(page)
+  const filters = page.getByRole('group', { name: 'Filter designs' })
+  const advanced = filters.getByRole('group', { name: 'Level' }).getByRole('button', { name: /^Advanced \(\d+\)$/ })
+  const n = Number((await advanced.textContent())!.match(/\((\d+)\)/)![1])
+  await advanced.click()
+  await expect(page).toHaveURL(/level=advanced/)
+  await expect(page.locator('#cases a[href^="/design/"]')).toHaveCount(n)
+  await page.reload()
+  await hydrated(page)
+  await expect(advanced).toHaveAttribute('aria-pressed', 'true')
+
+  await page.goto('/design?theme=model-development&level=foundation')
+  await hydrated(page)
+  await expect(page.getByText('No designs match these filters')).toBeVisible()
+  await page.getByRole('button', { name: 'Clear filters' }).click()
+  await expect(page).toHaveURL(/\/design$/)
+})
+
 // ENH-24a: diagrams fit their column at desktop and phone widths (PQ-13); one too wide
 // to read at that size opens at full size in a dialog that closes on Escape.
 for (const width of [1280, 390]) {
