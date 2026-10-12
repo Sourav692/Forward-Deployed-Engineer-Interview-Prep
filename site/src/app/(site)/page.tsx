@@ -1,16 +1,14 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { TextLink } from '@/components/areas/Area'
-import { LIVE, coverage } from '@/components/areas/data'
+import { siteCounts } from '@/components/areas/data'
 import { LinkButton } from '@/components/ui'
 import { PracticePreview } from '@/components/landing/PracticePreview'
 import { LearningJourney } from '@/components/landing/LearningJourney'
-import { getAllScenarios } from '@/lib/content'
-import { NAV, REVIEWS, SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
+import { NAV, SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
 import { pageMetadata, webSiteJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { ExpressLane } from '@/components/start/ExpressLane'
-import { learnTracks } from '@/lib/learn'
 
 /**
  * `/`: the product landing page (FE-13). A Server Component with two interactive
@@ -79,23 +77,19 @@ const DIFFERENT = [
 ]
 
 export default async function HomePage() {
-  const scenarios = await getAllScenarios()
-  const count = (moduleId: string) => scenarios.filter((s) => s.moduleId === moduleId).length
-  const cov = coverage()
-  // /learn lists only its own tracks; the interview track lives under /interview (FV-04).
-  const learnTrackCount = learnTracks().length
+  const counts = await siteCounts()
 
   const stats: { value: number; label: string }[] = [
-    { value: cov.byStatus.ready, label: 'modules ready' },
-    { value: cov.byStatus.partly, label: 'modules partly ready' },
-    { value: cov.byStatus['coming-soon'], label: 'modules coming soon' },
-    { value: cov.byStatus['on-hold'], label: 'modules on hold' },
+    { value: counts.byStatus.ready, label: 'modules ready' },
+    { value: counts.byStatus.partly, label: 'modules partly ready' },
+    { value: counts.byStatus['coming-soon'], label: 'modules coming soon' },
+    { value: counts.byStatus['on-hold'], label: 'modules on hold' },
   ]
   const material = [
-    `${count(LIVE.worksheets)} technical worksheets`,
-    `${count(LIVE.behavioural)} behavioural worksheets`,
-    `${count(LIVE.casebook)} worked system designs`,
-    `${REVIEWS.length} final-week reviews`,
+    `${counts.worksheets} technical worksheets`,
+    `${counts.behavioural} behavioural worksheets`,
+    `${counts.designs} worked system designs`,
+    `${counts.reviews} final-week reviews`,
   ]
 
   return (
@@ -119,9 +113,9 @@ export default async function HomePage() {
 
       <dl className="mt-10 grid grid-cols-3 gap-4 border-y border-border py-5 sm:mt-14">
         {[
-          { value: cov.byStatus.ready, label: 'ready curriculum modules' },
-          { value: count(LIVE.casebook), label: 'worked system designs' },
-          { value: count(LIVE.worksheets), label: 'technical worksheets' },
+          { value: counts.byStatus.ready, label: 'ready curriculum modules' },
+          { value: counts.designs, label: 'worked system designs' },
+          { value: counts.worksheets, label: 'technical worksheets' },
         ].map((item) => (
           <div key={item.label}>
             <dd className="text-2xl font-semibold tabular-nums sm:text-3xl">{item.value}</dd>
@@ -171,7 +165,7 @@ export default async function HomePage() {
 
       <LandingSection id="coverage" title="What Is Ready Today">
         <p className="max-w-3xl text-[0.9375rem] leading-relaxed text-muted">
-          The curriculum has {learnTrackCount} tracks in Learn and {cov.tracks - learnTrackCount} in Interview, {cov.modules} modules in all. Not all of them have material yet, and the
+          The curriculum has {counts.learnTracks} Learn tracks and the Interview area, {counts.modules} modules in all. Not all of them have material yet, and the
           site says so on every module page rather than hiding the gaps.
         </p>
         <dl className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">

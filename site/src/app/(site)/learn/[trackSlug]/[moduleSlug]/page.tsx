@@ -39,7 +39,7 @@ import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { moduleTag } from '@/lib/curriculum-href'
 
 /**
- * Module page (FE-07). Prerendered for all 53 modules (`generateStaticParams` +
+ * Module page (FE-07). Prerendered for every Learn module (`generateStaticParams` +
  * `dynamicParams = false`); the page is a Server Component and only the progress
  * pieces (status, prerequisite check, progress bar, confidence, notes) are islands.
  */
