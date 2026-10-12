@@ -3366,6 +3366,78 @@
       "updated": "2026-10-12"
     },
     {
+      "slug": "bank-policy-assistant-client-simulation",
+      "title": "Bank Policy Assistant Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/01_Bank_Policy_Assistant_Client_Simulation.md",
+      "estMinutes": 10,
+      "href": "/interview/mock-interviews/bank-policy-assistant-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "it-service-desk-agent-client-simulation",
+      "title": "IT Service Desk Agent Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/02_IT_Service_Desk_Agent_Client_Simulation.md",
+      "estMinutes": 10,
+      "href": "/interview/mock-interviews/it-service-desk-agent-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "grocery-forecast-explainer-client-simulation",
+      "title": "Grocery Forecast Explainer Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/03_Grocery_Forecast_Explainer_Client_Simulation.md",
+      "estMinutes": 9,
+      "href": "/interview/mock-interviews/grocery-forecast-explainer-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "saas-support-deflection-client-simulation",
+      "title": "SaaS Support Deflection Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/04_SaaS_Support_Deflection_Client_Simulation.md",
+      "estMinutes": 9,
+      "href": "/interview/mock-interviews/saas-support-deflection-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "prior-authorisation-packets-client-simulation",
+      "title": "Prior Authorisation Packets Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/05_Prior_Authorisation_Packets_Client_Simulation.md",
+      "estMinutes": 9,
+      "href": "/interview/mock-interviews/prior-authorisation-packets-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "contract-review-take-home-brief",
+      "title": "Contract Review Take-Home Brief",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/06_Contract_Review_Take_Home_Brief.md",
+      "estMinutes": 12,
+      "href": "/interview/mock-interviews/contract-review-take-home-brief",
+      "updated": "2026-10-12"
+    },
+    {
       "slug": "roadmap",
       "title": "Interview Learning Roadmap",
       "track": "interview-practice",
