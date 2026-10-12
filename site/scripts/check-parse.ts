@@ -160,6 +160,8 @@ async function checkReading(mod: {
       let diagrams = 0
       // Every tab is in the page's DOM at once, so an anchor id must be unique across tabs.
       const ids = new Set<string>()
+      // ENH-29: every design ends with what a Senior, Staff and Principal answer covers.
+      let calibrated = false
       for (const tab of tabs) {
         const label = `${track.id}/${slug}/${tab.id}`
         const raw = await readFile(join(CONTENT, 'modules', mod.id, track.id, slug, `${tab.id}.md`), 'utf8').catch(() => null)
@@ -179,6 +181,7 @@ async function checkReading(mod: {
         const titled = doc.sections.filter((x) => x.title).length
         if (titled === 0) failures.push(`${label}: no ## sections — the tab would have no contents list`)
         sections += titled
+        if (doc.sections.some((x) => x.title === 'Level calibration')) calibrated = true
         for (const section of doc.sections) {
           for (const chunk of section.chunks) {
             if (chunk.kind === 'diagram') {
@@ -196,6 +199,7 @@ async function checkReading(mod: {
           }
         }
       }
+      if (!calibrated) failures.push(`${track.id}/${slug}: no "## Level calibration" section on any tab`)
       diagramTotal += diagrams
       rows.push(`  ${`${track.id}/${slug}`.padEnd(52)} ${String(sections).padStart(3)} sec  ${diagrams} diagram(s)  (${tabs.length} tab${tabs.length === 1 ? '' : 's'})`)
     }
