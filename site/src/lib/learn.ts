@@ -14,6 +14,7 @@ import type {
   CurriculumTrack,
   LessonKind,
   PublishDecision,
+  Rights,
 } from './curriculum-types'
 import { parseReading, type ReadingDocument } from './reading'
 import { studyTime, type StudyTime } from './study-time'
@@ -46,6 +47,7 @@ export type LearnLesson = {
   publish: Exclude<PublishDecision, 'pending' | 'excluded'>
   source: string
   credit?: string
+  rights?: Rights
   estMinutes?: number
   /** Synced lessons: `YYYY-MM-DD` the source last changed, from git at sync time. */
   updated?: string

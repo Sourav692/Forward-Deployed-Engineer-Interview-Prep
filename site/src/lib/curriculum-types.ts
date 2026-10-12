@@ -16,6 +16,15 @@ export type TrackRequirement = 'yes' | 'no' | 'fde-path' | 'candidates'
  *  lessons are never written to site/content. */
 export type PublishDecision = 'own' | 'credited' | 'pending' | 'excluded'
 
+/**
+ * Whether a credited lesson may be published (ENH-28, owner decision 7):
+ * - `licensed`: a licence covers it;
+ * - `permitted`: the source allows it, or the lesson only summarises ideas in our own words;
+ * - `rewrite`: to be rewritten in our own words; it stays published until the rewrite lands,
+ *   then becomes `own` with no credit line.
+ */
+export type Rights = 'licensed' | 'permitted' | 'rewrite'
+
 /** `live`: already published elsewhere (a case, worksheet or Story Bank page), so Learn links
  *  to that page. `sync`: copied into content/learn by the Learn sync (DATA-02). */
 export type LessonKind = 'live' | 'sync'
@@ -103,6 +112,8 @@ export type CurriculumLesson = {
   publish: PublishDecision
   /** Credit line shown under the lesson when `publish` is `credited`. */
   credit?: string
+  /** Required with `credit`; shown on /library/credits. */
+  rights?: Rights
   /** Estimated reading time. Weights the module progress rollup when known. */
   estMinutes?: number
   /**

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getLearnManifest, getModuleBySlug, inlineHtml, learnHref, type LearnLesson } from '@/lib/learn'
+import type { Rights } from '@/lib/curriculum-types'
 import { pageMetadata } from '@/lib/seo'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { focusRing } from '@/components/ui'
@@ -8,8 +9,15 @@ import { focusRing } from '@/components/ui'
 /**
  * Credits (plan §12, SEC-05): every published lesson whose `publish` decision is
  * `credited`, grouped by its credit line, with links to the lesson and its module.
- * Built from the Learn manifest, so it lists exactly what the site publishes.
+ * Built from the Learn manifest, so it lists exactly what the site publishes. Each line
+ * shows its rights status as text (ENH-28, owner decision 7).
  */
+
+const RIGHTS: Record<Rights, string> = {
+  licensed: 'Licensed',
+  permitted: 'Permitted',
+  rewrite: 'Being rewritten in our own words',
+}
 
 export const metadata: Metadata = pageMetadata({
   path: '/library/credits',
@@ -17,7 +25,7 @@ export const metadata: Metadata = pageMetadata({
   description: 'The third-party books, guides and courses that credited lessons on Forward Deployed draw on, and where each one is used.',
 })
 
-type Group = { credit: string; lessons: LearnLesson[] }
+type Group = { credit: string; rights?: Rights; lessons: LearnLesson[] }
 
 function creditGroups(): Group[] {
   const groups = new Map<string, LearnLesson[]>()
@@ -28,7 +36,7 @@ function creditGroups(): Group[] {
     groups.set(lesson.credit, list)
   }
   return [...groups]
-    .map(([credit, lessons]) => ({ credit, lessons }))
+    .map(([credit, lessons]) => ({ credit, rights: lessons[0].rights, lessons }))
     .sort((a, b) => b.lessons.length - a.lessons.length || a.credit.localeCompare(b.credit))
 }
 
@@ -48,6 +56,13 @@ export default function CreditsPage() {
           {total} lessons draw on work by other authors. Each one carries its credit line under the lesson; this page
           collects them by source so you can see what each source contributes and where.
         </p>
+        <p className="mt-3 text-[0.9375rem] text-muted">
+          Each source shows its status: <strong className="font-semibold text-text">licensed</strong> (a licence
+          covers it), <strong className="font-semibold text-text">permitted</strong> (the source allows this use, or the
+          lessons only summarise its ideas in our own words) or{' '}
+          <strong className="font-semibold text-text">being rewritten in our own words</strong> (the lessons stay up
+          until their rewrite is published).
+        </p>
       </header>
 
       <div className="flex max-w-3xl flex-col gap-6">
@@ -59,6 +74,12 @@ export default function CreditsPage() {
             />
             <p className="mt-1 text-[0.8125rem] text-subtle">
               {group.lessons.length} {group.lessons.length === 1 ? 'lesson' : 'lessons'}
+              {group.rights && (
+                <>
+                  {' · '}
+                  <span className="font-semibold text-text">Status: {RIGHTS[group.rights]}</span>
+                </>
+              )}
             </p>
             <ul className="mt-3 flex flex-col gap-1.5">
               {group.lessons.map((lesson) => {
