@@ -47,6 +47,16 @@ Repair the common weak answers on the spot. "The answer is correct, so the citat
 
 ---
 
+## Level calibration
+
+On this design the levels separate on which checks an answer treats as release gates rather than quality knobs, not on how fluent the draft reads.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Keeps the copilot a drafter: a small model extracts typed fields on every page, deterministic compare flags gaps, and the strong LLM drafts only flagged cases. Pulls the payer rule in force on the date of service, fails closed on any span mismatch, and routes material cases to a named clinician. | The gates that prove it: a coverage gate that fails a table-heavy PDF instead of warning, and a citation gate kept apart from groundedness, since 0.91 groundedness hid 0.38 citation accuracy. |
+| Staff | Adds the parser coverage gate on high-risk policies and separate datasets for extraction, citation span accuracy, escalation and PHI leaks, with Security owning the zero-violation red-team suite. Rolls out shadow, then read-only pilot, then one low-risk category, with regression tests on parser releases and a rollback for citation-generator releases. | What happens as personas and sources multiply: who owns rule versions across payers, regulations and playbooks, and whether cost per true issue holds if the flagged fraction grows. |
+| Principal | Makes the spine a platform: one control plane of rule versions, extraction schemas, risk tiers and eval gates that prior authorisation, compliance and contracts plug into by swapping schema, rule and approver. Treats every parser, chunker or citation change as a release gated on offline eval, and keeps adjudication out until evaluation and governance earn it. | The false-positive budget, per-field extraction bars and which PHI may reach the model provider depend on each customer's reviewers and contracts, so they wait for discovery. |
+
 ## Key Takeaways
 
 - The copilot drafts and explains; a named human decides, and every component exists to keep that boundary.
