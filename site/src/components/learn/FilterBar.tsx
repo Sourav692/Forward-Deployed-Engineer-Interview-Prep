@@ -14,10 +14,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { trackProgress } from '@/lib/progress/store'
 import { useProgress } from '@/lib/progress/useProgress'
-import { Button, EmptyState, cx, focusRing } from '@/components/ui'
+import { Button, EmptyState } from '@/components/ui'
 import { COPY } from './copy'
+import { ChipGroup, type ChipOption as Option } from './ChipGroup'
 
-type Option = { value: string; label: string }
 
 const REQ: Option[] = [
   { value: '', label: 'All' },
@@ -96,34 +96,6 @@ export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: 
   )
 }
 
-/** A labelled set of toggle chips. Each chip is a button with `aria-pressed`. */
-function ChipGroup({ label, options, value, onChange }: { label: string; options: Option[]; value: string; onChange: (v: string) => void }) {
-  return (
-    <div role="group" aria-label={label} className="flex flex-wrap items-center gap-1.5">
-      <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-subtle" aria-hidden="true">
-        {label}
-      </span>
-      {options.map((o) => {
-        const active = o.value === value
-        return (
-          <button
-            key={o.value || 'all'}
-            type="button"
-            aria-pressed={active}
-            onClick={() => onChange(o.value)}
-            className={cx(
-              'rounded-full border px-3 py-1 text-sm transition-colors duration-150',
-              active ? 'border-accent bg-accent-soft font-semibold text-accent' : 'border-border-strong text-muted hover:bg-surface-2 hover:text-text',
-              focusRing,
-            )}
-          >
-            {o.label}
-          </button>
-        )
-      })}
-    </div>
-  )
-}
 
 /** The grid shown before the island hydrates (and to crawlers): every track, no filters. */
 export function StaticTrackGrid({ items }: { items: TrackItem[] }) {
