@@ -1,8 +1,4 @@
-# Case 4 — AI-Powered Recruiting Platform
-
-> **Level** 🔴 Design Mastery · **Module** 09 · **Doc** 4 of 6 · **Time** ~30 min
-> **Prerequisites:** Module 02, Module 04 doc 7 (judges), Module 05 doc 5 (human approval)
-> **Source material:** AI Powered Recruiting Platform Design
+# AI-Powered Recruiting Platform: Casebook
 
 ## The prompt
 

@@ -1,8 +1,6 @@
-# Worked Example — The Travel Agent
+# The Travel Agent: Worked Example
 
-> **Level** 🟢 Foundations · **Module** 02 · **Doc** 4 of 5 · **Time** ~30 min
-> **Prerequisites:** [The 12-Part Framework](../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/01_The_12_Part_Framework.md), [The 15 Principles](../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/02_The_15_Principles.md)
-> **Source material:** [System Design Overview](../../../01_Concept_Tutorials/System_Design_Fundamentals/1.%20System%20Design%20Overview.md)
+> **Before this:** [The Twelve-Part Design Framework](../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/01_The_Twelve_Part_Design_Framework.md) and [Design Principles as Tie-Breakers](../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md)
 
 ## Why this matters
 

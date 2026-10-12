@@ -1,8 +1,6 @@
-# Worked Example — The Travel Agent
+# The Travel Agent: Worked Example
 
-> **Level** 🟢 Foundations · **Module** 02 · **Doc** 4 of 5 · **Time** ~30 min
-> **Prerequisites:** The 12-Part Framework, The 15 Principles
-> **Source material:** System Design Overview
+> **Before this:** The Twelve-Part Design Framework and Design Principles as Tie-Breakers
 
 ## Why this matters
 
