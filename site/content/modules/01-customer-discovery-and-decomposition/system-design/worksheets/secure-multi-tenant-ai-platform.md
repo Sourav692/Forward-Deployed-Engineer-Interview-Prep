@@ -1,14 +1,14 @@
 # Secure Multi-Tenant AI Platform - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for a **Secure Multi-Tenant AI Platform**: one application serving 500 enterprise tenants with isolation, predictable performance, and regional controls. The dangerous failure is a missing tenant predicate.
+As the FDE, design a GenAI **Secure Multi-Tenant AI Platform**. A single application serves 500 enterprise tenants. Each one needs its data kept apart, steady performance, and control over the region its data lives in. The failure to fear most is a query that runs without its tenant predicate.
 
 ## 2. Clarify the customer problem
-- Which data classes are in scope, and which are excluded?
-- Are regional controls hard requirements or customer exceptions?
-- Does "predictable performance" mean latency, throughput, or fairness?
-- Which tenants may share infrastructure, and which need dedicated?
-- What evidence do auditors need to prove isolation?
+- Which classes of data are in scope, and which are out?
+- What proof of isolation will auditors ask for?
+- Is regional placement a hard rule, or an exception a few customers ask for?
+- When they say "predictable performance", do they mean latency, throughput or fair sharing?
+- Which tenants can run on shared infrastructure, and which must have their own?
 
 ## 3. Users and workflows
 | User | Workflow | Current pain | AI assist opportunity | Human approval needed? |
@@ -37,7 +37,7 @@ Design a GenAI FDE solution for a **Secure Multi-Tenant AI Platform**: one appli
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Use one of the rendered diagrams as a base, then customise:
+Pick a rendered diagram as your starting point and adapt it to this case. Cover each part below:
 - Identity and tenant context:
 - Policy and region:
 - Quota and admission:
@@ -48,37 +48,37 @@ Use one of the rendered diagrams as a base, then customise:
 ## 7. Evaluation plan
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
-| Cross-tenant incidents | 0 | > 0 | Audit logs, incidents | Security |
-| Isolation-test pass rate | Full pass | Any failure | Adversarial suite | Security eng |
-| Per-tenant p95 latency | Within SLO | Sustained breach | Telemetry by tenant | SRE |
-| Cost per tenant | Within band | Above band | Billing by usage | Finance/platform |
+| Cross-tenant incidents | None | One or more | Incident records and audit logs | Security team |
+| Isolation-test pass rate | Every test passes | A single failure | Attack-style isolation suite | Security engineering |
+| Per-tenant p95 latency | Inside the SLO | Stays over the SLO | Request telemetry split by tenant | SRE |
+| Cost per tenant | Inside the expected band | Over the band | Usage-based billing data | Finance and platform |
 
 ## 8. Failure modes
-- Missing tenant predicate on a query
-- Cache key omits tenant id
-- Shared queue leaks payload metadata
-- Vector index surfaces a neighbour
-- One tenant exhausts shared quota
-- Regional outage or misrouted traffic
+- A query runs with no tenant predicate
+- A cache key leaves out the tenant id
+- Payload metadata leaks through a shared queue
+- Vector search returns a neighbouring tenant's content
+- One tenant uses up the shared quota
+- A region fails, or traffic lands in the wrong region
 
 ## 9. Rollout plan
-1. Internal test tenants only.
-2. Adversarial isolation suite; failure halts.
-3. Small shared tenants, tight quotas.
-4. Validate latency, cost, support.
-5. Dedicated tier on thresholds.
-6. Monitor incidents and failover drills.
+1. Begin with internal test tenants and nobody else.
+2. Run the adversarial isolation suite; a failure stops progress.
+3. Admit a few small shared tenants on tight quotas.
+4. Check latency, cost and support load.
+5. Offer the dedicated tier only when thresholds justify it.
+6. Watch incidents and rehearse failover.
 
 ## 10. Weak vs strong answer
-**Weak:** "I'd put tenant_id on every row and add row-level security."
+**Weak:** "I'd add a tenant_id column to every table and switch on row-level security."
 
-**Strong:** "I'd derive immutable tenant context from verified identity, split control plane from data plane, enforce isolation independently at row, object, cache, queue, log, vector and key layers, fail closed on a missing predicate, and gate rollout on an adversarial isolation suite."
+**Strong:** "I'd take tenant context from verified identity and freeze it. I'd keep the control plane apart from the data plane. Row, object, cache, queue, log, vector and key layers would each enforce isolation on their own. A missing predicate fails closed, and no rollout stage passes without the adversarial isolation suite."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |
 |---|---|---|---|---|
-| Problem framing | Jumps to tools | Some tenants/metrics | Shared default, exception path |  |
-| Architecture | Generic services | Reasonable components | Control/data split, fail-closed |  |
-| Evaluation | Vague isolation | Basic tests | Adversarial suite as gate |  |
-| Production thinking | Demo only | Some monitoring | Blast radius, rollback, drills |  |
-| Communication | Technical dump | Mostly clear | Outcome and risk first |  |
+| Problem framing | Starts with tools | Names some tenants and metrics | Shares by default; clear path for exceptions |  |
+| Architecture | Generic service boxes | Sensible components | Splits control and data planes; fails closed |  |
+| Evaluation | Isolation left vague | A few basic tests | Adversarial suite used as a gate |  |
+| Production thinking | Stops at the demo | Some monitoring | Limits blast radius; rollback and drills |  |
+| Communication | Dumps technical detail | Mostly clear | Opens with outcome and risk |  |

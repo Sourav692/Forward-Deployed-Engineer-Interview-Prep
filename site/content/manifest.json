@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T10:35:38.418Z",
+  "generatedAt": "2026-10-12T13:12:05.911Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -90,85 +90,85 @@
               "slug": "enterprise-knowledge-assistant-rag",
               "order": 1,
               "title": "Enterprise Knowledge Assistant with RAG",
-              "minutes": 3,
-              "updated": "2026-10-04"
+              "minutes": 4,
+              "updated": "2026-10-12"
             },
             {
               "slug": "secure-multi-tenant-ai-platform",
               "order": 2,
               "title": "Secure Multi-Tenant AI Platform",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             },
             {
               "slug": "natural-language-to-sql-analytics-assistant",
               "order": 3,
               "title": "Natural-Language-to-SQL Analytics Assistant",
-              "minutes": 3,
-              "updated": "2026-10-04"
+              "minutes": 4,
+              "updated": "2026-10-12"
             },
             {
               "slug": "ai-customer-support-automation",
               "order": 4,
               "title": "AI Customer-Support Automation",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             },
             {
               "slug": "ai-system-for-an-air-gapped-environment",
               "order": 5,
               "title": "AI System for an Air-Gapped Environment",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             },
             {
               "slug": "llm-evaluation-and-release-gating-platform",
               "order": 6,
               "title": "LLM Evaluation and Release-Gating Platform",
-              "minutes": 3,
-              "updated": "2026-10-04"
+              "minutes": 4,
+              "updated": "2026-10-12"
             },
             {
               "slug": "high-volume-batch-inference-system",
               "order": 7,
               "title": "High-Volume Batch Inference System",
-              "minutes": 3,
-              "updated": "2026-10-04"
+              "minutes": 4,
+              "updated": "2026-10-12"
             },
             {
               "slug": "tool-using-ai-agent-with-safety-controls",
               "order": 8,
               "title": "Tool-Using AI Agent with Safety Controls",
-              "minutes": 3,
-              "updated": "2026-10-04"
+              "minutes": 4,
+              "updated": "2026-10-12"
             },
             {
               "slug": "reliable-workflow-orchestration-system",
               "order": 9,
               "title": "Reliable Workflow Orchestration System",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             },
             {
               "slug": "observability-customer-facing-ai-application",
               "order": 10,
               "title": "Observability for a Customer-Facing AI Application",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             },
             {
               "slug": "configurable-platform-customer-specific-workflows",
               "order": 11,
               "title": "Configurable Platform for Customer-Specific Workflows",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             },
             {
               "slug": "enterprise-chatbot-platform",
               "order": 12,
               "title": "Enterprise Chatbot Platform",
               "minutes": 3,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             }
           ]
         }
@@ -1111,7 +1111,7 @@
                   "label": "Tutorial 8"
                 }
               ],
-              "minutes": 85,
+              "minutes": 87,
               "updated": "2026-10-12"
             },
             {
@@ -1164,7 +1164,7 @@
                   "label": "Tutorial 9"
                 }
               ],
-              "minutes": 90,
+              "minutes": 92,
               "updated": "2026-10-12"
             },
             {
@@ -1209,7 +1209,7 @@
                   "label": "Tutorial 7"
                 }
               ],
-              "minutes": 81,
+              "minutes": 82,
               "updated": "2026-10-12"
             },
             {
@@ -1246,7 +1246,7 @@
                   "label": "Tutorial 5"
                 }
               ],
-              "minutes": 63,
+              "minutes": 65,
               "updated": "2026-10-12"
             },
             {

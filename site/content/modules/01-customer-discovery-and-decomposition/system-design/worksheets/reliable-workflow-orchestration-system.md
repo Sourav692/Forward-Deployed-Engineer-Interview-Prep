@@ -1,14 +1,14 @@
 # Reliable Workflow Orchestration System - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for a **Reliable Workflow Orchestration System**: coordinate approval, payment, email, and three internal systems when any step may fail or wait days. Exactly once means the business effect.
+Design a GenAI FDE solution for a **Reliable Workflow Orchestration System**. One business process spans a document approval, a payment, an email and three internal systems, and any step can fail or sit waiting for days. Here, "exactly once" refers to the business outcome, not to individual messages.
 
 ## 2. Clarify the customer problem
-- What event means the workflow actually succeeded?
-- Which failures need rollback, and which need compensation?
-- Which steps may wait minutes, hours, or days?
-- Who is authorised to resume, re-run, or override a case?
-- Does the payment provider support idempotency keys?
+- Which event tells us a workflow has truly finished?
+- When a step fails, do we undo it or run a compensating action?
+- How long can each step wait: minutes, hours or days?
+- Who has authority to resume, rerun or override a single case?
+- Will the payment provider accept an idempotency key?
 
 ## 3. Users and workflows
 | User | Workflow | Current pain | AI assist opportunity | Human approval needed? |
@@ -37,7 +37,7 @@ Design a GenAI FDE solution for a **Reliable Workflow Orchestration System**: co
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Use one of the rendered diagrams as a base, then customise:
+Start from one of the rendered diagrams and adapt it to this case:
 - Durable state and history:
 - Scheduling:
 - Timers and signals:
@@ -48,37 +48,37 @@ Use one of the rendered diagrams as a base, then customise:
 ## 7. Evaluation plan
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
-| Duplicate effects | 0 | Any duplicate | Idempotency logs | Reliability |
-| Replay determinism | Identical decisions | Any divergence | Replay test jobs | Runtime eng |
-| Stuck workflow age | Within expected wait | Beyond threshold | Queue inspection | Operations |
-| Manual repair count | Within tolerance | Above tolerance | Operator tickets | Support ops |
+| Duplicate business effects | 0 | Even one repeat | Idempotency key logs | Reliability team |
+| Replay determinism | Same decisions on every replay | One divergent decision | Replay jobs over stored history | Runtime engineering |
+| Age of stuck workflows | Inside the expected wait | Past the agreed limit | Queue and state inspection | Operations |
+| Manual repairs | Inside agreed tolerance | Over tolerance | Operator ticket records | Support operations |
 
 ## 8. Failure modes
-- Worker crashes after payment succeeds
-- Email succeeds but CRM update fails
-- Approval waits seven days
-- Definition changes while instances run
-- External API times out indefinitely
-- Two workers advance the same instance
+- A worker dies just after the payment goes through
+- The email sends but the CRM write fails
+- An approval sits untouched for seven days
+- A new definition ships while old instances still run
+- An external API never returns
+- Two workers try to move the same instance forward
 
 ## 9. Rollout plan
-1. One workflow, not a platform.
-2. Gate on crash recovery.
-3. Prove no duplicate effects.
-4. Build operator visibility.
-5. Rehearse resume and compensate.
-6. Version instead of mutating.
+1. Start with a single workflow; skip the platform.
+2. Make crash recovery the first gate.
+3. Show that no side effect happens twice.
+4. Give operators visibility early.
+5. Practise resume and compensation drills.
+6. Publish new versions; never edit live ones.
 
 ## 10. Weak vs strong answer
-**Weak:** "I'd build an orchestrator that calls each API in sequence with retries."
+**Weak:** "I'd write an orchestrator that calls each API one after another and retries when something fails."
 
-**Strong:** "I'd make it exactly once at the business-effect level: append-only history recording intent before execution, receipts keyed by idempotency key, waiting as a first-class timer state, compensation per step, and a pinned definition version per instance."
+**Strong:** "I'd guarantee exactly once for the business effect. An append-only history writes the intent before each step runs. Receipts are stored by idempotency key. Waiting is a proper timer state. Every step has its own compensation. Each instance stays pinned to the definition version it started on."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |
 |---|---|---|---|---|
-| Problem framing | Needs an orchestrator | Names steps | Exactly once, business effect |  |
-| Architecture | API chain | Durable state | Timers, signals, compensation |  |
-| Evaluation | "It completed" | Failures tracked | Duplicates, replay determinism |  |
-| Production thinking | Build platform | Pilot one process | Crash gate, operator repair |  |
-| Communication | Describes engine | Mostly clear | Double-charge case first |  |
+| Problem framing | "We need an orchestrator" | Lists the steps | Exactly once for the business outcome |  |
+| Architecture | Calls APIs in a chain | Keeps durable state | Timers, signals, per-step compensation |  |
+| Evaluation | "It finished" | Counts failures | Duplicates and replay determinism |  |
+| Production thinking | Builds a platform first | Pilots one process | Crash-recovery gate, operator repair |  |
+| Communication | Walks through the engine | Mostly clear | Opens with the double-charge case |  |

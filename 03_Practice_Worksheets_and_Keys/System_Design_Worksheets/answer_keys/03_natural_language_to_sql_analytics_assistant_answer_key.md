@@ -1,99 +1,99 @@
 # Natural-Language-to-SQL Analytics Assistant - Answer Key
 
-This answer key is designed for interview preparation. It shows what a strong GenAI FDE candidate should ask, design, evaluate, secure, and communicate before moving from demo to production.
+Try the worksheet before you read this key. Use it to see how a strong GenAI FDE candidate questions, designs, measures, secures and explains a system as it moves from demo to production.
 
 ## Strong discovery questions
-- Who owns each metric definition, how often do definitions change, and who approves a change?
-- Is there already a semantic layer or metrics catalogue, or must this system build one from scratch?
-- Which SQL dialects and warehouses are in scope, since dialect breadth changes generation and validation?
-- What is the tolerance for latency versus cost, and can queries run synchronously or must they be async and cached?
-- Is row-level and column-level security already enforced by the warehouse, or would the assistant have to reimplement it?
-- What should happen when the assistant is unsure: ask a clarifying question, refuse, or escalate to an analyst?
-- Which ten metrics matter most, and what does "revenue" actually mean — booked, recognised, or collected?
-- What audit evidence must exist so someone can reconstruct why a given number was produced?
+- For each metric, who owns the definition, who signs off a change, and how often do changes happen?
+- Do we already have a semantic layer or a metrics catalogue? If not, building one becomes part of the job.
+- Which warehouses and SQL dialects must we support? Every extra dialect widens both generation and validation.
+- How do we weigh latency against cost? Can a query answer inline, or does it have to run async behind a cache?
+- Does the warehouse already enforce row-level and column-level security, or would the assistant end up rebuilding it?
+- When the assistant is not sure, what should it do: ask a clarifying question, refuse, or hand the question to an analyst?
+- Which ten metrics matter most? And does "revenue" mean booked, recognised or collected?
+- If someone later asks why a number came out the way it did, what evidence must we be able to show them?
 
 ## Strong functional requirements
-- Support the core workflow: take a natural-language question, resolve it against a governed metric, generate dialect-specific SQL, validate it, execute read-only, and return the answer with its SQL and lineage.
-- Consult the semantic metric registry before touching physical tables, so the answer anchors on an approved definition.
-- Retrieve only the tables, joins, and freshness context needed, never exposing the whole warehouse schema.
-- Detect ambiguity and ask a clarifying question rather than silently choosing one of several plausible metrics.
-- Parse candidate SQL into an AST and enforce policy against the tree, not against raw text.
-- Return the result together with the exact SQL, metric lineage, and caveats such as snapshot staleness.
+- Core workflow: accept a question in plain language, map it to a governed metric, write SQL for the right dialect, validate it, run it read-only, and send back the answer with its SQL and lineage.
+- Look up the semantic metric registry first. Physical tables come later, so every answer rests on an approved definition.
+- Pull in just the tables, joins and freshness details the question needs. The full warehouse schema is never exposed.
+- When a question is ambiguous, ask. Never pick one of several plausible metrics without telling the user.
+- Turn the candidate SQL into an AST and apply policy to that tree. Raw text is not what gets checked.
+- Hand back the exact SQL, the metric lineage and any caveats, such as a stale snapshot, alongside the result.
 
 ## Strong non-functional requirements
-- Correctness: a fast, confidently wrong answer is the worst possible outcome, so trade latency for safety every time.
-- Latency: keep the user-facing path synchronous; anything that only improves future answers moves to background queues.
-- Security: a read-only identity that can reach only approved datasets, with warehouse-native row and column policies reused rather than reimplemented.
-- Compliance: append-only query runs recording actor, SQL hash, policy decision, bytes scanned, and the schema and metric versions used.
-- Reliability: fail closed on policy evaluation, planner timeouts, and suspicious scan volume; degrade on formatting or explanation failures.
-- Cost: enforce scan budgets, row limits, timeouts, and bounded date windows, because an unbounded query is a reliability problem, not just a bill.
+- Correctness: nothing is worse than a quick answer that is confidently wrong. Whenever speed and safety conflict, safety wins.
+- Latency: the path the user waits on stays synchronous. Work that only helps later answers goes onto background queues.
+- Security: run under a read-only identity limited to approved datasets. Reuse the warehouse's own row and column policies instead of writing new ones.
+- Compliance: log each run once and never edit it. The entry names who asked, hashes the SQL, notes the policy decision and the bytes scanned, and pins the schema and metric versions used.
+- Reliability: if policy evaluation fails, the planner times out or the scan volume looks suspicious, fail closed. If only formatting or the explanation breaks, degrade gracefully.
+- Cost: every query gets a scan budget, a row cap, a timeout and a bounded date window. A query with no bounds threatens reliability, not only the invoice.
 
 ## Architecture explanation
-- The user question reaches the query API, which authenticates the caller and resolves entitlements before any planning begins.
-- The semantic metric registry is consulted first, so "revenue last week" anchors on the governed definition rather than whatever table looks relevant.
-- The schema retriever pulls only the tables, joins, and freshness needed, backed by a cache with TTLs and version stamps so the system can explain what it used.
-- If the question maps to multiple metrics or grains, the ambiguity check stops and asks, because valid SQL against the wrong definition is still a failure.
-- The SQL generator produces dialect-specific SQL from the narrowed context only, never freewheeling across the full catalogue.
-- The candidate SQL is parsed into an AST and inspected by the policy validator, which rejects writes, unbounded cross joins, unauthorised tables, and budget violations.
-- Approved queries get a cost estimate, timeout, and row limit, then run through a read-only execution gateway holding the narrowest possible credentials.
-- The result summariser returns rows, the exact SQL, lineage, and caveats; entitlement and policy are re-checked at execution, not only at planning.
+- A question first hits the query API. It authenticates the caller and works out their entitlements before planning starts.
+- The semantic metric registry comes next. "Revenue last week" then resolves to the governed definition, not to whichever table looks closest.
+- The schema retriever fetches only the tables, joins and freshness the question needs. A cache with TTLs and version stamps sits behind it, so the system can say exactly what it used.
+- Next comes the ambiguity check. If the question fits more than one metric or grain, the flow pauses and asks, because correct SQL on the wrong definition still fails the user.
+- The SQL generator writes dialect-specific SQL using that narrowed context alone. It never roams the whole catalogue.
+- The policy validator inspects the candidate SQL as an AST. It blocks writes, unbounded cross joins, unauthorised tables and anything over budget.
+- Each approved query receives a cost estimate, a timeout and a row limit. A read-only execution gateway with the tightest credentials possible then runs it.
+- Entitlements and policy are checked again at execution, not only during planning. The result summariser returns the rows, the exact SQL, the lineage and the caveats.
 
 ## Data model / integration assumptions
 - Metric(id, name, definition, dimensions, owner, version); SchemaAsset(id, engine, object, columns, sensitivity); QueryRun(id, actor, sql_hash, policy_decision, bytes_scanned, result_ref).
-- Assume Metric versions are retained long enough to reconstruct why last quarter's dashboard produced a different number than today's.
-- Assume QueryRun is write-once and append-only, since query history is the first place incident review and adoption analysis start.
-- Assume every artifact that influences behaviour is versioned — metric definitions, schema snapshots, policy bundles, generated plans — or the system works in the happy path and fails at rollout.
-- Assume idempotency keys on question submission and feedback, and optimistic concurrency on metric edits, so one team cannot silently overwrite another team's definition.
+- We keep old Metric versions long enough to explain why last quarter's dashboard showed a different number from today's.
+- A QueryRun row is written once and only ever appended to. Incident reviews and adoption analysis both begin with query history.
+- Anything that shapes behaviour carries a version: definitions of metrics, snapshots of the schema, generated plans, policy bundles. Without that, the happy path works and the rollout breaks.
+- Question submissions and feedback carry idempotency keys. Metric edits use optimistic concurrency, so no team can overwrite another team's definition without noticing.
 
 ## Red-team risks
-- valid SQL answering the wrong business question, stale schema, join fan-out inflating totals, runaway scans, summary contradicting the table
-- Semantic substitution, where the assistant quietly uses login activity for "active customers" when the approved definition requires paid activity.
-- Schema drift, where a renamed table or shifted join key makes a previously good template produce something that still looks reasonable.
-- Join explosions that multiply rows and inflate totals while remaining syntactically valid and passing every SQL check.
-- Excessive scans that exhaust warehouse concurrency, slow other tenants, and drive an unexpected bill before anyone notices.
-- Summary drift, where the table is right but the prose misstates the trend — dangerous because executives read the prose, not the rows.
+- right SQL for the wrong business question, outdated schema, join fan-out that inflates totals, scans that run away, prose that disagrees with the table
+- Semantic substitution: asked for "active customers", the assistant counts logins, although the approved definition needs paid activity.
+- Schema drift: a table gets renamed or a join key moves, and a template that used to work now returns output that still looks plausible.
+- Join explosions: rows multiply and totals swell, yet the query is valid and clears every SQL check.
+- Excessive scans: one heavy query uses up warehouse concurrency, slows other tenants and runs up a surprise bill before anyone spots it.
+- Summary drift: the rows are correct but the prose gets the trend wrong. Executives read the prose, not the rows, which makes this one dangerous.
 
 ## Rollout plan
-- Week 0-1: pick ten governed metrics with stable definitions, known owners, and visible business impact; document non-goals.
-- Week 1-2: document metric definitions, review query templates, and confirm the assistant can explain which metric it used and why.
-- Week 2-3: build golden cases pairing question, approved SQL, and expected result shape, including ambiguous paraphrases and known traps.
-- Week 3-4: run the golden set on every change, comparing execution accuracy and semantic correctness, and explain every failure.
-- Week 5: shadow analysts on real questions while users still see the analyst's answer as the source of truth.
-- Week 6-8: release to executives only once the assistant consistently matches analyst-reviewed answers and escalation works.
-- After pilot: expand domain by domain, each with a named metric owner who approves definitions and owns semantic-layer changes.
+- Week 0-1: choose ten governed metrics whose definitions are stable, whose owners are known and whose business impact is visible. Write down the non-goals.
+- Week 1-2: write up the metric definitions, review the query templates, and check that the assistant can say which metric it picked and why.
+- Week 2-3: assemble golden cases, each pairing a question with approved SQL and the expected result shape. Include ambiguous paraphrases and known traps.
+- Week 3-4: each change triggers a full golden-set replay. Score semantic correctness next to execution accuracy, and find the cause of every failure.
+- Week 5: run in shadow beside analysts on real questions. For users, the analyst's answer stays the one that counts.
+- Week 6-8: open it to executives only when the assistant reliably agrees with analyst-reviewed answers and escalation works.
+- After pilot: grow one domain at a time. Each domain gets a named metric owner who approves its definitions and owns its semantic-layer changes.
 
 ## Evaluation plan
-These are thresholds I'd set for this case, not industry standards. Defend them, don't quote them.
+I'd set these thresholds for this case. They are not industry standards, so be ready to defend them rather than quote them.
 
 | Metric | What it proves | Strong threshold | Dataset / method |
 |---|---|---|---|
-| Semantic correctness | The answer matches the governed business definition | Consistently matches analyst review on scope | Golden question/SQL/result cases |
-| Execution accuracy | The generated SQL runs and returns the right shape | No unexplained regression on the golden set | Golden-set replay on every change |
-| Policy violations | No query escaped the safety boundary | Zero escaped; investigate repeated blocks | Policy decisions in query-run audit |
-| Bytes scanned per answer | Cost stays bounded per governed question | No 20% rise over the 7-day baseline | Warehouse query telemetry |
-| User trust score | Users rely on answers rather than re-checking them | At or above the launch target, not declining | In-product rating and periodic survey |
-| p95 latency and escalation volume | The workflow actually improved for analysts | Within target; escalations trending down | Request traces plus analyst ticket counts |
+| Semantic correctness | Answers follow the governed business definition | Agrees with analyst review on scope, consistently | Golden question/SQL/result cases |
+| Execution accuracy | The SQL executes and the result has the expected shape | No regression on the golden set that we cannot explain | Golden-set replay on each change |
+| Policy violations | Nothing got past the safety boundary | Zero escapes; repeated blocks get investigated | Policy decisions from the query-run audit |
+| Bytes scanned per answer | Each governed question has a bounded cost | Never 20% above the 7-day baseline | Warehouse query telemetry |
+| User trust score | People act on answers instead of checking them again | Meets the launch target and is not falling | In-product rating and a periodic survey |
+| p95 latency and escalation volume | Analysts really are better off | Inside target, with escalations falling | Request traces and analyst ticket counts |
 
 ## Weak answer
-I would let an LLM write SQL against the warehouse schema and run it. This is weak because generation is not the hard part — it ignores who owns metric definitions, allows an unapproved reading of "revenue," and has no AST validation, cost bound, or way to notice a confidently wrong answer.
+I'd point an LLM at the warehouse schema, let it write SQL, and execute whatever comes back. That is weak, because writing SQL is the easy part. Nobody owns the metric definitions, an unapproved reading of "revenue" slips through, and there is no AST validation, no cost limit and no way to catch an answer that is confidently wrong.
 
 ## Average answer
-I would use a semantic layer for metric definitions, generate SQL from it, validate the query before running it, and execute with a read-only account and row limits. I would log every query. This is better, but still incomplete because it does not say what happens when the question is ambiguous, when schema drifts, or when the prose summary disagrees with the table it supposedly describes.
+I'd put metric definitions in a semantic layer, generate SQL from it, validate each query before it runs, and execute under a read-only account with row limits. I'd log every query. That is an improvement, but gaps remain. It never says what happens with an ambiguous question, what happens when the schema drifts, or what happens when the written summary contradicts the table underneath it.
 
 ## Strong answer
-I would reframe this from building a text-to-SQL model to building a governed decision-support system that only speaks in terms the business already agreed to. The metric registry is consulted before any physical table, ambiguity triggers a clarifying question rather than a guess, and generated SQL is parsed into an AST and checked against policy and a scan budget before a read-only gateway ever sees it. Entitlements are re-checked at execution. I would prove it on ten governed metrics with golden cases pairing question, approved SQL, and expected result, then shadow analysts before any executive sees an answer. The key is not generating SQL, but guaranteeing that valid SQL can never quietly answer the wrong business question.
+I'd stop calling this a text-to-SQL model. It's a governed decision-support system, and it only uses terms the business has already signed off. The metric registry comes before any physical table. An ambiguous question gets a clarifying question back, not a guess. Generated SQL becomes an AST and must pass policy and a scan budget before the read-only gateway sees it, and entitlements get checked again at execution. The proof is ten governed metrics, each with golden cases: a question, its approved SQL, the result we expect. Analysts get shadowed before an executive ever reads an answer. Producing SQL is the easy bit. The hard part is making sure valid SQL never answers the wrong business question without anyone noticing.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
 |---|---|---|---|
-| Problem framing | "Let an LLM write the SQL" | Names executives and analysts | Reframes as governed decision support, names semantic failure as the danger |
-| Requirements | "Answer questions accurately" | Lists pipeline stages | Correctness over speed, explicit non-goals, ten-metric definition of good |
-| Architecture | Chat UI plus warehouse | Semantic layer and validation | Registry first, ambiguity gate, AST policy, read-only gateway, re-check at execution |
-| Data/integration | Mentions a metrics table | Names the core records | Versioned metrics and schema snapshots, append-only query runs, idempotency |
-| Evaluation | "We would test the SQL" | Some test queries | Golden cases, semantic correctness, bytes scanned, trust score, escalation volume |
-| Safety/security | "The model will refuse" | Read-only account and logging | Least privilege, warehouse-native policies, parse not regex, result masking |
-| Rollout | Ship to executives | Pilot then expand | Ten metrics, golden set, analyst shadowing, domain-by-domain with named owners |
-| Communication | Explains the model | Clear but generic | Leads with the wrong-answer risk, states trade-offs, closes with the first gate |
+| Problem framing | "Have an LLM write the SQL" | Identifies executives and analysts as users | Frames it as governed decision support and calls out semantic failure as the real danger |
+| Requirements | "Answer questions correctly" | Lists the pipeline stages | Puts correctness ahead of speed, states non-goals, defines good with ten metrics |
+| Architecture | A chat UI on top of the warehouse | Adds a semantic layer and validation | Metric lookup before tables, a gate for ambiguity, policy on the AST, a read-only gateway, entitlements checked twice |
+| Data/integration | Mentions a metrics table | Names the main records | Versions on metrics and on schema snapshots, query runs that are only appended, idempotency keys |
+| Evaluation | "We'd test the SQL" | A handful of test queries | Semantic correctness on golden cases, plus trust score, bytes scanned and escalation volume |
+| Safety/security | "The model will refuse" | Read-only account plus logging | Least privilege, the warehouse's own policies, parsing instead of regex, masked results |
+| Rollout | Launch straight to executives | Pilot, then expand | Ten metrics, golden set, shadowing analysts, one domain at a time with named owners |
+| Communication | Talks about the model | Clear yet generic | Opens with the wrong-answer risk, names the trade-offs, ends on the first gate |
 
 ## Final 2-minute spoken answer
-I would not start with the model. The naive pitch here is to let an LLM write the SQL, and that loses immediately, because generation is not the hard part. The hard part is that "revenue" might mean booked, recognised, or collected, and a syntactically perfect query against the wrong definition is a governance failure dressed up as a working feature. So I would reframe the problem as building a governed decision-support system that only speaks in terms the business has already agreed to. That means three things from day one: a semantic layer of governed metric definitions, a safety boundary around the warehouse that is read-only and cost-bounded, and an explicit way to say "I don't know which definition you mean" instead of guessing. Architecturally, the query API authenticates and resolves entitlements, the metric registry is consulted before any physical table, the schema retriever pulls only what is needed, ambiguity triggers a clarifying question, and the generated SQL is parsed into an AST and checked against policy and a scan budget before a read-only gateway executes it with timeouts and row limits. I would prove it on ten governed metrics with golden cases pairing question, approved SQL, and expected result, then shadow analysts before any executive sees output, then expand domain by domain with named metric owners. Success is not a fast answer; it is an answer nobody has to re-check.
+I wouldn't begin with the model. The obvious pitch is to have an LLM write the SQL, and it fails straight away, because writing SQL isn't the hard part. What's hard is that "revenue" might be booked, recognised or collected. A query that is syntactically perfect but uses the wrong definition is a governance failure that looks like a working feature. So I'd reframe it: we're building decision support that is governed, and it only speaks in terms the business has agreed. From day one that means three things. First, governed metric definitions held in a semantic layer. Second, a read-only, cost-capped boundary that wraps the warehouse. Third, a clear way to say "I'm not sure which definition you mean" rather than guessing. In the architecture, the query API authenticates the caller and resolves entitlements. The metric registry is checked before any physical table. The schema retriever fetches only what the question needs. Ambiguity sends a clarifying question back. Generated SQL becomes an AST, has to clear policy and a scan budget, and only then runs through a read-only gateway with a timeout and a row cap. To prove it, I'd take ten governed metrics and build golden cases of question, approved SQL and expected result. Analysts get shadowed before executives see anything. Then it grows domain by domain, and every domain has a named metric owner. Success isn't a fast answer. It's an answer nobody feels they need to check again.

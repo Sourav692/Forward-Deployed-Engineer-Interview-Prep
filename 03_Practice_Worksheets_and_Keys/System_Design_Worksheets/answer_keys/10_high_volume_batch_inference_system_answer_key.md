@@ -1,42 +1,42 @@
 # High-Volume Batch Inference System - Answer Key
 
-This answer key is designed for interview preparation. It shows what a strong GenAI FDE candidate should ask, design, evaluate, secure, and communicate before moving from demo to production.
+Try the worksheet before you read this key. It shows what a strong GenAI FDE candidate asks, designs, measures, secures and explains on the way from a demo to a production system.
 
 ## Strong discovery questions
-- Who consumes the output, and what actually breaks if it is late — is the deadline hard, soft, or tiered by segment?
-- Can the batch be partial, or must it be all-or-nothing? That single answer determines retry, checkpointing, and handoff.
-- What happens when the job is behind at 4 a.m. — speed up, reduce scope, use a cheaper model, or ship partial results?
-- How often does the model change, and who approves it, since that drives version pinning and rollout control?
-- What downstream system receives the classifications, and what capacity can it actually absorb?
-- Does downstream need original ordering, or only exactly-once logical results?
-- Are there native batch APIs and per-tenant rate limits, which turn a worker pool into a submission scheduler?
-- Is there a hard cost ceiling, and which degraded mode is preferred when catching up would blow it?
+- Who reads the classifications, and what goes wrong for them when the output arrives late? Is 6 a.m. a hard cut-off, a soft target, or different per segment?
+- Is a partial batch worth anything, or does it ship whole or not at all? Retries, checkpoints and handoff all follow from that one answer.
+- If we are behind schedule at 4 a.m., what do we do: go faster, shrink the scope, switch to a cheaper model, or publish what we have?
+- Who signs off a new model version, and how often does that happen? The answer sets how tightly we pin versions and control rollout.
+- Which system takes the results next, and how much load can it really accept?
+- Must results land in the input order, or is one logical result per record, exactly once, enough?
+- Does the provider offer a native batch API, and what are the rate limits per tenant? Those turn a plain worker pool into a submission scheduler.
+- What is the spending ceiling? If catching up would breach it, which degraded mode does the business prefer?
 
 ## Strong functional requirements
-- Support the core workflow: freeze a nightly input snapshot, partition it, classify every record under quota, and publish usable output before the deadline.
-- Partition work into independent, balanced units so the system scales by parallelism rather than by heroics.
-- Schedule and autoscale workers, batching model calls where the provider supports it.
-- Rate-limit globally and per tenant so retries never stampede the provider into self-inflicted throttling.
-- Checkpoint progress and write idempotently, so a replay never produces duplicate logical results.
-- Forecast completion continuously and invoke a pre-agreed contingency mode when the deadline is at risk.
+- Core workflow: take a frozen snapshot of the nightly input, split it, classify each record within quota, and publish usable output ahead of the deadline.
+- Cut the work into balanced, independent units. The system then grows by adding parallel workers, not by heroic effort.
+- Schedule workers, scale them automatically, and group model calls into batches wherever the provider allows it.
+- Apply rate limits both globally and per tenant. Retries must never swamp the provider and cause throttling we brought on ourselves.
+- Record progress in checkpoints and make every write idempotent. Replaying a partition must not create a second logical result.
+- Keep a running forecast of the finish time. When the deadline is in danger, switch to the contingency mode agreed in advance.
 
 ## Strong non-functional requirements
-- Latency: `RPS = (N_records / T_window) × (1 + h)` — assuming a 6-hour window, 100M records is about 4,630 records/sec, or 5,320 with the 15% headroom I'd add.
-- Availability: size against the tail of large or slow records, not the mean, because in my experience the slow, oversized records pile up at the end of a batch.
-- Security: inputs, prompts, and outputs protected per the customer's access and retention rules across every hop.
-- Compliance: an auditable record of which snapshot, model version, and partition produced every classification.
-- Reliability: no missing or duplicate logical results, with bounded replay from durable checkpoints after any crash.
-- Cost: measure cost per million records and watch retries, which can double token spend, and stragglers, which keep workers warm.
+- Latency: `RPS = (N_records / T_window) × (1 + h)`. Over a 6-hour window, 100M records works out at about 4,630 records/sec. My 15% headroom lifts that to 5,320.
+- Availability: plan capacity for the slow tail rather than the average. In my experience the big, sluggish records gather at the end of a run.
+- Security: every hop must protect inputs, prompts and outputs according to the customer's access and retention rules.
+- Compliance: for any classification, we can show the snapshot, the model version and the partition behind it.
+- Reliability: no logical result goes missing and none appears twice. After a crash, replay starts from a durable checkpoint and stays bounded.
+- Cost: track spend per million records. Two things push it up: retries, able to double token spend, and stragglers that hold workers busy.
 
 ## Architecture explanation
-- The job planner accepts the nightly run, freezes the input snapshot, and writes the batch plan; that snapshot is the system of record for what "this batch" means.
-- The partition manifest lists balanced work units with status and attempts, which is what makes the run replayable and auditable.
-- Partitioning favours even processing cost rather than data locality alone, combining tenant, payload-size band, or historical latency instead of record count.
-- A durable work queue hands out partition leases, so the planner never waits on any worker and a failed worker never holds the run hostage.
-- The rate-limit coordinator is where backpressure lives: workers request capacity before calling, and tightening quota slows leases rather than triggering a retry storm.
-- Autoscaled inference workers batch records, call the model, and validate output at a typed boundary before anything is stored.
-- The checkpoint store persists completed ranges so recovery never rescans, and the idempotent result sink upserts by record key so replays cannot duplicate.
-- An ETA forecaster and operations console make progress and deadline risk visible long before the final hour, which is what lets an operator decide rather than react.
+- When the nightly run arrives, the job planner locks the input snapshot and produces the batch plan. That snapshot defines exactly what "this batch" contains.
+- The partition manifest lists each balanced work unit with its status and attempt count. It is what lets us replay and audit the run.
+- Partitions are balanced on processing cost, not just on where the data sits. They mix tenant, payload-size band or past latency rather than counting rows.
+- A durable work queue issues leases on partitions. The planner never waits for a worker, and a dead worker cannot block the run.
+- Backpressure sits in the rate-limit coordinator. Each worker asks it for capacity before a call, so a tighter quota slows the leases instead of setting off a wave of retries.
+- Inference workers scale automatically. They group records, call the model and check the output against a typed boundary before storing anything.
+- The checkpoint store keeps finished ranges, so recovery never rescans old work. Results land in an idempotent sink keyed on record ID, so replaying a range cannot duplicate anything.
+- An ETA forecaster and an operations console show progress and deadline risk hours before the final stretch. An operator can then make a decision instead of firefighting.
 
 ```mermaid
 flowchart LR
@@ -53,60 +53,60 @@ flowchart LR
 
 ## Data model / integration assumptions
 - BatchJob(id, input_snapshot, deadline, model, state); Partition(job_id, partition_id, range, lease, attempts, checkpoint); InferenceResult(record_id, label, confidence, model_version, run_id).
-- Assume `input_snapshot` is an immutable pointer to the exact dataset version, which is the ownership boundary that makes replay possible.
-- Assume partitions move through available, leased, and completed, with retryable on transient failure and dead-lettered after too many attempts.
-- Assume the sink upserts on the logical record key, so duplicate work becomes harmless rather than something the producer must perfectly avoid.
-- Assume transient errors retry with backoff while validation errors surface as data-quality problems rather than being retried indefinitely.
+- `input_snapshot` points at one fixed version of the dataset and never changes. That ownership boundary is what makes a replay possible.
+- A partition goes from available to leased to completed. A transient failure marks it retryable, and too many attempts send it to the dead-letter queue.
+- Writes to the sink are upserts keyed on each record's logical ID. Repeated work is then harmless, and the producer does not have to avoid it perfectly.
+- Transient errors retry with backoff. Validation errors are reported as data-quality issues and are never retried without end.
 
 ## Red-team risks
-- behind schedule at 4 a.m., provider quota cut, hot-partition stragglers, worker crash after the model call, result sink throttling
-- Falling behind with no plausible path to the deadline, where shipping late output can be worse for the business than shipping none.
-- A provider quota reduction mid-run, where naive retries become a stampede that makes the throttling permanent.
-- Hot partitions producing stragglers, so one pathological shard monopolises the fleet while most workers idle.
-- A worker crashing after the model call but before the write, which duplicates cost and results unless the sink is idempotent.
-- Corrupted checkpoints, broken snapshot hashes, or an unknown model version, all of which must fail closed rather than proceed.
+- In short: running late at 4 a.m., a provider quota cut, stragglers from hot partitions, a worker crash after the model call, and a throttled result sink
+- The run falls behind with no realistic way to finish in time. For the business, late output can be worse than no output.
+- The provider lowers the quota mid-run. Naive retries then pile up and keep the throttling in place.
+- A hot partition turns into a straggler. One bad shard holds the fleet hostage while most workers sit idle.
+- A worker dies after calling the model but before writing the result. Without an idempotent sink, we pay twice and store the result twice.
+- A corrupted checkpoint, a snapshot hash that does not match, or an unrecognised model version must stop the run, never let it carry on.
 
 ## Rollout plan
-- Week 0-1: agree who consumes the output, whether partial results have value, and the cost ceiling.
-- Week 1-2: benchmark the representative token distribution — short records, long records, edge cases, known skew — not a toy sample.
-- Week 2-3: run a 1% load test proving parsing, auth, model invocation, sink writes, and checkpointing hold under real concurrency.
-- Week 3-4: run a 10% test proving retry behaviour, throttling, and downstream capacity still fit the deadline envelope; a failed 1% gate blocks it.
-- Week 5: practice failure on purpose — crash a worker, cut quota, kill a downstream dependency, drain and restore a queue.
-- Week 6-8: confirm bounded replay, durable checkpoints, and graceful degradation rather than retry-storm oscillation.
-- After pilot: define deadline contingency modes with named owners before the job is ever late, not after the first miss.
+- Week 0-1: settle who uses the output, whether a partial batch is worth anything, and what the spending ceiling is.
+- Week 1-2: benchmark against the real token distribution, not a toy sample: short records, long ones, edge cases and the skew we already know about.
+- Week 2-3: run a load test at 1%. It must show that parsing, auth, model calls, sink writes and checkpoints survive real concurrency.
+- Week 3-4: run a load test at 10%. It must show that retries, throttling and downstream capacity still fit inside the deadline. If the 1% gate failed, this step does not start.
+- Week 5: break things deliberately. Kill a worker, cut the quota, take down a downstream dependency, and drain then restore a queue.
+- Week 6-8: confirm that replay stays bounded, checkpoints survive, and the system degrades smoothly instead of swinging between retry storms.
+- After pilot: write the deadline contingency modes, each with a named owner, before the job ever runs late, not after the first miss.
 
 ## Evaluation plan
-These are thresholds I'd set for this case, not industry standards. Defend them, don't quote them.
+I chose these thresholds for this case. They are not industry standards, so be ready to defend them rather than recite them.
 
 | Metric | What it proves | Strong threshold | Dataset / method |
 |---|---|---|---|
-| Completion forecast vs. deadline | The run will actually land before 6 a.m. | Never crosses the deadline without a contingency activated | Progress rate against remaining work |
-| Duplicate logical result count | Replay is safe and the sink is truly idempotent | Within the tolerated replay window | Comparison on logical keys, not storage rows |
-| Records per second | Sustained throughput meets the required rate | At or above the forecast needed to finish | Worker telemetry and sink acknowledgments |
-| Straggler age | No single partition can monopolise the fleet | Oldest active partition within the recovery budget | Partition duration histograms |
-| Retry rate | Failures are transient rather than systemic | Within the normal band by failure class | Retry counters and failure taxonomy |
-| Cost per million records | Unit economics hold under retries and stragglers | Inside the approved budget envelope | Cloud billing plus model usage logs |
+| Completion forecast vs. deadline | The run will finish before 6 a.m. | Never passes the deadline unless a contingency mode is already active | Rate of progress compared with the work left |
+| Duplicate logical result count | Replays are safe and the sink really is idempotent | Stays inside the replay window we accept | Compare logical keys, not storage rows |
+| Records per second | Throughput holds at the rate we need | Matches or beats the rate the forecast says we need | Worker telemetry plus sink acknowledgements |
+| Straggler age | No one partition can tie up the fleet | The oldest running partition stays within the recovery budget | Histograms of partition duration |
+| Retry rate | Failures are passing glitches, not a systemic fault | Inside the normal band for each failure class | Retry counters plus a failure taxonomy |
+| Cost per million records | Unit costs survive retries and stragglers | Within the approved budget | Cloud bill plus model usage logs |
 
 ## Weak answer
-I would build a batch classifier with an inference service and a scheduler, then run it nightly. This is weak because it names tools instead of value, saying nothing about freezing a snapshot, what happens at 4 a.m., or how a crashed worker replays without duplicating.
+I'd stand up an inference service and a scheduler and run a batch classifier every night. This is weak because it lists tools, not value. It never freezes a snapshot, never says what happens at 4 a.m., and never explains how a crashed worker replays without creating duplicates.
 
 ## Average answer
-I would partition the records, run a pool of workers against the model with retries, checkpoint progress, and write results to a table. I would alert if the job is late. This is better, but still incomplete because it does not make the deadline a design constraint, does not shape outbound calls against quota, and treats "alert when late" as a recovery plan.
+I'd split the records into partitions, point a worker pool with retries at the model, checkpoint as we go and write the results to a table. If the job runs late, I'd raise an alert. That is an improvement, but gaps remain. The deadline is not treated as a design constraint, outbound calls are not shaped to the quota, and "alert when late" stands in for a recovery plan.
 
 ## Strong answer
-I would restate the goal as a replayable, cost-controlled batch delivered by deadline with clear recovery decisions when behind, because throughput is not the hard part. The planner freezes an immutable snapshot so the run cannot drift, the manifest makes partitions replayable, and leases separate scheduling from execution. Backpressure lives in a rate-limit coordinator that slows leases rather than letting retries stampede the provider. Checkpoints bound recovery and the sink upserts by record key, so duplicate work is harmless. I would size from the tail, not the mean, and surface a completion forecast long before the final hour. The key is that at 45% done at 4 a.m., the contingency mode was already agreed with a named owner.
+Throughput is not the hard part, so I'd restate the goal: a batch we can replay and keep within budget, delivered by the deadline, with recovery decisions agreed for when we fall behind. First the input is locked as an immutable snapshot, so it cannot drift. The manifest makes each partition replayable, and leases keep scheduling apart from execution. A rate-limit coordinator holds the backpressure, slowing leases so retries never flood the provider. Recovery is bounded by checkpoints, and every write is a keyed upsert, so repeated work does no harm. I'd size for the tail, not the average, and show a finish-time forecast well before the last hour. What matters most: if we are 45% done at 4 a.m., a named owner has already agreed which contingency mode we use.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
 |---|---|---|---|
-| Problem framing | "Run inference on 100M records" | Names the deadline and consumers | Replayable, cost-controlled batch with recovery decisions; four stakeholders separated |
-| Requirements | "Finish on time" | Lists partitioning and retries | Partial-result question answered first; functional and quality bars split with cost ceiling |
-| Architecture | Queue plus workers | Adds checkpointing and scaling | Snapshot, manifest, leases, rate-limit coordinator, idempotent sink, ETA forecaster |
-| Data/integration | Mentions a results table | Names jobs and partitions | Immutable snapshot pointer, lease lifecycle, upsert on logical key, typed output validation |
-| Evaluation | "The job finished" | Tracks throughput | Completion forecast, duplicates, straggler age, retry rate, cost per million |
-| Safety/security | Not addressed | Mentions access control | Fail closed on snapshot hash, unknown model version, corrupted checkpoint, unauthorised worker |
-| Rollout | Run it at full scale | Test then launch | Token-distribution benchmark, 1% and 10% ladder with gates, deliberate failure drills, contingency modes |
-| Communication | Quotes throughput | Clear but generic | Leads with the 4 a.m. decision, names owners, closes with the go/no-go gate |
+| Problem framing | "Run inference on 100M records" | Mentions the deadline and who consumes the output | A replayable batch held to a cost limit, with recovery decisions; separates the four stakeholders |
+| Requirements | "Finish on time" | Covers partitioning and retries | Asks about partial results first; keeps functional needs apart from quality bars and sets a cost ceiling |
+| Architecture | A queue and some workers | Adds checkpoints and scaling | Frozen snapshot and manifest, leased partitions, a rate-limit coordinator, an idempotent sink and an ETA forecaster |
+| Data/integration | Mentions a table for results | Names jobs and partitions | Immutable snapshot pointer, lease lifecycle, upsert on the logical key, typed check on output |
+| Evaluation | "The job finished" | Measures throughput | Forecast against the deadline, duplicate count, oldest straggler, retries, spend per million |
+| Safety/security | Not covered | Mentions access control | Stops on a bad snapshot hash, an unknown model version, a corrupted checkpoint or an unauthorised worker |
+| Rollout | Go straight to full scale | Test, then launch | Benchmark on real token mix, 1% and 10% steps with gates, planned failure drills, contingency modes |
+| Communication | Recites throughput figures | Clear but generic | Opens with the 4 a.m. decision, names owners, ends on the go/no-go gate |
 
 ## Final 2-minute spoken answer
-I would not start with the model. The prompt sounds like a throughput problem — classify 100 million records every night before 6 a.m. — but the room splits three ways immediately: the business owner wants classifications by morning, the platform lead wants the warehouse intact, and the on-call engineer wants to rerun safely when something fails. That disagreement is the real problem, so I would restate the target as completing a replayable, cost-controlled batch by deadline with clear recovery decisions when behind schedule. The first question I need answered is whether partial results have value, because that one answer determines retry strategy, checkpointing cadence, and how much money to spend on the last ten percent. On sizing, if we assume a six-hour window, 100 million records is about 4,630 records per second, and with the fifteen percent headroom I'd add for retries and stragglers, roughly 5,320 — and I would size from the tail of large records, not the mean. Architecturally, a planner freezes an immutable snapshot, a manifest splits it into partitions balanced for processing cost rather than row count, a durable queue hands out leases, and a rate-limit coordinator holds backpressure so tightening quota slows leases instead of triggering a retry storm. Checkpoints make recovery bounded and the sink upserts on the record key so replay cannot duplicate. The failure I would rehearse out loud is being 45% complete at 4 a.m., and the answer is that the contingency mode — narrow scope, cheaper model, or partial output with explicit status — was agreed with a named owner before launch.
+I wouldn't begin with the model. On the surface this is about throughput: classify 100 million records every night and finish before 6 a.m. But the people in the room want three different things. For the business owner, the labels must be ready by morning. The platform lead cares that the warehouse survives. On-call needs a safe way to rerun after a failure. That tension is the real problem. So I'd restate the target: a replayable batch, kept within budget, finished by the deadline, with clear recovery decisions for when we're behind. My first question is whether a partial batch has any value. That answer sets the retry strategy, how often we checkpoint, and how much we're willing to spend on the last ten percent. For sizing, say we have a six-hour window. That works out at roughly 4,630 records a second for 100 million. With the fifteen percent headroom I'd keep for retries and stragglers, it's roughly 5,320. And I'd size for the tail of big records, not the average. For the design, the input is locked first as an immutable snapshot. A manifest splits it into partitions balanced on processing cost, not row count. A durable queue hands out leases. A rate-limit coordinator holds the backpressure, so a tighter quota slows the leases rather than starting a retry storm. Recovery stays bounded thanks to checkpoints, and since every write is an upsert keyed on the record, a replay can't duplicate anything. The failure I'd talk through out loud is being 45% done at 4 a.m. My answer is that we chose the contingency mode before launch, with a named owner: a narrower scope, a cheaper model, or partial output marked with its status.

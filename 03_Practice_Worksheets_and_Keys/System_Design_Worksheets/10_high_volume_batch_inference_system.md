@@ -1,14 +1,14 @@
 # High-Volume Batch Inference System - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for a **High-Volume Batch Inference System**: classify 100 million records nightly before 6:00 a.m. under rate and cost limits. The real target is replayability and recovery when behind.
+You are the FDE designing a **High-Volume Batch Inference System**. Every night it must label 100 million records and finish before 6:00 a.m., while staying inside rate and cost limits. Speed is not the hard part. The run has to be replayable, and someone must know how to recover when it falls behind.
 
 ## 2. Clarify the customer problem
-- Who consumes the output, and what breaks if it is late?
-- Can the batch be partial, or must it be all-or-nothing?
-- What happens when the job is behind at 4 a.m.?
-- What capacity can the downstream consumer actually absorb?
-- Is there a hard cost ceiling, and which degraded mode is preferred?
+- Who reads the results, and what fails for them if the batch is late?
+- Is a partial batch useful, or does it have to land complete or not at all?
+- If progress is short at 4 a.m., what do we do?
+- How much load can the downstream system really take?
+- Is the cost cap firm, and which fallback mode does the business prefer?
 
 ## 3. Users and workflows
 | User | Workflow | Current pain | AI assist opportunity | Human approval needed? |
@@ -37,7 +37,7 @@ Design a GenAI FDE solution for a **High-Volume Batch Inference System**: classi
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Use one of the rendered diagrams as a base, then customise:
+Start from a rendered diagram and shape it to fit this case. Cover each part below:
 - Snapshot and planning:
 - Partitioning:
 - Leasing and workers:
@@ -48,37 +48,37 @@ Use one of the rendered diagrams as a base, then customise:
 ## 7. Evaluation plan
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
-| Completion forecast | Beats deadline | Crosses, no contingency | Progress telemetry | Operations |
-| Duplicate logical results | Within replay window | Beyond window | Logical-key comparison | Data engineering |
-| Straggler age | Within recovery budget | Oldest exceeds budget | Partition histograms | Batch platform |
-| Cost per million records | Within envelope | Trends outside | Billing + usage logs | Finance/platform |
+| Completion forecast | Lands before the deadline | Misses it with no fallback ready | Telemetry on progress | Operations |
+| Duplicate logical results | Inside the replay window | Past the window | Compare by logical key | Data engineering |
+| Straggler age | Inside the recovery budget | Oldest one is over budget | Histograms per partition | Batch platform |
+| Cost per million records | Inside the envelope | Drifting outside it | Billing plus usage logs | Finance/platform |
 
 ## 8. Failure modes
-- Behind schedule with no path to deadline
-- Provider cuts quota mid-run
-- Hot partition produces stragglers
-- Worker crashes after the model call
-- Result sink throttles writes
-- Corrupted checkpoint or snapshot hash
+- The run is late and nothing can still bring it in on time
+- The provider lowers the quota halfway through
+- One hot partition leaves slow stragglers behind
+- A worker dies just after the model call returns
+- The result sink starts throttling writes
+- A checkpoint or the snapshot hash turns out corrupted
 
 ## 9. Rollout plan
-1. Benchmark representative token distribution.
-2. Load test at 1%.
-3. Load test at 10%.
-4. Practice failures on purpose.
-5. Agree contingency modes and owners.
-6. Run full scale with forecasting.
+1. Measure performance on a realistic spread of token sizes.
+2. Run a load test with 1% of the data.
+3. Repeat the load test at 10%.
+4. Break things deliberately to rehearse recovery.
+5. Settle the fallback modes and who owns each one.
+6. Go to full volume with the forecast running.
 
 ## 10. Weak vs strong answer
-**Weak:** "I'd build a batch classifier with workers and a scheduler."
+**Weak:** "I'd set up a batch classifier with a scheduler and some workers."
 
-**Strong:** "I'd freeze an immutable snapshot, split it into partitions balanced by processing cost, lease them durably, hold backpressure in a rate-limit coordinator, checkpoint for bounded replay, upsert by record key, and agree contingency modes before the run is ever late."
+**Strong:** "I'd take a fixed snapshot and cut it into partitions sized by processing cost, not row count. Workers would claim partitions through durable leases. A rate-limit coordinator would own backpressure. Checkpoints would keep any replay small, and writes would upsert on the record key. I'd agree the fallback modes long before the run could be late."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |
 |---|---|---|---|---|
-| Problem framing | Throughput only | Names the deadline | Replayable, recovery decisions |  |
-| Architecture | Queue and workers | Adds checkpointing | Snapshot, leases, backpressure |  |
-| Evaluation | "Job finished" | Throughput tracked | Forecast, duplicates, stragglers |  |
-| Production thinking | Run it live | Some alerting | Failure drills, contingency owners |  |
-| Communication | Quotes throughput | Mostly clear | 4 a.m. decision first |  |
+| Problem framing | Talks only about throughput | Mentions the deadline | Frames replay and recovery choices |  |
+| Architecture | A queue plus workers | Adds checkpoints | Snapshot, leases and backpressure |  |
+| Evaluation | "The job completed" | Tracks throughput | Forecast, duplicates and stragglers |  |
+| Production thinking | Tries it in production | A few alerts | Rehearses failures; names fallback owners |  |
+| Communication | Cites throughput numbers | Mostly clear | Opens with the 4 a.m. call |  |

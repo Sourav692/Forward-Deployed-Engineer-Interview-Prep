@@ -1,99 +1,99 @@
 # Configurable Platform for Customer-Specific Workflows - Answer Key
 
-This answer key is designed for interview preparation. It shows what a strong GenAI FDE candidate should ask, design, evaluate, secure, and communicate before moving from demo to production.
+Try the worksheet before you read this key. Use it to see what a strong GenAI FDE candidate asks, designs, measures, secures and explains while taking a demo to production.
 
 ## Strong discovery questions
-- Which differences recur across customers, and which are genuine one-offs? That separates a platform capability from an exception path.
-- Do variations stop at fields, approvals, branding, and integrations, or do they extend into logic and lifecycle states?
-- Who authors configuration — internal engineers, customer admins, or a mixed model with vendor approval before production?
-- Which integrations are non-negotiable, and does an adapter failure block a transition or degrade gracefully?
-- What upgrade guarantee do customers expect: must configs survive core releases untouched?
-- Where is the custom-code security boundary — inside the trusted core, in a sandbox, or only through approved integration points?
-- What is the time-to-configure target, since hours implies self-service tooling and a week tolerates manual review?
-- What happens when a workflow is misconfigured, and is a guaranteed fallback approval path required?
+- Across the ten customers, which differences keep coming back and which happen only once? The first kind earns a platform capability; the second goes down an exception path.
+- Is the variation limited to fields, approvals, branding and integrations? Or does it reach into business logic and the states a workflow can pass through?
+- Who writes the configuration: our engineers, the customer's admins, or both, with the vendor signing off before anything reaches production?
+- Which integrations must exist on day one? If an adapter fails, does the transition stop, or does the workflow carry on in a reduced mode?
+- What do customers expect from an upgrade? Must their configs keep working, unchanged, through every core release?
+- Where does custom code stop? Is it allowed in the trusted core, confined to a sandbox, or limited to integration points we have approved?
+- How fast must a new customer be configured? A target of hours means self-service tooling. A target of a week leaves room for manual review.
+- What should happen when someone misconfigures a workflow? Do we need a fallback approval path that always works?
 
 ## Strong functional requirements
-- Support the core workflow: ten customers vary fields, approvals, branding, and integrations on one shared platform without forking the codebase.
-- Run a stable workflow engine executing the same core lifecycle for every customer, on one release train.
-- Express variation declaratively through schemas, rules, and UI metadata so most customisation never touches code.
-- Provide an adapter interface so external systems connect without rewriting the engine.
-- Version and validate every configuration so changes can be reviewed, tested, and rolled back.
-- Supply migration and rollback tooling so a version change never strands a customer on an incompatible config.
+- Core workflow: ten customers each change fields, approvals, branding and integrations, all on one shared platform and one codebase with no forks.
+- Keep a single, stable workflow engine. Every customer runs the same core lifecycle, and every customer ships on the same release train.
+- Describe variation as data: schemas, rules and UI metadata. Most customisation should then need no code change at all.
+- Offer an adapter interface. External systems plug into it, and the engine itself never needs rewriting.
+- Give every configuration a version and validate it. A change can then be reviewed, tested and rolled back.
+- Provide migration and rollback tools, so no version change leaves a customer stuck on a config the platform no longer supports.
 
 ## Strong non-functional requirements
-- Latency: partition the budget — saving feels interactive, validation preview tolerates delay, full deployment may be slower if reliable.
-- Availability: at the scale this case assumes — roughly 1,000 configuration versions a day with a 3x peak — validation and deployment must not share a synchronous path.
-- Security: arbitrary code is off by default; adapters and secrets are scoped per tenant; validation rules are themselves checked for denial-of-service risk.
-- Compliance: a durable trail of who published what, what changed, which approval gate was crossed, and which version went live.
-- Reliability: configuration isolation, so one tenant's settings or test changes cannot alter another tenant's runtime behaviour.
-- Cost: measure cost per validated version and activated template, including the support burden a flexible primitive creates.
+- Latency: split the budget by action. A save should feel instant, a validation preview may take a moment, and a full deployment can run slower as long as it is reliable.
+- Availability: this case assumes about 1,000 configuration versions a day, with peaks at 3x. Validation and deployment therefore need separate paths, not one synchronous chain.
+- Security: arbitrary code stays off unless explicitly allowed. Adapters and secrets belong to one tenant each. We also check the validation rules themselves, because a rule can be a denial-of-service risk.
+- Compliance: keep a lasting record of who published each change, what it altered, which approval gate it passed and which version went live.
+- Reliability: isolate configuration by tenant. A setting or test change from one tenant must never change how another tenant's workflows run.
+- Cost: track spend per validated version and per activated template. Include the support load that a very flexible primitive brings with it.
 
 ## Architecture explanation
-- The control plane owns configuration truth; the data plane executes workflows. Keeping them apart is what prevents ten forks.
-- The workflow runtime executes instances, step transitions, timers, and retries identically for every tenant.
-- The configuration registry is the system of record for immutable, published config versions and their release metadata.
-- The schema and rule validator runs synchronously on save and publish, checking syntax, semantic constraints, permissions, and compatibility.
-- The UI renderer generates tenant-specific forms, labels, and layouts from approved config, holding nothing beyond a cache.
-- The integration adapter SDK gives one standard interface for CRM, ERP, ticketing, and webhook connectors, with credentials referenced per tenant.
-- A feature flag service gates rollout by tenant, cohort, or percentage, and a sandbox runs the few approved extensions under hard limits.
-- A migration service rewrites older configs into new schema versions, and a tenant test harness replays tenant-specific contract tests as a release gate.
+- Configuration truth lives in the control plane, and workflows execute in the data plane. That separation is what stops the product splitting into ten forks.
+- For every tenant, the workflow runtime handles instances, step transitions, timers and retries in exactly the same way.
+- Published config versions are immutable. The configuration registry stores them with their release metadata and acts as the system of record.
+- On every save and publish, the schema and rule validator runs synchronously. Syntax, semantic constraints, permissions and compatibility all get checked there.
+- The UI renderer builds each tenant's forms, labels and layouts from the approved config. Apart from a cache, it stores nothing.
+- CRM, ERP, ticketing and webhook connectors all sit behind one standard interface, the integration adapter SDK. Each tenant's credentials are held by reference.
+- Rollout runs through a feature flag service, by tenant, cohort or percentage. The few extensions we approve run in a sandbox with strict limits.
+- The migration service moves older configs onto new schema versions. Before a release ships, the tenant test harness replays each tenant's contract tests as a gate.
 
 ## Data model / integration assumptions
 - WorkflowTemplate(id, engine_version, schema); TenantConfig(tenant_id, template_id, version, values); AdapterDefinition(name, contract_version, permissions); ConfigDeployment(tenant_id, version, state).
-- Assume ConfigDeployment is the deployment ledger and the source of truth for draft, validated, deployed, rolled_back, and failed.
-- Assume rollback creates a new deployment state rather than mutating the old record, so history stays reconstructable.
-- Assume every write carries an expected version, so two operators cannot race and silently overwrite each other's change.
-- Assume every validation, deployment, adapter test, and rollback is tagged with tenant, config version, request ID, and idempotency key.
+- ConfigDeployment acts as the deployment ledger. It is the source of truth for the draft, validated, deployed, rolled_back and failed states.
+- A rollback adds a new deployment state. It never edits the earlier record, so we can always rebuild the full history.
+- Each write states the version it expects to replace. Two operators racing on the same config then cannot overwrite each other without noticing.
+- We tag every validation, deployment, adapter test and rollback with the tenant, the config version, a request ID and an idempotency key.
 
 ## Red-team risks
-- infinite approval loop, adapter contract drift, upgrade breaking old field mappings, untested flag combinations, sandbox escape
-- A cyclic approval graph that loops at runtime, which is deterministic harm rather than a transient fault.
-- Adapter contract drift, where a downstream service changes a field or response shape and every tenant using it breaks at once.
-- A tenant upgrade breaking old field mappings, stranding integrations that still reference the previous version.
-- Untested feature-flag combinations, where two individually safe toggles produce a bad emergent path.
-- Sandbox escape from customer-defined logic, which is why arbitrary code is denied by default rather than merely reviewed.
+- approval loops that never end, drift in adapter contracts, upgrades that break old field mappings, flag combinations nobody tested, escape from the sandbox
+- An approval graph with a cycle in it keeps looping at runtime. That harm is deterministic, not a transient fault that a retry fixes.
+- A downstream service renames a field or changes its response shape. That adapter contract drift breaks every tenant on the adapter at the same moment.
+- A tenant upgrade breaks old field mappings, and integrations still pointing at the previous version are left stranded.
+- Two feature flags are each safe alone, but nobody tested them together, and the combination opens a bad path.
+- Customer-defined logic escapes the sandbox. This is the reason arbitrary code is denied by default instead of only being reviewed.
 
 ## Rollout plan
-- Week 0-1: identify which differences recur, who owns configuration, and where the custom-code boundary sits.
-- Week 1-2: prove one recurring pattern can be described in shared primitives rather than a one-off fork.
-- Week 2-3: hold the gate until the team agrees the recurring pattern is stable enough to encode as a platform capability.
-- Week 3-4: let the first customer admin configure their workflow and complete a pilot run through the real support channel.
-- Week 5: confirm the customer accepts the support model and the rollback procedure before widening.
-- Week 6-8: instrument baselines for launch speed, defect rate, and validation failures before expanding scope.
-- After pilot: expand only if configuration is demonstrably reducing custom work rather than creating hidden rework.
+- Week 0-1: find out which differences recur, who owns the configuration and where the line for custom code falls.
+- Week 1-2: show that one recurring pattern fits into shared primitives, with no one-off fork needed.
+- Week 2-3: keep the gate closed until the team agrees that this pattern is stable enough to become a platform capability.
+- Week 3-4: have the first customer admin configure their own workflow, then run a pilot through the real support channel.
+- Week 5: before going wider, check that the customer accepts both the support model and the rollback procedure.
+- Week 6-8: record a baseline for launch speed, defects and validation failures; scope grows only after that.
+- After pilot: grow only if configuration is clearly cutting custom work, not hiding rework somewhere else.
 
 ## Evaluation plan
-These are thresholds I'd set for this case, not industry standards. Defend them, don't quote them.
+I picked these thresholds for this case. They are not industry standards, so be ready to justify them rather than recite them.
 
 | Metric | What it proves | Strong threshold | Dataset / method |
 |---|---|---|---|
-| Fork count | The platform stayed one product rather than ten | Zero irremovable customer-specific branches | Architecture review and repo analysis |
-| Percentage handled by configuration | Variation lands in config, not code | High and rising per onboarding | Change-request classification tags |
-| Time to launch a customer | Onboarding is a platform capability, not a project | Falling across successive tenants | Release tracking timestamps |
-| Config validation failure rate | Authoring tools are usable and guardrails work | Stable; spikes signal confusing primitives | Config service logs |
-| Upgrade time per tenant | Backward compatibility is real | No bespoke work to move a tenant forward | Release and migration records |
-| Tenant incident rate | One bad config does not spread | Isolated per tenant, separate from platform outages | Incident management system |
+| Fork count | We still ship one product, not ten | No customer-specific branch that cannot be removed | Repo analysis plus architecture review |
+| Percentage handled by configuration | Customer differences end up in config, not in code | High, and climbing with each onboarding | Tags that classify each change request |
+| Time to launch a customer | Onboarding works as a platform feature, not a bespoke project | Shorter for each new tenant | Timestamps from release tracking |
+| Config validation failure rate | People writing config can use the tools, and the guardrails catch mistakes | Steady; a spike points to a confusing primitive | Logs from the config service |
+| Upgrade time per tenant | Backward compatibility actually holds | Moving a tenant forward needs no bespoke work | Migration and release records |
+| Tenant incident rate | A bad config stays contained | Contained to one tenant and counted apart from platform outages | The incident management system |
 
 ## Weak answer
-I would build a flexible workflow system with configurable forms, approvals, themes, and API hooks. This is weak because flexibility without governance becomes fragmentation — it never says who may author configuration, what survives an upgrade, or where custom code stops.
+I'd build a flexible workflow system where forms, approvals, themes and API hooks are all configurable. It falls short because flexibility with no governance turns into fragmentation. It never says who may write configuration, what an upgrade must preserve, or where custom code has to stop.
 
 ## Average answer
-I would keep a shared engine and move customer differences into versioned configuration, with validation before publish and an adapter layer for integrations. This is better, but still incomplete because it does not decide which differences deserve to become platform primitives, does not bound what validation rules may cost, and has no story for a tenant stranded on an old schema.
+I'd keep one shared engine, push customer differences into versioned configuration, validate it before publish and put integrations behind an adapter layer. That is an improvement, but gaps remain. It never decides which differences should become platform primitives. It sets no limit on what a validation rule may cost to run. And it has no plan for a tenant left behind on an old schema.
 
 ## Strong answer
-I would separate the requested feature, configuration, from the business result, which is serving customer-specific workflows without fragmenting the product into ten incompatible forks. The outcome has to be testable as safe, versioned, and supportable, and the metric I would hold myself to is how often a new customer variation lands without a fork, a hotfix, or a support escalation. Architecturally that means a stable engine on one release train, declarative schemas for most variation, an adapter interface for integrations, immutable versioned configs with validation before publish, and a narrow sandbox only where declarative configuration genuinely runs out. Arbitrary code is denied by default. I would prove one recurring pattern in shared primitives first, then let a real customer admin configure and pilot it before expanding.
+I'd split the feature they asked for, configuration, from the result they need: customer-specific workflows that don't break the product into ten incompatible forks. We should be able to test it on three counts: safe, versioned and supportable. The number I'd track is the share of new customer variations that launch without a fork, a hotfix or an escalation to support. In the design, that becomes one stable engine on one release train. Declarative schemas carry most of the variation, and an adapter interface handles integrations. Configs are immutable, versioned and validated before publish. A narrow sandbox appears only where declarative config really can't reach, and arbitrary code is denied by default. First I'd show that shared primitives can express one pattern that keeps recurring. Then a real customer admin configures and pilots it, and only after that do we expand.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
 |---|---|---|---|
-| Problem framing | "Make it flexible" | Names shared core and config | Feature separated from outcome; fork-free variation as the measurable result |
-| Requirements | Lists configurable fields | Adds versioning and validation | Recurring versus one-off, authorship model, upgrade promise, custom-code boundary |
-| Architecture | One engine plus settings | Registry, validator, adapters | Control/data plane split, sandbox, flags, migration service, tenant test harness |
-| Data/integration | Mentions a config table | Names templates and configs | Deployment ledger, rollback as new state, expected-version writes, tagged telemetry |
-| Evaluation | "Customers are happy" | Tracks incidents | Fork count, share handled by config, launch time, upgrade time per tenant |
-| Safety/security | "Admins are trusted" | Adds tenant separation | Code denied by default, per-tenant secrets, rule DoS validation, publisher audit |
-| Rollout | Onboard all ten | Pilot one customer | One recurring pattern first, real admin pilot, baselines before scope expansion |
-| Communication | Lists features | Clear but generic | Leads with fragmentation risk, names the non-goals, closes with the go/no-go gate |
+| Problem framing | "Make it flexible" | Mentions a shared core and config | Separates the feature from the outcome; variation with no forks is the measured result |
+| Requirements | Lists the configurable fields | Adds versioning and validation | Recurring versus one-off, who writes config, upgrade promise, where custom code stops |
+| Architecture | One engine with some settings | Registry, validator, adapters | Control plane and data plane apart, sandbox, flags, migration service, tenant test harness |
+| Data/integration | Mentions a config table | Names templates and configs | Deployment ledger, rollback as a new state, writes with an expected version, tagged telemetry |
+| Evaluation | "Customers are happy" | Counts incidents | Counts forks, measures the share done in config, launch time and per-tenant upgrade time |
+| Safety/security | "Admins are trusted" | Separates tenants | Code denied by default, secrets per tenant, rules checked for DoS, audit of who published |
+| Rollout | Onboard all ten at once | Pilots one customer | One recurring pattern first, a real admin pilot, baselines before wider scope |
+| Communication | Lists features | Clear, but generic | Opens with the fragmentation risk, states the non-goals, ends on the go/no-go gate |
 
 ## Final 2-minute spoken answer
-I would not start with the feature list. Everyone agrees on the headline request and disagrees on everything underneath it, so my first job is to separate the requested feature, configuration, from the business result: serving ten customers without fragmenting the product into ten incompatible forks. I would make that outcome testable in three words. Safe, meaning no change bypasses authorisation or creates unreviewed runtime behaviour. Versioned, meaning every customer knows which definition is active and what changed. Supportable, meaning someone can diagnose an issue and roll a bad configuration back. The metric I would hold myself to is how often a new customer variation goes live without a fork, a hotfix, or a support escalation — not a vanity count of configurable fields. The first design fork is which differences actually recur, because a recurring approval-chain difference deserves to become a platform capability while one seasonal override belongs in an exception path. Architecturally that means one stable engine on a single release train, declarative schemas carrying most variation, an adapter interface for integrations, immutable versioned configs validated before publish, and a narrow sandbox only where declarative config runs out. Arbitrary code is denied by default, adapters and secrets are scoped per tenant, and validation rules are themselves checked for resource exhaustion. The named failure is an infinite approval loop, which fails closed for that version rather than continuing. I would prove one recurring pattern first, then pilot with a real customer admin.
+I wouldn't open with a list of features. People agree on the headline request and disagree on everything beneath it. So my first job is to pull apart what they asked for, configuration, from what the business needs: ten customers served without the product splitting into ten incompatible forks. I'd make that outcome testable with three words. Safe: no change skips authorisation or creates runtime behaviour nobody reviewed. Versioned: each customer knows which definition is live and what changed in it. Supportable: someone can diagnose a problem and roll a bad configuration back. My own scorecard is simple: count the new customer variations that go live and never needed a fork, a hotfix or a call to support. A count of configurable fields would be a vanity number. The first real design choice is which differences recur. A difference in the approval chain that keeps coming back should become a platform capability. A single seasonal override belongs on an exception path. For the architecture, every tenant shares a single stable engine and a single release train. Declarative schemas carry most of the variation, and an adapter interface handles integrations. Configs are immutable and versioned, and we validate them before publish. A narrow sandbox exists only where declarative config can't go. Arbitrary code is off by default. Adapters and secrets belong to one tenant each, and we check validation rules too, in case one exhausts resources. The failure I'd name is an infinite approval loop. That version fails closed instead of carrying on. My first step is to show one recurring pattern working, and then a real customer admin pilots it.
