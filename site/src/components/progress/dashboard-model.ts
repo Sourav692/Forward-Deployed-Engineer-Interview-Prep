@@ -24,7 +24,7 @@ import { latestConfidence, listActivity, listAttempts, readKind, trackProgress }
 import type { ActivityEvent, PathChoice } from '@/lib/progress/types'
 import type { CompetencySheet } from '@/lib/dashboard'
 import { isRead, learnerStatus, moduleRevision, type ModuleInput } from '@/components/learn/progress-model'
-import { MOCK_METHOD_LESSON, MOCK_MODULE, MOCK_ROUNDS, mockAssessmentId } from './mock-rubric'
+import { MOCK_MODULE, MOCK_ROUNDS, mockAssessmentId, mockRoundsFor } from './mock-rubric'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 const moduleBySlug = new Map(MODULES.map((m) => [m.slug, m]))
@@ -34,15 +34,15 @@ const CURRICULUM_ORDER = TRACKS.flatMap((t) => t.sections.flatMap((s) => s.modul
 
 export const moduleHref = (m: Pick<CurriculumModule, 'track' | 'slug'>) => curriculumHref(m.track, m.slug)
 
-/** The five scenario mocks: every T8.2 lesson after the method lesson. */
-export const SCENARIO_MOCKS = (moduleBySlug.get(MOCK_MODULE)?.lessons ?? []).filter((s) => s !== MOCK_METHOD_LESSON)
+/** The scored mocks: every lesson in the mock module that mounts a scorer (scenario and client-sim). */
+export const SCENARIO_MOCKS = (moduleBySlug.get(MOCK_MODULE)?.lessons ?? []).filter((s) => mockRoundsFor(s).length > 0)
 const mockHref = (slug: string) => curriculumHref('interview-practice', MOCK_MODULE, slug)
 
 // ── Readiness ──────────────────────────────────────────────────────────────
 
-/** The latest full round's 1–5 mean for a mock, or the latest short round's, or null. */
+/** The latest full round's 1–5 mean for a mock, else the short round's, else the client-sim round's, or null. */
 export function latestMockMean(lessonSlug: string): number | null {
-  for (const round of ['full', 'short'] as const) {
+  for (const round of ['full', 'short', 'client-sim'] as const) {
     const last = listAttempts(mockAssessmentId(lessonSlug, round)).at(-1)
     if (last?.rubric) return scoreMock(last.rubric, MOCK_ROUNDS[round].dims.map((d) => d.id)).mean
   }
