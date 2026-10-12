@@ -451,15 +451,13 @@ for (const width of [1280, 390]) {
     for (const path of ['/design/decomposition-classics-67-68-69', '/learn/llm-and-retrieval/langchain-and-langgraph/composing-pipelines-with-langchain']) {
       await page.goto(path)
       const figures = page.locator('.mermaid-figure:visible')
-      // Diagrams draw as they near the viewport (hidden tabs wait for their tab): scroll down.
-      await page.evaluate(async () => {
-        for (let y = 0; y < document.body.scrollHeight; y += 500) {
-          window.scrollTo(0, y)
-          await new Promise((r) => setTimeout(r, 60))
-        }
-      })
-      // Mermaid draws in the browser; give it time on a loaded runner.
-      await expect(page.locator('[role="status"]:visible', { hasText: 'Drawing diagram' })).toHaveCount(0, { timeout: 20_000 })
+      // Diagrams draw as they near the viewport (hidden tabs wait for their tab). Bring each
+      // visible placeholder into view in turn, and give mermaid time on a loaded runner.
+      const placeholders = page.locator('[role="status"]:visible', { hasText: 'Drawing diagram' })
+      for (let n = await placeholders.count(); n > 0; n = await placeholders.count()) {
+        await placeholders.first().scrollIntoViewIfNeeded()
+        await expect.poll(() => placeholders.count(), { timeout: 30_000 }).toBeLessThan(n)
+      }
       expect(await figures.count()).toBeGreaterThan(0)
       for (const figure of await figures.all()) {
         const [svgWidth, column] = await figure.evaluate((el) => [el.querySelector('svg')!.getBoundingClientRect().width, el.clientWidth])
