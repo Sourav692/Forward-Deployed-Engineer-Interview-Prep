@@ -7,7 +7,7 @@
 - Can you justify a choice using the customer's requirements?
 - Can you explain what improves, what gets worse, and how you would verify it?
 - Can you consider a simpler alternative and adapt when priorities change?
-- Can you preserve required boundaries while optimizing quality, latency, and cost?
+- Can you preserve required boundaries while optimising quality, latency, and cost?
 
 ### 2. Core Mental Model
 
@@ -95,7 +95,7 @@ Repeated policy lookup → Scoped valid cache may help
 Current refund status → Freshness requirement decides reuse
 ```
 
-Do not present cache hits as a benefit when reused results are incorrect or unauthorized.
+Do not present cache hits as a benefit when reused results are incorrect or unauthorised.
 
 #### 6. Autonomy vs Human Review — Balance Workload and Consequences
 
@@ -109,7 +109,7 @@ Agent recommends → Policy decides → Executor acts
                  Approval when required
 ```
 
-Human approval is not permission to bypass other controls, and a confident model is not an authorization source.
+Human approval is not permission to bypass other controls, and a confident model is not an authorisation source.
 
 #### 7. Sync vs Async — Match Interaction to Task Duration
 
@@ -145,7 +145,7 @@ Provisional choice → Observe metric → Threshold / requirement changes
 |---|---|---|---|
 | Lower simple-task cost | Evaluated model routing | Avoid unnecessary expensive calls | Check segment quality and fallback cost |
 | Better evidence coverage | More candidates or hybrid retrieval | Improve retrieval recall | Measure noise, latency, answer support |
-| Repeated safe questions | Scoped cache | Avoid repeated work | Verify freshness/access behavior |
+| Repeated safe questions | Scoped cache | Avoid repeated work | Verify freshness/access behaviour |
 | Complex independent subtasks | Specialist agents if justified | Separate or parallelize work | Measure coordination cost and outcome |
 | High-impact actions | Policy + approval workflow | Control execution risk | Approval time and reviewer load |
 | Long research task | Async job + durable state | Fit interaction to duration | Status/result delivery complexity |
@@ -156,7 +156,7 @@ Provisional choice → Observe metric → Threshold / requirement changes
 ### 5. Important Distinctions and Gotchas
 
 1. **Possible benefit vs guaranteed benefit:** more agents, context, or model capability does not ensure better outcomes.
-2. **Optimization vs boundary violation:** do not remove authorization or policy checks for speed.
+2. **Optimisation vs boundary violation:** do not remove authorisation or policy checks for speed.
 3. **Cost/call vs cost/success:** retries and rework can erase savings.
 4. **Async responsiveness vs faster completion:** acknowledging early changes the interaction, not necessarily the task duration.
 5. **Decision vs permanent commitment:** name the evidence or changed requirement that would make you revisit the choice.
@@ -227,7 +227,7 @@ REQUIREMENT → OPTIONS → BENEFIT / COST
 |---|---|
 | “Extra quality at extra cost” | Marginal task-success gain |
 | “Maximum recall, fastest answer” | Evidence vs critical-path budget |
-| “Cache live data” | Required freshness and authorization |
+| “Cache live data” | Required freshness and authorisation |
 | “Many agents” | Justified benefit vs simpler baseline |
 | “Remove checks” | Non-negotiable boundaries |
 | “Why this design?” | Requirement → choice → trade-off → verification |
@@ -241,7 +241,7 @@ REQUIREMENT → OPTIONS → BENEFIT / COST
 
 ### Decision Rules
 
-Start from the customer's priority and minimum acceptable quality. Compare a simple baseline with the proposed alternative on representative tasks and important risk segments. Discuss changes to latency, cost per successful task, evidence quality, failure behavior, and operational complexity.
+Start from the customer's priority and minimum acceptable quality. Compare a simple baseline with the proposed alternative on representative tasks and important risk segments. Discuss changes to latency, cost per successful task, evidence quality, failure behaviour, and operational complexity.
 
 More context or more agents can hurt performance; better selection or fewer redundant calls can improve several dimensions together. The quality–cost–latency triangle is a reminder to inspect interactions, not proof that every benefit requires a loss.
 

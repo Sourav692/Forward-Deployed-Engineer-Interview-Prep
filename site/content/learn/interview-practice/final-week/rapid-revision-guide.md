@@ -375,7 +375,7 @@ Remember:
 
 #### Security rule
 
-> Apply permissions during retrieval. Don't retrieve everything and ask the LLM not to expose unauthorized information.
+> Apply permissions during retrieval. Don't retrieve everything and ask the LLM not to expose unauthorised information.
 
 ---
 
@@ -581,7 +581,7 @@ Total Latency
      └── Network
 ```
 
-Then optimize.
+Then optimise.
 
 Remember:
 
@@ -614,7 +614,7 @@ P99
 TTFT
 ```
 
-Don't optimize only average latency.
+Don't optimise only average latency.
 
 ---
 
@@ -917,7 +917,7 @@ Outcome
 
 > Who are you?
 
-#### Authorization
+#### Authorisation
 
 > What are you allowed to do?
 
@@ -1143,7 +1143,7 @@ What changes?
 
 > "P99 latency is 20 seconds."
 
-How do you investigate and optimize it?
+How do you investigate and optimise it?
 
 #### 5.
 

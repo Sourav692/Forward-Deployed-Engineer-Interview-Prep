@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T10:30:26.455Z",
+  "generatedAt": "2026-10-12T10:35:38.418Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -33,9 +33,9 @@
             {
               "slug": "healthcare-prior-auth-assistant",
               "order": 4,
-              "title": "Healthcare Prior Authorization Assistant",
+              "title": "Healthcare Prior Authorisation Assistant",
               "minutes": 2,
-              "updated": "2026-10-04"
+              "updated": "2026-10-12"
             },
             {
               "slug": "legal-contract-copilot",
@@ -208,14 +208,14 @@
               "order": 4,
               "title": "Delivery Under Pressure",
               "minutes": 4,
-              "updated": "2026-10-08"
+              "updated": "2026-10-12"
             },
             {
               "slug": "ownership-standards-and-failure",
               "order": 5,
               "title": "Ownership, Standards, and Failure",
               "minutes": 6,
-              "updated": "2026-10-08"
+              "updated": "2026-10-12"
             },
             {
               "slug": "scale-beyond-yourself",
@@ -229,7 +229,7 @@
               "order": 7,
               "title": "Leading People",
               "minutes": 5,
-              "updated": "2026-10-08"
+              "updated": "2026-10-12"
             }
           ]
         }
