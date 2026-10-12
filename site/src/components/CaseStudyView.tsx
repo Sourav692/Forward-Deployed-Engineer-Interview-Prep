@@ -6,7 +6,7 @@ import type { CaseStudy } from '@/lib/scenario'
 import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
 import type { ReadingDocument } from '@/lib/reading'
 import { loadRead, notifyProgress, saveRead } from '@/lib/storage'
-import { Diagram } from './Diagram'
+import { Diagram, hasStaticDiagram } from './Diagram'
 
 /**
  * A reading page: one case study, four documents, one tab each.
@@ -17,9 +17,10 @@ import { Diagram } from './Diagram'
  * `#deep-dive-acl-normalization` opens the tab that holds that section and scrolls
  * to it. Nothing depends on query strings, so every page stays statically built.
  *
- * Diagrams are the exception: mermaid measures text as it lays a graph out, and in a
- * hidden panel everything measures zero. A panel's diagrams mount the first time the
- * panel is shown.
+ * Diagrams drawn in the browser are the exception: mermaid measures text as it lays a
+ * graph out, and in a hidden panel everything measures zero, so those mount the first
+ * time the panel is shown. Diagrams the sync drew to static files render in every panel,
+ * so the served HTML holds them all (audit check PR-20); their images load lazily.
  */
 
 function tabForHash(
@@ -243,7 +244,7 @@ export function ReadingPanel({ doc, drawDiagrams }: { doc: ReadingDocument; draw
               <div className="space-y-4">
                 {section.chunks.map((chunk, i) =>
                   chunk.kind === 'diagram' ? (
-                    drawDiagrams ? (
+                    drawDiagrams || hasStaticDiagram(chunk.code) ? (
                       <Diagram key={i} code={chunk.code} />
                     ) : (
                       <div key={i} className="h-40 rounded-lg border border-dashed border-border" />

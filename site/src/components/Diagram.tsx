@@ -14,6 +14,9 @@ const SIZES: Record<string, number[]> = DIAGRAMS
  * picks the file for the theme. A fence without files (new, not yet synced) is drawn in
  * the browser instead, as below.
  */
+/** True when the sync drew this fence to static files, so it can render without measuring. */
+export const hasStaticDiagram = (code: string): boolean => diagramKey(code) in SIZES
+
 export function Diagram({ code }: { code: string }) {
   const key = diagramKey(code)
   const size = SIZES[key]
