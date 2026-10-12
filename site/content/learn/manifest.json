@@ -1914,7 +1914,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/",
-      "estMinutes": 59,
+      "estMinutes": 60,
       "href": "/design/evaluation-and-release-gating"
     },
     {
@@ -1925,7 +1925,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/",
-      "estMinutes": 73,
+      "estMinutes": 74,
       "href": "/design/secure-multi-tenant-ai-platform"
     },
     {
@@ -1936,7 +1936,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/",
-      "estMinutes": 62,
+      "estMinutes": 64,
       "href": "/design/observability-and-production-diagnosis"
     },
     {
@@ -1947,7 +1947,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/",
-      "estMinutes": 33,
+      "estMinutes": 34,
       "href": "/design/scale-prototype-to-production"
     },
     {
@@ -1958,7 +1958,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
-      "estMinutes": 42,
+      "estMinutes": 43,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -1969,7 +1969,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/",
-      "estMinutes": 60,
+      "estMinutes": 61,
       "href": "/design/high-volume-batch-pipeline"
     },
     {
@@ -1980,7 +1980,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/",
-      "estMinutes": 44,
+      "estMinutes": 45,
       "href": "/design/model-development-and-post-training"
     },
     {
@@ -1991,7 +1991,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/",
-      "estMinutes": 46,
+      "estMinutes": 48,
       "href": "/design/llm-inference-serving"
     },
     {
@@ -2286,7 +2286,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/",
-      "estMinutes": 79,
+      "estMinutes": 80,
       "href": "/design/enterprise-knowledge-assistant"
     },
     {
@@ -2297,7 +2297,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
-      "estMinutes": 84,
+      "estMinutes": 86,
       "href": "/design/customer-support-automation"
     },
     {
@@ -2308,7 +2308,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/",
-      "estMinutes": 73,
+      "estMinutes": 74,
       "href": "/design/tool-using-agent-with-safety-controls"
     },
     {
@@ -2330,7 +2330,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/",
-      "estMinutes": 64,
+      "estMinutes": 65,
       "href": "/design/sales-copilot"
     },
     {
@@ -2341,7 +2341,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/",
-      "estMinutes": 73,
+      "estMinutes": 75,
       "href": "/design/nl-over-governed-data"
     },
     {
@@ -2352,7 +2352,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/",
-      "estMinutes": 61,
+      "estMinutes": 62,
       "href": "/design/document-review-copilot"
     },
     {
@@ -2363,7 +2363,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/",
-      "estMinutes": 53,
+      "estMinutes": 55,
       "href": "/design/enterprise-coding-assistant"
     },
     {
@@ -2385,7 +2385,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
-      "estMinutes": 44,
+      "estMinutes": 45,
       "href": "/design/scoping-to-deployed-agent"
     },
     {
@@ -2396,7 +2396,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/",
-      "estMinutes": 50,
+      "estMinutes": 52,
       "href": "/design/agent-platform-for-non-technical-users"
     },
     {
@@ -2407,7 +2407,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/",
-      "estMinutes": 49,
+      "estMinutes": 51,
       "href": "/design/real-time-call-assistant"
     },
     {
@@ -2418,7 +2418,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/",
-      "estMinutes": 45,
+      "estMinutes": 46,
       "href": "/design/logistics-exception-handling"
     },
     {
@@ -2427,11 +2427,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes material adapted from iGrace course pages.",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/04_Recruiting_Platform/",
-      "estMinutes": 17,
+      "estMinutes": 22,
       "href": "/design/recruiting-platform"
     },
     {
@@ -2442,7 +2440,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/",
-      "estMinutes": 35,
+      "estMinutes": 37,
       "href": "/design/production-llm-gateway"
     },
     {
@@ -2451,11 +2449,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes material adapted from iGrace course pages.",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/14_Travel_Agent_Worked_Example/",
-      "estMinutes": 17,
+      "estMinutes": 20,
       "href": "/design/travel-agent-worked-example"
     },
     {
@@ -2464,11 +2460,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
-      "estMinutes": 87,
+      "estMinutes": 94,
       "href": "/design/air-gapped-ai-system"
     },
     {
@@ -2477,11 +2471,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
-      "estMinutes": 92,
+      "estMinutes": 103,
       "href": "/design/reliable-workflow-orchestration"
     },
     {
@@ -2490,11 +2482,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
-      "estMinutes": 82,
+      "estMinutes": 90,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -2503,11 +2493,9 @@
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
-      "publish": "credited",
-      "credit": "Includes a tutorial derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
-      "rights": "rewrite",
+      "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
-      "estMinutes": 65,
+      "estMinutes": 72,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
@@ -2518,7 +2506,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/60_Prioritize_AI_Use_Cases/",
-      "estMinutes": 33,
+      "estMinutes": 34,
       "href": "/design/prioritize-ai-use-cases"
     },
     {
@@ -2529,7 +2517,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/62_Build_When_Customer_Data_Is_Poor/",
-      "estMinutes": 34,
+      "estMinutes": 35,
       "href": "/design/build-when-customer-data-is-poor"
     },
     {
@@ -2540,7 +2528,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/80_Self_Adapting_Agent/",
-      "estMinutes": 46,
+      "estMinutes": 47,
       "href": "/design/self-adapting-agent"
     },
     {
@@ -2551,7 +2539,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/",
-      "estMinutes": 32,
+      "estMinutes": 34,
       "href": "/design/personal-assistant-with-memory"
     },
     {
@@ -2562,7 +2550,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/",
-      "estMinutes": 34,
+      "estMinutes": 37,
       "href": "/design/decomposition-classics-67-68-69"
     },
     {
@@ -3143,9 +3131,11 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/01_enterprise_knowledge_assistant_rag.md",
-      "estMinutes": 4,
+      "estMinutes": 3,
       "href": "/practice/enterprise-knowledge-assistant-rag"
     },
     {
@@ -3154,7 +3144,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md",
       "estMinutes": 3,
       "href": "/practice/secure-multi-tenant-ai-platform"
@@ -3165,9 +3157,11 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/03_natural_language_to_sql_analytics_assistant.md",
-      "estMinutes": 4,
+      "estMinutes": 3,
       "href": "/practice/natural-language-to-sql-analytics-assistant"
     },
     {
@@ -3176,7 +3170,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/04_ai_customer_support_automation.md",
       "estMinutes": 3,
       "href": "/practice/ai-customer-support-automation"
@@ -3187,7 +3183,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/07_ai_system_for_an_air_gapped_environment.md",
       "estMinutes": 3,
       "href": "/practice/ai-system-for-an-air-gapped-environment"
@@ -3198,9 +3196,11 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md",
-      "estMinutes": 4,
+      "estMinutes": 3,
       "href": "/practice/llm-evaluation-and-release-gating-platform"
     },
     {
@@ -3209,9 +3209,11 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md",
-      "estMinutes": 4,
+      "estMinutes": 3,
       "href": "/practice/high-volume-batch-inference-system"
     },
     {
@@ -3220,9 +3222,11 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md",
-      "estMinutes": 4,
+      "estMinutes": 3,
       "href": "/practice/tool-using-ai-agent-with-safety-controls"
     },
     {
@@ -3231,7 +3235,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/13_reliable_workflow_orchestration_system.md",
       "estMinutes": 3,
       "href": "/practice/reliable-workflow-orchestration-system"
@@ -3242,7 +3248,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md",
       "estMinutes": 3,
       "href": "/practice/observability-customer-facing-ai-application"
@@ -3253,7 +3261,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/17_configurable_platform_customer_specific_workflows.md",
       "estMinutes": 3,
       "href": "/practice/configurable-platform-customer-specific-workflows"
@@ -3264,7 +3274,9 @@
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
-      "publish": "own",
+      "publish": "credited",
+      "credit": "Derived from *The Forward Deployed Engineer System Design Interview* (Kindle).",
+      "rights": "rewrite",
       "source": "03_Practice_Worksheets_and_Keys/System_Design_Worksheets/21_enterprise_chatbot_platform.md",
       "estMinutes": 3,
       "href": "/practice/enterprise-chatbot-platform"
@@ -3339,6 +3351,78 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/06_Multi_Tenant_SaaS_Assistant_Mock_Interview.md",
       "estMinutes": 8,
       "href": "/interview/mock-interviews/multi-tenant-saas-assistant-mock-interview",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "bank-policy-assistant-client-simulation",
+      "title": "Bank Policy Assistant Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/01_Bank_Policy_Assistant_Client_Simulation.md",
+      "estMinutes": 10,
+      "href": "/interview/mock-interviews/bank-policy-assistant-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "it-service-desk-agent-client-simulation",
+      "title": "IT Service Desk Agent Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/02_IT_Service_Desk_Agent_Client_Simulation.md",
+      "estMinutes": 10,
+      "href": "/interview/mock-interviews/it-service-desk-agent-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "grocery-forecast-explainer-client-simulation",
+      "title": "Grocery Forecast Explainer Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/03_Grocery_Forecast_Explainer_Client_Simulation.md",
+      "estMinutes": 9,
+      "href": "/interview/mock-interviews/grocery-forecast-explainer-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "saas-support-deflection-client-simulation",
+      "title": "SaaS Support Deflection Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/04_SaaS_Support_Deflection_Client_Simulation.md",
+      "estMinutes": 9,
+      "href": "/interview/mock-interviews/saas-support-deflection-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "prior-authorisation-packets-client-simulation",
+      "title": "Prior Authorisation Packets Client Simulation",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/05_Prior_Authorisation_Packets_Client_Simulation.md",
+      "estMinutes": 9,
+      "href": "/interview/mock-interviews/prior-authorisation-packets-client-simulation",
+      "updated": "2026-10-12"
+    },
+    {
+      "slug": "contract-review-take-home-brief",
+      "title": "Contract Review Take-Home Brief",
+      "track": "interview-practice",
+      "module": "mock-interviews",
+      "kind": "sync",
+      "publish": "own",
+      "source": "01_Concept_Tutorials/Consolidated_Lessons/T8.2_Mock_Interviews_and_Scorecards/Client_Simulations/06_Contract_Review_Take_Home_Brief.md",
+      "estMinutes": 12,
+      "href": "/interview/mock-interviews/contract-review-take-home-brief",
       "updated": "2026-10-12"
     },
     {

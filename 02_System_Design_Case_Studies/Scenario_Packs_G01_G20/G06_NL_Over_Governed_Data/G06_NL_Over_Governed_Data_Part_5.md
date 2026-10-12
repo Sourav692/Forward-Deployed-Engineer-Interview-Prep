@@ -16,6 +16,16 @@ Add the warehouse side in the same breath. Warehouse compute per answer is the c
 
 ---
 
+## Level calibration
+
+On this design the levels separate on who owns the meaning of a number and how a wrong one gets caught, not on how good the generated SQL is.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Resolves each question to a versioned metric before touching a table, asks when "revenue" fits two definitions, and checks the parsed AST against policy and a scan budget. Runs it read-only as the user under warehouse-native row and column security; authorisation fails closed, and a summary that disagrees with the table is dropped. | How a correct-looking wrong answer is caught and proved: who owns each definition, semantic correctness as the release gate, schema drift, join fan-out and a replayable query run. |
+| Staff | Adds named metric owners who approve definitions and golden cases, analysts in shadow mode judging semantic correctness apart from execution success, and zero escaped policy violations as Security's gate. Rolls out ten metrics before executives, then domain by domain, with rollback on semantic mismatch, policy leakage, compute more than 20% above the seven-day baseline or falling trust. | What happens as domains and specialists multiply: tool bloat, when free-form SQL is allowed, and which parts the next customer inherits. |
+| Principal | Treats the semantic layer as a product the business owns, versioned so a changed board number is diffed by definition, and splits configuration, adapters, shared services and core so the next customer swaps only the edges. Prefers fixed operations or managed SQL with one narrower free-form path, and keeps each specialist's toolset small, the lesson the insurer's 20-plus-tool monolith taught. | The clarify threshold, per-metric scan budgets and the canonical meaning of "revenue" wait for discovery; the insurer's 60% was one engagement's number, not a default. |
+
 ## Key Takeaways
 
 - The failure to design against is valid SQL that confidently answers the wrong business question, named in the first two minutes.

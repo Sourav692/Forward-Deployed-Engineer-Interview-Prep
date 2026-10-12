@@ -70,6 +70,27 @@ test('learn flow: module → lesson → mark read persists → module progress',
   await expect(page.getByText(/^1 of \d+ read$/).first()).toBeVisible()
 })
 
+// ENH-30: a client simulation is scored on its own round, with no round picker, and keeps its
+// hidden constraints behind disclosures until the learner opens one.
+test('client simulation: score the client-sim round → attempt saved under its own key', async ({ page }) => {
+  await page.goto('/interview/mock-interviews/bank-policy-assistant-client-simulation')
+  await hydrated(page)
+  await expect(page.getByRole('timer')).toHaveText('45:00')
+  await expect(page.getByText('Which round did you run?')).toHaveCount(0)
+  await expect(page.locator('details').first()).not.toHaveAttribute('open', /.*/)
+
+  const dims = ['Discovery questions', 'Handling constraints', 'Framing back to the customer', 'Scoping', 'Next steps', 'Communication']
+  for (const dim of dims) await page.getByRole('group', { name: dim, exact: true }).getByText('3', { exact: true }).click()
+  await page.getByRole('button', { name: 'Save client simulation score' }).click()
+  const result = page.getByText(/^Last saved, client simulation: Pass, mean 3/)
+  await expect(result).toBeVisible()
+  expect(Object.keys(await fdStorage(page))).toContain('fd:v1:learn:attempts:mock:bank-policy-assistant-client-simulation:client-sim')
+
+  await page.reload()
+  await hydrated(page)
+  await expect(result).toBeVisible()
+})
+
 test('mock flow: score a full round → pass rule applied → result survives reload', async ({ page }) => {
   await page.goto(MOCK_LESSON)
   await hydrated(page)
@@ -137,11 +158,12 @@ test('progress: empty first, then readiness and the revision queue follow what t
   await page.getByRole('button', { name: 'Save full round score' }).click()
   await expect(page.getByText(/^Last saved, full round: Pass/)).toBeVisible()
 
-  // One of five mocks at 5 of 5 is 20 %. With mocks the only measured input, no headline score shows yet (FV-07).
+  // One of ten scored mocks (five scenario, five client simulations) at 5 of 5 is 10 %. With mocks the
+  // only measured input, no headline score shows yet (FV-07).
   await page.goto('/progress')
   await hydrated(page)
   const readiness = page.getByRole('region', { name: 'Interview Readiness' })
-  await expect(readiness).toContainText('Not enough data yet: 1 of 4 inputs measured (Mock interviews, 20 %)')
+  await expect(readiness).toContainText('Not enough data yet: 1 of 4 inputs measured (Mock interviews, 10 %)')
   await expect(readiness.getByText(/based on \d of 4 inputs/)).toHaveCount(0)
   await expect(page.getByRole('region', { name: /^Revision Queue/ })).toContainText('Low confidence')
 
@@ -441,6 +463,27 @@ test('sequences: module pages and the Story Bank have prev and next', async ({ p
   await expect(nav.locator('a[rel="next"]')).toHaveAttribute('href', /^\/practice\//)
   await page.goto('/learn/orientation')
   await expect(page.getByRole('heading', { name: 'Objectives' })).toBeVisible()
+})
+
+// ENH-23: /design filters by theme, level and time; chips count, the URL keeps the choice.
+test('casebook filters: count, filter, survive a reload and clear', async ({ page }) => {
+  await page.goto('/design')
+  await hydrated(page)
+  const filters = page.getByRole('group', { name: 'Filter designs' })
+  const advanced = filters.getByRole('group', { name: 'Level' }).getByRole('button', { name: /^Advanced \(\d+\)$/ })
+  const n = Number((await advanced.textContent())!.match(/\((\d+)\)/)![1])
+  await advanced.click()
+  await expect(page).toHaveURL(/level=advanced/)
+  await expect(page.locator('#cases a[href^="/design/"]')).toHaveCount(n)
+  await page.reload()
+  await hydrated(page)
+  await expect(advanced).toHaveAttribute('aria-pressed', 'true')
+
+  await page.goto('/design?theme=model-development&level=foundation')
+  await hydrated(page)
+  await expect(page.getByText('No designs match these filters')).toBeVisible()
+  await page.getByRole('button', { name: 'Clear filters' }).click()
+  await expect(page).toHaveURL(/\/design$/)
 })
 
 // ENH-24a: diagrams fit their column at desktop and phone widths (PQ-13); one too wide

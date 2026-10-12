@@ -52,6 +52,16 @@ Decode was two-thirds of the anchor's replica-seconds in section 3, so output le
 
 ---
 
+## Level calibration
+
+Every level can draw a queue in front of GPUs; the level shows in whether each GPU is treated as a stateful server with a memory budget, and how far the plan reaches past one cell.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Asks for input and output tokens first, prices a request at 0.15 replica-seconds and provisions about 214 replicas, cross-checked with Little's Law. Routes by free KV with power-of-two choices, batches continuously with chunked prefill and paged KV, and retries unstreamed work under a budget. | Tenant fairness under overload, the contract after a mid-stream failure, and how rollouts and autoscaling live with minutes-long cold starts. |
+| Staff | Adds the operating rules: token-weighted tenant buckets with a bounded queue that returns 429 early, backpressure from replica to gateway, N+1 headroom per zone, drain-and-canary rollouts, and an explicit choice between re-prefill and a partial error. Reports goodput, TTFT, TPOT and queue wait separately. | How the fleet is partitioned so one bad deploy or hot tenant cannot hurt everyone, and how request shape drives the capacity plan. |
+| Principal | Splits the fleet into independent cells behind a global balancer, prices the request mix before any fleet size, since chat, short completion and scoring differ almost tenfold at 100,000 rps, and challenges the profile rather than buying hardware. Sets goodput per GPU-hour as the cost measure and moves offline work to a batch tier. | Measured prefill and decode rates, KV use and token distributions for the real model; every replica count here rests on assumed throughput. |
+
 ## Key Takeaways
 
 - Request shape comes first, because prefill and decode price input and output tokens differently.

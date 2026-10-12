@@ -276,7 +276,7 @@ export const PATHS: LearningPath[] = [
         'capstone-and-portfolio',
       ],
     }),
-    estHours: 117,
+    estHours: 118,
     skipCriteria: 'None. Each module builds on the one before, so work through them in order.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -305,7 +305,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'model-adaptation-and-serving', 'capstone-and-portfolio'],
     }),
-    estHours: 153,
+    estHours: 164,
     skipCriteria:
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
@@ -336,7 +336,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'chunking-and-indexing', 'forward-deployed', 'capstone-and-portfolio'],
     }),
-    estHours: 136,
+    estHours: 147,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -364,7 +364,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'llm-and-retrieval', 'capstone-and-portfolio'],
     }),
-    estHours: 143,
+    estHours: 154,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -391,7 +391,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'model-adaptation-and-serving', 'capstone-build'],
     }),
-    estHours: 158,
+    estHours: 169,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
@@ -406,7 +406,7 @@ export const PATHS: LearningPath[] = [
     persona: 'fde-candidate',
     summary: 'The full core: systems, design, delivery, stories and mock interviews.',
     moduleFlags: FDE_FLAGS,
-    estHours: 158,
+    estHours: 169,
     skipCriteria: 'Any module you can explain without notes and rate 4 or more for confidence.',
     readinessCriteria: FDE_READINESS,
     startModule: 'how-the-platform-works',
@@ -420,7 +420,7 @@ export const PATHS: LearningPath[] = [
       required: ['first-ten-minutes', 'design-framework', 'sixty-minute-whiteboard', 'interview-practice'],
       skip: ['engineering-foundations', 'capstone-and-portfolio'],
     }),
-    estHours: 31,
+    estHours: 41,
     skipCriteria: 'Everything you already rate 4 or more for confidence.',
     readinessCriteria: [
       'The first ten minutes of a design question run from memory.',
@@ -456,7 +456,7 @@ export const PATHS: LearningPath[] = [
       'capstone-build': 'recommended',
       'model-adaptation-and-serving': 'optional',
     },
-    estHours: 188,
+    estHours: 199,
     skipCriteria: 'As the Forward Deployed Engineer path.',
     readinessCriteria: [
       ...FDE_READINESS,

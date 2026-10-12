@@ -19,6 +19,7 @@ const PAGES: [string, string][] = [
   ['practice', '/practice'],
   ['interview', '/interview'],
   ['mock lesson', MOCK_LESSON],
+  ['client simulation', '/interview/mock-interviews/bank-policy-assistant-client-simulation'],
   ['module with checkpoint', CHECKPOINT_MODULE],
   ['settings', '/settings'],
   ['interview hub', '/interview/hubs/ai-systems-design'],

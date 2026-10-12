@@ -6,33 +6,33 @@
 
 ## Why this matters
 
-The framework and principles are abstract until you watch them correct a real diagram. This document does exactly that: it takes a published reference architecture for an agentic travel assistant, shows five structural mistakes a careful reviewer found in it, and rebuilds it. Learning to *spot* those mistakes is more valuable than memorising the corrected diagram, because, in my experience, the same five errors show up in a lot of first-draft multi-agent designs — including ones you will draw under time pressure.
+Principles stay abstract until you watch them repair a real diagram, so that is what this document does. We take a sample design for a travel assistant built from AI agents, list five structural faults a careful review found, and redraw it. Keep the habit of *spotting* those faults; the fixed diagram matters less. Most first-pass multi-agent sketches repeat the same five, including the ones you will draw under time pressure.
 
-The system, as the reference sets it up: an agentic AI travel assistant serving customers across AMER, EMEA and APJ, with specialised agents for search, booking, pricing, recommendation and policy.
+The brief: an AI travel assistant serving customers in three regions (AMER, EMEA, APJ), where one specialist agent each handles policy, pricing, search, booking and recommendation.
 
 ## The original, and what was wrong with it
 
-The original drew a strict pipeline: five agents fan out, then *everything* funnels through one shared cache, one retrieval stage, one LLM step and one tool-calling stage in sequence. Five fixes:
+The first draft was a rigid pipeline. Five agents fanned out, and then *all* of their work squeezed through a single shared cache, a single retrieval stage, a single LLM step and a single tool-calling stage, one after another. It needed five fixes.
 
 ### 1 · Rate limiting belongs inside the API gateway
 
-The original drew Rate Limiter as a second box off the load balancer, parallel to the gateway, with no line continuing downstream — a dead end. Rate limiting is a *policy the gateway enforces on every request*, not an alternate route. Drawing it as a peer box suggests you think of it as a component rather than a behaviour.
+In the draft, Rate Limiter hung off the load balancer as its own box, side by side with the gateway. No line left it, so anything sent there went nowhere. Rate limiting is not a route. It is *a rule the gateway applies to every request*. A separate box implies a component, and rate limiting is a behaviour.
 
 ### 2 · The semantic cache is checked before any agent spawns
 
-The original placed the cache *after* all five agents had already run. A cache meant to reduce LLM latency and cost has to sit in front of the expensive work, not after it. Corrected: the cache is the supervisor's first move, and a hit returns without spawning a single agent. This is the short-circuiting principle from the 12-part framework, and it is the difference between a cache that saves money and one that saves nothing.
+The draft put the cache *behind* the five agents, so it was only consulted after they had all run. If a cache exists to cut LLM latency and cost, it must come before the costly work. Now the supervisor looks in the cache before doing anything else. On a hit, the answer goes back and no agent is spawned at all. In 12-part framework terms this is short-circuiting, and the placement decides whether the cache saves money or nothing.
 
 ### 3 · Retrieval is owned by each agent, not a shared stage
 
-One mandatory retrieval box downstream of all five agents forced a vector-DB lookup onto agents that never needed one. Search and Recommendation pull regional travel content; Booking and Policy mostly do not. Corrected: retrieval is a call each agent makes for itself, inside its own loop, when its task requires it.
+A single compulsory retrieval box after all five agents made every agent query the vector DB, whether it needed to or not. Search and Recommendation do draw on regional travel content. Booking and Policy rarely do. In the fix, each agent calls retrieval itself, within its own loop, and only when its task calls for it.
 
 ### 4 · Tool calling, MCP and external APIs sit alongside the agents
 
-The original funnelled every agent into one shared LLM step, then one tool-calling step, then one MCP registry — as if the whole request got a single turn. A Booking agent needs the Payment and Flight MCP servers *during its own turn*, not after four unrelated agents finish. Corrected: the shared backend (LLM, vector DBs, MCP registry, external APIs) is something each agent calls on demand.
+In the draft, all five agents passed in sequence through a shared LLM box, a shared tool-calling box and a shared MCP registry. That reads as though the request gets a single turn in total. Booking actually calls the Flight and Payment MCP servers *during its own work*; it cannot wait until four other agents finish. The redraw makes the LLM, the MCP registry, the external APIs and the vector DBs a shared backend that each agent calls on demand.
 
 ### 5 · A synthesiser agent replaces the missing aggregation step
 
-The original never showed how five parallel agent outputs become one response — the diagram just continued as a single line as if that were automatic. It is not. Corrected: a named Synthesiser Agent merges every agent that actually ran and resolves conflicts between them — a Policy decision overriding a Booking choice, for instance — before anything reaches the user.
+Nothing in the draft explained how five parallel results became a single reply. The flow simply carried on as one line, as though merging took care of itself. It does not. In the fix, a named Synthesiser Agent gathers the output of each agent that ran and settles any clash between them before the user sees anything. A Policy ruling that overrides a Booking choice is the classic example.
 
 ## The corrected architecture
 
@@ -69,93 +69,103 @@ flowchart TB
   RESP --> MON[Monitoring & Logging<br/>latency · token usage · per-agent execution traces · cache hit rate · alerts — spans every stage above]
 ```
 
-A cache hit returns before the supervisor spawns anything. On a miss, the supervisor spawns only the agents the query needs; each independently calls the shared backend for exactly what its task requires. The synthesiser merges whatever ran into one response, which is written back to the cache.
+On a cache hit, the user gets a reply and no agent starts. If it misses, the supervisor spawns just the agents this query calls for, and each one pulls from the shared backend only what its own task needs. The synthesiser merges their results into one answer, which is also saved to the cache.
 
 ## Components
 
 | Component | Purpose |
 |---|---|
-| Client | Web / mobile surface for search, booking, itinerary management |
-| Authentication | SSO via OpenID Connect (the identity layer on OAuth 2.0), with JWTs as tokens, before anything else runs |
-| Load balancer | Spreads traffic across API instances |
-| **API gateway** | Routing, request validation and throttling as *one* policy layer |
-| **Supervisor agent** | Reads the query, checks the cache, and only on a miss decides which specialists to spawn |
-| **Semantic cache** | Checked immediately; a hit returns without spawning an agent |
-| **Specialised agents** | Each retrieves its own domain context and calls its own tools — Booking reaches the payment gateway directly |
-| Regional vector DBs | Shared retrieval infrastructure that agents call into, not a stage every request passes through |
-| MCP tool registry | Dynamic tool discovery, reached by whichever agent needs it |
-| External APIs | Flights, hotels, maps, payment, via MCP servers |
-| **Synthesiser agent** | Merges outputs, resolves conflicts, produces one coherent response |
-| Monitoring & logging | Latency, tokens, failures, per-agent traces |
+| Client | Web and mobile app for searching, booking and managing trips |
+| Authentication | Runs first: SSO through OpenID Connect (an identity layer built on OAuth 2.0), issuing JWTs as tokens |
+| Load balancer | Shares traffic across API instances |
+| **API gateway** | A *single* policy layer that routes, validates and throttles requests |
+| **Supervisor agent** | Reads the query and looks in the cache first; picks specialists to start only after a miss |
+| **Semantic cache** | Checked straight away; on a hit, no agent is spawned |
+| **Specialised agents** | Each pulls the domain context and tools its task needs; Booking reaches the payment gateway directly |
+| Regional vector DBs | Shared retrieval that an agent queries when it chooses, not a stage on every request's path |
+| MCP tool registry | Finds tools at run time; any agent that needs it can call it |
+| External APIs | Flights, hotels, maps and payment, reached through MCP servers |
+| **Synthesiser agent** | Combines outputs, settles conflicts and returns one coherent reply |
+| Monitoring & logging | Tracks latency, tokens, failures and a trace for each agent |
 
 ## Data flow, in order
 
-1. User submits a request.
-2. Authentication validates identity; the load balancer routes; the gateway applies rate limiting and forwards to the supervisor.
-3. The supervisor checks the semantic cache **first**.
-4. On a hit, return immediately — no agent spawned.
-5. On a miss, spawn only the agents the query needs.
-6. Each agent retrieves its own context from the relevant regional vector DB, as a tool call inside its own loop.
-7. Each agent calls the external APIs it needs through the MCP registry, inside its own loop.
-8. The synthesiser collects outputs, resolves conflicts, composes one grounded response.
-9. The response returns to the user and is written back to the cache.
-10. Monitoring captures latency, tokens and per-agent traces across the request.
+1. A user sends a request.
+2. Authentication confirms who they are, the load balancer picks an instance, and the gateway enforces rate limits before passing the request to the supervisor.
+3. **First**, the supervisor looks up the semantic cache.
+4. A hit returns at once, and no agent is spawned.
+5. On a miss, the supervisor starts just the agents this query calls for.
+6. Inside its own loop, an agent that needs context makes a tool call to the matching regional vector DB.
+7. In that same loop, it calls external APIs via the MCP registry.
+8. The synthesiser gathers the outputs, settles conflicts and writes one grounded reply.
+9. The user receives the reply, and a copy goes into the cache.
+10. Across the whole request, monitoring captures latency, token counts and a trace per agent.
 
 ## Non-functional requirements
 
 | Requirement | Solution |
 |---|---|
-| Scalability | Horizontal scaling, auto-scaling, load balancing |
-| Reliability | Multi-region deployment, retries, failover |
-| Availability | Active-active regional architecture |
-| Performance | Semantic caching *before* fan-out, Redis, CDN, optimised vector search |
-| Security | OAuth, JWT, encryption, RBAC, secrets management |
-| Cost | A cache-first strategy that actually gates spawn; smaller models for simple tasks; regional routing |
-| Observability | Metrics, logs, distributed tracing per agent, dashboards, alerts |
-| Maintainability | Modular agents that own their own tools, CI/CD, infrastructure as code |
+| Scalability | Scale out horizontally, autoscale, balance load |
+| Reliability | Deploy in several regions; retry; fail over |
+| Availability | Regions run active-active |
+| Performance | Semantic cache placed *ahead of* the fan-out; Redis; CDN; tuned vector search |
+| Security | OAuth, JWT, encryption, RBAC, managed secrets |
+| Cost | A cache-first design where the cache really does gate spawning; small models for easy tasks; routing by region |
+| Observability | Metrics, logs, a distributed trace per agent, dashboards, alerts |
+| Maintainability | Modular agents that each own their tools; CI/CD; infrastructure as code |
 
 ## Trade-offs worth naming out loud
 
-**Shared retrieval service vs per-agent RAG.** A shared layer centralises data-residency and guardrail enforcement but couples every agent to one service. Per-agent retrieval matches how LangGraph- and CrewAI-style frameworks wire tools, at the cost of duplicated embedding infrastructure if ungoverned. Either is defensible. Treating RAG as a *peer of the agents* instead of as infrastructure or a tool is the actual mistake.
+**Shared retrieval service vs per-agent RAG.** One shared retrieval layer gives you a single place to enforce data residency and guardrails, but every agent then depends on that one service. Per-agent retrieval matches how frameworks such as LangGraph and CrewAI wire tools to each agent, yet without governance you end up running several copies of the embedding stack. You can defend either choice. What is actually wrong is placing RAG beside the agents *as if it were one of them*; it is infrastructure, or a tool.
 
-**Single agent vs multi-agent.** Multi-agent adds coordination and synthesis overhead. It earns its keep when sub-tasks need different tools, different guardrails, or independent scaling — as Booking and Policy clearly do here. Module 07 gives the full decision rule.
+**Single agent vs multi-agent.** Every extra agent adds coordination and a synthesis step you must pay for. Pay it when sub-tasks differ in their tools or guardrails, or must scale on their own. Booking and Policy plainly do. Module 07 sets out the full rule for deciding.
 
-**Semantic cache vs traditional cache.** Semantic caching matches near-duplicate queries, not just exact ones, which is why it can short-circuit the entire fan-out rather than one downstream call.
+**Semantic cache vs traditional cache.** A traditional cache only hits on an exact repeat. A semantic cache also matches near-duplicates, so it can skip the entire fan-out rather than save a single call downstream.
 
-**Global vs regional vector DBs.** Regional stores help meet data-residency requirements and lower latency; a global store buys simpler operations and cross-region consistency.
+**Global vs regional vector DBs.** Stores per region make data-residency rules easier to meet and bring latency down. One global store is simpler to run and keeps regions consistent with each other.
 
 ## A mental model: the international airport
 
 | Airport | System |
 |---|---|
-| Passengers | Users |
-| Airport entrance | Authentication |
-| Security check and baggage scanner — one line, not two | API gateway with rate limiting built in |
-| Information desk: "have we answered this before?" | Semantic cache, checked before any staff is dispatched |
-| Air traffic control tower | Supervisor agent |
-| Airline staff, each with their own manuals and radios | Specialised agents with their own retrieval and tools |
-| Flight information binders each desk keeps | Vector databases, consulted by whichever desk needs them |
-| Ground crew, catering, fuel trucks | External APIs |
-| Dispatch officer compiling one departure report | Synthesiser agent |
-| CCTV and operations centre | Monitoring and observability |
+| Travellers | Users |
+| Terminal entrance | Authentication |
+| Security screening and bag scan in a single lane, not two | Rate limiting as part of the API gateway |
+| Help desk that checks "did someone already answer this?" | Semantic cache, consulted before staff are dispatched |
+| Control tower | Supervisor agent |
+| Airline crews, each with its own manuals and radios | Specialised agents, each with its own retrieval and tools |
+| Reference binders kept at each desk | Vector databases, consulted by any desk that needs one |
+| Ground handlers, caterers and fuel trucks | External APIs |
+| Dispatcher who writes one departure report | Synthesiser agent |
+| CCTV and the operations room | Monitoring and observability |
 
 ## Interview lens
 
-The five fixes generalise into five questions to ask of any multi-agent diagram, including your own:
+Each of the five fixes turns into a question you can put to any multi-agent diagram, your own included:
 
-1. Is every "component" actually a component, or is it a policy that belongs inside something else?
-2. Does the cache sit *before* the expensive work it claims to save?
-3. Is retrieval forced on agents that do not need it?
-4. Does each agent get its own turn with its own tools, or is the whole request funnelled through one shared step?
-5. Where do parallel outputs converge, and who resolves conflicts?
+1. Is each box a real component, or a policy that should live inside another one?
+2. Does the cache come *ahead of* the costly work it is meant to avoid?
+3. Are agents made to retrieve when they have no need to?
+4. Does every agent loop and call tools by itself, or must the whole request squeeze through a single shared stage?
+5. Where do the parallel results meet, and who settles disagreements between them?
 
 ## Checkpoint
 
-- State the five structural fixes and, for each, the principle from the previous document it applies.
-- Why does cache placement decide whether a semantic cache saves anything?
-- What is the actual mistake in the shared-vs-per-agent RAG debate?
-- What does the synthesiser do that "the diagram continues as a single line" hides?
-- Draw the corrected architecture from memory.
+- List the five structural fixes. Which principle from the last document does each one apply?
+- Why does the position of a semantic cache decide whether it saves anything?
+- When teams argue shared versus per-agent RAG, what mistake actually matters?
+- Which job of the synthesiser is hidden when a diagram just "carries on as one line"?
+- Redraw the corrected architecture without looking.
+
+## Level calibration
+
+On the travel assistant, the levels split on whether the candidate only fixes the diagram's flow or also owns how the fixed system runs across regions and teams.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "Rate limiting lives inside the gateway. The supervisor checks the semantic cache before it spawns anything, and each agent calls retrieval and MCP tools inside its own loop. A synthesiser merges whatever ran and lets Policy override Booking." | Which queries may be served from the cache at all, and what the synthesiser does when one spawned agent fails or times out. |
+| Staff | "Shared retrieval versus per-agent RAG is a deliberate choice: shared for residency and guardrails, or per-agent with governance so embedding infrastructure isn't duplicated. I'd run it like a platform, with per-agent traces, cache hit rate and token usage on dashboards, smaller models for simple agents, and retries and failover per region." | Who owns each regional vector DB and the MCP tool registry, and the rule for when a new agent earns its coordination overhead. |
+| Principal | "AMER, EMEA and APJ stores buy residency and latency, and one global store buys simpler operations, so I'd make that call region by region on an active-active footprint. Then I'd turn the five fixes into a review standard every team's multi-agent diagram has to pass." | Each region's residency rules and the real traffic mix, which only the customer can supply. Until then, [cache hit-rate target] and [p95 target] stay open. |
 
 **Next →** [The 60-Minute Whiteboard Method](../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md)
 

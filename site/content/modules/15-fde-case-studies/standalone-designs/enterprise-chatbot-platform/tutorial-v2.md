@@ -1,6 +1,4 @@
-# Chapter 21 (Condensed): Enterprise Chatbot Platform — "Our Own ChatGPT"
-
-*Scenario: custom addition to the 20-scenario set — not from the source book.*
+# Enterprise Chatbot Platform — "Our Own ChatGPT"
 
 ---
 
@@ -88,15 +86,15 @@
 
 ## 0. The 60-Second Version
 
-- **Prompt:** 40,000 employees, "build us our own ChatGPT," internal data, enterprise controls.
-- **Real driver:** the case gives us an egress report showing 6,400 staff already pasting company data into consumer AI tools.
-- **Business result, not feature:** move AI usage from ungoverned consumer tools into a governed platform — without losing what made the consumer tools attractive.
-- **Unique constraint:** you have a free, zero-friction competitor your users already have on their phones.
-- **Two bars, always in tension:** governance (nothing leaves except under our agreement) and adoption (TTFT close to the free tool).
-- **Design centre:** the context assembler — where permissions, cost, safety and quality all intersect.
-- **The metric that matters:** consumer-AI egress volume, already instrumented in the proxy logs before you start.
+- **Prompt:** a company of 40,000 employees asks us to "build us our own ChatGPT", grounded in internal data and wrapped in enterprise controls.
+- **What actually drives it:** an egress report in the case shows 6,400 staff copying company data into consumer AI tools today.
+- **The result we owe, not the feature:** shift AI usage off ungoverned consumer tools and onto a governed platform, keeping what made those tools appealing.
+- **What makes this case unusual:** our competitor is free, needs no setup and already sits on every employee's phone.
+- **Two bars that pull against each other:** governance (nothing leaves except under an agreement we hold) and adoption (TTFT near what the free tool gives).
+- **Where the design centres:** the context assembler. Permissions, cost, safety and quality all meet there.
+- **The one metric that counts:** consumer-AI egress volume, which the proxy logs already record.
 
-> 🎯 **Interview Pointer:** Open with the two bars (governance vs. adoption) in the first breath — naming the tension up front is the single fastest way to signal you understand this isn't just "build ChatGPT."
+> 🎯 **Interview Pointer:** Name both bars, governance and adoption, in your first breath. Stating that tension early shows fastest that you see more here than "build ChatGPT".
 
 ---
 
@@ -104,57 +102,57 @@
 
 ### The room
 
-- **CIO:** "6,400 employees hit consumer AI domains last month. We need our own."
-- **General Counsel:** prove deal documents aren't in a third party's training set; produce an employee's history under legal process.
-- **Internal Comms:** the last chatbot got 400 one-time users — if this is worse than free, people use free.
-- **Platform lead:** 40,000 seats — what does it cost per month and who pays?
-- **AI lead:** general chat is easy; grounding in internal systems *per person's permissions* is the actual project.
+- **CIO:** "Last month 6,400 employees reached consumer AI domains. We need one of our own."
+- **General Counsel:** wants proof that deal documents never reach a third party's training set, and a way to produce one person's history when legal process requires it.
+- **Internal Comms:** the previous chatbot drew 400 users who came once each. If ours is worse than free, people stay with free.
+- **Platform lead:** what do 40,000 seats cost each month, and who pays?
+- **AI lead:** plain chat is the easy bit. The real project is grounding in internal systems *within each person's permissions*.
 
 ### Feature vs. business result
 
-- **Feature:** a ChatGPT clone.
-- **Business result:** retire an invisible data-leak risk while delivering a productivity gain — both must be true.
-- **Weak opening:** "React frontend, vector DB, LLM gateway." Describes a product without naming its purpose.
+- **The feature:** a clone of ChatGPT.
+- **The business result:** close a data-leak risk nobody can see, and deliver a real productivity gain. Both must hold.
+- **Weak way to start:** "React frontend, vector DB, LLM gateway." It lists parts and never says what they are for.
 
 ### Stakeholders and what each judges
 
 | Stakeholder | Judges on | Fails if ignored |
 |---|---|---|
-| Employees | Usefulness in the first 90 seconds | Governed tool nobody uses |
-| Security / legal / compliance | Evidence: egress, retention, discoverability | Pilot never reaches production |
-| Department admins / power users | Can they build and share assistants | Platform team becomes a ticket queue |
-| Platform operators | One fleet they can run and survive vendor loss | Unrunnable at 40k |
-| Finance | Defensible cost per employee per month | Emergency budget review in month four |
+| Employees | Whether it helps within 90 seconds | A governed tool that sits unused |
+| Security / legal / compliance | Evidence on egress, retention and discoverability | The pilot stalls before production |
+| Department admins / power users | Whether they can build and share assistants | The platform team turns into a ticket queue |
+| Platform operators | A single fleet they can operate that outlives any one vendor | Cannot be run at 40k |
+| Finance | A cost per employee per month they can defend | An unplanned budget review by month four |
 
-- **Jobs-to-be-done:** draft, summarise, explain, **find**. The first three are model capability; the fourth is where your engineering goes.
+- **Jobs-to-be-done:** summarise, draft, explain and **find**. The model already handles the first three. Finding is where our engineering goes.
 
 ### Six discovery questions that change the architecture
 
-1. **Model sourcing** — commercial API, self-hosted, or hybrid by data classification?
-2. **Grounding scope** — general chat on day one, or company systems? Which three first?
-3. **Retention and discovery** — how long, who may read another's conversations, under what process?
-4. **Assistant publishing** — can any employee publish, or is publishing governed?
-5. **Identity and residency** — SSO only? Regional deployment? Works-council constraints on usage telemetry?
-6. **Build vs. buy** — what specifically rules out licensing a vendor's enterprise tier?
+1. **Model sourcing:** a commercial API, our own hosted model, or a mix split by data classification?
+2. **Grounding scope:** day one as plain chat, or with company systems too? If systems, which three lead?
+3. **Retention and discovery:** how long do we keep conversations, and who may read someone else's, through what process?
+4. **Assistant publishing:** may any employee publish an assistant, or does publishing need approval?
+5. **Identity and residency:** is SSO the only login? Do we need regional deployments? Does a works council limit usage telemetry?
+6. **Build vs. buy:** what exactly stops us licensing a vendor's enterprise tier?
 
-> 🎯 **Interview Pointer:** Question 6 (build vs. buy) is the one I'd expect many candidates to skip. Asking it unprompted, before the interviewer raises it, is one of the strongest discovery signals you can send in this scenario.
+> 🎯 **Interview Pointer:** Many candidates skip question 6, build vs. buy. Raise it yourself, before the interviewer does. In this scenario that ranks among the best discovery signals available.
 
 ### Assumption ledger (state aloud, don't bury)
 
-- Commercial API under a zero-retention agreement is acceptable for internal-confidential, not restricted.
-- Corporate SSO is the sole identity source.
-- First grounding targets: intranet, HR policy library, engineering wiki.
-- Conversations belong to the employee but are discoverable under legal hold.
+- Internal-confidential data may go to a commercial API that has a zero-retention agreement. Restricted data may not.
+- Identity comes only from corporate SSO.
+- We ground in three systems first: the intranet, the HR policy library and the engineering wiki.
+- Each conversation belongs to its employee, yet stays discoverable under legal hold.
 
 ### Testable outcome
 
-- **Target I'd propose:** reduce measured consumer-AI egress 80% in two quarters while reaching 50% weekly active use.
-- **Why it works:** you cannot hit it by locking down, and you cannot hit it by shipping ungoverned. Both halves must be true.
-- **Rare gift:** the baseline is already in the proxy logs — most AI projects argue about whether they worked.
+- **The target I would put forward:** cut measured consumer-AI egress by 80% within two quarters, while weekly active use reaches 50%.
+- **Why it holds up:** neither a lockdown nor an ungoverned launch can meet it. Only a design that does both passes.
+- **A rare advantage:** the baseline already sits in the proxy logs. Most AI projects never settle whether they worked.
 
 ### Two-minute opening (say this)
 
-> "Move AI usage from consumer tools into a governed platform without losing the usefulness that drove people there. Two bars: nothing leaves our boundary except under an agreement we control, and time-to-first-token stays close to what they get for free. I'd clarify model sourcing, which systems we ground in first, retention and discovery, whether employees may publish assistants, and what rules out just buying. Default: thin owned orchestration over a commercial API, permission-filtered retrieval, provider abstraction. Success is displaced shadow-AI traffic plus weekly active use — not a launch date."
+> "The goal is to move AI usage off consumer tools and onto a governed platform, without losing what drew people there. I hold two bars. Nothing leaves our boundary unless an agreement we control covers it. And the time to first token roughly matches the free tools. First I'd clarify where the model comes from, the first systems to ground in, how long we keep conversations and who can read them, whether staff can publish assistants, and why we can't just buy. My default is a thin orchestration layer we own over a commercial API, with permission-filtered retrieval and a provider abstraction. Success means shadow-AI traffic falls and weekly active use climbs. A launch date is not success."
 
 ---
 
@@ -162,46 +160,46 @@
 
 ### The trap
 
-- **Scope credulity.** The product you're pointed at represents years of work across chat, retrieval, code execution, images, voice, memory and a marketplace.
-- Use the **exclusions bucket aggressively** — saying so early is strength, not retreat.
-- Four buckets: functional, nonfunctional, explicit exclusions, hard constraints.
+- **Believing the scope.** The product we are told to copy took years to build. It spans chat, memory, retrieval, voice, images, code execution and a marketplace.
+- Lean hard on the **exclusions bucket**. Naming early what we will not build reads as strength, not retreat.
+- Sort everything into four buckets: functional, nonfunctional, explicit exclusions and hard constraints.
 
 ### Deep-dive questions → what each decides
 
 | Question | What it decides |
 |---|---|
-| Model sourcing and data-processing terms | Thin orchestration (weeks) vs. also running a GPU fleet (quarters); whether a classification gate sits in the hot path |
-| Grounding scope + **are ACLs query-time resolvable?** | One index vs. federated connectors; pre-filter vs. post-filter vs. both. If ACLs aren't resolvable, that source is phase two regardless of sponsor enthusiasm |
-| Retention, legal hold, eDiscovery | Conversation store, deletion pipeline, audit schema, an admin surface that is itself audited |
-| Assistant publishing | Chat app vs. platform; introduces the harder authorisation problem (scope ≤ *viewer's* permissions, not author's) |
-| Identity, regions, workforce rules | Deployment topology; in some jurisdictions (Germany and the Netherlands, for example) the works council must agree to per-employee telemetry before it's an engineering matter |
-| Build vs. buy | Sometimes the honest answer is "buy" — and an FDE who says so has served the customer |
+| Model sourcing and data-processing terms | Weeks of thin orchestration, or quarters spent also running a GPU fleet. Also whether the hot path needs a classification gate |
+| Grounding scope + **are ACLs query-time resolvable?** | A single index versus federated connectors; pre-filter, post-filter or both. A source whose ACLs we cannot resolve waits for phase two, however keen its sponsor |
+| Retention, legal hold, eDiscovery | The conversation store, a deletion pipeline, the audit schema, and an admin surface that is audited too |
+| Assistant publishing | A chat app or a platform. A platform brings the harder authorisation problem: scope must stay within the *viewer's* permissions, not the creator's |
+| Identity, regions, workforce rules | The deployment topology. In some jurisdictions, such as Germany and the Netherlands, the works council must approve per-employee telemetry before engineering even starts |
+| Build vs. buy | Sometimes the honest answer is "buy", and the FDE who says so serves the customer well |
 
 ### Functional requirements (must / should / could)
 
-- **Must — authenticated streaming chat** with history, branching, regeneration, titles.
-- **Must — permission-aware retrieval** returning only what the asking employee could already open, with citations.
-- **Must — model routing behind a provider abstraction**; survive an outage or deprecation without a rewrite.
-- **Must — input and output policy enforcement** on both directions of the model call.
-- **Must — retention, legal hold, admin discovery**, with every admin read itself audited.
-- **Must — usage accounting and per-user quotas** so cost is attributable and a runaway script is contained.
-- **Should — custom assistants** with scoped instructions, tools and data; governed at publish, re-authorised at view.
-- **Could — assistant marketplace, cross-conversation memory, images, voice.**
+- **Must: authenticated streaming chat** with titles, history, branching and regeneration.
+- **Must: permission-aware retrieval** that returns only documents the employee could already open, each with a citation.
+- **Must: model routing through a provider abstraction**, so an outage or a deprecated model never forces a rewrite.
+- **Must: policy checks on input and output**, covering both directions of each model call.
+- **Must: retention, legal hold and admin discovery**, and each admin read goes into the audit log.
+- **Must: usage metering and per-user quotas.** Every cost gets an owner, and a runaway script hits a ceiling.
+- **Should: custom assistants** with their own instructions, tools and data. Governed when published, re-authorised whenever viewed.
+- **Could: an assistant marketplace, memory across conversations, images and voice.**
 
 ### Safety goals as measurable behaviour
 
-- **Zero retrieval above caller access level** — no chunk, citation, title, snippet or cached answer from a document they can't open, *including in a shared conversation*.
-- **Zero uncontrolled egress** — allowed destinations are enumerable and enforced, not conventional.
-- **Complete, tamper-evident audit** — enough to answer "who saw what, when."
-- **Bounded per-user spend** — one account cannot consume unbounded budget before something stops it.
+- **No retrieval above the caller's access level.** Nothing from a document they cannot open may surface: not a chunk, title, snippet, citation or cached answer, *shared conversations included*.
+- **No uncontrolled egress.** Every permitted destination is listed, and the system enforces the list rather than trusting habit.
+- **A complete audit that reveals tampering.** It must answer "who saw what, and when".
+- **Capped spend per user.** No account can burn an unlimited budget before something stops it.
 
 ### Explicit MVP exclusions
 
-- **No writes to systems of record.** Read and draft only; agentic writes are a separate risk review.
-- **No fine-tuning on company data.** Grounding is retrieval, not weights — also the sentence that most reassures Legal.
-- **No voice, images, or code execution sandbox.** Each is a product of its own.
-- **No external or customer-facing access.** Employees behind SSO only.
-- **No cross-conversation long-term memory.** A privacy consultation before it is a feature.
+- **Nothing writes to systems of record.** The MVP reads and drafts. Agentic writes need a risk review of their own.
+- **We do not fine-tune on company data.** We ground through retrieval, not weights. No line calms Legal more.
+- **No voice, no images, no code execution sandbox.** Each is a product in its own right.
+- **No outside or customer access.** Only employees signed in through SSO.
+- **No long-term memory across conversations.** It needs a privacy consultation first.
 
 ### Question tree (walk this aloud in 2 minutes)
 
@@ -218,27 +216,27 @@ flowchart TD
     K -->|"Something specific"| M["That constraint is now\nthe design's center"]
 ```
 
-- **Can prompts leave our boundary?** No → self-hosted, GPU planning, lower quality bar, longer timeline. Yes → thin orchestration, weeks. Depends → classifier in the hot path, two backends.
-- **Ground on day one?** No → ship general chat in six weeks, capture demand. Yes → which three sources, and are their ACLs query-time resolvable?
-- **Who publishes assistants?** Nobody → simpler. Anyone → publish review, view-time re-authorisation, deprecation lifecycle.
-- **What's wrong with buying?** Nothing named → recommend buy. Something specific → that constraint is now the design's centre.
+- **Can prompts leave our boundary?** No: self-host, plan GPUs, accept a lower quality bar and a longer timeline. Yes: thin orchestration, delivered in weeks. It depends: a classifier in the hot path and two backends.
+- **Do we ground on day one?** No: launch plain chat within six weeks and measure demand. Yes: name the three sources and check their ACLs resolve at query time.
+- **Who may publish assistants?** Nobody: a simpler build. Anyone: publish review, re-authorisation at view time and a deprecation lifecycle.
+- **What is wrong with buying?** Nothing specific: recommend buying. A concrete constraint: it becomes the centre of the design.
 
 ### Traceability: requirement → owner
 
 | Requirement | Owning component | Enforcement point |
 |---|---|---|
-| Authenticated streaming chat | Conversation service + streaming relay | Gateway session validation per turn |
-| Permission-aware retrieval | Retrieval service + connector ACL resolvers | Query-time filter, re-checked at citation render |
-| Model routing and failover | Model router + provider adapters | Route decision recorded per turn |
-| Input/output policy | Policy & DLP layer | Pre-dispatch scan; streaming output scan |
-| Retention, hold, discovery | Conversation store + retention worker + admin console | Retention class on conversation; hold blocks deletion |
-| Custom assistants | Assistant registry | Publish review; view-time scope intersection |
-| Usage accounting | Usage/quota service | Admission check before model dispatch |
-| Audit completeness | Audit pipeline | Append-only write on every turn and admin read |
+| Authenticated streaming chat | Conversation service + streaming relay | The gateway validates the session on every turn |
+| Permission-aware retrieval | Retrieval service + connector ACL resolvers | Filtered at query time, checked again when the citation renders |
+| Model routing and failover | Model router + provider adapters | Each turn records its route decision |
+| Input/output policy | Policy & DLP layer | A scan before dispatch; a scan over the streamed output |
+| Retention, hold, discovery | Conversation store + retention worker + admin console | Each conversation carries a retention class; a hold stops deletion |
+| Custom assistants | Assistant registry | Review at publish; scope intersection at view time |
+| Usage accounting | Usage/quota service | An admission check before the model call goes out |
+| Audit completeness | Audit pipeline | An append-only write for every turn and every admin read |
 
 ### When the interviewer won't answer
 
-- Don't stall. **Default with a reason, hedge with a cost, invite redirection.**
-- "I'll assume a commercial API under zero-retention terms — fastest to the adoption bar. A provider abstraction means 'actually self-hosted' changes one adapter and the capacity plan, not the architecture. Tell me to design the self-hosted case and I'll re-sequence."
+- Keep moving. **Pick a default and give the reason, name the cost of being wrong, and invite a correction.**
+- "I'll assume a commercial API on zero-retention terms, because it reaches the adoption bar fastest. Behind a provider abstraction, 'it's self-hosted after all' means only the capacity plan and a single adapter change. The architecture holds. If you want self-hosted, tell me and I'll change the order."
 
 ---
