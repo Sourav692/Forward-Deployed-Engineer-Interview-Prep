@@ -29,6 +29,7 @@ import {
   STORY_BANK,
   TABS,
   TRACKS,
+  wordCount,
 } from '../src/lib/editorial.ts'
 import { existsSync } from 'node:fs'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
@@ -37,7 +38,7 @@ import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts
 import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
 import { diagramKey } from '../src/lib/diagram-key.ts'
 import { mermaidFences } from './render-diagrams.mjs'
-import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
+import { CASEBOOK_MODULE, MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
@@ -701,6 +702,43 @@ for (const [token, files] of acronymPages) {
 }
 
 rows.push(`\n  editorial: ${pages.size} pages with metadata, ${cited.size} cited by reviews, ${linksChecked} internal links resolved`)
+
+// ------------------------------------------------------------------ page length (ENH-25)
+//
+// No page or case tab over WORD_LIMIT words (audit check PQ-12): past that, readers lose
+// their place, and the page is hard to use on a phone. Words count as reading time counts
+// them (`wordCount`). Answer keys are listed but not held to the limit: a worksheet shows
+// them one question at a time, behind "Show the model answer".
+// A warning until every page is split; then LONG_PAGE_IS_ERROR turns it into a failure.
+const WORD_LIMIT = 2500
+const LONG_PAGE_IS_ERROR = false
+{
+  const sizes: { label: string; words: number; key: boolean }[] = []
+  for (const file of await listMarkdown(CONTENT)) {
+    const rel = relative(CONTENT, file).split(sep)
+    const name = rel.at(-1)!.replace(/\.md$/, '')
+    const key = rel.includes('answer-keys')
+    const label =
+      rel[0] === 'learn'
+        ? `lesson ${rel.slice(1).join('/').replace(/\.md$/, '')}`
+        : rel[0] === 'behavioural'
+          ? name
+          : rel[1] === CASEBOOK_MODULE
+            ? `case ${rel[3]} · ${name}`
+            : `${key ? 'answer key' : 'worksheet'} ${name}`
+    sizes.push({ label, words: wordCount(await readFile(file, 'utf8')), key })
+  }
+  const over = sizes.filter((s) => s.words > WORD_LIMIT).sort((a, b) => b.words - a.words)
+  const pagesOver = over.filter((s) => !s.key)
+  rows.push(
+    `\n  page length: ${sizes.length} pages and tabs, ${pagesOver.length} over ${WORD_LIMIT.toLocaleString('en-GB')} words` +
+      ` (${over.length - pagesOver.length} answer keys over, not held to the limit)`,
+  )
+  for (const s of over) rows.push(`    ${s.key ? '·' : '⚠'} ${s.words.toLocaleString('en-GB')}  ${s.label}`)
+  if (LONG_PAGE_IS_ERROR) {
+    for (const s of pagesOver) failures.push(`page length: ${s.label} has ${s.words} words, over ${WORD_LIMIT}; split it at an H2 (ENH-25)`)
+  }
+}
 
 // ------------------------------------------------------------------ search index budget
 //

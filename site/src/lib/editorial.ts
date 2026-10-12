@@ -361,17 +361,24 @@ export const TABS: Record<string, { label: string; purpose: string }> = {
 export const WORDS_PER_MINUTE = 180
 
 /**
- * Whole minutes to read a markdown document: words outside code fences (diagrams and
- * code are not read word by word) at WORDS_PER_MINUTE, rounded up, never zero. The one
- * reading-time rule (ENH-22): the Learn and casebook syncs and the pages all call it, so
- * a page and its listing show the same time.
+ * Words a reader reads in a markdown document: words outside code fences (diagrams and
+ * code are not read word by word). Reading time and the page-length limit (ENH-25) both
+ * count with it, so "2,500 words" and "14 min read" measure the same thing.
  */
-export function readingMinutes(markdown: string): number {
-  const words = markdown
+export function wordCount(markdown: string): number {
+  return markdown
     .replace(/```[\s\S]*?```/g, ' ')
     .split(/\s+/)
     .filter((w) => /[A-Za-z0-9]/.test(w)).length
-  return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE))
+}
+
+/**
+ * Whole minutes to read a markdown document: its `wordCount` at WORDS_PER_MINUTE,
+ * rounded up, never zero. The one reading-time rule (ENH-22): the Learn and casebook
+ * syncs and the pages all call it, so a page and its listing show the same time.
+ */
+export function readingMinutes(markdown: string): number {
+  return Math.max(1, Math.ceil(wordCount(markdown) / WORDS_PER_MINUTE))
 }
 
 // ---------------------------------------------------------------- Last-Day Review
