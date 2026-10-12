@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T09:42:54.484Z",
+  "generatedAt": "2026-10-12T09:59:14.127Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -251,7 +251,11 @@
               "tabs": [
                 {
                   "id": "main",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "main-part-2",
+                  "label": "Interview Guide 2"
                 },
                 {
                   "id": "deep-dive",
@@ -282,7 +286,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 78,
+              "minutes": 79,
               "updated": "2026-10-12"
             },
             {
@@ -410,7 +414,11 @@
               "tabs": [
                 {
                   "id": "main",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "main-part-2",
+                  "label": "Interview Guide 2"
                 },
                 {
                   "id": "deep-dive",
@@ -441,7 +449,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 83,
+              "minutes": 84,
               "updated": "2026-10-12"
             },
             {
@@ -1072,11 +1080,39 @@
                 },
                 {
                   "id": "tutorial-v2",
-                  "label": "Tutorial"
+                  "label": "Tutorial 1"
+                },
+                {
+                  "id": "tutorial-v2-part-2",
+                  "label": "Tutorial 2"
+                },
+                {
+                  "id": "tutorial-v2-part-3",
+                  "label": "Tutorial 3"
+                },
+                {
+                  "id": "tutorial-v2-part-4",
+                  "label": "Tutorial 4"
+                },
+                {
+                  "id": "tutorial-v2-part-5",
+                  "label": "Tutorial 5"
+                },
+                {
+                  "id": "tutorial-v2-part-6",
+                  "label": "Tutorial 6"
+                },
+                {
+                  "id": "tutorial-v2-part-7",
+                  "label": "Tutorial 7"
+                },
+                {
+                  "id": "tutorial-v2-part-8",
+                  "label": "Tutorial 8"
                 }
               ],
-              "minutes": 81,
-              "updated": "2026-10-11"
+              "minutes": 85,
+              "updated": "2026-10-12"
             },
             {
               "slug": "reliable-workflow-orchestration",
@@ -1093,11 +1129,43 @@
                 },
                 {
                   "id": "tutorial-v2",
-                  "label": "Tutorial"
+                  "label": "Tutorial 1"
+                },
+                {
+                  "id": "tutorial-v2-part-2",
+                  "label": "Tutorial 2"
+                },
+                {
+                  "id": "tutorial-v2-part-3",
+                  "label": "Tutorial 3"
+                },
+                {
+                  "id": "tutorial-v2-part-4",
+                  "label": "Tutorial 4"
+                },
+                {
+                  "id": "tutorial-v2-part-5",
+                  "label": "Tutorial 5"
+                },
+                {
+                  "id": "tutorial-v2-part-6",
+                  "label": "Tutorial 6"
+                },
+                {
+                  "id": "tutorial-v2-part-7",
+                  "label": "Tutorial 7"
+                },
+                {
+                  "id": "tutorial-v2-part-8",
+                  "label": "Tutorial 8"
+                },
+                {
+                  "id": "tutorial-v2-part-9",
+                  "label": "Tutorial 9"
                 }
               ],
-              "minutes": 86,
-              "updated": "2026-10-11"
+              "minutes": 90,
+              "updated": "2026-10-12"
             },
             {
               "slug": "configurable-platform-customer-workflows",
@@ -1114,11 +1182,35 @@
                 },
                 {
                   "id": "tutorial-v2",
-                  "label": "Tutorial"
+                  "label": "Tutorial 1"
+                },
+                {
+                  "id": "tutorial-v2-part-2",
+                  "label": "Tutorial 2"
+                },
+                {
+                  "id": "tutorial-v2-part-3",
+                  "label": "Tutorial 3"
+                },
+                {
+                  "id": "tutorial-v2-part-4",
+                  "label": "Tutorial 4"
+                },
+                {
+                  "id": "tutorial-v2-part-5",
+                  "label": "Tutorial 5"
+                },
+                {
+                  "id": "tutorial-v2-part-6",
+                  "label": "Tutorial 6"
+                },
+                {
+                  "id": "tutorial-v2-part-7",
+                  "label": "Tutorial 7"
                 }
               ],
-              "minutes": 77,
-              "updated": "2026-10-11"
+              "minutes": 81,
+              "updated": "2026-10-12"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -1135,11 +1227,27 @@
                 },
                 {
                   "id": "tutorial-v2",
-                  "label": "Tutorial"
+                  "label": "Tutorial 1"
+                },
+                {
+                  "id": "tutorial-v2-part-2",
+                  "label": "Tutorial 2"
+                },
+                {
+                  "id": "tutorial-v2-part-3",
+                  "label": "Tutorial 3"
+                },
+                {
+                  "id": "tutorial-v2-part-4",
+                  "label": "Tutorial 4"
+                },
+                {
+                  "id": "tutorial-v2-part-5",
+                  "label": "Tutorial 5"
                 }
               ],
-              "minutes": 61,
-              "updated": "2026-10-11"
+              "minutes": 63,
+              "updated": "2026-10-12"
             },
             {
               "slug": "self-adapting-agent",
@@ -1148,15 +1256,23 @@
               "tabs": [
                 {
                   "id": "guide",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "guide-part-2",
+                  "label": "Interview Guide 2"
+                },
+                {
+                  "id": "guide-part-3",
+                  "label": "Interview Guide 3"
                 },
                 {
                   "id": "interview-template",
                   "label": "Answer Template"
                 }
               ],
-              "minutes": 44,
-              "updated": "2026-10-11"
+              "minutes": 46,
+              "updated": "2026-10-12"
             },
             {
               "slug": "personal-assistant-with-memory",
@@ -1165,11 +1281,19 @@
               "tabs": [
                 {
                   "id": "guide",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "guide-part-2",
+                  "label": "Interview Guide 2"
+                },
+                {
+                  "id": "guide-part-3",
+                  "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 31,
-              "updated": "2026-10-11"
+              "minutes": 32,
+              "updated": "2026-10-12"
             },
             {
               "slug": "production-llm-gateway",
@@ -1178,11 +1302,23 @@
               "tabs": [
                 {
                   "id": "guide",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "guide-part-2",
+                  "label": "Interview Guide 2"
+                },
+                {
+                  "id": "guide-part-3",
+                  "label": "Interview Guide 3"
+                },
+                {
+                  "id": "guide-part-4",
+                  "label": "Interview Guide 4"
                 }
               ],
-              "minutes": 33,
-              "updated": "2026-10-11"
+              "minutes": 35,
+              "updated": "2026-10-12"
             }
           ]
         },
@@ -1198,11 +1334,19 @@
               "tabs": [
                 {
                   "id": "guide",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "guide-part-2",
+                  "label": "Interview Guide 2"
+                },
+                {
+                  "id": "guide-part-3",
+                  "label": "Interview Guide 3"
                 }
               ],
               "minutes": 33,
-              "updated": "2026-10-11"
+              "updated": "2026-10-12"
             },
             {
               "slug": "scale-prototype-to-production",
@@ -1211,11 +1355,19 @@
               "tabs": [
                 {
                   "id": "guide",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "guide-part-2",
+                  "label": "Interview Guide 2"
+                },
+                {
+                  "id": "guide-part-3",
+                  "label": "Interview Guide 3"
                 }
               ],
               "minutes": 33,
-              "updated": "2026-10-11"
+              "updated": "2026-10-12"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -1224,11 +1376,19 @@
               "tabs": [
                 {
                   "id": "guide",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "guide-part-2",
+                  "label": "Interview Guide 2"
+                },
+                {
+                  "id": "guide-part-3",
+                  "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 32,
-              "updated": "2026-10-04"
+              "minutes": 34,
+              "updated": "2026-10-12"
             },
             {
               "slug": "decomposition-classics-67-68-69",
@@ -1237,11 +1397,19 @@
               "tabs": [
                 {
                   "id": "guide",
-                  "label": "Interview Guide"
+                  "label": "Interview Guide 1"
+                },
+                {
+                  "id": "guide-part-2",
+                  "label": "Interview Guide 2"
+                },
+                {
+                  "id": "guide-part-3",
+                  "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 33,
-              "updated": "2026-10-04"
+              "minutes": 34,
+              "updated": "2026-10-12"
             }
           ]
         }

@@ -1,0 +1,108 @@
+# Decomposition Classics: 911 Response Times, Bank Fraud, Medication Errors, part 3
+
+## 8. Compare the Three Side by Side
+
+The method repeats. The mission, the riskiest input and the human boundary change every time.
+
+| | #67 911 response | #68 Bank fraud | #69 Medication errors |
+|---|---|---|---|
+| Hidden conflict in the mission | Speed vs. cost vs. equity | Catch rate vs. customer friction vs. regulatory approval | Safety vs. alert fatigue vs. nurse time |
+| Riskiest input | Traffic sensors, thin where equity is judged | Labels, defined three ways | Administration records, which may not exist |
+| First slice | Interval segmentation report | Single investigator queue | Retrospective dose reconciliation |
+| Model, chosen last | Travel-time regression plus coverage optimisation | Explainable classifier on one fraud type | Rules first, risk ranking later |
+| Language model's role | Summarise call notes, if triage is slow | Summarise case notes; help relabel | Extract missing fields, human-confirmed |
+| Human boundary | Dispatcher keeps authority | Model risk signs before any decision changes | Pharmacist confirms before a nurse is alerted |
+| Guardrail metric | Worst district's 90th percentile | False-positive rate on legitimate customers | Alerts per nurse per shift |
+| Source curveball or likely one | GPS feed lost | A legacy system withheld | No bedside scanning |
+
+Read the fifth row as a pattern. In none of the three is a language model the core. Each gets a bounded assisting role behind a human. That is the source's pattern made concrete: goal first, data second, model last.
+
+## 9. Answer the Tier 2 Probes These Cases Invite
+
+The source lists 27 Tier 2 probes. These six are the ones these three cases draw. Answers are *(own construction)*.
+
+**"When do you route to human-in-the-loop?"** Route whenever the action is irreversible, regulated, or clinical. In all three cases that means always, for version one. The system recommends and the human decides. The design question is where the human sits: the dispatcher at the console, model risk at the gate, the pharmacist before the nurse.
+
+**"How does auditing and logging drive HITL decisions?"** Log every recommendation with its reason, and every accept or override with the human's reason. Override clusters show where the system is wrong. Falling override rates, on cases later confirmed correct, are the evidence for widening automation.
+
+**"What metrics matter beyond task success?"** Guardrail metrics that catch harm the headline hides. The worst district's percentile, false positives on legitimate customers, and alerts per nurse per shift. Each can worsen while the headline improves.
+
+**"Design an evaluation harness."** Backtest on history first, then shadow, then a pilot against a matched comparison. Hold out a labelled set the model never trains on. For #68 the holdout is relabelled to the one definition. For #69 it is pharmacist-reviewed.
+
+**"Graceful degradation when the model is unavailable?"** Each design keeps the existing process as the primary path. The dispatcher's standard view, the legacy fraud rules, and the pharmacy's order-time checks all stay live. The system adds a check; an outage removes the addition, never the baseline.
+
+**"How do you detect goal drift?"** Watch the guardrail metrics, not only the target. A fraud model can raise its catch rate by declining more customers. A coverage optimiser can cut the average by abandoning the far districts. The guardrail metric is how drift shows up.
+
+## 10. Open Each Case in Two Minutes
+
+Each opener is *(own construction)*. Say it before drawing anything.
+
+**#67.** "Before designing anything, I want to pin down what faster means. Response time can be improved on average while the outer districts get slower, so I'd ask whether the target is a citywide average or a percentile every district must meet. I'd also ask which interval counts. Time to scene has four parts: answering, triage, dispatch and travel. I'd assume the goal is the 90th percentile for priority-one calls, by district, with no new budget. The first thing I'd build isn't a model. It's a join of call records and GPS tracks that shows where the minutes go. If travel dominates, the lever is where idle ambulances wait. If triage dominates, it's a completely different project. Dispatchers keep authority throughout."
+
+**#68.** "The hard part here isn't the model, it's that three systems each mean something different by fraud. So in the first 90 days I'd deliver two things. The first is one investigator queue across all three systems, with customers matched between them. That creates value on its own, because fraud that crosses systems becomes visible. The second is a relabelled sample with one agreed definition, and a shadow model on one fraud type validated against it. Nothing changes a decision until model risk signs off. I'd also be clear that unlabelled cases mean uninvestigated, not legitimate."
+
+**#69.** "I'd start by asking what the system is allowed to do, and I'd propose it only flags risk for a clinician. It never changes an order. Next I'd want to measure the error rate, because incident reports undercount. The first slice reconciles ordered, dispensed and administered doses for a few time-critical drugs after surgery. Pharmacists review the flags. That gives a baseline and a precision figure before any alert reaches a ward. Precision matters because alert fatigue is itself a safety risk. Nurse schedules help find where errors cluster, by load and handover, never to rank nurses."
+
+## 11. Answer the Cost Pivot in Ten Minutes
+
+The source has no cost drill for these cases, so the card is *(own construction)*. It is grounded in two drivers from the cost playbook: agent steps and tool calls, and batch jobs and evaluation pipelines. The pivot to expect is "this is getting expensive, where does the money go?"
+
+| | |
+|---|---|
+| Dominant driver | Not model calls. It is data engineering and human review time: joins, entity resolution, relabelling and pharmacist confirmation. Model spend is small because the core models are regressions, classifiers and rules. Language models run only on notes. |
+| Cheapest lever first | Keep language models off the high-volume streams: GPS pings, transactions and dispensing events. Run them only on the narrow text tasks, in batch, with a small model. Spend human review on a stratified sample, not on every record. Reuse the relabelled set as the evaluation set. |
+| Metric that proves it | Cost per investigated case (#68); pharmacist minutes per confirmed flag (#69); cost per recommendation accepted (#67); language-model calls per thousand events, which should stay near zero |
+| Do not | Send every transaction, GPS ping or dispense event to a language model, or cut human review below the level that keeps precision safe |
+| 60-second line | These systems are cheap in compute and expensive in people. The models that matter are small. The expensive part is building one trustworthy label, so spend review time on a stratified sample and reuse it for evaluation. Keep language models on notes, in batch, and off the event streams. |
+
+The four verbs still generate the answer. Measure human-review minutes and model calls per case. Route high-volume events to rules and small models, and text to a language model only in batch. Bound review to a sample. Cache resolved entities and reconciled labels so no one pays twice.
+
+---
+
+## Key Takeaways
+
+- The round scores clarifying and narrated reasoning, and it fails architecture-first answers and hand-waved evaluation.
+- Six steps on a clock turn a vague prompt into a mission, owners, an input map, ordered workstreams, a walking skeleton and a live re-plan.
+- The input map, with owner and quality-risk columns, is the tool that stops a model being chosen before its data is understood.
+- Workstreams go in order of which unknown could kill the project, and in all three cases that is the data.
+- #67 decomposes time to scene first, protects the worst district, and treats the model as regression plus optimisation.
+- #68 delivers a single queue and one reconciled label in 90 days, with a shadow model that changes nothing until model risk signs.
+- #69 lets the system only flag, measures the error rate before reducing it, and treats alert fatigue as a safety risk.
+- Side by side, the mission, the riskiest input and the human boundary change, and the language model is never the core.
+- The Tier 2 probes are answered with human boundaries, guardrail metrics, staged evaluation and existing processes as fallback.
+- Each opener names the hidden conflict and the first slice within two minutes.
+- The cost pivot lands on people, not tokens: sample human review and keep language models off the event streams.
+
+## Check Yourself
+
+1. **What are the two failure modes the source says eliminate candidates?** Jumping to architecture before clarifying scope, and hand-waving evaluation.
+2. **What are the six steps, in order?** Clarify the mission; stakeholders and success metrics; map the inputs; decompose into workstreams sequenced by risk; walking-skeleton MVP; adapt live.
+3. **Which two columns does this page add to the input map, and why?** "What it can answer," which ties data to the decision, and "quality risk," where curveballs land.
+4. **In #67, why segment the interval before building anything?** The slow segment chooses the lever. If triage dominates, routing work is the wrong project.
+5. **In #67, which metric protects equity?** The worst district's 90th-percentile time to scene, which must not rise.
+6. **In #67, what changes when GPS disappears?** Travel estimates fall back to traffic sensors, which are thin in outer districts. The pilot stays in a sensor-rich district, and equity error bars widen.
+7. **In #68, why is "unlabelled" not "legitimate"?** Unlabelled cases were never investigated, so treating them as negatives teaches the model that uninvestigated fraud is fine.
+8. **In #68, what is the honest 90-day deliverable?** A single investigator queue plus a validated shadow model on one fraud type, not a production model deciding transactions.
+9. **In #69, why is precision a safety property?** Low precision causes alert fatigue, and ignored alerts include the real ones.
+10. **In #69, why must nurse schedules never rank nurses?** Surveillance discourages honest incident reporting, which the error measurement depends on.
+11. **Across all three, what role does a language model play?** A bounded assisting role on free text, behind a human, never the core decision.
+12. **What is the 60-second cost answer?** These systems cost people, not tokens. Sample human review, reuse the reviewed set for evaluation, and keep language models on notes in batch.
+
+## References
+
+All paths are relative to the repository root.
+
+| Section | Source |
+|---|---|
+| Case table, 1, 2, 4, 5.9 (the GPS curveball), 9 (probe wording) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: section 1 (what the round is, two failure modes, scoring), section 2 prompts 2–4 (#67, #68, #69) and the pattern note, section 3 Tier 2 probes, section 4 six-step framework |
+| 2 (opener and practice floor), 7.9 ("is AI the right solution") | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: reusable answer template, preparation plan, Questions 12 and 18 |
+| 4 (gate vocabulary), 6.4 (gated phases) | `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md` (stages, gates, named sign-off authorities); `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent.md` |
+| 11 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 5 (agent steps and tool calls) and 8 (batch jobs and evaluation pipelines) |
+| 3 (added columns), 5, 6, 7, 8, 9 (answers), 10, 11 (card), and every item marked own construction | Built for this page from the sources' arguments; not source material. The repo has no worked treatment of emergency dispatch, bank fraud or medication safety. |
+| Cross-references | G12 (scoping gates), G17 (evaluation raised unprompted, the #66 sibling prompt) in `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/`; #62 (building when the customer's data is poor) overlaps #68 |
+
+### Fact-check sources (checked 27 Sep 2026)
+
+- [AHRQ PSNet: Reporting Patient Safety Events](https://psnet.ahrq.gov/primer/reporting-patient-safety-events) — incident reports capture only a fraction of events compared with record review and observation
+- [AHRQ PSNet: Culture of Safety](https://psnet.ahrq.gov/primer/culture-safety) — reporting depends on a blame-free environment; individual blame impairs safety culture
+- [AHRQ PSNet: Factors influencing the reporting of medication errors and near misses among nurses](https://psnet.ahrq.gov/issue/factors-influencing-reporting-medication-errors-and-near-misses-among-nurses-systematic-mixed) — fear of blame and consequences is a barrier to nurses reporting medication errors
