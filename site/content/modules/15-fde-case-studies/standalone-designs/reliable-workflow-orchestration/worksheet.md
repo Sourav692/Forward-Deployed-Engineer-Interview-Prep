@@ -37,7 +37,7 @@ Design a GenAI FDE solution for a **Reliable Workflow Orchestration System**. On
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Start from one of the rendered diagrams and adapt it to this case:
+Fill in each part of your architecture for this case:
 - Durable state and history:
 - Scheduling:
 - Timers and signals:

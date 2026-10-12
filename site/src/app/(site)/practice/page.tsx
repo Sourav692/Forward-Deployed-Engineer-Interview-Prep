@@ -118,7 +118,7 @@ export default async function PracticePage() {
       <AreaSection
         id="mocks"
         title="Mock Interviews"
-        description="Full rounds under time, scored against the interviewer rubric. The mock formats and scorecards are in the Learn module below."
+        description="Full rounds under time, scored against the interviewer rubric. The mock formats and scorecards are in the module below."
       >
         <div className="space-y-2">
           {mocks.map((m) => (
