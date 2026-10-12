@@ -48,6 +48,24 @@ We scored this design once against our decomposition rubric of 20 items in 4 pha
   - Next, language and accessibility. The permission-filtered retrieval and the output scanning were designed for English text, and Section 6's tests prove them only on English. A true global rollout must re-run those contract tests on content in other languages. Scanners for DLP or classification that learned on English text may catch too much elsewhere, or miss things. Accessibility is in better shape. The streaming relay already sends typed events (token/citation/route_change/blocked/done), so assistive technology has a clean signal to announce each change of state. The gap here is in testing and QA, not in the architecture.
   - In the interview, link this to the adoption case the platform was built on. If the governed tool serves staff who work in other languages, or who rely on assistive technology, less well than everyone else, those people drift back to unapproved tools. That recreates the shadow-IT risk the whole project was funded to remove, only for a smaller group.
 
+## Key Takeaways
+
+- The result owed is not a ChatGPT clone but AI use moved off consumer tools, so hold two bars at once: nothing leaves without an agreement we control, and time to first token near what the free tools give.
+- Measure success with consumer-AI egress already in the proxy logs, aiming for an 80% cut within two quarters while weekly active use reaches 50%.
+- Raise build vs. buy before you are asked; the honest answer is a hybrid that buys the model and builds orchestration, connectors and governance.
+- Size on open streams, not request rate: 40 turns a second held for 20 seconds is 800 concurrent connections, and that figure sets the relay tier and the load balancer limits.
+- At about 5.8M tokens a minute at peak, the provider's TPM quota binds first, and that limit lives in a contract, not a cluster.
+- Resending full history makes input grow quadratically, so keep a sliding window with a pinned head and put stable content in a cacheable prefix from day one.
+- Re-authorise the conversation on every turn, because people share and revoke access between turns.
+- Derive retrieval permissions from the person asking: an assistant's effective scope is its scope intersected with the viewer's live permissions, so a scope caps access and never grants it.
+- Treat index ACLs as a cheap pre-filter only; the check that decides runs against live permissions and drops any chunk it cannot resolve.
+- Scan streamed output in sliding windows of 256 with an overlap of 64, so a secret split across a boundary cannot slip through and the answer still streams.
+- A stream that opens with `200` and stops at token 300 has failed, so the SLI counts `done` events and every path, complete, blocked or failed, finalises the turn, records usage and writes audit.
+- If the audit write fails the turn fails too, because this platform exists to be defensible.
+- Assume injection sometimes succeeds and make it worthless: untrusted content has no authority, the MVP has no write tools, and permission filtering caps the prize.
+- When the provider fails, trip a breaker and move to a secondary or smaller model with a label, because an error page sends staff back to the consumer tool.
+- Roll out in four phases that each add one class of risk, gated on measurements such as zero permission-boundary violations, and read the DLP block rate together with its false-positive rate.
+
 ## Level calibration
 
 For an internal "own ChatGPT" serving 40,000 employees, the levels separate on whether permissions and adoption are the design or features bolted onto chat.

@@ -58,6 +58,24 @@ Four items fall short: 7, 10, 17 and 18. Each gap is a deliberate choice of scop
 - That may change. A later release might add an AI helper for authoring, say one that drafts an approval graph from a plain-language description. The fail-closed stance of Section 6 applies unchanged. Whatever the AI proposes is untrusted input. It passes through the same schema, policy and cycle-detection gates as config a person wrote, and it never gets a route around them.
 - Under pressure from the interviewer, state the trade-off. AI-assisted authoring adds risk at the very boundary this design already treats as hostile: the path from config editor to validator in Section 4. It raises the *volume* of untrusted input that reaches the validator. The trust model stays the same.
 
+## Key Takeaways
+
+- Reframe "configuration" as the outcome: one stable product core with customisation that is safe, versioned and supportable, so ten customers never become ten forks.
+- Measure how often a new customer variation ships with no fork, no hotfix and no support escalation, not how many fields are configurable.
+- Who writes the configuration is an architecture question, because customer admins need validation, previews, narrow building blocks and safe defaults.
+- Size for the peak: 1,000 config versions a day is about 42 an hour, but half of them inside a 2-hour window is about 250 an hour before retries.
+- Keep validation out of the save API, so save stays fast and durable, validation is queued and bounded, and deployment is idempotent and retryable.
+- Deployment capacity is set by fan-out across tenants, regions and integrations, not by the number of human edits.
+- Split the control plane, where configs are written, checked, versioned and promoted, from the data plane that runs live workflows, so risky change stays off the hot path.
+- Publishing an immutable version is not switching it on: a tenant flag exposes it to one tenant, then a cohort, and rollback flips the flag back to the previous version.
+- The append-only `ConfigDeployment` ledger, not the config record, says which version is live, so a rollback is a new event and never an edit in place.
+- Publish runs parse, validate, authorise-by-policy, persist in that order, so cheap structural checks fail fast and nothing is written until every check passes.
+- Create-style calls carry an idempotency key: the same key and body return the same deployment, a changed body gets `422` and a retry still in flight gets `409`.
+- Arbitrary code is off by default, and any approved extension runs in a sandbox with least privilege, resource caps and limits on outbound traffic.
+- An infinite approval loop is caught by cycle detection at publish or a max-hop guard at runtime, and fails closed for that version while the tenant falls back to the last known-good one.
+- Partition by tenant ID so one tenant's approval surge stays in its partition; at 100 times the baseline that becomes per-tenant quotas and sharded queues.
+- Widen the configuration surface only after a second and third customer reuse the same mechanism, and steer by fork count and upgrade time per tenant.
+
 ## Level calibration
 
 On a shared workflow platform for ten customers, the levels separate on how far the answer goes past "make it configurable".

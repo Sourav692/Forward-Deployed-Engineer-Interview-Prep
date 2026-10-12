@@ -57,6 +57,24 @@ We scored this tutorial twice against our fixed 20-item decomposition rubric. On
 - Our design touches AI in just one place: before an LLM-driven step changes state, it must pass "typed validation and policy checks" (Section 5). I'd take that further with a concrete case. Suppose an LLM misreads or misroutes an approval. It could quietly approve something a human should have seen. That is an irreversible business effect, the same kind the failure-policy table in Section 6 already tells us to fail closed on.
 - So responsible AI needs no new framework. It plugs into the decision table we already have. Treat any model output that could start a payment, finish an approval or trigger a repair as untrusted input. Route it through the same human-review lane we already keep for irreversible or ambiguous compensation.
 
+## Key Takeaways
+
+- State the goal as one outcome: apply each business effect of a long-running process exactly once, keep its state visible, and compensate when a step fails.
+- Treat payment as the riskiest step because it cannot be reversed, so whatever else degrades, the design must still block a second payment.
+- Size from 10 million active workflows and 100 million activities a day, about 1,157 activities a second on average, then plan for peaks of 3x to 10x with at least double the observed peak as headroom.
+- Keep workflow state small and park documents and payloads in object storage, so 40 events of 1 KB across 10 million workflows stay near 400 GB of raw history.
+- At 10x growth, 1 billion activities a day or about 11.6k a second, expect replay latency, queue hot spots, storage fan-out or cost to break before application-server CPU does.
+- Split the control plane (registry, scheduler, timers, signal gateway, compensation engine, operations UI) from the data plane (queues and workers), so decisions scale apart from side effects.
+- Only the durable history store owns workflow progress: queues handle delivery, workers suggest effects, and the scheduler rebuilds its view from history each time.
+- When the worker dies after payment succeeds, the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does.
+- Give each side-effecting action its own idempotency key (`pay:`, `crm:`, `mail:`, `refund:`) rather than one key for the whole workflow.
+- Keep retry and compensation apart, because capped exponential backoff with jitter only spaces out attempts and only an explicit step such as a refund reverses a charge that already landed.
+- Model the seven-day approval as a durable timer state rather than a sleep loop or a polling worker, then remind, escalate or expire it by policy.
+- Fail closed on approval completion, payment authorisation and repairs, let email degrade and CRM sync queue, and partition retry and dead-letter lanes by tenant and dependency so a stuck CRM connector cannot block other tenants.
+- Pin each running instance to the definition version it started with, and ship changes as a new version instead of editing executions in flight.
+- Make deterministic replay and crash recovery the first rollout gate, ahead of operator visibility and migration by version.
+- Prefer an orchestrated saga over choreography, because choreography lowers coupling but then nobody can point to where a run stands.
+
 ## Level calibration
 
 On this design the levels separate on how well the answer protects one business effect stretched across days, then across teams, then across years of workflow changes.
