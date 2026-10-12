@@ -58,6 +58,16 @@ Every strong cost answer follows four verbs in order. Measure tokens per prompt 
 
 ---
 
+## Level calibration
+
+For this assistant, the levels separate on how far the answer goes past the four memory scopes into identity, deletion and proof that recall holds.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "Thread checkpoints keyed by `thread_id` with a summary past about 15 turns, semantic facts under stable keys, episodes appended and capped at 100 per user, and an embedding index so reads fit inside the 300ms budget." | Where `user_id` comes from, what happens when a new preference contradicts an old one, and how to prove recall rather than fluency. |
+| Staff | "`user_id` comes from auth, never the model, and every channel resolves to it first. Writes queue after the reply, a deletion job clears every store, index and cache, and a recall harness plus cross-user tests gate changes to the extraction prompt, summary threshold and cap." | Who owns the memory policy, retention and residency as the customer's compliance rules change. |
+| Principal | "Memory is a product surface: users see, correct and erase it, retention is named per scope, the residency map pins stores to a region, and enterprise knowledge stays out of memory because it refreshes on a different cadence." | The customer's retention and compliance answers, plus real tenure data, decide whether 100 episodes and 30-day thread retention are right. |
+
 ## Key Takeaways
 
 - Clarify the four promises hidden in "remembers you" and settle that the 300ms budget is for reads.

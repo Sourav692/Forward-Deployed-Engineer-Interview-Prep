@@ -157,6 +157,16 @@ The five fixes generalise into five questions to ask of any multi-agent diagram,
 - What does the synthesiser do that "the diagram continues as a single line" hides?
 - Draw the corrected architecture from memory.
 
+## Level calibration
+
+On the travel assistant, the levels split on whether the candidate only fixes the diagram's flow or also owns how the fixed system runs across regions and teams.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "Rate limiting lives inside the gateway. The supervisor checks the semantic cache before it spawns anything, and each agent calls retrieval and MCP tools inside its own loop. A synthesiser merges whatever ran and lets Policy override Booking." | Which queries may be served from the cache at all, and what the synthesiser does when one spawned agent fails or times out. |
+| Staff | "Shared retrieval versus per-agent RAG is a deliberate choice: shared for residency and guardrails, or per-agent with governance so embedding infrastructure isn't duplicated. I'd run it like a platform, with per-agent traces, cache hit rate and token usage on dashboards, smaller models for simple agents, and retries and failover per region." | Who owns each regional vector DB and the MCP tool registry, and the rule for when a new agent earns its coordination overhead. |
+| Principal | "AMER, EMEA and APJ stores buy residency and latency, and one global store buys simpler operations, so I'd make that call region by region on an active-active footprint. Then I'd turn the five fixes into a review standard every team's multi-agent diagram has to pass." | Each region's residency rules and the real traffic mix, which only the customer can supply. Until then, [cache hit-rate target] and [p95 target] stay open. |
+
 **Next →** [The 60-Minute Whiteboard Method](../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md)
 
 ## Sources (checked 27 Sep 2026)

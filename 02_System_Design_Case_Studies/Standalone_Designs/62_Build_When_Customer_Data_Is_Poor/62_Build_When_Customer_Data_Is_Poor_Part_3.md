@@ -61,6 +61,16 @@ I'd expect review cost to fall on its own as labels accumulate. Thresholds can t
 
 ---
 
+## Level calibration
+
+The levels split on how far past the model the answer reaches: into the data, into the label loop, or into the customer's own source systems.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Refuses to start with model selection, runs the one-week readiness scorecard, and reads κ = 0.52 on failure codes as noise and κ = 0.81 on outcomes as a usable label. Builds quality gates that quarantine rather than default, extraction with per-field confidence, and a review queue for low-confidence fields. | How adjuster corrections become trusted labels, and what a 100-claim seed set can and cannot detect. |
+| Staff | Runs the review queue as a label factory: corrections made in the tool, reviewer and time recorded, disagreements adjudicated, weak supervision on the failure-code field. Sizes the eval honestly, reports it per ERP source and attachment type, splits by time, and exits each phase on a measured condition with shadow mode before live drafts. | Fixing the defects at source, and telling the customer with measurements rather than adjectives. |
+| Principal | Pushes a data contract onto both ERPs so serial number is required and one code list exists at entry, using the quarantine report as the evidence. Frames phase 0 as value the customer keeps without AI, writes the non-goals down, and says "not yet" when a red field blocks every route. | Whether the source owners will sign the contract, and the real scorecard thresholds, which only this customer's week-1 numbers can set. |
+
 ## Key Takeaways
 
 - Start by testing whether the data can support a measurable improvement, not by picking a model.

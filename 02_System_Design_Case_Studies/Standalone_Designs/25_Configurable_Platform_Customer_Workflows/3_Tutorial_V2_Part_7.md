@@ -58,6 +58,16 @@ Given the strength of first-pass coverage (only items 7, 10, 17, and 18 fall sho
 - Where this could legitimately arise: if a future evolution added an AI-assisted config authoring tool (e.g., "suggest an approval graph from a natural-language description"), the same fail-closed philosophy from Section 6 would extend directly — treat AI-suggested configuration as untrusted input that must pass the same schema/policy/cycle-detection gates as human-authored config, never as a bypass around them.
 - I would flag this trade-off if the interviewer pushes on it: an AI-assisted authoring layer increases the risk surface at exactly the boundary (Section 4's config editor → validator path) the chapter already treats as adversarial, so it changes the *volume* of untrusted input hitting the validator, not the trust model itself.
 
+## Level calibration
+
+On a shared workflow platform for ten customers, the levels separate on how far the answer goes past "make it configurable".
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "One workflow runtime, declarative configs in a versioned registry, a validator on publish and an adapter SDK for integrations. Save stays fast while validation and deployment run queued and idempotent, and an approval loop fails closed for that version." | Who authors and approves configs, how a new version reaches one tenant before the rest, and who owns rollback. |
+| Staff | "Split the control plane from the data plane: publish immutable versions, expose them behind a tenant flag and gate on the tenant test harness. Ownership is explicit: product owns templates, customers own values, integrations own adapters, ops own the `ConfigDeployment` ledger, and rollout starts with one willing customer admin." | Which variations earn a place in core, how old schema generations retire, and whether to build the engine at all. |
+| Principal | "Pick the workflow family the company wants to own and promote a capability to core only when its leverage is proven. Build the constrained configuration model, buy commodity pieces like identity federation, and run a deprecation policy with a small number of supported generations. Fork count and upgrade time per tenant are what the organisation steers by." | Which differences truly recur, and what upgrade promise customers expect, need the first customers' real change requests to settle. |
+
 ## Sources (checked 27 Sep 2026)
 
 - [The Idempotency-Key HTTP Header Field (IETF draft -07)](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html) — `422` for a reused key with a different body, `409` for a retry while the first request is still running, replay returns the original result

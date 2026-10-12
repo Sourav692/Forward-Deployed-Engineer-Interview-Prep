@@ -57,6 +57,16 @@ This tutorial was self-reviewed against the fixed 20-item decomposition rubric a
 - The chapter's only AI-adjacent point is that LLM-driven steps need "typed validation and policy checks" before changing state (Section 5). I'd extend that concretely: an LLM misclassifying or mis-routing an approval could silently auto-approve something that should have gone to a human — an irreversible business effect exactly like the ones Section 6's failure-policy table already says to fail closed on.
 - So the responsible-AI framing bolts directly onto the existing decision table rather than needing a new framework: any model output that could trigger payment, approval completion, or repair mutations gets treated as untrusted input, gated behind the same human-review lane the chapter already reserves for irreversible or ambiguous compensation.
 
+## Level calibration
+
+On this design the levels separate on how well the answer protects one business effect stretched across days, then across teams, then across years of workflow changes.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "Append-only history records intent before execution and completion after acknowledgement, each side effect gets its own idempotency key, and the seven-day approval is a timer state. If the worker crashes after payment succeeds, replay sees the charge and moves on; it never charges again." | Retry kept separate from compensation for each step, a pinned definition version per instance, and who is authorised to repair a stuck case. |
+| Staff | "Starts, signals and repairs are authorised at different strengths, and repairs go through a narrow audited API. Retry and dead-letter lanes are scoped by tenant and dependency, so a stuck CRM connector cannot block other tenants. Replay determinism and crash recovery are the first gate, then operator visibility and runbooks." | What the core engine owns versus adapters and configuration once a second workflow arrives, and whether partitions survive 10x growth without a rewrite. |
+| Principal | "Buy the durable-execution runtime and build the workflow definitions, compensation policy and idempotency boundaries. Core owns state, replay and versioning; payment, email and the three internal systems sit behind adapters. I'd size partitions for the 10x case of 100 million active workflows and about 11.6k activities a second." | The customer's real share of week-long waits and the loaded operator cost per repair, which decide whether history retention or manual repair dominates cost per workflow. |
+
 ## Sources (checked 27 Sep 2026)
 
 - [IETF draft-ietf-httpapi-idempotency-key-header-07](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html) — 400 for a missing key, 409 while the first request is in flight, 422 for a reused key with a different payload
