@@ -25,9 +25,15 @@ export const MOCK_MODULE = 'mock-interviews'
 export const MOCK_METHOD_LESSON = 'running-and-scoring-a-mock-interview'
 
 /** Client-simulation mocks (ENH-30): scored on the `client-sim` round only. */
-export const CLIENT_SIM_LESSONS: ReadonlySet<string> = new Set<string>([])
+export const CLIENT_SIM_LESSONS: ReadonlySet<string> = new Set([
+  'bank-policy-assistant-client-simulation',
+  'it-service-desk-agent-client-simulation',
+  'grocery-forecast-explainer-client-simulation',
+  'saas-support-deflection-client-simulation',
+  'prior-authorisation-packets-client-simulation',
+])
 /** Lessons in the mock module with no scorer: the method lesson and briefs to practise against. */
-export const UNSCORED_MOCK_LESSONS: ReadonlySet<string> = new Set([MOCK_METHOD_LESSON])
+export const UNSCORED_MOCK_LESSONS: ReadonlySet<string> = new Set([MOCK_METHOD_LESSON, 'contract-review-take-home-brief'])
 
 /** The rounds a lesson in the mock module is scored on, in picker order; none means no scorer. */
 export function mockRoundsFor(lessonSlug: string): MockRound[] {
