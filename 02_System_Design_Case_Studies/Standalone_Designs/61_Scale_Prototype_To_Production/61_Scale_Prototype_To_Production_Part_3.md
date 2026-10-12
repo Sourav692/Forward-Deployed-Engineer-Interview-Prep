@@ -94,6 +94,16 @@ Every strong cost answer follows four verbs in order. Measure tokens and cost pe
 
 ---
 
+## Level calibration
+
+The levels split on whether the thousandfold jump is treated as a capacity problem, an operating problem, or a change programme for a whole organisation.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Sizes 240,000 requests a day down to about 20 a second and 7.8M tokens a minute, then puts one gateway in front of every call with per-user token buckets, retry inside a circuit breaker, a warm fallback and permission-filtered retrieval. Cuts the naive $122,000 month with routing, prefix caching and an output cap. | Who owns the prompt, the budget and the pager, and how 100,000 people arrive without a launch-day cliff. |
+| Staff | Walks the tenfold steps and names what breaks at each: identity, then capacity, then fairness. Adds a weighted fair queue per department, an eval set rebuilt from real traffic and gated on slices, cohort waves with a pointer-flip rollback, and named owners with runbooks and a support ladder. | Whether anyone actually changes how they work, and what the provider relationship needs beyond one quarter. |
+| Principal | Treats adoption as the deliverable, measuring week-4 retention and override rate per cohort and investigating a flat curve like a bug. Starts the capacity commitment weeks ahead, tells the customer the service cannot promise more uptime than its provider gives, and keeps per-department prompts as configuration behind one gate, never a fork. | The real department mix, active share and current prices, which only the first cohorts and the price sheet can confirm. |
+
 ## Key Takeaways
 
 - Ask what "works" meant, because a hundred volunteers prove usefulness, not cost, tail latency, permissions or adoption.

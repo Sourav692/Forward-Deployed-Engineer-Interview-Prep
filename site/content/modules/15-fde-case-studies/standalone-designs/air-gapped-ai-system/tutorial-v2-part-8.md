@@ -53,6 +53,16 @@ No further review passes were run — the single pass found no additional closea
 - I'd also mention that if the workload touches export-controlled technical data, ITAR/EAR handling rules could shape which analysts can even see certain documents — which would feed back into Section 1's stakeholder table as a new constraint from the compliance officer.
 - The way I'd frame it live: "I don't know which specific framework governs this enclave, but the controls I've already described — signed provenance, append-only audit, fail-closed promotion — map cleanly onto NIST 800-53's CM and AU families, so the architecture doesn't have to change once we learn the exact framework, only the evidence formatting does."
 
+## Level calibration
+
+On this design the levels separate on how far the answer treats the boundary as the system itself, not on how many boxes sit inside the enclave.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "I'd split the connected build world from the offline runtime: pinned dependencies, a signed bundle, a transfer staging zone, then the offline registry and mirror. A missing transitive package fails closed, blocks promotion and leaves the current release running." | Honest sizing against the fixed GPU pool, where the 477-replica result means challenging the request mix rather than asking for hardware, and a named owner for build, transfer and operate. |
+| Staff | "Release engineering signs, security owns trust roots and audit evidence, and operations runs the one-node canary with a tested rollback bundle. Model and index ship as a compatible pair, telemetry stays local-first, and expansion waits on install success, signature failures and saturation." | A release train matched to the customer's accreditation capacity, and which pieces become shared services across enclaves instead of being rebuilt for each site. |
+| Principal | "I'd run fewer, higher-confidence releases with urgent security fixes decoupled from features. Buy accredited commodity pieces such as the package mirror and identity, build only the verify-bundle gate and the mission pipeline, and standardise both across enclaves." | The real request mix, GPU cost and analyst cost, which decide unit economics and whether the 20 QPS peak is truly interactive work. Also which governance framework applies; that changes the evidence format, not the architecture. |
+
 ## Sources (checked 27 Sep 2026)
 
 - [NIST SP 800-53 Rev 5 control catalog (OSCAL JSON, usnistgov/oscal-content)](https://github.com/usnistgov/oscal-content/tree/main/nist.gov/SP800-53/rev5) — control titles for CM-3, CM-14, AU-2, AU-12 and SC-7

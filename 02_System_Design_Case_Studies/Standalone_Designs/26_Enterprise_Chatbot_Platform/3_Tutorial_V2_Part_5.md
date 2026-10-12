@@ -48,6 +48,16 @@ One review pass was run against the fixed 20-item / 4-phase decomposition rubric
   - On multilingual/accessibility specifically: the platform's permission-filtered retrieval and output-scanning logic were designed and tested (per Section 6's test suite) against English-language corpora; a real global rollout needs the same contract tests re-run against non-English content, since a DLP or classification scanner tuned on English text can both over-block and under-block in other languages — and the streaming relay's typed-event design (token/citation/route_change/blocked/done) already gives assistive technology a clean hook to announce state changes, so accessibility here is more a testing and QA gap than an architecture gap.
   - Interview framing: connect this back to the platform's own adoption argument — a governed tool that works less well for non-English-speaking or assistive-technology-using employees quietly reproduces the exact shadow-IT risk this whole project was funded to eliminate, just for a narrower population.
 
+## Level calibration
+
+For an internal "own ChatGPT" serving 40,000 employees, the levels separate on whether permissions and adoption are the design or features bolted onto chat.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | "SSO, streaming chat, permission-filtered retrieval with citations, and a model router behind provider adapters. I size on concurrent streams, 40 turns a second times a 20-second stream is 800 connections, and compact history with a pinned head." | Per-turn re-authorisation, the assistant-scope intersection, and what happens when an ACL lookup or an audit write fails. |
+| Staff | "Identity is set at the session and re-checked every turn, an assistant's effective scope is its scope intersected with the viewer's live permissions, and every layer fails closed. Rollout adds one risk class per phase, gated on zero boundary violations, and the DLP false-positive rate has an owner." | Whether to build at all, which data classes need self-hosting, and the legal and works-council commitments. |
+| Principal | "First ask what rules out buying a vendor's enterprise tier; the likely answer is hybrid: buy the model, build orchestration, connectors and governance, and self-host only the data classes that require it. Success is consumer-AI egress down with weekly active use up, and the works council is consulted before the beta, not after." | Whether building beats a vendor seat on cost needs measured cost per active user from the beta, not the estimate. |
+
 ## Sources (checked 27 Sep 2026)
 
 - [Microsoft 365 Copilot enterprise pricing](https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/enterprise) — $30/user/month list price, paid yearly, on top of a Microsoft 365 licence
