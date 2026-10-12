@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-10-12',
+    title: 'Release B: one home and one name for every page',
+    summary:
+      'The 33 system designs now live under /design, and the worksheets and story bank under /practice. The final-week review is part of the site instead of separate HTML copies, and every old address redirects once to the new one. Pages use the same name in the menu, on the hub, in the breadcrumb and on the card, with no internal codes in titles. Designs and worksheets on the same problem link to each other, and /design and /practice can be filtered by theme, level and reading time. Every page shows one reading time, and module, track and path times are the sum of their parts. Diagrams fit their column and arrive as part of the page, long pages are split into parts of at most 2,500 words, and the text follows British spelling.',
+  },
+  {
     date: '2026-10-11',
     title: 'Release A: trust and first impression',
     summary:
