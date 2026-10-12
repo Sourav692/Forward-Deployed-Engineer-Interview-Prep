@@ -464,6 +464,53 @@ test('casebook filters: count, filter, survive a reload and clear', async ({ pag
   await expect(page).toHaveURL(/\/design$/)
 })
 
+// ENH-24a: diagrams fit their column at desktop and phone widths (PQ-13); one too wide
+// to read at that size opens at full size in a dialog that closes on Escape.
+for (const width of [1280, 390]) {
+  test(`diagrams fit their column at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    for (const path of ['/design/decomposition-classics-67-68-69', '/learn/llm-and-retrieval/langchain-and-langgraph/composing-pipelines-with-langchain']) {
+      await page.goto(path)
+      const figures = page.locator('.mermaid-figure:visible')
+      // Diagrams draw as they near the viewport (hidden tabs wait for their tab). Bring each
+      // visible placeholder into view in turn, and give mermaid time on a loaded runner.
+      const placeholders = page.locator('[role="status"]:visible', { hasText: 'Drawing diagram' })
+      for (let n = await placeholders.count(); n > 0; n = await placeholders.count()) {
+        await placeholders.first().scrollIntoViewIfNeeded()
+        await expect.poll(() => placeholders.count(), { timeout: 30_000 }).toBeLessThan(n)
+      }
+      expect(await figures.count()).toBeGreaterThan(0)
+      for (const figure of await figures.all()) {
+        // A drawn diagram is an <img> (static SVG, ENH-24b) or an inline <svg> (fallback).
+        const [drawnWidth, column] = await figure.evaluate((el) => {
+          const drawn = [...el.querySelectorAll('img, svg')].find((d) => (d as HTMLElement).offsetParent !== null || d.getBoundingClientRect().width > 0)!
+          return [drawn.getBoundingClientRect().width, el.clientWidth]
+        })
+        expect(drawnWidth).toBeLessThanOrEqual(column + 1)
+      }
+    }
+    if (width === 390) {
+      const open = page.getByRole('button', { name: 'Open full size' }).first()
+      await open.click()
+      const dialog = page.getByRole('dialog', { name: 'Diagram at full size' })
+      await expect(dialog).toBeVisible()
+      await expect(dialog.locator('img:visible, svg:visible')).toHaveCount(1)
+      await page.keyboard.press('Escape')
+      await expect(dialog).toBeHidden()
+      await expect(open).toBeFocused()
+    }
+  })
+}
+
+// ENH-24b, PR-20: the served HTML holds each diagram as an image with a text alternative,
+// before any JavaScript runs.
+test('diagrams are in the served HTML', async ({ request }) => {
+  const html = await (await request.get('/design/decomposition-classics-67-68-69')).text()
+  expect(html).not.toContain('Drawing diagram')
+  expect(html.match(/<img[^>]*src="\/diagrams\/[0-9a-f]+-light\.svg"[^>]*>/g)?.length).toBeGreaterThan(0)
+  expect(html).toMatch(/<img[^>]*alt="Diagram: [^"]+"/)
+})
+
 // PR-21: the 404 page is in the served HTML, before any JavaScript runs, for an
 // unmatched URL and for an unknown param on a prerendered route.
 for (const path of ['/no-such-page', '/learn/no-such-track', '/design/no-such-case', '/practice/no-such-worksheet']) {

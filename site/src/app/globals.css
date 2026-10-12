@@ -448,7 +448,25 @@ body {
  */
 .mermaid-figure svg {
   display: block;
-  max-width: none;
+  margin-inline: auto;
+}
+
+/* Static diagrams (ENH-24b): one SVG file per theme; show the one for the page's theme. */
+.diagram-light,
+.dark .diagram-dark {
+  display: block;
+}
+.diagram-dark,
+.dark .diagram-light {
+  display: none;
+}
+
+/* The full-size dialog draws the SVG at its natural width (Diagram FullSize). */
+.mermaid-full svg {
+  display: block;
+  width: 100%;
+  max-width: none !important;
+  height: auto;
 }
 
 /* Print: drop all chrome, keep the worksheet and whatever the reader has written. */
@@ -557,5 +575,12 @@ abbr.gloss {
   .code-block {
     break-inside: avoid;
     background: #fff;
+  }
+  /* Paper is white: print the light diagram whatever the screen theme. */
+  .dark .diagram-light {
+    display: block;
+  }
+  .dark .diagram-dark {
+    display: none;
   }
 }

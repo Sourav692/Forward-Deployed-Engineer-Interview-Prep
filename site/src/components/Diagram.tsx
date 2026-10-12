@@ -1,9 +1,70 @@
 'use client'
 
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import DIAGRAMS from '../../public/diagrams/index.json'
+import { diagramAlt, diagramKey } from '@/lib/diagram-key'
+import { diagramThemeVariables } from '@/lib/diagram-theme'
+
+const SIZES: Record<string, number[]> = DIAGRAMS
 
 /**
- * Renders a ```mermaid fence as a diagram.
+ * A ```mermaid fence as a diagram (ENH-24b). The sync draws every fence to two static
+ * SVG files, light and dark (scripts/render-diagrams.mjs), so the page's HTML holds the
+ * diagram as images with a text alternative and needs no JavaScript to show it; CSS
+ * picks the file for the theme. A fence without files (new, not yet synced) is drawn in
+ * the browser instead, as below.
+ */
+export function Diagram({ code }: { code: string }) {
+  const key = diagramKey(code)
+  const size = SIZES[key]
+  return size ? <StaticDiagram id={key} alt={diagramAlt(code)} width={size[0]} height={size[1]} /> : <DrawnDiagram code={code} />
+}
+
+function StaticDiagram({ id, alt, width, height }: { id: string; alt: string; width: number; height: number }) {
+  const box = useRef<HTMLDivElement>(null)
+  const wide = useTooWide(box, width)
+  const images = (natural: boolean) =>
+    (['light', 'dark'] as const).map((theme) => (
+      // A plain <img>: next/image does not serve SVG, and these are already final files.
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        key={theme}
+        src={`/diagrams/${id}-${theme}.svg`}
+        alt={alt}
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+        className={`diagram-${theme} mx-auto h-auto ${natural ? 'max-w-none' : 'max-w-full'}`}
+      />
+    ))
+  return (
+    <div className="space-y-1.5">
+      <div ref={box} role="figure" aria-label="Diagram" className="mermaid-figure rounded-lg border border-border bg-surface p-3">
+        {images(false)}
+      </div>
+      {wide && <FullSize width={width}>{images(true)}</FullSize>}
+    </div>
+  )
+}
+
+/** True when a diagram this wide would shrink below about two thirds to fit `box` (see FullSize). */
+function useTooWide(box: React.RefObject<HTMLDivElement | null>, width: number): boolean {
+  const [wide, setWide] = useState(false)
+  useEffect(() => {
+    const el = box.current
+    if (!el || !width) return
+    const measure = () => setWide(width > el.clientWidth * 1.5)
+    measure()
+    const resize = new ResizeObserver(measure)
+    resize.observe(el)
+    return () => resize.disconnect()
+  }, [box, width])
+  return wide
+}
+
+/**
+ * The browser-drawn fallback for a fence the sync has not drawn yet.
  *
  * Mermaid is imported inside the effect rather than at module scope so its ~500KB
  * only loads on pages that actually contain a diagram — and only once the answer
@@ -17,71 +78,19 @@ import { useEffect, useId, useRef, useState } from 'react'
  *    observer re-renders the SVG on a flip. Mermaid bakes colours into the markup;
  *    without this, a diagram rendered in light mode stays dark-on-dark afterwards.
  */
-/**
- * Resolves a CSS custom property to a hex colour.
- *
- * Going through a canvas looks roundabout, but the tokens in `globals.css` are
- * `oklch()` and `getComputedStyle` serialises those to `lab()` — a notation
- * mermaid's colour library cannot parse. Rasterising one pixel converts any colour
- * space to plain sRGB, so the diagram gets the site's exact palette either way.
- */
-function token(name: string): string {
-  const probe = document.createElement('div')
-  probe.style.color = `var(${name})`
-  document.body.appendChild(probe)
-  const resolved = getComputedStyle(probe).color
-  probe.remove()
-
-  const ctx = document.createElement('canvas').getContext('2d')
-  if (!ctx) return resolved
-  ctx.fillStyle = resolved
-  ctx.fillRect(0, 0, 1, 1)
-  const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data
-  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')}`
-}
-
-/**
- * Mermaid's stock palettes (lavender nodes on pale yellow) read as a foreign object
- * on this page, so the diagram is drawn from the site's own tokens instead.
- *
- * Deliberately no accent: `globals.css` reserves the indigo for interactive
- * affordances and progress, and a diagram is neither.
- */
-function themeVariables(dark: boolean) {
-  const text = token('--text')
-  const line = token('--text-muted')
-  const surface = token('--surface-2')
-  const cluster = token('--bg')
-
-  return {
-    darkMode: dark,
-    fontFamily: 'inherit',
-    fontSize: '15px',
-    background: token('--surface'),
-    primaryColor: surface,
-    primaryTextColor: text,
-    primaryBorderColor: token('--border-strong'),
-    secondaryColor: cluster,
-    tertiaryColor: cluster,
-    mainBkg: surface,
-    nodeBorder: token('--border-strong'),
-    nodeTextColor: text,
-    textColor: text,
-    titleColor: text,
-    lineColor: line,
-    edgeLabelBackground: token('--surface'),
-    clusterBkg: cluster,
-    clusterBorder: token('--border'),
-  }
-}
-
-export function Diagram({ code }: { code: string }) {
+function DrawnDiagram({ code }: { code: string }) {
   // `useId` contains characters that are illegal in a DOM id and in the selector
   // mermaid builds from it, so keep only what survives both.
   const seed = useId().replace(/[^a-zA-Z0-9]/g, '')
   const [svg, setSvg] = useState('')
   const [failed, setFailed] = useState(false)
   const placeholder = useRef<HTMLDivElement>(null)
+  const box = useRef<HTMLDivElement>(null)
+  const [natural, setNatural] = useState(0)
+  useEffect(() => {
+    if (svg) setNatural(Math.round(box.current?.querySelector('svg')?.viewBox.baseVal?.width ?? 0))
+  }, [svg])
+  const wide = useTooWide(box, natural)
 
   useEffect(() => {
     let cancelled = false
@@ -102,12 +111,9 @@ export function Diagram({ code }: { code: string }) {
           suppressErrorRendering: true,
           fontFamily: 'inherit',
           theme: 'base',
-          themeVariables: themeVariables(theme === 'dark'),
-          // Mermaid's default is to fit the SVG to its container. A wide `flowchart
-          // LR` then scales down far enough that its labels are unreadable — the one
-          // here is 2200px of diagram in a 900px column. Draw it at its natural size
-          // and let the container scroll instead.
-          flowchart: { useMaxWidth: false },
+          themeVariables: diagramThemeVariables(theme === 'dark', 'inherit'),
+          // Mermaid's default fits the SVG to its column (ENH-24, PQ-13). A diagram that
+          // shrinks too far to read gets an "Open full size" dialog instead (FullSize).
         })
         const result = await mermaid.render(`mmd-${seed}-${theme}`, code)
         if (!cancelled) {
@@ -180,15 +186,79 @@ export function Diagram({ code }: { code: string }) {
   }
 
   return (
-    <div
-      // Wide diagrams scroll sideways; tabIndex lets keyboard users scroll them too (WCAG 2.1.1).
-      role="figure"
-      aria-label="Diagram"
-      tabIndex={0}
-      className="mermaid-figure overflow-x-auto rounded-lg border border-border bg-surface p-3 outline-none focus-visible:ring-4 focus-visible:ring-accent-ring"
-      // Mermaid output is generated from the markdown we ship, and is sanitised by
-      // its own `securityLevel: 'strict'` before it gets here.
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
+    <div className="space-y-1.5">
+      <div
+        ref={box}
+        role="figure"
+        aria-label="Diagram"
+        className="mermaid-figure rounded-lg border border-border bg-surface p-3"
+        // Mermaid output is generated from the markdown we ship, and is sanitised by
+        // its own `securityLevel: 'strict'` before it gets here.
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
+      {wide && (
+        <FullSize width={natural}>
+          <div className="mermaid-full" style={{ width: natural }} dangerouslySetInnerHTML={{ __html: svg }} />
+        </FullSize>
+      )}
+    </div>
+  )
+}
+
+/**
+ * A diagram whose natural width is more than 1.5 times its column shrinks below about
+ * two thirds of its size, where labels stop being readable. Such a diagram offers its
+ * full size in a dialog (ENH-24). The native <dialog> traps focus and closes on Escape;
+ * focus returns to the button. The SVG copy exists only while the dialog is open, so the
+ * page never holds two SVGs with the same ids.
+ */
+function FullSize({ width, children }: { width: number; children: ReactNode }) {
+  const dialog = useRef<HTMLDialogElement>(null)
+  const opener = useRef<HTMLButtonElement>(null)
+  const titleId = useId()
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (open && !dialog.current?.open) dialog.current?.showModal()
+  }, [open])
+
+  return (
+    <>
+      <button
+        ref={opener}
+        type="button"
+        onClick={() => setOpen(true)}
+        className="no-print rounded-sm text-[0.8125rem] font-medium text-accent hover:text-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-ring"
+      >
+        Open full size
+      </button>
+      <dialog
+        ref={dialog}
+        aria-labelledby={titleId}
+        onClose={() => {
+          setOpen(false)
+          opener.current?.focus()
+        }}
+        className="m-auto max-h-[90vh] w-[95vw] max-w-none overflow-hidden rounded-xl border border-border bg-bg p-0 text-text backdrop:bg-black/60"
+      >
+        <div className="flex items-center justify-between gap-4 border-b border-border px-4 py-2">
+          <h2 id={titleId} className="text-sm font-semibold">
+            Diagram at full size
+          </h2>
+          <button
+            type="button"
+            onClick={() => dialog.current?.close()}
+            className="rounded-md px-2 py-1 text-sm font-medium text-muted hover:bg-surface-2 hover:text-text focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-ring"
+          >
+            Close
+          </button>
+        </div>
+        {open && (
+          <div className="max-h-[calc(90vh-3rem)] overflow-auto p-4" tabIndex={0} aria-label="Diagram, scroll to see all of it">
+            <div style={{ width }}>{children}</div>
+          </div>
+        )}
+      </dialog>
+    </>
   )
 }

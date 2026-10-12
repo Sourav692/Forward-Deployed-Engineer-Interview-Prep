@@ -19,6 +19,7 @@ import { copyFile, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/p
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
+import { renderDiagrams } from './render-diagrams.mjs'
 import {
   COMPANY_PREP_DOCUMENTS,
   COMPANY_PREP_MODULE_ID,
@@ -331,6 +332,11 @@ async function main() {
     storyBankUpdated: updatedOf(join(BEHAVIOURAL_ROOT, STORY_BANK.source)),
   }
   await writeFile(join(OUT_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2))
+
+  // Diagrams last, once every page's markdown is written: each ```mermaid fence becomes
+  // public/diagrams/<key>-light|dark.svg, drawn only when new (ENH-24b).
+  const diagrams = await renderDiagrams({ siteDir: SITE_DIR })
+  console.log(`diagrams: ${diagrams.ready} of ${diagrams.total} ready as SVG${diagrams.drawn ? `, ${diagrams.drawn} drawn now` : ''}`)
 
   const allTracks = modules.flatMap((m) => m.tracks)
   const total = allTracks.reduce((sum, t) => sum + t.scenarios.length, 0)
