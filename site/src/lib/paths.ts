@@ -336,7 +336,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'chunking-and-indexing', 'forward-deployed', 'capstone-and-portfolio'],
     }),
-    estHours: 148,
+    estHours: 147,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
