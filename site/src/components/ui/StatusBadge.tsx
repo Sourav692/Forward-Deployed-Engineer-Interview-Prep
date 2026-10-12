@@ -146,7 +146,7 @@ export const STATUS_META: Record<BadgeStatus, StatusMeta> = {
   },
   'on-hold': {
     label: 'On hold',
-    rule: 'Paused by the owner. The module page explains why.',
+    rule: 'Paused for now; it will return. Nothing here to start yet.',
     className: 'border-warning bg-transparent text-warning-text',
     iconClassName: 'text-warning-text',
     // Pause

@@ -1,7 +1,7 @@
 # Tool-Using AI Agent with Safety Controls - Case Study Worksheet
 
 ## 1. Interview prompt
-As the FDE on this engagement, your job is to design and ship a **Tool-Using AI Agent with Safety Controls**. The agent reads email, looks things up in internal systems, edits CRM records and pays out refunds. None of that power may go unchecked. The model suggests an action; something else makes the call.
+As the FDE on this engagement, your job is to design and ship a **Tool-Using Agent with Safety Controls**. The agent reads email, looks things up in internal systems, edits CRM records and pays out refunds. None of that power may go unchecked. The model suggests an action; something else makes the call.
 
 ## 2. Clarify the customer problem
 - Which actions can be undone, and at what amount does money need a stricter path?

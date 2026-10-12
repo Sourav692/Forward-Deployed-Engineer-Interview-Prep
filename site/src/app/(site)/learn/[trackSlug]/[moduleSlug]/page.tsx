@@ -116,7 +116,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
             <p className="mt-2 text-sm text-muted">
               About {formatMinutes(time.total)}
               {time.practice > 0 && `: ${formatMinutes(time.reading)} reading + ${formatMinutes(time.practice)} practice`}
-              {list.main.length > 0 && ` · ${list.main.length} ${list.main.length === 1 ? 'lesson' : 'lessons'}`}
+              {list.main.length > 0 && ` · ${list.main.length} ${list.main.length === 1 ? 'lesson' : 'lessons'}${mod.listedOn ? ', listed in the casebook' : ''}`}
             </p>
           </header>
 

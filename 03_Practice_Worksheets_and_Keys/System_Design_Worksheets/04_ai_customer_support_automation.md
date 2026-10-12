@@ -1,7 +1,7 @@
 # AI Customer-Support Automation - Case Study Worksheet
 
 ## 1. Interview prompt
-As the FDE, design a GenAI system for **AI Customer-Support Automation**. Routine requests should be handled end to end. Risky ones go to a human, who receives the full context. The two harms to prevent are an action nobody authorised and a wrong answer given with confidence.
+As the FDE, design a GenAI system for **Customer Support Automation**. Routine requests should be handled end to end. Risky ones go to a human, who receives the full context. The two harms to prevent are an action nobody authorised and a wrong answer given with confidence.
 
 ## 2. Clarify the customer problem
 - Which channels are in scope, and what are the normal and peak volumes?
