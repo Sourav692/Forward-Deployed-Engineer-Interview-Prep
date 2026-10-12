@@ -1,14 +1,14 @@
 # Enterprise Chatbot Platform - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for an **Enterprise Chatbot Platform** for 40,000 employees. The real driver is 6,400 staff already pasting company data into consumer AI tools.
+As the FDE, you are asked to build an **Enterprise Chatbot Platform** that 40,000 employees will use. What is really pushing the project is that 6,400 of those staff already paste company data into consumer AI tools.
 
 ## 2. Clarify the customer problem
-- Commercial API, self-hosted, or hybrid by data class?
-- General chat first, or grounding — and which systems?
-- How long is retention, and who may read another's history?
-- Can any employee publish an assistant, or is it reviewed?
-- What rules out simply licensing a vendor's enterprise tier?
+- Should we call a commercial API, host models ourselves, or mix the two by data class?
+- Do we launch with plain chat, or with grounding on day one? If grounding, against which systems?
+- How long do we keep conversations, and who is allowed to read someone else's history?
+- May any employee publish an assistant, or does each one go through review?
+- Why can't the company just buy a vendor's enterprise tier?
 
 ## 3. Users and workflows
 | User | Workflow | Current pain | AI assist opportunity | Human approval needed? |
@@ -37,7 +37,7 @@ Design a GenAI FDE solution for an **Enterprise Chatbot Platform** for 40,000 em
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Use one of the rendered diagrams as a base, then customise:
+Start from a rendered diagram and shape it to fit this case. Cover each part below:
 - Session and identity:
 - Context assembler:
 - Retrieval ACLs:
@@ -48,37 +48,37 @@ Use one of the rendered diagrams as a base, then customise:
 ## 7. Evaluation plan
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
-| Consumer-AI egress | Down 80% / 2 quarters | Flat or rising | Proxy log baseline | Security |
-| Weekly active / eligible | >= 50% | Below 25% | Product telemetry | Product |
-| Permission violations | 0 | Any nonzero | Contract tests, audit | Governance |
-| Audit completeness | 100% | Below 100% | Turns recorded / served | Compliance |
+| Consumer-AI egress | Down 80% / 2 quarters | Not falling, or climbing | Baseline from proxy logs | Security |
+| Weekly active / eligible | >= 50% | Below 25% | Telemetry from the product | Product |
+| Permission violations | 0 | Anything above zero | Contract tests plus audit | Governance |
+| Audit completeness | 100% | Below 100% | Turns logged against turns served | Compliance |
 
 ## 8. Failure modes
-- Over-scoped assistant launders access
-- Stale ACL after a revocation
-- Prompt injection via an uploaded document
-- System prompt silently truncated
-- Runaway scripted account burns budget
-- Audit pipeline down; turns unrecorded
+- An assistant with too wide a scope hands out access its users lack
+- An ACL stays cached after access has been revoked
+- An uploaded document carries a prompt injection
+- The system prompt gets cut short and nobody notices
+- A scripted account runs out of control and drains the budget
+- The audit pipeline is down, so turns go unlogged
 
 ## 9. Rollout plan
-1. Baseline egress from proxy logs.
-2. General chat with SSO and audit.
-3. Add grounding on one corpus.
-4. Gate on zero permission violations.
-5. Add attachments with scanning.
-6. Add reviewed assistant publishing.
+1. Take a baseline of egress from the proxy logs.
+2. Launch plain chat behind SSO, with audit on.
+3. Ground answers in one corpus.
+4. Block progress unless permission violations stay at zero.
+5. Allow attachments, each one scanned.
+6. Let people publish assistants after review.
 
 ## 10. Weak vs strong answer
-**Weak:** "I'd build a React frontend, a vector DB, and an LLM gateway."
+**Weak:** "I'd stand up a React frontend, hook it to a vector DB, and route model calls through an LLM gateway."
 
-**Strong:** "Identity is set at the session and re-checked every turn; nothing enters the context window without passing policy and being audited. Retrieval resolves live ACLs per chunk, an assistant's effective scope intersects the viewer's, and every layer fails closed."
+**Strong:** "I'd fix identity when the session starts and check it again on every turn. Nothing reaches the context window unless policy lets it through and the audit log records it. Retrieval checks the live ACL for each chunk. An assistant can only see what both it and the current viewer may see. Every layer fails closed."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |
 |---|---|---|---|---|
-| Problem framing | ChatGPT clone | Governance named | Egress risk plus adoption |  |
-| Architecture | UI and vector DB | ACL filtering added | Assembler, router, audit |  |
-| Evaluation | "People like it" | Usage tracked | Egress, violations, audit |  |
-| Production thinking | Launch to all | Pilot first | One risk class per phase |  |
-| Communication | Technical only | Mostly clear | Board and on-call stories |  |
+| Problem framing | Copies ChatGPT | Mentions governance | Weighs egress risk and adoption together |  |
+| Architecture | A UI plus a vector DB | Adds ACL filtering | Assembler, router and audit |  |
+| Evaluation | "Users like it" | Tracks usage | Egress, violations and audit |  |
+| Production thinking | Opens it to everyone | Pilots first | Tackles one risk class per phase |  |
+| Communication | Only technical detail | Mostly clear | Has a story for the board and for on-call |  |

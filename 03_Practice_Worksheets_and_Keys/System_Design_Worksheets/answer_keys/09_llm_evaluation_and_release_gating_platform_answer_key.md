@@ -1,42 +1,42 @@
 # LLM Evaluation and Release-Gating Platform - Answer Key
 
-This answer key is designed for interview preparation. It shows what a strong GenAI FDE candidate should ask, design, evaluate, secure, and communicate before moving from demo to production.
+Try the worksheet before you read this key. It shows what a strong GenAI FDE candidate asks, designs, measures, secures and explains on the way from a demo to a production system.
 
 ## Strong discovery questions
-- What counts as a release — every prompt edit, only model changes, or only production deployments?
-- What evidence is required to pass: human rubric scores, automated checks, safety thresholds, latency budgets, or all of them?
-- What is the highest-risk failure: a wrong answer, a policy violation, a silent latency regression, a cost blowout, or tool misuse?
-- Who can override a failed gate, and how is that override recorded?
-- Is evaluation data shared across the 30 applications, or does each need isolated datasets and policies?
-- Which evaluations must run offline before release, and which must run online against shadow or sampled traffic?
-- What labels and human reviewers exist, and how is reviewer disagreement captured rather than discarded?
-- What regression thresholds are acceptable per application class, since without them the gate cannot be credible?
+- Which changes count as a release? Every prompt tweak, only a model swap, or only a production deploy?
+- What does a candidate need to show to pass? Human rubric scores, automated checks, safety limits, latency budgets, or the full set?
+- Which failure hurts most here: a wrong answer, a policy breach, latency creeping up unseen, runaway cost or a misused tool?
+- Who has authority to override a failed gate, and where does that override get logged?
+- Do the 30 applications share evaluation data, or does each one need its own datasets and policies?
+- Which checks have to run offline before release? Which ones belong online, fed by sampled or shadow traffic?
+- What labels and human reviewers do we have? When reviewers disagree, how do we keep that signal instead of throwing it away?
+- How much regression is acceptable for each class of application? Without those limits nobody will believe the gate.
 
 ## Strong functional requirements
-- Support the core workflow: a release owner submits a candidate change, the platform compares it to a pinned baseline and returns pass, block, or hold with evidence.
-- Version datasets, prompts, models, tools, and graders, because versioning is the only way to reproduce a decision later.
-- Run both deterministic and probabilistic evaluations, since some checks must be stable and others depend on rubric judgement.
-- Compare every candidate against a pinned production baseline rather than reporting an absolute score.
-- Support human review and record reviewer disagreement as a first-class signal feeding the release record.
-- Sample privacy-safe production failures back into future test suites so the test set evolves with the product.
+- Core workflow: the owner of a release puts forward a candidate change. The platform measures it against a pinned baseline and answers pass, block or hold, with the evidence attached.
+- Put a version on every dataset, prompt, model, tool and grader. Nothing else lets you replay a decision later.
+- Offer deterministic and probabilistic evaluations side by side. Some checks have to give the same answer every time, while others rely on judgement against a rubric.
+- Always score a candidate relative to the pinned production baseline. An absolute score on its own says little.
+- Include human review, and treat disagreement between reviewers as a signal in its own right that goes into the release record.
+- Feed production failures back into later test suites, with privacy protected. The tests then grow along with the product.
 
 ## Strong non-functional requirements
-- Latency: the gate must finish inside the release window; I'd treat a p95 run duration beyond about 20 minutes as the point where a gate turns into a blocker.
-- Availability: peak matters more than average, because 30 teams releasing in the same business hour can overwhelm a daily-average design.
-- Security: the sandboxed runner is hostile-adjacent, enforcing timeouts, egress limits, secrets scoping, and per-run concurrency caps.
-- Compliance: tenant and data isolation so one application's traces, labels, and evaluations never leak into another workspace.
-- Reliability: fail closed on release decisions when evidence is missing; never approve on an incomplete or unvalidated run.
-- Cost: at the roughly 3,000,000 test-case executions a day this case assumes, tier the suites — if every release costs a fortune, teams route around the gate.
+- Latency: the gate has to complete within the release window. I'd say a p95 run time above roughly 20 minutes is where the gate starts blocking people.
+- Availability: design for the peak, not the average. If 30 teams all release in the same business hour, a design sized on the daily average falls over.
+- Security: treat the sandboxed runner as nearly hostile. Enforce timeouts, limit egress, scope secrets tightly and cap concurrency for each run.
+- Compliance: isolate tenants and their data. Traces, labels and evaluations from one application must never show up in another team's workspace.
+- Reliability: if evidence is missing, the release decision fails closed. A run that is incomplete or not yet validated never earns an approval.
+- Cost: split suites into tiers, since this case expects about 3,000,000 test-case executions every day. When every release is expensive, teams find ways to skip the gate.
 
 ## Architecture explanation
-- Separate the control plane, which decides what to evaluate, from the data plane, which executes it, so policy stays deterministic when runners are slow or failing.
-- The artifact registry is the system of record for immutable candidate definitions — prompt version, model ID, retrieval settings, tool allowlist, baseline reference — preventing a candidate from drifting mid-run.
-- The dataset store owns suites, labels, rubrics, and scenario metadata; together the two stores define what was tested and against which reference.
-- The evaluation scheduler fans out work asynchronously, applying per-tenant quotas and admission control so one noisy application cannot starve the rest.
-- The sandboxed runner executes prompts, model calls, and tool calls under isolation and is treated as an untrusted execution boundary.
-- The grader service scores task success, safety, latency, and cost, escalating to human review when the grader is uncertain or the rubric is ambiguous.
-- The results warehouse persists run-level and aggregate outcomes; the release policy engine reads only completed, validated records and decides `Δ = Metric_candidate − Metric_baseline` against thresholds.
-- An online sampling pipeline observes live or shadow traffic after rollout, bridging pre-release evaluation to post-release monitoring.
+- Keep a control plane that chooses what to evaluate apart from a data plane that runs it. Policy then stays deterministic even when runners are slow or broken.
+- Each candidate's definition is frozen in the artifact registry, our system of record. It holds the model ID, the prompt version, the tool allowlist, the retrieval settings and the baseline reference. A candidate cannot shift while a run is in progress.
+- The dataset store holds suites, labels, rubrics and scenario metadata. Between them, the registry and the dataset store pin down what was tested and what it was compared against.
+- The evaluation scheduler spreads work out asynchronously. Quotas per tenant and admission control stop one busy application from starving all the others.
+- The sandboxed runner carries out prompts, model calls and tool calls in isolation. We treat it as an execution boundary we do not trust.
+- Scoring sits with the grader service, which rates safety, cost, latency and whether the task succeeded. When the grader is unsure or the rubric is unclear, it hands the case to a human.
+- The results warehouse stores outcomes per run and in aggregate. The release policy engine reads only records that are complete and validated, then judges `Δ = Metric_candidate − Metric_baseline` against the thresholds.
+- After rollout, an online sampling pipeline watches live or shadow traffic. It links evaluation before release to monitoring after it.
 
 ```mermaid
 flowchart LR
@@ -51,60 +51,60 @@ flowchart LR
 
 ## Data model / integration assumptions
 - EvalArtifact(id, type, version, hash); EvalCase(id, input_ref, expected, rubric, sensitivity); EvalRun(id, candidate, baseline, status); EvalResult(run_id, case_id, scores, trace_ref).
-- Assume artifacts are never mutated in place; a new version gets a new ID, so an old decision remains reconstructable.
-- Assume EvalRun status transitions are monotonic through submitted, queued, running, completed, failed, or blocked.
-- Assume EvalResult is written once and immutable afterward, except through an explicit superseding correction with its own version.
-- Assume the decision record and redacted score summary outlive the raw trace, so a shorter trace-retention policy never destroys auditability.
+- Nobody edits an artifact in place. Each new version gets a fresh ID, so we can always rebuild an earlier decision.
+- An EvalRun only ever moves forward through its states: submitted, queued, running, then completed, failed or blocked.
+- Once an EvalResult is written it does not change. The one exception is an explicit correction that supersedes it and carries its own version.
+- The decision record and a redacted summary of scores are kept longer than the raw trace. A shorter retention rule for traces therefore never breaks the audit trail.
 
 ## Red-team risks
-- grader rewarding verbosity over correctness, stale test sets, benchmark overfitting, PII in online samples, false confidence from tiny runs
-- A grader that scores long answers highly, shifting score distributions toward verbose responses with low factual alignment.
-- Test sets going stale, so the benchmark stops distinguishing candidates while incidents cluster in areas it never exercised.
-- Candidates overfitting the benchmark, showing large offline gains alongside flat or worsening real-world behaviour.
-- Online samples carrying PII, prompts, retrieved documents, or customer secrets into prompts, analytics, or developer-facing logs.
-- Small samples producing false confidence, where every score looks good but the run is too narrow to support a release decision.
+- a grader that prefers wordy answers to correct ones, test sets gone stale, candidates tuned to the benchmark, PII inside online samples, tiny runs that look convincing
+- The grader gives long answers high marks. Scores drift towards verbose responses that do not match the facts well.
+- The test set goes stale. It stops telling candidates apart, and incidents pile up in areas it never covered.
+- A candidate overfits the benchmark. Offline numbers jump while real-world behaviour stays flat or gets worse.
+- Samples taken online contain customer secrets, retrieved documents, prompts or PII. These then leak into prompts, analytics or logs that developers can read.
+- A small sample breeds false confidence. Every score looks fine, but the run is too narrow to back a release decision.
 
 ## Rollout plan
-- Week 0-1: name the gate's scope, the evidence required to pass, override authority, and per-application regression thresholds.
-- Week 1-2: prove the platform on one critical application end to end rather than onboarding all thirty.
-- Week 2-3: calibrate automated graders against sampled human labels, including concise-correct and verbose-wrong examples.
-- Week 3-4: hold the gate advisory until human-grader agreement is stable enough to trust on that application.
-- Week 5: add latency and cost gates alongside quality and safety, so no dimension improves while another quietly degrades.
-- Week 6-8: expand with a shared schema plus application-specific rubrics, keeping per-tenant isolation and quotas intact.
-- After pilot: widen only while coverage, escape rate, and flaky-case rate hold; a suite that stops discriminating is retired from gating.
+- Week 0-1: define what the gate covers, what evidence it demands to pass, who can override it and the regression limits for each application.
+- Week 1-2: run one critical application through the platform from start to finish instead of bringing all thirty on board.
+- Week 2-3: check the automated graders against a sample of human labels. Include answers that are short and right as well as answers that are long and wrong.
+- Week 3-4: keep the gate in advisory mode until agreement between humans and graders on that application is steady enough to rely on.
+- Week 5: bring in latency and cost gates next to quality and safety. No dimension should get better while another slips unnoticed.
+- Week 6-8: grow onto a shared schema with rubrics specific to each application. Tenant isolation and quotas stay in place.
+- After pilot: widen the rollout only while escape rate, flaky-case rate and coverage all stay healthy. Retire any suite from gating once it no longer separates good candidates from bad.
 
 ## Evaluation plan
-These are thresholds I'd set for this case, not industry standards. Defend them, don't quote them.
+These are thresholds I'd pick for this case. They are not industry standards, so be ready to defend them rather than recite them.
 
 | Metric | What it proves | Strong threshold | Dataset / method |
 |---|---|---|---|
-| Release regression escape rate | Harmful changes are actually caught before production | Under 5% rolling 30-day; zero severe in critical apps | Release outcomes against incident tickets |
-| Human-grader agreement | The automated grader can be trusted to gate | At or above 85% on a stable rubric | Adjudication against sampled human labels |
-| Evaluation coverage | The gate ran on enough of the suite to mean anything | At or above 95% for critical applications | Runner logs against dataset manifest |
-| Flaky case rate | Results are reproducible rather than noise | Under 2% overall; under 5% per rubric dimension | Repeated runs with versioned inputs |
-| Run duration | The gate fits inside the release window | p95 under 20 minutes in the release window | Orchestration timestamps and queue events |
-| Production failure capture rate | The suite reflects real production risk | At or above 80% per release quarter | Incident reviews against gate decisions |
+| Release regression escape rate | The gate really stops harmful changes before production | Under 5% over a rolling 30 days; no severe escapes in critical apps | Compare release outcomes with incident tickets |
+| Human-grader agreement | The automated grader is reliable enough to gate | 85% or higher on a stable rubric | Adjudicate against sampled human labels |
+| Evaluation coverage | Enough of the suite ran for the result to matter | 95% or higher for critical applications | Match runner logs to the dataset manifest |
+| Flaky case rate | Results repeat instead of being noise | Under 2% overall and under 5% for each rubric dimension | Rerun with versioned inputs |
+| Run duration | The gate finishes within the release window | p95 below 20 minutes during the release window | Timestamps from orchestration and queue events |
+| Production failure capture rate | The suite tracks the real risks in production | 80% or higher each release quarter | Review incidents against the gate's decisions |
 
 ## Weak answer
-I would build an evaluation dashboard with test runs, scorecards, and approvals so teams can see their scores. This is weak because it is feature-first — it never pins a baseline, never defines what regression blocks a release, never says who may override, and produces numbers nobody is obliged to act on.
+My plan: an evaluation dashboard showing test runs, scorecards and approvals, so each team can see where it stands. This is weak because it starts from features. It never pins a baseline or says which regression blocks a release. It never names who may override, and it produces numbers that no one has to act on.
 
 ## Average answer
-I would run a test suite against each candidate, score quality and safety, compare it to the previous version, and block the release if scores drop. I would store the results. This is better, but still incomplete because it does not version graders and rubrics, does not handle grader drift, and treats a small sample of good scores as sufficient evidence to ship.
+I would run a test suite on each candidate, score it for quality and safety, compare it with the last version and stop the release when scores fall. The results would go into storage. That is an improvement, but gaps remain. Graders and rubrics have no versions, grader drift goes unhandled, and a few good scores on a small sample count as enough to ship.
 
 ## Strong answer
-I would frame this as a controlled decision process rather than a dashboard: help teams compare a candidate against a pinned baseline, detect quality, safety, latency, and cost regressions, and record the evidence behind the decision. Control plane decides what to evaluate, data plane executes it in a sandbox treated as untrusted. Everything is versioned — datasets, prompts, models, tools, and graders — because reproducing a decision later is the whole point. The policy engine reads only completed, validated runs and computes the delta against thresholds set per application criticality. Missing evidence fails closed and insufficient sample size holds rather than approves. I would prove it on one critical application, calibrate graders against humans, then add latency and cost gates before expanding.
+I'd treat this as a controlled decision process, not a dashboard. Its job: let teams measure a candidate against a pinned baseline, catch regressions in quality, safety, latency and cost, and keep the evidence behind each call. The control plane picks what to evaluate. The data plane runs it in a sandbox I don't trust. I'd version everything, from datasets and prompts to models, tools and graders, because the point is to replay any decision later. The policy engine looks only at runs that are complete and validated, and computes the delta against thresholds set by how critical the application is. When evidence is missing, the gate fails closed. When the sample is too small, it holds instead of approving. My first step is a single critical application. I'd calibrate graders against people and add cost and latency gates before any wider launch.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
 |---|---|---|---|
-| Problem framing | "Build an eval dashboard" | Names engineers and release managers | Controlled decision process; separates the four stakeholders' distinct questions |
-| Requirements | "Score the model" | Lists suites and thresholds | Versioning, baseline comparison, human disagreement, production failure sampling |
-| Architecture | Queue plus workers plus DB | Scheduler, runner, results store | Control/data plane split, pinned artifacts, sandboxed runner, policy engine reads validated only |
-| Data/integration | Mentions test results | Names runs and cases | Immutable artifacts, monotonic run status, write-once results, trace vs. decision retention |
-| Evaluation | "Scores went up" | Tracks pass rate | Escape rate, grader agreement, coverage, flakiness, capture rate with thresholds |
-| Safety/security | "It is internal" | Adds tenant separation | Hostile-adjacent runner, egress limits, PII ingress filtering, least-privilege trace access |
-| Rollout | Onboard all 30 apps | Pilot then expand | One critical app, grader calibration, latency and cost gates, shared schema with per-app rubrics |
-| Communication | Reports metrics | Clear but generic | Leads with the decision, names what fails closed, closes with the calibration gate |
+| Problem framing | "Let's build an eval dashboard" | Mentions engineers and release managers | Frames a controlled decision process and splits out the separate question each of the four stakeholders asks |
+| Requirements | "Give the model a score" | Covers suites and thresholds | Versioning, comparison to a baseline, human disagreement and sampling of production failures |
+| Architecture | A queue, some workers and a database | Scheduler, runner and a results store | Splits control and data planes, pins artifacts, sandboxes the runner, and lets the policy engine read validated runs only |
+| Data/integration | Refers to test results | Names runs and cases | Immutable artifacts, run status that only moves forward, write-once results, separate retention for traces and decisions |
+| Evaluation | "The scores improved" | Tracks the pass rate | Escape rate, grader agreement, coverage, flakiness and capture rate, each with a threshold |
+| Safety/security | "It's internal" | Adds separation between tenants | A runner treated as nearly hostile, egress limits, PII filtered on the way in, least-privilege access to traces |
+| Rollout | Bring all 30 apps on at once | Pilot first, then expand | One critical app, graders calibrated, latency and cost gates added, a shared schema with rubrics per app |
+| Communication | Lists the metrics | Clear but generic | Opens with the decision, says what fails closed and ends on the calibration gate |
 
 ## Final 2-minute spoken answer
-I would not start with the model. The ask is one platform so 30 applications can decide whether a change is safe to release, but the platform is not the goal — making quality, safety, latency, and cost regressions visible before and after deployment is. So I would restate it as a release-gating system that compares a candidate against the current baseline and records the evidence behind the decision, then separate the four stakeholders, because an engineer asking "did my change worsen behaviour," an evaluator asking "what should I score," a safety lead asking "is this safe enough," and a release manager asking "can I approve this with evidence" are different jobs. Architecturally, the control plane decides what to evaluate and the data plane executes it inside a sandbox I treat as hostile-adjacent. An artifact registry pins the candidate so it cannot drift mid-run, a dataset store owns suites and rubrics, a scheduler fans out work with per-tenant quotas, a grader scores across all four dimensions, and a policy engine reads only completed validated runs to compute the delta against thresholds. Missing evidence fails closed, and a sample too small to support a decision holds rather than approves. The named failure is a grader that rewards verbosity over correctness, so graders are versioned, rubric hashes stored, and a calibration suite includes concise-correct and verbose-wrong cases. I would prove it on one critical application, calibrate against human labels, add latency and cost gates, then expand. The gate is only useful if teams trust it enough not to route around it.
+I'd begin somewhere other than the model. On paper the ask is a single platform that lets 30 applications decide whether a change is safe to ship. The platform itself is not the goal, though. The goal is to surface regressions in quality, safety, latency and cost, both before and after a deploy. So I'd restate it as a release gate that measures a candidate against the current baseline and keeps the evidence behind each decision. Then I'd separate the four stakeholders, because they do different jobs. An engineer wants to know if the change made behaviour worse. An evaluator wants to know what to score. A safety lead wants to know if it is safe enough. A release manager wants evidence to sign off on. In the architecture, a control plane chooses what to evaluate, and a data plane runs it in a sandbox I treat as nearly hostile. The candidate is frozen in an artifact registry, so nothing about it moves mid-run. A dataset store holds the suites and rubrics. A scheduler spreads the work out with quotas per tenant. A grader covers all four dimensions. The policy engine then takes only finished, validated runs and checks the delta against each threshold. If evidence is missing, the gate fails closed. If the sample is too small to decide, it holds instead of approving. My named failure is a grader that prefers long answers to correct ones. So graders get versions, we store the rubric hashes, and the calibration suite includes short correct answers and long wrong ones. I'd start with a single critical application and calibrate the graders on human labels. Cost and latency gates come next, and only then a wider launch. A gate only helps if teams trust it enough not to work around it.

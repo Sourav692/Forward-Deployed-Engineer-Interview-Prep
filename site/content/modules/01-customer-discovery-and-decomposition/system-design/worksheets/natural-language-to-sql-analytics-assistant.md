@@ -1,14 +1,14 @@
 # Natural-Language-to-SQL Analytics Assistant - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for a **Natural-Language-to-SQL Analytics Assistant**. Executives ask the same questions weekly and analysts hand-translate them. The dangerous failure is valid SQL answering the wrong business question.
+Your GenAI FDE task is a **Natural-Language-to-SQL Analytics Assistant**. Every week, executives repeat the same questions, and analysts turn each one into a query by hand. The worst outcome is not broken SQL. It is SQL that runs cleanly but answers a different business question from the one asked.
 
 ## 2. Clarify the customer problem
-- Who owns each metric definition, and how often do they change?
-- Does a semantic layer exist, or must this system build one?
-- Which dialects and warehouses are in scope?
-- Does the warehouse already enforce row and column security?
-- What happens when the question is ambiguous: ask, refuse, or escalate?
+- Who defines each metric, and how often does a definition change?
+- Is there a semantic layer already, or do we have to build one?
+- Does the warehouse enforce row and column security today?
+- Which warehouses and SQL dialects must we support?
+- If a question is ambiguous, should the assistant ask back, decline or hand it to an analyst?
 
 ## 3. Users and workflows
 | User | Workflow | Current pain | AI assist opportunity | Human approval needed? |
@@ -37,7 +37,7 @@ Design a GenAI FDE solution for a **Natural-Language-to-SQL Analytics Assistant*
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Use one of the rendered diagrams as a base, then customise:
+Pick a rendered diagram as your starting point and adapt it to this case. Cover each part below:
 - Metric registry:
 - Schema retrieval:
 - Ambiguity check:
@@ -48,37 +48,37 @@ Use one of the rendered diagrams as a base, then customise:
 ## 7. Evaluation plan
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
-| Semantic correctness | Matches analyst | Any silent mismatch | Golden question/SQL cases | Analytics lead |
-| Policy violations | 0 escaped | > 0 escaped | Query-run audit | Security |
-| Bytes scanned per answer | Within baseline | > 20% above | Warehouse telemetry | Data platform |
-| User trust score | >= launch target | Two-period decline | In-product feedback | Product |
+| Semantic correctness | Agrees with the analyst | Even one unflagged mismatch | Golden cases of question plus SQL | Analytics lead |
+| Policy violations | None get through | Any that get through | Audit of query runs | Security team |
+| Bytes scanned per answer | At or under baseline | More than 20% over | Telemetry from the warehouse | Data platform team |
+| User trust score | At or above the launch target | Falls two periods running | Feedback captured in the product | Product team |
 
 ## 8. Failure modes
-- Valid SQL, wrong business question
-- Stale schema invalidates a template
-- Join fan-out inflates totals
-- Query scans excessive data
-- Summary contradicts the table
-- Policy blocks frustrate users
+- The SQL runs but answers the wrong business question
+- A schema change quietly breaks a saved template
+- A join multiplies rows and inflates totals
+- A query reads far more data than it needs
+- The written summary disagrees with the result table
+- Policy blocks leave users frustrated
 
 ## 9. Rollout plan
-1. Ten governed metrics, named owners.
-2. Golden question/SQL/result cases.
-3. Replay golden set per change.
-4. Shadow analysts; analyst stays truth.
-5. Executive release once matched.
-6. Expand domain by domain.
+1. Start with ten governed metrics, each with a named owner.
+2. Build golden cases: question, SQL and expected result.
+3. Re-run the golden set on every change.
+4. Shadow the analysts; their answer stays the source of truth.
+5. Open to executives once the answers match.
+6. Grow one domain at a time.
 
 ## 10. Weak vs strong answer
-**Weak:** "I'd let an LLM write SQL from the schema and run it."
+**Weak:** "I'd give the model the schema, let it write SQL and run whatever comes back."
 
-**Strong:** "I'd anchor every question on a governed metric before touching tables, ask rather than guess when ambiguous, validate SQL as an AST against policy and a scan budget, execute read-only, and prove it on ten metrics with golden cases."
+**Strong:** "Before touching any table, I'd map the question to a governed metric. If the question is ambiguous, I'd ask rather than guess. I'd parse the SQL into an AST, check it against policy and a scan budget, run it read-only, and prove the whole thing on ten metrics with golden cases."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |
 |---|---|---|---|---|
-| Problem framing | Jumps to text-to-SQL | Some users/metrics | Governed decision support |  |
-| Architecture | LLM plus warehouse | Semantic layer added | Registry first, AST policy gate |  |
-| Evaluation | Vague accuracy | Some test queries | Golden cases, semantic correctness |  |
-| Production thinking | Demo only | Some monitoring | Scan budgets, rollback, owners |  |
-| Communication | Technical dump | Mostly clear | Wrong-answer risk first |  |
+| Problem framing | Leaps straight to text-to-SQL | Names some users and metrics | Frames it as governed decision support |  |
+| Architecture | Model wired to the warehouse | Adds a semantic layer | Metric registry first; AST policy gate |  |
+| Evaluation | "Accuracy" with no detail | A handful of test queries | Golden cases; checks semantic correctness |  |
+| Production thinking | Stops at the demo | Some monitoring | Scan budgets, rollback, named owners |  |
+| Communication | Dumps technical detail | Mostly clear | Opens with the wrong-answer risk |  |

@@ -1,10 +1,8 @@
-# Version 3 — Case Study Worksheets and Answer Keys
+# System Design Worksheets and Answer Keys
 
-Derived from the Version_2 tutorials; source book: The Forward Deployed Engineer System Design Interview. Chapter 21 is a custom addition, not from the source book.
+Twelve practice scenarios, each in two files. The **worksheet** is the part you fill in: sections 3–6 are left blank on purpose, and the other sections give you the frame to check your answer against. The **answer key** sets out what a strong FDE answer covers. Do the worksheet first, then compare. The long-form design guides for these scenarios are in `../../02_System_Design_Case_Studies/Standalone_Designs/`.
 
-Each scenario ships as a pair: a short **worksheet** you fill in yourself (sections 3–6 are deliberately blank; the rest is the scaffold you check against), and an **answer key** showing what a strong FDE answer covers. Format matches the Phase-01 `04_CASE_STUDY_WORKSHEET` reference docs. For the long-form treatment of any scenario, see `../Version_2/`.
-
-| Chapter | Scenario | Worksheet | Answer key |
+| No. | Scenario | Worksheet | Answer key |
 |---|---|---|---|
 | 1 | Enterprise Knowledge Assistant with RAG | [worksheet](01_enterprise_knowledge_assistant_rag.md) | [key](answer_keys/01_enterprise_knowledge_assistant_rag_answer_key.md) |
 | 2 | Secure Multi-Tenant AI Platform | [worksheet](02_secure_multi_tenant_ai_platform.md) | [key](answer_keys/02_secure_multi_tenant_ai_platform_answer_key.md) |

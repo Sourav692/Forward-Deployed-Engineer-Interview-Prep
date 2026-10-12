@@ -1,14 +1,14 @@
 # Configurable Platform for Customer-Specific Workflows - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for a **Configurable Platform for Customer-Specific Workflows**: ten customers vary fields, approvals, branding, and integrations on one platform. The danger is fragmenting into ten forks.
+As the FDE, your job is to shape a **Configurable Platform for Customer-Specific Workflows**. Ten customers share one platform, yet each wants its own fields, approval steps, branding and integrations. The thing to avoid is ending up with ten separate forks.
 
 ## 2. Clarify the customer problem
-- Which differences recur, and which are genuine one-offs?
-- Who authors configuration: engineers, customer admins, or both?
-- Must configurations survive core releases untouched?
-- Where does custom code stop — core, sandbox, or adapters only?
-- What is the time-to-configure target for a new customer?
+- Which of the differences keep coming back, and which really happen only once?
+- Who writes the configuration: our engineers, the customer's admins, or both?
+- Does each configuration have to keep working, unchanged, across core releases?
+- Where is custom code allowed: in the core, in a sandbox, or only inside adapters?
+- How long should it take to configure a new customer?
 
 ## 3. Users and workflows
 | User | Workflow | Current pain | AI assist opportunity | Human approval needed? |
@@ -37,7 +37,7 @@ Design a GenAI FDE solution for a **Configurable Platform for Customer-Specific 
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Use one of the rendered diagrams as a base, then customise:
+Start from a rendered diagram and shape it to fit this case. Cover each part below:
 - Workflow runtime:
 - Configuration registry:
 - Schema validation:
@@ -48,37 +48,37 @@ Use one of the rendered diagrams as a base, then customise:
 ## 7. Evaluation plan
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
-| Fork count | 0 | Any irremovable fork | Repo analysis | Engineering lead |
-| Handled by configuration | High and rising | Falling | Change-request tags | Platform eng |
-| Time to launch customer | Falling | Rising | Release tracking | Delivery lead |
-| Tenant incident rate | Isolated per tenant | Spreads across tenants | Incident system | Support and SRE |
+| Fork count | 0 | One fork that cannot be removed | Analysis of the repo | Engineering lead |
+| Handled by configuration | High and climbing | Dropping | Tags on change requests | Platform eng |
+| Time to launch customer | Getting shorter | Getting longer | Records of each release | Delivery lead |
+| Tenant incident rate | Stays inside one tenant | Reaches other tenants | The incident system | Support and SRE |
 
 ## 8. Failure modes
-- Approval graph loops infinitely
-- Adapter contract changes downstream
-- Upgrade breaks an old field mapping
-- Untested feature-flag combination
-- Custom code escapes the sandbox
-- A validation rule exhausts resources
+- An approval graph contains a cycle and never ends
+- An adapter's contract shifts on the downstream side
+- An upgrade breaks a field mapping that older configs rely on
+- Nobody tested a particular mix of feature flags
+- Custom code gets out of its sandbox
+- One validation rule eats all the available resources
 
 ## 9. Rollout plan
-1. Find the recurring pattern.
-2. Encode it in shared primitives.
-3. First customer admin configures it.
-4. Pilot run through real support.
-5. Baseline launch speed and defects.
-6. Expand only if forks stay zero.
+1. Spot the pattern that keeps repeating.
+2. Build it into shared primitives.
+3. Have the first customer's admin set it up.
+4. Run a pilot that goes through the real support desk.
+5. Record a baseline for launch speed and defect count.
+6. Widen only while the fork count stays at zero.
 
 ## 10. Weak vs strong answer
-**Weak:** "I'd build a flexible system with configurable forms, approvals, and hooks."
+**Weak:** "I'd make a flexible system with forms, approvals and hooks you can configure."
 
-**Strong:** "I'd keep one engine on one release train, express variation declaratively in immutable versioned configs validated before publish, deny arbitrary code by default, scope adapters and secrets per tenant, and measure success as variations shipped without a fork."
+**Strong:** "I'd run every customer on a single engine that ships on a single release train. Each customer's variation would live in a declarative config that is versioned, immutable and validated before it can be published. I'd deny arbitrary code unless it is explicitly allowed, and scope adapters and secrets to a single tenant. I'd count success as variations shipped with no fork."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |
 |---|---|---|---|---|
-| Problem framing | "Make it flexible" | Shared core named | Fork-free variation as outcome |  |
-| Architecture | Engine plus settings | Registry and validator | Sandbox, flags, migration |  |
-| Evaluation | "Customers happy" | Incidents tracked | Fork count, config share |  |
-| Production thinking | Onboard all ten | Pilot one | Rollback, baselines, gates |  |
-| Communication | Lists features | Mostly clear | Fragmentation risk first |  |
+| Problem framing | "Keep it flexible" | Names a shared core | Sets variation without forks as the goal |  |
+| Architecture | An engine with settings | Registry plus validator | Sandbox, flags and migrations |  |
+| Evaluation | "The customers are happy" | Tracks incidents | Fork count and share handled by config |  |
+| Production thinking | Brings on all ten at once | Pilots with one | Rollback, baselines and gates |  |
+| Communication | Lists features | Mostly clear | Opens with the risk of fragmenting |  |

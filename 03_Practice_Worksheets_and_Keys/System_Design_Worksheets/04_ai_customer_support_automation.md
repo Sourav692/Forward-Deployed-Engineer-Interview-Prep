@@ -1,14 +1,14 @@
 # AI Customer-Support Automation - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for **AI Customer-Support Automation**: automate routine requests, escalate risky ones to a human with full context. The danger is an unauthorised action or a confidently wrong answer.
+As the FDE, design a GenAI system for **AI Customer-Support Automation**. Routine requests should be handled end to end. Risky ones go to a human, who receives the full context. The two harms to prevent are an action nobody authorised and a wrong answer given with confidence.
 
 ## 2. Clarify the customer problem
-- Which channels are in scope, and at what volume and peak?
-- Which actions are autonomous, and which need approval?
-- How is the customer authenticated before account tools run?
-- What must a human see at handoff, and how fast?
-- How many languages, and what happens when detection fails?
+- Which channels are in scope, and what are the normal and peak volumes?
+- How do we confirm who the customer is before any account tool runs?
+- What may the system do on its own, and what needs sign-off?
+- At handoff, what must the human agent see, and within what time?
+- How many languages do we support, and what if we cannot tell the language?
 
 ## 3. Users and workflows
 | User | Workflow | Current pain | AI assist opportunity | Human approval needed? |
@@ -37,7 +37,7 @@ Design a GenAI FDE solution for **AI Customer-Support Automation**: automate rou
 |  |  |  |  |  |  |
 
 ## 6. Proposed architecture
-Use one of the rendered diagrams as a base, then customise:
+Pick a rendered diagram as your starting point and adapt it to this case. Cover each part below:
 - Identity verification:
 - Intent and risk routing:
 - Grounded retrieval:
@@ -48,37 +48,37 @@ Use one of the rendered diagrams as a base, then customise:
 ## 7. Evaluation plan
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
-| Safe automation rate | Stable per intent | Any intent drop | QA review labels | Support ops |
-| Incorrect resolutions | <= baseline | Above baseline | Reopen events | Support QA |
-| Repeat-contact rate | Flat or down | Rises post-change | CRM correlation | Support analytics |
-| Cost per resolved case | Improves | Offset by rework | Finance reporting | Finance ops |
+| Safe automation rate | Holds steady for each intent | Drops for any intent | Labels from QA review | Support operations |
+| Incorrect resolutions | At or under baseline | Over baseline | Tickets that get reopened | Support QA |
+| Repeat-contact rate | Level or falling | Climbs after a change | Contacts linked in the CRM | Support analytics |
+| Cost per resolved case | Goes down | Rework cancels the saving | Finance reports | Finance operations |
 
 ## 8. Failure modes
-- Confidently wrong policy answer
-- Prompt injection in customer text
-- Action taken before identity verified
-- Refund executes, response times out
-- Stale account state drives a commitment
-- Handoff omits context; agent repeats work
+- A policy answer is wrong but sounds certain
+- Customer text carries a prompt injection
+- An action runs before identity is checked
+- A refund goes through but the reply times out
+- Out-of-date account data leads to a promise
+- The handoff drops context, so the agent starts over
 
 ## 9. Rollout plan
-1. Agent-assist only; human sends.
-2. Automate low-risk reversible intents.
-3. Add one tool class at a time.
-4. Sample-review automated cases.
-5. Kill switch per intent.
-6. Roll back by intent.
+1. Assist agents only; a human sends every reply.
+2. Automate intents that are low-risk and easy to reverse.
+3. Introduce tool classes one at a time.
+4. Review a sample of automated cases.
+5. Keep a kill switch for each intent.
+6. Roll back one intent, not the whole system.
 
 ## 10. Weak vs strong answer
-**Weak:** "I'd send each message to an LLM and let it resolve the ticket."
+**Weak:** "I'd pass every message to the model and let it close the ticket."
 
-**Strong:** "I'd build a routed decision pipeline: verify identity before account tools, tag intent and risk, ground the draft in approved policy, and let a deterministic policy gateway — not the model — decide whether to auto-resolve, seek approval, or escalate."
+**Strong:** "I'd treat this as a decision pipeline with routing, not a chatbot. Identity is checked before any account tool. Each request gets an intent and a risk tag. Drafts rest on approved policy. Then a deterministic policy gateway, not the model, chooses between auto-resolve, approval and escalation."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |
 |---|---|---|---|---|
-| Problem framing | Builds a chatbot | Some routing | Routed decision pipeline |  |
-| Architecture | LLM replies | Retrieval plus escalation | Identity gate, policy gateway |  |
-| Evaluation | Vague accuracy | Deflection and CSAT | Safe automation, repeat contact |  |
-| Production thinking | Demo only | Some monitoring | Per-intent kill switch, rollback |  |
-| Communication | Technical dump | Mostly clear | Harm case first |  |
+| Problem framing | Builds a chatbot | Adds some routing | Sees a routed decision pipeline |  |
+| Architecture | Model writes the replies | Retrieval plus escalation | Identity gate and policy gateway |  |
+| Evaluation | "Accuracy" with no detail | Tracks deflection and CSAT | Safe automation and repeat contact |  |
+| Production thinking | Stops at the demo | Some monitoring | Kill switch and rollback per intent |  |
+| Communication | Dumps technical detail | Mostly clear | Opens with the harm case |  |

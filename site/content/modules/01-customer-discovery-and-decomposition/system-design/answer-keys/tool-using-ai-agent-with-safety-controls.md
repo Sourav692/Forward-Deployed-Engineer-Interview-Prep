@@ -1,99 +1,99 @@
 # Tool-Using AI Agent with Safety Controls - Answer Key
 
-This answer key is designed for interview preparation. It shows what a strong GenAI FDE candidate should ask, design, evaluate, secure, and communicate before moving from demo to production.
+Try the worksheet before you read this key. It shows what a strong GenAI FDE candidate asks, designs, measures, secures and explains on the way from a demo to a production system.
 
 ## Strong discovery questions
-- Which actions are reversible and which are not, and exactly where does the money boundary sit?
-- Does the agent act as the user, a service account, or a delegated actor with a narrow role?
-- What exact work should be automated first, and what must stay human-owned?
-- Which systems are the source of truth for identity, customer state, and financial actions?
-- What makes an action safe to execute automatically rather than requiring approval?
-- What is the rollback path when the agent makes a bad call, and who executes it?
-- What evidence must be recorded for audit, support, and dispute resolution?
-- Is success fewer handling minutes, higher resolution rate, lower error rate, or better satisfaction?
+- Which actions can be undone and which cannot? Where precisely does money start to move?
+- Whose identity does the agent use: the user's, a service account, or a delegated role with narrow rights?
+- Which piece of work do we automate first, and which decisions stay with people?
+- Where does the truth live for identity, for customer state and for financial actions?
+- What has to be true about an action before it can run without an approval?
+- When the agent gets it wrong, how do we roll back, and who does the rollback?
+- What do audit, support and dispute handling need us to record?
+- How do we measure success: shorter handling time, more cases resolved, fewer errors, or happier customers?
 
 ## Strong functional requirements
-- Support the core workflow: interpret incoming work, propose a bounded next action, pass it through deterministic policy, and execute only what is permitted.
-- Let the planner propose but never execute; the model interprets while deterministic systems decide who may act and what may change.
-- Declare every tool in a registry with its schema and data class, so tool use is governable rather than ad hoc.
-- Require explicit approval for irreversible or financial actions above a threshold, captured as a first-class record.
-- Execute through an idempotent gateway so a retry or replay can never produce a second side effect.
-- Provide a tested kill switch that halts autonomous execution paths without a deploy.
+- Core workflow: read the incoming work, suggest one bounded next step, run it past deterministic policy, and carry out only what policy allows.
+- The planner suggests and never acts. The model reads and interprets. Permission to act, and the limits on what changes, come from deterministic systems.
+- Each tool is declared in a registry, along with its schema and the class of data it touches. That makes tool use something we can govern, not something improvised.
+- Irreversible actions, and financial ones above a threshold, need an explicit approval. That approval is stored as a record in its own right.
+- All actions go through an idempotent gateway. However often a call is retried or replayed, the side effect happens once.
+- A kill switch, tested in advance, stops every autonomous path without a deploy.
 
 ## Strong non-functional requirements
-- Latency: budget model-planning time separately from tool time; I'd target p95 completion under about 15 seconds for low-risk tasks.
-- Availability: at the scale this case assumes — 50,000 users, 20 QPS peak, 10 actions per task — that is roughly 200 tool actions per second; reads parallelise, writes do not.
-- Security: short-lived, narrowly scoped credentials minted per workflow; the model never holds a reusable API key or admin token.
-- Compliance: a tamper-evident ledger recording intent, policy decision, approval, and outcome for every action.
-- Reliability: fail closed for writes when the credential broker or policy engine is unavailable; degrade only the lowest-risk reads.
-- Cost: hard ceilings on tool calls per task, per-task spend, refund amount, and allowable destinations — guardrails, not tuning knobs.
+- Latency: keep separate budgets for model planning and for tool calls. For low-risk tasks I'd aim for p95 completion under about 15 seconds.
+- Availability: the case gives us 50,000 users and a 20 QPS peak, each task taking 10 actions. Multiply it out and you get about 200 tool actions each second. Reads can fan out in parallel; writes cannot.
+- Security: each workflow gets its own short-lived, tightly scoped credentials. The model never holds an API key it could reuse or an admin token.
+- Compliance: every action leaves a tamper-evident ledger entry with the intent, the policy decision, the approval and the outcome.
+- Reliability: if the credential broker or the policy engine is down, writes fail closed. Degraded service is allowed for the safest reads and nothing else.
+- Cost: set hard caps on tool calls per task, spend per task, refund size and permitted destinations. They are guardrails, not dials to tune.
 
 ## Architecture explanation
-- The control plane decides what may happen; the data plane performs it. The model sits entirely inside the control plane's proposal step.
-- The agent planner proposes one bounded next action at a time and is explicitly forbidden from executing anything directly.
-- The task state store tracks workflow progress and intermediate results, and is never treated as the business source of truth.
-- The tool registry declares allowed tools, argument schemas, and data-class metadata, so an undeclared tool simply cannot be called.
-- The policy decision point deterministically returns allow, block, or needs-approval, with the granted scopes and a reason string.
-- The credential broker mints short-lived capability tokens bound to one tenant, one workflow, one action type, and one expiry.
-- The approval service captures human sign-off for irreversible actions, and the idempotent execution gateway ensures a given proposal executes exactly once.
-- The audit ledger records intent, decision, approval, and outcome; a kill switch halts autonomous paths and is tested before launch.
+- Two planes split the work: control rules on what is allowed, and data carries it out. The model lives wholly inside the control plane, at the step where actions are proposed.
+- The agent planner suggests one bounded next step at a time. It is expressly barred from running anything itself.
+- The task state store holds workflow progress and interim results. It is never the source of truth for the business.
+- The tool registry lists the permitted tools, their argument schemas and data-class metadata. A tool that is not listed cannot be called at all.
+- The policy decision point is deterministic. It answers allow, block or needs-approval, and returns the scopes it grants plus a reason string.
+- The credential broker issues short-lived capability tokens. A token covers a single tenant, workflow and action type, and it expires on a fixed clock.
+- The approval service records human sign-off for irreversible actions. The idempotent execution gateway makes sure each proposal runs exactly once.
+- The audit ledger keeps the intent, the decision, the approval and the outcome. A kill switch stops autonomous paths, and we test it before launch.
 
 ## Data model / integration assumptions
 - AgentTask(id, actor, goal, state, step_budget); ToolDefinition(name, schema, data_class, scopes); ActionProposal(id, task_id, tool, args_hash, policy_decision); PolicyDecision(proposal_id, verdict, scopes, reason); ActionReceipt(proposal_id, idempotency_key, outcome).
-- Assume the proposal is the model's recommendation and the receipt is the only proof a side effect occurred, so the two are never conflated.
-- Assume arguments are canonicalised before hashing, so the same logical input always yields the same idempotency seed.
-- Assume a repeated idempotency key returns the stored receipt rather than calling the tool again, which is what makes retries safe.
-- Assume schema validation runs before policy evaluation, so malformed arguments are rejected before any authorisation logic executes.
+- A proposal is only what the model recommends. A receipt is the sole evidence that a side effect took place, and we never mix the two up.
+- Arguments are put into canonical form before hashing. The same logical input then always produces the same idempotency seed.
+- When an idempotency key comes in a second time, the gateway hands back the stored receipt and skips the tool call. That is why a retry is safe.
+- Schema validation comes before policy evaluation. Malformed arguments are thrown out before any authorisation code runs.
 
 ## Red-team risks
-- prompt injection requesting an unauthorised tool, lost tool responses, stale approvals, action loops, credential broker outage
-- Indirect prompt injection inside a CRM record, ticket thread, database row, or fetched page; tool observations are untrusted data, never commands.
-- Over-broad credentials, where a long-lived token turns one manipulated plan into fleet-wide access rather than a single bounded workflow.
-- Unvalidated proposals, such as a confident "refund $5,000" against a $500 task limit, which validation must reject regardless of model certainty.
-- Lost responses after a tool succeeded, where a naive retry issues a second refund unless the gateway is genuinely idempotent.
-- Stale approvals and action loops, where an aged sign-off authorises the wrong state or an unbounded agent retries itself into a bill.
+- In short: a prompt injection that asks for an unauthorised tool, tool responses that go missing, stale approvals, action loops, and an outage of the credential broker
+- Indirect prompt injection hidden in a CRM record, a ticket thread, a database row or a fetched page. What a tool returns is untrusted data, never an instruction.
+- Credentials that grant too much. A long-lived token lets one manipulated plan reach the whole fleet instead of one bounded workflow.
+- Proposals nobody validates, such as a confident "refund $5,000" when the task limit is $500. Validation must reject it however sure the model sounds.
+- A tool call succeeds but its response is lost. A naive retry then sends a second refund unless the gateway truly is idempotent.
+- Old approvals and runaway loops. An outdated sign-off can authorise a state that has since changed, and an unbounded agent can keep retrying until the bill explodes.
 
 ## Rollout plan
-- Week 0-1: classify every action by reversibility and financial impact, and name the approver for each risky class.
-- Week 1-2: launch the smallest safe slice — read-only triage and drafting, with no write path enabled at all.
-- Week 2-3: prove reversibility on a narrow set of CRM writes before any write path is widened.
-- Week 3-4: add write paths only where rollback is demonstrated, keeping every financial action behind a human.
-- Week 5: red-team the prompt with hostile tool observations before granting the agent any additional power.
-- Week 6-8: canary a small representative traffic slice, watching policy denials, duplicate effects, approval delay, and override rate.
-- After pilot: expand autonomy only where unsafe-action count stays at zero and duplicate effects never appear.
+- Week 0-1: sort every action by whether it can be undone and how much money it touches, and name who approves each risky class.
+- Week 1-2: ship the smallest safe slice: triage and drafting in read-only mode, with every write path switched off.
+- Week 2-3: show that a small set of CRM writes can be reversed before opening up any wider write path.
+- Week 3-4: enable writes only where rollback has been shown to work, and keep a person in front of every financial action.
+- Week 5: attack the prompt with hostile tool observations before the agent gets any more power.
+- Week 6-8: send a small, representative share of traffic through a canary. Track how often policy denies, whether any effect is duplicated, how long approvals take and how often people override.
+- After pilot: give the agent more autonomy only where the count of unsafe actions stays at zero and no duplicate effect ever shows up.
 
 ## Evaluation plan
-These are thresholds I'd set for this case, not industry standards. Defend them, don't quote them.
+I chose these thresholds for this case. They are not industry standards, so be ready to defend them rather than recite them.
 
 | Metric | What it proves | Strong threshold | Dataset / method |
 |---|---|---|---|
-| Unsafe action count | The control boundary actually held | Zero in any sensitive workflow | Audit review, incident tickets, rule checks |
-| Duplicate-effect count | Retries and replays cannot double-charge | Zero; any occurrence alerts immediately | Idempotency logs and reconciliation reports |
-| Policy denial rate | Denials reflect real policy, not a broken prompt | Stable against baseline; spikes investigated | Policy engine logs |
-| Approval rate and delay | Human gates protect without stalling the workflow | Delay within SLO; rate stable | Approval service logs |
-| Task completion rate | Automation finishes work without manual rescue | Holds or improves after each expansion | Workflow state machine and case closures |
-| Human override rate | The agent is earning its place in the queue | Low enough to justify the automation | Review UI and post-action edits |
+| Unsafe action count | The control boundary did its job | None at all in any sensitive workflow | Audit review, incident tickets and rule checks |
+| Duplicate-effect count | No customer is ever charged twice, whatever gets retried or replayed | Zero; a single case triggers an alert at once | Idempotency logs plus reconciliation reports |
+| Policy denial rate | Denials come from genuine policy, not a faulty prompt | Steady against the baseline; any spike gets investigated | Logs from the policy engine |
+| Approval rate and delay | Human gates protect the flow without holding it up | Delay inside the SLO; rate steady | Logs from the approval service |
+| Task completion rate | The automation finishes work without someone stepping in | Stays level or rises after each expansion | Workflow state machine plus closed cases |
+| Human override rate | The agent justifies its place in the queue | Low enough that the automation pays for itself | Review UI and edits made after the action |
 
 ## Weak answer
-I would build an assistant that connects to email and CRM and issues refunds when it decides the customer deserves one. This is weak because it makes the model the authority, handing it credentials rather than scoped capabilities, with no deterministic policy gate and no defence against instructions hidden in a ticket.
+I'd build an assistant that hooks into email and the CRM and issues a refund whenever it judges the customer deserves one. This is weak because the model becomes the authority. It gets raw credentials instead of scoped capabilities, nothing deterministic gates its policy, and instructions hidden in a ticket meet no defence.
 
 ## Average answer
-I would have the agent plan tool calls, check permissions before each one, require approval for large refunds, and log everything. I would add retries for reliability. This is better, but still incomplete because it does not treat tool output as untrusted, does not bound loops or spend, and adds retries without idempotency — which is how one refund quietly becomes two.
+I'd let the agent plan its tool calls, run a permission check before each one, ask for approval on large refunds and log everything. For reliability I'd add retries. That is an improvement, but gaps remain. Tool output is not treated as untrusted, loops and spend have no limits, and retries arrive without idempotency. That last gap is how one refund silently turns into two.
 
 ## Strong answer
-I would frame the outcome as enabling useful automation while deterministic controls govern identity, permissions, risk, and irreversible effects, because the model must never be the authority. The planner proposes one bounded action; a typed schema validates it; a deterministic policy engine returns allow, block, or needs-approval; a credential broker mints a short-lived token scoped to that single action; and an idempotent gateway guarantees the effect happens exactly once. Tool observations are untrusted data, never instructions, so injection fails at the policy gate rather than relying on model judgement. Loops, spend, refund amounts, and destinations all have hard ceilings. I would start read-only, prove reversibility before enabling writes, keep money behind a human, and red-team the prompt before granting more power.
+The model must never be the authority, so I'd frame the outcome this way: automation that earns its keep, while deterministic rules own identity, access, risk and anything that can't be reversed. The planner suggests one bounded action, and a typed schema checks it. Then policy, which is deterministic, returns allow, block or needs-approval. The broker hands out a token that lives briefly and covers only that action, and the gateway's idempotency means the effect lands exactly once. Whatever a tool returns is untrusted data, not an instruction, so an injection is stopped at the policy gate instead of resting on the model's judgement. Hard caps cover loops, spend, refund size and destinations. I'd begin read-only, show that writes can be reversed before turning them on, keep a person in front of any money movement, and red-team the prompt before handing over more power.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
 |---|---|---|---|
-| Problem framing | "Build an agent that does refunds" | Names automation and approvals | Outcome as controlled automation; model proposes, deterministic systems decide |
-| Requirements | "It should be safe" | Lists permissions and logging | Reversibility classes, money boundary, delegation model, explicit step budget |
-| Architecture | Model calls tools directly | Adds a permission check | Planner, registry, policy point, credential broker, approval, idempotent gateway, kill switch |
-| Data/integration | Mentions logs | Names tasks and tool calls | Proposal vs. receipt separated, canonical args hash, validation before policy |
-| Evaluation | "It works" | Tracks success rate | Unsafe actions, duplicate effects, denial rate, approval delay, override rate |
-| Safety/security | "The model will refuse" | Adds scoped tokens | Untrusted observations, short-lived capabilities, output validation, bounded loops and spend |
-| Rollout | Enable all tools | Pilot with approvals | Read-only first, reversibility proven, money behind a human, prompt red-team, canary |
-| Communication | Describes the agent | Clear but generic | Leads with the hostile case, names what fails closed, closes with the autonomy gate |
+| Problem framing | "Build an agent that does refunds" | Mentions automation and approvals | Frames the goal as controlled automation; the model proposes and deterministic systems decide |
+| Requirements | "It should be safe" | Covers permissions and logging | Classes of reversibility, where money moves, how delegation works, a clear step budget |
+| Architecture | The model calls tools itself | Adds a permission check | A proposing planner, a tool registry, a policy decision point, a credential broker, approvals, an idempotent gateway and a kill switch |
+| Data/integration | Mentions logs | Names tasks and tool calls | Keeps proposal and receipt apart, hashes canonical args, validates before policy |
+| Evaluation | "It works" | Measures success rate | Counts unsafe actions and duplicates; tracks denials, approval delay and overrides |
+| Safety/security | "The model will refuse" | Adds scoped tokens | Treats observations as untrusted, short-lived capabilities, checks output, caps loops and spend |
+| Rollout | Turn on every tool | Pilot with approvals | Read-only first, reversibility shown, a person in front of money, prompt red-team, canary |
+| Communication | Describes the agent | Clear but generic | Opens with the hostile case, says what fails closed, ends on the autonomy gate |
 
 ## Final 2-minute spoken answer
-I would not start with the model. The customer asks for an agent that reads email, queries internal systems, updates CRM records, and issues refunds, and everyone nods at the feature list before disagreeing completely — operations wants speed, security wants hard gates, finance fears irreversible money movement. That disagreement is the design problem. So I would restate the outcome as enabling useful automation while deterministic controls govern identity, permissions, risk, and irreversible effects. The crucial consequence is that the model is not the authority: it can interpret and propose, but deterministic systems decide who may act, what may change, and whether an action can be reversed. Concretely, the planner proposes one bounded action, a typed schema validates the arguments before policy even runs, a deterministic policy engine returns allow, block, or needs-approval with the scopes it grants, a credential broker mints a short-lived token tied to one workflow and one action type, and an idempotent execution gateway guarantees exactly one side effect no matter how many retries occur. Tool observations are untrusted data, never commands, so a prompt injection hidden in a ticket fails at the policy gate rather than depending on the model to notice it. Loops, per-task spend, refund amounts, and destinations all carry hard ceilings. I would roll out read-only first, prove reversibility before enabling any write path, keep money behind a human, and red-team the prompt before granting more autonomy. Success is fewer handling minutes with zero unauthorised or unreviewed irreversible changes.
+I wouldn't begin with the model. Here the customer's agent has four jobs: read email, query internal systems, update CRM records and send refunds. Everyone agrees with that feature list, and then they disagree about everything else. Operations wants speed. Security wants hard gates. Finance is worried about money moving in ways we can't undo. That tension is the design problem. So I'd restate the goal as automation that does real work, with identity, access, risk and irreversible effects all held by deterministic controls. The key consequence is that the model holds no authority. It can read the situation and suggest a step. Who acts, what changes and whether it can be undone are settled by deterministic systems. In practice the planner suggests one bounded action. A typed schema checks the arguments before policy even looks at them. Deterministic policy then rules allow, block or needs-approval, and lists the scopes it grants. The broker mints a token that expires quickly and is bound to one workflow and one kind of action. Because the execution gateway is idempotent, retries never produce more than one side effect. Anything a tool returns is untrusted data, not a command. So an injection hidden in a ticket is stopped at the policy gate; we don't rely on the model spotting it. Hard caps apply to loops, per-task spend, refund size and destinations. For rollout I'd go read-only first, show that writes can be reversed before switching any on, keep a person in front of money movement, and red-team the prompt before giving the agent more autonomy. Success means less handling time and zero irreversible changes that nobody authorised or reviewed.
