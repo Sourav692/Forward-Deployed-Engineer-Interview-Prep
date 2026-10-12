@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
-import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput, trackTrail } from '@/lib/learn'
+import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput, trackModules, trackTrail } from '@/lib/learn'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { LessonActions } from '@/components/learn/LessonActions'
 import { LessonReader } from '@/components/learn/LessonReader'
@@ -50,6 +50,9 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const page = getLessonPage(trackSlug, moduleSlug, lessonSlug)
   if (!page) notFound()
   const { lesson, track, section, module: mod, siblings, doc, prev, next, index, count } = page
+  // After a module's last lesson, Next goes on to the following module, not back to this one.
+  const order = trackModules(track)
+  const nextModule = order[order.findIndex((m) => m.slug === mod.slug) + 1]
   const input = moduleInput(mod)
   const trail = trackTrail(track)
   // Section anchors exist only on Learn track pages.
@@ -139,6 +142,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             )}
             {next ? (
               <NavLink href={next.href} dir="next" label={next.title} />
+            ) : nextModule ? (
+              <NavLink href={learnHref.module(nextModule)} dir="next" label={nextModule.title} />
             ) : (
               <NavLink href={learnHref.module(mod)} dir="next" label={`Back to ${mod.title}`} />
             )}

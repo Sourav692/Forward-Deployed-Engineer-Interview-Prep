@@ -168,9 +168,17 @@ export const totalMinutes = (lessons: LearnLesson[]) => lessons.reduce((s, l) =>
 /** A module's study time (ENH-22): its lessons' reading plus its practice allowance. */
 export const moduleTime = (mod: CurriculumModule): StudyTime => studyTime(mod, allMinutes())
 
-/** A track's study hours: its modules' study time, summed. */
-export const trackHours = (track: CurriculumTrack): number =>
-  Math.round(trackModules(track).reduce((sum, m) => sum + moduleTime(m).total, 0) / 60)
+/**
+ * Minutes that count towards a track or section total: a module with no material yet
+ * (coming soon, on hold) keeps its own estimate on its card but adds nothing to the sum,
+ * so a total is time you can actually spend (audit checks PQ-11, ON-04).
+ */
+export const countedMinutes = (modules: CurriculumModule[]): number =>
+  modules.reduce((sum, m) => (m.status === 'coming-soon' || m.status === 'on-hold' ? sum : sum + moduleTime(m).total), 0)
+
+/** A track's study minutes and hours: its modules' study time, summed. */
+export const trackMinutes = (track: CurriculumTrack): number => countedMinutes(trackModules(track))
+export const trackHours = (track: CurriculumTrack): number => Math.round(trackMinutes(track) / 60)
 
 // ── Static params ──────────────────────────────────────────────────────────
 
