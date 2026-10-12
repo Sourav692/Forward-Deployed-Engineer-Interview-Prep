@@ -1958,7 +1958,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
-      "estMinutes": 43,
+      "estMinutes": 44,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -2319,7 +2319,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/",
-      "estMinutes": 62,
+      "estMinutes": 61,
       "href": "/design/sre-incident-response-agent"
     },
     {

@@ -1,4 +1,4 @@
-# G03 — Tool-Using Agent with Safety Controls: Deep Dive
+# Tool-Using Agent with Safety Controls: Deep Dive
 
 The [Main guide](/design/tool-using-agent-with-safety-controls#main) is the spoken design. This is its technical backup; the unchanged [source case](/design/tool-using-agent-with-safety-controls#full-pack) keeps the complete synthesis and references.
 

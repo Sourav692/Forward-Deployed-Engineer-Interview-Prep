@@ -1,4 +1,4 @@
-# G01 — Enterprise Knowledge Assistant: Interview Guide, part 2
+# Enterprise Knowledge Assistant: Interview Guide, part 2
 
 ## 7. ABAC
 

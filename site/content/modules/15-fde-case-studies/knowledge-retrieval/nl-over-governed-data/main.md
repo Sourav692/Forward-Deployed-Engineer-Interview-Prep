@@ -1,4 +1,4 @@
-# G06 — Natural Language over Governed Data: Main Interview Guide
+# Natural Language over Governed Data: Main Interview Guide
 
 **Analytics process** is: someone asks a business question, SQL hits the warehouse, a number shows up on a slide. The trap is **valid SQL for the wrong meaning of “revenue.”**
 
@@ -22,7 +22,7 @@ This is the anchor for the related executive-dashboard and retail-forecast expla
 | Case                             | Shared foundation                                                | What changes                                                                                                                   |
 | -------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | NL-to-SQL analytics assistant    | Governed metric → permitted schema → validated read-only query | General business questions and SQL safety                                                                                      |
-| Executive Dashboard Copilot      | Same metric registry and query evidence                          | KPI variance narrative, dashboard freshness, analyst escalation                                                                |
+| Executive Dashboard Assistant      | Same metric registry and query evidence                          | KPI variance narrative, dashboard freshness, analyst escalation                                                                |
 | Retail Demand Forecast Explainer | Same governed evidence and result checks                         | Deterministic driver statistics from sales, promotions, inventory, weather, and events; human review of planning actions       |
 | Insurer governed data assistant  | Governed metric views and auditable asset resolution             | Supervisor routes to Genie (now Genie One), a narrow SQL/RAG worker, deterministic analysis, or visualization; later specialized domain agents |
 

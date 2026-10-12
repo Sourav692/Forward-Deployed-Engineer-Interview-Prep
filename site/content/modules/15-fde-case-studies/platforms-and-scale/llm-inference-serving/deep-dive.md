@@ -1,4 +1,4 @@
-# G20 — LLM Inference Serving: Deep Dive
+# LLM Inference Serving: Deep Dive
 
 > Read with the unchanged [source](/design/llm-inference-serving#full-pack). The [Main guide](/design/llm-inference-serving#main) gives the interview route; the [Cheat Sheet](/design/llm-inference-serving#cheat-sheet) is the recall card. Serving-engine mechanisms and all numeric rates in the source are its own illustrative construction.
 

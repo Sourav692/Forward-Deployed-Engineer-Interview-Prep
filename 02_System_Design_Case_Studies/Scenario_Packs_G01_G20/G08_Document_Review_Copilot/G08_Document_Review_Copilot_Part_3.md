@@ -53,7 +53,7 @@ The claims-processing follow-up asks how to prove the system is safe enough for 
 
 ## 11. Roll Out in Shadow, Then One Category at a Time
 
-Week one is not the whole diagram. It is one document type and one policy source. It is the extraction schema agreed with the SMEs. It is a golden set built from historical cases with their human decisions. The purchased keys and the vendor case describe the same staircase.
+Week one is not the whole diagram. It is one document type and one policy source. It is the extraction schema agreed with the SMEs. It is a golden set built from historical cases with their human decisions. The answer keys and the vendor case describe the same staircase.
 
 | Stage | Gate |
 |---|---|

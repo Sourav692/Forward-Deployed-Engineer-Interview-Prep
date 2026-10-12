@@ -54,7 +54,7 @@ const AREA_COPY: Record<(typeof NAV)[number]['id'], { purpose: string; cta: stri
   learn: { purpose: 'The curriculum: tracks, modules and lessons, with progress saved in this browser.', cta: 'Browse the curriculum' },
   design: { purpose: 'The casebook: complete system designs to read as interview answers or deep dives.', cta: 'Open the casebook' },
   practice: { purpose: 'Worksheets and behavioural questions you answer, then score against a model answer.', cta: 'Start practising' },
-  interview: { purpose: 'Case-study worksheets, full mock rounds and the final-week review for the days before the loop.', cta: 'Get interview ready' },
+  interview: { purpose: 'Technical worksheets, full mock rounds and the final-week review for the days before the loop.', cta: 'Get interview ready' },
 }
 
 const DIFFERENT = [

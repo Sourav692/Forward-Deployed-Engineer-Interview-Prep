@@ -1,4 +1,4 @@
-# G06 — Natural Language over Governed Data: Deep Dive
+# Natural Language over Governed Data: Deep Dive
 
 The [Main guide](/design/nl-over-governed-data#main) is the spoken design. This is the technical backup to the unchanged [source study](/design/nl-over-governed-data#full-pack), especially §§3–14.
 

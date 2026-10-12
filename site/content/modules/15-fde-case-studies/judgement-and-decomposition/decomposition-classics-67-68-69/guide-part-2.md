@@ -1,6 +1,6 @@
 # Decomposition Classics: 911 Response Times, Bank Fraud, Medication Errors, part 2
 
-## 6. Decompose #68: Scope Fraud Unification in Ninety Days
+## 6. Decompose Bank Fraud: Scope Fraud Unification in Ninety Days
 
 *Everything in this section is (own construction). Numbers are assumptions.*
 
@@ -118,7 +118,7 @@ Assume the interviewer says system C's vendor will not release data for 60 days.
 
 ---
 
-## 7. Decompose #69: Start Medication Safety at the Human Check
+## 7. Decompose Medication Errors: Start Medication Safety at the Human Check
 
 *Everything in this section is (own construction). Numbers are assumptions. Clinical practice named here is general knowledge, not repo material.*
 

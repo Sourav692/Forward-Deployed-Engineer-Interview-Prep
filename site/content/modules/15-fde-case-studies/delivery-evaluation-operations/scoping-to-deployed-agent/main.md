@@ -1,4 +1,4 @@
-# G12 — Scoping to Deployed Agent: Main Interview Guide
+# Scoping to Deployed Agent: Main Interview Guide
 
 **Delivery process** is: customer wants an agent, you ship something real in two weeks, with a named person who can say stop.
 

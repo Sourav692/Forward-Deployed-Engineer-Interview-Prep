@@ -238,7 +238,7 @@ const FDE_FLAGS = flags('recommended', {
 
 const FDE_READINESS = [
   'Every required module completed: lessons read and confidence rated 3 or more.',
-  'Two full case-study worksheets answered inside 45 minutes each.',
+  'Two full technical worksheets answered inside 45 minutes each.',
   'Four timed mock interviews scored on the rubric, with no dimension below 3.',
   'Eight to twelve stories in your story bank, each told aloud in under three minutes.',
 ]
@@ -310,7 +310,7 @@ export const PATHS: LearningPath[] = [
       'Engineering foundations if you already ship backend services. Frameworks: LangChain and LangGraph if you use them at work.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
-      'Two case-study worksheets answered inside 45 minutes each.',
+      'Two technical worksheets answered inside 45 minutes each.',
       'Two timed mock interviews scored on the rubric, with no dimension below 3.',
     ],
     startModule: 'how-the-platform-works',
@@ -341,7 +341,7 @@ export const PATHS: LearningPath[] = [
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
-      'Two case-study worksheets answered inside 45 minutes each.',
+      'Two technical worksheets answered inside 45 minutes each.',
       'One timed mock interview scored on the rubric, with no dimension below 3.',
     ],
     startModule: 'how-the-platform-works',
@@ -368,7 +368,7 @@ export const PATHS: LearningPath[] = [
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
-      'Two case-study worksheets answered inside 45 minutes each.',
+      'Two technical worksheets answered inside 45 minutes each.',
       'Two timed mock interviews scored on the rubric, with no dimension below 3.',
     ],
     startModule: 'how-the-platform-works',

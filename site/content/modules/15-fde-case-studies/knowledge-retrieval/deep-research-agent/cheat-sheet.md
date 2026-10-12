@@ -1,4 +1,4 @@
-# G11 — Deep Research Agent: Cheat Sheet
+# Deep Research Agent: Cheat Sheet
 
 [Main](/design/deep-research-agent#main) · [Deep Dive](/design/deep-research-agent#deep-dive) · [Unchanged source](/design/deep-research-agent#full-pack)
 

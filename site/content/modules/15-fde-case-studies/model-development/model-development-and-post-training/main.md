@@ -1,4 +1,4 @@
-# G19 — Model Development and Post-Training: Main Interview Guide
+# Model Development and Post-Training: Main Interview Guide
 
 > **Source:** [Sources and Full Design](/design/model-development-and-post-training#full-pack), especially §§1–12. Use the [Deep Dive](/design/model-development-and-post-training#deep-dive) for methods and arithmetic and the [Cheat Sheet](/design/model-development-and-post-training#cheat-sheet) for rehearsal. The source constructs the design from reported prompts; its run sizes and throughput are illustrations, not measured training results.
 

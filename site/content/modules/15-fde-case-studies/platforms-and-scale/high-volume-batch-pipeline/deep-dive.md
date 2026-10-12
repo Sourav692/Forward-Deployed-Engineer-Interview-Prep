@@ -1,4 +1,4 @@
-# G10 — High-Volume Batch Pipeline: Deep Dive
+# High-Volume Batch Pipeline: Deep Dive
 
 > Read with the unchanged [source](/design/high-volume-batch-pipeline#full-pack). The [Main guide](/design/high-volume-batch-pipeline#main) is the interview path; the [Cheat Sheet](/design/high-volume-batch-pipeline#cheat-sheet) is the quick recall card.
 

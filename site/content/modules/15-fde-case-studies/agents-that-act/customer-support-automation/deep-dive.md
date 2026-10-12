@@ -1,4 +1,4 @@
-# G02 — Customer Support Automation: Deep Dive
+# Customer Support Automation: Deep Dive
 
 This is the technical backup for the [Main Interview Guide](/design/customer-support-automation#main). The unchanged [source case](/design/customer-support-automation#full-pack) contains the full synthesis and references.
 

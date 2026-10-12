@@ -77,7 +77,7 @@ export type Remedy = { label: string; href: string } | null
 
 /** Where to go next for one readiness input (UX-07 remedy table). */
 export function remedyFor(id: InterviewInput, sheets: CompetencySheet[], modules: ModuleInput[]): Remedy {
-  if (id === 'worksheets') return { label: 'Case-study worksheets', href: curriculumHref('interview-practice', 'case-study-worksheets') }
+  if (id === 'worksheets') return { label: 'Technical worksheets', href: curriculumHref('interview-practice', 'case-study-worksheets') }
   if (id === 'mocks') {
     const means = SCENARIO_MOCKS.map((slug) => ({ slug, mean: latestMockMean(slug) }))
     const pick = means.find((m) => m.mean === null) ?? means.reduce((lo, m) => ((m.mean ?? 0) < (lo.mean ?? 0) ? m : lo), means[0])

@@ -41,7 +41,7 @@ The [source discovery table, §1](G03_Tool_Using_Agent_With_Safety_Controls.md#1
 
 If approval policy is unspecified, assume a human gate for irreversible actions; do not invent a permissive refund threshold.
 
-### G03 is the anchor for its variants
+### The anchor for its variants
 
 | Related case                                                   | What changes from G03                                                                                  |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |

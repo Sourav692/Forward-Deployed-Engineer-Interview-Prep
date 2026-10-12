@@ -88,7 +88,7 @@ The diagnostic signals that make this possible are the ones section 2 kept. Requ
 
 Alert on customer harm or likely impending harm, not on telemetry volume. Good triggers are sustained latency above the SLO and elevated error rates. So are repeated empty retrievals, a spike in fallback responses, and critical tool failures. A sudden rise in "wrong answer" feedback for one tenant or cohort belongs on the list too.
 
-## 10. Walk Through the Latency Spike (#87)
+## 10. Walk Through the Latency Spike
 
 A slow pipeline is rarely one slow component. Incident #87 is the proof: no single span explains it, and every small change looked safe alone.
 

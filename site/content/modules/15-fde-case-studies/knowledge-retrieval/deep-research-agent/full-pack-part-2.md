@@ -41,7 +41,7 @@ Evaluate at two levels. Outcome evaluation asks whether the final answer was rig
 
 Debug a bad run from the trace keyed by run ID. Record per hop which agent ran, why it was chosen, what it saw and what it returned. The routing reasoning is the highest-value thing to log, because many bad multi-agent outputs come from how work was split and routed, not from one weak agent. Find the first hop where the trajectory diverged.
 
-## 11. Read the Deployed Research Platform as Proof (#12)
+## 11. Read the Deployed Research Platform as Proof
 
 The Research Platform is my own build of the same product, running on AWS. Given a topic, it researches, writes a full report, safety-checks it, caches it and remembers it. Read it once as evidence that each whiteboard box is a real component.
 
@@ -67,7 +67,7 @@ Be precise about its shape. Layer 3 is a pipeline with a loop and a gate, closer
 
 Name what it lacks, because that is the coverage-map habit. It has no per-user access control: one API key, no tenant model, so every user sees every cached report. That is fine for a research tool and wrong for an enterprise one, and it is exactly the anchor's per-user isolation requirement. It also has no deterministic release gate, since the judge scores are observability, not a gate.
 
-## 12. Build the Supervisor-and-Workers Version (#103)
+## 12. Build the Supervisor-and-Workers Version
 
 The mock prompt is "design a research system with a supervisor and workers". It is the anchor's implementation view. The supervisor plans N queries, workers execute them independently in parallel, and a synthesiser merges.
 

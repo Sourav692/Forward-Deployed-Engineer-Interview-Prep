@@ -1,4 +1,4 @@
-# G01 — Enterprise Knowledge Assistant: Cheat Sheet
+# Enterprise Knowledge Assistant: Cheat Sheet
 
 ## Problem
 

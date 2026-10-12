@@ -573,7 +573,7 @@ test('entry points: express lane, Frontier Lab hours, diagnostic links', async (
   await page.goto('/learn/orientation')
   await hydrated(page)
   // Sections start collapsed on narrow screens.
-  const section = page.getByRole('button', { name: /^Orientation/ })
+  const section = page.getByRole('button', { name: /^Getting started/ })
   if ((await section.getAttribute('aria-expanded')) === 'false') await section.click()
   await expect(page.getByRole('link', { name: 'Path diagnostic' })).toHaveAttribute('href', '/start#diagnostic')
   await page.goto('/learn/orientation/how-the-platform-works')

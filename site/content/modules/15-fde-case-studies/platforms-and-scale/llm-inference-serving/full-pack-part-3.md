@@ -1,6 +1,6 @@
 # LLM Inference Serving: Batching, Routing and Failover, part 3
 
-## 15. Walk the Latency Stack When It Gets Slow (#74)
+## 15. Walk the Latency Stack When It Gets Slow
 
 #74 asks for the full stack: tokenization, network, batch size, KV cache, post-processing. G14 section 12 answers it from the application's traces. This section answers it from inside the serving layer. First ask which latency is slow: first token, per token, or total *(from question 9 of the decomposition questions file)*.
 

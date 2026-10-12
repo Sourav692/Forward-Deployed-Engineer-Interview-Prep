@@ -75,7 +75,7 @@ Stream over server-sent events or a websocket, and flush per token. Watch for pr
 
 Cancellation is a cost control, not only a courtesy. When a caller disconnects, the sequence can keep decoding if any hop fails to pass the disconnect on, burning GPU time on tokens nobody reads *(additions file, section E)*. Propagate the disconnect to the scheduler, which evicts the sequence and frees its KV blocks at the next step.
 
-## 12. Shrink It to One GPU for the Synchronous Variant (#75)
+## 12. Shrink It to One GPU for the Synchronous Variant
 
 #75 is the anchor with the distribution removed: one GPU, up to 100 inputs per batch, callers who block and wait. The whole design becomes intake, a batcher, the GPU and a way back to the right caller.
 
@@ -85,7 +85,7 @@ Say the arithmetic. Assume a full batch of 100 takes 200 ms. Maximum throughput 
 
 One follow-up changes the answer. If the model generates variable-length output, a static batch of 100 finishes at its longest member. Move to continuous batching from section 6, even on one GPU.
 
-## 13. Scale It to 100,000 Requests per Second (#77)
+## 13. Scale It to 100,000 Requests per Second
 
 #77 is the anchor at a scale where the request shape decides everything. Price it before drawing anything, using section 3's replica-seconds *(own construction; same assumed rates)*.
 
@@ -107,7 +107,7 @@ The architecture adds four things at this scale.
 
 **Headroom over autoscaling.** New GPU replicas often take minutes to provision and load, so autoscaling follows the daily curve while reserved headroom absorbs bursts. Prefix caching and short output caps are the cheapest capacity at this size, because they cut replica-seconds per request directly.
 
-## 14. Review the Junior Design Against the Anchor (#79)
+## 14. Review the Junior Design Against the Anchor
 
 #79 is not a design question. It hands over a design and asks what to change, so the anchor becomes the rubric. Open with what works. Clarify the requirements the design assumed. Then name the top three risks by severity, not every flaw found.
 

@@ -1,4 +1,4 @@
-# G07 — Secure Multi-Tenant AI Platform: Cheat Sheet
+# Secure Multi-Tenant AI Platform: Cheat Sheet
 
 Use the [Main guide](/design/secure-multi-tenant-ai-platform#main) for the spoken design, the [Deep Dive](/design/secure-multi-tenant-ai-platform#deep-dive) for mechanics, and the unchanged [source](/design/secure-multi-tenant-ai-platform#full-pack) for the full case.
 

@@ -1,4 +1,4 @@
-# G17 — Logistics Exception Handling: Main Interview Guide
+# Logistics Exception Handling: Main Interview Guide
 
 **Exception handling** is: a shipment should have moved, it didn’t, ops must tell the customer or the carrier. Customs is not a chatbot decision.
 

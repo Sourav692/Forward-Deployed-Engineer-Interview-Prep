@@ -40,7 +40,7 @@ export const TRACKS: CurriculumTrack[] = [
     sections: [
       {
         slug: 'orientation',
-        title: 'Orientation',
+        title: 'Getting started',
         whyItMatters: 'Sets the method every later answer uses.',
         outcomes: 'Describe the FDE loop; apply the first-ten-minutes routine',
         exercise: 'Path diagnostic',
@@ -1472,7 +1472,7 @@ export const MODULES: CurriculumModule[] = [
   {
     slug: 'case-study-worksheets',
     code: 'I1',
-    title: 'Case-study worksheets',
+    title: 'Technical worksheets',
     track: 'interview-practice',
     section: 'practice-and-revision',
     status: 'ready',

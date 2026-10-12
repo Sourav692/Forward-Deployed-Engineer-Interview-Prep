@@ -1,4 +1,4 @@
-# G08 — Document Review Copilot: Main Interview Guide
+# Document Review Copilot: Main Interview Guide
 
 **Document review** is: a packet arrives, a human decides yes/no against a rule (payer, law, playbook). Reading is cheap. **Signing** is expensive.
 

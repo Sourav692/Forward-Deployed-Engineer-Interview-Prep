@@ -1,4 +1,4 @@
-# G05 — Sales Copilot: Deep Dive
+# Sales Copilot: Deep Dive
 
 Use the [Main guide](/design/sales-copilot#main) for the spoken answer. This is the technical backup; the unchanged [source case](/design/sales-copilot#full-pack) keeps the full synthesis, interview script, and references.
 
@@ -16,7 +16,7 @@ Use the [Main guide](/design/sales-copilot#main) for the spoken answer. This is 
 | Support history | Account tickets/escalations | Account/tenant scope; severity can be mis-summarized. |
 | Warehouse | Usage, ROI pilots, renewals; often daily | Row-level account/role scope; internal ROI is not an approved external claim. |
 
-Each record needs stable ID, owner, updated time, and ACL metadata; exclude unmapped sources. User feedback is not ground truth until SME approval. The source notes that its detailed CRM permission model and structured router are additions to the pack based on cross-cutting references, not claims made by the purchased worksheet alone.
+Each record needs stable ID, owner, updated time, and ACL metadata; exclude unmapped sources. User feedback is not ground truth until SME approval. The source notes that its detailed CRM permission model and structured router are additions to the pack based on cross-cutting references, not claims made by the practice worksheet alone.
 
 ## 2. Identity and CRM sharing mirror
 

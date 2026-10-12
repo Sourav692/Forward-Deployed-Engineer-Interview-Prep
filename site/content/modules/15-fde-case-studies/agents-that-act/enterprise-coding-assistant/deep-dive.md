@@ -1,4 +1,4 @@
-# G09 — Enterprise Coding Assistant: Deep Dive
+# Enterprise Coding Assistant: Deep Dive
 
 The [Main guide](/design/enterprise-coding-assistant#main) is the spoken answer. This backs it with mechanisms from the unchanged [source study](/design/enterprise-coding-assistant#full-pack), especially §§3–13.
 

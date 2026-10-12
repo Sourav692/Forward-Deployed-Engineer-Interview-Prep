@@ -1,4 +1,4 @@
-# G02 — Customer Support Automation: Cheat Sheet
+# Customer Support Automation: Cheat Sheet
 
 Use the [Main guide](/design/customer-support-automation#main) for the spoken answer and the [Deep Dive](/design/customer-support-automation#deep-dive) for technical follow-ups. The [source case](/design/customer-support-automation#full-pack) remains the full reference.
 

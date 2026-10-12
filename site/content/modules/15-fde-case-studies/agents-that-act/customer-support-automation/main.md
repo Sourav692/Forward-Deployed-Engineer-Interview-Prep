@@ -1,4 +1,4 @@
-# G02 — Customer Support Automation: Main Interview Guide
+# Customer Support Automation: Main Interview Guide
 
 **Support process** is a customer has a problem, someone answers or acts, and we close the case without making money or data worse.
 
@@ -42,7 +42,7 @@ These questions set the first-release boundary. The [source case, §1](/design/c
 
 If the interviewer cannot provide numbers, say which assumptions you are making. Keep money-moving and account-changing actions gated until identity, authority, and policy are clear.
 
-### G02 is the anchor for its support-automation variants
+### The anchor for its support-automation variants
 
 Learn the shared decision pipeline here, then change the boundary that dominates each variant.
 

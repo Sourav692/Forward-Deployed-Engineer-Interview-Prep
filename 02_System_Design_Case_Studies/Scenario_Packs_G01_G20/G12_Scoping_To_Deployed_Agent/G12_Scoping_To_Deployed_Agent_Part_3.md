@@ -29,7 +29,7 @@ The run also shows 6 of 6 gates passed, `deployed True` on day 14, and one escal
 
 Read these as one engagement, run once. The eval score and time-to-value are demo-scripted, not measured on a real delivery. What is proven is that the pipeline enforces its own gates. Saying so before the interviewer asks is itself the signal.
 
-## 13. Read #65 as the Same Case in Prose
+## 13. Read the Same Case in Prose
 
 #65 is not a second design. It is the anchor's Northwind running case, written three ways, and each adds something to rehearse.
 

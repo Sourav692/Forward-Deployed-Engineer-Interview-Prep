@@ -1,4 +1,4 @@
-# G07 — Secure Multi-Tenant AI Platform: Deep Dive
+# Secure Multi-Tenant AI Platform: Deep Dive
 
 The [Main guide](/design/secure-multi-tenant-ai-platform#main) is the spoken answer. This is technical backup for the unchanged [source study](/design/secure-multi-tenant-ai-platform#full-pack), especially §§3–14.
 

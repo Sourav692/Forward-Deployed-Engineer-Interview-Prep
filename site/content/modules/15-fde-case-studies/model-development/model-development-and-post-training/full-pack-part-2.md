@@ -36,7 +36,7 @@ Report sampling settings with every number. Pass@1 at temperature zero and major
 
 The Foundations evaluation lab shows the simplest version: run the model over a test set, compare with expected answers, then try a public benchmark, ARC. Exact-match comparison is where every eval starts. The release gate for this pipeline follows the same logic as G13's evaluation and release-gating page: fixed suites, thresholds agreed in advance, and a gate that blocks rather than advises.
 
-## 9. Scale Training Under a Fixed Compute Budget (#73)
+## 9. Scale Training Under a Fixed Compute Budget
 
 Case #73 changes the training stage. "Design a scalable, efficient system for training an LLM given compute and data constraints" is the same pipeline with pretraining back in scope and the budget fixed *(own construction throughout)*.
 
@@ -58,7 +58,7 @@ Checkpointing is the reliability story. At hundreds of GPUs over days, some hard
 
 > *"I size from the budget: tokens per parameter picks the model size, six N D gives the FLOPs, and memory picks the parallelism. Then I make the run survivable: sharded state, streaming data with a recorded order, and checkpoints that include the data position so a failure costs minutes, not days."*
 
-## 10. Trade Harm Against Helpfulness on One Chart (#81)
+## 10. Trade Harm Against Helpfulness on One Chart
 
 Case #81 changes the post-training and eval stages. "Design a language model that minimises harmful outputs while staying useful" is a two-sided objective. A model that refuses everything is perfectly harmless and useless. Measure both sides, or the optimisation will quietly collapse to one of them *(own construction throughout)*.
 
@@ -70,7 +70,7 @@ The repo's enterprise RAG output guardrail makes the same point at the applicati
 
 Red-team continuously. Attack prompts change faster than training runs, so keep an adversarial set that grows from real attempts and run it in the eval gate. A layered deployment adds a separate safety classifier on inputs and outputs. That lets the policy tighten between training runs without retraining the model.
 
-## 11. Shrink the Model Without Shrinking Its Manners (#83)
+## 11. Shrink the Model Without Shrinking Its Manners
 
 Case #83 changes the deploy stage. "Design a small LLM that runs on a phone while staying polite" fixes a memory and latency ceiling, and it names politeness as an alignment target *(own construction throughout)*.
 

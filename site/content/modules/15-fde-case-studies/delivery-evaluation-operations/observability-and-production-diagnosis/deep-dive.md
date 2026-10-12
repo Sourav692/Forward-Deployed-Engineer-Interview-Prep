@@ -1,4 +1,4 @@
-# G14 — Observability and Production Diagnosis: Deep Dive
+# Observability and Production Diagnosis: Deep Dive
 
 > Read with the unchanged [source](/design/observability-and-production-diagnosis#full-pack). The [Main guide](/design/observability-and-production-diagnosis#main) is the interview path; the [Cheat Sheet](/design/observability-and-production-diagnosis#cheat-sheet) is the recall card.
 

@@ -1,4 +1,4 @@
-# G16 — Real-Time Call Assistant: Cheat Sheet
+# Real-Time Call Assistant: Cheat Sheet
 
 [Main](/design/real-time-call-assistant#main) · [Deep Dive](/design/real-time-call-assistant#deep-dive) · [Unchanged source](/design/real-time-call-assistant#full-pack)
 

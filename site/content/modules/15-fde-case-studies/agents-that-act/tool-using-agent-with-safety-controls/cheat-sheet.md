@@ -1,4 +1,4 @@
-# G03 — Tool-Using Agent with Safety Controls: Cheat Sheet
+# Tool-Using Agent with Safety Controls: Cheat Sheet
 
 Use the [Main guide](/design/tool-using-agent-with-safety-controls#main) to practice speaking and the [Deep Dive](/design/tool-using-agent-with-safety-controls#deep-dive) for mechanisms. The [source](/design/tool-using-agent-with-safety-controls#full-pack) is the full reference.
 

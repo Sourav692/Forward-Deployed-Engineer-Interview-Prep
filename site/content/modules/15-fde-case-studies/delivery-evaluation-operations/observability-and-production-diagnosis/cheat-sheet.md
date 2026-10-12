@@ -1,4 +1,4 @@
-# G14 — Observability and Production Diagnosis: Cheat Sheet
+# Observability and Production Diagnosis: Cheat Sheet
 
 [Main](/design/observability-and-production-diagnosis#main) · [Deep Dive](/design/observability-and-production-diagnosis#deep-dive) · [Unchanged source](/design/observability-and-production-diagnosis#full-pack)
 

@@ -1,4 +1,4 @@
-# G02 — Customer Support Automation: Main Interview Guide, part 2
+# Customer Support Automation: Main Interview Guide, part 2
 
 ## 4. Decide what can happen
 

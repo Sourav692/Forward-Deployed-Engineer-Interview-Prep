@@ -1,4 +1,4 @@
-# G04 — SRE Incident Response Agent: Cheat Sheet
+# SRE Incident Response Agent: Cheat Sheet
 
 Use the [Main guide](/design/sre-incident-response-agent#main) to practice speaking and the [Deep Dive](/design/sre-incident-response-agent#deep-dive) for technical follow-ups. The [source](/design/sre-incident-response-agent#full-pack) is the full reference.
 

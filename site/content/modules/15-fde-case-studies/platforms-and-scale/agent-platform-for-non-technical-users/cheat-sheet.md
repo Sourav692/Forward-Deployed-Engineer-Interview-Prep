@@ -1,4 +1,4 @@
-# G15 — Agent Platform for Non-Technical Users: Cheat Sheet
+# Agent Platform for Non-Technical Users: Cheat Sheet
 
 [Main](/design/agent-platform-for-non-technical-users#main) · [Deep Dive](/design/agent-platform-for-non-technical-users#deep-dive) · [Unchanged source](/design/agent-platform-for-non-technical-users#full-pack)
 

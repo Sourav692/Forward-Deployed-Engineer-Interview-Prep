@@ -1,4 +1,4 @@
-# G09 — Enterprise Coding Assistant: Cheat Sheet
+# Enterprise Coding Assistant: Cheat Sheet
 
 Use the [Main guide](/design/enterprise-coding-assistant#main) for the interview, the [Deep Dive](/design/enterprise-coding-assistant#deep-dive) for mechanisms, and the unchanged [source](/design/enterprise-coding-assistant#full-pack) for the full design.
 

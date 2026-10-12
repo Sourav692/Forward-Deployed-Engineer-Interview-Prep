@@ -1,4 +1,4 @@
-# G04 — SRE Incident Response Agent: Main Interview Guide
+# SRE Incident Response Agent: Main Interview Guide
 
 **Incident response** is: pages go off, someone finds a cause, someone changes production. Wrong rollback at 3 a.m. is worse than a slow summary.
 
@@ -42,7 +42,7 @@ The [source discovery, §1](/design/sre-incident-response-agent#full-pack) gives
 
 If the interviewer cannot provide all numbers, state assumptions for throughput, latency, horizon, accuracy, cost, autonomy, data class, and recovery. Name the oracle: post-incident review of the hypothesis and outcome.
 
-### G04 is the anchor for its incident variants
+### The anchor for its incident variants
 
 | Related case                                    | What changes from G04                                                                                           |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
