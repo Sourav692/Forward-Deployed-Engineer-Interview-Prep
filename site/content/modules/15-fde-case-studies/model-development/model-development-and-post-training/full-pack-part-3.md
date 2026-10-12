@@ -52,6 +52,16 @@ The four verbs from the cost playbook still generate the answer. Measure, by att
 
 ---
 
+## Level calibration
+
+Every level can name SFT and RL; the level shows in which stage gets the budget and who decides a checkpoint is ready to move forward.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | Pins the target first, then walks the loop: verified, deduplicated and decontaminated data, short SFT for format, sampled attempts scored by a program verifier with a drift penalty, and a held-out gate. Says `6ND` aloud and sees that post-training and evaluation, not SFT, take the budget. | Who owns labels, the written policy and gate thresholds, and how a new constraint maps to one stage. |
+| Staff | Adds the gate as a shared contract: thresholds agreed in advance, five eval slices with sampling settings on every number, harmful compliance plotted against over-refusal, and a leakage check on any large gain. Runs the budget as experiments: ablations, adapters, full-state checkpoints and a kill rule on eval gained per GPU-hour. | Whether weights are the right surface at all, and how a tuned model is kept current as the task definition changes. |
+| Principal | Works down context, memory, procedure and parameters before funding a run, and keeps a prompted fallback because a tuned model freezes its task definition. Treats data provenance, datasheets and a gated flywheel from production traces as assets that outlive any one checkpoint. | The customer's pass@1 target, compute budget and device ceiling; every run size here is an assumption until they confirm them. |
+
 ## Key Takeaways
 
 - Pin the target first: level of math, answer versus working, tools and users decide the data, reward and eval.

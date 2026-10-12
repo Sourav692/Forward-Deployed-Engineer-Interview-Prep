@@ -20,6 +20,17 @@ Every strong cost answer follows four verbs in order. Measure, by tracing tokens
 
 ---
 
+## Level calibration
+
+The levelling rubric describes what to say, not who the candidate is.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Mid | Correct components, names a framework, describes a working happy path | Numbers, failure design, trade-offs stated as choices |
+| Senior | Requirements as numbers, names the control pattern *and the rejected alternative*, walks a degradation ladder, does cost arithmetic | Organisational consequences, migration path, second-order effects |
+| Staff | All of the above, plus: what to build first and why, what to deliberately *not* build, how the design changes at 10x, the measurement that would falsify it | Little — at this level differences are about scope of influence |
+| Principal | All of the above, framed as a multi-year bet for the organisation: one gateway with a second provider behind an adapter, so a provider outage or price change is a config change; per-user isolation and a deterministic release gate as shared platform rules, the two things the deployed platform lacks. If the grade distribution stays poor, they move investment to the corpus, not the architecture. | The real arrival bursts, service-time distribution and the citation standard a reviewer would accept, which only the customer's own data can settle |
+
 ## Key Takeaways
 
 - The first eight minutes set the eight numbers, the oracle and the scope cut, and end with "is that the system?".
