@@ -1,4 +1,4 @@
-# Tool-Using AI Agent with Safety Controls, part 4
+# Tool-Using Agent with Safety Controls, part 4
 
 ## 12. Answer the Cost and Latency Pivot in Ten Minutes
 

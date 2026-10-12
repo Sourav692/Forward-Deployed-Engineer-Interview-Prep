@@ -1963,7 +1963,7 @@
     },
     {
       "slug": "g10-high-volume-batch-pipeline",
-      "title": "High-Volume Batch Pipeline",
+      "title": "High-Volume Batch Inference Pipeline",
       "track": "ai-systems-design",
       "module": "scenario-library",
       "kind": "live",
@@ -3160,7 +3160,7 @@
     },
     {
       "slug": "ai-customer-support-automation",
-      "title": "AI Customer-Support Automation",
+      "title": "Customer Support Automation",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -3182,7 +3182,7 @@
     },
     {
       "slug": "llm-evaluation-and-release-gating-platform",
-      "title": "LLM Evaluation and Release-Gating Platform",
+      "title": "Evaluation and Release Gating",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -3193,7 +3193,7 @@
     },
     {
       "slug": "high-volume-batch-inference-system",
-      "title": "High-Volume Batch Inference System",
+      "title": "High-Volume Batch Inference Pipeline",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",
@@ -3204,7 +3204,7 @@
     },
     {
       "slug": "tool-using-ai-agent-with-safety-controls",
-      "title": "Tool-Using AI Agent with Safety Controls",
+      "title": "Tool-Using Agent with Safety Controls",
       "track": "interview-practice",
       "module": "case-study-worksheets",
       "kind": "live",

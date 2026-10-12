@@ -1,7 +1,7 @@
 # LLM Evaluation and Release-Gating Platform - Case Study Worksheet
 
 ## 1. Interview prompt
-You are the FDE asked to build an **LLM Evaluation and Release-Gating Platform**. Thirty AI applications will share it, and each team uses it to judge whether a change is safe to ship. If teams stop trusting the gate, they will simply go around it.
+You are the FDE asked to build an **Evaluation and Release Gating**. Thirty AI applications will share it, and each team uses it to judge whether a change is safe to ship. If teams stop trusting the gate, they will simply go around it.
 
 ## 2. Clarify the customer problem
 - Which changes count as a release, and what proof does each one need?

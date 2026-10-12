@@ -1182,7 +1182,7 @@ export const MODULES: CurriculumModule[] = [
     section: 'casebook',
     status: 'ready',
     practiceMinutes: 135,
-    objective: 'Recognise the 5 classic designs and their whiteboard scripts',
+    objective: 'Recognise the 9 classic designs and their whiteboard scripts',
     scope: 'Reading and recall',
     prerequisites: ['architecture-patterns'],
     deliverable: 'Summarise 3 cases from memory',
@@ -3669,7 +3669,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'g10-high-volume-batch-pipeline',
-    title: 'High-Volume Batch Pipeline',
+    title: 'High-Volume Batch Inference Pipeline',
     source: '02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/',
     home: 'scenario-library',
     kind: 'live',
@@ -4930,7 +4930,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'ai-customer-support-automation',
-    title: 'AI Customer-Support Automation',
+    title: 'Customer Support Automation',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/04_ai_customer_support_automation.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -4946,7 +4946,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'llm-evaluation-and-release-gating-platform',
-    title: 'LLM Evaluation and Release-Gating Platform',
+    title: 'Evaluation and Release Gating',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -4954,7 +4954,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'high-volume-batch-inference-system',
-    title: 'High-Volume Batch Inference System',
+    title: 'High-Volume Batch Inference Pipeline',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md',
     home: 'case-study-worksheets',
     kind: 'live',
@@ -4962,7 +4962,7 @@ export const LESSONS: CurriculumLesson[] = [
   },
   {
     slug: 'tool-using-ai-agent-with-safety-controls',
-    title: 'Tool-Using AI Agent with Safety Controls',
+    title: 'Tool-Using Agent with Safety Controls',
     source: '03_Practice_Worksheets_and_Keys/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md',
     home: 'case-study-worksheets',
     kind: 'live',

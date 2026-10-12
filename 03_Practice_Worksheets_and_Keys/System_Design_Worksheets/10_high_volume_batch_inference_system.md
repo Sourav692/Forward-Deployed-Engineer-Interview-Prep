@@ -1,7 +1,7 @@
 # High-Volume Batch Inference System - Case Study Worksheet
 
 ## 1. Interview prompt
-You are the FDE designing a **High-Volume Batch Inference System**. Every night it must label 100 million records and finish before 6:00 a.m., while staying inside rate and cost limits. Speed is not the hard part. The run has to be replayable, and someone must know how to recover when it falls behind.
+You are the FDE designing a **High-Volume Batch Inference Pipeline**. Every night it must label 100 million records and finish before 6:00 a.m., while staying inside rate and cost limits. Speed is not the hard part. The run has to be replayable, and someone must know how to recover when it falls behind.
 
 ## 2. Clarify the customer problem
 - Who reads the results, and what fails for them if the batch is late?
