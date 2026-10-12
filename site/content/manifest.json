@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T10:35:38.418Z",
+  "generatedAt": "2026-10-12T11:34:53.091Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -286,7 +286,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 79,
+              "minutes": 80,
               "updated": "2026-10-12"
             },
             {
@@ -327,7 +327,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 73,
+              "minutes": 75,
               "updated": "2026-10-12"
             },
             {
@@ -364,7 +364,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 61,
+              "minutes": 62,
               "updated": "2026-10-12"
             },
             {
@@ -449,7 +449,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 84,
+              "minutes": 86,
               "updated": "2026-10-12"
             },
             {
@@ -486,7 +486,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 73,
+              "minutes": 74,
               "updated": "2026-10-12"
             },
             {
@@ -560,7 +560,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 64,
+              "minutes": 65,
               "updated": "2026-10-12"
             },
             {
@@ -597,7 +597,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 53,
+              "minutes": 55,
               "updated": "2026-10-12"
             },
             {
@@ -715,7 +715,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 73,
+              "minutes": 74,
               "updated": "2026-10-12"
             },
             {
@@ -756,7 +756,7 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 60,
+              "minutes": 61,
               "updated": "2026-10-12"
             },
             {

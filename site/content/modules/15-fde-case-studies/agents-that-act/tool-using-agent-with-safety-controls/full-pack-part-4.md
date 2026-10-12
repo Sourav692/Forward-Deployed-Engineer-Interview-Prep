@@ -62,6 +62,16 @@ The weak answer is "the tool was blocked, so there is no problem, I would tell t
 
 ---
 
+## Level calibration
+
+On this design the levels separate on how far the control plane reaches past a single request, not on how well the planner picks tools.
+
+| Level | Sounds like | Missing |
+|---|---|---|
+| Senior | The planner proposes one bounded action, the typed schema rejects over-limit arguments before policy runs, and the policy decision point returns allow, block or needs-approval. A broker mints a token for that one action, the idempotent gateway executes once and stores a receipt, and writes fail closed if policy or the broker is down. | The operating half: who owns each tool's revert path, how the kill switch stops work already in flight, and what evidence lets autonomy expand. |
+| Staff | Gives each tool an owner and a documented revert procedure, binds approvals to tenant, record version, amount and expiry, and makes the kill switch cancel queued work, revoke tokens and mark in-flight tasks. Rolls out read-only first, keeps money behind a human, and gates every expansion on zero unsafe actions and zero duplicate effects. | What breaks as workflows and applications multiply: one-off wiring per customer, a registry past 1,500 functions, and planner regressions like the refund near miss that the gateway quietly absorbs. |
+| Principal | Makes policy, broker, approval, gateway and ledger one shared control plane, so each new workflow brings only adapters and configuration, the registry loads only task-relevant tools, and identity propagates so no application trusts the LLM. Treats the refund near miss as a shift in the proposal distribution, so policy simulation and a separate action-risk check gate every planner change. | The refund threshold, the autonomy tier per action class and how long the ledger is kept depend on the customer's finance policy and dispute rules, so they wait for discovery. |
+
 ## Key Takeaways
 
 - The model proposes and never decides, and the disagreement between operations, security and finance is the design problem to name in the first two minutes.

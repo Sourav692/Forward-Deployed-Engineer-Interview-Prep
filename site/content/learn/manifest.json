@@ -1925,7 +1925,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/",
-      "estMinutes": 73,
+      "estMinutes": 74,
       "href": "/design/secure-multi-tenant-ai-platform"
     },
     {
@@ -1969,7 +1969,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/",
-      "estMinutes": 60,
+      "estMinutes": 61,
       "href": "/design/high-volume-batch-pipeline"
     },
     {
@@ -2286,7 +2286,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/",
-      "estMinutes": 79,
+      "estMinutes": 80,
       "href": "/design/enterprise-knowledge-assistant"
     },
     {
@@ -2297,7 +2297,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
-      "estMinutes": 84,
+      "estMinutes": 86,
       "href": "/design/customer-support-automation"
     },
     {
@@ -2308,7 +2308,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/",
-      "estMinutes": 73,
+      "estMinutes": 74,
       "href": "/design/tool-using-agent-with-safety-controls"
     },
     {
@@ -2330,7 +2330,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/",
-      "estMinutes": 64,
+      "estMinutes": 65,
       "href": "/design/sales-copilot"
     },
     {
@@ -2341,7 +2341,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/",
-      "estMinutes": 73,
+      "estMinutes": 75,
       "href": "/design/nl-over-governed-data"
     },
     {
@@ -2352,7 +2352,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/",
-      "estMinutes": 61,
+      "estMinutes": 62,
       "href": "/design/document-review-copilot"
     },
     {
@@ -2363,7 +2363,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/",
-      "estMinutes": 53,
+      "estMinutes": 55,
       "href": "/design/enterprise-coding-assistant"
     },
     {
