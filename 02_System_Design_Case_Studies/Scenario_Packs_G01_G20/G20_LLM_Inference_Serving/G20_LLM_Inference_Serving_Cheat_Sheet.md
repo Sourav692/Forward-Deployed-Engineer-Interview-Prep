@@ -21,7 +21,7 @@ Health evicts sick GPUs; disconnect cancels and frees KV.
 - Static generative batches wait for the longest output; continuous batches release finished sequences.
 - KV memory, not request count, decides GPU placement; source example ≈128KiB KV/token.
 - Unstreamed failed requests retry under budget; streamed ones need explicit continuation/partial-error semantics.
-- Refuse early with bounded queues; optimize **goodput**, not raw throughput.
+- Refuse early with bounded queues; optimise **goodput**, not raw throughput.
 
 ## Variants
 

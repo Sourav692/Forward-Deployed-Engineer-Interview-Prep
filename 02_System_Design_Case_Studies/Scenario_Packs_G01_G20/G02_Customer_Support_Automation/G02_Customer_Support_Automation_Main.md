@@ -66,7 +66,7 @@ The easiest way to frame requirements in an interview is:
 2. **Classify intent and risk** — before choosing an answer or action path.
 3. **Verify identity** — before account data or account tools.
 4. **Retrieve live facts** — approved policy and current customer/order state; draft from evidence.
-5. **Gate proposed actions** — authorization, validation, freshness, threshold, and approval.
+5. **Gate proposed actions** — authorisation, validation, freshness, threshold, and approval.
 6. **Escalate with context** — conversation, evidence, attempted actions, and why automation stopped.
 7. **Audit the case** — decisions, tool calls, overrides, and outcomes.
 
@@ -139,12 +139,12 @@ flowchart LR
 - **Step 7.** **Execute and record.** Send permitted actions through the scoped tool gateway to the system of record; audit the decision and outcome.
 
 
-**Model and agent role:** The LLM drafts and proposes; a bounded agent planner coordinates only requests that truly span systems. Simple lookups use direct routes. Neither the LLM nor the planner authorizes an account action; the deterministic gateway and human approval path do that.
+**Model and agent role:** The LLM drafts and proposes; a bounded agent planner coordinates only requests that truly span systems. Simple lookups use direct routes. Neither the LLM nor the planner authorises an account action; the deterministic gateway and human approval path do that.
 
 **Three boundaries to point at:**
 
 - **Identity:** pre-auth FAQ can use a limited generic mode; account tools require verified assurance.
-- **Authorization:** the model proposes; the tool policy gateway checks identity, allowed action, thresholds, freshness, and human approval. Confidence never grants permission.
+- **Authorisation:** the model proposes; the tool policy gateway checks identity, allowed action, thresholds, freshness, and human approval. Confidence never grants permission.
 - **Sync/async:** accept and route promptly; run permitted longer actions in the background with status and reconciliation.
 
 The automation layer owns the **case workflow and evidence of its decisions**. CRM, identity, order, and billing systems remain authoritative for customer facts and money. Policy articles are versioned; live account or billing state is fetched before an action.

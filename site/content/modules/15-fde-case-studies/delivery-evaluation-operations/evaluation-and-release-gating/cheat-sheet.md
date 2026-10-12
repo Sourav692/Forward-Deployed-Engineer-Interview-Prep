@@ -10,7 +10,7 @@ Critical apps and slices? Release window? Labels/rubric owner? Sensitive traces?
 
 `Release request → pinned artifact + baseline → versioned suites → sandbox runners → deterministic checks + calibrated LLM grader → validated results → policy delta → pass / block / hold → online feedback`
 
-LLM graders score; deterministic policy and authorized humans decide.
+LLM graders score; deterministic policy and authorised humans decide.
 
 ## Numbers
 

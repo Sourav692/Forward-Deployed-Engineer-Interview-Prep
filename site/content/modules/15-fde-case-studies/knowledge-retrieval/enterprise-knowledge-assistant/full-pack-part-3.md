@@ -67,7 +67,7 @@ Close on the trade-offs and what would change them.
 
 ## 12. Deliver It in Sixty Minutes
 
-Spend minutes in proportion to risk, not diagram size. Authorization and freshness deserve more of the hour than embeddings, and a candidate who spends twenty minutes on embeddings and one on permissions has optimised the wrong thing. Write the budget in the corner of the board.
+Spend minutes in proportion to risk, not diagram size. Authorisation and freshness deserve more of the hour than embeddings, and a candidate who spends twenty minutes on embeddings and one on permissions has optimised the wrong thing. Write the budget in the corner of the board.
 
 | Minutes | Phase                                                             |
 | ------- | ----------------------------------------------------------------- |
@@ -103,7 +103,7 @@ The follow-ups arrive in a predictable order, and each has a prepared answer.
 
 | Follow-up | Answer |
 | --------- | ------ |
-| How do you prove users never see a passage they cannot open? | Authorize before a passage can enter context or the response. Query-time effective permissions. A disallowed citation rejects or rewrites the response. Suite: known-denied docs, group changes, adversarial queries — retrieval, reranker, assembler, and citation renderer share one policy |
+| How do you prove users never see a passage they cannot open? | Authorise before a passage can enter context or the response. Query-time effective permissions. A disallowed citation rejects or rewrites the response. Suite: known-denied docs, group changes, adversarial queries — retrieval, reranker, assembler, and citation renderer share one policy |
 | Access today, gone tomorrow? | Pre-filter is a snapshot. Post-check re-resolves live, so revocation hits the next query. Short permission cache, versioned identity, IdP change events. If signals lag, state the max stale window |
 | Confident but wrong? | Citation check against the retrieval set, groundedness on a silent labeled set, abstain on weak evidence, trace which stage failed. Confidence follows evidence, not tone |
 | Re-index after a chunking change? | Versioned migration: old and new side by side, new index version, offline eval, small traffic slice, leak tests again, rollback kept |
@@ -113,7 +113,7 @@ The follow-ups arrive in a predictable order, and each has a prepared answer.
 | Weak line | Replace with |
 | --------- | ------------ |
 | "Vector search because it's modern" | Hybrid: exact terms plus paraphrase |
-| "Permissions are handled by the database" | Storage ACL ≠ retrieval-time authorization |
+| "Permissions are handled by the database" | Storage ACL ≠ retrieval-time authorisation |
 | "Store the whole prompt for debugging" | Structured traces, redacted |
 | "Real-time sync everywhere" | Mixed, by freshness need |
 | "More context will solve it" | Precision, cost, a tight candidate set |

@@ -44,7 +44,7 @@ The incident on this design is a near miss, and the trap is to say there was no 
 
 Detect from the telemetry: 18 planned calls, 6 blocked and 12 allowed, a €740 refund against a €250 limit with approval state missing, and a planner compliance score of 0.42. The gateway's critical line is enforcement working; the safety evaluator's line is the planner failing. Contain immediately: disable bulk refund planning, force all VIP refund actions into review-ticket mode, and add a user confirmation step for financial actions. Then audit the 12 allowed calls to confirm the smaller refunds were legitimate.
 
-The root cause is a planner prompt, `agent_planner_2026_07`, deployed to make the agent "more action-oriented", whose examples emphasised completing workflows end to end and omitted bulk-action approval boundaries. The planner over-generalised "handle delayed shipments" into direct refund execution, retrieved the refund policy, and failed to apply the threshold during planning. The gateway policy was unchanged and blocked correctly. The distinction that matters is planner failure versus enforcement success: a near miss, not a completed unauthorized transaction.
+The root cause is a planner prompt, `agent_planner_2026_07`, deployed to make the agent "more action-oriented", whose examples emphasised completing workflows end to end and omitted bulk-action approval boundaries. The planner over-generalised "handle delayed shipments" into direct refund execution, retrieved the refund policy, and failed to apply the threshold during planning. The gateway policy was unchanged and blocked correctly. The distinction that matters is planner failure versus enforcement success: a near miss, not a completed unauthorised transaction.
 
 Prevent with defence in depth rather than a prompt edit:
 
@@ -56,9 +56,9 @@ Prevent with defence in depth rather than a prompt edit:
 
 The same pattern applies to account deletion, data export and permission changes. A malicious user can phrase any of them as operational cleanup.
 
-> *"This is a near miss. The gateway prevented loss, but the planner attempted unauthorized high-value refunds. I would inspect the planned calls, policy retrieval, and gateway decisions. Then I would disable bulk refund execution, route VIP refunds to review tickets, encode approval thresholds in the tool schema, add policy simulation before execution, and keep the gateway as a non-bypassable enforcement layer."*
+> *"This is a near miss. The gateway prevented loss, but the planner attempted unauthorised high-value refunds. I would inspect the planned calls, policy retrieval, and gateway decisions. Then I would disable bulk refund execution, route VIP refunds to review tickets, encode approval thresholds in the tool schema, add policy simulation before execution, and keep the gateway as a non-bypassable enforcement layer."*
 
-The weak answer is "the tool was blocked, so there is no problem, I would tell the agent to be more careful". The scorecard rewards four things. Reading planned, blocked and allowed calls with role, amount and approval state. Separating planner failure from gateway success. Auditing plan, policy context, schema and gateway logs rather than editing the prompt. Naming the fraud and unauthorized-action risk.
+The weak answer is "the tool was blocked, so there is no problem, I would tell the agent to be more careful". The scorecard rewards four things. Reading planned, blocked and allowed calls with role, amount and approval state. Separating planner failure from gateway success. Auditing plan, policy context, schema and gateway logs rather than editing the prompt. Naming the fraud and unauthorised-action risk.
 
 ---
 
@@ -84,12 +84,12 @@ The weak answer is "the tool was blocked, so there is no problem, I would tell t
 2. **What makes a retry safe?** A canonical argument hash as the idempotency seed and a gateway that returns the stored receipt for a repeated key instead of calling the tool again. Without that, do not retry a write.
 3. **What does an approval bind to, and why?** A snapshot of tenant, record version, amount and expiry, so a change to the record before execution invalidates it and it is re-requested.
 4. **Where does the policy boundary end?** At allow, deny or approve. The execution boundary ends at a scoped, logged side effect in a system of record.
-5. **Why does validation run before policy?** So malformed or over-limit arguments, such as a $5,000 refund on a $500 task, are rejected before any authorization logic executes, whatever the model's confidence.
+5. **Why does validation run before policy?** So malformed or over-limit arguments, such as a $5,000 refund on a $500 task, are rejected before any authorisation logic executes, whatever the model's confidence.
 6. **What happens to writes when the credential broker is down?** They fail closed; only reads with a cached, non-sensitive path that policy explicitly allows degrade, and never to a broad static secret.
 7. **At what scale does function calling break, and what replaces it?** Around 1,500 functions across 100 applications, when prompt size and selection accuracy collapse; MCP gives discovery and a tool registry loads only the servers a task needs.
 8. **Which two counts gate every autonomy expansion?** Unsafe actions and duplicate effects, both zero.
 9. **What is the refund near miss's root cause, and what is its fix?** A planner prompt that omitted bulk-action approval boundaries; risk-aware schemas, policy simulation before execution, a risk classifier, and enforcement kept in the gateway.
-10. **What is the first production gate?** That the control plane demonstrably prevents unauthorized actions, duplicate execution and uncontrolled side effects, not that the agent can do everything.
+10. **What is the first production gate?** That the control plane demonstrably prevents unauthorised actions, duplicate execution and uncontrolled side effects, not that the agent can do everything.
 
 ## References
 

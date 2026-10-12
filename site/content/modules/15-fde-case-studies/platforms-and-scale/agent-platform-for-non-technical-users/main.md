@@ -19,7 +19,7 @@ That’s it: **event → one spec → guardrail → execute once → recover.** 
 
 ## The anchor and its related case
 
-The anchor asks for a multi-tenant platform where non-technical users configure workflows across channels that may reply, tag, escalate or issue a refund. The hard part is ensuring a real action is authorized, executed once and recoverable after a crash.
+The anchor asks for a multi-tenant platform where non-technical users configure workflows across channels that may reply, tag, escalate or issue a refund. The hard part is ensuring a real action is authorised, executed once and recoverable after a crash.
 
 | Case | Shared foundation | What changes |
 |---|---|---|
@@ -58,11 +58,11 @@ A **$500 refund** on a **$50 cap** is refused, never clamped. Autonomous status 
 
 | Requirement | Example target / constraint |
 |---|---|
-| **Security** | Tenant isolation; no unauthorized destructive action; author ≠ approver. |
+| **Security** | Tenant isolation; no unauthorised destructive action; author ≠ approver. |
 | **Spend** | Actual-dollar caps; max steps and cost. |
 | **Reliability** | Crash recovery; idempotency under redelivery; one active run per target entity. |
 | **Audit** | Every allow/deny recorded. |
-| **Demo note** | Source demo: 21 tests, no LLM — safety engine behavior, not a future LLM planner. |
+| **Demo note** | Source demo: 21 tests, no LLM — safety engine behaviour, not a future LLM planner. |
 
 ### Interview shortcut
 
@@ -104,7 +104,7 @@ flowchart TB
 - Routing matches only that tenant's live workflow, chooses highest priority and returns a named reason if none matches; an entity lock prevents concurrent mutations of the same ticket.
 - The orchestrator pins the workflow version and resumes at `next_step_index`, using the same loop for fresh and restarted runs.
 - Before a step runs, it resolves values and validates the tool's typed schema. A model may supply proposed values, but cannot change the spec or tool signature in the demo.
-- An action-level idempotency key is checked **before** authorization so a replayed side effect is a no-op and is not charged again.
+- An action-level idempotency key is checked **before** authorisation so a replayed side effect is a no-op and is not charged again.
 - The guardrail checks the tighter workflow/tenant step and spend caps, shadow/live stage and destructive-tool allow-list or human approval. Deny wins; approval pauses safely.
 - Only an allowed step calls the scoped tool. The orchestrator records the outcome, checkpoints, logs every decision and continues or finishes.
 
@@ -112,13 +112,13 @@ flowchart TB
 
 **Priority versus lock:** priority chooses which workflow *should* run; the lock prevents two from acting at once. They solve different problems. A draft workflow never matches a live event.
 
-**Dollars versus compute cost:** a refund tool must check its real `amount_usd`, not the tiny operational fee for calling the tool. One source bug let $500 pass a $5 cap because it checked the wrong quantity. Another bug charged the cap again on replay even though the refund was deduplicated; moving the idempotency check before authorization fixed it.
+**Dollars versus compute cost:** a refund tool must check its real `amount_usd`, not the tiny operational fee for calling the tool. One source bug let $500 pass a $5 cap because it checked the wrong quantity. Another bug charged the cap again on replay even though the refund was deduplicated; moving the idempotency check before authorisation fixed it.
 
 **Ordered denial:** step budget → spend cap → shadow mode → not live → human approval if the destructive tool is not tenant-allow-listed. Workflow limits may tighten tenant policy but never loosen it. `AUTONOMOUS` raises which actions can skip approval; it never removes caps.
 
 **Promotion:** `DRAFT → TESTING → SHADOW → LIVE → AUTONOMOUS`, one step at a time. An author cannot sign off their own workflow. Shadow mocks writes; live still needs human approval for actions that have not earned autonomous permission.
 
-**Runaway cost:** measure cost per run and tenant, cap steps and model tokens, add tenant budgets and circuit breakers. Idempotency covers action effects *and* billing. Route deterministic events through rules and use a model only where judgment adds value.
+**Runaway cost:** measure cost per run and tenant, cap steps and model tokens, add tenant budgets and circuit breakers. Idempotency covers action effects *and* billing. Route deterministic events through rules and use a model only where judgement adds value.
 
 ## Rollout, scale and honest gaps
 
@@ -126,4 +126,4 @@ Start with one channel and one non-destructive workflow, then prove negative gua
 
 ## Two-minute interview answer
 
-“I would separate what a non-technical user intends from what may safely execute. Each channel becomes one canonical, tenant-scoped event. Routing chooses the highest-priority live workflow, while an entity lock prevents concurrent actions. A versioned declarative spec drives one checkpointed execution loop. Arguments are typed and validated; action-level idempotency is checked before charging or authorization; then deterministic guardrails enforce step limits, the real dollar spend cap, rollout stage and human approval or a tenant allow-list. Only an allowed tool call runs, and every decision is logged. I would prove the $500 refund is refused under a $50 cap, a replay cannot refund twice, and a crash resumes from its checkpoint. The source demo does this without an LLM; a future planner would remain inside these same boundaries.”
+“I would separate what a non-technical user intends from what may safely execute. Each channel becomes one canonical, tenant-scoped event. Routing chooses the highest-priority live workflow, while an entity lock prevents concurrent actions. A versioned declarative spec drives one checkpointed execution loop. Arguments are typed and validated; action-level idempotency is checked before charging or authorisation; then deterministic guardrails enforce step limits, the real dollar spend cap, rollout stage and human approval or a tenant allow-list. Only an allowed tool call runs, and every decision is logged. I would prove the $500 refund is refused under a $50 cap, a replay cannot refund twice, and a crash resumes from its checkpoint. The source demo does this without an LLM; a future planner would remain inside these same boundaries.”

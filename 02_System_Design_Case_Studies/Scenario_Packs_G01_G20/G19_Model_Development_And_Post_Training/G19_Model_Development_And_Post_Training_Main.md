@@ -98,9 +98,9 @@ flowchart LR
 
 **Evaluation integrity:** split by source and time, inspect n-gram/embedding overlap, and report pass@1 with its sampling settings. A large offline gain can be leakage. Gate general ability, fabrication on ill-posed problems, harmful compliance and over-refusal, not only math accuracy. Do not tune repeatedly on the final test set.
 
-**Compute budget:** size by `~6ND` training FLOPs, memory and effective throughput. Use LoRA/QLoRA for quick iteration; full fine-tuning only after a demonstrated adapter ceiling. For larger runs, use sharded state, parallelism appropriate to layer size, streamed data with recorded order and checkpoints including optimizer and loader position. Track evaluation gain per GPU-hour and kill stagnant runs.
+**Compute budget:** size by `~6ND` training FLOPs, memory and effective throughput. Use LoRA/QLoRA for quick iteration; full fine-tuning only after a demonstrated adapter ceiling. For larger runs, use sharded state, parallelism appropriate to layer size, streamed data with recorded order and checkpoints including optimiser and loader position. Track evaluation gain per GPU-hour and kill stagnant runs.
 
-**Phone variant:** illustrative 3B weights need about **1.5GB at 4-bit** before KV cache and runtime overhead; a 1–2GB budget may require a smaller model, shorter context or both. Distill for task behavior, quantize, train politeness preferences and measure the quantized student on the slowest supported phone.
+**Phone variant:** illustrative 3B weights need about **1.5GB at 4-bit** before KV cache and runtime overhead; a 1–2GB budget may require a smaller model, shorter context or both. Distill for task behaviour, quantize, train politeness preferences and measure the quantized student on the slowest supported phone.
 
 ## Two-minute interview answer
 

@@ -34,7 +34,7 @@ Four stakeholders hire the platform, and each asks a different question. Failing
 
 | Stakeholder | The question they hire the platform to answer |
 |---|---|
-| AI application engineer | "Did my change worsen behavior?" |
+| AI application engineer | "Did my change worsen behaviour?" |
 | Domain evaluator | "What should I score and why?" |
 | Safety lead | "Is this release safe enough for the risk profile?" |
 | Release manager | "Can I approve this with evidence?" |
@@ -119,4 +119,4 @@ In this design, evaluator concurrency is the limit at current scale. At 10x, I e
 
 Cache immutable inputs, never the behaviour being measured. Test definitions, baseline outputs, corpus snapshots, rubric and prompt templates and precomputed embeddings are safe to cache when versioned. A cached stochastic judgement would hide exactly the variance the gate is meant to measure.
 
-> *"I cache immutable inputs and expensive shared fixtures, not the stochastic judgment itself."*
+> *"I cache immutable inputs and expensive shared fixtures, not the stochastic judgement itself."*

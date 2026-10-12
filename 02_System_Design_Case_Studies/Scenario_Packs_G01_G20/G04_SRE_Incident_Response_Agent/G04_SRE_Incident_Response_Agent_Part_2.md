@@ -111,7 +111,7 @@ Read the components in dependency order, because that is the order they have to 
 | Hypothesis generator and evidence ranker | Ranked causes with confidence and the evidence for each; refuse an uncited cause            | Closed: no telemetry, no root-cause claim                                                                           |
 | Proposal builder                         | Exact command, blast radius, evidence, freeze check, simulation result, owner routing       | Closed: no simulation for a destructive command, no proposal                                                        |
 | Approval gate                            | Owner and commander decide; decision and time recorded                                      | Closed: no approval, no execution; expiry after the incident window                                                 |
-| Tool gateway                             | Authorize, validate, bound, execute with idempotency key and timeout, classify, trim, log   | Closed on`DENIED`; `INVALID` returned as a dead end with no workaround hint                                     |
+| Tool gateway                             | Authorise, validate, bound, execute with idempotency key and timeout, classify, trim, log   | Closed on`DENIED`; `INVALID` returned as a dead end with no workaround hint                                     |
 | Timeline writer                          | Every event, hypothesis, decision and outcome into the incident record                      | Degrades: the incident proceeds, the gap is logged                                                                  |
 | Trace store, eval, dashboards            | Replayable investigations; precision, coverage, decision time, reversal rate                | Degrades: output still served, gap logged                                                                           |
 
@@ -145,7 +145,7 @@ flowchart LR
 
 Never explain a denial. A `DENIED` that says "restarts of this service need commander approval" can read to the model as a hint, and the next attempt may be the same restart phrased as a scale-to-zero. Denials are a dead end to the model, with the reason logged for humans.
 
-Every write, once approved, walks through one gateway in one order. Authorize before validating, otherwise a denied caller learns the tool's schema from the validation error. Validate the arguments against the schema. Execute with a timeout and an idempotency key, which is a hash of run id, tool name and arguments, so a retry after a timeout runs the restart once. Classify the result into the five states. Trim it to the declared fields before it returns. Log all of it.
+Every write, once approved, walks through one gateway in one order. Authorise before validating, otherwise a denied caller learns the tool's schema from the validation error. Validate the arguments against the schema. Execute with a timeout and an idempotency key, which is a hash of run id, tool name and arguments, so a retry after a timeout runs the restart once. Classify the result into the five states. Trim it to the declared fields before it returns. Log all of it.
 
 ```mermaid
 sequenceDiagram

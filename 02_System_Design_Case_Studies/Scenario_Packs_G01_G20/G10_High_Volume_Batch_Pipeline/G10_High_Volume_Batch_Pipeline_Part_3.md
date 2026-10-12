@@ -6,7 +6,7 @@
 
 | Failure policy | Example triggers |
 |---|---|
-| Fail closed | Broken snapshot hash, unauthorized worker, corrupted checkpoint, unknown model version |
+| Fail closed | Broken snapshot hash, unauthorised worker, corrupted checkpoint, unknown model version |
 | Degrade | Transient downstream throttling, temporary feature store slowness, short-lived queue depth spikes |
 | Queue | Quota reduction, noncritical partition backlog, scheduled maintenance window |
 | Human intervention | 45% complete at 4 a.m. with no plausible path to deadline, repeated sink throttling, repeated crash loop, or any case where delayed output is worse than no output |

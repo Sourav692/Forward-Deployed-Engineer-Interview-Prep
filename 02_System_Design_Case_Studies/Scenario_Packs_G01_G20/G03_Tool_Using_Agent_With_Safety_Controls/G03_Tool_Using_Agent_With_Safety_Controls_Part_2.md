@@ -65,7 +65,7 @@ Read the nine components in dependency order, because that is the order they hav
 | Agent planner | Propose the next bounded action, never execute | Model to control plane | Degrades: pauses and escalates on low confidence |
 | Task state store | Track workflow progress and intermediate results | Durable workflow state, not business truth | Closed for writes: no state, no continuation |
 | Tool registry | Declare allowed tools, schemas, data class, risk label | Approved tool catalog | Closed: undeclared tool cannot be called |
-| Policy decision point | Return allow, block or needs-approval with scopes and a reason | Authorization and risk gate | Closed: unavailable means no writes |
+| Policy decision point | Return allow, block or needs-approval with scopes and a reason | Authorisation and risk gate | Closed: unavailable means no writes |
 | Credential broker | Mint one scoped, short-lived token per approved action | Identity and secret boundary | Closed for writes; reads degrade only where policy allows a cached path |
 | Approval service | Capture human sign-off bound to a snapshot with expiry | Human-in-the-loop control | Closed: expired approval means re-request |
 | Idempotent execution gateway | Exactly one side effect per proposal, replay returns the receipt | Execution safety boundary | Reconciles: uncertain writes go to a reconciliation state, never blind retry |
@@ -119,7 +119,7 @@ sequenceDiagram
   end
 ```
 
-The data model follows from the walk, and two records must never be conflated. AgentTask(id, actor, goal, state, step_budget). ToolDefinition(name, schema, data_class, scopes). ActionProposal(id, task_id, tool, args_hash, policy_decision). PolicyDecision(proposal_id, verdict, scopes, reason). ActionReceipt(proposal_id, idempotency_key, outcome). The proposal is the model's recommendation; the receipt is the only proof a side effect occurred. Arguments are canonicalized before hashing, so the same logical input always yields the same idempotency seed. A repeated key returns the stored receipt instead of calling the tool again, which is what makes retries safe. Schema validation runs before policy evaluation, so malformed arguments are rejected before any authorization logic executes.
+The data model follows from the walk, and two records must never be conflated. AgentTask(id, actor, goal, state, step_budget). ToolDefinition(name, schema, data_class, scopes). ActionProposal(id, task_id, tool, args_hash, policy_decision). PolicyDecision(proposal_id, verdict, scopes, reason). ActionReceipt(proposal_id, idempotency_key, outcome). The proposal is the model's recommendation; the receipt is the only proof a side effect occurred. Arguments are canonicalized before hashing, so the same logical input always yields the same idempotency seed. A repeated key returns the stored receipt instead of calling the tool again, which is what makes retries safe. Schema validation runs before policy evaluation, so malformed arguments are rejected before any authorisation logic executes.
 
 ## 6. Layer the Integrations and Propagate Identity Through Every Call
 
@@ -160,7 +160,7 @@ The reported Salesforce prompt asks for the loop, the tool interfaces, the memor
 
 ## 7. Hold the Four Security Controls as One Set
 
-Security starts from the hostile case, not the happy path. A message that looks like ordinary customer email is a prompt injection asking the agent to ignore policy, pull a privileged record and issue an unauthorized refund. The right move is not to debate whether the model understands the instruction. It is to contain the blast radius, preserve evidence and keep every irreversible action behind deterministic checks. The model sees information; it does not inherit trust.
+Security starts from the hostile case, not the happy path. A message that looks like ordinary customer email is a prompt injection asking the agent to ignore policy, pull a privileged record and issue an unauthorised refund. The right move is not to debate whether the model understands the instruction. It is to contain the blast radius, preserve evidence and keep every irreversible action behind deterministic checks. The model sees information; it does not inherit trust.
 
 Four controls answer almost any "how do you secure an agent with tool access" question, and they are memorised as a set. Treat tool observations as untrusted. A CRM response, ticket thread, database row or fetched page can carry hostile instructions. If the model can read it, the model can be manipulated by it, so tool output is never a command, a policy override or an approval signal. Never give the model broad, long-lived credentials. A broker mints capability tokens tied to one tenant, one workflow, one action type and one expiry window. If the broker is down, writes fail closed. Validate output before downstream use. The model may propose "refund $5,000", and a $500 task limit rejects it however confident the model sounds. Validation is where policy becomes enforceable. Bound the dangerous dimensions with hard ceilings on tool calls, per-task spend, maximum refund amount, allowable CRM objects and destinations.
 
@@ -168,11 +168,11 @@ Blast radius is a design variable along four axes: tenant, region, workflow and 
 
 ## 8. Fail Closed on Writes and Degrade Only Reads
 
-Design the failure path with the happy path. Five rules organise the table. Reads that support a recommendation may degrade or queue. Writes that change customer state fail closed when authorization, validation or identity is uncertain. Irreversible effects require approval or a second deterministic check. A write is never retried without proven idempotency. Incomplete evidence means stop and escalate.
+Design the failure path with the happy path. Five rules organise the table. Reads that support a recommendation may degrade or queue. Writes that change customer state fail closed when authorisation, validation or identity is uncertain. Irreversible effects require approval or a second deterministic check. A write is never retried without proven idempotency. Incomplete evidence means stop and escalate.
 
 | Fails | Behaviour |
 |---|---|
-| Prompt injection requests an unauthorized tool | Detected by policy evaluation on the proposed action, not by the model's judgement. The tool is never invoked, the message and observation are preserved, the task is quarantined or routed to a human. The model never held a credential that could have succeeded |
+| Prompt injection requests an unauthorised tool | Detected by policy evaluation on the proposed action, not by the model's judgement. The tool is never invoked, the message and observation are preserved, the task is quarantined or routed to a human. The model never held a credential that could have succeeded |
 | Tool succeeds but the response is lost | If idempotent, reconcile via the idempotency key or transaction record before any retry. If not, move to a reconciliation state, mark the action uncertain, escalate if the final state cannot be confirmed. Never repeat a write blindly |
 | Approval becomes stale before execution | Approval is bound to a snapshot: tenant, record version, amount, expiry. If the snapshot no longer matches at execution time, the approval is invalid and is re-requested |
 | Agent loops on the same action | Attempt counter, backoff, circuit breaker that opens after repeated failure. N attempts without a state change means stop and escalate |

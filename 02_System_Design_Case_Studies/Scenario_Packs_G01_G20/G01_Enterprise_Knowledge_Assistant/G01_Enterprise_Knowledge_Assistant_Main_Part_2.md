@@ -15,7 +15,7 @@ ABAC can combine:
 - customer/account
 - time window
 
-Authorization stays deterministic. **Never ask the LLM to decide whether a user is allowed to see something.**
+Authorisation stays deterministic. **Never ask the LLM to decide whether a user is allowed to see something.**
 
 ---
 
@@ -29,7 +29,7 @@ Use hybrid retrieval.
 
 **RRF:** combine rank from dense and lexical systems.
 
-Then rerank the **authorized** candidate pool.
+Then rerank the **authorised** candidate pool.
 
 Correct order:
 
@@ -56,7 +56,7 @@ Do not stuff the entire top-k into the prompt.
 
 Use:
 
-1. authorized candidates
+1. authorised candidates
 2. rerank
 3. evidence selection
 4. compression if needed
@@ -79,7 +79,7 @@ Evidence
  → User
 ~~~
 
-Every citation must refer to evidence the user is authorized to see and that actually supports the claim.
+Every citation must refer to evidence the user is authorised to see and that actually supports the claim.
 
 If evidence is insufficient:
 
@@ -103,7 +103,7 @@ A wiki page can contain malicious text telling the model to ignore its instructi
 Use:
 
 - clear instruction/data boundaries
-- deterministic authorization
+- deterministic authorisation
 - tool gateway
 - allowlisted tools/actions
 - argument validation
@@ -133,8 +133,8 @@ Evaluate separate layers.
 
 ### Security
 
-- unauthorized retrieval
-- unauthorized citation
+- unauthorised retrieval
+- unauthorised citation
 - cross-tenant leakage
 - revoked/deleted document tests
 
@@ -167,7 +167,7 @@ Run the same questions as each identity.
 
 The question is not just “did we get the right answer?” but:
 
-> **“Did each persona get the right authorized answer?”**
+> **“Did each persona get the right authorised answer?”**
 
 Include negative cases where the correct result is zero accessible documents.
 
@@ -222,26 +222,26 @@ Use permission-aware caching, bounded top-k, selective reranking, model routing,
 
 ## 16. Scalability, latency & cost: production design
 
-Use one framework: **measure the workload, find the bottleneck, then bound or route the expensive work without weakening authorization or answer quality.**
+Use one framework: **measure the workload, find the bottleneck, then bound or route the expensive work without weakening authorisation or answer quality.**
 
 | Concern | What drives it | Production choices | What to measure |
 |---|---|---|---|
 | **Scalability** | Corpus size, peak QPS, ACL/group cardinality, ingestion churn | Separate asynchronous ingestion from serving; partition/shard by tenant or useful scope; incremental indexing and tombstones; bounded candidate sets; scale stateless serving independently | Peak and sustained QPS, queue lag, index freshness, retrieval capacity, error rate |
-| **Latency** | Identity/policy lookup, retrieval, reranking, generation and verification | Apply authorization in retrieval; keep top-k bounded; rerank selectively; parallelize independent safe work; use permission-aware caches; stream when useful; set stage deadlines and degrade to safe partial results or abstention | p50/p95/p99 per stage, timeout rate, cache hit rate, time to first token |
+| **Latency** | Identity/policy lookup, retrieval, reranking, generation and verification | Apply authorisation in retrieval; keep top-k bounded; rerank selectively; parallelize independent safe work; use permission-aware caches; stream when useful; set stage deadlines and degrade to safe partial results or abstention | p50/p95/p99 per stage, timeout rate, cache hit rate, time to first token |
 | **Cost** | Embedding/index refresh, search, reranking, model calls and context tokens | Incremental/batched embeddings; route simple tasks to smaller models; compress evidence; cap top-k/context; rerank only when expected quality gain justifies it; cache only with permission/version-aware keys | Cost per request and tenant, tokens, embedding/index spend, rerank rate, cost by route |
 
 ### How to reason through it in an interview
 
 1. **Quantify first.** Ask for corpus size, average and peak QPS, concurrency, freshness/revocation SLO, p95 target, quality target and cost budget. State assumptions if the interviewer has no numbers.
-2. **Protect the invariant.** Authorization pre-filtering and the final policy check stay in place. A timeout or cache hit must never bypass permissions or serve stale revoked content.
-3. **Optimize the measured bottleneck.** Profile each stage before choosing a fix. Reduce candidate count or skip reranking only when evaluation shows quality remains acceptable; route up to a stronger model for high-risk or difficult synthesis.
+2. **Protect the invariant.** Authorisation pre-filtering and the final policy check stay in place. A timeout or cache hit must never bypass permissions or serve stale revoked content.
+3. **Optimise the measured bottleneck.** Profile each stage before choosing a fix. Reduce candidate count or skip reranking only when evaluation shows quality remains acceptable; route up to a stronger model for high-risk or difficult synthesis.
 4. **Scale ingestion separately.** Queue connector work, make it idempotent, process changes incrementally, and reconcile periodically. This prevents backfills from competing with interactive serving.
 5. **Set safe degradation paths.** On a deadline, stop optional reranking or return fewer verified results; if authorization/freshness cannot be established, fail closed and abstain.
 6. **Prove the trade-off.** Replay representative queries across personas and track answer quality, citation correctness, leakage, latency and cost together. Zero leakage remains a release gate.
 
 **Interview-ready answer:**
 
-> “I’d start by quantifying corpus size, peak QPS, freshness, latency and cost targets. I’d separate asynchronous ingestion from online serving and scale retrieval and generation independently. On the query path I’d enforce permissions inside retrieval, keep top-k and context bounded, and use reranking and model size selectively based on measured quality. I’d cache only with tenant, permission and index or policy versions in the key, and invalidate on changes. Then I’d track p95 by stage, cost per request, freshness and answer quality together. Under pressure I can skip optional work or abstain, but I never relax authorization.”
+> “I’d start by quantifying corpus size, peak QPS, freshness, latency and cost targets. I’d separate asynchronous ingestion from online serving and scale retrieval and generation independently. On the query path I’d enforce permissions inside retrieval, keep top-k and context bounded, and use reranking and model size selectively based on measured quality. I’d cache only with tenant, permission and index or policy versions in the key, and invalidate on changes. Then I’d track p95 by stage, cost per request, freshness and answer quality together. Under pressure I can skip optional work or abstain, but I never relax authorisation.”
 
 ---
 
@@ -273,7 +273,7 @@ Invalidate on ACL changes, deletes, source updates and index/policy changes.
 Isolation should exist across:
 
 - identity
-- authorization
+- authorisation
 - retrieval filters
 - cache keys
 - storage/index partitioning
@@ -304,7 +304,7 @@ A cross-tenant principal with broad groups must still return zero results for an
 
 ---
 
-## 20. Cost optimization
+## 20. Cost optimisation
 
 Think:
 
@@ -389,7 +389,7 @@ Opening:
 Five beats:
 
 1. **Problem:** multiple roles need different slices of the same information.
-2. **Decision:** authorization becomes a retrieval constraint.
+2. **Decision:** authorisation becomes a retrieval constraint.
 3. **Design:** normalize ACLs → pre-filter → retrieve → post-check → rerank → evidence → generate → verify.
 4. **Lessons:** bad test labels, untested security rules and model-based security decisions can all mislead you.
 5. **Limitation:** a small corpus can make retrieval strategies look similar; large-scale retrieval claims need a representative corpus.
@@ -406,7 +406,7 @@ Five beats:
 | ACL changes? | Query-time enforcement |
 | Deletion missed? | Tombstone + reconciliation |
 | Why hybrid? | Semantic + exact match |
-| Why rerank after auth? | Rank only authorized pool |
+| Why rerank after auth? | Rank only authorised pool |
 | Prompt injection? | Retrieved text is data |
 | Hallucination? | Evidence + citation + abstain |
 | Scale? | Peak QPS + refresh |
@@ -436,7 +436,7 @@ Five beats:
 
 Remember the flow:
 
-**Identity → Authorization → Pre-filter → Hybrid retrieval → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate.**
+**Identity → Authorisation → Pre-filter → Hybrid retrieval → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate.**
 
 And the release rule:
 

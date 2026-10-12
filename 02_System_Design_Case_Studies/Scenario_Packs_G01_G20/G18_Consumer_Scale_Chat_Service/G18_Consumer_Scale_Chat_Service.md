@@ -21,7 +21,7 @@
 
 Ask what "ChatGPT" means in this room before drawing anything. The question bank's first failure mode is jumping to architecture before clarifying scope. An OpenAI FDE candidate reported the interviewer stopping them to ask: *"What questions would you ask the customer before designing anything?"*
 
-The prompt, from the reported-question bank: **"Design ChatGPT."** Nothing else is given. The framework on the same page says to clarify the mission first: *"Are we optimizing for response time, cost, accuracy, or equity of coverage? Who's the primary user?"* State assumptions explicitly if the interviewer does not confirm them.
+The prompt, from the reported-question bank: **"Design ChatGPT."** Nothing else is given. The framework on the same page says to clarify the mission first: *"Are we optimising for response time, cost, accuracy, or equity of coverage? Who's the primary user?"* State assumptions explicitly if the interviewer does not confirm them.
 
 | Question | Assumed answer *(own construction)* | What it decides |
 |---|---|---|

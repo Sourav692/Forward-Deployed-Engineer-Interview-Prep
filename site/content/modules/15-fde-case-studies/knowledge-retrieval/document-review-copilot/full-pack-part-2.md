@@ -4,7 +4,7 @@
 
 The spine is the same in every persona. The interviewer will pick one. Learn the spine once and swap the nouns.
 
-| | Prior authorization (#30) | Financial compliance (#29) | Legal contract (#31) |
+| | Prior authorisation (#30) | Financial compliance (#29) | Legal contract (#31) |
 |---|---|---|---|
 | Document in | Patient encounter, clinical notes, labs, imaging, prior therapies | Advisor email, chat, marketing draft, client or regulatory document | Uploaded contract |
 | Governing rule | Payer policy, versioned by payer, plan, procedure, diagnosis, date of service | Regulatory rule library and internal policy, by jurisdiction and product | Negotiation playbook and clause library, by clause type |
@@ -132,7 +132,7 @@ Three boundaries are worth pointing at with the diagram up. Each one is a line o
 
 The schema is where the copilot stops being a chatbot. It becomes a workflow. Structured extraction with a typed schema per document type is the one component every downstream step depends on. Comparison, risk tiering and citation all key on fields, not on prose. A model cannot compare evidence to criteria it has not first named.
 
-For prior authorization the fields are payer, plan, procedure, diagnosis codes, date of service, prior therapies, labs, imaging and the clinical facts that map to each payer requirement. For compliance they are document type, jurisdiction, business unit, the obligation that applies, and the evidence span that meets or breaks it. For contracts they are clause type, the normalised clause text, the counterparty, the jurisdiction and the confidentiality level. Every record in the answer keys is a row in one of those schemas. The EvidenceLink, Finding and RiskFinding records are the join between an extracted field and the rule it was compared against, with a confidence.
+For prior authorisation the fields are payer, plan, procedure, diagnosis codes, date of service, prior therapies, labs, imaging and the clinical facts that map to each payer requirement. For compliance they are document type, jurisdiction, business unit, the obligation that applies, and the evidence span that meets or breaks it. For contracts they are clause type, the normalised clause text, the counterparty, the jurisdiction and the confidentiality level. Every record in the answer keys is a row in one of those schemas. The EvidenceLink, Finding and RiskFinding records are the join between an extracted field and the rule it was compared against, with a confidence.
 
 Two rules follow. In this design, extraction runs on the cheap model and on every page, because it is a narrow, schema-bound task whose output can be checked. A low-confidence field is flagged as missing rather than filled. A confident wrong field poisons every step after it. The vendor case's step-therapy test names the failure. A payer rule requires step therapy and the EHR has no record of it. The right output is a gap, not an invented history.
 

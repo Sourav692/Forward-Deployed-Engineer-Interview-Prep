@@ -23,7 +23,7 @@ The product is not a chatbot that answers everything. It is a routed service tha
 
 Open with the harm case, not the architecture. The ask sounds like "automate routine support", and the single reframe interviewers listen for is that the product must decide when to act, when to ask, and when to stop. Say it in the first minute, because it sets up every gate that follows.
 
-> *"I'd like to optimize for the outcome first: reduce handling time and cost without increasing incorrect or harmful resolutions. I'll clarify the highest-risk intents, estimate scale, sketch the control flow, and then spend most of my time on escalation, safety and rollout."*
+> *"I'd like to optimise for the outcome first: reduce handling time and cost without increasing incorrect or harmful resolutions. I'll clarify the highest-risk intents, estimate scale, sketch the control flow, and then spend most of my time on escalation, safety and rollout."*
 
 The running example is a customer who says "I was charged twice for last month's subscription and need this fixed today." The naive design sends that to a model, drafts a reply and resolves the ticket. The real design starts earlier. Verify who the user is. Determine whether the request touches money. Decide whether it is safe to act on the account. Preserve enough context for a human to take over if automation hesitates. If the billing provider is down, or the model sounds confident but the policy check fails, degrade into a safe handoff rather than force a bad answer.
 
@@ -42,7 +42,7 @@ Ask the questions that move risk boundaries. Name the six discovery areas fast a
 | Which categories carry legal, financial or safety risk and must stay human-reviewed in the first release? | The risk tags the router assigns and the non-goals list                                             |
 | What is the refund threshold above which approval is mandatory, and who owns that policy?                 | The one number the gateway checks on every money-moving action                                      |
 
-Interviewers often answer only half of these on purpose, to see whether the candidate can assume without gambling on the highest-risk area. Safe defaults exist. Chat and email but no phone means a text-based model. An unknown language mix means the dominant language plus a fallback escalation path. Unknown volume means scalable but not over-engineered. Dangerous assumptions weaken the control boundary. They are that identity is always verified, that any request can be automated, that the model's answer is inherently safe, and that the CRM is always the source of truth. When in doubt, protect the highest-risk constraint first: no unauthorized action and no confidently wrong answer on sensitive topics.
+Interviewers often answer only half of these on purpose, to see whether the candidate can assume without gambling on the highest-risk area. Safe defaults exist. Chat and email but no phone means a text-based model. An unknown language mix means the dominant language plus a fallback escalation path. Unknown volume means scalable but not over-engineered. Dangerous assumptions weaken the control boundary. They are that identity is always verified, that any request can be automated, that the model's answer is inherently safe, and that the CRM is always the source of truth. When in doubt, protect the highest-risk constraint first: no unauthorised action and no confidently wrong answer on sensitive topics.
 
 Map the people, because each notices a different failure first.
 
@@ -63,9 +63,9 @@ Declare the scope fence before the first box, because without a non-goals list t
 
 ## 2. State Requirements as Testable Constraints
 
-A constraint is a boundary the design must obey; a preference is polish. "Refunds above a stated threshold require human approval" is a constraint and shapes trust boundaries, authorization and audit. "Show recent purchases on the right side of the console" is a preference and decides nothing about admissibility. State every requirement so a test can fail it.
+A constraint is a boundary the design must obey; a preference is polish. "Refunds above a stated threshold require human approval" is a constraint and shapes trust boundaries, authorisation and audit. "Show recent purchases on the right side of the console" is a preference and decides nothing about admissibility. State every requirement so a test can fail it.
 
-The functional must-haves form the pipeline in order. Classify and route every request by intent and risk before any retrieval or drafting begins. Retrieve grounded customer and policy context from CRM, order and policy sources before drafting. Draft or send answers gated by confidence and risk level. Execute tools such as refunds, address changes and subscription actions only through a controlled, authorized layer. Hand off to a human with full conversation and action history whenever automation hesitates. Record every retrieval, decision, tool call and human override so any outcome is attributable afterward.
+The functional must-haves form the pipeline in order. Classify and route every request by intent and risk before any retrieval or drafting begins. Retrieve grounded customer and policy context from CRM, order and policy sources before drafting. Draft or send answers gated by confidence and risk level. Execute tools such as refunds, address changes and subscription actions only through a controlled, authorised layer. Hand off to a human with full conversation and action history whenever automation hesitates. Record every retrieval, decision, tool call and human override so any outcome is attributable afterward.
 
 The non-functional requirements tier by risk rather than one flat SLO.
 
@@ -85,9 +85,9 @@ Every requirement has an owning component, and the traceability table is the pro
 | Classify and route requests                   | Intent router, policy classifier, escalation gate                    |
 | Retrieve grounded customer and policy context | Retrieval layer connected to CRM, order and policy sources           |
 | Draft or send answers by confidence and risk  | Response policy engine with confidence thresholds and approval paths |
-| Execute tools through a controlled layer      | Tool execution service with authorization, validation and logging    |
+| Execute tools through a controlled layer      | Tool execution service with authorisation, validation and logging    |
 | Hand off with conversation and action history | Agent console and shared case timeline                               |
-| No unauthorized account action                | Permission checks and human approval for restricted operations       |
+| No unauthorised account action                | Permission checks and human approval for restricted operations       |
 | Low incorrect-resolution rate                 | Conservative thresholds, grounding, fallback to human review         |
 | Fast human takeover                           | One-click escalation and context packaging                           |
 | Complete action auditability                  | Append-only event trail with actor, time and reason                  |

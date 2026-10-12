@@ -15,7 +15,7 @@ Begin where the customer is already hurt, executives wanting governed natural-la
 
 The 90-second architecture summary:
 
-> *"We're building a governed natural-language-to-SQL assistant for executives and analysts who need fast answers but cannot afford incorrect metrics or unsafe queries. I'd put a semantic layer between the model and the warehouse so the assistant generates SQL from approved business definitions rather than raw table names. The service would accept a user question, classify intent and risk, resolve the relevant metric definitions, generate a constrained draft query, validate it for policy and cost, and then either execute automatically or route for approval depending on sensitivity and confidence. Row-level security must be enforced in the warehouse, not in the prompt. I'd log the question, the generated SQL, the metric mapping, the cost estimate, the execution result, and the user identity for audit and debugging. The biggest trade-off is flexibility versus correctness: I'd optimize for governed answers first, then add templates and fallback pathways for the long tail. My first rollout gate would be a small set of executive metrics with a golden test corpus and a hard stop on ambiguous or expensive queries."*
+> *"We're building a governed natural-language-to-SQL assistant for executives and analysts who need fast answers but cannot afford incorrect metrics or unsafe queries. I'd put a semantic layer between the model and the warehouse so the assistant generates SQL from approved business definitions rather than raw table names. The service would accept a user question, classify intent and risk, resolve the relevant metric definitions, generate a constrained draft query, validate it for policy and cost, and then either execute automatically or route for approval depending on sensitivity and confidence. Row-level security must be enforced in the warehouse, not in the prompt. I'd log the question, the generated SQL, the metric mapping, the cost estimate, the execution result, and the user identity for audit and debugging. The biggest trade-off is flexibility versus correctness: I'd optimise for governed answers first, then add templates and fallback pathways for the long tail. My first rollout gate would be a small set of executive metrics with a golden test corpus and a hard stop on ambiguous or expensive queries."*
 
 The 2-minute spoken answer:
 
@@ -47,7 +47,7 @@ Name the trade-offs with a balanced verdict each. Raw schema prompting versus se
 
 Repair the weak answers on the spot. "Let the LLM write the SQL" becomes registry first, AST policy, read-only gateway. "The database handles permissions" becomes warehouse-native policies reused plus entitlement re-check at execution. "We'll test the SQL" becomes golden cases judged for semantic correctness. "It will ask when unsure" becomes a confidence threshold with a number. "We'll just run it and see" becomes cost estimation before execution.
 
-Score a dry run on six dimensions: estimation, architecture, depth (ambiguity, cost, failure paths), security (authorization, RLS, validation, audit), delivery (gates, fallback, support) and communication. A miss in any one is a design gap to fix, not a phrase to memorise.
+Score a dry run on six dimensions: estimation, architecture, depth (ambiguity, cost, failure paths), security (authorisation, RLS, validation, audit), delivery (gates, fallback, support) and communication. A miss in any one is a design gap to fix, not a phrase to memorise.
 
 ## 13. Tell It as Something Built
 

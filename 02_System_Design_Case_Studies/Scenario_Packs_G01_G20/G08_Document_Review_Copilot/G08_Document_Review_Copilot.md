@@ -4,11 +4,11 @@
 
 ◷ 31 min
 
-The three personas in this group look like three products: a prior-authorization assistant, a compliance reviewer, a contract copilot. They are one system with one spine. A document comes in. Structure is extracted and compared against a policy, a playbook or clinical criteria. Gaps are flagged, risk is classified, and material cases go to a human who decides. This page consolidates the group's prompts into one read for the day before. The purchased answer keys are templated. So the argument here is built from their workflows, records, risks and rollout, plus the vendor's prior-authorization case. Anything constructed for this page rather than taken from a source is labelled as such.
+The three personas in this group look like three products: a prior-authorisation assistant, a compliance reviewer, a contract copilot. They are one system with one spine. A document comes in. Structure is extracted and compared against a policy, a playbook or clinical criteria. Gaps are flagged, risk is classified, and material cases go to a human who decides. This page consolidates the group's prompts into one read for the day before. The purchased answer keys are templated. So the argument here is built from their workflows, records, risks and rollout, plus the vendor's prior-authorisation case. Anything constructed for this page rather than taken from a source is labelled as such.
 
 | Case in the group | What it contributes here |
 |---|---|
-| #30 Healthcare Prior Authorization Assistant (anchor) | Sections 1 to 10: the design, the PHI boundary, the payer-rule versioning, the spoken answer; the vendor PDF's personas, workflow, red-team list and rollout phases |
+| #30 Healthcare Prior Authorisation Assistant (anchor) | Sections 1 to 10: the design, the PHI boundary, the payer-rule versioning, the spoken answer; the vendor PDF's personas, workflow, red-team list and rollout phases |
 | #29 Financial Compliance Document Reviewer | The rule-citation and risk-classification variant in sections 3 and 7; the red-team mock in section 12 |
 | #31 Legal Contract Review Copilot | The clause-versus-playbook variant and fallback language in sections 3 and 7 |
 | #47 OpenAI-style Q3 Claims-Processing Assistant (practice case) | The lower-risk-first ordering in section 10 and its follow-up in section 11 |
@@ -23,7 +23,7 @@ The three personas in this group look like three products: a prior-authorization
 
 Open by saying what the system is not. It does not make the clinical decision, the compliance ruling or the legal call. It gathers evidence, maps it to the governing rule, writes the draft and explains the risk. A named human approves. That is the whole design. Every component below exists to keep the cheap step from being mistaken for the expensive one.
 
-> *"I would design this as a permission-aware prior-authorization drafting system, not a clinical decision-maker. Every generated claim must point back to a source note, code, lab result, or payer rule. If evidence is missing, stale, or conflicting, the assistant should not invent language. It should flag the gap and route the case to a clinician."*
+> *"I would design this as a permission-aware prior-authorisation drafting system, not a clinical decision-maker. Every generated claim must point back to a source note, code, lab result, or payer rule. If evidence is missing, stale, or conflicting, the assistant should not invent language. It should flag the gap and route the case to a clinician."*
 
 The three answer tiers from the answer keys show what that framing buys. The weak answer connects the documents to a vector database and lets an LLM answer, maybe behind a chatbot UI. It ignores the workflow, the permission boundary, source freshness, evaluation, human approval and monitoring. The average answer builds RAG with citations and tests it on sample questions. It never separates low-risk assistance from high-risk actions. It never defines the data model or the rollout gates. The strong answer maps the workflow and the risk boundary first. It ingests approved sources with metadata, freshness and ACLs. It filters by permission before generation. It cites every claim, exposes uncertainty and missing evidence, and routes risky actions to approval. It proves all of that with golden cases, permission red-team tests, groundedness and citation metrics, and latency and cost budgets. The rollout is staged: offline prototype, shadow mode, read-only pilot, approved write-back.
 
@@ -43,7 +43,7 @@ Ask the discovery questions the answer keys share. Add the vendor case's domain 
 | How should the system behave when clinical notes conflict with payer rules? | The conflict policy: surface, prefer the approved current source, escalate |
 | Which PHI fields are necessary, and what is excluded from prompts and logs? | Data minimisation and the log redaction rules |
 
-Map the people. Each notices a different failure first. The vendor case names four for prior authorization. The other two personas have their equivalents.
+Map the people. Each notices a different failure first. The vendor case names four for prior authorisation. The other two personas have their equivalents.
 
 | User | Workflow | Failure they notice first | What the copilot gives them | Approval role |
 |---|---|---|---|---|

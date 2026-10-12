@@ -38,7 +38,7 @@ The source’s sizing exercise assumes **2M tickets/month, 100 QPS peak, and 20 
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Peak QPS or incident burst          | Stateless gateway/router, ordered queues by customer or case, rate limits per user/tenant/tool, circuit breakers, shed optional enrichment.                                |
 | Latency                             | Budget by risk tier; direct lookup for simple work, bounded retrieval/context, selective reasoning, streaming for perceived speed, background actions where allowed.       |
-| Freshness                           | Cache approved policy by version and safe FAQ answers by tenant/permission/version; fetch live identity, money, account status, and authorization.                         |
+| Freshness                           | Cache approved policy by version and safe FAQ answers by tenant/permission/version; fetch live identity, money, account status, and authorisation.                         |
 | Cost                                | Trace spend by intent; use rules or a small model for classification/FAQ, a stronger model for ambiguous or high-risk synthesis, and a planner only for multi-system work. |
 | Growth toward 10M conversations/day | Partition retrieval by product/region/language/business unit, isolate escalation and offline work, regionalize for residency, and scale stateless services independently.  |
 
@@ -75,7 +75,7 @@ Spend the hour roughly as follows: opening and requirements (10 min), architectu
 
 **90-second answer:**
 
-> “I would design support automation as a routed decision pipeline. The gateway normalizes the message, identity verification establishes what account data and tools are available, and an intent router tags risk. Approved policy and current account facts ground a draft or proposed action. A deterministic gateway checks authorization, freshness, thresholds, and whether a human must approve; the model cannot grant itself permission. Simple, low-risk requests can be answered quickly. Money-moving or ambiguous cases go to an agent with evidence, attempted actions, and a reason. Every write is idempotent, and an uncertain side effect is reconciled before retry. I’d launch in agent-assist, then automate narrow reversible intents, adding tools one class at a time with per-intent rollback. I’d judge it by safe automation, incorrect resolutions, repeat contact, CSAT, latency, and cost per resolved case.”
+> “I would design support automation as a routed decision pipeline. The gateway normalizes the message, identity verification establishes what account data and tools are available, and an intent router tags risk. Approved policy and current account facts ground a draft or proposed action. A deterministic gateway checks authorisation, freshness, thresholds, and whether a human must approve; the model cannot grant itself permission. Simple, low-risk requests can be answered quickly. Money-moving or ambiguous cases go to an agent with evidence, attempted actions, and a reason. Every write is idempotent, and an uncertain side effect is reconciled before retry. I’d launch in agent-assist, then automate narrow reversible intents, adding tools one class at a time with per-intent rollback. I’d judge it by safe automation, incorrect resolutions, repeat contact, CSAT, latency, and cost per resolved case.”
 
 ### Interviewer trigger → short answer
 

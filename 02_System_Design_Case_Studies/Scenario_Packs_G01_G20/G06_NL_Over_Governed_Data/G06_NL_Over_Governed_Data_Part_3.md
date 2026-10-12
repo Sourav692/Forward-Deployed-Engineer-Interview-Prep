@@ -2,11 +2,11 @@
 
 ## 9. Fail Closed on Policy, Degrade on Everything Else
 
-A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human. Not every incident deserves the same reaction: a policy engine outage differs from a visualization glitch, and a query scan that explodes cost differs from a benign cache miss. Memorise the pattern by category: authorization closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
+A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human. Not every incident deserves the same reaction: a policy engine outage differs from a visualization glitch, and a query scan that explodes cost differs from a benign cache miss. Memorise the pattern by category: authorisation closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
 
 | Situation | Preferred policy | Why |
 |---|---|---|
-| Authorization or policy evaluation fails | Fail closed | Better to deny than to expose data accidentally |
+| Authorisation or policy evaluation fails | Fail closed | Better to deny than to expose data accidentally |
 | Warehouse connection is briefly unavailable | Degrade or queue, depending on freshness needs | Preserve request intent if the use case tolerates delay |
 | Query planner exceeds a safe timeout | Fail closed with a retry suggestion | Prevent runaway cost and long-tail blocking |
 | Low-risk formatting or explanation service fails | Degrade | User may still get a safe, reduced answer path |

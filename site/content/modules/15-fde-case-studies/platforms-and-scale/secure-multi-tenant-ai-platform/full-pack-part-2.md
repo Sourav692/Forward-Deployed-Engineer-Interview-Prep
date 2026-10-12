@@ -106,7 +106,7 @@ Read the components in dependency order, because that is the order they must exi
 | Regional scheduler | Place workload into an allowed region and tier | Placement and residency boundary | Control | Closed for sensitive writes; queue or reroute otherwise |
 | Audit pipeline | Capture immutable tenant-scoped events for investigation and billing | Observability and compliance boundary | Data | Degrades: the action completes, the gap is alerted |
 
-Three boundaries are worth pointing at while the diagram is up. The sync/async boundary sits after audit: authentication, authorization, quota admission and region selection are synchronous, and reporting, logging and offline enrichment may be asynchronous. Anything that could cross a trust boundary or consume scarce capacity is never deferred blindly to a background task. The systems of record are the tenant directory for membership, the partitioned database for tenant data, the quota service for usage and the audit pipeline for traceability. A boundary mistake among them is a security incident. Caches improve latency and are never the source of truth for membership or authorization. Queues carry tenant identifiers and policy context explicitly, because backpressure is only safe when the worker knows which tenant it is slowing down.
+Three boundaries are worth pointing at while the diagram is up. The sync/async boundary sits after audit: authentication, authorisation, quota admission and region selection are synchronous, and reporting, logging and offline enrichment may be asynchronous. Anything that could cross a trust boundary or consume scarce capacity is never deferred blindly to a background task. The systems of record are the tenant directory for membership, the partitioned database for tenant data, the quota service for usage and the audit pipeline for traceability. A boundary mistake among them is a security incident. Caches improve latency and are never the source of truth for membership or authorisation. Queues carry tenant identifiers and policy context explicitly, because backpressure is only safe when the worker knows which tenant it is slowing down.
 
 The MVP is one policy service, one gateway, one tenant-aware application tier, one partitioned data store, one quota service, one regional control plane and one audit stream. That is enough to prove isolation, performance shaping and regional routing. Dedicated customer clusters, per-service SLOs, richer workload classification and a more granular policy language are extensions, not prerequisites.
 
@@ -114,7 +114,7 @@ The MVP is one policy service, one gateway, one tenant-aware application tier, o
 
 Tenant context comes from verified identity, never from the request body. A signed token, verified claim or server-side session can be authenticated and logged. A header or JSON field the client sets can be spoofed, replayed or forwarded across tenants by accident, unless a trusted gateway sets it. That one choice governs everything downstream, because row filters, object ownership, cache keys, queue partitions, log redaction and vector-index lookup must all consume the same verified context.
 
-The dependency order is strict, and each step has a reason. Identity must come first. Context must become immutable early. Policy must run before expensive work. Region is a control-plane decision, not a late optimization. Audit happens after the action but close to it.
+The dependency order is strict, and each step has a reason. Identity must come first. Context must become immutable early. Policy must run before expensive work. Region is a control-plane decision, not a late optimisation. Audit happens after the action but close to it.
 
 1. **Identity federation** authenticates the human or workload through the customer's IdP.
 2. **Tenant directory** maps the principal to tenant membership and allowed deployment posture.
@@ -127,7 +127,7 @@ The dependency order is strict, and each step has a reason. Identity must come f
 9. **Regional scheduler** decides which region and cluster class may serve the request.
 10. **Audit pipeline** records tenant-scoped activity.
 
-Narrate the happy path and tie each step to a customer reason. Authenticate through federation, because the customer keeps their own identity source. Derive immutable tenant context, because one company may have several subsidiaries. Authorize against policy, because authorization must be explainable and centrally governed. Route to the allowed region and tier, because location control is part of the product promise. Apply quota before inference, because shared cannot mean noisy neighbour. Read and write only tenant-scoped resources. Emit a tenant-scoped audit event, because enterprise buyers need traceability.
+Narrate the happy path and tie each step to a customer reason. Authenticate through federation, because the customer keeps their own identity source. Derive immutable tenant context, because one company may have several subsidiaries. Authorise against policy, because authorisation must be explainable and centrally governed. Route to the allowed region and tier, because location control is part of the product promise. Apply quota before inference, because shared cannot mean noisy neighbour. Read and write only tenant-scoped resources. Emit a tenant-scoped audit event, because enterprise buyers need traceability.
 
 ```mermaid
 sequenceDiagram
@@ -164,7 +164,7 @@ sequenceDiagram
 
 If the missing-predicate case is not obvious from the diagram, the design is still too hand-wavy. That is the diagnostic test for the diagram itself. The strongest signal in the round is not the drawing but the narration of how identity, data, state and failure move through it.
 
-Production identity has three problems in front of the policy engine, and none of them is authorization. Token validation checks the signature against the IdP's published keys, the issuer, the expiry, and that the token was issued for this application, before any permission logic runs. Group mapping is owned by the customer. Their Okta or Microsoft Entra ID (formerly Azure AD) groups are the source of truth, mapped into the platform's role vocabulary. That mapping is configuration that drifts silently when a group is renamed. Just-in-time provisioning creates the first local record from the token's claims, scoped to the customer and never with more access than intended by default.
+Production identity has three problems in front of the policy engine, and none of them is authorisation. Token validation checks the signature against the IdP's published keys, the issuer, the expiry, and that the token was issued for this application, before any permission logic runs. Group mapping is owned by the customer. Their Okta or Microsoft Entra ID (formerly Azure AD) groups are the source of truth, mapped into the platform's role vocabulary. That mapping is configuration that drifts silently when a group is renamed. Just-in-time provisioning creates the first local record from the token's claims, scoped to the customer and never with more access than intended by default.
 
 ## 6. Enforce Isolation at Seven Layers That Do Not Trust Each Other
 
@@ -173,8 +173,8 @@ One row label is one defence layer. It is easy to omit in application code, ad h
 | Layer | What must be true |
 |---|---|
 | Row | Every query includes the tenant predicate, and the database enforces it where possible |
-| Object | Files, blobs and embeddings are namespaced or separately authorized by tenant |
-| Cache | Every cache key includes the tenant id; a shared cache never returns data with ambiguous authorization context |
+| Object | Files, blobs and embeddings are namespaced or separately authorised by tenant |
+| Cache | Every cache key includes the tenant id; a shared cache never returns data with ambiguous authorisation context |
 | Queue | Messages never expose payload metadata across tenants, especially in shared dead-letter and retry channels |
 | Log | Logs never expose secrets, raw prompts or cross-tenant identifiers that let someone reconstruct another customer's state |
 | Vector index | Tenant scoping applied at ingestion and at query time, because semantic search otherwise surfaces neighbouring content |

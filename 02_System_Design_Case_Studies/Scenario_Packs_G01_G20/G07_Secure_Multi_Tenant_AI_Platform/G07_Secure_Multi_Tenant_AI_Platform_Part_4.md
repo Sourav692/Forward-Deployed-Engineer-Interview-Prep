@@ -68,8 +68,8 @@ The lines that carry the round:
 Practise it three ways:
 
 - ten minutes answering aloud, then cut every sentence that does not change a design decision
-- a pair mock where the partner interrupts on "secure", "scale" and "optimized" until the mechanism is named
-- one enforcement point (row-level authorization, tenant-scoped export and delete, or per-tenant rate limiting) written with tests, failure handling and a rollback plan
+- a pair mock where the partner interrupts on "secure", "scale" and "optimised" until the mechanism is named
+- one enforcement point (row-level authorisation, tenant-scoped export and delete, or per-tenant rate limiting) written with tests, failure handling and a rollback plan
 
 ## 13. Answer the Cost Pivot in Ten Minutes
 

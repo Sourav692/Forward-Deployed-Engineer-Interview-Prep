@@ -45,11 +45,11 @@ Map the people, because each stakeholder defines a different success condition.
 |---|---|---|---|---|
 | Business user | Delegates inbox and case work, wants less manual handling | The agent stalls or does the wrong thing to a customer | Triage, drafts, prepared refund cases, closed loops on low-risk cases | None for reads and drafts |
 | Approver | Decides when a risky action is allowed | A refund executed without them, or a queue that never drains | An approval record with reviewer, timestamp, rationale and the exact payload | They are the approval |
-| Security owner | Defines identity, authorization and audit rules | A long-lived credential in a prompt, or a tool called on an injected instruction | Scoped tokens, a policy gate outside the model, a tamper-evident ledger | Signs off on each tool class |
+| Security owner | Defines identity, authorisation and audit rules | A long-lived credential in a prompt, or a tool called on an injected instruction | Scoped tokens, a policy gate outside the model, a tamper-evident ledger | Signs off on each tool class |
 | Tool and data owner | Owns email, CRM, customer DB, refund service | Their system called in unsupported ways, or duplicated writes | A declared schema per tool, idempotency keys, per-tool concurrency limits | Owns the revert procedure |
 | Operator | Monitors, retries, escalates | No way to stop it, no way to explain a decision | Kill switch, runbook, replayable decision record | Runs containment |
 
-State the assumptions where the interviewer withholds answers, ranked by risk. With no approval process defined, assume a conservative human gate on every irreversible action. With retention unspecified, assume enough is stored to reconstruct any action, and leave the exact period to customer policy. With tenancy unclear, assume strict isolation and a separate authorization check at every tool boundary. The CRM is the source of truth for customer context. Refunds above a threshold require approval. The agent may draft actions but cannot execute high-risk steps unless the policy engine allows it.
+State the assumptions where the interviewer withholds answers, ranked by risk. With no approval process defined, assume a conservative human gate on every irreversible action. With retention unspecified, assume enough is stored to reconstruct any action, and leave the exact period to customer policy. With tenancy unclear, assume strict isolation and a separate authorisation check at every tool boundary. The CRM is the source of truth for customer context. Refunds above a threshold require approval. The agent may draft actions but cannot execute high-risk steps unless the policy engine allows it.
 
 ## 2. State Requirements as Testable Constraints
 
@@ -85,7 +85,7 @@ Every must-have then needs an owner in the architecture, and the traceability ta
 | Requirement | Control point | Component |
 |---|---|---|
 | Separate planning from execution | Plan/execute boundary | Orchestrator that emits candidate actions but cannot perform them |
-| Validate tool name, arguments, identity, policy | Policy gate | Authorization service with schema validation and allowlists |
+| Validate tool name, arguments, identity, policy | Policy gate | Authorisation service with schema validation and allowlists |
 | Use scoped short-lived credentials | Secret broker | Token minting layer with time-limited, least-privilege credentials |
 | Require approval for high-risk actions | Human approval flow | Review queue with explicit accept/reject and reason capture |
 | Idempotent, auditable effects | Action ledger | Durable event log and idempotency keys |

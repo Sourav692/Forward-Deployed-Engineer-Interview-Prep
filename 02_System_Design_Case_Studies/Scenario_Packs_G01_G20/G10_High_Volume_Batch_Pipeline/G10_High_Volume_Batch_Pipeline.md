@@ -67,7 +67,7 @@ Protect the one constraint that most changes the architecture. **Can the batch b
 
 When an answer is withheld, state the assumption and keep moving. The reusable form:
 
-> *"Given the missing details, I'm going to assume the records are independently partitionable, partial results are only useful if they're explicit and auditable, and the highest-risk constraint is finishing by the deadline without duplicates. That means I'll prioritize shardable work, checkpointed progress, idempotent writes, and rate limiting before I optimize for cost or advanced scheduling. If any of those assumptions are wrong, the design changes in specific ways, so I'd want to validate them early."*
+> *"Given the missing details, I'm going to assume the records are independently partitionable, partial results are only useful if they're explicit and auditable, and the highest-risk constraint is finishing by the deadline without duplicates. That means I'll prioritize shardable work, checkpointed progress, idempotent writes, and rate limiting before I optimise for cost or advanced scheduling. If any of those assumptions are wrong, the design changes in specific ways, so I'd want to validate them early."*
 
 Assumptions carry risk too, so name it. If one record depends on another's result, naive parallelism breaks correctness. If a tenant expects strict completion, a degraded mode that skips low-priority work breaks the contract. If the provider's batch API has different semantics from synchronous calls, a naive retry loop duplicates output.
 

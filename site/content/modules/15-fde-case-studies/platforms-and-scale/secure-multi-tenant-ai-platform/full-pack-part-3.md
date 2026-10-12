@@ -14,7 +14,7 @@ Export and delete across regions deserve their own answer. A tenant inventory an
 
 Memorise the pattern, not the table. Security defects fail closed. Capacity pressure degrades. Metadata leaks quarantine and escalate to a human. Control-plane loss depends on whether local enforcement still holds.
 
-| Scenario | Recommended behavior | Why |
+| Scenario | Recommended behaviour | Why |
 |---|---|---|
 | Missing tenant predicate | Fail closed immediately | An unscoped read/write is a security defect, not a transient error |
 | Cache key omits tenant id | Fail closed and invalidate affected entries | A shared cache hit can leak data across tenants even when the database is safe |
@@ -38,7 +38,7 @@ flowchart TD
 
 The cache drill is the one candidates underrate. A cache bug looks harmless in isolation, because the database stays protected, but a shared cache replays the wrong tenant's object if the key misses tenant scope. Detect by instrumenting key components in metrics and traces. Contain by disabling the cache path or namespace, invalidating suspect entries and falling back to the source of truth. Recover by rebuilding from correctly scoped reads and re-checking responses served in the window. Prevent by requiring tenant id in every cache-key helper, centralising key construction, and a negative test asserting a cross-tenant lookup is a miss. If the cache holds auth-sensitive material, treat it as a security incident, not a performance bug.
 
-Production failure behaviour is the difference between a toy and a system. Timeouts tight enough to avoid pile-ups of stale work. Retries only for transient failures, never for authorization failures or malformed requests. Idempotency on writes, billing events and workflow triggers. Circuit breakers on dependencies returning repeated failures. Dead-letter queues that hold poison messages for inspection rather than endless reprocessing. Human escalation for policy corruption, suspected isolation failure or ambiguous tenant ownership. The honest system says what it can recover automatically and what needs a human with authority.
+Production failure behaviour is the difference between a toy and a system. Timeouts tight enough to avoid pile-ups of stale work. Retries only for transient failures, never for authorisation failures or malformed requests. Idempotency on writes, billing events and workflow triggers. Circuit breakers on dependencies returning repeated failures. Dead-letter queues that hold poison messages for inspection rather than endless reprocessing. Human escalation for policy corruption, suspected isolation failure or ambiguous tenant ownership. The honest system says what it can recover automatically and what needs a human with authority.
 
 Say what breaks first at 10x. Noisy-neighbour risk and cache churn become dominant, so pooled-plus-quotas becomes pooled-plus-partitioning, with more dedicated pools and more explicit regional controls.
 
@@ -146,6 +146,6 @@ Keep four kinds of thing apart, because anything re-implemented per customer is 
 |---|---|---|---|
 | Missing tenant predicate | Platform engineering | Negative tests, code review checklists | Any request reaching a non-tenant-scoped path |
 | Cache bleed | SRE + platform engineering | Tenant-keyed cache design, namespace validation | Any cache hit crossing tenant boundaries |
-| Misrouted regional traffic | Infra + security | Region-aware routing rules, deployment checks | A route sending protected data to an unauthorized region |
+| Misrouted regional traffic | Infra + security | Region-aware routing rules, deployment checks | A route sending protected data to an unauthorised region |
 
 Name the failure conditions explicitly. Cost reduced but users do not adopt: not succeeded. Users adopt but support cannot operate it: not succeeded. Fast but unable to prove tenant boundaries: not succeeded.

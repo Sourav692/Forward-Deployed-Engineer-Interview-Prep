@@ -12,13 +12,13 @@ Which document and decision? Who approves? Which current rule version? What fiel
 
 ## Flow
 
-**Document/rule ingest → OCR and table-coverage gate → authorized rule/evidence retrieval → small-model typed extraction → compare/gaps/risk → strong LLM only on flagged cases → exact-span citation → independent verifier → named human approval → audit.**
+**Document/rule ingest → OCR and table-coverage gate → authorised rule/evidence retrieval → small-model typed extraction → compare/gaps/risk → strong LLM only on flagged cases → exact-span citation → independent verifier → named human approval → audit.**
 
 **Agent role:** bounded review copilot. Small model extracts; strong LLM drafts flagged work; neither makes a medical, legal, or compliance ruling.
 
 ## Six rules
 
-1. One spine covers prior authorization, compliance, and contracts; swap the schema, governing rule, and approver.
+1. One spine covers prior authorisation, compliance, and contracts; swap the schema, governing rule, and approver.
 2. Missing/low-confidence evidence is a gap, not text to invent.
 3. High-risk PDF with missing tables fails ingestion; retrieval cannot recover absent content.
 4. A correct answer with a wrong citation is high severity; verify the exact span used.
@@ -40,4 +40,4 @@ Interactive **3–8 s**; packet **10–20 s**; bulk surveillance overnight. Exam
 
 Rules and small models screen every page; strong LLM only on flagged risk. Measure tokens/document, flagged fraction, extraction quality, and cost per **true issue found**. One type + rule → golden historical cases → shadow → read-only pilot → approved draft-only rollout.
 
-“Extraction is cheap; judgment is expensive. The citation and human decision remain release gates.”
+“Extraction is cheap; judgement is expensive. The citation and human decision remain release gates.”

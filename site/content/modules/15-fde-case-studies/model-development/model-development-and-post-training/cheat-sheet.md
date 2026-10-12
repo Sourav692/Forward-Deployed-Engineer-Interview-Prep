@@ -18,7 +18,7 @@ Training ≈ `6ND` FLOPs; generation ≈ `2N` FLOPs/token. 7B × 50M SFT tokens 
 
 ## Gate and pivots
 
-- SFT teaches format; verified rollouts optimize correctness. Step grading is needed when working itself matters.
+- SFT teaches format; verified rollouts optimise correctness. Step grading is needed when working itself matters.
 - Decontaminate and split by source/time; report pass@1 and sampling settings.
 - Gate math, general regression, ill-posed answers, harmful compliance **and** over-refusal.
 - Compute pivot: small ablations, adapters, targeted rollouts, full-state checkpoints, eval gain/GPU-hour.

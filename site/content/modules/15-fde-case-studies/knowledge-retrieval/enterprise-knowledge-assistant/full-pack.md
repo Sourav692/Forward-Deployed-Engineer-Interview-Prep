@@ -47,7 +47,7 @@ Ask the questions that change a component. Write the answers where they stay vis
 | Who may view audit logs and answer traces, and what must they contain to reconstruct an answer?                                     | Trace schema: source event IDs, index and ACL version stamps, request ID, exact citation set            |
 | Fallback when retrieval fails or sources conflict: refuse, label staleness, or escalate?                                            | The output policy engine's three modes                                                                  |
 
-Each stakeholder notices a different failure first. Optimize only for the employee and security cannot defend it; optimize only for control and nobody uses it.
+Each stakeholder notices a different failure first. Optimise only for the employee and security cannot defend it; optimise only for control and nobody uses it.
 
 | User                | Workflow                                                                  | Failure they notice first                             | What the assistant gives them                                                                       | Approval needed                                            |
 | ------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -98,7 +98,7 @@ Every Must has an owner:
 | Version and ACL preservation    | Metadata store, ACL normaliser, permission-aware index, audit log               |
 | Hybrid retrieval and reranking  | Keyword index, vector index, fusion, reranker                                   |
 | Grounded answers with citations | LLM gateway, evidence selector, citation builder and verifier                   |
-| No cross-user disclosure        | Identity mapping, authorization filter, policy enforcement point, output policy |
+| No cross-user disclosure        | Identity mapping, authorisation filter, policy enforcement point, output policy |
 | p95 latency                     | Query service, caches, rerank budget, model timeout                             |
 | Deletion freshness SLO          | Connector sync, tombstones, reconciliation job, reindex                         |
 | Graceful degradation            | Circuit breakers, fallbacks, partial-answer policy                              |

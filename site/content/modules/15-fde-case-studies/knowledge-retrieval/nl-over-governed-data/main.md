@@ -152,7 +152,7 @@ For mixed questions, route each subtask to its right source: semantic search fin
 
 ## 6. Scale, latency, and cost
 
-Keep metric resolution, authorization, validation, and execution synchronous because they determine the one answer. Crawl catalogs, refresh caches, and replay evaluations asynchronously, partitioned by tenant or warehouse so background jobs do not stampede query traffic. Cache only with tenant, permission signature, metric/schema version, and freshness in mind.
+Keep metric resolution, authorisation, validation, and execution synchronous because they determine the one answer. Crawl catalogs, refresh caches, and replay evaluations asynchronously, partitioned by tenant or warehouse so background jobs do not stampede query traffic. Cache only with tenant, permission signature, metric/schema version, and freshness in mind.
 
 Measure first-try semantic correctness, SQL retry rate, warehouse compute per answer (bytes scanned on BigQuery, DBU or credit time on Databricks and Snowflake), token spend, and p95 by stage. The source flags **>20% above the seven-day baseline** as a cost warning. The cheapest levers are narrower metric context, approved templates, dry-run cost checks, bounded windows, and safe caching. Repeatedly asking a stronger model to repair invalid SQL raises both bills and can still answer the wrong question.
 
