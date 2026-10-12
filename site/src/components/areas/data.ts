@@ -4,7 +4,7 @@ import { cache } from 'react'
 import { getAllScenarios, getTracks } from '@/lib/content'
 import { MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
 import type { CurriculumModule, ModuleStatus } from '@/lib/curriculum-types'
-import { RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL } from '@/lib/editorial'
+import { LEVELS, RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL, type Level } from '@/lib/editorial'
 import { learnTracks, trackHours } from '@/lib/learn'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import type { LinkItem } from './Area'
@@ -26,12 +26,15 @@ export const LIVE = {
 export const moduleHref = (moduleId: string) => `/modules/${moduleId}`
 export const trackAnchor = (moduleId: string, trackId: string) => `${MODULE_AREAS[moduleId] ?? moduleHref(moduleId)}#${trackId}`
 
+/** A list row with what the /design and /practice filters read (ENH-23). */
+export type GroupItem = LinkItem & { level: Level; minutes?: number }
+
 export type TrackGroup = {
   id: string
   title: string
   blurb: string
   href: string
-  items: LinkItem[]
+  items: GroupItem[]
 }
 
 /** Every page of a live module, grouped by its tracks in manifest order. */
@@ -51,7 +54,13 @@ export async function moduleGroups(moduleId: string): Promise<{ groups: TrackGro
     href: trackAnchor(moduleId, track.id),
     items: scenarios
       .filter((s) => s.trackId === track.id)
-      .map((s) => ({ href: scenarioHref(s), title: qualifiedTitle(s), twin: twinOf(s) })),
+      .map((s) => ({
+        href: scenarioHref(s),
+        title: qualifiedTitle(s),
+        twin: twinOf(s),
+        level: LEVELS[`${s.trackId}/${s.slug}`] ?? 'core',
+        minutes: s.minutes,
+      })),
   }))
   return { groups, scenarios }
 }
