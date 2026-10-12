@@ -42,7 +42,7 @@ jobs:
       - name: Generated content is committed
         run: |
           # sync rewrites generatedAt on every run, so ignore manifest.json
-          drift=$(git status --porcelain -- content public/fde-last-day-prep ':!content/manifest.json')
+          drift=$(git status --porcelain -- content public/diagrams ':!content/manifest.json')
           if [ -n "$drift" ]; then
             echo "$drift"
             echo "::error::Generated content is out of date. Run npm run sync in site/ and commit the result."

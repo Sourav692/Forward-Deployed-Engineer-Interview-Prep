@@ -35,6 +35,8 @@ import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
+import { diagramKey } from '../src/lib/diagram-key.ts'
+import { mermaidFences } from './render-diagrams.mjs'
 import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard } from './learn.mjs'
 
@@ -419,6 +421,23 @@ for (const mod of manifest.modules) {
     }
   }
 }
+// ENH-24b, PR-20: every diagram is drawn to static SVG files at sync time, so the page's
+// HTML holds it. A fence without its files would fall back to drawing in the browser.
+{
+  const dir = join(SITE_ROOT, 'public', 'diagrams')
+  const index = JSON.parse((await readFile(join(dir, 'index.json'), 'utf8').catch(() => null)) ?? '{}')
+  const keys = new Set<string>()
+  for (const file of await readdir(CONTENT, { recursive: true })) {
+    if (!file.endsWith('.md')) continue
+    for (const code of mermaidFences(await readFile(join(CONTENT, file), 'utf8'))) keys.add(diagramKey(code))
+  }
+  const missing = [...keys].filter((k) => !index[k] || ['light', 'dark'].some((t) => !existsSync(join(dir, `${k}-${t}.svg`))))
+  if (missing.length) {
+    failures.push(`diagrams: ${missing.length} of ${keys.size} have no SVG files; run npm run sync (it needs Playwright's Chromium: npx playwright install chromium)`)
+  }
+  rows.push(`\n  diagrams: ${keys.size - missing.length} of ${keys.size} drawn to static SVG`)
+}
+
 // PQ-07: the repository is private, so a link into it 404s for every visitor. The other
 // phrases are authoring notes (the case index spreadsheet, how a tutorial was regenerated,
 // which viewer draws a diagram) that mean nothing to a visitor.
