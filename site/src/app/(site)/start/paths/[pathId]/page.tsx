@@ -9,7 +9,8 @@ import { PathFlag } from '@/components/learn/PathFlag'
 import { ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { ChoosePathPanel } from '@/components/start/ChoosePath'
 import { Tag, cx, focusRing } from '@/components/ui'
-import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /**
  * Path detail (FE-10). Prerendered for every path (`generateStaticParams` +
@@ -49,6 +50,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Choose Your Path', path: '/start' }, { name: `${path.title} Path`, path: `/start/paths/${path.id}` }])} />
       <Breadcrumbs items={[{ label: 'Choose Your Path', href: '/start' }, { label: `${path.title} Path` }]} />
       <div className="max-w-3xl">
         <header>

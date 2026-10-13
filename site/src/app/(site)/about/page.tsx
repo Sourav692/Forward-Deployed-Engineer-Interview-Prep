@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AUTHOR, FEEDBACK_EMAIL, reportHref } from '@/lib/editorial'
 import { getLearnManifest } from '@/lib/learn'
-import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 import { focusRing } from '@/components/ui'
 
 /**
@@ -24,6 +25,7 @@ export default function AboutPage() {
 
   return (
     <div className="py-8 sm:py-10">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Library', path: '/library' }, { name: 'About', path: '/about' }])} />
       <header className="mb-8 max-w-3xl">
         <h1 className="text-3xl font-semibold tracking-[-0.02em]">About</h1>
         <p className="mt-3 text-base text-muted">

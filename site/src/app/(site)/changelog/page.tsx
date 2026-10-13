@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { CHANGELOG } from '@/lib/changelog'
 import { formatDate } from '@/lib/editorial'
-import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /** /changelog (audit check PR-06): what changed on the site, newest first, from `changelog.ts`. */
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = pageMetadata({
 export default function ChangelogPage() {
   return (
     <div className="py-8 sm:py-10">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Library', path: '/library' }, { name: 'Changelog', path: '/changelog' }])} />
       <header className="mb-8 max-w-3xl">
         <h1 className="text-3xl font-semibold tracking-[-0.02em]">Changelog</h1>
         <p className="mt-3 text-base text-muted">New features, new content and larger rewrites, newest first.</p>
