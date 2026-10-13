@@ -11,7 +11,7 @@ A memory system is not one database with a bigger context window. It is four sco
 | Handbook Module 03 doc 2 and Module 07 doc 5 | Three scopes of state, per-user isolation, a real 30-day retention decision (sections 2, 5 and 11) |
 | Cost and latency study guides | The cost pivot (section 16) |
 
-**The source is short.** Section 6 of the memory study guide gives a prompt, a rubric and seven bullets, about 25 lines in all. It has no diagram, no sizing and no cost. Everything beyond those 25 lines is built from the rest of the repo's memory material, and anything the repo does not say is marked *(own construction)*. Sizing figures are stated assumptions, not measurements.
+**The source is short.** Section 6 of the memory study guide gives a prompt, a rubric and seven bullets, about 25 lines in all. It has no diagram, no sizing and no cost. Everything beyond those 25 lines is built from this site's other memory material, and anything those sources do not say is marked *(own construction)*. Sizing figures are stated assumptions, not measurements.
 
 The prompt, verbatim from the source:
 

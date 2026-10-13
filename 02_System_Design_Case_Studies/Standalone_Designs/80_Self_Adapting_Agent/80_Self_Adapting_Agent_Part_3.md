@@ -2,7 +2,7 @@
 
 ## 14. Deliver It in Sixty Minutes
 
-Spend the hour on the ladder and the gate. The repo's question bank flags evaluation as what sets strong candidates apart in the OpenAI round it covers, and I'm assuming the same here. The question bank's framework has six steps: clarify the mission, stakeholders and metrics, map inputs, decompose and sequence by risk, walking-skeleton MVP, then adapt live. The plan below follows it *(own construction)*.
+Spend the hour on the ladder and the gate. Reported interview questions flag evaluation as what sets strong candidates apart in the OpenAI decomposition round, and I'm assuming the same here. The decomposition framework has six steps: clarify the mission, stakeholders and metrics, map inputs, decompose and sequence by risk, walking-skeleton MVP, then adapt live. The plan below follows it *(own construction)*.
 
 | Minutes | Move | What to say |
 |---|---|---|
@@ -36,7 +36,7 @@ These are the relevant Tier 2 probes from the question bank, answered for this d
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the learning loop costs more than serving". The repo has no playbook drill for this prompt, so the card below is *(own construction)*.
+The interviewer's pivot after a good design is "the learning loop costs more than serving". There is no playbook drill for this prompt, so the card below is *(own construction)*.
 
 | | |
 |---|---|

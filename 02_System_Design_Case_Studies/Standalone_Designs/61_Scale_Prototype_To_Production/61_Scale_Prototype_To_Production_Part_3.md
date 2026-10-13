@@ -78,7 +78,7 @@ Follow-ups beyond the bank's adoption question *(own construction)*:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot: "The pilot cost $400 a month. Finance just saw the forecast." The repo has no drill for #61, so the card below is a self-drill *(own construction)*, grounded in the cost cram sheets.
+The interviewer's pivot: "The pilot cost $400 a month. Finance just saw the forecast." There is no drill for this prompt, so the card below is a self-drill *(own construction)*, grounded in the cost cram sheets.
 
 | | |
 |---|---|

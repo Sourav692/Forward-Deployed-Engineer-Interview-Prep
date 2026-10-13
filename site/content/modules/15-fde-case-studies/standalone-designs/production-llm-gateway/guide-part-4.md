@@ -103,7 +103,7 @@ The levels split on whether the four constraints are met one at a time, traded a
 8. **Why does the model face return a typed error rather than a degraded string?** An agent that acts on degraded text as if it were real can take a wrong action. Degrade for humans, fail loudly for machines.
 9. **Sum the common-path latency.** ~1ms + ~5-10ms + ~200-400ms + ~1-2s + ~1ms, about 2.4 s at the top of each range. The LLM output check adds 300-500ms.
 10. **Why can p95 full-answer latency never be under 3 s here?** Complex turns are 21% of traffic and take 5 to 10 seconds, so p95 falls inside them. Hold them to first token instead.
-11. **Why can't the notebook's retry schedule run on the interactive path during an outage?** It waits 0.3 s, 0.6 s and 1.2 s, 2.1 s in total, before the fourth attempt. Use a per-request deadline and let the breaker send traffic to the fallback.
+11. **Why can't a typical retry schedule run on the interactive path during an outage?** It waits 0.3 s, 0.6 s and 1.2 s, 2.1 s in total, before the fourth attempt. Use a per-request deadline and let the breaker send traffic to the fallback.
 12. **A region-bound customer's primary provider goes down. Where does traffic go?** To that region's own fallback pool, or to a human handoff. Never to the global pool.
 13. **What is the cost card's 60-second line?** Almost all the money is the complex agent path, so route fewer turns there, cap its steps, and send common intents down a one-call path. Cache only safe answers. Prove it with cost per resolved conversation.
 

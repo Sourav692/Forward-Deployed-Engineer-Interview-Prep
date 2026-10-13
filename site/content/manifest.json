@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T21:28:40.023Z",
+  "generatedAt": "2026-10-12T21:32:20.733Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1272,7 +1272,7 @@
                 }
               ],
               "minutes": 47,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "personal-assistant-with-memory",
@@ -1293,7 +1293,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "production-llm-gateway",
@@ -1318,7 +1318,7 @@
                 }
               ],
               "minutes": 37,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             }
           ]
         },
@@ -1346,7 +1346,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "scale-prototype-to-production",
@@ -1367,7 +1367,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -1388,7 +1388,7 @@
                 }
               ],
               "minutes": 35,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "decomposition-classics-67-68-69",
@@ -1409,7 +1409,7 @@
                 }
               ],
               "minutes": 37,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             }
           ]
         }

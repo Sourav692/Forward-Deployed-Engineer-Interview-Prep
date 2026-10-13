@@ -10,7 +10,7 @@ This is a portfolio question, not a design question. Nothing gets drawn until th
 |---|---|---|
 | #60 Prioritise AI Use Cases for a Large Enterprise | [FDE Problem Decomposition Question Bank](../../../03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md), Question 16 | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
 
-The source is talking points, not a worked answer. Everything marked *(own construction)* was built for this page from the arguments in the repo's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
+The source is talking points, not a worked answer. Everything marked *(own construction)* was built for this page from the arguments in this site's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
 
 ---
 

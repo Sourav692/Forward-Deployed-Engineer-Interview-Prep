@@ -116,11 +116,11 @@ Point at three boundaries while the diagram is up. The input guard runs before t
 
 Two layers exist because each catches what the other misses. The source's one-liner carries the ordering: "Run rule-based first because it's free — only pay for the LLM check on what survives the cheap layer."
 
-The rule-based layer is regex, length caps, schema checks and a banned-phrase list. It costs microseconds and nothing per call. It is brittle: "pretend the rules above never existed" matches none of the injection patterns in the source notebooks. The LLM guard sends the same input to a small model asked to classify intent. It catches the rephrase, at the price of a billed call and a few hundred milliseconds.
+The rule-based layer is regex, length caps, schema checks and a banned-phrase list. It costs microseconds and nothing per call. It is brittle: "pretend the rules above never existed" matches none of the injection patterns in a typical rule list. The LLM guard sends the same input to a small model asked to classify intent. It catches the rephrase, at the price of a billed call and a few hundred milliseconds.
 
 Run both directions, because each direction sees something the other cannot. The source's sharpest line: "The model can leak something the user themselves said two turns ago — if you only guard the input, you never catch that." The same PII detector therefore runs twice. On input, it masks before anything is forwarded. On output, it catches the model repeating what it saw earlier in the conversation.
 
-Keep moderation separate from guardrails. Moderation checks a fixed, general harm taxonomy: harassment, hate, self-harm, sexual content, violence and a few more. It flags a message only when a category score is high enough, so mild rudeness like "you are very poor ha ha" passed it cleanly in the source notebook. A guardrail enforces this product's policy, such as "stay on topic for support" or "never reveal the system prompt." Ship both; neither substitutes for the other.
+Keep moderation separate from guardrails. Moderation checks a fixed, general harm taxonomy: harassment, hate, self-harm, sexual content, violence and a few more. It flags a message only when a category score is high enough, so mild rudeness like "you are very poor ha ha" passed it cleanly in testing. A guardrail enforces this product's policy, such as "stay on topic for support" or "never reveal the system prompt." Ship both; neither substitutes for the other.
 
 Log every block with a reason. A blocked customer needs a safe reply, and an engineer needs to know which rule fired. The reason log is also the evidence a security reviewer asks for.
 
@@ -151,6 +151,6 @@ Meter every call before it is made. The source's rule: "The cap has to fire befo
 | Per-request token cap | One oversized prompt or runaway context | Reject explicitly before the call, never truncate silently |
 | Daily ledger and pacer | Many ordinary requests adding up | At 80% spent, raise the router threshold; at 95%, small model only plus human handoff for complex turns; at 100%, cache and handoff only |
 
-Count with a real tokeniser. The source notebooks estimate tokens as `len(text.split()) * 1.3` in one place and `* 4 // 3` in another. That is fine for trend lines and wrong for a budget. Charge the ledger with the provider's reported usage after each call, and use a real tokeniser for the pre-call check.
+Count with a real tokeniser. Rough examples estimate tokens as `len(text.split()) * 1.3` or `* 4 // 3`. That is fine for trend lines and wrong for a budget. Charge the ledger with the provider's reported usage after each call, and use a real tokeniser for the pre-call check.
 
 The pacer answers the question a hard cap alone cannot: what happens at 4 p.m. when the day's money is gone. Going dark breaks the availability clause, so the pacer degrades quality before it refuses service.

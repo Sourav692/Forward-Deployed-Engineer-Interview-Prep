@@ -117,7 +117,7 @@ Read the components in dependency order *(own construction)*:
 
 A defect caught at ingestion costs one rejected record. The same defect caught after the model costs a wrong recommendation, a reviewer's time, and some trust. So the gates sit before extraction, not in the output guardrail.
 
-The repo's enterprise RAG ingestion pipeline states the rule in one line: "An unmappable document is quarantined, not defaulted to `internal`." Defaulting is how a latent defect gets indexed. The same rule applies to a warranty claim. A claim with a placeholder serial number is flagged as missing, never assigned a guessed value. The pipeline also records per-source `last_synced_at` and every rejected document with its reason. It keeps those queryable after the process exits, not just printed. That is the quarantine box in section 7.
+The enterprise RAG design's ingestion pipeline states the rule in one line: "An unmappable document is quarantined, not defaulted to `internal`." Defaulting is how a latent defect gets indexed. The same rule applies to a warranty claim. A claim with a placeholder serial number is flagged as missing, never assigned a guessed value. The pipeline also records per-source `last_synced_at` and every rejected document with its reason. It keeps those queryable after the process exits, not just printed. That is the quarantine box in section 7.
 
 Content hashing belongs here too. The same pipeline hashes each document's text and skips re-embedding anything unchanged. In the claims design, that hash stops re-extraction of scanned invoices that have not changed. Extraction is the most expensive step, so this matters for cost as well as correctness.
 

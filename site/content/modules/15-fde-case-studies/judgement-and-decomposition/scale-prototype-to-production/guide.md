@@ -14,7 +14,7 @@ Scaling a prototype a thousandfold is not a bigger deployment of the same system
 | Handbook Module 06 doc 1 | Section 7: identity, fair queuing |
 | G07, G13, G14, G18, G20 and Standalone #100 | Cross-linked by section instead of re-explained |
 
-**The repo has talking points for this prompt, not a worked design.** Question 17 lists what to cover and one follow-up. Everything that turns that list into an architecture, a sizing walk and a rollout is *own construction*, built from the sources above. Every number is a stated assumption for the whiteboard, not a measurement.
+**The source has talking points for this prompt, not a worked design.** Question 17 lists what to cover and one follow-up. Everything that turns that list into an architecture, a sizing walk and a rollout is *own construction*, built from the sources above. Every number is a stated assumption for the whiteboard, not a measurement.
 
 ---
 

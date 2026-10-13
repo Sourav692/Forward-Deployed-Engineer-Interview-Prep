@@ -18,13 +18,13 @@ Cap episodic memory per user, because nothing else will. Every completed task is
 
 The digest keeps the gist of older activity at a fixed size. "Booked four trips to Lisbon this year" survives even after the four booking episodes are pruned *(own construction)*. The pruner runs as a background job on the write path, so pruning never costs a reply any latency.
 
-Session memory needs the same discipline in a different form. A TTL marks entries for expiry, and sliding expiry extends the session on activity. The study guide's gotcha is that, in the LangGraph store its notebooks use, expiry is enforced by a sweep, not checked on every read. An expired entry can still be returned until the sweeper runs. That is true of `SqliteStore` and of `PostgresStore` by default; Postgres can set `omit_expired` to hide expired rows on read, and `InMemoryStore` has no TTL at all (checked Sep 2026). Schedule the sweeper, or check the entry's age if a few seconds of staleness matter.
+Session memory needs the same discipline in a different form. A TTL marks entries for expiry, and sliding expiry extends the session on activity. The gotcha is that, in the LangGraph store, expiry is enforced by a sweep, not checked on every read. An expired entry can still be returned until the sweeper runs. That is true of `SqliteStore` and of `PostgresStore` by default; Postgres can set `omit_expired` to hide expired rows on read, and `InMemoryStore` has no TTL at all (checked Sep 2026). Schedule the sweeper, or check the entry's age if a few seconds of staleness matter.
 
 ## 9. Search With an Index, Not a Scan
 
 Search long-term memory by relevance, because a scan's cost grows with how much has been stored. An unfiltered scan over a namespace is invisible at 5 facts and slow and noisy at 500. The source answer puts an embedding index on the semantic and episodic namespaces. Recall at 1,000+ saved items then becomes a vector query, not a full scan, and that is what keeps p95 under 300ms as history grows.
 
-The study guide flags this as a gap in the repo's own notebooks. Every long-term search there is an unfiltered scan or a similarity check by the model. None configures a real embedding index. That is the difference between working with 10 memories and working with 10,000.
+Many simple memory demos skip this. Their long-term search is an unfiltered scan or a similarity check by the model, with no real embedding index. That is the difference between working with 10 memories and working with 10,000.
 
 Use each search shape for what it does best *(own construction)*:
 
@@ -78,7 +78,7 @@ Governance follows from the same design *(own construction, building on the FDE 
 
 ## 12. Measure Recall, Not Fluency
 
-Measure whether the assistant remembers, not whether it sounds as if it does. A fluent answer that invents a preference is worse than one that asks again. The study guide lists memory-quality evaluation as the gap nothing in the repo's notebooks covers, so building it is the strong move.
+Measure whether the assistant remembers, not whether it sounds as if it does. A fluent answer that invents a preference is worse than one that asks again. Few worked examples cover memory-quality evaluation, so building it is the strong move.
 
 The harness comes straight from the study guide's take-home. Plant a fact early in a long synthetic conversation. Ask for it 20 turns later. Score full history, sliding window and summarisation against each other on recall and cost. Extend it across conversations for this design: plant in thread A, ask in thread B a simulated week later *(own construction)*.
 
@@ -114,7 +114,7 @@ Volunteer how the design breaks, because a design with no failure modes has not 
 
 ## 14. Score Yourself Against the Rubric
 
-Use the source's rubric as the checklist for the answer, because it is the only scored artifact the repo has for #98. Each line points to where this page answers it.
+Use the source's rubric as the checklist for the answer, because it is the only scored artefact the source gives for this prompt. Each line points to where this page answers it.
 
 | Rubric item (verbatim from the source) | Answered in |
 |---|---|
