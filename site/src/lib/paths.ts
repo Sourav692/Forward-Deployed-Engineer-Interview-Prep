@@ -413,7 +413,7 @@ export const PATHS: LearningPath[] = [
   },
   {
     id: 'revision',
-    title: 'Revision',
+    title: 'Revision Only',
     persona: 'revision',
     summary: 'Interview this week: the opening routine, the design method and final-week drills.',
     moduleFlags: flags('optional', {
