@@ -348,7 +348,7 @@ export const TRACKS: CurriculumTrack[] = [
   },
   {
     slug: 'capstone-and-portfolio',
-    code: 'T9',
+    code: 'T8',
     title: 'Capstone and Portfolio',
     objective: 'Build and present evidence of real capability',
     forWhom: 'Career changers, architects',
@@ -1635,7 +1635,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'capstone-build',
-    code: 'T9.1',
+    code: 'T8.1',
     title: 'Capstone build',
     track: 'capstone-and-portfolio',
     section: 'capstone',
@@ -1657,7 +1657,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'portfolio-write-up',
-    code: 'T9.2',
+    code: 'T8.2',
     title: 'Portfolio write-up and presentation',
     track: 'capstone-and-portfolio',
     section: 'capstone',
