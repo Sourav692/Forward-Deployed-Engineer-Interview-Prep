@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import { FOOTER_NAV, SITE_URL, reportHref } from '@/lib/editorial'
@@ -111,6 +112,7 @@ export default async function RootLayout({
         </footer>
 
         <BottomBar />
+        <Analytics />
       </body>
     </html>
   )

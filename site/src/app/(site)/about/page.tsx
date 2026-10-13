@@ -81,7 +81,8 @@ export default function AboutPage() {
             Your Data
           </h2>
           <p className="mt-2">
-            There are no accounts and no analytics. Your answers and progress are stored in this browser only; you can
+            There are no accounts. Page views are counted with Vercel Web Analytics, which sets no cookies and stores
+            no personal data. Your answers and progress are stored in this browser only; you can
             export, import or reset them in{' '}
             <Link href="/settings" className={link}>
               Settings
