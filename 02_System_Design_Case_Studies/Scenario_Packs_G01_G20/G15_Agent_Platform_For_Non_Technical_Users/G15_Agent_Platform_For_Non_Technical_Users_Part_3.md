@@ -69,9 +69,9 @@ The failure table tells the interviewer what a workflow does, not what breaks.
 | The process crashes mid-run | Resumes from the last checkpoint; the completed step never re-runs |
 | An event is redelivered (at-least-once channel semantics) | The idempotency key makes the redelivery a no-op |
 
-## 13. Read Cascade Robotics as the Anchor in Prose
+## 13. Walk Through the Cascade Robotics Example
 
-Member #64 is the same built project taught as a seven-document course, Module 05, with a runnable lab. The design is identical, and nothing in the anchor is contradicted. It adds four things.
+Cascade Robotics is a worked, runnable build of this design. Nothing in it contradicts the answer above, and it adds four things.
 
 First, the three-layer map that organises the whole answer:
 
@@ -88,16 +88,16 @@ First, the three-layer map that organises the whole answer:
 
 A weak answer spends its time on Layer 1 and waves at an LLM doing reasoning. A strong answer spends most of it on Layers 2 and 3, because that is where real incidents happen: double refunds, a skipped human check, a re-run completed step.
 
-Second, the case-study fixture, `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/data/case_study.json`. The tenant is `cascade_robotics`, with three workflows. `wf_ticket_triage` runs at priority 10 on `webhook / ticket.created`. `wf_legacy_ticket_tagger` runs at priority 1 on the same trigger, to demonstrate the conflict. `wf_slack_escalation` runs at priority 10 on `slack / urgent_message`.
+Second, the example data. The tenant is `cascade_robotics`, with three workflows. `wf_ticket_triage` runs at priority 10 on `webhook / ticket.created`. `wf_legacy_ticket_tagger` runs at priority 1 on the same trigger, to demonstrate the conflict. `wf_slack_escalation` runs at priority 10 on `slack / urgent_message`.
 
 Third, the cross-project shape. The RAG platform, this agent platform and the delivery framework all return `Decision(allowed, rule, reason)` from a named policy where deny overrides. The three functions are `authorize_step()` here, `sign_off()` in the delivery framework and `decide()` in enterprise RAG. Access control, delivery gates and workflow guardrails are the same kind of problem wearing three different hats. That line works well as a bridge when the interviewer has seen the G01 or G12 design.
 
-Fourth, the coverage map's discipline: every claim is marked *built and runnable* or *known but not demonstrated*, with an effort label to close it. The punch list, by effort:
+Fourth, the coverage discipline: every claim is marked *built and runnable* or *known but not demonstrated*, with an effort label to close it. The punch list, by effort:
 
 - **Low:** template library with `clone()`, a retry wrapper around `resume()`, PII redaction on step outputs, a plain-language run summary.
 - **Moderate:** a `Connector` model with a vault abstraction, a real planner, sandboxed custom-tool review, canary migration between versions.
 - **Large:** a visual builder, and a real secrets manager with a distributed lock store.
 
-The module's one-breath restatement is worth memorising:
+The one-breath restatement is worth memorising:
 
 > *"We're building the safety and orchestration layer that sits between a non-technical user's plain-English intent and a real, destructive action — so that no matter which channel the trigger came from, the action only runs when it's actually supposed to, runs exactly once, and survives crashes and retries without ever surprising anyone."*
