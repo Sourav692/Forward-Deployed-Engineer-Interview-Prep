@@ -145,7 +145,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
                         const flag = path.moduleFlags[m.slug]
                         return (
                           <li key={m.slug} className="flex flex-col gap-1.5 px-3 py-2.5 sm:flex-row sm:items-center sm:gap-3">
-                            <div className="flex min-w-0 flex-1 items-baseline gap-2">
+                            <div className="flex min-w-0 flex-1 items-baseline gap-2 sm:min-w-56">
                               {moduleTag(m) && <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(m)}</span>}
                               <Link
                                 href={learnHref.module(m)}
@@ -154,7 +154,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
                                 {m.title}
                               </Link>
                             </div>
-                            <div className="flex flex-wrap items-center gap-2 pl-11 sm:pl-0">
+                            <div className="flex min-w-0 flex-wrap items-center gap-2 pl-11 sm:pl-0">
                               <PathFlag flag={flag} size="xs" srPrefix="Flag:" />
                               {m.status === 'partly' && <Tag>Partly ready</Tag>}
                               <ModuleStatusBadge input={moduleInput(m)} size="xs" />
