@@ -40,6 +40,9 @@ test('path flow: landing → start → keyboard diagnostic → path flag on /lea
   }
 
   await expect(page.getByText('Your Recommended Path')).toBeVisible()
+  // ON: the result is a week-by-week plan, not just a path name.
+  await expect(page.getByRole('heading', { name: 'Your Weekly Plan' })).toBeVisible()
+  await expect(page.getByText(/^Weeks? 1(–\d+)?$/)).toBeVisible()
   const follow = page.getByRole('button', { name: /^Start first module|^Choose this path/ })
   await tabTo(page, follow)
   await page.keyboard.press('Enter')

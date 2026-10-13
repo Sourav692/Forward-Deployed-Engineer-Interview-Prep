@@ -485,6 +485,37 @@ export function resolveChoice(choice: Pick<PathChoice, 'pathId' | 'variant'> | n
   return (choice.variant && getPathById(choice.variant)) || getPathById(choice.pathId)
 }
 
+// ── Weekly plan ────────────────────────────────────────────────────────────
+
+export type PlanWeek = { week: number; modules: string[] }
+export type WeeklyPlan = { weeks: PlanWeek[]; totalWeeks: number; minutes: number; skipped: number }
+
+/**
+ * The diagnostic's week-by-week plan: the path's required and recommended modules in
+ * curriculum order, less the ones the answers say may be skipped, laid end to end at
+ * `weeklyHours` a week. Each module is listed in the week it starts. Gap modules are
+ * never required or recommended (ON-05), so the plan only uses material that exists.
+ */
+export function weeklyPlan(
+  path: LearningPath,
+  weeklyHours: number,
+  canSkip: readonly string[],
+  minutesOf: (slug: string) => number,
+): WeeklyPlan {
+  const budget = Math.max(1, weeklyHours) * 60
+  const studied = ALL_MODULES.filter((s) => path.moduleFlags[s] === 'required' || path.moduleFlags[s] === 'recommended')
+  const slugs = studied.filter((s) => !canSkip.includes(s))
+  const weeks: PlanWeek[] = []
+  let minutes = 0
+  for (const slug of slugs) {
+    const week = Math.floor(minutes / budget) + 1
+    if (weeks.at(-1)?.week === week) weeks.at(-1)!.modules.push(slug)
+    else weeks.push({ week, modules: [slug] })
+    minutes += minutesOf(slug)
+  }
+  return { weeks, totalWeeks: Math.max(1, Math.ceil(minutes / budget)), minutes, skipped: studied.length - slugs.length }
+}
+
 // ── Diagnostic ─────────────────────────────────────────────────────────────
 
 export type DiagnosticOption = {
