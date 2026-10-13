@@ -45,7 +45,7 @@ Run from `site/`, in this order after content, sync, editorial, glossary, or sit
 
 ## Git and deployment
 
-- Vercel project: `forward-deployed`. Production: `https://fdeprep.vercel.app/`.
+- Vercel project: `forward-deployed`. Production: `https://forwarddeployedprep.com/`.
 - Never push directly to `main`. Use a new branch per task, open a PR, then merge.
 - Start a task on an up-to-date `main`. If already on the branch for the same task, keep using it.
 - Branch names use `<type>/<short-kebab-description>`; include the task ID for task-board work, such as `feat/FE-04-search-index`.
