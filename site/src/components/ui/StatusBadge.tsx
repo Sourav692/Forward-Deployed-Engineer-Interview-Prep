@@ -181,9 +181,9 @@ export function StatusBadge({ status, size = 'sm', tooltip = true, prerequisite,
   const tipText = tooltip === false ? null : typeof tooltip === 'string' ? tooltip : meta.rule
 
   const pill = cx(
-    'inline-flex shrink-0 items-center gap-1 rounded-full border text-xs font-semibold',
-    // Long suggestion labels wrap instead of overflowing narrow cards.
-    status === 'blocked' ? 'text-left' : 'whitespace-nowrap',
+    'inline-flex items-center gap-1 border text-xs font-semibold',
+    // Long suggestion labels shrink and wrap instead of squeezing the row's title.
+    status === 'blocked' ? 'min-w-0 rounded-lg text-left' : 'shrink-0 rounded-full whitespace-nowrap',
     size === 'sm' ? 'px-2 py-0.5' : 'px-1.5 py-px',
     meta.className,
     className,
