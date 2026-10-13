@@ -54,7 +54,7 @@ anything else as a code block.
 ## Deploying
 
 Vercel project **`sourav-dbx/forward-deployed`**, live at
-<https://forward-deployed-sigma.vercel.app>.
+<https://fdeprep.vercel.app>.
 
 The project's **Root Directory is `site`**, so:
 

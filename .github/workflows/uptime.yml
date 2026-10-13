@@ -14,7 +14,7 @@ permissions: {}
 
 env:
   # The production host, in one place for when the custom domain lands (ENH-12).
-  SITE: https://forward-deployed-sigma.vercel.app
+  SITE: https://fdeprep.vercel.app
 
 jobs:
   check:
