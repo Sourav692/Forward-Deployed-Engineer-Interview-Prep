@@ -99,7 +99,7 @@ export function formatDate(iso: string): string {
  * Production origin. The one place it is written down: sitemap, robots, canonical URLs
  * and the final-week pages' head tags (written by the sync) all read it.
  */
-export const SITE_URL = 'https://fdeprep.vercel.app'
+export const SITE_URL = 'https://forwarddeployedprep.com'
 export const SITE_TAGLINE = 'FDE interview practice and system-design review'
 
 /**
