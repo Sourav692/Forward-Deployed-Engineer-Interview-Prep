@@ -6,7 +6,7 @@ The order is not optional. Configuring against unconnected data fails, evaluatin
 
 | Days | Stage | What has to be true to leave it | Northwind evidence in the demo | Signed by |
 |---|---|---|---|---|
-| 0 | Intake | Measurable metrics, a named SME, named sources; otherwise refused | `case_study.json` accepted | — |
+| 0 | Intake | Measurable metrics, a named SME, named sources; otherwise refused | Intake record accepted | — |
 | 1–2 | Scoping and qualification | Metrics written down and measurable; SME assigned; security review started | `scoping_questionnaire.pdf`, `success_metrics_signoff.pdf`; Zendesk and Confluence connectors pulled; "SEC-2026-0142 review report, no blocking findings" | Security reviewer |
 | 3–4 | Data readiness | Sources connected; access live and verified, not "requested" | "Read-only Zendesk (OAuth read scope), Confluence (scoped token) and Salesforce (read-only integration user) access verified live"; escalation check runs on day 3 | Customer SME |
 | 5–7 | Configure, do not code | Assembled from the library and configured for this customer | Triage prompt, golden-set harness, PII policy pulled; Northwind escalation policy built custom; `golden_set_v1.json` | Customer SME ("golden_set_v1.json reviewed, 40 cases approved") |

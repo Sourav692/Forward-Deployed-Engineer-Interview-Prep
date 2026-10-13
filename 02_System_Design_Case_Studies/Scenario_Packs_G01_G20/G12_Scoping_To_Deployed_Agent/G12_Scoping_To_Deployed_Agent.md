@@ -54,7 +54,7 @@ Then scope out loud. Design the pipeline as a state machine with named, role-gat
 
 A two-week clock started against something nobody can measure is worse than no clock. So the requirements of this case are the scoping document's contents, and intake refuses the engagement if they are missing. The running case is Northwind Logistics: a tier-1 support triage agent over Zendesk, Confluence and Salesforce.
 
-**Success metrics, agreed at intake, in writing** (verbatim from `case_study.json`):
+**Success metrics, agreed at intake, in writing** (verbatim from the intake record):
 
 | Metric | How it is measured |
 |---|---|
