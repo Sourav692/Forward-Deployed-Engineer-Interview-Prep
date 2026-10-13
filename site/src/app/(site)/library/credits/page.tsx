@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getLearnManifest, getModuleBySlug, inlineHtml, learnHref, type LearnLesson } from '@/lib/learn'
 import type { Rights } from '@/lib/curriculum-types'
-import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { focusRing } from '@/components/ui'
 
@@ -48,6 +49,7 @@ export default function CreditsPage() {
 
   return (
     <div className="py-8 sm:py-10">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Library', path: '/library' }, { name: 'Credits', path: '/library/credits' }])} />
       <Breadcrumbs items={[{ label: 'Library', href: '/library' }, { label: 'Credits' }]} />
       <header className="mb-8 max-w-3xl">
         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Library</p>

@@ -10,7 +10,8 @@ import type { ReadingDocument, ReadingSection } from '@/lib/reading'
 import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
 import { ReadingPanel } from '@/components/CaseStudyView'
 import { LessonTabs } from '@/components/learn/LessonTabs'
-import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 import { Byline } from '@/components/Byline'
 
 /**
@@ -35,6 +36,7 @@ export default async function StoryBankPage() {
 
   return (
     <div className="py-10">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Practice', path: '/practice' }, { name: STORY_BANK.title, path: '/practice/story-bank' }])} />
       <Breadcrumbs items={[{ label: 'Practice', href: '/practice' }, { label: STORY_BANK.title }]} />
 
       <header className="mb-10 max-w-3xl">

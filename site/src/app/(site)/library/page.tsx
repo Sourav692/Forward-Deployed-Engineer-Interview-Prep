@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { AreaHeader, LinkList } from '@/components/areas/Area'
-import { pageMetadata } from '@/lib/seo'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
 
 /**
  * /library: the utility index (FE-11). Reference pages that support every area rather
@@ -40,6 +41,7 @@ const ITEMS = [
 export default function LibraryPage() {
   return (
     <div className="py-12">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Library', path: '/library' }])} />
       <AreaHeader eyebrow="Library" title="Library">
         <p>Reference pages that support every area: terms, where the material comes from, and what has changed.</p>
       </AreaHeader>
