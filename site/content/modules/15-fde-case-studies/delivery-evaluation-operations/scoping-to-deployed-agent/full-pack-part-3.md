@@ -36,7 +36,7 @@ Read these as one engagement, run once. The eval score and time-to-value are dem
 | Source in #65 | What it adds beyond the anchor script |
 |---|---|
 | Module 10 doc 3, Scoping to Production in Two Weeks | The fourteen-day table with exit conditions, the trust-ladder link to Module 05, the one-breath restatement |
-| `projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/data/case_study.json` | The two success metrics verbatim, the three connectors, the SME id |
+| FDE delivery framework reference implementation, case-study data | The two success metrics verbatim, the three connectors, the SME id |
 | AI_Engineer `INTERVIEW_SCRIPT.md` | Identical to the anchor; the anchor was lifted from it, so reading one covers both |
 | The code project (`run_engagement_demo.py`, `demo_gate_failure.py`, 17 tests) | The evidence strings and figures in section 5, and the negative-control demo |
 | Module 10 doc 4 and `docs/05` | The five metrics, the two gate pairs, the evidence-bar critique, credentials, residency and tenancy |

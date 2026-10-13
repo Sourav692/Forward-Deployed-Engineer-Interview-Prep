@@ -10,7 +10,7 @@ A call assistant is a workflow-timing problem before it is a model problem. The 
 |---|---|
 | #59 OpenAI Q15 AI Assistant for Sales or Customer-Service Calls (anchor) | The eleven-part decomposition and the evaluation follow-up, used in sections 1 to 3, 7 to 9 and 11 |
 | #43 Real-time sales assistant, sub-3-second response (playbook drill, Case 6) | The before, during and after split in sections 1, 4 and 5; the whole of section 14 |
-| Realtime voice project, `05_Projects/Realtime_Voice_AI_Agent_with_RAG` | The streaming voice pipeline and its under-2-second figure, in sections 4 and 6 |
+| Realtime Voice AI Agent with RAG (reference implementation) | The streaming voice pipeline and its under-2-second figure, in sections 4 and 6 |
 | G05 Sales Copilot pack | The account snapshot, the CRM permission mirror and the preview-then-approve write, in sections 5 and 9 |
 
 **Most of this page is own construction.** The prompt gives a component list and an evaluation list. The drill gives the shape and the metrics. The design connecting them, the latency budget and every diagram were built for this page and are marked *(own construction)*.
@@ -77,7 +77,7 @@ The latency budget is the constraint most likely to be probed. Say it as arithme
 | Network and UI | ~150 ms | Persistent connection to the rep's client |
 | **Total** | **~2.0 s** | Leaves about 1 s of headroom under 3 s |
 
-The headroom is not slack. It covers the one allowlisted live lookup, such as current price, which runs in parallel with the model call and is dropped when it misses its timeout. The voice project in `05_Projects/` targets the same class of loop, voice in to voice out, "with <2 second response latency"; it is a stated goal, not a measurement, but it shows 2 seconds is a normal design target. That project also has to speak the answer, which this one does not.
+The headroom is not slack. It covers the one allowlisted live lookup, such as current price, which runs in parallel with the model call and is dropped when it misses its timeout. The Realtime Voice AI Agent reference implementation targets the same class of loop, voice in to voice out, "with <2 second response latency"; it is a stated goal, not a measurement, but it shows 2 seconds is a normal design target. That project also has to speak the answer, which this one does not.
 
 Every must-have then needs an owner in the architecture *(own construction)*.
 
