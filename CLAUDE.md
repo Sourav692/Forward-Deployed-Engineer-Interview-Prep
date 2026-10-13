@@ -69,7 +69,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Git and deploy
 
-- The active Vercel project is `forward-deployed`; production is https://forward-deployed-sigma.vercel.app/. The former `site` project and `site-sourav-dbx.vercel.app` deployment were deleted.
+- The active Vercel project is `forward-deployed`; production is https://fdeprep.vercel.app/ (the old https://forward-deployed-sigma.vercel.app/ host redirects to it). The former `site` project and `site-sourav-dbx.vercel.app` deployment were deleted.
 - Vercel deploys `main` to production on push; other branches get preview URLs. Never push to `main` directly: work on a branch, open a PR, merge.
 - Commit messages use conventional prefixes: `feat:`, `content:`, `fix:`, `chore:`.
 - Branch per task. Whenever the user asks to fix something, work on a plan, or work on a specific task, first create a new branch from an up-to-date `main` and do all of that work there. One task per branch: do not mix unrelated changes, and do not reuse a branch from an earlier task. If you are already on a branch created for this same task, keep using it.

@@ -117,7 +117,7 @@ One file per audit at `.website_spec/site-audits/<YYYY-MM-DD>/scores.json`. Crea
 ```json
 {
   "date": "2026-11-20",
-  "site": "https://forward-deployed-sigma.vercel.app",
+  "site": "https://fdeprep.vercel.app",
   "auditor": "Claude",
   "notes": "What was in scope, what was skipped and why",
   "scores": {

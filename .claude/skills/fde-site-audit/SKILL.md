@@ -1,6 +1,6 @@
 ---
 name: fde-site-audit
-description: Re-audit the Forward Deployed FDE interview-prep website (forward-deployed-sigma.vercel.app or its new domain) for information architecture, onboarding, first-visit experience, page quality, production readiness and content coverage; score it on the 10-dimension rubric against Hello Interview, Aced/Exponent, ByteByteGo and other prep sites; and track every check and score against previous audits in a history file. Use this whenever the user asks to audit, re-audit, review, score, benchmark or check production readiness of the Forward Deployed / FDE prep site, asks how the site scores now, what is still open or fixed since the last audit, whether it is ready to launch, or how it compares with competitors — even if they don't say "audit".
+description: Re-audit the Forward Deployed FDE interview-prep website (fdeprep.vercel.app; formerly forward-deployed-sigma.vercel.app) for information architecture, onboarding, first-visit experience, page quality, production readiness and content coverage; score it on the 10-dimension rubric against Hello Interview, Aced/Exponent, ByteByteGo and other prep sites; and track every check and score against previous audits in a history file. Use this whenever the user asks to audit, re-audit, review, score, benchmark or check production readiness of the Forward Deployed / FDE prep site, asks how the site scores now, what is still open or fixed since the last audit, whether it is ready to launch, or how it compares with competitors — even if they don't say "audit".
 ---
 
 # Forward Deployed site audit
@@ -29,7 +29,7 @@ Create a task list from these steps; a full audit takes a while and the owner ma
 
 ### 1. Set up
 
-1. **Site URL**: what the user gives; else the `site` of the latest history entry; else `https://forward-deployed-sigma.vercel.app`.
+1. **Site URL**: what the user gives; else the `site` of the latest history entry; else `https://fdeprep.vercel.app`.
 2. **Folders**: `.website_spec/site-audits/<YYYY-MM-DD>/` at the root of the current project; history at `.website_spec/site-audits/history.jsonl`.
 3. **History**: `python3 <skill>/scripts/score.py seed --history .website_spec/site-audits/history.jsonl` (adds the baseline if missing; safe to repeat).
 4. **Start this audit's record**:
