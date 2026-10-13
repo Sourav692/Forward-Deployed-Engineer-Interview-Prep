@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T21:32:20.733Z",
+  "generatedAt": "2026-10-13T03:41:01.779Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -900,7 +900,7 @@
                 }
               ],
               "minutes": 45,
-              "updated": "2026-10-12"
+              "updated": "2026-10-13"
             },
             {
               "slug": "evaluation-and-release-gating",
