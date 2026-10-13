@@ -11,11 +11,14 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
-import { DIAGNOSTIC, getPathById, pathVariants, scoreDiagnostic, type DiagnosticResult } from '@/lib/paths'
+import { DIAGNOSTIC, getPathById, pathVariants, scoreDiagnostic, weeklyPlan, type DiagnosticResult } from '@/lib/paths'
 import { Button, LinkButton, ProgressBar, cx, focusRing } from '@/components/ui'
 import { savePath } from './path-state'
 
-export type ModuleRef = { code: string; title: string; href: string }
+export type ModuleRef = { code: string; title: string; href: string; minutes: number }
+
+/** Weeks of the plan the result card lists; the path page has the rest. */
+const PLAN_WEEKS_SHOWN = 6
 
 type Step = 'intro' | number | 'result'
 
@@ -60,6 +63,8 @@ export function Diagnostic({ modules }: { modules: Record<string, ModuleRef> }) 
     if (!path) return null
     const start = modules[path.startModule]
     const variants = pathVariants(path.id)
+    const plan = weeklyPlan(path, result.weeklyHours, result.canSkip, (slug) => modules[slug]?.minutes ?? 0)
+    const shown = plan.weeks.filter((w) => w.week <= PLAN_WEEKS_SHOWN)
     const follow = () => {
       const saved = savePath(path, result.weeklyHours)
       if (!saved) setSessionOnly(true)
@@ -79,8 +84,7 @@ export function Diagnostic({ modules }: { modules: Record<string, ModuleRef> }) 
         </h3>
         <p className="mt-2 text-base text-muted">{path.summary}</p>
         <p className="mt-1 text-sm text-muted">
-          About {path.estHours} hours of required and recommended study, or about{' '}
-          {Math.max(1, Math.round(path.estHours / result.weeklyHours))} weeks at {result.weeklyHours} hours a week.
+          About {path.estHours} hours of required and recommended study.
         </p>
 
         {result.reasons.length > 0 && (
@@ -112,6 +116,42 @@ export function Diagnostic({ modules }: { modules: Record<string, ModuleRef> }) 
                 ))}
             </ul>
           </>
+        )}
+
+        <h4 className="mt-5 text-sm font-semibold">Your Weekly Plan</h4>
+        <p className="mt-1 text-sm text-muted">
+          About {Math.round(plan.minutes / 60)} hours over {plan.totalWeeks} {plan.totalWeeks === 1 ? 'week' : 'weeks'} at{' '}
+          {result.weeklyHours} hours a week
+          {plan.skipped > 0 && `, leaving out ${plan.skipped} ${plan.skipped === 1 ? 'module' : 'modules'} you may be able to skip`}. Only
+          modules with lessons ready to study are included.
+        </p>
+        <ol className="mt-2 space-y-1.5 text-sm">
+          {shown.map((w, i) => {
+            // A long module runs on until the next one starts.
+            const end = (plan.weeks[i + 1]?.week ?? plan.totalWeeks + 1) - 1
+            return (
+              <li key={w.week} className="flex gap-3">
+                <span className="w-24 shrink-0 font-semibold tabular-nums text-subtle">
+                  {end > w.week ? `Weeks ${w.week}–${end}` : `Week ${w.week}`}
+                </span>
+                <span className="min-w-0">
+                  {w.modules
+                    .filter((slug) => modules[slug])
+                    .map((slug, j) => (
+                      <span key={slug}>
+                        {j > 0 && ', '}
+                        <Link href={modules[slug].href} className={cx('rounded-sm text-accent underline underline-offset-2', focusRing)}>
+                          {modules[slug].title}
+                        </Link>
+                      </span>
+                    ))}
+                </span>
+              </li>
+            )
+          })}
+        </ol>
+        {plan.totalWeeks > PLAN_WEEKS_SHOWN && (
+          <p className="mt-1.5 text-sm text-muted">The full path lists the remaining modules in order.</p>
         )}
 
         {variants.length > 0 && (

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { MODULES } from '@/lib/curriculum'
-import { learnHref } from '@/lib/learn'
+import { learnHref, moduleTime } from '@/lib/learn'
 import { CurrentPathNotice } from '@/components/start/ChoosePath'
 import { Diagnostic, type ModuleRef } from '@/components/start/Diagnostic'
 import { HowItWorks } from '@/components/start/HowItWorks'
@@ -28,7 +28,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function StartPage() {
   const modules: Record<string, ModuleRef> = Object.fromEntries(
-    MODULES.map((m) => [m.slug, { code: m.code, title: m.title, href: learnHref.module(m) }]),
+    MODULES.map((m) => [m.slug, { code: m.code, title: m.title, href: learnHref.module(m), minutes: moduleTime(m).total }]),
   )
   return (
     <>

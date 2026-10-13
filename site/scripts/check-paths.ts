@@ -24,6 +24,7 @@ import {
   TRACK_MODULES,
   getPathById,
   scoreDiagnostic,
+  weeklyPlan,
 } from '../src/lib/paths.ts'
 
 /** Lesson slug -> reading minutes, from the Learn sync manifest (`npm run sync` first). */
@@ -107,6 +108,21 @@ for (const answers of answerSets) {
   const r = scoreDiagnostic(answers)
   if (!baseIds.has(r.pathId)) fail(`scoreDiagnostic(${JSON.stringify(answers)}) returned "${r.pathId}"`)
   if (!(r.weeklyHours > 0)) fail(`scoreDiagnostic(${JSON.stringify(answers)}) returned weeklyHours ${r.weeklyHours}`)
+
+  // The diagnostic's weekly plan (ON onboarding): only ready material, no skipped module,
+  // every planned minute counted, weeks in order.
+  const path = PATHS.find((p) => p.id === r.pathId)!
+  const minutesOf = (slug: string) => studyTime(bySlug.get(slug)!, lessonMinutes).total
+  const plan = weeklyPlan(path, r.weeklyHours, r.canSkip, minutesOf)
+  const planned = plan.weeks.flatMap((w) => w.modules)
+  const where = `weeklyPlan(${r.pathId}, ${JSON.stringify(answers)})`
+  for (const slug of planned) {
+    const m = bySlug.get(slug)!
+    if (m.status === 'coming-soon' || m.status === 'on-hold') fail(`${where} plans ${m.status} module "${slug}"`)
+    if (r.canSkip.includes(slug)) fail(`${where} plans "${slug}", which the answers say may be skipped`)
+  }
+  if (planned.reduce((s, slug) => s + minutesOf(slug), 0) !== plan.minutes) fail(`${where} minutes do not add up`)
+  if (plan.weeks.some((w, i) => i > 0 && w.week <= plan.weeks[i - 1].week) || (plan.weeks.at(-1)?.week ?? 0) > plan.totalWeeks) fail(`${where} weeks out of order`)
 }
 
 const allFirst = scoreDiagnostic(answerSets[1]).pathId
