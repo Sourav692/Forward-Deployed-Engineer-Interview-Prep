@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { GLOSSARY, glossaryAnchor, type GlossaryGroup } from '@/lib/glossary'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 
 export const metadata: Metadata = pageMetadata({
   path: '/glossary',
@@ -26,6 +27,7 @@ export default function GlossaryPage() {
   return (
     <div className="py-12">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Library', path: '/library' }, { name: 'Glossary', path: '/glossary' }])} />
+      <Breadcrumbs items={[{ label: 'Library', href: '/library' }, { label: 'Glossary' }]} />
       <header className="max-w-2xl">
         <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em]">Glossary</h1>
         <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted">
