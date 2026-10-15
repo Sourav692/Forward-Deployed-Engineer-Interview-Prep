@@ -14,6 +14,7 @@
  */
 import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
 import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
+import { MODULE_HOMES } from '../src/lib/curriculum-href.ts'
 import { REVIEWS, TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
 import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
@@ -91,7 +92,7 @@ for (const t of TRACKS) {
 }
 const listedInSections = new Set(TRACKS.flatMap((t) => t.sections.flatMap((s) => s.modules)))
 for (const m of MODULES) {
-  if (!listedInSections.has(m.slug)) fail(`module ${m.code} is in no section`)
+  if (!listedInSections.has(m.slug) && !(`${m.track}/${m.slug}` in MODULE_HOMES)) fail(`module ${m.code} is in no section`)
   for (const p of m.prerequisites) if (!moduleBySlug.has(p)) fail(`module ${m.code}: unknown prerequisite "${p}"`)
   for (const l of [...m.lessons, ...m.seeAlso]) if (!lessonBySlug.has(l)) fail(`module ${m.code}: unknown lesson "${l}"`)
 }

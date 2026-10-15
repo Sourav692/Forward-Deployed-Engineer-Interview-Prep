@@ -14,7 +14,7 @@
  * Runtime imports use explicit `.ts` paths so `scripts/check-progress-store.ts` can run
  * this file under plain `node`.
  */
-import { LESSONS, MODULES } from '../curriculum.ts'
+import { LESSONS, MODULES, TRACKS } from '../curriculum.ts'
 import { notifyProgress, storageAvailable } from '../storage.ts'
 import { rollup } from './rules.ts'
 import { studyTime } from '../study-time.ts'
@@ -338,7 +338,8 @@ export function moduleProgress(moduleSlug: string, minutes?: Readonly<Record<str
 export function trackProgress(trackSlug: string, minutes?: Readonly<Record<string, number>>): ProgressSummary {
   let lessonsRead = 0
   let lessonsTotal = 0
-  const parts = MODULES.filter((m) => m.track === trackSlug && m.lessons.length > 0).map((m) => {
+  const listed = new Set(TRACKS.find((t) => t.slug === trackSlug)?.sections.flatMap((s) => s.modules) ?? [])
+  const parts = MODULES.filter((m) => listed.has(m.slug) && m.lessons.length > 0).map((m) => {
     const p = moduleProgress(m.slug, minutes)
     lessonsRead += p.lessonsRead
     lessonsTotal += p.lessonsTotal

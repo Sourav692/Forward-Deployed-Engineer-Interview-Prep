@@ -101,13 +101,15 @@ export type SiteCounts = {
 export const siteCounts = cache(async (): Promise<SiteCounts> => {
   const scenarios = await getAllScenarios()
   const count = (moduleId: string) => scenarios.filter((s) => s.moduleId === moduleId).length
+  const listed = new Set(CURRICULUM_TRACKS.flatMap((t) => t.sections.flatMap((s) => s.modules)))
+  const modules = CURRICULUM_MODULES.filter((m) => listed.has(m.slug))
   const byStatus: Record<ModuleStatus, number> = { ready: 0, partly: 0, 'coming-soon': 0, 'on-hold': 0 }
-  for (const m of CURRICULUM_MODULES) byStatus[m.status] += 1
+  for (const m of modules) byStatus[m.status] += 1
   const learn = learnTracks()
   return {
     learnTracks: learn.length,
     learnHours: learn.reduce((sum, t) => sum + trackHours(t), 0),
-    modules: CURRICULUM_MODULES.length,
+    modules: modules.length,
     byStatus,
     worksheets: count(LIVE.worksheets),
     behavioural: count(LIVE.behavioural),

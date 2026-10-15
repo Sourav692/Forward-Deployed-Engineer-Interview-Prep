@@ -185,7 +185,10 @@ export const trackHours = (track: CurriculumTrack): number => Math.round(trackMi
 export const trackParams = () => learnTracks().map((t) => ({ trackSlug: t.slug }))
 
 export const moduleParams = () =>
-  MODULES.filter((m) => isLearnTrack(m.track)).map((m) => ({ trackSlug: m.track, moduleSlug: m.slug }))
+  MODULES.filter((m) => isLearnTrack(m.track) && !(`${m.track}/${m.slug}` in MODULE_HOMES)).map((m) => ({
+    trackSlug: m.track,
+    moduleSlug: m.slug,
+  }))
 
 /** Module pages under /interview: the interview practice track's modules. */
 /** Module pages under /interview. A module listed on another page (MODULE_HOMES) has none. */

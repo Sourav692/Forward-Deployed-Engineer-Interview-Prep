@@ -247,7 +247,7 @@ export const TRACKS: CurriculumTrack[] = [
         assessment: 'Cheat-sheet recall',
         interviewRelevance: 'Follow-up depth',
         doneWhen: '6 cases read, cheat sheets queued',
-        modules: ['classic-ai-designs', 'scenario-library'],
+        modules: ['classic-ai-designs'],
       },
     ],
   },
@@ -1204,6 +1204,8 @@ export const MODULES: CurriculumModule[] = [
     ],
     seeAlso: ['prompt-injection-and-egress-control', 'red-teaming-and-layered-guardrails', 'prompt-versioning-rollout-and-rollback', 'enterprise-rag-on-a-governed-lakehouse'],
   },
+  // Compatibility metadata for case links and saved progress. The cases live in
+  // Casebook; this module is no longer listed or assigned in the Learn curriculum.
   {
     slug: 'scenario-library',
     code: 'T5.5',
@@ -1761,7 +1763,7 @@ export const INTERVIEW_HUBS: InterviewHub[] = [
       'sre-triage-agent-mock-interview',
       'multi-tenant-saas-assistant-mock-interview',
     ],
-    modules: ['design-framework', 'sixty-minute-whiteboard', 'classic-ai-designs', 'scenario-library', 'case-study-worksheets'],
+    modules: ['design-framework', 'sixty-minute-whiteboard', 'classic-ai-designs', 'case-study-worksheets'],
   },
   {
     slug: 'forward-deployed-engineering',

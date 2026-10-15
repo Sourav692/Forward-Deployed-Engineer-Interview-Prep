@@ -224,6 +224,7 @@ const CASEBOOK_BEFORE_ENH_16: Record<string, string[]> = {
 }
 
 const casebookRedirects: Redirect[] = [
+  { source: '/learn/ai-systems-design/scenario-library', destination: '/design', permanent: true },
   { source: `/modules/${CASEBOOK_MODULE}`, destination: '/design', permanent: true },
   ...Object.entries(CASEBOOK_BEFORE_ENH_16).flatMap(([trackId, slugs]) =>
     slugs.map((slug) => ({
