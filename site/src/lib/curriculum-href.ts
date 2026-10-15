@@ -33,12 +33,13 @@ export const trackTag = (t: { slug: string; code: string }) => (isLearnTrack(t.s
 export const hubHref = (slug: string) => `/interview/hubs/${slug}`
 
 /**
- * Modules whose own page moved into an area index (ENH-17): the I1 worksheet lessons are
- * listed on /practice. The module keeps its id and lessons, so progress is unchanged, and
- * its old URL redirects (src/lib/redirects.ts).
+ * Modules whose own page moved into an area index: worksheets are listed on /practice,
+ * and the scenario library lives in Casebook. These modules keep their ids and lesson
+ * references for saved progress, and their old URLs redirect (src/lib/redirects.ts).
  */
 export const MODULE_HOMES: Record<string, string> = {
   [`${INTERVIEW_TRACK}/case-study-worksheets`]: '/practice',
+  'ai-systems-design/scenario-library': '/design',
 }
 
 /** The URL of a track, a module in it, or a lesson in that module. */

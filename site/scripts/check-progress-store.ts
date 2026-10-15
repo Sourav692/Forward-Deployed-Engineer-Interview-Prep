@@ -145,6 +145,16 @@ check(
 )
 check('track lessons read', tp.lessonsRead, mod.lessons.length)
 
+// Reading a Casebook case must not change the Learn track's completion denominator
+// or fraction, while its existing read-state key must still work.
+const designBeforeCase = store.trackProgress('ai-systems-design')
+const library = MODULES.find((m) => m.slug === 'scenario-library')!
+const caseLesson = library.lessons[0]
+store.markLessonRead(library.slug, caseLesson, NOW)
+check('case read state remains available', store.isLessonRead(library.slug, caseLesson), true)
+check('casebook is outside Learn track progress', store.trackProgress('ai-systems-design'), designBeforeCase)
+store.markLessonUnread(library.slug, caseLesson)
+
 // ── Export, import guard, reset ────────────────────────────────────────────
 
 storage.setItem('fd:v1:answers:t1/s1', JSON.stringify({ a: 'live worksheet answer' }))
