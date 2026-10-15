@@ -20,6 +20,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
 import { renderDiagrams } from './render-diagrams.mjs'
+import { explorerSources, writeExplorers } from './explorers.mjs'
 import {
   COMPANY_PREP_DOCUMENTS,
   COMPANY_PREP_MODULE_ID,
@@ -257,9 +258,11 @@ async function main() {
   // Learn lessons: the same snapshot pattern, for clones without the lesson sources.
   // The previous manifest in the snapshot also drives the lesson slug guard.
   await snapshotLearn({ outDir: OUT_DIR, snapshotDir: LEARN_SNAPSHOT_DIR })
+  const explorers = await explorerSources(REPO_ROOT, OUT_DIR, SITE_DIR)
 
   await rm(OUT_DIR, { recursive: true, force: true })
   await mkdir(OUT_DIR, { recursive: true })
+  await writeExplorers(explorers, OUT_DIR, SITE_DIR)
 
   const modules = []
   const warnings = []

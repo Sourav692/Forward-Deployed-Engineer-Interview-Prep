@@ -15,6 +15,7 @@ import { MockScorer } from '@/components/progress/MockScorer'
 import { MockTimer } from '@/components/progress/MockTimer'
 import { MOCK_MINUTES, MOCK_MODULE, mockRoundsFor } from '@/components/progress/mock-rubric'
 import { cx, focusRing } from '@/components/ui'
+import { lessonExplorer } from '@/lib/explorers/load'
 
 /**
  * Lesson page (FE-07). One static page per synced, published lesson: the params come
@@ -115,7 +116,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             </div>
           )}
 
-          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} />
+          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} />
 
           {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} rounds={mockRounds} />}
 

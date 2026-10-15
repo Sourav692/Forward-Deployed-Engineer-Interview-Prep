@@ -1,0 +1,1658 @@
+{
+  "title": "Enterprise AI Assistant: Integration Layers at Scale — Interactive Explorer",
+  "subtitle": "Explore the flow. Understand the decisions. Revise.",
+  "sources": [
+    {
+      "id": "enterprise-assistant-lesson",
+      "title": "Enterprise AI Assistant: Integration Layers at Scale",
+      "file": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/01_Enterprise_AI_Assistant_Integration_Layers_at_Scale.md",
+      "note": "Canonical lesson read in full. The source map distinguishes interactive coverage from material retained in the written lesson."
+    }
+  ],
+  "systems": [
+    {
+      "id": "enterprise-assistant",
+      "name": "Enterprise AI Assistant: Integration Layers at Scale",
+      "nav": "Enterprise AI Assistant",
+      "family": "Classic AI designs",
+      "tag": "T5.4",
+      "headline": "One employee request. Four integration layers.",
+      "requestLabel": "EMPLOYEE REQUEST",
+      "discoverySection": "Ask the Five Questions That Reshape the Design",
+      "description": "Coordinate enterprise applications while each application retains its own permission checks.",
+      "question": "Schedule a meeting with John and send him the latest proposal.",
+      "scope": "This design covers integration and tool discovery. RAG, memory and human-approval workflows are not implemented here.",
+      "provenance": "Architecture, requirements and boundaries are adapted from the named canonical Markdown. Scenario branches, identifiers and payloads are illustrative teaching examples, not executions or measured results. Source assumptions remain assumptions.",
+      "sourceIds": [
+        "enterprise-assistant-lesson"
+      ],
+      "discovery": [
+        {
+          "question": "Read-only, or can it act?",
+          "answer": "The source requires reads and writes.",
+          "decision": "Keep authorisation at every application boundary and trace side effects."
+        },
+        {
+          "question": "Do backends already speak REST?",
+          "answer": "The estate mixes REST, GraphQL, SOAP and legacy SQL.",
+          "decision": "Use connectors and MCP discovery over the transports the applications actually support."
+        },
+        {
+          "question": "Multi-step requests?",
+          "answer": "Yes: scheduling and sharing span two domains.",
+          "decision": "Use a planner for multi-step work; simple tasks need no planning framework."
+        },
+        {
+          "question": "Scale?",
+          "answer": "The scenario assumes 50,000 employees and roughly 8,000 concurrent requests at peak.",
+          "decision": "Keep request services stateless, bound work, and grow tool discovery selectively."
+        },
+        {
+          "question": "Does every employee see the same data?",
+          "answer": "No. Finance and HR have different access.",
+          "decision": "Propagate verified identity and enforce source permissions."
+        }
+      ],
+      "diagram": {
+        "width": 1160,
+        "height": 620,
+        "nodes": [
+          {
+            "id": "identity",
+            "label": "Enterprise identity",
+            "sub": "Employee permissions",
+            "x": 40,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "gateway",
+            "label": "AI gateway",
+            "sub": "Quota and request context",
+            "x": 310,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "planner",
+            "label": "Workflow planner",
+            "sub": "Multi-step tasks only",
+            "x": 580,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "registry",
+            "label": "Tool registry",
+            "sub": "Load relevant capabilities",
+            "x": 850,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "mcp",
+            "label": "MCP servers",
+            "sub": "Calendar and document tools",
+            "x": 850,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "function",
+            "label": "Function calling",
+            "sub": "Model selects typed arguments",
+            "x": 580,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "calendar",
+            "label": "Calendar application",
+            "sub": "Transport and authorisation",
+            "x": 310,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "documents",
+            "label": "Document application",
+            "sub": "Read and share proposal",
+            "x": 40,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "workers",
+            "label": "Async workers",
+            "sub": "Job ID and progress",
+            "x": 580,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "audit",
+            "label": "Execution trace",
+            "sub": "Tools, latency and errors",
+            "x": 850,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "observation"
+          }
+        ],
+        "edges": [
+          {
+            "from": "identity",
+            "to": "gateway",
+            "kind": "flow",
+            "points": [
+              [
+                260,
+                93.0
+              ],
+              [
+                310,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "gateway",
+            "to": "planner",
+            "kind": "flow",
+            "points": [
+              [
+                530,
+                93.0
+              ],
+              [
+                580,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "planner",
+            "to": "registry",
+            "kind": "flow",
+            "points": [
+              [
+                800,
+                93.0
+              ],
+              [
+                850,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "registry",
+            "to": "mcp",
+            "kind": "data",
+            "points": [
+              [
+                960.0,
+                131
+              ],
+              [
+                960.0,
+                230
+              ]
+            ]
+          },
+          {
+            "from": "mcp",
+            "to": "function",
+            "kind": "data",
+            "points": [
+              [
+                850,
+                268.0
+              ],
+              [
+                800,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "function",
+            "to": "calendar",
+            "kind": "flow",
+            "points": [
+              [
+                580,
+                268.0
+              ],
+              [
+                530,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "function",
+            "to": "documents",
+            "kind": "flow",
+            "points": [
+              [
+                580,
+                268.0
+              ],
+              [
+                564,
+                268.0
+              ],
+              [
+                564,
+                214
+              ],
+              [
+                276,
+                214
+              ],
+              [
+                276,
+                268.0
+              ],
+              [
+                260,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "planner",
+            "to": "workers",
+            "kind": "branch",
+            "points": [
+              [
+                580,
+                93.0
+              ],
+              [
+                564,
+                93.0
+              ],
+              [
+                564,
+                443.0
+              ],
+              [
+                580,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "workers",
+            "to": "registry",
+            "kind": "flow",
+            "points": [
+              [
+                800,
+                443.0
+              ],
+              [
+                816,
+                443.0
+              ],
+              [
+                816,
+                93.0
+              ],
+              [
+                850,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "calendar",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                530,
+                268.0
+              ],
+              [
+                546,
+                268.0
+              ],
+              [
+                546,
+                389
+              ],
+              [
+                834,
+                389
+              ],
+              [
+                834,
+                443.0
+              ],
+              [
+                850,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "documents",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                260,
+                268.0
+              ],
+              [
+                276,
+                268.0
+              ],
+              [
+                276,
+                389
+              ],
+              [
+                834,
+                389
+              ],
+              [
+                834,
+                443.0
+              ],
+              [
+                850,
+                443.0
+              ]
+            ]
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "meeting-shared",
+          "label": "Meeting and proposal succeed",
+          "outcome": "The calendar booked the meeting and the document application shared the proposal.",
+          "stages": [
+            {
+              "title": "Authenticate the employee and admit the request",
+              "component": "Enterprise identity + AI gateway",
+              "short": "Identity and quota",
+              "what": "An employee asks to meet John and send the latest proposal. The gateway attaches verified identity and checks the employee quota.",
+              "why": "Applications must authorise the employee, rather than trust the model.",
+              "next": "Next: Plan the two application decisions.",
+              "input": {
+                "request": "Schedule a meeting with John and send him the latest proposal.",
+                "employee": "employee-17"
+              },
+              "output": {
+                "principal": "employee-17",
+                "quota": "admitted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Identity comes from enterprise authentication, never model-generated arguments."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "gateway"
+              ]
+            },
+            {
+              "title": "Plan the two application decisions",
+              "component": "Workflow planner",
+              "short": "Plan two steps",
+              "what": "The planner separates booking the calendar slot from finding and sharing a proposal. It tracks both results.",
+              "why": "One function cannot coordinate these two domains.",
+              "next": "Next: Return a job ID and queue the plan.",
+              "input": {
+                "task": "meeting plus proposal"
+              },
+              "output": {
+                "steps": [
+                  "book meeting",
+                  "find and share proposal"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "A multi-step plan is bounded; no unlimited tool loop."
+                }
+              ],
+              "nodeIds": [
+                "planner"
+              ]
+            },
+            {
+              "title": "Discover only the relevant capabilities",
+              "component": "Tool registry + MCP servers",
+              "short": "Discover tools",
+              "what": "The registry selects the calendar and document MCP servers. Their tool descriptions enter this request context.",
+              "why": "Loading all 100+ applications would waste prompt space and weaken selection.",
+              "next": "Next: Select functions and validate their arguments.",
+              "input": {
+                "domains": [
+                  "calendar",
+                  "documents"
+                ]
+              },
+              "output": {
+                "loaded_servers": [
+                  "calendar",
+                  "documents"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Only task-relevant tool schemas are loaded."
+                }
+              ],
+              "nodeIds": [
+                "registry",
+                "mcp"
+              ]
+            },
+            {
+              "title": "Select functions and validate their arguments",
+              "component": "Function calling",
+              "short": "Select functions",
+              "what": "The model chooses the exposed booking and proposal tools. The application validates the typed arguments before dispatch.",
+              "why": "Function calling decides what to invoke; it does not grant authority or replace the transport.",
+              "next": "Next: Book through the calendar application.",
+              "input": {
+                "tools": [
+                  "book_meeting",
+                  "share_proposal"
+                ]
+              },
+              "output": {
+                "calls": [
+                  {
+                    "tool": "book_meeting",
+                    "attendee": "John"
+                  },
+                  {
+                    "tool": "share_proposal",
+                    "recipient": "John"
+                  }
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Schema validation is a design addition in this example; downstream permissions still decide access."
+                }
+              ],
+              "nodeIds": [
+                "function"
+              ]
+            },
+            {
+              "title": "Book through the calendar application",
+              "component": "Calendar application",
+              "short": "Calendar executes",
+              "what": "The calendar connector uses the application transport to book a slot. The calendar checks the employee identity before writing.",
+              "why": "The backend remains the authority even when the model selected the call.",
+              "next": "Next: Stop sharing at the document permission check.",
+              "input": {
+                "actor": "employee-17",
+                "attendee": "John"
+              },
+              "output": {
+                "meeting_id": "meeting-42",
+                "status": "booked"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The calendar grants the employee the required write permission."
+                }
+              ],
+              "nodeIds": [
+                "calendar"
+              ]
+            },
+            {
+              "title": "Share the permitted proposal",
+              "component": "Document application",
+              "short": "Documents execute",
+              "what": "The document application finds the latest proposal visible to the employee and permits sharing with John. It returns the application result.",
+              "why": "Discovery of a tool is different from permission to read or share its data.",
+              "next": "Next: Return both application outcomes.",
+              "input": {
+                "actor": "employee-17",
+                "recipient": "John"
+              },
+              "output": {
+                "proposal_id": "proposal-8",
+                "status": "shared"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Both read access and permitted sharing are checked by the application."
+                }
+              ],
+              "nodeIds": [
+                "documents"
+              ]
+            },
+            {
+              "title": "Return both application outcomes",
+              "component": "Execution trace",
+              "short": "Report results",
+              "what": "The trace records selected tools, application results, latency and errors. The response reports what each application actually did.",
+              "why": "A multi-step request may partly succeed; one blanket success would hide failures.",
+              "next": "The calendar booked the meeting and the document application shared the proposal.",
+              "input": {
+                "meeting": "booked",
+                "proposal": "shared"
+              },
+              "output": {
+                "result": "meeting booked and proposal shared"
+              },
+              "checks": [
+                {
+                  "kind": "Observe",
+                  "text": "Trace metadata should support debugging without exposing unnecessary sensitive payloads."
+                }
+              ],
+              "nodeIds": [
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "workers"
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "gateway",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "gateway",
+              "to": "planner",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "planner",
+              "to": "registry",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "registry",
+              "to": "mcp",
+              "kind": "data",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "mcp",
+              "to": "function",
+              "kind": "data",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "function",
+              "to": "calendar",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "function",
+              "to": "documents",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  564,
+                  268.0
+                ],
+                [
+                  564,
+                  214
+                ],
+                [
+                  276,
+                  214
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "calendar",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  530,
+                  268.0
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  546,
+                  389
+                ],
+                [
+                  834,
+                  389
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "documents",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  268.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  834,
+                  389
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "share-denied",
+          "label": "Document sharing is denied",
+          "outcome": "The meeting remains booked. The proposal was not shared; the employee sees the partial result.",
+          "stages": [
+            {
+              "title": "Authenticate the employee and admit the request",
+              "component": "Enterprise identity + AI gateway",
+              "short": "Identity and quota",
+              "what": "An employee asks to meet John and send the latest proposal. The gateway attaches verified identity and checks the employee quota.",
+              "why": "Applications must authorise the employee, rather than trust the model.",
+              "next": "Next: Plan the two application decisions.",
+              "input": {
+                "request": "Schedule a meeting with John and send him the latest proposal.",
+                "employee": "employee-17"
+              },
+              "output": {
+                "principal": "employee-17",
+                "quota": "admitted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Identity comes from enterprise authentication, never model-generated arguments."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "gateway"
+              ]
+            },
+            {
+              "title": "Plan the two application decisions",
+              "component": "Workflow planner",
+              "short": "Plan two steps",
+              "what": "The planner separates booking the calendar slot from finding and sharing a proposal. It tracks both results.",
+              "why": "One function cannot coordinate these two domains.",
+              "next": "Next: Return a job ID and queue the plan.",
+              "input": {
+                "task": "meeting plus proposal"
+              },
+              "output": {
+                "steps": [
+                  "book meeting",
+                  "find and share proposal"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "A multi-step plan is bounded; no unlimited tool loop."
+                }
+              ],
+              "nodeIds": [
+                "planner"
+              ]
+            },
+            {
+              "title": "Discover only the relevant capabilities",
+              "component": "Tool registry + MCP servers",
+              "short": "Discover tools",
+              "what": "The registry selects the calendar and document MCP servers. Their tool descriptions enter this request context.",
+              "why": "Loading all 100+ applications would waste prompt space and weaken selection.",
+              "next": "Next: Select functions and validate their arguments.",
+              "input": {
+                "domains": [
+                  "calendar",
+                  "documents"
+                ]
+              },
+              "output": {
+                "loaded_servers": [
+                  "calendar",
+                  "documents"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Only task-relevant tool schemas are loaded."
+                }
+              ],
+              "nodeIds": [
+                "registry",
+                "mcp"
+              ]
+            },
+            {
+              "title": "Select functions and validate their arguments",
+              "component": "Function calling",
+              "short": "Select functions",
+              "what": "The model chooses the exposed booking and proposal tools. The application validates the typed arguments before dispatch.",
+              "why": "Function calling decides what to invoke; it does not grant authority or replace the transport.",
+              "next": "Next: Book through the calendar application.",
+              "input": {
+                "tools": [
+                  "book_meeting",
+                  "share_proposal"
+                ]
+              },
+              "output": {
+                "calls": [
+                  {
+                    "tool": "book_meeting",
+                    "attendee": "John"
+                  },
+                  {
+                    "tool": "share_proposal",
+                    "recipient": "John"
+                  }
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Schema validation is a design addition in this example; downstream permissions still decide access."
+                }
+              ],
+              "nodeIds": [
+                "function"
+              ]
+            },
+            {
+              "title": "Book through the calendar application",
+              "component": "Calendar application",
+              "short": "Calendar executes",
+              "what": "The calendar connector uses the application transport to book a slot. The calendar checks the employee identity before writing.",
+              "why": "The backend remains the authority even when the model selected the call.",
+              "next": "Next: Stop sharing at the document permission check.",
+              "input": {
+                "actor": "employee-17",
+                "attendee": "John"
+              },
+              "output": {
+                "meeting_id": "meeting-42",
+                "status": "booked"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The calendar grants the employee the required write permission."
+                }
+              ],
+              "nodeIds": [
+                "calendar"
+              ]
+            },
+            {
+              "title": "Stop sharing at the document permission check",
+              "component": "Document application + Execution trace",
+              "short": "Sharing denied",
+              "what": "The document application denies sharing the proposal. The trace records a partial result and the response states that the meeting already exists.",
+              "why": "A tool being available never overrides a backend denial. Cross-application atomic rollback is not promised.",
+              "next": "The meeting remains booked. The proposal was not shared; the employee sees the partial result.",
+              "input": {
+                "meeting_id": "meeting-42",
+                "share_permission": false
+              },
+              "output": {
+                "meeting": "booked",
+                "proposal": "not shared"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not retry with a broader service identity or claim that both steps completed."
+                }
+              ],
+              "nodeIds": [
+                "documents",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "workers"
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "gateway",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "gateway",
+              "to": "planner",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "planner",
+              "to": "registry",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "registry",
+              "to": "mcp",
+              "kind": "data",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "mcp",
+              "to": "function",
+              "kind": "data",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "function",
+              "to": "calendar",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "function",
+              "to": "documents",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  564,
+                  268.0
+                ],
+                [
+                  564,
+                  214
+                ],
+                [
+                  276,
+                  214
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "calendar",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  530,
+                  268.0
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  546,
+                  389
+                ],
+                [
+                  834,
+                  389
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "documents",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  268.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  834,
+                  389
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "single-ticket",
+          "label": "One ticket needs no planner",
+          "outcome": "The application returns one created ticket; the planner is skipped.",
+          "stages": [
+            {
+              "title": "Authenticate the employee and admit the request",
+              "component": "Enterprise identity + AI gateway",
+              "short": "Identity and quota",
+              "what": "An employee asks to create a Jira ticket for a broken monitor. The gateway attaches verified identity and checks the employee quota.",
+              "why": "Applications must authorise the employee, rather than trust the model.",
+              "next": "Next: Plan the two application decisions.",
+              "input": {
+                "request": "Create a Jira ticket for the broken monitor.",
+                "employee": "employee-17"
+              },
+              "output": {
+                "principal": "employee-17",
+                "quota": "admitted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Identity comes from enterprise authentication, never model-generated arguments."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "gateway"
+              ]
+            },
+            {
+              "title": "Select the known ticket function",
+              "component": "Function calling",
+              "short": "One function",
+              "what": "For a single ticket the model selects the known create-ticket function. It does not build a multi-domain plan.",
+              "why": "Planning overhead buys nothing for one deterministic operation.",
+              "next": "Next: Execute against the ticket backend.",
+              "input": {
+                "request": "Create a Jira ticket for the broken monitor."
+              },
+              "output": {
+                "tool": "create_ticket",
+                "summary": "Broken monitor"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The ticket schema is validated before the transport call."
+                }
+              ],
+              "nodeIds": [
+                "function"
+              ]
+            },
+            {
+              "title": "Execute against the ticket backend",
+              "component": "Ticket application",
+              "short": "Backend executes",
+              "what": "The connector calls the ticket application with the employee identity. The application checks create permission and returns its ticket ID.",
+              "why": "REST executes the choice the model made; the two are different layers.",
+              "next": "Next: Trace the single result.",
+              "input": {
+                "actor": "employee-17",
+                "tool": "create_ticket"
+              },
+              "output": {
+                "ticket_id": "IT-42",
+                "status": "created"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The backend validates employee permission."
+                }
+              ],
+              "nodeIds": [
+                "documents"
+              ]
+            },
+            {
+              "title": "Trace the single result",
+              "component": "Execution trace",
+              "short": "Return ticket",
+              "what": "The trace records the tool result and the response gives the ticket ID. No planner or broad tool discovery was required.",
+              "why": "A short workflow should stay short.",
+              "next": "The application returns one created ticket; the planner is skipped.",
+              "input": {
+                "ticket_id": "IT-42"
+              },
+              "output": {
+                "response": "Created IT-42."
+              },
+              "checks": [
+                {
+                  "kind": "Observe",
+                  "text": "Record tool latency and errors."
+                }
+              ],
+              "nodeIds": [
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "gateway",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "gateway",
+              "to": "function",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  546,
+                  93.0
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  580,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "function",
+              "to": "documents",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  564,
+                  268.0
+                ],
+                [
+                  564,
+                  214
+                ],
+                [
+                  276,
+                  214
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "documents",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  268.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  834,
+                  389
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "planner",
+            "registry",
+            "mcp",
+            "calendar",
+            "workers"
+          ],
+          "nodeOverrides": {
+            "documents": {
+              "label": "Ticket application",
+              "sub": "Create with employee identity"
+            }
+          }
+        },
+        {
+          "id": "async-pending",
+          "label": "Long workflow is accepted asynchronously",
+          "outcome": "The employee has job-42 and a running status. No meeting or document action is claimed complete.",
+          "stages": [
+            {
+              "title": "Authenticate the employee and admit the request",
+              "component": "Enterprise identity + AI gateway",
+              "short": "Identity and quota",
+              "what": "An employee asks to meet John and send the latest proposal. The gateway attaches verified identity and checks the employee quota.",
+              "why": "Applications must authorise the employee, rather than trust the model.",
+              "next": "Next: Plan the two application decisions.",
+              "input": {
+                "request": "Schedule a meeting with John and send him the latest proposal.",
+                "employee": "employee-17"
+              },
+              "output": {
+                "principal": "employee-17",
+                "quota": "admitted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Identity comes from enterprise authentication, never model-generated arguments."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "gateway"
+              ]
+            },
+            {
+              "title": "Plan the two application decisions",
+              "component": "Workflow planner",
+              "short": "Plan two steps",
+              "what": "The planner separates booking the calendar slot from finding and sharing a proposal. It tracks both results.",
+              "why": "One function cannot coordinate these two domains.",
+              "next": "Next: Return a job ID and queue the plan.",
+              "input": {
+                "task": "meeting plus proposal"
+              },
+              "output": {
+                "steps": [
+                  "book meeting",
+                  "find and share proposal"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "A multi-step plan is bounded; no unlimited tool loop."
+                }
+              ],
+              "nodeIds": [
+                "planner"
+              ]
+            },
+            {
+              "title": "Return a job ID and queue the plan",
+              "component": "Async workers",
+              "short": "Job accepted",
+              "what": "The gateway returns task accepted with a job ID. A worker will execute the plan asynchronously.",
+              "why": "Long workflows should not hold an interactive request open.",
+              "next": "Next: Record the pending execution.",
+              "input": {
+                "plan": [
+                  "book meeting",
+                  "share proposal"
+                ]
+              },
+              "output": {
+                "job_id": "job-42",
+                "status": "accepted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Acceptance is distinct from execution or completion."
+                }
+              ],
+              "nodeIds": [
+                "workers"
+              ]
+            },
+            {
+              "title": "Record the pending execution",
+              "component": "Execution trace",
+              "short": "Pending status",
+              "what": "The trace records the accepted job and its pending application steps. A later status update must use the actual application outcomes.",
+              "why": "Queueing work is not proof that a business action happened.",
+              "next": "The employee has job-42 and a running status. No meeting or document action is claimed complete.",
+              "input": {
+                "job_id": "job-42"
+              },
+              "output": {
+                "status": "pending",
+                "completed_actions": []
+              },
+              "checks": [
+                {
+                  "kind": "Observe",
+                  "text": "Observe worker backlog and per-application errors."
+                }
+              ],
+              "nodeIds": [
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "gateway",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "gateway",
+              "to": "planner",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "planner",
+              "to": "workers",
+              "kind": "branch",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "workers",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  800,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "registry",
+            "mcp",
+            "function",
+            "calendar",
+            "documents"
+          ]
+        }
+      ],
+      "revision": {
+        "pitch": "I would put enterprise identity and a gateway in front of every request. The applications trust that identity, not the model. For a simple ticket, function calling chooses the tool and the backend transport executes it. For a request across calendar and documents, a planner coordinates the decisions. A tool registry loads only the relevant MCP servers, so we do not place thousands of tool schemas in every prompt. MCP makes those capabilities discoverable; it does not replace REST, SOAP or SQL underneath. Each backend checks the employee permissions before reading or writing. Long work returns a job ID and runs asynchronously. I would trace tool selection, application results, errors, latency and cost, and report partial success honestly. This case goes deep on integration. It leaves RAG, memory and approval to the support-assistant design.",
+        "flow": "Identity → gateway → optional planner → relevant tool discovery → function choice → application transport and authorisation → traced results",
+        "requirements": [
+          [
+            "Functional",
+            "Natural-language conversation, reads and writes across 100+ applications, multi-step workflows, tool execution and enterprise authentication."
+          ],
+          [
+            "Non-functional",
+            "Availability, security, extensibility, maintainability and easy application onboarding at the scenario scale."
+          ]
+        ],
+        "discovery": [
+          "Read-only, or can it act?",
+          "Do backends already speak REST?",
+          "Multi-step requests?",
+          "Scale?",
+          "Does every employee see the same data?"
+        ],
+        "tradeoff": "Dynamic tool discovery reduces prompt size but makes registry quality and permission-aware exposure important. A planner helps multi-domain work and is overhead for a single ticket.",
+        "failure": "The calendar may succeed while document sharing is denied. Report the partial outcome; the source does not define a cross-application transaction.",
+        "ops": [
+          [
+            "Scale",
+            "Load relevant MCP servers rather than all applications. Keep stateless services and quotas; the source scale is an assumption."
+          ],
+          [
+            "Latency",
+            "Run long workflows asynchronously with job IDs. Trace application calls rather than promising one universal response time."
+          ],
+          [
+            "Cost",
+            "Bound model/tool loops and account for each application call. Reuse caches only within the correct identity scope."
+          ],
+          [
+            "Evaluation",
+            "Exercise simple and multi-domain requests, application denials, tool-selection quality and partial completion."
+          ]
+        ],
+        "remember": "REST executes. Function calling decides. MCP discovers. The planner coordinates."
+      },
+      "sourceMap": [
+        {
+          "section": "Ask the Five Questions That Reshape the Design",
+          "where": "Understand the problem",
+          "note": "All five source questions are preserved with their architectural consequence."
+        },
+        {
+          "section": "Put Identity in Front of the Model",
+          "where": "Explore flow",
+          "note": "Verified identity and gateway admission precede tool access."
+        },
+        {
+          "section": "Stack the Integration Methods as Layers",
+          "where": "Explore flow and revision",
+          "note": "Registry, MCP, function choice, planner and backend transport have separate responsibilities."
+        },
+        {
+          "section": "Separate REST From Function Calling by Who Decides",
+          "where": "Explore flow",
+          "note": "The single-ticket branch skips planning and distinguishes choice from execution."
+        },
+        {
+          "section": "Reach for a Planner Only When the Task Needs One",
+          "where": "Explore flow",
+          "note": "The meeting uses a planner; the single-ticket scenario does not."
+        },
+        {
+          "section": "Scale Discovery With a Tool Registry",
+          "where": "Explore flow and revision",
+          "note": "Selective discovery and the asynchronous pending branch are interactive. Global deployment details remain in the lesson."
+        },
+        {
+          "section": "Worked Example: One Request Through Every Layer",
+          "where": "Explore flow",
+          "note": "The meeting and latest proposal are the main scenario."
+        },
+        {
+          "section": "Weigh the Four Methods Honestly",
+          "where": "Revision and Read lesson",
+          "note": "The layer trade-off is summarised. The full comparison table remains in the lesson."
+        },
+        {
+          "section": "Key Takeaways",
+          "where": "Interview revision",
+          "note": "Compressed into the spoken answer and operating points."
+        },
+        {
+          "section": "Check Yourself",
+          "where": "Read lesson",
+          "note": "This section remains in the written lesson. The explorer does not reproduce every detail."
+        },
+        {
+          "section": "References",
+          "where": "Canonical source",
+          "note": "The explorer is grounded in this Markdown. Upstream references remain in the local source; the public lesson omits the reference appendix."
+        }
+      ],
+      "limitations": [
+        "A prewritten guided explanation; no live customer systems, models or actions are connected.",
+        "Scenario payloads and outcomes are illustrative. Targets and figures from the source are scenario assumptions, not measurements made by this explorer.",
+        "Typed argument validation and explicit partial-result reporting are added teaching choices.",
+        "The document node is relabelled as the ticket backend only in the single-ticket scenario."
+      ]
+    }
+  ]
+}

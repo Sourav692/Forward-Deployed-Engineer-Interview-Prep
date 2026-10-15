@@ -1,0 +1,2676 @@
+{
+  "title": "Customer Support · FDE Explorer",
+  "subtitle": "A damaged laptop. Six possible paths. Explore what runs, what waits, and what stops.",
+  "sources": [
+    {
+      "id": "support-lesson",
+      "title": "Customer Support Assistant: Knowledge, Actions, and Approval",
+      "file": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/02_Customer_Support_Assistant_Knowledge_Actions_and_Approval.md",
+      "note": "The full canonical lesson was read: peer capabilities, the multi-system damaged-laptop example, memory, human approval, asynchronous work, scale, trade-offs and identified gaps. Maya, Northstar, order O-1042, dollar amounts, policies, identifiers and receipts are fictional teaching inputs. Explicit action-bound approvals, typed proposals, scoped read-only caching, idempotency and evidence-quality checks are added pilot design choices. The source’s 1M and 10M conversations/day figures are illustrative design loads, not measured results; this pilot makes no throughput or latency claim."
+    }
+  ],
+  "systems": [
+    {
+      "id": "customer-support",
+      "name": "Customer support: answer, act, or ask",
+      "nav": "Customer support",
+      "icon": "layers",
+      "color": "purple",
+      "tag": "Customer support",
+      "family": "T5.4 · Classic AI designs",
+      "description": "Follow Maya’s damaged-laptop incident through knowledge, application tools and human approval. Switch scenarios to see which capabilities run and which are skipped.",
+      "question": "Maya’s laptop arrived damaged. Explore her policy question or her request to refund the order, cancel the warranty, notify shipping and create a ticket.",
+      "scope": "A guided interview walkthrough, from trusted identity to evidence or a per-action status. Knowledge ingestion, full disaster recovery, real authentication, real payments and later job settlement are outside this pilot. No live systems are connected.",
+      "provenance": "Source-grounded architecture with explicitly added controls. All people, tenant names, policies, amounts, payloads and outcomes are illustrative. Six prewritten scenarios teach the design; the HTML does not execute business operations. Browser-local reviewed state is independent of the prep site’s lesson-completion state.",
+      "sourceIds": [
+        "support-lesson"
+      ],
+      "diagram": {
+        "width": 1180,
+        "height": 620,
+        "nodes": [
+          {
+            "id": "identity",
+            "label": "Gateway + identity",
+            "sub": "Tenant · user · scope",
+            "x": 40,
+            "y": 40,
+            "role": "component"
+          },
+          {
+            "id": "cache",
+            "label": "Answer cache",
+            "sub": "Read-only · scoped",
+            "x": 270,
+            "y": 40,
+            "role": "data"
+          },
+          {
+            "id": "orchestrator",
+            "label": "Orchestrator",
+            "sub": "Choose capabilities",
+            "x": 500,
+            "y": 40,
+            "role": "component"
+          },
+          {
+            "id": "memory",
+            "label": "Customer memory",
+            "sub": "Session + preferences",
+            "x": 730,
+            "y": 40,
+            "role": "data"
+          },
+          {
+            "id": "audit",
+            "label": "Audit + traces",
+            "sub": "Observe every boundary",
+            "x": 960,
+            "y": 40,
+            "role": "observation"
+          },
+          {
+            "id": "retrieval",
+            "label": "Knowledge retrieval",
+            "sub": "Find permitted evidence",
+            "x": 40,
+            "y": 245,
+            "role": "component"
+          },
+          {
+            "id": "model",
+            "label": "Model gateway",
+            "sub": "Plan or draft",
+            "x": 270,
+            "y": 245,
+            "role": "component"
+          },
+          {
+            "id": "tools",
+            "label": "Tool / MCP layer",
+            "sub": "Typed application calls",
+            "x": 500,
+            "y": 245,
+            "role": "component"
+          },
+          {
+            "id": "policy",
+            "label": "Action policy",
+            "sub": "Authority · risk · amount",
+            "x": 730,
+            "y": 245,
+            "role": "branch"
+          },
+          {
+            "id": "approval",
+            "label": "Manager approval",
+            "sub": "Approve this exact action",
+            "x": 960,
+            "y": 245,
+            "role": "branch"
+          },
+          {
+            "id": "knowledge",
+            "label": "Knowledge base",
+            "sub": "Versioned support policy",
+            "x": 40,
+            "y": 455,
+            "role": "data"
+          },
+          {
+            "id": "response",
+            "label": "Customer response",
+            "sub": "Evidence or real status",
+            "x": 270,
+            "y": 455,
+            "role": "component"
+          },
+          {
+            "id": "support",
+            "label": "Order + support apps",
+            "sub": "Orders · tickets · jobs",
+            "x": 500,
+            "y": 455,
+            "role": "component"
+          },
+          {
+            "id": "payments",
+            "label": "Refund executor",
+            "sub": "Payment provider receipt",
+            "x": 730,
+            "y": 455,
+            "role": "component"
+          }
+        ],
+        "edges": [
+          {
+            "to": "cache",
+            "kind": "flow",
+            "from": "identity"
+          },
+          {
+            "to": "orchestrator",
+            "kind": "flow",
+            "from": "cache"
+          },
+          {
+            "to": "audit",
+            "kind": "observation",
+            "from": "identity",
+            "points": [
+              [
+                129,
+                40
+              ],
+              [
+                129,
+                14
+              ],
+              [
+                1049,
+                14
+              ],
+              [
+                1049,
+                40
+              ]
+            ],
+            "label": "trace, not a business action",
+            "labelX": 590,
+            "labelY": 30
+          },
+          {
+            "to": "memory",
+            "kind": "data",
+            "from": "orchestrator"
+          },
+          {
+            "to": "model",
+            "kind": "flow",
+            "from": "orchestrator",
+            "points": [
+              [
+                589,
+                110
+              ],
+              [
+                589,
+                175
+              ],
+              [
+                359,
+                175
+              ],
+              [
+                359,
+                245
+              ]
+            ],
+            "label": "plan",
+            "labelX": 470,
+            "labelY": 165
+          },
+          {
+            "to": "tools",
+            "kind": "flow",
+            "from": "model"
+          },
+          {
+            "to": "policy",
+            "kind": "flow",
+            "from": "tools"
+          },
+          {
+            "to": "support",
+            "kind": "data",
+            "from": "tools",
+            "label": "read order",
+            "labelX": 548,
+            "labelY": 405
+          },
+          {
+            "to": "support",
+            "kind": "branch",
+            "from": "policy",
+            "points": [
+              [
+                819,
+                315
+              ],
+              [
+                819,
+                355
+              ],
+              [
+                705,
+                355
+              ],
+              [
+                705,
+                490
+              ],
+              [
+                678,
+                490
+              ]
+            ],
+            "label": "authorised support work",
+            "labelX": 705,
+            "labelY": 440
+          },
+          {
+            "to": "approval",
+            "kind": "branch",
+            "from": "policy",
+            "label": "high-value refund",
+            "labelX": 935,
+            "labelY": 232
+          },
+          {
+            "to": "response",
+            "kind": "flow",
+            "from": "support"
+          },
+          {
+            "to": "audit",
+            "kind": "observation",
+            "from": "policy",
+            "points": [
+              [
+                819,
+                245
+              ],
+              [
+                819,
+                195
+              ],
+              [
+                1049,
+                195
+              ],
+              [
+                1049,
+                110
+              ]
+            ],
+            "label": "decision record",
+            "labelX": 935,
+            "labelY": 184
+          },
+          {
+            "to": "payments",
+            "kind": "flow",
+            "from": "approval",
+            "points": [
+              [
+                1049,
+                315
+              ],
+              [
+                1049,
+                395
+              ],
+              [
+                819,
+                395
+              ],
+              [
+                819,
+                455
+              ]
+            ],
+            "label": "approved proposal",
+            "labelX": 950,
+            "labelY": 383
+          },
+          {
+            "to": "response",
+            "kind": "flow",
+            "from": "payments",
+            "points": [
+              [
+                819,
+                525
+              ],
+              [
+                819,
+                590
+              ],
+              [
+                359,
+                590
+              ],
+              [
+                359,
+                525
+              ]
+            ],
+            "label": "provider receipt",
+            "labelX": 590,
+            "labelY": 578
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "refund-approved",
+          "label": "Refund · manager approves",
+          "outcome": "Refund submitted · settlement pending",
+          "stages": [
+            {
+              "title": "Establish who is asking",
+              "component": "API gateway, authentication and audit",
+              "short": "Identity first",
+              "what": "Maya asks for help with damaged laptop order O-1042. The gateway verifies her session and derives the customer and tenant from trusted identity, then starts a trace.",
+              "why": "A model must not choose which customer or tenant it is allowed to act for. Every later access carries this verified scope.",
+              "next": "Check whether this request is eligible for a cached answer.",
+              "input": {
+                "message": "Refund the damaged laptop, cancel its warranty, notify shipping and create a ticket.",
+                "session": "illustrative signed session"
+              },
+              "output": {
+                "customer_id": "maya",
+                "tenant_id": "northstar-demo",
+                "trace_id": "demo-1042",
+                "authenticated": true
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify the session before reading customer data. Derive scope server-side; do not trust tenant or customer IDs suggested by the model."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Record a trace ID and safe decision metadata. Do not log the session token or raw payment details."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            },
+            {
+              "title": "Keep cached answers away from writes",
+              "component": "Scoped answer cache",
+              "short": "Cache cannot act",
+              "what": "This request asks for changes to several business systems. The cache is bypassed for execution; a remembered answer can never stand in for a refund or a current order status.",
+              "why": "A cache hit proves that an answer was stored, not that a payment happened. For read-only questions, a cache must also match tenant, access scope and policy version.",
+              "next": "Send the live action request to the orchestrator.",
+              "input": {
+                "request_kind": "multi-system action",
+                "order_id": "O-1042"
+              },
+              "output": {
+                "cache_eligible": false,
+                "reason": "business actions require fresh authorisation and receipts"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not cache action execution or replay a successful-looking refund response. This read-only cache restriction is an added pilot design choice."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure cache bypasses separately from read-only answer hits."
+                }
+              ],
+              "nodeIds": [
+                "cache"
+              ]
+            },
+            {
+              "title": "Resolve the order and plan only what is needed",
+              "component": "Orchestrator, model gateway and customer memory",
+              "short": "Resolve + plan",
+              "what": "Session memory resolves “the laptop” to O-1042. The orchestrator asks the model for a plan because refund, warranty, shipping and ticketing span several applications; the plan is a proposal, not permission.",
+              "why": "A simple order lookup does not need this planner. Memory holds conversational context and preferences; current support policy stays in the separate knowledge base.",
+              "next": "Load the relevant tool definitions and validate the proposed calls.",
+              "input": {
+                "reference": "the damaged laptop",
+                "session_context": {
+                  "last_order": "O-1042"
+                },
+                "requested_work": [
+                  "refund",
+                  "cancel warranty",
+                  "notify shipping",
+                  "create ticket"
+                ]
+              },
+              "output": {
+                "resolved_order": "O-1042",
+                "plan": [
+                  "propose refund",
+                  "request warranty cancellation",
+                  "open shipping investigation",
+                  "create high-priority ticket"
+                ],
+                "writes_executed": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "An order reference from memory still needs an application-side ownership check before any operation."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The model proposes a plan. It cannot grant customer access, approve a refund or mark a business action complete."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Track planner tokens and tool count per request; do not use multi-agent planning for a single deterministic lookup."
+                }
+              ],
+              "nodeIds": [
+                "orchestrator",
+                "memory",
+                "model"
+              ]
+            },
+            {
+              "title": "Propose typed calls through the tool layer",
+              "component": "Tool calling, MCP adapters and order applications",
+              "short": "Discover + type",
+              "what": "Model Context Protocol (MCP) adapters advertise the order and action tools. They read permission-checked order facts; the planner uses the advertised argument shapes to propose the actions. Identity stays attached and no write runs yet.",
+              "why": "Retrieval answers a question; application tools change the world. Typed proposals make the intended order, amount and operation explicit before policy evaluates them.",
+              "next": "Evaluate the exact proposals against application authority and business policy.",
+              "input": {
+                "order_id": "O-1042",
+                "available_tools": [
+                  "get_order",
+                  "propose_refund",
+                  "cancel_warranty",
+                  "open_shipping_investigation",
+                  "create_ticket"
+                ]
+              },
+              "output": {
+                "order_snapshot": {
+                  "owner": "maya",
+                  "refundable_amount_usd": 1200
+                },
+                "refund_proposal": {
+                  "order_id": "O-1042",
+                  "amount_usd": 1200,
+                  "version": "v1"
+                },
+                "support_proposals": [
+                  "cancel_warranty",
+                  "open_shipping_investigation",
+                  "create_ticket"
+                ],
+                "writes_executed": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Allow only advertised operations and validate argument types. Read authorised order records to derive the refundable amount; the model does not set it."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Propagate tenant and customer identity on each call. Treat tool output as data, never as authority to bypass policy."
+                }
+              ],
+              "nodeIds": [
+                "tools",
+                "model",
+                "support"
+              ]
+            },
+            {
+              "title": "Separate permission from approval",
+              "component": "Application authorisation and action policy",
+              "short": "Policy before writes",
+              "what": "The applications confirm that Maya may request these operations on O-1042. In this illustrative policy, the $1,200 refund exceeds a $500 automatic-action limit, so it needs a manager. The checked support operations may proceed independently.",
+              "why": "Customer permission and manager approval answer different questions. The assistant cannot turn a plausible request into authority to spend money.",
+              "next": "Start the authorised support work and queue the unchanged refund proposal for review.",
+              "input": {
+                "order_id": "O-1042",
+                "refund_amount_usd": 1200,
+                "illustrative_auto_limit_usd": 500,
+                "proposal_version": "v1"
+              },
+              "output": {
+                "refund": "approval_required",
+                "support_operations": "authorised",
+                "payment_executed": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Authorisation is deterministic and enforced by the business applications. High-risk actions cannot bypass the approval boundary."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The $500 limit and the $1,200 order are fictional pilot inputs, not a policy claimed by the source."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Audit the decision, policy version, action identity and reason."
+                }
+              ],
+              "nodeIds": [
+                "policy"
+              ]
+            },
+            {
+              "title": "Do safe work while the refund waits",
+              "component": "Support applications, approval queue and response",
+              "short": "Parallel branches",
+              "what": "The ticket application returns ticket T-1042. Warranty cancellation and the shipping investigation return accepted-job receipts. In parallel, the manager queue receives the refund proposal; Maya gets an acknowledgement that clearly says the refund is waiting.",
+              "why": "Independent authorised work need not wait for the money-moving action. Accepted jobs and a pending refund are different from completed cancellation, investigation or payment.",
+              "next": "Keep the refund paused until an authorised manager makes a decision.",
+              "input": {
+                "support_operations": "authorised",
+                "refund_proposal": "O-1042 / USD 1200 / v1"
+              },
+              "output": {
+                "ticket": {
+                  "id": "T-1042",
+                  "status": "created"
+                },
+                "warranty": {
+                  "job_id": "W-1042",
+                  "status": "accepted"
+                },
+                "shipping": {
+                  "job_id": "S-1042",
+                  "status": "accepted"
+                },
+                "refund": {
+                  "approval_id": "A-1042",
+                  "status": "pending"
+                },
+                "customer_message": "Your ticket is created. Warranty and shipping work are submitted. Your refund is awaiting manager approval."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Use each application’s receipt as the source of status. A submitted job is not proof of completion."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The pending approval has not called the payments executor. Bind review to the exact order, amount, tenant and proposal version."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure acknowledgement latency separately from job completion and manager waiting time."
+                }
+              ],
+              "nodeIds": [
+                "support",
+                "approval",
+                "response"
+              ]
+            },
+            {
+              "title": "Approve the exact proposal",
+              "component": "Authorised manager and action policy",
+              "short": "Human decision",
+              "what": "An authorised manager approves O-1042 for $1,200 at proposal version v1. The system rechecks authority and confirms the proposal has not changed before making the refund executable.",
+              "why": "A generic “approved” message from the model or an unrelated ticket is not an approval. Changes to the order, amount or version require a new decision.",
+              "next": "Submit this approved action once to the payments application.",
+              "input": {
+                "approval_id": "A-1042",
+                "actor_role": "refund_manager",
+                "proposal": "O-1042 / USD 1200 / v1"
+              },
+              "output": {
+                "decision": "approved",
+                "proposal_version": "v1",
+                "payment_executed": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify the signer’s tenant and role, the recorded decision and the exact proposal. The binding and recheck are explicit pilot design additions."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Approval permits the attempted action; it is not a payment receipt."
+                }
+              ],
+              "nodeIds": [
+                "approval",
+                "policy"
+              ]
+            },
+            {
+              "title": "Report the refund receipt, not a promise",
+              "component": "Payments application, response and audit",
+              "short": "Receipt + status",
+              "what": "The payments application accepts the approved refund with the stable action key O-1042:refund:v1 and returns receipt R-1042. Maya sees “refund submitted”; settlement is still pending. The ticket and other accepted jobs keep their own statuses.",
+              "why": "Payment execution, settlement and customer acknowledgement are separate events. Reporting the authoritative status avoids claiming that money has arrived when it has only been submitted.",
+              "next": "End this walkthrough with the receipt and per-action statuses. Later settlement and job completion are outside this scenario.",
+              "input": {
+                "approved_proposal": "O-1042 / USD 1200 / v1",
+                "action_key": "O-1042:refund:v1"
+              },
+              "output": {
+                "refund": {
+                  "receipt_id": "R-1042",
+                  "status": "submitted",
+                  "settlement": "pending"
+                },
+                "ticket": "created",
+                "warranty": "accepted",
+                "shipping": "accepted",
+                "customer_message": "Your refund has been submitted. Receipt: R-1042. Settlement is pending."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require an authoritative provider receipt before reporting submission. Never infer success from the model’s text or the approval record alone."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The adapter must honour a stable per-action idempotency key. A duplicate delivery must reuse or reconcile the original result, never issue a second refund."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Correlate approval and provider receipt with the original trace. No actual provider is called by this HTML."
+                }
+              ],
+              "nodeIds": [
+                "payments",
+                "response",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "to": "cache",
+              "kind": "flow",
+              "from": "identity"
+            },
+            {
+              "to": "orchestrator",
+              "kind": "flow",
+              "from": "cache"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "identity",
+              "points": [
+                [
+                  129,
+                  40
+                ],
+                [
+                  129,
+                  14
+                ],
+                [
+                  1049,
+                  14
+                ],
+                [
+                  1049,
+                  40
+                ]
+              ],
+              "label": "trace, not a business action",
+              "labelX": 590,
+              "labelY": 30
+            },
+            {
+              "to": "memory",
+              "kind": "data",
+              "from": "orchestrator"
+            },
+            {
+              "to": "model",
+              "kind": "flow",
+              "from": "orchestrator",
+              "points": [
+                [
+                  589,
+                  110
+                ],
+                [
+                  589,
+                  175
+                ],
+                [
+                  359,
+                  175
+                ],
+                [
+                  359,
+                  245
+                ]
+              ],
+              "label": "plan",
+              "labelX": 470,
+              "labelY": 165
+            },
+            {
+              "to": "tools",
+              "kind": "flow",
+              "from": "model"
+            },
+            {
+              "to": "policy",
+              "kind": "flow",
+              "from": "tools"
+            },
+            {
+              "to": "support",
+              "kind": "data",
+              "from": "tools",
+              "label": "read order",
+              "labelX": 548,
+              "labelY": 405
+            },
+            {
+              "to": "support",
+              "kind": "branch",
+              "from": "policy",
+              "points": [
+                [
+                  819,
+                  315
+                ],
+                [
+                  819,
+                  355
+                ],
+                [
+                  705,
+                  355
+                ],
+                [
+                  705,
+                  490
+                ],
+                [
+                  678,
+                  490
+                ]
+              ],
+              "label": "authorised support work",
+              "labelX": 705,
+              "labelY": 440
+            },
+            {
+              "to": "approval",
+              "kind": "branch",
+              "from": "policy",
+              "label": "high-value refund",
+              "labelX": 935,
+              "labelY": 232
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "support"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "policy",
+              "points": [
+                [
+                  819,
+                  245
+                ],
+                [
+                  819,
+                  195
+                ],
+                [
+                  1049,
+                  195
+                ],
+                [
+                  1049,
+                  110
+                ]
+              ],
+              "label": "decision record",
+              "labelX": 935,
+              "labelY": 184
+            },
+            {
+              "to": "payments",
+              "kind": "flow",
+              "from": "approval",
+              "points": [
+                [
+                  1049,
+                  315
+                ],
+                [
+                  1049,
+                  395
+                ],
+                [
+                  819,
+                  395
+                ],
+                [
+                  819,
+                  455
+                ]
+              ],
+              "label": "approved proposal",
+              "labelX": 950,
+              "labelY": 383
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "payments",
+              "points": [
+                [
+                  819,
+                  525
+                ],
+                [
+                  819,
+                  590
+                ],
+                [
+                  359,
+                  590
+                ],
+                [
+                  359,
+                  525
+                ]
+              ],
+              "label": "provider receipt",
+              "labelX": 590,
+              "labelY": 578
+            }
+          ],
+          "skipNodes": [
+            "retrieval",
+            "knowledge"
+          ]
+        },
+        {
+          "id": "approval-pending",
+          "label": "Refund · still awaiting approval",
+          "outcome": "Pending approval · no payment call",
+          "stages": [
+            {
+              "title": "Establish who is asking",
+              "component": "API gateway, authentication and audit",
+              "short": "Identity first",
+              "what": "Maya asks for help with damaged laptop order O-1042. The gateway verifies her session and derives the customer and tenant from trusted identity, then starts a trace.",
+              "why": "A model must not choose which customer or tenant it is allowed to act for. Every later access carries this verified scope.",
+              "next": "Check whether this request is eligible for a cached answer.",
+              "input": {
+                "message": "Refund the damaged laptop, cancel its warranty, notify shipping and create a ticket.",
+                "session": "illustrative signed session"
+              },
+              "output": {
+                "customer_id": "maya",
+                "tenant_id": "northstar-demo",
+                "trace_id": "demo-1042",
+                "authenticated": true
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify the session before reading customer data. Derive scope server-side; do not trust tenant or customer IDs suggested by the model."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Record a trace ID and safe decision metadata. Do not log the session token or raw payment details."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            },
+            {
+              "title": "Keep cached answers away from writes",
+              "component": "Scoped answer cache",
+              "short": "Cache cannot act",
+              "what": "This request asks for changes to several business systems. The cache is bypassed for execution; a remembered answer can never stand in for a refund or a current order status.",
+              "why": "A cache hit proves that an answer was stored, not that a payment happened. For read-only questions, a cache must also match tenant, access scope and policy version.",
+              "next": "Send the live action request to the orchestrator.",
+              "input": {
+                "request_kind": "multi-system action",
+                "order_id": "O-1042"
+              },
+              "output": {
+                "cache_eligible": false,
+                "reason": "business actions require fresh authorisation and receipts"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not cache action execution or replay a successful-looking refund response. This read-only cache restriction is an added pilot design choice."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure cache bypasses separately from read-only answer hits."
+                }
+              ],
+              "nodeIds": [
+                "cache"
+              ]
+            },
+            {
+              "title": "Resolve the order and plan only what is needed",
+              "component": "Orchestrator, model gateway and customer memory",
+              "short": "Resolve + plan",
+              "what": "Session memory resolves “the laptop” to O-1042. The orchestrator asks the model for a plan because refund, warranty, shipping and ticketing span several applications; the plan is a proposal, not permission.",
+              "why": "A simple order lookup does not need this planner. Memory holds conversational context and preferences; current support policy stays in the separate knowledge base.",
+              "next": "Load the relevant tool definitions and validate the proposed calls.",
+              "input": {
+                "reference": "the damaged laptop",
+                "session_context": {
+                  "last_order": "O-1042"
+                },
+                "requested_work": [
+                  "refund",
+                  "cancel warranty",
+                  "notify shipping",
+                  "create ticket"
+                ]
+              },
+              "output": {
+                "resolved_order": "O-1042",
+                "plan": [
+                  "propose refund",
+                  "request warranty cancellation",
+                  "open shipping investigation",
+                  "create high-priority ticket"
+                ],
+                "writes_executed": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "An order reference from memory still needs an application-side ownership check before any operation."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The model proposes a plan. It cannot grant customer access, approve a refund or mark a business action complete."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Track planner tokens and tool count per request; do not use multi-agent planning for a single deterministic lookup."
+                }
+              ],
+              "nodeIds": [
+                "orchestrator",
+                "memory",
+                "model"
+              ]
+            },
+            {
+              "title": "Propose typed calls through the tool layer",
+              "component": "Tool calling, MCP adapters and order applications",
+              "short": "Discover + type",
+              "what": "Model Context Protocol (MCP) adapters advertise the order and action tools. They read permission-checked order facts; the planner uses the advertised argument shapes to propose the actions. Identity stays attached and no write runs yet.",
+              "why": "Retrieval answers a question; application tools change the world. Typed proposals make the intended order, amount and operation explicit before policy evaluates them.",
+              "next": "Evaluate the exact proposals against application authority and business policy.",
+              "input": {
+                "order_id": "O-1042",
+                "available_tools": [
+                  "get_order",
+                  "propose_refund",
+                  "cancel_warranty",
+                  "open_shipping_investigation",
+                  "create_ticket"
+                ]
+              },
+              "output": {
+                "order_snapshot": {
+                  "owner": "maya",
+                  "refundable_amount_usd": 1200
+                },
+                "refund_proposal": {
+                  "order_id": "O-1042",
+                  "amount_usd": 1200,
+                  "version": "v1"
+                },
+                "support_proposals": [
+                  "cancel_warranty",
+                  "open_shipping_investigation",
+                  "create_ticket"
+                ],
+                "writes_executed": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Allow only advertised operations and validate argument types. Read authorised order records to derive the refundable amount; the model does not set it."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Propagate tenant and customer identity on each call. Treat tool output as data, never as authority to bypass policy."
+                }
+              ],
+              "nodeIds": [
+                "tools",
+                "model",
+                "support"
+              ]
+            },
+            {
+              "title": "Separate permission from approval",
+              "component": "Application authorisation and action policy",
+              "short": "Policy before writes",
+              "what": "The applications confirm that Maya may request these operations on O-1042. In this illustrative policy, the $1,200 refund exceeds a $500 automatic-action limit, so it needs a manager. The checked support operations may proceed independently.",
+              "why": "Customer permission and manager approval answer different questions. The assistant cannot turn a plausible request into authority to spend money.",
+              "next": "Start the authorised support work and queue the unchanged refund proposal for review.",
+              "input": {
+                "order_id": "O-1042",
+                "refund_amount_usd": 1200,
+                "illustrative_auto_limit_usd": 500,
+                "proposal_version": "v1"
+              },
+              "output": {
+                "refund": "approval_required",
+                "support_operations": "authorised",
+                "payment_executed": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Authorisation is deterministic and enforced by the business applications. High-risk actions cannot bypass the approval boundary."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The $500 limit and the $1,200 order are fictional pilot inputs, not a policy claimed by the source."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Audit the decision, policy version, action identity and reason."
+                }
+              ],
+              "nodeIds": [
+                "policy"
+              ]
+            },
+            {
+              "title": "Do safe work while the refund waits",
+              "component": "Support applications, approval queue and response",
+              "short": "Parallel branches",
+              "what": "The ticket application returns ticket T-1042. Warranty cancellation and the shipping investigation return accepted-job receipts. In parallel, the manager queue receives the refund proposal; Maya gets an acknowledgement that clearly says the refund is waiting.",
+              "why": "Independent authorised work need not wait for the money-moving action. Accepted jobs and a pending refund are different from completed cancellation, investigation or payment.",
+              "next": "Keep the refund paused until an authorised manager makes a decision.",
+              "input": {
+                "support_operations": "authorised",
+                "refund_proposal": "O-1042 / USD 1200 / v1"
+              },
+              "output": {
+                "ticket": {
+                  "id": "T-1042",
+                  "status": "created"
+                },
+                "warranty": {
+                  "job_id": "W-1042",
+                  "status": "accepted"
+                },
+                "shipping": {
+                  "job_id": "S-1042",
+                  "status": "accepted"
+                },
+                "refund": {
+                  "approval_id": "A-1042",
+                  "status": "pending"
+                },
+                "customer_message": "Your ticket is created. Warranty and shipping work are submitted. Your refund is awaiting manager approval."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Use each application’s receipt as the source of status. A submitted job is not proof of completion."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The pending approval has not called the payments executor. Bind review to the exact order, amount, tenant and proposal version."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure acknowledgement latency separately from job completion and manager waiting time."
+                }
+              ],
+              "nodeIds": [
+                "support",
+                "approval",
+                "response"
+              ]
+            },
+            {
+              "title": "End honestly at the approval boundary",
+              "component": "Approval queue, response and audit",
+              "short": "Pending is an outcome",
+              "what": "The manager has not decided. The refund stays pending and the payments executor is skipped. Maya can see her created ticket and submitted support jobs without being told that a refund was processed.",
+              "why": "A queue acknowledgement is not a financial success. Explicit pending status lets the customer and support team know exactly which decision remains open.",
+              "next": "Stop here. A later manager decision starts a separate continuation; this scenario does not execute it.",
+              "input": {
+                "approval_id": "A-1042",
+                "decision": null
+              },
+              "output": {
+                "refund": "awaiting_approval",
+                "payments_calls": 0,
+                "ticket": "created",
+                "warranty": "accepted",
+                "shipping": "accepted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No approval means no payment execution. There is no edge to the payments node in this scenario."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Track the age and owner of pending reviews without converting a timeout into automatic approval."
+                }
+              ],
+              "nodeIds": [
+                "approval",
+                "response",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "to": "cache",
+              "kind": "flow",
+              "from": "identity"
+            },
+            {
+              "to": "orchestrator",
+              "kind": "flow",
+              "from": "cache"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "identity",
+              "points": [
+                [
+                  129,
+                  40
+                ],
+                [
+                  129,
+                  14
+                ],
+                [
+                  1049,
+                  14
+                ],
+                [
+                  1049,
+                  40
+                ]
+              ],
+              "label": "trace, not a business action",
+              "labelX": 590,
+              "labelY": 30
+            },
+            {
+              "to": "memory",
+              "kind": "data",
+              "from": "orchestrator"
+            },
+            {
+              "to": "model",
+              "kind": "flow",
+              "from": "orchestrator",
+              "points": [
+                [
+                  589,
+                  110
+                ],
+                [
+                  589,
+                  175
+                ],
+                [
+                  359,
+                  175
+                ],
+                [
+                  359,
+                  245
+                ]
+              ],
+              "label": "plan",
+              "labelX": 470,
+              "labelY": 165
+            },
+            {
+              "to": "tools",
+              "kind": "flow",
+              "from": "model"
+            },
+            {
+              "to": "policy",
+              "kind": "flow",
+              "from": "tools"
+            },
+            {
+              "to": "support",
+              "kind": "data",
+              "from": "tools",
+              "label": "read order",
+              "labelX": 548,
+              "labelY": 405
+            },
+            {
+              "to": "support",
+              "kind": "branch",
+              "from": "policy",
+              "points": [
+                [
+                  819,
+                  315
+                ],
+                [
+                  819,
+                  355
+                ],
+                [
+                  705,
+                  355
+                ],
+                [
+                  705,
+                  490
+                ],
+                [
+                  678,
+                  490
+                ]
+              ],
+              "label": "authorised support work",
+              "labelX": 705,
+              "labelY": 440
+            },
+            {
+              "to": "approval",
+              "kind": "branch",
+              "from": "policy",
+              "label": "high-value refund",
+              "labelX": 935,
+              "labelY": 232
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "support"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "policy",
+              "points": [
+                [
+                  819,
+                  245
+                ],
+                [
+                  819,
+                  195
+                ],
+                [
+                  1049,
+                  195
+                ],
+                [
+                  1049,
+                  110
+                ]
+              ],
+              "label": "decision record",
+              "labelX": 935,
+              "labelY": 184
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "approval",
+              "points": [
+                [
+                  1049,
+                  315
+                ],
+                [
+                  1049,
+                  560
+                ],
+                [
+                  359,
+                  560
+                ],
+                [
+                  359,
+                  525
+                ]
+              ],
+              "label": "pending / denied status",
+              "labelX": 690,
+              "labelY": 548
+            }
+          ],
+          "skipNodes": [
+            "retrieval",
+            "knowledge",
+            "payments"
+          ]
+        },
+        {
+          "id": "approval-denied",
+          "label": "Refund · manager declines",
+          "outcome": "Refund denied · no payment call",
+          "stages": [
+            {
+              "title": "Establish who is asking",
+              "component": "API gateway, authentication and audit",
+              "short": "Identity first",
+              "what": "Maya asks for help with damaged laptop order O-1042. The gateway verifies her session and derives the customer and tenant from trusted identity, then starts a trace.",
+              "why": "A model must not choose which customer or tenant it is allowed to act for. Every later access carries this verified scope.",
+              "next": "Check whether this request is eligible for a cached answer.",
+              "input": {
+                "message": "Refund the damaged laptop, cancel its warranty, notify shipping and create a ticket.",
+                "session": "illustrative signed session"
+              },
+              "output": {
+                "customer_id": "maya",
+                "tenant_id": "northstar-demo",
+                "trace_id": "demo-1042",
+                "authenticated": true
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify the session before reading customer data. Derive scope server-side; do not trust tenant or customer IDs suggested by the model."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Record a trace ID and safe decision metadata. Do not log the session token or raw payment details."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            },
+            {
+              "title": "Keep cached answers away from writes",
+              "component": "Scoped answer cache",
+              "short": "Cache cannot act",
+              "what": "This request asks for changes to several business systems. The cache is bypassed for execution; a remembered answer can never stand in for a refund or a current order status.",
+              "why": "A cache hit proves that an answer was stored, not that a payment happened. For read-only questions, a cache must also match tenant, access scope and policy version.",
+              "next": "Send the live action request to the orchestrator.",
+              "input": {
+                "request_kind": "multi-system action",
+                "order_id": "O-1042"
+              },
+              "output": {
+                "cache_eligible": false,
+                "reason": "business actions require fresh authorisation and receipts"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not cache action execution or replay a successful-looking refund response. This read-only cache restriction is an added pilot design choice."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure cache bypasses separately from read-only answer hits."
+                }
+              ],
+              "nodeIds": [
+                "cache"
+              ]
+            },
+            {
+              "title": "Resolve the order and plan only what is needed",
+              "component": "Orchestrator, model gateway and customer memory",
+              "short": "Resolve + plan",
+              "what": "Session memory resolves “the laptop” to O-1042. The orchestrator asks the model for a plan because refund, warranty, shipping and ticketing span several applications; the plan is a proposal, not permission.",
+              "why": "A simple order lookup does not need this planner. Memory holds conversational context and preferences; current support policy stays in the separate knowledge base.",
+              "next": "Load the relevant tool definitions and validate the proposed calls.",
+              "input": {
+                "reference": "the damaged laptop",
+                "session_context": {
+                  "last_order": "O-1042"
+                },
+                "requested_work": [
+                  "refund",
+                  "cancel warranty",
+                  "notify shipping",
+                  "create ticket"
+                ]
+              },
+              "output": {
+                "resolved_order": "O-1042",
+                "plan": [
+                  "propose refund",
+                  "request warranty cancellation",
+                  "open shipping investigation",
+                  "create high-priority ticket"
+                ],
+                "writes_executed": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "An order reference from memory still needs an application-side ownership check before any operation."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The model proposes a plan. It cannot grant customer access, approve a refund or mark a business action complete."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Track planner tokens and tool count per request; do not use multi-agent planning for a single deterministic lookup."
+                }
+              ],
+              "nodeIds": [
+                "orchestrator",
+                "memory",
+                "model"
+              ]
+            },
+            {
+              "title": "Propose typed calls through the tool layer",
+              "component": "Tool calling, MCP adapters and order applications",
+              "short": "Discover + type",
+              "what": "Model Context Protocol (MCP) adapters advertise the order and action tools. They read permission-checked order facts; the planner uses the advertised argument shapes to propose the actions. Identity stays attached and no write runs yet.",
+              "why": "Retrieval answers a question; application tools change the world. Typed proposals make the intended order, amount and operation explicit before policy evaluates them.",
+              "next": "Evaluate the exact proposals against application authority and business policy.",
+              "input": {
+                "order_id": "O-1042",
+                "available_tools": [
+                  "get_order",
+                  "propose_refund",
+                  "cancel_warranty",
+                  "open_shipping_investigation",
+                  "create_ticket"
+                ]
+              },
+              "output": {
+                "order_snapshot": {
+                  "owner": "maya",
+                  "refundable_amount_usd": 1200
+                },
+                "refund_proposal": {
+                  "order_id": "O-1042",
+                  "amount_usd": 1200,
+                  "version": "v1"
+                },
+                "support_proposals": [
+                  "cancel_warranty",
+                  "open_shipping_investigation",
+                  "create_ticket"
+                ],
+                "writes_executed": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Allow only advertised operations and validate argument types. Read authorised order records to derive the refundable amount; the model does not set it."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Propagate tenant and customer identity on each call. Treat tool output as data, never as authority to bypass policy."
+                }
+              ],
+              "nodeIds": [
+                "tools",
+                "model",
+                "support"
+              ]
+            },
+            {
+              "title": "Separate permission from approval",
+              "component": "Application authorisation and action policy",
+              "short": "Policy before writes",
+              "what": "The applications confirm that Maya may request these operations on O-1042. In this illustrative policy, the $1,200 refund exceeds a $500 automatic-action limit, so it needs a manager. The checked support operations may proceed independently.",
+              "why": "Customer permission and manager approval answer different questions. The assistant cannot turn a plausible request into authority to spend money.",
+              "next": "Start the authorised support work and queue the unchanged refund proposal for review.",
+              "input": {
+                "order_id": "O-1042",
+                "refund_amount_usd": 1200,
+                "illustrative_auto_limit_usd": 500,
+                "proposal_version": "v1"
+              },
+              "output": {
+                "refund": "approval_required",
+                "support_operations": "authorised",
+                "payment_executed": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Authorisation is deterministic and enforced by the business applications. High-risk actions cannot bypass the approval boundary."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The $500 limit and the $1,200 order are fictional pilot inputs, not a policy claimed by the source."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Audit the decision, policy version, action identity and reason."
+                }
+              ],
+              "nodeIds": [
+                "policy"
+              ]
+            },
+            {
+              "title": "Do safe work while the refund waits",
+              "component": "Support applications, approval queue and response",
+              "short": "Parallel branches",
+              "what": "The ticket application returns ticket T-1042. Warranty cancellation and the shipping investigation return accepted-job receipts. In parallel, the manager queue receives the refund proposal; Maya gets an acknowledgement that clearly says the refund is waiting.",
+              "why": "Independent authorised work need not wait for the money-moving action. Accepted jobs and a pending refund are different from completed cancellation, investigation or payment.",
+              "next": "Keep the refund paused until an authorised manager makes a decision.",
+              "input": {
+                "support_operations": "authorised",
+                "refund_proposal": "O-1042 / USD 1200 / v1"
+              },
+              "output": {
+                "ticket": {
+                  "id": "T-1042",
+                  "status": "created"
+                },
+                "warranty": {
+                  "job_id": "W-1042",
+                  "status": "accepted"
+                },
+                "shipping": {
+                  "job_id": "S-1042",
+                  "status": "accepted"
+                },
+                "refund": {
+                  "approval_id": "A-1042",
+                  "status": "pending"
+                },
+                "customer_message": "Your ticket is created. Warranty and shipping work are submitted. Your refund is awaiting manager approval."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Use each application’s receipt as the source of status. A submitted job is not proof of completion."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The pending approval has not called the payments executor. Bind review to the exact order, amount, tenant and proposal version."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure acknowledgement latency separately from job completion and manager waiting time."
+                }
+              ],
+              "nodeIds": [
+                "support",
+                "approval",
+                "response"
+              ]
+            },
+            {
+              "title": "Respect a rejected refund",
+              "component": "Manager decision, action policy and response",
+              "short": "Denied means stop",
+              "what": "The authorised manager rejects the exact refund proposal. The decision is recorded, no payment call is made, and Maya receives the denied refund status. Previously accepted support work keeps its own status.",
+              "why": "The planner cannot rewrite a rejected proposal and silently try again. A refund decision also must not erase the audit trail of other actions that already happened.",
+              "next": "Stop the refund branch. Further review, if requested, is a new authorised support process.",
+              "input": {
+                "approval_id": "A-1042",
+                "decision": "denied",
+                "proposal_version": "v1"
+              },
+              "output": {
+                "refund": "denied",
+                "payments_calls": 0,
+                "ticket": "created",
+                "warranty": "accepted",
+                "shipping": "accepted",
+                "customer_message": "The refund request was not approved. Your support ticket remains open."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "A denied decision cannot reach the payments executor. Changing the proposal does not inherit the old approval."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Record the decision and safe customer-facing reason, without disclosing private reviewer notes."
+                }
+              ],
+              "nodeIds": [
+                "approval",
+                "policy",
+                "response",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "to": "cache",
+              "kind": "flow",
+              "from": "identity"
+            },
+            {
+              "to": "orchestrator",
+              "kind": "flow",
+              "from": "cache"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "identity",
+              "points": [
+                [
+                  129,
+                  40
+                ],
+                [
+                  129,
+                  14
+                ],
+                [
+                  1049,
+                  14
+                ],
+                [
+                  1049,
+                  40
+                ]
+              ],
+              "label": "trace, not a business action",
+              "labelX": 590,
+              "labelY": 30
+            },
+            {
+              "to": "memory",
+              "kind": "data",
+              "from": "orchestrator"
+            },
+            {
+              "to": "model",
+              "kind": "flow",
+              "from": "orchestrator",
+              "points": [
+                [
+                  589,
+                  110
+                ],
+                [
+                  589,
+                  175
+                ],
+                [
+                  359,
+                  175
+                ],
+                [
+                  359,
+                  245
+                ]
+              ],
+              "label": "plan",
+              "labelX": 470,
+              "labelY": 165
+            },
+            {
+              "to": "tools",
+              "kind": "flow",
+              "from": "model"
+            },
+            {
+              "to": "policy",
+              "kind": "flow",
+              "from": "tools"
+            },
+            {
+              "to": "support",
+              "kind": "data",
+              "from": "tools",
+              "label": "read order",
+              "labelX": 548,
+              "labelY": 405
+            },
+            {
+              "to": "support",
+              "kind": "branch",
+              "from": "policy",
+              "points": [
+                [
+                  819,
+                  315
+                ],
+                [
+                  819,
+                  355
+                ],
+                [
+                  705,
+                  355
+                ],
+                [
+                  705,
+                  490
+                ],
+                [
+                  678,
+                  490
+                ]
+              ],
+              "label": "authorised support work",
+              "labelX": 705,
+              "labelY": 440
+            },
+            {
+              "to": "approval",
+              "kind": "branch",
+              "from": "policy",
+              "label": "high-value refund",
+              "labelX": 935,
+              "labelY": 232
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "support"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "policy",
+              "points": [
+                [
+                  819,
+                  245
+                ],
+                [
+                  819,
+                  195
+                ],
+                [
+                  1049,
+                  195
+                ],
+                [
+                  1049,
+                  110
+                ]
+              ],
+              "label": "decision record",
+              "labelX": 935,
+              "labelY": 184
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "approval",
+              "points": [
+                [
+                  1049,
+                  315
+                ],
+                [
+                  1049,
+                  560
+                ],
+                [
+                  359,
+                  560
+                ],
+                [
+                  359,
+                  525
+                ]
+              ],
+              "label": "pending / denied status",
+              "labelX": 690,
+              "labelY": 548
+            }
+          ],
+          "skipNodes": [
+            "retrieval",
+            "knowledge",
+            "payments"
+          ]
+        },
+        {
+          "id": "policy-answer",
+          "label": "Knowledge · policy evidence found",
+          "outcome": "Policy answered · no business writes",
+          "stages": [
+            {
+              "title": "Authenticate before answering",
+              "component": "Gateway, identity and audit",
+              "short": "Scope the question",
+              "what": "Maya asks, “My laptop arrived damaged. What does the support policy say?” The gateway verifies her session and establishes the tenant and access scope before any lookup.",
+              "why": "Even a knowledge question can expose tenant-specific policy. Trusted scope belongs ahead of both the cache and retrieval.",
+              "next": "Check for an answer cached for this tenant and policy scope.",
+              "input": {
+                "question": "My laptop arrived damaged. What does the support policy say?"
+              },
+              "output": {
+                "customer": "maya",
+                "tenant": "northstar-demo",
+                "authenticated": true,
+                "request_kind": "knowledge"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify the session and derive trusted tenant scope before reading cached or retrieved content."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Start a trace without logging the raw session token."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            },
+            {
+              "title": "Miss the scoped answer cache",
+              "component": "Answer cache",
+              "short": "Read-only lookup",
+              "what": "The tenant-and-policy-scoped cache has no current answer for Maya’s question. It returns a miss, so this request continues to fresh knowledge retrieval.",
+              "why": "A scoped cache can reduce repeated-question cost. It must not share private answers across tenants or reuse an obsolete policy version.",
+              "next": "Classify the request as a question rather than an action.",
+              "input": {
+                "tenant": "northstar-demo",
+                "question_key": "damaged-laptop-policy",
+                "policy_version": "demo-v3"
+              },
+              "output": {
+                "cache": "miss"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Use tenant, visibility and policy version in cache eligibility. These cache-scope details are an added pilot design choice."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure hit rate and invalidation misses; do not assume a hit rate from this example."
+                }
+              ],
+              "nodeIds": [
+                "cache"
+              ]
+            },
+            {
+              "title": "Choose knowledge without an action planner",
+              "component": "Orchestrator",
+              "short": "Choose retrieval",
+              "what": "Maya asked what the policy says, not to execute a refund. The orchestrator selects knowledge retrieval and skips customer memory, action tools, the approval queue and payments.",
+              "why": "Retrieval, memory and tools are peer capabilities. Sending every question through all of them adds cost and can create unintended side effects.",
+              "next": "Search the permitted support knowledge base.",
+              "input": {
+                "intent": "explain damaged-item policy"
+              },
+              "output": {
+                "route": "knowledge",
+                "planner_needed": false,
+                "business_writes": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Keep the knowledge route read-only. Do not convert a policy question into a refund command."
+                }
+              ],
+              "nodeIds": [
+                "orchestrator"
+              ]
+            },
+            {
+              "title": "Retrieve policy evidence within scope",
+              "component": "Retrieval layer and knowledge base",
+              "short": "Find evidence",
+              "what": "The retriever searches current support documents visible to Maya’s tenant. It returns passage policy-damage-v3, which says damaged-device returns or replacements require an order-eligibility review.",
+              "why": "Retrieval-augmented generation (RAG) supplies current evidence. A relevant-looking document is useful only if it is permitted and actually supports the answer.",
+              "next": "Pass the retained passage and evidence ID to the model gateway.",
+              "input": {
+                "query": "damaged laptop support policy",
+                "tenant": "northstar-demo"
+              },
+              "output": {
+                "evidence": [
+                  {
+                    "id": "policy-damage-v3",
+                    "text": "Support reviews the order’s eligibility before confirming a damaged-device return or replacement."
+                  }
+                ],
+                "business_writes": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Enforce document visibility in the retrieval path and preserve evidence IDs. The sample policy wording is fictional."
+                },
+                {
+                  "kind": "Offline",
+                  "text": "Use human-labelled examples to assess evidence relevance and answer support. A matching document ID alone does not prove a claim is supported."
+                }
+              ],
+              "nodeIds": [
+                "retrieval",
+                "knowledge"
+              ]
+            },
+            {
+              "title": "Draft only what the evidence supports",
+              "component": "Model gateway",
+              "short": "Ground the answer",
+              "what": "The model gateway chooses a model suitable for this short policy answer. The model explains the retained passage without inventing a guaranteed refund or turning source text into an instruction to use a tool.",
+              "why": "The model writes the explanation; the evidence supplies the policy. Knowledge content cannot grant authority to act.",
+              "next": "Return an attributed policy answer with no business side effects.",
+              "input": {
+                "question": "What does the support policy say?",
+                "evidence_ids": [
+                  "policy-damage-v3"
+                ]
+              },
+              "output": {
+                "draft": "Support needs to review your order’s eligibility before confirming a return or replacement.",
+                "evidence_ids": [
+                  "policy-damage-v3"
+                ],
+                "tool_calls": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Only return citation IDs present in the retained evidence. Citation existence is an exact check, not a proof of semantic support."
+                },
+                {
+                  "kind": "Offline",
+                  "text": "Evaluate unsupported claims and correct refusals separately from exact citation checks. No runtime LLM judge is claimed here."
+                }
+              ],
+              "nodeIds": [
+                "model"
+              ]
+            },
+            {
+              "title": "Answer the question without moving money",
+              "component": "Customer response",
+              "short": "Evidence, not action",
+              "what": "Maya receives the policy explanation with its evidence ID. No ticket is created, no approval is implied and no refund is submitted by this read-only interaction.",
+              "why": "Clear boundaries prevent a customer from confusing an explanation of policy with a completed business operation.",
+              "next": "End with a grounded answer. A later action request starts its own authorised flow.",
+              "input": {
+                "draft": "Support needs to review your order’s eligibility before confirming a return or replacement.",
+                "evidence_ids": [
+                  "policy-damage-v3"
+                ]
+              },
+              "output": {
+                "answer": "Support needs to review your order’s eligibility before confirming a return or replacement.",
+                "citations": [
+                  "policy-damage-v3"
+                ],
+                "business_writes": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Return the retained citation IDs and keep the action count at zero."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Track supported-answer quality and latency independently of action completion."
+                }
+              ],
+              "nodeIds": [
+                "response"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "to": "cache",
+              "kind": "flow",
+              "from": "identity"
+            },
+            {
+              "to": "orchestrator",
+              "kind": "flow",
+              "from": "cache"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "identity",
+              "points": [
+                [
+                  129,
+                  40
+                ],
+                [
+                  129,
+                  14
+                ],
+                [
+                  1049,
+                  14
+                ],
+                [
+                  1049,
+                  40
+                ]
+              ],
+              "label": "trace, not a business action",
+              "labelX": 590,
+              "labelY": 30
+            },
+            {
+              "to": "retrieval",
+              "kind": "flow",
+              "from": "orchestrator",
+              "points": [
+                [
+                  500,
+                  75
+                ],
+                [
+                  470,
+                  75
+                ],
+                [
+                  470,
+                  150
+                ],
+                [
+                  129,
+                  150
+                ],
+                [
+                  129,
+                  245
+                ]
+              ],
+              "label": "knowledge question",
+              "labelX": 270,
+              "labelY": 140
+            },
+            {
+              "to": "knowledge",
+              "kind": "data",
+              "from": "retrieval"
+            },
+            {
+              "to": "model",
+              "kind": "flow",
+              "from": "retrieval"
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "model"
+            }
+          ],
+          "skipNodes": [
+            "memory",
+            "tools",
+            "policy",
+            "approval",
+            "support",
+            "payments"
+          ]
+        },
+        {
+          "id": "evidence-missing",
+          "label": "Knowledge · no usable evidence",
+          "outcome": "Needs support · no invented answer",
+          "stages": [
+            {
+              "title": "Authenticate before answering",
+              "component": "Gateway, identity and audit",
+              "short": "Scope the question",
+              "what": "Maya asks, “My laptop arrived damaged. What does the support policy say?” The gateway verifies her session and establishes the tenant and access scope before any lookup.",
+              "why": "Even a knowledge question can expose tenant-specific policy. Trusted scope belongs ahead of both the cache and retrieval.",
+              "next": "Check for an answer cached for this tenant and policy scope.",
+              "input": {
+                "question": "My laptop arrived damaged. What does the support policy say?"
+              },
+              "output": {
+                "customer": "maya",
+                "tenant": "northstar-demo",
+                "authenticated": true,
+                "request_kind": "knowledge"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify the session and derive trusted tenant scope before reading cached or retrieved content."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Start a trace without logging the raw session token."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            },
+            {
+              "title": "Miss the scoped answer cache",
+              "component": "Answer cache",
+              "short": "Read-only lookup",
+              "what": "The tenant-and-policy-scoped cache has no current answer for Maya’s question. It returns a miss, so this request continues to fresh knowledge retrieval.",
+              "why": "A scoped cache can reduce repeated-question cost. It must not share private answers across tenants or reuse an obsolete policy version.",
+              "next": "Classify the request as a question rather than an action.",
+              "input": {
+                "tenant": "northstar-demo",
+                "question_key": "damaged-laptop-policy",
+                "policy_version": "demo-v3"
+              },
+              "output": {
+                "cache": "miss"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Use tenant, visibility and policy version in cache eligibility. These cache-scope details are an added pilot design choice."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Measure hit rate and invalidation misses; do not assume a hit rate from this example."
+                }
+              ],
+              "nodeIds": [
+                "cache"
+              ]
+            },
+            {
+              "title": "Choose knowledge without an action planner",
+              "component": "Orchestrator",
+              "short": "Choose retrieval",
+              "what": "Maya asked what the policy says, not to execute a refund. The orchestrator selects knowledge retrieval and skips customer memory, action tools, the approval queue and payments.",
+              "why": "Retrieval, memory and tools are peer capabilities. Sending every question through all of them adds cost and can create unintended side effects.",
+              "next": "Search the permitted support knowledge base.",
+              "input": {
+                "intent": "explain damaged-item policy"
+              },
+              "output": {
+                "route": "knowledge",
+                "planner_needed": false,
+                "business_writes": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Keep the knowledge route read-only. Do not convert a policy question into a refund command."
+                }
+              ],
+              "nodeIds": [
+                "orchestrator"
+              ]
+            },
+            {
+              "title": "Find no usable policy evidence",
+              "component": "Retrieval layer and knowledge base",
+              "short": "No evidence",
+              "what": "The permitted search returns no current passage that answers Maya’s damaged-laptop question. An outdated or inaccessible passage is not usable evidence.",
+              "why": "An empty evidence set is a legitimate result. The assistant must not fill that gap with model memory or imply that hidden documents exist.",
+              "next": "Skip answer generation and return an explicit limitation.",
+              "input": {
+                "query": "damaged laptop support policy",
+                "tenant": "northstar-demo"
+              },
+              "output": {
+                "evidence": [],
+                "reason": "no_current_permitted_support",
+                "business_writes": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Enforce document visibility in the retrieval path and preserve evidence IDs. The sample policy wording is fictional."
+                },
+                {
+                  "kind": "Offline",
+                  "text": "Use human-labelled examples to assess evidence relevance and answer support. A matching document ID alone does not prove a claim is supported."
+                }
+              ],
+              "nodeIds": [
+                "retrieval",
+                "knowledge"
+              ]
+            },
+            {
+              "title": "Say what could not be verified",
+              "component": "Customer response",
+              "short": "Honest hand-off",
+              "what": "Maya is told that the assistant could not verify the current policy from available support sources. The response suggests contacting support, without claiming that a ticket or refund has been created.",
+              "why": "A useful limitation is safer than an unsupported guarantee. This path deliberately skips the model-answer and business-action components.",
+              "next": "Stop with needs-support status. A human hand-off or action request would be a separate flow.",
+              "input": {
+                "evidence": [],
+                "question": "What does the support policy say?"
+              },
+              "output": {
+                "status": "needs_support",
+                "message": "I could not verify the current policy from the available support sources. Please contact support to review this order.",
+                "citations": [],
+                "business_writes": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not invent citations, promise a refund or claim a support ticket exists."
+                },
+                {
+                  "kind": "Offline",
+                  "text": "Include empty, stale and forbidden-evidence cases in the answer-quality evaluation set."
+                }
+              ],
+              "nodeIds": [
+                "response"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "to": "cache",
+              "kind": "flow",
+              "from": "identity"
+            },
+            {
+              "to": "orchestrator",
+              "kind": "flow",
+              "from": "cache"
+            },
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "identity",
+              "points": [
+                [
+                  129,
+                  40
+                ],
+                [
+                  129,
+                  14
+                ],
+                [
+                  1049,
+                  14
+                ],
+                [
+                  1049,
+                  40
+                ]
+              ],
+              "label": "trace, not a business action",
+              "labelX": 590,
+              "labelY": 30
+            },
+            {
+              "to": "retrieval",
+              "kind": "flow",
+              "from": "orchestrator",
+              "points": [
+                [
+                  500,
+                  75
+                ],
+                [
+                  470,
+                  75
+                ],
+                [
+                  470,
+                  150
+                ],
+                [
+                  129,
+                  150
+                ],
+                [
+                  129,
+                  245
+                ]
+              ],
+              "label": "knowledge question",
+              "labelX": 270,
+              "labelY": 140
+            },
+            {
+              "to": "knowledge",
+              "kind": "data",
+              "from": "retrieval"
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "retrieval",
+              "points": [
+                [
+                  218,
+                  280
+                ],
+                [
+                  240,
+                  280
+                ],
+                [
+                  240,
+                  490
+                ],
+                [
+                  270,
+                  490
+                ]
+              ],
+              "label": "no usable evidence",
+              "labelX": 243,
+              "labelY": 410
+            }
+          ],
+          "skipNodes": [
+            "memory",
+            "model",
+            "tools",
+            "policy",
+            "approval",
+            "support",
+            "payments"
+          ]
+        },
+        {
+          "id": "session-expired",
+          "label": "Access · expired session",
+          "outcome": "Sign-in required · no downstream access",
+          "stages": [
+            {
+              "title": "Reject the expired session before access",
+              "component": "Gateway, authentication and audit",
+              "short": "No trusted identity",
+              "what": "Maya sends the same damaged-laptop request with an expired session. Authentication fails at the gateway. No cache, customer-memory, knowledge or business-system access occurs.",
+              "why": "The user’s message does not establish identity. The request must stop before any sensitive read or proposed write.",
+              "next": "Return a sign-in-required response and record a safe audit event.",
+              "input": {
+                "request": "Help with damaged laptop order O-1042",
+                "session_status": "expired"
+              },
+              "output": {
+                "authenticated": false,
+                "status": 401,
+                "downstream_calls": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Fail authentication before access to any cache, document, customer memory or tool."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Record the denial reason and trace ID without logging the failed credential."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            },
+            {
+              "title": "Ask Maya to sign in again",
+              "component": "Customer response",
+              "short": "Stop here",
+              "what": "The response asks Maya to sign in before the assistant can help with the order. It reveals no order details and reports no completed work.",
+              "why": "A refusal should explain the next useful step without leaking customer data or pretending work was submitted.",
+              "next": "End the unauthenticated request. A fresh verified session starts a new flow.",
+              "input": {
+                "status": 401
+              },
+              "output": {
+                "message": "Please sign in again before I can help with this order.",
+                "retrieval_calls": 0,
+                "business_writes": 0
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No diagram execution edge reaches retrieval, memory, tools, approval or payments in this scenario."
+                }
+              ],
+              "nodeIds": [
+                "response"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "to": "audit",
+              "kind": "observation",
+              "from": "identity",
+              "points": [
+                [
+                  129,
+                  40
+                ],
+                [
+                  129,
+                  14
+                ],
+                [
+                  1049,
+                  14
+                ],
+                [
+                  1049,
+                  40
+                ]
+              ],
+              "label": "trace, not a business action",
+              "labelX": 590,
+              "labelY": 30
+            },
+            {
+              "to": "response",
+              "kind": "flow",
+              "from": "identity",
+              "points": [
+                [
+                  129,
+                  110
+                ],
+                [
+                  129,
+                  175
+                ],
+                [
+                  240,
+                  175
+                ],
+                [
+                  240,
+                  490
+                ],
+                [
+                  270,
+                  490
+                ]
+              ],
+              "label": "stop before access",
+              "labelX": 240,
+              "labelY": 220
+            }
+          ],
+          "skipNodes": [
+            "cache",
+            "orchestrator",
+            "memory",
+            "retrieval",
+            "model",
+            "tools",
+            "policy",
+            "approval",
+            "knowledge",
+            "support",
+            "payments"
+          ]
+        }
+      ],
+      "revision": {
+        "pitch": "I would split this assistant into a knowledge path and an action path, behind trusted customer identity. For a policy question, check a tenant-scoped answer cache, retrieve permitted current evidence, and return an answer with its sources. If evidence is missing, say so. For Maya’s damaged laptop, use memory to resolve the order and a planner only because the request spans refund, warranty, shipping and ticketing. The model proposes typed calls through the tool layer; the business applications still authorise every operation. A high-value refund waits for a manager’s decision on that exact proposal. Independent authorised support work can proceed asynchronously, and the customer gets an honest acknowledgement. After approval, submit the refund with a stable action key and report the payment provider’s receipt as submitted, not settled. Keep knowledge, customer memory and tools separate. Bound work per tenant and tool, attribute costs to the request, and trace the policy decisions and per-action statuses. The model explains and proposes; trusted systems decide and execute.",
+        "flow": "Identify → route → retrieve evidence OR propose typed actions → authorise writes → approve where required → report evidence or receipts",
+        "requirements": [
+          [
+            "Functional",
+            "Answer FAQs; search enterprise knowledge; create and update tickets; query CRM and orders; process authorised refunds; escalate; retain appropriate conversation history."
+          ],
+          [
+            "Non-functional",
+            "Availability, low latency, enterprise security, answer accuracy, easy integration of new systems, scale and cost control."
+          ]
+        ],
+        "discovery": [
+          "Answering only, or executing actions?",
+          "Where does product knowledge live?",
+          "Can the AI independently approve a sensitive business decision?",
+          "What scale should the design support?",
+          "Should it remember previous conversations?",
+          "Which operations are asynchronous, and what receipt, retry and reconciliation guarantees do their applications provide?"
+        ],
+        "tradeoff": "Manager approval reduces the risk of an expensive action but delays completion. Acknowledge early and expose the pending decision and each independent job’s real status.",
+        "failure": "Pending or denied approval stops the refund branch. A missing policy passage stops the grounded answer. Neither becomes a success because a model can produce confident text.",
+        "ops": [
+          [
+            "Scale",
+            "Size from measured arrival rate, bursts and application quotas. Bound concurrent work per tenant and tool; decouple long-running jobs from the customer acknowledgement."
+          ],
+          [
+            "Latency",
+            "Measure acknowledgement, retrieval, model time, approval wait and business completion separately. These are different clocks; this pilot claims no measured latency."
+          ],
+          [
+            "Cost",
+            "Use a suitable smaller model for simple knowledge answers and a planner only for cross-system work. Attribute tokens, tool calls and retries to the original request."
+          ],
+          [
+            "Evaluation",
+            "Test tenant scope, approval binding, missing evidence and duplicate actions with exact checks. Assess answer support using human-labelled examples; exact citations alone are insufficient."
+          ]
+        ],
+        "remember": "An answer needs evidence. An action needs authority. A success needs a receipt."
+      },
+      "discovery": [
+        {
+          "question": "Answering only, or executing actions?",
+          "answer": "Both. Answer support questions and perform authorised business operations.",
+          "decision": "Keep knowledge retrieval and business actions as separate routes. A question must not accidentally become a write."
+        },
+        {
+          "question": "Where does product knowledge live?",
+          "answer": "Documents, the knowledge base, CRM, order management and ticketing.",
+          "decision": "Retrieve from current, permitted enterprise sources. Store policies separately from customer conversation memory."
+        },
+        {
+          "question": "Can the AI independently approve a sensitive business decision?",
+          "answer": "No. The source uses a $5,000 refund as an example of a decision requiring a person.",
+          "decision": "Add a manager-approval boundary before sensitive execution. The pilot’s $500 threshold is a separate, fictional example policy."
+        },
+        {
+          "question": "What scale should the design support?",
+          "answer": "The opening brief assumes around 1M conversations per day globally. A later section explores a separate 10M/day sizing scenario.",
+          "decision": "Treat volume as a design input. Discuss stateless services, bounded work, cache eligibility, model routing and asynchronous processing without claiming measured capacity."
+        },
+        {
+          "question": "Should it remember previous conversations?",
+          "answer": "Yes. Retain conversational context and appropriate customer history.",
+          "decision": "Separate session context, longer-term customer memory and enterprise knowledge. Resolve “the order” from context, then verify it in the application."
+        }
+      ],
+      "sourceMap": [
+        {
+          "section": "Clarify What It Answers and What It Does",
+          "where": "Understand the problem",
+          "note": "All five original discovery questions and the full functional / non-functional requirements."
+        },
+        {
+          "section": "Draw Capabilities as Peers, Not a Pipeline",
+          "where": "Explore flow",
+          "note": "Each scenario activates its own subset of knowledge, tools and memory."
+        },
+        {
+          "section": "Use RAG for Answers and Tools for Actions",
+          "where": "Knowledge and refund scenarios",
+          "note": "Evidence-based answers stay separate from application writes."
+        },
+        {
+          "section": "Save the Planner for Cross-System Requests",
+          "where": "Refund flow, stage 3",
+          "note": "Use a planner for the four-system damaged-laptop request; skip it for a simple policy question."
+        },
+        {
+          "section": "Split Memory Into Three Layers",
+          "where": "Understand / refund flow, stage 3",
+          "note": "Session and customer memory are distinct from current enterprise knowledge."
+        },
+        {
+          "section": "Put a Human Between the Assistant and Risky Actions",
+          "where": "Approved, pending and declined refund scenarios",
+          "note": "The exact refund proposal waits for a manager; missing approval never executes the payment."
+        },
+        {
+          "section": "Scale to 10M Conversations a Day",
+          "where": "Interview revision",
+          "note": "Qualitative scale, latency and cost decisions. The explorer does not simulate or prove throughput."
+        },
+        {
+          "section": "Combine Both Assistant Designs Into One Spine",
+          "where": "Architecture and revision",
+          "note": "The shared identity, orchestration, capability and application spine is compressed into the map."
+        },
+        {
+          "section": "Raise the Four Gaps Both Designs Leave",
+          "where": "Sources and revision",
+          "note": "Discuss security, prompt versioning, disaster recovery and capacity estimation. Full implementations are outside this pilot."
+        },
+        {
+          "section": "Worked Example: The Damaged Laptop",
+          "where": "Three refund scenarios",
+          "note": "The source request supplies the central incident. Maya, IDs, amounts and receipts are illustrative additions."
+        },
+        {
+          "section": "Key Takeaways",
+          "where": "Interview revision",
+          "note": "Compressed into the spoken answer, flow, trade-off and production talking points."
+        },
+        {
+          "section": "Check Yourself",
+          "where": "Read lesson",
+          "note": "The original self-check remains in the written lesson; it has not been converted into a scored quiz."
+        },
+        {
+          "section": "References",
+          "where": "Canonical source",
+          "note": "The canonical Markdown is the explorer source. Upstream references remain in that source; this public lesson omits the reference appendix."
+        }
+      ],
+      "limitations": [
+        "A guided explanation with prewritten scenarios, not a live support system.",
+        "The $1,200 order, $500 threshold, people, IDs, policy text and receipts are fictional teaching inputs.",
+        "Action-bound approval, scoped read-only caching, typed proposals, idempotency and receipt reconciliation are explicit design additions.",
+        "Security controls, prompt lifecycle, disaster recovery and capacity estimation are discussion points; this pilot does not implement a production platform."
+      ],
+      "headline": "One damaged laptop. Six possible paths.",
+      "requestLabel": "MAYA’S REQUEST",
+      "discoverySection": "Clarify What It Answers and What It Does"
+    }
+  ]
+}
