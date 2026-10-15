@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 const AREAS = [
   { href: '/learn', title: 'Learn', note: 'The curriculum, by track and module.' },
-  { href: '/design', title: 'Design', note: 'The casebook of worked system designs.' },
+  { href: '/design', title: 'Casebook', note: 'The casebook of worked system designs.' },
   { href: '/practice', title: 'Practice', note: 'Worksheets, behavioural questions and mocks.' },
   { href: '/interview', title: 'Interview', note: 'Final-week review and company prep.' },
 ]

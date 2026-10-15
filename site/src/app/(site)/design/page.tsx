@@ -3,9 +3,8 @@ import { Suspense } from 'react'
 import { FilteredGroups } from '@/components/areas/FilteredGroups'
 import { LEVEL_LABEL } from '@/lib/editorial'
 import { ModuleProgress } from '@/components/Progress'
-import { AreaGroup, AreaHeader, AreaSection, LinkList } from '@/components/areas/Area'
-import { LIVE, curriculumModules, curriculumTrack, moduleGroups, siteCounts } from '@/components/areas/data'
-import { ModuleCard } from '@/components/learn/ModuleCard'
+import { AreaGroup, AreaHeader, AreaSection, LinkList, TextLink } from '@/components/areas/Area'
+import { LIVE, moduleGroups, siteCounts } from '@/components/areas/data'
 import { learnHref } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
@@ -18,7 +17,7 @@ import { JsonLd } from '@/components/JsonLd'
 
 export const metadata: Metadata = pageMetadata({
   path: '/design',
-  title: 'Design',
+  title: 'Casebook',
   description:
     'The casebook: complete AI system designs grouped by theme, each readable as a spoken interview answer, a technical deep dive, or a quick review.',
 })
@@ -27,42 +26,30 @@ const METHOD_TRACK = 'ai-systems-design'
 
 export default async function DesignPage() {
   const { groups, scenarios } = await moduleGroups(LIVE.casebook)
-  const method = curriculumModules(METHOD_TRACK)
-  const methodTrack = curriculumTrack(METHOD_TRACK)
   const counts = await siteCounts()
 
   return (
     <div className="py-12">
-      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Design', path: '/design' }])} />
-      <AreaHeader eyebrow="The casebook" title="Design">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Casebook', path: '/design' }])} />
+      <AreaHeader eyebrow="Worked system designs" title="Casebook">
         <p>
           {counts.designs} complete system designs, grouped by the kind of system they build. {counts.layeredDesigns} of them read
           at three depths: the answer you would say in the interview, the technical deep dive behind it, and a quick
-          review for the night before. Learn the method first, then read cases to see it applied.
+          review for the night before. Choose a case to study the architecture, trade-offs and failure modes in depth.
         </p>
       </AreaHeader>
+      <aside id="method" aria-label="Learn the design method" className="mt-6 max-w-3xl scroll-mt-20 rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
+        <p className="text-muted">
+          Need a structure for your answer? The AI Systems Design track in Learn teaches the framework, whiteboard
+          timing and reusable patterns. Return here to see them applied in complete worked designs.
+        </p>
+        <div className="mt-3">
+          <TextLink href={learnHref.track(METHOD_TRACK)}>Learn the design method</TextLink>
+        </div>
+      </aside>
       <div className="mt-6">
         <ModuleProgress scenarios={scenarios} />
       </div>
-
-      <AreaSection
-        id="method"
-        title="Learn the Method"
-        description={
-          <>
-            The design framework, the sixty-minute whiteboard routine and the patterns every case reuses. These modules
-            live in{' '}
-            {methodTrack ? methodTrack.title : 'the curriculum'} under Learn.
-          </>
-        }
-        action={methodTrack ? { label: 'Open the track', href: learnHref.track(methodTrack.slug) } : undefined}
-      >
-        <div className="space-y-2">
-          {method.map((m) => (
-            <ModuleCard key={m.slug} module={m} />
-          ))}
-        </div>
-      </AreaSection>
 
       <AreaSection
         id="cases"

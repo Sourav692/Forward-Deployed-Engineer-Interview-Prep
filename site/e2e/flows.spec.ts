@@ -386,7 +386,7 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await expect(page).toHaveURL(CASE_STUDY)
   await hydrated(page)
   await expect(page.getByRole('button', { name: 'Interview Guide 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Design' })).toHaveAttribute('href', '/design')
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Casebook' })).toHaveAttribute('href', '/design')
 })
 
 // ENH-17: worksheets moved to /practice/<slug>. Answers key on track/slug, not the URL,
