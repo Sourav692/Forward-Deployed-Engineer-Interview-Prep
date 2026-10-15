@@ -1,0 +1,1768 @@
+{
+  "title": "Recruiting Platform: Explainable Ranking, Human Decisions — Interactive Explorer",
+  "subtitle": "Explore the flow. Understand the decisions. Revise.",
+  "sources": [
+    {
+      "id": "recruiting-platform-lesson",
+      "title": "Recruiting Platform: Explainable Ranking, Human Decisions",
+      "file": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md",
+      "note": "Canonical lesson read in full. The source map distinguishes interactive coverage from material retained in the written lesson."
+    }
+  ],
+  "systems": [
+    {
+      "id": "recruiting-platform",
+      "name": "Recruiting Platform: Explainable Ranking, Human Decisions",
+      "nav": "Recruiting Platform",
+      "family": "Classic AI designs",
+      "tag": "T5.4",
+      "headline": "One candidate. Evidence, scores, then a person.",
+      "requestLabel": "RECRUITER REQUEST",
+      "discoverySection": "Read the Last Clause as the Design Constraint",
+      "description": "Assist recruiters with structured profiles, explainable ranking and assessment evidence while people retain final decisions.",
+      "question": "Find relevant candidates for an LLM Engineer role and prepare the next interview.",
+      "scope": "The explorer shows one candidate through bulk ingestion, matching, assessment and review. It does not make hiring decisions or establish legal compliance.",
+      "provenance": "Architecture, requirements and boundaries are adapted from the named canonical Markdown. Scenario branches, identifiers and payloads are illustrative teaching examples, not executions or measured results. Source assumptions remain assumptions.",
+      "sourceIds": [
+        "recruiting-platform-lesson"
+      ],
+      "discovery": [
+        {
+          "question": "Enterprise hiring or staffing agencies?",
+          "answer": "The source leaves the customer type open.",
+          "decision": "Confirm tenant boundaries, customer roles and volume before sizing this scenario."
+        },
+        {
+          "question": "Real-time or batch matching?",
+          "answer": "Bulk ingestion is batch; recruiter search is near-real-time.",
+          "decision": "Separate asynchronous parse/embed jobs from interactive search."
+        },
+        {
+          "question": "Can recruiters override AI recommendations?",
+          "answer": "Yes, always.",
+          "decision": "Expose evidence and preserve an audited human override."
+        },
+        {
+          "question": "Fully automated or human-assisted decisions?",
+          "answer": "Human-assisted.",
+          "decision": "No model score can finalise a hiring decision."
+        },
+        {
+          "question": "Compliance: GDPR, EEOC?",
+          "answer": "The source includes privacy, fairness and audit obligations.",
+          "decision": "Treat these as requirements requiring specialist validation; do not infer compliance from a score."
+        }
+      ],
+      "diagram": {
+        "width": 1160,
+        "height": 620,
+        "nodes": [
+          {
+            "id": "upload",
+            "label": "Recruiter intake",
+            "sub": "Tenant-scoped JD and resumes",
+            "x": 40,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "queue",
+            "label": "Ingestion jobs",
+            "sub": "Uploads return promptly",
+            "x": 310,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "extract",
+            "label": "Structured extraction",
+            "sub": "Comparable fields and evidence",
+            "x": 580,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "profiles",
+            "label": "Candidate profiles",
+            "sub": "PII-protected records",
+            "x": 850,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "data"
+          },
+          {
+            "id": "search",
+            "label": "Semantic matching",
+            "sub": "Candidate and JD embeddings",
+            "x": 850,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "rank",
+            "label": "Explainable ranking",
+            "sub": "Weighted signal breakdown",
+            "x": 580,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "questions",
+            "label": "Interview questions",
+            "sub": "Role and candidate gaps",
+            "x": 310,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "judge",
+            "label": "Assessment scoring",
+            "sub": "Rationale and confidence",
+            "x": 40,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "human",
+            "label": "Recruiter review",
+            "sub": "Advance, override or reject",
+            "x": 40,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "branch"
+          },
+          {
+            "id": "schedule",
+            "label": "Interview scheduler",
+            "sub": "Only after human advance",
+            "x": 310,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "audit",
+            "label": "Audit and fairness",
+            "sub": "Recommendations and overrides",
+            "x": 580,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "observation"
+          }
+        ],
+        "edges": [
+          {
+            "from": "upload",
+            "to": "queue",
+            "kind": "flow",
+            "points": [
+              [
+                260,
+                93.0
+              ],
+              [
+                310,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "queue",
+            "to": "extract",
+            "kind": "flow",
+            "points": [
+              [
+                530,
+                93.0
+              ],
+              [
+                580,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "extract",
+            "to": "profiles",
+            "kind": "data",
+            "points": [
+              [
+                800,
+                93.0
+              ],
+              [
+                850,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "profiles",
+            "to": "search",
+            "kind": "data",
+            "points": [
+              [
+                960.0,
+                131
+              ],
+              [
+                960.0,
+                230
+              ]
+            ]
+          },
+          {
+            "from": "search",
+            "to": "rank",
+            "kind": "flow",
+            "points": [
+              [
+                850,
+                268.0
+              ],
+              [
+                800,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "rank",
+            "to": "questions",
+            "kind": "flow",
+            "points": [
+              [
+                580,
+                268.0
+              ],
+              [
+                530,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "questions",
+            "to": "judge",
+            "kind": "flow",
+            "points": [
+              [
+                310,
+                268.0
+              ],
+              [
+                260,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "judge",
+            "to": "human",
+            "kind": "flow",
+            "points": [
+              [
+                150.0,
+                306
+              ],
+              [
+                150.0,
+                405
+              ]
+            ]
+          },
+          {
+            "from": "rank",
+            "to": "human",
+            "kind": "data",
+            "points": [
+              [
+                580,
+                268.0
+              ],
+              [
+                564,
+                268.0
+              ],
+              [
+                564,
+                389
+              ],
+              [
+                276,
+                389
+              ],
+              [
+                276,
+                443.0
+              ],
+              [
+                260,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "human",
+            "to": "schedule",
+            "kind": "branch",
+            "points": [
+              [
+                260,
+                443.0
+              ],
+              [
+                310,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "human",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                260,
+                443.0
+              ],
+              [
+                276,
+                443.0
+              ],
+              [
+                276,
+                389
+              ],
+              [
+                564,
+                389
+              ],
+              [
+                564,
+                443.0
+              ],
+              [
+                580,
+                443.0
+              ]
+            ]
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "human-advances",
+          "label": "Low-confidence score, recruiter advances",
+          "outcome": "The recruiter advances the candidate after reviewing the evidence. Scheduling follows the recorded human decision.",
+          "stages": [
+            {
+              "title": "Accept the job and resumes without blocking upload",
+              "component": "Recruiter intake + Ingestion jobs",
+              "short": "Queue intake",
+              "what": "A recruiter posts an LLM Engineer role and submits a candidate resume. The tenant-scoped upload returns a job ID while parsing runs in the background.",
+              "why": "Bulk resume ingestion should not freeze the recruiter interface.",
+              "next": "Next: Turn free text into an evidenced profile.",
+              "input": {
+                "request": "Match this resume to the LLM Engineer role.",
+                "tenant": "recruiter-co",
+                "resume": "candidate-24.pdf"
+              },
+              "output": {
+                "job_id": "ingest-24",
+                "status": "accepted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Associate documents and jobs with the authenticated recruiter tenant."
+                }
+              ],
+              "nodeIds": [
+                "upload",
+                "queue"
+              ]
+            },
+            {
+              "title": "Turn free text into an evidenced profile",
+              "component": "Structured extraction + Candidate profiles",
+              "short": "Extract profile",
+              "what": "The parser extracts skills, projects and experience into a consistent profile. It retains source evidence for the extracted fields.",
+              "why": "Ranking needs comparable fields, not a different document shape for every candidate.",
+              "next": "Next: Find semantic fit beyond keywords.",
+              "input": {
+                "resume": "candidate-24.pdf",
+                "jd": "role-llm-engineer"
+              },
+              "output": {
+                "skills": [
+                  "RAG",
+                  "agentic AI"
+                ],
+                "experience_years": 4,
+                "field_evidence": "resume page 1"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Validate the extraction schema and protect candidate PII."
+                },
+                {
+                  "kind": "Judge",
+                  "text": "Assess extraction faithfulness against the resume; do not invent missing qualifications."
+                }
+              ],
+              "nodeIds": [
+                "extract",
+                "profiles"
+              ]
+            },
+            {
+              "title": "Find semantic fit beyond keywords",
+              "component": "Semantic matching",
+              "short": "Semantic match",
+              "what": "Embeddings match the candidate’s RAG and agentic AI projects to the LLM Engineer role. The candidate need not contain the exact word LLM.",
+              "why": "Keyword-only screening would miss semantically relevant experience.",
+              "next": "Next: Show a weighted score breakdown.",
+              "input": {
+                "candidate": "candidate-24",
+                "role": "role-llm-engineer"
+              },
+              "output": {
+                "semantic_match": "relevant",
+                "evidence": [
+                  "RAG project",
+                  "agentic AI project"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Search only profiles the recruiter is permitted to see."
+                }
+              ],
+              "nodeIds": [
+                "search"
+              ]
+            },
+            {
+              "title": "Show a weighted score breakdown",
+              "component": "Explainable ranking",
+              "short": "Explain ranking",
+              "what": "The ranker combines semantic fit, required skills, experience and domain signals. It shows the weights and supporting evidence instead of one unexplained number.",
+              "why": "Recruiters must be able to question why a candidate appears where they do.",
+              "next": "Next: Generate questions, then score assessment evidence.",
+              "input": {
+                "weights": {
+                  "semantic": 0.3,
+                  "skills": 0.25,
+                  "experience": 0.2,
+                  "domain": 0.15,
+                  "other": 0.1
+                }
+              },
+              "output": {
+                "candidate": "candidate-24",
+                "signals": {
+                  "semantic": "strong",
+                  "skills": "partial",
+                  "experience": "solid"
+                }
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "These weights are illustrative, matching the source example; they are not validated hiring criteria."
+                }
+              ],
+              "nodeIds": [
+                "rank"
+              ]
+            },
+            {
+              "title": "Generate questions, then score assessment evidence",
+              "component": "Interview questions + Assessment scoring",
+              "short": "Questions and score",
+              "what": "Role-specific questions probe the candidate’s gaps. After assessment evidence exists, the judge produces a rubric-based rationale with low confidence on problem-solving.",
+              "why": "Question generation precedes an assessment; a score without evidence would be invented.",
+              "next": "Next: Record the recruiter’s decline.",
+              "input": {
+                "interview_evidence": "assessment-24",
+                "rubric": [
+                  "technical correctness",
+                  "communication",
+                  "problem-solving"
+                ]
+              },
+              "output": {
+                "communication": "strong",
+                "problem_solving_confidence": "low",
+                "decision": "none"
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Calibrate assessment scoring against human-labelled rubrics."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The AI judge cannot make the hiring decision."
+                }
+              ],
+              "nodeIds": [
+                "questions",
+                "judge"
+              ]
+            },
+            {
+              "title": "Require a human decision and record the override",
+              "component": "Recruiter review + Audit and fairness",
+              "short": "Human advances",
+              "what": "Low confidence makes manual review mandatory. The recruiter reads the evidence and advances this candidate, overriding the initial ranking order.",
+              "why": "Human review is required for final decisions, not only when the score is uncertain.",
+              "next": "Next: Schedule only after the human advances.",
+              "input": {
+                "candidate": "candidate-24",
+                "confidence": "low"
+              },
+              "output": {
+                "reviewer": "recruiter-7",
+                "decision": "advance",
+                "override_logged": true
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Record the authenticated reviewer and their decision."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Monitor fairness and overrides across permitted cohorts; this scenario does not establish compliance."
+                }
+              ],
+              "nodeIds": [
+                "human",
+                "audit"
+              ]
+            },
+            {
+              "title": "Schedule only after the human advances",
+              "component": "Interview scheduler",
+              "short": "Schedule interview",
+              "what": "The scheduler checks availability, sends the next-stage invite and updates the ATS. It acts on the recruiter’s decision, not the judge’s preference.",
+              "why": "Automation can coordinate logistics after the consequential decision remains human.",
+              "next": "The recruiter advances the candidate after reviewing the evidence. Scheduling follows the recorded human decision.",
+              "input": {
+                "candidate": "candidate-24",
+                "human_decision": "advance"
+              },
+              "output": {
+                "invite_id": "interview-24",
+                "status": "scheduled"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "A positive human advance is required before this scheduling branch."
+                }
+              ],
+              "nodeIds": [
+                "schedule"
+              ]
+            }
+          ],
+          "skipNodes": [],
+          "edges": [
+            {
+              "from": "upload",
+              "to": "queue",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "queue",
+              "to": "extract",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "extract",
+              "to": "profiles",
+              "kind": "data",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "profiles",
+              "to": "search",
+              "kind": "data",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "search",
+              "to": "rank",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "rank",
+              "to": "questions",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "questions",
+              "to": "judge",
+              "kind": "flow",
+              "points": [
+                [
+                  310,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "judge",
+              "to": "human",
+              "kind": "flow",
+              "points": [
+                [
+                  150.0,
+                  306
+                ],
+                [
+                  150.0,
+                  405
+                ]
+              ]
+            },
+            {
+              "from": "rank",
+              "to": "human",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  564,
+                  268.0
+                ],
+                [
+                  564,
+                  389
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  260,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "human",
+              "to": "schedule",
+              "kind": "branch",
+              "points": [
+                [
+                  260,
+                  443.0
+                ],
+                [
+                  310,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "human",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  443.0
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  564,
+                  389
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "review-pending",
+          "label": "Human review is still pending",
+          "outcome": "The candidate remains awaiting human review. There is no scheduling or hiring decision.",
+          "stages": [
+            {
+              "title": "Accept the job and resumes without blocking upload",
+              "component": "Recruiter intake + Ingestion jobs",
+              "short": "Queue intake",
+              "what": "A recruiter posts an LLM Engineer role and submits a candidate resume. The tenant-scoped upload returns a job ID while parsing runs in the background.",
+              "why": "Bulk resume ingestion should not freeze the recruiter interface.",
+              "next": "Next: Turn free text into an evidenced profile.",
+              "input": {
+                "request": "Match this resume to the LLM Engineer role.",
+                "tenant": "recruiter-co",
+                "resume": "candidate-24.pdf"
+              },
+              "output": {
+                "job_id": "ingest-24",
+                "status": "accepted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Associate documents and jobs with the authenticated recruiter tenant."
+                }
+              ],
+              "nodeIds": [
+                "upload",
+                "queue"
+              ]
+            },
+            {
+              "title": "Turn free text into an evidenced profile",
+              "component": "Structured extraction + Candidate profiles",
+              "short": "Extract profile",
+              "what": "The parser extracts skills, projects and experience into a consistent profile. It retains source evidence for the extracted fields.",
+              "why": "Ranking needs comparable fields, not a different document shape for every candidate.",
+              "next": "Next: Find semantic fit beyond keywords.",
+              "input": {
+                "resume": "candidate-24.pdf",
+                "jd": "role-llm-engineer"
+              },
+              "output": {
+                "skills": [
+                  "RAG",
+                  "agentic AI"
+                ],
+                "experience_years": 4,
+                "field_evidence": "resume page 1"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Validate the extraction schema and protect candidate PII."
+                },
+                {
+                  "kind": "Judge",
+                  "text": "Assess extraction faithfulness against the resume; do not invent missing qualifications."
+                }
+              ],
+              "nodeIds": [
+                "extract",
+                "profiles"
+              ]
+            },
+            {
+              "title": "Find semantic fit beyond keywords",
+              "component": "Semantic matching",
+              "short": "Semantic match",
+              "what": "Embeddings match the candidate’s RAG and agentic AI projects to the LLM Engineer role. The candidate need not contain the exact word LLM.",
+              "why": "Keyword-only screening would miss semantically relevant experience.",
+              "next": "Next: Show a weighted score breakdown.",
+              "input": {
+                "candidate": "candidate-24",
+                "role": "role-llm-engineer"
+              },
+              "output": {
+                "semantic_match": "relevant",
+                "evidence": [
+                  "RAG project",
+                  "agentic AI project"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Search only profiles the recruiter is permitted to see."
+                }
+              ],
+              "nodeIds": [
+                "search"
+              ]
+            },
+            {
+              "title": "Show a weighted score breakdown",
+              "component": "Explainable ranking",
+              "short": "Explain ranking",
+              "what": "The ranker combines semantic fit, required skills, experience and domain signals. It shows the weights and supporting evidence instead of one unexplained number.",
+              "why": "Recruiters must be able to question why a candidate appears where they do.",
+              "next": "Next: Generate questions, then score assessment evidence.",
+              "input": {
+                "weights": {
+                  "semantic": 0.3,
+                  "skills": 0.25,
+                  "experience": 0.2,
+                  "domain": 0.15,
+                  "other": 0.1
+                }
+              },
+              "output": {
+                "candidate": "candidate-24",
+                "signals": {
+                  "semantic": "strong",
+                  "skills": "partial",
+                  "experience": "solid"
+                }
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "These weights are illustrative, matching the source example; they are not validated hiring criteria."
+                }
+              ],
+              "nodeIds": [
+                "rank"
+              ]
+            },
+            {
+              "title": "Generate questions, then score assessment evidence",
+              "component": "Interview questions + Assessment scoring",
+              "short": "Questions and score",
+              "what": "Role-specific questions probe the candidate’s gaps. After assessment evidence exists, the judge produces a rubric-based rationale with low confidence on problem-solving.",
+              "why": "Question generation precedes an assessment; a score without evidence would be invented.",
+              "next": "Next: Record the recruiter’s decline.",
+              "input": {
+                "interview_evidence": "assessment-24",
+                "rubric": [
+                  "technical correctness",
+                  "communication",
+                  "problem-solving"
+                ]
+              },
+              "output": {
+                "communication": "strong",
+                "problem_solving_confidence": "low",
+                "decision": "none"
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Calibrate assessment scoring against human-labelled rubrics."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The AI judge cannot make the hiring decision."
+                }
+              ],
+              "nodeIds": [
+                "questions",
+                "judge"
+              ]
+            },
+            {
+              "title": "Leave the candidate in mandatory review",
+              "component": "Recruiter review + Audit and fairness",
+              "short": "Review pending",
+              "what": "The low-confidence assessment waits for a recruiter. Ranking and judge scores remain recommendations while no reviewer has decided.",
+              "why": "Uncertainty must not silently turn into an automated reject or advance.",
+              "next": "The candidate remains awaiting human review. There is no scheduling or hiring decision.",
+              "input": {
+                "candidate": "candidate-24",
+                "reviewer_decision": null
+              },
+              "output": {
+                "status": "awaiting_review",
+                "scheduled": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No scheduler or final hiring action executes without the human decision."
+                }
+              ],
+              "nodeIds": [
+                "human",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "schedule"
+          ],
+          "edges": [
+            {
+              "from": "upload",
+              "to": "queue",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "queue",
+              "to": "extract",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "extract",
+              "to": "profiles",
+              "kind": "data",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "profiles",
+              "to": "search",
+              "kind": "data",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "search",
+              "to": "rank",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "rank",
+              "to": "questions",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "questions",
+              "to": "judge",
+              "kind": "flow",
+              "points": [
+                [
+                  310,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "judge",
+              "to": "human",
+              "kind": "flow",
+              "points": [
+                [
+                  150.0,
+                  306
+                ],
+                [
+                  150.0,
+                  405
+                ]
+              ]
+            },
+            {
+              "from": "rank",
+              "to": "human",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  564,
+                  268.0
+                ],
+                [
+                  564,
+                  389
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  260,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "human",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  443.0
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  564,
+                  389
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "extraction-incomplete",
+          "label": "Resume extraction lacks evidence",
+          "outcome": "The resume is flagged for correction before embedding, matching or ranking.",
+          "stages": [
+            {
+              "title": "Accept the job and resumes without blocking upload",
+              "component": "Recruiter intake + Ingestion jobs",
+              "short": "Queue intake",
+              "what": "A recruiter posts an LLM Engineer role and submits a candidate resume. The tenant-scoped upload returns a job ID while parsing runs in the background.",
+              "why": "Bulk resume ingestion should not freeze the recruiter interface.",
+              "next": "Next: Turn free text into an evidenced profile.",
+              "input": {
+                "request": "Match this resume to the LLM Engineer role.",
+                "tenant": "recruiter-co",
+                "resume": "candidate-24.pdf"
+              },
+              "output": {
+                "job_id": "ingest-24",
+                "status": "accepted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Associate documents and jobs with the authenticated recruiter tenant."
+                }
+              ],
+              "nodeIds": [
+                "upload",
+                "queue"
+              ]
+            },
+            {
+              "title": "Flag an incomplete extracted profile",
+              "component": "Structured extraction",
+              "short": "Correct extraction",
+              "what": "The parser cannot find evidence for a required experience field. It marks the field unknown and requests correction rather than inventing a value.",
+              "why": "A consistently shaped profile is useful only if its fields are faithful to the source.",
+              "next": "The resume is flagged for correction before embedding, matching or ranking.",
+              "input": {
+                "resume": "candidate-24.pdf",
+                "experience_evidence": null
+              },
+              "output": {
+                "status": "needs_correction",
+                "experience_years": null
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Schema and required evidence checks prevent the incomplete profile from entering the ranking path."
+                }
+              ],
+              "nodeIds": [
+                "extract"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "profiles",
+            "search",
+            "rank",
+            "questions",
+            "judge",
+            "human",
+            "schedule",
+            "audit"
+          ],
+          "edges": [
+            {
+              "from": "upload",
+              "to": "queue",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "queue",
+              "to": "extract",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "human-declines",
+          "label": "Recruiter declines after review",
+          "outcome": "The recruiter records a decline. The scheduler is skipped and the AI never made the final decision.",
+          "stages": [
+            {
+              "title": "Accept the job and resumes without blocking upload",
+              "component": "Recruiter intake + Ingestion jobs",
+              "short": "Queue intake",
+              "what": "A recruiter posts an LLM Engineer role and submits a candidate resume. The tenant-scoped upload returns a job ID while parsing runs in the background.",
+              "why": "Bulk resume ingestion should not freeze the recruiter interface.",
+              "next": "Next: Turn free text into an evidenced profile.",
+              "input": {
+                "request": "Match this resume to the LLM Engineer role.",
+                "tenant": "recruiter-co",
+                "resume": "candidate-24.pdf"
+              },
+              "output": {
+                "job_id": "ingest-24",
+                "status": "accepted"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Associate documents and jobs with the authenticated recruiter tenant."
+                }
+              ],
+              "nodeIds": [
+                "upload",
+                "queue"
+              ]
+            },
+            {
+              "title": "Turn free text into an evidenced profile",
+              "component": "Structured extraction + Candidate profiles",
+              "short": "Extract profile",
+              "what": "The parser extracts skills, projects and experience into a consistent profile. It retains source evidence for the extracted fields.",
+              "why": "Ranking needs comparable fields, not a different document shape for every candidate.",
+              "next": "Next: Find semantic fit beyond keywords.",
+              "input": {
+                "resume": "candidate-24.pdf",
+                "jd": "role-llm-engineer"
+              },
+              "output": {
+                "skills": [
+                  "RAG",
+                  "agentic AI"
+                ],
+                "experience_years": 4,
+                "field_evidence": "resume page 1"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Validate the extraction schema and protect candidate PII."
+                },
+                {
+                  "kind": "Judge",
+                  "text": "Assess extraction faithfulness against the resume; do not invent missing qualifications."
+                }
+              ],
+              "nodeIds": [
+                "extract",
+                "profiles"
+              ]
+            },
+            {
+              "title": "Find semantic fit beyond keywords",
+              "component": "Semantic matching",
+              "short": "Semantic match",
+              "what": "Embeddings match the candidate’s RAG and agentic AI projects to the LLM Engineer role. The candidate need not contain the exact word LLM.",
+              "why": "Keyword-only screening would miss semantically relevant experience.",
+              "next": "Next: Show a weighted score breakdown.",
+              "input": {
+                "candidate": "candidate-24",
+                "role": "role-llm-engineer"
+              },
+              "output": {
+                "semantic_match": "relevant",
+                "evidence": [
+                  "RAG project",
+                  "agentic AI project"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Search only profiles the recruiter is permitted to see."
+                }
+              ],
+              "nodeIds": [
+                "search"
+              ]
+            },
+            {
+              "title": "Show a weighted score breakdown",
+              "component": "Explainable ranking",
+              "short": "Explain ranking",
+              "what": "The ranker combines semantic fit, required skills, experience and domain signals. It shows the weights and supporting evidence instead of one unexplained number.",
+              "why": "Recruiters must be able to question why a candidate appears where they do.",
+              "next": "Next: Generate questions, then score assessment evidence.",
+              "input": {
+                "weights": {
+                  "semantic": 0.3,
+                  "skills": 0.25,
+                  "experience": 0.2,
+                  "domain": 0.15,
+                  "other": 0.1
+                }
+              },
+              "output": {
+                "candidate": "candidate-24",
+                "signals": {
+                  "semantic": "strong",
+                  "skills": "partial",
+                  "experience": "solid"
+                }
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "These weights are illustrative, matching the source example; they are not validated hiring criteria."
+                }
+              ],
+              "nodeIds": [
+                "rank"
+              ]
+            },
+            {
+              "title": "Generate questions, then score assessment evidence",
+              "component": "Interview questions + Assessment scoring",
+              "short": "Questions and score",
+              "what": "Role-specific questions probe the candidate’s gaps. After assessment evidence exists, the judge produces a rubric-based rationale with low confidence on problem-solving.",
+              "why": "Question generation precedes an assessment; a score without evidence would be invented.",
+              "next": "Next: Record the recruiter’s decline.",
+              "input": {
+                "interview_evidence": "assessment-24",
+                "rubric": [
+                  "technical correctness",
+                  "communication",
+                  "problem-solving"
+                ]
+              },
+              "output": {
+                "communication": "strong",
+                "problem_solving_confidence": "low",
+                "decision": "none"
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Calibrate assessment scoring against human-labelled rubrics."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "The AI judge cannot make the hiring decision."
+                }
+              ],
+              "nodeIds": [
+                "questions",
+                "judge"
+              ]
+            },
+            {
+              "title": "Record the recruiter’s decline",
+              "component": "Recruiter review + Audit and fairness",
+              "short": "Human declines",
+              "what": "After reviewing the job-relevant evidence the recruiter declines this candidate. The audit records the human decision and rationale.",
+              "why": "The same human control covers a decline and an advance.",
+              "next": "The recruiter records a decline. The scheduler is skipped and the AI never made the final decision.",
+              "input": {
+                "candidate": "candidate-24",
+                "reviewer": "recruiter-7"
+              },
+              "output": {
+                "decision": "decline",
+                "actor_type": "human",
+                "scheduled": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not present the judge score as the decision-maker."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Fairness monitoring continues across both advances and declines."
+                }
+              ],
+              "nodeIds": [
+                "human",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "schedule"
+          ],
+          "edges": [
+            {
+              "from": "upload",
+              "to": "queue",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "queue",
+              "to": "extract",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "extract",
+              "to": "profiles",
+              "kind": "data",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "profiles",
+              "to": "search",
+              "kind": "data",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "search",
+              "to": "rank",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "rank",
+              "to": "questions",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "questions",
+              "to": "judge",
+              "kind": "flow",
+              "points": [
+                [
+                  310,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "judge",
+              "to": "human",
+              "kind": "flow",
+              "points": [
+                [
+                  150.0,
+                  306
+                ],
+                [
+                  150.0,
+                  405
+                ]
+              ]
+            },
+            {
+              "from": "rank",
+              "to": "human",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  564,
+                  268.0
+                ],
+                [
+                  564,
+                  389
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  260,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "human",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  443.0
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  276,
+                  389
+                ],
+                [
+                  564,
+                  389
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "revision": {
+        "pitch": "I would design an assisted recruiting workflow. Uploads return promptly and background jobs parse resumes and job descriptions into one comparable profile schema. That extraction is the seam: every later step depends on faithful structured fields. Semantic search finds relevant experience beyond exact keywords. The ranker combines explicit weighted signals and shows their evidence so recruiters can challenge the ordering. Role-specific questions lead to assessments, then a judge supplies rubric scores with a rationale. It never decides who is hired. Low confidence makes review mandatory, and every final decision remains with a recruiter or hiring manager, including overrides. Scheduling follows a recorded human advance. I would protect PII, enforce tenant and role access, honour deletion requirements, audit recommendations and decisions, and monitor fairness continuously. Those are design requirements to validate, not proof of legal compliance.",
+        "flow": "Upload → background extraction → structured profile → semantic match → explainable ranking → assessment evidence → human review → scheduling if advanced",
+        "requirements": [
+          [
+            "Functional",
+            "Upload and parse resumes and JDs, build profiles, search and rank fit, generate questions and scorecards, summarise feedback, recommend outcomes, schedule and support recruiter Q&A."
+          ],
+          [
+            "Non-functional",
+            "Thousands of resumes per hour, accurate extraction, explainable rankings, protected PII, scale, cost control, auditability and continuous fairness monitoring."
+          ]
+        ],
+        "discovery": [
+          "Enterprise hiring or staffing agencies?",
+          "Real-time or batch matching?",
+          "Can recruiters override AI recommendations?",
+          "Fully automated or human-assisted decisions?",
+          "Compliance: GDPR, EEOC?"
+        ],
+        "tradeoff": "Semantic matching improves discovery but costs compute. Historical-success signals may repeat past bias, so explicit weights, evidence and fairness monitoring remain necessary.",
+        "failure": "A low-confidence assessment waits for a human. An incomplete extraction is corrected before ranking; neither case becomes an automatic rejection.",
+        "ops": [
+          [
+            "Scale",
+            "Decouple upload from parse/embed jobs and queue seasonal bursts. Keep candidate data in the required region."
+          ],
+          [
+            "Latency",
+            "Measure queue wait, extraction time and recruiter-search latency separately."
+          ],
+          [
+            "Cost",
+            "Cache permitted embeddings and stable generated outputs; use larger models only where their quality pays for the cost."
+          ],
+          [
+            "Evaluation",
+            "Evaluate extraction accuracy, matching precision/recall, rubric agreement, overrides and fairness slices with qualified reviewers."
+          ]
+        ],
+        "remember": "The AI extracts, ranks and scores. A person decides."
+      },
+      "sourceMap": [
+        {
+          "section": "Read the Last Clause as the Design Constraint",
+          "where": "Understand the problem",
+          "note": "All five source questions retain the human-control constraint."
+        },
+        {
+          "section": "Make Structured Extraction the Seam",
+          "where": "Explore flow",
+          "note": "Normal and incomplete-extraction branches show why downstream ranking needs comparable evidenced fields."
+        },
+        {
+          "section": "Follow a Candidate Through the Pipeline",
+          "where": "Explore flow",
+          "note": "One candidate moves from asynchronous intake through assessment, review and optional scheduling."
+        },
+        {
+          "section": "Weight Ranking Signals Explicitly",
+          "where": "Explore flow",
+          "note": "The illustrative source weights are visible; they are not universal hiring criteria."
+        },
+        {
+          "section": "Let the AI Judge Score, Never Decide",
+          "where": "Explore flow",
+          "note": "Pending, advance and decline branches require a human final decision."
+        },
+        {
+          "section": "Scale Ingestion Without Blocking Uploads",
+          "where": "Explore flow and revision",
+          "note": "The upload job boundary is interactive; regional and GPU sizing details remain in the lesson."
+        },
+        {
+          "section": "Treat Fairness as a Continuous Control",
+          "where": "Explore flow and revision",
+          "note": "Human decisions and overrides are audited. Fairness is a monitoring requirement, not a demonstrated compliance result."
+        },
+        {
+          "section": "Prepare the Three Follow-Ups",
+          "where": "Revision and Read lesson",
+          "note": "Accuracy, privacy and bias concerns are compressed; the full follow-ups remain in the lesson."
+        },
+        {
+          "section": "Worked Example: An \"LLM Engineer\" Posting",
+          "where": "Explore flow",
+          "note": "The RAG/agentic-AI candidate and low-confidence problem-solving review anchor the main path."
+        },
+        {
+          "section": "Key Takeaways",
+          "where": "Interview revision",
+          "note": "The spoken answer preserves extraction, explanation and human authority."
+        },
+        {
+          "section": "Check Yourself",
+          "where": "Read lesson",
+          "note": "This section remains in the written lesson. The explorer does not reproduce every detail."
+        },
+        {
+          "section": "References",
+          "where": "Canonical source",
+          "note": "The explorer is grounded in this Markdown. Upstream references remain in the local source; the public lesson omits the reference appendix."
+        }
+      ],
+      "limitations": [
+        "A prewritten guided explanation; no live customer systems, models or actions are connected.",
+        "Scenario payloads and outcomes are illustrative. Targets and figures from the source are scenario assumptions, not measurements made by this explorer.",
+        "Required extraction evidence and a correction branch are added teaching choices.",
+        "No live fairness audit, candidate data, legal assessment or model scoring is performed."
+      ]
+    }
+  ]
+}

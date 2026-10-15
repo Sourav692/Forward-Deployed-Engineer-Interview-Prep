@@ -1,0 +1,2761 @@
+{
+  "title": "Access-Controlled Enterprise RAG — Interactive Explorer",
+  "subtitle": "Explore the flow. Understand the decisions. Revise.",
+  "sources": [
+    {
+      "id": "enterprise-rag-lesson",
+      "title": "Access-Controlled Enterprise RAG",
+      "file": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
+      "note": "Canonical lesson read in full. The source map distinguishes interactive coverage from material retained in the written lesson."
+    }
+  ],
+  "systems": [
+    {
+      "id": "enterprise-rag",
+      "name": "Access-Controlled Enterprise RAG",
+      "nav": "Access-Controlled Enterprise RAG",
+      "family": "Classic AI designs",
+      "tag": "T5.4",
+      "headline": "One question. Different correct answers.",
+      "requestLabel": "PERSONA QUESTION",
+      "discoverySection": "Frame the Round Around Different Correct Answers",
+      "description": "Keep unauthorised text out of model context using tenant partitioning, filtered retrieval and an authoritative post-check.",
+      "question": "Why did Vertex Financial lose data in March, and do they get service credits?",
+      "scope": "Read-only Q&A over the source scenario’s enterprise sources. Write actions and real-time streaming ingestion remain out of scope.",
+      "provenance": "Architecture, requirements and boundaries are adapted from the named canonical Markdown. Scenario branches, identifiers and payloads are illustrative teaching examples, not executions or measured results. Source assumptions remain assumptions.",
+      "sourceIds": [
+        "enterprise-rag-lesson"
+      ],
+      "discovery": [
+        {
+          "question": "Who are the users, and do they all see the same data?",
+          "answer": "No. Tier-1, Tier-3, account managers, contractors and other tenants have different permitted answers.",
+          "decision": "Start with a persona-by-document visibility matrix, not one universal answer."
+        },
+        {
+          "question": "What are the sources, and who owns permissions in each?",
+          "answer": "The source scenario combines help content, runbooks, tickets, post-mortems, contracts/pricing and security advisories.",
+          "decision": "Translate source ACLs into one resource model; refuse documents with unusable permissions."
+        },
+        {
+          "question": "What is the sensitivity range, and what regulatory constraints apply?",
+          "answer": "The case includes public through restricted data, residency, PII, erasure and audit requirements.",
+          "decision": "Use attribute-based deny rules and redaction obligations, enforced before model access."
+        },
+        {
+          "question": "What are the scale and latency budget?",
+          "answer": "The lesson scopes the interview to multi-tenant Q&A under three seconds; it does not provide a universal traffic rate.",
+          "decision": "Measure retrieval, reranking and generation; do not invent a throughput figure."
+        },
+        {
+          "question": "Can the assistant act, and what does a wrong answer cost?",
+          "answer": "This design is read-only. Leaks are incidents; unsupported answers still need refusal.",
+          "decision": "Exclude writes, separate quality from security, and gate releases on deterministic leak checks."
+        }
+      ],
+      "diagram": {
+        "width": 1380,
+        "height": 620,
+        "nodes": [
+          {
+            "id": "identity",
+            "label": "Identity and ABAC",
+            "sub": "Fresh principal attributes",
+            "x": 40,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "plan",
+            "label": "Query planner",
+            "sub": "Bound any decomposition",
+            "x": 310,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "retrieve",
+            "label": "Hybrid retrieval",
+            "sub": "Filtered dense and lexical",
+            "x": 580,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "enforce",
+            "label": "Policy post-check",
+            "sub": "Authoritative allow and redact",
+            "x": 850,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "rerank",
+            "label": "Reranking",
+            "sub": "Permitted pool only",
+            "x": 1120,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "grade",
+            "label": "Evidence sufficiency",
+            "sub": "Answerable from these chunks?",
+            "x": 1120,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "generate",
+            "label": "Answer model",
+            "sub": "Permitted evidence and IDs",
+            "x": 850,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "verify",
+            "label": "Citation verification",
+            "sub": "Real, permitted and grounded",
+            "x": 580,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "audit",
+            "label": "Run trace",
+            "sub": "Policy, evidence and outcome",
+            "x": 310,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "observation"
+          },
+          {
+            "id": "connect",
+            "label": "Source connectors",
+            "sub": "Source permission translation",
+            "x": 40,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "normalise",
+            "label": "Normalise and validate",
+            "sub": "Refuse unusable ACLs",
+            "x": 310,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "index",
+            "label": "Tenant index",
+            "sub": "Chunked and embedded records",
+            "x": 580,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "data"
+          }
+        ],
+        "edges": [
+          {
+            "from": "identity",
+            "to": "plan",
+            "kind": "flow",
+            "points": [
+              [
+                260,
+                93.0
+              ],
+              [
+                310,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "plan",
+            "to": "retrieve",
+            "kind": "flow",
+            "points": [
+              [
+                530,
+                93.0
+              ],
+              [
+                580,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "retrieve",
+            "to": "index",
+            "kind": "data",
+            "points": [
+              [
+                580,
+                93.0
+              ],
+              [
+                564,
+                93.0
+              ],
+              [
+                564,
+                443.0
+              ],
+              [
+                580,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "retrieve",
+            "to": "enforce",
+            "kind": "flow",
+            "points": [
+              [
+                800,
+                93.0
+              ],
+              [
+                850,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "enforce",
+            "to": "rerank",
+            "kind": "flow",
+            "points": [
+              [
+                1070,
+                93.0
+              ],
+              [
+                1120,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "rerank",
+            "to": "grade",
+            "kind": "flow",
+            "points": [
+              [
+                1230.0,
+                131
+              ],
+              [
+                1230.0,
+                230
+              ]
+            ]
+          },
+          {
+            "from": "grade",
+            "to": "generate",
+            "kind": "flow",
+            "points": [
+              [
+                1120,
+                268.0
+              ],
+              [
+                1070,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "generate",
+            "to": "verify",
+            "kind": "flow",
+            "points": [
+              [
+                850,
+                268.0
+              ],
+              [
+                800,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "verify",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                580,
+                268.0
+              ],
+              [
+                530,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "enforce",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                850,
+                93.0
+              ],
+              [
+                834,
+                93.0
+              ],
+              [
+                834,
+                214
+              ],
+              [
+                546,
+                214
+              ],
+              [
+                546,
+                268.0
+              ],
+              [
+                530,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "grade",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                1120,
+                268.0
+              ],
+              [
+                1104,
+                268.0
+              ],
+              [
+                1104,
+                214
+              ],
+              [
+                546,
+                214
+              ],
+              [
+                546,
+                268.0
+              ],
+              [
+                530,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "connect",
+            "to": "normalise",
+            "kind": "flow",
+            "points": [
+              [
+                260,
+                443.0
+              ],
+              [
+                310,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "normalise",
+            "to": "index",
+            "kind": "flow",
+            "points": [
+              [
+                530,
+                443.0
+              ],
+              [
+                580,
+                443.0
+              ]
+            ]
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "tier-one",
+          "label": "Tier-1 support answer",
+          "outcome": "The Tier-1 agent receives support-visible backlog information and is referred to the account manager for credits.",
+          "stages": [
+            {
+              "title": "Resolve a trusted principal and compile the filter",
+              "component": "Identity and ABAC",
+              "short": "Authorise first",
+              "what": "The Tier-1 support agent asks why Vertex lost data and whether credits apply. Fresh tenant, groups, clearance and region become a search filter.",
+              "why": "The answer must depend on what this principal may read, not what a prompt asks the model to hide.",
+              "next": "Next: Plan the read-only question.",
+              "input": {
+                "question": "Why did Vertex Financial lose data in March, and do they get service credits?",
+                "persona": "Tier-1 support agent"
+              },
+              "output": {
+                "tenant": "meridian",
+                "groups": [
+                  "public",
+                  "support_t1"
+                ],
+                "filter": "tenant plus permitted attributes"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Tenant, attributes and group membership come from trusted identity services."
+                }
+              ],
+              "nodeIds": [
+                "identity"
+              ]
+            },
+            {
+              "title": "Plan the read-only question",
+              "component": "Query planner",
+              "short": "Plan retrieval",
+              "what": "The question has a cause part and a credits part. The planner bounds the retrieval work and keeps this request read-only.",
+              "why": "A multi-part question may need several evidence sources but no business write.",
+              "next": "Next: Retrieve only the tenant and attribute slice.",
+              "input": {
+                "parts": [
+                  "cause",
+                  "credit eligibility"
+                ]
+              },
+              "output": {
+                "mode": "read_only",
+                "queries": "bounded"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No tool for issuing credits or changing contracts is in scope."
+                }
+              ],
+              "nodeIds": [
+                "plan"
+              ]
+            },
+            {
+              "title": "Retrieve only the tenant and attribute slice",
+              "component": "Hybrid retrieval + Tenant index",
+              "short": "Filtered hybrid",
+              "what": "Dense and lexical search run inside the tenant partition with the compiled permission filter. Rank fusion combines the two candidate lists.",
+              "why": "Dense search handles paraphrases; lexical search preserves exact ticket and error identifiers.",
+              "next": "Next: Re-check live policy and apply obligations.",
+              "input": {
+                "tenant": "meridian",
+                "groups": [
+                  "public",
+                  "support_t1"
+                ]
+              },
+              "output": {
+                "candidate_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "fusion": "reciprocal rank fusion"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Apply the filter on both dense and lexical retrieval paths."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Search candidates are not yet approved model context."
+                }
+              ],
+              "nodeIds": [
+                "retrieve",
+                "index"
+              ]
+            },
+            {
+              "title": "Re-check live policy and apply obligations",
+              "component": "Policy post-check",
+              "short": "Enforce live policy",
+              "what": "The authoritative policy checks tenant, clearance, residency, embargo, need-to-know, external status and default deny. Only allowed, appropriately redacted text remains.",
+              "why": "The cheap index filter cannot implement live revocation or every policy obligation.",
+              "next": "Next: Reject insufficient permitted evidence.",
+              "input": {
+                "candidate_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "principal": "Tier-1 support agent"
+              },
+              "output": {
+                "model_eligible_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "obligations": "PII redacted where required"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Fresh policy evaluation precedes reranking and model context."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "A pre-filter/post-check disagreement is a staleness or security signal."
+                }
+              ],
+              "nodeIds": [
+                "enforce"
+              ]
+            },
+            {
+              "title": "Rerank and assess the permitted evidence",
+              "component": "Reranking + Evidence sufficiency",
+              "short": "Rerank and grade",
+              "what": "The reranker selects the best authorised chunks. Sufficiency checks whether those chunks support the answer this persona can receive.",
+              "why": "Relevance does not establish answer support, and forbidden text must not influence the ranking pool.",
+              "next": "Next: Draft the persona-specific answer with evidence IDs.",
+              "input": {
+                "permitted_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ]
+              },
+              "output": {
+                "context_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "evidence": "sufficient for permitted answer"
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Assess claim support using only the permitted context."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "No forbidden chunk enters the reranker or model."
+                }
+              ],
+              "nodeIds": [
+                "rerank",
+                "grade"
+              ]
+            },
+            {
+              "title": "Draft the persona-specific answer with evidence IDs",
+              "component": "Answer model",
+              "short": "Generate answer",
+              "what": "The model drafts the permitted explanation and cites its evidence. It cannot add a claim from a withheld document.",
+              "why": "The same question legitimately has different correct answers for different principals.",
+              "next": "Next: Verify citations and record the permitted response.",
+              "input": {
+                "persona": "Tier-1 support agent",
+                "context_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ]
+              },
+              "output": {
+                "answer": "The permitted support evidence describes a platform backlog. Ask the account manager about service credits.",
+                "citations": [
+                  "HELP-1",
+                  "TICKET-1"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Assess whether the draft stays within the evidence; the model is not the access-control authority."
+                }
+              ],
+              "nodeIds": [
+                "generate"
+              ]
+            },
+            {
+              "title": "Verify citations and record the permitted response",
+              "component": "Citation verification + Run trace",
+              "short": "Verify and return",
+              "what": "Every citation must resolve to real permitted evidence. The trace records policy decisions, context IDs and the final response.",
+              "why": "Grounding, authorisation and relevance are different checks; the audit must show what actually reached the model.",
+              "next": "The Tier-1 agent receives support-visible backlog information and is referred to the account manager for credits.",
+              "input": {
+                "answer": "The permitted support evidence describes a platform backlog. Ask the account manager about service credits.",
+                "citation_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ]
+              },
+              "output": {
+                "verified": true,
+                "response": "The permitted support evidence describes a platform backlog. Ask the account manager about service credits."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Citation IDs must exist and be policy-permitted."
+                },
+                {
+                  "kind": "Judge",
+                  "text": "Assess whether each cited passage supports its associated claim."
+                }
+              ],
+              "nodeIds": [
+                "verify",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "connect",
+            "normalise"
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "plan",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "plan",
+              "to": "retrieve",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "index",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "enforce",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "rerank",
+              "kind": "flow",
+              "points": [
+                [
+                  1070,
+                  93.0
+                ],
+                [
+                  1120,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "rerank",
+              "to": "grade",
+              "kind": "flow",
+              "points": [
+                [
+                  1230.0,
+                  131
+                ],
+                [
+                  1230.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "grade",
+              "to": "generate",
+              "kind": "flow",
+              "points": [
+                [
+                  1120,
+                  268.0
+                ],
+                [
+                  1070,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "generate",
+              "to": "verify",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "verify",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "grade",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  1120,
+                  268.0
+                ],
+                [
+                  1104,
+                  268.0
+                ],
+                [
+                  1104,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tier-three",
+          "label": "Tier-3 engineering answer",
+          "outcome": "The Tier-3 engineer receives the permitted root-cause explanation and eligibility statement.",
+          "stages": [
+            {
+              "title": "Resolve a trusted principal and compile the filter",
+              "component": "Identity and ABAC",
+              "short": "Authorise first",
+              "what": "The Tier-3 engineer asks why Vertex lost data and whether credits apply. Fresh tenant, groups, clearance and region become a search filter.",
+              "why": "The answer must depend on what this principal may read, not what a prompt asks the model to hide.",
+              "next": "Next: Plan the read-only question.",
+              "input": {
+                "question": "Why did Vertex Financial lose data in March, and do they get service credits?",
+                "persona": "Tier-3 engineer"
+              },
+              "output": {
+                "tenant": "meridian",
+                "groups": [
+                  "support_t3",
+                  "engineering"
+                ],
+                "filter": "tenant plus permitted attributes"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Tenant, attributes and group membership come from trusted identity services."
+                }
+              ],
+              "nodeIds": [
+                "identity"
+              ]
+            },
+            {
+              "title": "Plan the read-only question",
+              "component": "Query planner",
+              "short": "Plan retrieval",
+              "what": "The question has a cause part and a credits part. The planner bounds the retrieval work and keeps this request read-only.",
+              "why": "A multi-part question may need several evidence sources but no business write.",
+              "next": "Next: Retrieve only the tenant and attribute slice.",
+              "input": {
+                "parts": [
+                  "cause",
+                  "credit eligibility"
+                ]
+              },
+              "output": {
+                "mode": "read_only",
+                "queries": "bounded"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No tool for issuing credits or changing contracts is in scope."
+                }
+              ],
+              "nodeIds": [
+                "plan"
+              ]
+            },
+            {
+              "title": "Retrieve only the tenant and attribute slice",
+              "component": "Hybrid retrieval + Tenant index",
+              "short": "Filtered hybrid",
+              "what": "Dense and lexical search run inside the tenant partition with the compiled permission filter. Rank fusion combines the two candidate lists.",
+              "why": "Dense search handles paraphrases; lexical search preserves exact ticket and error identifiers.",
+              "next": "Next: Re-check live policy and apply obligations.",
+              "input": {
+                "tenant": "meridian",
+                "groups": [
+                  "support_t3",
+                  "engineering"
+                ]
+              },
+              "output": {
+                "candidate_doc_ids": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ],
+                "fusion": "reciprocal rank fusion"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Apply the filter on both dense and lexical retrieval paths."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Search candidates are not yet approved model context."
+                }
+              ],
+              "nodeIds": [
+                "retrieve",
+                "index"
+              ]
+            },
+            {
+              "title": "Re-check live policy and apply obligations",
+              "component": "Policy post-check",
+              "short": "Enforce live policy",
+              "what": "The authoritative policy checks tenant, clearance, residency, embargo, need-to-know, external status and default deny. Only allowed, appropriately redacted text remains.",
+              "why": "The cheap index filter cannot implement live revocation or every policy obligation.",
+              "next": "Next: Rerank and assess the permitted evidence.",
+              "input": {
+                "candidate_doc_ids": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ],
+                "principal": "Tier-3 engineer"
+              },
+              "output": {
+                "model_eligible_doc_ids": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ],
+                "obligations": "PII redacted where required"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Fresh policy evaluation precedes reranking and model context."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "A pre-filter/post-check disagreement is a staleness or security signal."
+                }
+              ],
+              "nodeIds": [
+                "enforce"
+              ]
+            },
+            {
+              "title": "Rerank and assess the permitted evidence",
+              "component": "Reranking + Evidence sufficiency",
+              "short": "Rerank and grade",
+              "what": "The reranker selects the best authorised chunks. Sufficiency checks whether those chunks support the answer this persona can receive.",
+              "why": "Relevance does not establish answer support, and forbidden text must not influence the ranking pool.",
+              "next": "Next: Draft the persona-specific answer with evidence IDs.",
+              "input": {
+                "permitted_doc_ids": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ]
+              },
+              "output": {
+                "context_doc_ids": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ],
+                "evidence": "sufficient for permitted answer"
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Assess claim support using only the permitted context."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "No forbidden chunk enters the reranker or model."
+                }
+              ],
+              "nodeIds": [
+                "rerank",
+                "grade"
+              ]
+            },
+            {
+              "title": "Draft the persona-specific answer with evidence IDs",
+              "component": "Answer model",
+              "short": "Generate answer",
+              "what": "The model drafts the permitted explanation and cites its evidence. It cannot add a claim from a withheld document.",
+              "why": "The same question legitimately has different correct answers for different principals.",
+              "next": "Next: Verify citations and record the permitted response.",
+              "input": {
+                "persona": "Tier-3 engineer",
+                "context_doc_ids": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ]
+              },
+              "output": {
+                "answer": "The permitted engineering evidence explains the root cause and indicates credit eligibility; no unauthorised contractual detail is added.",
+                "citations": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Assess whether the draft stays within the evidence; the model is not the access-control authority."
+                }
+              ],
+              "nodeIds": [
+                "generate"
+              ]
+            },
+            {
+              "title": "Verify citations and record the permitted response",
+              "component": "Citation verification + Run trace",
+              "short": "Verify and return",
+              "what": "Every citation must resolve to real permitted evidence. The trace records policy decisions, context IDs and the final response.",
+              "why": "Grounding, authorisation and relevance are different checks; the audit must show what actually reached the model.",
+              "next": "The Tier-3 engineer receives the permitted root-cause explanation and eligibility statement.",
+              "input": {
+                "answer": "The permitted engineering evidence explains the root cause and indicates credit eligibility; no unauthorised contractual detail is added.",
+                "citation_doc_ids": [
+                  "POSTMORTEM-1",
+                  "TICKET-1"
+                ]
+              },
+              "output": {
+                "verified": true,
+                "response": "The permitted engineering evidence explains the root cause and indicates credit eligibility; no unauthorised contractual detail is added."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Citation IDs must exist and be policy-permitted."
+                },
+                {
+                  "kind": "Judge",
+                  "text": "Assess whether each cited passage supports its associated claim."
+                }
+              ],
+              "nodeIds": [
+                "verify",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "connect",
+            "normalise"
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "plan",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "plan",
+              "to": "retrieve",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "index",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "enforce",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "rerank",
+              "kind": "flow",
+              "points": [
+                [
+                  1070,
+                  93.0
+                ],
+                [
+                  1120,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "rerank",
+              "to": "grade",
+              "kind": "flow",
+              "points": [
+                [
+                  1230.0,
+                  131
+                ],
+                [
+                  1230.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "grade",
+              "to": "generate",
+              "kind": "flow",
+              "points": [
+                [
+                  1120,
+                  268.0
+                ],
+                [
+                  1070,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "generate",
+              "to": "verify",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "verify",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "grade",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  1120,
+                  268.0
+                ],
+                [
+                  1104,
+                  268.0
+                ],
+                [
+                  1104,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "account-manager",
+          "label": "Account-manager answer",
+          "outcome": "The account manager receives permitted contractual credit information without the engineering root cause.",
+          "stages": [
+            {
+              "title": "Resolve a trusted principal and compile the filter",
+              "component": "Identity and ABAC",
+              "short": "Authorise first",
+              "what": "The account manager asks why Vertex lost data and whether credits apply. Fresh tenant, groups, clearance and region become a search filter.",
+              "why": "The answer must depend on what this principal may read, not what a prompt asks the model to hide.",
+              "next": "Next: Plan the read-only question.",
+              "input": {
+                "question": "Why did Vertex Financial lose data in March, and do they get service credits?",
+                "persona": "account manager"
+              },
+              "output": {
+                "tenant": "meridian",
+                "groups": [
+                  "commercial"
+                ],
+                "filter": "tenant plus permitted attributes"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Tenant, attributes and group membership come from trusted identity services."
+                }
+              ],
+              "nodeIds": [
+                "identity"
+              ]
+            },
+            {
+              "title": "Plan the read-only question",
+              "component": "Query planner",
+              "short": "Plan retrieval",
+              "what": "The question has a cause part and a credits part. The planner bounds the retrieval work and keeps this request read-only.",
+              "why": "A multi-part question may need several evidence sources but no business write.",
+              "next": "Next: Retrieve only the tenant and attribute slice.",
+              "input": {
+                "parts": [
+                  "cause",
+                  "credit eligibility"
+                ]
+              },
+              "output": {
+                "mode": "read_only",
+                "queries": "bounded"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No tool for issuing credits or changing contracts is in scope."
+                }
+              ],
+              "nodeIds": [
+                "plan"
+              ]
+            },
+            {
+              "title": "Retrieve only the tenant and attribute slice",
+              "component": "Hybrid retrieval + Tenant index",
+              "short": "Filtered hybrid",
+              "what": "Dense and lexical search run inside the tenant partition with the compiled permission filter. Rank fusion combines the two candidate lists.",
+              "why": "Dense search handles paraphrases; lexical search preserves exact ticket and error identifiers.",
+              "next": "Next: Re-check live policy and apply obligations.",
+              "input": {
+                "tenant": "meridian",
+                "groups": [
+                  "commercial"
+                ]
+              },
+              "output": {
+                "candidate_doc_ids": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ],
+                "fusion": "reciprocal rank fusion"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Apply the filter on both dense and lexical retrieval paths."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Search candidates are not yet approved model context."
+                }
+              ],
+              "nodeIds": [
+                "retrieve",
+                "index"
+              ]
+            },
+            {
+              "title": "Re-check live policy and apply obligations",
+              "component": "Policy post-check",
+              "short": "Enforce live policy",
+              "what": "The authoritative policy checks tenant, clearance, residency, embargo, need-to-know, external status and default deny. Only allowed, appropriately redacted text remains.",
+              "why": "The cheap index filter cannot implement live revocation or every policy obligation.",
+              "next": "Next: Rerank and assess the permitted evidence.",
+              "input": {
+                "candidate_doc_ids": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ],
+                "principal": "account manager"
+              },
+              "output": {
+                "model_eligible_doc_ids": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ],
+                "obligations": "PII redacted where required"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Fresh policy evaluation precedes reranking and model context."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "A pre-filter/post-check disagreement is a staleness or security signal."
+                }
+              ],
+              "nodeIds": [
+                "enforce"
+              ]
+            },
+            {
+              "title": "Rerank and assess the permitted evidence",
+              "component": "Reranking + Evidence sufficiency",
+              "short": "Rerank and grade",
+              "what": "The reranker selects the best authorised chunks. Sufficiency checks whether those chunks support the answer this persona can receive.",
+              "why": "Relevance does not establish answer support, and forbidden text must not influence the ranking pool.",
+              "next": "Next: Draft the persona-specific answer with evidence IDs.",
+              "input": {
+                "permitted_doc_ids": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ]
+              },
+              "output": {
+                "context_doc_ids": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ],
+                "evidence": "sufficient for permitted answer"
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Assess claim support using only the permitted context."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "No forbidden chunk enters the reranker or model."
+                }
+              ],
+              "nodeIds": [
+                "rerank",
+                "grade"
+              ]
+            },
+            {
+              "title": "Draft the persona-specific answer with evidence IDs",
+              "component": "Answer model",
+              "short": "Generate answer",
+              "what": "The model drafts the permitted explanation and cites its evidence. It cannot add a claim from a withheld document.",
+              "why": "The same question legitimately has different correct answers for different principals.",
+              "next": "Next: Verify citations and record the permitted response.",
+              "input": {
+                "persona": "account manager",
+                "context_doc_ids": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ]
+              },
+              "output": {
+                "answer": "The permitted contract evidence describes the applicable credit tiers. No engineering root cause is disclosed.",
+                "citations": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Assess whether the draft stays within the evidence; the model is not the access-control authority."
+                }
+              ],
+              "nodeIds": [
+                "generate"
+              ]
+            },
+            {
+              "title": "Verify citations and record the permitted response",
+              "component": "Citation verification + Run trace",
+              "short": "Verify and return",
+              "what": "Every citation must resolve to real permitted evidence. The trace records policy decisions, context IDs and the final response.",
+              "why": "Grounding, authorisation and relevance are different checks; the audit must show what actually reached the model.",
+              "next": "The account manager receives permitted contractual credit information without the engineering root cause.",
+              "input": {
+                "answer": "The permitted contract evidence describes the applicable credit tiers. No engineering root cause is disclosed.",
+                "citation_doc_ids": [
+                  "CONTRACT-1",
+                  "PRICING-1"
+                ]
+              },
+              "output": {
+                "verified": true,
+                "response": "The permitted contract evidence describes the applicable credit tiers. No engineering root cause is disclosed."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Citation IDs must exist and be policy-permitted."
+                },
+                {
+                  "kind": "Judge",
+                  "text": "Assess whether each cited passage supports its associated claim."
+                }
+              ],
+              "nodeIds": [
+                "verify",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "connect",
+            "normalise"
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "plan",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "plan",
+              "to": "retrieve",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "index",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "enforce",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "rerank",
+              "kind": "flow",
+              "points": [
+                [
+                  1070,
+                  93.0
+                ],
+                [
+                  1120,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "rerank",
+              "to": "grade",
+              "kind": "flow",
+              "points": [
+                [
+                  1230.0,
+                  131
+                ],
+                [
+                  1230.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "grade",
+              "to": "generate",
+              "kind": "flow",
+              "points": [
+                [
+                  1120,
+                  268.0
+                ],
+                [
+                  1070,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "generate",
+              "to": "verify",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "verify",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "grade",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  1120,
+                  268.0
+                ],
+                [
+                  1104,
+                  268.0
+                ],
+                [
+                  1104,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "contractor-denied",
+          "label": "External contractor has no permitted evidence",
+          "outcome": "The contractor receives a neutral refusal that does not hint at withheld documents.",
+          "stages": [
+            {
+              "title": "Resolve the external principal",
+              "component": "Identity and ABAC",
+              "short": "External principal",
+              "what": "The contractor has a valid identity in the tenant but is external. The policy denies commercial sources and default-denies the rest for this query.",
+              "why": "Clearance alone cannot override external and default-deny rules.",
+              "next": "Next: Record a neutral refusal.",
+              "input": {
+                "question": "Why did Vertex Financial lose data in March, and do they get service credits?",
+                "external": true
+              },
+              "output": {
+                "allowable_scope": []
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Deny rules override grants; do not expose document names in the refusal."
+                }
+              ],
+              "nodeIds": [
+                "identity"
+              ]
+            },
+            {
+              "title": "Record a neutral refusal",
+              "component": "Run trace",
+              "short": "Refuse neutrally",
+              "what": "No permitted evidence pool exists for this request. The response declines without naming the confidential material it did not use.",
+              "why": "Even refusal wording can leak the existence of withheld content.",
+              "next": "The contractor receives a neutral refusal that does not hint at withheld documents.",
+              "input": {
+                "permitted_docs": []
+              },
+              "output": {
+                "response": "I cannot answer that from the information available to you.",
+                "model_called": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Retrieval, reranking and generation nodes are skipped."
+                }
+              ],
+              "nodeIds": [
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  276,
+                  93.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  310,
+                  268.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "plan",
+            "retrieve",
+            "enforce",
+            "rerank",
+            "grade",
+            "generate",
+            "verify",
+            "connect",
+            "normalise",
+            "index"
+          ]
+        },
+        {
+          "id": "revoked-access",
+          "label": "Live access revoked after indexing",
+          "outcome": "The stale candidate is dropped by the live policy check. No answer is generated from it.",
+          "stages": [
+            {
+              "title": "Resolve a trusted principal and compile the filter",
+              "component": "Identity and ABAC",
+              "short": "Authorise first",
+              "what": "The Tier-1 support agent asks why Vertex lost data and whether credits apply. Fresh tenant, groups, clearance and region become a search filter.",
+              "why": "The answer must depend on what this principal may read, not what a prompt asks the model to hide.",
+              "next": "Next: Plan the read-only question.",
+              "input": {
+                "question": "Why did Vertex Financial lose data in March, and do they get service credits?",
+                "persona": "Tier-1 support agent"
+              },
+              "output": {
+                "tenant": "meridian",
+                "groups": [
+                  "public",
+                  "support_t1"
+                ],
+                "filter": "tenant plus permitted attributes"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Tenant, attributes and group membership come from trusted identity services."
+                }
+              ],
+              "nodeIds": [
+                "identity"
+              ]
+            },
+            {
+              "title": "Plan the read-only question",
+              "component": "Query planner",
+              "short": "Plan retrieval",
+              "what": "The question has a cause part and a credits part. The planner bounds the retrieval work and keeps this request read-only.",
+              "why": "A multi-part question may need several evidence sources but no business write.",
+              "next": "Next: Retrieve only the tenant and attribute slice.",
+              "input": {
+                "parts": [
+                  "cause",
+                  "credit eligibility"
+                ]
+              },
+              "output": {
+                "mode": "read_only",
+                "queries": "bounded"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No tool for issuing credits or changing contracts is in scope."
+                }
+              ],
+              "nodeIds": [
+                "plan"
+              ]
+            },
+            {
+              "title": "Retrieve only the tenant and attribute slice",
+              "component": "Hybrid retrieval + Tenant index",
+              "short": "Filtered hybrid",
+              "what": "Dense and lexical search run inside the tenant partition with the compiled permission filter. Rank fusion combines the two candidate lists.",
+              "why": "Dense search handles paraphrases; lexical search preserves exact ticket and error identifiers.",
+              "next": "Next: Re-check live policy and apply obligations.",
+              "input": {
+                "tenant": "meridian",
+                "groups": [
+                  "public",
+                  "support_t1"
+                ]
+              },
+              "output": {
+                "candidate_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "fusion": "reciprocal rank fusion"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Apply the filter on both dense and lexical retrieval paths."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Search candidates are not yet approved model context."
+                }
+              ],
+              "nodeIds": [
+                "retrieve",
+                "index"
+              ]
+            },
+            {
+              "title": "Catch revoked access in the authoritative post-check",
+              "component": "Policy post-check + Run trace",
+              "short": "Revocation blocks",
+              "what": "A candidate still carries stale indexed group metadata. Fresh principal attributes no longer permit it, so the post-check removes the text and records the disagreement.",
+              "why": "Revocation must not wait for a full content reindex.",
+              "next": "The stale candidate is dropped by the live policy check. No answer is generated from it.",
+              "input": {
+                "candidate_doc_ids": [
+                  "TICKET-1"
+                ],
+                "live_group_member": false
+              },
+              "output": {
+                "permitted_doc_ids": [],
+                "response": "I cannot answer that from the information available to you."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Never send a denied candidate to reranking or generation."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Alert on the filter/post-check disagreement."
+                }
+              ],
+              "nodeIds": [
+                "enforce",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "rerank",
+            "grade",
+            "generate",
+            "verify",
+            "connect",
+            "normalise"
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "plan",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "plan",
+              "to": "retrieve",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "index",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "enforce",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "policy-unavailable",
+          "label": "Authorisation service is unavailable",
+          "outcome": "The request fails closed before retrieval or model access.",
+          "stages": [
+            {
+              "title": "Fail closed when policy cannot be established",
+              "component": "Identity and ABAC + Run trace",
+              "short": "Policy unavailable",
+              "what": "Identity resolution or the policy dependency cannot establish current authorisation. The request stops rather than guessing a safe-looking filter.",
+              "why": "Availability does not justify serving content with unknown permission.",
+              "next": "The request fails closed before retrieval or model access.",
+              "input": {
+                "question": "Why did Vertex lose data?",
+                "policy_service": "unavailable"
+              },
+              "output": {
+                "status": "refused",
+                "retrieved_docs": []
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No fallback may bypass authorisation."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  276,
+                  93.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  310,
+                  268.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "plan",
+            "retrieve",
+            "enforce",
+            "rerank",
+            "grade",
+            "generate",
+            "verify",
+            "connect",
+            "normalise",
+            "index"
+          ]
+        },
+        {
+          "id": "insufficient-evidence",
+          "label": "Permitted chunks do not support an answer",
+          "outcome": "The system refuses and escalates; relevant-looking snippets do not become a fabricated answer.",
+          "stages": [
+            {
+              "title": "Resolve a trusted principal and compile the filter",
+              "component": "Identity and ABAC",
+              "short": "Authorise first",
+              "what": "The Tier-1 support agent asks why Vertex lost data and whether credits apply. Fresh tenant, groups, clearance and region become a search filter.",
+              "why": "The answer must depend on what this principal may read, not what a prompt asks the model to hide.",
+              "next": "Next: Plan the read-only question.",
+              "input": {
+                "question": "Why did Vertex Financial lose data in March, and do they get service credits?",
+                "persona": "Tier-1 support agent"
+              },
+              "output": {
+                "tenant": "meridian",
+                "groups": [
+                  "public",
+                  "support_t1"
+                ],
+                "filter": "tenant plus permitted attributes"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Tenant, attributes and group membership come from trusted identity services."
+                }
+              ],
+              "nodeIds": [
+                "identity"
+              ]
+            },
+            {
+              "title": "Plan the read-only question",
+              "component": "Query planner",
+              "short": "Plan retrieval",
+              "what": "The question has a cause part and a credits part. The planner bounds the retrieval work and keeps this request read-only.",
+              "why": "A multi-part question may need several evidence sources but no business write.",
+              "next": "Next: Retrieve only the tenant and attribute slice.",
+              "input": {
+                "parts": [
+                  "cause",
+                  "credit eligibility"
+                ]
+              },
+              "output": {
+                "mode": "read_only",
+                "queries": "bounded"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No tool for issuing credits or changing contracts is in scope."
+                }
+              ],
+              "nodeIds": [
+                "plan"
+              ]
+            },
+            {
+              "title": "Retrieve only the tenant and attribute slice",
+              "component": "Hybrid retrieval + Tenant index",
+              "short": "Filtered hybrid",
+              "what": "Dense and lexical search run inside the tenant partition with the compiled permission filter. Rank fusion combines the two candidate lists.",
+              "why": "Dense search handles paraphrases; lexical search preserves exact ticket and error identifiers.",
+              "next": "Next: Re-check live policy and apply obligations.",
+              "input": {
+                "tenant": "meridian",
+                "groups": [
+                  "public",
+                  "support_t1"
+                ]
+              },
+              "output": {
+                "candidate_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "fusion": "reciprocal rank fusion"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Apply the filter on both dense and lexical retrieval paths."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "Search candidates are not yet approved model context."
+                }
+              ],
+              "nodeIds": [
+                "retrieve",
+                "index"
+              ]
+            },
+            {
+              "title": "Re-check live policy and apply obligations",
+              "component": "Policy post-check",
+              "short": "Enforce live policy",
+              "what": "The authoritative policy checks tenant, clearance, residency, embargo, need-to-know, external status and default deny. Only allowed, appropriately redacted text remains.",
+              "why": "The cheap index filter cannot implement live revocation or every policy obligation.",
+              "next": "Next: Reject insufficient permitted evidence.",
+              "input": {
+                "candidate_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "principal": "Tier-1 support agent"
+              },
+              "output": {
+                "model_eligible_doc_ids": [
+                  "HELP-1",
+                  "TICKET-1"
+                ],
+                "obligations": "PII redacted where required"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Fresh policy evaluation precedes reranking and model context."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "A pre-filter/post-check disagreement is a staleness or security signal."
+                }
+              ],
+              "nodeIds": [
+                "enforce"
+              ]
+            },
+            {
+              "title": "Reject insufficient permitted evidence",
+              "component": "Reranking + Evidence sufficiency + Run trace",
+              "short": "Evidence insufficient",
+              "what": "Reranking finds topically relevant support snippets, but none supports the asked claim. Sufficiency returns insufficient and the response offers escalation.",
+              "why": "A document can be relevant and permitted without supporting the answer.",
+              "next": "The system refuses and escalates; relevant-looking snippets do not become a fabricated answer.",
+              "input": {
+                "permitted_docs": [
+                  "HELP-1"
+                ],
+                "claim_supported": false
+              },
+              "output": {
+                "status": "insufficient_evidence",
+                "generated_answer": false
+              },
+              "checks": [
+                {
+                  "kind": "Judge",
+                  "text": "Evaluate support against the permitted passages, not similarity score."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Skip generation after insufficient evidence."
+                }
+              ],
+              "nodeIds": [
+                "rerank",
+                "grade",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "generate",
+            "verify",
+            "connect",
+            "normalise"
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "plan",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "plan",
+              "to": "retrieve",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "index",
+              "kind": "data",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "retrieve",
+              "to": "enforce",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "rerank",
+              "kind": "flow",
+              "points": [
+                [
+                  1070,
+                  93.0
+                ],
+                [
+                  1120,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "rerank",
+              "to": "grade",
+              "kind": "flow",
+              "points": [
+                [
+                  1230.0,
+                  131
+                ],
+                [
+                  1230.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "enforce",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "grade",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  1120,
+                  268.0
+                ],
+                [
+                  1104,
+                  268.0
+                ],
+                [
+                  1104,
+                  214
+                ],
+                [
+                  546,
+                  214
+                ],
+                [
+                  546,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ingestion-acl-missing",
+          "label": "Source document has no usable ACL",
+          "outcome": "The document is rejected before chunking, embedding or indexing.",
+          "stages": [
+            {
+              "title": "Read one source record and its permissions",
+              "component": "Source connectors",
+              "short": "Read source ACL",
+              "what": "A connector receives a changed source document. It must translate the source permission model along with the content.",
+              "why": "An ingestion bug can create a latent leak long before a user asks.",
+              "next": "Next: Reject the ungovernable document.",
+              "input": {
+                "request": "Ingest changed source document DOC-9.",
+                "source_acl": null
+              },
+              "output": {
+                "document": "DOC-9",
+                "acl_status": "missing"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not assign a permissive default ACL."
+                }
+              ],
+              "nodeIds": [
+                "connect"
+              ]
+            },
+            {
+              "title": "Reject the ungovernable document",
+              "component": "Normalise and validate",
+              "short": "Refuse ingestion",
+              "what": "Validation finds no usable ACL. The record is refused and sent for connector correction, never into the tenant index.",
+              "why": "Every chunk inherits a validated resource policy or stays out of retrieval.",
+              "next": "The document is rejected before chunking, embedding or indexing.",
+              "input": {
+                "document": "DOC-9",
+                "usable_acl": false
+              },
+              "output": {
+                "status": "rejected",
+                "indexed": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No chunking, embedding or index write follows invalid ACL validation."
+                }
+              ],
+              "nodeIds": [
+                "normalise"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "identity",
+            "plan",
+            "retrieve",
+            "enforce",
+            "rerank",
+            "grade",
+            "generate",
+            "verify",
+            "audit",
+            "index"
+          ],
+          "edges": [
+            {
+              "from": "connect",
+              "to": "normalise",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  443.0
+                ],
+                [
+                  310,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cross-tenant-denied",
+          "label": "Another tenant asks the same question",
+          "outcome": "The other tenant receives no Meridian evidence or indication of withheld documents.",
+          "stages": [
+            {
+              "title": "Keep the tenant partition isolated",
+              "component": "Identity and ABAC + Run trace",
+              "short": "Tenant isolation",
+              "what": "The authenticated principal belongs to a different tenant. Its search scope cannot include Meridian, regardless of clearance or groups.",
+              "why": "Tenant isolation is the first hard boundary.",
+              "next": "The other tenant receives no Meridian evidence or indication of withheld documents.",
+              "input": {
+                "question": "Why did Vertex Financial lose data in March?",
+                "tenant": "other-co"
+              },
+              "output": {
+                "meridian_scope": false,
+                "response": "I cannot answer that from the information available to you."
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Never let request text select another tenant collection."
+                }
+              ],
+              "nodeIds": [
+                "identity",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "identity",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  276,
+                  93.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  310,
+                  268.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "plan",
+            "retrieve",
+            "enforce",
+            "rerank",
+            "grade",
+            "generate",
+            "verify",
+            "connect",
+            "normalise",
+            "index"
+          ]
+        }
+      ],
+      "revision": {
+        "pitch": "I would start by drawing the persona table: the same question must produce different correct answers. Access control therefore shapes retrieval. Ingestion translates source permissions, refuses unusable ACLs and indexes within a tenant partition. At query time, trusted identity attributes compile into a cheap search filter. Dense and lexical retrieval run under that filter and combine by rank fusion. Before any model sees text, an authoritative policy check re-evaluates live attributes and applies obligations such as redaction. Only that authorised pool is reranked and checked for enough evidence. The model drafts a cited answer, then citations are verified as real, permitted and supporting the claims. I would trace the actual context and separate forbidden-document labels from irrelevant-document labels in evaluation. Any leak blocks release. Non-security dependencies can degrade; authorisation cannot. If policy is unavailable, we refuse.",
+        "flow": "Authorise → plan → filtered hybrid retrieval → authoritative enforcement → rerank → grade evidence → generate → verify",
+        "requirements": [
+          [
+            "Functional",
+            "Read-only multi-source Q&A, source permission translation, attribute-scoped hybrid retrieval, live enforcement, redaction obligations, evidence sufficiency, cited answers and replayable traces."
+          ],
+          [
+            "Non-functional",
+            "Tenant isolation, deny-overrides/default deny, live revocation, target below three seconds, graceful non-security degradation and a deterministic zero-leak release gate."
+          ]
+        ],
+        "discovery": [
+          "Who are the users, and do they all see the same data?",
+          "What are the sources, and who owns permissions in each?",
+          "What is the sensitivity range, and what regulatory constraints apply?",
+          "What are the scale and latency budget?",
+          "Can the assistant act, and what does a wrong answer cost?"
+        ],
+        "tradeoff": "Tenant partitioning plus pre-filtering adds operational work but bounds the blast radius. The authoritative post-check adds a hop and catches live revocation and obligations the index filter cannot express.",
+        "failure": "A stale index returns a candidate after access was revoked. The live post-check drops it before model context and records the disagreement.",
+        "ops": [
+          [
+            "Scale",
+            "Per-request rebuilding of a lexical index is the reference bottleneck. A production lexical store needs document-level security or correctly scoped shards."
+          ],
+          [
+            "Latency",
+            "Bound query expansion and measure model, reranker and search spans; the under-three-second figure is a target."
+          ],
+          [
+            "Cost",
+            "Cache embeddings by content hash, decouple ACL changes from content re-embedding, and bound model fan-out."
+          ],
+          [
+            "Evaluation",
+            "Use retrieval recall/MRR and groundedness for quality. Separately assert forbidden IDs never reach model context; any leak blocks release."
+          ]
+        ],
+        "remember": "The filter makes retrieval cheap. The authoritative post-check makes it correct."
+      },
+      "sourceMap": [
+        {
+          "section": "Frame the Round Around Different Correct Answers",
+          "where": "Understand the problem",
+          "note": "The discovery questions retain persona, permissions, sensitivity, scope and latency."
+        },
+        {
+          "section": "Anchor on One Question and Five Personas",
+          "where": "Explore flow",
+          "note": "Tier-1, Tier-3, account-manager, contractor and cross-tenant outcomes are separate scenarios."
+        },
+        {
+          "section": "Draw Two Flows and Make the Order Structural",
+          "where": "Explore flow",
+          "note": "Query edges enforce policy before models. A separate ingestion failure stops a missing-ACL record before indexing."
+        },
+        {
+          "section": "Choose Pre-Filtering Inside a Tenant Partition",
+          "where": "Explore flow and revision",
+          "note": "Tenant isolation and filtered search are structural. The complete pattern comparison remains in the lesson."
+        },
+        {
+          "section": "Split the Check Into a Cheap Filter and an Authoritative Post-Check",
+          "where": "Explore flow",
+          "note": "The live-revocation branch demonstrates why both layers exist."
+        },
+        {
+          "section": "Retrieve Hybrid, Then Rerank After Enforcement",
+          "where": "Explore flow and revision",
+          "note": "Hybrid, rank fusion and permitted-only reranking are represented. HyDE and multi-query techniques remain in the lesson."
+        },
+        {
+          "section": "Gate Releases on Zero Leaks",
+          "where": "Interview revision",
+          "note": "Security labels and a deterministic release gate are explained; the explorer does not execute a real security suite."
+        },
+        {
+          "section": "Degrade Everywhere Except Authorisation",
+          "where": "Explore flow and revision",
+          "note": "Policy outage fails closed. The full dependency fallback table remains in the written lesson."
+        },
+        {
+          "section": "Close With the Thesis and Week One",
+          "where": "Revision and Read lesson",
+          "note": "The thesis is compressed; the detailed customer week-one plan remains in the lesson."
+        },
+        {
+          "section": "Worked Example: One Question, Three Personas",
+          "where": "Explore flow",
+          "note": "The same Vertex question produces distinct permitted responses."
+        },
+        {
+          "section": "Key Takeaways",
+          "where": "Interview revision",
+          "note": "Security, retrieval and generation checks stay separate."
+        },
+        {
+          "section": "Check Yourself",
+          "where": "Read lesson",
+          "note": "This section remains in the written lesson. The explorer does not reproduce every detail."
+        },
+        {
+          "section": "References",
+          "where": "Canonical source",
+          "note": "The explorer is grounded in this Markdown. Upstream references remain in the local source; the public lesson omits the reference appendix."
+        }
+      ],
+      "limitations": [
+        "A prewritten guided explanation; no live customer systems, models or actions are connected.",
+        "Scenario payloads and outcomes are illustrative. Targets and figures from the source are scenario assumptions, not measurements made by this explorer.",
+        "Document IDs and answer text are illustrative adaptations; no real Meridian documents are present.",
+        "The explorer demonstrates selected query and ingestion boundaries. It does not execute a leak suite, retrieval backend or ABAC engine."
+      ]
+    }
+  ]
+}

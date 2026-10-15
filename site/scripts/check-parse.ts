@@ -43,6 +43,7 @@ import { diagramKey } from '../src/lib/diagram-key.ts'
 import { mermaidFences } from './render-diagrams.mjs'
 import { CASEBOOK_MODULE, MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard, splitH2 } from './learn.mjs'
+import { checkExplorerSnapshots } from './explorers.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
 
@@ -912,6 +913,12 @@ const LONG_PAGE_IS_ERROR = true
         (grown.length ? ` (grown: ${grown.join(', ')}; refresh with --update-baseline)` : ''),
     )
   }
+}
+
+try {
+  rows.push(`\n  ${await checkExplorerSnapshots(resolve(CONTENT, '../..'), resolve(CONTENT, '..'))}`)
+} catch (error) {
+  failures.push(`explorers: ${error instanceof Error ? error.message : String(error)}`)
 }
 
 console.log(rows.join('\n'))

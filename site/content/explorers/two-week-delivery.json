@@ -1,0 +1,2689 @@
+{
+  "title": "Delivering an Agent in Two Weeks with Enforced Gates — Interactive Explorer",
+  "subtitle": "Explore the flow. Understand the decisions. Revise.",
+  "sources": [
+    {
+      "id": "two-week-delivery-lesson",
+      "title": "Delivering an Agent in Two Weeks with Enforced Gates",
+      "file": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md",
+      "note": "Canonical lesson read in full. The source map distinguishes interactive coverage from material retained in the written lesson."
+    }
+  ],
+  "systems": [
+    {
+      "id": "two-week-delivery",
+      "name": "Delivering an Agent in Two Weeks with Enforced Gates",
+      "nav": "Delivering an Agent in Two Weeks with Enforced Gates",
+      "family": "Classic AI designs",
+      "tag": "T5.4",
+      "headline": "One engagement. Every transition needs authority.",
+      "requestLabel": "ENGAGEMENT REQUEST",
+      "discoverySection": "Frame the Round on Gates, Not Boxes",
+      "description": "Treat delivery as an evidence-bound state machine with role-specific sign-offs and visible refusal, stall and no-go outcomes.",
+      "question": "Move Northwind’s support-triage engagement from intake to an approved handover without skipping a gate.",
+      "scope": "The explorer explains an operating model. It does not provision infrastructure, run a real evaluation harness or guarantee that every engagement deploys within two weeks.",
+      "provenance": "Architecture, requirements and boundaries are adapted from the named canonical Markdown. Scenario branches, identifiers and payloads are illustrative teaching examples, not executions or measured results. Source assumptions remain assumptions.",
+      "sourceIds": [
+        "two-week-delivery-lesson"
+      ],
+      "discovery": [
+        {
+          "question": "Is two weeks a hard SLA or a target?",
+          "answer": "The source does not give one universal answer; a failed gate must stay a failed gate.",
+          "decision": "Agree whether a stop means delay, abort or re-scope before starting the clock."
+        },
+        {
+          "question": "Who owns the go/no-go decision?",
+          "answer": "The anchor assigns success-metrics sign-off to the sponsor.",
+          "decision": "Bind the gate to an allowed role; seniority or deadline pressure does not confer that role."
+        },
+        {
+          "question": "What is genuinely reusable across customers?",
+          "answer": "The source tracks asset pulls and describes five reused assets out of six for Northwind.",
+          "decision": "Record reuse versus custom work; a list of asset names is not a production implementation library."
+        },
+        {
+          "question": "What happens when a hard gate genuinely fails?",
+          "answer": "The engagement remains at its stage with a named, logged outcome.",
+          "decision": "Model denial and no-go as first-class states; never skip a failed gate to hit the date."
+        },
+        {
+          "question": "Is this for one team or an organisation-wide standard?",
+          "answer": "The source raises this as a question to resolve.",
+          "decision": "Decide ownership and versioning of the shared accelerator library and measure reviewer capacity across engagements."
+        }
+      ],
+      "diagram": {
+        "width": 1160,
+        "height": 620,
+        "nodes": [
+          {
+            "id": "intake",
+            "label": "Engagement intake",
+            "sub": "Measurable metrics and SME",
+            "x": 40,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "scope",
+            "label": "Scoping · days 1–2",
+            "sub": "Security reviewer sign-off",
+            "x": 310,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "data",
+            "label": "Data ready · days 3–4",
+            "sub": "Customer SME data access",
+            "x": 580,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "configure",
+            "label": "Configure · days 5–7",
+            "sub": "SME signs the golden set",
+            "x": 850,
+            "y": 55,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "evaluate",
+            "label": "Evaluate · days 8–9",
+            "sub": "FDA signs baseline evidence",
+            "x": 850,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "shadow",
+            "label": "Shadow · days 10–11",
+            "sub": "FDA signs tested rollback",
+            "x": 580,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "limited",
+            "label": "Limited prod · days 12–13",
+            "sub": "Gather agreed success evidence",
+            "x": 310,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "sponsor",
+            "label": "Go/no-go · day 14",
+            "sub": "Sponsor owns the decision",
+            "x": 40,
+            "y": 230,
+            "w": 220,
+            "h": 76,
+            "role": "branch"
+          },
+          {
+            "id": "deploy",
+            "label": "Deployment handover",
+            "sub": "Runbook and dashboards",
+            "x": 40,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "component"
+          },
+          {
+            "id": "library",
+            "label": "Accelerator library",
+            "sub": "Reused or custom asset pulls",
+            "x": 850,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "data"
+          },
+          {
+            "id": "escalate",
+            "label": "Day-3 escalation",
+            "sub": "Pending data-access gate",
+            "x": 580,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "branch"
+          },
+          {
+            "id": "audit",
+            "label": "Engagement event log",
+            "sub": "Evidence, denials and reuse",
+            "x": 310,
+            "y": 405,
+            "w": 220,
+            "h": 76,
+            "role": "observation"
+          }
+        ],
+        "edges": [
+          {
+            "from": "intake",
+            "to": "scope",
+            "kind": "flow",
+            "points": [
+              [
+                260,
+                93.0
+              ],
+              [
+                310,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "scope",
+            "to": "data",
+            "kind": "flow",
+            "points": [
+              [
+                530,
+                93.0
+              ],
+              [
+                580,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "data",
+            "to": "configure",
+            "kind": "flow",
+            "points": [
+              [
+                800,
+                93.0
+              ],
+              [
+                850,
+                93.0
+              ]
+            ]
+          },
+          {
+            "from": "configure",
+            "to": "evaluate",
+            "kind": "flow",
+            "points": [
+              [
+                960.0,
+                131
+              ],
+              [
+                960.0,
+                230
+              ]
+            ]
+          },
+          {
+            "from": "configure",
+            "to": "library",
+            "kind": "data",
+            "points": [
+              [
+                850,
+                93.0
+              ],
+              [
+                834,
+                93.0
+              ],
+              [
+                834,
+                443.0
+              ],
+              [
+                850,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "evaluate",
+            "to": "shadow",
+            "kind": "flow",
+            "points": [
+              [
+                850,
+                268.0
+              ],
+              [
+                800,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "shadow",
+            "to": "limited",
+            "kind": "flow",
+            "points": [
+              [
+                580,
+                268.0
+              ],
+              [
+                530,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "limited",
+            "to": "sponsor",
+            "kind": "flow",
+            "points": [
+              [
+                310,
+                268.0
+              ],
+              [
+                260,
+                268.0
+              ]
+            ]
+          },
+          {
+            "from": "sponsor",
+            "to": "deploy",
+            "kind": "branch",
+            "points": [
+              [
+                150.0,
+                306
+              ],
+              [
+                150.0,
+                405
+              ]
+            ]
+          },
+          {
+            "from": "data",
+            "to": "escalate",
+            "kind": "branch",
+            "points": [
+              [
+                580,
+                93.0
+              ],
+              [
+                564,
+                93.0
+              ],
+              [
+                564,
+                443.0
+              ],
+              [
+                580,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "escalate",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                580,
+                443.0
+              ],
+              [
+                530,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "deploy",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                260,
+                443.0
+              ],
+              [
+                310,
+                443.0
+              ]
+            ]
+          },
+          {
+            "from": "sponsor",
+            "to": "audit",
+            "kind": "observation",
+            "points": [
+              [
+                260,
+                268.0
+              ],
+              [
+                276,
+                268.0
+              ],
+              [
+                276,
+                443.0
+              ],
+              [
+                310,
+                443.0
+              ]
+            ]
+          }
+        ]
+      },
+      "scenarios": [
+        {
+          "id": "evidence-approved",
+          "label": "All gates pass under an agreed day-14 evidence contract",
+          "outcome": "The sponsor authorises the scoped handover. The week-4 live target remains an explicit follow-up, not a result already measured on day 14.",
+          "stages": [
+            {
+              "title": "Accept only an engagement ready to start",
+              "component": "Engagement intake",
+              "short": "Ready intake",
+              "what": "Northwind proposes Tier-1 support triage over Zendesk, Confluence and Salesforce. Intake checks measurable metrics, an assigned customer SME and an agreed day-14 evidence contract.",
+              "why": "The two-week clock should start from readiness, not an unmeasurable ambition.",
+              "next": "Next: Let the security reviewer sign the scoping gate.",
+              "input": {
+                "request": "Deliver the Northwind support triage agent.",
+                "customer_sme": "assigned",
+                "first_response_target_minutes": 5,
+                "week4_zero_edit_target": 0.6
+              },
+              "output": {
+                "intake": "accepted",
+                "day14_proxy": "eligible-ticket replay agreed",
+                "week4_live_measurement": "still future"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require measurable success criteria and a named customer SME."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Do not label a future week-4 live metric as already measured on day 14."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            },
+            {
+              "title": "Let the security reviewer sign the scoping gate",
+              "component": "Scoping · days 1–2",
+              "short": "Security sign-off",
+              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "next": "Next: Require the customer SME’s data-access evidence.",
+              "input": {
+                "gate": "security_review",
+                "signer_role": "security_reviewer",
+                "evidence": "review-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                }
+              ],
+              "nodeIds": [
+                "scope"
+              ]
+            },
+            {
+              "title": "Require the customer SME’s data-access evidence",
+              "component": "Data ready · days 3–4",
+              "short": "Data sign-off",
+              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
+              "next": "Next: Reuse assets and obtain golden-set sign-off.",
+              "input": {
+                "gate": "data_access",
+                "signer_role": "customer_sme",
+                "evidence": "source-access-checks-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "CONFIGURE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The FDA cannot substitute their own role for the customer SME."
+                }
+              ],
+              "nodeIds": [
+                "data"
+              ]
+            },
+            {
+              "title": "Reuse assets and obtain golden-set sign-off",
+              "component": "Configure · days 5–7 + Accelerator library",
+              "short": "Reuse and golden set",
+              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
+              "next": "Next: Attach evaluation evidence and FDA approval.",
+              "input": {
+                "asset_pulls": 6,
+                "reused": 5,
+                "custom": [
+                  "guardrail_policy"
+                ],
+                "golden_set_signer": "customer_sme"
+              },
+              "output": {
+                "reuse_ratio": "5/6 ≈ 83%",
+                "golden_set": "signed",
+                "next_stage": "EVALUATE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No Evaluate transition without the required golden-set evidence."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "The source library contains named assets, not a fully wired library of production implementations."
+                }
+              ],
+              "nodeIds": [
+                "configure",
+                "library"
+              ]
+            },
+            {
+              "title": "Attach evaluation evidence and FDA approval",
+              "component": "Evaluate · days 8–9",
+              "short": "Evaluation gate",
+              "what": "The Evaluate gate receives a baseline report and the FDA’s sign-off. The framework validates authority and evidence presence, not the correctness of an unconnected evaluation harness.",
+              "why": "Gate enforcement and evidence production are separate responsibilities.",
+              "next": "Next: Refuse to advance without tested rollback.",
+              "input": {
+                "gate": "eval_baseline",
+                "signer_role": "fda",
+                "evidence": "baseline-report-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "SHADOW"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Earlier gates must already be passed."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "In the source reference, the real evaluation harness is not wired into this gate."
+                }
+              ],
+              "nodeIds": [
+                "evaluate"
+              ]
+            },
+            {
+              "title": "Test rollback before limited production",
+              "component": "Shadow · days 10–11",
+              "short": "Rollback gate",
+              "what": "The team runs the agreed shadow checks and attaches rollback-test evidence. An FDA signs rollback_tested, allowing the next stage only after that gate passes.",
+              "why": "A runbook saying rollback exists is different from evidence that it works.",
+              "next": "Next: Identify the future evidence gap.",
+              "input": {
+                "gate": "rollback_tested",
+                "signer_role": "fda",
+                "evidence": "rollback-test-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "LIMITED_PROD"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No stage can jump over the rollback gate."
+                }
+              ],
+              "nodeIds": [
+                "shadow"
+              ]
+            },
+            {
+              "title": "Collect the explicitly agreed day-14 evidence",
+              "component": "Limited prod · days 12–13",
+              "short": "Day-14 evidence",
+              "what": "Limited production supplies first-response evidence. The example also supplies an agreed eligible-ticket replay for zero-edit behaviour, while the week-4 live target remains scheduled for follow-up.",
+              "why": "A day-14 decision cannot honestly certify a future week-4 live result.",
+              "next": "Next: Let the sponsor make the evidence-bound go/no-go.",
+              "input": {
+                "first_response_minutes": 4.2,
+                "eligible_ticket_replay_zero_edit": 0.64,
+                "evidence_type": "illustrative day14 proxy"
+              },
+              "output": {
+                "day14_contract": "met in this scenario",
+                "week4_live_target": "not yet measured"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "These numbers are illustrative inputs. The proxy must have been agreed at intake, not substituted at the deadline."
+                }
+              ],
+              "nodeIds": [
+                "limited"
+              ]
+            },
+            {
+              "title": "Let the sponsor make the evidence-bound go/no-go",
+              "component": "Go/no-go · day 14",
+              "short": "Sponsor decides",
+              "what": "The sponsor reviews the agreed day-14 evidence and signs success_metrics for the scoped release. The future week-4 live check remains explicitly open.",
+              "why": "The sponsor owns the decision; the delivery lead cannot silently change what counts as success.",
+              "next": "Next: Hand over the scoped deployment and permanent record.",
+              "input": {
+                "signer_role": "sponsor",
+                "day14_evidence": "agreed proxy plus response report",
+                "week4_live_status": "pending"
+              },
+              "output": {
+                "decision": "go_for_scoped_release",
+                "week4_follow_up": "required"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "If the agreed gate requires actual week-4 live evidence, this day-14 sign-off must remain blocked instead."
+                }
+              ],
+              "nodeIds": [
+                "sponsor"
+              ]
+            },
+            {
+              "title": "Hand over the scoped deployment and permanent record",
+              "component": "Deployment handover + Engagement event log",
+              "short": "Handover",
+              "what": "The approved engagement reaches the deployment handover with a runbook and dashboards. The event record retains signers, evidence, asset reuse and the pending follow-up.",
+              "why": "A successful path is a sequence of authorised decisions, not proof that every customer can deploy in two weeks.",
+              "next": "The sponsor authorises the scoped handover. The week-4 live target remains an explicit follow-up, not a result already measured on day 14.",
+              "input": {
+                "approved_release": "scoped Northwind triage",
+                "runbook": "attached",
+                "dashboards": "attached"
+              },
+              "output": {
+                "stage": "DEPLOYED in this illustrative scenario",
+                "week4_live_follow_up": "open"
+              },
+              "checks": [
+                {
+                  "kind": "Observe",
+                  "text": "This is a simulated case outcome; the local explorer deploys no agent or infrastructure."
+                }
+              ],
+              "nodeIds": [
+                "deploy",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "escalate"
+          ],
+          "edges": [
+            {
+              "from": "intake",
+              "to": "scope",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "scope",
+              "to": "data",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "data",
+              "to": "configure",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "evaluate",
+              "kind": "flow",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "library",
+              "kind": "data",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "evaluate",
+              "to": "shadow",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "shadow",
+              "to": "limited",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "limited",
+              "to": "sponsor",
+              "kind": "flow",
+              "points": [
+                [
+                  310,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "sponsor",
+              "to": "deploy",
+              "kind": "branch",
+              "points": [
+                [
+                  150.0,
+                  306
+                ],
+                [
+                  150.0,
+                  405
+                ]
+              ]
+            },
+            {
+              "from": "deploy",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  443.0
+                ],
+                [
+                  310,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "sponsor",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  268.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  310,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "wrong-role",
+          "label": "FDA tries to sign the customer data gate",
+          "outcome": "The sign-off is denied and logged. The engagement remains DATA_READY with no partial advance.",
+          "stages": [
+            {
+              "title": "Accept only an engagement ready to start",
+              "component": "Engagement intake",
+              "short": "Ready intake",
+              "what": "Northwind proposes Tier-1 support triage over Zendesk, Confluence and Salesforce. Intake checks measurable metrics, an assigned customer SME and an agreed day-14 evidence contract.",
+              "why": "The two-week clock should start from readiness, not an unmeasurable ambition.",
+              "next": "Next: Let the security reviewer sign the scoping gate.",
+              "input": {
+                "request": "Deliver the Northwind support triage agent.",
+                "customer_sme": "assigned",
+                "first_response_target_minutes": 5,
+                "week4_zero_edit_target": 0.6
+              },
+              "output": {
+                "intake": "accepted",
+                "day14_proxy": "eligible-ticket replay agreed",
+                "week4_live_measurement": "still future"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require measurable success criteria and a named customer SME."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Do not label a future week-4 live metric as already measured on day 14."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            },
+            {
+              "title": "Let the security reviewer sign the scoping gate",
+              "component": "Scoping · days 1–2",
+              "short": "Security sign-off",
+              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "next": "Next: Require the customer SME’s data-access evidence.",
+              "input": {
+                "gate": "security_review",
+                "signer_role": "security_reviewer",
+                "evidence": "review-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                }
+              ],
+              "nodeIds": [
+                "scope"
+              ]
+            },
+            {
+              "title": "Deny the wrong signer without changing state",
+              "component": "Data ready · days 3–4 + Engagement event log",
+              "short": "Wrong role denied",
+              "what": "The impatient FDA attempts data_access. The gate permits only the customer SME role, so the attempt is denied and logged.",
+              "why": "The person closest to the work is not automatically authorised to certify customer access.",
+              "next": "The sign-off is denied and logged. The engagement remains DATA_READY with no partial advance.",
+              "input": {
+                "gate": "data_access",
+                "signer_role": "fda",
+                "evidence": "I checked it"
+              },
+              "output": {
+                "decision": "denied",
+                "stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Role mismatch leaves the gate and stage unchanged."
+                }
+              ],
+              "nodeIds": [
+                "data",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "intake",
+              "to": "scope",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "scope",
+              "to": "data",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "data",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  530,
+                  443.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "configure",
+            "evaluate",
+            "shadow",
+            "limited",
+            "sponsor",
+            "deploy",
+            "library",
+            "escalate"
+          ]
+        },
+        {
+          "id": "day-three-escalation",
+          "label": "Day 3 arrives without data access",
+          "outcome": "One escalation is recorded. The engagement stays blocked until the customer SME supplies the required sign-off.",
+          "stages": [
+            {
+              "title": "Accept only an engagement ready to start",
+              "component": "Engagement intake",
+              "short": "Ready intake",
+              "what": "Northwind proposes Tier-1 support triage over Zendesk, Confluence and Salesforce. Intake checks measurable metrics, an assigned customer SME and an agreed day-14 evidence contract.",
+              "why": "The two-week clock should start from readiness, not an unmeasurable ambition.",
+              "next": "Next: Let the security reviewer sign the scoping gate.",
+              "input": {
+                "request": "Deliver the Northwind support triage agent.",
+                "customer_sme": "assigned",
+                "first_response_target_minutes": 5,
+                "week4_zero_edit_target": 0.6
+              },
+              "output": {
+                "intake": "accepted",
+                "day14_proxy": "eligible-ticket replay agreed",
+                "week4_live_measurement": "still future"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require measurable success criteria and a named customer SME."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Do not label a future week-4 live metric as already measured on day 14."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            },
+            {
+              "title": "Let the security reviewer sign the scoping gate",
+              "component": "Scoping · days 1–2",
+              "short": "Security sign-off",
+              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "next": "Next: Require the customer SME’s data-access evidence.",
+              "input": {
+                "gate": "security_review",
+                "signer_role": "security_reviewer",
+                "evidence": "review-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                }
+              ],
+              "nodeIds": [
+                "scope"
+              ]
+            },
+            {
+              "title": "Keep the missing data gate pending",
+              "component": "Data ready · days 3–4",
+              "short": "Data gate pending",
+              "what": "On day 3 data_access still has no customer SME sign-off. The framework retains DATA_READY.",
+              "why": "Time passed is not evidence that permissions work.",
+              "next": "Next: Escalate once and retain the stall.",
+              "input": {
+                "day": 3,
+                "gate": "data_access",
+                "status": "pending"
+              },
+              "output": {
+                "stage": "DATA_READY",
+                "can_configure": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not advance while the predecessor gate is pending."
+                }
+              ],
+              "nodeIds": [
+                "data"
+              ]
+            },
+            {
+              "title": "Escalate once and retain the stall",
+              "component": "Day-3 escalation + Engagement event log",
+              "short": "Escalate once",
+              "what": "The scheduled trigger records the data-access escalation once. It does not fabricate a sign-off or reset the engagement into a later stage.",
+              "why": "An automatic logged escalation makes the blocking reason visible even when nobody remembers to chase it.",
+              "next": "One escalation is recorded. The engagement stays blocked until the customer SME supplies the required sign-off.",
+              "input": {
+                "day": 3,
+                "data_gate": "pending",
+                "escalation_sent_before": false
+              },
+              "output": {
+                "escalation": "recorded once",
+                "stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Repeated trigger checks must not create duplicate escalation events."
+                }
+              ],
+              "nodeIds": [
+                "escalate",
+                "audit"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "configure",
+            "evaluate",
+            "shadow",
+            "limited",
+            "sponsor",
+            "deploy",
+            "library"
+          ],
+          "edges": [
+            {
+              "from": "intake",
+              "to": "scope",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "scope",
+              "to": "data",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "data",
+              "to": "escalate",
+              "kind": "branch",
+              "points": [
+                [
+                  580,
+                  93.0
+                ],
+                [
+                  564,
+                  93.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  580,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "escalate",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  580,
+                  443.0
+                ],
+                [
+                  530,
+                  443.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "intake-refused",
+          "label": "Success criteria are not measurable",
+          "outcome": "Intake refuses the engagement. No day-1 scoping clock or downstream gate begins.",
+          "stages": [
+            {
+              "title": "Refuse the unmeasurable engagement",
+              "component": "Engagement intake",
+              "short": "Intake refuses",
+              "what": "The request says only make the agent helpful and has no assigned SME. Intake cannot define a measurable pass, so it refuses the engagement.",
+              "why": "Starting a clock against an undefined success target hides risk instead of accelerating delivery.",
+              "next": "Intake refuses the engagement. No day-1 scoping clock or downstream gate begins.",
+              "input": {
+                "request": "Make our agent helpful in two weeks.",
+                "measurable_metric": null,
+                "customer_sme": null
+              },
+              "output": {
+                "intake": "refused",
+                "reason": [
+                  "unmeasurable metrics",
+                  "no SME"
+                ]
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Reject before the engagement enters Scoping."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            }
+          ],
+          "skipNodes": [
+            "scope",
+            "data",
+            "configure",
+            "evaluate",
+            "shadow",
+            "limited",
+            "sponsor",
+            "deploy",
+            "library",
+            "escalate",
+            "audit"
+          ],
+          "edges": []
+        },
+        {
+          "id": "golden-set-pending",
+          "label": "Customer has not signed the golden set",
+          "outcome": "The engagement remains in Configure. Evaluation cannot start without the customer’s golden-set sign-off.",
+          "stages": [
+            {
+              "title": "Accept only an engagement ready to start",
+              "component": "Engagement intake",
+              "short": "Ready intake",
+              "what": "Northwind proposes Tier-1 support triage over Zendesk, Confluence and Salesforce. Intake checks measurable metrics, an assigned customer SME and an agreed day-14 evidence contract.",
+              "why": "The two-week clock should start from readiness, not an unmeasurable ambition.",
+              "next": "Next: Let the security reviewer sign the scoping gate.",
+              "input": {
+                "request": "Deliver the Northwind support triage agent.",
+                "customer_sme": "assigned",
+                "first_response_target_minutes": 5,
+                "week4_zero_edit_target": 0.6
+              },
+              "output": {
+                "intake": "accepted",
+                "day14_proxy": "eligible-ticket replay agreed",
+                "week4_live_measurement": "still future"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require measurable success criteria and a named customer SME."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Do not label a future week-4 live metric as already measured on day 14."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            },
+            {
+              "title": "Let the security reviewer sign the scoping gate",
+              "component": "Scoping · days 1–2",
+              "short": "Security sign-off",
+              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "next": "Next: Require the customer SME’s data-access evidence.",
+              "input": {
+                "gate": "security_review",
+                "signer_role": "security_reviewer",
+                "evidence": "review-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                }
+              ],
+              "nodeIds": [
+                "scope"
+              ]
+            },
+            {
+              "title": "Require the customer SME’s data-access evidence",
+              "component": "Data ready · days 3–4",
+              "short": "Data sign-off",
+              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
+              "next": "Next: Reuse assets and obtain golden-set sign-off.",
+              "input": {
+                "gate": "data_access",
+                "signer_role": "customer_sme",
+                "evidence": "source-access-checks-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "CONFIGURE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The FDA cannot substitute their own role for the customer SME."
+                }
+              ],
+              "nodeIds": [
+                "data"
+              ]
+            },
+            {
+              "title": "Keep Evaluate behind the unsigned golden set",
+              "component": "Configure · days 5–7 + Accelerator library + Engagement event log",
+              "short": "Golden set blocks",
+              "what": "Configure has pulled its assets, but the golden set lacks the customer SME’s evidence-bound sign-off. The next stage stays blocked.",
+              "why": "An internal opinion that the examples look good is not the customer’s agreed evaluation baseline.",
+              "next": "The engagement remains in Configure. Evaluation cannot start without the customer’s golden-set sign-off.",
+              "input": {
+                "gate": "golden_set",
+                "customer_sme_signature": null,
+                "asset_pulls": 6
+              },
+              "output": {
+                "stage": "CONFIGURE",
+                "can_evaluate": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No code path jumps Configure to Evaluate while golden_set is pending."
+                }
+              ],
+              "nodeIds": [
+                "configure",
+                "library",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "intake",
+              "to": "scope",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "scope",
+              "to": "data",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "data",
+              "to": "configure",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "library",
+              "kind": "data",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  389
+                ],
+                [
+                  546,
+                  389
+                ],
+                [
+                  546,
+                  443.0
+                ],
+                [
+                  530,
+                  443.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "evaluate",
+            "shadow",
+            "limited",
+            "sponsor",
+            "deploy",
+            "escalate"
+          ]
+        },
+        {
+          "id": "no-go",
+          "label": "Day-14 evidence misses the agreed target",
+          "outcome": "The sponsor records no-go. There is no deployment handover and no deadline-based override.",
+          "stages": [
+            {
+              "title": "Accept only an engagement ready to start",
+              "component": "Engagement intake",
+              "short": "Ready intake",
+              "what": "Northwind proposes Tier-1 support triage over Zendesk, Confluence and Salesforce. Intake checks measurable metrics, an assigned customer SME and an agreed day-14 evidence contract.",
+              "why": "The two-week clock should start from readiness, not an unmeasurable ambition.",
+              "next": "Next: Let the security reviewer sign the scoping gate.",
+              "input": {
+                "request": "Deliver the Northwind support triage agent.",
+                "customer_sme": "assigned",
+                "first_response_target_minutes": 5,
+                "week4_zero_edit_target": 0.6
+              },
+              "output": {
+                "intake": "accepted",
+                "day14_proxy": "eligible-ticket replay agreed",
+                "week4_live_measurement": "still future"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require measurable success criteria and a named customer SME."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Do not label a future week-4 live metric as already measured on day 14."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            },
+            {
+              "title": "Let the security reviewer sign the scoping gate",
+              "component": "Scoping · days 1–2",
+              "short": "Security sign-off",
+              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "next": "Next: Require the customer SME’s data-access evidence.",
+              "input": {
+                "gate": "security_review",
+                "signer_role": "security_reviewer",
+                "evidence": "review-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                }
+              ],
+              "nodeIds": [
+                "scope"
+              ]
+            },
+            {
+              "title": "Require the customer SME’s data-access evidence",
+              "component": "Data ready · days 3–4",
+              "short": "Data sign-off",
+              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
+              "next": "Next: Reuse assets and obtain golden-set sign-off.",
+              "input": {
+                "gate": "data_access",
+                "signer_role": "customer_sme",
+                "evidence": "source-access-checks-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "CONFIGURE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The FDA cannot substitute their own role for the customer SME."
+                }
+              ],
+              "nodeIds": [
+                "data"
+              ]
+            },
+            {
+              "title": "Reuse assets and obtain golden-set sign-off",
+              "component": "Configure · days 5–7 + Accelerator library",
+              "short": "Reuse and golden set",
+              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
+              "next": "Next: Attach evaluation evidence and FDA approval.",
+              "input": {
+                "asset_pulls": 6,
+                "reused": 5,
+                "custom": [
+                  "guardrail_policy"
+                ],
+                "golden_set_signer": "customer_sme"
+              },
+              "output": {
+                "reuse_ratio": "5/6 ≈ 83%",
+                "golden_set": "signed",
+                "next_stage": "EVALUATE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No Evaluate transition without the required golden-set evidence."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "The source library contains named assets, not a fully wired library of production implementations."
+                }
+              ],
+              "nodeIds": [
+                "configure",
+                "library"
+              ]
+            },
+            {
+              "title": "Attach evaluation evidence and FDA approval",
+              "component": "Evaluate · days 8–9",
+              "short": "Evaluation gate",
+              "what": "The Evaluate gate receives a baseline report and the FDA’s sign-off. The framework validates authority and evidence presence, not the correctness of an unconnected evaluation harness.",
+              "why": "Gate enforcement and evidence production are separate responsibilities.",
+              "next": "Next: Refuse to advance without tested rollback.",
+              "input": {
+                "gate": "eval_baseline",
+                "signer_role": "fda",
+                "evidence": "baseline-report-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "SHADOW"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Earlier gates must already be passed."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "In the source reference, the real evaluation harness is not wired into this gate."
+                }
+              ],
+              "nodeIds": [
+                "evaluate"
+              ]
+            },
+            {
+              "title": "Test rollback before limited production",
+              "component": "Shadow · days 10–11",
+              "short": "Rollback gate",
+              "what": "The team runs the agreed shadow checks and attaches rollback-test evidence. An FDA signs rollback_tested, allowing the next stage only after that gate passes.",
+              "why": "A runbook saying rollback exists is different from evidence that it works.",
+              "next": "Next: Identify the future evidence gap.",
+              "input": {
+                "gate": "rollback_tested",
+                "signer_role": "fda",
+                "evidence": "rollback-test-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "LIMITED_PROD"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No stage can jump over the rollback gate."
+                }
+              ],
+              "nodeIds": [
+                "shadow"
+              ]
+            },
+            {
+              "title": "Record a missed measurable target",
+              "component": "Limited prod · days 12–13",
+              "short": "Target missed",
+              "what": "The illustrative first-response evidence is seven minutes against the under-five-minute target. The report preserves the miss instead of changing the target.",
+              "why": "A measurable criterion must be allowed to fail.",
+              "next": "Next: Keep the release at no-go.",
+              "input": {
+                "first_response_minutes": 7,
+                "target_minutes": 5
+              },
+              "output": {
+                "success_metrics_met": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Use the signed metric definition, not a convenient new threshold."
+                }
+              ],
+              "nodeIds": [
+                "limited"
+              ]
+            },
+            {
+              "title": "Keep the release at no-go",
+              "component": "Go/no-go · day 14 + Engagement event log",
+              "short": "Sponsor no-go",
+              "what": "The sponsor cannot pass success_metrics on failed evidence. The framework logs no-go and blocks deployment.",
+              "why": "A visible no-go is a legitimate outcome of the framework.",
+              "next": "The sponsor records no-go. There is no deployment handover and no deadline-based override.",
+              "input": {
+                "day": 14,
+                "success_metrics_met": false
+              },
+              "output": {
+                "decision": "no_go",
+                "deployed": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Time passed cannot bypass the failed gate."
+                }
+              ],
+              "nodeIds": [
+                "sponsor",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "intake",
+              "to": "scope",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "scope",
+              "to": "data",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "data",
+              "to": "configure",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "library",
+              "kind": "data",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "evaluate",
+              "kind": "flow",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "evaluate",
+              "to": "shadow",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "shadow",
+              "to": "limited",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "limited",
+              "to": "sponsor",
+              "kind": "flow",
+              "points": [
+                [
+                  310,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "sponsor",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  268.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  310,
+                  443.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "deploy",
+            "escalate"
+          ]
+        },
+        {
+          "id": "future-metric-unavailable",
+          "label": "Gate requires actual week-4 live evidence",
+          "outcome": "The day-14 gate stays blocked because a future live result cannot yet be measured. The framework must delay or re-scope through the agreed authority.",
+          "stages": [
+            {
+              "title": "Accept only an engagement ready to start",
+              "component": "Engagement intake",
+              "short": "Ready intake",
+              "what": "Northwind has an assigned SME and directly measurable support metrics. This branch retains the source’s unresolved timing contract: the success gate requires an actual week-4 live result while the delivery target remains day 14.",
+              "why": "The two-week clock should start from readiness, not an unmeasurable ambition.",
+              "next": "Next: Let the security reviewer sign the scoping gate.",
+              "input": {
+                "request": "Deliver the Northwind support triage agent.",
+                "customer_sme": "assigned",
+                "first_response_target_minutes": 5,
+                "week4_zero_edit_target": 0.6,
+                "day14_proxy_agreed": false
+              },
+              "output": {
+                "intake": "accepted with unresolved evidence timing",
+                "required_evidence": "actual week4 live result",
+                "week4_live_measurement": "still future"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require measurable success criteria and a named customer SME."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Do not label a future week-4 live metric as already measured on day 14."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            },
+            {
+              "title": "Let the security reviewer sign the scoping gate",
+              "component": "Scoping · days 1–2",
+              "short": "Security sign-off",
+              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "next": "Next: Require the customer SME’s data-access evidence.",
+              "input": {
+                "gate": "security_review",
+                "signer_role": "security_reviewer",
+                "evidence": "review-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                }
+              ],
+              "nodeIds": [
+                "scope"
+              ]
+            },
+            {
+              "title": "Require the customer SME’s data-access evidence",
+              "component": "Data ready · days 3–4",
+              "short": "Data sign-off",
+              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
+              "next": "Next: Reuse assets and obtain golden-set sign-off.",
+              "input": {
+                "gate": "data_access",
+                "signer_role": "customer_sme",
+                "evidence": "source-access-checks-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "CONFIGURE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The FDA cannot substitute their own role for the customer SME."
+                }
+              ],
+              "nodeIds": [
+                "data"
+              ]
+            },
+            {
+              "title": "Reuse assets and obtain golden-set sign-off",
+              "component": "Configure · days 5–7 + Accelerator library",
+              "short": "Reuse and golden set",
+              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
+              "next": "Next: Attach evaluation evidence and FDA approval.",
+              "input": {
+                "asset_pulls": 6,
+                "reused": 5,
+                "custom": [
+                  "guardrail_policy"
+                ],
+                "golden_set_signer": "customer_sme"
+              },
+              "output": {
+                "reuse_ratio": "5/6 ≈ 83%",
+                "golden_set": "signed",
+                "next_stage": "EVALUATE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No Evaluate transition without the required golden-set evidence."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "The source library contains named assets, not a fully wired library of production implementations."
+                }
+              ],
+              "nodeIds": [
+                "configure",
+                "library"
+              ]
+            },
+            {
+              "title": "Attach evaluation evidence and FDA approval",
+              "component": "Evaluate · days 8–9",
+              "short": "Evaluation gate",
+              "what": "The Evaluate gate receives a baseline report and the FDA’s sign-off. The framework validates authority and evidence presence, not the correctness of an unconnected evaluation harness.",
+              "why": "Gate enforcement and evidence production are separate responsibilities.",
+              "next": "Next: Refuse to advance without tested rollback.",
+              "input": {
+                "gate": "eval_baseline",
+                "signer_role": "fda",
+                "evidence": "baseline-report-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "SHADOW"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Earlier gates must already be passed."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "In the source reference, the real evaluation harness is not wired into this gate."
+                }
+              ],
+              "nodeIds": [
+                "evaluate"
+              ]
+            },
+            {
+              "title": "Test rollback before limited production",
+              "component": "Shadow · days 10–11",
+              "short": "Rollback gate",
+              "what": "The team runs the agreed shadow checks and attaches rollback-test evidence. An FDA signs rollback_tested, allowing the next stage only after that gate passes.",
+              "why": "A runbook saying rollback exists is different from evidence that it works.",
+              "next": "Next: Identify the future evidence gap.",
+              "input": {
+                "gate": "rollback_tested",
+                "signer_role": "fda",
+                "evidence": "rollback-test-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "LIMITED_PROD"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No stage can jump over the rollback gate."
+                }
+              ],
+              "nodeIds": [
+                "shadow"
+              ]
+            },
+            {
+              "title": "Identify the future evidence gap",
+              "component": "Limited prod · days 12–13",
+              "short": "Future evidence missing",
+              "what": "This engagement’s signed gate requires the actual week-4 zero-edit live result, not a replay proxy. On day 14 that evidence does not exist yet.",
+              "why": "The source combines a week-4 target with day-14 go/no-go; a working gate cannot pretend time has advanced.",
+              "next": "Next: Block the sponsor sign-off on missing evidence.",
+              "input": {
+                "day": 14,
+                "required_evidence": "week4 live zero-edit rate",
+                "evidence_available": false
+              },
+              "output": {
+                "success_metrics": "unproven"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Do not substitute an unapproved proxy or label future evidence measured."
+                }
+              ],
+              "nodeIds": [
+                "limited"
+              ]
+            },
+            {
+              "title": "Block the sponsor sign-off on missing evidence",
+              "component": "Go/no-go · day 14 + Engagement event log",
+              "short": "Missing evidence blocks",
+              "what": "The sponsor records a blocked gate and a need to resolve the metric timing contract. There is no deployment claim.",
+              "why": "Naming an inconsistency is better than building a decorative pass.",
+              "next": "The day-14 gate stays blocked because a future live result cannot yet be measured. The framework must delay or re-scope through the agreed authority.",
+              "input": {
+                "required_evidence_available": false
+              },
+              "output": {
+                "decision": "blocked",
+                "deployed": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Any re-scope needs explicit authority; scope-change automation is not implemented in the source."
+                }
+              ],
+              "nodeIds": [
+                "sponsor",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "intake",
+              "to": "scope",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "scope",
+              "to": "data",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "data",
+              "to": "configure",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "library",
+              "kind": "data",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "evaluate",
+              "kind": "flow",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "evaluate",
+              "to": "shadow",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "shadow",
+              "to": "limited",
+              "kind": "flow",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  530,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "limited",
+              "to": "sponsor",
+              "kind": "flow",
+              "points": [
+                [
+                  310,
+                  268.0
+                ],
+                [
+                  260,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "sponsor",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  260,
+                  268.0
+                ],
+                [
+                  276,
+                  268.0
+                ],
+                [
+                  276,
+                  443.0
+                ],
+                [
+                  310,
+                  443.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "deploy",
+            "escalate"
+          ]
+        },
+        {
+          "id": "rollback-pending",
+          "label": "Rollback has not been tested",
+          "outcome": "The engagement remains in Shadow. Limited production is blocked until rollback evidence is signed.",
+          "stages": [
+            {
+              "title": "Accept only an engagement ready to start",
+              "component": "Engagement intake",
+              "short": "Ready intake",
+              "what": "Northwind proposes Tier-1 support triage over Zendesk, Confluence and Salesforce. Intake checks measurable metrics, an assigned customer SME and an agreed day-14 evidence contract.",
+              "why": "The two-week clock should start from readiness, not an unmeasurable ambition.",
+              "next": "Next: Let the security reviewer sign the scoping gate.",
+              "input": {
+                "request": "Deliver the Northwind support triage agent.",
+                "customer_sme": "assigned",
+                "first_response_target_minutes": 5,
+                "week4_zero_edit_target": 0.6
+              },
+              "output": {
+                "intake": "accepted",
+                "day14_proxy": "eligible-ticket replay agreed",
+                "week4_live_measurement": "still future"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require measurable success criteria and a named customer SME."
+                },
+                {
+                  "kind": "Exact",
+                  "text": "Do not label a future week-4 live metric as already measured on day 14."
+                }
+              ],
+              "nodeIds": [
+                "intake"
+              ]
+            },
+            {
+              "title": "Let the security reviewer sign the scoping gate",
+              "component": "Scoping · days 1–2",
+              "short": "Security sign-off",
+              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "next": "Next: Require the customer SME’s data-access evidence.",
+              "input": {
+                "gate": "security_review",
+                "signer_role": "security_reviewer",
+                "evidence": "review-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "DATA_READY"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                }
+              ],
+              "nodeIds": [
+                "scope"
+              ]
+            },
+            {
+              "title": "Require the customer SME’s data-access evidence",
+              "component": "Data ready · days 3–4",
+              "short": "Data sign-off",
+              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
+              "next": "Next: Reuse assets and obtain golden-set sign-off.",
+              "input": {
+                "gate": "data_access",
+                "signer_role": "customer_sme",
+                "evidence": "source-access-checks-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "CONFIGURE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "The FDA cannot substitute their own role for the customer SME."
+                }
+              ],
+              "nodeIds": [
+                "data"
+              ]
+            },
+            {
+              "title": "Reuse assets and obtain golden-set sign-off",
+              "component": "Configure · days 5–7 + Accelerator library",
+              "short": "Reuse and golden set",
+              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
+              "next": "Next: Attach evaluation evidence and FDA approval.",
+              "input": {
+                "asset_pulls": 6,
+                "reused": 5,
+                "custom": [
+                  "guardrail_policy"
+                ],
+                "golden_set_signer": "customer_sme"
+              },
+              "output": {
+                "reuse_ratio": "5/6 ≈ 83%",
+                "golden_set": "signed",
+                "next_stage": "EVALUATE"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "No Evaluate transition without the required golden-set evidence."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "The source library contains named assets, not a fully wired library of production implementations."
+                }
+              ],
+              "nodeIds": [
+                "configure",
+                "library"
+              ]
+            },
+            {
+              "title": "Attach evaluation evidence and FDA approval",
+              "component": "Evaluate · days 8–9",
+              "short": "Evaluation gate",
+              "what": "The Evaluate gate receives a baseline report and the FDA’s sign-off. The framework validates authority and evidence presence, not the correctness of an unconnected evaluation harness.",
+              "why": "Gate enforcement and evidence production are separate responsibilities.",
+              "next": "Next: Refuse to advance without tested rollback.",
+              "input": {
+                "gate": "eval_baseline",
+                "signer_role": "fda",
+                "evidence": "baseline-report-42"
+              },
+              "output": {
+                "gate": "passed",
+                "next_stage": "SHADOW"
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Earlier gates must already be passed."
+                },
+                {
+                  "kind": "Observe",
+                  "text": "In the source reference, the real evaluation harness is not wired into this gate."
+                }
+              ],
+              "nodeIds": [
+                "evaluate"
+              ]
+            },
+            {
+              "title": "Refuse to advance without tested rollback",
+              "component": "Shadow · days 10–11 + Engagement event log",
+              "short": "Rollback blocks",
+              "what": "The rollback_tested gate has no evidence. The FDA cannot sign an empty record, so the stage remains Shadow.",
+              "why": "A future intention to test rollback is not a completed rollback test.",
+              "next": "The engagement remains in Shadow. Limited production is blocked until rollback evidence is signed.",
+              "input": {
+                "gate": "rollback_tested",
+                "evidence": ""
+              },
+              "output": {
+                "gate": "pending",
+                "stage": "SHADOW",
+                "can_enter_limited_prod": false
+              },
+              "checks": [
+                {
+                  "kind": "Exact",
+                  "text": "Require non-empty evidence and the allowed signer role."
+                }
+              ],
+              "nodeIds": [
+                "shadow",
+                "audit"
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "from": "intake",
+              "to": "scope",
+              "kind": "flow",
+              "points": [
+                [
+                  260,
+                  93.0
+                ],
+                [
+                  310,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "scope",
+              "to": "data",
+              "kind": "flow",
+              "points": [
+                [
+                  530,
+                  93.0
+                ],
+                [
+                  580,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "data",
+              "to": "configure",
+              "kind": "flow",
+              "points": [
+                [
+                  800,
+                  93.0
+                ],
+                [
+                  850,
+                  93.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "library",
+              "kind": "data",
+              "points": [
+                [
+                  850,
+                  93.0
+                ],
+                [
+                  834,
+                  93.0
+                ],
+                [
+                  834,
+                  443.0
+                ],
+                [
+                  850,
+                  443.0
+                ]
+              ]
+            },
+            {
+              "from": "configure",
+              "to": "evaluate",
+              "kind": "flow",
+              "points": [
+                [
+                  960.0,
+                  131
+                ],
+                [
+                  960.0,
+                  230
+                ]
+              ]
+            },
+            {
+              "from": "evaluate",
+              "to": "shadow",
+              "kind": "flow",
+              "points": [
+                [
+                  850,
+                  268.0
+                ],
+                [
+                  800,
+                  268.0
+                ]
+              ]
+            },
+            {
+              "from": "shadow",
+              "to": "audit",
+              "kind": "observation",
+              "points": [
+                [
+                  580,
+                  268.0
+                ],
+                [
+                  564,
+                  268.0
+                ],
+                [
+                  564,
+                  443.0
+                ],
+                [
+                  530,
+                  443.0
+                ]
+              ]
+            }
+          ],
+          "skipNodes": [
+            "limited",
+            "sponsor",
+            "deploy",
+            "escalate"
+          ]
+        }
+      ],
+      "revision": {
+        "pitch": "I would treat this as an operating-model state machine. Intake first requires measurable success criteria and a customer SME. We also agree what evidence can actually exist by the go/no-go date. Each transition needs the right role, non-empty evidence and all earlier gates passed. The security reviewer signs security, the customer SME signs access and the golden set, the FDA signs evaluation and rollback, and the sponsor owns success metrics. No code path skips a stage. A day-3 data-access stall raises one logged escalation instead of depending on a reminder. Configure records reused versus custom assets, because that ratio shows whether delivery is repeatable or bespoke. I would distinguish the real gate mechanism from unconnected evidence producers: the source library is named assets and its evaluation harness is not fully wired. A no-go is valid. The framework makes readiness and blockers visible; it does not guarantee a two-week deployment.",
+        "flow": "Measurable intake → security → data access → golden set → evaluation → tested rollback → limited-production evidence → sponsor go/no-go → approved handover",
+        "requirements": [
+          [
+            "Functional",
+            "Validate intake, enforce immediate-next-stage transitions, check named signers/evidence/prior gates, record asset reuse, escalate pending data access and support auditable go/no-go handover."
+          ],
+          [
+            "Non-functional",
+            "Unskippable controls, clear ownership, repeatability, visible stalls, honest evidence and portfolio capacity without a guarantee that every engagement fits two weeks."
+          ]
+        ],
+        "discovery": [
+          "Is two weeks a hard SLA or a target?",
+          "Who owns the go/no-go decision?",
+          "What is genuinely reusable across customers?",
+          "What happens when a hard gate genuinely fails?",
+          "Is this for one team or an organisation-wide standard?"
+        ],
+        "tradeoff": "Role-separated gates may slow a very small team, but removing them lets deadline pressure become self-certification. Compress responsibilities only through an explicit authorised design.",
+        "failure": "The wrong role attempts a sign-off, or a required metric is not yet measurable. Deny or block and keep the state unchanged; never fake progress to reach day 14.",
+        "ops": [
+          [
+            "Scale",
+            "Scale by engagement and reviewer capacity, not documents or tokens. Use actual stage-duration data before setting portfolio load."
+          ],
+          [
+            "Latency",
+            "Measure stage dwell time and blocked-gate time. The two-week clock is a readiness target, not an unconditional SLA."
+          ],
+          [
+            "Cost",
+            "Track reused pulls / total pulls and custom work. The source’s five-of-six example is about repeatability, not a universal reuse benchmark."
+          ],
+          [
+            "Evaluation",
+            "Test wrong roles, empty evidence, predecessor gates, no-skip transitions, single escalation and no-go. Connect real evidence producers separately."
+          ]
+        ],
+        "remember": "A gate is a decision with a named authority. A day-14 no-go is a legitimate outcome."
+      },
+      "sourceMap": [
+        {
+          "section": "Frame the Round on Gates, Not Boxes",
+          "where": "Understand the problem",
+          "note": "All five source questions frame evidence and authority rather than infrastructure."
+        },
+        {
+          "section": "Refuse What Cannot Be Measured",
+          "where": "Explore flow",
+          "note": "Intake refusal and future-week metric timing are separate failure scenarios."
+        },
+        {
+          "section": "Label Every Gate With Who Signs It",
+          "where": "Explore flow",
+          "note": "Every stage names its signer; wrong-role attempts cannot advance."
+        },
+        {
+          "section": "Make a Gate a Decision, Not a Checkbox",
+          "where": "Explore flow",
+          "note": "Role, evidence and predecessor checks plus day-3 escalation are explicit."
+        },
+        {
+          "section": "Measure Reuse to Prove the Process Is Productised",
+          "where": "Explore flow and revision",
+          "note": "Five reused assets out of six are recorded, with the source library’s implementation limits stated."
+        },
+        {
+          "section": "Name Which Mitigations Are Real",
+          "where": "Sources and Read lesson",
+          "note": "Automatic escalation and intake checks are retained. Scope-change control and the source’s counting inconsistency are named as gaps."
+        },
+        {
+          "section": "Treat a Stall as a Visible Outcome",
+          "where": "Explore flow",
+          "note": "Pending data, golden-set and rollback gates, missing evidence and no-go are visible terminal outcomes."
+        },
+        {
+          "section": "Close on a Narrow Rollout",
+          "where": "Revision and Read lesson",
+          "note": "The gate thesis is compressed; the full internal rollout discussion remains in the lesson."
+        },
+        {
+          "section": "Worked Example: Day 3 at Northwind",
+          "where": "Explore flow",
+          "note": "The delayed data gate and wrong-role attempt are interactive scenarios."
+        },
+        {
+          "section": "Key Takeaways",
+          "where": "Interview revision",
+          "note": "The spoken answer retains readiness, authority, reuse and honest limitations."
+        },
+        {
+          "section": "Check Yourself",
+          "where": "Read lesson",
+          "note": "This section remains in the written lesson. The explorer does not reproduce every detail."
+        },
+        {
+          "section": "References",
+          "where": "Canonical source",
+          "note": "The explorer is grounded in this Markdown. Upstream references remain in the local source; the public lesson omits the reference appendix."
+        }
+      ],
+      "limitations": [
+        "A prewritten guided explanation; no live customer systems, models or actions are connected.",
+        "Scenario payloads and outcomes are illustrative. Targets and figures from the source are scenario assumptions, not measurements made by this explorer.",
+        "The source’s week-4 live success target cannot already be measured on day 14. The successful teaching branch explicitly assumes an agreed day-14 proxy; a separate branch blocks when the gate requires actual future live evidence.",
+        "Day-14 proxy values, evidence IDs and request payloads are illustrative additions, not source measurements.",
+        "The source has no automated scope-change implementation, no fully wired evaluation harness, and a library of asset names rather than deployable implementations.",
+        "The source counts implemented mitigations inconsistently. This explorer names the actual behaviours instead of claiming a corrected universal count."
+      ]
+    }
+  ]
+}

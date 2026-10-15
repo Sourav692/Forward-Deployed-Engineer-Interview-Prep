@@ -28,24 +28,28 @@ export function LessonToc({ headings }: { headings: TocHeading[] }) {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
         const line = window.innerHeight * 0.3
+        // The explorer keeps the original reading panel in the DOM but hides it.
+        const visible = sections.filter((section) => section.getClientRects().length > 0)
         let current: string | null = null
-        for (const el of sections) {
+        for (const el of visible) {
           if (el.getBoundingClientRect().top <= line) current = el.id
           else break
         }
         // A short last section can never reach the line; at the bottom, it is the one being read.
         const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
-        if (atBottom) current = sections[sections.length - 1].id
+        if (atBottom && visible.length) current = visible[visible.length - 1].id
         setActive(current)
       })
     }
     update()
     window.addEventListener('scroll', update, { passive: true })
     window.addEventListener('resize', update)
+    window.addEventListener('fd:lesson-view', update)
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
+      window.removeEventListener('fd:lesson-view', update)
     }
   }, [headings])
 

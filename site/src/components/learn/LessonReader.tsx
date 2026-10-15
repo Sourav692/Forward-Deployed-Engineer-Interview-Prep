@@ -1,10 +1,12 @@
 import { Diagram } from '@/components/Diagram'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
-import type { ReadingSection } from '@/lib/reading'
+import { toPlainText, type ReadingSection } from '@/lib/reading'
 import { Byline } from '@/components/Byline'
 import { LessonTabs } from '@/components/learn/LessonTabs'
 import { TwinLinks } from '@/components/PageIntro'
 import type { TwinLink } from '@/lib/twins'
+import type { ExplorerData } from '@/lib/explorers/types'
+import { LessonExperience } from '@/components/explorers/LessonExperience'
 
 /**
  * A final-week review's "One-Page Memory Card" H2 opens a second tab, Recall card (owner
@@ -24,14 +26,15 @@ const RECALL_CARD = /^One-Page Memory Card\b/
  * note ("From the FDE Handbook") and, for third-party material (`publish: 'credited'`),
  * the credit line.
  */
-export function LessonReader({ page, twins = [] }: { page: LessonPage; twins?: TwinLink[] }) {
+export function LessonReader({ page, twins = [], explorer }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null }) {
   const { lesson, doc, sourceNote, creditHtml } = page
   const card = doc.sections.findIndex((s) => s.title && RECALL_CARD.test(s.title))
+  const sourceLinks = { ...explorer?.readingLinks, ...Object.fromEntries(doc.sections.filter((s) => s.title).map((s) => [toPlainText(s.title!), `#${s.id}`])) }
   return (
     // `break-words` lets long unbroken tokens (file paths in inline code, URLs) wrap
     // instead of pushing the page sideways; tables and code blocks scroll in their own box.
-    <article className="lesson-reading break-words" aria-labelledby="lesson-title">
-      <header className="border-b border-border pb-5">
+    <article className={`lesson-reading break-words ${explorer ? 'max-w-none' : ''}`} aria-labelledby="lesson-title">
+      <header className={`border-b border-border pb-5 ${explorer ? 'max-w-[68ch]' : ''}`}>
         <h1 id="lesson-title" className="text-balance">
           {lesson.title}
         </h1>
@@ -50,7 +53,7 @@ export function LessonReader({ page, twins = [] }: { page: LessonPage; twins?: T
         )}
       </header>
 
-      <div className="mt-6">
+      {explorer ? <LessonExperience data={explorer} sourceLinks={sourceLinks}><div className="max-w-[68ch]"><Sections sections={doc.sections} /></div></LessonExperience> : <div className="mt-6">
         {card > 0 ? (
           <>
             <LessonTabs
@@ -67,7 +70,7 @@ export function LessonReader({ page, twins = [] }: { page: LessonPage; twins?: T
         ) : (
           <Sections sections={doc.sections} />
         )}
-      </div>
+      </div>}
     </article>
   )
 }
