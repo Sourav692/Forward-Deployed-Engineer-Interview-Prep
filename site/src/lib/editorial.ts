@@ -116,7 +116,7 @@ export const NAV = [
   { id: 'learn', label: 'Learn', href: '/learn', match: ['/learn'] },
   {
     id: 'design',
-    label: 'Design',
+    label: 'Casebook',
     href: '/design',
     match: ['/design'],
   },

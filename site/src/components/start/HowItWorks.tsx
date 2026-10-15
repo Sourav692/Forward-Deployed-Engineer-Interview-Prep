@@ -20,7 +20,7 @@ const AREAS = [
   },
   {
     href: '/design',
-    title: 'Design',
+    title: 'Casebook',
     body: 'Complete system designs. Read one after practising the same kind of problem, or when a worksheet stumps you.',
   },
   {

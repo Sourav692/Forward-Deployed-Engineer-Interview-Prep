@@ -23,6 +23,7 @@ import { SideNav } from '@/components/learn/SideNav'
 import { Tag } from '@/components/ui'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { trackTag } from '@/lib/curriculum-href'
+import { TextLink } from '@/components/areas/Area'
 
 /**
  * Track page (FE-06). Every track is prerendered at build time: `generateStaticParams`
@@ -113,6 +114,19 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
               ))}
             </ul>
           </section>
+
+          {track.slug === 'ai-systems-design' && (
+            <aside aria-label="Worked design cases" className="mt-6 max-w-3xl rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
+              <p className="text-muted">
+                Start here to learn the design framework, whiteboard timing and reusable patterns. The classic design
+                lessons are short walkthroughs for recognising those patterns. For complete architectures, deeper
+                trade-offs and interview follow-ups, open the worked cases in Casebook.
+              </p>
+              <div className="mt-3">
+                <TextLink href="/design">Explore worked design cases</TextLink>
+              </div>
+            </aside>
+          )}
 
           <StorageNotice />
 

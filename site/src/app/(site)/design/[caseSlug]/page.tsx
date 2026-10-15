@@ -48,11 +48,11 @@ export default async function CasePage({ params }: { params: Promise<Params> }) 
     <CaseStudyPage
       study={study}
       crumbs={[
-        { label: 'Design', href: '/design' },
+        { label: 'Casebook', href: '/design' },
         { label: study.ref.trackTitle, href: `/design#${study.ref.trackId}` },
         { label: qualifiedTitle(study.ref) },
       ]}
-      partOf={{ name: 'Design', path: '/design' }}
+      partOf={{ name: 'Casebook', path: '/design' }}
     />
   )
 }
