@@ -337,7 +337,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'chunking-and-indexing', 'forward-deployed', 'capstone-and-portfolio'],
     }),
-    estHours: 116,
+    estHours: 117,
     skipCriteria:
       'SQL and data modelling, Distributed systems essentials, and Chunking and indexing, once you can explain them without notes.',
     readinessCriteria: [
@@ -365,7 +365,7 @@ export const PATHS: LearningPath[] = [
       ],
       optional: ['engineering-foundations', 'llm-and-retrieval', 'capstone-and-portfolio'],
     }),
-    estHours: 123,
+    estHours: 124,
     skipCriteria: 'The LLM and retrieval track, including ML fundamentals, once you can explain each module without notes.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',

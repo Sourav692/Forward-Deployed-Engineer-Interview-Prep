@@ -4,54 +4,43 @@
 
 ◷ 12 min
 
-Wiring an LLM to a tool call is easy; letting someone who has never seen a stack trace configure it safely is not. Make the system take the dangerous decisions itself, in code, and pace the round with [the six-step whiteboard clock](../T5.2_The_60_Minute_Whiteboard_Method/01_The_Six_Step_Whiteboard_Clock.md).
+## Understand the Customer Problem
 
-**Objectives:**
+In this scenario, Cascade Robotics wants support staff to configure ticket and escalation automations without writing code. A workflow may draft a reply, request approval, or move real money through a refund. The customer needs clear limits on what each automation can do, plus a record of why it acted. A crash, repeated webhook, or vague model instruction must not silently cause another payment.
 
-- frame the round on deterministic control rather than model judgement;
-- route events with two independent checks, priority and an entity lock;
-- validate typed tool calls and order guardrail rules so deny overrides;
-- make runs durable and side effects idempotent, including their cost;
-- name the failure behaviour and the honest scale limits.
+Keep risky decisions in deterministic application controls. Use [the whiteboard clock](../T5.2_The_60_Minute_Whiteboard_Method/01_The_Six_Step_Whiteboard_Clock.md) to explain routing, typed calls, guardrails, and recovery.
 
 ---
 
 ## Frame the Round on Who Decides
 
-The prompt is "Design an AI agent platform for non-technical users to configure workflow automations across multiple channels." Say one sentence early. Anyone can wire an LLM to a tool call. The hard part is letting a non-technical person configure that safely. So the system must make the dangerous decisions itself, deterministically, and never delegate them to the model's judgement in the moment.
+Start with the user's ability and the cost of a mistake. Can they read a decision tree, or do they need a natural-language builder? Which channels and integration owners are involved? Email threading and webhook deduplication need explicit contracts.
 
-Five clarifying questions change the design. How non-technical are the users? Someone who reads a decision tree differs from someone who cannot read JSON, and that decides whether natural-language authoring is the whole product. Which channels, and who owns each integration? Slack and webhooks are usually simple; email threading and web-form deduplication hide the real work.
-
-Can it act, or only read? Write actions such as refunds and closing tickets turn this into a guardrail problem instead of a UI problem. What is the blast radius of a bad workflow? A wrong Slack reply is embarrassing; a wrong refund is money. Is it multi-tenant from day one? That decides whether isolation is a retrofit or load-bearing.
-
-Then scope explicitly. Design a multi-tenant platform where users configure declarative workflows, never code, that can take real destructive actions under a guardrail service. The visual builder UI and a natural-language-to-spec compiler are separate projects. Name what they must produce and move on.
+Ask whether workflows read or write, what a bad action could cost, and whether the platform is multi-tenant. Scope this case to versioned, declarative workflows and a guarded runtime. The visual builder and natural-language compiler are separate projects; both must produce the same validated specification.
 
 ## Anchor on a Refund Cap
 
-The anchor case is Cascade Robotics: Tier-1 support triage across a Zendesk webhook and a Slack escalation channel. A high-priority ticket gets a drafted reply. A billing complaint gets an automatic refund up to a tenant-configured cap, and above the cap a human approves.
+Cascade handles Tier-1 support through Zendesk webhooks and Slack escalations. A high-priority ticket gets a drafted reply; a billing complaint may request a refund.
 
-The cap is not a nice-to-have. It is the difference between "the agent acts autonomously" and "the agent acts autonomously until a mistake would cost real money, then stops and asks".
+The source's introduction describes an approval threshold, while its runtime demonstrates a hard spend cap. Keep those separate: approval may permit an otherwise eligible action, but cannot override a hard budget. A cap change needs its own authorised configuration change.
 
-Write the nouns: event, channel, versioned workflow spec, trigger, step, tool, run, guardrail and principal. Then narrate one event. A ticket webhook arrives, and a channel adapter normalises it into a canonical event. Routing finds the highest-priority live workflow for it and checks that no other run is active on that ticket. The orchestrator runs steps one at a time, checkpointing after each.
-
-A non-destructive step, such as drafting a reply, just runs. A destructive one, such as a refund, goes through the guardrail. Is the workflow live enough to act? Is this tool allow-listed for autonomous use? Is a human needed? Does it fit the spend cap? If it passes, it executes with an idempotency key, so a retry can never double-refund. Every decision, allowed or denied, is logged.
+Track event, channel, workflow version, trigger, step, tool, run, guardrail, and principal. Route one event, lock its ticket, and checkpoint each step. Destructive actions need validated arguments, policy permission, application authorisation, and an authoritative receipt.
 
 ## Route With Two Independent Checks
 
-```
-  raw payload (any channel) --> ADAPTER --> canonical Event
-                                                  |
-                                                  v
-                              ROUTING
-                              1. priority match     <- design-time: which SHOULD run
-                              2. entity lock check  <- run-time: can TWO ever run
-                                                  |
-                                                  v
-                    ORCHESTRATOR (durable, checkpointed)
-                    step -> validate args -> guardrail
-                    -> execute (idempotent) -> checkpoint
-                                                  |
-                         COMPLETED / PAUSED_FOR_APPROVAL / HALTED
+```mermaid
+flowchart TB
+    E["Channel payload"] --> A["Adapter<br/>validate and normalise event"]
+    A --> R["Routing<br/>tenant and priority match"]
+    R --> L{"Entity lock available?"}
+    L -->|No| W["Wait or reject conflict"]
+    L -->|Yes| O["Orchestrator<br/>load workflow and checkpoint"]
+    O --> V["Validate arguments<br/>and evaluate guardrails"]
+    V -->|Needs approval| P["Pause<br/>no destructive execution"]
+    P -->|Approved and revalidated| X["Authorised connector<br/>stable operation ID"]
+    V -->|Allowed| X
+    V -->|Denied| H["Halt with reason"]
+    X --> C["Persist receipt, cost<br/>and next checkpoint"]
 ```
 
 Routing is two checks on purpose. Priority answers a configuration question: which workflow is supposed to win. The entity lock answers a safety question: can two workflows ever mutate the same ticket at once. The lock holds even if priority was misconfigured, which turns a wrong priority into merely wrong instead of dangerous.
@@ -60,11 +49,9 @@ The checkpoint is one mechanism for both fresh runs and crash recovery. There is
 
 ## Type the Call So the Model Never Shapes It
 
-Announce the risk. The hardest part is making dangerous decisions deterministic instead of delegated to the model, so spend the time on the guardrail engine and the orchestrator. The channel adapters are comparatively boring.
+Design the tool schema before runtime. The source illustrates `issue_refund(order_id: str, amount_usd: float)` and `validate_args()`. Reject missing fields, wrong types, invalid ranges, and unknown tools before dispatch.
 
-Constrain the tool call with a schema, not a prompt. A free-text call such as "issue a refund of about fifty dollars for this order" is bad. A typed signature, `issue_refund(order_id: str, amount_usd: float)`, is good. `validate_args()` checks every required field is present and every value's type matches before execution. A malformed call never reaches the tool.
-
-The model decides that a refund is warranted. It never decides the shape of the call that moves money. This is the instinct of constrained decoding, applied at the tool-call boundary instead of the token boundary.
+The model may propose a refund and its arguments. The schema constrains their shape; policy and business applications decide whether the action is permitted. Valid JSON is not proof that an amount is correct or authorised.
 
 ## Order the Guardrail Rules So Deny Wins
 
@@ -75,7 +62,7 @@ The script introduces its guardrail as "five ordered rules, deny overrides", but
 | 1 | Step budget exceeded? | Halt; do not loop |
 | 2 | Spend cap exceeded? | Halt; do not loop. Uses the real dollar amount for a refund |
 | 3 | Non-destructive? | Run it |
-| 4 | Shadow mode? | Never executes, regardless of anything else |
+| 4 | Shadow mode? | No destructive execution; drafts and simulation only |
 | 5 | Below live status? | Destructive steps disabled entirely |
 | 6 | Autonomous and allow-listed? | Auto-approved |
 | 7 | Otherwise | Needs a real human with the right role |
@@ -90,25 +77,27 @@ The reference build found a bug worth telling. A $500 refund on a workflow with 
 
 Two quantities were conflated: the operational cost of running a step, and the dollars the step spends on the customer's behalf. A cap cannot limit money it never measures. The fix makes a financial tool's cost the real amount in its own arguments. It is the same family of bug as the false leak alarm in [Access-Controlled Enterprise RAG](06_Access_Controlled_Enterprise_RAG.md): a check that looks protective but measures the wrong quantity.
 
-> **Warning: idempotency must cover every effect of a step, including its cost.** The reference build's second bug came from a redelivered refund event. The idempotency guard correctly skipped the second refund, but the retry still went through the budget check and added its cost again. A safe, blocked retry then pushed a legitimate run over its cap. Check "has this exact action already applied?" before authorisation, and treat a replay as a free, pre-authorised no-op.
+> **Warning: idempotency must cover every effect of a step, including its cost.** The reference build's second bug came from a redelivered refund event. The idempotency guard correctly skipped the second refund, but the retry still went through the budget check and added its cost again. A safe, blocked retry then pushed a legitimate run over its cap. After verifying caller and tenant access, check whether the exact action already completed. Return its protected receipt without applying the financial effect or its budget debit again. An in-progress or unknown operation is not a completed replay.
 
 ## Make Runs Durable and Retries Harmless
 
-```
-  Run 1: step 0 (draft) -> CHECKPOINT -> step 1 (refund, needs approval) -> PAUSED
-
-  [process restarts / human takes an hour to approve]
-
-  resume(): reads next_step_index=1, re-enters at step 1 - step 0 NEVER re-runs.
-  Approval granted -> step 1 executes -> idempotency_key = "run_id:refund" recorded.
-
-  If step 1 is attempted again (a redelivered event, a retry):
-  same idempotency_key already exists -> no-op. The refund never fires twice.
+```mermaid
+flowchart TB
+    S["Load run and next_step_index"] --> K{"Step has confirmed receipt?"}
+    K -->|Yes| N["Reuse receipt<br/>do not debit financial budget again"]
+    K -->|No| G["Validate and check current policy"]
+    G -->|Approval needed| P["Persist pause<br/>wait for authorised approval"]
+    P --> G
+    G -->|Allowed| I["Record operation intent<br/>execute with stable key"]
+    I -->|Confirmed| C["Persist receipt and checkpoint"]
+    I -->|Unknown outcome| U["Reconcile with backend<br/>do not blindly repeat"]
+    C --> S
+    N --> S
 ```
 
 There is no separate crash-recovery path. `resume()` and a fresh run call the same loop, which always starts at `next_step_index`, whether that is 0 or mid-workflow. One loop means one set of bugs to find, not two.
 
-The idempotency key belongs to the action, not the run. A run can legitimately retry, but one specific side effect must never apply twice.
+The key identifies a particular action, not just a run or tool name. The reference uses `run_id:refund`; a production workflow with repeated refund steps also needs a stable step identity and unchanged arguments.
 
 ## Raise Tenancy, Security, and Failure Unprompted
 
@@ -123,26 +112,32 @@ Name the honest gaps. There is no real secrets vault for connector credentials y
 | A step's arguments do not validate | Rejected before execution; the run halts with a named reason |
 | A destructive step's approval never comes | The run stays `PAUSED_FOR_APPROVAL` indefinitely; it never silently expires into either action |
 | A workflow runs away through a self-trigger | Halts at the step budget instead of looping until noticed |
-| The process crashes mid-run | Resumes from the last checkpoint; a step that already ran never re-runs |
-| An event is redelivered | The idempotency key on any destructive step makes the redelivery a no-op |
+| Process crashes mid-run | Load durable checkpoint; reconcile any effect whose receipt was not persisted |
+| Event is redelivered | Deduplicate intake and each effect; rely on a supported backend contract |
 
-Scale has one honest limit. Every lock and idempotency key in the reference build lives in an in-process dictionary: correct in shape, wrong in storage. At real volume, that becomes a distributed lock, such as Redis or a unique-constraint row, plus a durable idempotency store shared across workers. `acquire_lock` and `release_lock` stay the same two functions; only their backing changes.
+Scale has one honest limit. Every lock and idempotency key in the reference build lives in an in-process dictionary: useful for demonstrating control flow, insufficient for crash durability or multiple workers. At real volume, that becomes a distributed lock, such as Redis or a unique-constraint row, plus a durable idempotency store shared across workers. `acquire_lock` and `release_lock` stay the same two functions; only their backing changes.
 
 ## Close on Determinism and a Narrow Week One
 
-Summarise in three sentences. Every dangerous decision is deterministic and enforced in code, never delegated to the model: which workflow runs, whether a destructive step executes, and whether a retry can double-apply. Workflows are declarative and versioned, and promoted through a staged rollout the way a person earns autonomy. Durability and idempotency make a crash or a redelivered event a non-event.
+The runtime owns workflow selection, destructive-action permission, and replay handling. Workflows are declarative and versioned; promotion through shadow and live modes never removes caps or application permissions.
 
-| Decision | Chose | Would revisit if |
-|---|---|---|
-| A fixed step-list planner over an LLM reasoning loop | Deterministic, testable, free | The task space is open-ended enough that a fixed plan cannot cover it; then a model picks the next tool inside the same guardrail |
-| Priority plus entity lock over one ranking | Two independent checks | Conflicts became rare enough that the lock is not worth it; unlikely, since the lock makes misconfiguration merely wrong |
-| In-process locks and idempotency store | Simple and fast for a demo | Any real deployment on day one |
+| Decision | Chose | Revisit when |
+| --- | --- | --- |
+| Fixed step list | Deterministic and testable | Open-ended tasks need model planning inside the same guardrails. |
+| Priority plus entity lock | Separate configuration and concurrency checks | Verify distributed lock ownership and recovery. |
+| In-process state | Reference demo only | Every real deployment needs durable shared state. |
 
-For the forward-deployed close, week one is not the full agent runtime. It is one channel, one non-destructive workflow, the guardrail engine and the staged rollout. That proves a non-technical user's workflow cannot take an unapproved destructive action, before anyone argues about which LLM plans the steps.
-
-Questions for the interviewer's company: how much agent configuration is already declarative rather than code? Does the guardrail decision live in the platform or in each connector? How is a workflow that acts across two channels in one run handled? How is a workflow judged to have earned autonomous status? The artefact to show is the durability demo, where a run crashes mid-flight, resumes, and the executed step provably never re-runs, backed by 21 deterministic tests with no LLM.
+Start with one channel, one non-destructive workflow, and tested guardrails. The source reports 21 deterministic tests; this editorial pass does not rerun that reference runtime. Ask who owns policy, how autonomy is earned, and how cross-channel actions share one durable run.
 
 ## Worked Example: A $500 Refund on a $5 Cap
+
+> **Added production guidance:** the clarification, payload, and recovery contract below are illustrative extensions to the reference runtime.
+
+### Clarify the Financial Boundary
+
+Ask: "Is $5 a hard budget or an approval threshold? Who may change it? Which refund operation is this, and does the payment backend deduplicate requests?" Approval alone cannot make a $500 action fit a $5 hard cap.
+
+### Follow the Blocked Refund
 
 A billing complaint arrives through the Zendesk webhook. Routing picks the highest-priority live workflow and takes the entity lock on the ticket. Step 0 drafts a reply: non-destructive, so it runs and checkpoints.
 
@@ -159,6 +154,26 @@ Now suppose the tenant raises the cap, the workflow is autonomous, but `issue_re
 | Priority says which should run; the lock says whether two can | Routing |
 | A halted run with a named reason beats a silent loop | Failure behaviour |
 
+### Trace the Guardrail Result
+
+```json
+{
+  "trusted_scope": {"tenant": "cascade", "run": "run-42"},
+  "proposal": {"tool": "issue_refund", "amount_usd": 500},
+  "policy": {"spend_cap_usd": 5, "version": "v3"},
+  "decision": "halt_spend_cap_exceeded",
+  "payment_status": "not_started"
+}
+```
+
+The application derives scope and checks policy. The guardrail rejection is the outcome: no payment API call occurred. If an eligible call later times out, reconcile it before retrying. Durable checkpoints alone cannot close the gap between a remote payment and a local receipt.
+
+## Explain the Design in 60 Seconds
+
+> "I'd separate workflow authoring from the guarded runtime. Each event would be normalised, matched within its tenant, and checked against an entity lock. A versioned workflow would run through one checkpointed execution loop.
+>
+> The model could propose arguments, but schemas, hard budgets, tool allow-lists, and approval roles would control execution. A $500 refund under a $5 cap would halt, even with approval. I'd persist operation intent and receipts, reconcile uncertain payments, and deduplicate both the business effect and financial budget debit. The reference's in-memory stores demonstrate the shape; production needs durable shared state and backend idempotency support. I'd begin with one channel and non-destructive work."
+
 ---
 
 ## Key Takeaways
@@ -166,7 +181,7 @@ Now suppose the tenant raises the cap, the workflow is autonomous, but `issue_re
 - Frame the round on deterministic control, and ask about users, channels, write actions, blast radius and tenancy.
 - Anchor on a refund cap: autonomy up to the point where a mistake costs real money.
 - Route with a priority match and an independent entity lock; one checkpointed loop serves fresh and resumed runs.
-- Typed, validated tool signatures keep the model from shaping the call that moves money.
+- Typed tools constrain model proposals; policy and backend authorisation control money movement.
 - Order the seven guardrail rules so deny wins; budget counts steps and the cap counts dollars.
 - A spend cap must measure the real money a step spends, not a nominal fee.
 - Resume and fresh runs share one loop; idempotency belongs to the action and must cover cost too.
@@ -182,7 +197,22 @@ Now suppose the tenant raises the cap, the workflow is autonomous, but `issue_re
    Every tool shared a flat nominal cost function, so the refund counted as a few cents. A financial tool's cost must be the real amount in its arguments.
 
 3. **Why must the idempotency check run before authorisation?**
-   Otherwise a replayed action is skipped but its cost is still counted, and a safe retry can push a run over budget. A replay should be a free, pre-authorised no-op.
+   Otherwise a replayed action is skipped but its cost is still counted, and a safe retry can push a run over budget. After caller access checks, a confirmed replay returns the existing receipt without another financial debit. Unknown outcomes need reconciliation.
+
+4. **Can manager approval override a hard spend cap?**
+   No. An authorised policy change is separate from approving an eligible action.
+
+5. **Do checkpoints alone prevent duplicate remote payments?**
+   No. Reconcile the gap between remote execution and local receipt persistence, with a supported backend contract.
+
+6. **What needs to identify a repeated action?**
+   Tenant, run, stable step identity, and the same arguments. A tool name alone may identify several legitimate steps.
+
+7. **Can a replay skip caller access checks?**
+   No. Verify caller and tenant before returning an existing protected receipt; do not apply its financial debit again.
+
+8. **Are the reference in-memory dictionaries production durability?**
+   No. Multiple workers and crash recovery need shared durable state and tested concurrency behaviour.
 
 ## References
 

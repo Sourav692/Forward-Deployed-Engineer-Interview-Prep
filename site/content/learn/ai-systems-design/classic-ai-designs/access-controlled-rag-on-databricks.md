@@ -2,15 +2,11 @@
 
 *Letting the platform enforce access deletes code that had to be proven correct, but the vector index sits outside that enforcement and forces a split design.*
 
-On Databricks, most access control is Unity Catalog's job, not application code's. Two Vector Search facts decide the whole physical architecture, so lead with them and reuse the platform-agnostic design from [Access-Controlled Enterprise RAG](/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag) for everything else.
+## Understand the Customer Problem
 
-**Objectives:**
+In this scenario, Meridian Cloud wants the permission-aware assistant from the previous case to run on Databricks. Support agents need useful answers without seeing engineering, commercial, or another tenant's restricted material. The customer already has a data platform and wants to reuse its governance. The challenge is keeping search candidates separate from the text that the signed-in user is actually allowed to read.
 
-- state the two Vector Search governance facts and the table-and-view split they force;
-- write the access policy as a Unity Catalog row filter or view with a column mask;
-- encode group membership for index filters and choose the endpoint type;
-- carry the user's identity to the governed read, and test leaks with a SQL assertion;
-- name what was verified on a live workspace and what was not.
+Reuse [the enterprise RAG design](/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag), then explain where Unity Catalog enforces access and where the application must still constrain search. The source calls the product Vector Search; current documentation calls it [AI Search](https://docs.databricks.com/aws/en/ai-search/ai-search/).
 
 ---
 
@@ -28,29 +24,26 @@ Draw the naive design first, then break it. The naive claim is that Unity Catalo
 
 First fact: Databricks Vector Search does not enforce Unity Catalog row filters or column masks. The documentation says row- and column-level permissions are not supported, and points to application-level ACLs through the filter API. The index is a derived copy. The sync pipeline reads with its own identity and writes into a serving system with no concept of end users. With no query-time principal, `is_account_group_member()` has nobody to evaluate.
 
-Second fact, found by building it rather than in the limitations page: the index cannot even be created on a governed table. It fails at creation.
+Second observation: the supplied reference build failed when creating an index over a source table with row/column security. Treat this as a recorded build result, not a new workspace test or a promise about every index configuration.
 
-```
+```text
 BadRequest: Table main.meridian_rag.chunks cannot have both
             row/column security and online materialized views.
 ```
 
-So the naive design is not only insecure; it does not build. Pause on this. It is specific, counter-intuitive and verifiable, and most candidates get it wrong.
+The [current limitations](https://docs.databricks.com/aws/en/ai-search/ai-search/) still say row- and column-level permissions are unsupported. Validate the target configuration before building on the reference observation.
 
 ## Split the Base Table From the Governed View
 
 The platform forces a physical split.
 
-```
-   kb.chunks              UNGOVERNED base table
-      |                   SELECT granted ONLY to the sync service principal
-      |
-      +--------------->   VECTOR SEARCH INDEX   (Delta Sync reads this)
-      |                   layer 1 - ACL applied by the query filter
-      |
-      +--------------->   kb.chunks_secure      GOVERNED dynamic view
-                          SELECT granted to humans and agents
-                          layer 2 - UC enforces ACL + PII masking
+```mermaid
+flowchart TB
+    B["Base chunks table<br/>no row policy<br/>restricted grants"] -->|Sync identity| I["Search index<br/>layer 1 candidate filter"]
+    B --> V["Governed dynamic view<br/>access predicate and redaction"]
+    I --> Q["Candidate chunk IDs<br/>never use raw index text"]
+    Q -->|Read as signed-in user| V
+    V --> P["Only permitted text<br/>can reach the model"]
 ```
 
 Because the base table carries no policies, granting anyone `SELECT` on it bypasses the whole access model. Locking it to the pipeline identity stops being hygiene and becomes load-bearing. Write that rule down and audit it.
@@ -59,7 +52,7 @@ Because the base table carries no policies, granting anyone `SELECT` on it bypas
 
 ## Let Unity Catalog Be the Second Layer
 
-The two-layer answer from the platform-agnostic design survives, but layer 2 changes owner. Layer 1 is the Vector Search filter. It runs as the service principal, compiled from the caller's groups and passed on every query. Unauthorised vectors are never scored, so it is an optimisation and a first line of defence.
+The two-layer answer from the platform-agnostic design survives, but layer 2 changes owner. Layer 1 is the Vector Search filter. It runs as the service principal, compiled from the caller's groups and passed on every query. It narrows candidate results according to the endpoint filter semantics. It is not the authoritative user-access decision.
 
 Layer 2 re-reads the returned chunk IDs from the governed view, on behalf of the user. Unity Catalog applies the row filter and column mask itself, and that is the authoritative decision. The text that reaches the model is what layer 2 returned, never what the index returned.
 
@@ -67,44 +60,38 @@ Layer 2 is not application code; it is the same engine that governs every dashbo
 
 ## Write the Policy Once, in SQL
 
-The same seven rules become one SQL function. On any governed table that is not an index source, attach it with `SET ROW FILTER`. On the index source, the same predicate must live in a view, because of the second fact.
+Express tenant, clearance, region, validity dates, group access, need-to-know, and external-user restrictions in a governed SQL policy. Keep the search source separate from the governed read. The following is an illustrative view over a trusted entitlement table; adapt and test the actual schema.
 
 ```sql
-CREATE OR REPLACE FUNCTION security.chunk_row_filter(
-  tenant_id STRING, sensitivity_lvl INT, region STRING,
-  need_to_know STRING, valid_from DATE, valid_until DATE, source_system STRING)
-RETURN is_account_group_member('kb_admins')
-    OR EXISTS (SELECT 1 FROM security.user_entitlements e
-               WHERE e.user_email = current_user()
-                 AND tenant_id = 'meridian'                              -- tenant
-                 AND sensitivity_lvl <= e.clearance_lvl                  -- clearance
-                 AND (region = 'GLOBAL' OR region = e.region)            -- residency
-                 AND (valid_from IS NULL OR valid_from <= current_date())-- embargo
-                 AND (need_to_know IS NULL OR need_to_know = e.compartment)
-                 AND (NOT e.is_external OR source_system NOT IN ('contract','pricing')));
-
--- on a table that is NOT a vector index source:
-ALTER TABLE kb.chunks_governed SET ROW FILTER security.chunk_row_filter ON (...);
-
--- on the index source, the same predicate goes in a view instead:
 CREATE OR REPLACE VIEW kb.chunks_secure AS
-SELECT chunk_id, doc_id,
-       CASE WHEN NOT contains_pii THEN content
-            WHEN is_account_group_member('pii_readers') THEN content
-            ELSE regexp_replace(content,'[\w.+-]+@[\w-]+\.[\w.-]+','[REDACTED_EMAIL]')
-       END AS content
-FROM kb.chunks c WHERE EXISTS ( ...the seven rules... );
+SELECT c.chunk_id, c.doc_id,
+       CASE WHEN NOT c.contains_pii
+                 OR is_account_group_member('pii_readers')
+            THEN c.content ELSE '[REDACTED]' END AS content
+FROM kb.chunks c
+WHERE EXISTS (
+  SELECT 1 FROM security.user_entitlements e
+  WHERE e.user_email = current_user()
+    AND c.tenant_id = e.tenant_id
+    AND c.sensitivity_lvl <= e.clearance_lvl
+    AND (c.region = 'GLOBAL' OR c.region = e.region)
+    AND (c.valid_from IS NULL OR c.valid_from <= current_date())
+    AND (c.valid_until IS NULL OR current_date() <= c.valid_until)
+    AND (c.need_to_know IS NULL OR c.need_to_know = e.compartment)
+    AND arrays_overlap(c.allowed_groups, e.groups)
+    AND (NOT e.is_external OR c.source_system NOT IN ('contract','pricing'))
+);
 ```
 
-One object holds seven rules and governs every reader: the agent, a notebook, a dashboard and a SQL query. It does not only protect callers who go through application code.
+This example assumes tenant-scoped entitlements with `groups` and `compartment` fields. A deployed policy needs deny precedence, validity semantics, and persona tests. The view redacts entire sensitive content; an email-only regex would not be a complete PII control. Grant readers `SELECT` on the view, not the base. Other governed tables can use `SET ROW FILTER` and column masks.
 
 PII becomes a column mask keyed on `is_account_group_member('pii_readers')`. Draw the distinction for anyone who knows the platform. A Unity Catalog column mask is an access-control primitive. `ai_mask` is an AI transform, and it should never sit between a user and PII.
 
-Live revocation takes one sentence. `is_account_group_member()` reads SCIM-synced account groups, so removing someone in Okta takes effect on their next query, with no reindex, cache bust or code.
+Revocation depends on identity synchronisation and query-time policy freshness. `is_account_group_member()` evaluates account membership; SCIM propagates changes from the identity provider. Measure propagation and invalidate scoped caches. Do not promise immediate revocation from an upstream change.
 
 ## Encode Groups for the Index Filter
 
-Vector Search filters work on scalar columns. There is no documented array-containment operator, so an `allowed_groups ARRAY<STRING>` column cannot be filtered directly. Pick one of two encodings out loud.
+The reference uses scalar group flags rather than assuming array-containment support in the index filter. Confirm the deployed endpoint's [filter operators](https://docs.databricks.com/aws/en/ai-search/filtering-guide). The governed SQL read can use richer predicates.
 
 | Encoding | How | Cost |
 |---|---|---|
@@ -123,7 +110,7 @@ The array must be regenerated whenever the caller's group count changes. Build t
 
 ## Choose the Storage-Optimized Endpoint
 
-That gotcha is one more reason to choose Storage-Optimized. Its filter is a SQL string, so `(grp_a = true OR grp_b = true)` means exactly what it looks like.
+The reference chooses Storage-Optimized for its SQL-like filter syntax. Standard uses dictionary filters. Build either form from trusted, allow-listed attributes, not raw model or user strings.
 
 | | Standard | Storage-Optimized (choose) |
 |---|---|---|
@@ -132,24 +119,25 @@ That gotcha is one more reason to choose Storage-Optimized. Its filter is a SQL 
 | Cost | Higher | ~7× lower |
 | Filters | Dictionary | SQL string |
 
-Retrieval of 300–500 ms is invisible next to a 2-second generation. A SQL-string filter also makes the access predicate reviewable by a security person, which is worth real money.
+These are the source's illustrative comparison figures, not a benchmark or current price quote. A 300–500 ms retrieval still adds to a 2-second generation. Compare end-to-end latency, vector dimensions, update rate, and actual cost before choosing an endpoint.
 
-Retrieval itself shrinks to parameters. Hybrid search is one parameter, replacing a hand-rolled BM25 index. It also removes the worst limitation of the platform-agnostic build, the per-request lexical index over the authorised pool. Reranking is another parameter: the managed reranker takes the top ~50 before returning the top-k.
+Retrieval itself shrinks to parameters. Hybrid search is one parameter, replacing a hand-rolled BM25 index. It also removes the worst limitation of the platform-agnostic build, the per-request lexical index over the authorised pool. The source proposes managed reranking over the top ~50 candidates. Verify availability and where it runs. In this case, do not let a managed reranker read raw index content before the governed re-read.
 
 ```python
 index.similarity_search(
     query_text=q,
     query_type="HYBRID",              # dense + BM25, managed
     filters=acl_filter,               # layer 1, on every call
-    reranker={"model": "databricks_reranker",
-              "parameters": {"columns_to_rerank": ["title", "content"]}},
+    columns=["chunk_id", "doc_id"],   # fetch text only through the governed view
     num_results=20)
 ```
 
-Multi-query, HyDE, decomposition and RRF across generated queries stay in agent code. Those are orchestration patterns, not retrieval infrastructure.
+After the governed read, rerank only its permitted text. Multi-query, hypothetical-document embeddings (HyDE), decomposition, and Reciprocal Rank Fusion (RRF) remain orchestration choices to evaluate.
 
 ## Carry the User's Identity to the Governed Read
 
-Layer 2 is only real if the read runs as the user. The app or agent endpoint receives credentials that Databricks downscopes to declared scopes and forwards as `x-forwarded-access-token`. Call `get_user_workspace_client()` inside the request handler, never at startup. The SQL warehouse then reads `kb_chunks_secure`, and Unity Catalog applies the row filter and mask.
+The governed read must run as the signed-in user, not the search sync principal. Validate that a user token exists, confirm the expected principal, and create the request-scoped client. Never silently fall back to a broadly privileged service identity.
 
-Name the caveats unprompted; they are credibility, not weakness. On-behalf-of-user auth for agent endpoints is public preview, and an admin must enable it. Token refresh can lag ~5 minutes. And the token exists only at request time.
+The source discusses `x-forwarded-access-token` and `get_user_workspace_client()`. Choose the supported mechanism for the actual host. [Databricks Apps on-behalf-of-user authorisation is now generally available](https://www.databricks.com/blog/now-ga-building-permission-aware-databricks-apps-behalf-user-authorization); that is distinct from the source's agent-endpoint preview configuration. Check declared scopes and hosting-specific setup.
+
+The source mentions a ~5-minute refresh lag. Treat it as a historical caveat, not a revocation guarantee. Measure identity propagation and cache freshness in the deployed environment.

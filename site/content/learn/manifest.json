@@ -2154,9 +2154,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/01_Enterprise_AI_Assistant_Integration_Layers_at_Scale.md",
-      "estMinutes": 9,
+      "estMinutes": 14,
       "href": "/learn/ai-systems-design/classic-ai-designs/enterprise-ai-assistant-integration-layers-at-scale",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "customer-support-assistant-knowledge-actions-and-approval",
@@ -2166,9 +2166,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/02_Customer_Support_Assistant_Knowledge_Actions_and_Approval.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/ai-systems-design/classic-ai-designs/customer-support-assistant-knowledge-actions-and-approval",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "coding-assistant-context-engineering-under-300-ms",
@@ -2178,9 +2178,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/03_Coding_Assistant_Context_Engineering_Under_300_ms.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/coding-assistant-context-engineering-under-300-ms",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "recruiting-platform-explainable-ranking-human-decisions",
@@ -2190,9 +2190,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md",
-      "estMinutes": 8,
+      "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/recruiting-platform-explainable-ranking-human-decisions",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "logistics-exceptions-designing-around-a-policy-gate",
@@ -2202,9 +2202,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/05_Logistics_Exceptions_Designing_Around_a_Policy_Gate.md",
-      "estMinutes": 10,
+      "estMinutes": 12,
       "href": "/learn/ai-systems-design/classic-ai-designs/logistics-exceptions-designing-around-a-policy-gate",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "access-controlled-enterprise-rag",
@@ -2216,7 +2216,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
       "estMinutes": 7,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "access-controlled-enterprise-rag-retrieval-and-release",
@@ -2226,9 +2226,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag-retrieval-and-release",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "access-controlled-rag-on-databricks",
@@ -2238,9 +2238,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "access-controlled-rag-on-databricks-testing-and-operations",
@@ -2250,9 +2250,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
-      "estMinutes": 9,
+      "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks-testing-and-operations",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "safe-workflow-automation-for-non-technical-users",
@@ -2262,9 +2262,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/08_Safe_Workflow_Automation_for_Non_Technical_Users.md",
-      "estMinutes": 14,
+      "estMinutes": 13,
       "href": "/learn/ai-systems-design/classic-ai-designs/safe-workflow-automation-for-non-technical-users",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "delivering-an-agent-in-two-weeks-with-enforced-gates",
@@ -2276,7 +2276,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md",
       "estMinutes": 13,
       "href": "/learn/ai-systems-design/classic-ai-designs/delivering-an-agent-in-two-weeks-with-enforced-gates",
-      "updated": "2026-10-05"
+      "updated": "2026-10-16"
     },
     {
       "slug": "g01-enterprise-knowledge-assistant",

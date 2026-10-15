@@ -2,17 +2,13 @@
 
 *Auto-resolving disruptions clears the backlog faster, while every action the assistant takes without a person has to stay inside a boundary the customer will be held accountable for.*
 
-◷ 9 min
+◷ 11 min
 
-Work this design the way a forward-deployed round runs: clarifying questions first, then the design they force. Here the questions are the design, and one component, the Policy Gate, carries the system.
+## Understand the Customer Problem
 
-**Objectives:**
+In this scenario, a logistics operations team watches shipments across many carriers. Customs holds, missed scans, and weather delays create work that agents must resolve before shipments stay stuck. Some carriers send live events; others send files hours apart. The customer wants low-risk fixes handled automatically, sensitive cases routed to a person, and regional shipment data kept within its required location.
 
-- turn four clarifying answers into four architectural decisions;
-- unify streaming and batch carrier feeds without faking real-time;
-- order the rules inside the Policy Gate so customs can never be auto-resolved;
-- keep EU data in the EU with a shared control plane and regional data planes;
-- size a low-DAU, high-stakes system by event throughput and correctness.
+Let the customer's answers shape ingestion, the policy gate, and regional deployment. Use [the first ten minutes](../T5.2_The_60_Minute_Whiteboard_Method/01_The_Six_Step_Whiteboard_Clock.md) to establish those boundaries.
 
 ---
 
@@ -35,33 +31,19 @@ Functionally, the assistant ingests carrier events and detects disruptions. It c
 
 ## Draw the Policy Gate as Its Own Component
 
-```
-Carriers (60% real-time, 40% batch)
-        │
-   ┌────┴────┐
-Webhook   Batch File
-Ingest    Ingest (EDI/CSV, scheduled)
-   │         │
-   └────┬────┘
-        │
-Event Normalization & Stream
-        │
-Disruption Detection Service
-   (customs hold · missed scan · weather delay)
-        │
-Resolution Agent
- (drafts action + confidence score)
-        │
-   Policy Gate
- (value + confidence + always-human customs rule)
-   │            │
-Auto-Resolve   Human Approval Queue
-   │            │  (ops agent: approve / edit / reject)
-   └─────┬──────┘
-         │
-   Carrier / Ops Systems (execute the resolution)
-         │
-   Audit Log (every decision, automated or human)
+```mermaid
+flowchart TB
+    W["Webhook carriers<br/>60% real-time"] --> N["Validate, deduplicate<br/>and normalise events"]
+    B["Batch carriers<br/>40% CSV or EDI"] --> N
+    N --> D["Disruption detection"]
+    D --> R["Resolution agent<br/>propose a fix"]
+    R --> P["Deterministic policy gate"]
+    P -->|Eligible low risk| E["Carrier or ops application<br/>authorise and execute"]
+    P -->|Customs or other gated case| H["Human queue<br/>approve, edit or reject"]
+    H -->|Approved and revalidated| E
+    H -->|Pending or rejected| S["No execution"]
+    E --> A["Regional audit log<br/>and confirmed outcome"]
+    S --> A
 ```
 
 The Policy Gate is a first-class component, not a side check inside the Resolution Agent. The customer said customs must never be bypassed. A rule hidden inside the agent cannot be tested or audited on its own. So the gate stands alone, where it can be both.
@@ -76,16 +58,13 @@ A missed scan on a batch carrier is detected late by design. Surface that latenc
 
 ## Check Customs Before Anything Else
 
-```
-Resolution Agent output (action + confidence + shipment value + exception type)
-            │
-   Is exception type = customs/regulatory?
-     │ Yes                    │ No
-     ↓                        ↓
- Human Approval        value < $500 AND confidence ≥ threshold?
- Queue (always)          │ Yes                  │ No
-                          ↓                      ↓
-                     Auto-Resolve          Human Approval Queue
+```mermaid
+flowchart TB
+    R["Proposed resolution"] --> C{"Customs or regulatory?"}
+    C -->|Yes| H["Human approval required"]
+    C -->|No| V{"Value below $500<br/>and confidence meets threshold?"}
+    V -->|Yes| A["Eligible for automatic execution"]
+    V -->|No or unknown| H
 ```
 
 The customs check runs first and short-circuits everything else. This mirrors the customer's own framing: customs is a hard compliance boundary, not something that competes with a confidence score. Only after that check does the value and confidence rule apply. It is the same structure as deny-rules-first in access control, and as short-circuiting in [Scale, Reliability, and Security](../T5.1_The_Design_Framework/03_Scale_Reliability_and_Security.md).
@@ -96,28 +75,27 @@ The customs check runs first and short-circuits everything else. This mirrors th
 
 EU data cannot leave the EU, so one global deployment is out. Use a **shared control plane**: agent logic, model routing, policy definitions and UI, deployed identically in each region. Pair it with a **regional data plane** (event store, any vector store, audit log) that never replicates across regions.
 
-```
-        Shared Control Plane (logic, policy, UI — versioned identically)
-              │                    │                    │
-         US Region             EU Region             APAC Region
-     (US carrier data,     (EU carrier data,     (APAC carrier data,
-      US audit log)         EU audit log —        APAC audit log)
-                             never leaves EU)
+```mermaid
+flowchart TB
+    L["Shared control plane<br/>versioned logic, policy and UI"] --> U["US regional services<br/>US events and audit"]
+    L --> E["EU regional services<br/>EU events and audit"]
+    L --> A["APAC regional services<br/>APAC events and audit"]
+    E --> R["EU storage, inference and logs<br/>keep protected data in region"]
 ```
 
-An agent in any region sees the same UI and the same policy; only storage is partitioned. Name the pattern, *shared logic, isolated data*, rather than just drawing three boxes.
+Agents share UI and policy versions. Regional execution, model calls, telemetry, storage, and support access must also respect residency. Name the pattern, *shared logic, isolated data*, rather than just drawing three boxes.
 
 ## Size by Event Throughput and Correctness
 
 Users do not constrain this system. Event throughput and correctness do. Keep detection and resolution services stateless behind a queue, with state in the event store and audit log. Queue-backed ingestion turns a regional weather event that hits many shipments at once into backlog, not overload.
 
-Put an idempotency key on every auto-resolve action. A retry after a transient failure must never double-book or double-refund. Wrap carrier APIs in circuit breakers, so a flaky carrier degrades to "route to human" instead of piling up retries that delay every other exception.
+Put an idempotency key on every auto-resolve action. Use it only with a backend that actually deduplicates repeated operations. Reconcile uncertain outcomes before retrying; unsupported carriers may need human handling. Wrap carrier APIs in circuit breakers, so a flaky carrier degrades to "route to human" instead of piling up retries that delay every other exception.
 
 Track time-to-detect separately for real-time and batch carriers. An average hides that a meaningful share are detected hours late by design. Watch approval-queue SLAs too. With 40 concurrent agents, a queue growing faster than they clear it at shift handoff is a capacity problem the AI cannot solve. Alert on queue depth, not just event latency.
 
 ## Make Every Decision Auditable and Explainable
 
-Treat the audit log as a first-class store. It records every gate decision and agent action immutably, with the model's confidence and reasoning attached. Give carrier credentials least privilege: only the scopes needed to rebook or reschedule, never broad account access. Mirror residency at the application layer, so an EU agent's session cannot query US data by default, and the reverse.
+Treat the audit log as a first-class store. It records every gate decision and agent action immutably, with the confidence, observable rationale, policy version, and authoritative execution result attached. Give carrier credentials least privilege: only the scopes needed to rebook or reschedule, never broad account access. Mirror residency at the application layer, so an EU agent's session cannot query US data by default, and the reverse.
 
 Show *why* at the point of approval. An agent approving a black box under time pressure is how a wrong suggestion becomes a wrong human decision.
 
@@ -125,21 +103,65 @@ Show *why* at the point of approval. An agent approving a black box under time p
 |---|---|---|
 | Unified stream (webhook + batch) | One detection code path; simpler to add carriers | Batch exceptions detected late by design, so must be surfaced |
 | Policy Gate as a separate component | Independently testable; the customs rule cannot be bypassed by a confidence-score bug | Extra hop in the critical path |
-| Regional data planes, shared control plane | Compliant by construction; consistent UX and policy | Cross-region reporting needs an aggregation layer that respects residency |
+| Regional data planes, shared control plane | Supports residency boundaries; consistent UX and policy | Cross-region reporting needs an aggregation layer that respects residency |
 | Queue-backed ingestion | Absorbs bursts | Latency under normal load; backlog needs monitoring |
 | Idempotent auto-resolve | Safe to retry | Every carrier integration must support idempotency keys; legacy ones may not, forcing some carriers to human-only |
 
 ## Worked Example: A Missed Scan on an EU Batch Carrier
 
+> **Added production guidance:** the clarification, payload, and failure choices below are illustrative extensions. Carrier support for idempotency must be established explicitly.
+
+### Clarify What May Change
+
+Ask: "Which shipment and carrier? What is the last authoritative update? Who owns the confidence threshold, and what happens at exactly $500?" The stated rule is strictly under $500; route the boundary value and missing data to human review.
+
+### Follow the Batch Event
+
 A regional EU carrier drops its CSV file four hours after the last one. Batch ingest diffs it against the last known state and finds one shipment with no scan since yesterday. Only that change enters the EU stream, and the record never leaves the EU data plane. Detection flags a missed scan and records that it came from the batch path, so the agent sees it was detected late.
 
-The Resolution Agent drafts a reschedule with high confidence on a $320 shipment. The gate first asks whether this is a customs hold. It is not. It then checks value and confidence: under $500 and above threshold, so it auto-resolves. The rebooking call carries an idempotency key, so a retry after a timeout cannot book twice. Every step, with the confidence and reasoning, lands in the EU audit log.
+The Resolution Agent drafts a reschedule with high confidence on a $320 shipment. The gate first asks whether this is a customs hold. It is not. It then checks value and confidence: under $500 and above threshold, so it auto-resolves. For this example, assume the carrier honours an idempotency contract. Reuse the same key and arguments on a safe retry; otherwise reconcile status before any repeat call. Each step, its rationale, and the carrier receipt land in the EU audit log.
 
 Change one fact and the path changes. Were the exception a customs hold, the first check would send it to a person regardless of the $320 value or the confidence. One boundary decides, and everything else feeds it correctly and acts on its verdict safely.
+
+### Trace the Gate Decision
+
+```json
+{
+  "trusted_scope": {"customer": "logistics-a", "region": "EU"},
+  "shipment_id": "shipment-42",
+  "exception": "missed_scan",
+  "value_usd": 320,
+  "confidence_meets_policy": true,
+  "policy_version": "v3",
+  "decision": "eligible_for_auto_resolution",
+  "execution_status": "not_started"
+}
+```
+
+The application validates carrier facts and scope. The gate's eligibility decision is not a completed rebooking. Execute through the authorised carrier connector and record its receipt.
+
+### Handle Delays and Unknown Outcomes
+
+| Situation | Response |
+| --- | --- |
+| Customs hold, even at $320 | Always wait for human approval. |
+| Late batch data or conflicting status | Surface freshness; recheck before acting. |
+| Carrier call times out | Mark outcome unknown and reconcile; do not blindly repeat. |
+| Duplicate event | Deduplicate detection and the business operation separately. |
+
+Keep audit, reconciliation, and model traffic in the permitted regional path.
 
 ## Practise From the Architecture Prompt
 
 The source includes a mock session that ran the four clarifying questions and stopped at the opening architecture prompt. It reads: "Walk me through your high-level architecture. What are the major components, and how does an event — say, a missed carrier scan — flow through the system from ingestion to either auto-resolution or a human agent's queue?" Use this lesson as the model answer, and practise picking up from exactly that prompt.
+
+---
+
+## Explain the Design in 60 Seconds
+
+> "I'd start with four facts: carrier freshness, operations staffing, the automatic-action boundary, and residency. I'd ingest webhooks and scheduled files separately, then normalise changes into one regional stream. Detection would identify a disruption and the agent would draft a fix.
+>
+> A deterministic policy gate would check customs first. Customs always goes to a person; only other cases below $500 with sufficient confidence could proceed automatically. Carrier APIs would enforce access and return execution receipts. I'd handle duplicates, reconcile uncertain writes, and isolate failing carriers. Shared policy would run in regional data planes. I'd measure event backlog, freshness, approval queues, and confirmed outcomes rather than just user count."
 
 ---
 
@@ -149,7 +171,7 @@ The source includes a mock session that ran the four clarifying questions and st
 - The Policy Gate is its own component, so the customs rule is testable and auditable.
 - Keep separate webhook and batch ingestion, converge after ingestion, and surface batch latency.
 - Check customs first and short-circuit; only then apply the under-$500, high-confidence rule.
-- A shared control plane with regional data planes keeps EU data in the EU by construction.
+- A shared control plane with regional data planes supports EU residency only when processing, inference, logs, and access follow the same boundary.
 - Size by event throughput and correctness: queues, idempotent actions, circuit breakers, separate time-to-detect, and queue-depth alerts.
 - Make the audit log first-class, scope carrier credentials tightly, and show the reasoning at approval.
 - Practise answering from the mock's architecture prompt.
@@ -164,6 +186,21 @@ The source includes a mock session that ran the four clarifying questions and st
 
 3. **What does the shared control plane and regional data plane pattern cost?**
    Cross-region reporting needs an aggregation layer that respects residency. In return, residency holds by construction and every region shares one UI and policy.
+
+4. **What happens at exactly $500 or when value is missing?**
+   The automatic rule is strictly under $500. Route the boundary or missing information to human review.
+
+5. **Does a local idempotency key guarantee one rebooking?**
+   No. The carrier must support deduplication or authoritative reconciliation; otherwise automatic retries are unsafe.
+
+6. **Which regional traffic matters besides storage?**
+   Model calls, telemetry, reconciliation, support access, and audit must follow the residency boundary too.
+
+7. **Does policy eligibility mean the shipment was rescheduled?**
+   No. The carrier application must authorise the call and return a confirmed result.
+
+8. **What should the UI show for a batch carrier?**
+   The last authoritative update and detection freshness, so the agent can judge delayed evidence.
 
 ## References
 
