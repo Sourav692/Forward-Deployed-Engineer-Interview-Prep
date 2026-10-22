@@ -1,11 +1,41 @@
 {
   "version": 1,
   "skills": {
+    "fde-html-explorer": {
+      "source": "Sourav692/skills",
+      "sourceType": "github",
+      "skillPath": "skills/fde-html-explorer/SKILL.md",
+      "computedHash": "e38ff89069c6a93d3a86a0bb96aa6fb3b37deee178c79f6485056f61f0b1c033"
+    },
     "scroll-world": {
       "source": "oso95/scroll-world",
       "sourceType": "github",
       "skillPath": "skills/scroll-world/SKILL.md",
       "computedHash": "e7ea15d223b6a687840306ab4e3e48ce507df3094c8e78742f6f8b84ae7face0"
+    },
+    "site-audit": {
+      "source": "Sourav692/skills",
+      "sourceType": "github",
+      "skillPath": "skills/site-audit/SKILL.md",
+      "computedHash": "0be524e505c72e4c2c3d72a189ccdf3a38fbd6a61141ba3fac7cf58abbc67532"
+    },
+    "site-plan": {
+      "source": "Sourav692/skills",
+      "sourceType": "github",
+      "skillPath": "skills/site-plan/SKILL.md",
+      "computedHash": "0dcf9e5da70d8b5413506e3f9df9369417234eed990571deb07075c363da0aa9"
+    },
+    "site-plan-to-tasks": {
+      "source": "Sourav692/skills",
+      "sourceType": "github",
+      "skillPath": "skills/site-plan-to-tasks/SKILL.md",
+      "computedHash": "ddfbf5bd5fc19b63672ff19009bbd2441d95874e8e2e05856974e812ea1c1737"
+    },
+    "verify-site": {
+      "source": "Sourav692/skills",
+      "sourceType": "github",
+      "skillPath": "skills/verify-site/SKILL.md",
+      "computedHash": "f39630a9b49b84157514640a40fc665dcfeca194bf295fec66877611951f92fb"
     }
   }
 }

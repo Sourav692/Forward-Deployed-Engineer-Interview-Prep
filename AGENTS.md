@@ -23,7 +23,7 @@
 - Do not publish or wire in `09_Study_Plans/`, `99_Reference_Library/`, or content that references its purchased library index. Remove references to `LIBRARY_MAP.md`, `ROADMAP_7_DAY.md`, and the condensed-plan spreadsheet before public use.
 - Keep `site/src/lib/editorial.ts` and `site/src/lib/glossary.ts` free of runtime imports because sync scripts import them.
 - Preserve track, tab, and scenario IDs. They back URLs and `fd:v1:*` localStorage keys. Labels may change.
-- Run the `add-module` skill for new modules, tracks, or scenarios.
+- For new modules, tracks, or scenarios, follow "Adding a module, track or scenario" in `CLAUDE.md`.
 
 ## Validation
 
