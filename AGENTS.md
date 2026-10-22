@@ -10,6 +10,7 @@
 
 - Root directories `00_` through `09_` and `99_Reference_Library/` contain prep material. Put new material in the directory matching its kind.
 - `site/` is the only JavaScript project. It uses Next.js 16, React 19, Tailwind v4, and npm. Run npm commands from `site/` only.
+- Skills: Claude Code gets the Sourav692 skills from the `sourav-skills` plugin, so this repo has no `.claude/skills/`. Codex skills are npx installs in `.agents/skills/` (tracked in `skills-lock.json`). Update them with `.agents/update-skills.sh`, never `npx skills update`: it re-adds `.claude/skills` symlinks. Add one with `npx skills@latest add <owner/repo> -s <name> -a codex -y`.
 - Before changing Next.js code, read the relevant local Next documentation in `site/node_modules/next/dist/docs/`. Also follow [site/AGENTS.md](site/AGENTS.md).
 - The platform brief is `00_Start_Here/Platform_Blueprint.html`; its local source prompt is `.website_spec/website_prompt.md`.
 - Website design docs, specs, audits, plans, task boards and QA reports live in `.website_spec/` (gitignored, owner's clone only). Put new ones there, never in `site/` or another committed folder. The production plan is `.website_spec/2026-10-05-production-implementation-plan.md`; its board is `.website_spec/tasks/README.md`.
