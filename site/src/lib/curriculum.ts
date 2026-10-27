@@ -240,7 +240,7 @@ export const TRACKS: CurriculumTrack[] = [
       },
       {
         slug: 'casebook',
-        title: 'Casebook',
+        title: 'Classic designs',
         whyItMatters: 'Pattern recognition from worked designs.',
         outcomes: 'Map a new prompt to a known pattern',
         exercise: 'Read and summarise 6 cases',
@@ -1177,7 +1177,7 @@ export const MODULES: CurriculumModule[] = [
   {
     slug: 'classic-ai-designs',
     code: 'T5.4',
-    title: 'Casebook: classic AI designs',
+    title: 'Classic AI designs',
     track: 'ai-systems-design',
     section: 'casebook',
     status: 'ready',

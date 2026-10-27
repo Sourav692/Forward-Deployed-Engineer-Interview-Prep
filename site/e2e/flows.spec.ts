@@ -390,6 +390,7 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await page.goto('/learn/ai-systems-design/scenario-library')
   await expect(page).toHaveURL('/design')
   await expect(page.getByRole('heading', { level: 1, name: 'Casebook' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Open Classic AI designs' })).toHaveAttribute('href', '/learn/ai-systems-design/classic-ai-designs')
 })
 
 // ENH-17: worksheets moved to /practice/<slug>. Answers key on track/slug, not the URL,
