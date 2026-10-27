@@ -2,7 +2,7 @@
 
 ## 15. Walk the Latency Stack When It Gets Slow
 
-#74 asks for the full stack: tokenization, network, batch size, KV cache, post-processing. G14 section 12 answers it from the application's traces. This section answers it from inside the serving layer. First ask which latency is slow: first token, per token, or total *(from question 9 of the decomposition questions file)*.
+#74 asks for the full stack: tokenization, network, batch size, KV cache, post-processing. Section 12 of the Observability and Production Diagnosis case answers it from the application's traces. This section answers it from inside the serving layer. First ask which latency is slow: first token, per token, or total *(from question 9 of the decomposition questions file)*.
 
 | Layer | Symptom | Likely cause | Check |
 |---|---|---|---|
@@ -15,7 +15,7 @@
 | Decode | Starts fast, then drags | Output length grew | Output tokens per request |
 | Post-processing | Gap after the last token | Safety filter, schema validation, detokenization | Span after final token |
 
-The rule from the additions file carries the diagnosis. A frozen screen points at the prompt, the queue or prefill. An answer that starts fast then drags points at output length. The peak-only follow-up gets the answer from G14. Separate queue wait from service time, then add admission control and shed non-interactive traffic.
+The rule from the additions file carries the diagnosis. A frozen screen points at the prompt, the queue or prefill. An answer that starts fast then drags points at output length. The peak-only follow-up gets the answer from the Observability and Production Diagnosis case. Separate queue wait from service time, then add admission control and shed non-interactive traffic.
 
 ## 16. Deliver It in Forty-Five Minutes
 

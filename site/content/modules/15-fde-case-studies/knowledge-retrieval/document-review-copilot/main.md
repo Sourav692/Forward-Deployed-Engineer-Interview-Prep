@@ -2,7 +2,7 @@
 
 **Document review** is: a packet arrives, a human decides yes/no against a rule (payer, law, playbook). Reading is cheap. **Signing** is expensive.
 
-**G08 covers one slice:** extract evidence, compare to the right rule version, cite the exact span, draft. A named human still decides.
+**This case covers one slice:** extract evidence, compare to the right rule version, cite the exact span, draft. A named human still decides.
 
 End to end, as prior auth for a procedure:
 
@@ -77,7 +77,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This diagram condenses the [source architecture, §4](/design/document-review-copilot#full-pack) into the ingest and review lanes. It names where the cheap model and strong LLM run and where they lose authority.
+This diagram condenses the [Full Design architecture, section 4](/design/document-review-copilot#full-pack) into the ingest and review lanes. It names where the cheap model and strong LLM run and where they lose authority.
 
 ```mermaid
 flowchart LR

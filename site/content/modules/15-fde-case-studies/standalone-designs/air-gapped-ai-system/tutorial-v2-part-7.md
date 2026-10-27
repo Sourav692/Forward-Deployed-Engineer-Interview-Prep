@@ -97,7 +97,7 @@ flowchart LR
   - A central service raises reuse and control, but becomes one operational asset to protect and monitor closely.
 - If the enclave can host it, start central: governance and updates are easier there. Fall back to workstations for isolated teams or cut-off sub-enclaves.
 
-> 🎯 **Interview Pointer:** The four trade-offs follow one pattern. Lay out both options, name the deciding factor in terms of the customer's real constraints, then commit to a default and say when you would leave it. Use the same pattern live for trade-offs this section does not list.
+> **Interview pointer:** The four trade-offs follow one pattern. Lay out both options, name the deciding factor in terms of the customer's real constraints, then commit to a default and say when you would leave it. Use the same pattern live for trade-offs this section does not list.
 
 ### Four Hard Follow-Up Questions
 - **"How do patches enter the network?"**

@@ -12,7 +12,7 @@ Scaling a prototype a thousandfold is not a bigger deployment of the same system
 | Production study guide (`12_production_and_operations`) | Sections 7 and 8: retries, breakers, fallback, degradation, budgets, the 99.9% answer |
 | Handbook Module 08 doc 1 and Module 10 doc 4 | Sections 10 and 12: shadow, canary, pointer-flip rollback, override rate, week-4 retention |
 | Handbook Module 06 doc 1 | Section 7: identity, fair queuing |
-| G07, G13, G14, G18, G20 and Standalone #100 | Cross-linked by section instead of re-explained |
+| The Secure Multi-Tenant AI Platform case, the Evaluation and Release Gating case, the Observability and Production Diagnosis case, the Consumer-Scale Chat Service case, the LLM Inference Serving case and Standalone #100 | Cross-linked by section instead of re-explained |
 
 **The source has talking points for this prompt, not a worked design.** Question 17 lists what to cover and one follow-up. Everything that turns that list into an architecture, a sizing walk and a rollout is *own construction*, built from the sources above. Every number is a stated assumption for the whiteboard, not a measurement.
 

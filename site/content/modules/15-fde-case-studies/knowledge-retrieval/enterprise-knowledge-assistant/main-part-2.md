@@ -353,34 +353,7 @@ This becomes closer to a permission-aware search product with a cached-answer la
 
 ---
 
-## 22. Databricks
-
-Important lesson:
-
-> **Governed source data does not automatically make a copied search index governed.**
-
-On Databricks the index is Databricks AI Search (formerly Vector Search), and AI Search does not enforce Unity Catalog row filters or column masks.
-
-Verify:
-
-- where identity is evaluated
-- how revocation propagates
-- whether the index can inherit source governance
-- how row/column controls interact with indexing
-- deletion/ACL SLO
-
-Ask the interviewer:
-
-1. Is Unity Catalog the governance boundary today?
-2. Are groups SCIM-synced or managed in-workspace?
-3. How faithfully must source permissions be mirrored?
-4. What is the revocation SLO?
-
-Prove the design with a persona-by-document visibility matrix rather than only verbal claims.
-
----
-
-## 23. Interview story
+## 22. Interview story
 
 Opening:
 
@@ -396,7 +369,7 @@ Five beats:
 
 ---
 
-## 24. Interview trigger → answer
+## 23. Interview trigger → answer
 
 | Interviewer asks | Mental trigger |
 |---|---|
@@ -413,11 +386,10 @@ Five beats:
 | No leaks? | Fail closed + leak suite |
 | 100 ms? | Remove generation from hot path |
 | Cost? | Route + bound + selective rerank + cache |
-| Databricks? | Verify governance at the index boundary |
 
 ---
 
-## 25. 60-minute delivery
+## 24. 60-minute delivery
 
 | Time | Focus |
 |---|---|

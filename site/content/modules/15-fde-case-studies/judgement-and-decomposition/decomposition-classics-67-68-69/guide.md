@@ -2,7 +2,7 @@
 
 *Commit to a plan early enough to show progress, and late enough that the mission, not the model, has chosen it.*
 
-These three prompts are not system-design questions with a hidden right architecture. They test whether the mission gets pinned down before anything is drawn. This page teaches the method once, then runs it three times. The scoping mechanics come from G12 and the evaluation-first habit from G17, and both are named here rather than repeated.
+These three prompts are not system-design questions with a hidden right architecture. They test whether the mission gets pinned down before anything is drawn. This page teaches the method once, then runs it three times. The scoping mechanics come from the Scoping to Deployed Agent case and the evaluation-first habit from the Logistics Exception Handling case, and both are named here rather than repeated.
 
 | Case | Prompt (verbatim from the source) | What it tests, per the source |
 |---|---|---|
@@ -63,7 +63,7 @@ Sequence by asking which unknown, if it turns out badly, kills the project *(own
 
 Then build the walking skeleton. The source's definition is precise: the thinnest end-to-end version, even with mocked agent logic, "to prove the integration story." A mocked model with real data flowing end to end teaches more than a clever model on a spreadsheet.
 
-The G12 pack carries the matching delivery mechanics: stage gates, named sign-off authorities, and refusing to start without measurable success criteria. Use its gate vocabulary when the interviewer asks how a phase ends.
+The Scoping to Deployed Agent pack carries the matching delivery mechanics: stage gates, named sign-off authorities, and refusing to start without measurable success criteria. Use its gate vocabulary when the interviewer asks how a phase ends.
 
 ---
 

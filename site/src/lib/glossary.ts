@@ -182,6 +182,8 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'Permissions decided by attributes — region, department, data sensitivity — not just role. Finer-grained than RBAC.' },
   { term: 'SSO', expansion: 'single sign-on', group: 'Security and compliance',
     plain: 'One company login for every app. It is also where you get the user\'s identity to enforce permissions.' },
+  { term: 'SCIM', expansion: 'System for Cross-domain Identity Management', group: 'Security and compliance',
+    plain: 'The standard an identity provider uses to push users and group changes to other systems. A removal reaches them on the next push, not instantly.' },
   { term: 'OIDC', expansion: 'OpenID Connect', group: 'Security and compliance',
     plain: "The login layer on top of OAuth. OAuth only says what an app may do; OIDC adds who the user is, as a signed ID token." },
   { term: 'DLP', expansion: 'data loss prevention', group: 'Security and compliance',

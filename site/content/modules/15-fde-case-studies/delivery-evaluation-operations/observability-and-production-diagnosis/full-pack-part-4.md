@@ -25,7 +25,7 @@ Two gap answers are worth having ready *(V2 gap note, supplementary)*. On build 
 
 ## 15. Answer Every Cost and Latency Pivot With a Card
 
-Ten members of this group are the same system asked a cost or latency question. Each gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse, and the line to say. The "Do not" field for the §15 scenarios is *(own construction)*; the playbook gives no weak answer for them. Every card shares the playbook's customer-communication sentence: *"Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric."*
+Ten members of this group are the same system asked a cost or latency question. Each gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse, and the line to say. The "Do not" field for the scenarios is *(own construction)*; the playbook gives no weak answer for them. Every card shares the playbook's customer-communication sentence: *"Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric."*
 
 ### 15.1 LLM costs exploded after launch
 

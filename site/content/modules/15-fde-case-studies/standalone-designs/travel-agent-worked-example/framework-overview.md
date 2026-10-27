@@ -38,10 +38,10 @@ The draft never said how five parallel outputs turn into one reply. It just kept
 
 The components and the regional footprint match the first draft. What changes is the structure: a cache hit now really is cheap, each agent uses its tools within its own loop, and all results pass through one accountable step before the reply leaves.
 
-- 🟢 the request path
-- 🟢 agents, each running its own loop in parallel
-- 🟣 shared backend, called only when needed (dashed lines)
-- 🟠 added: Synthesizer Agent
+- Green: the request path
+- Green: agents, each running its own loop in parallel
+- Purple: shared backend, called only when needed (dashed lines)
+- Orange: added: Synthesizer Agent
 
 ```mermaid
 flowchart TB

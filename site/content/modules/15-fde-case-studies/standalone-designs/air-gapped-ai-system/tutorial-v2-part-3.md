@@ -70,7 +70,7 @@ flowchart LR
   - When the registry marks an image as approved, the runtime must not quietly fall back to an older copy it has cached.
   - A service credential revoked in the identity provider must be revoked everywhere, consistently, by the local control plane.
 
-> 🎯 **Interview Pointer:** Interviewers love to probe the split between system of record, cache and queue. For every component you draw, be ready to say which bucket it belongs to and what breaks once its data goes stale.
+> **Interview pointer:** Interviewers love to probe the split between system of record, cache and queue. For every component you draw, be ready to say which bucket it belongs to and what breaks once its data goes stale.
 
 ### End-to-End Happy Path
 - Tell the happy path as a sequence of explicit state changes:

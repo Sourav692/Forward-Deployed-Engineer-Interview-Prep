@@ -14,7 +14,7 @@ Real-time p95? IDEs/languages/tasks? Whole-repo context? Code-host ACL? Private/
 
 **On push:** code host + ACL → symbol/dependency chunks → embedding/index. **On keystroke:** extension → auth → context funnel → scoped cache hit or authorised retrieval → small LLM → syntax/API/secret/license/unsafe validation → editor. **Explicit tasks:** larger reasoning model on a separate slow lane.
 
-**Agent role:** core completion is a routed LLM assistant. Tool-using chat mode is a separate acting-agent surface, with G03-style tool and approval controls if introduced.
+**Agent role:** core completion is a routed LLM assistant. Tool-using chat mode is a separate acting-agent surface, with Tool-Using Agent with Safety Controls-style tool and approval controls if introduced.
 
 ## Numbers
 

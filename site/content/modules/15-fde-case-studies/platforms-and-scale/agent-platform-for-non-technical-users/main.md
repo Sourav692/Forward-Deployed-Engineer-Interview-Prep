@@ -2,7 +2,7 @@
 
 **No-code agent process** is: a support lead draws a workflow — reply, tag, refund — without writing Python. The hard part is a real refund happening **once**, and stopping if the box crashes.
 
-**G15 covers one slice:** events in, versioned spec, guardrails, durable steps. A future LLM may draft a spec; the demo engine is deterministic.
+**This case covers one slice:** events in, versioned spec, guardrails, durable steps. A future LLM may draft a spec; the demo engine is deterministic.
 
 End to end, as Cascade’s “small refunds without a human”:
 
@@ -15,7 +15,7 @@ End to end, as Cascade’s “small refunds without a human”:
 
 That’s it: **event → one spec → guardrail → execute once → recover.** Authors cannot secretly approve their own live refunds.
 
-> **Full source:** [Sources and Full Design](/design/agent-platform-for-non-technical-users#full-pack), especially §§1–12 for the anchor and §13 for Cascade Robotics. Use the [Deep Dive](/design/agent-platform-for-non-technical-users#deep-dive) for guardrail and recovery mechanics and the [Cheat Sheet](/design/agent-platform-for-non-technical-users#cheat-sheet) for rehearsal.
+> **Full source:** [Sources and Full Design](/design/agent-platform-for-non-technical-users#full-pack), especially sections 1–12 for the anchor and section 13 for Cascade Robotics. Use the [Deep Dive](/design/agent-platform-for-non-technical-users#deep-dive) for guardrail and recovery mechanics and the [Cheat Sheet](/design/agent-platform-for-non-technical-users#cheat-sheet) for rehearsal.
 
 ## The anchor and its related case
 

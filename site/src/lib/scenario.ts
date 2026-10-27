@@ -141,3 +141,48 @@ export type CaseStudy = {
   prev: ScenarioRef | null
   next: ScenarioRef | null
 }
+
+/** One document of a case page: a tab, made of one or more parts (ENH-25 splits long ones). */
+export type CaseDocument = {
+  /** The first part's tab id, which is also the document's id. */
+  tab: string
+  label: string
+  purpose: string
+  minutes: number
+  /** Not needed for interview preparation: reference material behind the other tabs. */
+  optional: boolean
+  parts: CaseStudy['docs']
+}
+
+/**
+ * A case with an Introduction page (`site/case-pages/<slug>/introduction.md`, synced as
+ * its first tab) uses the chapters layout: a sidebar of documents with their parts as
+ * chapters. A case without one keeps one tab per part. See "Case pages on the site" in
+ * CLAUDE.md.
+ */
+export const hasChapters = (study: CaseStudy) => study.docs[0]?.tab === 'intro'
+
+/** Tabs a chapters case marks optional for interview preparation. */
+const OPTIONAL_TABS = new Set(['full-pack'])
+
+/**
+ * Folds a case's part tabs (`<id>-part-<n>`) into documents. Part ids stay the tab ids
+ * the page shows and saves progress under, so links and saved read state hold.
+ */
+export function documentsOf(study: CaseStudy): CaseDocument[] {
+  const chapters = hasChapters(study)
+  const documents: CaseDocument[] = []
+  for (const doc of study.docs) {
+    const id = chapters ? doc.tab.replace(/-part-\d+$/, '') : doc.tab
+    const last = documents.at(-1)
+    if (last?.tab === id) {
+      last.parts.push(doc)
+      last.minutes += doc.minutes
+    } else {
+      // A split document's parts are labelled "<label> <n>"; the document drops the number.
+      const label = chapters ? doc.label.replace(/ 1$/, '') : doc.label
+      documents.push({ tab: id, label, purpose: doc.purpose, minutes: doc.minutes, optional: chapters && OPTIONAL_TABS.has(id), parts: [doc] })
+    }
+  }
+  return documents
+}

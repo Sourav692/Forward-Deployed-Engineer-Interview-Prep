@@ -2,7 +2,7 @@
 
 **Overnight batch** is: a huge file must be classified before morning. Miss the window and the site publishes nothing — or publishes a partial, if they allow it.
 
-**G10 covers one slice:** freeze the job, chew through 100 million records, retry the flaky ones, quarantine the junk, publish by policy. Not a chat agent picking the next task.
+**This case covers one slice:** freeze the job, chew through 100 million records, retry the flaky ones, quarantine the junk, publish by policy. Not a chat agent picking the next task.
 
 End to end, as Tuesday’s 6 a.m. catalog job:
 

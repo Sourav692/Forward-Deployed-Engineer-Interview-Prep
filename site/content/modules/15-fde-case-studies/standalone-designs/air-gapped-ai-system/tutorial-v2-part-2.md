@@ -75,7 +75,7 @@ $$
   - The customer's workflow could really be batch-first. Then a queue with a nightly SLA is the better fit.
 - This is why you estimate at all: the arithmetic forces the design towards something real.
 
-> 🎯 **Interview Pointer:** Interviewers often choose numbers that give a ridiculous replica count on purpose. They want to see whether you cling to the result or question the assumed request mix. State the formula, reach the awkward number, then move to how the workload shape could change. Do not ask for more hardware.
+> **Interview pointer:** Interviewers often choose numbers that give a ridiculous replica count on purpose. They want to see whether you cling to the result or question the assumed request mix. State the formula, reach the awkward number, then move to how the workload shape could change. Do not ask for more hardware.
 
 ### Sensitivity Analysis: Baseline vs. 10x Growth
 - Strong answers give ranges instead of fake exactness. A sensitivity view beats one heroic number because it shows which design lever matters most.

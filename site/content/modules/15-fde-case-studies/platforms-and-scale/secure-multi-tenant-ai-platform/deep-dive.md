@@ -1,6 +1,6 @@
 # Secure Multi-Tenant AI Platform: Deep Dive
 
-The [Main guide](/design/secure-multi-tenant-ai-platform#main) is the spoken answer. This is technical backup for the unchanged [source study](/design/secure-multi-tenant-ai-platform#full-pack), especially §§3–14.
+The [Main guide](/design/secure-multi-tenant-ai-platform#main) is the spoken answer. This is technical backup for the unchanged [source study](/design/secure-multi-tenant-ai-platform#full-pack), especially sections 3–14.
 
 ## 1. Immutable tenant context and authority
 
@@ -12,7 +12,7 @@ Validate token signature, issuer, audience, and expiry with the customer IdP bef
 
 The row, object, cache, queue, log, vector, and key layers enforce independently. Bind database row security to verified session context, with the app connecting as a role that is not the table owner, a superuser or BYPASSRLS (or use FORCE ROW LEVEL SECURITY); a query with no tenant predicate then returns no data, rather than all data. Partitioning helps only behind per-tenant credentials. Objects use tenant namespaces. Cache keys include tenant, permission signature, and source/policy version. Queue and dead-letter envelopes carry tenant context. Logs omit raw prompts and secrets. Vector chunks receive tenant metadata at ingest, queries compile a tenant filter, and a final check compares request and chunk tenant before prompt assembly. Tenant-scoped data keys mean raw storage access yields only ciphertext, one leaked key opens one tenant rather than all, and destroying a key crypto-shreds that tenant.
 
-Three tenancy tiers trade cost for separation: shared rows with database enforcement (default), separate schema/namespace, and dedicated cluster/region/keys. Escalate on residency, strict latency, unacceptable contention, or a policy demanding harder separation, using documented thresholds rather than customer size alone. G01’s pre-filter plus authoritative post-check applies to tenant retrieval, but tenant isolation must extend to every non-retrieval path too.
+Three tenancy tiers trade cost for separation: shared rows with database enforcement (default), separate schema/namespace, and dedicated cluster/region/keys. Escalate on residency, strict latency, unacceptable contention, or a policy demanding harder separation, using documented thresholds rather than customer size alone. The Enterprise Knowledge Assistant case’s pre-filter plus authoritative post-check applies to tenant retrieval, but tenant isolation must extend to every non-retrieval path too.
 
 ## 3. Admission, fairness, and unit economics
 
@@ -30,7 +30,7 @@ Export and delete require an inventory of every tenant-owned surface: relational
 
 ## 5. Cross-tenant retrieval incident: trace-first diagnosis
 
-The [source §14](/design/secure-multi-tenant-ai-platform#full-pack) records an Acme answer citing a Globex renewal addendum. The request was `tenant_id=acme`; retrieved chunks included `doc_tenant_id=globex`. Filter version `v3` applied only `visibility in ['public','internal']`, omitting `tenant_id == 'acme'`. The ACL enforcer then skipped its check under `pre_authorized_connector_flag=true`. The response evaluator detected a critical violation **after `response_served=true`**. A rollout had reached **15% of Acme traffic**, so the live filter version and canary cohort matter.
+The [Full Design, section 14](/design/secure-multi-tenant-ai-platform#full-pack) records an Acme answer citing a Globex renewal addendum. The request was `tenant_id=acme`; retrieved chunks included `doc_tenant_id=globex`. Filter version `v3` applied only `visibility in ['public','internal']`, omitting `tenant_id == 'acme'`. The ACL enforcer then skipped its check under `pre_authorized_connector_flag=true`. The response evaluator detected a critical violation **after `response_served=true`**. A rollout had reached **15% of Acme traffic**, so the live filter version and canary cohort matter.
 
 Trace request → actual filter → chunk tenants → ACL decision → prompt/citation. Search all traces on `v3` for tenant mismatch; compare with v2 controls rather than relying on a UI reproduction. Contain by disabling v3, blocking any mismatched chunk before context, purging suspect answer caches, holding affected contract answers for human review, and notifying the customer. Root cause is two supposedly independent layers trusting a connector shortcut. Prevent with a non-bypassable server-side tenant predicate, hard post-retrieval invariant, removal of connector-level ACL bypass, negative release tests, and `cross_tenant_retrieval_count` by tenant, connector, and filter version. This is a confidentiality incident, not a hallucination.
 

@@ -2,7 +2,7 @@
 
 ## 9. Propose CRM Updates, Never Write Them Silently
 
-A CRM record outlives the call. A wrong stage or an invented commitment misleads forecasting for weeks. So the assistant proposes and a person approves. It is the same preview-then-approve rule as G05 section 8.
+A CRM record outlives the call. A wrong stage or an invented commitment misleads forecasting for weeks. So the assistant proposes and a person approves. It is the same preview-then-approve rule as section 8 of the Sales Copilot case.
 
 #59 lists confidence scoring and human correction as components for this reason. Score each proposed field on evidence: an explicit statement in a customer turn scores high, an inference from tone scores low *(own construction)*. High-confidence fields are pre-filled in the review form. Low-confidence fields are shown as suggestions the rep must confirm. Nothing is auto-applied on day one. Auto-apply may later earn a narrow scope, such as logging the call date, once measured accuracy there holds.
 

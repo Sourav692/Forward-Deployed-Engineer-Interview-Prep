@@ -105,7 +105,7 @@ On the use-case portfolio, the levels split on whether the candidate ranks thirt
 
 ## References
 
-Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) for gate mechanics; [G13 Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) for the eval harness; [#61 Scale a Prototype to Production](/design/scale-prototype-to-production) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](/design/build-when-customer-data-is-poor) for items blocked on data readiness; [Decomposition Classics #67–#69](/design/decomposition-classics-67-68-69) for decomposing a single chosen use case; [#100 Production LLM Gateway](/design/production-llm-gateway) for the gateway enabler.
+Related packs, for cross-reference rather than repetition: [Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) for gate mechanics; [Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) for the eval harness; [#61 Scale a Prototype to Production](/design/scale-prototype-to-production) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](/design/build-when-customer-data-is-poor) for items blocked on data readiness; [Decomposition Classics #67–#69](/design/decomposition-classics-67-68-69) for decomposing a single chosen use case; [#100 Production LLM Gateway](/design/production-llm-gateway) for the gateway enabler.
 
 ### Fact-check sources (checked 27 Sep 2026)
 

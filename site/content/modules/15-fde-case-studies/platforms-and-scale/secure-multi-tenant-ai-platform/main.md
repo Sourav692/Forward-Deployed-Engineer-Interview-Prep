@@ -2,7 +2,7 @@
 
 **Multi-tenant AI** is one platform, many customers. Cheaper than a stack per customer. The failure is **Acme seeing Globex’s docs**, in a cache, a log, or a prompt.
 
-**G07 covers one slice:** identity → tenant stamp that never changes → every store and model call respects it. Not “put tenant_id on a row and hope.”
+**This case covers one slice:** identity → tenant stamp that never changes → every store and model call respects it. Not “put tenant_id on a row and hope.”
 
 End to end, as Acme user Maya asking her assistant:
 
@@ -17,7 +17,7 @@ That’s it: **verify tenant once → enforce everywhere → meter and isolate.*
 
 The promise is one affordable AI platform for many customers **without a cross-tenant read, write, cache hit, or model context leak**. A tenant ID on a row is insufficient. Derive tenant context from verified identity once, keep it immutable, and enforce it independently at every storage and inference boundary.
 
-G07 is the [source study](/design/secure-multi-tenant-ai-platform#full-pack)’s anchor for the shared platform, per-tenant budget, noisy-neighbor, and cross-tenant retrieval cases.
+This case is the [source study](/design/secure-multi-tenant-ai-platform#full-pack)’s anchor for the shared platform, per-tenant budget, noisy-neighbor, and cross-tenant retrieval cases.
 
 | Variant | Shared foundation | What changes |
 |---|---|---|
@@ -79,7 +79,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This condenses the [source architecture, §4](/design/secure-multi-tenant-ai-platform#full-pack). The platform hosts LLM inference, but the model receives only tenant-scoped inputs and never decides tenant membership or authorisation.
+This condenses the [Full Design architecture, section 4](/design/secure-multi-tenant-ai-platform#full-pack). The platform hosts LLM inference, but the model receives only tenant-scoped inputs and never decides tenant membership or authorisation.
 
 ```mermaid
 flowchart LR

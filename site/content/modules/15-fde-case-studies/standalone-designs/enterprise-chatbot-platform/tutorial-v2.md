@@ -94,7 +94,7 @@
 - **Where the design centres:** the context assembler. Permissions, cost, safety and quality all meet there.
 - **The one metric that counts:** consumer-AI egress volume, which the proxy logs already record.
 
-> 🎯 **Interview Pointer:** Name both bars, governance and adoption, in your first breath. Stating that tension early shows fastest that you see more here than "build ChatGPT".
+> **Interview pointer:** Name both bars, governance and adoption, in your first breath. Stating that tension early shows fastest that you see more here than "build ChatGPT".
 
 ---
 
@@ -135,7 +135,7 @@
 5. **Identity and residency:** is SSO the only login? Do we need regional deployments? Does a works council limit usage telemetry?
 6. **Build vs. buy:** what exactly stops us licensing a vendor's enterprise tier?
 
-> 🎯 **Interview Pointer:** Many candidates skip question 6, build vs. buy. Raise it yourself, before the interviewer does. In this scenario that ranks among the best discovery signals available.
+> **Interview pointer:** Many candidates skip question 6, build vs. buy. Raise it yourself, before the interviewer does. In this scenario that ranks among the best discovery signals available.
 
 ### Assumption ledger (state aloud, don't bury)
 

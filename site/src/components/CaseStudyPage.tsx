@@ -1,5 +1,5 @@
 import { familyMeta, getRelated } from '@/lib/content'
-import { scenarioHref, type CaseStudy } from '@/lib/scenario'
+import { documentsOf, hasChapters, scenarioHref, type CaseDocument, type CaseStudy } from '@/lib/scenario'
 import { learningResourceJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { Byline } from '@/components/Byline'
@@ -11,7 +11,7 @@ import { pageTwins } from '@/lib/twins'
 export const caseDescription = (study: CaseStudy) =>
   study.ref.moduleId === '16-company-oriented-prep'
     ? `Company-oriented interview preparation: ${study.title}.`
-    : `FDE case study: ${study.title} — ${study.docs.map((d) => d.label.toLowerCase()).join(', ')}.`
+    : `FDE case study: ${study.title} — ${documentsOf(study).filter((d) => d.tab !== 'intro').map((d) => d.label.toLowerCase()).join(', ')}.`
 
 /**
  * A reading page: the casebook designs at /design/<slug> (ENH-16), and the company prep
@@ -28,7 +28,9 @@ export async function CaseStudyPage({
 }) {
   const meta = familyMeta(study.ref.trackId)
   const [related, twins] = await Promise.all([getRelated(study.ref), pageTwins(study.ref)])
-  const minutes = study.docs.reduce((sum, d) => sum + d.minutes, 0)
+  // The Introduction is the case's landing page, not one of its documents.
+  const documents = documentsOf(study).filter((d) => d.tab !== 'intro')
+  const minutes = documents.reduce((sum, d) => sum + d.minutes, 0)
 
   return (
     <div className="py-10">
@@ -52,22 +54,25 @@ export async function CaseStudyPage({
         <div className="mt-3">
           <MetaStrip
             meta={meta}
-            minutes={study.docs.length === 1 ? minutes : null}
+            minutes={documents.length === 1 ? minutes : null}
             extra={
-              study.docs.length > 1 && (
+              documents.length > 1 && (
                 <>
                   <span aria-hidden>·</span>
                   <span>
-                    {study.docs.length} documents, {minutes} min in total
+                    {documents.length} documents, {minutes} min in total
                   </span>
                 </>
               )
             }
           />
         </div>
-        <BeforeYouStart meta={meta}>
-          <ReadingOrder study={study} />
-        </BeforeYouStart>
+        {/* A chapters case says all of this on its Introduction page instead. */}
+        {!hasChapters(study) && (
+          <BeforeYouStart meta={meta}>
+            <ReadingOrder study={study} documents={documents} />
+          </BeforeYouStart>
+        )}
       </header>
 
       <CaseStudyView study={study} />
@@ -82,18 +87,15 @@ export async function CaseStudyPage({
  * live and any superseded versions — so every tab can reach the provenance without
  * repeating it.
  */
-function ReadingOrder({ study }: { study: CaseStudy }) {
+function ReadingOrder({ study, documents }: { study: CaseStudy; documents: CaseDocument[] }) {
   return (
     <>
-      {study.docs.length > 1 && (
+      {documents.length > 1 && (
         <Fact term="Reading order">
           <ol className="list-decimal space-y-0.5 pl-4 marker:text-subtle">
-            {study.docs.map((d) => (
+            {documents.map((d) => (
               <li key={d.tab}>
-                <a href={`#${d.tab}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
-                  {d.label}
-                </a>{' '}
-                <span className="text-subtle">· {d.minutes} min</span>
+                <DocumentLink document={d} />
               </li>
             ))}
           </ol>
@@ -115,3 +117,17 @@ function ReadingOrder({ study }: { study: CaseStudy }) {
     </>
   )
 }
+
+function DocumentLink({ document: d }: { document: CaseDocument }) {
+  return (
+    <>
+      <a href={`#${d.tab}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
+        {d.label}
+      </a>{' '}
+      <span className="text-subtle">
+        · {d.minutes} min{d.parts.length > 1 && `, ${d.parts.length} parts`}
+      </span>
+    </>
+  )
+}
+

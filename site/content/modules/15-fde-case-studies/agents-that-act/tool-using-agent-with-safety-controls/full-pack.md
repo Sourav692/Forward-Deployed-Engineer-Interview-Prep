@@ -11,7 +11,7 @@ The hard part of this system is not getting a model to call a tool. It is that a
 | #50 OpenAI-style practice Q6, AI Agent for Enterprise Workflow Automation | Section 11: the focus list and the refund follow-up |
 | #82 Reported Salesforce prompt: agent loop, tool interfaces, memory, orchestration, safety | Section 6 and 11: the loop shape and the Tier 2 probes |
 | #90 Incident: refund tool called above the approval threshold | Section 13 |
-| #107 and #118 §15 scenarios: agent loops on tools, tool workflow times out | Section 12 |
+| #107 and #118 scenarios: agent loops on tools, tool workflow times out | Section 12 |
 | #22 self-drill: the agent gets slow and expensive | Section 12 |
 
 ---

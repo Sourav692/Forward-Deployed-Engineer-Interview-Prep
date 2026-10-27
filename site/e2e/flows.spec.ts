@@ -73,6 +73,74 @@ test('learn flow: module → lesson → mark read persists → module progress',
   await expect(page.getByText(/^1 of \d+ read$/).first()).toBeVisible()
 })
 
+// CT-01: G01 opens on its Introduction, with a sidebar of documents and their parts. Part
+// ids stay in the hash and in saved progress, so old links and read state still work.
+async function caseContents(page: Page) {
+  const toggle = page.getByRole('button', { name: /^Contents/ })
+  if (await toggle.isVisible()) await toggle.click()
+  return page.getByRole('navigation', { name: 'Case contents' })
+}
+
+test('case chapters: G01 introduction, sidebar parts, old links and progress', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('fd:v1:read:knowledge-retrieval/enterprise-knowledge-assistant', JSON.stringify(['main', 'main-part-2']))
+  })
+  await page.goto(CASE_STUDY)
+  await hydrated(page)
+  await expect(page.getByRole('region', { name: 'Introduction' })).toBeVisible()
+  await expect(page.getByRole('cell', { name: 'Optional' })).toBeVisible()
+  await expect(page.getByText(/databricks/i)).toHaveCount(0)
+  await expect(page.getByText(/\bG01\b/)).toHaveCount(0)
+  // Full Design is optional, so its parts stay folded until it is open.
+  await expect(page.locator('#case-contents').getByRole('button', { name: 'Full Design, part 1', includeHidden: true })).toHaveCount(0)
+
+  await page.goto(`${CASE_STUDY}#full-pack-part-3`)
+  await hydrated(page)
+  await expect(page.getByRole('region', { name: 'Full Design' })).toBeVisible()
+  // Checked without opening the phone menu, which would cover the buttons below.
+  await expect(page.locator('#case-contents').getByRole('button', { name: 'Full Design, part 3', includeHidden: true })).toHaveAttribute('aria-current', 'page')
+  await page.getByRole('button', { name: 'Next: Part 4 →' }).click()
+  await expect(page).toHaveURL(/#full-pack-part-4$/)
+
+  const nav = await caseContents(page)
+  await expect(nav.getByRole('button', { name: 'Full Design, part 4' })).toHaveAttribute('aria-current', 'page')
+  await expect(nav.getByText(/^1 of 4 read$/)).toBeVisible()
+  await nav.getByRole('button', { name: /^Interview Guide( \d+ min)?$/ }).click()
+  await expect(page).toHaveURL(/#main$/)
+  await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toBeVisible()
+
+  // Arrow keys move between parts.
+  await page.keyboard.press('ArrowRight')
+  await expect(page).toHaveURL(/#main-part-2$/)
+  await page.keyboard.press('ArrowLeft')
+  await expect(page).toHaveURL(/#main$/)
+
+  // Scrolling to the end of a part marks it read, and says so.
+  await page.goto(`${CASE_STUDY}#deep-dive`)
+  await hydrated(page)
+  await expect(page.getByRole('region', { name: 'Technical Deep Dive' })).toBeVisible()
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  await expect(page.getByRole('button', { name: 'Technical Deep Dive marked as read' })).toBeVisible()
+  await expect(page.getByText('Marked when you reached the end. Select the button to undo.')).toBeVisible()
+
+  // A later visit without a hash offers to resume the last part open.
+  await page.goto(CASE_STUDY)
+  await hydrated(page)
+  await expect(page.getByText('You were reading Technical Deep Dive.')).toBeVisible()
+  await page.getByRole('button', { name: 'Continue →' }).click()
+  await expect(page).toHaveURL(/#deep-dive$/)
+})
+
+// Every scenario-pack case with an Introduction page gets the same layout as G01.
+test('case chapters: another case opens on its introduction with the sidebar', async ({ page }) => {
+  await page.goto('/design/customer-support-automation')
+  await hydrated(page)
+  await expect(page.getByRole('region', { name: 'Introduction' })).toBeVisible()
+  const nav = await caseContents(page)
+  await expect(nav.getByRole('button', { name: 'Interview Guide, part 2' })).toBeAttached()
+  await expect(page.getByText(/\bG\d{2}\b/)).toHaveCount(0)
+})
+
 // ENH-30: a client simulation is scored on its own round, with no round picker, and keeps its
 // hidden constraints behind disclosures until the learner opens one.
 test('client simulation: score the client-sim round → attempt saved under its own key', async ({ page }) => {
@@ -385,7 +453,8 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await page.goto('/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant')
   await expect(page).toHaveURL(CASE_STUDY)
   await hydrated(page)
-  await expect(page.getByRole('button', { name: 'Interview Guide 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
+  await (await caseContents(page)).getByRole('button', { name: /^Interview Guide( \d+ min)?$/ }).click()
+  await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Casebook' })).toHaveAttribute('href', '/design')
   await page.goto('/learn/ai-systems-design/scenario-library')
   await expect(page).toHaveURL('/design')

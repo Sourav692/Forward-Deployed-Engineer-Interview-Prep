@@ -344,6 +344,10 @@ export const TABS: Record<string, { label: string; purpose: string; short?: stri
     label: 'Company Guide',
     purpose: 'A company-specific preparation guide for this interview loop.',
   },
+  intro: {
+    label: 'Introduction',
+    purpose: 'What the case covers, who it is for, and which tabs to read before an interview.',
+  },
   main: {
     label: 'Interview Guide',
     purpose:

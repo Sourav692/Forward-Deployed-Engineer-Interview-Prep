@@ -63,7 +63,7 @@ flowchart LR
   - Declarative definitions are simpler to inspect and validate, and people who are not engineers can follow them. In return they can prove too rigid for the branching real enterprises need.
   - Balanced position: offer a declarative model for the common shape, and let code handle business-specific logic where it has to.
 
-> 🎯 **Interview Pointer:** Expect "orchestration vs. choreography" to be the trade-off an interviewer pushes hardest, often as a blunt "why not let events drive it all?" Have a one-line verdict to hand. Choreography lowers coupling, but nobody can then point to where a run stands, and that rules it out once the customer needs visible state and recovery support can run.
+> **Interview pointer:** Expect "orchestration vs. choreography" to be the trade-off an interviewer pushes hardest, often as a blunt "why not let events drive it all?" Have a one-line verdict to hand. Choreography lowers coupling, but nobody can then point to where a run stands, and that rules it out once the customer needs visible state and recovery support can run.
 
 ### Follow-up Drills and Strong Answers
 

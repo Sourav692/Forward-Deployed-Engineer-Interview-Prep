@@ -415,6 +415,23 @@ body {
 .reading tr:last-child td {
   border-bottom: 0;
 }
+/* Case pages with chapters: text columns read left-aligned whatever the source table
+   says, and on a phone the first column stays put while a wide table scrolls. */
+.case-chapters .reading :is(td, th)[align] {
+  text-align: left;
+}
+@media (max-width: 639px) {
+  .case-chapters .reading .table-wrap :is(td, th):first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--bg);
+    box-shadow: inset -1px 0 var(--border);
+  }
+  .case-chapters .reading .table-wrap th:first-child {
+    background: var(--surface-2);
+  }
+}
 .reading td + td,
 .reading th + th {
   border-left: 1px solid var(--border);

@@ -2,7 +2,7 @@
 
 **Sales process** is the path from “we might sell” to “the deal is won or lost”: find a company, book a meeting, learn their pain, send a proposal, negotiate, update CRM, close.
 
-**G05 covers one slice of that loop:** prep for a meeting, then maybe a follow-up and a CRM update. Not the whole funnel.
+**This case covers one slice of that loop:** prep for a meeting, then maybe a follow-up and a CRM update. Not the whole funnel.
 
 End to end, as Sara:
 
@@ -27,7 +27,7 @@ An account executive has a meeting soon. They need an **account summary**, **opp
 
 ### Questions to ask the interviewer
 
-The [source discovery, §1](/design/sales-copilot#full-pack) expands these questions:
+The [Full Design discovery, section 1](/design/sales-copilot#full-pack) expands these questions:
 
 | Question to ask                                                                  | What it's really asking                                                                                            | What you then decide                                                          |
 | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
@@ -44,7 +44,7 @@ If these answers are missing, keep the first release read-only, restrict sources
 
 ### The anchor for its sales-assistant variants
 
-| Related case                          | What changes from G05                                                                                         |
+| Related case                          | What changes from this case                                                                                         |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | Account-research assistant question   | Broader CRM/email/usage/support/public-source integration, entity resolution, seller adoption and time saved. |
 | Slow agentic CRM assistant            | Serial tool calls and agent steps likely dominate (confirm in traces); precompute, cache, parallelise reads, and bound the graph.        |
@@ -88,7 +88,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This condenses the [source architecture, §4](/design/sales-copilot#full-pack) into three lanes.
+This condenses the [Full Design architecture, section 4](/design/sales-copilot#full-pack) into three lanes.
 
 ```mermaid
 flowchart LR
@@ -177,7 +177,7 @@ Gate on **zero permission violations** and **zero critical unsupported external 
 
 Start with one CRM connector, three reps in distinct territories, historical briefs and SME-approved answers. Add permission red-team and claim-level negative cases, shadow mode, live read-only pilot, then drafts and approved write-back. Keep model versions pinned and canary each route change.
 
-The [source regression, §14](/design/sales-copilot#full-pack) shows why: a model upgrade had a **96.7% aggregate pass rate over 120 cases**, but only **six regulated-claim cases** passed at **83.3%**; online unsupported claims rose from **1.2% to 8.7%**, and the verifier had been changed to warn-only. Contain by rolling back the model route and restoring block mode. Add independent gates for pending certifications, internal-only ROI, and unapproved customer references.
+The [Full Design regression, section 14](/design/sales-copilot#full-pack) shows why: a model upgrade had a **96.7% aggregate pass rate over 120 cases**, but only **six regulated-claim cases** passed at **83.3%**; online unsupported claims rose from **1.2% to 8.7%**, and the verifier had been changed to warn-only. Contain by rolling back the model route and restoring block mode. Add independent gates for pending certifications, internal-only ROI, and unapproved customer references.
 
 ## 9. Interview delivery
 

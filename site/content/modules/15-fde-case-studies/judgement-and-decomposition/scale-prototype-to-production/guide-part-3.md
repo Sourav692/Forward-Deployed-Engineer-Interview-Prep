@@ -16,7 +16,7 @@ Question 17 lists seventeen things to cover. Check the answer against them, in t
 | Streaming | Section 7 |
 | Cost controls | Sections 4, 7 and 15 |
 | Autoscaling | Section 7: workers by queue depth |
-| Observability | Sections 6 and 11; G14 for the full design |
+| Observability | Sections 6 and 11; the Observability and Production Diagnosis case for the full design |
 | Reliability targets | Sections 3 and 8 |
 | Rollbacks | Section 10 |
 | Security review | Section 11 |

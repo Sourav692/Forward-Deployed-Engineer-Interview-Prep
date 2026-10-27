@@ -139,7 +139,7 @@ flowchart TD
   style G fill:#a63d40,stroke:#5c1f22,color:#fff
 ```
 
-> 🎯 **Interview Pointer:** Expect a question on how fine-grained the idempotency keys are, and answer it head-on. Each business action with a side effect gets its own key (`pay:`, `crm:`, `mail:`, `refund:`). The workflow as a whole does not share one. That single detail moves an answer from a whiteboard sketch to something a team could run in production.
+> **Interview pointer:** Expect a question on how fine-grained the idempotency keys are, and answer it head-on. Each business action with a side effect gets its own key (`pay:`, `crm:`, `mail:`, `refund:`). The workflow as a whole does not share one. That single detail moves an answer from a whiteboard sketch to something a team could run in production.
 
 ### What the Whiteboard Version Omits on Purpose
 

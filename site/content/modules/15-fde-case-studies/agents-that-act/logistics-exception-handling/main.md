@@ -2,7 +2,7 @@
 
 **Exception handling** is: a shipment should have moved, it didn’t, ops must tell the customer or the carrier. Customs is not a chatbot decision.
 
-**G17 covers one slice:** watch feeds, detect a hold/miss/weather, draft or auto-resolve only what policy allows. Humans always own customs.
+**This case covers one slice:** watch feeds, detect a hold/miss/weather, draft or auto-resolve only what policy allows. Humans always own customs.
 
 End to end, as a missed scan in Frankfurt:
 
@@ -15,7 +15,7 @@ End to end, as a missed scan in Frankfurt:
 
 That’s it: **feed → detect → policy → draft or narrow auto → audit.** “Just ping the carrier for every blip” stays out.
 
-> **Source:** [Sources and Full Design](/design/logistics-exception-handling#full-pack), especially §§1–10. Use the [Deep Dive](/design/logistics-exception-handling#deep-dive) for gate, reliability and evaluation detail and the [Cheat Sheet](/design/logistics-exception-handling#cheat-sheet) for rehearsal.
+> **Source:** [Sources and Full Design](/design/logistics-exception-handling#full-pack), especially sections 1–10. Use the [Deep Dive](/design/logistics-exception-handling#deep-dive) for gate, reliability and evaluation detail and the [Cheat Sheet](/design/logistics-exception-handling#cheat-sheet) for rehearsal.
 
 ## Anchor and related case
 

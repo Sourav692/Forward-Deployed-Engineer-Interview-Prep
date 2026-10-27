@@ -117,7 +117,7 @@ These are **example implementations**, not mandatory product choices:
 5. **Travel booking (#101):** supervisor with read-only booking lookup, RAG policy QA, and one write-capable change/cancel specialist. Compute refund amount with pure logic; example >$200 approval interrupt; idempotency by booking and request ID; durable conversation checkpoint, separate customer memory, 15-step and cost ceilings; direct workflow for simple baggage FAQ.
 6. **Parent-document retrieval (#102):** example child chunks of about 400 characters and parents of about 2,000 (LangChain's example sizes; tune on your data); shared Postgres vector/doc store, HNSW once exact scans start to eat the latency budget, idempotent daily append keyed by article ID and modification time; p95 <2 s budget dominated by streamed generation; cap final `k` at 3–4 and abstain below similarity threshold.
 
-Keep these mock-specific thresholds attached to their scenarios. They are not global G02 requirements.
+Keep these mock-specific thresholds attached to their scenarios. They are not global requirements of this case.
 
 ## 10. Interview probes to rehearse
 

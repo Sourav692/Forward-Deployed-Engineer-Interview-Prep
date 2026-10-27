@@ -213,7 +213,7 @@ flowchart TD
 - **Add:** review before any company-wide publish, a per-viewer view of reachable sources, and an alert when a new assistant's usage spikes.
 - **The interview point:** the **authorisation design is wrong; nothing is buggy**. Normal testing never shows it. Authors test with their own login, and for them the intersection is simply everything they can already reach.
 
-> 🎯 **Interview Pointer:** No failure is more specific to this case. Open the security discussion with it, not a stock prompt-injection answer. I'd expect interviewers to use it to sort candidates who grasp delegated authorisation from those who don't.
+> **Interview pointer:** No failure is more specific to this case. Open the security discussion with it, not a stock prompt-injection answer. I'd expect interviewers to use it to sort candidates who grasp delegated authorisation from those who don't.
 
 ### Walkthrough — instructions hidden in an uploaded document
 

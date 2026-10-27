@@ -71,7 +71,7 @@ Rollout: one CRM connector and territory matrix; historical golden set; offline 
 
 ## 8. Latency pivot
 
-The source drill starts with 30–45 s account prep. The likely driver is serial tool calls and agent steps, not necessarily model inference. Trace the graph, then precompute the account snapshot, route common questions deterministically, parallelise independent read-only calls, cache permission-scoped state, cap steps/top-k/timeouts, and use the agent only for ambiguous next steps. Track agent step count, tool latency, snapshot hit rate, timeout rate, p95, and cost/workflow. A real-time in-call assistant is a distinct G16 problem with stronger precompute/stream/async split.
+The source drill starts with 30–45 s account prep. The likely driver is serial tool calls and agent steps, not necessarily model inference. Trace the graph, then precompute the account snapshot, route common questions deterministically, parallelise independent read-only calls, cache permission-scoped state, cap steps/top-k/timeouts, and use the agent only for ambiguous next steps. Track agent step count, tool latency, snapshot hit rate, timeout rate, p95, and cost/workflow. A real-time in-call assistant is a distinct Real-Time Call Assistant problem with stronger precompute/stream/async split.
 
 ## 9. Model regression incident
 

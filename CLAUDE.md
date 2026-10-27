@@ -48,6 +48,56 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - An all-caps token on 3+ pages must be added to `GLOSSARY` or `NOT_ACRONYMS` in `glossary.ts`, or `check:content` fails.
 - Adding a module/track/scenario touches many files: follow "Adding a module, track or scenario" below.
 
+## Case pages on the site (casebook)
+
+The scenario-pack cases (`/design/<slug>`, module 15) share one layout and one set of editorial rules, first built on the Enterprise Knowledge Assistant. Keep every new or edited case to them.
+
+- **The root markdown is not edited for the site.** Site-only changes live in `site/case-pages/` and `site/scripts/case-site-edits.mjs`, which run at sync time. Never hand-edit `site/content/`.
+- **Introduction page.** Each case has `site/case-pages/<slug>/introduction.md`. Sync adds it as the first tab (`intro`), and a case with one gets the chapters layout (`hasChapters` in `src/lib/scenario.ts`). Follow `site/case-pages/enterprise-knowledge-assistant/introduction.md`. Headings, in order:
+  - `# <Case title>: Introduction`
+  - `## Overview`: two or three short paragraphs covering the problem, the hard constraint and the design.
+  - `## The core idea`: one sentence and one small `mermaid` `flowchart LR` of the request path.
+  - `## Who it is for`
+  - `## Objectives`: "After this case you can:" and two bullets.
+  - `## What it assumes`
+  - `## How to use it`: numbered steps.
+  - `## The sections`: a table with the columns Section, What it is for and Interview prep.
+  - `## Practise it`: only when the case has a twin worksheet (`RELATED_CASE` in `editorial.ts`); link it at `/practice/<worksheet-slug>`.
+  - Link each section by its tab id (`#main`, `#deep-dive`, `#cheat-sheet`, `#full-pack`) and give its part count. Never hardcode reading minutes.
+- **Mandatory and optional.** Interview Guide, Technical Deep Dive and Quick Review are mandatory for interview preparation. Full Design is optional reference material (`OPTIONAL_TABS` in `scenario.ts`).
+- **Chapters layout** (`src/components/CaseStudyView.tsx`):
+  - **Sidebar:** a left sidebar lists Introduction, then each document with its parts (`<tab>-part-<n>`, from the ENH-25 split) nested under it.
+    - An optional document's parts stay folded until it is open.
+    - The open page's `## ` sections show under its entry, in place of a separate "On this page" column.
+    - Minutes show per document and per part.
+    - On a phone the sidebar is a sticky "Contents" menu.
+  - **Reading a part:** one part shows at a time.
+    - The purpose line appears on a document's first part only, and there is no all-caps document title.
+    - Each part has previous and next buttons, and the left and right arrow keys do the same.
+    - A part is marked read when the reader scrolls to its end; the button undoes it.
+  - **Introduction:** it offers to resume the last part opened (`fd:v1:last:<case>`).
+  - **Quick Review:** it has a "Print or save as PDF" button.
+  - **Tables:** left-aligned, with a sticky first column on phones (`.case-chapters` in `globals.css`).
+  - **Header:** it drops "Before you start", because the Introduction covers it. The Introduction never counts towards progress or reading time.
+  - Part and tab ids stay in the hash and in saved progress, so never rename them.
+- **Editorial rules, enforced at sync** by `case-site-edits.mjs`. Sync fails, quoting the text, if one is broken:
+  - **No Databricks or its products** (Unity Catalog, Genie, Lakebase, Lakeview, Agent Bricks, Delta Sync, Unity Gateway).
+    - A `## ` section whose heading names one is dropped, and so is a line that names one.
+    - A mention inside a sentence the case still needs gets a `replace` rule in `CASE_SITE_EDITS` with vendor-neutral wording, for example "a managed text-to-SQL service".
+  - **No case codes** (`G01` to `G20`) in page text. A code becomes the case's name, for example "section 6 of the Enterprise Knowledge Assistant case". On its own page it becomes "this case".
+  - **No `§`, emoji, or tick and cross marks.** Arrows, box drawing and diagram shapes stay.
+    - "[source case, §1]" becomes "[Full Design, section 1]", and "§§5–8" becomes "sections 5–8".
+    - Source-library citations ("§15 scenarios") drop the sign.
+    - "🎯 **Interview Pointer:**" becomes "**Interview pointer:**".
+    - ✅ 🟡 ❌ in coverage tables become Built, Partial and Not built.
+    - A ✓ or ✗ in a diagram becomes words through a `replace` rule.
+  - **Renumbering:** when a cut drops a section, that document's `## N.` sections are renumbered across its parts, and its "Section N" references follow.
+- **Adding or editing a case:**
+  1. Write its `introduction.md`.
+  2. Run `npm run sync` and fix each error with a `replace` rule, never by editing the root source.
+  3. Run `npm run check:content`.
+  4. Run the case e2e tests in `e2e/flows.spec.ts`.
+
 ## Adding a module, track or scenario
 
 Adding content to the site touches several files. Work through every step; `npm run check:content` (from `site/`) fails if one is missed.

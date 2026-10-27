@@ -92,7 +92,7 @@
 - **Key takeaway:** do not treat the boundary as a restriction bolted onto an ordinary AI system. The boundary is the design.
   - Requirements, architecture, data model, security and delivery all start from it.
 
-> 🎯 **Interview Pointer:** Learn the outcome line word for word: "maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries". End each later 90-second summary with it. Interviewers notice when every section points back to one goal.
+> **Interview pointer:** Learn the outcome line word for word: "maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries". End each later 90-second summary with it. Interviewers notice when every section points back to one goal.
 
 ### Stakeholder Map
 - Each stakeholder wants one thing and dreads another, and they pull in different directions. Fill in both columns before you draw a box.
@@ -233,7 +233,7 @@ flowchart TD
 - It shapes packaging, dependency management, model deployment, observability and rollback.
 - If the customer relaxes it later, the design gets simpler. If you assume the reverse and are wrong, the whole architecture falls apart.
 
-> 🎯 **Interview Pointer:** If the interviewer says "assume whatever you need", pin down the no-internet-at-runtime assumption first. I would expect an interviewer to check that one before any other.
+> **Interview pointer:** If the interviewer says "assume whatever you need", pin down the no-internet-at-runtime assumption first. I would expect an interviewer to check that one before any other.
 
 ### Why This Is a Strong FDE Signal
 - The panel wants to see three habits at once. You care about the customer, you judge well as an engineer, and you deliver. Here that means finding the constraints that matter, prioritising while facts are missing, and keeping the solution shippable.

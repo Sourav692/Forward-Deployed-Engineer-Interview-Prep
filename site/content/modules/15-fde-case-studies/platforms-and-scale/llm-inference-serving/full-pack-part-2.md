@@ -65,7 +65,7 @@ An unbounded queue converts overload into latency for everyone, then into timeou
 
 Admission control sits at the gateway. Each tenant holds a token bucket charged by estimated tokens, not by request count, so one tenant's long prompts cannot starve another's short ones. The queue behind it is bounded, and a full queue returns 429 with a Retry-After header. The bound follows from Little's Law: a queue deeper than the SLO allows will only ever serve requests that have already failed their SLO.
 
-Backpressure flows upstream. Replicas signal saturation through the registry. The router stops sending, admission tightens, and the gateway rejects. Shed by priority. Interactive traffic stays and offline traffic moves to a batch tier, which the provider-limits scenario in G14 answers the same way *(additions file, section E)*. The same rule appears in G10 at batch scale: admission control belongs before the quota breach, not after.
+Backpressure flows upstream. Replicas signal saturation through the registry. The router stops sending, admission tightens, and the gateway rejects. Shed by priority. Interactive traffic stays and offline traffic moves to a batch tier, which the provider-limits scenario in the Observability and Production Diagnosis case answers the same way *(additions file, section E)*. The same rule appears in the High-Volume Batch Inference Pipeline case at batch scale: admission control belongs before the quota breach, not after.
 
 ## 11. Stream Every Token and Cancel on Disconnect
 

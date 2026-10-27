@@ -49,11 +49,11 @@ The non-technical half of the problem has five constraints, and the sources are 
 
 | Constraint | In plain language | Built? |
 |---|---|---|
-| Templates, not a blank canvas | Clone "Auto-refund small orders" and change the numbers | ❌ `clone()` over pre-built specs is the low-effort fix |
-| Plain English compiles to a reviewable spec | The sentence becomes a form you confirm | 🟡 The spec is the form; the compiler is not built |
-| A test mode where nothing happens | Shadow mode fakes every write | ✅ `SHADOW` blocks every destructive step unconditionally, even for an admin |
-| Run history in human words | "Refunded 12, escalated 2, denied 1 for exceeding the cap" | ❌ The trace is structured; a sentence per step is low effort |
-| Staged rollout, like a driving test with levels | One stage at a time, and the author cannot grade their own test | ✅ `promote()` |
+| Templates, not a blank canvas | Clone "Auto-refund small orders" and change the numbers | Not built: `clone()` over pre-built specs is the low-effort fix |
+| Plain English compiles to a reviewable spec | The sentence becomes a form you confirm | Partial: The spec is the form; the compiler is not built |
+| A test mode where nothing happens | Shadow mode fakes every write | Built: `SHADOW` blocks every destructive step unconditionally, even for an admin |
+| Run history in human words | "Refunded 12, escalated 2, denied 1 for exceeding the cap" | Not built: The trace is structured; a sentence per step is low effort |
+| Staged rollout, like a driving test with levels | One stage at a time, and the author cannot grade their own test | Built: `promote()` |
 
 Versioning follows from the same idea. `WorkflowStore` keeps every published version, and a `Run` pins to the version it started on. Editing a workflow mid-flight never changes runs already in progress.
 

@@ -24,7 +24,7 @@
   - Retention: hold the whole history for the full support and audit window. Incident reviews, customer support and change tracking all depend on it.
 - Separate owners stop the records from tangling. Product owns the template. The customer owns the tenant config. Integrations owns the adapter contract. Ops owns the deployment record. Once those lines blur, you get forks that call themselves flexibility.
 
-> 🎯 **Interview Pointer:** If asked what tells you which version is live, answer `ConfigDeployment`, not `TenantConfig`. Its state transitions are append-only. That ledger, not the config record, lets support see what is running now, and it turns a rollback into a new event rather than an edit in place.
+> **Interview pointer:** If asked what tells you which version is live, answer `ConfigDeployment`, not `TenantConfig`. Its state transitions are append-only. That ledger, not the config record, lets support see what is running now, and it turns a rollback into a new event rather than an edit in place.
 
 ### Four API Contracts
 
@@ -226,7 +226,7 @@ flowchart TD
   style FAIL3 fill:#a63d40,stroke:#5c1f22,color:#fff
 ```
 
-> 🎯 **Interview Pointer:** Commit the sequence to memory and reuse it elsewhere: parse → validate → authorise-by-policy → persist. Expect the follow-up "why that order?" Cheap structural checks come first and fail fast, so the costly policy and adapter checks only run on sound input. Nothing is written until every earlier step passes, so the path fails closed.
+> **Interview pointer:** Commit the sequence to memory and reuse it elsewhere: parse → validate → authorise-by-policy → persist. Expect the follow-up "why that order?" Cheap structural checks come first and fail fast, so the costly policy and adapter checks only run on sound input. Nothing is written until every earlier step passes, so the path fails closed.
 
 ### What the Whiteboard Version Omits on Purpose
 

@@ -165,7 +165,7 @@ Name what will not be promised. In the worked example, the first release makes n
 
 ## 12. Phase the Work So Data Fixes Ship as Value
 
-The phases follow the readiness scores, not a generic timeline. Each phase exits on a measured condition, in the spirit of G12's gates *(own construction)*.
+The phases follow the readiness scores, not a generic timeline. Each phase exits on a measured condition, in the spirit of the Scoping to Deployed Agent case’s gates *(own construction)*.
 
 | Phase | Weeks | Ships | Exit condition |
 |---|---|---|---|

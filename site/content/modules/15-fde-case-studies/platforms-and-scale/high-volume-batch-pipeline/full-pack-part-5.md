@@ -22,7 +22,7 @@ flowchart LR
     H -.unchanged.-> SKIP[Reuse last summary]
 ```
 
-**#116, §15 scenario 13, the batch embedding job became too expensive.** The nightly embedding bill spikes after a document refresh. Ask whether all documents are re-embedded or only changed content. The causes are full re-indexing, duplicate documents, no content hash, or a larger embedding model.
+**#116, scenario 13, the batch embedding job became too expensive.** The nightly embedding bill spikes after a document refresh. Ask whether all documents are re-embedded or only changed content. The causes are full re-indexing, duplicate documents, no content hash, or a larger embedding model.
 
 | | |
 |---|---|

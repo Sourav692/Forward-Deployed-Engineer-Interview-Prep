@@ -13,7 +13,7 @@
 - **Control 2 — avoid telemetry egress assumptions.** In a connected product, teams switch on cloud diagnostics, remote metrics and crash reporting without a second thought. Inside the enclave that habit is wrong. Each observability path has to be local-first and approved on purpose. Metrics flow to an internal collector. Support bundles leave only through a controlled operator workflow. A library that silently calls home is a leak, not monitoring.
 - **Control 3 — treat privileged administration as a high-risk interface.** Admin commands live apart from the everyday user flow. Demand local role-based approval for them. Key rotation, index rebuilds, trust-root updates and rollback promotion should each run as a deliberate, explicit operation that leaves an audit record.
 
-> 🎯 **Interview Pointer:** Telemetry egress is where candidates slip. Interviewers wait to hear "we'll send logs to our SaaS dashboard", said out of habit. Say plainly that every observability path stays local-first and approved.
+> **Interview pointer:** Telemetry egress is where candidates slip. Interviewers wait to hear "we'll send logs to our SaaS dashboard", said out of habit. Say plainly that every observability path stays local-first and approved.
 
 ### Failure Policy: Fail Open, Fail Closed, Degrade, Queue
 - A strong FDE answer sorts each failure into a bucket: fail open, fail closed, degrade, queue, or hand to a human. For example:
@@ -248,4 +248,4 @@ def test_tampered_model_is_rejected():
 - They know which failures should queue, which should degrade, which must fail closed and which need a person. They can explain the blast radius, hold on to evidence and back a safety invariant with a test.
 - **90-second interview summary:** "The offline release pipeline is a high-trust control plane, and I guard it that way. Every dependency is pinned and attested. Signatures are checked against offline trust roots. Telemetry never assumes it can leave the network. Privileged admin is kept apart from normal use. The riskiest failure is a bundle that is incomplete or corrupted. So the system fails closed, keeps the evidence and leaves the running release alone. Runtime problems each get a clear policy: some queue, some degrade to an approved fallback, some need a human. My first production gate: no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible."
 
-> 🎯 **Interview Pointer:** When someone asks for your first production gate, give the same sentence every time, in every section, and learn it by heart: no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible.
+> **Interview pointer:** When someone asks for your first production gate, give the same sentence every time, in every section, and learn it by heart: no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible.

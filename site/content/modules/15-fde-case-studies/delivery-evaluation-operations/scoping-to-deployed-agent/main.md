@@ -2,7 +2,7 @@
 
 **Delivery process** is: customer wants an agent, you ship something real in two weeks, with a named person who can say stop.
 
-**G12 covers one slice:** intake → gates → a small live agent → rollback. Not “we’ll figure production out later.” The source uses a Northwind support-triage demo.
+**This case covers one slice:** intake → gates → a small live agent → rollback. Not “we’ll figure production out later.” The source uses a Northwind support-triage demo.
 
 End to end, as Northwind tickets:
 

@@ -2,7 +2,7 @@
 
 **Coding in an IDE** is type, get a suggestion, keep going. If the ghost text is late, you already typed past it. If it used a repo you cannot clone, that’s a leak.
 
-**G09 covers one slice:** fast inline complete from code you may read, plus slower explain/test on another path. Not “send the monorepo to a giant model.”
+**This case covers one slice:** fast inline complete from code you may read, plus slower explain/test on another path. Not “send the monorepo to a giant model.”
 
 End to end, as intern Alex typing in a private repo:
 
@@ -63,7 +63,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is the whiteboard version of the [source architecture, §4](/design/enterprise-coding-assistant#full-pack). The hot path uses a small LLM; slower explicit tasks use a larger reasoning model. Neither model decides access or whether unsafe code may be shown.
+This is the whiteboard version of the [Full Design architecture, section 4](/design/enterprise-coding-assistant#full-pack). The hot path uses a small LLM; slower explicit tasks use a larger reasoning model. Neither model decides access or whether unsafe code may be shown.
 
 ```mermaid
 flowchart LR
@@ -109,7 +109,7 @@ flowchart LR
 - **Step 7.** Validate syntax, known APIs against the symbol index, secrets, license, and unsafe patterns before display. Suppress invalid or late output.
 - **Step 8.** Stream the accepted suggestion to the editor and record latency, cache, model, validation, and acceptance events without saving source code.
 
-**Agent role:** the core completion product is a routed LLM assistant, not an autonomous coding agent. An optional chat mode that runs tests or opens a pull request would need the separate acting-agent controls from G03: allowlisted tools, scoped credentials, approval for writes, and audit. Those actions are not on the completion hot path.
+**Agent role:** the core completion product is a routed LLM assistant, not an autonomous coding agent. An optional chat mode that runs tests or opens a pull request would need the separate acting-agent controls from the Tool-Using Agent with Safety Controls case: allowlisted tools, scoped credentials, approval for writes, and audit. Those actions are not on the completion hot path.
 
 ## 4. Context, cache, and model routing
 

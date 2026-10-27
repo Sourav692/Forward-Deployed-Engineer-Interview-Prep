@@ -2,7 +2,7 @@
 
 **Diagnosis process** is: a user says “it’s slow and sometimes wrong.” You need the hop that hurt — without turning traces into a second copy of their tickets.
 
-**G14 covers one slice:** one correlation id through the AI path, redacted spans, tenant-scoped debug. Not a new product feature.
+**This case covers one slice:** one correlation id through the AI path, redacted spans, tenant-scoped debug. Not a new product feature.
 
 End to end, as Acme’s German refund flow:
 
@@ -15,7 +15,7 @@ End to end, as Acme’s German refund flow:
 
 That’s it: **trace the path → hide the secrets → find the hop.** Telemetry must not stall the user.
 
-> **Full source:** [Sources and Full Design](/design/observability-and-production-diagnosis#full-pack), especially §§1–9 for the anchor architecture and §§10–15 for incidents and variants. Use the [Deep Dive](/design/observability-and-production-diagnosis#deep-dive) for diagnostic detail and the [Cheat Sheet](/design/observability-and-production-diagnosis#cheat-sheet) for rehearsal.
+> **Full source:** [Sources and Full Design](/design/observability-and-production-diagnosis#full-pack), especially sections 1–9 for the anchor architecture and sections 10–15 for incidents and variants. Use the [Deep Dive](/design/observability-and-production-diagnosis#deep-dive) for diagnostic detail and the [Cheat Sheet](/design/observability-and-production-diagnosis#cheat-sheet) for rehearsal.
 
 ## The anchor and its family
 
