@@ -18,6 +18,30 @@ import { join } from 'node:path'
 
 const SITE_ROOT = join(import.meta.dirname, '..')
 
+/**
+ * Edits for every case page. The packs name each other by code ("as in G01"), which the
+ * site never shows, so a code becomes the case's name. Ordered: specific wordings first,
+ * then a catch-all. Sync fails if a listed code survives.
+ */
+const SITE_WIDE = {
+  forbid: /\bG01\b/,
+  replace: [
+    ['\n                         G01\n', '\n'],
+    ['# G01 — ', '# '],
+    ['**G01 covers one slice:**', '**This case covers one slice:**'],
+    ['What changes from G01', 'What changes from this case'],
+    ['[G01 Enterprise Knowledge Assistant]', '[Enterprise Knowledge Assistant]'],
+    ['the enterprise knowledge assistant in G01', 'the Enterprise Knowledge Assistant case'],
+    ['drawn from G01 section 6', 'drawn from section 6 of the Enterprise Knowledge Assistant case'],
+    ['the same two-layer idea as G01 section 6', 'the same two-layer idea as section 6 of the Enterprise Knowledge Assistant case'],
+    ['G01’s pre-filter', 'The Enterprise Knowledge Assistant case’s pre-filter'],
+    ["is G01's section 6", 'is section 6 of the Enterprise Knowledge Assistant case'],
+    ['owned by G01 section 6', 'owned by section 6 of the Enterprise Knowledge Assistant case'],
+    ['the G01 or G12 design', 'the Enterprise Knowledge Assistant or Scoping to Deployed Agent design'],
+    ['exactly as in G01', 'exactly as in the Enterprise Knowledge Assistant case'],
+  ],
+}
+
 export const CASE_SITE_EDITS = {
   'enterprise-knowledge-assistant': {
     intro: join(SITE_ROOT, 'case-pages', 'enterprise-knowledge-assistant', 'introduction.md'),
@@ -48,9 +72,12 @@ export const CASE_SITE_EDITS = {
 
 /** Applies a case's site-only cuts to one document's markdown. */
 export function applySiteEdits(slug, markdown, file) {
-  const edits = CASE_SITE_EDITS[slug]
-  if (!edits?.cut) return markdown
   let text = markdown
+  for (const [from, to] of SITE_WIDE.replace) text = text.split(from).join(to)
+  const code = text.match(SITE_WIDE.forbid)
+  if (code) throw new Error(`Site edits left the case code "${code[0]}" in ${file}; add a SITE_WIDE replace rule`)
+  const edits = CASE_SITE_EDITS[slug]
+  if (!edits?.cut) return text
   for (const [from, to] of edits.replace ?? []) text = text.split(from).join(to)
 
   const out = []

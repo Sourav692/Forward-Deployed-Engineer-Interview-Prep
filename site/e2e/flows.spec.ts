@@ -90,6 +90,7 @@ test('case chapters: G01 introduction, sidebar parts, old links and progress', a
   await expect(page.getByRole('region', { name: 'Introduction' })).toBeVisible()
   await expect(page.getByRole('cell', { name: 'Optional' })).toBeVisible()
   await expect(page.getByText(/databricks/i)).toHaveCount(0)
+  await expect(page.getByText(/\bG01\b/)).toHaveCount(0)
   // Full Design is optional, so its parts stay folded until it is open.
   await expect(page.locator('#case-contents').getByRole('button', { name: 'Full Design, part 1', includeHidden: true })).toHaveCount(0)
 

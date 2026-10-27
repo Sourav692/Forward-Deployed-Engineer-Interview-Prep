@@ -2,7 +2,7 @@
 
 **Knowledge work** is people looking up how the company actually runs: policies, runbooks, product docs. The same question is not the same answer if you are an intern vs a VP.
 
-**G01 covers one slice:** ask an internal question and get a cited answer you are allowed to see. Not a general Google, not a ticket bot.
+**This case covers one slice:** ask an internal question and get a cited answer you are allowed to see. Not a general Google, not a ticket bot.
 
 End to end, as Priya (Tier-1 support):
 
@@ -21,7 +21,7 @@ That’s it: **who you are → what you may read → cited answer or stop.** Bui
 
 Use this guide as the **master case study** for enterprise RAG and knowledge-assistant interviews. Learn the shared architecture here, then adapt it to each variant's dominant constraint.
 
-| Related case | What changes from G01 |
+| Related case | What changes from this case |
 |---|---|
 | **Enterprise Support Assistant** | Support knowledge, tickets and runbooks become central; add workflow integrations, escalation paths and customer-specific visibility. |
 | **Legal RAG** | Increase citation precision, source authority, version tracking, auditability and review; control cost while handling high-risk answers. |
@@ -31,7 +31,6 @@ Use this guide as the **master case study** for enterprise RAG and knowledge-ass
 | **Security / incident cases** | Focus on threat model, blast radius, detection, containment, revocation, recovery and evidence that no unauthorised data escaped. |
 
 ~~~text
-                         G01
           Enterprise Knowledge Assistant
                            |
        +-------------------+--------------------+

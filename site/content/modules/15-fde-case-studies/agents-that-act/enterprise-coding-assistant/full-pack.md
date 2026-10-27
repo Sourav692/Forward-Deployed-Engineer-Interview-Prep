@@ -79,7 +79,7 @@ The collector gathers the current function, the current file, open tabs, importe
 | Retrieved snippets from other repositories | Costs a lookup and risks leakage | Only where the developer holds read access there too | |
 | Internal API docs and conventions | Cheap once indexed | Organisation-level | |
 
-The OpenAI-style practice prompt adds the indexing side: repository indexing with incremental updates, code-aware chunking, symbol and dependency retrieval. Index by symbol and file rather than by fixed token windows, so a retrieved chunk is a whole function or class and its imports. Re-index on push, not on a schedule, so the assistant never suggests a helper that was deleted this morning. Mirror the code host's repository permissions into the index metadata at indexing time and check them again at retrieval, which is the same two-layer rule as the enterprise knowledge assistant in G01 *(own construction, drawn from G01 section 6)*.
+The OpenAI-style practice prompt adds the indexing side: repository indexing with incremental updates, code-aware chunking, symbol and dependency retrieval. Index by symbol and file rather than by fixed token windows, so a retrieved chunk is a whole function or class and its imports. Re-index on push, not on a schedule, so the assistant never suggests a helper that was deleted this morning. Mirror the code host's repository permissions into the index metadata at indexing time and check them again at retrieval, which is the same two-layer rule as the Enterprise Knowledge Assistant case *(own construction, drawn from section 6 of the Enterprise Knowledge Assistant case)*.
 
 ## 4. Draw the Architecture End to End
 

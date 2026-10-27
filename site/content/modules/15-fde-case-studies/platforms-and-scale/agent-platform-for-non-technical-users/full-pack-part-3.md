@@ -90,7 +90,7 @@ A weak answer spends its time on Layer 1 and waves at an LLM doing reasoning. A 
 
 Second, the example data. The tenant is `cascade_robotics`, with three workflows. `wf_ticket_triage` runs at priority 10 on `webhook / ticket.created`. `wf_legacy_ticket_tagger` runs at priority 1 on the same trigger, to demonstrate the conflict. `wf_slack_escalation` runs at priority 10 on `slack / urgent_message`.
 
-Third, the cross-project shape. The RAG platform, this agent platform and the delivery framework all return `Decision(allowed, rule, reason)` from a named policy where deny overrides. The three functions are `authorize_step()` here, `sign_off()` in the delivery framework and `decide()` in enterprise RAG. Access control, delivery gates and workflow guardrails are the same kind of problem wearing three different hats. That line works well as a bridge when the interviewer has seen the G01 or G12 design.
+Third, the cross-project shape. The RAG platform, this agent platform and the delivery framework all return `Decision(allowed, rule, reason)` from a named policy where deny overrides. The three functions are `authorize_step()` here, `sign_off()` in the delivery framework and `decide()` in enterprise RAG. Access control, delivery gates and workflow guardrails are the same kind of problem wearing three different hats. That line works well as a bridge when the interviewer has seen the Enterprise Knowledge Assistant or Scoping to Deployed Agent design.
 
 Fourth, the coverage discipline: every claim is marked *built and runnable* or *known but not demonstrated*, with an effort label to close it. The punch list, by effort:
 
