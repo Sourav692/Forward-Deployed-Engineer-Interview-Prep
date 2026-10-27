@@ -43,7 +43,7 @@ On this design the levels separate on how far the permission boundary reaches be
 |---|---|---|
 | Senior | Partitions by tenant and pre-filters inside hybrid search, re-checks policy live before generation, reranks 20 to 6 after enforcement and abstains on weak evidence. Authorisation fails closed; everything else degrades. | The ingest half and the proof: how each source's ACLs get translated, how a missed deletion is caught, and what shows zero leaks before release. |
 | Staff | Adds the ACL normaliser that refuses anything without a usable ACL, tombstones and reconciliation for missed deletes, and a leak suite Security owns as the release gate. Rolls out one corpus at a time, with an owner and a rollback trigger per source. | What happens as sources, tenants and pivots multiply: index and embedding migrations, cost per answer at 100 QPS peak, and whether governance survives a copied index. |
-| Principal | Makes permission translation a platform contract every connector meets, and versions the index so a chunking or embedding change is a staged cutover with rollback. Keeps the legal cost pivot and the 100 ms pivot on the same trust path, and checks that Unity Catalog governance does not silently drop at the index boundary. | The freshness SLO per content class and the stated stale window for revocation depend on the customer's IdP sync and risk appetite, so they wait for discovery. |
+| Principal | Makes permission translation a platform contract every connector meets, and versions the index so a chunking or embedding change is a staged cutover with rollback. Keeps the legal cost pivot and the 100 ms pivot on the same trust path, and checks that source governance does not silently drop at the index boundary. | The freshness SLO per content class and the stated stale window for revocation depend on the customer's IdP sync and risk appetite, so they wait for discovery. |
 
 ## Key Takeaways
 
@@ -59,7 +59,6 @@ On this design the levels separate on how far the permission boundary reaches be
 - The release gate is a leak count of zero, not a score, and every run is a replayable trace.
 - Rollout starts with one corpus, three personas and the leak test standing, then widens source by source.
 - The sixty minutes are spent in proportion to risk, with the three-sentence close and eight carrying lines ready.
-- On Databricks the index does not inherit governance and cannot be built on a governed table, so the base table is locked and Unity Catalog becomes layer 2.
 - As a story, the same system is a one-sentence open, five beats and an honest limitation.
 - The cost pivot is answered with the same architecture: measure, route, bound, cache safely. The 100 ms pivot removes generation from the hot path and leans on permission-keyed caches.
 - Incidents on this design are answered by pointing at the section that would have caught them.
@@ -73,7 +72,6 @@ On this design the levels separate on how far the permission boundary reaches be
 5. **Why is the leak rate a gate rather than a metric?** A retrieval regression is a bug to fix next sprint; a leak is an incident, so one exposure blocks the release instead of lowering a score.
 6. **What do the four scale numbers force?** 100k employees force ACL cardinality, not concurrency. 50M chunks force refresh, not the first embed. 20 QPS hides an untuned sync path; 100 QPS makes rerank and generate a serving problem.
 7. **What breaks first at 10× and what replaces it?** BM25 rebuilt per request over the authorised pool; a lexical store with native document-level security such as OpenSearch DLS, or a cached per-group shard.
-8. **On Databricks, why does the naive design fail before it can leak?** A Delta Sync index cannot be created on a table carrying a row filter or column mask, so the base table is left ungoverned and locked to the pipeline identity while humans read a governed view.
 9. **How is α tuned?** Against a representative query set segmented by query type, never a fixed number.
 10. **What is the sixty-second cost answer for legal RAG under budget?** Citations and escalation for legal quality, top-k and routing for budget, gated rerank for the 8-second target, and a limited-corpus pilot with cost instrumented from day one.
 
@@ -89,19 +87,7 @@ On this design the levels separate on how far the permission boundary reaches be
 - [Anthropic, Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval) — reranking gain versus contextual embeddings
 - [OpenSearch document-level security](https://docs.opensearch.org/latest/security/access-control/document-level-security/) — OpenSearch DLS as a lexical store with native doc security
 - [Microsoft 365 Copilot federated connectors overview](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/federated-connectors-overview) — federated search limits on ranking and latency
-- [Databricks AI Search (formerly Vector Search)](https://docs.databricks.com/aws/en/vector-search/vector-search) — product rename, no row/column-level permissions, capacity
-- [Azure Databricks platform release notes](https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/) — June 2026 rename of Vector Search to AI Search
-- [Databricks: Row filters and column masks](https://docs.databricks.com/aws/en/data-governance/unity-catalog/filters-and-masks/) — no AI Search index on a governed table; masks are access control
-- [Databricks: CREATE TABLE USING](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-create-table-using) — row filters are kept on CREATE OR REPLACE
-- [Databricks: Agent authentication](https://docs.databricks.com/aws/en/generative-ai/agent-framework/agent-authentication) — on-behalf-of-user auth is Public Preview, admin-enabled
-- [Databricks: is_account_group_member function](https://docs.databricks.com/aws/en/sql/language-manual/functions/is_account_group_member) — account-group checks at query time
-- [Databricks: Configure SCIM provisioning for Okta](https://docs.databricks.com/aws/en/admin/users-groups/scim/okta) — group removals arrive via SCIM push
 - [Microsoft Entra: How application provisioning works](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/how-provisioning-works) — Entra provisioning runs on sync cycles
-- [Databricks: ai_mask function](https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_mask) — ai_mask is a generative transform, not access control
-- [Query an AI Search index (Azure Databricks)](https://learn.microsoft.com/en-us/azure/databricks/ai-search/query-ai-search) — filter syntax, positional OR, SQL-string filters, hybrid and reranker
-- [Databricks AI Search performance guide](https://docs.databricks.com/aws/en/ai-search/best-practices) — Standard vs Storage-Optimized latency, capacity and cost
-- [Databricks blog: Announcing Storage-Optimized Endpoints](https://www.databricks.com/blog/announcing-storage-optimized-endpoints-vector-search) — up to 7× lower cost
-- [databricks-ai-search on PyPI](https://pypi.org/project/databricks-ai-search/) — `DatabricksReranker` object and the SDK package rename
 - [Artificial Analysis LLM leaderboard (TTFT)](https://artificialanalysis.ai/leaderboards/models) — fastest APIs ~0.4 s to first token, so 100 ms rules out live generation
 - [Google Drive Help: Learn about folders with limited access](https://support.google.com/drive/answer/14254362?hl=en-GB) — folder permissions inherit, but a limited-access folder blocks inherited access
 

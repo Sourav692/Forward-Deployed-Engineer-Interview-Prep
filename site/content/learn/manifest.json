@@ -2286,7 +2286,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/",
-      "estMinutes": 80,
+      "estMinutes": 75,
       "href": "/design/enterprise-knowledge-assistant"
     },
     {

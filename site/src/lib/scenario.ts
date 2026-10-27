@@ -149,6 +149,8 @@ export type CaseDocument = {
   label: string
   purpose: string
   minutes: number
+  /** Not needed for interview preparation: reference material behind the other tabs. */
+  optional: boolean
   parts: CaseStudy['docs']
 }
 
@@ -159,6 +161,9 @@ export type CaseDocument = {
 const CHAPTER_CASES = new Set(['enterprise-knowledge-assistant'])
 
 export const hasChapters = (study: CaseStudy) => CHAPTER_CASES.has(study.ref.slug)
+
+/** Tabs a chapters case marks optional for interview preparation. */
+const OPTIONAL_TABS = new Set(['full-pack'])
 
 /**
  * Folds a case's part tabs (`<id>-part-<n>`) into documents. Part ids stay the tab ids
@@ -176,7 +181,7 @@ export function documentsOf(study: CaseStudy): CaseDocument[] {
     } else {
       // A split document's parts are labelled "<label> <n>"; the document drops the number.
       const label = chapters ? doc.label.replace(/ 1$/, '') : doc.label
-      documents.push({ tab: id, label, purpose: doc.purpose, minutes: doc.minutes, parts: [doc] })
+      documents.push({ tab: id, label, purpose: doc.purpose, minutes: doc.minutes, optional: chapters && OPTIONAL_TABS.has(id), parts: [doc] })
     }
   }
   return documents

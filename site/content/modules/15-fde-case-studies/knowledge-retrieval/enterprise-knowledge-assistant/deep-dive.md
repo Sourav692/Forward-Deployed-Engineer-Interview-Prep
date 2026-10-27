@@ -365,23 +365,6 @@ Tighten the evidence set and compress.
 
 ---
 
-## 21. Databricks verification mindset
-
-A governed source does not automatically mean a derived search index has identical governance semantics. Databricks AI Search (formerly Vector Search) does not enforce Unity Catalog row filters or column masks.
-
-Verify:
-
-- identity propagation
-- row/column control behaviour
-- index construction restrictions
-- revocation timing
-- deletion propagation
-- query-time authorisation
-
-A persona-by-document visibility matrix is strong evidence.
-
----
-
 ## 22. Project-story lessons
 
 Useful lessons to discuss if asked about mistakes:

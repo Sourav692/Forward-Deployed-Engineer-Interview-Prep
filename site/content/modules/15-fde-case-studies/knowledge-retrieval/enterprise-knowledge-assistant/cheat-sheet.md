@@ -123,16 +123,6 @@ Never simply:
 
 **Auth unavailable** → fail closed
 
-## Databricks
-
-> **Governed source ≠ automatically governed search index.**
-
-Databricks AI Search (formerly Vector Search) does not enforce Unity Catalog row filters or column masks.
-
-Verify identity propagation, revocation, index restrictions and deletion/ACL SLO.
-
-Bring a **persona × document visibility matrix**.
-
 ## Project story
 
 > “I built an enterprise AI search system where the hardest part wasn't finding the right answer. It was making sure the same question produced the right answer for the right person.”
@@ -157,7 +147,6 @@ Five beats:
 | No leaks? | Fail closed + leak suite |
 | 100 ms? | Remove generation from hot path |
 | Cost? | Route + bound + selective rerank + cache |
-| Databricks? | Verify governance at index boundary |
 
 ## One sentence
 

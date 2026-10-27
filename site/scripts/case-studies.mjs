@@ -33,6 +33,7 @@ import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { TITLE_OVERRIDES, TRACKS, readingMinutes, tabMeta } from '../src/lib/editorial.ts'
 import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
+import { CASE_SITE_EDITS, applySiteEdits } from './case-site-edits.mjs'
 import { UNLINK, gitDates, stripClockLine, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
 export const CASE_STUDY_MODULE_ID = CASEBOOK_MODULE
@@ -242,7 +243,9 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       const folder = groups.get(g)
       const dir = join(root, folder)
       const tabs = DOC_TABS.flatMap((t) => withParts({ id: t.id, file: docFile(folder, t), src: join(dir, docFile(folder, t)) }))
-      const main = await readFile(join(dir, tabs[0].file), 'utf8')
+      const intro = CASE_SITE_EDITS[slugOf(folder)]?.intro
+      if (intro) tabs.unshift({ id: 'intro', file: basename(intro), src: intro, label: labelOf('intro') })
+      const main = await readFile(tabs.find((t) => t.id === 'main').src, 'utf8')
       cases.push({ theme: theme.id, dir, slug: slugOf(folder), order: Number(g.slice(1)), title: nameFrom(main, folder), tabs })
     }
   }
@@ -330,7 +333,8 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)
         if (!existsSync(file)) throw new Error(`Missing ${tab.label} document: ${file}`)
-        const markdown = stripHeadingCodes(unlinkRepoLinks(rewriteLinks(stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file, ctx)))
+        const source = applySiteEdits(c.slug, stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file)
+        const markdown = stripHeadingCodes(unlinkRepoLinks(rewriteLinks(source, file, ctx)))
         await writeFile(join(outBase, `${tab.id}.md`), markdown)
         minutes += readingMinutes(markdown)
       }

@@ -11,7 +11,7 @@ import { pageTwins } from '@/lib/twins'
 export const caseDescription = (study: CaseStudy) =>
   study.ref.moduleId === '16-company-oriented-prep'
     ? `Company-oriented interview preparation: ${study.title}.`
-    : `FDE case study: ${study.title} — ${documentsOf(study).map((d) => d.label.toLowerCase()).join(', ')}.`
+    : `FDE case study: ${study.title} — ${documentsOf(study).filter((d) => d.tab !== 'intro').map((d) => d.label.toLowerCase()).join(', ')}.`
 
 /**
  * A reading page: the casebook designs at /design/<slug> (ENH-16), and the company prep
@@ -29,7 +29,8 @@ export async function CaseStudyPage({
   const meta = familyMeta(study.ref.trackId)
   const [related, twins] = await Promise.all([getRelated(study.ref), pageTwins(study.ref)])
   const minutes = study.docs.reduce((sum, d) => sum + d.minutes, 0)
-  const documents = documentsOf(study)
+  // The Introduction is the case's landing page, not one of its documents.
+  const documents = documentsOf(study).filter((d) => d.tab !== 'intro')
 
   return (
     <div className="py-10">
@@ -66,9 +67,12 @@ export async function CaseStudyPage({
             }
           />
         </div>
-        <BeforeYouStart meta={meta}>
-          <ReadingOrder study={study} documents={documents} />
-        </BeforeYouStart>
+        {/* A chapters case says all of this on its Introduction page instead. */}
+        {!hasChapters(study) && (
+          <BeforeYouStart meta={meta}>
+            <ReadingOrder study={study} documents={documents} />
+          </BeforeYouStart>
+        )}
       </header>
 
       <CaseStudyView study={study} />
@@ -84,26 +88,17 @@ export async function CaseStudyPage({
  * repeating it.
  */
 function ReadingOrder({ study, documents }: { study: CaseStudy; documents: CaseDocument[] }) {
-  // With chapters, the full design is reference material the other tabs were drawn from,
-  // so it sits after the reading order instead of being its longest step.
-  const reference = hasChapters(study) ? documents.find((d) => d.tab === 'full-pack') : undefined
-  const steps = documents.filter((d) => d !== reference)
   return (
     <>
       {documents.length > 1 && (
         <Fact term="Reading order">
           <ol className="list-decimal space-y-0.5 pl-4 marker:text-subtle">
-            {steps.map((d) => (
+            {documents.map((d) => (
               <li key={d.tab}>
                 <DocumentLink document={d} />
               </li>
             ))}
           </ol>
-          {reference && (
-            <p className="mt-1.5">
-              For detail and sources: <DocumentLink document={reference} />
-            </p>
-          )}
         </Fact>
       )}
       <Fact term="Sources">
@@ -111,7 +106,7 @@ function ReadingOrder({ study, documents }: { study: CaseStudy; documents: CaseD
           <>
             The references for every tab are in{' '}
             <a href={`#${study.sources.anchor}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
-              {sourcesLabel(study.sources.tab, documents, study.sources.label)} → {study.sources.title}
+              {study.sources.label} → {study.sources.title}
             </a>
             .
           </>
@@ -136,8 +131,3 @@ function DocumentLink({ document: d }: { document: CaseDocument }) {
   )
 }
 
-/** "Full Design, part 5" for a part of a split document; the tab's own label otherwise. */
-function sourcesLabel(tab: string, documents: CaseDocument[], fallback: string) {
-  const d = documents.find((doc) => doc.parts.length > 1 && doc.parts.some((p) => p.tab === tab))
-  return d ? `${d.label}, part ${d.parts.findIndex((p) => p.tab === tab) + 1}` : fallback
-}
