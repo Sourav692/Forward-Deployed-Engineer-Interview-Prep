@@ -129,7 +129,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
       : following && { tab: following.parts[0].tab, label: following.label }
     return (
       <div key={p.tab} hidden={active !== p.tab}>
-        <ReadingPanel doc={p.doc} drawDiagrams={visited.has(p.tab)} toc={!chapters} />
+        <ReadingPanel doc={p.doc} drawDiagrams={visited.has(p.tab)} toc={!chapters} title={!chapters} />
 
         <div className="no-print mt-12 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-surface p-4">
           {d.tab !== 'intro' && (
@@ -187,10 +187,10 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
       >
         {/* What this tab is for, so a reader landing on it from search knows where
             it sits in the case — the tab row alone does not say. */}
-        {d.purpose && d.tab !== 'intro' && (
+        {d.purpose && d.tab !== 'intro' && current <= 0 && (
           <p className="no-print mb-6 max-w-3xl rounded-lg bg-surface-2/60 px-4 py-2.5 text-[0.875rem] leading-relaxed text-muted">
-            <span className="font-semibold text-text">{d.label}</span>
-            {split && ` · part ${current + 1} of ${d.parts.length}`} · {d.minutes} min in total
+            <span className="font-semibold text-text">{d.label}</span> · {d.minutes} min
+            {split && ` in ${d.parts.length} parts`}
             {d.optional && ' · optional'} — {d.purpose}
           </p>
         )}
@@ -239,7 +239,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                         {d.optional && <span className="ml-1.5 text-[0.75rem] font-normal text-subtle">optional</span>}
                       </NavItem>
                       {here && !split && <SectionLinks doc={d.parts[0].doc} />}
-                      {split && (
+                      {split && (here || !d.optional) && (
                         <ul className="mb-1 ml-3 space-y-0.5 border-l border-border pl-2">
                           {d.parts.map((p, pi) => (
                             <li key={p.tab}>
@@ -390,11 +390,14 @@ export function ReadingPanel({
   doc,
   drawDiagrams,
   toc: showToc = true,
+  title = true,
 }: {
   doc: ReadingDocument
   drawDiagrams: boolean
   /** False beside a case sidebar, which lists the sections itself. */
   toc?: boolean
+  /** False beside a case sidebar, which already names the page shown. */
+  title?: boolean
 }) {
   const toc = showToc ? doc.sections.filter((s) => s.title) : []
   // No contents list for a single section, and no empty column where it would be.
@@ -422,7 +425,7 @@ export function ReadingPanel({
       </aside>
 
       <div className="min-w-0">
-        {doc.title && (
+        {title && doc.title && (
           <div className="mb-6 border-b border-border pb-4 text-[0.8125rem] font-semibold uppercase tracking-[0.08em] text-subtle">
             {doc.title}
           </div>

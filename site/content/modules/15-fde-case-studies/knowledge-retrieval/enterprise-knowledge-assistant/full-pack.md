@@ -10,10 +10,10 @@ The hard part of this system is not finding the right passage. It is that a Tier
 | #6 Whiteboard script, Enterprise RAG with Access Control         | Sections 5 to 9 and 12: the sixty-minute delivery                          |
 | #27 Internal Knowledge Assistant for Enterprise Support          | The support-agent persona in sections 1 and 11                             |
 | #45 and #57 OpenAI-style practice prompts                        | The two follow-ups in section 12                                           |
-| #63 Meridian Assist running case                                 | Section 14                                                                 |
-| #38 Legal RAG under strict cost limits and #70 sub-100 ms search | Section 15                                                                 |
+| #63 Meridian Assist running case                                 | Section 13                                                                 |
+| #38 Legal RAG under strict cost limits and #70 sub-100 ms search | Section 14                                                                 |
 | #72 reported prompt, LLM-powered enterprise search               | Section 12, follow-up table                                                |
-| #86, #93, #94 incidents and four §15 scenarios                  | Section 16                                                                 |
+| #86, #93, #94 incidents and four §15 scenarios                  | Section 15                                                                 |
 
 ---
 

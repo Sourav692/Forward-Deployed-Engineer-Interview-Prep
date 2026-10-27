@@ -33,7 +33,7 @@ import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { TITLE_OVERRIDES, TRACKS, readingMinutes, tabMeta } from '../src/lib/editorial.ts'
 import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
-import { CASE_SITE_EDITS, applySiteEdits } from './case-site-edits.mjs'
+import { CASE_SITE_EDITS, applySiteEdits, renumberSections } from './case-site-edits.mjs'
 import { UNLINK, gitDates, stripClockLine, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
 export const CASE_STUDY_MODULE_ID = CASEBOOK_MODULE
@@ -330,11 +330,23 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
       const outBase = join(outDir, 'modules', CASE_STUDY_MODULE_ID, theme.id, c.slug)
       await mkdir(outBase, { recursive: true })
       let minutes = 0
+      const sources = new Map()
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)
         if (!existsSync(file)) throw new Error(`Missing ${tab.label} document: ${file}`)
-        const source = applySiteEdits(c.slug, stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file)
-        const markdown = stripHeadingCodes(unlinkRepoLinks(rewriteLinks(source, file, ctx)))
+        sources.set(tab.id, applySiteEdits(c.slug, stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file))
+      }
+      if (CASE_SITE_EDITS[c.slug]?.renumber) {
+        // A document's parts share one numbering, so renumber them together.
+        const byDocument = Map.groupBy(c.tabs, (tab) => tab.id.replace(/-part-\d+$/, ''))
+        for (const [doc, tabs] of byDocument) {
+          const parts = renumberSections(tabs.map((tab) => sources.get(tab.id)), `${c.slug}/${doc}`)
+          tabs.forEach((tab, i) => sources.set(tab.id, parts[i]))
+        }
+      }
+      for (const tab of c.tabs) {
+        const file = tab.src ?? join(c.dir, tab.file)
+        const markdown = stripHeadingCodes(unlinkRepoLinks(rewriteLinks(sources.get(tab.id), file, ctx)))
         await writeFile(join(outBase, `${tab.id}.md`), markdown)
         minutes += readingMinutes(markdown)
       }

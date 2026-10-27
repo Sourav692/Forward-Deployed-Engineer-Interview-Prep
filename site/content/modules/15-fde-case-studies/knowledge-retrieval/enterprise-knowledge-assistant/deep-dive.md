@@ -365,7 +365,7 @@ Tighten the evidence set and compress.
 
 ---
 
-## 22. Project-story lessons
+## 21. Project-story lessons
 
 Useful lessons to discuss if asked about mistakes:
 

@@ -353,7 +353,7 @@ This becomes closer to a permission-aware search product with a cached-answer la
 
 ---
 
-## 23. Interview story
+## 22. Interview story
 
 Opening:
 
@@ -369,7 +369,7 @@ Five beats:
 
 ---
 
-## 24. Interview trigger → answer
+## 23. Interview trigger → answer
 
 | Interviewer asks | Mental trigger |
 |---|---|
@@ -389,7 +389,7 @@ Five beats:
 
 ---
 
-## 25. 60-minute delivery
+## 24. 60-minute delivery
 
 | Time | Focus |
 |---|---|

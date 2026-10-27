@@ -90,11 +90,14 @@ test('case chapters: G01 introduction, sidebar parts, old links and progress', a
   await expect(page.getByRole('region', { name: 'Introduction' })).toBeVisible()
   await expect(page.getByRole('cell', { name: 'Optional' })).toBeVisible()
   await expect(page.getByText(/databricks/i)).toHaveCount(0)
+  // Full Design is optional, so its parts stay folded until it is open.
+  await expect(page.locator('#case-contents').getByRole('button', { name: 'Full Design, part 1', includeHidden: true })).toHaveCount(0)
 
   await page.goto(`${CASE_STUDY}#full-pack-part-3`)
   await hydrated(page)
   await expect(page.getByRole('region', { name: 'Full Design' })).toBeVisible()
-  await expect(page.getByText(/part 3 of 5/).first()).toBeVisible()
+  // Checked without opening the phone menu, which would cover the buttons below.
+  await expect(page.locator('#case-contents').getByRole('button', { name: 'Full Design, part 3', includeHidden: true })).toHaveAttribute('aria-current', 'page')
   await page.getByRole('button', { name: 'Next: Part 4 →' }).click()
   await expect(page).toHaveURL(/#full-pack-part-4$/)
 

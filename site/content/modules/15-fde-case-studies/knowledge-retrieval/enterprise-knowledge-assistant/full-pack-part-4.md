@@ -1,6 +1,6 @@
 # Enterprise Knowledge Assistant with Permission-Aware RAG, part 4
 
-## 14. Tell It as Something Built
+## 13. Tell It as Something Built
 
 For "tell me about something you built", the same system is a story, and the beats stand alone so they can be played in whatever order the conversation goes. Lead with one sentence and then stop talking; the next question chooses the next beat.
 

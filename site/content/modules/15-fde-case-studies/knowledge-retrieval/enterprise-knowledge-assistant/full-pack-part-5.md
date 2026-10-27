@@ -1,6 +1,6 @@
 # Enterprise Knowledge Assistant with Permission-Aware RAG, part 5
 
-## 15. Answer the Cost Pivot in Ten Minutes
+## 14. Answer the Cost Pivot in Ten Minutes
 
 The interviewer's pivot after a good design is "now it has to run under a strict budget". Here it arrives as a legal team wanting RAG over contracts and policies, with a strict budget, mandatory citations and a latency target under 8 seconds. Answer it right after the design, in the same sitting, using the same architecture.
 
@@ -19,7 +19,7 @@ The interviewer's pivot after a good design is "now it has to run under a strict
 
 **Sixty-second budget line:** citations and escalation for legal quality, top-k and routing for budget, no heavy rerank on every query for the 8 s target. Pilot a limited corpus with cost instrumented from day one. Order: measure → route → bound → cache safely (tenant, permission, version in the key).
 
-## 16. Debug the Incidents on This Design
+## 15. Debug the Incidents on This Design
 
 Incidents and production scenarios on this system are not new designs; they are questions about where the design would have caught the failure. Answer each as detect, contain, root cause, prevent, and point at the section that answers it.
 
@@ -30,7 +30,7 @@ Incidents and production scenarios on this system are not new designs; they are 
 | 94  | Incident: embedding-model change degrades recall (vector drift) | Section 12's re-indexing answer: versioned index, offline eval, staged cutover, rollback                                                   |
 | 106 | §15: retrieval became slow after adding more documents         | Section 3's envelope and section 9's scale rules: partition by tenant, ACL pre-filter, top-k discipline                                    |
 | 111 | §15: vector database query latency increased                   | Filters and index type, warm caches, over-retrieval caps                                                                                   |
-| 112 | §15: reranker improved quality but doubled latency             | Section 15's lever: rerank only ambiguous queries, a smaller candidate set, a cheaper reranker                                             |
+| 112 | §15: reranker improved quality but doubled latency             | Section 14's lever: rerank only ambiguous queries, a smaller candidate set, a cheaper reranker                                             |
 | 117 | §15: long context window caused poor performance               | Section 8's rule: a tight candidate set beats prompt stuffing; compress evidence                                                           |
 
 ---
