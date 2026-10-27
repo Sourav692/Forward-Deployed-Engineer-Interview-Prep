@@ -1,0 +1,41 @@
+/*
+ * The landing page's colour and type tokens (Hallmark, Editorial theme). Scoped to the
+ * `data-theme` on the landing page's wrapper, so nothing else on the site picks them up.
+ * landing.module.css points the site's own tokens at these inside that wrapper.
+ */
+[data-theme='editorial'] {
+  --color-paper: oklch(97% 0.007 86);
+  --color-paper-2: oklch(94% 0.010 86);
+  --color-paper-3: oklch(91% 0.012 84);
+  --color-ink: oklch(16% 0.012 280);
+  --color-ink-2: oklch(29% 0.011 280);
+  --color-muted: oklch(48% 0.010 75);
+  --color-rule: oklch(85% 0.009 85);
+  --color-rule-2: oklch(64% 0.010 80);
+  --color-accent: oklch(49% 0.130 152);
+  --color-accent-ink: oklch(98% 0.005 88);
+  --color-focus: oklch(52% 0.135 152);
+  --color-error: oklch(52% 0.19 27);
+  --color-band: oklch(16% 0.012 280);
+  --color-band-ink: oklch(97% 0.007 86);
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-source-serif), "Source Serif 4", ui-serif, Georgia, serif;
+}
+
+.dark [data-theme='editorial'] {
+  --color-paper: oklch(17% 0.010 86);
+  --color-paper-2: oklch(20% 0.010 86);
+  --color-paper-3: oklch(23% 0.011 84);
+  --color-ink: oklch(94% 0.008 280);
+  --color-ink-2: oklch(84% 0.008 280);
+  --color-muted: oklch(70% 0.010 75);
+  --color-rule: oklch(31% 0.009 85);
+  --color-rule-2: oklch(52% 0.010 80);
+  --color-accent: oklch(62% 0.105 152);
+  --color-accent-ink: oklch(15% 0.010 88);
+  --color-focus: oklch(66% 0.11 152);
+  --color-error: oklch(70% 0.15 27);
+  /* The band stays the darkest surface in dark mode, a step below the paper. */
+  --color-band: oklch(11% 0.009 86);
+  --color-band-ink: oklch(94% 0.008 280);
+}

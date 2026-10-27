@@ -30,12 +30,13 @@ function usePalette() {
     return () => observer.disconnect()
   }, [])
   return {
-    base: dark ? '#302c40' : '#f1edf9',
-    surface: dark ? '#514760' : '#ffffff',
-    accent: dark ? '#b8a0f2' : '#7954c9',
-    muted: dark ? '#8b809d' : '#c3b6d6',
-    text: dark ? '#f4eefb' : '#3a2c4f',
-    ink: dark ? '#252031' : '#f1edf9',
+    // Hex mirrors of the landing tokens in landing.module.css (three.js takes no OKLCH).
+    base: dark ? '#181611' : '#eeebe4',
+    surface: dark ? '#26241f' : '#f7f5f0',
+    accent: dark ? '#c9cad0' : '#2a2b31',
+    muted: dark ? '#6c6863' : '#d0cdc7',
+    text: dark ? '#eaebf1' : '#0c0d12',
+    ink: dark ? '#110f0a' : '#eeebe4',
   }
 }
 
@@ -196,7 +197,7 @@ export default function JourneyWorld({ progress, onInvalidate, onReady, onUnavai
         >
           <ambientLight intensity={1.2} />
           <directionalLight position={[5, 12, 6]} intensity={2.2} castShadow shadow-mapSize={[1024, 1024]} shadow-camera-left={-8} shadow-camera-right={22} shadow-camera-top={8} shadow-camera-bottom={-8} shadow-bias={-0.001} />
-          <directionalLight position={[-5, 4, -5]} intensity={0.6} color="#c4b4ed" />
+          <directionalLight position={[-5, 4, -5]} intensity={0.6} color="#f7f5f0" />
           <Camera progress={progress} onReady={onReady} />
           <ContextEvents onInvalidate={onInvalidate} onUnavailable={onUnavailable} />
           <Discovery palette={palette} />

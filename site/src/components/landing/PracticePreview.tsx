@@ -37,8 +37,8 @@ export function PracticePreview() {
   return (
     <section aria-label="Try a practice question" className={styles.practice}>
       <div className={styles.practiceTop}>
-        <span className="text-sm font-semibold">A little practice, right here</span>
-        <span className="font-mono text-xs text-muted">{String(step + 1).padStart(2, '0')} / 03</span>
+        <span className="text-base">A little practice, right here</span>
+        <span className="text-sm text-muted">{String(step + 1).padStart(2, '0')} / 03</span>
       </div>
       <ol className={styles.practiceSteps} aria-label="Practice steps">
         {['Write', 'Compare', 'Score'].map((label, index) => (
@@ -48,8 +48,8 @@ export function PracticePreview() {
         ))}
       </ol>
       <div className={styles.practiceBody}>
-        <p className="mb-2 text-xs font-medium text-accent">Internal knowledge assistant</p>
-        <h2 ref={heading} tabIndex={-1} className="text-xl font-semibold leading-snug tracking-tight focus:outline-none">
+        <p className={styles.tag}>Internal knowledge assistant</p>
+        <h2 ref={heading} tabIndex={-1} className="text-2xl focus:outline-none">
           {step === 0 ? 'Before you pick a model…' : step === 1 ? 'Compare the reasoning' : 'How strong was your answer?'}
         </h2>
         {step === 0 && (
@@ -57,7 +57,7 @@ export function PracticePreview() {
             <p id="preview-prompt" className="mt-3 text-sm leading-relaxed text-muted">
               A customer wants an assistant for sensitive internal documents. What would you clarify first?
             </p>
-            <label htmlFor="preview-answer" className="mt-5 block text-sm font-medium">Your first move</label>
+            <label htmlFor="preview-answer" className="mt-5 block text-sm">Your first move</label>
             <textarea
               ref={input}
               id="preview-answer"
@@ -71,7 +71,7 @@ export function PracticePreview() {
               className={styles.answer}
             />
             {needsAnswer && <p id="preview-error" role="alert" className="mt-2 text-sm text-danger">Write a first thought before comparing.</p>}
-            <Button onClick={() => advance(1)} className="mt-4 min-h-11 w-full">Compare with a strong answer</Button>
+            <Button onClick={() => advance(1)} className="mt-4 min-h-12 w-full">Compare with a strong answer</Button>
             <p className="mt-3 text-xs leading-relaxed text-muted">A quick preview. Your draft stays on this page.</p>
           </>
         )}
@@ -100,7 +100,7 @@ export function PracticePreview() {
                 {RUBRIC.map((item) => (
                   <label key={item.value} className={styles.scoreOption}>
                     <input type="radio" name="preview-score" value={item.value} checked={score === item.value} onChange={() => setScore(item.value)} />
-                    <span className="font-mono text-sm font-semibold">{item.value}/5</span>
+                    <span className="text-sm">{item.value}/5</span>
                     <span className="text-sm leading-snug">{item.label}</span>
                   </label>
                 ))}
@@ -109,7 +109,7 @@ export function PracticePreview() {
             <p aria-live="polite" className="mt-3 text-sm text-muted">
               {score === null ? 'Look for the decision and its reason, not matching words.' : `Your self-score: ${score}/5. Try the full case to practise the next decision.`}
             </p>
-            <a href={WORKSHEET} className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-accent underline underline-offset-4">Open the full worksheet <span aria-hidden className="ml-2">→</span></a>
+            <a href={WORKSHEET} className="mt-4 inline-flex min-h-11 items-center text-base text-accent underline">Open the full worksheet</a>
             <Button variant="ghost" onClick={() => advance(0)} className="mt-1 min-h-11 w-full">Try again</Button>
           </>
         )}

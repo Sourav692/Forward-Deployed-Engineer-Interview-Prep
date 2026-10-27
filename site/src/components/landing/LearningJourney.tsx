@@ -51,7 +51,7 @@ function Island({ scene, x = 0 }: { scene: 0 | 1; x?: number }) {
           <g fill="var(--text-muted)" opacity="0.8">
             <circle cx="311" cy="388" r="12" /><path d="M300 405h22l6 25h-34Z" />
           </g>
-          <text x="91" y="477" className={styles.mapCaption}>01 / DISCOVERY</text>
+          <text x="91" y="477" className={styles.mapCaption}>Discovery</text>
         </>
       ) : (
         <>
@@ -84,7 +84,7 @@ function Island({ scene, x = 0 }: { scene: 0 | 1; x?: number }) {
             <text x="120" y="347">Identity</text><text x="258" y="157">Retrieval</text>
             <text x="447" y="326">Answer</text><text x="243" y="404">Evidence</text>
           </g>
-          <text x="91" y="477" className={styles.mapCaption}>02 / ARCHITECTURE</text>
+          <text x="91" y="477" className={styles.mapCaption}>Architecture</text>
         </>
       )}
     </g>
@@ -168,18 +168,18 @@ export function LearningJourney() {
   }
 
   return (
-    <section aria-labelledby="journey-heading" className="mt-16 sm:mt-24">
+    <section aria-labelledby="journey-heading" className="mt-12 border-t-4 border-text pt-6 sm:mt-16">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h2 id="journey-heading" className="text-2xl font-semibold tracking-tight sm:text-3xl">From a question to a system.</h2>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">Follow one idea from the customer’s desk to the architecture behind the answer.</p>
+          <h2 id="journey-heading" className="text-[length:var(--text-section,1.875rem)]">From a Question to a System</h2>
+          <p className="mt-4 max-w-xl text-[length:var(--text-lead,1rem)] leading-snug">Follow one idea from the customer’s desk to the architecture behind the answer.</p>
         </div>
-        <a href="#areas" className="inline-flex min-h-11 items-center rounded-md text-sm font-semibold text-accent underline underline-offset-4">Skip journey <span aria-hidden className="ml-2">↓</span></a>
+        <a href="#areas" className="inline-flex min-h-11 items-center text-base text-accent underline">Skip journey</a>
       </div>
       <section ref={root} aria-label="Discovery to architecture journey" className={styles.journeyTrack} data-motion="false" data-scene="0">
         <div ref={panel} className={styles.journeyPanel}>
           <div className={styles.journeyHeader}>
-            <p className="text-xs font-medium text-muted">{unavailable ? 'Showing the static journey.' : 'Two scenes. One connected idea.'}</p>
+            <p className="text-sm text-muted">{unavailable ? 'Showing the static journey.' : 'Two scenes. One connected idea.'}</p>
             {!unavailable && <Button variant="ghost" onClick={() => setStaticView(!staticView)} aria-pressed={staticView} className={styles.viewToggle}>
               {staticView ? 'Use 3D view' : 'Use static view'}
             </Button>}
@@ -190,15 +190,15 @@ export function LearningJourney() {
                 <article key={scene.title} className={styles.sceneCopy} data-copy-scene={index}>
                   <h3>
                     <button type="button" data-scene-button={index} onClick={() => goToScene(index)} className={styles.sceneButton}>
-                      <span className="font-mono text-xs">0{index + 1}</span>
-                      <span className="text-xl font-semibold leading-snug">{scene.title}</span>
+                      <span className="text-base">0{index + 1}</span>
+                      <span className="text-2xl leading-tight">{scene.title}</span>
                     </button>
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{scene.body}</p>
-                  <Link href={scene.href} className="mt-3 inline-flex min-h-11 items-center rounded-sm text-sm font-semibold text-accent">{scene.cta} <span aria-hidden className="ml-2">→</span></Link>
+                  <Link href={scene.href} className="mt-3 inline-flex min-h-11 items-center text-base text-accent underline">{scene.cta}</Link>
                 </article>
               ))}
-              <p className="mt-7 text-xs text-muted">Scroll to follow the idea, or choose a scene.</p>
+              <p className="mt-7 text-sm text-muted">Scroll to follow the idea, or choose a scene.</p>
               <div className={styles.journeyProgress} aria-hidden><span /></div>
             </div>
             <div className={styles.mapWindow} data-ready={ready && eligible && nearViewport}>
@@ -213,16 +213,16 @@ export function LearningJourney() {
               <article key={scene.title} className={styles.staticScene}>
                 <svg viewBox="30 110 580 390" role="img" aria-label={scene.detail} className={styles.staticMap}><Island scene={index as 0 | 1} /></svg>
                 <div className="px-5 pb-6">
-                  <h3 className="text-xl font-semibold">{scene.title}</h3>
+                  <h3 className="text-2xl">{scene.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{scene.body}</p>
-                  <Link href={scene.href} className="mt-3 inline-flex min-h-11 items-center rounded-sm text-sm font-semibold text-accent">{scene.cta} <span aria-hidden className="ml-2">→</span></Link>
+                  <Link href={scene.href} className="mt-3 inline-flex min-h-11 items-center text-base text-accent underline">{scene.cta}</Link>
                 </div>
               </article>
             ))}
           </div>
         </div>
       </section>
-      <p className="mt-3 text-xs leading-relaxed text-muted">Next: test the system, practise your explanation, and prepare for the interview.</p>
+      <p className="mt-4 text-sm leading-relaxed text-muted">Next: test the system, practise your explanation, and prepare for the interview.</p>
     </section>
   )
 }
