@@ -153,10 +153,10 @@ All paths are relative to the repository root.
 | 10 | `01_Concept_Tutorials/FDE_Handbook/08_AgentOps_And_Platform/06_Infra_And_CICD.md`: the assembled pipeline |
 | 10, 11, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: six gates, evidence bar, override rate, week-4 retention |
 | 7 | `02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/100_Production_LLM_Gateway.md`, sections 5–10 (gateway internals) |
-| 7 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform.md`, sections 7 and 8 |
-| 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating.md`, sections 5–8 and 14 |
-| 6, 13 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis.md` (observability design and cost cards) |
-| 4 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service.md` §3 and `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving.md` §3 (the same sizing method at larger scale) |
+| 7 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/4_Full_Design/G07_Full_Design.md`, sections 7 and 8 |
+| 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md`, sections 5–8 and 14 |
+| 6, 13 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/4_Full_Design/G14_Full_Design.md` (observability design and cost cards) |
+| 4 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/4_Full_Design/G18_Full_Design.md` §3 and `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/4_Full_Design/G20_Full_Design.md` §3 (the same sizing method at larger scale) |
 | Every table and section marked own construction, all sizing and cost figures, the self-drill card | Built for this page from the sources' arguments; not source material |
 
 ### Fact-check sources (checked 27 Sep 2026)

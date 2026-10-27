@@ -15,7 +15,7 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G01 Enterprise Knowledge Assistant | Permission-aware RAG over enterprise documents, where retrieval must respect each user's access rights. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/G01_Enterprise_Knowledge_Assistant_Main.md` |
+| G01 Enterprise Knowledge Assistant | Permission-aware RAG over enterprise documents, where retrieval must respect each user's access rights. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/1_Interview_Guide/G01_Interview_Guide.md` |
 | Enterprise Knowledge Assistant with RAG (Ch 1) | Long-form walkthrough of designing a RAG assistant from ingestion to evaluation. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-1-enterprise-knowledge-assistant-rag-tutorial_v2.md` |
 | Enterprise Knowledge Assistant with RAG | Fill-in system design worksheet for the RAG assistant case. | Worksheet + key | `03_PW/System_Design_Worksheets/01_enterprise_knowledge_assistant_rag.md` |
 | Internal Knowledge Assistant for Enterprise Support | Customer-discovery worksheet: scope a support team's internal knowledge assistant. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/01_internal_knowledge_assistant.md` |
@@ -35,7 +35,7 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G02 Customer Support Automation | Support automation as a routed decision pipeline: deflect, assist or escalate each ticket. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/G02_Customer_Support_Automation_Main.md` |
+| G02 Customer Support Automation | Support automation as a routed decision pipeline: deflect, assist or escalate each ticket. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/1_Interview_Guide/G02_Interview_Guide.md` |
 | AI Customer-Support Automation (Ch 4) | Long-form design of an AI system that resolves support tickets end to end. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-4-ai-customer-support-automation-tutorial_v2.md` |
 | AI Customer-Support Automation | Fill-in worksheet for the support automation case. | Worksheet + key | `03_PW/System_Design_Worksheets/04_ai_customer_support_automation.md` |
 | Case 2: Customer Support AI Assistant | Support assistant that answers from knowledge, takes actions and asks for approval. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/02_Customer_Support_Assistant.md` |
@@ -47,23 +47,23 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 | Agentic Support Workflow (full mock) | Full timed mock on a support workflow where agents take actions. | Mock interview | `03_PW/Mock_Interviews/Full_Mock_Interviews/02_agentic_support_workflow_full_mock.md` |
 | Agentic Support Workflow (short mock) | Short practice mock on the same case. | Mock interview | `03_PW/Mock_Interviews/Short_Practice_Mocks/02_agentic_support_workflow_mock.md` |
 | ServiceNow Ticket Automation Agent | Discovery worksheet: an agent that triages and updates ServiceNow tickets. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/09_service_now_ticket_agent.md` |
-| G16 Real-Time Call Assistant | Live assistant for sales and service calls under tight streaming latency. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/G16_Real_Time_Call_Assistant_Main.md` |
+| G16 Real-Time Call Assistant | Live assistant for sales and service calls under tight streaming latency. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/1_Interview_Guide/G16_Interview_Guide.md` |
 
 ## 3. Agents, tools and workflow automation
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G03 Tool-Using Agent with Safety Controls | An agent that calls real tools, with permissions, approvals and blast-radius limits. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/G03_Tool_Using_Agent_With_Safety_Controls_Main.md` |
+| G03 Tool-Using Agent with Safety Controls | An agent that calls real tools, with permissions, approvals and blast-radius limits. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/1_Interview_Guide/G03_Interview_Guide.md` |
 | Tool-Using AI Agent with Safety Controls (Ch 11) | Long-form design of the safe tool-using agent. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-11-tool-using-ai-agent-with-safety-controls-tutorial_v2.md` |
 | Tool-Using AI Agent with Safety Controls | Fill-in worksheet for the safe tool-using agent. | Worksheet + key | `03_PW/System_Design_Worksheets/11_tool_using_ai_agent_with_safety_controls.md` |
-| G15 Agent Platform for Non-Technical Users | A platform where business users build agents without breaking production systems. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/G15_Agent_Platform_For_Non_Technical_Users_Main.md` |
+| G15 Agent Platform for Non-Technical Users | A platform where business users build agents without breaking production systems. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/1_Interview_Guide/G15_Interview_Guide.md` |
 | Whiteboard: Agent Platform for Non-Technical Users | Spoken whiteboard script for the non-technical agent platform. | Whiteboard script | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md` |
 | Safe Workflow Automation for Non-Technical Users | Lesson version of the agent platform whiteboard. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/08_Safe_Workflow_Automation_for_Non_Technical_Users.md` |
 | Reliable Workflow Orchestration System (Ch 13) | Durable multi-step workflows with retries, idempotency and recovery. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-13-reliable-workflow-orchestration-system-tutorial_v2.md` (copy: `02_SD/Standalone_Designs/23_Reliable_Workflow_Orchestration/3_Tutorial_V2.md`) |
 | Reliable Workflow Orchestration System | Fill-in worksheet for workflow orchestration. | Worksheet + key | `03_PW/System_Design_Worksheets/13_reliable_workflow_orchestration_system.md` |
 | Configurable Platform for Customer-Specific Workflows (Ch 17) | One platform that each customer configures into its own workflow without forking code. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-17-configurable-platform-customer-specific-workflows-tutorial_v2.md` (copy: `02_SD/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/3_Tutorial_V2.md`) |
 | Configurable Platform for Customer-Specific Workflows | Fill-in worksheet for the configurable platform. | Worksheet + key | `03_PW/System_Design_Worksheets/17_configurable_platform_customer_specific_workflows.md` |
-| G11 Deep Research Agent | A consumer-scale agent that plans, searches and writes long research reports. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/G11_Deep_Research_Agent_Main.md` |
+| G11 Deep Research Agent | A consumer-scale agent that plans, searches and writes long research reports. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/1_Interview_Guide/G11_Interview_Guide.md` |
 | Case Study: Research Platform | A deployed multi-agent research-report system on AWS, walked layer by layer. | Handbook case study | `01_CT/FDE_Handbook/07_Multi_Agent_Systems/04_Case_Study_Research_Platform.md` |
 | Case Study: Supervisor to Deep Agent | A governed data assistant for a life insurer, told as its evolution from monolith to supervisor to deep agent. | Handbook case study | `01_CT/FDE_Handbook/07_Multi_Agent_Systems/05_Case_Study_Supervisor_To_Deep_Agent.md` |
 | Self-Adapting Agent | An agent that changes its own behaviour for new tasks, and how to stop each change becoming an unreviewed regression. | Standalone design | `02_SD/Standalone_Designs/80_Self_Adapting_Agent/80_Self_Adapting_Agent.md` (template: `02_SD/Standalone_Designs/80_Self_Adapting_Agent/self_adapting_agent_fde_interview_template.md`) |
@@ -74,7 +74,7 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G09 Enterprise Coding Assistant | Code completion and chat over a large codebase within a 300 ms budget. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/G09_Enterprise_Coding_Assistant_Main.md` |
+| G09 Enterprise Coding Assistant | Code completion and chat over a large codebase within a 300 ms budget. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/1_Interview_Guide/G09_Interview_Guide.md` |
 | Case 3: AI-Powered Coding Assistant | Casebook design of an IDE coding assistant. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/03_Coding_Assistant.md` |
 | AI Powered Coding Assistant Design | Course version of the coding assistant. | Course walkthrough | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/7. AI Powered Coding Assistant Design.md` |
 | Coding Assistant: Context Engineering Under 300 ms | Lesson version of Case 3, focused on picking context fast. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/03_Coding_Assistant_Context_Engineering_Under_300_ms.md` |
@@ -83,12 +83,12 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G06 Natural Language over Governed Data | Let business users ask questions of governed data without bypassing its controls. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/G06_NL_Over_Governed_Data_Main.md` |
+| G06 Natural Language over Governed Data | Let business users ask questions of governed data without bypassing its controls. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/1_Interview_Guide/G06_Interview_Guide.md` |
 | Natural-Language-to-SQL Analytics Assistant (Ch 3) | Long-form design of a text-to-SQL assistant with validation and safe execution. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-3-natural-language-to-sql-analytics-assistant-tutorial_v2.md` |
 | Natural-Language-to-SQL Analytics Assistant | Fill-in worksheet for the text-to-SQL case. | Worksheet + key | `03_PW/System_Design_Worksheets/03_natural_language_to_sql_analytics_assistant.md` |
 | Retail Demand Forecast Explanation Assistant | Discovery worksheet: explain demand forecasts to retail planners in plain language. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/08_retail_demand_explainer.md` |
 | Executive Dashboard Copilot | Discovery worksheet: a copilot that answers executives' questions about their dashboards. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/10_executive_dashboard_copilot.md` |
-| G10 High-Volume Batch Pipeline | Batch inference and document pipelines processing millions of items cheaply and reliably. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/G10_High_Volume_Batch_Pipeline_Main.md` |
+| G10 High-Volume Batch Pipeline | Batch inference and document pipelines processing millions of items cheaply and reliably. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/1_Interview_Guide/G10_Interview_Guide.md` |
 | High-Volume Batch Inference System (Ch 10) | Long-form design of the batch inference system. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-10-high-volume-batch-inference-system-tutorial_v2.md` |
 | High-Volume Batch Inference System | Fill-in worksheet for batch inference. | Worksheet + key | `03_PW/System_Design_Worksheets/10_high_volume_batch_inference_system.md` |
 
@@ -96,9 +96,9 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G05 Sales Copilot | A copilot that preps account executives with account research and next steps. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G05_Sales_Copilot/G05_Sales_Copilot_Main.md` |
+| G05 Sales Copilot | A copilot that preps account executives with account research and next steps. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G05_Sales_Copilot/1_Interview_Guide/G05_Interview_Guide.md` |
 | Sales Copilot for Account Executives | Discovery worksheet for the sales copilot. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/02_sales_copilot.md` |
-| G08 Document Review Copilot | Document review where an LLM drafts findings and a policy check gates them. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/G08_Document_Review_Copilot_Main.md` |
+| G08 Document Review Copilot | Document review where an LLM drafts findings and a policy check gates them. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/1_Interview_Guide/G08_Interview_Guide.md` |
 | Financial Compliance Document Reviewer | Discovery worksheet: review financial documents for compliance issues. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/03_financial_compliance_reviewer.md` |
 | Financial Compliance + Red Team (full mock) | Full timed mock on the compliance reviewer, including adversarial testing. | Mock interview | `03_PW/Mock_Interviews/Full_Mock_Interviews/03_financial_red_team_full_mock.md` |
 | Financial Compliance + Red Team (short mock) | Short practice mock on the same case. | Mock interview | `03_PW/Mock_Interviews/Short_Practice_Mocks/03_financial_red_team_mock.md` |
@@ -107,7 +107,7 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 | Case 4: AI-Powered Recruiting Platform | Screen, rank and schedule candidates while recruiters keep the final decision. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/04_Recruiting_Platform.md` (copy: `02_SD/Standalone_Designs/04_Recruiting_Platform/1_Handbook_Casebook_Recruiting_Platform.md`) |
 | AI Powered Recruiting Platform Design | Long reference design of the recruiting platform. | Course walkthrough | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/8. AI Powered Recruiting Platform Design.md` (long form: `02_SD/Standalone_Designs/04_Recruiting_Platform/2_FDE_Recruiting_Platform_Design_long.md`) |
 | Recruiting Platform: Explainable Ranking, Human Decisions | Lesson version of Case 4. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md` |
-| G17 Logistics Exception Handling | An agent that handles shipment exceptions and reroutes deliveries. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/G17_Logistics_Exception_Handling_Main.md` |
+| G17 Logistics Exception Handling | An agent that handles shipment exceptions and reroutes deliveries. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/1_Interview_Guide/G17_Interview_Guide.md` |
 | Case 5: AI Logistics Exception-Handling Assistant | Casebook design of the logistics assistant, framed as the FDE round. | Casebook | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md` |
 | AI Logistics Exception-Handling Assistant Design | Course version of the logistics assistant. | Course walkthrough | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/AI Logistics Exception-Handling Assistant Design.md` |
 | Mock: AI Exception-Handling Assistant | Mock interview transcript on the logistics case. | Mock interview | `02_SD/Classic_Design_Walkthroughs/System_Design_Course/Mock - AI Exception-Handling Assistant.md` |
@@ -117,28 +117,28 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G07 Secure Multi-Tenant AI Platform | A shared AI platform where tenants' data, prompts and costs stay isolated. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/G07_Secure_Multi_Tenant_AI_Platform_Main.md` |
+| G07 Secure Multi-Tenant AI Platform | A shared AI platform where tenants' data, prompts and costs stay isolated. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/1_Interview_Guide/G07_Interview_Guide.md` |
 | Secure Multi-Tenant AI Platform (Ch 2) | Long-form design of the multi-tenant platform. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-2-secure-multi-tenant-ai-platform-tutorial_v2.md` |
 | Secure Multi-Tenant AI Platform | Fill-in worksheet for the multi-tenant platform. | Worksheet + key | `03_PW/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md` |
 | AI System for an Air-Gapped Environment (Ch 7) | Run an AI system with no internet: local models, offline updates, strict audit. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md` (copy: `02_SD/Standalone_Designs/19_Air_Gapped_AI_System/3_Tutorial_V2.md`) |
 | AI System for an Air-Gapped Environment | Fill-in worksheet for the air-gapped case. | Worksheet + key | `03_PW/System_Design_Worksheets/07_ai_system_for_an_air_gapped_environment.md` |
-| G18 Consumer-Scale Chat Service | ChatGPT-shaped chat for 100M daily users: streaming, history, admission and GPU cost. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/G18_Consumer_Scale_Chat_Service_Main.md` |
-| G19 Model Development and Post-Training | Build a maths-solving model from data through SFT, post-training and evaluation. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/G19_Model_Development_And_Post_Training_Main.md` |
-| G20 LLM Inference Serving | Serve LLMs with batching, routing and failover across GPU fleets. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/G20_LLM_Inference_Serving_Main.md` |
+| G18 Consumer-Scale Chat Service | ChatGPT-shaped chat for 100M daily users: streaming, history, admission and GPU cost. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/1_Interview_Guide/G18_Interview_Guide.md` |
+| G19 Model Development and Post-Training | Build a maths-solving model from data through SFT, post-training and evaluation. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/1_Interview_Guide/G19_Interview_Guide.md` |
+| G20 LLM Inference Serving | Serve LLMs with batching, routing and failover across GPU fleets. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/1_Interview_Guide/G20_Interview_Guide.md` |
 | Production LLM Gateway Under Real Constraints | A gateway where safety checks and fallback hops share a three-second budget. | Standalone design | `02_SD/Standalone_Designs/100_Production_LLM_Gateway/100_Production_LLM_Gateway.md` |
 
 ## 8. Operations, evaluation and observability
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G04 SRE Incident Response Agent | An agent that helps an SRE team triage and respond to incidents safely. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/G04_SRE_Incident_Response_Agent_Main.md` |
+| G04 SRE Incident Response Agent | An agent that helps an SRE team triage and respond to incidents safely. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/1_Interview_Guide/G04_Interview_Guide.md` |
 | SRE Incident Triage Agent | Discovery worksheet for the SRE triage agent. | Discovery worksheet + key | `03_PW/Customer_Discovery_Worksheets/06_sre_triage_agent.md` |
 | SRE Triage Agent (full mock) | Full timed mock on the SRE triage agent. | Mock interview | `03_PW/Mock_Interviews/Full_Mock_Interviews/04_sre_triage_full_mock.md` |
 | SRE Triage Agent (short mock) | Short practice mock on the same case. | Mock interview | `03_PW/Mock_Interviews/Short_Practice_Mocks/04_sre_triage_mock.md` |
-| G13 Evaluation and Release Gating | Evaluation and release gates for thirty AI applications sharing one platform. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/G13_Evaluation_And_Release_Gating_Main.md` |
+| G13 Evaluation and Release Gating | Evaluation and release gates for thirty AI applications sharing one platform. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/1_Interview_Guide/G13_Interview_Guide.md` |
 | LLM Evaluation and Release-Gating Platform (Ch 9) | Long-form design of the evaluation and release-gating platform. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-9-llm-evaluation-and-release-gating-platform-tutorial_v2.md` |
 | LLM Evaluation and Release-Gating Platform | Fill-in worksheet for release gating. | Worksheet + key | `03_PW/System_Design_Worksheets/09_llm_evaluation_and_release_gating_platform.md` |
-| G14 Observability and Production Diagnosis | Trace, measure and diagnose a customer-facing AI app when quality drops. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/G14_Observability_And_Production_Diagnosis_Main.md` |
+| G14 Observability and Production Diagnosis | Trace, measure and diagnose a customer-facing AI app when quality drops. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/1_Interview_Guide/G14_Interview_Guide.md` |
 | Observability for a Customer-Facing AI Application (Ch 15) | Long-form design of observability for a production AI app. | Long-form tutorial | `02_SD/Scenario_Tutorials_Long_Form/Version_2/chapter-15-observability-customer-facing-ai-application-tutorial_v2.md` |
 | Observability for a Customer-Facing AI Application | Fill-in worksheet for observability. | Worksheet + key | `03_PW/System_Design_Worksheets/15_observability_customer_facing_ai_application.md` |
 
@@ -146,7 +146,7 @@ Folder prefixes used below: `02_SD` = `02_System_Design_Case_Studies`, `03_PW` =
 
 | Case study | One-line summary | Format | File path |
 |---|---|---|---|
-| G12 Scoping to Deployed Agent | Take a scoping document to a deployed agent in two weeks. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/G12_Scoping_To_Deployed_Agent_Main.md` |
+| G12 Scoping to Deployed Agent | Take a scoping document to a deployed agent in two weeks. | Scenario pack | `02_SD/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/1_Interview_Guide/G12_Interview_Guide.md` |
 | Whiteboard: Scoping Doc to Deployed Agent in Two Weeks | Spoken whiteboard script for the two-week delivery. | Whiteboard script | `02_SD/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/04_Scoping_Doc_To_Deployed_Agent_In_Two_Weeks.md` (also: `05_FDE_Delivery_and_Scoping/Delivery_Framework/INTERVIEW_SCRIPT.md`) |
 | Delivering an Agent in Two Weeks with Enforced Gates | Lesson version of the two-week delivery, with role-gated stage gates. | Lesson | `01_CT/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md` |
 | Prioritise AI Use Cases for a Large Enterprise | Pick the use case that survives the data, the regulator and the users, not the one that impresses. | Standalone design | `02_SD/Standalone_Designs/60_Prioritize_AI_Use_Cases/60_Prioritize_AI_Use_Cases.md` |
