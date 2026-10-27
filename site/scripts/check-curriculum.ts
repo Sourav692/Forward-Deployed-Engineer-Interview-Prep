@@ -14,7 +14,8 @@
  */
 import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
 import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
-import { MODULE_HOMES } from '../src/lib/curriculum-href.ts'
+import { MODULE_HOMES, isLearnTrack } from '../src/lib/curriculum-href.ts'
+import { LEARN_STAGES } from '../src/lib/learn-stages.ts'
 import { REVIEWS, TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
 import { MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
@@ -69,6 +70,15 @@ export function findPrerequisiteCycle(modules: CurriculumModule[]): string[] | n
 
 // Slugs (UX-01)
 unique('track', TRACKS.map((t) => t.slug))
+unique('learning stage', LEARN_STAGES.map((stage) => stage.slug))
+const stagedTracks = LEARN_STAGES.flatMap((stage) => stage.tracks)
+unique('staged track', stagedTracks)
+for (const track of TRACKS.filter((track) => isLearnTrack(track.slug))) {
+  if (!stagedTracks.includes(track.slug)) fail(`Learn track ${track.slug} has no learning stage`)
+}
+for (const slug of stagedTracks) {
+  if (!TRACKS.some((track) => track.slug === slug && isLearnTrack(slug))) fail(`learning stage references unknown Learn track ${slug}`)
+}
 unique('module', MODULES.map((m) => m.slug))
 unique('lesson', LESSONS.map((l) => l.slug))
 for (const t of TRACKS) unique(`section (${t.slug})`, t.sections.map((s) => s.slug))
