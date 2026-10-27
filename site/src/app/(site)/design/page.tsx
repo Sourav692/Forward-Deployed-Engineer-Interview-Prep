@@ -23,6 +23,8 @@ export const metadata: Metadata = pageMetadata({
 })
 
 const METHOD_TRACK = 'ai-systems-design'
+/** The short Learn versions of nine cases (T5.4); its lessons and these cases link to each other. */
+const CLASSIC_MODULE = 'classic-ai-designs'
 
 export default async function DesignPage() {
   const { groups, scenarios } = await moduleGroups(LIVE.casebook)
@@ -41,10 +43,12 @@ export default async function DesignPage() {
       <aside id="method" aria-label="Learn the design method" className="mt-6 max-w-3xl scroll-mt-20 rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
         <p className="text-muted">
           Need a structure for your answer? The AI Systems Design track in Learn teaches the framework, whiteboard
-          timing and reusable patterns. Return here to see them applied in complete worked designs.
+          timing and reusable patterns. Its Classic AI designs module takes nine systems through that method in
+          short lessons, each with an interactive explorer. Return here for the complete worked designs.
         </p>
-        <div className="mt-3">
+        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
           <TextLink href={learnHref.track(METHOD_TRACK)}>Learn the design method</TextLink>
+          <TextLink href={learnHref.module({ track: METHOD_TRACK, slug: CLASSIC_MODULE })}>Open Classic AI designs</TextLink>
         </div>
       </aside>
       <div className="mt-6">

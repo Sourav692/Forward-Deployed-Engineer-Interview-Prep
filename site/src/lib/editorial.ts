@@ -824,6 +824,8 @@ export const CLASSIC_DESIGN_CASE: Record<string, string> = {
   'access-controlled-enterprise-rag': 'knowledge-retrieval/enterprise-knowledge-assistant',
   'customer-support-assistant-knowledge-actions-and-approval': 'agents-that-act/customer-support-automation',
   'coding-assistant-context-engineering-under-300-ms': 'agents-that-act/enterprise-coding-assistant',
+  'safe-workflow-automation-for-non-technical-users': 'platforms-and-scale/agent-platform-for-non-technical-users',
+  'delivering-an-agent-in-two-weeks-with-enforced-gates': 'delivery-evaluation-operations/scoping-to-deployed-agent',
 }
 
 /** How demanding a case or worksheet is, for the /design and /practice filters (ENH-23). */
