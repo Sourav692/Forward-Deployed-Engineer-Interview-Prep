@@ -2,7 +2,7 @@
 
 **Support process** is a customer has a problem, someone answers or acts, and we close the case without making money or data worse.
 
-**G02 covers one slice:** chat/email/voice in, then answer, get approval, or hand off. Not a free-form company agent.
+**This case covers one slice:** chat/email/voice in, then answer, get approval, or hand off. Not a free-form company agent.
 
 End to end, as a double-charge ticket:
 
@@ -27,7 +27,7 @@ Use a double-charge request as the running example. A fluent reply is not enough
 
 ### Questions to ask the interviewer
 
-These questions set the first-release boundary. The [source case, §1](/design/customer-support-automation#full-pack) has the complete discovery table.
+These questions set the first-release boundary. The [Full Design, section 1](/design/customer-support-automation#full-pack) has the complete discovery table.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -46,7 +46,7 @@ If the interviewer cannot provide numbers, say which assumptions you are making.
 
 Learn the shared decision pipeline here, then change the boundary that dominates each variant.
 
-| Related case                                                | What changes from G02                                                                                                |
+| Related case                                                | What changes from this case                                                                                                |
 | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | Customer Support Assistant at 1M conversations/day          | Planner only for multi-system requests; three distinct memory layers; model routing and large-scale serving.         |
 | Multi-Tenant SaaS Support Assistant                         | Add a tenant predicate to every retrieval and tool call; test for cross-tenant leakage.                              |
@@ -93,7 +93,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture you can draw
 
-This simplifies the [source architecture, §4](/design/customer-support-automation#full-pack) for a whiteboard explanation.
+This simplifies the [Full Design architecture, section 4](/design/customer-support-automation#full-pack) for a whiteboard explanation.
 
 ```mermaid
 flowchart LR

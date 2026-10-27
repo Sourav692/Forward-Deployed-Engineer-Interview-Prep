@@ -45,7 +45,7 @@ flowchart TD
   style F fill:#a63d40,stroke:#5c1f22,color:#fff
 ```
 
-> 🎯 **Interview Pointer:** If you are asked what happens when the worker dies after the payment goes through, build the answer on one sentence: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does. A lost worker is not a lost business action. Tie detection, containment, recovery and prevention back to durable history every time.
+> **Interview pointer:** If you are asked what happens when the worker dies after the payment goes through, build the answer on one sentence: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does. A lost worker is not a lost business action. Tie detection, containment, recovery and prevention back to durable history every time.
 
 ### Failure Drill: Email Succeeds but CRM Fails
 

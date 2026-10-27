@@ -95,7 +95,7 @@ The whole system, drawn with its planes *(own construction)*:
  ╔══════════════════════ CONTROL PLANE (changes are releases) ═══════════════════════╗
  ║ model catalogue + routing policy per tier · quotas and rate limits per tier       ║
  ║ system prompts (versioned, prefix-stable) · moderation thresholds · region map    ║
- ║ feature flags · eval gates (G13) · budgets and alerts                             ║
+ ║ feature flags · eval gates (Evaluation and Release Gating) · budgets and alerts                             ║
  ╚═══════════════════════════════════════╤═══════════════════════════════════════════╝
                                          │ configures every box below
  ╔══════════════════════ DATA PLANE, per region (calls are requests) ════════════════╗

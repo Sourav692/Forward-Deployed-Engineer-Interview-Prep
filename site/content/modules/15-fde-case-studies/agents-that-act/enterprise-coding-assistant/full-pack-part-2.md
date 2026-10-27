@@ -6,9 +6,9 @@ Context engineering is a funnel, not a filter that runs once. The repository nar
 
 ```
 Full Repository & Workspace (potentially millions of tokens)
-                    │  ✕ unrelated files
+                    │  excluded: unrelated files
 Relevant Signals (current file, imports, open tabs, cursor, recent edits)
-                    │  ✕ distant history
+                    │  excluded: distant history
 Compressed & Ranked Context (semantic search + prioritisation)
                     │
 Final Prompt (fits the model's context window)

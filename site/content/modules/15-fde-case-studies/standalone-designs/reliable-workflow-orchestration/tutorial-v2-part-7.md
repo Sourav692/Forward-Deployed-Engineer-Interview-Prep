@@ -18,7 +18,7 @@
 - This pair is the first true go/no-go gate. It shows whether the orchestration logic lives through the failures that hurt most.
 - A line worth having ready: "I won't promote this until we can replay a run from its history, recover from a worker crash, and show that no irreversible effect happens twice."
 
-> 🎯 **Interview Pointer:** Put deterministic replay and crash recovery *first* in the gate order, ahead of operator tooling and ahead of a wider release. That ordering marks a seasoned delivery plan. A weaker answer just promises to "add monitoring later".
+> **Interview pointer:** Put deterministic replay and crash recovery *first* in the gate order, ahead of operator tooling and ahead of a wider release. That ordering marks a seasoned delivery plan. A weaker answer just promises to "add monitoring later".
 
 ### Operator Visibility Before Broadening Scope
 

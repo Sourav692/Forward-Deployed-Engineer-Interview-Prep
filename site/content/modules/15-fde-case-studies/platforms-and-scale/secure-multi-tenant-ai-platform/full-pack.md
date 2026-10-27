@@ -8,7 +8,7 @@ The dangerous failure is not a bad answer. It is a query, cache lookup, queue me
 |---|---|
 | #16 Secure Multi-Tenant AI Platform (anchor, book ch 2) | Sections 1 to 12: the design, requirements, sizing, enforcement, evaluation, rollout and delivery |
 | #41 Multi-tenant GenAI platform with per-customer budgets | Section 13, the cost drill card |
-| #108 One tenant has unusually high usage | Section 13, the §15 scenario answer |
+| #108 One tenant has unusually high usage | Section 13, the scenario answer |
 | #85 Cross-tenant retrieval leak through a missing metadata filter | Section 14, the incident walked through with its telemetry |
 
 ---

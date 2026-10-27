@@ -176,7 +176,7 @@ flowchart TD
 - The charge may have gone through before the worker died. So "worker lost" must never be read as "business action lost".
 - Only the record prevents a double charge on retry: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does. The scheduler reads the history to see what already happened. Depending on that, it safely reissues the step or hands the case to compensation.
 
-> 🎯 **Interview Pointer:** This is the follow-up to expect most: the payment succeeds, then the worker dies before the receipt is written. Know the answer cold: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does.
+> **Interview pointer:** This is the follow-up to expect most: the payment succeeds, then the worker dies before the receipt is written. Know the answer cold: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does.
 
 ### End-to-End Flow, Step by Step
 

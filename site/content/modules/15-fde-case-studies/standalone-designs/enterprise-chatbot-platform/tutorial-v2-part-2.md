@@ -17,7 +17,7 @@
 - Long-lived streams defeat autoscaling on request count and naive round-robin. Idle proxies also close a stream that falls silent for 60 seconds during a slow tool call; nginx and AWS ALB both do so by default. Heartbeats fix that.
 - When a rolling restart severs connections, it is no longer a blip. Users see a **product failure**.
 
-> 🎯 **Interview Pointer:** Open the sizing with 800 concurrent streams, not raw QPS. That figure drives the relay tier and the provider quota. Interviewers pick up on Little's Law used in place of plain request-rate maths.
+> **Interview pointer:** Open the sizing with 800 concurrent streams, not raw QPS. That figure drives the relay tier and the provider quota. Interviewers pick up on Little's Law used in place of plain request-rate maths.
 
 ### The cost trap: quadratic history
 

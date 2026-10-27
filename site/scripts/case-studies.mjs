@@ -33,7 +33,7 @@ import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { TITLE_OVERRIDES, TRACKS, readingMinutes, tabMeta } from '../src/lib/editorial.ts'
 import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
-import { CASE_SITE_EDITS, applySiteEdits, renumberSections } from './case-site-edits.mjs'
+import { applySiteEdits, introFor, renumberSections } from './case-site-edits.mjs'
 import { UNLINK, gitDates, stripClockLine, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
 export const CASE_STUDY_MODULE_ID = CASEBOOK_MODULE
@@ -243,10 +243,10 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       const folder = groups.get(g)
       const dir = join(root, folder)
       const tabs = DOC_TABS.flatMap((t) => withParts({ id: t.id, file: docFile(folder, t), src: join(dir, docFile(folder, t)) }))
-      const intro = CASE_SITE_EDITS[slugOf(folder)]?.intro
+      const intro = introFor(slugOf(folder))
       if (intro) tabs.unshift({ id: 'intro', file: basename(intro), src: intro, label: labelOf('intro') })
       const main = await readFile(tabs.find((t) => t.id === 'main').src, 'utf8')
-      cases.push({ theme: theme.id, dir, slug: slugOf(folder), order: Number(g.slice(1)), title: nameFrom(main, folder), tabs })
+      cases.push({ theme: theme.id, dir, slug: slugOf(folder), code: g, order: Number(g.slice(1)), title: nameFrom(main, folder), tabs })
     }
   }
 
@@ -322,6 +322,8 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
   }
 
   const updatedOf = gitDates(repoRoot)
+  // Case codes the packs use for each other ("as in G01"), mapped to the titles the site shows.
+  const codes = new Map(cases.filter((c) => c.code).map((c) => [c.code, TITLE_OVERRIDES[`${c.theme}/${c.slug}`] ?? c.title]))
   const tracks = []
   for (const theme of THEMES) {
     const scenarios = []
@@ -331,18 +333,21 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
       await mkdir(outBase, { recursive: true })
       let minutes = 0
       const sources = new Map()
+      const cut = new Set()
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)
         if (!existsSync(file)) throw new Error(`Missing ${tab.label} document: ${file}`)
-        sources.set(tab.id, applySiteEdits(c.slug, stripRepoReferences(stripClockLine(await readFile(file, 'utf8'))), file))
+        const raw = stripRepoReferences(stripClockLine(await readFile(file, 'utf8')))
+        const edited = applySiteEdits(c.slug, raw, file, { codes, own: c.code })
+        sources.set(tab.id, edited.markdown)
+        if (edited.cutSection) cut.add(tab.id.replace(/-part-\d+$/, ''))
       }
-      if (CASE_SITE_EDITS[c.slug]?.renumber) {
-        // A document's parts share one numbering, so renumber them together.
-        const byDocument = Map.groupBy(c.tabs, (tab) => tab.id.replace(/-part-\d+$/, ''))
-        for (const [doc, tabs] of byDocument) {
-          const parts = renumberSections(tabs.map((tab) => sources.get(tab.id)), `${c.slug}/${doc}`)
-          tabs.forEach((tab, i) => sources.set(tab.id, parts[i]))
-        }
+      // A document that lost a section is renumbered; its parts share one numbering.
+      const byDocument = Map.groupBy(c.tabs, (tab) => tab.id.replace(/-part-\d+$/, ''))
+      for (const [doc, tabs] of byDocument) {
+        if (!cut.has(doc)) continue
+        const parts = renumberSections(tabs.map((tab) => sources.get(tab.id)), `${c.slug}/${doc}`)
+        tabs.forEach((tab, i) => sources.set(tab.id, parts[i]))
       }
       for (const tab of c.tabs) {
         const file = tab.src ?? join(c.dir, tab.file)

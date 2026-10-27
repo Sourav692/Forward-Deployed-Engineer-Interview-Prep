@@ -2,7 +2,7 @@
 
 **Ops automation** is turning a messy email into a real system change: CRM note, refund, lookup.
 
-**G03 covers one slice:** the model proposes the next small action; other services decide if it may run. The model never holds the keys.
+**This case covers one slice:** the model proposes the next small action; other services decide if it may run. The model never holds the keys.
 
 End to end, as a “refund this VIP” email:
 
@@ -27,7 +27,7 @@ The same request matters differently to operations, security, finance, and tool 
 
 ### Questions to ask the interviewer
 
-The [source discovery table, §1](/design/tool-using-agent-with-safety-controls#full-pack) gives the full set. These seven change the controls. Email and tool output stay untrusted either way, so that is assumed rather than asked.
+The [Full Design discovery table, section 1](/design/tool-using-agent-with-safety-controls#full-pack) gives the full set. These seven change the controls. Email and tool output stay untrusted either way, so that is assumed rather than asked.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -43,7 +43,7 @@ If approval policy is unspecified, assume a human gate for irreversible actions;
 
 ### The anchor for its variants
 
-| Related case                                                   | What changes from G03                                                                                  |
+| Related case                                                   | What changes from this case                                                                                  |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | Enterprise assistant over 100+ apps                            | Tool discovery and registry loading at scale; enterprise identity must reach every application.        |
 | Enterprise workflow automation / reported agent design prompts | More orchestration and memory detail, with the same proposal-to-execution boundary.                    |
@@ -92,7 +92,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is a whiteboard version of the [source architecture, §4](/design/tool-using-agent-with-safety-controls#full-pack).
+This is a whiteboard version of the [Full Design architecture, section 4](/design/tool-using-agent-with-safety-controls#full-pack).
 
 ```mermaid
 flowchart TB
@@ -173,7 +173,7 @@ Roll out in layers: read-only triage and drafting → narrow reversible CRM writ
 
 ## 8. Refund near-miss drill
 
-In the [source incident, §13](/design/tool-using-agent-with-safety-controls#full-pack), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorised money moved; the planner still failed by proposing a risky bulk action.
+In the [Full Design incident, section 13](/design/tool-using-agent-with-safety-controls#full-pack), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorised money moved; the planner still failed by proposing a risky bulk action.
 
 **Detect:** read planned, blocked, and allowed calls with amount, role, approval state, policy version. **Contain:** disable bulk refund planning, route VIP refunds to review tickets, and audit the 12 allowed calls. **Root cause:** action-oriented planner examples omitted bulk approval boundaries; the gateway policy still worked. **Prevent:** risk-aware tool schemas, policy simulation, a separate action-risk check, and non-bypassable gateway enforcement.
 

@@ -155,12 +155,12 @@ export type CaseDocument = {
 }
 
 /**
- * Cases that show a split document as one tab with its parts as chapters. The rest show
- * one tab per part, as before. A pilot list while the owner reviews the layout on G01.
+ * A case with an Introduction page (`site/case-pages/<slug>/introduction.md`, synced as
+ * its first tab) uses the chapters layout: a sidebar of documents with their parts as
+ * chapters. A case without one keeps one tab per part. See "Case pages on the site" in
+ * CLAUDE.md.
  */
-const CHAPTER_CASES = new Set(['enterprise-knowledge-assistant'])
-
-export const hasChapters = (study: CaseStudy) => CHAPTER_CASES.has(study.ref.slug)
+export const hasChapters = (study: CaseStudy) => study.docs[0]?.tab === 'intro'
 
 /** Tabs a chapters case marks optional for interview preparation. */
 const OPTIONAL_TABS = new Set(['full-pack'])

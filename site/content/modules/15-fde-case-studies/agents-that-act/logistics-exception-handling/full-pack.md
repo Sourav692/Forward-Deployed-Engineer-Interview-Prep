@@ -2,7 +2,7 @@
 
 *The agent has to act fast enough to unstick a shipment, and never act at all on the one class of case the customer will be held accountable for.*
 
-This is a low-scale, high-stakes design, not a traffic problem. Only 150 people use it, and the engineering bar is correctness at one decision boundary. This page consolidates the group's prompts into one read for the day before. It reuses the deny-first gate from G03 and the tenancy ladder from G07, and names them rather than repeating them.
+This is a low-scale, high-stakes design, not a traffic problem. Only 150 people use it, and the engineering bar is correctness at one decision boundary. This page consolidates the group's prompts into one read for the day before. It reuses the deny-first gate from the Tool-Using Agent with Safety Controls case and the tenancy ladder from the Secure Multi-Tenant AI Platform case, and names them rather than repeating them.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -209,4 +209,4 @@ Both paths converge *after* ingestion instead. Webhook ingest validates and dedu
 
 A missed scan on a batch carrier is inherently detected late. **Surface that latency to agents rather than hide it.** It changes how urgently they should act. Tag every batch-sourced exception with its detection lag, and show it on the draft.
 
-The same idea appears as channel adapters in G15. Here the channels are carrier feeds.
+The same idea appears as channel adapters in the Agent Platform for Non-Technical Users case. Here the channels are carrier feeds.

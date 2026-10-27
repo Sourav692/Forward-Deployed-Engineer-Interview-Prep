@@ -142,7 +142,7 @@ Point at three boundaries while the diagram is up *(own construction)*. The thre
 
 A live CRM lookup can't be counted on to fit inside three seconds. The CRM's own latency is out of the design's control, and its tail is worse than its median. So the account context is built before the call, when there is time. The drill names this lever first: "precompute account context".
 
-The snapshot holds the account summary, open opportunities with stage and next step, the last interactions, open support cases, and the approved answers for the account's segment. This is the same snapshot G05 section 5 builds for the pre-meeting hour, and the same rules carry over. It runs as the rep. It is cached on the account and the rep's permission signature. A role or territory change invalidates it.
+The snapshot holds the account summary, open opportunities with stage and next step, the last interactions, open support cases, and the approved answers for the account's segment. This is the same snapshot section 5 of the Sales Copilot case builds for the pre-meeting hour, and the same rules carry over. It runs as the rep. It is cached on the account and the rep's permission signature. A role or territory change invalidates it.
 
 Trigger the build from the calendar for scheduled calls, and from the dialer for outbound campaigns *(own construction)*. Inbound calls are the hard case, because the account is unknown until the number is matched. Match on caller ID, then build a minimal snapshot in the first seconds of the call, while the greeting is still happening. I'm assuming the first real question rarely lands in the first ten seconds, and that gap is the window.
 

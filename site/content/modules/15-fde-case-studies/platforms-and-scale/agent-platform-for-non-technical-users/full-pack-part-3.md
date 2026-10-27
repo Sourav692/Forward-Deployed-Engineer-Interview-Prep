@@ -47,13 +47,13 @@ The source project contains no LLM at all, on purpose, so every property can be 
 
 | Gap | Status | What to say |
 |---|---|---|
-| Planner | 🟡 Fixed step list | Swapping in an LLM or rule engine that picks the next tool is a moderate change. The architecture stays: a reasoning loop with deterministic guardrails around it |
-| Authoring surface | 🟡 / ❌ | The spec is what a builder would serialise to. NL-to-spec needs a real LLM call, and its output enters at `DRAFT` behind the same `promote()` gate |
-| Automatic retries | ❌ | `resume()` is correct, but nothing calls it automatically. A retry wrapper with backoff is low effort because idempotent resumption is done |
-| Connector secrets | ❌ | A `Connector` model referencing a vault secret is moderate work; the vault itself is infrastructure |
-| PII redaction | ❌ | Low effort. The RAG project's `redact_pii()` is reusable on step outputs before a human sees them for approval |
-| Custom tools | 🟡 | Schema validation and scoping exist. Sandboxed execution and review-before-publish reuse `promote()`'s role-gated pattern |
-| Gradual version migration | ❌ | A `traffic_split` on the spec, consulted by routing |
+| Planner | Partial: Fixed step list | Swapping in an LLM or rule engine that picks the next tool is a moderate change. The architecture stays: a reasoning loop with deterministic guardrails around it |
+| Authoring surface | Partial / not built | The spec is what a builder would serialise to. NL-to-spec needs a real LLM call, and its output enters at `DRAFT` behind the same `promote()` gate |
+| Automatic retries | Not built | `resume()` is correct, but nothing calls it automatically. A retry wrapper with backoff is low effort because idempotent resumption is done |
+| Connector secrets | Not built | A `Connector` model referencing a vault secret is moderate work; the vault itself is infrastructure |
+| PII redaction | Not built | Low effort. The RAG project's `redact_pii()` is reusable on step outputs before a human sees them for approval |
+| Custom tools | Partial | Schema validation and scoping exist. Sandboxed execution and review-before-publish reuse `promote()`'s role-gated pattern |
+| Gradual version migration | Not built | A `traffic_split` on the spec, consulted by routing |
 
 The scale answer is one sentence of mechanism and one of storage:
 

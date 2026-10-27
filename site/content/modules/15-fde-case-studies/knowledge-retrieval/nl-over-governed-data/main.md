@@ -2,7 +2,7 @@
 
 **Analytics process** is: someone asks a business question, SQL hits the warehouse, a number shows up on a slide. The trap is **valid SQL for the wrong meaning of “revenue.”**
 
-**G06 covers one slice:** map the question to an approved metric, then a read-only query with a paper trail. Not “chat with every table.”
+**This case covers one slice:** map the question to an approved metric, then a read-only query with a paper trail. Not “chat with every table.”
 
 End to end, as an exec asking “What’s Q3 revenue?”
 
@@ -24,7 +24,7 @@ This is the anchor for the related executive-dashboard and retail-forecast expla
 | NL-to-SQL analytics assistant    | Governed metric → permitted schema → validated read-only query | General business questions and SQL safety                                                                                      |
 | Executive Dashboard Assistant      | Same metric registry and query evidence                          | KPI variance narrative, dashboard freshness, analyst escalation                                                                |
 | Retail Demand Forecast Explainer | Same governed evidence and result checks                         | Deterministic driver statistics from sales, promotions, inventory, weather, and events; human review of planning actions       |
-| Insurer governed data assistant  | Governed metric views and auditable asset resolution             | Supervisor routes to Genie (now Genie One), a narrow SQL/RAG worker, deterministic analysis, or visualisation; later specialised domain agents |
+| Insurer governed data assistant  | Governed metric views and auditable asset resolution             | Supervisor routes to a managed text-to-SQL service, a narrow SQL/RAG worker, deterministic analysis, or visualisation; later specialised domain agents |
 
 ## 1. Questions to ask the interviewer
 
@@ -82,7 +82,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is the interview-size view of the [source architecture, §4](/design/nl-over-governed-data#full-pack). The LLM interprets and explains; registry, policy, warehouse, and analysts keep authority.
+This is the interview-size view of the [Full Design architecture, section 4](/design/nl-over-governed-data#full-pack). The LLM interprets and explains; registry, policy, warehouse, and analysts keep authority.
 
 ```mermaid
 flowchart LR
@@ -126,7 +126,7 @@ flowchart LR
 - **Step 7.** Summarise the structured result and verify every number against the table. On mismatch, return the table alone and alert reviewers.
 - **Step 8.** Return the definition, SQL, lineage, freshness caveats, and answer; record the versions, decision, and bytes scanned for replay.
 
-**Agent role:** the default design is a governed LLM query workflow. A supervisor/agent is useful only when one question needs multiple approved specialists, as in the insurer variant. It routes among Genie, a restricted SQL/RAG worker, deterministic analysis, and visualisation; neither that agent nor its LLMs may define metrics or bypass the query gate.
+**Agent role:** the default design is a governed LLM query workflow. A supervisor/agent is useful only when one question needs multiple approved specialists, as in the insurer variant. It routes among a managed text-to-SQL service, a restricted SQL/RAG worker, deterministic analysis, and visualisation; neither that agent nor its LLMs may define metrics or bypass the query gate.
 
 ## 4. Three decisions to defend
 
@@ -134,7 +134,7 @@ flowchart LR
 | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | Semantic layer before schema                    | Resolve a named, versioned business metric before searching physical tables                                                                           | Valid SQL using the wrong grain, exclusions, or definition |
 | Clarify before query                            | Show supported meanings; a numeric confidence gate can trigger clarification (the insurer supervisor used**<60%** for its own intent clarification) | A plausible answer to an unstated business interpretation  |
-| Fixed operations or managed SQL before open SQL | Use reviewed operations or curated Genie-like views for common questions; allow hand-generated SQL only in a narrower approved path                   | Invented columns, excessive scans, and permission drift    |
+| Fixed operations or managed SQL before open SQL | Use reviewed operations or curated text-to-SQL views for common questions; allow hand-generated SQL only in a narrower approved path                   | Invented columns, excessive scans, and permission drift    |
 
 For mixed questions, route each subtask to its right source: semantic search finds related prose, structured queries compute counts and sums, direct lookup resolves IDs. A retail “why” answer computes drivers deterministically and lets the LLM narrate them; correlation is not proof of causation.
 
@@ -154,7 +154,7 @@ For mixed questions, route each subtask to its right source: semantic search fin
 
 Keep metric resolution, authorisation, validation, and execution synchronous because they determine the one answer. Crawl catalogs, refresh caches, and replay evaluations asynchronously, partitioned by tenant or warehouse so background jobs do not stampede query traffic. Cache only with tenant, permission signature, metric/schema version, and freshness in mind.
 
-Measure first-try semantic correctness, SQL retry rate, warehouse compute per answer (bytes scanned on BigQuery, DBU or credit time on Databricks and Snowflake), token spend, and p95 by stage. The source flags **>20% above the seven-day baseline** as a cost warning. The cheapest levers are narrower metric context, approved templates, dry-run cost checks, bounded windows, and safe caching. Repeatedly asking a stronger model to repair invalid SQL raises both bills and can still answer the wrong question.
+Measure first-try semantic correctness, SQL retry rate, warehouse compute per answer (bytes scanned on BigQuery, credit time on Snowflake and similar warehouses), token spend, and p95 by stage. The source flags **>20% above the seven-day baseline** as a cost warning. The cheapest levers are narrower metric context, approved templates, dry-run cost checks, bounded windows, and safe caching. Repeatedly asking a stronger model to repair invalid SQL raises both bills and can still answer the wrong question.
 
 ## 7. Evaluation and rollout
 

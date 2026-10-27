@@ -9,7 +9,7 @@ A call assistant is a workflow-timing problem before it is a model problem. The 
 | #59 OpenAI Q15 AI Assistant for Sales or Customer-Service Calls (anchor) | The eleven-part decomposition and the evaluation follow-up, used in sections 1 to 3, 7 to 9 and 11 |
 | #43 Real-time sales assistant, sub-3-second response (playbook drill, Case 6) | The before, during and after split in sections 1, 4 and 5; the whole of section 14 |
 | Realtime Voice AI Agent with RAG (reference implementation) | The streaming voice pipeline and its under-2-second figure, in sections 4 and 6 |
-| G05 Sales Copilot pack | The account snapshot, the CRM permission mirror and the preview-then-approve write, in sections 5 and 9 |
+| Sales Copilot pack | The account snapshot, the CRM permission mirror and the preview-then-approve write, in sections 5 and 9 |
 
 **Most of this page is own construction.** The prompt gives a component list and an evaluation list. The drill gives the shape and the metrics. The design connecting them, the latency budget and every diagram were built for this page and are marked *(own construction)*.
 
@@ -45,7 +45,7 @@ The weak answer is the drill's own: "large model with a live CRM lookup on each 
 
 **Should-haves.** Live suggestions during the call, the #43 capability. Evaluation by call type and language. Retention policy enforced by the platform, not by habit.
 
-**Later.** Coaching analytics across calls. Automatic follow-up email drafts, which reuse G05's approved-claims rule.
+**Later.** Coaching analytics across calls. Automatic follow-up email drafts, which reuse the Sales Copilot case’s approved-claims rule.
 
 Ordering live suggestions after the post-call summary is deliberate *(own construction)*. The summary and the CRM proposal deliver value with no latency risk, and they build the evaluation set the live path later needs.
 
@@ -104,4 +104,4 @@ Every input to this system is someone's personal data. Audio carries voices and 
 | Live facts: price, stock, case status | During, allowlisted | Operational | Read-only, per-field timeout |
 | Summary, actions, CRM proposal | After | High; derived from the transcript | The rep and their approver |
 
-Two rules follow. Redact before anything leaves the transcript stream, because a model call and a log line are both copies. And build the snapshot as the rep, with the rep's CRM visibility, exactly as G05 section 5 does. A suggestion that quotes a deal value from a peer's territory is a leak, however helpful it sounded.
+Two rules follow. Redact before anything leaves the transcript stream, because a model call and a log line are both copies. And build the snapshot as the rep, with the rep's CRM visibility, exactly as section 5 of the Sales Copilot case does. A suggestion that quotes a deal value from a peer's territory is a leak, however helpful it sounded.

@@ -2,7 +2,7 @@
 
 **Incident response** is: pages go off, someone finds a cause, someone changes production. Wrong rollback at 3 a.m. is worse than a slow summary.
 
-**G04 covers one slice:** collapse the alert storm, look with read-only tools, then *suggest* a fix. Humans still approve writes.
+**This case covers one slice:** collapse the alert storm, look with read-only tools, then *suggest* a fix. Humans still approve writes.
 
 End to end, as checkout 5xx after a deploy:
 
@@ -27,7 +27,7 @@ The dependency inversion is the distinctive risk: the observability stack the ag
 
 ### Questions to ask the interviewer
 
-The [source discovery, §1](/design/sre-incident-response-agent#full-pack) gives the full set. Ask these before choosing tools:
+The [Full Design discovery, section 1](/design/sre-incident-response-agent#full-pack) gives the full set. Ask these before choosing tools:
 
 | Question to ask                                                                         | What it's really asking                                                                              | What you then decide                                                       |
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -44,7 +44,7 @@ If the interviewer cannot provide all numbers, state assumptions for throughput,
 
 ### The anchor for its incident variants
 
-| Related case                                    | What changes from G04                                                                                           |
+| Related case                                    | What changes from this case                                                                                           |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | SRE triage worksheet and mocks                  | Requirements, source ownership, golden set, and rollout probes become more explicit.                            |
 | Operations/incident-response assistant question | Tests the progression from read-only investigation to suggested, approved, then narrowly autonomous mitigation. |
@@ -90,7 +90,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This diagram condenses the [source architecture, §4](/design/sre-incident-response-agent#full-pack).
+This diagram condenses the [Full Design architecture, section 4](/design/sre-incident-response-agent#full-pack).
 
 ```mermaid
 flowchart LR

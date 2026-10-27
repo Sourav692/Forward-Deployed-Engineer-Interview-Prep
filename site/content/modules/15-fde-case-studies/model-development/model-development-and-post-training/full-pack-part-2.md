@@ -34,7 +34,7 @@ Build the eval suite in five slices *(own construction)*.
 
 Report sampling settings with every number. Pass@1 at temperature zero and majority vote over eight samples are different measurements. Report both if both are used, and never compare one with the other.
 
-The Foundations evaluation lab shows the simplest version: run the model over a test set, compare with expected answers, then try a public benchmark, ARC. Exact-match comparison is where every eval starts. The release gate for this pipeline follows the same logic as G13's evaluation and release-gating page: fixed suites, thresholds agreed in advance, and a gate that blocks rather than advises.
+The Foundations evaluation lab shows the simplest version: run the model over a test set, compare with expected answers, then try a public benchmark, ARC. Exact-match comparison is where every eval starts. The release gate for this pipeline follows the same logic as the Evaluation and Release Gating case’s evaluation and release-gating page: fixed suites, thresholds agreed in advance, and a gate that blocks rather than advises.
 
 ## 9. Scale Training Under a Fixed Compute Budget
 

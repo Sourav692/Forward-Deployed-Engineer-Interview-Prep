@@ -99,7 +99,7 @@ flowchart LR
   - The most recent successful signed transfer.
 - Laid out this way, the dashboard settles the question that counts most in a closed network. Is the user's problem getting better because the system is healthy? Or is the system just staying alive while the workflow stays painful?
 
-> 🎯 **Interview Pointer:** "How would you dashboard this?" comes up often. Answer with three rows (user outcome, service behaviour, operational control) rather than a flat list of metrics. It shows you reason in causal layers instead of collecting green lights.
+> **Interview pointer:** "How would you dashboard this?" comes up often. Answer with three rows (user outcome, service behaviour, operational control) rather than a flat list of metrics. It shows you reason in causal layers instead of collecting green lights.
 
 ### Ownership, Gates, and Rollback Triggers
 - **Product or business owner:** sets the case-review workflow and decides what success means.

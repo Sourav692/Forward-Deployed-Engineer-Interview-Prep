@@ -99,7 +99,7 @@
   - A low cap recovers user-facing work faster, but it can swamp a flaky dependency.
   - A high cap protects the dependency, but customers wait longer to see progress.
 
-> 🎯 **Interview Pointer:** Interviewers like to set the "retry vs. compensation" trap. Say plainly that backoff never stands in for a business-level reversal, such as a refund, when a side effect that already completed has to be undone.
+> **Interview pointer:** Interviewers like to set the "retry vs. compensation" trap. Say plainly that backoff never stands in for a business-level reversal, such as a refund, when a side effect that already completed has to be undone.
 
 ### Which Estimate Should Drive the Architecture
 

@@ -18,7 +18,7 @@ Resolution Agent output (action + confidence + shipment value + exception type)
 
 **The customs check runs first and short-circuits everything else.** A confidence score cannot outvote a rule it is never compared with. This mirrors the customer's own framing. Customs is a hard compliance boundary, not something that competes with a confidence score. Only after that check does the value-and-confidence rule apply.
 
-State the ordering out loud. A candidate who checks confidence before the customs carve-out has built a system where a high-confidence model could, in principle, auto-resolve a customs hold. That is exactly what the customer ruled out. It is the same structure as deny-rules-first in the G03 tool gateway, and the same short-circuit logic.
+State the ordering out loud. A candidate who checks confidence before the customs carve-out has built a system where a high-confidence model could, in principle, auto-resolve a customs hold. That is exactly what the customer ruled out. It is the same structure as deny-rules-first in the Tool-Using Agent with Safety Controls tool gateway, and the same short-circuit logic.
 
 Three details make the gate trustworthy *(own construction)*. Take the exception type from the detection service, not from the agent's own output. An agent that mislabels a customs hold as a weather delay must not be able to talk its way past the gate. Fail closed on any missing field: no value, no type or no confidence routes to a human. And keep the policy definitions in the control plane under version control, so a threshold change is a release with an audit entry, not a config edit.
 
@@ -35,7 +35,7 @@ The customer requires EU data to stay in the EU, so a single global deployment i
                              never leaves EU)
 ```
 
-An ops agent in any region sees the same UI and the same policy. Only storage is partitioned. Name the pattern — *shared logic, isolated data* — rather than just drawing three boxes. It is the tenancy ladder from G07, applied at the region level instead of the customer level.
+An ops agent in any region sees the same UI and the same policy. Only storage is partitioned. Name the pattern — *shared logic, isolated data* — rather than just drawing three boxes. It is the tenancy ladder from the Secure Multi-Tenant AI Platform case, applied at the region level instead of the customer level.
 
 Mirror residency at the application layer too. An EU agent's session cannot query US shipment data, and vice versa, by default. Storage isolation alone leaves the application free to join across regions.
 

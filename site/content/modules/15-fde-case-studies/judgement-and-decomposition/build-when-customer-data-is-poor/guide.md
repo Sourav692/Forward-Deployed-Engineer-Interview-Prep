@@ -2,7 +2,7 @@
 
 *The customer wants value this quarter, and the data can only prove what it actually contains.*
 
-Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [G12](/design/scoping-to-deployed-agent#full-pack) and the gating discipline of [G13](/design/evaluation-and-release-gating#full-pack) without repeating them.
+Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [the Scoping to Deployed Agent case](/design/scoping-to-deployed-agent#full-pack) and the gating discipline of [the Evaluation and Release Gating case](/design/evaluation-and-release-gating#full-pack) without repeating them.
 
 | Case | What the page adds |
 |---|---|
@@ -66,7 +66,7 @@ Two rows deserve emphasis, because in my experience they fool teams most often.
 
 **Inconsistent labels are worse than missing labels.** A missing label is visibly missing. An inconsistent one looks like ground truth, gets trained on, and then scores the model's copied errors as correct. The Cracking book's routing case is the canonical example. A fine-tune reported 94% accuracy against an 81% prompted baseline, then reached only ~78% in production. One of three compounding causes was that labels came from a previous version of the same system's routing decisions. The model learned the old system's errors, and evaluation marked them right. After deduplication, a split by time and a human-adjudicated relabel, the honest number came out near 83%. Production matched it within two points.
 
-**Access restrictions are a data-quality problem in disguise.** The delivery framework in G12 treats data access as its own risk, with a mechanism attached: "Start day 1, escalate day 3". Data nobody can read has quality zero, whatever it contains.
+**Access restrictions are a data-quality problem in disguise.** The delivery framework in the Scoping to Deployed Agent case treats data access as its own risk, with a mechanism attached: "Start day 1, escalate day 3". Data nobody can read has quality zero, whatever it contains.
 
 ## 4. Score Readiness in One Week
 
@@ -97,7 +97,7 @@ The scorecard scores only the dimensions the target decision depends on *(own co
 
 The thresholds are assumptions to adjust per domain. The decision rule is not. A red on a dimension the chosen design depends on means redesign or wait. A red on a dimension the design can route around means narrow the scope and say so in writing.
 
-The delivery framework in G12 already has the slot for this week. It allocates days 3–4 to data readiness, and its gate is `data_access_granted`, signed by the customer SME. The scorecard is what raises the evidence bar behind that signature. Access being live is necessary. Access to data that scores red is not readiness.
+The delivery framework in the Scoping to Deployed Agent case already has the slot for this week. It allocates days 3–4 to data readiness, and its gate is `data_access_granted`, signed by the customer SME. The scorecard is what raises the evidence bar behind that signature. Access being live is necessary. Access to data that scores red is not readiness.
 
 ## 5. Decide What to Build Anyway, or Say Not Yet
 

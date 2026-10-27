@@ -2,7 +2,7 @@
 
 **Consumer chat** is ChatGPT-shaped: many people, many turns, stream tokens, remember the thread, don’t go bankrupt on GPUs. The **model is stateless**; the **product is not**.
 
-**G18 covers one slice:** sessions, streaming, admission, moderation, cost. Not training the foundation model.
+**This case covers one slice:** sessions, streaming, admission, moderation, cost. Not training the foundation model.
 
 End to end, as free-tier user Sam:
 
@@ -15,7 +15,7 @@ End to end, as free-tier user Sam:
 
 That’s it: **admit → load state → infer stream → moderate → persist.** “We’ll train a new model in this round” stays out unless they ask.
 
-> **Source:** [Sources and Full Design](/design/consumer-scale-chat-service#full-pack), especially §§1–12. Use the [Deep Dive](/design/consumer-scale-chat-service#deep-dive) for sizing and trade-offs and the [Cheat Sheet](/design/consumer-scale-chat-service#cheat-sheet) for rehearsal. The source builds its design from one-line “Design ChatGPT/Claude” prompts; all scale figures are explicit whiteboard assumptions, not measured service facts.
+> **Source:** [Sources and Full Design](/design/consumer-scale-chat-service#full-pack), especially sections 1–12. Use the [Deep Dive](/design/consumer-scale-chat-service#deep-dive) for sizing and trade-offs and the [Cheat Sheet](/design/consumer-scale-chat-service#cheat-sheet) for rehearsal. The source builds its design from one-line “Design ChatGPT/Claude” prompts; all scale figures are explicit whiteboard assumptions, not measured service facts.
 
 ## The anchor and variant
 
@@ -112,7 +112,7 @@ flowchart TB
 
 ## Evaluation and rollout
 
-Measure p50/p95 time to first token by tier/region, queue wait, cache-read token share, regenerate and edit-resend rate, abandonment, output tokens after abandon, moderation errors, cost per daily active user and cross-user-read tests. Treat model and system-prompt changes as releases: canary, evaluate quality/safety/latency/cost, and watch cache hit rate. For the Anthropic wording, be ready to zoom into replica capacity, batching and failover from G20.
+Measure p50/p95 time to first token by tier/region, queue wait, cache-read token share, regenerate and edit-resend rate, abandonment, output tokens after abandon, moderation errors, cost per daily active user and cross-user-read tests. Treat model and system-prompt changes as releases: canary, evaluate quality/safety/latency/cost, and watch cache hit rate. For the Anthropic wording, be ready to zoom into replica capacity, batching and failover from the LLM Inference Serving case.
 
 ## Two-minute interview answer
 

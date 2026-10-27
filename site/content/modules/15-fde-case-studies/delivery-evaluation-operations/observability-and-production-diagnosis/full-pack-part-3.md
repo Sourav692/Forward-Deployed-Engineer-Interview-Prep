@@ -47,7 +47,7 @@ The follow-up is "would you fine-tune the model?" Classify the problem first. A 
 
 **#74, diagnose high latency in an LLM inference pipeline.** This is the layer below the application. Walk the full stack: tokenization, network, batch size, KV cache, post-processing. Two facts carry the answer *(from the additions file, section B)*. Prefill processes the whole prompt in parallel and sets time to first token, so it scales with input tokens. Decode generates one token at a time and sets tokens per second, so it scales with output tokens. A frozen UI points at prompt size, retrieval and queueing. An answer that starts fast then drags points at output length.
 
-Batch size trades throughput for per-request latency. With continuous batching nothing waits to fill; each decode step just gets slower as more sequences share it. The KV cache holds attention state for tokens already processed. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption. Post-processing is usually small, but a synchronous evaluator or logger on the hot path is not. The same stack walk anchors G20 on inference serving, so prepare it once.
+Batch size trades throughput for per-request latency. With continuous batching nothing waits to fill; each decode step just gets slower as more sequences share it. The KV cache holds attention state for tokens already processed. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption. Post-processing is usually small, but a synchronous evaluator or logger on the hot path is not. The same stack walk anchors the LLM Inference Serving case on inference serving, so prepare it once.
 
 ## 13. Roll Out in Four Phases With Named Owners
 

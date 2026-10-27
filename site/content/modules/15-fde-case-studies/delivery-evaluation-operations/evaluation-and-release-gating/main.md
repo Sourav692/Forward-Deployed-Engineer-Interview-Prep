@@ -2,7 +2,7 @@
 
 **Release process** is: you want to change a prompt or model on a live app. A dashboard is not a decision. **Pass, block, or hold** is.
 
-**G13 covers one slice:** a shared gate for ~30 apps vs a pinned production baseline. Not auto-tuning.
+**This case covers one slice:** a shared gate for ~30 apps vs a pinned production baseline. Not auto-tuning.
 
 End to end, as the refund-bot prompt change:
 

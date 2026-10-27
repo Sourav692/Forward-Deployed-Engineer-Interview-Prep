@@ -34,7 +34,7 @@ Ask five questions before drawing, and state an assumption for each one the inte
 
 The weak answer draws "user → gateway → LLM" and adds retries. The strong answer names the two faces in the first two minutes. It then says each constraint in the prompt belongs to one of them: safety to the edge face, uptime and budget to the model face, latency to both.
 
-Keep this gateway distinct from the "deterministic gateway" in [G02 Customer Support Automation](/design/customer-support-automation#full-pack) section 6. That one decides which *actions* an agent may take. This one decides how *model traffic* is screened, paid for and recovered. A real support product has both.
+Keep this gateway distinct from the "deterministic gateway" in [Customer Support Automation](/design/customer-support-automation#full-pack) section 6. That one decides which *actions* an agent may take. This one decides how *model traffic* is screened, paid for and recovered. A real support product has both.
 
 > *"I'll treat the gateway as two faces. The edge face screens the customer's input and the agent's output. The model face sits under every model call the agent makes, so retries, failover and the budget see all of them, not just the first."*
 

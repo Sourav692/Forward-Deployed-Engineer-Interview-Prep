@@ -60,7 +60,7 @@ I picked these volumes and peak factors for this case. They are not industry ben
 
 - Growth of 10x raises more than cost; it can demand a new partitioning strategy. Custom fields and rules behave the same way. Deeply branched forms full of computed fields may call for cached execution plans, partial evaluation, or checks done at compile time. Plugins that run often may need a sandbox or an adapter boundary instead of running in-process.
 
-> 🎯 **Interview Pointer:** Expect a follow-up on *why* 10x growth calls for new partitioning and not just extra servers. The reason is noisy-neighbour risk. Past a certain point, a shared validator or queue can no longer keep one misbehaving tenant's blast radius contained. Interviewers value that reasoning more than a precise spreadsheet.
+> **Interview pointer:** Expect a follow-up on *why* 10x growth calls for new partitioning and not just extra servers. The reason is noisy-neighbour risk. Past a certain point, a shared validator or queue can no longer keep one misbehaving tenant's blast radius contained. Interviewers value that reasoning more than a precise spreadsheet.
 
 ### Average vs. Peak: Headroom as a Product Feature
 

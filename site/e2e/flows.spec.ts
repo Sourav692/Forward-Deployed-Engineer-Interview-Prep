@@ -131,6 +131,16 @@ test('case chapters: G01 introduction, sidebar parts, old links and progress', a
   await expect(page).toHaveURL(/#deep-dive$/)
 })
 
+// Every scenario-pack case with an Introduction page gets the same layout as G01.
+test('case chapters: another case opens on its introduction with the sidebar', async ({ page }) => {
+  await page.goto('/design/customer-support-automation')
+  await hydrated(page)
+  await expect(page.getByRole('region', { name: 'Introduction' })).toBeVisible()
+  const nav = await caseContents(page)
+  await expect(nav.getByRole('button', { name: 'Interview Guide, part 2' })).toBeAttached()
+  await expect(page.getByText(/\bG\d{2}\b/)).toHaveCount(0)
+})
+
 // ENH-30: a client simulation is scored on its own round, with no round picker, and keeps its
 // hidden constraints behind disclosures until the learner opens one.
 test('client simulation: score the client-sim round → attempt saved under its own key', async ({ page }) => {

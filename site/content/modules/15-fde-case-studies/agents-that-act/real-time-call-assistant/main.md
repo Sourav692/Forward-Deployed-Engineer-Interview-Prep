@@ -2,11 +2,11 @@
 
 **A sales call** has three clocks: hours before, three seconds while they talk, minutes after. Mixing those clocks makes the live panel freeze.
 
-**G16 covers one slice:** a short live bullet for the rep, then a careful summary and CRM proposal later. The model does not write CRM.
+**This case covers one slice:** a short live bullet for the rep, then a careful summary and CRM proposal later. The model does not write CRM.
 
 End to end, as Sara on an Acme call:
 
-1. **This morning** we pack her account snapshot (same idea as G05).
+1. **This morning** we pack her account snapshot (same idea as the Sales Copilot case).
 2. **Customer asks a question.** We wait for end of utterance. Consent must already be on.
 3. **ASR streams.** PII is redacted before storage or the model.
 4. **A small prompt + snapshot** (maybe live price/stock) yields one bullet in ~3 s. Timeout → stay silent, don’t stall.
@@ -15,7 +15,7 @@ End to end, as Sara on an Acme call:
 
 That’s it: **prep before → tiny live suggest → rich after, with a human on writes.** Voice-out and auto-send are out (that’s a different product).
 
-> **Full source:** [Sources and Full Design](/design/real-time-call-assistant#full-pack), especially §§1–11 for the design and §14 for the sub-3-second pivot. Use the [Deep Dive](/design/real-time-call-assistant#deep-dive) for budgets and evaluation and the [Cheat Sheet](/design/real-time-call-assistant#cheat-sheet) for rehearsal. Much of the source design is explicitly its author's construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
+> **Full source:** [Sources and Full Design](/design/real-time-call-assistant#full-pack), especially sections 1–11 for the design and section 14 for the sub-3-second pivot. Use the [Deep Dive](/design/real-time-call-assistant#deep-dive) for budgets and evaluation and the [Cheat Sheet](/design/real-time-call-assistant#cheat-sheet) for rehearsal. Much of the source design is explicitly its author's construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
 
 ## One call, three clocks
 
@@ -25,7 +25,7 @@ Before the call, hours are available to prepare permission-scoped account contex
 |---|---|---|
 | #59 Call assistant question-bank prompt | Transcribe, diarize, summarise, extract actions and propose CRM updates | Drives end-to-end components and summary-evaluation follow-up. |
 | #43 Sub-3-second sales drill | Same call context | Focuses on precompute, small prompt/model, streaming and timeout. |
-| Realtime voice project / G05 Sales Copilot | Streaming ASR/RAG; CRM snapshot and approval pattern | Voice output is replaced by a rep-facing panel; CRM writes remain reviewed. |
+| Realtime voice project / Sales Copilot | Streaming ASR/RAG; CRM snapshot and approval pattern | Voice output is replaced by a rep-facing panel; CRM writes remain reviewed. |
 
 ## Questions to ask the interviewer
 

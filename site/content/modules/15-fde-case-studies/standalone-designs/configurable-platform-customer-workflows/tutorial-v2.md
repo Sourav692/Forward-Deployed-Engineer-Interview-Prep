@@ -89,7 +89,7 @@
 - Avoid vanity measures such as the number of configurable fields. Track how often a new customer variation ships with no fork, no hotfix and no support escalation.
 - Think of it as a job to be done. The customer is hiring the platform to make custom forks unnecessary while each tenant keeps its own process; they are not buying "a workflow engine". That pushes the design towards a stable core with a few controlled extension points, not a codebase that changes shape per account.
 
-> 🎯 **Interview Pointer:** Learn the outcome statement by heart: "keep one stable product core, and allow customisation that is safe, versioned and supportable." Interviewers listen for those three words, because each one drives a later architecture decision.
+> **Interview pointer:** Learn the outcome statement by heart: "keep one stable product core, and allow customisation that is safe, versioned and supportable." Interviewers listen for those three words, because each one drives a later architecture decision.
 
 ### Stakeholder Map
 
@@ -188,7 +188,7 @@ flowchart TD
   Q6 --> DESIGN["Concrete design pressures:<br/>core abstraction, UX/auth model,<br/>adapter interface, versioning,<br/>trust boundary, tooling investment"]
 ```
 
-> 🎯 **Interview Pointer:** Expect follow-ups on question 5, the custom-code boundary. Have the default ready (a declarative core, with any arbitrary code kept outside the trust boundary) and link it to the sandbox component in the architecture section and the controls in the security section.
+> **Interview pointer:** Expect follow-ups on question 5, the custom-code boundary. Have the default ready (a declarative core, with any arbitrary code kept outside the trust boundary) and link it to the sandbox component in the architecture section and the controls in the security section.
 
 ### Must-Have Functional Requirements
 

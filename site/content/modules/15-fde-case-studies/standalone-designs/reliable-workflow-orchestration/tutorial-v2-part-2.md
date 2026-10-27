@@ -56,7 +56,7 @@
   - A polished dashboard — a preference.
 - Saying the label aloud for each item shows you can keep scope creep out of the architecture.
 
-> 🎯 **Interview Pointer:** If the interviewer adds a "nice to have" partway through, label it as a constraint or a preference before you respond to it. Few habits signal architectural discipline under pressure as clearly.
+> **Interview pointer:** If the interviewer adds a "nice to have" partway through, label it as a constraint or a preference before you respond to it. Few habits signal architectural discipline under pressure as clearly.
 
 ### What the MVP Will Not Support
 

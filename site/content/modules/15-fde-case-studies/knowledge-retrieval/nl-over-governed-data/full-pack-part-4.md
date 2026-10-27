@@ -63,10 +63,10 @@ flowchart LR
         A1["Single agent<br/>20+ tools, full history"] -->|context bloat,<br/>tool confusion| A2["Degraded accuracy"]
     end
     subgraph S2["Stage 2 — Supervisor Pattern (shipped)"]
-        B1["Supervisor<br/>(LangGraph, 8 nodes)"] --> B2["Genie Agent<br/>(Text-to-SQL)"]
+        B1["Supervisor<br/>(LangGraph, 8 nodes)"] --> B2["Text-to-SQL Agent<br/>(managed service)"]
         B1 --> B3["Multi-Tool Agent<br/>(SQL + RAG)"]
         B1 --> B4["Data Analysis Agent<br/>(stats/anomaly)"]
-        B1 --> B5["Visualization Agent<br/>(Lakeview API)"]
+        B1 --> B5["Visualization Agent<br/>(dashboard API)"]
     end
     subgraph S3["Stage 3 — Deep Agent (evolved)"]
         C1["Orchestrator"] --> C2["4x domain subagents<br/>(customer, channels,<br/>policy, claims)"]
@@ -82,35 +82,33 @@ The supervisor is an eight-node state machine.
 
 ```
 classify_intent → clarify_or_disambiguate → resolve_assets_with_context_index
-    → route_to_{genie | multi_tool | analysis | visualization} → compose_answer
+    → route_to_{text_to_sql | multi_tool | analysis | visualization} → compose_answer
 ```
 
-Intent is classified with a confidence score. Clarification fires only below 60%. The supervisor, and only the supervisor, resolves assets against a 16-asset Context Index of Genie Spaces (now Genie Agents; Genie itself is now Genie One), metric views, tables and document indexes, with endorsed assets ranked first. It passes the resolved list to one of four specialists on shared state. Centralising resolution costs one hop of latency. It buys a single auditable source of truth for what data any answer is based on. Two workers resolving to different tables for the same question is a governance nightmare in insurance.
+Intent is classified with a confidence score. Clarification fires only below 60%. The supervisor, and only the supervisor, resolves assets against a 16-asset Context Index of curated text-to-SQL spaces, metric views, tables and document indexes, with endorsed assets ranked first. It passes the resolved list to one of four specialists on shared state. Centralising resolution costs one hop of latency. It buys a single auditable source of truth for what data any answer is based on. Two workers resolving to different tables for the same question is a governance nightmare in insurance.
 
 | Agent | Role | Tools | The trade-off it embodies |
 |---|---|---|---|
-| **Genie** | BI specialist | Genie Conversation API (managed text-to-SQL; Genie Spaces renamed Genie Agents in 2026) | A managed service over a hand-rolled text-to-SQL chain: less flexible, but its SQL is always read-only and runs under each user's Unity Catalog permissions, and analysts curate the space's tables, instructions and example SQL without code |
-| **Multi-Tool** | Generalist | LLM-generated SQL + Databricks AI Search (formerly Vector Search) RAG over policy docs | The *one* place hand-generated SQL was allowed, for ad-hoc questions outside Genie's curated scope, under deliberately narrower governance |
+| **Text-to-SQL** | BI specialist | Managed text-to-SQL conversation API | A managed service over a hand-rolled text-to-SQL chain: less flexible, but its SQL is always read-only and runs under each user's catalog permissions, and analysts curate the space's tables, instructions and example SQL without code |
+| **Multi-Tool** | Generalist | LLM-generated SQL + vector search RAG over policy docs | The *one* place hand-generated SQL was allowed, for ad-hoc questions outside the text-to-SQL service's curated scope, under deliberately narrower governance |
 | **Data Analysis** | Statistical | Z-score anomaly detection, trend statistics | Kept **deterministic**: thresholds are computed, not "reasoned about", so the model cannot invent a plausible but wrong number |
-| **Visualisation** | Dashboard creator | Lakeview REST API | Publishes real, clickable dashboards rather than a static chart image, closing the loop on the weeks-long dashboard pain |
+| **Visualisation** | Dashboard creator | Dashboard REST API | Publishes real, clickable dashboards rather than a static chart image, closing the loop on the weeks-long dashboard pain |
 
 The governance beat sits underneath, in five pieces:
 
 - a handful of governed metric views instead of raw fact tables
-- short-term memory in a Delta table keyed by thread, short retention, so conversations survive a restart and stay auditable
+- short-term memory in a table keyed by thread, short retention, so conversations survive a restart and stay auditable
 - base-plus-overlay prompts in a governed table with a five-minute cache, so behaviour is tunable without a redeploy
 - MLflow tracing on every node, so a wrong answer traces to the exact node and tool call
-- an AI Gateway (now Unity Gateway) doing rate limiting, PII filtering and guardrails on the model endpoints the agent calls (as of 2026 it can't guardrail the agent endpoint itself), because the raw endpoint is never exposed
 
 | Requirement | Why LangGraph fit |
 |---|---|
 | **Conditional routing on confidence** | Explicit conditional edges: `classify_intent` routes to `clarify_or_disambiguate` only when confidence < 60%. Role-based crews delegate by conversation; CrewAI Flows now add `@router` branching, but a LangGraph conditional edge states it most directly |
-| **Durable, resumable state** | Multi-turn conversations backed by Delta checkpoints, a governance requirement; every conversation state must be auditable. In this build I wrote a custom checkpointer over a Delta table; Databricks' documented path today is a Lakebase (Postgres) checkpointer |
+| **Durable, resumable state** | Multi-turn conversations backed by table checkpoints, a governance requirement; every conversation state must be auditable. In this build I wrote a custom checkpointer over a table |
 | **Deterministic composition** | A governed insurance environment cannot tolerate open-ended agent-to-agent chat deciding its own flow. The graph is inspectable and fixed at build time: eight nodes, each nameable |
 
-The second-pivot beat is the same failure one level up. As domains grew, the supervisor's own tool list re-approached the original bloat. So the fix was applied again, as a deep-agent pattern. An orchestrator delegates to fully self-contained sub-agents, one per analytics domain: customer, distribution channels, policy and underwriting, claims. Each has its own prompt, small toolset, context window and Genie Space (now a Genie Agent). A memory-manager sub-agent owns long-term memory in a categorised table of preference, fact, decision, project and feedback. The cost was more infrastructure surface. The gain was a ceiling on tool-selection degradation that does not reappear as the system grows.
+The second-pivot beat is the same failure one level up. As domains grew, the supervisor's own tool list re-approached the original bloat. So the fix was applied again, as a deep-agent pattern. An orchestrator delegates to fully self-contained sub-agents, one per analytics domain: customer, distribution channels, policy and underwriting, claims. Each has its own prompt, small toolset, context window and curated text-to-SQL space. A memory-manager sub-agent owns long-term memory in a categorised table of preference, fact, decision, project and feedback. The cost was more infrastructure surface. The gain was a ceiling on tool-selection degradation that does not reappear as the system grows.
 
-The platform-reality beat: the managed multi-agent feature (now Agent Bricks Supervisor Agent, GA in 2026) wasn't an option for this customer at the time, so I hand-built the supervisor. More code to own, in exchange for a production path nobody outside the engagement controlled.
 
 State the results honestly. In that engagement, the team reported time-to-insight going from days to minutes. Dashboard delivery went from weeks to governed self-serve. Adoption grew after rollout, though I can't attribute it cleanly, and it's worth saying exactly that before being asked. MVP in about two months. If rebuilt today: instrument resolution-time and accuracy metrics from day one rather than relying on tracing for post-hoc debugging, and invest earlier in the offline evaluation dataset.
 

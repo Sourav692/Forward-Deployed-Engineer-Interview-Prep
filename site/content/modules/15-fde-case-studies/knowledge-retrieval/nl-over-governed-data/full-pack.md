@@ -9,7 +9,7 @@ The hard part of this system is not generating SQL. It is that a syntactically p
 | #17 Natural-Language-to-SQL Analytics Assistant (anchor) | Sections 1 to 12: the design, requirements, validation, failure drills, evaluation, rollout and delivery |
 | #36 Executive Dashboard Assistant | The executive persona and variance explanation in sections 1 and 8; its escalate-to-analyst rule |
 | #34 Retail Demand Forecast Explanation Assistant | The planner persona, driver attribution and the correlation-versus-causation risk in section 8 |
-| #13 From Supervisor to Deep Agent (governed data assistant at a large Asian life insurer) | The governed metric views, the Genie-versus-Multi-Tool split, the clarify-below-60% gate, and section 13's story |
+| #13 From Supervisor to Deep Agent (governed data assistant at a large Asian life insurer) | The governed metric views, the text-to-SQL-versus-Multi-Tool split, the clarify-below-60% gate, and section 13's story |
 | Self-drill for #17 | Section 14, the cost pivot |
 
 ---

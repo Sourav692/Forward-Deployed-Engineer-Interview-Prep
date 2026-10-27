@@ -2,7 +2,7 @@
 
 **Research process** is: a question, hunt on the web and in *your* files, a cited brief. Failed hunt should look incomplete, not confident-fake.
 
-**G11 covers one slice:** bounded, read-only research with citations. It cannot send email or buy anything.
+**This case covers one slice:** bounded, read-only research with citations. It cannot send email or buy anything.
 
 End to end, as “Who is Acme’s CEO, with sources?”
 

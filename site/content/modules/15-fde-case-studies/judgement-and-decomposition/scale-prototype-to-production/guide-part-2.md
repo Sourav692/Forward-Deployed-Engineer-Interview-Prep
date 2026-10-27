@@ -9,7 +9,7 @@ The whole system, drawn with its planes *(own construction)*:
 ```
  ╔═════════════════════ CONTROL PLANE (changes are releases) ═══════════════════════╗
  ║ prompt registry + live pointer · routing policy · quotas per department          ║
- ║ eval gate in CI (G13) · budgets + anomaly alerts · feature flags per cohort      ║
+ ║ eval gate in CI (Evaluation and Release Gating) · budgets + anomaly alerts · feature flags per cohort      ║
  ╚══════════════════════════════════════╤═══════════════════════════════════════════╝
                                         │ configures every box below
  ╔═════════════════════ DATA PLANE (calls are requests) ════════════════════════════╗
@@ -108,7 +108,7 @@ Put every model call behind one gateway, because the prototype's direct calls le
 
 **Identity first.** Handbook Module 06 doc 1 draws the line: authorisation logic assumes identity is already established. Validate the customer's own SSO token, map their groups to internal roles, and derive the user's permission scope once per request. The prototype's shared key cannot tell 100,000 people apart, so it cannot enforce a single rule about them.
 
-**Limits and fairness are two mechanisms.** The same Handbook doc says it in one line: a rate limit answers *may this request proceed at all*; a fair queue answers *in what order do requests get served under load*. Give each user a token bucket sized in tokens, not only requests. Feed admitted work into a weighted fair queue per department, so the finance quarter-end burst waits for its share rather than starving everyone. G07 section 7 has the full argument.
+**Limits and fairness are two mechanisms.** The same Handbook doc says it in one line: a rate limit answers *may this request proceed at all*; a fair queue answers *in what order do requests get served under load*. Give each user a token bucket sized in tokens, not only requests. Feed admitted work into a weighted fair queue per department, so the finance quarter-end burst waits for its share rather than starving everyone. Section 7 of the Secure Multi-Tenant AI Platform case has the full argument.
 
 **Meter before the call.** The production guide's rule: *"The cap has to fire before the API call, not after — checking cost post-hoc only tells you what you already spent."* Use a real tokeniser for the estimate, since the guide shows a word-count heuristic letting expensive requests through.
 
@@ -130,13 +130,13 @@ Degrade in front of people and fail loudly in front of machines. That is the gui
 
 ## 9. Rebuild the Eval Set From Production, Not the Demo
 
-The prototype's eval set, if it exists, is the demo questions. It measures what already worked on the questions the builder thought to ask. That is survivorship, not evaluation. G13 designs the full release gate; this section names what the scale-up changes *(own construction, from G13's argument)*.
+The prototype's eval set, if it exists, is the demo questions. It measures what already worked on the questions the builder thought to ask. That is survivorship, not evaluation. The Evaluation and Release Gating case designs the full release gate; this section names what the scale-up changes *(own construction, from the Evaluation and Release Gating case’s argument)*.
 
 Build the new set from the first cohorts' real traffic. Sample by intent and by department, because 100,000 users ask questions the 100 never did. Label with the customer's subject-matter experts, not the builder. Add adversarial cases for permissions and prompt injection, and hold the security slice at zero failures. Handbook Module 08 doc 1 is explicit: the safety gate is *"A hard block, not a review comment."*
 
-Gate on slices, not on the aggregate. G13 section 8 makes the point: an average can rise while one department's intent collapses. Report each slice against a named baseline, which is the version currently serving.
+Gate on slices, not on the aggregate. Section 8 of the Evaluation and Release Gating case makes the point: an average can rise while one department's intent collapses. Report each slice against a named baseline, which is the version currently serving.
 
-Keep evaluating after launch. Run a sampled online evaluation on live traffic, plus thumbs, regenerates and escalations. The cost additions warn about the new bill: LLM-as-judge is inference too. Stratify the sample, use a cheaper judge with a periodic strong-judge audit, and cache judge calls on unchanged pairs. G13 section 14 has the full cost card.
+Keep evaluating after launch. Run a sampled online evaluation on live traffic, plus thumbs, regenerates and escalations. The cost additions warn about the new bill: LLM-as-judge is inference too. Stratify the sample, use a cheaper judge with a periodic strong-judge audit, and cache judge calls on unchanged pairs. Section 14 of the Evaluation and Release Gating case has the full cost card.
 
 ## 10. Roll Out by Cohort With a Pointer-Flip Rollback
 

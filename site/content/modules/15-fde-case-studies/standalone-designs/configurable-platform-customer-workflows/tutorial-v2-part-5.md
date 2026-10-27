@@ -41,7 +41,7 @@ flowchart LR
   P4 -->|"go/no-go:<br/>2nd/3rd customer reuse works"| DONE["Reusable product pattern"]
 ```
 
-> 🎯 **Interview Pointer:** Interviewers tend to push on the gates between phases, so know all four by heart. The pattern is stable. The customer accepts the support and rollback model. The evidence shows config cuts custom work. Customers two and three reuse it with no fresh build. These gates are what stop a rollout from becoming "we shipped because the demo went well."
+> **Interview pointer:** Interviewers tend to push on the gates between phases, so know all four by heart. The pattern is stable. The customer accepts the support and rollback model. The evidence shows config cuts custom work. Customers two and three reuse it with no fresh build. These gates are what stop a rollout from becoming "we shipped because the demo went well."
 
 ### The Six-Metric Scorecard
 

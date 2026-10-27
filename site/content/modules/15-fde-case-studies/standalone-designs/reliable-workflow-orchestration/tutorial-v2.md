@@ -160,7 +160,7 @@
   - Owner or follow-up: the product owner, ahead of any sizing work
 - Every discovery blends confirmed facts with provisional guesses. A guess nobody writes down quietly turns into a design decision. In an interview, splitting checked requirements from assumptions often earns more credit than naming a particular product.
 
-> 🎯 **Interview Pointer:** Panels like to test whether your discovery stays honest when the clock is running. Keep the four-field ledger (assumption, impact, verification, owner) ready to use. It shows rigour and costs you almost no time.
+> **Interview pointer:** Panels like to test whether your discovery stays honest when the clock is running. Keep the four-field ledger (assumption, impact, verification, owner) ready to use. It shows rigour and costs you almost no time.
 
 ### Turning Discovery into Scope, Risks, and Success
 
