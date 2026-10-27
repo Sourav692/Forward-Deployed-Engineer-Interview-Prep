@@ -28,7 +28,7 @@ export function introFor(slug) {
   return existsSync(file) ? file : null
 }
 
-const CUT = /databricks|unity catalog|delta sync|genie|lakebase|lakeview|unity gateway|agent bricks/i
+const CUT = /databricks|unity catalog|delta sync|genie|lakebase|lakeview|unity gateway|agent bricks|\bDBUs?\b/i
 // Emoji are forbidden; arrows, box drawing, diagram shapes and ©, ® and ™ are
 // typography and stay.
 const FORBID = /\bG\d{2}\b|§|[✓✗✔✘✕]|(?![\u{A9}\u{AE}\u{2122}\u{2190}-\u{21FF}\u{2500}-\u{25FF}\u{2934}\u{2935}\u{2B05}-\u{2B07}])\p{Extended_Pictographic}/u
@@ -71,6 +71,9 @@ export const CASE_SITE_EDITS = {
       ['an AI Gateway (now Unity Gateway) for rate limits', 'a model gateway for rate limits'],
       ["The managed multi-agent feature (now Agent Bricks Supervisor Agent, GA in 2026) wasn't an option", "A managed multi-agent feature wasn't an option"],
       ['DBU or credit time on Databricks and Snowflake', 'credit time on Snowflake and similar warehouses'],
+      // DBU is Databricks' billing unit; the site's glossary would spell the name out.
+      ['bytes scanned or DBU/credit time', 'bytes scanned or credit time'],
+      ['bytes scanned or DBU time', 'bytes scanned or compute time'],
       ['"Genie Agent<br/>(Text-to-SQL)"', '"Text-to-SQL Agent<br/>(managed service)"'],
       ['"Visualization Agent<br/>(Lakeview API)"', '"Visualization Agent<br/>(dashboard API)"'],
       ['route_to_{genie | multi_tool', 'route_to_{text_to_sql | multi_tool'],

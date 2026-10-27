@@ -99,7 +99,7 @@ A query that runs is not a query that is right. So the evaluation separates two 
 | Semantic correctness | Matches analyst review on scope | Any silent mismatch | Golden question/SQL/result cases | Analytics lead |
 | Execution accuracy | No unexplained regression on the golden set | Any unexplained regression | Golden-set replay on every change | Application owner |
 | Policy violations | 0 escaped | > 0 escaped; investigate repeated blocks (more than five identical blocked attempts in a day) | Policy decisions in the query-run audit | Security |
-| Warehouse compute per answer (bytes scanned or DBU/credit time) | Within the 7-day baseline | > 20% above baseline | Warehouse telemetry | Data platform |
+| Warehouse compute per answer (bytes scanned or credit time) | Within the 7-day baseline | > 20% above baseline | Warehouse telemetry | Data platform |
 | User trust score | ≥ launch target (4.2/5 or 80% positive) | Two consecutive review periods of decline, even if usage rises | In-product feedback and periodic survey | Product |
 | p95 latency and escalation volume | Within target; escalations trending down | Breach or rising escalations | Request traces plus analyst ticket counts | Platform / SRE |
 | Groundedness and citation accuracy (copilot personas) | ≥ 90% supported claims; ≥ 95% correct citations | Below | Golden Q&A with SME review; source-span audit | ML / eval |
