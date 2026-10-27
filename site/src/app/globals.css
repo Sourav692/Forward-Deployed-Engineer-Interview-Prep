@@ -116,6 +116,12 @@ html {
   scroll-padding-top: 5.5rem;
 }
 
+/* `clip`, not `hidden`: no horizontal scroll, and position: sticky keeps working. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
