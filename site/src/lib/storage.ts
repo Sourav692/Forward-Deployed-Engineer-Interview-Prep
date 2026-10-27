@@ -75,6 +75,7 @@ const statusKey = (scenario: string) => `${PREFIX}:status:${scenario}`
 const answerStatusesKey = (scenario: string) => `${PREFIX}:answer-statuses:${scenario}`
 const rowsKey = (scenario: string) => `${PREFIX}:rows:${scenario}`
 const readKey = (scenario: string) => `${PREFIX}:read:${scenario}`
+const lastKey = (scenario: string) => `${PREFIX}:last:${scenario}`
 
 export type Answers = Record<string, string>
 export type Scores = Record<string, number>
@@ -131,6 +132,10 @@ export function saveRead(s: string, tabs: string[], totalTabs: number): boolean 
   return ok
 }
 
+/** The part of a reading page the reader last had open, so the page can offer to resume. */
+export const loadLastPart = (s: string) => read<string | null>(lastKey(s), null)
+export const saveLastPart = (s: string, tab: string) => write(lastKey(s), tab)
+
 export function clearScenario(scenario: string): void {
   remove(answersKey(scenario))
   remove(scoresKey(scenario))
@@ -138,6 +143,7 @@ export function clearScenario(scenario: string): void {
   remove(answerStatusesKey(scenario))
   remove(rowsKey(scenario))
   remove(readKey(scenario))
+  remove(lastKey(scenario))
 }
 
 /** Number of answered fields, used for the per-scenario completion indicator. */

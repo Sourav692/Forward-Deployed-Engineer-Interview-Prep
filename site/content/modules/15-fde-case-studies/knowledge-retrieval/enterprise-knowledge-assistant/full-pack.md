@@ -13,7 +13,7 @@ The hard part of this system is not finding the right passage. It is that a Tier
 | #63 Meridian Assist running case                                 | Section 13                                                                 |
 | #38 Legal RAG under strict cost limits and #70 sub-100 ms search | Section 14                                                                 |
 | #72 reported prompt, LLM-powered enterprise search               | Section 12, follow-up table                                                |
-| #86, #93, #94 incidents and four §15 scenarios                  | Section 15                                                                 |
+| #86, #93, #94 incidents and four latency and scale scenarios                  | Section 15                                                                 |
 
 ---
 

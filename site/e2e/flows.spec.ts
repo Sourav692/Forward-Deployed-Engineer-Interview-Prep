@@ -104,9 +104,30 @@ test('case chapters: G01 introduction, sidebar parts, old links and progress', a
   const nav = await caseContents(page)
   await expect(nav.getByRole('button', { name: 'Full Design, part 4' })).toHaveAttribute('aria-current', 'page')
   await expect(nav.getByText(/^1 of 4 read$/)).toBeVisible()
-  await nav.getByRole('button', { name: 'Interview Guide', exact: true }).click()
+  await nav.getByRole('button', { name: /^Interview Guide( \d+ min)?$/ }).click()
   await expect(page).toHaveURL(/#main$/)
   await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toBeVisible()
+
+  // Arrow keys move between parts.
+  await page.keyboard.press('ArrowRight')
+  await expect(page).toHaveURL(/#main-part-2$/)
+  await page.keyboard.press('ArrowLeft')
+  await expect(page).toHaveURL(/#main$/)
+
+  // Scrolling to the end of a part marks it read, and says so.
+  await page.goto(`${CASE_STUDY}#deep-dive`)
+  await hydrated(page)
+  await expect(page.getByRole('region', { name: 'Technical Deep Dive' })).toBeVisible()
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  await expect(page.getByRole('button', { name: 'Technical Deep Dive marked as read' })).toBeVisible()
+  await expect(page.getByText('Marked when you reached the end. Select the button to undo.')).toBeVisible()
+
+  // A later visit without a hash offers to resume the last part open.
+  await page.goto(CASE_STUDY)
+  await hydrated(page)
+  await expect(page.getByText('You were reading Technical Deep Dive.')).toBeVisible()
+  await page.getByRole('button', { name: 'Continue →' }).click()
+  await expect(page).toHaveURL(/#deep-dive$/)
 })
 
 // ENH-30: a client simulation is scored on its own round, with no round picker, and keeps its
@@ -421,7 +442,7 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await page.goto('/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant')
   await expect(page).toHaveURL(CASE_STUDY)
   await hydrated(page)
-  await (await caseContents(page)).getByRole('button', { name: 'Interview Guide', exact: true }).click()
+  await (await caseContents(page)).getByRole('button', { name: /^Interview Guide( \d+ min)?$/ }).click()
   await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Casebook' })).toHaveAttribute('href', '/design')
   await page.goto('/learn/ai-systems-design/scenario-library')

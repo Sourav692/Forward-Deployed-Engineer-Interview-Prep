@@ -8,6 +8,19 @@ The design is a permission-aware retrieval pipeline. It identifies the user, ret
 
 This is the anchor case for enterprise RAG. Support assistants, legal search and low-latency enterprise search reuse the same core and change which constraint dominates.
 
+## The core idea
+
+Every request takes the same path, and authorisation comes before retrieval, never after it.
+
+```mermaid
+flowchart LR
+  A[Who is asking?] --> B[What may they read?]
+  B --> C[Retrieve only that]
+  C --> D{Enough evidence?}
+  D -->|Yes| E[Answer with citations]
+  D -->|No| F[Abstain or escalate]
+```
+
 ## Who it is for
 
 Engineers preparing for Forward Deployed, solutions or applied-AI engineering interviews, especially a round that asks you to design a RAG system or a knowledge assistant.
@@ -38,3 +51,7 @@ Comfort with retrieval (keyword search, embeddings and reranking), LLM agents an
 | [Technical Deep Dive](#deep-dive) | The detail behind each component, from ACL normalisation and the two authorisation layers to cache safety, cost and the failure playbook. Read it after the Interview Guide, to answer follow-up questions. | Mandatory |
 | [Quick Review](#cheat-sheet) | The whole case on one page: the architecture, five rules, scale numbers and interview triggers, for recall before the interview. | Mandatory |
 | [Full Design](#full-pack) (5 parts) | The complete, referenced write-up the other sections were drawn from: sizing, rollout, the release gate, the cost pivot, incident drills and the sources. | Optional |
+
+## Practise it
+
+When you have read the mandatory sections, try the [Enterprise Knowledge Assistant worksheet](/practice/enterprise-knowledge-assistant-rag). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.

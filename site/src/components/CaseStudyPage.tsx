@@ -28,9 +28,9 @@ export async function CaseStudyPage({
 }) {
   const meta = familyMeta(study.ref.trackId)
   const [related, twins] = await Promise.all([getRelated(study.ref), pageTwins(study.ref)])
-  const minutes = study.docs.reduce((sum, d) => sum + d.minutes, 0)
   // The Introduction is the case's landing page, not one of its documents.
   const documents = documentsOf(study).filter((d) => d.tab !== 'intro')
+  const minutes = documents.reduce((sum, d) => sum + d.minutes, 0)
 
   return (
     <div className="py-10">

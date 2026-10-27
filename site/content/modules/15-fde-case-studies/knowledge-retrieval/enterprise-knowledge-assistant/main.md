@@ -80,7 +80,7 @@ Answer / Abstain / Escalate
 
 ### Questions to ask the interviewer
 
-Ask the questions that change a design decision. The [source case, §1](/design/enterprise-knowledge-assistant#full-pack) expands these into the full discovery table.
+Ask the questions that change a design decision. The [Full Design, section 1](/design/enterprise-knowledge-assistant#full-pack) expands these into the full discovery table.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -153,7 +153,7 @@ Ingestion, normalisation, indexing, query authorisation, retrieval, reranking, e
 
 ### Architecture diagram
 
-This is the interview-size version of the [source architecture, §5](/design/enterprise-knowledge-assistant#full-pack).
+This is the interview-size version of the [Full Design architecture, section 5](/design/enterprise-knowledge-assistant#full-pack).
 
 ```mermaid
 flowchart LR

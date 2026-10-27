@@ -28,10 +28,10 @@ Incidents and production scenarios on this system are not new designs; they are 
 | 86  | Incident: stale index gives a wrong prior-auth policy answer    | Section 9's missed-deletion replay, the reconciliation drill, the freshness-lag metric                                                     |
 | 93  | Incident: prompt injection from a retrieved Confluence page     | Section 7, the LLM is never the enforcement point; retrieved content is evidence, never instructions; the tool gateway blocks exfiltration |
 | 94  | Incident: embedding-model change degrades recall (vector drift) | Section 12's re-indexing answer: versioned index, offline eval, staged cutover, rollback                                                   |
-| 106 | §15: retrieval became slow after adding more documents         | Section 3's envelope and section 9's scale rules: partition by tenant, ACL pre-filter, top-k discipline                                    |
-| 111 | §15: vector database query latency increased                   | Filters and index type, warm caches, over-retrieval caps                                                                                   |
-| 112 | §15: reranker improved quality but doubled latency             | Section 14's lever: rerank only ambiguous queries, a smaller candidate set, a cheaper reranker                                             |
-| 117 | §15: long context window caused poor performance               | Section 8's rule: a tight candidate set beats prompt stuffing; compress evidence                                                           |
+| 106 | retrieval became slow after adding more documents         | Section 3's envelope and section 9's scale rules: partition by tenant, ACL pre-filter, top-k discipline                                    |
+| 111 | vector database query latency increased                   | Filters and index type, warm caches, over-retrieval caps                                                                                   |
+| 112 | reranker improved quality but doubled latency             | Section 14's lever: rerank only ambiguous queries, a smaller candidate set, a cheaper reranker                                             |
+| 117 | long context window caused poor performance               | Section 8's rule: a tight candidate set beats prompt stuffing; compress evidence                                                           |
 
 ---
 

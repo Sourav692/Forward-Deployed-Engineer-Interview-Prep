@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { CaseStudy } from '@/lib/scenario'
 import { documentsOf, hasChapters, qualifiedTitle, scenarioHref, type CaseDocument } from '@/lib/scenario'
 import type { ReadingDocument } from '@/lib/reading'
-import { loadRead, notifyProgress, saveRead } from '@/lib/storage'
+import { loadLastPart, loadRead, notifyProgress, saveLastPart, saveRead } from '@/lib/storage'
 import { Diagram, hasStaticDiagram } from './Diagram'
 
 /**
@@ -14,7 +14,9 @@ import { Diagram, hasStaticDiagram } from './Diagram'
  * A case on the chapters pilot (`hasChapters`) swaps the tab row for a sidebar: an
  * Introduction page, then each document with its parts (ENH-25 splits) nested under it,
  * one part shown at a time. Each part keeps its own tab id (`full-pack-part-3`) in the
- * hash and in saved progress, so links and read state hold.
+ * hash and in saved progress, so links and read state hold. Those pages also mark a part
+ * read when the reader scrolls to its end, offer to resume the last part opened, and
+ * move between parts with the left and right arrow keys.
  *
  * All four tabs are in the DOM and inactive ones are `hidden`. That costs a little
  * HTML and buys two things: search results can link straight to a section in any
@@ -53,6 +55,13 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
   const [menuOpen, setMenuOpen] = useState(false)
   // The Introduction is a landing page, not reading: it never counts towards progress.
   const readable = tabIds.filter((t) => t !== 'intro')
+  const chapters = hasChapters(study)
+  /** The part last marked read by reaching its end, so its button can say so. */
+  const [autoRead, setAutoRead] = useState<string | null>(null)
+  /** Parts the reader unmarked: reaching their end again does not re-mark them. */
+  const unmarked = useRef(new Set<string>())
+  /** The part the reader last had open on an earlier visit, offered on the Introduction. */
+  const [resume, setResume] = useState<string | null>(null)
 
   const show = useCallback((tab: string) => {
     setActive(tab)
@@ -87,36 +96,98 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
       }
     }
     apply()
+    if (chapters && !window.location.hash) {
+      const last = loadLastPart(progressId)
+      if (last && last !== 'intro' && current.includes(last)) setResume(last)
+    }
     window.addEventListener('hashchange', apply)
     return () => window.removeEventListener('hashchange', apply)
-  }, [progressId, show, tabKey])
+  }, [chapters, progressId, show, tabKey])
   /* eslint-enable react-hooks/set-state-in-effect */
 
-  const selectTab = (tab: string, scroll = false) => {
-    show(tab)
-    setMenuOpen(false)
-    // replaceState, not a hash assignment: a tab click should not pile up history
-    // entries, and should not make the browser jump to an element.
-    window.history.replaceState(null, '', `#${tab}`)
-    if (scroll) {
-      const top = (tabsRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY - 72
-      window.scrollTo({ top: Math.max(top, 0) })
-    }
-  }
+  const selectTab = useCallback(
+    (tab: string, scroll = false) => {
+      show(tab)
+      setMenuOpen(false)
+      // replaceState, not a hash assignment: a tab click should not pile up history
+      // entries, and should not make the browser jump to an element.
+      window.history.replaceState(null, '', `#${tab}`)
+      if (scroll) {
+        const top = (tabsRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY - 72
+        window.scrollTo({ top: Math.max(top, 0) })
+      }
+    },
+    [show],
+  )
 
   const toggleRead = (tab: string) => {
+    setAutoRead(null)
     setRead((prev) => {
       const next = prev.includes(tab) ? prev.filter((t) => t !== tab) : [...prev, tab]
+      if (!next.includes(tab)) unmarked.current.add(tab)
       saveRead(progressId, next, readable.length)
       notifyProgress()
       return next
     })
   }
 
+  // Remember the part open, so a later visit can offer to resume it.
+  useEffect(() => {
+    if (chapters && hydrated && active !== 'intro') saveLastPart(progressId, active)
+  }, [active, chapters, hydrated, progressId])
+
+  // Mark a part read when the reader scrolls down to its end. Arriving there by a jump
+  // does not count: the reader must scroll at least a screen within the part first.
+  const total = readable.length
+  useEffect(() => {
+    if (!chapters || !hydrated || active === 'intro') return
+    const end = document.getElementById(`end-${active}`)
+    if (!end) return
+    const start = window.scrollY
+    const observer = new IntersectionObserver(([entry]) => {
+      const scrolled = window.scrollY - start > window.innerHeight
+      if (!entry.isIntersecting || !scrolled || unmarked.current.has(active)) return
+      setRead((prev) => {
+        if (prev.includes(active)) return prev
+        const next = [...prev, active]
+        saveRead(progressId, next, total)
+        notifyProgress()
+        return next
+      })
+      setAutoRead(active)
+    })
+    observer.observe(end)
+    return () => observer.disconnect()
+  }, [active, chapters, hydrated, progressId, total])
+
+  // Left and right arrows move to the previous and next part, unless the reader is
+  // typing or scrolling a wide table or code block sideways.
+  useEffect(() => {
+    if (!chapters) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
+      if ((e.target as HTMLElement).closest('input, textarea, select, [contenteditable], .table-wrap, pre')) return
+      const order = tabKey.split('|')
+      const to = order[order.indexOf(active) + (e.key === 'ArrowRight' ? 1 : -1)]
+      if (!to) return
+      e.preventDefault()
+      selectTab(to, true)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [active, chapters, selectTab, tabKey])
+
   const activeDoc = documents.find((d) => d.parts.some((p) => p.tab === active)) ?? documents[0]
   const isRead = (d: CaseDocument) => d.parts.every((p) => read.includes(p.tab))
   const counted = documents.filter((d) => d.tab !== 'intro')
-  const chapters = hasChapters(study)
+
+  /** "Full Design, part 3" for a part of a split document; the document's label otherwise. */
+  const partName = (tab: string) => {
+    const d = documents.find((doc) => doc.parts.some((p) => p.tab === tab))
+    if (!d) return tab
+    return d.parts.length > 1 ? `${d.label}, part ${d.parts.findIndex((p) => p.tab === tab) + 1}` : d.label
+  }
 
   /** One part of a document: the text, then mark-as-read and where to go next. */
   const part = (d: CaseDocument, di: number, p: CaseDocument['parts'][number], pi: number) => {
@@ -129,7 +200,20 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
       : following && { tab: following.parts[0].tab, label: following.label }
     return (
       <div key={p.tab} hidden={active !== p.tab}>
+        {d.tab === 'intro' && resume && (
+          <div className="no-print mb-6 flex flex-wrap items-center gap-3 rounded-lg border border-accent/40 bg-accent-soft/50 px-4 py-3 text-[0.875rem]">
+            <span>You were reading {partName(resume)}.</span>
+            <button
+              type="button"
+              onClick={() => selectTab(resume, true)}
+              className="rounded-md bg-accent px-3 py-1.5 font-semibold text-white hover:bg-accent-hover dark:text-bg"
+            >
+              Continue →
+            </button>
+          </div>
+        )}
         <ReadingPanel doc={p.doc} drawDiagrams={visited.has(p.tab)} toc={!chapters} title={!chapters} />
+        <div id={`end-${p.tab}`} aria-hidden />
 
         <div className="no-print mt-12 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-surface p-4">
           {d.tab !== 'intro' && (
@@ -145,6 +229,20 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
             >
               {done && <Check className="h-4 w-4" />}
               {done ? `${name} marked as read` : `Mark ${name} as read`}
+            </button>
+          )}
+          {chapters && (
+            <span role="status" className="text-[0.8125rem] text-muted">
+              {autoRead === p.tab && done && 'Marked when you reached the end. Select the button to undo.'}
+            </span>
+          )}
+          {chapters && p.tab === 'cheat-sheet' && (
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="rounded-md border border-border px-3.5 py-2 text-[0.875rem] font-semibold transition-colors hover:border-border-strong"
+            >
+              Print or save as PDF
             </button>
           )}
           <div className="ml-auto flex flex-wrap gap-3">
@@ -204,7 +302,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
       ? `${activeDoc.label}, part ${activeDoc.parts.findIndex((p) => p.tab === active) + 1}`
       : activeDoc.label
     return (
-      <article>
+      <article className="case-chapters">
         <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
           <div className="no-print sticky top-[3.75rem] z-20 -mx-4 mb-6 border-b border-border bg-bg/95 px-4 backdrop-blur-md lg:top-20 lg:z-auto lg:mx-0 lg:mb-0 lg:self-start lg:border-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none">
             <button
@@ -234,6 +332,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                         current={here && (!split || active === d.parts[0].tab) ? true : here ? 'within' : false}
                         done={hydrated && d.tab !== 'intro' && isRead(d)}
                         onClick={() => selectTab(d.parts[0].tab, true)}
+                        minutes={d.tab === 'intro' ? undefined : d.minutes}
                       >
                         <span className="font-medium">{d.label}</span>
                         {d.optional && <span className="ml-1.5 text-[0.75rem] font-normal text-subtle">optional</span>}
@@ -248,6 +347,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                                 done={hydrated && read.includes(p.tab)}
                                 onClick={() => selectTab(p.tab, true)}
                                 label={`${d.label}, part ${pi + 1}`}
+                                minutes={p.minutes}
                               >
                                 Part {pi + 1}
                               </NavItem>
@@ -357,12 +457,14 @@ function NavItem({
   done,
   onClick,
   label,
+  minutes,
   children,
 }: {
   current: boolean | 'within'
   done: boolean
   onClick: () => void
   label?: string
+  minutes?: number
   children: React.ReactNode
 }) {
   return (
@@ -380,7 +482,11 @@ function NavItem({
       }`}
     >
       <span className="min-w-0 flex-1">{children}</span>
-      {done && <Check className="h-3.5 w-3.5 shrink-0 text-success" />}
+      {done ? (
+        <Check className="h-3.5 w-3.5 shrink-0 text-success" />
+      ) : (
+        minutes !== undefined && <span className="shrink-0 text-[0.75rem] tabular-nums text-subtle">{minutes} min</span>
+      )}
     </button>
   )
 }
