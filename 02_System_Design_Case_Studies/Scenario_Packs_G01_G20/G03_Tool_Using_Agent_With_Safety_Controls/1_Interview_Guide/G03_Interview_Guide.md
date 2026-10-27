@@ -17,7 +17,7 @@ That’s it: **propose → validate → decide → maybe approve → execute onc
 
 > **Core idea:** The model proposes one bounded action. Deterministic services validate, authorise, approve, execute, and record it. The agent never holds broad credentials or decides whether its own action is allowed.
 
-Use this for the spoken design. The [Deep Dive](G03_Tool_Using_Agent_With_Safety_Controls_Deep_Dive.md) holds the mechanics, and the unchanged [source case](G03_Tool_Using_Agent_With_Safety_Controls.md) holds the full reference.
+Use this for the spoken design. The [Deep Dive](../2_Technical_Deep_Dive/G03_Technical_Deep_Dive.md) holds the mechanics, and the unchanged [source case](../4_Full_Design/G03_Full_Design.md) holds the full reference.
 
 ## 1. Open with the authority boundary
 
@@ -27,7 +27,7 @@ The same request matters differently to operations, security, finance, and tool 
 
 ### Questions to ask the interviewer
 
-The [source discovery table, §1](G03_Tool_Using_Agent_With_Safety_Controls.md#1-name-the-model-as-the-proposer-never-the-authority) gives the full set. These seven change the controls. Email and tool output stay untrusted either way, so that is assumed rather than asked.
+The [source discovery table, §1](../4_Full_Design/G03_Full_Design.md#1-name-the-model-as-the-proposer-never-the-authority) gives the full set. These seven change the controls. Email and tool output stay untrusted either way, so that is assumed rather than asked.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -92,7 +92,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is a whiteboard version of the [source architecture, §4](G03_Tool_Using_Agent_With_Safety_Controls.md#4-draw-the-architecture-end-to-end).
+This is a whiteboard version of the [source architecture, §4](../4_Full_Design/G03_Full_Design.md#4-draw-the-architecture-end-to-end).
 
 ```mermaid
 flowchart TB
@@ -173,7 +173,7 @@ Roll out in layers: read-only triage and drafting → narrow reversible CRM writ
 
 ## 8. Refund near-miss drill
 
-In the [source incident, §13](G03_Tool_Using_Agent_With_Safety_Controls.md#13-debug-the-refund-near-miss-as-detect-contain-root-cause-prevent), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorised money moved; the planner still failed by proposing a risky bulk action.
+In the [source incident, §13](../4_Full_Design/G03_Full_Design.md#13-debug-the-refund-near-miss-as-detect-contain-root-cause-prevent), the planner proposed 18 refunds for delayed VIP shipments, including a €740 refund above a €250 approval limit. The gateway blocked six calls, but 12 were allowed. No unauthorised money moved; the planner still failed by proposing a risky bulk action.
 
 **Detect:** read planned, blocked, and allowed calls with amount, role, approval state, policy version. **Contain:** disable bulk refund planning, route VIP refunds to review tickets, and audit the 12 allowed calls. **Root cause:** action-oriented planner examples omitted bulk approval boundaries; the gateway policy still worked. **Prevent:** risk-aware tool schemas, policy simulation, a separate action-risk check, and non-bypassable gateway enforcement.
 

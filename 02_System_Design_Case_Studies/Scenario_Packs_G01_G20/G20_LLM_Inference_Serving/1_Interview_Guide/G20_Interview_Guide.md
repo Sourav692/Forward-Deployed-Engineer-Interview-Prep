@@ -1,6 +1,6 @@
 # G20 — LLM Inference Serving: Main Interview Guide
 
-> **Source:** [Sources and Full Design](G20_LLM_Inference_Serving.md), especially §§1–11 for the anchor and §§12–15 for variants. Use the [Deep Dive](G20_LLM_Inference_Serving_Deep_Dive.md) for scheduling, KV and failover mechanics and the [Cheat Sheet](G20_LLM_Inference_Serving_Cheat_Sheet.md) for rehearsal. The source states that its serving design and all capacity figures are constructed examples, not measurements of an actual engine.
+> **Source:** [Sources and Full Design](../4_Full_Design/G20_Full_Design.md), especially §§1–11 for the anchor and §§12–15 for variants. Use the [Deep Dive](../2_Technical_Deep_Dive/G20_Technical_Deep_Dive.md) for scheduling, KV and failover mechanics and the [Cheat Sheet](../3_Quick_Review/G20_Quick_Review.md) for rehearsal. The source states that its serving design and all capacity figures are constructed examples, not measurements of an actual engine.
 
 ## Anchor and related prompts
 

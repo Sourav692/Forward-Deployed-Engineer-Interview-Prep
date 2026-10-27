@@ -1,6 +1,6 @@
 # G03 — Tool-Using Agent with Safety Controls: Deep Dive
 
-The [Main guide](G03_Tool_Using_Agent_With_Safety_Controls_Main.md) is the spoken design. This is its technical backup; the unchanged [source case](G03_Tool_Using_Agent_With_Safety_Controls.md) keeps the complete synthesis and references.
+The [Main guide](../1_Interview_Guide/G03_Interview_Guide.md) is the spoken design. This is its technical backup; the unchanged [source case](../4_Full_Design/G03_Full_Design.md) keeps the complete synthesis and references.
 
 **Model and agent roles:** The LLM agent planner produces one bounded `ActionProposal` from task state and tool observations. The registry, validator, policy point, approver, broker, and idempotent gateway remain separate deterministic authorities; the planner never executes directly.
 
@@ -88,4 +88,4 @@ Contain by disabling bulk refund planning, forcing VIP refunds into review-ticke
 | Auto execution vs approval delay | Low-risk auto, medium conditional/reviewed, high-risk explicit approval or block. |
 | Central gateway vs direct write integrations | Centralise auth, validation, audit, and idempotency in one write path. |
 
-The [source](G03_Tool_Using_Agent_With_Safety_Controls.md) retains the original 50-minute script, full diagrams, trace excerpt, and reference table.
+The [source](../4_Full_Design/G03_Full_Design.md) retains the original 50-minute script, full diagrams, trace excerpt, and reference table.

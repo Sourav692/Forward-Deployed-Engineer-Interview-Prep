@@ -119,7 +119,7 @@ flowchart TB
 | Observability | Cost per successful outcome and adoption are the portfolio's scoreboard | #7 | All of them |
 | Portfolio office | Holds the card register, re-scores quarterly, records kill decisions | Wave 0 | The next thirty ideas |
 
-The platform view is *(own construction)*. Its gateway pieces come from this site's gateway material. [#100 Production LLM Gateway](../100_Production_LLM_Gateway/) designs that component in full. [G13 Evaluation and Release Gating](../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/G13_Evaluation_And_Release_Gating.md) covers the harness.
+The platform view is *(own construction)*. Its gateway pieces come from this site's gateway material. [#100 Production LLM Gateway](../100_Production_LLM_Gateway/) designs that component in full. [G13 Evaluation and Release Gating](../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) covers the harness.
 
 ## 10. Sequence the Portfolio in Waves
 
@@ -151,7 +151,7 @@ The stage gates reuse the delivery framework's shape: a named, checkable conditi
 
 The gate names and roles adapt Handbook Module 10's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio *(own construction)*. The delivery framework's week-4 retention metric is the adoption kill signal. It is recorded as "none" until measured, never as a fake zero. Its accelerator reuse rate becomes the portfolio's platform health metric.
 
-Re-score the whole register every quarter. Pilot data replaces estimates, so the portfolio corrects itself. A Later item whose data problem was solved by an enabler moves up without anyone lobbying for it. [G12 Scoping to Deployed Agent](../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/G12_Scoping_To_Deployed_Agent.md) covers the gate mechanics in depth.
+Re-score the whole register every quarter. Pilot data replaces estimates, so the portfolio corrects itself. A Later item whose data problem was solved by an enabler moves up without anyone lobbying for it. [G12 Scoping to Deployed Agent](../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md) covers the gate mechanics in depth.
 
 ## 12. Say No to the Executive's Pet Project Without Losing the Executive
 

@@ -1,6 +1,6 @@
 # G06 — Natural Language over Governed Data: Cheat Sheet
 
-Use the [Main guide](G06_NL_Over_Governed_Data_Main.md) for the spoken answer, the [Deep Dive](G06_NL_Over_Governed_Data_Deep_Dive.md) for mechanisms, and the unchanged [source](G06_NL_Over_Governed_Data.md) for the full case.
+Use the [Main guide](../1_Interview_Guide/G06_Interview_Guide.md) for the spoken answer, the [Deep Dive](../2_Technical_Deep_Dive/G06_Technical_Deep_Dive.md) for mechanisms, and the unchanged [source](../4_Full_Design/G06_Full_Design.md) for the full case.
 
 ## One sentence
 

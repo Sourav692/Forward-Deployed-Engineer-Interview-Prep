@@ -1,6 +1,6 @@
 # G02 — Customer Support Automation: Cheat Sheet
 
-Use the [Main guide](G02_Customer_Support_Automation_Main.md) for the spoken answer and the [Deep Dive](G02_Customer_Support_Automation_Deep_Dive.md) for technical follow-ups. The [source case](G02_Customer_Support_Automation.md) remains the full reference.
+Use the [Main guide](../1_Interview_Guide/G02_Interview_Guide.md) for the spoken answer and the [Deep Dive](../2_Technical_Deep_Dive/G02_Technical_Deep_Dive.md) for technical follow-ups. The [source case](../4_Full_Design/G02_Full_Design.md) remains the full reference.
 
 ## One sentence
 

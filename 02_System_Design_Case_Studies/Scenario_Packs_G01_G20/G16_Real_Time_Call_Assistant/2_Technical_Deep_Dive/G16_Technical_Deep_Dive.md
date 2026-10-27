@@ -1,6 +1,6 @@
 # G16 — Real-Time Call Assistant: Deep Dive
 
-> Read with the unchanged [source](G16_Real_Time_Call_Assistant.md). The [Main guide](G16_Real_Time_Call_Assistant_Main.md) is the interview path; the [Cheat Sheet](G16_Real_Time_Call_Assistant_Cheat_Sheet.md) is the recall card. The source marks much of the architecture and the 2-second stage budget as its own construction; validate those assumptions with production measurements.
+> Read with the unchanged [source](../4_Full_Design/G16_Full_Design.md). The [Main guide](../1_Interview_Guide/G16_Interview_Guide.md) is the interview path; the [Cheat Sheet](../3_Quick_Review/G16_Quick_Review.md) is the recall card. The source marks much of the architecture and the 2-second stage budget as its own construction; validate those assumptions with production measurements.
 
 ## 1. Three lanes and the budget
 

@@ -80,7 +80,7 @@ Answer / Abstain / Escalate
 
 ### Questions to ask the interviewer
 
-Ask the questions that change a design decision. The [source case, §1](G01_Enterprise_Knowledge_Assistant.md#1-name-permission-fidelity-as-the-constraint-before-drawing-anything) expands these into the full discovery table.
+Ask the questions that change a design decision. The [source case, §1](../4_Full_Design/G01_Full_Design.md#1-name-permission-fidelity-as-the-constraint-before-drawing-anything) expands these into the full discovery table.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -153,7 +153,7 @@ Ingestion, normalisation, indexing, query authorisation, retrieval, reranking, e
 
 ### Architecture diagram
 
-This is the interview-size version of the [source architecture, §5](G01_Enterprise_Knowledge_Assistant.md#5-draw-the-architecture-end-to-end).
+This is the interview-size version of the [source architecture, §5](../4_Full_Design/G01_Full_Design.md#5-draw-the-architecture-end-to-end).
 
 ```mermaid
 flowchart LR

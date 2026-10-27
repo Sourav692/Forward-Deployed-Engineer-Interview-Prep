@@ -76,7 +76,7 @@ All paths are relative to the repository root unless they start with `05_Project
 | 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, the two latency-only add-ons |
 | 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, "Streaming works but users abandon mid-answer" |
 | 2, 4, 6 | `05_Projects/Realtime_Voice_AI_Agent_with_RAG/Docs/PROJECT_REPORT.md`: the voice pipeline, "<2 second response latency" (a stated aim), Silero VAD, Deepgram (the report says Nova-2; the code runs Pipecat's default, Nova-3) |
-| 3, 5, 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/G05_Sales_Copilot.md`, sections 5, 6 and 8: the snapshot, the CRM permission mirror, preview-then-approve |
+| 3, 5, 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/4_Full_Design/G05_Full_Design.md`, sections 5, 6 and 8: the snapshot, the CRM permission mirror, preview-then-approve |
 | 2 (budget), 4 (diagrams, component table), 10, 12, 13, and every item marked own construction | Built for this page from the sources' arguments; not source material |
 
 ### Fact-check sources (checked 27 Sep 2026)

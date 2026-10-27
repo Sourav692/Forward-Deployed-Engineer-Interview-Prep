@@ -1,6 +1,6 @@
 # G07 — Secure Multi-Tenant AI Platform: Deep Dive
 
-The [Main guide](G07_Secure_Multi_Tenant_AI_Platform_Main.md) is the spoken answer. This is technical backup for the unchanged [source study](G07_Secure_Multi_Tenant_AI_Platform.md), especially §§3–14.
+The [Main guide](../1_Interview_Guide/G07_Interview_Guide.md) is the spoken answer. This is technical backup for the unchanged [source study](../4_Full_Design/G07_Full_Design.md), especially §§3–14.
 
 ## 1. Immutable tenant context and authority
 
@@ -30,7 +30,7 @@ Export and delete require an inventory of every tenant-owned surface: relational
 
 ## 5. Cross-tenant retrieval incident: trace-first diagnosis
 
-The [source §14](G07_Secure_Multi_Tenant_AI_Platform.md#14-debug-the-cross-tenant-leak) records an Acme answer citing a Globex renewal addendum. The request was `tenant_id=acme`; retrieved chunks included `doc_tenant_id=globex`. Filter version `v3` applied only `visibility in ['public','internal']`, omitting `tenant_id == 'acme'`. The ACL enforcer then skipped its check under `pre_authorized_connector_flag=true`. The response evaluator detected a critical violation **after `response_served=true`**. A rollout had reached **15% of Acme traffic**, so the live filter version and canary cohort matter.
+The [source §14](../4_Full_Design/G07_Full_Design.md#14-debug-the-cross-tenant-leak) records an Acme answer citing a Globex renewal addendum. The request was `tenant_id=acme`; retrieved chunks included `doc_tenant_id=globex`. Filter version `v3` applied only `visibility in ['public','internal']`, omitting `tenant_id == 'acme'`. The ACL enforcer then skipped its check under `pre_authorized_connector_flag=true`. The response evaluator detected a critical violation **after `response_served=true`**. A rollout had reached **15% of Acme traffic**, so the live filter version and canary cohort matter.
 
 Trace request → actual filter → chunk tenants → ACL decision → prompt/citation. Search all traces on `v3` for tenant mismatch; compare with v2 controls rather than relying on a UI reproduction. Contain by disabling v3, blocking any mismatched chunk before context, purging suspect answer caches, holding affected contract answers for human review, and notifying the customer. Root cause is two supposedly independent layers trusting a connector shortcut. Prevent with a non-bypassable server-side tenant predicate, hard post-retrieval invariant, removal of connector-level ACL bypass, negative release tests, and `cross_tenant_retrieval_count` by tenant, connector, and filter version. This is a confidentiality incident, not a hallucination.
 

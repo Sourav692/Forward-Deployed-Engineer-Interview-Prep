@@ -85,4 +85,4 @@ All paths are relative to the repository root.
 - [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) — LLM judges show verbosity bias
 - [AICPA & CIMA: SOC 2](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2) — SOC 2 control mapping
 - [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/) — deletion rights that trace retention must respect
-- [V2 chapter 9 tutorial, "My Perspective on the Gaps"](../../Scenario_Tutorials_Long_Form/Version_2/chapter-9-llm-evaluation-and-release-gating-platform-tutorial_v2.md) — the gap note calling human review the most expensive unit cost
+- [V2 chapter 9 tutorial, "My Perspective on the Gaps"](../../../Scenario_Tutorials_Long_Form/Version_2/chapter-9-llm-evaluation-and-release-gating-platform-tutorial_v2.md) — the gap note calling human review the most expensive unit cost

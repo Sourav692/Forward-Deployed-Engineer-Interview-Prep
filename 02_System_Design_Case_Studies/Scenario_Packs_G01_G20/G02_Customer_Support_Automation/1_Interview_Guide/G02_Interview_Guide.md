@@ -17,7 +17,7 @@ That’s it: **verify → facts → draft → gate → answer, approve, or escal
 
 > **Core idea:** Build a routed decision pipeline that knows when to answer, when to ask for approval, and when to hand off. The model can draft and recommend; verified identity and a deterministic policy gateway decide whether an account action may happen.
 
-The unchanged [source case](G02_Customer_Support_Automation.md) is the full reference. Use this guide for the spoken design, the [Deep Dive](G02_Customer_Support_Automation_Deep_Dive.md) for follow-ups, and the [Cheat Sheet](G02_Customer_Support_Automation_Cheat_Sheet.md) for last-minute recall.
+The unchanged [source case](../4_Full_Design/G02_Full_Design.md) is the full reference. Use this guide for the spoken design, the [Deep Dive](../2_Technical_Deep_Dive/G02_Technical_Deep_Dive.md) for follow-ups, and the [Cheat Sheet](../3_Quick_Review/G02_Quick_Review.md) for last-minute recall.
 
 ## 1. Open with the risk
 
@@ -27,7 +27,7 @@ Use a double-charge request as the running example. A fluent reply is not enough
 
 ### Questions to ask the interviewer
 
-These questions set the first-release boundary. The [source case, §1](G02_Customer_Support_Automation.md#1-reframe-the-chatbot-as-a-routed-decision-pipeline) has the complete discovery table.
+These questions set the first-release boundary. The [source case, §1](../4_Full_Design/G02_Full_Design.md#1-reframe-the-chatbot-as-a-routed-decision-pipeline) has the complete discovery table.
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
@@ -93,7 +93,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture you can draw
 
-This simplifies the [source architecture, §4](G02_Customer_Support_Automation.md#4-draw-the-architecture-end-to-end) for a whiteboard explanation.
+This simplifies the [source architecture, §4](../4_Full_Design/G02_Full_Design.md#4-draw-the-architecture-end-to-end) for a whiteboard explanation.
 
 ```mermaid
 flowchart LR

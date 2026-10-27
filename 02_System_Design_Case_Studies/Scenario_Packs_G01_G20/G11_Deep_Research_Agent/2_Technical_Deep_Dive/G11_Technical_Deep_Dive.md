@@ -1,6 +1,6 @@
 # G11 — Deep Research Agent: Deep Dive
 
-> Read with the unchanged [source](G11_Deep_Research_Agent.md). The [Main guide](G11_Deep_Research_Agent_Main.md) gives the interview flow; the [Cheat Sheet](G11_Deep_Research_Agent_Cheat_Sheet.md) is the recall card.
+> Read with the unchanged [source](../4_Full_Design/G11_Full_Design.md). The [Main guide](../1_Interview_Guide/G11_Interview_Guide.md) gives the interview flow; the [Cheat Sheet](../3_Quick_Review/G11_Quick_Review.md) is the recall card.
 
 ## 1. Permission and trust topology
 

@@ -1,6 +1,6 @@
 # G17 — Logistics Exception Handling: Deep Dive
 
-> Read with the unchanged [source](G17_Logistics_Exception_Handling.md). The [Main guide](G17_Logistics_Exception_Handling_Main.md) gives the interview flow; the [Cheat Sheet](G17_Logistics_Exception_Handling_Cheat_Sheet.md) is the recall card.
+> Read with the unchanged [source](../4_Full_Design/G17_Full_Design.md). The [Main guide](../1_Interview_Guide/G17_Interview_Guide.md) gives the interview flow; the [Cheat Sheet](../3_Quick_Review/G17_Quick_Review.md) is the recall card.
 
 ## 1. Event rate, exception rate and feed freshness
 

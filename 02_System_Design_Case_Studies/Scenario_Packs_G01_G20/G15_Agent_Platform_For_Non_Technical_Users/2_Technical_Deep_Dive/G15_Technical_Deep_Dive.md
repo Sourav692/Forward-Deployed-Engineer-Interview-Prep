@@ -1,6 +1,6 @@
 # G15 — Agent Platform for Non-Technical Users: Deep Dive
 
-> Read with the unchanged [source](G15_Agent_Platform_For_Non_Technical_Users.md). The [Main guide](G15_Agent_Platform_For_Non_Technical_Users_Main.md) is the interview path; the [Cheat Sheet](G15_Agent_Platform_For_Non_Technical_Users_Cheat_Sheet.md) is the recall card.
+> Read with the unchanged [source](../4_Full_Design/G15_Full_Design.md). The [Main guide](../1_Interview_Guide/G15_Interview_Guide.md) is the interview path; the [Cheat Sheet](../3_Quick_Review/G15_Quick_Review.md) is the recall card.
 
 ## 1. The contract between authoring and runtime
 

@@ -112,7 +112,7 @@ All paths are relative to the repository root unless stated.
 | 8 | `03_Advanced/07_Advanced_Agentic_Systems/Memory_and_State/Agentic_Memory_Architectures/03_Voyager_Skill_Library.ipynb`, `04_Agent_Workflow_Memory.ipynb`; `.../LangGraph/01_Memory/memory/07_Long_Term_Procedural_Memory_SQLite.ipynb` (human-approved procedures, versioning and rollback) |
 | 9 | `03_Advanced/10_Alternative_Agent_Frameworks/DSPy/context-engineering-dspy/` (declared prompts, evaluation, pairwise Elo); it has no optimiser module, so section 9 is general knowledge |
 | 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md` (the four verbs) |
-| Related packs | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/G03_Tool_Using_Agent_With_Safety_Controls.md` (gateway and approvals), `G13_Evaluation_And_Release_Gating.md` (release gate), `G19_Model_Development_And_Post_Training.md` (rung 5 in depth) |
+| Related packs | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/4_Full_Design/G03_Full_Design.md` (gateway and approvals), `4_Full_Design/G13_Full_Design.md` (release gate), `4_Full_Design/G19_Full_Design.md` (rung 5 in depth) |
 | 2, 3, 4, 5, 9, 12, 14, 15, and every item marked own construction | Built for this page; all sizing numbers are assumptions |
 
 ### Fact-check sources (checked 27 Sep 2026)

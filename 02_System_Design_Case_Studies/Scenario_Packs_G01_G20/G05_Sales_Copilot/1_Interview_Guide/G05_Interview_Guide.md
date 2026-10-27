@@ -17,7 +17,7 @@ That’s it: **prepare → ask → prove it from her data → don’t invent cla
 
 > **Core idea:** Give a rep a useful, cited account brief without showing records they cannot access, inventing customer facts, making unapproved claims, or writing to CRM without preview and approval.
 
-Use this for the spoken design. The [Deep Dive](G05_Sales_Copilot_Deep_Dive.md) has the mechanisms and incident drill, and the unchanged [source case](G05_Sales_Copilot.md) is the full reference.
+Use this for the spoken design. The [Deep Dive](../2_Technical_Deep_Dive/G05_Technical_Deep_Dive.md) has the mechanisms and incident drill, and the unchanged [source case](../4_Full_Design/G05_Full_Design.md) is the full reference.
 
 ## 1. Start with the workflow and risk boundary
 
@@ -27,7 +27,7 @@ An account executive has a meeting soon. They need an **account summary**, **opp
 
 ### Questions to ask the interviewer
 
-The [source discovery, §1](G05_Sales_Copilot.md#1-name-the-workflow-and-the-risk-boundary-before-drawing-anything) expands these questions:
+The [source discovery, §1](../4_Full_Design/G05_Full_Design.md#1-name-the-workflow-and-the-risk-boundary-before-drawing-anything) expands these questions:
 
 | Question to ask                                                                  | What it's really asking                                                                                            | What you then decide                                                          |
 | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
@@ -88,7 +88,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This condenses the [source architecture, §4](G05_Sales_Copilot.md#4-draw-the-architecture-end-to-end) into three lanes.
+This condenses the [source architecture, §4](../4_Full_Design/G05_Full_Design.md#4-draw-the-architecture-end-to-end) into three lanes.
 
 ```mermaid
 flowchart LR
@@ -177,7 +177,7 @@ Gate on **zero permission violations** and **zero critical unsupported external 
 
 Start with one CRM connector, three reps in distinct territories, historical briefs and SME-approved answers. Add permission red-team and claim-level negative cases, shadow mode, live read-only pilot, then drafts and approved write-back. Keep model versions pinned and canary each route change.
 
-The [source regression, §14](G05_Sales_Copilot.md#14-debug-the-model-regression-incident) shows why: a model upgrade had a **96.7% aggregate pass rate over 120 cases**, but only **six regulated-claim cases** passed at **83.3%**; online unsupported claims rose from **1.2% to 8.7%**, and the verifier had been changed to warn-only. Contain by rolling back the model route and restoring block mode. Add independent gates for pending certifications, internal-only ROI, and unapproved customer references.
+The [source regression, §14](../4_Full_Design/G05_Full_Design.md#14-debug-the-model-regression-incident) shows why: a model upgrade had a **96.7% aggregate pass rate over 120 cases**, but only **six regulated-claim cases** passed at **83.3%**; online unsupported claims rose from **1.2% to 8.7%**, and the verifier had been changed to warn-only. Contain by rolling back the model route and restoring block mode. Add independent gates for pending certifications, internal-only ROI, and unapproved customer references.
 
 ## 9. Interview delivery
 

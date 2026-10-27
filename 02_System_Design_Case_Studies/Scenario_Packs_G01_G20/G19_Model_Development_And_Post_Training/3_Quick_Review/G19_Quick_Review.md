@@ -1,6 +1,6 @@
 # G19 — Model Development and Post-Training: Cheat Sheet
 
-[Main](G19_Model_Development_And_Post_Training_Main.md) · [Deep Dive](G19_Model_Development_And_Post_Training_Deep_Dive.md) · [Unchanged source](G19_Model_Development_And_Post_Training.md)
+[Main](../1_Interview_Guide/G19_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G19_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G19_Full_Design.md)
 
 ## Ask first
 

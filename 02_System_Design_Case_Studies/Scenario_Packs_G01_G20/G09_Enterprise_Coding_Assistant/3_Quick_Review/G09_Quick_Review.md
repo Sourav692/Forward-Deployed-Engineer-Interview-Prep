@@ -1,6 +1,6 @@
 # G09 — Enterprise Coding Assistant: Cheat Sheet
 
-Use the [Main guide](G09_Enterprise_Coding_Assistant_Main.md) for the interview, the [Deep Dive](G09_Enterprise_Coding_Assistant_Deep_Dive.md) for mechanisms, and the unchanged [source](G09_Enterprise_Coding_Assistant.md) for the full design.
+Use the [Main guide](../1_Interview_Guide/G09_Interview_Guide.md) for the interview, the [Deep Dive](../2_Technical_Deep_Dive/G09_Technical_Deep_Dive.md) for mechanisms, and the unchanged [source](../4_Full_Design/G09_Full_Design.md) for the full design.
 
 ## One sentence
 

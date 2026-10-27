@@ -1,6 +1,6 @@
 # G15 — Agent Platform for Non-Technical Users: Cheat Sheet
 
-[Main](G15_Agent_Platform_For_Non_Technical_Users_Main.md) · [Deep Dive](G15_Agent_Platform_For_Non_Technical_Users_Deep_Dive.md) · [Unchanged source](G15_Agent_Platform_For_Non_Technical_Users.md)
+[Main](../1_Interview_Guide/G15_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G15_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G15_Full_Design.md)
 
 ## Ask first
 

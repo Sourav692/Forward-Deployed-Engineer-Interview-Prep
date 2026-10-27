@@ -3,12 +3,12 @@
  * `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/`, one folder per group (G01–G20).
  *
  * Unlike the worksheet modules, these are reading pages. Each group folder holds four
- * documents, and each becomes a tab on the group's page:
+ * documents, one subfolder each, named after the tab they become on the group's page:
  *
- *   Gxx_Name_Main.md        -> main        (the interview guide; opens by default)
- *   Gxx_Name_Deep_Dive.md   -> deep-dive
- *   Gxx_Name_Cheat_Sheet.md -> cheat-sheet
- *   Gxx_Name.md             -> full-pack   (the original consolidated, sourced pack)
+ *   1_Interview_Guide/Gxx_Interview_Guide.md         -> main        (opens by default)
+ *   2_Technical_Deep_Dive/Gxx_Technical_Deep_Dive.md -> deep-dive
+ *   3_Quick_Review/Gxx_Quick_Review.md               -> cheat-sheet
+ *   4_Full_Design/Gxx_Full_Design.md                 -> full-pack   (the original sourced pack)
  *
  * A document over the page-length limit is split at its H2s into `<name>_Part_2.md`,
  * `<name>_Part_3.md`, … beside it, and each part is a tab of its own (`withParts`).
@@ -52,11 +52,14 @@ const PUBLISHED = null
  * must not — and cannot — touch its id.
  */
 export const DOC_TABS = [
-  { id: 'main', suffix: '_Main' },
-  { id: 'deep-dive', suffix: '_Deep_Dive' },
-  { id: 'cheat-sheet', suffix: '_Cheat_Sheet' },
-  { id: 'full-pack', suffix: '' },
+  { id: 'main', file: '1_Interview_Guide/Interview_Guide' },
+  { id: 'deep-dive', file: '2_Technical_Deep_Dive/Technical_Deep_Dive' },
+  { id: 'cheat-sheet', file: '3_Quick_Review/Quick_Review' },
+  { id: 'full-pack', file: '4_Full_Design/Full_Design' },
 ]
+
+/** `1_Interview_Guide/Interview_Guide` in group `G01_…` -> `1_Interview_Guide/G01_Interview_Guide.md` */
+const docFile = (folder, tab) => tab.file.replace('/', `/${folder.slice(0, 3)}_`) + '.md'
 
 function labelOf(id, parts = 1) {
   const tab = tabMeta(id, parts)
@@ -74,7 +77,7 @@ function withParts(tab) {
   const parts = [tab]
   while (existsSync(partFile(tab.src, parts.length + 1))) {
     const src = partFile(tab.src, parts.length + 1)
-    parts.push({ id: `${tab.id}-part-${parts.length + 1}`, file: basename(src), src })
+    parts.push({ id: `${tab.id}-part-${parts.length + 1}`, file: partFile(tab.file, parts.length + 1), src })
   }
   return parts.map((p) => ({ ...p, label: labelOf(p.id, parts.length) }))
 }
@@ -204,21 +207,11 @@ function rewriteHref(href, sourceFile, ctx) {
 
   let abs = resolve(dirname(sourceFile), decodeURI(pathPart))
 
-  // Packs written before the three-layer folders existed link to `Gxx_Name.md` at the
-  // top of the packs folder. That file now lives inside its own folder.
-  if (!existsSync(abs)) {
-    const moved = join(dirname(abs), basename(abs, '.md'), basename(abs))
-    if (existsSync(moved)) abs = moved
-  }
-
   const isDir = existsSync(abs) && statSync(abs).isDirectory()
+  if (isDir && ctx.pages.has(abs)) return ctx.pages.get(abs)
   // A file in a published folder that is not one of its tabs — an archived tutorial —
   // has no place on the site, so it becomes plain text like any other repo file.
-  const page = ctx.pages.get(isDir ? abs : dirname(abs))
-  if (page && (isDir || page.tabsByFile.has(basename(abs)))) {
-    const tab = isDir ? null : page.tabsByFile.get(basename(abs))
-    return `${page.url}${tab ? `#${tab}` : ''}`
-  }
+  if (!isDir && ctx.tabs.has(abs)) return ctx.tabs.get(abs)
 
   if (relative(ctx.repoRoot, abs).startsWith('..')) return null
   return UNLINK
@@ -248,7 +241,7 @@ async function collectCases(root, standaloneRoot, repoRoot) {
       if (!groups.has(g) || !isPublished(g)) continue
       const folder = groups.get(g)
       const dir = join(root, folder)
-      const tabs = DOC_TABS.flatMap((t) => withParts({ id: t.id, file: `${folder}${t.suffix}.md`, src: join(dir, `${folder}${t.suffix}.md`) }))
+      const tabs = DOC_TABS.flatMap((t) => withParts({ id: t.id, file: docFile(folder, t), src: join(dir, docFile(folder, t)) }))
       const main = await readFile(join(dir, tabs[0].file), 'utf8')
       cases.push({ theme: theme.id, dir, slug: slugOf(folder), order: Number(g.slice(1)), title: nameFrom(main, folder), tabs })
     }
@@ -301,16 +294,19 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
   const root = join(caseStudiesDir, 'Scenario_Packs_G01_G20')
   const cases = await collectCases(root, join(caseStudiesDir, 'Standalone_Designs'), repoRoot)
 
-  // Page URL and file -> tab for every published folder, so cross-links point at the
-  // site instead of the repo.
+  // Page URL per published folder and per tab file, so cross-links point at the site
+  // instead of the repo.
   const pages = new Map()
+  const tabs = new Map()
   for (const c of cases) {
-    pages.set(c.dir, {
-      url: caseUrl(c),
-      tabsByFile: new Map(c.tabs.map((t) => [t.file, t.id])),
-    })
+    pages.set(c.dir, caseUrl(c))
+    for (const t of c.tabs) {
+      const file = t.src ?? join(c.dir, t.file)
+      // A file shared from another module (a reused worksheet) stays out, as before.
+      if (file.startsWith(`${c.dir}/`)) tabs.set(file, `${caseUrl(c)}#${t.id}`)
+    }
   }
-  const ctx = { root, repoRoot, pages }
+  const ctx = { root, repoRoot, pages, tabs }
   if (sourceUrls) {
     for (const c of cases) {
       const url = caseUrl(c)

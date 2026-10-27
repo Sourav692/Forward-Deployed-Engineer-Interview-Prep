@@ -1,6 +1,6 @@
 # G19 — Model Development and Post-Training: Main Interview Guide
 
-> **Source:** [Sources and Full Design](G19_Model_Development_And_Post_Training.md), especially §§1–12. Use the [Deep Dive](G19_Model_Development_And_Post_Training_Deep_Dive.md) for methods and arithmetic and the [Cheat Sheet](G19_Model_Development_And_Post_Training_Cheat_Sheet.md) for rehearsal. The source constructs the design from reported prompts; its run sizes and throughput are illustrations, not measured training results.
+> **Source:** [Sources and Full Design](../4_Full_Design/G19_Full_Design.md), especially §§1–12. Use the [Deep Dive](../2_Technical_Deep_Dive/G19_Technical_Deep_Dive.md) for methods and arithmetic and the [Cheat Sheet](../3_Quick_Review/G19_Quick_Review.md) for rehearsal. The source constructs the design from reported prompts; its run sizes and throughput are illustrations, not measured training results.
 
 ## The anchor and its variants
 

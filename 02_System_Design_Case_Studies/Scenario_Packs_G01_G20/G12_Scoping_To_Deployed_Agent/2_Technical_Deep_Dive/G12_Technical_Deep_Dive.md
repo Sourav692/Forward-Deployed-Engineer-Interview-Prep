@@ -1,6 +1,6 @@
 # G12 — Scoping to Deployed Agent: Deep Dive
 
-> Read with the unchanged [source](G12_Scoping_To_Deployed_Agent.md). The [Main guide](G12_Scoping_To_Deployed_Agent_Main.md) is the interview route; the [Cheat Sheet](G12_Scoping_To_Deployed_Agent_Cheat_Sheet.md) is the recall card.
+> Read with the unchanged [source](../4_Full_Design/G12_Full_Design.md). The [Main guide](../1_Interview_Guide/G12_Interview_Guide.md) is the interview route; the [Cheat Sheet](../3_Quick_Review/G12_Quick_Review.md) is the recall card.
 
 ## 1. Two distinct systems
 

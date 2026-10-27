@@ -1,6 +1,6 @@
 # G04 — SRE Incident Response Agent: Cheat Sheet
 
-Use the [Main guide](G04_SRE_Incident_Response_Agent_Main.md) to practice speaking and the [Deep Dive](G04_SRE_Incident_Response_Agent_Deep_Dive.md) for technical follow-ups. The [source](G04_SRE_Incident_Response_Agent.md) is the full reference.
+Use the [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) to practice speaking and the [Deep Dive](../2_Technical_Deep_Dive/G04_Technical_Deep_Dive.md) for technical follow-ups. The [source](../4_Full_Design/G04_Full_Design.md) is the full reference.
 
 ## One sentence
 

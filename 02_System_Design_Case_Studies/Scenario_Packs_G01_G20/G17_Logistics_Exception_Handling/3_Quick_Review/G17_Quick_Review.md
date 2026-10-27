@@ -1,6 +1,6 @@
 # G17 — Logistics Exception Handling: Cheat Sheet
 
-[Main](G17_Logistics_Exception_Handling_Main.md) · [Deep Dive](G17_Logistics_Exception_Handling_Deep_Dive.md) · [Unchanged source](G17_Logistics_Exception_Handling.md)
+[Main](../1_Interview_Guide/G17_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G17_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G17_Full_Design.md)
 
 ## Ask first
 

@@ -15,7 +15,7 @@ End to end, as Cascade’s “small refunds without a human”:
 
 That’s it: **event → one spec → guardrail → execute once → recover.** Authors cannot secretly approve their own live refunds.
 
-> **Full source:** [Sources and Full Design](G15_Agent_Platform_For_Non_Technical_Users.md), especially §§1–12 for the anchor and §13 for Cascade Robotics. Use the [Deep Dive](G15_Agent_Platform_For_Non_Technical_Users_Deep_Dive.md) for guardrail and recovery mechanics and the [Cheat Sheet](G15_Agent_Platform_For_Non_Technical_Users_Cheat_Sheet.md) for rehearsal.
+> **Full source:** [Sources and Full Design](../4_Full_Design/G15_Full_Design.md), especially §§1–12 for the anchor and §13 for Cascade Robotics. Use the [Deep Dive](../2_Technical_Deep_Dive/G15_Technical_Deep_Dive.md) for guardrail and recovery mechanics and the [Cheat Sheet](../3_Quick_Review/G15_Quick_Review.md) for rehearsal.
 
 ## The anchor and its related case
 

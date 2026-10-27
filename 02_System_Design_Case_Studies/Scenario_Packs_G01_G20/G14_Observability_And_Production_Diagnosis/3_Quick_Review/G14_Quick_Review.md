@@ -1,6 +1,6 @@
 # G14 — Observability and Production Diagnosis: Cheat Sheet
 
-[Main](G14_Observability_And_Production_Diagnosis_Main.md) · [Deep Dive](G14_Observability_And_Production_Diagnosis_Deep_Dive.md) · [Unchanged source](G14_Observability_And_Production_Diagnosis.md)
+[Main](../1_Interview_Guide/G14_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G14_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G14_Full_Design.md)
 
 ## Ask first
 

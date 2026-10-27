@@ -1,6 +1,6 @@
 # G20 — LLM Inference Serving: Deep Dive
 
-> Read with the unchanged [source](G20_LLM_Inference_Serving.md). The [Main guide](G20_LLM_Inference_Serving_Main.md) gives the interview route; the [Cheat Sheet](G20_LLM_Inference_Serving_Cheat_Sheet.md) is the recall card. Serving-engine mechanisms and all numeric rates in the source are its own illustrative construction.
+> Read with the unchanged [source](../4_Full_Design/G20_Full_Design.md). The [Main guide](../1_Interview_Guide/G20_Interview_Guide.md) gives the interview route; the [Cheat Sheet](../3_Quick_Review/G20_Quick_Review.md) is the recall card. Serving-engine mechanisms and all numeric rates in the source are its own illustrative construction.
 
 ## 1. Two phases and two capacity checks
 

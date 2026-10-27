@@ -115,7 +115,7 @@ All paths are relative to the repository root.
 | 6, 9, 11 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md`, sections 1.2 (streaming), 1.10 (circuit breaker), 1.17 (moderation) and the input-vs-output moderation trade-off |
 | 6, 12 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis.md`, sections 2 and 9 and card 15.10 |
 | 8, 11 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform.md`, sections 7 and 8 |
-| 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/G01_Enterprise_Knowledge_Assistant.md`, section 6 |
+| 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/4_Full_Design/G01_Full_Design.md`, section 6 |
 | 12 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating.md` (release gate) |
 | Every table and section marked own construction, all sizing figures, the self-drill card | Built for this page from the sources' arguments; not source material |
 

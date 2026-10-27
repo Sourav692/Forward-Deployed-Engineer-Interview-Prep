@@ -1,6 +1,6 @@
 # G13 — Evaluation and Release Gating: Cheat Sheet
 
-[Main](G13_Evaluation_And_Release_Gating_Main.md) · [Deep Dive](G13_Evaluation_And_Release_Gating_Deep_Dive.md) · [Unchanged source](G13_Evaluation_And_Release_Gating.md)
+[Main](../1_Interview_Guide/G13_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G13_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G13_Full_Design.md)
 
 ## Ask first
 

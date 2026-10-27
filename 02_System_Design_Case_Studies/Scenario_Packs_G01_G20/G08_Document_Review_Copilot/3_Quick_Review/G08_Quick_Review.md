@@ -1,6 +1,6 @@
 # G08 — Document Review Copilot: Cheat Sheet
 
-Use the [Main guide](G08_Document_Review_Copilot_Main.md) for the spoken answer, the [Deep Dive](G08_Document_Review_Copilot_Deep_Dive.md) for mechanisms, and the unchanged [source](G08_Document_Review_Copilot.md) for the full case.
+Use the [Main guide](../1_Interview_Guide/G08_Interview_Guide.md) for the spoken answer, the [Deep Dive](../2_Technical_Deep_Dive/G08_Technical_Deep_Dive.md) for mechanisms, and the unchanged [source](../4_Full_Design/G08_Full_Design.md) for the full case.
 
 ## One sentence
 

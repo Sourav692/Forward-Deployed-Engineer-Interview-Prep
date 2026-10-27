@@ -4,7 +4,7 @@
 
 ◷ 26 min
 
-Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [G12](../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/G12_Scoping_To_Deployed_Agent.md) and the gating discipline of [G13](../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/G13_Evaluation_And_Release_Gating.md) without repeating them.
+Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [G12](../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md) and the gating discipline of [G13](../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) without repeating them.
 
 | Case | What the page adds |
 |---|---|

@@ -1,6 +1,6 @@
 # G14 — Observability and Production Diagnosis: Deep Dive
 
-> Read with the unchanged [source](G14_Observability_And_Production_Diagnosis.md). The [Main guide](G14_Observability_And_Production_Diagnosis_Main.md) is the interview path; the [Cheat Sheet](G14_Observability_And_Production_Diagnosis_Cheat_Sheet.md) is the recall card.
+> Read with the unchanged [source](../4_Full_Design/G14_Full_Design.md). The [Main guide](../1_Interview_Guide/G14_Interview_Guide.md) is the interview path; the [Cheat Sheet](../3_Quick_Review/G14_Quick_Review.md) is the recall card.
 
 ## 1. Collection policy is the first capacity decision
 

@@ -17,7 +17,7 @@ That’s it: **tiny permitted context → fast suggest → validate or stay sile
 
 An inline completion must arrive before the developer’s next keystroke **and** respect a private repository’s permissions. Design the context funnel and latency budget first. Do not send the whole repository to a large model, and do not let a cached or retrieved snippet cross an access boundary.
 
-The [source study](G09_Enterprise_Coding_Assistant.md) combines the under-300 ms coding-assistant anchor with the enterprise private-repository variant. The latter adds incremental indexing, repository ACLs, licensing and productivity proof; it keeps the same fast completion spine.
+The [source study](../4_Full_Design/G09_Full_Design.md) combines the under-300 ms coding-assistant anchor with the enterprise private-repository variant. The latter adds incremental indexing, repository ACLs, licensing and productivity proof; it keeps the same fast completion spine.
 
 ## 1. Questions to ask the interviewer
 
@@ -63,7 +63,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This is the whiteboard version of the [source architecture, §4](G09_Enterprise_Coding_Assistant.md#4-draw-the-architecture-end-to-end). The hot path uses a small LLM; slower explicit tasks use a larger reasoning model. Neither model decides access or whether unsafe code may be shown.
+This is the whiteboard version of the [source architecture, §4](../4_Full_Design/G09_Full_Design.md#4-draw-the-architecture-end-to-end). The hot path uses a small LLM; slower explicit tasks use a larger reasoning model. Neither model decides access or whether unsafe code may be shown.
 
 ```mermaid
 flowchart LR
@@ -144,4 +144,4 @@ Roll out one repository with real permissions and three developers with differen
 
 **Memory line:** “Cache first, retrieve on a miss, route by task, validate before display.”
 
-Use the [Deep Dive](G09_Enterprise_Coding_Assistant_Deep_Dive.md) for budget and permission mechanics and the [Cheat Sheet](G09_Enterprise_Coding_Assistant_Cheat_Sheet.md) for a final pass.
+Use the [Deep Dive](../2_Technical_Deep_Dive/G09_Technical_Deep_Dive.md) for budget and permission mechanics and the [Cheat Sheet](../3_Quick_Review/G09_Quick_Review.md) for a final pass.

@@ -1,6 +1,6 @@
 # G13 — Evaluation and Release Gating: Deep Dive
 
-> Read with the unchanged [source](G13_Evaluation_And_Release_Gating.md). The [Main guide](G13_Evaluation_And_Release_Gating_Main.md) gives the interview flow; the [Cheat Sheet](G13_Evaluation_And_Release_Gating_Cheat_Sheet.md) is the recall card.
+> Read with the unchanged [source](../4_Full_Design/G13_Full_Design.md). The [Main guide](../1_Interview_Guide/G13_Interview_Guide.md) gives the interview flow; the [Cheat Sheet](../3_Quick_Review/G13_Quick_Review.md) is the recall card.
 
 ## 1. Decision contract and stakeholders
 

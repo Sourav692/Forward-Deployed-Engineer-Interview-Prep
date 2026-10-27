@@ -1,6 +1,6 @@
 # G07 — Secure Multi-Tenant AI Platform: Cheat Sheet
 
-Use the [Main guide](G07_Secure_Multi_Tenant_AI_Platform_Main.md) for the spoken design, the [Deep Dive](G07_Secure_Multi_Tenant_AI_Platform_Deep_Dive.md) for mechanics, and the unchanged [source](G07_Secure_Multi_Tenant_AI_Platform.md) for the full case.
+Use the [Main guide](../1_Interview_Guide/G07_Interview_Guide.md) for the spoken design, the [Deep Dive](../2_Technical_Deep_Dive/G07_Technical_Deep_Dive.md) for mechanics, and the unchanged [source](../4_Full_Design/G07_Full_Design.md) for the full case.
 
 ## One sentence
 

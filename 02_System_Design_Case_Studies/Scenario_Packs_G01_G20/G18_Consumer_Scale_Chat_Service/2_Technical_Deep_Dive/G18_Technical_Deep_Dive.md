@@ -1,6 +1,6 @@
 # G18 — Consumer-Scale Chat Service: Deep Dive
 
-> Read with the unchanged [source](G18_Consumer_Scale_Chat_Service.md). The [Main guide](G18_Consumer_Scale_Chat_Service_Main.md) is the interview route; the [Cheat Sheet](G18_Consumer_Scale_Chat_Service_Cheat_Sheet.md) is the recall card. The source's design and sizing are constructed from one-line prompts; validate them against a real workload.
+> Read with the unchanged [source](../4_Full_Design/G18_Full_Design.md). The [Main guide](../1_Interview_Guide/G18_Interview_Guide.md) is the interview route; the [Cheat Sheet](../3_Quick_Review/G18_Quick_Review.md) is the recall card. The source's design and sizing are constructed from one-line prompts; validate them against a real workload.
 
 ## 1. From users to streams
 

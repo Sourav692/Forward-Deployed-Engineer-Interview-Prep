@@ -1,6 +1,6 @@
 # G19 — Model Development and Post-Training: Deep Dive
 
-> Read with the unchanged [source](G19_Model_Development_And_Post_Training.md). The [Main guide](G19_Model_Development_And_Post_Training_Main.md) is the interview path; the [Cheat Sheet](G19_Model_Development_And_Post_Training_Cheat_Sheet.md) is the recall card. Most design choices in the source are constructed from prompts and general practice, so distinguish assumptions from measured results.
+> Read with the unchanged [source](../4_Full_Design/G19_Full_Design.md). The [Main guide](../1_Interview_Guide/G19_Interview_Guide.md) is the interview path; the [Cheat Sheet](../3_Quick_Review/G19_Quick_Review.md) is the recall card. Most design choices in the source are constructed from prompts and general practice, so distinguish assumptions from measured results.
 
 ## 1. Data quality and split integrity
 

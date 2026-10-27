@@ -1,6 +1,6 @@
 # G05 — Sales Copilot: Cheat Sheet
 
-Use the [Main guide](G05_Sales_Copilot_Main.md) to practice speaking and the [Deep Dive](G05_Sales_Copilot_Deep_Dive.md) for mechanisms. The [source](G05_Sales_Copilot.md) is the full reference.
+Use the [Main guide](../1_Interview_Guide/G05_Interview_Guide.md) to practice speaking and the [Deep Dive](../2_Technical_Deep_Dive/G05_Technical_Deep_Dive.md) for mechanisms. The [source](../4_Full_Design/G05_Full_Design.md) is the full reference.
 
 ## One sentence
 

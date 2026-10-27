@@ -15,7 +15,7 @@ End to end, as Acme’s German refund flow:
 
 That’s it: **trace the path → hide the secrets → find the hop.** Telemetry must not stall the user.
 
-> **Full source:** [Sources and Full Design](G14_Observability_And_Production_Diagnosis.md), especially §§1–9 for the anchor architecture and §§10–15 for incidents and variants. Use the [Deep Dive](G14_Observability_And_Production_Diagnosis_Deep_Dive.md) for diagnostic detail and the [Cheat Sheet](G14_Observability_And_Production_Diagnosis_Cheat_Sheet.md) for rehearsal.
+> **Full source:** [Sources and Full Design](../4_Full_Design/G14_Full_Design.md), especially §§1–9 for the anchor architecture and §§10–15 for incidents and variants. Use the [Deep Dive](../2_Technical_Deep_Dive/G14_Technical_Deep_Dive.md) for diagnostic detail and the [Cheat Sheet](../3_Quick_Review/G14_Quick_Review.md) for rehearsal.
 
 ## The anchor and its family
 

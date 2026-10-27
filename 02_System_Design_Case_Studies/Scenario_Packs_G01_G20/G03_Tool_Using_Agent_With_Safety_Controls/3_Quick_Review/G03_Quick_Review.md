@@ -1,6 +1,6 @@
 # G03 — Tool-Using Agent with Safety Controls: Cheat Sheet
 
-Use the [Main guide](G03_Tool_Using_Agent_With_Safety_Controls_Main.md) to practice speaking and the [Deep Dive](G03_Tool_Using_Agent_With_Safety_Controls_Deep_Dive.md) for mechanisms. The [source](G03_Tool_Using_Agent_With_Safety_Controls.md) is the full reference.
+Use the [Main guide](../1_Interview_Guide/G03_Interview_Guide.md) to practice speaking and the [Deep Dive](../2_Technical_Deep_Dive/G03_Technical_Deep_Dive.md) for mechanisms. The [source](../4_Full_Design/G03_Full_Design.md) is the full reference.
 
 ## One sentence
 

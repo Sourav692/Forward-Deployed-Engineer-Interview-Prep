@@ -1,6 +1,6 @@
 # G10 — High-Volume Batch Inference Pipeline: Deep Dive
 
-> Read with the unchanged [source](G10_High_Volume_Batch_Pipeline.md). The [Main guide](G10_High_Volume_Batch_Pipeline_Main.md) is the interview path; the [Cheat Sheet](G10_High_Volume_Batch_Pipeline_Cheat_Sheet.md) is the quick recall card.
+> Read with the unchanged [source](../4_Full_Design/G10_Full_Design.md). The [Main guide](../1_Interview_Guide/G10_Interview_Guide.md) is the interview path; the [Cheat Sheet](../3_Quick_Review/G10_Quick_Review.md) is the quick recall card.
 
 ## 1. Contract before machinery
 

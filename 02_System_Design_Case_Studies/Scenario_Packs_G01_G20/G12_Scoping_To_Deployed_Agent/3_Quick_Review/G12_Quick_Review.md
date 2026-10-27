@@ -1,6 +1,6 @@
 # G12 — Scoping to Deployed Agent: Cheat Sheet
 
-[Main](G12_Scoping_To_Deployed_Agent_Main.md) · [Deep Dive](G12_Scoping_To_Deployed_Agent_Deep_Dive.md) · [Unchanged source](G12_Scoping_To_Deployed_Agent.md)
+[Main](../1_Interview_Guide/G12_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G12_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G12_Full_Design.md)
 
 ## Ask first
 

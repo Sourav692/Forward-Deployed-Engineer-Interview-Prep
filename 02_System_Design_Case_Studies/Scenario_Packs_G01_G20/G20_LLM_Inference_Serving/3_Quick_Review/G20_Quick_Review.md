@@ -1,6 +1,6 @@
 # G20 — LLM Inference Serving: Cheat Sheet
 
-[Main](G20_LLM_Inference_Serving_Main.md) · [Deep Dive](G20_LLM_Inference_Serving_Deep_Dive.md) · [Unchanged source](G20_LLM_Inference_Serving.md)
+[Main](../1_Interview_Guide/G20_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G20_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G20_Full_Design.md)
 
 ## Ask first
 

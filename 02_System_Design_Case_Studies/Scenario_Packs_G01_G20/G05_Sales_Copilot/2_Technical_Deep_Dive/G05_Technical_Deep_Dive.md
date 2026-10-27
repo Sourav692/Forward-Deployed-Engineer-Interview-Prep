@@ -1,6 +1,6 @@
 # G05 — Sales Copilot: Deep Dive
 
-Use the [Main guide](G05_Sales_Copilot_Main.md) for the spoken answer. This is the technical backup; the unchanged [source case](G05_Sales_Copilot.md) keeps the full synthesis, interview script, and references.
+Use the [Main guide](../1_Interview_Guide/G05_Interview_Guide.md) for the spoken answer. This is the technical backup; the unchanged [source case](../4_Full_Design/G05_Full_Design.md) keeps the full synthesis, interview script, and references.
 
 **Model and agent roles:** Deterministic routes handle common snapshots, CRM counts, and exact lookups; a bounded agent path handles ambiguous multi-step asks. The LLM copilot summarises and drafts from authorised evidence, while the claim verifier and approval gateway control external claims and CRM writes.
 
@@ -88,4 +88,4 @@ On the source’s 2026-07-08 scenario, `llm_standard_v2` changed to `llm_premium
 | Block unapproved external claims | Legal/commercial risk exceeds draft convenience. | Internal-only notes may use warnings; external drafts still block. |
 | Preview and approve writes | Changes are consequential and auditable. | Proven low-risk field update earns a narrower automated route. |
 
-The [source](G05_Sales_Copilot.md) retains the original sixty-minute script, detailed source attribution, and trace excerpt.
+The [source](../4_Full_Design/G05_Full_Design.md) retains the original sixty-minute script, detailed source attribution, and trace excerpt.

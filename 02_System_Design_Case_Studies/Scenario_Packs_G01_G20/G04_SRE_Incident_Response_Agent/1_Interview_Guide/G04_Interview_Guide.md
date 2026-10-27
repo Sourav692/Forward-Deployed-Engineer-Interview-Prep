@@ -17,7 +17,7 @@ That’s it: **dedupe → read → hypothesize → propose → human → maybe w
 
 > **Core idea:** Dedupe the alert storm, investigate with read-only tools, show evidence and missing sources, then stage any mitigation for human approval. The agent runs outside the failure it is investigating.
 
-Use this guide for the interview. The [Deep Dive](G04_SRE_Incident_Response_Agent_Deep_Dive.md) contains the technical drills, and the unchanged [source case](G04_SRE_Incident_Response_Agent.md) is the full reference.
+Use this guide for the interview. The [Deep Dive](../2_Technical_Deep_Dive/G04_Technical_Deep_Dive.md) contains the technical drills, and the unchanged [source case](../4_Full_Design/G04_Full_Design.md) is the full reference.
 
 ## 1. Open with the read-only boundary
 
@@ -27,7 +27,7 @@ The dependency inversion is the distinctive risk: the observability stack the ag
 
 ### Questions to ask the interviewer
 
-The [source discovery, §1](G04_SRE_Incident_Response_Agent.md#1-name-the-read-only-boundary-before-drawing-anything) gives the full set. Ask these before choosing tools:
+The [source discovery, §1](../4_Full_Design/G04_Full_Design.md#1-name-the-read-only-boundary-before-drawing-anything) gives the full set. Ask these before choosing tools:
 
 | Question to ask                                                                         | What it's really asking                                                                              | What you then decide                                                       |
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -90,7 +90,7 @@ If asked **“What are the requirements?”**, say:
 
 ## 3. Architecture
 
-This diagram condenses the [source architecture, §4](G04_SRE_Incident_Response_Agent.md#4-draw-the-architecture-end-to-end).
+This diagram condenses the [source architecture, §4](../4_Full_Design/G04_Full_Design.md#4-draw-the-architecture-end-to-end).
 
 ```mermaid
 flowchart LR

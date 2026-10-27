@@ -1,6 +1,6 @@
 # G09 — Enterprise Coding Assistant: Deep Dive
 
-The [Main guide](G09_Enterprise_Coding_Assistant_Main.md) is the spoken answer. This backs it with mechanisms from the unchanged [source study](G09_Enterprise_Coding_Assistant.md), especially §§3–13.
+The [Main guide](../1_Interview_Guide/G09_Interview_Guide.md) is the spoken answer. This backs it with mechanisms from the unchanged [source study](../4_Full_Design/G09_Full_Design.md), especially §§3–13.
 
 ## 1. Context and index design
 

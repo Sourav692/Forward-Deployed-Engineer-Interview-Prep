@@ -1,6 +1,6 @@
 # G04 — SRE Incident Response Agent: Deep Dive
 
-The [Main guide](G04_SRE_Incident_Response_Agent_Main.md) is the spoken answer. This is its technical backup; the unchanged [source case](G04_SRE_Incident_Response_Agent.md) has the complete reference and interview scripts.
+The [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) is the spoken answer. This is its technical backup; the unchanged [source case](../4_Full_Design/G04_Full_Design.md) has the complete reference and interview scripts.
 
 **Model and agent roles:** Rules or a small model collapse alerts before the strong LLM synthesizes ranked hypotheses from bounded, read-only telemetry. The incident agent may propose a mitigation, but only human approval plus the gateway permits a write.
 
@@ -77,4 +77,4 @@ Week one: one alert class, named source owners, historical incidents and SME lab
 - **“Too expensive?”** Rules/small model for correlation, one strong synthesis, bounded lookback, cached versioned catalog/runbooks. Track cost per resolved investigation.
 - **“Wrong citation?”** Verify against the actual retrieved signal/runbook span; reject or repair before a proposal.
 
-The [source](G04_SRE_Incident_Response_Agent.md) retains the full diagrams, 45-minute script, levelling rubric, recovery moves, and references.
+The [source](../4_Full_Design/G04_Full_Design.md) retains the full diagrams, 45-minute script, levelling rubric, recovery moves, and references.

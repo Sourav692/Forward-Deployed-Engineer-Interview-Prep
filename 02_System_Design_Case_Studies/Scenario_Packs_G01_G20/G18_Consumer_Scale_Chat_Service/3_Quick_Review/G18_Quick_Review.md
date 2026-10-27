@@ -1,6 +1,6 @@
 # G18 — Consumer-Scale Chat Service: Cheat Sheet
 
-[Main](G18_Consumer_Scale_Chat_Service_Main.md) · [Deep Dive](G18_Consumer_Scale_Chat_Service_Deep_Dive.md) · [Unchanged source](G18_Consumer_Scale_Chat_Service.md)
+[Main](../1_Interview_Guide/G18_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G18_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G18_Full_Design.md)
 
 ## Ask first
 

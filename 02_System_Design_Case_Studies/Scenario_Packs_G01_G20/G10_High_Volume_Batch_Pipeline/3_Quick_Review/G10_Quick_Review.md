@@ -1,6 +1,6 @@
 # G10 — High-Volume Batch Inference Pipeline: Cheat Sheet
 
-[Main](G10_High_Volume_Batch_Pipeline_Main.md) · [Deep Dive](G10_High_Volume_Batch_Pipeline_Deep_Dive.md) · [Unchanged source](G10_High_Volume_Batch_Pipeline.md)
+[Main](../1_Interview_Guide/G10_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G10_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G10_Full_Design.md)
 
 ## Open with the contract
 

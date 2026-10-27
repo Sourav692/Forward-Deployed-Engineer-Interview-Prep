@@ -1,6 +1,6 @@
 # G02 — Customer Support Automation: Deep Dive
 
-This is the technical backup for the [Main Interview Guide](G02_Customer_Support_Automation_Main.md). The unchanged [source case](G02_Customer_Support_Automation.md) contains the full synthesis and references.
+This is the technical backup for the [Main Interview Guide](../1_Interview_Guide/G02_Interview_Guide.md). The unchanged [source case](../4_Full_Design/G02_Full_Design.md) contains the full synthesis and references.
 
 **Model and agent roles:** Rules or a small model route intent and risk. The LLM response generator drafts a reply or proposed action; a bounded planner is reserved for multi-system requests. The policy gateway and approver, not the model, authorise effects.
 
@@ -132,4 +132,4 @@ For a 60-minute round, give the outcome and constraints first, draw the gates, s
 
 ## Source trace
 
-The [source case](G02_Customer_Support_Automation.md) retains the detailed comparison table, original interview scripts, check-yourself prompts, and references to casebook, FDE, OpenAI Applied, and study-guide material. This Deep Dive relocates their mechanisms and scenario-specific figures; consult the source when quoting a particular mock or original reference path.
+The [source case](../4_Full_Design/G02_Full_Design.md) retains the detailed comparison table, original interview scripts, check-yourself prompts, and references to casebook, FDE, OpenAI Applied, and study-guide material. This Deep Dive relocates their mechanisms and scenario-specific figures; consult the source when quoting a particular mock or original reference path.

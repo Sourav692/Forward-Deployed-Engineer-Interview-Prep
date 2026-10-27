@@ -128,11 +128,11 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [FDE problem-decomposition question bank](../../../03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md) — reusable practice cases for ambiguous enterprise problems
+- [FDE problem-decomposition question bank](../../../../03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md) — reusable practice cases for ambiguous enterprise problems
 - [Control Who Sees What (Salesforce Help)](https://help.salesforce.com/s/articleView?id=platform.security_data_access.htm&type=5) — record access starts from org-wide defaults; FLS controls fields
 - [Field-Level Security (Salesforce Help)](https://help.salesforce.com/s/articleView?id=sf.admin_fls.htm&language=en_US&type=5) — hiding fields such as amount by profile or permission set
 - [AWS KMS cryptography essentials (envelope encryption)](https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html) — what per-tenant data keys do and do not protect
 - [Stripe API reference: Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency keys stop a retried write from running twice
 - [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — treating content as data lowers but does not stop injection
 - [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — gate write tools outside the model
-- [G05 Deep Dive, latency pivot](G05_Sales_Copilot_Deep_Dive.md) — agent steps and serial tool calls are the likely driver, to confirm in traces
+- [G05 Deep Dive, latency pivot](../2_Technical_Deep_Dive/G05_Technical_Deep_Dive.md) — agent steps and serial tool calls are the likely driver, to confirm in traces
