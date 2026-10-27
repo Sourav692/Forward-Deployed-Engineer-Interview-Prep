@@ -294,7 +294,7 @@
 .worldCanvas canvas { display: block; touch-action: pan-y; }
 .worldInspector { padding: var(--space-2xs) var(--space-lg) var(--space-sm); }
 .componentButtons { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
-.componentButtons button { min-height: 2.75rem; padding: var(--space-xs) var(--space-sm); border: var(--rule-hair) solid var(--border-strong); font-size: var(--text-sm); color: var(--text-muted); cursor: pointer; background: var(--surface); transition: color var(--dur-micro, 120ms) var(--ease-out, ease-out), background-color var(--dur-micro, 120ms) var(--ease-out, ease-out); }
+.componentButtons button { min-height: 2.75rem; padding: var(--space-xs) var(--space-sm); border: var(--rule-hair) solid var(--border-strong); font-size: var(--text-sm); color: var(--text-muted); cursor: pointer; background: var(--surface); }
 .componentButtons button:hover { color: var(--text); }
 .componentButtons button:active { background: var(--surface-2); }
 .componentButtons button:disabled { opacity: 0.55; cursor: not-allowed; }
@@ -328,7 +328,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home a, .componentButtons button { transition: none; }
+  .home a { transition: none; }
   .btn:active { transform: none; }
 }
 
