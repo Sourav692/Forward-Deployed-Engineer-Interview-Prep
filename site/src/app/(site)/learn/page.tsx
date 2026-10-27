@@ -36,11 +36,10 @@ export default async function LearnPage() {
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Learn', path: '/learn' }])} />
       <header className="mb-8 max-w-3xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">The curriculum</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">Learn</h1>
         <p className="mt-3 text-base text-muted">
-          {counts.learnTracks} tracks, about {counts.learnHours} hours in all. Required tracks build the core every Forward Deployed
-          Engineer is tested on; optional tracks fill gaps. Open a track to see its sections and modules. Worksheets,
+          {counts.learnTracks} tracks grouped into five learning stages, about {counts.learnHours} hours in all.
+          Follow your chosen path or start with the gaps you need to fill. Open a track to see its modules. Worksheets,
           mock interviews and final-week revision are under{' '}
           <Link href="/interview" className="text-accent underline underline-offset-2">
             Interview

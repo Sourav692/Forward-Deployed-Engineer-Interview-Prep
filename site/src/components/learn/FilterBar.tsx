@@ -17,6 +17,7 @@ import { useProgress } from '@/lib/progress/useProgress'
 import { Button, EmptyState } from '@/components/ui'
 import { COPY } from './copy'
 import { ChipGroup, type ChipOption as Option } from './ChipGroup'
+import { LEARN_STAGES } from '@/lib/learn-stages'
 
 
 const REQ: Option[] = [
@@ -74,13 +75,7 @@ export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: 
         {visible.length} of {items.length} tracks shown
       </p>
       {visible.length ? (
-        <ul className="grid gap-4 sm:grid-cols-2">
-          {visible.map((i) => (
-            <li key={i.slug} className="flex">
-              {i.node}
-            </li>
-          ))}
-        </ul>
+        <GroupedTracks items={visible} />
       ) : (
         <EmptyState
           title={COPY.filterEmptyTitle}
@@ -100,12 +95,34 @@ export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: 
 /** The grid shown before the island hydrates (and to crawlers): every track, no filters. */
 export function StaticTrackGrid({ items }: { items: TrackItem[] }) {
   return (
-    <ul className="mt-[3.25rem] grid gap-4 sm:grid-cols-2">
-      {items.map((i) => (
-        <li key={i.slug} className="flex">
-          {i.node}
-        </li>
-      ))}
-    </ul>
+    <div className="mt-[3.25rem]">
+      <GroupedTracks items={items} />
+    </div>
+  )
+}
+
+/** Share the same grouping before hydration and after requirement/progress filtering. */
+function GroupedTracks({ items }: { items: TrackItem[] }) {
+  return (
+    <div className="space-y-10">
+      {LEARN_STAGES.map((stage, index) => {
+        const tracks = stage.tracks.flatMap((slug) => items.filter((item) => item.slug === slug))
+        if (!tracks.length) return null
+        return (
+          <section key={stage.slug} id={stage.slug} aria-labelledby={`stage-${stage.slug}`} className="scroll-mt-24">
+            <div className="mb-4 border-t border-border pt-5">
+              <h2 id={`stage-${stage.slug}`} className="text-xl font-semibold tracking-[-0.02em]">
+                <span className="mr-3 text-base font-normal tabular-nums text-subtle">{index + 1}.</span>
+                {stage.title}
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm text-muted">{stage.summary}</p>
+            </div>
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {tracks.map((item) => <li key={item.slug} className="flex">{item.node}</li>)}
+            </ul>
+          </section>
+        )
+      })}
+    </div>
   )
 }
