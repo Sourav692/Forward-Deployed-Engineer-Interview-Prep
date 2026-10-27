@@ -20,14 +20,14 @@ export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes:
         {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
         <Tag tone={isRequired(track) ? 'accent' : 'neutral'}>{REQUIREMENT_LABEL[track.required]}</Tag>
       </div>
-      <h2 className="mt-2 text-lg font-semibold leading-snug">
+      <h3 className="mt-2 text-lg font-semibold leading-snug">
         <Link
           href={learnHref.track(track.slug)}
           className={cx('rounded-sm after:absolute after:inset-0 after:rounded-lg hover:text-accent', focusRing)}
         >
           {track.title}
         </Link>
-      </h2>
+      </h3>
       <p className="mt-1 text-sm text-muted">{track.objective}</p>
       <p className="mt-3 text-xs text-muted">
         About {trackHours(track)} h · {modules.length} modules
