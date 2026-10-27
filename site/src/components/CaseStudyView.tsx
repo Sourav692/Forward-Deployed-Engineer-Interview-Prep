@@ -3,13 +3,17 @@
 import { PrevNext } from '@/components/PrevNext'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { CaseStudy } from '@/lib/scenario'
-import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
+import { documentsOf, qualifiedTitle, scenarioHref } from '@/lib/scenario'
 import type { ReadingDocument } from '@/lib/reading'
 import { loadRead, notifyProgress, saveRead } from '@/lib/storage'
 import { Diagram, hasStaticDiagram } from './Diagram'
 
 /**
  * A reading page: one case study, four documents, one tab each.
+ *
+ * A document split into parts (ENH-25) shows one part at a time, with the parts listed
+ * at the top and previous/next at the bottom. Each part keeps its own tab id
+ * (`full-pack-part-3`) in the hash and in saved progress; the tab row shows documents.
  *
  * All four tabs are in the DOM and inactive ones are `hidden`. That costs a little
  * HTML and buys two things: search results can link straight to a section in any
@@ -37,6 +41,7 @@ function tabForHash(
 
 export function CaseStudyView({ study }: { study: CaseStudy }) {
   const progressId = `${study.ref.trackId}/${study.ref.slug}`
+  const documents = documentsOf(study)
   const tabIds = study.docs.map((d) => d.tab)
   const tabKey = tabIds.join('|')
   const [active, setActive] = useState<string>(tabIds[0])
@@ -102,27 +107,30 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
     })
   }
 
+  const activeDoc = documents.find((d) => d.parts.some((p) => p.tab === active)) ?? documents[0]
+  const isRead = (d: (typeof documents)[number]) => d.parts.every((p) => read.includes(p.tab))
+
   return (
     <article>
       {/* One document needs no tab bar; the mark-as-read control below still works. */}
-      {study.docs.length > 1 && (
+      {documents.length > 1 && (
       <div
         ref={tabsRef}
         className="no-print sticky top-[3.75rem] z-20 -mx-4 mb-8 border-y border-border bg-bg/85 px-4 backdrop-blur-md sm:mx-0 sm:rounded-lg sm:border sm:px-2"
       >
         <div role="tablist" aria-label="Case study documents" className="flex gap-1 overflow-x-auto py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {study.docs.map(({ tab: id, label }) => {
-            const selected = active === id
-            const done = hydrated && read.includes(id)
+          {documents.map((d) => {
+            const selected = activeDoc.tab === d.tab
+            const done = hydrated && isRead(d)
             return (
               <button
-                key={id}
+                key={d.tab}
                 type="button"
                 role="tab"
-                id={`tab-${id}`}
+                id={`tab-${d.tab}`}
                 aria-selected={selected}
-                aria-controls={`panel-${id}`}
-                onClick={() => selectTab(id)}
+                aria-controls={`panel-${d.tab}`}
+                onClick={() => selectTab(d.parts[0].tab)}
                 className={`flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-[0.875rem] font-medium transition-colors ${
                   selected
                     ? 'bg-accent-soft text-accent'
@@ -130,63 +138,112 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                 }`}
               >
                 {done && <Check className="h-3.5 w-3.5 text-success" />}
-                {label}
+                {d.label}
               </button>
             )
           })}
           {hydrated && (
             <span className="ml-auto hidden shrink-0 self-center pr-2 text-[0.75rem] tabular-nums text-subtle sm:inline">
-              {read.length} of {study.docs.length} read
+              {documents.filter(isRead).length} of {documents.length} read
             </span>
           )}
         </div>
       </div>
       )}
 
-      {study.docs.map(({ tab, label, purpose, minutes, doc }, i) => {
-        const nextTab = study.docs[i + 1]
-        const done = read.includes(tab)
+      {documents.map((d, di) => {
+        const split = d.parts.length > 1
+        const current = d.parts.findIndex((p) => p.tab === active)
         return (
           <div
-            key={tab}
-            id={`panel-${tab}`}
+            key={d.tab}
+            id={`panel-${d.tab}`}
             role="tabpanel"
-            aria-labelledby={`tab-${tab}`}
-            hidden={active !== tab}
+            aria-labelledby={`tab-${d.tab}`}
+            hidden={activeDoc.tab !== d.tab}
           >
             {/* What this tab is for, so a reader landing on it from search knows where
                 it sits in the case — the tab row alone does not say. */}
-            {purpose && (
+            {d.purpose && (
               <p className="no-print mb-6 max-w-3xl rounded-lg bg-surface-2/60 px-4 py-2.5 text-[0.875rem] leading-relaxed text-muted">
-                <span className="font-semibold text-text">{label}</span> · {minutes} min — {purpose}
+                <span className="font-semibold text-text">{d.label}</span> · {d.minutes} min
+                {split && ` in ${d.parts.length} parts`} — {d.purpose}
               </p>
             )}
-            <ReadingPanel doc={doc} drawDiagrams={visited.has(tab)} />
+            {split && (
+              <nav aria-label={`${d.label} parts`} className="no-print mb-8 max-w-3xl rounded-lg border border-border p-4">
+                <p className="mb-2 text-[0.8125rem] font-semibold text-subtle">
+                  Part {current + 1} of {d.parts.length}
+                </p>
+                <ol className="space-y-0.5">
+                  {d.parts.map((p, pi) => (
+                    <li key={p.tab}>
+                      <button
+                        type="button"
+                        onClick={() => selectTab(p.tab, true)}
+                        aria-current={pi === current ? 'step' : undefined}
+                        className={`flex w-full gap-2 rounded-md px-2 py-1 text-left text-[0.875rem] transition-colors ${
+                          pi === current ? 'bg-accent-soft font-semibold text-accent' : 'text-muted hover:bg-surface-2 hover:text-text'
+                        }`}
+                      >
+                        <span className="shrink-0 tabular-nums">Part {pi + 1}</span>
+                        <span dangerouslySetInnerHTML={{ __html: partTitle(p.doc, pi) }} />
+                        {hydrated && read.includes(p.tab) && <Check className="ml-auto h-3.5 w-3.5 shrink-0 self-center text-success" />}
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
 
-            <div className="no-print mt-12 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-surface p-4">
-              <button
-                type="button"
-                onClick={() => toggleRead(tab)}
-                aria-pressed={done}
-                className={`flex items-center gap-2 rounded-md px-3.5 py-2 text-[0.875rem] font-semibold transition-colors ${
-                  done
-                    ? 'bg-success-soft text-success hover:opacity-90'
-                    : 'bg-accent text-white hover:bg-accent-hover dark:text-bg'
-                }`}
-              >
-                {done && <Check className="h-4 w-4" />}
-                {done ? `${label} marked as read` : `Mark ${label} as read`}
-              </button>
-              {nextTab && (
-                <button
-                  type="button"
-                  onClick={() => selectTab(nextTab.tab, true)}
-                  className="ml-auto rounded-md border border-border px-3.5 py-2 text-[0.875rem] font-semibold transition-colors hover:border-border-strong"
-                >
-                  Next: {nextTab.label} →
-                </button>
-              )}
-            </div>
+            {d.parts.map((p, pi) => {
+              const done = read.includes(p.tab)
+              const name = split ? `${d.label} part ${pi + 1}` : d.label
+              const next = d.parts[pi + 1]
+                ? { tab: d.parts[pi + 1].tab, label: `Part ${pi + 2}` }
+                : documents[di + 1] && { tab: documents[di + 1].parts[0].tab, label: documents[di + 1].label }
+              return (
+                <div key={p.tab} hidden={active !== p.tab}>
+                  <ReadingPanel doc={p.doc} drawDiagrams={visited.has(p.tab)} />
+
+                  <div className="no-print mt-12 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-surface p-4">
+                    <button
+                      type="button"
+                      onClick={() => toggleRead(p.tab)}
+                      aria-pressed={done}
+                      className={`flex items-center gap-2 rounded-md px-3.5 py-2 text-[0.875rem] font-semibold transition-colors ${
+                        done
+                          ? 'bg-success-soft text-success hover:opacity-90'
+                          : 'bg-accent text-white hover:bg-accent-hover dark:text-bg'
+                      }`}
+                    >
+                      {done && <Check className="h-4 w-4" />}
+                      {done ? `${name} marked as read` : `Mark ${name} as read`}
+                    </button>
+                    <div className="ml-auto flex flex-wrap gap-3">
+                      {split && pi > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => selectTab(d.parts[pi - 1].tab, true)}
+                          className="rounded-md border border-border px-3.5 py-2 text-[0.875rem] font-semibold transition-colors hover:border-border-strong"
+                        >
+                          ← Part {pi}
+                        </button>
+                      )}
+                      {next && (
+                        <button
+                          type="button"
+                          onClick={() => selectTab(next.tab, true)}
+                          className="rounded-md border border-border px-3.5 py-2 text-[0.875rem] font-semibold transition-colors hover:border-border-strong"
+                        >
+                          Next: {next.label} →
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         )
       })}
@@ -264,6 +321,11 @@ export function ReadingPanel({ doc, drawDiagrams }: { doc: ReadingDocument; draw
       </div>
     </div>
   )
+}
+
+/** A part's name in its document's parts list: its first `## ` heading. */
+function partTitle(doc: ReadingDocument, index: number): string {
+  return doc.sections.find((s) => s.title)?.title ?? `Part ${index + 1}`
 }
 
 function Check({ className }: { className?: string }) {

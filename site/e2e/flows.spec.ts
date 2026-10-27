@@ -73,6 +73,33 @@ test('learn flow: module → lesson → mark read persists → module progress',
   await expect(page.getByText(/^1 of \d+ read$/).first()).toBeVisible()
 })
 
+// CT-01: G01 shows one tab per document; a split document's parts are chapters inside it.
+// Part ids stay in the hash and in saved progress, so old links and read state still work.
+test('case chapters: G01 has four tabs, part links open the right chapter, old progress counts', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('fd:v1:read:knowledge-retrieval/enterprise-knowledge-assistant', JSON.stringify(['main', 'main-part-2']))
+  })
+  await page.goto(`${CASE_STUDY}#full-pack-part-3`)
+  await hydrated(page)
+  const tabs = page.getByRole('tablist', { name: 'Case study documents' }).getByRole('tab')
+  await expect(tabs).toHaveCount(4)
+  await expect(tabs.nth(3)).toHaveAttribute('aria-selected', 'true')
+  const parts = page.getByRole('navigation', { name: 'Full Design parts' })
+  await expect(parts.getByText('Part 3 of 5')).toBeVisible()
+  await expect(parts.getByRole('button').nth(2)).toHaveAttribute('aria-current', 'step')
+
+  await page.getByRole('button', { name: 'Next: Part 4 →' }).click()
+  await expect(page).toHaveURL(/#full-pack-part-4$/)
+  await expect(parts.getByText('Part 4 of 5')).toBeVisible()
+
+  // The counter is hidden below the sm breakpoint, so check it is there, not visible.
+  await expect(page.getByText(/^1 of 4 read$/)).toBeAttached()
+  await tabs.first().click()
+  await expect(page).toHaveURL(/#main$/)
+  await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Interview Guide parts' }).getByText('Part 1 of 2')).toBeVisible()
+})
+
 // ENH-30: a client simulation is scored on its own round, with no round picker, and keeps its
 // hidden constraints behind disclosures until the learner opens one.
 test('client simulation: score the client-sim round → attempt saved under its own key', async ({ page }) => {
@@ -385,7 +412,7 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await page.goto('/modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant')
   await expect(page).toHaveURL(CASE_STUDY)
   await hydrated(page)
-  await expect(page.getByRole('button', { name: 'Interview Guide 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.getByRole('button', { name: 'Interview Guide part 1 marked as read' })).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'Casebook' })).toHaveAttribute('href', '/design')
   await page.goto('/learn/ai-systems-design/scenario-library')
   await expect(page).toHaveURL('/design')

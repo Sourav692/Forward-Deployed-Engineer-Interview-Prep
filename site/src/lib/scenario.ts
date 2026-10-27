@@ -141,3 +141,43 @@ export type CaseStudy = {
   prev: ScenarioRef | null
   next: ScenarioRef | null
 }
+
+/** One document of a case page: a tab, made of one or more parts (ENH-25 splits long ones). */
+export type CaseDocument = {
+  /** The first part's tab id, which is also the document's id. */
+  tab: string
+  label: string
+  purpose: string
+  minutes: number
+  parts: CaseStudy['docs']
+}
+
+/**
+ * Cases that show a split document as one tab with its parts as chapters. The rest show
+ * one tab per part, as before. A pilot list while the owner reviews the layout on G01.
+ */
+const CHAPTER_CASES = new Set(['enterprise-knowledge-assistant'])
+
+export const hasChapters = (study: CaseStudy) => CHAPTER_CASES.has(study.ref.slug)
+
+/**
+ * Folds a case's part tabs (`<id>-part-<n>`) into documents. Part ids stay the tab ids
+ * the page shows and saves progress under, so links and saved read state hold.
+ */
+export function documentsOf(study: CaseStudy): CaseDocument[] {
+  const chapters = hasChapters(study)
+  const documents: CaseDocument[] = []
+  for (const doc of study.docs) {
+    const id = chapters ? doc.tab.replace(/-part-\d+$/, '') : doc.tab
+    const last = documents.at(-1)
+    if (last?.tab === id) {
+      last.parts.push(doc)
+      last.minutes += doc.minutes
+    } else {
+      // A split document's parts are labelled "<label> <n>"; the document drops the number.
+      const label = chapters ? doc.label.replace(/ 1$/, '') : doc.label
+      documents.push({ tab: id, label, purpose: doc.purpose, minutes: doc.minutes, parts: [doc] })
+    }
+  }
+  return documents
+}
