@@ -18,6 +18,13 @@ export const AREA_TRACKS: Record<string, string> = {
   [INTERVIEW_TRACK]: '/interview',
 }
 
+/**
+ * Area-track modules whose pages live in another area: the technical worksheets are
+ * listed under /practice, so the interview sidebar and its previous/next links skip
+ * them. The module, its id and its progress keys are unchanged.
+ */
+export const LISTED_ELSEWHERE = new Set(['case-study-worksheets'])
+
 /** Whether a track is listed and served under /learn. */
 export const isLearnTrack = (track: string): boolean => !(track in AREA_TRACKS)
 

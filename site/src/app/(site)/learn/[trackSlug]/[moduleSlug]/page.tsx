@@ -36,7 +36,7 @@ import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
 import { PrevNext } from '@/components/PrevNext'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
-import { isLearnTrack, moduleTag } from '@/lib/curriculum-href'
+import { LISTED_ELSEWHERE, isLearnTrack, moduleTag } from '@/lib/curriculum-href'
 import { PageHead } from '@/components/editorial/PageHead'
 
 /**
@@ -84,7 +84,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   const firstLesson = list.seeAlsoIsMain && mod.status !== 'ready' ? undefined : list.main[0]
   const trail = trackTrail(track)
   // Modules in track order; the overview links to its neighbours (ENH-22, PQ-05).
-  const order = trackModules(track)
+  const order = trackModules(track).filter((m) => !LISTED_ELSEWHERE.has(m.slug))
   const at = order.findIndex((m) => m.slug === mod.slug)
   const prevModule = at > 0 ? order[at - 1] : null
   const nextModule = at >= 0 && at < order.length - 1 ? order[at + 1] : null
