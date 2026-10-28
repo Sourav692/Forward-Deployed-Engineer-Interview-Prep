@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { CurriculumTrack } from '@/lib/curriculum-types'
 import { getModuleBySlug, learnHref, trackLabel } from '@/lib/learn'
 import { cx, focusRing } from '@/components/ui'
-import { moduleTag } from '@/lib/curriculum-href'
+import { LISTED_ELSEWHERE, moduleTag } from '@/lib/curriculum-href'
 
 /**
  * SideNav tree (FE-03): the track's sections and modules, as nested lists.
@@ -34,7 +34,7 @@ export function SideNav({
             <ul className="mt-1 space-y-0.5">
               {s.modules.map((slug) => {
                 const m = getModuleBySlug(slug)
-                if (!m) return null
+                if (!m || LISTED_ELSEWHERE.has(slug)) return null
                 const current = slug === currentModule
                 const gap = m.status === 'coming-soon' ? 'Coming soon' : m.status === 'on-hold' ? 'On hold' : null
                 return (

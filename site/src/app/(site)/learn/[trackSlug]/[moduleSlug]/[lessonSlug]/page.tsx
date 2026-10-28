@@ -16,7 +16,7 @@ import { MockTimer } from '@/components/progress/MockTimer'
 import { MOCK_MINUTES, MOCK_MODULE, mockRoundsFor } from '@/components/progress/mock-rubric'
 import { cx, focusRing } from '@/components/ui'
 import { lessonExplorer } from '@/lib/explorers/load'
-import { isLearnTrack } from '@/lib/curriculum-href'
+import { LISTED_ELSEWHERE, isLearnTrack } from '@/lib/curriculum-href'
 
 /**
  * Lesson page (FE-07). One static page per synced, published lesson: the params come
@@ -53,7 +53,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   if (!page) notFound()
   const { lesson, track, section, module: mod, siblings, doc, prev, next, index, count } = page
   // After a module's last lesson, Next goes on to the following module, not back to this one.
-  const order = trackModules(track)
+  const order = trackModules(track).filter((m) => !LISTED_ELSEWHERE.has(m.slug))
   const nextModule = order[order.findIndex((m) => m.slug === mod.slug) + 1]
   const input = moduleInput(mod)
   const trail = trackTrail(track)
