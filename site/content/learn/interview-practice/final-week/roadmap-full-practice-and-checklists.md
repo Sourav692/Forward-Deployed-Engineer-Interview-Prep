@@ -2,7 +2,7 @@
 
 ### Full Case-Study Practice
 
-These should be solved **without looking at the earlier modules**.
+These should be solved **without looking at the earlier reviews**.
 
 #### Case 1: Customer Support Agent
 
@@ -121,9 +121,9 @@ Observability
 ### Phase 1: Problem Decomposition
 
 ```text
-Module 1 — Discovery
-Module 2 — Functional Requirements
-Module 3 — Non-Functional Requirements
+Review 1 — Discovery
+Review 2 — Functional Requirements
+Review 3 — Non-Functional Requirements
 ```
 
 **Outcome:** Understand before designing.
@@ -133,11 +133,11 @@ Module 3 — Non-Functional Requirements
 ### Phase 2: Architecture
 
 ```text
-Module 4 — Core Components
-Module 5 — RAG
-Module 6 — Agents
-Module 7 — Tools
-Module 8 — Policy / HITL
+Review 4 — Core Components
+Review 5 — RAG
+Review 6 — Agents
+Review 7 — Tools
+Review 8 — Policy / HITL
 ```
 
 **Outcome:** Build the right system.
@@ -147,10 +147,10 @@ Module 8 — Policy / HITL
 ### Phase 3: Production Scale
 
 ```text
-Module 9  — Scaling
-Module 10 — Latency
-Module 11 — Cost
-Module 12 — Reliability
+Review 9  — Scaling
+Review 10 — Latency
+Review 11 — Cost
+Review 12 — Reliability
 ```
 
 **Outcome:** Turn the POC into production.
@@ -160,10 +160,10 @@ Module 12 — Reliability
 ### Phase 4: Production Quality
 
 ```text
-Module 13 — Evaluation
-Module 14 — Release
-Module 15 — Observability
-Module 16 — Security
+Review 13 — Evaluation
+Review 14 — Release
+Review 15 — Observability
+Review 16 — Security
 ```
 
 **Outcome:** Safely operate the system.
@@ -173,8 +173,8 @@ Module 16 — Security
 ### Phase 5: Interview Mastery
 
 ```text
-Module 17 — Trade-Offs
-Module 18 — Full Case Studies
+Review 17 — Trade-Offs
+Review 18 — Full Case Studies
 ```
 
 At this stage:

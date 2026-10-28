@@ -62,7 +62,7 @@ Do **not** start with technology.
 
 ---
 
-# Module 1: FDE Problem Decomposition
+# Review 1: FDE Problem Decomposition
 
 ## Goal
 
@@ -164,7 +164,7 @@ How do we measure it?
 
 ---
 
-# Module 2: Functional Requirements
+# Review 2: Functional Requirements
 
 ## Goal
 
@@ -267,7 +267,7 @@ Audit
 
 ---
 
-# Module 3: Non-Functional Requirements
+# Review 3: Non-Functional Requirements
 
 ## Goal
 
@@ -311,7 +311,7 @@ Auditability
 
 ---
 
-# Module 4: Core Architecture Building Blocks
+# Review 4: Core Architecture Building Blocks
 
 ## Goal
 
@@ -410,7 +410,7 @@ Which requirement triggered it?
 
 ---
 
-# Module 5: RAG & Enterprise Data
+# Review 5: RAG & Enterprise Data
 
 ## Goal
 
@@ -466,7 +466,7 @@ LLM
 
 ---
 
-# Module 6: Agentic Architecture
+# Review 6: Agentic Architecture
 
 ## Goal
 
@@ -506,7 +506,7 @@ Action
 
 ---
 
-# Module 7: Tools, Actions & Enterprise Integration
+# Review 7: Tools, Actions & Enterprise Integration
 
 ## Goal
 
@@ -547,7 +547,7 @@ Enterprise System
 
 ---
 
-# Module 8: Guardrails, Policy & Human Approval
+# Review 8: Guardrails, Policy & Human Approval
 
 ## Goal
 
@@ -582,7 +582,7 @@ Executor acts
 
 ---
 
-# Module 9: Scaling AI Systems
+# Review 9: Scaling AI Systems
 
 ## Goal
 
@@ -615,7 +615,7 @@ Handle:
 
 ---
 
-# Module 10: Latency Optimisation
+# Review 10: Latency Optimisation
 
 ## Goal
 
@@ -656,7 +656,7 @@ Total Latency
 
 ---
 
-# Module 11: Cost Optimisation
+# Review 11: Cost Optimisation
 
 ## Goal
 
@@ -698,7 +698,7 @@ Cost / Task
 
 ---
 
-# Module 12: Reliability & Failure Handling
+# Review 12: Reliability & Failure Handling
 
 ## Goal
 
@@ -748,7 +748,7 @@ Escalate?
 
 ---
 
-# Module 13: AI Evaluation
+# Review 13: AI Evaluation
 
 ## Goal
 
@@ -796,7 +796,7 @@ Successful Task
 
 ---
 
-# Module 14: Release & Change Management
+# Review 14: Release & Change Management
 
 ## Goal
 
@@ -838,7 +838,7 @@ Monitor
 
 ---
 
-# Module 15: Observability & Production Operations
+# Review 15: Observability & Production Operations
 
 ## Goal
 
@@ -883,7 +883,7 @@ Response
 
 ---
 
-# Module 16: Security & Enterprise Multi-Tenancy
+# Review 16: Security & Enterprise Multi-Tenancy
 
 ## Goal
 
@@ -930,7 +930,7 @@ Audit
 
 ---
 
-# Module 17: Trade-Off Thinking
+# Review 17: Trade-Off Thinking
 
 ## Goal
 
@@ -970,7 +970,7 @@ Explain **why** you made architecture decisions.
 
 ---
 
-# Module 18: End-to-End FDE Interview Execution
+# Review 18: End-to-End FDE Interview Execution
 
 ## Goal
 
@@ -1014,7 +1014,7 @@ Combine everything into one repeatable interview flow.
 
 ## Full Case-Study Practice
 
-These should be solved **without looking at the earlier modules**.
+These should be solved **without looking at the earlier reviews**.
 
 ### Case 1: Customer Support Agent
 
@@ -1133,9 +1133,9 @@ Observability
 ## Phase 1: Problem Decomposition
 
 ```text
-Module 1 — Discovery
-Module 2 — Functional Requirements
-Module 3 — Non-Functional Requirements
+Review 1 — Discovery
+Review 2 — Functional Requirements
+Review 3 — Non-Functional Requirements
 ```
 
 **Outcome:** Understand before designing.
@@ -1145,11 +1145,11 @@ Module 3 — Non-Functional Requirements
 ## Phase 2: Architecture
 
 ```text
-Module 4 — Core Components
-Module 5 — RAG
-Module 6 — Agents
-Module 7 — Tools
-Module 8 — Policy / HITL
+Review 4 — Core Components
+Review 5 — RAG
+Review 6 — Agents
+Review 7 — Tools
+Review 8 — Policy / HITL
 ```
 
 **Outcome:** Build the right system.
@@ -1159,10 +1159,10 @@ Module 8 — Policy / HITL
 ## Phase 3: Production Scale
 
 ```text
-Module 9  — Scaling
-Module 10 — Latency
-Module 11 — Cost
-Module 12 — Reliability
+Review 9  — Scaling
+Review 10 — Latency
+Review 11 — Cost
+Review 12 — Reliability
 ```
 
 **Outcome:** Turn the POC into production.
@@ -1172,10 +1172,10 @@ Module 12 — Reliability
 ## Phase 4: Production Quality
 
 ```text
-Module 13 — Evaluation
-Module 14 — Release
-Module 15 — Observability
-Module 16 — Security
+Review 13 — Evaluation
+Review 14 — Release
+Review 15 — Observability
+Review 16 — Security
 ```
 
 **Outcome:** Safely operate the system.
@@ -1185,8 +1185,8 @@ Module 16 — Security
 ## Phase 5: Interview Mastery
 
 ```text
-Module 17 — Trade-Offs
-Module 18 — Full Case Studies
+Review 17 — Trade-Offs
+Review 18 — Full Case Studies
 ```
 
 At this stage:

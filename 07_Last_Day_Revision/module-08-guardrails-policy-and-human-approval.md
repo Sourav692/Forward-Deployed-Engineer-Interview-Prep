@@ -1,4 +1,4 @@
-# Module 8: Guardrails, Policy & Human Approval
+# Review 8: Guardrails, Policy & Human Approval
 
 ## Concise Interview Module
 

@@ -192,7 +192,7 @@ Name what would change the design: new workload, stricter residency, failed qual
 
 ### 8. Practice Questions: Full Cases
 
-Solve without opening earlier modules. Use the five-stage flow and explain one request, one failure, and one trade-off.
+Solve without opening earlier reviews. Use the five-stage flow and explain one request, one failure, and one trade-off.
 
 1. **Customer support:** answer policies, check orders, issue permitted refunds. Cover discovery, requirements, RAG/tools, approval, duplicate prevention, scale, and confirmed outcomes.
 2. **Enterprise knowledge:** millions of documents with employee-specific permissions. Cover ingestion, authorised retrieval, freshness, latency, and answer evaluation.

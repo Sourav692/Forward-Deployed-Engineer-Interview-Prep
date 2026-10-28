@@ -10,7 +10,7 @@ HEAR THE TRIGGER → RECALL THE CONCEPT
 
 **Answer pattern:** “That suggests ___. I’d clarify ___ before choosing ___. The main trade-off is ___.”
 
-## 1. Discovery and Requirements: Modules 1–3
+## 1. Discovery and Requirements: Reviews 1–3
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -26,7 +26,7 @@ HEAR THE TRIGGER → RECALL THE CONCEPT
 
 **Recall discovery:** WHY → TODAY → WHO/HOW MUCH → WHAT → HOW FAR → BOUNDARIES.
 
-## 2. Architecture Responsibilities: Module 4
+## 2. Architecture Responsibilities: Review 4
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -48,7 +48,7 @@ Orchestrator: Which step / transition next?
 State store: Where did the task stop?
 ```
 
-## 3. RAG and Enterprise Data: Module 5
+## 3. RAG and Enterprise Data: Review 5
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -70,7 +70,7 @@ Source → Parse/index → Access/version filters
 
 RAG = retrieval-augmented generation. Recall concerns finding relevant evidence; precision concerns how much retrieved evidence is relevant. Groundedness concerns support, not whether the source is current and correct for the case.
 
-## 4. Agents, Tools, Actions, and Approval: Modules 6–8
+## 4. Agents, Tools, Actions, and Approval: Reviews 6–8
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -95,7 +95,7 @@ Agent recommends → Policy decides → Executor acts
 
 HITL = human-in-the-loop. High model confidence is not permission to act. Approval does not grant unrelated access or reverse completed transactions.
 
-## 5. Scale, Latency, and Cost: Modules 9–11
+## 5. Scale, Latency, and Cost: Reviews 9–11
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -126,7 +126,7 @@ Cost: Total cost across attempts ÷ successful tasks
 
 Streaming does not necessarily reduce computation. Async does not automatically shorten completion. A queue does not create capacity. TTFT marks only when output starts; useful user output and confirmed action completion are separate measurements.
 
-## 6. Failure and Recovery: Module 12
+## 6. Failure and Recovery: Review 12
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -141,7 +141,7 @@ Streaming does not necessarily reduce computation. Async does not automatically 
 
 **Rule:** timeout ≠ confirmed failure; checkpoint ≠ exactly-once external effect; DLQ ≠ completion. Never generate a fresh logical action key because the previous attempt timed out.
 
-## 7. Evaluate, Release, and Operate: Modules 13–15
+## 7. Evaluate, Release, and Operate: Reviews 13–15
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -174,7 +174,7 @@ Audit: Business decision/action trail
 
 Observe tool operations, state transitions, decision summaries, and evidence, not private model chain-of-thought, which is often hidden and not always faithful. Shadow candidates must not duplicate real actions. Keep telemetry access and retention appropriate to sensitive data.
 
-## 8. Enterprise Security: Module 16
+## 8. Enterprise Security: Review 16
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -188,7 +188,7 @@ Observe tool operations, state transitions, decision summaries, and evidence, no
 
 **Distinguish:** authentication = who; authorisation = allowed resource/operation; business policy = whether this action meets the rule; tenant fairness = shared-capacity allocation.
 
-## 9. Trade-Offs and Interview Execution: Modules 17–18
+## 9. Trade-Offs and Interview Execution: Reviews 17–18
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|

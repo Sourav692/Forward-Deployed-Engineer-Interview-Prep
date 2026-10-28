@@ -1571,7 +1571,7 @@ export const MODULES: CurriculumModule[] = [
   {
     slug: 'final-week',
     code: 'I3',
-    title: 'Final week',
+    title: 'Final Week Review',
     track: 'interview-practice',
     section: 'practice-and-revision',
     status: 'ready',
@@ -1585,9 +1585,6 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: ['Cramming new material'],
     lessons: [
       'roadmap',
-      'roadmap-full-practice-and-checklists',
-      'rapid-revision-guide',
-      'trigger-to-concept-cheat-sheet',
       'module-01-fde-problem-decomposition',
       'module-02-functional-requirements',
       'module-03-non-functional-requirements',
@@ -1606,6 +1603,48 @@ export const MODULES: CurriculumModule[] = [
       'module-16-security-and-enterprise-multi-tenancy',
       'module-17-trade-off-thinking',
       'module-18-end-to-end-fde-interview-execution',
+      'roadmap-full-practice-and-checklists',
+      'rapid-revision-guide',
+      'trigger-to-concept-cheat-sheet',
+    ],
+    // A six-day plan for the interview week, from the roadmap's five phases plus the last day.
+    groups: [
+      {
+        id: 'day-1',
+        title: 'Day 1: The plan and problem decomposition',
+        note: 'Read the roadmap, then reviews 1 to 3. Understand before designing.',
+        lessons: ['roadmap', 'module-01-fde-problem-decomposition', 'module-02-functional-requirements', 'module-03-non-functional-requirements'],
+      },
+      {
+        id: 'day-2',
+        title: 'Day 2: Architecture',
+        note: 'Reviews 4 to 8. Build the right system.',
+        lessons: ['module-04-core-architecture-building-blocks', 'module-05-rag-and-enterprise-data', 'module-06-agentic-architecture', 'module-07-tools-actions-and-enterprise-integration', 'module-08-guardrails-policy-and-human-approval'],
+      },
+      {
+        id: 'day-3',
+        title: 'Day 3: Production scale',
+        note: 'Reviews 9 to 12. Turn the POC into production.',
+        lessons: ['module-09-scaling-ai-systems', 'module-10-latency-optimization', 'module-11-cost-optimization', 'module-12-reliability-and-failure-handling'],
+      },
+      {
+        id: 'day-4',
+        title: 'Day 4: Production quality',
+        note: 'Reviews 13 to 16. Safely operate the system.',
+        lessons: ['module-13-ai-evaluation', 'module-14-release-and-change-management', 'module-15-observability-and-production-operations', 'module-16-security-and-enterprise-multi-tenancy'],
+      },
+      {
+        id: 'day-5',
+        title: 'Day 5: Interview mastery',
+        note: 'Reviews 17 and 18, then the full case-study practice. Stop adding terminology; start solving cases.',
+        lessons: ['module-17-trade-off-thinking', 'module-18-end-to-end-fde-interview-execution', 'roadmap-full-practice-and-checklists'],
+      },
+      {
+        id: 'day-6',
+        title: 'Day 6: Last-day recall',
+        note: 'The whole flow in one pass and the trigger phrases, for the last read before the loop.',
+        lessons: ['rapid-revision-guide', 'trigger-to-concept-cheat-sheet'],
+      },
     ],
     seeAlso: [],
   },

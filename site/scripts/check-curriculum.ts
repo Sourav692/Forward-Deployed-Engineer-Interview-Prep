@@ -105,6 +105,8 @@ for (const m of MODULES) {
   if (!listedInSections.has(m.slug) && !(`${m.track}/${m.slug}` in MODULE_HOMES)) fail(`module ${m.code} is in no section`)
   for (const p of m.prerequisites) if (!moduleBySlug.has(p)) fail(`module ${m.code}: unknown prerequisite "${p}"`)
   for (const l of [...m.lessons, ...m.seeAlso]) if (!lessonBySlug.has(l)) fail(`module ${m.code}: unknown lesson "${l}"`)
+  // A reading plan must list the module's lessons exactly, in order, or a lesson drops off the page.
+  if (m.groups && m.groups.flatMap((g) => g.lessons).join() !== m.lessons.join()) fail(`module ${m.code}: groups do not list its lessons exactly, in order`)
 }
 
 // One canonical home per lesson (DATA-03)

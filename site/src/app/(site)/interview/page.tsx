@@ -4,8 +4,8 @@ import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { curriculumModules, siteCounts } from '@/components/areas/data'
 import { EditorialSection } from '@/components/editorial/EditorialSection'
 import { ModuleProgress } from '@/components/learn/ProgressIslands'
-import { LAST_DAY, LAST_DAY_GUIDES } from '@/lib/editorial'
-import { INTERVIEW_HUBS, LESSONS } from '@/lib/curriculum'
+import { LAST_DAY } from '@/lib/editorial'
+import { INTERVIEW_HUBS } from '@/lib/curriculum'
 import { curriculumHref, hubHref } from '@/lib/curriculum-href'
 import { INTERVIEW_TRACK, formatMinutes, moduleInput, readingList, type LearnLesson } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
@@ -32,13 +32,6 @@ export const metadata: Metadata = pageMetadata({
  */
 const MOCKS = 'mock-interviews'
 const FINAL_WEEK = 'final-week'
-
-/** The final week's two guides are its first lessons; found by source file. */
-const guideHref = (source: string) => {
-  const lesson = LESSONS.find((l) => l.source === `07_Last_Day_Revision/${source}`)
-  if (!lesson) throw new Error(`No final-week lesson for 07_Last_Day_Revision/${source}`)
-  return curriculumHref(INTERVIEW_TRACK, FINAL_WEEK, lesson.slug)
-}
 
 const moduleOf = (slug: string) => {
   const mod = curriculumModules(INTERVIEW_TRACK).find((m) => m.slug === slug)
@@ -117,11 +110,11 @@ export default async function InterviewPage() {
       <EditorialSection
         id="final-week"
         title={LAST_DAY.title}
-        description={`${counts.reviews} condensed reviews, each with a one-page recall card, and a trigger-to-concept cheat sheet. Read them after you have studied the concepts; a new concept needs its lesson first.`}
+        description={`A six-day plan: the roadmap, ${counts.reviews} condensed reviews with one-page recall cards, the case-study practice and a last-day pass. Read it after you have studied the concepts; a new concept needs its lesson first.`}
       >
         <div className="cb-well lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
           <div>
-            <h3 className="text-[1.75rem] leading-none">Start with a guide</h3>
+            <h3 className="text-[1.75rem] leading-none">One week, six days</h3>
             <div className="mt-4 max-w-[22rem]">
               <ModuleProgress input={moduleInput(finalWeek)} />
             </div>
@@ -130,11 +123,12 @@ export default async function InterviewPage() {
             </Link>
           </div>
           <ul className="cb-rows mt-6 lg:mt-0">
-            {LAST_DAY_GUIDES.map((g) => (
+            {(finalWeek.groups ?? []).map((g) => (
               <li key={g.id} className="cb-row">
-                <Link href={guideHref(g.source)} className="cb-row-link">
+                <Link href={`${curriculumHref(INTERVIEW_TRACK, FINAL_WEEK)}#${g.id}`} className="cb-row-link">
                   <span className="cb-row-title">{g.title}</span>
-                  <span className="cb-row-note">{g.blurb}</span>
+                  <span className="cb-row-facts">{g.lessons.length} lessons</span>
+                  <span className="cb-row-note">{g.note}</span>
                 </Link>
               </li>
             ))}

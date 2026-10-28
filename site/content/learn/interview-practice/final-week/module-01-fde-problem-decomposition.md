@@ -214,7 +214,7 @@ API Gateway   = User → Application control
 Model Gateway = Application → Model control
 ```
 
-**Transition into Module 2:**
+**Transition into Review 2:**
 
 > “Based on discovery, I’ll summarise what the system must do and how well it must do it before choosing components.”
 

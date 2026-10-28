@@ -1,4 +1,4 @@
-# Module 2: Functional Requirements
+# Review 2: Functional Requirements
 
 ## Concise Interview Module
 
@@ -291,7 +291,7 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
 
 ## One-Page Memory Card: Functional Requirements
 
-**Core question:** What must the system DO, based on the customer needs discovered in Module 1?
+**Core question:** What must the system DO, based on the customer needs discovered in Review 1?
 
 ### Recall Flow
 

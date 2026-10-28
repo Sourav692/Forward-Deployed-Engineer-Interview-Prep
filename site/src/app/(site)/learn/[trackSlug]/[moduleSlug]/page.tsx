@@ -32,6 +32,7 @@ import { ModulePathFlag } from '@/components/learn/PathFlagIslands'
 import { PrerequisiteCard } from '@/components/learn/PrerequisiteCard'
 import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { ReadingList } from '@/components/learn/ReadingList'
+import { LessonGroups } from '@/components/learn/LessonGroups'
 import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
 import { PrevNext } from '@/components/PrevNext'
@@ -206,6 +207,8 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                         {mod.listedOn.label}
                       </Link>
                     </p>
+                  ) : list.main.length && mod.groups ? (
+                    <LessonGroups groups={mod.groups} lessons={list.main} />
                   ) : list.main.length ? (
                     <ReadingList lessons={list.main} />
                   ) : (
