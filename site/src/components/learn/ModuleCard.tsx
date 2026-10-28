@@ -18,7 +18,7 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
       <div className="min-w-0 flex-1 sm:min-w-56">
         <div className="flex items-baseline gap-2">
           {moduleTag(mod) && <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
-          <h3 className="min-w-0 text-sm font-semibold leading-snug">
+          <h3 className="cb-small-head min-w-0 text-sm font-semibold leading-snug">
             <Link href={learnHref.module(mod)} className={cx('rounded-sm after:absolute after:inset-0 after:rounded-md hover:text-accent', focusRing)}>
               {mod.title}
             </Link>
@@ -26,7 +26,7 @@ export function ModuleCard({ module: mod }: { module: CurriculumModule }) {
         </div>
         <p className="mt-0.5 pl-11 text-xs text-muted">
           {formatMinutes(moduleTime(mod).total)}
-          {input.reading.length > 0 && ` · ${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`}
+          {input.reading.length > 0 && `, ${input.reading.length} ${input.reading.length === 1 ? 'lesson' : 'lessons'}`}
         </p>
       </div>
       <div className="relative z-10 flex min-w-0 flex-wrap items-center gap-2 pl-11 sm:pl-0">

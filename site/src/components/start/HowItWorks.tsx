@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { cx, focusRing } from '@/components/ui'
 
 /**
  * "How the site works" on /start (ENH-11): what the old /guide and /learning-map pages
  * said that /start did not, in one place. The four areas, the practice loop and what an
- * interviewer scores. A Server Component with no state.
+ * interviewer scores. A Server Component with no state, set as contents rows and a
+ * numbered loop in the Editorial theme (editorial.css).
  */
 
 const AREAS = [
@@ -63,52 +63,55 @@ const TESTS = [
 
 export function HowItWorks() {
   return (
-    <section aria-labelledby="how-it-works-title" id="how-it-works" className="mt-14 max-w-3xl scroll-mt-24">
-      <h2 id="how-it-works-title" className="text-xl font-semibold tracking-[-0.01em]">
-        How the Site Works
-      </h2>
-      <p className="mt-1 text-sm text-muted">
-        Four areas, each with one job. A path tells you which modules to start with; the areas are where you study them.
-      </p>
-      <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+    <section aria-labelledby="how-it-works-title" id="how-it-works" className="mt-24 scroll-mt-24">
+      <div className="cb-opens mb-8 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
+        <h2 id="how-it-works-title" className="cb-section-head">
+          How the Site Works
+        </h2>
+        <p className="mt-4 max-w-[60ch] text-base lg:mt-1">
+          Four areas, each with one job. A path tells you which modules to start with; the areas are where you study them.
+        </p>
+      </div>
+      <ul className="cb-rows">
         {AREAS.map((area) => (
-          <li key={area.href} className="rounded-lg border border-border bg-surface p-4">
-            <Link href={area.href} className={cx('rounded-sm font-semibold hover:text-accent', focusRing)}>
-              {area.title}
+          <li key={area.href} className="cb-row">
+            <Link href={area.href} className="cb-row-link">
+              <span className="cb-row-title">{area.title}</span>
+              <span className="cb-row-note">{area.body}</span>
             </Link>
-            <p className="mt-1 text-sm leading-relaxed text-muted">{area.body}</p>
           </li>
         ))}
       </ul>
 
-      <h3 className="mt-10 text-lg font-semibold">The Practice Loop</h3>
-      <ol className="mt-3 space-y-4">
-        {LOOP.map((step, i) => (
-          <li key={step.title} className="flex gap-3">
-            <span
-              aria-hidden
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-bold text-accent"
-            >
-              {i + 1}
-            </span>
-            <div>
-              <p className="font-semibold">{step.title}</p>
-              <p className="mt-0.5 text-sm leading-relaxed text-muted">{step.body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
+      <div className="cb-group mt-16">
+        <div>
+          <h3>The Practice Loop</h3>
+          <p className="cb-group-blurb">Five steps for every worksheet, from the prompt to the spoken summary.</p>
+        </div>
+        <ol className="cb-steps">
+          {LOOP.map((step) => (
+            <li key={step.title}>
+              <p className="cb-step-title">{step.title}</p>
+              <p className="cb-step-body">{step.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
 
-      <h3 className="mt-10 text-lg font-semibold">What the Interview Tests</h3>
-      <p className="mt-1 text-sm text-muted">The same five things are scored in every round. They are the rows of the scorecard.</p>
-      <dl className="mt-3 grid gap-3 sm:grid-cols-2">
-        {TESTS.map(([term, desc]) => (
-          <div key={term} className="rounded-lg border border-border bg-surface p-4">
-            <dt className="font-semibold">{term}</dt>
-            <dd className="mt-1 text-sm leading-relaxed text-muted">{desc}</dd>
-          </div>
-        ))}
-      </dl>
+      <div className="cb-group mt-16">
+        <div>
+          <h3>What the Interview Tests</h3>
+          <p className="cb-group-blurb">The same five things are scored in every round. They are the rows of the scorecard.</p>
+        </div>
+        <dl className="cb-rows">
+          {TESTS.map(([term, desc]) => (
+            <div key={term} className="cb-row py-3.5">
+              <dt className="cb-row-title">{term}</dt>
+              <dd className="mt-1 text-base text-[var(--color-ink-2)]">{desc}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   )
 }

@@ -11,12 +11,13 @@ import { ChoosePathPanel } from '@/components/start/ChoosePath'
 import { Tag, cx, focusRing } from '@/components/ui'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { PageHead } from '@/components/editorial/PageHead'
 
 /**
  * Path detail (FE-10). Prerendered for every path (`generateStaticParams` +
  * `dynamicParams = false`, so unknown ids are a 404). A Server Component: the flags
  * come from `lib/paths.ts` at build time; only the learner's module status and the
- * "Choose this path" panel are client islands.
+ * "Choose this path" panel are client islands. The head is the Editorial PageHead.
  */
 
 type Params = { pathId: string }
@@ -52,33 +53,35 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Choose Your Path', path: '/start' }, { name: `${path.title} Path`, path: `/start/paths/${path.id}` }])} />
       <Breadcrumbs items={[{ label: 'Choose Your Path', href: '/start' }, { label: `${path.title} Path` }]} />
-      <div className="max-w-3xl">
-        <header>
-          <p className="text-xs font-semibold uppercase tracking-[0.1em] text-subtle">Learning Path</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">{path.title}</h1>
-          <p className="mt-3 text-lg text-muted">{path.summary}</p>
-          {persona && (
-            <p className="mt-2 text-sm text-muted">
-              For: <span className="font-semibold text-text">{persona.title}</span>. {persona.startingPoint}.
-            </p>
-          )}
-          <p className="mt-1 text-sm text-muted">
-            About {path.estHours} hours of required and recommended study ·{' '}
-            {counts
-              .filter((c) => c.n > 0)
-              .map((c) => `${c.n} ${c.f}`)
-              .join(', ')}
-          </p>
-          {base && (
-            <p className="mt-2 text-sm text-muted">
-              A variant of the{' '}
-              <Link href={`/start/paths/${base.id}`} className={link}>
-                {base.title}
-              </Link>{' '}
-              path.
-            </p>
-          )}
-        </header>
+      <div className="max-w-4xl">
+        <PageHead
+          tag="Learning path"
+          title={path.title}
+          standfirst={path.summary}
+          facts={[
+            ...(persona ? [{ term: 'For', value: `${persona.title}. ${persona.startingPoint}.` }] : []),
+            { term: 'Study time', value: `About ${path.estHours} h, required and recommended` },
+            {
+              term: 'Modules',
+              value: counts
+                .filter((c) => c.n > 0)
+                .map((c) => `${c.n} ${c.f}`)
+                .join(', '),
+            },
+            ...(base
+              ? [
+                  {
+                    term: 'Variant of',
+                    value: (
+                      <Link href={`/start/paths/${base.id}`} className={link}>
+                        {base.title}
+                      </Link>
+                    ),
+                  },
+                ]
+              : []),
+          ]}
+        />
 
         <div className="mt-6">
           <StorageNotice />
@@ -128,7 +131,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
               const onPath = modules.filter((m) => path.moduleFlags[m.slug] !== 'skip')
               return (
                 <li key={track.slug}>
-                  <h3 className="flex flex-wrap items-baseline gap-2 text-base font-semibold">
+                  <h3 className="cb-small-head flex flex-wrap items-baseline gap-2 text-base font-semibold">
                     {/* Only Learn tracks have a code; the interview track's title says what it is. */}
                     {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
                     <Link href={learnHref.track(track.slug)} className={cx('rounded-sm hover:text-accent', focusRing)}>

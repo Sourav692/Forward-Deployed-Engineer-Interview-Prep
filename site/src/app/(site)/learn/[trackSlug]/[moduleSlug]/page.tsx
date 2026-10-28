@@ -37,7 +37,7 @@ import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
 import { PrevNext } from '@/components/PrevNext'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
-import { LISTED_ELSEWHERE, isLearnTrack, moduleTag } from '@/lib/curriculum-href'
+import { LISTED_ELSEWHERE, moduleTag } from '@/lib/curriculum-href'
 import { PageHead } from '@/components/editorial/PageHead'
 
 /**
@@ -89,9 +89,7 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   const at = order.findIndex((m) => m.slug === mod.slug)
   const prevModule = at > 0 ? order[at - 1] : null
   const nextModule = at >= 0 && at < order.length - 1 ? order[at + 1] : null
-  // An area-served track (/interview) renders in its area's Editorial theme: the head
-  // becomes a ruled spec line instead of the dot-joined Learn meta.
-  const area = !isLearnTrack(track.slug)
+  // The head is the Editorial PageHead (Learn and /interview alike): a ruled spec line.
   const lessonCount = list.main.length > 0 ? `${list.main.length} ${list.main.length === 1 ? 'lesson' : 'lessons'}${mod.listedOn ? ', listed in the casebook' : ''}` : null
   // Section anchors exist only on Learn track pages.
   const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
@@ -110,38 +108,21 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <SideNav track={track} currentModule={mod.slug} />
         <div className="min-w-0 max-w-3xl">
-          {area ? (
-            <PageHead
-              title={mod.title}
-              standfirst={`${capitalise(mod.objective)}.`}
-              facts={[
-                { term: 'Time', value: `About ${formatMinutes(time.total)}${time.practice > 0 ? `: ${formatMinutes(time.reading)} reading, ${formatMinutes(time.practice)} practice` : ''}` },
-                ...(lessonCount ? [{ term: 'Lessons', value: lessonCount }] : []),
-              ]}
-            >
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <ModuleStatusBadge input={input} />
-                {mod.status === 'partly' && <Tag>Partly ready</Tag>}
-                <ModulePathFlag moduleSlug={mod.slug} />
-              </div>
-            </PageHead>
-          ) : (
-          <header>
-            <div className="flex flex-wrap items-center gap-2">
-              {moduleTag(mod) && <span className="text-xs font-semibold tabular-nums text-subtle">{moduleTag(mod)}</span>}
+          <PageHead
+            tag={moduleTag(mod) ?? undefined}
+            title={mod.title}
+            standfirst={`${capitalise(mod.objective)}.`}
+            facts={[
+              { term: 'Time', value: `About ${formatMinutes(time.total)}${time.practice > 0 ? `: ${formatMinutes(time.reading)} reading, ${formatMinutes(time.practice)} practice` : ''}` },
+              ...(lessonCount ? [{ term: 'Lessons', value: lessonCount }] : []),
+            ]}
+          >
+            <div className="mt-4 flex flex-wrap items-center gap-2">
               <ModuleStatusBadge input={input} />
               {mod.status === 'partly' && <Tag>Partly ready</Tag>}
               <ModulePathFlag moduleSlug={mod.slug} />
             </div>
-            <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">{mod.title}</h1>
-            <p className="mt-3 text-lg text-muted">{capitalise(mod.objective)}.</p>
-            <p className="mt-2 text-sm text-muted">
-              About {formatMinutes(time.total)}
-              {time.practice > 0 && `: ${formatMinutes(time.reading)} reading + ${formatMinutes(time.practice)} practice`}
-              {lessonCount && ` · ${lessonCount}`}
-            </p>
-          </header>
-          )}
+          </PageHead>
 
           <div className="mt-6">
             <StorageNotice />

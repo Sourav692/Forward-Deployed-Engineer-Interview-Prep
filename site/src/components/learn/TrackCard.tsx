@@ -7,30 +7,29 @@ import { TrackProgress } from './ProgressIslands'
 import { trackTag } from '@/lib/curriculum-href'
 
 /**
- * TrackCard (FE-06): one track on /learn. The whole card is one link (the title),
- * stretched over the card with a pseudo-element so there is a single tab stop. Module
- * status counts are left to the track page, which labels each module (FV-03).
+ * TrackCard (FE-06): one track on /learn, a ruled entry in the Editorial theme. The whole
+ * entry is one link (the title), stretched over it with a pseudo-element so there is a
+ * single tab stop. Module status counts are left to the track page, which labels each
+ * module (FV-03).
  */
 export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes: Record<string, number> }) {
   const modules = trackModules(track)
 
   return (
-    <article className="relative flex w-full flex-col rounded-lg border border-border bg-surface p-4 transition-shadow duration-150 hover:shadow-[var(--shadow)] sm:p-5">
+    <article className="cb-entry relative flex w-full flex-col">
       <div className="flex flex-wrap items-center gap-2">
         {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
         <Tag tone={isRequired(track) ? 'accent' : 'neutral'}>{REQUIREMENT_LABEL[track.required]}</Tag>
       </div>
-      <h3 className="mt-2 text-lg font-semibold leading-snug">
-        <Link
-          href={learnHref.track(track.slug)}
-          className={cx('rounded-sm after:absolute after:inset-0 after:rounded-lg hover:text-accent', focusRing)}
-        >
+      <h3 className="cb-entry-title mt-3">
+        <Link href={learnHref.track(track.slug)} className={cx('after:absolute after:inset-0', focusRing)}>
           {track.title}
         </Link>
       </h3>
-      <p className="mt-1 text-sm text-muted">{track.objective}</p>
-      <p className="mt-3 text-xs text-muted">
-        About {trackHours(track)} h · {modules.length} modules
+      <p className="cb-entry-body">{track.objective}</p>
+      <p className="cb-entry-facts">
+        <span>About {trackHours(track)} h</span>
+        <span>{modules.length} modules</span>
       </p>
       <TrackPathSummary trackSlug={track.slug} />
       <div className="mt-auto pt-4">

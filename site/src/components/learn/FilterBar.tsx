@@ -104,20 +104,20 @@ export function StaticTrackGrid({ items }: { items: TrackItem[] }) {
 /** Share the same grouping before hydration and after requirement/progress filtering. */
 function GroupedTracks({ items }: { items: TrackItem[] }) {
   return (
-    <div className="space-y-10">
+    <div className="space-y-20">
       {LEARN_STAGES.map((stage, index) => {
         const tracks = stage.tracks.flatMap((slug) => items.filter((item) => item.slug === slug))
         if (!tracks.length) return null
         return (
           <section key={stage.slug} id={stage.slug} aria-labelledby={`stage-${stage.slug}`} className="scroll-mt-24">
-            <div className="mb-4 border-t border-border pt-5">
-              <h2 id={`stage-${stage.slug}`} className="text-xl font-semibold tracking-[-0.02em]">
-                <span className="mr-3 text-base font-normal tabular-nums text-subtle">{index + 1}.</span>
+            <div className="cb-opens mb-6 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
+              <h2 id={`stage-${stage.slug}`} className="cb-section-head">
+                <span className="cb-stage-number">{index + 1}.</span>
                 {stage.title}
               </h2>
-              <p className="mt-2 max-w-2xl text-sm text-muted">{stage.summary}</p>
+              <p className="mt-4 max-w-[60ch] text-base lg:mt-1">{stage.summary}</p>
             </div>
-            <ul className="grid gap-4 sm:grid-cols-2">
+            <ul className="grid gap-x-10 sm:grid-cols-2">
               {tracks.map((item) => <li key={item.slug} className="flex">{item.node}</li>)}
             </ul>
           </section>

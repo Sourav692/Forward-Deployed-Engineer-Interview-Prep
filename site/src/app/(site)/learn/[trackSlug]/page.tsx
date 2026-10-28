@@ -9,7 +9,6 @@ import {
   formatMinutes,
   getModuleBySlug,
   getTrack,
-  isRequired,
   learnHref,
   trackMinutes,
   trackParams,
@@ -20,10 +19,10 @@ import { ModuleCard } from '@/components/learn/ModuleCard'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import { SectionAccordion } from '@/components/learn/SectionAccordion'
 import { SideNav } from '@/components/learn/SideNav'
-import { Tag } from '@/components/ui'
 import { DiagnosticText } from '@/components/learn/DiagnosticText'
 import { trackTag } from '@/lib/curriculum-href'
 import { TextLink } from '@/components/areas/Area'
+import { PageHead } from '@/components/editorial/PageHead'
 
 /**
  * Track page (FE-06). Every track is prerendered at build time: `generateStaticParams`
@@ -78,31 +77,33 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <SideNav track={track} />
         <div className="min-w-0">
-          <header className="max-w-3xl">
-            <div className="flex flex-wrap items-center gap-2">
-              {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
-              <Tag tone={isRequired(track) ? 'accent' : 'neutral'}>{REQUIREMENT_LABEL[track.required]}</Tag>
-            </div>
-            <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">{track.title}</h1>
-            <p className="mt-3 text-base text-muted">{track.objective}.</p>
-          </header>
-
-          <dl className="mt-6 grid gap-4 rounded-lg border border-border bg-surface p-4 text-sm sm:grid-cols-3 sm:p-5">
-            <Fact term="For whom">{track.forWhom}</Fact>
-            <Fact term="Time">{formatMinutes(trackMinutes(track))}</Fact>
-            <Fact term="Before this track">
-              {prereqTracks.length === 0 && !track.prerequisiteNote && 'Nothing; start here'}
-              {prereqTracks.map((t, i) => (
-                <span key={t.slug}>
-                  {i > 0 && ', '}
-                  <Link href={learnHref.track(t.slug)} className="text-accent underline underline-offset-2">
-                    {t.title}
-                  </Link>
-                </span>
-              ))}
-              {track.prerequisiteNote && `${prereqTracks.length ? '; ' : ''}${track.prerequisiteNote}`}
-            </Fact>
-          </dl>
+          <PageHead
+            tag={trackTag(track) ?? undefined}
+            title={track.title}
+            standfirst={`${track.objective}.`}
+            facts={[
+              { term: 'Requirement', value: REQUIREMENT_LABEL[track.required] },
+              { term: 'For whom', value: track.forWhom },
+              { term: 'Time', value: formatMinutes(trackMinutes(track)) },
+              {
+                term: 'Before this track',
+                value: (
+                  <>
+                    {prereqTracks.length === 0 && !track.prerequisiteNote && 'Nothing; start here'}
+                    {prereqTracks.map((t, i) => (
+                      <span key={t.slug}>
+                        {i > 0 && ', '}
+                        <Link href={learnHref.track(t.slug)} className="underline underline-offset-2">
+                          {t.title}
+                        </Link>
+                      </span>
+                    ))}
+                    {track.prerequisiteNote && `${prereqTracks.length ? '; ' : ''}${track.prerequisiteNote}`}
+                  </>
+                ),
+              },
+            ]}
+          />
 
           <section aria-labelledby="exit" className="mt-6">
             <h2 id="exit" className="text-sm font-semibold">
@@ -139,7 +140,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
                   key={s.slug}
                   id={s.slug}
                   title={s.title}
-                  meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'} · ${formatMinutes(minutes)}`}
+                  meta={`${modules.length} ${modules.length === 1 ? 'module' : 'modules'}, ${formatMinutes(minutes)}`}
                 >
                   <p className="text-sm text-muted">{s.whyItMatters}</p>
                   <ul className="mt-3 space-y-2">
@@ -170,7 +171,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
 function Fact({ term, children }: { term: string; children: React.ReactNode }) {
   return (
     <div className="min-w-0">
-      <dt className="text-xs font-semibold uppercase tracking-wide text-subtle">{term}</dt>
+      <dt className="text-[0.8125rem] font-medium text-subtle">{term}</dt>
       <dd className="mt-1 text-text">{children}</dd>
     </div>
   )
