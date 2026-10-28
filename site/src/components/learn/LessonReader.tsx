@@ -6,6 +6,7 @@ import { LessonTabs } from '@/components/learn/LessonTabs'
 import { TwinLinks } from '@/components/PageIntro'
 import type { TwinLink } from '@/lib/twins'
 import type { ExplorerData } from '@/lib/explorers/types'
+import { PageHead } from '@/components/editorial/PageHead'
 import { LessonExperience } from '@/components/explorers/LessonExperience'
 
 /**
@@ -25,8 +26,11 @@ const RECALL_CARD = /^One-Page Memory Card\b/
  * Under the title: the author and last-updated line, then reading time, the source
  * note ("From the FDE Handbook") and, for third-party material (`publish: 'credited'`),
  * the credit line.
+ *
+ * `tag` is set on area-served lessons (/interview): the head becomes the Editorial
+ * PageHead, tagged with the area, with the same facts as a ruled spec line.
  */
-export function LessonReader({ page, twins = [], explorer }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null }) {
+export function LessonReader({ page, twins = [], explorer, tag }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null; tag?: string }) {
   const { lesson, doc, sourceNote, creditHtml } = page
   const card = doc.sections.findIndex((s) => s.title && RECALL_CARD.test(s.title))
   const sourceLinks = { ...explorer?.readingLinks, ...Object.fromEntries(doc.sections.filter((s) => s.title).map((s) => [toPlainText(s.title!), `#${s.id}`])) }
@@ -34,6 +38,26 @@ export function LessonReader({ page, twins = [], explorer }: { page: LessonPage;
     // `break-words` lets long unbroken tokens (file paths in inline code, URLs) wrap
     // instead of pushing the page sideways; tables and code blocks scroll in their own box.
     <article className={`lesson-reading break-words ${explorer ? 'max-w-none' : ''}`} aria-labelledby="lesson-title">
+      {tag ? (
+        <PageHead
+          tag={tag}
+          title={lesson.title}
+          facts={[
+            ...(lesson.estMinutes ? [{ term: 'Reading time', value: formatMinutes(lesson.estMinutes) }] : []),
+            ...(sourceNote ? [{ term: 'Source', value: sourceNote }] : []),
+          ]}
+          updated={lesson.updated}
+          twins={twins}
+          report={{ title: lesson.title, path: lesson.href }}
+        >
+          {creditHtml && (
+            <p className="mt-3 text-sm text-muted">
+              <span className="font-semibold text-text">Credit: </span>
+              <span dangerouslySetInnerHTML={{ __html: creditHtml }} />
+            </p>
+          )}
+        </PageHead>
+      ) : (
       <header className={`border-b border-border pb-5 ${explorer ? 'max-w-[68ch]' : ''}`}>
         <h1 id="lesson-title" className="text-balance">
           {lesson.title}
@@ -52,6 +76,7 @@ export function LessonReader({ page, twins = [], explorer }: { page: LessonPage;
           </p>
         )}
       </header>
+      )}
 
       {explorer ? <LessonExperience data={explorer} sourceLinks={sourceLinks}><div className="max-w-[68ch]"><Sections sections={doc.sections} /></div></LessonExperience> : <div className="mt-6">
         {card > 0 ? (

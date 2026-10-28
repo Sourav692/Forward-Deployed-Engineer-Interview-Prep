@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import type { ReactNode } from 'react'
 import { Suspense } from 'react'
 import { FilteredGroups } from '@/components/areas/FilteredGroups'
 import { ModuleProgress } from '@/components/Progress'
 import { ContentsGroup } from '@/components/editorial/ContentsGroup'
+import { EditorialSection } from '@/components/editorial/EditorialSection'
 import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { LIVE, moduleGroups } from '@/components/areas/data'
 import { LEVEL_LABEL, STORY_BANK } from '@/lib/editorial'
@@ -67,7 +67,7 @@ export default async function PracticePage() {
         </div>
       </header>
 
-      <PracticeSection
+      <EditorialSection
         id="worksheets"
         title="Technical worksheets"
         description="Customer scenarios worked from discovery to rollout. Start with Discovery Foundations; the System Design Practice set adds one dangerous constraint to each problem."
@@ -86,9 +86,9 @@ export default async function PracticePage() {
             <FilteredGroups groups={worksheets.groups} levels={LEVEL_LABEL} noun="worksheets" unit={['worksheet', 'worksheets']} contents />
           </Suspense>
         </div>
-      </PracticeSection>
+      </EditorialSection>
 
-      <PracticeSection
+      <EditorialSection
         id="behavioural"
         title="Behavioural and leadership"
         description="Hiring manager and leadership principle questions. Each model answer shows the shape of a strong story and marks the details only you can supply."
@@ -108,26 +108,11 @@ export default async function PracticePage() {
             <ContentsGroup key={g.id} group={g} unit={['worksheet', 'worksheets']} />
           ))}
         </div>
-      </PracticeSection>
+      </EditorialSection>
 
       <div className="mt-24">
         <SuggestTopic hub="Practice" />
       </div>
     </div>
-  )
-}
-
-/** One practice area: a heavy rule, the condensed head and its standfirst, then its pages. */
-function PracticeSection({ id, title, description, children }: { id: string; title: string; description: string; children: ReactNode }) {
-  return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="mt-24 scroll-mt-20 first-of-type:mt-0">
-      <div className="cb-opens mb-8 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
-        <h2 id={`${id}-heading`} className="cb-section-head">
-          {title}
-        </h2>
-        <p className="mt-4 max-w-[60ch] text-base lg:mt-1">{description}</p>
-      </div>
-      {children}
-    </section>
   )
 }

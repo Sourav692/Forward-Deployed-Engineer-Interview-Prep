@@ -16,6 +16,7 @@ import { MockTimer } from '@/components/progress/MockTimer'
 import { MOCK_MINUTES, MOCK_MODULE, mockRoundsFor } from '@/components/progress/mock-rubric'
 import { cx, focusRing } from '@/components/ui'
 import { lessonExplorer } from '@/lib/explorers/load'
+import { isLearnTrack } from '@/lib/curriculum-href'
 
 /**
  * Lesson page (FE-07). One static page per synced, published lesson: the params come
@@ -61,6 +62,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   // The scenario mocks (every T8.2 lesson after the method lesson) get a timer and a scorer (FE-15).
   const mockRounds = mod.slug === MOCK_MODULE ? mockRoundsFor(lesson.slug) : []
   const scenarioMock = mockRounds.length > 0
+  // An area-served track (/interview) takes its area's Editorial head and plain nav labels.
+  const area = !isLearnTrack(track.slug)
 
   return (
     <>
@@ -116,7 +119,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             </div>
           )}
 
-          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} />
+          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} tag={area ? 'Interview' : undefined} />
 
           {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} rounds={mockRounds} />}
 
@@ -137,16 +140,16 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             className="no-print sticky bottom-0 z-20 -mx-4 mt-8 grid grid-cols-2 gap-3 border-t border-border bg-bg/95 px-4 py-3 text-sm backdrop-blur sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-t-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none"
           >
             {prev ? (
-              <NavLink href={prev.href} dir="prev" label={prev.title} />
+              <NavLink href={prev.href} plain={area} dir="prev" label={prev.title} />
             ) : (
-              <NavLink href={learnHref.module(mod)} dir="prev" label={`${mod.title} overview`} />
+              <NavLink href={learnHref.module(mod)} plain={area} dir="prev" label={`${mod.title} overview`} />
             )}
             {next ? (
-              <NavLink href={next.href} dir="next" label={next.title} />
+              <NavLink href={next.href} plain={area} dir="next" label={next.title} />
             ) : nextModule ? (
-              <NavLink href={learnHref.module(nextModule)} dir="next" label={nextModule.title} />
+              <NavLink href={learnHref.module(nextModule)} plain={area} dir="next" label={nextModule.title} />
             ) : (
-              <NavLink href={learnHref.module(mod)} dir="next" label={`Back to ${mod.title}`} />
+              <NavLink href={learnHref.module(mod)} plain={area} dir="next" label={`Back to ${mod.title}`} />
             )}
           </nav>
         </div>
@@ -155,18 +158,23 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   )
 }
 
-function NavLink({ href, dir, label }: { href: string; dir: 'prev' | 'next'; label: string }) {
+/** `plain` drops the arrow glued to the label (Editorial theme); the accessible name keeps it. */
+function NavLink({ href, dir, label, plain = false }: { href: string; dir: 'prev' | 'next'; label: string; plain?: boolean }) {
+  const word = dir === 'prev' ? '← Previous' : 'Next →'
   return (
     <Link
       href={href}
       rel={dir}
+      aria-label={plain ? `${word} ${label}` : undefined}
       className={cx(
         'flex min-w-0 flex-col rounded-md px-2 py-1 hover:bg-surface-2',
         dir === 'next' && 'col-start-2 items-end text-right',
         focusRing,
       )}
     >
-      <span className="text-xs text-subtle">{dir === 'prev' ? '← Previous' : 'Next →'}</span>
+      <span className="text-xs text-subtle">
+        {plain ? (dir === 'prev' ? 'Previous' : 'Next') : word}
+      </span>
       <span className="w-full truncate font-semibold">{label}</span>
     </Link>
   )
