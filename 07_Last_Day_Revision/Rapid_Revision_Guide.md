@@ -1,8 +1,8 @@
-# FDE AI System Design — Rapid Revision Guide
+# FDE AI System Design: Rapid Revision Guide
 
 > **Purpose:** Last-day revision for an AI/Agentic FDE problem-decomposition interview.
 >
-> Don't memorise architectures. Memorise the **decision process**.
+> Memorise the **decision process** rather than architectures.
 
 ---
 
@@ -46,7 +46,7 @@ Trade-offs
 
 ---
 
-# 2. Discovery — What Should I Ask?
+# 2. Discovery: What Should I Ask?
 
 Remember:
 
@@ -172,7 +172,7 @@ Don't invent numbers.
 
 Ask the customer and turn requirements into measurable SLOs.
 
-Example (the 5 seconds is a placeholder — confirm the real number with the customer):
+Example (the 5 seconds is a placeholder; confirm the real number with the customer):
 
 ```text
 Bad:
@@ -315,7 +315,7 @@ Freshness risk ↑
 
 ---
 
-# 6. RAG — Rapid Version
+# 6. RAG: Rapid Version
 
 ## Ingestion
 
@@ -355,7 +355,7 @@ Remember:
 
 ### Precision
 
-> How much retrieved information is actually relevant?
+> How much retrieved information is relevant?
 
 ### Groundedness
 
@@ -379,11 +379,11 @@ Remember:
 
 ---
 
-# 7. Agentic Systems — Rapid Version
+# 7. Agentic Systems: Rapid Version
 
 First ask:
 
-> **Do I actually need an agent?**
+> **Do I need an agent?**
 
 ```text
 Deterministic problem
@@ -397,7 +397,7 @@ Agent
 
 Then ask:
 
-> **Do I actually need multiple agents?**
+> **Do I need multiple agents?**
 
 Don't create multi-agent architecture without a reason.
 
@@ -488,7 +488,7 @@ Executor acts
 
 Do not use the LLM as the final authority for deterministic business rules.
 
-Example (illustrative thresholds — the customer sets the real ones, including the middle band):
+Example (illustrative thresholds; the customer sets the real ones, including the middle band):
 
 ```text
 Refund < $100
@@ -515,7 +515,7 @@ Defense in Depth
 
 ---
 
-# 10. Scaling — Rapid Version
+# 10. Scaling: Rapid Version
 
 Interviewer says:
 
@@ -566,7 +566,7 @@ One tenant consumes shared resources and hurts others.
 
 ---
 
-# 11. Latency — Rapid Version
+# 11. Latency: Rapid Version
 
 First decompose:
 
@@ -618,7 +618,7 @@ Don't optimise only average latency.
 
 ---
 
-# 12. Cost — Rapid Version
+# 12. Cost: Rapid Version
 
 Break cost down:
 
@@ -671,11 +671,11 @@ Cost
 Successful Tasks
 ```
 
-> **Cost per successful task** — the one I'd lead with, because it counts retries and failed attempts.
+> **Cost per successful task**: the one I'd lead with, because it counts retries and failed attempts.
 
 ---
 
-# 13. Reliability — Rapid Version
+# 13. Reliability: Rapid Version
 
 When something fails:
 
@@ -745,7 +745,7 @@ A checkpoint doesn't make an external action happen exactly once. If a write may
 
 ---
 
-# 14. Evaluation — Rapid Version
+# 14. Evaluation: Rapid Version
 
 ## RAG
 
@@ -808,7 +808,7 @@ Successful Task
 
 ---
 
-# 15. Release — Rapid Version
+# 15. Release: Rapid Version
 
 Avoid:
 
@@ -865,7 +865,7 @@ Kill Switch
 
 ---
 
-# 16. Observability — Rapid Version
+# 16. Observability: Rapid Version
 
 Trace the entire request:
 
@@ -911,7 +911,7 @@ Outcome
 
 ---
 
-# 17. Security — Rapid Version
+# 17. Security: Rapid Version
 
 ### Authentication
 
@@ -953,7 +953,7 @@ Defense in Depth
 
 ---
 
-# 18. Trade-Offs — Rapid Version
+# 18. Trade-Offs: Rapid Version
 
 Almost every decision should have:
 
@@ -1013,9 +1013,9 @@ More Agents
 
 ---
 
-# 🔥 Trigger → Concept Cheat Sheet
+# Trigger → Concept Cheat Sheet
 
-This is the section to revise immediately before the interview.
+Revise this section immediately before the interview.
 
 | Interviewer Says                      | Think                                         |
 | ------------------------------------- | --------------------------------------------- |
@@ -1079,7 +1079,7 @@ This is the section to revise immediately before the interview.
 
 ---
 
-# ⚡ 60-Second Architecture Pressure Test
+# 60-Second Architecture Pressure Test
 
 After drawing your architecture, quickly ask yourself:
 
@@ -1117,7 +1117,7 @@ After drawing your architecture, quickly ask yourself:
 
 ---
 
-# 🎯 10 Rapid Practice Questions
+# 10 Rapid Practice Questions
 
 Try answering each in **1–2 minutes**, not 20 minutes.
 
@@ -1270,18 +1270,18 @@ So I introduce Component A
 Trade-off is B
 ```
 
-> **Don't demonstrate how many architecture terms you know. Demonstrate that you know exactly when and why to use them.**
+> **Show that you know exactly when and why to use each architecture term.**
 
 ---
 
 ## Sources (checked 27 Sep 2026)
 
-- [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/) — SLI, SLO and SLA definitions
-- [Google SRE Workbook - Canarying Releases](https://sre.google/workbook/canarying-releases/) — canary as a partial, time-limited rollout that is evaluated
-- [AWS Builders' Library - Timeouts, retries and backoff with jitter](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter) — backoff and jitter; retry only when safe to repeat
-- [Azure Architecture Center - Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) — stop calling a failing dependency for a while
-- [Amazon SQS Developer Guide - Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) — retry, then move to a DLQ
-- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency key honoured on retry
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — checkpoints don't stop duplicate side effects; idempotent consumers
-- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — apply permissions during retrieval
-- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/) — don't rely on the prompt to hide unauthorised data
+- [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/): SLI, SLO and SLA definitions
+- [Google SRE Workbook - Canarying Releases](https://sre.google/workbook/canarying-releases/): canary as a partial, time-limited rollout that is evaluated
+- [AWS Builders' Library - Timeouts, retries and backoff with jitter](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter): backoff and jitter; retry only when safe to repeat
+- [Azure Architecture Center - Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker): stop calling a failing dependency for a while
+- [Amazon SQS Developer Guide - Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html): retry, then move to a DLQ
+- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests): idempotency key honoured on retry
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): checkpoints don't stop duplicate side effects; idempotent consumers
+- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/): apply permissions during retrieval
+- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/): don't rely on the prompt to hide unauthorised data

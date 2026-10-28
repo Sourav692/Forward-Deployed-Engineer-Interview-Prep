@@ -4,7 +4,7 @@
 
 ◷ 6 min
 
-Tenant isolation is not a prompt instruction. Treat it as a system invariant carried by every query, cache key and log, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
+Treat tenant isolation as a system invariant carried by every query, cache key and log, never as a prompt instruction, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
 **Objectives:**
 

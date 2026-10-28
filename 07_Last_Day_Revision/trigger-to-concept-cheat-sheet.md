@@ -1,4 +1,4 @@
-# FDE Interview — Trigger → Concept Cheat Sheet
+# FDE Interview: Trigger → Concept Cheat Sheet
 
 Use this to recognise what an interviewer is testing and decide your next move. A trigger suggests a question or requirement; it does not automatically justify a component.
 
@@ -10,7 +10,7 @@ HEAR THE TRIGGER → RECALL THE CONCEPT
 
 **Answer pattern:** “That suggests ___. I’d clarify ___ before choosing ___. The main trade-off is ___.”
 
-## 1. Discovery and Requirements — Modules 1–3
+## 1. Discovery and Requirements: Modules 1–3
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -26,7 +26,7 @@ HEAR THE TRIGGER → RECALL THE CONCEPT
 
 **Recall discovery:** WHY → TODAY → WHO/HOW MUCH → WHAT → HOW FAR → BOUNDARIES.
 
-## 2. Architecture Responsibilities — Module 4
+## 2. Architecture Responsibilities: Module 4
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -48,7 +48,7 @@ Orchestrator: Which step / transition next?
 State store: Where did the task stop?
 ```
 
-## 3. RAG and Enterprise Data — Module 5
+## 3. RAG and Enterprise Data: Module 5
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -59,7 +59,7 @@ State store: Where did the task stop?
 | “Exact product code” | Keyword / hybrid matching | Compare exact-term and meaning-based retrieval | 5 |
 | “Old policy answer” | Freshness and version | Update pipeline, metadata, applicability | 5 |
 | “Right evidence, wrong answer” | Context use / generation | Was evidence retained, and do claims follow it? | 5, 13 |
-| “Includes citations” | Evidence support | Do sources actually support the important claims? | 5, 13 |
+| “Includes citations” | Evidence support | Do sources support the important claims? | 5, 13 |
 | “Different document permissions” | Authorised retrieval | Enforce before context; update permissions and cache scope | 5, 16 |
 
 ```text
@@ -70,7 +70,7 @@ Source → Parse/index → Access/version filters
 
 RAG = retrieval-augmented generation. Recall concerns finding relevant evidence; precision concerns how much retrieved evidence is relevant. Groundedness concerns support, not whether the source is current and correct for the case.
 
-## 4. Agents, Tools, Actions, and Approval — Modules 6–8
+## 4. Agents, Tools, Actions, and Approval: Modules 6–8
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -95,7 +95,7 @@ Agent recommends → Policy decides → Executor acts
 
 HITL = human-in-the-loop. High model confidence is not permission to act. Approval does not grant unrelated access or reverse completed transactions.
 
-## 5. Scale, Latency, and Cost — Modules 9–11
+## 5. Scale, Latency, and Cost: Modules 9–11
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -126,7 +126,7 @@ Cost: Total cost across attempts ÷ successful tasks
 
 Streaming does not necessarily reduce computation. Async does not automatically shorten completion. A queue does not create capacity. TTFT marks only when output starts; useful user output and confirmed action completion are separate measurements.
 
-## 6. Failure and Recovery — Module 12
+## 6. Failure and Recovery: Module 12
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -139,9 +139,9 @@ Streaming does not necessarily reduce computation. Async does not automatically 
 | “Message fails repeatedly” | DLQ | Dead-letter queue owner, diagnosis, safe replay | 12 |
 | “Optional feature breaks everything” | Blast radius / degradation | Keep safe independent capabilities available | 12 |
 
-**Rule:** timeout ≠ confirmed failure; checkpoint ≠ exactly-once external effect; DLQ ≠ completion. Never generate a fresh logical action key simply because the previous attempt timed out.
+**Rule:** timeout ≠ confirmed failure; checkpoint ≠ exactly-once external effect; DLQ ≠ completion. Never generate a fresh logical action key because the previous attempt timed out.
 
-## 7. Evaluate, Release, and Operate — Modules 13–15
+## 7. Evaluate, Release, and Operate: Modules 13–15
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -174,7 +174,7 @@ Audit: Business decision/action trail
 
 Observe tool operations, state transitions, decision summaries, and evidence, not private model chain-of-thought, which is often hidden and not always faithful. Shadow candidates must not duplicate real actions. Keep telemetry access and retention appropriate to sensitive data.
 
-## 8. Enterprise Security — Module 16
+## 8. Enterprise Security: Module 16
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -188,7 +188,7 @@ Observe tool operations, state transitions, decision summaries, and evidence, no
 
 **Distinguish:** authentication = who; authorisation = allowed resource/operation; business policy = whether this action meets the rule; tenant fairness = shared-capacity allocation.
 
-## 9. Trade-Offs and Interview Execution — Modules 17–18
+## 9. Trade-Offs and Interview Execution: Modules 17–18
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
@@ -227,20 +227,20 @@ Why this choice?→ Requirement + trade-off + verification
 
 ## Sources (checked 27 Sep 2026)
 
-- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/) — access control before model context; permission-aware retrieval
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — access control before model context; untrusted retrieved and tool input
-- [Claude docs - Rate limits](https://platform.claude.com/docs/en/api/rate-limits) — provider rate limits cap throughput
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — checkpoints don't stop duplicate side effects; at-least-once redelivery
-- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts) — checkpoints don't stop duplicate side effects
-- [Anthropic Engineering, How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) — multi-agent overhead
-- [Cemri et al. 2025, Why Do Multi-Agent LLM Systems Fail? (MAST, arXiv 2503.13657)](https://arxiv.org/abs/2503.13657) — multi-agent overhead
-- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410) — chain-of-thought is not always faithful
-- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency key reuse and scope
-- [IETF draft-ietf-httpapi-idempotency-key-header-07 (expired) s2.7](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html) — idempotency key reuse and scope
-- [OpenAI API docs - Batch API](https://developers.openai.com/api/docs/guides/batch) — batch discounts
-- [Claude docs - Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) — batch discounts
-- [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena (arXiv 2306.05685)](https://arxiv.org/abs/2306.05685) — LLM-judge bias, calibration
-- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — permission-aware retrieval
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — untrusted retrieved and tool input
-- [Amazon Bedrock User Guide: Cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html) — cross-region inference
-- [Amazon Bedrock User Guide: Geographic cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html) — cross-region inference
+- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/): access control before model context; permission-aware retrieval
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): access control before model context; untrusted retrieved and tool input
+- [Claude docs - Rate limits](https://platform.claude.com/docs/en/api/rate-limits): provider rate limits cap throughput
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): checkpoints don't stop duplicate side effects; at-least-once redelivery
+- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts): checkpoints don't stop duplicate side effects
+- [Anthropic Engineering, How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system): multi-agent overhead
+- [Cemri et al. 2025, Why Do Multi-Agent LLM Systems Fail? (MAST, arXiv 2503.13657)](https://arxiv.org/abs/2503.13657): multi-agent overhead
+- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410): chain-of-thought is not always faithful
+- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests): idempotency key reuse and scope
+- [IETF draft-ietf-httpapi-idempotency-key-header-07 (expired) s2.7](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html): idempotency key reuse and scope
+- [OpenAI API docs - Batch API](https://developers.openai.com/api/docs/guides/batch): batch discounts
+- [Claude docs - Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): batch discounts
+- [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena (arXiv 2306.05685)](https://arxiv.org/abs/2306.05685): LLM-judge bias, calibration
+- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/): permission-aware retrieval
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): untrusted retrieved and tool input
+- [Amazon Bedrock User Guide: Cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html): cross-region inference
+- [Amazon Bedrock User Guide: Geographic cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html): cross-region inference

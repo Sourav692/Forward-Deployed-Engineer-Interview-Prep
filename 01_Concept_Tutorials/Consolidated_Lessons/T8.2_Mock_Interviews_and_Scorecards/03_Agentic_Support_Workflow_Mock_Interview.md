@@ -4,7 +4,7 @@
 
 ◷ 6 min
 
-The pilot did not fail on wording. It refunded the wrong order and trusted a stale event, so practise separating proposal from execution, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
+The pilot refunded the wrong order and trusted a stale event, so practise separating proposal from execution, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
 **Objectives:**
 

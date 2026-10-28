@@ -1,4 +1,4 @@
-# FDE AI System Design — Interview Learning Roadmap
+# FDE AI System Design: Interview Learning Roadmap
 
 > **Goal:** Build a reusable problem-decomposition and system-design framework for AI/Agentic FDE interviews.
 >
@@ -44,7 +44,7 @@ Observability + Operations
 Trade-offs
 ```
 
-The key principle throughout the interview:
+Follow this chain throughout the interview:
 
 ```text
 Customer Need
@@ -62,7 +62,7 @@ Do **not** start with technology.
 
 ---
 
-# Module 1 — FDE Problem Decomposition
+# Module 1: FDE Problem Decomposition
 
 ## Goal
 
@@ -154,17 +154,17 @@ SUCCESS
 How do we measure it?
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. A bank says, **"We want an AI agent for customer support."** What are the first 5–7 questions you would ask before discussing architecture?
 2. A logistics customer says, **"Our operations team spends too much time resolving shipment exceptions."** How would you understand the current workflow before proposing AI?
-3. The customer immediately says, **"We want a multi-agent architecture."** How would you determine whether multi-agent is actually required?
+3. The customer immediately says, **"We want a multi-agent architecture."** How would you determine whether multi-agent is required?
 4. A customer says they want to **reduce support cost by 30%**. What additional success metrics would you define before designing the system?
 5. What questions would you ask to determine whether the AI should **answer, recommend, or autonomously act**?
 
 ---
 
-# Module 2 — Functional Requirements
+# Module 2: Functional Requirements
 
 ## Goal
 
@@ -257,7 +257,7 @@ Escalate
 Audit
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. For an **enterprise customer-support agent**, define 6–8 functional requirements.
 2. A support agent must answer policy questions, check order status, and issue eligible refunds. Break these into functional requirements.
@@ -267,7 +267,7 @@ Audit
 
 ---
 
-# Module 3 — Non-Functional Requirements
+# Module 3: Non-Functional Requirements
 
 ## Goal
 
@@ -301,7 +301,7 @@ Observability
 Auditability
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. The customer says, **"The system should be fast."** How would you turn that into a measurable NFR?
 2. The system serves **50 enterprise customers and 100K total users**. Which NFRs become especially important?
@@ -311,11 +311,11 @@ Auditability
 
 ---
 
-# Module 4 — Core Architecture Building Blocks
+# Module 4: Core Architecture Building Blocks
 
 ## Goal
 
-Know the reusable building blocks and, more importantly, **what requirement triggers each one**.
+Know the reusable building blocks and, above all, **what requirement triggers each one**.
 
 ## Topics
 
@@ -400,7 +400,7 @@ Why do I need it?
 Which requirement triggered it?
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Explain the difference between an **API Gateway and Model Gateway** in 30 seconds.
 2. When would you introduce an **orchestrator** rather than putting everything inside one agent?
@@ -410,7 +410,7 @@ Which requirement triggered it?
 
 ---
 
-# Module 5 — RAG & Enterprise Data
+# Module 5: RAG & Enterprise Data
 
 ## Goal
 
@@ -456,7 +456,7 @@ LLM
 - Static vs live data
 - Groundedness
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Your RAG system frequently **fails to retrieve the correct document**. What would you investigate?
 2. It retrieves the correct document but also returns **many irrelevant chunks**. What problem is this and how would you improve it?
@@ -466,7 +466,7 @@ LLM
 
 ---
 
-# Module 6 — Agentic Architecture
+# Module 6: Agentic Architecture
 
 ## Goal
 
@@ -496,7 +496,7 @@ Reason
 Action
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. When would you choose a **deterministic workflow instead of an agent**?
 2. A customer wants separate RAG, refund, order and escalation agents. Would you accept this architecture immediately? What would you ask first?
@@ -506,7 +506,7 @@ Action
 
 ---
 
-# Module 7 — Tools, Actions & Enterprise Integration
+# Module 7: Tools, Actions & Enterprise Integration
 
 ## Goal
 
@@ -537,7 +537,7 @@ Enterprise System
 - Retry
 - Circuit breaker
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Why would you avoid giving an LLM direct unrestricted access to a production CRM?
 2. An agent issues a refund, the API times out, and the agent retries. How do you prevent a **double refund**?
@@ -547,7 +547,7 @@ Enterprise System
 
 ---
 
-# Module 8 — Guardrails, Policy & Human Approval
+# Module 8: Guardrails, Policy & Human Approval
 
 ## Goal
 
@@ -572,7 +572,7 @@ Executor acts
 - Kill switch
 - Least privilege
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Refunds below $100 can happen automatically, while refunds above $500 require manager approval. Where should this rule live?
 2. Why shouldn't the LLM itself be the final authority for a deterministic financial policy?
@@ -582,7 +582,7 @@ Executor acts
 
 ---
 
-# Module 9 — Scaling AI Systems
+# Module 9: Scaling AI Systems
 
 ## Goal
 
@@ -605,7 +605,7 @@ Handle:
 - Load shedding
 - Multi-tenancy
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Your prototype supports 100 users. The customer now expects **100K users**. Walk through what changes.
 2. Tenant A suddenly consumes 70% of model capacity and Tenant B starts experiencing poor latency. What is happening?
@@ -615,7 +615,7 @@ Handle:
 
 ---
 
-# Module 10 — Latency Optimisation ⚡
+# Module 10: Latency Optimisation
 
 ## Goal
 
@@ -646,7 +646,7 @@ Total Latency
 - Queue latency
 - Async processing
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Average latency is 3 seconds but P99 is 25 seconds. What does this tell you?
 2. Your agent calls CRM, order and ticket APIs sequentially. Each takes 1 second. What obvious optimisation would you consider?
@@ -656,7 +656,7 @@ Total Latency
 
 ---
 
-# Module 11 — Cost Optimisation 💰
+# Module 11: Cost Optimisation
 
 ## Goal
 
@@ -688,7 +688,7 @@ Cost / Task
 - Cost attribution
 - Cost per successful task
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. The customer's LLM bill doubles after launching an agent. What would you inspect first?
 2. Why might **model routing** reduce cost without materially reducing quality?
@@ -698,7 +698,7 @@ Cost / Task
 
 ---
 
-# Module 12 — Reliability & Failure Handling
+# Module 12: Reliability & Failure Handling
 
 ## Goal
 
@@ -738,17 +738,17 @@ Recover?
 Escalate?
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Your primary model provider becomes unavailable. What happens next?
 2. A tool API returns intermittent 503 errors. What retry strategy would you use?
-3. Why can aggressive retries actually make an outage worse?
+3. Why can aggressive retries make an outage worse?
 4. A recommendation feature fails. Should the entire customer-support system become unavailable?
 5. A background event fails processing after several retries. What should happen next?
 
 ---
 
-# Module 13 — AI Evaluation
+# Module 13: AI Evaluation
 
 ## Goal
 
@@ -786,7 +786,7 @@ Good Answer
 Successful Task
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. How would you evaluate a customer-support system containing both **RAG and action-taking agents**?
 2. Give examples of **deterministic checks** for an agent.
@@ -796,7 +796,7 @@ Successful Task
 
 ---
 
-# Module 14 — Release & Change Management
+# Module 14: Release & Change Management
 
 ## Goal
 
@@ -828,7 +828,7 @@ Monitor
 - Rollback
 - Kill switch
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Your team creates a new prompt that performs better on 20 examples. Would you immediately deploy it?
 2. Explain when you would use **shadow traffic vs canary deployment**.
@@ -838,7 +838,7 @@ Monitor
 
 ---
 
-# Module 15 — Observability & Production Operations
+# Module 15: Observability & Production Operations
 
 ## Goal
 
@@ -873,7 +873,7 @@ Tool
 Response
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. A user says, **"My request took 18 seconds yesterday."** What telemetry would you inspect?
 2. Explain the difference between **logging, metrics and tracing** using an agent request.
@@ -883,7 +883,7 @@ Response
 
 ---
 
-# Module 16 — Security & Enterprise Multi-Tenancy
+# Module 16: Security & Enterprise Multi-Tenancy
 
 ## Goal
 
@@ -920,7 +920,7 @@ Human Approval
 Audit
 ```
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. Employee A can access HR documents while Employee B cannot. How should this affect retrieval?
 2. Why is filtering unauthorised documents **after generation** a weak security design?
@@ -930,7 +930,7 @@ Audit
 
 ---
 
-# Module 17 — Trade-Off Thinking
+# Module 17: Trade-Off Thinking
 
 ## Goal
 
@@ -960,7 +960,7 @@ Explain **why** you made architecture decisions.
 - More autonomy → human effort ↓, business risk ↑
 - Async → better scalability, immediate response ↓
 
-## 🎯 Practice Questions
+## Practice Questions
 
 1. You can improve answer quality by adding another LLM critic, but it adds 3 seconds and 40% cost. How would you reason about the decision?
 2. The customer wants maximum retrieval recall but also very low latency. What trade-off would you discuss?
@@ -970,7 +970,7 @@ Explain **why** you made architecture decisions.
 
 ---
 
-# Module 18 — End-to-End FDE Interview Execution
+# Module 18: End-to-End FDE Interview Execution
 
 ## Goal
 
@@ -1012,11 +1012,11 @@ Combine everything into one repeatable interview flow.
 17. Trade-Offs
 ```
 
-## 🎯 Full Case-Study Practice
+## Full Case-Study Practice
 
 These should be solved **without looking at the earlier modules**.
 
-### Case 1 — Customer Support Agent
+### Case 1: Customer Support Agent
 
 > A large e-commerce company wants an AI customer-support system that can answer questions, check orders and issue refunds.
 
@@ -1036,7 +1036,7 @@ Discovery
 
 ---
 
-### Case 2 — Enterprise Knowledge Assistant
+### Case 2: Enterprise Knowledge Assistant
 
 > A multinational company wants a ChatGPT-style assistant over millions of internal documents, but employees have different access permissions.
 
@@ -1053,7 +1053,7 @@ Evaluation
 
 ---
 
-### Case 3 — Logistics Exception Agent
+### Case 3: Logistics Exception Agent
 
 > A logistics company wants AI to detect shipment exceptions and automatically resolve routine cases.
 
@@ -1072,7 +1072,7 @@ Audit
 
 ---
 
-### Case 4 — SRE Incident Agent
+### Case 4: SRE Incident Agent
 
 > An enterprise wants an AI agent that investigates production incidents and can execute remediation actions.
 
@@ -1091,7 +1091,7 @@ Audit
 
 ---
 
-### Case 5 — Deep Research Agent
+### Case 5: Deep Research Agent
 
 > Build an enterprise research agent that searches multiple sources and may run for 10–20 minutes.
 
@@ -1109,7 +1109,7 @@ Evaluation
 
 ---
 
-### Case 6 — Multi-Tenant AI Platform
+### Case 6: Multi-Tenant AI Platform
 
 > Build a shared AI platform supporting 100 enterprise customers and multiple LLM providers.
 
@@ -1130,7 +1130,7 @@ Observability
 
 # Recommended Learning Sequence
 
-## Phase 1 — Problem Decomposition
+## Phase 1: Problem Decomposition
 
 ```text
 Module 1 — Discovery
@@ -1142,7 +1142,7 @@ Module 3 — Non-Functional Requirements
 
 ---
 
-## Phase 2 — Architecture
+## Phase 2: Architecture
 
 ```text
 Module 4 — Core Components
@@ -1156,7 +1156,7 @@ Module 8 — Policy / HITL
 
 ---
 
-## Phase 3 — Production Scale
+## Phase 3: Production Scale
 
 ```text
 Module 9  — Scaling
@@ -1169,7 +1169,7 @@ Module 12 — Reliability
 
 ---
 
-## Phase 4 — Production Quality
+## Phase 4: Production Quality
 
 ```text
 Module 13 — Evaluation
@@ -1182,7 +1182,7 @@ Module 16 — Security
 
 ---
 
-## Phase 5 — Interview Mastery
+## Phase 5: Interview Mastery
 
 ```text
 Module 17 — Trade-Offs
@@ -1195,9 +1195,9 @@ At this stage:
 
 ---
 
-# 🔥 Trigger → Concept Cheat Sheet
+# Trigger → Concept Cheat Sheet
 
-The objective is not to memorise definitions.
+Skip memorising definitions.
 
 Train yourself to hear a customer/interviewer statement and automatically recognise the architecture concern.
 
@@ -1402,18 +1402,18 @@ but more infrastructure
 
 # One-Line FDE Framework
 
-> **Start from the customer problem, turn discovery into measurable requirements, build the simplest happy-path architecture, and then pressure-test it across scale, latency, cost, reliability, security, AI quality and operations—adding components only when a requirement justifies them.**
+> **Start from the customer problem, turn discovery into measurable requirements, build the simplest happy-path architecture, and then pressure-test it across scale, latency, cost, reliability, security, AI quality and operations, adding components only when a requirement justifies them.**
 
 ---
 
 ## Sources (checked 27 Sep 2026)
 
-- [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/) — SLI, SLO and SLA definitions
-- [Google SRE Workbook - Canarying Releases](https://sre.google/workbook/canarying-releases/) — canary as a partial, time-limited rollout that is evaluated
-- [AWS Builders' Library - Timeouts, retries and backoff with jitter](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter) — retries can amplify an outage; backoff and jitter
-- [Azure Architecture Center - Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) — stop calling a failing dependency for a while
-- [Amazon SQS Developer Guide - Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) — retry, then move to a DLQ
-- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency keys prevent a double refund on retry
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — at-least-once delivery; checkpoints don't stop duplicate side effects
-- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — permission-aware retrieval
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — least privilege and controlled tools for agents
+- [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/): SLI, SLO and SLA definitions
+- [Google SRE Workbook - Canarying Releases](https://sre.google/workbook/canarying-releases/): canary as a partial, time-limited rollout that is evaluated
+- [AWS Builders' Library - Timeouts, retries and backoff with jitter](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter): retries can amplify an outage; backoff and jitter
+- [Azure Architecture Center - Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker): stop calling a failing dependency for a while
+- [Amazon SQS Developer Guide - Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html): retry, then move to a DLQ
+- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests): idempotency keys prevent a double refund on retry
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): at-least-once delivery; checkpoints don't stop duplicate side effects
+- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/): permission-aware retrieval
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): least privilege and controlled tools for agents

@@ -1,4 +1,4 @@
-# Module 13 — AI Evaluation
+# Module 13: AI Evaluation
 
 ## Concise Interview Module
 
@@ -29,13 +29,13 @@ Both:  Quality + safety + latency + cost
 
 ### 3. Essential Concepts
 
-#### 1. Define Success — Start From the Task
+#### 1. Define Success: Start From the Task
 
 Agree on correct completion, unacceptable outcomes, and operating limits. A refund task succeeds only when the correct permitted refund is confirmed, not when the model says “done.”
 
 > “What must be true in the system of record for us to count this task as successful?”
 
-#### 2. Representative Dataset — Cover Real Work and Hard Cases
+#### 2. Representative Dataset: Cover Real Work and Hard Cases
 
 Include normal requests, ambiguous inputs, missing evidence, restricted data, tool failures, long workflows, and harmful instruction attempts. Separate development examples from held-out assessment.
 
@@ -47,7 +47,7 @@ Real task mix + edge/failure cases + critical segments
 
 > “I’d report results by task and risk segment, not only one overall score.”
 
-#### 3. Retrieval Evaluation — Did We Find the Evidence?
+#### 3. Retrieval Evaluation: Did We Find the Evidence?
 
 Check relevance and recall against labelled evidence, with a defined retrieval cutoff. Inspect whether relevant content survives into final context.
 
@@ -58,13 +58,13 @@ Correct evidence present → Inspect generation next
 
 > “I’d separate candidate retrieval from context selection so we know where evidence was lost.”
 
-#### 4. Answer Evaluation — Correct, Supported, and Useful?
+#### 4. Answer Evaluation: Correct, Supported, and Useful?
 
 Evaluate correctness, groundedness, relevance, citations, and appropriate limitation statements. Groundedness means claims are supported by evidence; stale evidence can still make an answer wrong.
 
 > “I’d check claim support and case correctness rather than reward the presence of a citation.”
 
-#### 5. Agent Evaluation — Inspect Operations and Outcomes
+#### 5. Agent Evaluation: Inspect Operations and Outcomes
 
 Check routing, tool selection, argument validity, access/policy compliance, observable trajectory, and actual completion.
 
@@ -74,9 +74,9 @@ Request → Tool request → Arguments → Result → Final state
 
 Evaluate recorded operations and decision summaries, not private model chain-of-thought, which is often hidden and not always faithful. Allow different valid paths when the task permits them.
 
-> “The response and the enterprise state must agree about what actually happened.”
+> “The response and the enterprise state must agree about what happened.”
 
-#### 6. Deterministic Checks — Test Explicit Conditions
+#### 6. Deterministic Checks: Test Explicit Conditions
 
 Use code or trusted assertions for schemas, required fields, known tool permissions, policy boundaries, duplicate effects, latency limits, and confirmed final state.
 
@@ -87,7 +87,7 @@ Correct order updated? No duplicate refund?
 
 > “I’d use deterministic checks wherever the requirement has an unambiguous test.”
 
-#### 7. Semantic Evaluation — Use Clear Rubrics
+#### 7. Semantic Evaluation: Use Clear Rubrics
 
 Human or model-assisted judges can assess relevance, completeness, explanation quality, and claim support. Calibrate against expert labels and inspect disagreements.
 
@@ -95,7 +95,7 @@ Human or model-assisted judges can assess relevance, completeness, explanation q
 
 Keep judged content separate from judge instructions. Track judge/rubric versions and limitations; do not rely on the same model's self-confidence as proof.
 
-#### 8. Offline vs Online — Test Before and Observe After Release
+#### 8. Offline vs Online: Test Before and Observe After Release
 
 Offline evaluation supports repeatable candidate comparisons. Online evaluation uses production traces, outcomes, overrides, and user feedback to detect real behaviour and drift.
 
@@ -106,7 +106,7 @@ Production → Outcomes / traces → New cases / regression checks
 
 User ratings are useful but biased and incomplete. Reopened tickets or incorrect downstream state can contradict a positive rating.
 
-#### 9. Compare and Diagnose — Quality Within Operating Limits
+#### 9. Compare and Diagnose: Quality Within Operating Limits
 
 Compare candidates on the same task set with quality, policy, latency, and cost criteria. Repeat or quantify uncertainty for variable behaviour where needed.
 
@@ -227,5 +227,5 @@ Model-assisted judging needs a clear rubric, versioning, and calibration against
 
 ## Sources (checked 27 Sep 2026)
 
-- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410) — chain-of-thought is not always faithful
-- [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena (arXiv 2306.05685)](https://arxiv.org/abs/2306.05685) — LLM-judge bias, calibration
+- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410): chain-of-thought is not always faithful
+- [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena (arXiv 2306.05685)](https://arxiv.org/abs/2306.05685): LLM-judge bias, calibration

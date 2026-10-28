@@ -1,4 +1,4 @@
-# Module 15 — Observability & Production Operations
+# Module 15: Observability & Production Operations
 
 ## Concise Interview Module
 
@@ -26,11 +26,11 @@ Request → Router → Workflow/agent
                          Actual outcome
 ```
 
-Actual order and branching depend on the task. Correlate the whole path, including queue wait, retries, and asynchronous continuation.
+The order and branching depend on the task. Correlate the whole path, including queue wait, retries, and asynchronous continuation.
 
 ### 3. Essential Concepts
 
-#### 1. Logs — Record Specific Events
+#### 1. Logs: Record Specific Events
 
 Use structured events for errors, state transitions, policy outcomes, and dependency responses with task/request identifiers.
 
@@ -42,7 +42,7 @@ task_id + timestamp + stage + version + status/error
 
 Avoid indiscriminate prompt, credential, or document dumps. Access and retention must match data sensitivity.
 
-#### 2. Metrics — Measure Patterns Over Time
+#### 2. Metrics: Measure Patterns Over Time
 
 Track request/task rates, latency distributions, failures, queue age, active work, tokens, cost, escalations, and task outcomes.
 
@@ -55,7 +55,7 @@ Tool errors ↑          → Dependency issue candidate
 
 Segment by important workload, tenant cohort, and release version. Keep metric dimensions bounded; individual request IDs belong in logs/traces, not unrestricted metric labels.
 
-#### 3. Distributed Traces — Follow One Task Across Boundaries
+#### 3. Distributed Traces: Follow One Task Across Boundaries
 
 Use correlated spans for queue, retrieval, model calls, tools, and orchestration. Carry identifiers across async jobs and retries where possible.
 
@@ -67,15 +67,15 @@ Trace ID → Queue span → Retrieval/model/tool spans → Outcome
 
 Parallel spans overlap; nested spans must not be double-counted. Trace sampling affects which requests remain inspectable.
 
-#### 4. AI Telemetry — Capture More Than Server Health
+#### 4. AI Telemetry: Capture More Than Server Health
 
 Record model/provider/configuration, token usage, call count, retrieval source identifiers, tool names/arguments in controlled form, retries, agent steps, and outcome signals.
 
-> “I’d connect model and tool usage to the task outcome, not just monitor CPU and HTTP status.”
+> “I’d connect model and tool usage to the task outcome; CPU and HTTP status alone are not enough.”
 
 Capture evidence references and decision summaries, not private model chain-of-thought, which is often hidden and not always faithful. Apply minimisation or redaction to sensitive fields.
 
-#### 5. Audit — Reconstruct Business Decisions
+#### 5. Audit: Reconstruct Business Decisions
 
 Record who requested and approved an action, applicable evidence/policy, exact action, and confirmed result. Protect audit records according to customer access and retention requirements.
 
@@ -85,7 +85,7 @@ Request + identity → Evidence + policy → Approval → Action/result
 
 > “For a disputed refund, I need the business decision trail, not only a latency trace.”
 
-#### 6. SLI / SLO / SLA — Measurement, Target, Commitment
+#### 6. SLI / SLO / SLA: Measurement, Target, Commitment
 
 A service-level indicator (SLI) is the measured service behaviour. An SLO is its target. A service-level agreement (SLA) is an agreed service commitment, often including consequences.
 
@@ -99,7 +99,7 @@ SLA: Customer agreement about the promised service
 
 Targets and exclusions must be explicit. Do not imply universal numbers or invent contractual terms.
 
-#### 7. Alerts and Runbooks — Make Detection Actionable
+#### 7. Alerts and Runbooks: Make Detection Actionable
 
 Alert on customer impact, meaningful target breaches, dangerous actions, or actionable dependency/queue conditions. Define owner, investigation steps, and permitted mitigation.
 
@@ -111,7 +111,7 @@ Detect → Identify scope/version → Mitigate → Verify recovery
 
 Avoid alerting on every harmless fluctuation. Latency and uptime alerts do not replace quality or confirmed-action checks.
 
-#### 8. Production Learning — Turn Incidents Into Better Coverage
+#### 8. Production Learning: Turn Incidents Into Better Coverage
 
 Correlate delayed task outcomes, reopened tickets, human overrides, and version changes. Add validated failure cases to evaluation and improve instrumentation gaps.
 
@@ -236,5 +236,5 @@ Minimise sensitive data in telemetry and restrict retention/access. Use evidence
 
 ## Sources (checked 27 Sep 2026)
 
-- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410) — chain-of-thought is not always faithful
-- [Prometheus - Metric and label naming](https://prometheus.io/docs/practices/naming/) — bounded metric labels
+- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410): chain-of-thought is not always faithful
+- [Prometheus - Metric and label naming](https://prometheus.io/docs/practices/naming/): bounded metric labels

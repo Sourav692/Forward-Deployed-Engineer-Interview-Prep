@@ -1,6 +1,6 @@
 # SaaS Support Deflection Client Simulation
 
-This is a 45-minute client simulation about a customer-support deflection project: the interviewer plays the customer and answers only what is asked. The customer arrives with a target already promised to the board, and the round tests whether you find out what that target really measures before you commit to it. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you actually asked about.
+This is a 45-minute client simulation about a customer-support deflection project: the interviewer plays the customer and answers only what is asked. The customer arrives with a target already promised to the board, and the round tests whether you find out what that target measures before you commit to it. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you asked about.
 
 ## The Customer
 

@@ -4,7 +4,7 @@
 
 ◷ 6 min
 
-The demo did not fail because the model was weak. It failed on stale pages and a permission leak, so practise answering with scope and access control first, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
+The demo failed on stale pages and a permission leak, so practise answering with scope and access control first, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
 **Objectives:**
 

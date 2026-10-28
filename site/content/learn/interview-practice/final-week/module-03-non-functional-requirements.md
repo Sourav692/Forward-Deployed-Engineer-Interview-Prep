@@ -41,7 +41,7 @@ These are a checklist, not an execution sequence. Prioritise what the customer c
 
 ### 3. Essential Concepts
 
-#### 1. Scale — Describe the Workload
+#### 1. Scale: Describe the Workload
 
 Ask for request rate, concurrency, peak traffic, tenants, growth, and task duration. User count alone is insufficient.
 
@@ -54,7 +54,7 @@ Users → Active users → Requests → Concurrent work
 
 Long tasks occupy capacity longer. Model-provider limits and downstream API limits can become the bottleneck before application servers do.
 
-#### 2. Latency — Define the User's Waiting Experience
+#### 2. Latency: Define the User's Waiting Experience
 
 Separate time to first useful output from total completion time. Define targets by workload and percentile rather than only an average.
 
@@ -67,7 +67,7 @@ Research:  Acknowledge  → Progress → Completed task
 
 A service-level objective (SLO) is an agreed target. Example format: “P95 completion latency ≤ X seconds for workload Y over window Z.” P95 means 95% of measured requests meet that latency. Confirm X, Y, and Z with the customer.
 
-#### 3. Reliability — Finish Correctly, Including During Failures
+#### 3. Reliability: Finish Correctly, Including During Failures
 
 Availability asks whether the service is usable; reliability also includes correct completion, recovery, and safe side effects.
 
@@ -81,7 +81,7 @@ Workflow crashes      → Resume from durable state
 
 Define availability around meaningful operations. An endpoint returning responses is not enough if it cannot complete the customer's task.
 
-#### 4. AI Quality — Define Acceptable Answers and Actions
+#### 4. AI Quality: Define Acceptable Answers and Actions
 
 Measure correctness, groundedness, retrieval quality, tool selection, and end-to-end task success on representative cases.
 
@@ -93,7 +93,7 @@ Relevant evidence → Supported answer → Correct task outcome
 
 Specify the evaluation set and scoring method alongside the target. Good wording does not prove that a refund or support resolution succeeded.
 
-#### 5. Security — Enforce Identity and Access Boundaries
+#### 5. Security: Enforce Identity and Access Boundaries
 
 Define user and tenant isolation, least-privilege tools, sensitive-data handling, and residency or retention constraints where relevant.
 
@@ -106,7 +106,7 @@ Identity → Authorized data → Authorized tools
 
 Permission enforcement is a functional behaviour too. NFR discussions clarify how consistently and within which boundaries it must hold.
 
-#### 6. Safety — Keep Actions Within Policy
+#### 6. Safety: Keep Actions Within Policy
 
 Agree on prohibited actions, approval rules, safe stopping behaviour, and the ability to disable execution.
 
@@ -120,7 +120,7 @@ Agent recommends → Policy decides → Executor acts
 
 For sensitive actions, do not treat a model's confidence as permission. Policy and access checks remain necessary.
 
-#### 7. Cost — Budget for Successful Outcomes
+#### 7. Cost: Budget for Successful Outcomes
 
 Include models, tokens, retrieval, tools, compute, failed attempts, retries, and human review where relevant.
 
@@ -134,7 +134,7 @@ Successful tasks
 
 Reducing model cost while increasing failures or manual rework may worsen the business result.
 
-#### 8. Observability — See Where the System Breaks
+#### 8. Observability: See Where the System Breaks
 
 Define end-to-end traces and metrics for latency, errors, tokens, cost, tool calls, and outcomes. Keep sensitive information out of unrestricted logs.
 
@@ -145,7 +145,7 @@ Request → Retrieval → Model → Tool → Result
    └────────── Correlated trace ─────────┘
 ```
 
-#### 9. Auditability — Reconstruct Business Decisions
+#### 9. Auditability: Reconstruct Business Decisions
 
 Record relevant evidence, policy decisions, approvals, action results, and versions under appropriate access and retention rules.
 
@@ -310,5 +310,5 @@ Confirm targets with the customer. Label assumptions. For quality, specify the r
 
 ## Sources (checked 27 Sep 2026)
 
-- [Claude docs - Rate limits](https://platform.claude.com/docs/en/api/rate-limits) — provider rate limits cap throughput
-- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410) — chain-of-thought is not always faithful
+- [Claude docs - Rate limits](https://platform.claude.com/docs/en/api/rate-limits): provider rate limits cap throughput
+- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410): chain-of-thought is not always faithful

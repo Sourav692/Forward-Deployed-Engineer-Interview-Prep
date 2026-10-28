@@ -1,6 +1,6 @@
 # Prior Authorisation Packets Client Simulation
 
-This is a 45-minute client simulation about a document-processing workflow in healthcare: the interviewer plays the customer and answers only what is asked. The customer wants the whole process automated, and the constraints that decide what is safe to build sit with people she has not mentioned yet. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you actually asked about.
+This is a 45-minute client simulation about a document-processing workflow in healthcare: the interviewer plays the customer and answers only what is asked. The customer wants the whole process automated, and the constraints that decide what is safe to build sit with people she has not mentioned yet. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you asked about.
 
 ## The Customer
 

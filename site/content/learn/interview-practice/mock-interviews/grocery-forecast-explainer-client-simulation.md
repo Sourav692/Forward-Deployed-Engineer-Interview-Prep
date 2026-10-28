@@ -1,6 +1,6 @@
 # Grocery Forecast Explainer Client Simulation
 
-This is a 45-minute client simulation built around a data and analytics request: the interviewer plays the customer and answers only what is asked. The request sounds like "chat with our data", but the hidden constraints are about who owns the numbers, how late the data arrives and what happens when an explanation drives an order. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you actually asked about.
+This is a 45-minute client simulation built around a data and analytics request: the interviewer plays the customer and answers only what is asked. The request sounds like "chat with our data", but the hidden constraints are about who owns the numbers, how late the data arrives and what happens when an explanation drives an order. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you asked about.
 
 ## The Customer
 
@@ -75,7 +75,7 @@ She cares about fresh-food waste, empty shelves, her planners' time, and her tea
 
 "We have [number of stores] stores and [number of product lines] product lines. Sales data lands overnight, so the earliest anyone sees yesterday's sales is [daily data availability time]."
 
-**Why it matters:** This is not a real-time problem. The heavy work, finding the biggest misses and lining up their drivers, can run overnight in a batch, which is cheaper and faster for planners than answering everything live. Interactive follow-up questions then work on that prepared result.
+**Why it matters:** Nothing here needs real-time answers. The heavy work, finding the biggest misses and lining up their drivers, can run overnight in a batch, which is cheaper and faster for planners than answering everything live. Interactive follow-up questions then work on that prepared result.
 
 </details>
 
@@ -131,7 +131,7 @@ Score each dimension from 1 to 5 with the scorer below; a 4 or 5 needs a quoted 
 ## Common Mistakes
 
 - Promising to explain the vendor model's reasoning when only its outputs are visible.
-- Presenting correlation as cause, so a planner acts on "the weather caused it" when the promotion data was simply late.
+- Presenting correlation as cause, so a planner acts on "the weather caused it" when the promotion data was late.
 - Automating order overrides on fresh lines in the first release.
 - Ignoring the accuracy definition split, so the first finance review discredits the tool.
 - Letting margin or supplier funding data shape explanations shown to planners.

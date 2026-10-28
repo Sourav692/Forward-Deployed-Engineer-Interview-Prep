@@ -23,7 +23,7 @@ For every dependency ask: **What fails, what does the user see, and how does the
 
 ### 3. Essential Concepts
 
-#### 1. Timeouts — Bound Waiting
+#### 1. Timeouts: Bound Waiting
 
 Set dependency deadlines inside the task's total time budget. A timeout ends the caller's wait; it does not establish the remote outcome.
 
@@ -34,13 +34,13 @@ Read timeout → Safe retry / fallback
 Write timeout → Unknown outcome → Status check
 ```
 
-#### 2. Retry Classification — Separate Transient and Permanent Errors
+#### 2. Retry Classification: Separate Transient and Permanent Errors
 
 Retry eligible transient failures within a shared task budget. Invalid input, denied access, and policy rejection need correction or a stop, not repeated calls.
 
 > “I’d retry only when the failure is transient and another attempt is safe.”
 
-#### 3. Backoff and Jitter — Avoid Retry Storms
+#### 3. Backoff and Jitter: Avoid Retry Storms
 
 Increase delays between retries and randomize them so clients do not retry together. Honor server guidance where applicable and stop at the attempt/deadline limit.
 
@@ -50,7 +50,7 @@ Failure → Wait → Retry → Longer randomized wait → Retry / stop
 
 > “I’d bound retries across layers so the tool and orchestrator do not multiply attempts.”
 
-#### 4. Circuit Breaker — Stop Hammering a Failing Dependency
+#### 4. Circuit Breaker: Stop Hammering a Failing Dependency
 
 Temporarily stop normal calls after repeated failures; later allow recovery probes. Provide a defined unavailable, deferred, or fallback response.
 
@@ -62,7 +62,7 @@ Repeated failure → Open breaker → Fast fail / defer
 
 > “The breaker protects the dependency and our capacity; it does not repair the service.”
 
-#### 5. Idempotency — Preserve Correct Side Effects
+#### 5. Idempotency: Preserve Correct Side Effects
 
 Reuse the same logical action identifier across retries. Coordinate local action records and downstream idempotency support, and reconcile uncertain outcomes.
 
@@ -73,7 +73,7 @@ Refund key X → Retry of same operation, not new refund
 
 > “Recovery must not convert one refund request into two refunds.”
 
-#### 6. Fallback and Graceful Degradation — Preserve Safe Functionality
+#### 6. Fallback and Graceful Degradation: Preserve Safe Functionality
 
 Use a compatible model fallback when it meets capability, quality, data, and policy requirements. If a noncritical capability fails, preserve independent safe functionality.
 
@@ -84,7 +84,7 @@ Payment API unavailable    → Do not claim refund completion
 
 > “I’d define which capability can degrade and which action must stop.”
 
-#### 7. Checkpoints — Resume Known Progress
+#### 7. Checkpoints: Resume Known Progress
 
 Persist task context, completed steps, approval state, and action status. Resume from durable state rather than rerun every step.
 
@@ -94,7 +94,7 @@ Step complete → Save state → Crash → Load → Resume
 
 Checkpoints alone do not guarantee safe external replay. Reconcile writes that may have completed before a checkpoint was saved.
 
-#### 8. Dead-Letter Queue — Isolate Work That Cannot Complete
+#### 8. Dead-Letter Queue: Isolate Work That Cannot Complete
 
 After bounded unsuccessful processing, route eligible background messages to a dead-letter queue (DLQ) or equivalent failure store. Preserve context for diagnosis and controlled replay.
 
@@ -104,7 +104,7 @@ Message → Bounded attempts → DLQ → Inspect / fix → Safe replay
 
 > “A DLQ needs an owner and recovery process; it is not a successful outcome.”
 
-#### 9. Blast Radius — Limit What a Failure Can Affect
+#### 9. Blast Radius: Limit What a Failure Can Affect
 
 Separate capacity, permissions, and execution paths where justified. Tenant limits and dependency-specific controls can prevent one failure from affecting everyone.
 
@@ -242,7 +242,7 @@ Model recovery does not replace enterprise-tool recovery or business-action reco
 
 ## Sources (checked 27 Sep 2026)
 
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — checkpoints don't stop duplicate side effects
-- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts) — checkpoints don't stop duplicate side effects
-- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency key reuse and scope
-- [IETF draft-ietf-httpapi-idempotency-key-header-07 (expired) s2.7](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html) — idempotency key reuse and scope
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): checkpoints don't stop duplicate side effects
+- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts): checkpoints don't stop duplicate side effects
+- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests): idempotency key reuse and scope
+- [IETF draft-ietf-httpapi-idempotency-key-header-07 (expired) s2.7](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html): idempotency key reuse and scope

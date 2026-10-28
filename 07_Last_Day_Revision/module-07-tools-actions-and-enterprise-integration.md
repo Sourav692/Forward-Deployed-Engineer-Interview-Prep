@@ -1,4 +1,4 @@
-# Module 7 — Tools, Actions & Enterprise Integration
+# Module 7: Tools, Actions & Enterprise Integration
 
 ## Concise Interview Module
 
@@ -33,7 +33,7 @@ CONTRACT → ACCESS → READ/WRITE → TIMEOUT
 
 ### 3. Essential Concepts
 
-#### 1. Controlled Tool Layer — Expose Operations, Not Unlimited Access
+#### 1. Controlled Tool Layer: Expose Operations, Not Unlimited Access
 
 Give the model approved operations with clear input and output schemas. Validate arguments and enforce access in application code or the downstream system.
 
@@ -45,7 +45,7 @@ Model tool request → Validate → Authorize → Execute
 
 Tool results are data, not permission to bypass policy. The model must not be able to supply its own trusted tenant identity or credentials.
 
-#### 2. Integration Contract — Discover the Real Constraints
+#### 2. Integration Contract: Discover the Real Constraints
 
 Ask about API availability, authentication, schemas, limits, synchronous vs asynchronous behaviour, ownership, and error semantics.
 
@@ -59,7 +59,7 @@ Payment system: Refund execution / status
 
 CRM means customer relationship management; ERP means enterprise resource planning. The integration may be harder than the reasoning step.
 
-#### 3. Read vs Write Tools — Different Consequences
+#### 3. Read vs Write Tools: Different Consequences
 
 Reads need access checks and freshness rules. Writes also need policy, explicit action scope, duplicate protection, confirmation, and audit.
 
@@ -72,7 +72,7 @@ Write: Authorized proposal → Policy → Execute → Confirm
 
 Read calls still incur cost and may expose sensitive data; do not treat them as unrestricted.
 
-#### 4. Executor — Own the Business Side Effect
+#### 4. Executor: Own the Business Side Effect
 
 The executor turns a validated, permitted action into a concrete API operation. Bind execution to the approved operation and inputs.
 
@@ -86,7 +86,7 @@ Refund proposal + approval + action identifier
 
 Keep secrets outside model context. Record whether the action was accepted, completed, rejected, or remains unknown.
 
-#### 5. Idempotency — Make Repetition Safe
+#### 5. Idempotency: Make Repetition Safe
 
 An idempotent operation produces no additional business effect when repeated as the same logical operation. Use an action/idempotency key supported by the execution path.
 
@@ -99,7 +99,7 @@ refund_request_123 → Retry: existing result / same operation
 
 Do not generate a new key for every retry. Idempotency scope, retention, and changed-input behaviour must match the downstream contract.
 
-#### 6. Timeout — Stop Waiting Without Assuming Failure
+#### 6. Timeout: Stop Waiting Without Assuming Failure
 
 Set dependency deadlines within the task's total time budget. A timeout means the caller did not receive a result in time; the remote action may have succeeded.
 
@@ -113,7 +113,7 @@ Refund call → Timeout → Status lookup / reconcile
 
 If status cannot be determined, preserve the unknown state and escalate or reconcile later. Never claim completion without confirmation.
 
-#### 7. Retry — Retry Only When Safe and Useful
+#### 7. Retry: Retry Only When Safe and Useful
 
 Retry transient failures within a bounded budget, with backoff and jitter. Do not blindly retry invalid input, denied permission, or policy rejection.
 
@@ -127,7 +127,7 @@ Unknown write result   → Reconcile + idempotent recovery
 
 Avoid nested retry loops at the tool, orchestrator, and model layers multiplying attempts.
 
-#### 8. Circuit Breaker — Protect a Failing Dependency
+#### 8. Circuit Breaker: Protect a Failing Dependency
 
 After repeated failures, temporarily stop normal calls and later probe recovery. Combine this with a defined fallback or safe stop.
 
@@ -275,7 +275,7 @@ The controlled tool layer owns enterprise operations; downstream authorisation r
 
 ## Sources (checked 27 Sep 2026)
 
-- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency key reuse and scope
-- [IETF draft-ietf-httpapi-idempotency-key-header-07 (expired) s2.7](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html) — idempotency key reuse and scope
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — untrusted retrieved and tool input
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — untrusted retrieved and tool input
+- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests): idempotency key reuse and scope
+- [IETF draft-ietf-httpapi-idempotency-key-header-07 (expired) s2.7](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html): idempotency key reuse and scope
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): untrusted retrieved and tool input
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): untrusted retrieved and tool input

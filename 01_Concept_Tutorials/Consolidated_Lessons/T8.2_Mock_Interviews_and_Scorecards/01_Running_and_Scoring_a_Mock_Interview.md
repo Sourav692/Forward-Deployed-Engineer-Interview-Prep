@@ -4,7 +4,7 @@
 
 ◷ 10 min
 
-A mock interview is not a reading exercise. Answer under a timer first, then compare, then score against a rubric with evidence. Five scenario mocks follow this lesson, and each one uses the same arc, answer moves and rubric taught here.
+Run a mock interview as timed practice. Answer under a timer first, then compare, then score against a rubric with evidence. Five scenario mocks follow this lesson, and each one uses the same arc, answer moves and rubric taught here.
 
 **Objectives:**
 
@@ -101,7 +101,7 @@ Take the average answer from the internal knowledge assistant mock: "I would cla
 
 Discovery is a 3: it mentions users, but no metrics, owners or failure cost. Architecture is a 3: plausible, but with no policy layer, telemetry or rollback. Security is a 3: access control is named but not placed in retrieval, and prompt injection is missing. Evaluation is a 3: "answer quality" with no golden set or launch gate. Production is a 2 or 3: no rollout plan beyond "start with support". Communication is a 3: clear but shallow.
 
-The round lands at about 3 out of 5, the same as the source's score. More important than the number, every point lost has a named missing element, and that list is the practice plan for the next round.
+The round lands at about 3 out of 5, the same as the source's score. Every point lost has a named missing element, and that list is the practice plan for the next round.
 
 > **Warning: do not read the strong version first.** Reading the answer before attempting the round trains recognition, not recall. Attempt every prompt under the timer, then compare. Practise the hard stages, the objections and rollout pushback, not only the opening.
 
