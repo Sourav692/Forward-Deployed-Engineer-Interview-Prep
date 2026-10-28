@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import type { ReactNode } from 'react'
 import { Suspense } from 'react'
 import { FilteredGroups } from '@/components/areas/FilteredGroups'
 import { ModuleProgress } from '@/components/Progress'
-import { AreaGroup, AreaHeader, AreaSection, LinkList, TextLink } from '@/components/areas/Area'
+import { ContentsGroup } from '@/components/editorial/ContentsGroup'
 import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { LIVE, curriculumModules, moduleGroups } from '@/components/areas/data'
 import { ModuleCard } from '@/components/learn/ModuleCard'
@@ -33,91 +35,89 @@ export default async function PracticePage() {
   ])
   const mocks = curriculumModules('interview-practice').filter((m) => m.slug === MOCKS_MODULE)
 
+  const sections = [
+    { href: '#worksheets', label: 'Technical worksheets', count: `${worksheets.scenarios.length} worksheets` },
+    { href: '#behavioural', label: 'Behavioural and leadership', count: `${behavioural.scenarios.length} worksheets` },
+    { href: '#mocks', label: 'Mock interviews', count: `${mocks.length} ${mocks.length === 1 ? 'module' : 'modules'}` },
+  ]
+
+  // Hallmark, Editorial theme (editorial.css): the name and what practice means here, an
+  // index of the three areas, then each area opened by a heavy rule with its pages as
+  // contents rows.
   return (
-    <div className="py-12">
+    <div className="pb-24">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Practice', path: '/practice' }])} />
-      <AreaHeader eyebrow="Practise under interview conditions" title="Practice">
-        <p>
-          Reading a strong answer is not the same as giving one. Each worksheet hands you a customer problem to work
-          section by section, then shows what a strong answer covers so you can score yourself honestly. Behavioural
-          questions work the same way, with your own stories in the gaps.
-        </p>
-      </AreaHeader>
+      <header className="cb-hero">
+        <div>
+          <h1>Practice</h1>
+          <p className="cb-standfirst">
+            Each worksheet hands you a customer problem to work section by section, then shows what a strong answer
+            covers so you can score yourself honestly.
+          </p>
+        </div>
+        <div className="cb-hero-side">
+          <p>Behavioural questions work the same way, with your own stories in the gaps.</p>
+          <nav aria-label="On this page" className="mt-5">
+            <ul className="cb-rows">
+              {sections.map((s) => (
+                <li key={s.href} className="cb-row">
+                  <a href={s.href} className="cb-row-link">
+                    <span className="cb-row-title">{s.label}</span>
+                    <span className="cb-row-facts">{s.count}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-      <nav aria-label="On this page" className="mt-6 flex flex-wrap gap-2">
-        {[
-          ['#worksheets', 'Worksheets'],
-          ['#behavioural', 'Behavioural'],
-          ['#mocks', 'Mock interviews'],
-        ].map(([href, label]) => (
-          <a
-            key={href}
-            href={href}
-            className="rounded-full border border-border px-3 py-1 text-[0.8125rem] text-muted transition-colors hover:border-border-strong hover:text-text"
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
-
-      <AreaSection
+      <PracticeSection
         id="worksheets"
-        title="Technical Worksheets"
+        title="Technical worksheets"
         description="Customer scenarios worked from discovery to rollout. Start with Discovery Foundations; the System Design Practice set adds one dangerous constraint to each problem."
       >
-        <ModuleProgress scenarios={worksheets.scenarios} />
-        <div className="mt-5">
+        <ModuleProgress scenarios={worksheets.scenarios} plain />
+        <div className="mt-10">
           <Suspense
             fallback={
-              <div className="space-y-4">
+              <div>
                 {worksheets.groups.map((g) => (
-                  <AreaGroup
-                    key={g.id}
-                    id={g.id}
-                    title={g.title}
-                    blurb={g.blurb}
-                    action={{ label: `${g.items.length} worksheets`, href: g.href }}
-                  >
-                    <LinkList items={g.items} />
-                  </AreaGroup>
+                  <ContentsGroup key={g.id} group={g} unit={['worksheet', 'worksheets']} />
                 ))}
               </div>
             }
           >
-            <FilteredGroups groups={worksheets.groups} levels={LEVEL_LABEL} noun="worksheets" unit={['worksheet', 'worksheets']} />
+            <FilteredGroups groups={worksheets.groups} levels={LEVEL_LABEL} noun="worksheets" unit={['worksheet', 'worksheets']} contents />
           </Suspense>
         </div>
-      </AreaSection>
+      </PracticeSection>
 
-      <AreaSection
+      <PracticeSection
         id="behavioural"
-        title="Behavioural and Leadership"
+        title="Behavioural and leadership"
         description="Hiring manager and leadership principle questions. Each model answer shows the shape of a strong story and marks the details only you can supply."
       >
-        <ModuleProgress scenarios={behavioural.scenarios} />
-        <div className="mt-5 space-y-4">
-          <AreaGroup title={STORY_BANK.title} blurb={STORY_BANK.blurb}>
-            <div className="px-2 pb-1">
-              <TextLink href={STORY_BANK.href}>Open the Story Bank</TextLink>
-            </div>
-          </AreaGroup>
+        <ModuleProgress scenarios={behavioural.scenarios} plain />
+        <div className="cb-well mt-10 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
+          <h3 className="text-[1.75rem] leading-none">{STORY_BANK.title}</h3>
+          <div className="mt-4 lg:mt-0">
+            <p className="max-w-[60ch] text-base">{STORY_BANK.blurb}</p>
+            <Link href={STORY_BANK.href} className="cb-btn cb-btn--primary mt-5">
+              Open the Story Bank
+            </Link>
+          </div>
+        </div>
+        <div className="mt-16">
           {behavioural.groups.map((g) => (
-            <AreaGroup
-              key={g.id}
-              id={g.id}
-              title={g.title}
-              blurb={g.blurb}
-              action={{ label: `${g.items.length} worksheets`, href: g.href }}
-            >
-              <LinkList items={g.items} />
-            </AreaGroup>
+            <ContentsGroup key={g.id} group={g} unit={['worksheet', 'worksheets']} />
           ))}
         </div>
-      </AreaSection>
+      </PracticeSection>
 
-      <AreaSection
+      <PracticeSection
         id="mocks"
-        title="Mock Interviews"
+        title="Mock interviews"
         description="Full rounds under time, scored against the interviewer rubric. The mock formats and scorecards are in the module below."
       >
         <div className="space-y-2">
@@ -125,8 +125,26 @@ export default async function PracticePage() {
             <ModuleCard key={m.slug} module={m} />
           ))}
         </div>
-      </AreaSection>
-      <SuggestTopic hub="Practice" />
+      </PracticeSection>
+
+      <div className="mt-24">
+        <SuggestTopic hub="Practice" />
+      </div>
     </div>
+  )
+}
+
+/** One practice area: a heavy rule, the condensed head and its standfirst, then its pages. */
+function PracticeSection({ id, title, description, children }: { id: string; title: string; description: string; children: ReactNode }) {
+  return (
+    <section id={id} aria-labelledby={`${id}-heading`} className="mt-24 scroll-mt-20 first-of-type:mt-0">
+      <div className="cb-opens mb-8 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
+        <h2 id={`${id}-heading`} className="cb-section-head">
+          {title}
+        </h2>
+        <p className="mt-4 max-w-[60ch] text-base lg:mt-1">{description}</p>
+      </div>
+      {children}
+    </section>
   )
 }

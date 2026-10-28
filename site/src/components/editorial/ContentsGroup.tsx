@@ -3,12 +3,12 @@ import { LEVEL_LABEL } from '@/lib/editorial'
 import type { TrackGroup } from '@/components/areas/data'
 
 /**
- * One casebook theme as a magazine contents block (Hallmark, Editorial theme): the
- * theme's name and argument on the left, its cases as ruled rows on the right, each row
- * the case's title with its level and reading time at the edge. No hooks, so the filter
- * island and the server fallback both render it. Styles are in casebook.css.
+ * One theme or track as a magazine contents block (Hallmark, Editorial theme): the
+ * theme's name and argument on the left, its pages as ruled rows on the right, each row
+ * the page's title with its level and reading time at the edge. No hooks, so the filter
+ * island and the server fallback both render it. Styles are in editorial.css.
  */
-export function CaseGroup({ group, unit }: { group: TrackGroup; unit: [string, string] }) {
+export function ContentsGroup({ group, unit }: { group: TrackGroup; unit: [string, string] }) {
   const count = `${group.items.length} ${group.items.length === 1 ? unit[0] : unit[1]}`
   return (
     <section id={group.id} aria-labelledby={`${group.id}-title`} className="cb-group">

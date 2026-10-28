@@ -1,11 +1,12 @@
 import { familyMeta, getRelated } from '@/lib/content'
-import { AUTHOR, MODES, formatDate, reportHref } from '@/lib/editorial'
+import { MODES } from '@/lib/editorial'
 import { documentsOf, hasChapters, scenarioHref, type CaseDocument, type CaseStudy } from '@/lib/scenario'
 import { learningResourceJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { CaseStudyView } from '@/components/CaseStudyView'
 import { Breadcrumbs, type Crumb } from '@/components/learn/Breadcrumbs'
-import { BeforeYouStart, Fact, TwinLinks, WhereNext } from '@/components/PageIntro'
+import { BeforeYouStart, Fact, WhereNext } from '@/components/PageIntro'
+import { PageHead } from '@/components/editorial/PageHead'
 import { pageTwins } from '@/lib/twins'
 
 export const caseDescription = (study: CaseStudy) =>
@@ -46,48 +47,25 @@ export async function CaseStudyPage({
       />
       <Breadcrumbs items={crumbs} />
 
-      {/* Hallmark, Editorial theme (casebook.css): the theme as the one green tag, the
-          title as a condensed head, the facts as a ruled spec line, no dot-joined meta. */}
-      <header className="cb-case-head">
-        <span className="cb-tag">{study.ref.trackTitle}</span>
-        <h1 className="mt-4">{study.title}</h1>
-        <dl className="cb-facts">
-          <div>
-            <dt>Kind</dt>
-            <dd>{MODES[meta.mode].label}</dd>
-          </div>
-          <div>
-            <dt>Level</dt>
-            <dd>{meta.difficulty}</dd>
-          </div>
-          <div>
-            <dt>Reading time</dt>
-            <dd>{documents.length > 1 ? `${documents.length} documents, ${minutes} min in total` : `${minutes} min`}</dd>
-          </div>
-          <div>
-            <dt>By</dt>
-            <dd>{AUTHOR}</dd>
-          </div>
-          {study.ref.updated && (
-            <div>
-              <dt>Last updated</dt>
-              <dd>{formatDate(study.ref.updated)}</dd>
-            </div>
-          )}
-        </dl>
-        <TwinLinks links={twins} />
-        <p className="cb-label mt-3 text-[0.875rem]">
-          <a href={reportHref({ title: study.title, path: scenarioHref(study.ref) })} className="underline">
-            Report an issue
-          </a>
-        </p>
+      <PageHead
+        tag={study.ref.trackTitle}
+        title={study.title}
+        facts={[
+          { term: 'Kind', value: MODES[meta.mode].label },
+          { term: 'Level', value: meta.difficulty },
+          { term: 'Reading time', value: documents.length > 1 ? `${documents.length} documents, ${minutes} min in total` : `${minutes} min` },
+        ]}
+        updated={study.ref.updated}
+        twins={twins}
+        report={{ title: study.title, path: scenarioHref(study.ref) }}
+      >
         {/* A chapters case says all of this on its Introduction page instead. */}
         {!hasChapters(study) && (
           <BeforeYouStart meta={meta}>
             <ReadingOrder study={study} documents={documents} />
           </BeforeYouStart>
         )}
-      </header>
+      </PageHead>
 
       <CaseStudyView study={study} />
 

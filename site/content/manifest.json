@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T06:40:13.446Z",
+  "generatedAt": "2026-10-28T06:54:08.524Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -84,7 +84,7 @@
         {
           "id": "system-design",
           "title": "System Design Practice",
-          "blurb": "Twelve harder scenarios, each built around one dangerous constraint — permission fidelity, tenant isolation, air-gapped deployment, release gating.",
+          "blurb": "Twelve harder scenarios, each built around one dangerous constraint: permission fidelity, tenant isolation, air-gapped deployment or release gating.",
           "scenarios": [
             {
               "slug": "enterprise-knowledge-assistant-rag",
@@ -421,7 +421,7 @@
         {
           "id": "agents-that-act",
           "title": "Agents and Copilots in Real Workflows",
-          "blurb": "Systems that work inside real tools — tickets, deploys, CRMs, shipments. Some act on their own within limits; others draft and a person commits. The design is mostly about deciding which is which.",
+          "blurb": "Systems that work inside real tools: tickets, deploys, CRMs, shipments. Some act on their own within limits; others draft and a person commits. The design is mostly about deciding which is which.",
           "scenarios": [
             {
               "slug": "customer-support-automation",

@@ -257,7 +257,7 @@ export function ScenarioView({
                 <span className="font-semibold text-subtle">Stories that fit: </span>
                 {section.stories.map((story, i) => (
                   <span key={story.href}>
-                    {i > 0 && ' · '}
+                    {i > 0 && ', '}
                     <Link href={story.href} className="text-accent hover:text-accent-hover">
                       {story.title}
                     </Link>

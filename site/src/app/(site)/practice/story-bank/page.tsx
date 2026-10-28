@@ -4,15 +4,15 @@ import type { Metadata } from 'next'
 import { getAllScenarios, getStoryBank, getTracks } from '@/lib/content'
 import { PrevNext } from '@/components/PrevNext'
 import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
-import { STORY_BANK, STORY_BANK_META, STORY_GROUPS, storyGroupOf } from '@/lib/editorial'
+import { MODES, STORY_BANK, STORY_BANK_META, STORY_GROUPS, storyGroupOf } from '@/lib/editorial'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import type { ReadingDocument, ReadingSection } from '@/lib/reading'
-import { BeforeYouStart, MetaStrip } from '@/components/PageIntro'
+import { BeforeYouStart } from '@/components/PageIntro'
+import { PageHead } from '@/components/editorial/PageHead'
 import { ReadingPanel } from '@/components/CaseStudyView'
 import { LessonTabs } from '@/components/learn/LessonTabs'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
-import { Byline } from '@/components/Byline'
 
 /**
  * The behavioural Story Bank (CONTENT-15): markdown from
@@ -35,19 +35,23 @@ export default async function StoryBankPage() {
   const groups = doc.sections.filter((s) => s.title !== null)
 
   return (
-    <div className="py-10">
+    <div className="pb-20 pt-8">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Practice', path: '/practice' }, { name: STORY_BANK.title, path: '/practice/story-bank' }])} />
       <Breadcrumbs items={[{ label: 'Practice', href: '/practice' }, { label: STORY_BANK.title }]} />
 
-      <header className="mb-10 max-w-3xl">
-        <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{STORY_BANK.title}</h1>
-        <Byline updated={bank.updated} report={{ title: STORY_BANK.title, path: STORY_BANK.href }} />
-        <p className="mt-3 text-[1rem] leading-relaxed text-muted">{STORY_BANK.blurb}</p>
-        <div className="mt-3">
-          <MetaStrip meta={STORY_BANK_META} minutes={bank.minutes} />
-        </div>
+      <PageHead
+        title={STORY_BANK.title}
+        standfirst={STORY_BANK.blurb}
+        facts={[
+          { term: 'Kind', value: MODES[STORY_BANK_META.mode].label },
+          { term: 'Level', value: STORY_BANK_META.difficulty },
+          { term: 'Reading time', value: `${bank.minutes} min` },
+        ]}
+        updated={bank.updated}
+        report={{ title: STORY_BANK.title, path: STORY_BANK.href }}
+      >
         <BeforeYouStart meta={STORY_BANK_META} />
-      </header>
+      </PageHead>
 
       <section className="no-print mb-12" aria-labelledby="customer-stories-title">
         <div className="mb-5 max-w-3xl">
@@ -62,10 +66,7 @@ export default async function StoryBankPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           {STORY_GROUPS.map((group) => (
             <a key={group.id} href={`#${group.id}`} className="story-bank-card group">
-              <span className="text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-subtle">
-                Customer engagement
-              </span>
-              <h3 className="mt-1.5 text-[1.125rem] font-semibold transition-colors group-hover:text-accent">
+              <h3 className="text-[1.125rem] font-semibold transition-colors group-hover:text-accent">
                 {group.title}
               </h3>
               <p className="mt-1.5 flex-1 text-[0.875rem] leading-relaxed text-muted">{group.context}</p>
@@ -73,7 +74,7 @@ export default async function StoryBankPage() {
                 <span className="font-semibold text-text">Best for: </span>{group.bestFor}
               </div>
               <span className="mt-3 text-[0.875rem] font-semibold text-accent transition-colors group-hover:text-accent-hover">
-                View customer stories →
+                View customer stories
               </span>
             </a>
           ))}
@@ -104,7 +105,7 @@ export default async function StoryBankPage() {
               href={`/practice#${track.id}`}
               className="text-accent hover:text-accent-hover"
             >
-              {track.title} →
+              {track.title}
             </Link>
           ))}
         </div>

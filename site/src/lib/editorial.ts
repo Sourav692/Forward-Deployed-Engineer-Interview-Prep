@@ -64,7 +64,7 @@ export const SOURCE_STATUS_LABELS: Record<SourceStatus, string> = {
   original: 'Original material for this site',
   derived: 'Condensed from the sources credited on the How It Works page',
   sourced: 'Cites its sources in the Sources and Full Design tab',
-  personal: "Built from one candidate's engagements — adapt, do not recite",
+  personal: "Built from one candidate's engagements: adapt them, do not recite them",
 }
 
 export type Link = { label: string; href: string }
@@ -189,8 +189,8 @@ export const TRACKS: Record<string, { title: string; blurb: string }> = {
   'system-design': {
     title: 'System Design Practice',
     blurb:
-      'Twelve harder scenarios, each built around one dangerous constraint — permission ' +
-      'fidelity, tenant isolation, air-gapped deployment, release gating.',
+      'Twelve harder scenarios, each built around one dangerous constraint: permission ' +
+      'fidelity, tenant isolation, air-gapped deployment or release gating.',
   },
   'fde-competencies': {
     title: 'Behavioural Round Questions',
@@ -208,7 +208,7 @@ export const TRACKS: Record<string, { title: string; blurb: string }> = {
   'agents-that-act': {
     title: 'Agents and Copilots in Real Workflows',
     blurb:
-      'Systems that work inside real tools — tickets, deploys, CRMs, shipments. Some act on ' +
+      'Systems that work inside real tools: tickets, deploys, CRMs, shipments. Some act on ' +
       'their own within limits; others draft and a person commits. The design is mostly ' +
       'about deciding which is which.',
   },
@@ -371,7 +371,7 @@ export const TABS: Record<string, { label: string; purpose: string; short?: stri
   worksheet: {
     label: 'Practice Worksheet',
     purpose:
-      'Attempt the case yourself first. Read-only here — use the interactive version to save answers.',
+      'Attempt the case yourself first. This copy is read-only; use the interactive version to save answers.',
   },
   'answer-key': {
     label: 'Model Answer',
@@ -399,7 +399,7 @@ export const TABS: Record<string, { label: string; purpose: string; short?: stri
   },
   guide: {
     label: 'Interview Guide',
-    purpose: 'The complete case in one document — no companion tabs are needed.',
+    purpose: 'The complete case in one document, with no companion tabs.',
   },
   'interview-template': {
     label: 'Answer Template',
@@ -588,7 +588,7 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
       'Propose a first architecture and say how you would evaluate and roll it out',
     ],
     howToUse:
-      'Time-box it to about 45 minutes. Draft each section before opening its model answer — ' +
+      'Time-box it to about 45 minutes. Draft each section before opening its model answer: ' +
       'a rough attempt teaches more than a blank one, and you do not need to fill every cell.',
     sourceStatus: 'original',
     // Fact-check round 2 (CONTENT-18): external claims checked against official docs.
@@ -606,7 +606,7 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
       'Defend an architecture, evaluation plan and rollout under follow-up questions',
     ],
     howToUse:
-      'Allow about an hour. Work the discovery sections properly — they decide the design — ' +
+      'Allow about an hour. Work the discovery sections properly, because they decide the design, ' +
       'then compare each section with the model answer and score yourself honestly.',
     sourceStatus: 'derived',
     // Fact-check round 2 (CONTENT-18): external claims checked against official docs.
@@ -634,7 +634,7 @@ const CASE_STUDY_BASE: Omit<EditorialMeta, 'difficulty' | 'outcomes'> = {
   mode: 'case-study',
   audience: FDE_AUDIENCE,
   prerequisites: [
-    'Comfort with retrieval, agents and basic cloud architecture — the related reviews below cover each',
+    'Comfort with retrieval, agents and basic cloud architecture; the related reviews below cover each',
   ],
   howToUse:
     'Read the tabs in order. The Interview Guide stands alone; later tabs assume it. Mark ' +
@@ -679,7 +679,7 @@ FAMILY_META['judgement-and-decomposition'] = {
   ...CASE_STUDY_BASE,
   // Fact-check round 2 (CONTENT-18).
   difficulty: 'Intermediate',
-  prerequisites: ['No specific technical prerequisite — these test reasoning, not components'],
+  prerequisites: ['No specific technical prerequisite: these questions test reasoning, not components'],
   howToUse:
     'Before reading, spend five minutes sketching your own answer. Then read the guide and ' +
     'compare the structure, not just the conclusion.',

@@ -5,7 +5,7 @@ import type { Level } from '@/lib/editorial'
 import { ChipGroup, type ChipOption } from '@/components/learn/ChipGroup'
 import { COPY } from '@/components/learn/copy'
 import { Button, EmptyState } from '@/components/ui'
-import { CaseGroup } from '@/components/casebook/CaseGroup'
+import { ContentsGroup } from '@/components/editorial/ContentsGroup'
 import { AreaGroup, LinkList } from './Area'
 import type { GroupItem, TrackGroup } from './data'
 
@@ -41,7 +41,7 @@ export function FilteredGroups({
   /** Each group's count label: ['case', 'cases']. */
   unit: [string, string]
   time?: boolean
-  /** Render each group as a casebook contents block (`CaseGroup`) instead of a card. */
+  /** Render each group as a casebook contents block (`ContentsGroup`) instead of a card. */
   contents?: boolean
 }) {
   const params = useSearchParams()
@@ -90,7 +90,7 @@ export function FilteredGroups({
       </p>
       {shown.length > 0 ? (
         <div className={contents ? undefined : 'space-y-4'}>
-          {shown.map((g) => contents ? <CaseGroup key={g.id} group={g} unit={unit} /> : (
+          {shown.map((g) => contents ? <ContentsGroup key={g.id} group={g} unit={unit} /> : (
             <AreaGroup
               key={g.id}
               id={g.id}
