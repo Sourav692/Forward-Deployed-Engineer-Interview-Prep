@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { FilteredGroups } from '@/components/areas/FilteredGroups'
 import { LEVEL_LABEL } from '@/lib/editorial'
 import { ModuleProgress } from '@/components/Progress'
-import { CaseGroup } from '@/components/casebook/CaseGroup'
+import { ContentsGroup } from '@/components/editorial/ContentsGroup'
 import { LIVE, moduleGroups, siteCounts } from '@/components/areas/data'
 import { learnHref } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
@@ -31,7 +31,7 @@ export default async function DesignPage() {
   const { groups, scenarios } = await moduleGroups(LIVE.casebook)
   const counts = await siteCounts()
 
-  // Hallmark, Editorial theme (casebook.css): the name and its argument, then the cases
+  // Hallmark, Editorial theme (editorial.css): the name and its argument, then the cases
   // as a contents page, theme by theme, and the method note last.
   return (
     <div className="pb-24">
@@ -65,7 +65,7 @@ export default async function DesignPage() {
           fallback={
             <div>
               {groups.map((g) => (
-                <CaseGroup key={g.id} group={g} unit={['case', 'cases']} />
+                <ContentsGroup key={g.id} group={g} unit={['case', 'cases']} />
               ))}
             </div>
           }

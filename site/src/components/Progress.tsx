@@ -46,7 +46,7 @@ export function ModuleProgress({
 }: {
   scenarios: ScenarioRef[]
   readingNoun?: string
-  /** "Start: <title>" as the casebook's ink block (`cb-btn` in casebook.css), whose theme keeps arrows out of labels. */
+  /** "Start: <title>" as the Editorial ink block (`cb-btn` in editorial.css), whose theme keeps arrows out of labels. */
   plain?: boolean
 }) {
   const progress = useProgress(scenarios)
@@ -91,7 +91,7 @@ export function ModuleProgress({
       {next && (
         <Link
           href={scenarioHref(next)}
-          className={plain ? 'cb-btn cb-btn--primary' : 'rounded-md bg-accent px-3.5 py-2 text-[0.875rem] font-semibold text-white transition-colors dark:text-bg hover:bg-accent-hover'}
+          className={plain ? 'cb-btn cb-btn--primary cb-btn--truncate' : 'rounded-md bg-accent px-3.5 py-2 text-[0.875rem] font-semibold text-white transition-colors dark:text-bg hover:bg-accent-hover'}
         >
           {done + started > 0 ? 'Continue' : 'Start'}
           {plain ? ': ' : ' → '}

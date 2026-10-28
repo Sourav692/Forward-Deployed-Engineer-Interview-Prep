@@ -3,13 +3,13 @@ import type { Metadata } from 'next'
 import { familyMeta, getAllScenarios, getRelated, getScenario } from '@/lib/content'
 import { MODES } from '@/lib/editorial'
 import { ScenarioView } from '@/components/ScenarioView'
-import { BeforeYouStart, MetaStrip, TwinLinks, WhereNext } from '@/components/PageIntro'
+import { BeforeYouStart, WhereNext } from '@/components/PageIntro'
+import { PageHead } from '@/components/editorial/PageHead'
 import { pageTwins } from '@/lib/twins'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref } from '@/lib/scenario'
 import { learningResourceJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
-import { Byline } from '@/components/Byline'
 
 /**
  * /practice/<slug>: one technical or behavioural worksheet (ENH-17). The URL drops the
@@ -59,7 +59,7 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
   const [related, twins] = await Promise.all([getRelated(ref), pageTwins(ref)])
 
   return (
-    <div className="py-10">
+    <div className="pb-20 pt-8">
       <JsonLd
         data={learningResourceJsonLd({
           name: scenario.title,
@@ -77,27 +77,21 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
         ]}
       />
 
-      <header className="mb-8 max-w-3xl">
-        <div className="mb-2 text-[0.8125rem] font-semibold text-accent">{ref.trackTitle}</div>
-        <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{scenario.title}</h1>
-        <Byline updated={ref.updated} report={{ title: scenario.title, path: scenarioHref(ref) }} />
-        <TwinLinks links={twins} />
-        <div className="mt-3">
-          <MetaStrip
-            meta={meta}
-            minutes={ref.minutes ?? null}
-            extra={
-              meta.personalisation && (
-                <>
-                  <span aria-hidden>·</span>
-                  <span className="font-semibold text-text">Track each answer as you practise</span>
-                </>
-              )
-            }
-          />
-        </div>
+      <PageHead
+        tag={ref.trackTitle}
+        title={scenario.title}
+        facts={[
+          { term: 'Kind', value: MODES[meta.mode].label },
+          { term: 'Level', value: meta.difficulty },
+          ...(ref.minutes ? [{ term: 'Time', value: `${ref.minutes} min` }] : []),
+          ...(meta.personalisation ? [{ term: 'Progress', value: 'Track each answer as you practise' }] : []),
+        ]}
+        updated={ref.updated}
+        twins={twins}
+        report={{ title: scenario.title, path: scenarioHref(ref) }}
+      >
         <BeforeYouStart meta={meta} />
-      </header>
+      </PageHead>
 
       <ScenarioView scenario={scenario} behavioral={meta.mode === 'behavioural'} />
 

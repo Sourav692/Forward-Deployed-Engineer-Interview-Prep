@@ -1,0 +1,362 @@
+/* Hallmark · shape: index (contents rows) for /design and /practice, app screen for /design/<slug> (reading view), /practice/<slug> (worksheet) and /practice/story-bank · genre: editorial · theme: Editorial (locked: shared with the landing page, tokens in landing/tokens.css) · redesign: full · job: read
+ * hero: Settled (/design), Settled (/practice), none (app screens) · nav: kept (site shell) · footer: kept (site shell) · imagery: the product (the case list as a magazine contents page; the reading view), no photographs · signature: each index set as a contents page, every case or worksheet a ruled row with its level and reading time
+ * axes: light/display-condensed/chromatic-green · posture: restrained · scope: /design and /design/<slug>, tokens on .editorial-page · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H3 E4 S4 R4 V4 · weakest: H, the index hero is a word and two sentences with the reading progress beside it; the contents rows below carry the page */
+/* Hallmark · waive 72 · div.editorial-page paints its paper with a 100vmax spread shadow, so its 0px edge is the container edge · no text sits in a box; the casebook has no cards */
+/* Hallmark · waive 44c · the /design hero is the name, one standfirst and the progress action; the contents head and the theme filters sit in the same 1440x900 screen · the index's object is the list, so the list starts in the fold instead of a taller hero */
+/* Hallmark · waive 79 · the space under the /design hero holds the contents head and the theme filters, not empty paper · the list is the index's object, so it starts in the first screen instead of a taller hero */
+/* Hallmark · waive 49b · links inside the Introduction's sections table wrap at 320px because table cells keep an 8rem minimum · the table scrolls sideways with a sticky first column, so the full link stays readable */
+/* Hallmark · dropped the AreaGroup count link markup on /design · the same link (the theme's href, "N cases") renders in ContentsGroup as .cb-group-count */
+/* Hallmark · dismissed 77 · the index is a contents page (hero, eight themes, the method note) and a case page is a reading screen; neither is a landing strip */
+/* Hallmark · waive 39b · the worksheet's status and filter buttons are app controls inside the answer panel, 40px tall in a 44px row · the worksheet page is an app screen, where the range is 32 to 40px */
+/* Hallmark · answered F25 · the off-screen columns belong to a worksheet answer grid the reader types into; it scrolls sideways inside its own box, and pinning an editable column would cover the cell being typed in */
+/* Hallmark · answered F4 · the second filled recipe is a pressed filter chip, a selection state, not a button; each page has one filled action style (cb-btn--primary) */
+/* Hallmark · dropped the AreaGroup count links and the pill nav markup on /practice · the same links render in ContentsGroup (.cb-group-count) and in the hero's On this page rows */
+/* Hallmark · dropped "Customer engagement" on the Story Bank cards · 54 names it as an eyebrow; the section head already says Choose a customer story */
+/* Hallmark · answered F19 · 400 reading, 500 labels, 800 heads; 600 is bold inside reading text only, where the source marks a term */
+/* Hallmark · kept accessible names "Continue →", "Next: Part N →" and "Practise this as a worksheet →" as aria-labels (the e2e suite reads them); the visible labels drop the glued arrow (63) */
+
+/*
+ * The Editorial system (Hallmark) for the casebook and practice areas, scoped to
+ * `.editorial-page`, the wrapper the /design and /practice layouts render. Colour and font tokens come from landing/tokens.css under
+ * [data-theme='editorial']; this file sets the scale, re-points the site's tokens so
+ * shared components take the theme, and styles the reading view. Rules here are not in
+ * a cascade layer, so they win over Tailwind utilities on the same element: keep every
+ * selector under `.editorial-page`.
+ */
+.editorial-page {
+  --rule-hair: 1px;
+  --rule-heavy: 4px;
+  --tracking-display: -0.012em;
+  --display-weight: 800;
+  --text-sm: 0.875rem;
+  --text-body: 1.125rem;
+  --text-display: clamp(4rem, 1.5rem + 9vw, 10rem);
+  --text-h1: clamp(2.5rem, 1.5rem + 3.5vw, 4.25rem);
+  --text-section: clamp(2rem, 1.25rem + 2.5vw, 3rem);
+  --text-h2: clamp(1.625rem, 1.2rem + 1.2vw, 2.125rem);
+  --text-h3: 1.375rem;
+  --text-row: clamp(1.25rem, 1rem + 0.6vw, 1.5rem);
+  --text-lead: clamp(1.25rem, 1rem + 0.8vw, 1.625rem);
+  --dur-short: 220ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* The site's tokens, re-pointed inside the wrapper only. */
+  --bg: var(--color-paper);
+  --surface: var(--color-paper);
+  --surface-2: var(--color-paper-2);
+  --border: var(--color-rule);
+  --border-strong: var(--color-rule-2);
+  --input-border: var(--color-rule-2);
+  --text: var(--color-ink);
+  --text-muted: var(--color-muted);
+  --text-subtle: var(--color-muted);
+  --accent: var(--color-ink);
+  --accent-hover: var(--color-ink-2);
+  --accent-soft: var(--color-paper-3);
+  --accent-ring: var(--color-focus);
+  --success: var(--color-accent);
+  --success-soft: var(--color-paper-2);
+  --danger: var(--color-error);
+
+  /* The paper runs edge to edge behind the capped container, without 100vw. */
+  background: var(--color-paper);
+  box-shadow: 0 0 0 100vmax var(--color-paper);
+  clip-path: inset(0 -100vmax);
+  color: var(--color-ink-2);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  font-optical-sizing: auto;
+  font-variant-numeric: oldstyle-nums;
+  caret-color: var(--color-accent);
+}
+
+.dark .editorial-page { font-weight: 350; }
+.editorial-page :where(*) { border-radius: 0; }
+.editorial-page ::selection { background: color-mix(in oklab, var(--color-accent) 22%, transparent); color: var(--color-ink); }
+
+/* Heads: Bricolage condensed at 800, one weight and one colour, sentence case. */
+.editorial-page :is(h1, h2, h3) {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-variation-settings: "wdth" 75, "opsz" 96;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+  font-variant-numeric: lining-nums tabular-nums;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+/* Labels, controls, nav, captions and table heads: the display face at its label cut. */
+.editorial-page :is(button, nav, label, th, small, figcaption, [role='group'], .cb-label) {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+/* Shared components set some labels in tracked capitals; the theme never does (54). */
+.editorial-page .uppercase { text-transform: none; letter-spacing: 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: "opsz" 12; }
+
+.editorial-page a { text-decoration-color: var(--color-rule-2); text-underline-offset: 0.2em; }
+.editorial-page a:hover { text-decoration-color: var(--color-accent); }
+.editorial-page :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* Controls: an ink block and an ink-outlined block, square, label face. */
+.editorial-page .cb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.125rem;
+  border: var(--rule-hair) solid var(--color-ink);
+  background: none;
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+}
+.editorial-page .cb-btn:hover { background: var(--color-paper-3); }
+.editorial-page .cb-btn--primary { background: var(--color-ink); color: var(--color-paper); }
+.editorial-page .cb-btn--primary:hover { background: var(--color-ink-2); }
+.editorial-page .cb-btn--done { border-color: var(--color-accent); color: var(--color-accent); }
+.editorial-page .cb-btn--done:hover { background: var(--color-paper-2); }
+.editorial-page .cb-btn:active { transform: translateY(1px); }
+.editorial-page .cb-btn svg { flex: none; }
+/* A label that can outgrow a phone (a case or worksheet title) keeps one line and ends in an ellipsis. */
+.editorial-page .cb-btn--truncate { display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; line-height: 42px; }
+/* Controls inside a worksheet or reading view sit on the app range: 40px, a 44px row. */
+.editorial-page article button { min-height: 2.5rem; }
+@media (max-width: 22rem) { .editorial-page .cb-btn { padding-inline: 0.75rem; font-size: 0.8125rem; } }
+
+/* Index ----------------------------------------------------------------------- */
+
+.editorial-page .cb-hero {
+  display: grid;
+  gap: 2.5rem;
+  align-items: end;
+  padding-block: 3.5rem 4rem;
+}
+@media (min-width: 64rem) {
+  .editorial-page .cb-hero { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); padding-block: 4.5rem 4rem; }
+}
+.editorial-page .cb-hero h1 { font-size: var(--text-display); line-height: 0.92; }
+.editorial-page .cb-standfirst {
+  margin-top: 1.5rem;
+  max-width: 34ch;
+  font-size: var(--text-lead);
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+.editorial-page .cb-hero-side { border-top: var(--rule-heavy) solid var(--color-ink); padding-top: 1.25rem; }
+.editorial-page .cb-hero-side p { font-size: 1rem; color: var(--color-ink-2); max-width: 40ch; }
+
+.editorial-page .cb-opens { border-top: var(--rule-heavy) solid var(--color-ink); padding-top: 1.25rem; }
+.editorial-page .cb-section-head { font-size: var(--text-section); line-height: 1; }
+
+/* A theme: its name and argument on the left, its cases as ruled rows on the right. */
+.editorial-page .cb-group {
+  display: grid;
+  gap: 1.25rem 2.5rem;
+  border-top: var(--rule-heavy) solid var(--color-ink);
+  padding-top: 1.25rem;
+  scroll-margin-top: 5rem;
+}
+@media (min-width: 64rem) {
+  .editorial-page .cb-group { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+}
+.editorial-page .cb-group + .cb-group { margin-top: 4rem; }
+.editorial-page .cb-group h3 { font-size: var(--text-h2); line-height: 1; }
+.editorial-page .cb-group-blurb { margin-top: 0.75rem; font-size: 1rem; line-height: 1.5; max-width: 38ch; }
+.editorial-page .cb-group-count { margin-top: 1rem; display: inline-block; font-size: var(--text-sm); color: var(--color-ink); text-decoration: underline; }
+
+.editorial-page .cb-rows { list-style: none; margin: 0; padding: 0; border-top: var(--rule-hair) solid var(--color-rule-2); }
+.editorial-page .cb-row { border-bottom: var(--rule-hair) solid var(--color-rule); }
+.editorial-page .cb-row-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 1.5rem;
+  align-items: baseline;
+  padding: 0.875rem 0;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.editorial-page .cb-row-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "wdth" 85, "opsz" 24;
+  font-size: var(--text-row);
+  line-height: 1.15;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color var(--dur-short) var(--ease-out);
+}
+.editorial-page .cb-row-link:hover .cb-row-title { text-decoration-color: var(--color-accent); }
+.editorial-page .cb-row-facts {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: var(--text-sm);
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.editorial-page .cb-row-twin {
+  display: inline-block;
+  margin: -0.375rem 0 0.875rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  text-decoration: underline;
+}
+
+/* On this page: one line per section title; the full title is in the link's title attribute. */
+.editorial-page nav[aria-label='On this page'] a { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Filter chips: square, 44px, the label face; a long theme row scrolls sideways on a phone. */
+.editorial-page [role='group'] button { min-height: 44px; padding-inline: 0.875rem; white-space: nowrap; font-size: 0.875rem; }
+.editorial-page [role='group'] button[aria-pressed='true'] { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+@media (max-width: 40rem) {
+  .editorial-page [role='group'][aria-label='Theme'] { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.25rem; scrollbar-width: thin; }
+}
+
+/* The method note: a paper well under a hairline, never a raised card. */
+.editorial-page .cb-well {
+  background: var(--color-paper-2);
+  border-top: var(--rule-hair) solid var(--color-rule-2);
+  padding: 1.5rem;
+}
+
+/* Case page -------------------------------------------------------------------- */
+
+.editorial-page .cb-case-head { padding-block: 1.5rem 2rem; border-bottom: var(--rule-heavy) solid var(--color-ink); margin-bottom: 2.5rem; }
+.editorial-page .cb-case-head h1 { font-size: var(--text-h1); line-height: 0.95; max-width: 18ch; }
+.editorial-page .cb-tag {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+.editorial-page .cb-facts {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.75rem 0 0;
+  border-top: var(--rule-hair) solid var(--color-rule-2);
+}
+.editorial-page .cb-facts > div { padding: 0.75rem 1.5rem 0 0; }
+.editorial-page .cb-facts > div + div { border-left: var(--rule-hair) solid var(--color-rule); padding-left: 1.5rem; }
+@media (max-width: 40rem) {
+  .editorial-page .cb-facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .editorial-page .cb-facts > div, .editorial-page .cb-facts > div + div { border-left: 0; padding: 0.75rem 1rem 0 0; }
+}
+.editorial-page .cb-facts dt { font-family: var(--font-display); font-weight: 500; font-variation-settings: "opsz" 12; font-size: 0.8125rem; color: var(--color-muted); }
+.editorial-page .cb-facts dd { margin: 0.125rem 0 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: "opsz" 12; font-size: 1rem; color: var(--color-ink); font-variant-numeric: lining-nums tabular-nums; }
+
+/* The contents sidebar: the open page carries a heavy ink bar, never a filled pill. */
+.editorial-page .cb-nav-item {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.375rem 0.625rem;
+  border-left: 3px solid transparent;
+  background: none;
+  color: var(--color-muted);
+  text-align: left;
+  transition: color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+}
+.editorial-page .cb-nav-item:hover { color: var(--color-ink); border-left-color: var(--color-rule-2); }
+.editorial-page .cb-nav-item[data-state='within'] { color: var(--color-ink); }
+.editorial-page .cb-nav-item[aria-current='page'] { color: var(--color-ink); border-left-color: var(--color-ink); }
+.editorial-page .cb-nav-min { flex: none; font-size: 0.8125rem; color: var(--color-muted); font-variant-numeric: lining-nums tabular-nums; }
+
+/* What a document is for: its name and time as a label, the purpose as a standfirst. */
+.editorial-page .cb-purpose { margin-bottom: 2.5rem; max-width: 46rem; }
+.editorial-page .cb-purpose-label { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-size: var(--text-sm); color: var(--color-muted); }
+.editorial-page .cb-purpose-label strong { color: var(--color-ink); font-weight: 500; }
+.editorial-page .cb-purpose-text { margin-top: 0.5rem; font-size: var(--text-lead); line-height: 1.35; color: var(--color-ink); }
+
+.editorial-page .cb-part-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: var(--rule-heavy) solid var(--color-ink);
+}
+.editorial-page .cb-resume {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 2.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-paper-2);
+  border-top: var(--rule-hair) solid var(--color-rule-2);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: 1rem;
+  color: var(--color-ink);
+}
+
+/* Practice ----------------------------------------------------------------------- */
+
+/* Answer fields: square, a 1px rule that turns ink on focus, paper behind the text. */
+.editorial-page :is(textarea, input[type='text'], input[type='search'], select) {
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+.editorial-page textarea::placeholder { color: var(--color-muted); }
+
+/* A worksheet section: its number and title as one condensed head under a hairline. */
+.editorial-page section[id^='section-'] > div:first-child { border-top: var(--rule-hair) solid var(--color-rule-2); padding-top: 1rem; }
+.editorial-page section[id^='section-'] h2 { font-size: var(--text-h2); line-height: 1.05; }
+.editorial-page section[id^='section-'] > div:first-child > span { font-family: var(--font-display); font-weight: var(--display-weight); font-variation-settings: "wdth" 75, "opsz" 96; font-size: var(--text-h2); color: var(--color-muted); }
+
+/* Story Bank: each customer engagement opens on a heavy rule, never a raised card. */
+.editorial-page .story-bank-card { border: 0; border-top: var(--rule-heavy) solid var(--color-ink); background: none; box-shadow: none; padding: 1.25rem 0 0; min-height: 0; }
+.editorial-page .story-bank-card:hover { transform: none; }
+.editorial-page .story-bank-card h3 { font-size: var(--text-h3); }
+
+/* Reading text: Source Serif at 18px, heads condensed, tables on hairlines. */
+.editorial-page .reading { font-size: var(--text-body); line-height: 1.6; color: var(--color-ink-2); max-width: 46rem; }
+.editorial-page section > h2 { font-size: var(--text-h2); line-height: 1.05; margin-bottom: 1.25rem; padding-top: 1rem; border-top: var(--rule-hair) solid var(--color-rule-2); }
+.editorial-page .reading h3 { font-size: var(--text-h3); line-height: 1.15; margin-top: 2rem; }
+.editorial-page .reading :is(h4, h5) { font-family: var(--font-display); font-weight: var(--display-weight); font-variation-settings: "wdth" 75, "opsz" 24; letter-spacing: var(--tracking-display); color: var(--color-ink); font-size: 1.0625rem; }
+.editorial-page .reading strong { color: var(--color-ink); font-weight: 600; }
+.editorial-page .reading a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-rule-2); }
+.editorial-page .reading a:hover { text-decoration-color: var(--color-accent); }
+.editorial-page .reading code { font-size: 0.875em; background: var(--color-paper-2); border: 0; }
+.editorial-page .reading blockquote { border-left: var(--rule-heavy) solid var(--color-ink); background: none; font-style: italic; color: var(--color-ink); padding-left: 1.25rem; }
+.editorial-page .reading hr { border-top: var(--rule-hair) solid var(--color-rule-2); }
+.editorial-page .reading .table-wrap { border: 0; border-top: 2px solid var(--color-ink); border-bottom: var(--rule-hair) solid var(--color-rule-2); max-width: none; }
+.editorial-page .reading table { font-size: 0.9375rem; }
+.editorial-page .reading th { background: none; color: var(--color-ink); font-size: 0.875rem; border-bottom: var(--rule-hair) solid var(--color-rule-2); }
+.editorial-page .reading :is(td, th) { border-color: var(--color-rule); }
+.editorial-page .code-block { background: var(--color-paper-2); border: 0; border-top: var(--rule-hair) solid var(--color-rule-2); }
+.editorial-page .mermaid-figure { border-color: var(--color-rule); }
+@media (max-width: 639px) {
+  .editorial-page .table-wrap :is(td, th):first-child { position: sticky; left: 0; z-index: 1; background: var(--color-paper); box-shadow: inset -1px 0 var(--color-rule); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-page *, .editorial-page *::before, .editorial-page *::after { transition-duration: 0.01ms; }
+  .editorial-page .cb-btn:active { transform: none; }
+}
