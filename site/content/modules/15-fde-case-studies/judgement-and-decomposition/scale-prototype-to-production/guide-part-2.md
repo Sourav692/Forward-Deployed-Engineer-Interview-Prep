@@ -151,7 +151,7 @@ Never launch to 100,000 people on one day. Roll out by cohort, so each tenfold s
 
 Split cohorts per user, never per request. The Handbook's reason: one person's experience must not flicker between versions mid-conversation. Hold the safety gate identical across arms.
 
-Make rollback a pointer flip. The Handbook's line settles it: *"If rollback requires a build, it is not a rollback; it is a hot-fix under pressure."* The version that was live five minutes ago stays deployed, ready to take traffic. Test the rollback before the first wave, because Handbook Module 10 doc 4 makes `rollback_tested` a gate that blocks limited production.
+Make rollback a pointer flip. The Handbook's line: *"If rollback requires a build, it is not a rollback; it is a hot-fix under pressure."* The version that was live five minutes ago stays deployed, ready to take traffic. Test the rollback before the first wave, because Handbook Module 10 doc 4 makes `rollback_tested` a gate that blocks limited production.
 
 ## 11. Assign Owners Before the First Page
 
@@ -166,7 +166,7 @@ At 100 users, the builder is the owner, the on-call and the support desk. At 100
 | Budget | Finance partner plus product owner | Department budgets, anomaly thresholds |
 | Support | IT helpdesk (L1), app team (L2), platform (L3) | Tickets, known issues, escalation |
 
-Write runbooks for the incidents that will happen *(own construction)*. The cost cram sheet lists fifteen, and four matter from week one. Cost 5× after rollout: *"The increase is likely from request shape, not just user count."* Latency 2 s to 20 s after a deploy: roll back the prompt or reranker, activate the fallback provider. One tenant over-using: *"distinguish healthy adoption from runaway automation."* And cache hit rate dropping: look for a silent prefix invalidator. Add a fifth for a permissions leak, owned by security.
+Write runbooks for the incidents that will happen *(own construction)*. The cost cram sheet lists fifteen, and four matter from week one. Cost 5× after rollout: *"The increase is likely from request shape, not just user count."* Latency 2 s to 20 s after a deploy: roll back the prompt or reranker, activate the fallback provider. One tenant over-using: *"distinguish healthy adoption from runaway automation."* Cache hit rate dropping: look for a silent prefix invalidator. Add a fifth for a permissions leak, owned by security.
 
 Run a security review against evidence, not a checkbox. Handbook Module 10 doc 4 names the failure: a gate can be structurally real and still accept free text as evidence. Require adversarial testing and permission-boundary probes as listed artefacts before the review passes.
 
@@ -174,10 +174,10 @@ Run a security review against evidence, not a checkbox. Handbook Module 10 doc 4
 
 A system can be technically ready and still fail, because nobody uses it. Adoption is the last item on the bank's list, and it is where the follow-up goes.
 
-Measure adoption with numbers that cannot be faked by a launch email. Handbook Module 10 doc 4 gives two. The human-approval override rate: *"Falling over time = trust being earned; flat = the agent is not ready for less supervision."* And week-4 retention: *"Whether the thing deployed is still the thing being used a month later."* Add active users as a share of licensed users, task success by intent, and cost per successful task *(own construction)*. The cost additions insist on the last one: a cheaper model that needs a retry or a human correction is not cheaper.
+Measure adoption with numbers that cannot be faked by a launch email. Handbook Module 10 doc 4 gives two. The human-approval override rate: *"Falling over time = trust being earned; flat = the agent is not ready for less supervision."* The second is week-4 retention: *"Whether the thing deployed is still the thing being used a month later."* Add active users as a share of licensed users, task success by intent, and cost per successful task *(own construction)*. The cost additions insist on the last one: a cheaper model that needs a retry or a human correction is not cheaper.
 
 The bank's follow-up, verbatim: *"The system is technically ready but users are not adopting it. What do you investigate?"* Its answer list, verbatim: whether the problem is important enough, workflow fit, user trust, response quality, latency, training and onboarding, incentives, integration friction, and whether the product solves the user's actual pain point.
 
-Order that list into an investigation *(own construction)*. Start with data, not opinions. Segment usage by department and intent, and find where users try once and stop. Then read those sessions. A drop after the first answer points to quality or trust. A drop before any answer points to latency or onboarding. Low first use points to workflow fit and integration friction: the assistant lives in a separate tab while the work lives in another tool. Only then talk to users, and ask about their pain rather than the product. The cost cram sheet's executive table says it plainly: adoption depends on *"Perceived latency, workflow fit, reliability, explainability."*
+Order that list into an investigation *(own construction)*. Start with data, not opinions. Segment usage by department and intent, and find where users try once and stop. Then read those sessions. A drop after the first answer points to quality or trust. A drop before any answer points to latency or onboarding. Low first use points to workflow fit and integration friction: the assistant lives in a separate tab while the work lives in another tool. Only then talk to users, and ask about their pain rather than the product. The cost cram sheet's executive table says adoption depends on *"Perceived latency, workflow fit, reliability, explainability."*
 
 > *"Adoption is a deliverable. I would measure it per cohort, and treat a flat week-4 retention as a bug with a root cause, not a marketing problem."*

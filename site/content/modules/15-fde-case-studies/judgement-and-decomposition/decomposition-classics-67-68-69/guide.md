@@ -2,7 +2,7 @@
 
 *Commit to a plan early enough to show progress, and late enough that the mission, not the model, has chosen it.*
 
-These three prompts are not system-design questions with a hidden right architecture. They test whether the mission gets pinned down before anything is drawn. This page teaches the method once, then runs it three times. The scoping mechanics come from the Scoping to Deployed Agent case and the evaluation-first habit from the Logistics Exception Handling case, and both are named here rather than repeated.
+These three prompts have no hidden right architecture. They test whether you pin down the mission before drawing anything. This page teaches the method once, then runs it three times. The scoping mechanics come from the Scoping to Deployed Agent case and the evaluation-first habit from the Logistics Exception Handling case; this page names them and does not repeat them.
 
 | Case | Prompt (verbatim from the source) | What it tests, per the source |
 |---|---|---|
@@ -10,7 +10,7 @@ These three prompts are not system-design questions with a hidden right architec
 | #68 | "A regional bank wants to unify fraud detection across three legacy systems acquired through M&A. None of the data is labelled consistently. How do you scope the first 90 days?" | Data quality realism, phased scoping, regulatory constraints |
 | #69 | "A hospital network wants to reduce medication errors in post-surgery care. They have patient records, pharmacy dispensing logs, and nurse assignment schedules. Where do you start?" | High-stakes HITL design, safety-first decomposition |
 
-The source gives the three prompts, the six-step framework and the Tier 2 probes. It gives no worked answer for any of the three. Every case section is therefore *(own construction)*, built from the framework's arguments. Every number in those sections is an assumption to state aloud, not a sourced fact. Domain facts are general knowledge and are marked where they appear.
+The source gives the three prompts, the six-step framework and the Tier 2 probes. It gives no worked answer for any of the three. So every case section is *(own construction)*, built from the framework's arguments, and every number in those sections is an assumption to state aloud, not a sourced fact. Domain facts are general knowledge and are marked where they appear.
 
 ---
 
@@ -18,9 +18,9 @@ The source gives the three prompts, the six-step framework and the Tier 2 probes
 
 The decomposition round is 45 to 60 minutes on a vague enterprise problem. The source describes the task as breaking it "into users, data, workflows, constraints, and a prioritised V1 — out loud, collaboratively." There is no correct answer. The interviewer watches how the path gets chosen when none is given.
 
-Two failure modes eliminate many candidates, and both are in the source. The first is jumping to architecture before clarifying scope. One OpenAI FDE candidate reported being stopped mid-design and asked, "What questions would you ask the customer before designing anything?" The second is hand-waving evaluation. "How do you know your AI system is actually working well?" is used as a deliberate differentiator.
+The source names two failure modes that eliminate many candidates. The first is jumping to architecture before clarifying scope. One OpenAI FDE candidate reported being stopped mid-design and asked, "What questions would you ask the customer before designing anything?" The second is hand-waving evaluation. "How do you know your AI system is actually working well?" is asked on purpose to separate candidates.
 
-The scoring rewards narration. A polished answer delivered in silence scores worse than messy, well-narrated thinking. The source's pattern note settles the rest: every prompt is business goal first, data second, model last. None of these three prompts asks which model to use.
+The scoring rewards narration. A polished answer delivered in silence scores worse than messy, well-narrated thinking. The source's pattern note: every prompt is business goal first, data second, model last. None of these three prompts asks which model to use.
 
 A reasoning step the interviewer cannot hear cannot be scored. So think aloud continuously, and tie every choice to how it would be evaluated.
 
@@ -37,15 +37,15 @@ The source's framework has six steps. The timings below are *(own construction)*
 | 30–45 | **Walking-skeleton MVP, then iterate.** Ship the thinnest end-to-end version, even with mocked agent logic | A first slice, its architecture, and its evaluation |
 | 45–60 | **Adapt live.** The interviewer changes a constraint mid-round | A re-derived plan, with no defence of the old one |
 
-The source gives the canonical curveball: "you lost access to the GPS feed." Re-derive rather than defend. Adaptability is what is being scored in that moment.
+The source gives the canonical curveball: "you lost access to the GPS feed." Re-derive the plan; don't defend the old one. That moment scores adaptability.
 
 When the customer will not confirm an assumption, state it and move on. The companion question bank's opener works for all three cases. "Before proposing a solution, I'd like to clarify the business outcome, primary user, current workflow, constraints, and how success will be measured."
 
-The bank also sets a floor for each case. Produce five clarifying questions, three to five workstreams, three measurable success metrics, two major trade-offs, three failure modes and a phased plan. Each case section below meets that floor.
+The bank also sets a floor for each case: five clarifying questions, three to five workstreams, three measurable success metrics, two major trade-offs, three failure modes and a phased plan. Each case section below meets that floor.
 
 ## 3. Map Every Input Before Naming a Model
 
-A model cannot be chosen before the data that feeds it is known. The input map is the tool that forces this, and the source names its columns: shape, owner, freshness. Data-oriented thinking is the edge the source recommends leaning into.
+You cannot choose a model before you know the data that feeds it. The input map forces this, and the source names its columns: shape, owner, freshness. The source recommends data-oriented thinking as your edge.
 
 The template below adds two columns *(own construction)*. One asks what the source can answer. The other asks what could make it lie.
 
@@ -53,7 +53,7 @@ The template below adds two columns *(own construction)*. One asks what the sour
 |---|---|---|---|---|---|
 | *name* | events, rows, files, free text | the team who can fix it | seconds, hours, days | the question it supports | gaps, drift, label noise, bias |
 
-The "owner" column carries more weight than it looks. A quality problem without an owner stays a quality problem. The "quality risk" column is where the interviewer's first curveball usually lands.
+A quality problem without an owner stays a quality problem. The interviewer's first curveball usually lands in the "quality risk" column.
 
 ## 4. Sequence Workstreams by Risk, Not by Interest
 
@@ -61,7 +61,7 @@ The source asks for workstreams "sequenced by risk" with the ordering justified.
 
 Sequence by asking which unknown, if it turns out badly, kills the project *(own construction)*. That unknown goes first, because every later workstream inherits its answer. In all three cases the answer is the data, not the model.
 
-Then build the walking skeleton. The source's definition is precise: the thinnest end-to-end version, even with mocked agent logic, "to prove the integration story." A mocked model with real data flowing end to end teaches more than a clever model on a spreadsheet.
+Then build the walking skeleton. The source defines it as the thinnest end-to-end version, even with mocked agent logic, "to prove the integration story." A mocked model with real data flowing end to end teaches more than a clever model on a spreadsheet.
 
 The Scoping to Deployed Agent pack carries the matching delivery mechanics: stage gates, named sign-off authorities, and refusing to start without measurable success criteria. Use its gate vocabulary when the interviewer asks how a phase ends.
 
@@ -73,13 +73,13 @@ The Scoping to Deployed Agent pack carries the matching delivery mechanics: stag
 
 ### 5.1 Clarify the mission
 
-"Reduce response time" hides three objectives that pull apart. The source names them: response time, cost, and equity of coverage. A citywide average can fall while the slowest neighbourhoods get slower. That is the trap to name first.
+"Reduce response time" hides three objectives that pull apart. The source names them: response time, cost, and equity of coverage. A citywide average can fall while the slowest neighbourhoods get slower. Name that trap first.
 
 | Ask | Assumed answer | Implication |
 |---|---|---|
 | Which interval counts: call answered, dispatched, or on scene? | Call received to unit on scene, split into its segments | Decompose the interval before optimising it |
 | Is the target an average or a percentile? | 90th percentile for the highest-priority calls, assumed at 8 minutes | Optimise the tail, not the mean |
-| Must every district meet it, or only the city? | Every district, and the city reports by district | Equity becomes a hard constraint, not a nice-to-have |
+| Must every district meet it, or only the city? | Every district, and the city reports by district | Equity becomes a hard constraint |
 | Can we add units or stations? | No new budget in year one | The levers are placement and dispatch, not headcount |
 | Who acts on a recommendation? | The dispatcher, who keeps final authority | The system recommends; a human dispatches |
 
@@ -89,7 +89,7 @@ The last row is the safety boundary. An algorithm that dispatches without a huma
 
 The dispatcher uses the output. The EMS operations chief owns unit placement. The city council answers for equity. Residents feel the result.
 
-The north-star metric is 90th-percentile time to scene for priority-one calls, reported by district. Three guardrail metrics sit beside it. The first is the worst district's 90th percentile, and it must not rise. The second is unit utilisation, which must not burn crews out. The third is calls left uncovered during peaks.
+The north-star metric is 90th-percentile time to scene for priority-one calls, reported by district. Three guardrail metrics sit beside it: the worst district's 90th percentile (must not rise), unit utilisation (must not burn crews out), and calls left uncovered during peaks.
 
 ### 5.3 Map the inputs
 
@@ -103,7 +103,7 @@ The quality risks shape the plan. In this scenario, traffic sensors are thinnest
 
 ### 5.4 Sequence by risk
 
-Start by decomposing the interval, because no one yet knows where the minutes go. If most delay sits in call triage, routing optimisation is the wrong project.
+Decompose the interval first, because no one yet knows where the minutes go. If most delay sits in call triage, routing optimisation is the wrong project.
 
 | Order | Workstream | Why here |
 |---|---|---|
@@ -116,7 +116,7 @@ Start by decomposing the interval, because no one yet knows where the minutes go
 
 The first slice is a report, not a model. Segment every priority-one call from the last year into answer, triage, dispatch and travel time. Show it by district and hour.
 
-Assume the result shows travel dominates in two outer districts at night. The second slice is then a pre-positioning recommendation: where idle units should wait, by hour, to cover those districts.
+Assume the result shows that travel dominates in two outer districts at night. The second slice is then a pre-positioning recommendation: where idle units should wait, by hour, to cover those districts.
 
 The model comes last, and it is mostly not machine learning. Travel-time estimation is a regression over GPS history. Pre-positioning is a coverage optimisation, a classic operations-research problem. A language model has one sensible role: summarising free-text call notes to speed triage, and only if segment analysis says triage is slow.
 
@@ -166,7 +166,7 @@ flowchart LR
 
 Backtest the optimiser on last year's calls first. Replay history with the recommended positions and estimate time to scene. Then pilot in one district at night, with a matched district as comparison.
 
-Two checks gate expansion. The target district's 90th percentile must improve. No other district's 90th percentile may worsen, because moving units toward one area uncovers another. Track dispatcher override rate too. A high override rate means the model is wrong or distrusted, and either one needs an answer.
+Two checks gate expansion. The target district's 90th percentile must improve. No other district's 90th percentile may worsen, because moving units toward one area uncovers another. Track dispatcher override rate too. A high override rate means dispatchers think the model is wrong or don't trust it; either needs an answer.
 
 ### 5.8 Name the failure modes
 

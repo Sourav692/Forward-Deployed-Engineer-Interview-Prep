@@ -5,7 +5,7 @@
 ### From Prototype to Trusted Production
 - A working demo is only the start. The milestone is the customer seriously asking when they can rely on it in production.
 - Once that question lands, the interview moves past architecture into delivery. You now need a phased rollout, gates you can measure, named owners and a support model that holds up when the first incident hits.
-- Inside an air gap, delivery belongs to the design itself. If the team must improvise to move, verify, install, watch or roll back the software, what they have is an encouraging demo, not something they can deploy.
+- Inside an air gap, delivery belongs to the design itself. If the team must improvise to move, verify, install, watch or roll back the software, they have an encouraging demo they cannot deploy.
 - The FDE's job is to turn the prototype into an operating path: safe enough for the enclave, dull enough for operators, valuable enough for users.
 
 ### Four Phases That Move Risk Out of the Dark
@@ -39,7 +39,7 @@ flowchart LR
 4. **Keep a tested rollback bundle and its runbooks.**
    - **Owner:** operations carries out a rollback, release engineering keeps the artifacts, and the technical lead approves.
    - **Exit criteria:** the last known-good bundle sits stored, tested and ready for immediate use, along with its escalation path, operator checklist, rollback steps and signatures.
-   - **Why it matters:** treat rollback as a prepared artifact rather than an idea. When a release goes wrong, the team needs a trusted route back, not a scramble to rebuild confidence under pressure.
+   - **Why it matters:** treat rollback as a prepared artifact. When a release goes wrong, the team needs a trusted route back instead of a scramble to rebuild confidence under pressure.
 - Each phase gets an owner, a gate and a stopping point before damage spreads. That separates a staged rollout from deployment by hope.
 
 ### Technical Health Metrics
@@ -75,7 +75,7 @@ flowchart LR
   - *Alert threshold:* a release that is too old has drifted away from the latest security fixes and operational lessons. Releases that change too fast get too little soak time.
 
 ### User and Business Metrics
-- These are distinct from technical health. A perfectly healthy system can still go unused.
+- Keep these apart from technical health. A healthy system can still go unused.
 - **Adoption metrics:** repeat use, active users, documents submitted, and the share of workflows done with no manual workaround.
 - **Business outcome metrics:** time saved on each case, a lighter manual review load, more analyst throughput, and fewer missed deadlines or rework cycles.
 - **Outcome owner:** normally the business sponsor or the operations manager, backed by product and the FDE.
@@ -97,7 +97,7 @@ flowchart LR
   - Whether a rollback bundle is available.
   - Mean time to repair, alongside open incidents.
   - The most recent successful signed transfer.
-- Laid out this way, the dashboard settles the question that counts most in a closed network. Is the user's problem getting better because the system is healthy? Or is the system just staying alive while the workflow stays painful?
+- Laid out this way, the dashboard settles the question that counts most in a closed network. Is the user's problem getting better because the system is healthy? Or is the system only staying alive while the workflow stays painful?
 
 > 🎯 **Interview Pointer:** "How would you dashboard this?" comes up often. Answer with three rows (user outcome, service behaviour, operational control) rather than a flat list of metrics. It shows you reason in causal layers instead of collecting green lights.
 
@@ -113,16 +113,16 @@ flowchart LR
   - The bundle is complete and fits the target node class.
   - On hardware close enough to production, the staging run shows the expected behaviour.
   - Latency, throughput and saturation on the canary node stay within thresholds.
-  - Someone has actually tested the rollback bundle; archiving it is not enough.
+  - Someone has tested the rollback bundle; archiving it is not enough.
 - **Rollback triggers:** signature failures that repeat, an install failure nobody can explain, a latency regression on the canary, a climbing error rate, or any sign that the release puts enclave integrity at risk. In an air-gapped setting, "we'll debug it live" is no plan. Saying it means the team never had a working way back.
 
 ### Standardisation Strategy
-- This sorts what should be the same for every customer from what should stay local:
+- Sort what should be the same for every customer from what should stay local:
   - **Configuration:** approval thresholds, retention rules, document types, queue limits, which approved offline model to use, and the rules that route workflows.
   - **Adapter:** importers that read the customer's document sources, connectors that export to case systems, and translation layers that map local formats into the analysis pipeline.
   - **Shared service:** the release registry, audit logging, bundle validation, signature verification and model serving primitives. These are strong candidates to reuse across enclaves.
   - **Core product:** the document analysis engine, the health-check framework, the offline package manager and the discipline of rollback. Improve these and every deployment benefits.
-- This split shows product thinking, not only implementation. The FDE should not hand-build one-off integrations forever. The goal is to turn repeated local pain into reusable product capability while respecting every customer boundary.
+- This split shows product thinking. The FDE should not hand-build one-off integrations forever. The goal is to turn repeated local pain into reusable product capability while respecting every customer boundary.
 
 ### Risk Register
 - **Risk:** the offline bundle lacks a transitive package.
@@ -146,6 +146,6 @@ flowchart LR
 - The prototype runs, and the customer wants to know when it will be production-ready. "After we tune the model some more" is the wrong reply.
 - The right reply takes four steps from prototype to staged rollout. Build staging on hardware identical to production, rehearse the signed transfer, run a canary on one node, and keep a tested rollback bundle with runbooks.
 - Track release age, mean time to repair, saturation, latency, throughput, signature verification failures and offline install success rate.
-- Track business outcome, adoption, model quality and technical health as separate layers. Only then can you tell whether the product really makes the workflow better.
+- Track business outcome, adoption, model quality and technical health as separate layers. Only then can you tell whether the product makes the workflow better.
 - Name owners and set gates, so a bad release halts before it turns into an incident.
 - Measurable customer impact statement: the system counts as a success only when analysts use it, documents are handled faster and more consistently, and the operating team keeps it running as maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries.

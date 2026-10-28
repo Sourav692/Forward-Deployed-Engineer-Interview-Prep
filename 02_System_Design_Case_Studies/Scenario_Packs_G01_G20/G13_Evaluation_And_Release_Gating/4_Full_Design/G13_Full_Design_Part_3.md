@@ -2,7 +2,7 @@
 
 ## 8. Gate on Slices, Not on the Aggregate
 
-A high average can hide a failing slice. A change may improve mean quality while hurting the rare, high-risk cases the business actually fears. So the release gate reads per-slice results, and a critical slice must pass on its own.
+A high average can hide a failing slice. A change may improve mean quality while hurting the rare, high-risk cases the business fears. So the release gate reads per-slice results, and a critical slice must pass on its own.
 
 The golden set is small enough to maintain carefully and broad enough to reflect real release risk. It holds representative happy paths, known hard cases, policy-sensitive cases, and examples that previously caused incidents or near misses. It also holds the edge cases where the old system failed quietly: malformed tool inputs, ambiguous queries, retrieval misses, and verbose answers that looked strong but were wrong. A golden set of obvious examples creates false confidence.
 
@@ -10,7 +10,7 @@ Nondeterministic outputs are compared as distributions, not single strings. Run 
 
 Online feedback is a discovery channel, not a scorecard. Thumbs-down, abandonment, escalation, correction and repeated retries are candidates for new cases. They enter the golden set only after redaction and trustworthy labelling. The tutorial's line: "Online feedback is a discovery channel for new failure modes; offline evaluation is where I make those failure modes measurable and releasable."
 
-The suite itself goes stale. The benchmark stops distinguishing candidates, or incidents cluster where it never looks. Mark it non-authoritative for gating, refresh it with new workflows, and re-baseline thresholds. A candidate can also overfit the benchmark: large offline gains with flat real-world behaviour. Hidden holdout cases, adversarial variants and never exposing the gate suite to the candidate's prompt, retrieval index or logs are the defence.
+The suite itself goes stale. The benchmark stops distinguishing candidates, or incidents cluster where it never looks. Mark it non-authoritative for gating, refresh it with new workflows, and re-baseline thresholds. A candidate can also overfit the benchmark: large offline gains with flat real-world behaviour. The defence is hidden holdout cases, adversarial variants, and never exposing the gate suite to the candidate's prompt, retrieval index or logs.
 
 ## 9. Walk Through the Regression the Suite Missed
 
@@ -20,7 +20,7 @@ A sales copilot drafts account-specific outreach emails from CRM notes, product 
 
 The workflow was CRM account context → approved claims retriever → prompt template → LLM gateway → policy evaluator → offline eval suite → online quality monitor. The release gate checked grammar, tone and general groundedness on 120 examples. Only 6 of them were about regulated claims.
 
-The telemetry tells the whole story in three lines.
+Six signals tell the story.
 
 | Signal | Value | What it means |
 |---|---|---|
@@ -28,7 +28,7 @@ The telemetry tells the whole story in three lines.
 | External claim policy failures | 37, severity high | The failures are the dangerous kind |
 | Release gate, `eval_v14` | 120 cases, 96.7% pass, `release_gate=pass` | The aggregate looked healthy |
 | Regulated-claim slice | 6 cases, 83.3% pass | The critical slice was tiny and already failing |
-| Missing cases | `security_cert_pending`, `roi_internal_only`, `customer_logo_permission` | The suite never tested the actual risk |
+| Missing cases | `security_cert_pending`, `roi_internal_only`, `customer_logo_permission` | The suite never tested the real risk |
 | Claim verifier | `policy_action=should_block actual_action=warn_only` | The runtime backstop was switched off |
 
 Two changes landed together on 2026-07-08 at 09:00. The router moved drafting from `llm_standard_v2` to `llm_premium_v3` after an offline eval showed better fluency. The policy evaluator also moved from block mode to warn-only during the experiment, to reduce false positives.
@@ -42,7 +42,7 @@ Debug it by comparing offline pass rates with online failure modes. Inspect fail
 | Immediate | Roll back to `llm_standard_v2`; restore policy-evaluator block mode for external claims; add review banners to drafts generated during the experiment |
 | Long term | A claim-level eval suite with labelled approval status; slice-based release gates; zero critical failures required for regulated claims; unsupported-claim rate monitored online; negative examples where the model must refuse internal-only claims |
 
-The risk is not stylistic. Unsupported sales claims create legal exposure, customer trust damage and compliance issues. A careless or malicious rep could prompt the assistant to exaggerate ROI or security status and send the draft externally.
+Unsupported sales claims create legal exposure, customer trust damage and compliance issues. A careless or malicious rep could prompt the assistant to exaggerate ROI or security status and send the draft externally.
 
 Map it back onto the anchor *(own construction)*. The anchor's gate would have caught this in three places. A per-application threshold on the regulated-claim slice fails at 83.3%. The coverage metric flags a critical slice with 6 cases as below minimum sample, so the gate holds. And a policy change from block to warn-only is itself a versioned artifact, so it goes through the gate instead of around it.
 
@@ -72,7 +72,7 @@ The follow-up is "the offline benchmark improved, but the customer still says qu
 
 **#55, build an evaluation strategy.** A customer wants to deploy an assistant but has no reliable way to measure quality. The source lists fourteen items to cover: a representative production dataset, golden examples, task-specific rubrics, ground-truth labels, automated graders, human evaluation, and LLM-as-judge calibration. Then safety and refusal tests, regression tests, online metrics, user feedback, slice-based analysis, statistical confidence, and continuous evaluation in CI/CD.
 
-The source's key distinction is one sentence. "Model quality is not the same as application quality." Evaluate the complete workflow: retrieval, tools, business rules, user interaction, operational performance and business outcomes. That sentence is also the anchor's four-dimension gate in miniature.
+The source's key distinction fits in one sentence: "Model quality is not the same as application quality." Evaluate the complete workflow: retrieval, tools, business rules, user interaction, operational performance and business outcomes. That sentence is also the anchor's four-dimension gate in miniature.
 
 The follow-up is "what if there is no labelled data?" Sample production traffic. Use expert labelling. Apply weak supervision. Use synthetic examples carefully. Measure grader agreement. Send the difficult cases to human review. The anchor's rollout says the same thing in order: one application, humans label a sample, calibrate the grader, and keep the gate advisory until agreement holds.
 

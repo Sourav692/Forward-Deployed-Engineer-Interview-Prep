@@ -51,7 +51,7 @@ Read the table for what the sum hides, not only for its order.
 
 ## 9. Fund the Platform the Top Items Share
 
-The architecture in this case is the shared platform, not any one use case. It earns a diagram because it explains the sequencing: the enablers make every later card cheaper. The delivery framework's governing question applies to a portfolio too. For each new use case, how much is pulled from a library, and how much is built from scratch?
+The architecture in this case is the shared platform, not any one use case. It earns a diagram because the enablers make every later card cheaper, which explains the sequencing. The delivery framework's governing question applies to a portfolio too. For each new use case, how much is pulled from a library, and how much is built from scratch?
 
 ```
    WAVE 1 USE CASES           WAVE 2                      LATER
@@ -182,7 +182,7 @@ Say it to the executive in outcome language. The cost cram sheet's rule applies:
 
 > *"Autonomous settlement is where this ends up, and it's the most valuable thing on the list. The fastest safe route there starts with the two items that build its data and its evidence. In four months you'll see settlement recommendations running beside your adjusters. At that point the case for automation will be made by your own numbers."*
 
-The move is to make the pet project the destination of the roadmap rather than its first stop. The executive keeps the goal; the programme keeps its credibility.
+Make the pet project the roadmap's destination rather than its first stop. The executive keeps the goal; the programme keeps its credibility.
 
 ## 13. Anticipate the Failure Modes
 

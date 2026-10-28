@@ -60,7 +60,7 @@ The Northwind stall answers "are the gates real?" in three rows:
 
 ## 7. Refuse at Intake Rather Than Start a Clock
 
-Immeasurable-metric refusal is the cheapest, highest-signal move in the design, so say it before drawing a single box. Intake raises `ScopingRefused` and creates no engagement at all. It is the delivery version of Module 04's refusal to index a document with no usable ACL.
+Refusing an immeasurable metric is the cheapest, highest-signal move in the design, so say it before you draw a single box. Intake raises `ScopingRefused` and creates no engagement at all. It is the delivery version of Module 04's refusal to index a document with no usable ACL.
 
 The SME requirement is refused at intake for a structural reason. Two of the six gates need an SME signature, and every later gate waits on them. An engagement with no SME cannot finish, and it is better to know on day 0 than on day 8.
 
@@ -82,7 +82,7 @@ The library holds connectors, prompt templates, an eval harness, guardrail polic
 
 In the Northwind demo run the rate is 83%: 5 of 6 assets came straight from the library, and one guardrail policy was custom. A rising custom-build count is the early signal that two weeks is about to slip. Tracked across engagements, the ratio says whether the framework works or is quietly turning bespoke again.
 
-Be honest about what the library is not. The entries are named assets, not the connector code or the eval harness. The real harness exists one project over, in the RAG platform, and wiring the Evaluate stage to call it is on the punch list. The gate mechanism is real; the number behind one piece of evidence is not yet.
+Say what the library is not. The entries are named assets, not the connector code or the eval harness. The real harness exists one project over, in the RAG platform, and wiring the Evaluate stage to call it is on the punch list. The gate mechanism is real; the number behind one piece of evidence is not yet.
 
 ## 9. Make Risk Mitigations Checks, Not Reminders
 

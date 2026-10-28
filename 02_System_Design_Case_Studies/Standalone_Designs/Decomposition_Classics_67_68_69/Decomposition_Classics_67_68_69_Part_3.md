@@ -15,23 +15,23 @@ The method repeats. The mission, the riskiest input and the human boundary chang
 | Guardrail metric | Worst district's 90th percentile | False-positive rate on legitimate customers | Alerts per nurse per shift |
 | Source curveball or likely one | GPS feed lost | A legacy system withheld | No bedside scanning |
 
-Read the fifth row as a pattern. In none of the three is a language model the core. Each gets a bounded assisting role behind a human. That is the source's pattern made concrete: goal first, data second, model last.
+In none of the three is a language model the core; each gets a bounded assisting role behind a human. That is the source's pattern in practice: goal first, data second, model last.
 
 ## 9. Answer the Tier 2 Probes These Cases Invite
 
-The source lists 27 Tier 2 probes. These six are the ones these three cases draw. Answers are *(own construction)*.
+The source lists 27 Tier 2 probes. These three cases draw six of them. Answers are *(own construction)*.
 
-**"When do you route to human-in-the-loop?"** Route whenever the action is irreversible, regulated, or clinical. In all three cases that means always, for version one. The system recommends and the human decides. The design question is where the human sits: the dispatcher at the console, model risk at the gate, the pharmacist before the nurse.
+**"When do you route to human-in-the-loop?"** Route whenever the action is irreversible, regulated, or clinical. For version one of all three cases, that means always. The system recommends and the human decides. The design question is where the human sits: the dispatcher at the console, model risk at the gate, the pharmacist before the nurse.
 
-**"How does auditing and logging drive HITL decisions?"** Log every recommendation with its reason, and every accept or override with the human's reason. Override clusters show where the system is wrong. Falling override rates, on cases later confirmed correct, are the evidence for widening automation.
+**"How does auditing and logging drive HITL decisions?"** Log every recommendation with its reason, and every accept or override with the human's reason. Override clusters show where the system is wrong. Falling override rates on cases later confirmed correct justify widening automation.
 
-**"What metrics matter beyond task success?"** Guardrail metrics that catch harm the headline hides. The worst district's percentile, false positives on legitimate customers, and alerts per nurse per shift. Each can worsen while the headline improves.
+**"What metrics matter beyond task success?"** Guardrail metrics that catch harm the headline hides: the worst district's percentile, false positives on legitimate customers, and alerts per nurse per shift. Each can worsen while the headline improves.
 
 **"Design an evaluation harness."** Backtest on history first, then shadow, then a pilot against a matched comparison. Hold out a labelled set the model never trains on. For #68 the holdout is relabelled to the one definition. For #69 it is pharmacist-reviewed.
 
 **"Graceful degradation when the model is unavailable?"** Each design keeps the existing process as the primary path. The dispatcher's standard view, the legacy fraud rules, and the pharmacy's order-time checks all stay live. The system adds a check; an outage removes the addition, never the baseline.
 
-**"How do you detect goal drift?"** Watch the guardrail metrics, not only the target. A fraud model can raise its catch rate by declining more customers. A coverage optimiser can cut the average by abandoning the far districts. The guardrail metric is how drift shows up.
+**"How do you detect goal drift?"** Watch the guardrail metrics, not only the target. A fraud model can raise its catch rate by declining more customers. A coverage optimiser can cut the average by abandoning the far districts. Drift shows up in the guardrail metrics.
 
 ## 10. Open Each Case in Two Minutes
 
@@ -49,7 +49,7 @@ The source has no cost drill for these cases, so the card is *(own construction)
 
 | | |
 |---|---|
-| Dominant driver | Not model calls. It is data engineering and human review time: joins, entity resolution, relabelling and pharmacist confirmation. Model spend is small because the core models are regressions, classifiers and rules. Language models run only on notes. |
+| Dominant driver | Data engineering and human review time, not model calls: joins, entity resolution, relabelling and pharmacist confirmation. Model spend is small because the core models are regressions, classifiers and rules, and language models run only on notes. |
 | Cheapest lever first | Keep language models off the high-volume streams: GPS pings, transactions and dispensing events. Run them only on the narrow text tasks, in batch, with a small model. Spend human review on a stratified sample, not on every record. Reuse the relabelled set as the evaluation set. |
 | Metric that proves it | Cost per investigated case (#68); pharmacist minutes per confirmed flag (#69); cost per recommendation accepted (#67); language-model calls per thousand events, which should stay near zero |
 | Do not | Send every transaction, GPS ping or dispense event to a language model, or cut human review below the level that keeps precision safe |
@@ -75,7 +75,7 @@ In all three cases the levels split on reach: the data and the lever at Senior, 
 
 | Level | Sounds like | Missing |
 |---|---|---|
-| Senior | Ships a single investigator queue on entity resolution, then a shadow model on one fraud type, and treats unlabelled cases as unknown, not legitimate. | The label is three teams' definitions, so reconciliation needs owners and a sign-off, not just a script. |
+| Senior | Ships a single investigator queue on entity resolution, then a shadow model on one fraud type, and treats unlabelled cases as unknown, not legitimate. | The label is three teams' definitions, so reconciliation needs owners and a sign-off as well as a script. |
 | Staff | Makes label reconciliation a workstream signed by senior investigators, gates each phase of the 90 days, and lets nothing change a decision until model risk signs. | What happens to the three legacy systems and their teams after day 90. |
 | Principal | Frames the reconciled label as a bank-wide asset: one fraud definition, a reusable holdout, and a path to retire legacy rules as validated models earn trust. | Which system retires first depends on [losses by system] and vendor terms the design cannot see. |
 
@@ -91,7 +91,7 @@ In all three cases the levels split on reach: the data and the lever at Senior, 
 
 - The round scores clarifying and narrated reasoning, and it fails architecture-first answers and hand-waved evaluation.
 - Six steps on a clock turn a vague prompt into a mission, owners, an input map, ordered workstreams, a walking skeleton and a live re-plan.
-- The input map, with owner and quality-risk columns, is the tool that stops a model being chosen before its data is understood.
+- The input map, with owner and quality-risk columns, stops anyone choosing a model before they understand its data.
 - Workstreams go in order of which unknown could kill the project, and in all three cases that is the data.
 - #67 decomposes time to scene first, protects the worst district, and treats the model as regression plus optimisation.
 - #68 delivers a single queue and one reconciled label in 90 days, with a shadow model that changes nothing until model risk signs.
@@ -131,6 +131,6 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [AHRQ PSNet: Reporting Patient Safety Events](https://psnet.ahrq.gov/primer/reporting-patient-safety-events) — incident reports capture only a fraction of events compared with record review and observation
-- [AHRQ PSNet: Culture of Safety](https://psnet.ahrq.gov/primer/culture-safety) — reporting depends on a blame-free environment; individual blame impairs safety culture
-- [AHRQ PSNet: Factors influencing the reporting of medication errors and near misses among nurses](https://psnet.ahrq.gov/issue/factors-influencing-reporting-medication-errors-and-near-misses-among-nurses-systematic-mixed) — fear of blame and consequences is a barrier to nurses reporting medication errors
+- [AHRQ PSNet: Reporting Patient Safety Events](https://psnet.ahrq.gov/primer/reporting-patient-safety-events): incident reports capture only a fraction of events compared with record review and observation
+- [AHRQ PSNet: Culture of Safety](https://psnet.ahrq.gov/primer/culture-safety): reporting depends on a blame-free environment; individual blame impairs safety culture
+- [AHRQ PSNet: Factors influencing the reporting of medication errors and near misses among nurses](https://psnet.ahrq.gov/issue/factors-influencing-reporting-medication-errors-and-near-misses-among-nurses-systematic-mixed): fear of blame and consequences is a barrier to nurses reporting medication errors

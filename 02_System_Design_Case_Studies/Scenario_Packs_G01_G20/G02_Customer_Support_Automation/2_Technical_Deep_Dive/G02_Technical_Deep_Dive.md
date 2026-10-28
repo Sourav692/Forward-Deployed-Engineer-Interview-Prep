@@ -1,6 +1,6 @@
-# G02 — Customer Support Automation: Deep Dive
+# G02 Customer Support Automation: Deep Dive
 
-This is the technical backup for the [Main Interview Guide](../1_Interview_Guide/G02_Interview_Guide.md). The unchanged [source case](../4_Full_Design/G02_Full_Design.md) contains the full synthesis and references.
+Technical backup for the [Main Interview Guide](../1_Interview_Guide/G02_Interview_Guide.md). The unchanged [source case](../4_Full_Design/G02_Full_Design.md) holds the full synthesis and references.
 
 **Model and agent roles:** Rules or a small model route intent and risk. The LLM response generator drafts a reply or proposed action; a bounded planner is reserved for multi-system requests. The policy gateway and approver, not the model, authorise effects.
 
@@ -41,7 +41,7 @@ The boundaries are deliberately narrow:
 2. **Identity:** pre-auth traffic stays in a limited generic mode. Account-specific data and tools require an approved identity path and sufficient assurance.
 3. **Policy gateway:** checks action allowlist, identity assurance, current facts, value threshold, account/tenant scope, and review rule on each proposal. The model’s confidence is never authorisation.
 4. **Tool service:** scoped credentials, typed arguments, idempotency key, immutable record, and reconciliation on uncertain outcomes.
-5. **Human approval:** the interrupt is placed at the risky tool call so read-only work does not wait needlessly.
+5. **Human approval:** the interrupt is placed at the risky tool call so read-only work does not wait.
 
 Contain blast radius by tenant, region, workflow, and dependency. A refund-tool incident should not disable FAQ answers. A language router outage should not erase ticketing or audit.
 
@@ -61,13 +61,13 @@ Rules can tag simple cases. Small models can handle classification and routine F
 
 ## 5. Risk-tiered budgets and sizing
 
-The source’s **illustrative** requirements are routine p95 <3 s, ambiguous p95 <8 s, and high-risk handoff bundle p95 <15 s. The last tier does not authorise automated final decisions. A sample 2M-ticket/month, 100-QPS-peak, 20-language workload yields about 67k tickets/day on average, but bursts drive gateway, queue, and escalation capacity.
+The source’s illustrative requirements are routine p95 <3 s, ambiguous p95 <8 s, and high-risk handoff bundle p95 <15 s. The last tier does not authorise automated final decisions. A sample 2M-ticket/month, 100-QPS-peak, 20-language workload yields about 67k tickets/day on average, but bursts drive gateway, queue, and escalation capacity.
 
 With a 70/20/10 routine/ambiguous/escalated split and 2/3/1 model calls: `1.4M × 2 + 0.4M × 3 + 0.2M × 1 = 4.2M` monthly model calls before retries, moderation, and tools. Retrieval is roughly 2.2M–2.4M calls on the source assumptions. These are planning calculations, not measured traffic.
 
 At 10× conversations, use stateless gateways and orchestration, retrieval partitions by product/region/language/business unit, regional deployment where residency requires it, asynchronous long-running actions, rate limits by user/tenant/tool, and circuit breakers. Isolate offline summarisation and human escalation from routine classification. A semantic FAQ cache near ingress can avoid expensive orchestration only when tenant, permission, and content version are in the key. Identity assertions, account status, authorisation decisions, and money state require live authority.
 
-Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong_resolution − C_recontact` (and account for retrieval/operations when pricing it). Measure cost per **resolved** issue and by intent. A shorter cheap answer that drives recontact can lose money.
+Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong_resolution − C_recontact` (and account for retrieval/operations when pricing it). Measure cost per resolved issue and by intent. A shorter cheap answer that drives recontact can lose money.
 
 ## 6. Failure decisions and incident drills
 
@@ -81,9 +81,9 @@ Cost is a workflow calculation: `NetValue = V_time_saved − C_model − C_wrong
 | Language detection uncertain | Language-neutral intake and escalation. | Detection scores and chosen fallback. |
 | Tool timed out after possible side effect | Pending reconciliation; never blind retry. | Idempotency key, action record, ledger result. |
 
-For a **wrong policy answer**, ask whether a side effect occurred or a customer was misled. Preserve prompt, output, evidence, and policy version; stop automated delivery; hand off; add a regression example. For a **billing timeout before action**, the gateway blocks a refund because authoritative facts are missing, then hands off. For a **timeout after a refund call**, check the ledger before deciding whether anything remains to do.
+For a wrong policy answer, ask whether a side effect occurred or a customer was misled. Preserve prompt, output, evidence, and policy version; stop automated delivery; hand off; add a regression example. For a billing timeout before action, the gateway blocks a refund because authoritative facts are missing, then hands off. For a timeout after a refund call, check the ledger before deciding whether anything remains to do.
 
-Policy retrieval cannot be replaced by an unmarked stale answer. Model failures circuit-break and queue eligible work. Use short deadlines, bounded jittered retries, and dead-letter queues so failures stay inspectable. Explain the handoff at workflow level: which intent and rule fired, which fact was absent or contradictory, and which action was attempted.
+Never replace failed policy retrieval with an unmarked stale answer. Model failures circuit-break and queue eligible work. Use short deadlines, bounded jittered retries, and dead-letter queues so failures stay inspectable. Explain the handoff at workflow level: which intent and rule fired, which fact was absent or contradictory, and which action was attempted.
 
 ## 7. Evaluation, release gate, and operations
 
@@ -108,7 +108,7 @@ Rollout: agent-assist first; prove retrieval, routing, handoff, and audit; autom
 
 ## 9. Implementation details from the six source mocks
 
-These are **example implementations**, not mandatory product choices:
+These are example implementations, not mandatory product choices:
 
 1. **Multilingual triage (#95):** detect language → classify → route → draft → translate back. An intent branch needs a default arm. Example p95 <3 s allocation: 200 ms detection, 300 ms classification, 1.5 s streamed drafting, 500 ms translation (2.5 s total). Bound retries and provide a classifier fallback.
 2. **Human-gated graph (#96):** structured `{category, risk_level}` output; interrupt inside refund/deletion tool; durable Postgres checkpoint keyed by ticket; idempotent side effect keyed by ticket and action; concurrent read-only lookups; at most three self-correction iterations before escalation.
@@ -128,7 +128,7 @@ Keep these mock-specific thresholds attached to their scenarios. They are not gl
 - **“Prompt injection in a ticket?”** Ticket text is data; tools and retrieval enforce scope; test malicious instructions in documents, tickets, emails, and tenant data.
 - **“Launch next Monday?”** Controlled shadow/draft pilot and narrow reversible actions with rollback, rather than broad unsupervised release.
 
-For a 60-minute round, give the outcome and constraints first, draw the gates, spend the most time on identity, action policy, handoff, failure recovery, and rollout, then discuss scale and cost. The source’s 90-second and two-minute speeches are useful examples; keep your own explanation conversational.
+For a 60-minute round, give the outcome and constraints first, draw the gates, spend the most time on identity, action policy, handoff, failure recovery, and rollout, then discuss scale and cost. Use the source’s 90-second and two-minute speeches as examples, but keep your own explanation conversational.
 
 ## Source trace
 

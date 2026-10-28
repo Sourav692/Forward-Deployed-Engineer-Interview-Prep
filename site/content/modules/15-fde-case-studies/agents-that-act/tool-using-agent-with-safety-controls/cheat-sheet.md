@@ -1,6 +1,6 @@
 # Tool-Using Agent with Safety Controls: Cheat Sheet
 
-Use the [Main guide](/design/tool-using-agent-with-safety-controls#main) to practice speaking and the [Deep Dive](/design/tool-using-agent-with-safety-controls#deep-dive) for mechanisms. The [source](/design/tool-using-agent-with-safety-controls#full-pack) is the full reference.
+Use the [Main guide](/design/tool-using-agent-with-safety-controls#main) to practise speaking and the [Deep Dive](/design/tool-using-agent-with-safety-controls#deep-dive) for mechanisms. The [source](/design/tool-using-agent-with-safety-controls#full-pack) is the full reference.
 
 ## One sentence
 
@@ -44,7 +44,7 @@ Actions reversible? Money boundary? Delegated identity? What needs approval? Sys
 
 ## Source planning numbers
 
-**50k users · 20 QPS peak · 10 actions/task → ~200 tool actions/s.** Iterative planning may mean 40–60 model calls/s. Qualitative risk aid: **impact × likelihood × irreversibility**.
+**50k users · 20 QPS peak · 10 actions/task → ~200 tool actions/s.** Iterative planning may mean 40–60 model calls/s. Qualitative risk aid: impact × likelihood × irreversibility.
 
 ## Release and rollout
 
@@ -56,7 +56,7 @@ Trace model steps and tool latency; route common tasks deterministically; cap st
 
 ## Near-miss card
 
-Planner proposed **18 refunds**; six blocked, 12 allowed; **€740** exceeded **€250** no-approval threshold. Gateway prevented unauthorised transfer, but planner bulk-action behaviour failed. Disable bulk path, audit allowed calls, add risk-aware schemas and simulation, keep gateway enforcement.
+Planner proposed 18 refunds; six blocked, 12 allowed; €740 exceeded the €250 no-approval threshold. The gateway prevented any unauthorised transfer, but the planner's bulk-action behaviour failed. Disable bulk path, audit allowed calls, add risk-aware schemas and simulation, keep gateway enforcement.
 
 ## Interview close
 

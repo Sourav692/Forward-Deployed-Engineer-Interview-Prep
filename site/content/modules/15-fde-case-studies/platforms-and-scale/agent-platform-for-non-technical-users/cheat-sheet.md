@@ -10,11 +10,11 @@ How non-technical is authoring? Which channels? Read-only or destructive actions
 
 `Channel adapter → canonical tenant Event → live-trigger priority → entity lock → pinned-spec orchestrator → typed args → action idempotency → guardrail / approval → scoped tool → checkpoint / trace`
 
-The demonstrated engine has **no LLM**. A future model proposes values or a draft spec; code and humans authorise actions.
+The demonstrated engine has no LLM. A future model proposes values or a draft spec; code and humans authorise actions.
 
 ## Five rules
 
-- Priority chooses which workflow **should** run; a lock stops two that **can** collide.
+- Priority chooses which workflow *should* run; a lock stops two that *can* collide.
 - Resume and fresh execution share one loop at `next_step_index`.
 - Key idempotency on `{run_id}:{step_name}` and check it before authorisation or billing.
 - Guardrail denies in order: step cap, real-dollar spend cap, shadow, not-live, missing destructive-action authority.

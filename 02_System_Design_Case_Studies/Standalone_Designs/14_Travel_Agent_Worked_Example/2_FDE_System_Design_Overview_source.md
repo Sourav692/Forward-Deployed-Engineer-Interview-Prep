@@ -1,10 +1,10 @@
 # Travel Agent System Design
 
-*Reference design — the corrected version*
+*Reference design: the corrected version*
 
-System design is the plan for how software parts work together to solve a business problem quickly, reliably and at scale. This page applies that plan to one sample system: an **agentic AI travel assistant** for customers in AMER, EMEA and APJ. It starts from a first-draft reference architecture and folds in five structural fixes that came out of two later reviews.
+System design is the plan for how software parts work together to solve a business problem quickly, reliably and at scale. This page applies that plan to one sample system: an agentic AI travel assistant for customers in AMER, EMEA and APJ. It starts from a first-draft reference architecture and folds in five structural fixes that came out of two later reviews.
 
-> **What this is:** A first-draft architecture for a travel-agent system laid it out as a rigid pipeline. Five agents fanned out, then all passed, in order, through one shared cache, one retrieval stage, one LLM step and one tool-calling stage. An architecture review found four points where that order does not match how a multi-agent system really runs. A separate blueprint, written independently, reached the same four fixes and added a fifth: a named Synthesizer Agent to fill the missing aggregation step. This page combines all five into one final architecture.
+> **What this is:** A first-draft architecture for a travel-agent system laid it out as a rigid pipeline. Five agents fanned out, then all passed, in order, through one shared cache, one retrieval stage, one LLM step and one tool-calling stage. An architecture review found four points where that order does not match how a multi-agent system runs. A separate blueprint, written independently, reached the same four fixes and added a fifth: a named Synthesizer Agent to fill the missing aggregation step. This page combines all five into one final architecture.
 
 ---
 
@@ -14,7 +14,7 @@ The first draft needed five structural fixes. Four came from the architecture re
 
 ### 1 · Rate limiting moved inside the API Gateway
 
-In the first draft, Rate Limiter was a separate box off the load balancer, next to the Gateway, with nothing flowing out of it. It was a dead end. Rate limiting is not a path a request takes. It is a rule the Gateway enforces on every request.
+In the first draft, Rate Limiter was a separate box off the load balancer, next to the Gateway, with nothing flowing out of it. It was a dead end. Rate limiting is a rule the Gateway enforces on every request, not a path a request takes.
 
 ### 2 · Semantic Cache checked before any agent spawns
 
@@ -28,15 +28,15 @@ A single required retrieval box after all five agents made every agent hit the v
 
 The draft pushed every agent through one shared LLM step, then a single Tool Calling step, then a single MCP Registry, as though the request had only one turn in total. The Booking Agent needs the Payment and Flight MCP servers while *it* is running, not after four unrelated agents have wrapped up.
 
-### 5 · A Synthesizer Agent replaces the missing aggregation step — *added by the prior blueprint*
+### 5 · A Synthesizer Agent replaces the missing aggregation step (*added by the prior blueprint*)
 
-The draft never said how five parallel outputs turn into one reply. It just kept going as a single line, as if merging happened by itself. Now a named Synthesizer Agent combines the output of every agent that ran and settles conflicts between them before the user sees anything. A Policy decision that overrides a Booking choice is a typical case.
+The draft never said how five parallel outputs turn into one reply. It kept going as a single line, as if merging happened by itself. Now a named Synthesizer Agent combines the output of every agent that ran and settles conflicts between them before the user sees anything. A Policy decision that overrides a Booking choice is a typical case.
 
 ---
 
 ## Architecture
 
-The components and the regional footprint match the first draft. What changes is the structure: a cache hit now really is cheap, each agent uses its tools within its own loop, and all results pass through one accountable step before the reply leaves.
+The components and the regional footprint match the first draft. The structure is what changes: a cache hit is now cheap, each agent uses its tools within its own loop, and all results pass through one accountable step before the reply leaves.
 
 - 🟢 the request path
 - 🟢 agents, each running its own loop in parallel
@@ -76,7 +76,7 @@ flowchart TB
   RESP --> MON[Monitoring & Logging<br/>latency · token usage · per-agent execution traces · cache hit rate · alerts — spans every stage above]
 ```
 
-A cache hit (teal) returns before the Supervisor spawns any agent. On a miss, the Supervisor spawns only the agents this query needs. Each of them calls the shared backend on its own (the Foundation LLM, the regional vector DBs, the MCP registry and the external APIs) for just what its task requires. The Synthesizer Agent then combines whatever ran into a single reply, and that reply is written back to the cache so the next similar query can reuse it.
+A cache hit (teal) returns before the Supervisor spawns any agent. On a miss, the Supervisor spawns only the agents this query needs. Each of them calls the shared backend on its own (the Foundation LLM, the regional vector DBs, the MCP registry and the external APIs) for only what its task requires. The Synthesizer Agent then combines whatever ran into a single reply, and that reply is written back to the cache so the next similar query can reuse it.
 
 ---
 
@@ -103,13 +103,13 @@ The list of components matches the first draft. The Gateway, the Cache and the a
 
 ## Data flow
 
-The ten steps from the first draft, put in a new order so that cache-first really does come first.
+The ten steps from the first draft, put in a new order so that the cache check comes first.
 
 1. A user sends a request from the web or mobile client.
 2. Authentication confirms the user's identity. The Load Balancer sends the request to a free API instance. The API Gateway enforces rate limits and hands the request to the Supervisor.
 3. Before making any decision about agents, the Supervisor checks the Semantic Cache.
 4. If the cache hits, the stored answer goes straight back and no agent is spawned at all.
-5. If it misses, the Supervisor spawns the specialised agents this query actually calls for (Search, Booking, Pricing, Recommendation, Policy).
+5. If it misses, the Supervisor spawns the specialised agents this query calls for (Search, Booking, Pricing, Recommendation, Policy).
 6. Each agent pulls the context it needs from the right regional Vector DB, using a tool call within its own loop.
 7. Each agent calls the external APIs it needs (flights, hotels, maps, payment) through the MCP Tool Registry, again within its own loop.
 8. The Synthesizer Agent gathers every agent's output, settles conflicts and writes one grounded reply.
@@ -120,7 +120,7 @@ The ten steps from the first draft, put in a new order so that cache-first reall
 
 ## Non-functional requirements
 
-These are the same as in the first draft. The new order above simply makes the cache-first row true in practice.
+These are the same as in the first draft. The new order above makes the cache-first row true in practice.
 
 | Requirement | Example solution |
 | --- | --- |
@@ -129,7 +129,7 @@ These are the same as in the first draft. The new order above simply makes the c
 | Availability | Regions run in active-active mode. |
 | Performance | A semantic cache ahead of the fan-out, Redis, a CDN and tuned vector search. |
 | Security | OAuth, JWT, encryption, RBAC and managed secrets. |
-| Cost optimisation | A cache-first design where the cache really decides whether agents spawn, small models for easy tasks, and routing by region. |
+| Cost optimisation | A cache-first design where the cache decides whether agents spawn, small models for easy tasks, and routing by region. |
 | Observability | Metrics, logs, distributed tracing for each agent, dashboards and alerts. |
 | Maintainability | Microservices, modular agents that each own their tools, CI/CD and infrastructure as code. |
 
@@ -139,13 +139,13 @@ These are the same as in the first draft. The new order above simply makes the c
 
 The contrasts an interviewer wants to hear you draw.
 
-**Shared retrieval service vs. per-agent RAG** — A shared Vector DB layer puts data-residency and guardrail enforcement in one place, but it ties every agent to that single service. Retrieval per agent mirrors how LangGraph- and CrewAI-style frameworks attach tools, yet without governance it duplicates the embedding infrastructure. Both positions hold up. The real mistake is drawing RAG as a peer of the agents, when it is infrastructure or a tool.
+**Shared retrieval service vs. per-agent RAG.** A shared Vector DB layer puts data-residency and guardrail enforcement in one place, but it ties every agent to that single service. Retrieval per agent mirrors how LangGraph- and CrewAI-style frameworks attach tools, yet without governance it duplicates the embedding infrastructure. Both positions hold up. The real mistake is drawing RAG as a peer of the agents, when it is infrastructure or a tool.
 
-**Single agent vs. multi-agent** — Several agents bring coordination and synthesis costs. Those costs pay off when sub-tasks need their own tools, their own guardrails or their own scaling, which is plainly true of Booking and Policy here.
+**Single agent vs. multi-agent.** Several agents bring coordination and synthesis costs. Those costs pay off when sub-tasks need their own tools, their own guardrails or their own scaling, which is plainly true of Booking and Policy here.
 
-**Semantic cache vs. traditional cache** — A semantic cache hits on near-duplicate queries as well as exact repeats. That is why it can skip the entire agent fan-out instead of saving a single call further down.
+**Semantic cache vs. traditional cache.** A semantic cache hits on near-duplicate queries as well as exact repeats. That is why it can skip the entire agent fan-out instead of saving a single call further down.
 
-**Global vs. regional vector DBs** — Stores per region (AMER/EMEA/APJ) make data-residency rules easier to meet and cut latency. A single global store is simpler to operate and keeps regions consistent with each other.
+**Global vs. regional vector DBs.** Stores per region (AMER/EMEA/APJ) make data-residency rules easier to meet and cut latency. A single global store is simpler to operate and keeps regions consistent with each other.
 
 ---
 

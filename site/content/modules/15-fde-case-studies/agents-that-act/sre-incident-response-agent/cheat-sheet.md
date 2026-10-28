@@ -1,6 +1,6 @@
 # SRE Incident Response Agent: Cheat Sheet
 
-Use the [Main guide](/design/sre-incident-response-agent#main) to practice speaking and the [Deep Dive](/design/sre-incident-response-agent#deep-dive) for technical follow-ups. The [source](/design/sre-incident-response-agent#full-pack) is the full reference.
+Use the [Main guide](/design/sre-incident-response-agent#main) to practise speaking and the [Deep Dive](/design/sre-incident-response-agent#deep-dive) for technical follow-ups. The [source](/design/sre-incident-response-agent#full-pack) is the full reference.
 
 ## One sentence
 
@@ -38,7 +38,7 @@ Exact command + computed blast radius + evidence + runbook + change-freeze check
 
 ## Failure card
 
-Telemetry down → report `UNAVAILABLE` and lower confidence. Alert storm → attach to cluster, visible queue. Stale runbook → warn/block proposal. Injection in logs → data, not instructions. Approval/policy down → fail closed on writes.
+Telemetry down → report `UNAVAILABLE` and lower confidence. Alert storm → attach to cluster, visible queue. Stale runbook → warn/block proposal. Injection in logs → treat as data, never as instructions. Approval/policy down → fail closed on writes.
 
 ## Release and rollout
 

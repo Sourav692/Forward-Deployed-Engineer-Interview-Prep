@@ -2,7 +2,7 @@
 
 *A suggestion has to land while the customer is still talking, and a CRM record has to be right long after the call ends.*
 
-A call assistant is a workflow-timing problem before it is a model problem. The same call needs a three-second answer during the conversation and a careful, reviewed record after it. This group has one question-bank prompt and one latency drill and no worked design, so most of this page is built here. It consolidates the group's prompts into one read for the day before.
+A call assistant is a workflow-timing problem before it is a model problem. The same call needs a three-second answer during the conversation and a careful, reviewed record after it. This group has one question-bank prompt and one latency drill and no worked design, so most of this page is built here. It folds the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -17,7 +17,7 @@ A call assistant is a workflow-timing problem before it is a model problem. The 
 
 ## 1. Split the Call Into Before, During and After Before Drawing Anything
 
-The prompt sounds like one system: "A company wants to transcribe calls, summarise them, extract actions, and update its CRM." It is really three systems with three clocks. A sub-3-second answer cannot wait on work that takes ten seconds. So the first move is to sort every task by when its answer is needed.
+The prompt sounds like one system: "A company wants to transcribe calls, summarise them, extract actions, and update its CRM." It is three systems with three clocks. A sub-3-second answer cannot wait on work that takes ten seconds. So the first move is to sort every task by when its answer is needed.
 
 The drill's framing settles it: "a sub-3s target is a **workflow design** problem, not only a model choice." Before the call there are hours, so precompute the account context. During the call there are three seconds, so send a small prompt to a fast model and stream the suggestion. After the call there are minutes, so summarise, extract actions and propose the CRM update asynchronously.
 
@@ -61,7 +61,7 @@ Ordering live suggestions after the post-call summary is deliberate *(own constr
 | Permissions | A rep's suggestions draw only on accounts and fields that rep may see in the CRM |
 | Cost | Cost per call tracked; the large model never runs per utterance |
 
-The latency budget is the constraint most likely to be probed. Say it as arithmetic *(own construction; the allocations are assumptions to measure, not vendor figures)*. The clock starts when the customer stops speaking and stops when the first bullet is readable.
+Interviewers probe the latency budget more than any other constraint. Say it as arithmetic *(own construction; the allocations are assumptions to measure, not vendor figures)*. The clock starts when the customer stops speaking and stops when the first bullet is readable.
 
 | Stage | Budget | Why it fits |
 |---|---|---|
@@ -75,7 +75,7 @@ The latency budget is the constraint most likely to be probed. Say it as arithme
 | Network and UI | ~150 ms | Persistent connection to the rep's client |
 | **Total** | **~2.0 s** | Leaves about 1 s of headroom under 3 s |
 
-The headroom is not slack. It covers the one allowlisted live lookup, such as current price, which runs in parallel with the model call and is dropped when it misses its timeout. The Realtime Voice AI Agent reference implementation targets the same class of loop, voice in to voice out, "with <2 second response latency"; it is a stated goal, not a measurement, but it shows 2 seconds is a normal design target. That project also has to speak the answer, which this one does not.
+The headroom covers the one allowlisted live lookup, such as current price, which runs in parallel with the model call and is dropped when it misses its timeout. The Realtime Voice AI Agent reference implementation targets the same class of loop, voice in to voice out, "with <2 second response latency"; it is a stated goal, not a measurement, but it shows 2 seconds is a normal design target. That project also has to speak the answer, which this one does not.
 
 Every must-have then needs an owner in the architecture *(own construction)*.
 

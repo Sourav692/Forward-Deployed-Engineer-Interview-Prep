@@ -1,4 +1,4 @@
-# G13 — Evaluation and Release Gating: Cheat Sheet
+# G13 Evaluation and Release Gating: Cheat Sheet
 
 [Main](../1_Interview_Guide/G13_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G13_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G13_Full_Design.md)
 
@@ -21,12 +21,12 @@ LLM graders score; deterministic policy and authorised humans decide.
 - Pin model, prompt, retrieval, tool, policy, dataset and rubric versions.
 - Compare candidate to current production baseline across quality, safety, p95 latency and cost.
 - Safety floor and critical slices pass independently of the aggregate.
-- Missing evidence **blocks**; thin or disputed evidence **holds**.
+- Missing evidence blocks; thin or disputed evidence holds.
 - Calibrate the versioned LLM grader against humans before making it a hard gate.
 
 ## Incident to cite
 
-Sales copilot: aggregate 96.7% pass on 120 cases; just six regulated-claim cases at 83.3%; unsupported claims 8.7% online versus 1.2% baseline; claim policy changed to warn-only. Roll back route, restore blocking, add claim-level critical-slice coverage.
+Sales copilot: aggregate 96.7% pass on 120 cases; only six regulated-claim cases at 83.3%; unsupported claims 8.7% online versus 1.2% baseline; claim policy changed to warn-only. Roll back route, restore blocking, add claim-level critical-slice coverage.
 
 ## Cost close
 

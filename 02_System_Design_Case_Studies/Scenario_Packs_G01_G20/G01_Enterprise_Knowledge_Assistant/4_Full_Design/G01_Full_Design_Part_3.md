@@ -2,7 +2,7 @@
 
 ## 10. Gate the Release on a Leak Count, Not a Score
 
-A retrieval regression is a bug to fix next sprint. A leak is an incident. So the security suite blocks the release outright instead of lowering a score, and it runs the same question as different personas and asserts restricted material never appears.
+A retrieval regression is a bug to fix next sprint. A leak is an incident. So a failed security suite blocks the release outright instead of lowering a score. It runs the same question as different personas and asserts that restricted material never appears.
 
 | Metric                          |                                                    Good threshold |                          Bad threshold | Test dataset                                                                         | Owner             |
 | ------------------------------- | ----------------------------------------------------------------: | -------------------------------------: | ------------------------------------------------------------------------------------ | ----------------- |
@@ -23,13 +23,13 @@ Red-team the boundary directly with five attack families:
 - citation fabrication, where the model cites a document absent from the retrieval set
 - staleness attacks, where a deleted or superseded document still ranks well
 
-**Eval bug:** labels mixed "not allowed" with "wrong document." A permitted contract tripped LEAK. False alarms train people to ignore the next real one. Split `forbidden_docs` (release gate) from `distractor_docs` (precision). Assert every forbidden doc is actually policy-denied.
+**Eval bug:** labels mixed "not allowed" with "wrong document." A permitted contract tripped LEAK. False alarms train people to ignore the next real one. Split `forbidden_docs` (release gate) from `distractor_docs` (precision). Assert every forbidden doc is policy-denied.
 
 **Trace (not the raw prompt):** prompt version, chunk IDs, policy decisions, tool calls, tokens, latency, cost, groundedness. One artefact for the engineer, the auditor, and finance. It already shows whether retrieval missed, permissions over-filtered, the model ignored evidence, or the template changed.
 
 ## 11. Roll Out One Corpus at a Time
 
-Week one at a customer is not the whole diagram. It is one source connected, the ACL translation provably right for three personas, a golden set built with their SMEs, and the leak test standing. That proves the risky part, the permission model, before anyone argues about embeddings, and everything else is incremental.
+Week one at a customer covers one connected source, the ACL translation provably right for three personas, a golden set built with their SMEs, and a standing leak test. That proves the risky part, the permission model, before anyone argues about embeddings. Everything else is incremental.
 
 | Week  | Gate                                                                                                                                                                                       |
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -103,7 +103,7 @@ The follow-ups arrive in a predictable order, and each has a prepared answer.
 
 | Follow-up | Answer |
 | --------- | ------ |
-| How do you prove users never see a passage they cannot open? | Authorise before a passage can enter context or the response. Query-time effective permissions. A disallowed citation rejects or rewrites the response. Suite: known-denied docs, group changes, adversarial queries — retrieval, reranker, assembler, and citation renderer share one policy |
+| How do you prove users never see a passage they cannot open? | Authorise before a passage can enter context or the response. Query-time effective permissions. A disallowed citation rejects or rewrites the response. Suite: known-denied docs, group changes, adversarial queries; retrieval, reranker, assembler, and citation renderer share one policy |
 | Access today, gone tomorrow? | Pre-filter is a snapshot. Post-check re-resolves live, so revocation hits the next query. Short permission cache, versioned identity, IdP change events. If signals lag, state the max stale window |
 | Confident but wrong? | Citation check against the retrieval set, groundedness on a silent labelled set, abstain on weak evidence, trace which stage failed. Confidence follows evidence, not tone |
 | Re-index after a chunking change? | Versioned migration: old and new side by side, new index version, offline eval, small traffic slice, leak tests again, rollback kept |

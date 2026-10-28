@@ -35,7 +35,7 @@ An offline gate of a few hundred cases usually can't detect small regressions wi
 
 ## 10. Roll Out Read-Only First
 
-Week one at a customer is not the whole diagram. It is one alert class, the telemetry sources with named owners, a golden set built from the last quarter's incidents, and a shadow run against history that proves hypothesis precision before anyone sees a proposal.
+Week one at a customer is one alert class, the telemetry sources with named owners, a golden set built from the last quarter's incidents, and a shadow run against history that proves hypothesis precision before anyone sees a proposal. The rest of the diagram comes later.
 
 | Stage    | Gate                                                                                                                              |
 | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,7 +120,7 @@ flowchart TD
     D[You don't know the domain] --> D1["Say so, ask 2 questions that would<br/>let you reason about it.<br/>Ignorance is expected; hiding it is not."]
 ```
 
-Interviewers respect explicit prioritisation and penalise silent overruns. The failure mode is not running out of time; it is running out of time without saying so.
+Interviewers respect explicit prioritisation and penalise silent overruns, so say it aloud when you are running short of time.
 
 Repair the common weak answers on the spot. "Connect the LLM to logs and let it restart services from runbooks" becomes read-only investigation with staged, approved mitigation. "Put the user's role in the prompt and tell the model not to reveal restricted data" becomes permissions enforced at retrieval and at the gateway. "Use a faster model if it is slow" becomes a decomposed latency budget with parallel queries and pre-aggregation. "Test a few examples manually" becomes a golden set from historical incidents, red-team cases and hypothesis precision from review. "Optimise cost later" becomes tiered routing and a cost per resolved investigation from day one.
 

@@ -78,13 +78,13 @@ The MVP is the smallest trustworthy path from registration to decision: registry
 
 ## 5. Pin Every Input and Compare Against a Baseline
 
-A score means nothing without the thing it is compared against. The platform does not produce one "good" number. It says whether a candidate is better, worse or indistinguishable from a pinned baseline.
+A score means nothing without the thing it is compared against. The platform does not produce one "good" number; it says whether a candidate is better, worse or indistinguishable from a pinned baseline.
 
-The comparison is **Δ = Metric_candidate − Metric_baseline**. The metric can be quality, safety violation rate, task success, refusal accuracy, latency or cost, depending on the gate. A shift is useful only when the baseline is fixed, versioned and comparable. A two-tenths-of-a-point gain on a noisy rubric may not justify release. Weigh variance, confidence bands and operational risk, not just the sign of the delta.
+The comparison is **Δ = Metric_candidate − Metric_baseline**. The metric can be quality, safety violation rate, task success, refusal accuracy, latency or cost, depending on the gate. A shift is useful only when the baseline is fixed, versioned and comparable. A two-tenths-of-a-point gain on a noisy rubric may not justify release. Weigh variance, confidence bands and operational risk as well as the sign of the delta.
 
 Say the derivation on the whiteboard in one breath. For each test case, compare candidate output to a pinned baseline output or rubric score. Compute Δ for the metric that matters to the application. Aggregate by application, by release and across the fleet. If the distribution of Δ crosses the allowed regression threshold, the gate fails or routes to human review.
 
-Four records carry the whole design. Their lifecycles are what make a decision reconstructable a year later.
+Four records carry the whole design. Their lifecycles let you reconstruct a decision a year later.
 
 | Record | Purpose | Lifecycle |
 |---|---|---|
@@ -120,7 +120,7 @@ def release_decision(candidate: Mapping[str, Any], baseline: Mapping[str, Any], 
 
 Quality is judged on the lower bound of a bootstrapped delta, not the point estimate. That single choice is what "statistically honest" means in code. A malformed metric, such as `"safety_rate": "high"`, raises `ValidationError` before any policy logic runs. The tutorial's test policy uses `max_quality_drop` 0.01, `min_safety_rate` 0.95, `max_p95_ms` 250 and `max_cost` 0.20 under `policy-7`.
 
-One invariant deserves its own test. A quality gain cannot hide a safety regression.
+One invariant gets its own test: a quality gain cannot hide a safety regression.
 
 ```python
 baseline = Score(quality=0.90, safety_rate=0.999)
@@ -130,7 +130,7 @@ def test_quality_win_cannot_hide_safety_regression():
     assert not release_decision(candidate, baseline, policy(min_safety_rate=0.995)).allow
 ```
 
-A more persuasive release cannot ship if it falls below the safety floor. That is the production judgement the round is testing.
+A more persuasive release cannot ship if it falls below the safety floor. The round tests that judgement.
 
 Missing evidence and thin evidence are different outcomes. Missing evidence, such as a grader timeout or a dead evidence store, blocks. Thin evidence, a sample too small to decide, holds as "insufficient evidence" rather than approving. Neither ever turns into a pass by default.
 
@@ -149,7 +149,7 @@ The named failure is a grader that rewards verbosity over correctness. Long, con
 
 Validate a grader against human judgements on a representative sample, not the easy cases. Measure agreement on the cases that drive release decisions, then inspect the disagreements. Some reveal rubric gaps; others expose ambiguity in the task itself. Re-score a held-out set with humans periodically, because a grader drifts after rubric changes or model upgrades even when the platform is stable.
 
-Trust is earned in levels. Early on the grader is advisory: it blocks only low-risk deploys or requires human approval on uncertain cases. As agreement stabilises, high-confidence checks move to automatic gating. The design does not pretend the grader is perfect. It builds a path to trust.
+Trust is earned in levels. Early on the grader is advisory: it blocks only low-risk deploys or requires human approval on uncertain cases. As agreement stabilises, high-confidence checks move to automatic gating. The design assumes the grader is imperfect and builds a path to trust.
 
 | Trade-off | Use this for breadth | Use this for the decision |
 |---|---|---|

@@ -1,6 +1,6 @@
 # Deep Research Agent: Main Interview Guide
 
-**Research process** is: a question, hunt on the web and in *your* files, a cited brief. Failed hunt should look incomplete, not confident-fake.
+A research run takes a question, searches the web and *your* files, and returns a cited brief. A failed search should look incomplete, never confidently fake.
 
 **This case covers one slice:** bounded, read-only research with citations. It cannot send email or buy anything.
 
@@ -13,13 +13,13 @@ End to end, as “Who is Acme’s CEO, with sources?”
 5. **A synthesizer writes only from that ledger.** Every fact needs a citation.
 6. **A verifier and sanitizer** strip bad links/HTML. Gaps stay visible.
 
-That’s it: **plan → search in isolation → cite or show the hole → stop.** External actions stay out.
+The whole flow is plan → search in isolation → cite or show the hole → stop. External actions stay out.
 
 > **Source:** [Sources and Full Design](/design/deep-research-agent#full-pack). Use the [Deep Dive](/design/deep-research-agent#deep-dive) for state and security mechanics and the [Cheat Sheet](/design/deep-research-agent#cheat-sheet) for rehearsal.
 
 ## The case in one sentence
 
-Build a read-only research agent for public web and a user's private documents: about 100,000 daily users and 40,000 research runs/day, p95 under 90 seconds, first signal under 3 seconds, 3–12 steps/run, cited claims, and about $0.20/run. A failed branch yields an explicitly incomplete answer, not fabricated certainty.
+Build a read-only research agent for public web and a user's private documents: about 100,000 daily users and 40,000 research runs/day, p95 under 90 seconds, first signal under 3 seconds, 3–12 steps/run, cited claims, and about $0.20/run. A failed branch returns an answer marked incomplete instead of fabricated certainty.
 
 ## Questions to ask the interviewer
 
@@ -28,17 +28,17 @@ Build a read-only research agent for public web and a user's private documents: 
 | What is an acceptable citation, and must every factual claim have one? | If we say “Acme’s CEO is Jane,” must we show the URL and span, or is a vibe okay? | Evidence schema and verifier.                                       |
 | Which sources are public and which are user-scoped?                    | Can the web agent see my Drive, or only public pages?                                | Tool identities and isolation.                                      |
 | What happens when a source is unavailable or search finds nothing?     | If Wikipedia timed out, do we say “not found” or “we couldn’t check”?           | `EMPTY` vs `UNAVAILABLE`, and when a partial answer is allowed. |
-| What makes a research run complete?                                    | After 12 hops we still lack a number — keep going, or stop and show the gap?        | Coverage rubric, hop cap, and no-progress stop.                     |
-| May answers contain external links, images or rendered HTML?           | Can the answer include a tracking pixel or a`javascript:` link from a random page? | Egress sanitization.                                                |
+| What makes a research run complete?                                    | After 12 hops we still lack a number: keep going, or stop and show the gap?        | Coverage rubric, hop cap, and no-progress stop.                     |
+| May answers contain external links, images or rendered HTML?           | Can the answer include a tracking pixel or a `javascript:` link from a random page? | Egress sanitization.                                                |
 | Is $0.20 a hard cap or target, and at what traffic peak?               | At noon, if a run would cost $0.50, do we stop mid-research?                         | Model routing and search budgets.                                   |
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Authenticate and rate-limit.**
 2. **Plan a bounded research task.**
@@ -49,7 +49,7 @@ The easiest way to frame requirements in an interview is:
 7. **Verify claims and sanitize** rendered output.
 8. **Stream status and return explicit gaps.**
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -69,7 +69,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The planner and synthesizer use a reasoning-tier LLM; narrower web/document agents can use smaller models. The supervisor is bounded by deterministic hop, budget and no-progress rules. Web agents never inherit private-document access.
+The planner and synthesizer use a reasoning-tier LLM; narrower web/document agents can use smaller models. Deterministic hop, budget and no-progress rules bound the supervisor. Web agents never inherit private-document access.
 
 ```mermaid
 flowchart LR
@@ -103,7 +103,7 @@ flowchart LR
 
 **Parallel merge must be correct.** If branches write a single `summary` field, a hand-rolled last-write-wins merge can silently drop findings (LangGraph raises `InvalidUpdateError` instead when the key has no reducer). Store a list of typed evidence with an append/concatenate reducer, provenance and dedupe. Sum budget consumption across branches.
 
-**Termination matters.** Use a hard hop cap (the source gives eight as an example), per-run money/tool limits and no-progress detection. Distinguish no evidence found from a failed source. On a cap or outage, provide a partial answer with the missing section named.
+**Bound every run.** Use a hard hop cap (the source gives eight as an example), per-run money/tool limits and no-progress detection. Distinguish no evidence found from a failed source. On a cap or outage, provide a partial answer with the missing section named.
 
 **Cost and latency:** isolate subagent contexts; use smaller models for narrow extraction and a stronger model for planning/synthesis; cap rounds; deduplicate searches; cache public facts and user-scoped private work separately; measure cost by branch, hop and synthesis tokens. Parallelism helps only when tasks are independent and provider limits permit it.
 
@@ -111,7 +111,7 @@ flowchart LR
 
 ### What to score
 
-Score **outcome and trajectory**, not only the final paragraph.
+Score the outcome and the trajectory, not only the final paragraph.
 
 | Metric | What it catches |
 |---|---|
@@ -131,20 +131,20 @@ Score **outcome and trajectory**, not only the final paragraph.
 - Empty search (`EMPTY`)
 - Unavailable tools (`UNAVAILABLE`)
 
-Audit **the evidence ledger and the link sanitizer**, not only the final answer.
+Audit the evidence ledger and the link sanitizer, not only the final answer.
 
 ### Related AWS research platform
 
 This is my own build of the same product. It uses API limits, Bedrock guardrails, Redis/RDS memory, a search–summarise–write–critic loop, and observability.
 
-Its source **does not** give per-user ACL or deterministic release gating. Do **not** copy those defaults into this enterprise case.
+Its source gives no per-user ACL or deterministic release gating, so do not copy those defaults into this enterprise case.
 
 ### When to use multiple agents
 
-A supervisor–worker split is worth it for **parallelism**, **distinct permissions**, or **context isolation** (web vs Drive).
+A supervisor–worker split pays off when you need parallelism, distinct permissions, or context isolation (web vs Drive).
 
-If the decomposition is predictable, a **deterministic workflow** is simpler.
+If the decomposition is predictable, a deterministic workflow is simpler.
 
 ## Two-minute interview answer
 
-“I would clarify citation quality, private-document permissions and the partial-answer contract first. The planner builds a bounded research plan, then public-web workers and a separate user-scoped document worker gather typed findings in parallel. Their evidence is appended into a user-scoped ledger; a coverage check can trigger a limited replan. A stronger LLM synthesizes the answer, and a claim verifier plus egress sanitizer ensures citations support the claims and rendered output cannot leak private content through images or links. I enforce hop, time and spend caps, return explicit gaps on failure, and measure both answer quality and the path the agents took.”
+“I would clarify citation quality, private-document permissions and the partial-answer contract first. The planner builds a bounded research plan, then public-web workers and a separate user-scoped document worker gather typed findings in parallel. They append evidence to a user-scoped ledger, and a coverage check can trigger a limited replan. A stronger LLM synthesizes the answer, A claim verifier checks that citations support the claims, and an egress sanitizer stops rendered output leaking private content through images or links. I enforce hop, time and spend caps, return explicit gaps on failure, and measure both answer quality and the path the agents took.”

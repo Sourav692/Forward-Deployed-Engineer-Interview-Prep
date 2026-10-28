@@ -24,7 +24,7 @@ Memorise the pattern, not the table. Security defects fail closed. Capacity pres
 | Vector index surfaces a neighbour | Fail closed on the post-retrieval tenant invariant; block the response | Usually a tenant filter missing or wrong at query time (as in section 14), or chunks ingested without a tenant tag |
 | Misrouted regional traffic | Reject at the scheduler; alert; audit the route | A route sending protected data to an unauthorised region is a residency breach |
 
-Each of the first five has a rehearsed drill in the tutorial, and they share a shape: detect, refuse and log, contain, recover, prevent. For the missing predicate, detection is code review plus automated tests plus runtime alerts on any query reaching a repository without tenant scope; it never depends on a customer ticket. Refusal is a security error, never a silently substituted default tenant, with identity, trace, operation and the missing-scope fact logged. Containment blocks the release in pre-production. In production it disables the feature path, rotates credentials and freezes logs and traces. In-flight retries keep failing closed rather than retrying into a different scope. Recovery re-runs affected requests through the corrected path and confirms idempotency keys and replay logs cannot bypass the fixed check. Prevention is a negative test that fails if any unscoped repository method is reachable, plus static query-shape lint, so the unscoped path is hard to call rather than merely undesirable.
+Each of the first five has a rehearsed drill in the tutorial, and they share a shape: detect, refuse and log, contain, recover, prevent. For the missing predicate, detection is code review plus automated tests plus runtime alerts on any query reaching a repository without tenant scope; it never depends on a customer ticket. Refusal is a security error, never a silently substituted default tenant, with identity, trace, operation and the missing-scope fact logged. Containment blocks the release in pre-production. In production it disables the feature path, rotates credentials and freezes logs and traces. In-flight retries keep failing closed rather than retrying into a different scope. Recovery re-runs affected requests through the corrected path and confirms idempotency keys and replay logs cannot bypass the fixed check. Prevention is a negative test that fails if any unscoped repository method is reachable, plus static query-shape lint, so the unscoped path is hard to call, not only discouraged.
 
 ```mermaid
 flowchart TD
@@ -36,7 +36,7 @@ flowchart TD
     style A fill:#a63d40,stroke:#5c1f22,color:#fff
 ```
 
-The cache drill is the one candidates underrate. A cache bug looks harmless in isolation, because the database stays protected, but a shared cache replays the wrong tenant's object if the key misses tenant scope. Detect by instrumenting key components in metrics and traces. Contain by disabling the cache path or namespace, invalidating suspect entries and falling back to the source of truth. Recover by rebuilding from correctly scoped reads and re-checking responses served in the window. Prevent by requiring tenant id in every cache-key helper, centralising key construction, and a negative test asserting a cross-tenant lookup is a miss. If the cache holds auth-sensitive material, treat it as a security incident, not a performance bug.
+Candidates often underrate the cache drill. A cache bug looks harmless in isolation, because the database stays protected, but a shared cache replays the wrong tenant's object if the key misses tenant scope. Detect by instrumenting key components in metrics and traces. Contain by disabling the cache path or namespace, invalidating suspect entries and falling back to the source of truth. Recover by rebuilding from correctly scoped reads and re-checking responses served in the window. Prevent by requiring tenant id in every cache-key helper, centralising key construction, and a negative test asserting a cross-tenant lookup is a miss. If the cache holds auth-sensitive material, treat it as a security incident, not a performance bug.
 
 Production failure behaviour is the difference between a toy and a system. Timeouts tight enough to avoid pile-ups of stale work. Retries only for transient failures, never for authorisation failures or malformed requests. Idempotency on writes, billing events and workflow triggers. Circuit breakers on dependencies returning repeated failures. Dead-letter queues that hold poison messages for inspection rather than endless reprocessing. Human escalation for policy corruption, suspected isolation failure or ambiguous tenant ownership. The honest system says what it can recover automatically and what needs a human with authority.
 
@@ -44,7 +44,7 @@ Say what breaks first at 10x. Noisy-neighbour risk and cache churn become domina
 
 ## 10. Gate the Release on an Adversarial Isolation Suite
 
-The central promise is proven by a suite that tries to break the boundary, and a single unexplained boundary failure halts promotion. The goal is not to prove perfection but to prove the system fails safely and visibly under attack.
+A suite that tries to break the boundary proves the central promise, and a single unexplained boundary failure halts promotion. The goal is to show the system fails safely and visibly under attack, not to prove perfection.
 
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
@@ -55,7 +55,7 @@ The central promise is proven by a suite that tries to break the boundary, and a
 | Cost per tenant | Within the band for the tenant class | Above band | Billing mapped to tenant usage | Finance + platform |
 | Regional failover time | Within the agreed RTO | Recovery exceeds target | Game-day and failover drills | SRE |
 
-Keep technical health, model quality, adoption and business outcome as separate metric layers, because blurring them loses the ability to tell an engineering problem from product fit from customer behaviour. Trace a user outcome back to component telemetry in one chain. "Document processing feels slow" becomes request arrival, quota admission, queue depth, inference duration, retrieval latency, cache hit ratio and regional routing.
+Keep technical health, model quality, adoption and business outcome as separate metric layers, because once they blur you cannot tell an engineering problem from a product-fit problem or from customer behaviour. Trace a user outcome back to component telemetry in one chain. "Document processing feels slow" becomes request arrival, quota admission, queue depth, inference duration, retrieval latency, cache hit ratio and regional routing.
 
 The interview-sized isolation test proves one invariant at the API level, not only in the database. A secret created under one tenant is invisible to another. The other tenant does not even learn that the object exists.
 
@@ -110,7 +110,7 @@ It deliberately omits authentication middleware, request signing, database trans
 - key-rotation procedures
 - incident runbooks for suspected boundary failures
 
-The operational question is not "do we have security?" It is "can we prove the system fails in the right direction, and recover without widening the blast radius?" Every external dependency and irreversible action needs an explicit failure and recovery policy. The absence of a policy is itself a policy, and it usually fails open.
+The operational question is "can we prove the system fails in the right direction, and recover without widening the blast radius?", not "do we have security?" Every external dependency and irreversible action needs an explicit failure and recovery policy. The absence of a policy is itself a policy, and it usually fails open.
 
 The data model carries four ownership boundaries rather than four tables. Tenant(id, region, tier, key_ref, retention_policy) is data ownership. Membership(user_id, tenant_id, role, status) is authority. UsageLedger(tenant_id, period, tokens, requests, cost) is commercial control. AuditEvent(tenant_id, actor, action, resource, decision) is defensibility. Every write boundary needs an idempotency key, which stops duplicate writes from retries, and optimistic concurrency, which stops lost updates from concurrent writers. Model output never flows raw into the system; it is parsed into a typed schema and policy-checked before persistence.
 
@@ -140,7 +140,7 @@ In weeks: 0-1 name stakeholders, the dangerous failure and explicit exclusions. 
 
 Rollout is more than code promotion. A canary takes a tiny slice of low-risk traffic first. Rollback returns to the prior configuration with no data loss and no cross-tenant contamination. Migration moves tenant metadata, quotas and routing with validation at each step. Training makes support and customer-facing teams fluent in the guarantees and non-guarantees. Documentation covers setup, limits, escalation paths and what a quota error means. Ownership is named: platform engineering owns runtime, security owns boundary validation, support owns first-response triage, product owns tiering policy, SRE owns service health and failover rehearsals.
 
-Keep four kinds of thing apart, because anything re-implemented per customer is the symptom of a platform becoming a bundle of one-off projects. Configuration is what varies per customer without code: quotas, region preferences, feature flags, retention, routing policy. Adapters absorb external variance: identity providers, storage systems, logging sinks, approval workflows. Shared services are expensive to rebuild and central to leverage: tenant registry, policy enforcement, metering, audit, failover orchestration. Core product defines the platform: isolation, admission, data access boundaries, observability primitives, internal APIs.
+Keep four kinds of thing apart. Anything re-implemented per customer is a sign the platform is turning into a bundle of one-off projects. Configuration is what varies per customer without code: quotas, region preferences, feature flags, retention, routing policy. Adapters absorb external variance: identity providers, storage systems, logging sinks, approval workflows. Shared services are expensive to rebuild and central to reuse: tenant registry, policy enforcement, metering, audit, failover orchestration. Core product defines the platform: isolation, admission, data access boundaries, observability primitives, internal APIs.
 
 | Risk | Owner | Mitigation | Trigger |
 |---|---|---|---|

@@ -7,30 +7,30 @@
 - The prototype runs, so the customer asks: when can we rely on it in production? The design talk now becomes a delivery plan, with measurable gates, a named owner per step and a route into support.
 - Begin by modelling a single workflow in explicit form. A good candidate is document approval, then payment, then the email, then the three internal updates.
 - A slice this narrow tells you whether business effects survive retries, pauses and crashes. It also keeps the first release small, so the team can reason through every move from one state to the next.
-- Breadth of features is not the aim here. Learning is. You want to confirm three things: the workflow definition holds steady, anyone can inspect the state model, and the team can say what happens when a worker dies after the card is charged but before the email goes out.
-- When you name that first workflow out loud, you signal that you think in MVP terms and stage the rollout. The alternative is one big, risky launch.
+- The aim is learning, not breadth of features. Confirm three things: the workflow definition holds steady, anyone can inspect the state model, and the team can say what happens when a worker dies after the card is charged but before the email goes out.
+- When you name that first workflow out loud, you signal that you think in MVP terms and stage the rollout instead of one big, risky launch.
 
 ### Determinism and Crash Recovery as the First Gate
 
 - Test two things before any traffic grows:
   - Feed a recorded workflow history back through the engine. Check that every decision comes out the same as before.
   - Kill workers in the middle of a run and bring them back. Check that the engine picks up from durable state and does not blindly fire the side effects again.
-- This pair is the first true go/no-go gate. It shows whether the orchestration logic lives through the failures that hurt most.
+- This pair is the first go/no-go gate. It shows whether the orchestration logic lives through the failures that hurt most.
 - A line worth having ready: "I won't promote this until we can replay a run from its history, recover from a worker crash, and show that no irreversible effect happens twice."
 
-> **Interview pointer:** Put deterministic replay and crash recovery *first* in the gate order, ahead of operator tooling and ahead of a wider release. That ordering marks a seasoned delivery plan. A weaker answer just promises to "add monitoring later".
+> **Interview pointer:** Put deterministic replay and crash recovery *first* in the gate order, ahead of operator tooling and ahead of a wider release. That ordering marks a seasoned delivery plan. A weaker answer promises to "add monitoring later".
 
 ### Operator Visibility Before Broadening Scope
 
 - With recovery proven, give operators a window into the system: dashboards, logs, traces and admin screens. Support staff should be able to answer three things quickly. What is in flight? What has stalled? What needs a human?
-- This is core, not polish. Without it, broken work piles up quietly; with it, a support team can actually run the platform.
+- Treat this as core. Without it, broken work piles up quietly; with it, a support team can run the platform.
 - A rule that works in practice: show workflow-level state in the words the business uses (pending approval, payment authorised, compensation pending, completed). Beside it, show activity-level signals such as retry counts, timeouts, failed workers, how deep each queue is and how slow downstream calls are. Link the two, so a complaint from a user leads straight to the step that failed.
 
 ### Version Workflows Instead of Mutating Them
 
 - Ship changes as a new workflow version. Never edit running executions in place. A run in flight may wait for days on an approval, a human reviewer or an outside system. If you swap its logic while it waits, old and new instances start to behave differently.
 - Versions keep the operating model easy to follow. A run keeps the rules it began with. New runs get the new logic. During an incident, operators know which history applies.
-- Here the customer begins to trust the platform. The way changes ship has become predictable.
+- The customer starts to trust the platform once changes ship predictably.
 
 ### Rollout Scorecard: Six Metric Layers
 
@@ -63,7 +63,7 @@
 
 **Business outcome metrics**
 
-- Look for fewer failed approvals, a shorter gap from payment to email, fewer customer escalations and a shorter cycle for the whole process. The point to make in the interview: technical health tells you the machine works; business outcomes tell you the customer gains from it.
+- Look for fewer failed approvals, a shorter gap from payment to email, fewer customer escalations and a shorter cycle for the whole process. Say in the interview that technical health tells you the machine works; business outcomes tell you the customer gains from it.
 
 ### Phased Rollout: Owners, Exit Criteria, Rollback Triggers
 
@@ -106,7 +106,7 @@ flowchart LR
   - **Adapters**: the payment gateway, the email providers, document systems and the three internal systems, each reached through its own adapter. They sit behind interfaces because they differ from one customer and environment to the next.
   - **Configuration**: retry budgets, timeout windows, rules for routing approvals, escalation thresholds and visibility settings per tenant. These change more often than code does, so it must be safe to adjust them.
   - **Shared services**: identity, audit logging, metrics export and notification plumbing, where the organisation already has a standard for them. Reusing them cuts duplication, but only if the team can keep ownership lines and support commitments intact.
-- The split shows product judgement. You are not building a bespoke workflow engine for a single customer. You are pulling reusable product value out of the pilot.
+- The split shows product judgement: you pull reusable product value out of the pilot instead of building a bespoke workflow engine for a single customer.
 
 ### Train Operators Before the First Wide Rollout
 
@@ -122,6 +122,6 @@ flowchart LR
   - **Replay nondeterminism**: the workflow-runtime team owns it. Deterministic APIs and replay tests driven by history mitigate it. Trigger: a replayed decision that differs from the recorded one.
   - **Operator overload**: operations owns it. Dashboards, runbooks and tuned alerts mitigate it. Trigger: the manual repair count keeps going up.
   - **Version migration error**: the release manager owns it. Version gating and a canary rollout mitigate it. Trigger: old and new runs reach different outcomes.
-- This is not paperwork. The register is how a technical design becomes a service people can support.
+- The register turns a technical design into a service people can support.
 - A strong rollout story goes in order. Prove one workflow end to end. Next, check replay and crash recovery. Then give operators visibility. Finally, migrate by version behind a canary and a rollback plan. Through every step, keep an eye on six numbers: completion time, retries, how long work sits stuck, duplicated effects, compensations and manual repairs. Hold off on calling it a success until customers use it, the business process gets better and support can run it without heroics.
 - The customer impact you can measure: a workflow platform that can apply each business effect of a long-running process exactly once, keep its state visible, and compensate when a step fails. Recovery stays under control and manual work drops. Approval, payment, email and the internal updates then run as one dependable service, not a chain of brittle one-off scripts.

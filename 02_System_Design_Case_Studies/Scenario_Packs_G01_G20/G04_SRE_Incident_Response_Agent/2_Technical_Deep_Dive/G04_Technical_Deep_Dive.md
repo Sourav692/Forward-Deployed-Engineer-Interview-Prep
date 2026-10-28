@@ -1,4 +1,4 @@
-# G04 — SRE Incident Response Agent: Deep Dive
+# G04 SRE Incident Response Agent: Deep Dive
 
 The [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) is the spoken answer. This is its technical backup; the unchanged [source case](../4_Full_Design/G04_Full_Design.md) has the complete reference and interview scripts.
 
@@ -20,29 +20,29 @@ The [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) is the spoken answ
 
 The agent runs outside the affected blast radius and assumes any telemetry source may be partially unavailable. Every record needs stable ID, owner, updated time, and ACL metadata; exclude an unmapped source. Redact sensitive log fields before context assembly. Feedback stays separate from ground truth until SME/post-incident approval.
 
-Core records: `Alert`, `Signal`, `Deployment`, `Runbook`, `ActionProposal`, `IncidentTimeline`, and `SourceCoverage(investigation_id, source, status)`. Source coverage is part of the answer, not just operational telemetry.
+Core records: `Alert`, `Signal`, `Deployment`, `Runbook`, `ActionProposal`, `IncidentTimeline`, and `SourceCoverage(investigation_id, source, status)`. Show source coverage in the answer itself as well as in operational telemetry.
 
 ## 2. Intake, correlation, and context budget
 
-The source’s 1,200 alerts/day average is less important than **400 in 90 s**. Group by service and time window; attach new alerts to an active cluster; cap concurrent investigations per service. Rules or a small model do this before any strong-model call. One good investigation per correlated incident beats hundreds of shallow ones and protects the telemetry backend.
+Design for the burst of 400 in 90 s, not the source’s 1,200 alerts/day average. Group by service and time window; attach new alerts to an active cluster; cap concurrent investigations per service. Rules or a small model do this before any strong-model call. One good investigation per correlated incident beats hundreds of shallow ones and protects the telemetry backend.
 
-Pre-aggregate before prompting: bucket metrics, count log signatures, sample traces, diff deployments, cap lookback. Keep raw slices available through read tools when a hypothesis needs them. The strong model synthesizes ranked causes from a bounded evidence set, with citations and missing-source disclosure. A citation-free cause is a refusal or a low-confidence hypothesis, not a finding.
+Pre-aggregate before prompting: bucket metrics, count log signatures, sample traces, diff deployments, cap lookback. Keep raw slices available through read tools when a hypothesis needs them. The strong model synthesizes ranked causes from a bounded evidence set, with citations and missing-source disclosure. Treat a citation-free cause as a refusal or a low-confidence hypothesis, never as a finding.
 
 ## 3. Tool result contract and gateway
 
-Use five typed states: `SUCCESS` (data), `EMPTY` (query succeeded, no match), `UNAVAILABLE` (source did not answer), `DENIED` (caller lacks authority), `INVALID` (bad arguments). A string result hides the difference. `EMPTY` versus `UNAVAILABLE` prevents false confidence and retry storms. `DENIED` must not reveal a workaround; log the human-readable reason outside model context.
+Use five typed states: `SUCCESS` (data), `EMPTY` (query succeeded, no match), `UNAVAILABLE` (source did not answer), `DENIED` (caller lacks authority), `INVALID` (bad arguments). A plain string result hides the difference. Separating `EMPTY` from `UNAVAILABLE` prevents false confidence and retry storms. `DENIED` must not reveal a workaround; log the human-readable reason outside model context.
 
-An approved write takes one route: **authorise → validate → execute with timeout and idempotency key → classify → trim to declared fields → log**. Authorisation comes first to avoid revealing a protected schema to a denied caller. An example idempotency seed is a hash of run ID, tool name, and canonical arguments. Read tools use scoped read-only credentials. Write tools appear only for the current rollout stage and remain behind approval.
+An approved write takes one route: authorise → validate → execute with timeout and idempotency key → classify → trim to declared fields → log. Authorisation comes first so a denied caller never sees a protected schema. An example idempotency seed is a hash of run ID, tool name, and canonical arguments. Read tools use scoped read-only credentials. Write tools appear only for the current rollout stage and remain behind approval.
 
 ## 4. Proposal and human boundary
 
-An action proposal contains exact command, service/owner, computed blast radius, supporting signals, runbook, change-freeze status, simulation or dry-run result, rollback path, and expiry. A missing blast radius or required simulation blocks the proposal. Service owner and incident commander review; approval and decision time are logged. A freeze owner must approve work during a declared freeze. The model may recommend; the gateway and approvers decide.
+An action proposal contains exact command, service/owner, computed blast radius, supporting signals, runbook, change-freeze status, simulation or dry-run result, rollback path, and expiry. A missing blast radius or required simulation blocks the proposal. The service owner and incident commander review it, and the log records approval and decision time. A freeze owner must approve work during a declared freeze. The model may recommend; the gateway and approvers decide.
 
-The agent’s timeline records alert IDs, queried signals, reached/missed sources, hypotheses, confidence, proposals, approvals, executed command, outcome, model/prompt version, and policy state. That supports post-incident review of both correct and wrong calls.
+The agent’s timeline records alert IDs, queried signals, reached/missed sources, hypotheses, confidence, proposals, approvals, executed command, outcome, model/prompt version, and policy state. Post-incident review can then examine both correct and wrong calls.
 
 ## 5. Latency arithmetic and 10× growth
 
-First useful output target is **under 30 s** from alert receipt; interactive follow-up **3–8 s**. Example slices from the source: dedupe/correlation <1 s, context ~1–2 s, parallel queries ~5–10 s for the slowest source, strong synthesis ~10–15 s with streaming. Pre-aggregation runs as results arrive. Citation verification stays inline for proposals; explanatory text can use an async check if policy allows it.
+Target the first useful output under 30 s from alert receipt and interactive follow-ups in 3–8 s. Example slices from the source: dedupe/correlation <1 s, context ~1–2 s, parallel queries ~5–10 s for the slowest source, strong synthesis ~10–15 s with streaming. Pre-aggregation runs as results arrive. Citation verification stays inline for proposals; explanatory text can use an async check if policy allows it.
 
 For a slow prototype, trace auth, retrieval, rerank, model, tools, verification. Parallelise independent reads, cache versioned catalog/deploy context, reduce candidate count, stream useful partials, and remove diagnostics that do not change the hypothesis. Avoid serial reasoning loops in a live incident. At 10× alert volume, correlation load rises but strong-model calls should follow incident clusters, not raw alert count. Provider quota and telemetry rate limits likely bind; source coverage exposes degradation early.
 
@@ -67,7 +67,7 @@ The oracle is post-incident review. **Hypothesis precision** is the falsifying m
 
 Red-team wrong-service commands, unsupported causes, leaked secrets/PII, alert noise, injected runbooks/logs, different user roles on the same alert, freezes, and stale contradictory runbooks. Offline cases cannot detect every small regression: shadow live alerts, pin model versions, canary changes, and roll back on disagreement or a harmful proposal.
 
-Week one: one alert class, named source owners, historical incidents and SME labels, no write path. Then shadow summaries, live read-only with citations/coverage, draft timelines or approved low-risk actions, and expansion only while precision, latency, and safety hold. A responder ignoring output is a rollback signal, not merely an adoption metric.
+Week one: one alert class, named source owners, historical incidents and SME labels, no write path. Then shadow summaries, live read-only with citations/coverage, draft timelines or approved low-risk actions, and expansion only while precision, latency, and safety hold. Treat responders ignoring the output as a rollback signal, on top of tracking it for adoption.
 
 ## 8. Interview pivots
 
@@ -77,4 +77,4 @@ Week one: one alert class, named source owners, historical incidents and SME lab
 - **“Too expensive?”** Rules/small model for correlation, one strong synthesis, bounded lookback, cached versioned catalog/runbooks. Track cost per resolved investigation.
 - **“Wrong citation?”** Verify against the actual retrieved signal/runbook span; reject or repair before a proposal.
 
-The [source](../4_Full_Design/G04_Full_Design.md) retains the full diagrams, 45-minute script, levelling rubric, recovery moves, and references.
+The [source](../4_Full_Design/G04_Full_Design.md) keeps the full diagrams, 45-minute script, levelling rubric, recovery moves, and references.

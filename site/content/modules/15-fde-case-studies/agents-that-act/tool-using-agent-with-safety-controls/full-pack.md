@@ -2,7 +2,7 @@
 
 *Let the model act on email, CRM and refunds without ever letting it decide, because usefulness comes from acting and trust comes from never deciding.*
 
-The hard part of this system is not getting a model to call a tool. It is that an agent which reads email, queries systems, updates CRM and issues refunds has to be useful without holding any authority. So the model proposes and deterministic systems decide. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
+Getting a model to call a tool is easy. The hard part is an agent that reads email, queries systems, updates CRM and issues refunds, and stays useful without holding any authority. So the model proposes and deterministic systems decide. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -18,13 +18,13 @@ The hard part of this system is not getting a model to call a tool. It is that a
 
 ## 1. Name the Model as the Proposer, Never the Authority
 
-Open with the disagreement, not the feature list. The customer asks for an agent that reads email, queries internal systems, updates CRM records and issues refunds. Everyone nods at the feature list, then disagrees completely. Operations wants speed. Security wants hard approval gates. The support manager wants routine cases handled without friction. Finance fears irreversible money movement. That disagreement is the design problem. So restate the ask as a testable outcome: enable useful automation while deterministic controls govern identity, permissions, risk and irreversible effects. The consequence is that the model is not the authority. It interprets and proposes. Deterministic systems decide who may act, what may change and whether an action can be reversed.
+Open with the disagreement, not the feature list. The customer asks for an agent that reads email, queries internal systems, updates CRM records and issues refunds. Everyone nods at the feature list, then disagrees completely. Operations wants speed. Security wants hard approval gates. The support manager wants routine cases handled without friction. Finance fears irreversible money movement. That disagreement is the design problem. So restate the ask as a testable outcome: enable useful automation while deterministic controls govern identity, permissions, risk and irreversible effects. So the model is not the authority. It interprets and proposes. Deterministic systems decide who may act, what may change and whether an action can be reversed.
 
 > *"Let me restate the problem first. We need a tool-using agent that can read email, query internal systems, update CRM records, and sometimes trigger refunds, but the model itself should not have unchecked authority. So I'd frame the outcome as enabling useful automation while deterministic controls govern identity, permissions, risk, and irreversible effects."*
 
 The three answer tiers show what that framing buys. The weak answer connects the agent to email and CRM and lets it issue refunds when it decides the customer deserves one. It makes the model the authority, hands it credentials instead of scoped capabilities, and has no defence against instructions hidden in a ticket. The average answer plans tool calls, checks permissions before each one, requires approval for large refunds, logs everything and adds retries. It still treats tool output as trusted, never bounds loops or spend, and adds retries without idempotency, which is how one refund quietly becomes two. The strong answer has the planner propose one bounded action. A typed schema validates it. A deterministic policy engine returns allow, block or needs-approval. A credential broker mints a short-lived token scoped to that single action. An idempotent gateway guarantees exactly one effect. Tool observations are untrusted data, never instructions. Loops, spend, refund amounts and destinations all have hard ceilings.
 
-Then ask the questions that change what may be built, because a useful question is not the one that sounds thorough.
+Then ask the questions that change what may be built, not the ones that sound thorough.
 
 | Question to ask | What the answer decides |
 |---|---|
@@ -95,7 +95,7 @@ Every must-have then needs an owner in the architecture, and the traceability ta
 
 ## 3. Size by Workload Shape and Risk, Not by Request Count
 
-One request is not one unit of work. Use the planning anchor of 50,000 users, 10 actions per task and 20 QPS peak. Then separate three layers of load. How often tasks arrive. How many tool calls, model calls and policy checks each task triggers. How many actions can actually change records, money or permissions.
+One request is not one unit of work. Use the planning anchor of 50,000 users, 10 actions per task and 20 QPS peak. Then separate three layers of load. How often tasks arrive. How many tool calls, model calls and policy checks each task triggers. How many actions can change records, money or permissions.
 
 | Estimate | Number | What it forces |
 |---|---|---|
@@ -104,7 +104,7 @@ One request is not one unit of work. Use the planning anchor of 50,000 users, 10
 | Audit storage | ~5 KB decision record and ~20 KB audit trail per task, so 100 KB/s to 400 KB/s | About 8.6 GB to 34.6 GB per day of raw append-only data before indexing and replication |
 | Planner compute | ~1 second of planner time per task, so about 20 core-seconds per second at peak | Reasoned about as a throughput-constrained service with slack for tail latency |
 
-The estimate that most affects the design is not CPU. It is the ratio of model time to tool time, plus the irreversibility of tool effects. Planning fast and tools slow means invest in async orchestration, caching and queueing. Tool effects high-risk means invest in policy checks, staged execution and audit logging even at the cost of latency. Human review as the bottleneck means clearer escalation rules and fewer ambiguous cases.
+The estimate that most affects the design is the ratio of model time to tool time, plus the irreversibility of tool effects. CPU matters less. Planning fast and tools slow means invest in async orchestration, caching and queueing. Tool effects high-risk means invest in policy checks, staged execution and audit logging even at the cost of latency. Human review as the bottleneck means clearer escalation rules and fewer ambiguous cases.
 
 Derive the risk tier before deciding autonomy. The decision aid is `Risk = Impact × Likelihood × Irreversibility`, not literal arithmetic. A low-impact read of a public FAQ can be fully autonomous. A CRM update can be partially reversible and still costly if it misroutes a customer. A refund may be technically reversible and still meaningfully irreversible through customer dissatisfaction, accounting noise or abuse. The tiers are fully autonomous, autonomous with preconditions, requires human approval, and blocked entirely.
 

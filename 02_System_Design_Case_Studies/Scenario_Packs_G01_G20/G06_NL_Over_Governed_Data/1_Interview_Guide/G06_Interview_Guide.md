@@ -1,23 +1,23 @@
-# G06 — Natural Language over Governed Data: Main Interview Guide
+# G06 Natural Language over Governed Data: Main Interview Guide
 
-**Analytics process** is: someone asks a business question, SQL hits the warehouse, a number shows up on a slide. The trap is **valid SQL for the wrong meaning of “revenue.”**
+In the **analytics process**, someone asks a business question, SQL hits the warehouse, and a number shows up on a slide. The trap is **valid SQL for the wrong meaning of “revenue.”**
 
-**G06 covers one slice:** map the question to an approved metric, then a read-only query with a paper trail. Not “chat with every table.”
+**G06 covers one slice:** map the question to an approved metric, then run a read-only query with a paper trail. It does not cover “chat with every table.”
 
 End to end, as an exec asking “What’s Q3 revenue?”
 
 1. **We resolve who they are** and which rows they may see.
 2. **We pin “revenue” to Finance’s versioned metric**, not a guess.
-3. **If 30-day vs 90-day is unclear**, we ask or send to an analyst — we do not pick.
+3. **If 30-day vs 90-day is unclear**, we ask or send to an analyst; we do not pick.
 4. **We generate SQL, parse it, cap the scan**, then run read-only.
 5. **We return the number, the SQL, lineage, freshness.** Prose is checked against the numbers.
 6. **Next quarter we can replay** who asked, which metric version, which SQL hash.
 
-That’s it: **metric first → permitted SQL → bounded run → explain from the result.** Writes and inventing KPIs stay out.
+The path is **metric first → permitted SQL → bounded run → explain from the result.** Writes and invented KPIs stay out.
 
 The failure to design against is **valid SQL that answers the wrong business question**. “Revenue” can mean booked, recognised, or collected revenue; the model cannot choose that definition on the business’s behalf. Anchor the question to a versioned metric before exposing a physical schema, then bound and audit every query.
 
-This is the anchor for the related executive-dashboard and retail-forecast explanation cases in the [source study](../4_Full_Design/G06_Full_Design.md). Learn the governed query path once; change the final explanation and review workflow for each variant.
+This case anchors the related executive-dashboard and retail-forecast explanation cases in the [source study](../4_Full_Design/G06_Full_Design.md). Learn the governed query path once; change the final explanation and review workflow for each variant.
 
 | Case                             | Shared foundation                                                | What changes                                                                                                                   |
 | -------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -30,7 +30,7 @@ This is the anchor for the related executive-dashboard and retail-forecast expla
 
 | Question to ask                                                                                                   | What it's really asking                                                                                        | What you then decide                                                            |
 | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Who owns “revenue,” “active customer,” and the other first ten metrics? Is a semantic layer already approved? | If Finance means recognised revenue and Sales means booked, who wins — or does that dictionary already exist? | Registry scope, owners, and whether you wire to an existing layer or build one. |
+| Who owns “revenue,” “active customer,” and the other first ten metrics? Is a semantic layer already approved? | If Finance means recognised revenue and Sales means booked, who wins? Or does that dictionary already exist? | Registry scope, owners, and whether you wire to an existing layer or build one. |
 | Which warehouse, dialect, and approved datasets are in scope?                                                     | Are we on Snowflake over approved finance views, or every table in the lake?                                   | SQL generator, catalog adapter, parser, and policy rules.                       |
 | Where are row and column permissions enforced today?                                                              | If a regional manager asks for all salaries, does the warehouse already hide those rows?                       | Reuse warehouse ACLs, or build the missing layer.                               |
 | When a term maps to two metrics or grains, should we clarify, refuse, or send it to an analyst?                   | If “active customer” could mean 30-day or 90-day, do we ask, refuse, or hand it to an analyst?               | Ambiguity gate and review queue.                                                |
@@ -40,23 +40,23 @@ This is the anchor for the related executive-dashboard and retail-forecast expla
 
 ## 2. Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
-1. **Resolve to a governed metric first** — before any physical schema.
+1. **Resolve to a governed metric first**, before any physical schema.
 2. **Retrieve only permitted tables, joins, and freshness context.**
-3. **Ask on ambiguity** — do not pick between two approved meanings.
+3. **Ask on ambiguity** instead of picking between two approved meanings.
 4. **Produce dialect-specific SQL.**
-5. **Parse the AST** — check tables, columns, joins, shape, and estimated scan.
+5. **Parse the AST**: check tables, columns, joins, shape, and estimated scan.
 6. **Execute through a read-only gateway.**
 7. **Return result, SQL, metric lineage, and caveats.**
-8. **Generate prose from the structured result** — check it against the numbers.
-9. **Audit the query run** — actor, decision, SQL hash, bytes scanned, metric/schema/policy versions.
+8. **Generate prose from the structured result** and check it against the numbers.
+9. **Audit the query run**: actor, decision, SQL hash, bytes scanned, metric/schema/policy versions.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -72,7 +72,7 @@ The easiest way to frame requirements in an interview is:
 - Ten owner-approved metrics.
 - Golden question / SQL / result cases.
 - Analyst shadow review, then a small executive audience.
-- Not a general interface to every warehouse table, a write-query tool, or a machine that defines business metrics.
+- Out of scope: a general interface to every warehouse table, a write-query tool, or a machine that defines business metrics.
 
 ### Interview shortcut
 
@@ -136,7 +136,7 @@ flowchart LR
 | Clarify before query                            | Show supported meanings; a numeric confidence gate can trigger clarification (the insurer supervisor used**<60%** for its own intent clarification) | A plausible answer to an unstated business interpretation  |
 | Fixed operations or managed SQL before open SQL | Use reviewed operations or curated Genie-like views for common questions; allow hand-generated SQL only in a narrower approved path                   | Invented columns, excessive scans, and permission drift    |
 
-For mixed questions, route each subtask to its right source: semantic search finds related prose, structured queries compute counts and sums, direct lookup resolves IDs. A retail “why” answer computes drivers deterministically and lets the LLM narrate them; correlation is not proof of causation.
+For mixed questions, route each subtask to the right source: semantic search finds related prose, structured queries compute counts and sums, direct lookup resolves IDs. A retail “why” answer computes drivers deterministically and lets the LLM narrate them; correlation is not proof of causation.
 
 ## 5. Failure playbook
 

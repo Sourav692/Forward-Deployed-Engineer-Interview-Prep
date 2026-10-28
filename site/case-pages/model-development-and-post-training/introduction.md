@@ -2,7 +2,7 @@
 
 ## Overview
 
-A team wants a model that solves maths problems, and the interview walks from data through supervised fine-tuning (SFT), post-training and evaluation. The hard part is evaluation integrity. Leaked or near-duplicate test problems inflate scores: in the source's example, duplicated traces gave a 94% offline score against roughly 78% in production.
+A team wants a model that solves maths problems. The interview walks from data through supervised fine-tuning (SFT), post-training and evaluation. The hard part is evaluation integrity. Leaked or near-duplicate test problems inflate scores: in the source's example, duplicated traces gave a 94% offline score against roughly 78% in production.
 
 The design collects answer-checkable problems, removes duplicates and evaluation overlap, and uses a short SFT run to teach the format. It then scores the model's own sampled answers with a verifier, step grader or preference labels and updates with drift control. Each checkpoint must pass a held-out gate for maths, general ability and safety; a failure loops back to the data mix.
 
@@ -35,7 +35,7 @@ After this case you can:
 
 ## What it assumes
 
-Comfort with LLM fine-tuning (adapters such as LoRA, optimiser state and FLOPs estimates) and with model evaluation on held-out data. The related reviews at the foot of each section cover each one.
+Comfort with LLM fine-tuning (adapters such as LoRA, optimiser state and FLOPs estimates) and with model evaluation on held-out data. The related reviews at the foot of each section cover them.
 
 ## How to use it
 

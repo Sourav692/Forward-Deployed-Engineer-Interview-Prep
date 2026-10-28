@@ -1,6 +1,6 @@
-# G04 — SRE Incident Response Agent: Cheat Sheet
+# G04 SRE Incident Response Agent: Cheat Sheet
 
-Use the [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) to practice speaking and the [Deep Dive](../2_Technical_Deep_Dive/G04_Technical_Deep_Dive.md) for technical follow-ups. The [source](../4_Full_Design/G04_Full_Design.md) is the full reference.
+Use the [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) to practise speaking and the [Deep Dive](../2_Technical_Deep_Dive/G04_Technical_Deep_Dive.md) for technical follow-ups. The [source](../4_Full_Design/G04_Full_Design.md) is the full reference.
 
 ## One sentence
 
@@ -38,7 +38,7 @@ Exact command + computed blast radius + evidence + runbook + change-freeze check
 
 ## Failure card
 
-Telemetry down → report `UNAVAILABLE` and lower confidence. Alert storm → attach to cluster, visible queue. Stale runbook → warn/block proposal. Injection in logs → data, not instructions. Approval/policy down → fail closed on writes.
+Telemetry down → report `UNAVAILABLE` and lower confidence. Alert storm → attach to cluster, visible queue. Stale runbook → warn/block proposal. Injection in logs → treat as data, never as instructions. Approval/policy down → fail closed on writes.
 
 ## Release and rollout
 

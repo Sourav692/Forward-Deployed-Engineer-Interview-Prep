@@ -10,7 +10,7 @@
 
 `Job API → immutable snapshot + partition manifest → durable leases → workers → rate coordinator → classifier model/LLM → typed validation → idempotent sink → checkpoint + ack → reconcile + publish`
 
-The model classifies or extracts; deterministic orchestration owns the workflow. Checkpoint **after** sink success.
+The model classifies or extracts; deterministic orchestration owns the workflow. Checkpoint only after the sink write succeeds.
 
 ## Numbers
 

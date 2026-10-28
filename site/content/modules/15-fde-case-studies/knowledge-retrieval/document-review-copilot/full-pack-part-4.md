@@ -43,13 +43,13 @@ The follow-ups arrive in a predictable order.
 | How should the system behave when clinical notes conflict with payer rules? | Surface the conflict, prefer the approved current source, flag the case and escalate; never resolve it in the draft |
 | What if the payer rule changed after the request was started? | Rule versioning by effective date; the request is judged against the version in force at the date of service, and a mismatch is counted and shown |
 
-Repair the common weak answers on the spot. "The answer is correct, so the citation is cosmetic" becomes citation faithfulness as a high-severity dimension. "Increase top-k or tell the model to read tables" becomes an ingestion gate. Absent content cannot be retrieved. "Put the user's role in the prompt" becomes permissions enforced in retrieval and tool execution. "Use a faster model if it is slow" becomes a latency budget by stage and tiered routing. "Test a few examples and ask users" becomes a golden set with human decisions, adversarial cases and launch gates.
+Repair the common weak answers on the spot. "The answer is correct, so the citation is cosmetic" becomes citation faithfulness as a high-severity dimension. "Increase top-k or tell the model to read tables" becomes an ingestion gate, because absent content cannot be retrieved. "Put the user's role in the prompt" becomes permissions enforced in retrieval and tool execution. "Use a faster model if it is slow" becomes a latency budget by stage and tiered routing. "Test a few examples and ask users" becomes a golden set with human decisions, adversarial cases and launch gates.
 
 ---
 
 ## Level calibration
 
-On this design the levels separate on which checks an answer treats as release gates rather than quality knobs, not on how fluent the draft reads.
+On this design, the levels differ in which checks an answer treats as release gates rather than quality knobs. How fluent the draft reads does not separate them.
 
 | Level | Sounds like | Missing |
 |---|---|---|
@@ -70,9 +70,9 @@ On this design the levels separate on which checks an answer treats as release g
 - The decision, the permission check and the citation fail closed; everything else degrades with the gap labelled.
 - The release gate has four dimensions with four datasets, and groundedness alone is not one of them.
 - Rollout starts in shadow mode and expands one category at a time, extraction and triage before any adjudication.
-- The red-team round is won by narrowing scope, refusing disclaimers as controls, and pricing cost per true issue found.
-- The cost pivot is answered by the same architecture: cheap extraction everywhere, the strong model only on flagged risk.
-- Incidents on this design are answered by reading the telemetry aloud and naming the gate that was missing.
+- You win the red-team round by narrowing scope, refusing disclaimers as controls, and pricing cost per true issue found.
+- The same architecture answers the cost pivot: cheap extraction everywhere, the strong model only on flagged risk.
+- Answer incidents on this design by reading the telemetry aloud and naming the gate that was missing.
 
 ## Check Yourself
 
@@ -90,11 +90,11 @@ On this design the levels separate on which checks an answer treats as release g
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- FDE problem-decomposition question bank — claims and regulated-industry practice cases
-- [HL7 FHIR R5 Subscriptions framework](https://hl7.org/fhir/R5/subscriptions.html) — event-driven FHIR needs Subscriptions; otherwise you poll
-- [FINRA Books and Records (SEA 17a-4, FINRA 4511)](https://www.finra.org/rules-guidance/key-topics/books-records) — retention of advisor communications; WORM or audit-trail storage
-- [FINRA Rule 3110: Supervision](https://www.finra.org/rules-guidance/rulebooks/finra-rules/3110) — supervisory review of correspondence
-- [Unstructured partitioning (infer_table_structure)](https://docs.unstructured.io/open-source/core-functionality/partitioning) — layout-aware parsers keep table structure that plain loaders flatten
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — no fool-proof prevention; limit what the model can do
-- [MSRC: How Microsoft defends against indirect prompt injection attacks (Jul 2025)](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks) — separating task from content lowers but does not remove the risk
+- FDE problem-decomposition question bank: claims and regulated-industry practice cases
+- [HL7 FHIR R5 Subscriptions framework](https://hl7.org/fhir/R5/subscriptions.html): event-driven FHIR needs Subscriptions; otherwise you poll
+- [FINRA Books and Records (SEA 17a-4, FINRA 4511)](https://www.finra.org/rules-guidance/key-topics/books-records): retention of advisor communications; WORM or audit-trail storage
+- [FINRA Rule 3110: Supervision](https://www.finra.org/rules-guidance/rulebooks/finra-rules/3110): supervisory review of correspondence
+- [Unstructured partitioning (infer_table_structure)](https://docs.unstructured.io/open-source/core-functionality/partitioning): layout-aware parsers keep table structure that plain loaders flatten
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): no fool-proof prevention; limit what the model can do
+- [MSRC: How Microsoft defends against indirect prompt injection attacks (Jul 2025)](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks): separating task from content lowers but does not remove the risk
 

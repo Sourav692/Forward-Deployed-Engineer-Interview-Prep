@@ -1,4 +1,4 @@
-# G17 — Logistics Exception Handling: Cheat Sheet
+# G17 Logistics Exception Handling: Cheat Sheet
 
 [Main](../1_Interview_Guide/G17_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G17_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G17_Full_Design.md)
 
@@ -14,7 +14,7 @@ Agent proposes; gate decides. Exception type comes from detection, never from th
 
 ## Numbers and rules
 
-~200 webhook events/s peak; files every 2–6 hours; ~150 agents/~40 concurrent. Auto only when **non-customs**, value **< $500**, confidence above threshold. Missing field → human. EU data stays EU (customer rule, not GDPR). Batch lateness is visible.
+~200 webhook events/s peak; files every 2–6 hours; ~150 agents/~40 concurrent. Auto only when non-customs, value < $500 and confidence above threshold. Missing field → human. EU data stays EU (customer rule, not GDPR). Batch lateness is visible.
 
 ## Failure and proof
 

@@ -80,14 +80,14 @@
 ### Reframing the Request
 
 - The room agrees on the headline, "one platform for similar workflows", and on little else. Fields, approval paths, audit depth and release process all differ by stakeholder.
-- So don't start by drawing services. The first move is to turn a vague ask into a measurable outcome: one configurable workflow platform on which ten customers can each change their fields, approvals, branding and integrations, while the shared core stays stable, versioned and supportable.
-- The key reframe splits the feature someone asked for ("configuration") from the result the business needs: each customer gets its own workflow, and the product does not splinter into ten forks that cannot talk to each other. Saying that split aloud is what makes you sound like an FDE, not an implementer.
+- Don't start by drawing services. First turn the vague ask into a measurable outcome: one configurable workflow platform on which ten customers can each change their fields, approvals, branding and integrations, while the shared core stays stable, versioned and supportable.
+- Separate the feature someone asked for ("configuration") from the result the business needs: each customer gets its own workflow, and the product does not splinter into ten forks that cannot talk to each other. Say that split aloud; an implementer skips it, an FDE leads with it.
 - Make each word in the outcome testable:
   - Safe: no change can skip authorisation or switch on runtime behaviour that nobody reviewed.
   - Versioned: every customer can see which workflow definition is live and what changed in it.
   - Supportable: support and release staff can trace a fault, undo a bad configuration and explain behaviour tenant by tenant.
 - Avoid vanity measures such as the number of configurable fields. Track how often a new customer variation ships with no fork, no hotfix and no support escalation.
-- Think of it as a job to be done. The customer is hiring the platform to make custom forks unnecessary while each tenant keeps its own process; they are not buying "a workflow engine". That pushes the design towards a stable core with a few controlled extension points, not a codebase that changes shape per account.
+- Frame it as a job to be done: the customer hires the platform to make custom forks unnecessary while each tenant keeps its own process. That pushes the design towards a stable core with a few controlled extension points instead of a codebase that changes shape per account.
 
 > 🎯 **Interview Pointer:** Learn the outcome statement by heart: "keep one stable product core, and allow customisation that is safe, versioned and supportable." Interviewers listen for those three words, because each one drives a later architecture decision.
 
@@ -134,7 +134,7 @@ flowchart TD
   - What counts as "done" for the first customer: one live workflow, several teams onboarded, or every variation migrated?
   - How will the customer judge it: less manual handling, faster turnaround, fewer errors or simpler audits?
 - The answers become the design's inputs: scope, assumptions, risks, owners and success measures.
-- If the interviewer holds back, state your assumption aloud: "I'll assume only customer admins can configure, and the vendor approves each change before production." That is a clear boundary, not hedging.
+- If the interviewer holds back, state your assumption aloud: "I'll assume only customer admins can configure, and the vendor approves each change before production." That sets a clear boundary.
 
 ```mermaid
 flowchart TD
@@ -156,25 +156,25 @@ flowchart TD
 ### Weak vs. Strong Answers
 
 - A weak restatement leads with features: "Let's build a flexible workflow system: forms, approvals, themes and some API hooks."
-- A strong restatement leads with the outcome: "We need a single shared workflow platform. Each customer can tailor its fields, approvals, branding and integrations without a separate codebase, and the core stays stable enough to version, support and roll out safely." The second version exposes the real tension: flexibility against fragmentation.
+- A strong restatement leads with the outcome: "We need a single shared workflow platform. Each customer can tailor its fields, approvals, branding and integrations without a separate codebase, and the core stays stable enough to version, support and roll out safely." The second version names the tension between flexibility and fragmentation.
 - A short spoken opening: "Let me frame it first. One workflow product, ten customers, each wanting its own fields, approval chains, branding and integrations. I want a stable shared core with safe, versioned, supportable customisation, so we never run ten forks. First I'd find out who owns configuration, which variations are really needed, which failures we can't accept, and how we'll measure the first rollout. Then the design rests on validation, rollback and a few controlled extension points, not per-customer code."
-- Why it lands: it names the problem and the people, and it holds the architecture back until someone owns the workflow, someone owns the risk and a success metric exists. Bound the problem first; choose the design second.
+- It works because it names the problem and the people, and holds the architecture back until someone owns the workflow, someone owns the risk and a success metric exists.
 
 ## 2. Clarifying Questions, Requirements, and Constraints
 
 ### Requirement vs. Preference
 
-- The quickest way to lose control of this design is to take "we need flexibility" at face value. Ask who needs it, under what governance, and with what promise about upgrades.
+- Don't take "we need flexibility" at face value, or you lose control of the design. Ask who needs it, under what governance, and with what promise about upgrades.
 - Sort requirements from preferences and hard constraints from conveniences. Every customer wants a slightly different mix of fields, approvals, branding, integrations and sometimes rules. The first design fork is spotting which differences repeat.
-- Skip that, along with who authors configuration and where custom code ends, and you fall into one of two holes. Either the platform is too thin, or you build a bespoke rules engine nobody can support safely.
+- Skip that, along with who authors configuration and where custom code ends, and you get one of two failures: a platform that is too thin, or a bespoke rules engine nobody can support safely.
 
 ### The Six-Question Interview Tree
 
 - Six questions keep the conversation away from a feature wish list:
   1. **Which differences keep coming back between customers?** This separates a shared product pattern from one-offs. Approval chains that differ again and again are a platform capability; one seasonal override goes down an exception path. It also tells you what the core abstraction is: steps, policy rules, form schemas or integration orchestration.
-  2. **Who will write the configuration?** It sounds like staffing but it is architecture. Internal engineers can handle expressive power; customer admins and support staff need guardrails such as validation, previews, narrow building blocks and safe defaults. The answer reshapes the UX, the validation model and the authorisation model.
+  2. **Who will write the configuration?** This is an architecture question. Internal engineers can handle expressive power; customer admins and support staff need guardrails such as validation, previews, narrow building blocks and safe defaults. The answer reshapes the UX, the validation model and the authorisation model.
   3. **Which integrations and extensions can't be dropped?** Typical items are webhook callbacks, outbound notifications, CRM sync, document generation, ticket creation and auth hooks. The list fixes the adapter interface, settles sync versus async, and decides whether a failed call blocks a transition or degrades gracefully.
-  4. **What upgrade promise do customers expect?** If configs must outlive core releases, you need versioning, migration tooling, backward-compatible schema changes and rollback paths. Without them the "product core" is really a services project with no end.
+  4. **What upgrade promise do customers expect?** If configs must outlive core releases, you need versioning, migration tooling, backward-compatible schema changes and rollback paths. Without them the "product core" becomes an endless services project.
   5. **Where does the security boundary for custom code sit?** Options are the trusted core itself, a sandbox, or approved integration points only. The choice sets tenant isolation and supply-chain scrutiny. Default to a declarative core, with arbitrary code kept beyond the main trust boundary.
   6. **How fast must a configuration change go live?** Changes needed within hours call for self-service tooling with validation built in. A week allows more manual review. The target decides where you invest: admin UX, reusable templates, automated testing or partner onboarding.
 
@@ -206,7 +206,7 @@ flowchart TD
 - Configuration isolation: no customer's settings, data or test changes can leak into how another customer's workflows run.
 - Backward-compatible upgrades: an existing configuration keeps working until a planned migration runs.
 - Observable customer-specific behaviour: when a workflow goes wrong, operators can see the config version involved and which rule or adapter fired.
-- These shape the system; they are not wishes. No observability means no support. No backward compatibility turns configuration into a liability. Weak isolation turns customisation into a steady stream of multi-tenant incidents.
+- Each one shapes the system. No observability means no support. No backward compatibility turns configuration into a liability. Weak isolation turns customisation into a steady stream of multi-tenant incidents.
 
 ### MVP Non-Goals / Scope Fence
 
@@ -220,7 +220,7 @@ flowchart TD
 
 ### Requirement-to-Component Traceability
 
-- Give every requirement a likely home. The table shows a clean path from requirements to components:
+- Give every requirement a likely home:
 
 | Requirement | Likely component |
 |---|---|
@@ -243,5 +243,5 @@ flowchart TD
 
 ### The Strong Candidate Move
 
-- The strong move is not "make everything flexible". It runs in order: find the recurring differences, settle who owns configuration, state the integration and upgrade promise, draw a firm line for custom code, then commit to a stable engine backed by declarative configuration, versioning and strict validation.
-- That order turns discovery into a buildable plan, not a feature list. Ask only questions that change the design, then proceed on stated assumptions.
+- The strong move runs in order: find the recurring differences, settle who owns configuration, state the integration and upgrade promise, draw a firm line for custom code, then commit to a stable engine backed by declarative configuration, versioning and strict validation.
+- That order turns discovery into a buildable plan. Ask only questions that change the design, then proceed on stated assumptions.

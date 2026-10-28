@@ -2,7 +2,7 @@
 
 ## 14. Deliver It in Sixty Minutes
 
-Spend the hour on the ladder and the gate. Reported interview questions flag evaluation as what sets strong candidates apart in the OpenAI decomposition round, and I'm assuming the same here. The decomposition framework has six steps: clarify the mission, stakeholders and metrics, map inputs, decompose and sequence by risk, walking-skeleton MVP, then adapt live. The plan below follows it *(own construction)*.
+Spend the hour on the ladder and the gate. Reported interview questions say evaluation sets strong candidates apart in the OpenAI decomposition round; I'm assuming the same holds here. The decomposition framework has six steps: clarify the mission, stakeholders and metrics, map inputs, decompose and sequence by risk, walking-skeleton MVP, then adapt live. The plan below follows it *(own construction)*.
 
 | Minutes | Move | What to say |
 |---|---|---|
@@ -15,11 +15,11 @@ Spend the hour on the ladder and the gate. Reported interview questions flag eva
 | 45–52 | Bounds | What the agent may change and what only a human may |
 | 52–60 | Adapt live | Re-derive the part the new constraint touches |
 
-The walking skeleton is rungs 1 and 2 plus the trace store. Ship the router, the fallback, dynamic examples, the memory write policy and traces. Add the skill library and its gate in the second increment, once a month of traces exists to evaluate against. Prompt optimisation comes third. Training comes last, if ever.
+The walking skeleton is rungs 1 and 2 plus the trace store. Ship the router, the fallback, dynamic examples, the memory write policy and traces. Add the skill library and its gate in the second increment, once you have a month of traces to evaluate against. Prompt optimisation comes third, and training last, if ever.
 
-Expect a constraint change mid-round. "There is no reliable success signal" removes Reflexion and skill promotion. Adaptation falls back to human-reviewed memories and examples. "Tasks change daily" pushes everything down to rung 1 and rules out training. "Regulators require every behaviour change to be approved" keeps the whole design but makes owner review mandatory at every promotion.
+Expect a constraint change mid-round. "There is no reliable success signal" removes Reflexion and skill promotion, so adaptation falls back to human-reviewed memories and examples. "Tasks change daily" pushes everything down to rung 1 and rules out training. "Regulators require every behaviour change to be approved" keeps the whole design but makes owner review mandatory at every promotion.
 
-These are the relevant Tier 2 probes from the question bank, answered for this design.
+The relevant Tier 2 probes from the question bank, answered for this design:
 
 | Probe | Strong answer |
 |---|---|
@@ -46,7 +46,7 @@ The interviewer's pivot after a good design is "the learning loop costs more tha
 | Do not | Cut the held-out or per-stratum checks to save money, or climb to fine-tuning because evaluation feels expensive |
 | 60-second line | Learning cost is candidate volume times suite size. Dedupe and smoke-test candidates before the full gate, scope suites to the strata a change touches, and keep the prefix cache warm. The metric is learning spend per promotion. |
 
-The four verbs from the cost playbook generate the same answer. Measure, by attributing spend to runtime versus learning and to each candidate. Route, by sending cheap changes through cheap checks and full suites only to survivors. Bound, with a learning budget that blocks new candidates when breached. Cache safely, by reusing baseline results across candidates evaluated against the same baseline version.
+The four verbs from the cost playbook give the same answer. Measure, by attributing spend to runtime versus learning and to each candidate. Route, by sending cheap changes through cheap checks and full suites only to survivors. Bound, with a learning budget that blocks new candidates when breached. Cache safely, by reusing baseline results across candidates evaluated against the same baseline version.
 
 ---
 
@@ -117,12 +117,12 @@ All paths are relative to the repository root unless stated.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Prompt caching — Claude API docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — the cache is a prefix; a change invalidates that level and everything after it
-- [Prompt caching — OpenAI API docs](https://developers.openai.com/api/docs/guides/prompt-caching) — reuse needs an exact prefix match; put variable content last
-- [Reflexion: Language Agents with Verbal Reinforcement Learning (Shinn et al., 2023)](https://arxiv.org/abs/2303.11366) — lessons kept as text in an episodic buffer, no weight updates
-- [Large Language Models Cannot Self-Correct Reasoning Yet (Huang et al., 2023)](https://arxiv.org/abs/2310.01798) — self-correction without external feedback often fails or makes answers worse
-- [Voyager: An Open-Ended Embodied Agent with Large Language Models (Wang et al., 2023)](https://arxiv.org/abs/2305.16291) — skill library of executable code, refined with execution feedback and self-verification
-- [Agent Workflow Memory (Wang et al., 2024)](https://arxiv.org/abs/2409.07429) — reusable workflows induced from agent trajectories
-- [MIPROv2 — DSPy docs](https://dspy.ai/api/optimizers/MIPROv2/) — optimisers that search instructions and few-shot examples against a metric
-- [Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs (Ovadia et al., 2023)](https://arxiv.org/abs/2312.05934) — retrieval beats unsupervised fine-tuning for new knowledge
-- [Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations? (Gekhman et al., 2024)](https://arxiv.org/abs/2405.05904) — new facts are learned slowly through fine-tuning and raise hallucination
+- [Prompt caching (Claude API docs)](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): the cache is a prefix; a change invalidates that level and everything after it
+- [Prompt caching (OpenAI API docs)](https://developers.openai.com/api/docs/guides/prompt-caching): reuse needs an exact prefix match; put variable content last
+- [Reflexion: Language Agents with Verbal Reinforcement Learning (Shinn et al., 2023)](https://arxiv.org/abs/2303.11366): lessons kept as text in an episodic buffer, no weight updates
+- [Large Language Models Cannot Self-Correct Reasoning Yet (Huang et al., 2023)](https://arxiv.org/abs/2310.01798): self-correction without external feedback often fails or makes answers worse
+- [Voyager: An Open-Ended Embodied Agent with Large Language Models (Wang et al., 2023)](https://arxiv.org/abs/2305.16291): skill library of executable code, refined with execution feedback and self-verification
+- [Agent Workflow Memory (Wang et al., 2024)](https://arxiv.org/abs/2409.07429): reusable workflows induced from agent trajectories
+- [MIPROv2 (DSPy docs)](https://dspy.ai/api/optimizers/MIPROv2/): optimisers that search instructions and few-shot examples against a metric
+- [Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs (Ovadia et al., 2023)](https://arxiv.org/abs/2312.05934): retrieval beats unsupervised fine-tuning for new knowledge
+- [Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations? (Gekhman et al., 2024)](https://arxiv.org/abs/2405.05904): new facts are learned slowly through fine-tuning and raise hallucination

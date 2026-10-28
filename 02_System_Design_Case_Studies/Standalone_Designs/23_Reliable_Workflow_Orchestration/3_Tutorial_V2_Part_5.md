@@ -11,22 +11,22 @@
 ### Core Durable Records
 
 - Four records carry the design. Give each a purpose, a key, a lifecycle and a retention rule:
-  - `WorkflowInstance(id, definition_version, state, next_event)` — the single row that owns one business process.
+  - `WorkflowInstance(id, definition_version, state, next_event)`: the single row that owns one business process.
     - Purpose: the one durable record of where the workflow stands and where it will resume.
     - Primary key: `id`.
     - Lifecycle: created at start, changed on each transition, and finally archived or kept as the customer's policy requires.
     - Retention: hold the live row while the workflow runs. Once it finishes, keep a slimmer historical copy if audit or replay needs one.
-  - `HistoryEvent(instance_id, sequence, type, payload_ref)` — an audit trail you only ever add to.
+  - `HistoryEvent(instance_id, sequence, type, payload_ref)`: an audit trail you only ever add to.
     - Purpose: rebuild the exact order of events without leaning on memory or short-lived logs.
     - Primary key: `(instance_id, sequence)`.
     - Lifecycle: new events get appended; past events are never edited.
     - Retention: keep events while debugging, customer audits and replay still need them. After that, policy moves them to cold storage or deletes them.
-  - `ActivityReceipt(idempotency_key, external_ref, status)` — a note of each side effect that has been tried or has finished.
+  - `ActivityReceipt(idempotency_key, external_ref, status)`: a note of each side effect that has been tried or has finished.
     - Purpose: stop a retry from taking payment again, sending a second email or repeating an update.
     - Primary key: `idempotency_key`.
     - Lifecycle: written just before or just after the external effect, depending on how the dependency behaves.
     - Retention: keep it for as long as duplicates must be blocked.
-  - `Timer(instance_id, fire_at)` — a record of each scheduled wake-up.
+  - `Timer(instance_id, fire_at)`: a record of each scheduled wake-up.
     - Purpose: wake a workflow after a long wait, expire an approval, or check whether an outside job has finished.
     - Primary key: `(instance_id, fire_at)`, or whatever key the scheduler uses instead.
     - Lifecycle: insert it when a wait starts and delete it once the wait ends. Insert it again if the workflow is retried.
@@ -35,21 +35,21 @@
 ### API Contracts
 
 - Four API contracts expose the state machine. Each is quick to explain, yet strict enough that no client can slip vague work into the engine:
-  - `POST /v1/workflows/{type}` — begins a new workflow.
+  - `POST /v1/workflows/{type}`: begins a new workflow.
     - Authentication: normal caller authentication, scoped to the tenant or customer.
     - Idempotency: the caller sends an idempotency key, so a retried call never yields a second instance.
     - Request: the workflow type, the business payload, caller context and, if wanted, correlation metadata.
     - Response: the instance id, the starting state and a status reference that does not change.
     - Errors: `400` for a malformed request; `401/403` when auth fails; `409` while a request with that key is still in flight; `422` when the key returns with a different payload, or the inputs make no business sense. This split of 409 and 422 comes from the IETF Idempotency-Key draft, which had expired by Sep 2026: an Internet-Draft, not an RFC.
-  - `POST /v1/workflows/{id}/signals` — accepts input from a person or another system.
+  - `POST /v1/workflows/{id}/signals`: accepts input from a person or another system.
     - Authentication: the caller needs permission to signal this workflow or tenant.
     - Idempotency: a signal id combined with a payload hash, or a caller key, filters out double-clicked approvals and repeated system callbacks.
     - Response: the accepted signal and the transition it caused, or a no-op when that signal has already been applied.
-  - `GET /v1/workflows/{id}/history` — returns the audit trail.
+  - `GET /v1/workflows/{id}/history`: returns the audit trail.
     - Authentication: the caller needs read rights for the workflow's tenant and policy scope.
     - Semantics: it never writes; results come back in pages, sorted by sequence.
     - Errors: `404` when the workflow does not exist; `403` when access policy hides it.
-  - `POST /v1/workflows/{id}/repair` — gives operators, or automation they have approved, a way to resume, replay or compensate.
+  - `POST /v1/workflows/{id}/repair`: gives operators, or automation they have approved, a way to resume, replay or compensate.
     - Authentication: elevated operator authorisation with a narrow scope.
     - Idempotency: each repair action carries its own idempotency token. An operator who clicks twice should not cause twice the side effects.
     - Semantics: the call must state plainly which action it takes: retry a step, compensate a finished step, or resume from a known checkpoint.
@@ -146,7 +146,7 @@ flowchart TD
 - The short snippet leaves out concurrency control, versioning and observability hooks. A real build needs all of them:
   - **Optimistic concurrency**: each `WorkflowInstance` update checks a version number, so two workers cannot both move the same instance forward from stale state. In practice: "update where version = expected_version"; if another worker got there first, retry or abort.
   - **Schema and contract versioning**: `definition_version` on the instance lets old and new definitions run at the same time. An instance in flight stays on the version it began with, unless an explicit migration policy says otherwise.
-  - **Idempotency at every write boundary**: payment is only one case. Repair actions, email sends, CRM updates and approval signals should be just as safe to replay, where that is feasible.
+  - **Idempotency at every write boundary**: payment is only one case. Repair actions, email sends, CRM updates and approval signals should be as safe to replay, where that is feasible.
   - **Observability**: every transition should produce metrics, trace spans and structured logs, tagged with step name, outcome and `instance_id`. The history table is the system of record. Telemetry is there for fast diagnosis.
   - **Policy checks around model output**: an LLM might classify, route or summarise work inside a step. Before that output can change state or fire an external action, it must clear typed validation and policy checks. The model may propose; it must not quietly decide.
 
@@ -197,10 +197,10 @@ async def test_worker_crash_after_payment_does_not_double_charge(orchestrator, f
     assert fake_activities.refund.await_count == 1
 ```
 
-- Together they prove two things. The API contract is idempotent in practice, not only on paper. And the most important drill in this design holds: a failure after a successful payment ends in a refund, and replay never charges twice.
+- Together they prove that the API contract is idempotent in practice, and that the most important drill in this design holds: a failure after a successful payment ends in a refund, and replay never charges twice.
 
 ### Why This Answer Sounds Credible in an Interview
 
 - Weak answer: "We'll add retries, and that makes it reliable."
 - Strong answer: workflow state belongs to the orchestrator. Each side effect carries an idempotency key. Each state transition is versioned. Each replay is driven by history. Compensation is spelled out, never implied.
-- With those parts made concrete, the rest of the system can be explained rather than taken on faith. That gap separates someone who can describe an orchestration system from someone who can build one.
+- With those parts made concrete, the rest of the system can be explained rather than taken on faith.

@@ -1,6 +1,6 @@
-# G15 — Agent Platform for Non-Technical Users: Main Interview Guide
+# G15 Agent Platform for Non-Technical Users: Main Interview Guide
 
-**No-code agent process** is: a support lead draws a workflow — reply, tag, refund — without writing Python. The hard part is a real refund happening **once**, and stopping if the box crashes.
+On a no-code agent platform, a support lead draws a workflow (reply, tag, refund) without writing Python. The hard part is making a real refund happen exactly once and stop safely if the box crashes.
 
 **G15 covers one slice:** events in, versioned spec, guardrails, durable steps. A future LLM may draft a spec; the demo engine is deterministic.
 
@@ -9,11 +9,11 @@ End to end, as Cascade’s “small refunds without a human”:
 1. **Email/Slack becomes a canonical event** with tenant id.
 2. **One live workflow matches**, or we record why none did. Entity lock so two copies don’t double-pay.
 3. **Each step checkpoints.** Arguments must match the schema.
-4. **A $500 refund hits a $50 cap** — refuse, don’t clamp to $50.
+4. **A $500 refund hits a $50 cap.** Refuse it; don’t clamp to $50.
 5. **Approval pause or allow-list.** Then one idempotent write.
 6. **Crash mid-way resumes from the checkpoint**, not from “guess we should refund again.”
 
-That’s it: **event → one spec → guardrail → execute once → recover.** Authors cannot secretly approve their own live refunds.
+The whole flow is event → one spec → guardrail → execute once → recover. Authors cannot secretly approve their own live refunds.
 
 > **Full source:** [Sources and Full Design](../4_Full_Design/G15_Full_Design.md), especially §§1–12 for the anchor and §13 for Cascade Robotics. Use the [Deep Dive](../2_Technical_Deep_Dive/G15_Technical_Deep_Dive.md) for guardrail and recovery mechanics and the [Cheat Sheet](../3_Quick_Review/G15_Quick_Review.md) for rehearsal.
 
@@ -38,11 +38,11 @@ The anchor asks for a multi-tenant platform where non-technical users configure 
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Normalise channels** into a canonical event with tenant id.
 2. **Choose one live workflow** or a named non-selection.
@@ -52,9 +52,9 @@ The easiest way to frame requirements in an interview is:
 6. **Apply per-step guardrails.**
 7. **Promote with role checks** through draft, testing, shadow, live, autonomous.
 
-A **$500 refund** on a **$50 cap** is refused, never clamped. Autonomous status cannot bypass the cap. `issue_refund` needs allow-list or human approval. A retry cannot refund twice.
+A $500 refund on a $50 cap is refused, never clamped. Autonomous status cannot bypass the cap. `issue_refund` needs an allow-list entry or human approval. A retry cannot refund twice.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -62,7 +62,7 @@ A **$500 refund** on a **$50 cap** is refused, never clamped. Autonomous status 
 | **Spend** | Actual-dollar caps; max steps and cost. |
 | **Reliability** | Crash recovery; idempotency under redelivery; one active run per target entity. |
 | **Audit** | Every allow/deny recorded. |
-| **Demo note** | Source demo: 21 tests, no LLM — safety engine behaviour, not a future LLM planner. |
+| **Demo note** | Source demo: 21 tests, no LLM; it shows safety-engine behaviour, not a future LLM planner. |
 
 ### Interview shortcut
 
@@ -72,7 +72,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The runtime is a fixed, versioned step list in the demonstrated system. A future LLM may propose a typed value or a draft workflow spec, but code controls routing, argument schema, policy, approval, execution and resumption. An LLM is not present in the source's runnable demo.
+In the demo, the runtime is a fixed, versioned step list. A future LLM may propose a typed value or a draft workflow spec, but code controls routing, argument schema, policy, approval, execution and resumption. The source's runnable demo has no LLM.
 
 ```mermaid
 flowchart TB
@@ -104,7 +104,7 @@ flowchart TB
 - Routing matches only that tenant's live workflow, chooses highest priority and returns a named reason if none matches; an entity lock prevents concurrent mutations of the same ticket.
 - The orchestrator pins the workflow version and resumes at `next_step_index`, using the same loop for fresh and restarted runs.
 - Before a step runs, it resolves values and validates the tool's typed schema. A model may supply proposed values, but cannot change the spec or tool signature in the demo.
-- An action-level idempotency key is checked **before** authorisation so a replayed side effect is a no-op and is not charged again.
+- An action-level idempotency key is checked before authorisation, so a replayed side effect is a no-op and is not charged again.
 - The guardrail checks the tighter workflow/tenant step and spend caps, shadow/live stage and destructive-tool allow-list or human approval. Deny wins; approval pauses safely.
 - Only an allowed step calls the scoped tool. The orchestrator records the outcome, checkpoints, logs every decision and continues or finishes.
 

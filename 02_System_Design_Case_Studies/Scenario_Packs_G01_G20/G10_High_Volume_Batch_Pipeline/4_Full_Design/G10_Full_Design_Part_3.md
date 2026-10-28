@@ -2,7 +2,7 @@
 
 ## 8. Decide the Failure Policy Before the Run
 
-"We retry" is not a failure policy. A policy answers what to retry, how long, against which snapshot, with what evidence, and who is paged. Every external dependency and every irreversible action needs one.
+A failure policy goes beyond "we retry". It answers what to retry, how long, against which snapshot, with what evidence, and who is paged. Every external dependency and every irreversible action needs one.
 
 | Failure policy | Example triggers |
 |---|---|
@@ -23,15 +23,15 @@ The five drills, each as detection, containment, recovery and prevention:
 | 4. Worker crash after the model call | Lease expiry | Nothing is marked complete until every row is durable | Resume from the immutable snapshot; overwrite identical results or skip finalised rows | Deterministic record keys; complete only after all rows are written |
 | 5. Result sink throttles | Sink latency, queue age | Bounded retries with jitter, then circuit-break the sink and slow intake upstream | Past the retry budget, move partitions to a dead-letter path or durable retry queue and page a human | Escalation policy in the runbook before launch |
 
-The pattern across all five: never push harder against a failing dependency. Slow the arrival rate at the coordinator, preserve evidence before repair, and escalate when the deadline is no longer recoverable. The ownership statement to say in the room:
+Across all five, never push harder against a failing dependency. Slow the arrival rate at the coordinator, preserve evidence before repair, and escalate when the deadline is no longer recoverable. The ownership statement to say in the room:
 
 > *"This design contains blast radius by tenant, region, workflow, and dependency; it retries only within a bounded policy; it preserves evidence before repair; and it escalates when the deadline is no longer recoverable."*
 
 ## 9. Answer the 4 a.m. Question Before It Is Asked
 
-The signature follow-up is that the job is 45% complete at 4 a.m. The forecaster should have flagged it already. The console should answer three questions, not just turn red. Can we still finish by 6:00 a.m.? Which lever do we pull first? What is the blast radius if we keep going?
+The signature follow-up is that the job is 45% complete at 4 a.m. The forecaster should have flagged it already. The console should answer three questions instead of only turning red. Can we still finish by 6:00 a.m.? Which lever do we pull first? What is the blast radius if we keep going?
 
-Find the bottleneck before choosing the lever. It is compute, a hot partition, provider throttling or downstream backpressure. Then choose the smallest intervention that restores schedule confidence. That means raising concurrency if there is headroom, splitting slow partitions, or switching remaining work to a fallback model. Alternatively, publish only the subset that meets the correctness and policy bar. If throttling is temporary, the coordinator reduces concurrency and keeps the run stable. If it is persistent, stop taking new leases, checkpoint everything and page the customer with a recovery plan.
+Find the bottleneck before choosing the lever: compute, a hot partition, provider throttling or downstream backpressure. Then choose the smallest intervention that restores schedule confidence. That means raising concurrency if there is headroom, splitting slow partitions, or switching remaining work to a fallback model. Alternatively, publish only the subset that meets the correctness and policy bar. If throttling is temporary, the coordinator reduces concurrency and keeps the run stable. If it is persistent, stop taking new leases, checkpoint everything and page the customer with a recovery plan.
 
 ```mermaid
 flowchart LR
@@ -68,7 +68,7 @@ The riskiest assumption is that the backlog is evenly distributed and model runt
 
 ## 11. Measure Deadline, Duplicates and Stragglers
 
-"The job finished" is not an evaluation. A batch can finish and still have published duplicates, run twice the budget, or been saved by one operator at 5:50. The scorecard separates throughput, correctness and cost.
+"The job finished" proves little. A batch can finish and still have published duplicates, run twice the budget, or been saved by one operator at 5:50. The scorecard separates throughput, correctness and cost.
 
 | Metric | What it proves | Calculation and source | Strong threshold | Owner |
 |---|---|---|---|---|
@@ -80,13 +80,13 @@ The riskiest assumption is that the backlog is evenly distributed and model runt
 | Retry rate | Failures are transient, not systemic | Retry counters and failure taxonomy | Within the normal band by failure class | On-call |
 | Cost per million records | Unit economics hold under retries and stragglers | Cloud billing plus model usage logs | Inside the approved budget envelope | Finance / platform |
 
-Build the dashboard as a story, not a wall of charts. The headline asks one question: will the batch complete by 6:00 a.m.? It shows the forecast, remaining partitions and the contingency mode. Below it sit the levers that explain the forecast: records/sec, tokens/sec, retry rate, straggler age, queue depth and sink lag. Below those sit correctness signals: duplicates, rejected inputs, checkpoint freshness and replayed partitions. A business user sees whether the run is on track. An operator sees which subsystem is slowing it. An engineer traces a retry spike to a quota cut or a bad input cohort.
+Build the dashboard top-down. The headline asks one question: will the batch complete by 6:00 a.m.? It shows the forecast, remaining partitions and the contingency mode. Below it sit the levers that explain the forecast: records/sec, tokens/sec, retry rate, straggler age, queue depth and sink lag. Below those sit correctness signals: duplicates, rejected inputs, checkpoint freshness and replayed partitions. A business user sees whether the run is on track. An operator sees which subsystem is slowing it. An engineer traces a retry spike to a quota cut or a bad input cohort.
 
 Keep four layers distinct: technical health, model quality from sampled evaluation, adoption by downstream teams, and business outcome.
 
 ## 12. Roll Out Through a Load-Test Ladder
 
-Launch is a sequence of controlled reductions in uncertainty. The customer's question is not "does it work?" but "when can this be trusted in production?"
+Launch is a sequence of controlled reductions in uncertainty. The customer asks "when can this be trusted in production?", a harder question than "does it work?"
 
 | Stage | Gate | Owner |
 |---|---|---|

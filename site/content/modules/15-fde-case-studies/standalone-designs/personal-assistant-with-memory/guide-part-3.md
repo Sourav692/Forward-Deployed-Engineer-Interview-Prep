@@ -37,8 +37,8 @@ The follow-ups, including the study guide's "skeptical staff engineer" prompts:
 | Customer wants it to remember everything forever | Ask for retention and compliance requirements first; unbounded episodic memory is a cost and governance problem, not a free feature |
 | Users report seeing each other's preferences | Audit namespace derivation; the usual cause is a `user_id` from the wrong place |
 | Demo worked with 5 facts, pilot user has 500 | That is the scan becoming visible; add the index and the episode cap |
-| Why not just use a million-token context window? | The context window is working memory; it is wiped each conversation, costs tokens every turn and slows the first token |
-| How would the assistant learn procedures, not just facts? | Workflow memory: abstract repeated successful task sequences into templates, retrieved by structural similarity; it pays off only on repetition |
+| Why not use a million-token context window? | The context window is working memory; it is wiped each conversation, costs tokens every turn and slows the first token |
+| How would the assistant learn procedures as well as facts? | Workflow memory: abstract repeated successful task sequences into templates, retrieved by structural similarity; it pays off only on repetition |
 
 ## 16. Answer the Cost Pivot in Ten Minutes
 
@@ -90,7 +90,7 @@ For this assistant, the levels separate on how far the answer goes past the four
 ## Check Yourself
 
 1. **What four promises hide in "remembers you"?** Hold the conversation, keep preferences, recall past tasks, and keep users apart.
-2. **Why does the 100-episode cap matter for latency, not just storage?** It bounds the index each user's search runs over, which keeps the vector query fast as tenure grows.
+2. **Why does the 100-episode cap matter for latency as well as storage?** It bounds the index each user's search runs over, which keeps the vector query fast as tenure grows.
 3. **Why is summarising every ~15 turns a cost decision?** Each fold is an extra model call; at the assumed 30 turns a day it adds about 7% more calls.
 4. **What key does each scope use?** `thread_id` for the conversation, `session_id` with a TTL for the session, `(semantic, user_id)` plus a stable key for facts, `(episodic, user_id)` plus a fresh key for tasks.
 5. **Why does trimming the prompt not shrink the database?** Trimming filters what the model sees; only an explicit removal or a retention policy deletes stored history.
@@ -106,8 +106,8 @@ For this assistant, the levels separate on how far the answer goes past the four
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [LangGraph `TTLConfig` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint/langgraph/store/base/__init__.py) — `refresh_on_read` gives sliding expiry; `omit_expired` defaults to off; sweeping deletes expired items
-- [LangGraph `SqliteStore` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint-sqlite/langgraph/store/sqlite/base.py) — `get` does not filter expired rows; `sweep_ttl` and `start_ttl_sweeper` delete them
-- [LangGraph `PostgresStore` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint-postgres/langgraph/store/postgres/base.py) — optional `omit_expired` read filter; the sweeper must be started explicitly
-- [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) — the model edits its own memory through function calls
+- [LangGraph `TTLConfig` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint/langgraph/store/base/__init__.py): `refresh_on_read` gives sliding expiry; `omit_expired` defaults to off; sweeping deletes expired items
+- [LangGraph `SqliteStore` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint-sqlite/langgraph/store/sqlite/base.py): `get` does not filter expired rows; `sweep_ttl` and `start_ttl_sweeper` delete them
+- [LangGraph `PostgresStore` source](https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint-postgres/langgraph/store/postgres/base.py): optional `omit_expired` read filter; the sweeper must be started explicitly
+- [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560): the model edits its own memory through function calls
 

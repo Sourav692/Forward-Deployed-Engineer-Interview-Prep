@@ -1,4 +1,4 @@
-# G01 — Enterprise Knowledge Assistant: Cheat Sheet
+# G01 Enterprise Knowledge Assistant: Cheat Sheet
 
 ## Problem
 
@@ -16,13 +16,13 @@ Security loop:
 
 **Source events → ACL + Version + Tombstone → Index → Reconciliation**
 
-**LLM/agent role:** LLM gateway generates from authorised evidence; optional multi-hop planning never decides access. This is a RAG assistant, not an autonomous write agent.
+**LLM/agent role:** LLM gateway generates from authorised evidence; optional multi-hop planning never decides access. It is a RAG assistant and takes no autonomous write actions.
 
 ## Five rules
 
 1. Permission first, retrieval second, generation third.
 2. Unauthorised content never enters the LLM context.
-3. Authorisation is deterministic, not LLM-based.
+3. Deterministic code decides authorisation, never the LLM.
 4. Fail closed on security.
 5. **Leak count = 0** is a release gate.
 
@@ -54,8 +54,6 @@ Missed deletion?
 
 **Tombstone + reconciliation + revalidation**
 
-Remember:
-
 > Authorisation correctness ≠ freshness correctness.
 
 ## RAG quality
@@ -81,7 +79,7 @@ Measure:
 - citation leakage
 - trace leakage
 
-Retrieved content = **data, not instructions**.
+Retrieved content = data, not instructions.
 
 ## Scale numbers
 
@@ -103,7 +101,7 @@ Cache key:
 
 **tenant + permission signature + index version + query**
 
-Never simply:
+Never:
 
 **query → answer**
 
@@ -131,7 +129,7 @@ Databricks AI Search (formerly Vector Search) does not enforce Unity Catalog row
 
 Verify identity propagation, revocation, index restrictions and deletion/ACL SLO.
 
-Bring a **persona × document visibility matrix**.
+Bring a persona × document visibility matrix.
 
 ## Project story
 

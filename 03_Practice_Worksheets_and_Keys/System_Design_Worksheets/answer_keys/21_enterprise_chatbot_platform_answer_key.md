@@ -8,7 +8,7 @@ Use this key after you have tried the worksheet. It walks through the questions,
 - How long do we keep conversations? Who is allowed to read another employee's history, and through which legal process?
 - May any employee publish an assistant, or does each one go through a review before it is published?
 - Is corporate SSO the only identity source? Do residency rules or works councils limit the usage telemetry we can collect?
-- What exactly stops us licensing the enterprise tier from a vendor? Everything about build versus buy turns on that.
+- What stops us licensing the enterprise tier from a vendor? Everything about build versus buy turns on that.
 - How much traffic goes to consumer AI tools today, measured? Is that number already sitting in the proxy logs?
 - How quickly does the free tool on employees' phones show its first token? That is the speed we compete with.
 
@@ -23,7 +23,7 @@ Use this key after you have tried the worksheet. It walks through the questions,
 ## Strong non-functional requirements
 - Latency: time-to-first-token is the SLO that drives adoption. I'd hold p95 below 1.0s and keep p99 below 2.0s. Past about a second, people start to feel the wait. Next to the free tool, a four-second spinner would look broken.
 - Availability: the case puts daily volume near 576,000 turns. Squeeze them into a ten-hour working day and you get 40 turns per second; the morning rush runs at 2.5x, with roughly 800 streams open at once.
-- Security: each isolation layer fails closed. In this system, failing open is the same thing as leaking.
+- Security: each isolation layer fails closed. Here, failing open means leaking.
 - Compliance: retention is a named policy class that supports legal hold. The audit must cover 100% of the turns we serve.
 - Reliability: the message a user typed must never be lost. When the main model is in trouble, fall back to a smaller model and label it, instead of showing an error page.
 - Cost: if every turn resends the whole history, each turn's input grows linearly and the conversation's total grows quadratically. So keep the head pinned, summarise the middle, and design a stable, cacheable prefix from the start.
@@ -33,21 +33,21 @@ Use this key after you have tried the worksheet. It walks through the questions,
 - At the edge, a gateway validates each SSO token and shapes the traffic. Conversation state belongs to the conversation service, which authorises the caller on every turn.
 - At the centre of the design sits the context assembler, where permissions, cost, safety and quality all meet. It builds context from the identity of the human asking, and ignores whatever the client claims.
 - Retrieval and the connectors fetch candidates already filtered by the caller's current permissions. If the ACL resolver is down, the chunk is dropped; access never widens.
-- Inputs pass through policy and DLP classification before anything is dispatched. They scan the streamed output through a sliding window whose overlap is at least as long as the longest pattern. A known pattern split across a boundary therefore still gets caught.
+- Inputs pass through policy and DLP classification before anything is dispatched. The same layer scans the streamed output through a sliding window whose overlap is at least as long as the longest pattern, so a known pattern split across a boundary still gets caught.
 - The model router picks the provider, deployment and model from the data class, cost and health, and data class always beats cost. Provider adapters hide vendor differences and take care of retries.
 - The streaming relay keeps long-lived connections open and deals with aborts mid-stream. When a client disconnects, it cancels the upstream stream, so we stop paying for tokens nobody will read, at least on providers that honour cancellation. Some do not.
 - The assistant registry controls definitions and scopes. Usage and quota metering counts tokens. An append-only audit pipeline records each turn, admin reads included.
 
 ## Data model / integration assumptions
 - Conversation(id, workspace_id, owner_id, assistant_id, retention_class, legal_hold); Message(id, conversation_id, parent_id, role, content_ref, citations, token_count, model_id, status); Assistant(id, author_id, instructions, tool_bindings, data_scopes, visibility, version, review_state); Attachment(id, uploader_id, scan_status, extract_ref); AuditEvent(event_id, actor_id, action, resource_ref, decision, reason).
-- Messages form a tree rather than a list. `parent_id` is the field that lets a user regenerate an answer or branch the conversation.
+- Messages form a tree rather than a list. `parent_id` lets a user regenerate an answer or branch the conversation.
 - `status` has four values: complete, blocked, failed and partial. A stream that dies at 80% fits none of the first three.
 - `retention_class` holds a named policy, not a raw number. Years later, legal can still say which policy applied.
-- `scan_status` decides whether an attachment may enter the context window. If the scan fails, we treat the file as untrusted, not just as missing.
+- `scan_status` decides whether an attachment may enter the context window. If the scan fails, we treat the file as untrusted, not merely as missing.
 
 ## Red-team risks
 - assistants with too much scope laundering access, ACLs left stale after a revocation, prompt injection through documents, the head of the prompt truncated without notice, scripted accounts running away with usage
-- The permission laundromat: an employee with wide access publishes an assistant to the whole company. Its data scope must therefore be intersected with each viewer's own permissions.
+- The permission laundromat: an employee with wide access publishes an assistant to the whole company. So intersect its data scope with each viewer's own permissions.
 - A revocation happens, but a cached permission lives on. The employee then sees a document they can no longer open, through a stale ACL.
 - A document someone uploads, or one retrieval pulls in, contains an indirect prompt injection. It must have no authority over policy or tool calls.
 - On a long conversation, a naive drop-from-front strategy cuts off the system prompt. The assistant's behaviour changes and nobody can see why.
@@ -67,7 +67,7 @@ I picked these thresholds for this case. They are not industry standards, so be 
 
 | Metric | What it proves | Strong threshold | Dataset / method |
 |---|---|---|---|
-| Consumer-AI egress volume | The risk that paid for the project is really going down | Roughly 80% lower after two quarters | Network proxy logs compared with the baseline taken before launch |
+| Consumer-AI egress volume | The risk that paid for the project is going down | Roughly 80% lower after two quarters | Network proxy logs compared with the baseline taken before launch |
 | Weekly active over eligible | Adoption is how safety shows up, not a vanity figure | 50% or more of eligible employees | Product telemetry, split by department |
 | Permission-boundary violations | Isolation holds up under real traffic | Zero; a single case is an incident, not a trend to watch | Contract tests and a review of the production audit |
 | Audit completeness | Legal can defend every turn | Every turn served, 100%, has a record | Recorded turns as a share of turns served |
@@ -78,10 +78,10 @@ I picked these thresholds for this case. They are not industry standards, so be 
 I'd stand up a React frontend over a vector database and an LLM gateway, and staff could then talk to company data. It falls short because it describes a product but not why the product exists. The shadow-AI egress, the reason the budget exists, goes unmentioned. It also never filters retrieval by what the employee asking is allowed to see.
 
 ## Average answer
-I'd put a commercial model behind SSO with a chat UI on top, retrieve from internal documents through a permission filter, log every conversation and apply retention policies. That is better, but gaps remain. It authorises only when the session starts, not on each turn. Shared assistants get no rule for intersecting scopes. And it treats adoption as optional, when adoption is in fact the safety outcome.
+I'd put a commercial model behind SSO with a chat UI on top, retrieve from internal documents through a permission filter, log every conversation and apply retention policies. That is better, but it authorises only when the session starts, not on each turn. Shared assistants get no rule for intersecting scopes. It treats adoption as optional, when adoption is the safety outcome.
 
 ## Strong answer
-I'd set the goal as moving AI use off consumer tools nobody governs and onto a platform we do govern, while keeping the usefulness that drew people to those tools. That creates two bars that pull against each other. Data leaves our boundary only under an agreement we control. And time-to-first-token stays near what employees already get for free. My coherence rule: identity is fixed at the session and checked again each turn, and nothing reaches the context window unless policy passed it and audit recorded it. Permissions always come from the human asking. An assistant can reach only the overlap of its own scope and the viewer's. Each layer fails closed, since failing open here means a leak. I'd call it a success when shadow-AI traffic is displaced and weekly active use climbs.
+I'd set the goal as moving AI use off consumer tools nobody governs and onto a platform we do govern, while keeping the usefulness that drew people to those tools. That creates two bars that pull against each other. Data leaves our boundary only under an agreement we control. Time-to-first-token stays near what employees already get for free. My coherence rule: identity is fixed at the session and checked again each turn, and nothing reaches the context window unless policy passed it and audit recorded it. Permissions always come from the human asking. An assistant can reach only the overlap of its own scope and the viewer's. Each layer fails closed, since failing open here means a leak. I'd call it a success when shadow-AI traffic is displaced and weekly active use climbs.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
@@ -96,4 +96,4 @@ I'd set the goal as moving AI use off consumer tools nobody governs and onto a p
 | Communication | Purely technical | Clear, but generic | Tells the board, the department and on-call their stories from one set of telemetry |
 
 ## Final 2-minute spoken answer
-I wouldn't open with the model. On paper, 40,000 employees want "build us our own ChatGPT". The real driver, though, is the egress report: company data is already being pasted into consumer AI tools by 6,400 staff. So the business goal is to bring that usage onto a platform we govern, without losing what made the consumer tools appealing. That sets two bars, and they pull against each other. Data leaves our boundary only under an agreement we control. And the first token has to arrive about as fast as it does on the free app in their pocket. It also hands us a rare thing, a success metric whose baseline we already measure. My proposed target: within two quarters, measured consumer-AI egress falls by 80% and weekly active use reaches 50%. Locking everything down won't get us there, and neither will shipping without governance. For the architecture, I'd state the coherence rule before any diagram. Identity is set at the session and checked again on each turn. Nothing enters the context window unless it has passed policy and been written to the audit. The context assembler sits at the centre, where permissions, cost, safety and quality meet. Permissions always come from the human asking. A published assistant can therefore reach only the overlap of its own scope and the viewer's, and that stops one privileged person laundering their access to everyone. Retrieval resolves ACLs at query time. If the resolver is down, the chunk is dropped. Every layer fails closed, because here failing open means leaking. The order of release is general chat, grounding, attachments and finally assistants, so each phase brings in just one new class of risk.
+I wouldn't open with the model. On paper, 40,000 employees want "build us our own ChatGPT". The real driver, though, is the egress report: 6,400 staff already paste company data into consumer AI tools. So the business goal is to bring that usage onto a platform we govern, without losing what made the consumer tools appealing. That sets two bars, and they pull against each other. Data leaves our boundary only under an agreement we control. The first token has to arrive about as fast as it does on the free app in their pocket. It also hands us a rare thing, a success metric whose baseline we already measure. My proposed target: within two quarters, measured consumer-AI egress falls by 80% and weekly active use reaches 50%. Locking everything down won't get us there, and neither will shipping without governance. For the architecture, I'd state the coherence rule before any diagram. Identity is set at the session and checked again on each turn. Nothing enters the context window unless it has passed policy and been written to the audit. The context assembler sits at the centre, where permissions, cost, safety and quality meet. Permissions always come from the human asking. A published assistant can therefore reach only the overlap of its own scope and the viewer's, and that stops one privileged person laundering their access to everyone. Retrieval resolves ACLs at query time. If the resolver is down, the chunk is dropped. Every layer fails closed, because here failing open means leaking. The order of release is general chat, grounding, attachments and finally assistants, so each phase brings in only one new class of risk.

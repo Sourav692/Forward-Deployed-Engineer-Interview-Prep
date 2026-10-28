@@ -4,7 +4,7 @@
 
 ◷ 24 min
 
-These four prompts are one pipeline asked four ways, not four different systems. Each question fixes a different constraint, and that constraint changes exactly one stage: data, SFT, post-training, evaluation or deployment. This page consolidates the group's prompts into one read for the day before.
+These four prompts ask about one pipeline in four ways. Each question fixes a different constraint, and that constraint changes exactly one stage: data, SFT, post-training, evaluation or deployment. This page puts the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -30,7 +30,7 @@ A model cannot be trained toward a target nobody wrote down. "Solves math proble
 | Who uses it, and what does failure cost? | A tutor that is wrong teaches students wrong; a research assistant that is wrong wastes an hour |
 | Build from a base model, or adapt an existing chat model? | Sets whether pretraining is in scope or only post-training |
 
-The decomposition round rewards this move explicitly. The question bank's own framework starts with "Clarify the mission" and warns that the most common failure is jumping to architecture before scope. Say the assumptions aloud if the interviewer does not answer. A safe default is grade-school to competition word problems, final numeric answers, an optional code tool, and adaptation of an open base model.
+The decomposition round rewards this move. The question bank's own framework starts with "Clarify the mission" and warns that the most common failure is jumping to architecture before scope. Say the assumptions aloud if the interviewer does not answer. A safe default is grade-school to competition word problems, final numeric answers, an optional code tool, and adaptation of an open base model.
 
 > *"Before I pick a method I want the target pinned: which level of math, whether a final answer is enough or the working must be right too, and whether the model may call a tool. Those three answers decide the data, the reward and the eval."*
 
@@ -65,7 +65,7 @@ Every must-have then needs an owner in the pipeline.
 
 ## 3. Size the Run Before Naming a Method
 
-Arithmetic decides which methods are even on the table. The standard approximation for training compute is about 6 × parameters × training tokens in FLOPs. Generation costs about 2 × parameters per generated token. Both are rules of thumb, good enough for a whiteboard and not for a purchase order.
+Arithmetic decides which methods are on the table. The standard approximation for training compute is about 6 × parameters × training tokens in FLOPs. Generation costs about 2 × parameters per generated token. Both are rules of thumb, good enough for a whiteboard and not for a purchase order.
 
 Run the numbers on the math model *(all figures are assumptions, arithmetic is exact)*.
 
@@ -76,13 +76,13 @@ Run the numbers on the math model *(all figures are assumptions, arithmetic is e
 | Post-training rollouts | 50K prompts × 8 samples × 1,000 tokens = 4e8 generated tokens | 2 × 7e9 × 4e8 = 5.6e18 FLOPs to generate |
 | Post-training updates | Training on those 4e8 tokens | 6 × 7e9 × 4e8 = 1.68e19 FLOPs |
 
-The lesson is in the ratio. SFT is cheap. With these assumed workloads, post-training with sampled rollouts costs roughly ten times more, and generation runs well below peak throughput because it is memory-bound. So the compute budget belongs to post-training and to evaluation, not to the supervised stage.
+SFT is cheap. With these assumed workloads, post-training with sampled rollouts costs roughly ten times more, and generation runs well below peak throughput because it is memory-bound. So the compute budget belongs to post-training and to evaluation, not to the supervised stage.
 
 Memory decides the hardware shape. A full fine-tune with the Adam optimiser in mixed precision needs roughly 16 bytes per parameter for weights, gradients and optimiser state. That is about 112 GB for a 7B model *(assumption: the rule of thumb, before activations)*. It does not fit on one 80 GB card. Either shard the optimiser state across GPUs or train a small adapter instead of the full weights. Section 9 returns to both.
 
 ## 4. Draw the Architecture End to End
 
-The pipeline is a loop, not a line. Data flows forward through training stages. Evaluation results flow backward into the next data mix. The organising rule is that no checkpoint moves forward without passing the eval gate *(own construction for every diagram in this section)*.
+The pipeline is a loop. Data flows forward through training stages, and evaluation results flow backward into the next data mix. No checkpoint moves forward without passing the eval gate *(own construction for every diagram in this section)*.
 
 ```
  ╔═══════════════════════ CONTROL PLANE (changes are experiments) ═══════════════════════╗
@@ -166,11 +166,11 @@ flowchart LR
 
 ## 5. Collect Data That Can Be Checked, Not Just Read
 
-Math has a rare advantage: most final answers can be verified by a program. Build the data pipeline around that advantage. A problem whose answer cannot be checked is worth less than one that can, because nothing downstream can tell whether training on it helped.
+In math, a program can verify most final answers, which few domains allow. Build the data pipeline around that. A problem whose answer cannot be checked is worth less than one that can, because nothing downstream can tell whether training on it helped.
 
-Draw from four sources *(own construction)*. Public problem sets with known answers. Licensed or customer-owned material. Human-written problems from domain experts for the hard tail. Synthetic problems and solutions generated by a stronger model, kept only when the final answer passes verification. Rejection sampling is the name for that last filter. Generate many solutions, keep the ones whose answer checks out, discard the rest.
+Draw from four sources *(own construction)*. Public problem sets with known answers. Licensed or customer-owned material. Human-written problems from domain experts for the hard tail. Synthetic problems and solutions generated by a stronger model, kept only when the final answer passes verification. That last filter is rejection sampling: generate many solutions, keep the ones whose answer checks out, discard the rest.
 
-The Foundations labs show the mechanical half of this stage. They contrast a pretraining corpus with a company fine-tuning dataset. They format examples as question-answer pairs with a prompt template, store them as JSONL, tokenise with padding and truncation, and split into train and test. That is the plumbing. The judgement is in what the Cracking book's learning chapter calls the three gates of the data flywheel.
+The Foundations labs show the mechanical half of this stage. They contrast a pretraining corpus with a company fine-tuning dataset. They format examples as question-answer pairs with a prompt template, store them as JSONL, tokenise with padding and truncation, and split into train and test. That is the plumbing. The judgement lies in what the Cracking book's learning chapter calls the three gates of the data flywheel.
 
 Deduplicate first. In the book's worked example, 140,000 traces turned out to be only about 9,000 distinct requests after dedup. Split by time and by source, never at random, because a random split puts near-twins on both sides. Route low-agreement, high-impact examples to human adjudication, because an automatic label is not the same as a correct one. Ship a datasheet with every dataset: collection window, filters, dedup method, split strategy, label source and known biases.
 
@@ -180,6 +180,6 @@ SFT teaches the model what a good answer looks like, not how to find one it has 
 
 The Foundations labs make the contrast concrete. They compare a base model with an instruction-tuned one on the same prompt. The base model continues the text; the tuned one answers the question. They then train a small model, `pythia-70m`, for a handful of steps and compare it with the same model trained longer and with a larger model. In those labs, more training on the same data changed the style of the answer long before it changed whether the answer was right.
 
-Three rules follow *(own construction)*. Keep SFT short, because a model that over-fits the worked solutions reproduces their exact wording and loses flexibility. Mix general instruction data in, so the model does not forget how to follow ordinary requests. Include examples that decline an ill-posed problem, or the model will never learn that "this has no unique answer" is a legal output.
+Three rules follow *(own construction)*. Keep SFT short: a model that over-fits the worked solutions reproduces their exact wording and loses flexibility. Mix in general instruction data so the model does not forget how to follow ordinary requests. Include examples that decline an ill-posed problem, or the model will never learn that "this has no unique answer" is a legal output.
 
 Parameter-efficient fine-tuning is the default for iteration. An adapter method such as LoRA trains a small set of added weights and leaves the base model frozen. QLoRA does the same on a base model loaded at 4-bit precision. A typical Llama 2 AutoTrain run uses `--use_peft` and `--use_int4` (current AutoTrain calls them `--peft` and `--quantization int4`) to fit a 7B model on modest hardware. Use adapters for fast experiments. Move to a full fine-tune only when an adapter demonstrably plateaus below the target.

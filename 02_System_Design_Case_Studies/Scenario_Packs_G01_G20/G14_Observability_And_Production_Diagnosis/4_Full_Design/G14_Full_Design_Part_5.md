@@ -12,7 +12,7 @@ Every level traces the request; the level shows in what the answer refuses to co
 
 ## Key Takeaways
 
-- "Slow and sometimes wrong" is three problems, latency, correctness and diagnosability, and each is made measurable before any design.
+- "Slow and sometimes wrong" is three problems (latency, correctness and diagnosability), and each is made measurable before any design.
 - The first design decision is the no-capture list: full prompts, raw documents, secrets and unbounded labels stay out by default.
 - Requirements are stated so a test can fail them, with the support workflow as the functional core and overhead as a budget.
 - Telemetry cost is set by collection policy; the worked sizing shows storage is small and the classifier is the real constraint.
@@ -63,16 +63,16 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Grafana Tempo docs: Manage trace ingestion](https://grafana.com/docs/tempo/latest/operations/manage-trace-ingestion/) — typical span size (~500 bytes) behind the storage sizing
-- [RFC 2104: HMAC, section 3 Keys](https://www.rfc-editor.org/rfc/rfc2104) — HMAC security rests on a secret key, not a salt
-- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations) — GPT-4-class list prices used to check the $2.74 figure
-- [Ovadia et al. 2023, Fine-Tuning or Retrieval? (arXiv 2312.05934)](https://arxiv.org/abs/2312.05934) — fine-tuning is a weak way to add knowledge compared with retrieval
-- [Kwon et al. 2023, Efficient Memory Management for LLM Serving with PagedAttention](https://arxiv.org/abs/2309.06180) — continuous batching and KV-cache limits
-- [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html) — batch size, preemption and chunked prefill trade-offs
-- [GDPR (Regulation 2016/679), Recital 26](https://eur-lex.europa.eu/eli/reg/2016/679/oj) — pseudonymised data is still personal data
-- [EDPB Guidelines 01/2025 on Pseudonymisation](https://www.edpb.europa.eu/system/files/2025-01/edpb_guidelines_202501_pseudonymisation_en.pdf) — keyed hashes as pseudonymisation, not anonymisation
-- [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/) — deletion requests reach linked fingerprints
-- [Claude docs: Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — exact prefix match; timestamps, unsorted JSON, tool changes and model swaps break the cache
-- [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching) — exact prefix match and minimum cacheable length
-- [OpenRouter help: Which providers stop billing when a stream is cancelled](https://openrouter.zendesk.com/hc/en-us/articles/51691588409883-How-do-I-cancel-a-streaming-request-and-which-providers-stop-billing-when-I-do) — cancelling a stream stops billing only on some providers
-- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/) — self-hosted engines abort generation on client disconnect
+- [Grafana Tempo docs: Manage trace ingestion](https://grafana.com/docs/tempo/latest/operations/manage-trace-ingestion/): typical span size (~500 bytes) behind the storage sizing
+- [RFC 2104: HMAC, section 3 Keys](https://www.rfc-editor.org/rfc/rfc2104): HMAC security rests on a secret key, not a salt
+- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations): GPT-4-class list prices used to check the $2.74 figure
+- [Ovadia et al. 2023, Fine-Tuning or Retrieval? (arXiv 2312.05934)](https://arxiv.org/abs/2312.05934): fine-tuning is a weak way to add knowledge compared with retrieval
+- [Kwon et al. 2023, Efficient Memory Management for LLM Serving with PagedAttention](https://arxiv.org/abs/2309.06180): continuous batching and KV-cache limits
+- [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html): batch size, preemption and chunked prefill trade-offs
+- [GDPR (Regulation 2016/679), Recital 26](https://eur-lex.europa.eu/eli/reg/2016/679/oj): pseudonymised data is still personal data
+- [EDPB Guidelines 01/2025 on Pseudonymisation](https://www.edpb.europa.eu/system/files/2025-01/edpb_guidelines_202501_pseudonymisation_en.pdf): keyed hashes as pseudonymisation, not anonymisation
+- [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/): deletion requests reach linked fingerprints
+- [Claude docs: Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): exact prefix match; timestamps, unsorted JSON, tool changes and model swaps break the cache
+- [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching): exact prefix match and minimum cacheable length
+- [OpenRouter help: Which providers stop billing when a stream is cancelled](https://openrouter.zendesk.com/hc/en-us/articles/51691588409883-How-do-I-cancel-a-streaming-request-and-which-providers-stop-billing-when-I-do): cancelling a stream stops billing only on some providers
+- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/): self-hosted engines abort generation on client disconnect

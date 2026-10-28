@@ -2,7 +2,7 @@
 
 *Extraction is cheap and judgement is expensive, and the copilot must never let the cheap step stand in for the expensive one.*
 
-The three personas in this group look like three products: a prior-authorisation assistant, a compliance reviewer, a contract copilot. They are one system with one spine. A document comes in. Structure is extracted and compared against a policy, a playbook or clinical criteria. Gaps are flagged, risk is classified, and material cases go to a human who decides. This page consolidates the group's prompts into one read for the day before. The answer keys are templated. So the argument here is built from their workflows, records, risks and rollout, plus the vendor's prior-authorisation case. Anything constructed for this page rather than taken from a source is labelled as such.
+The three personas in this group look like three products: a prior-authorisation assistant, a compliance reviewer, a contract copilot. They are one system with one spine. A document comes in. The system extracts its structure and compares it against a policy, a playbook or clinical criteria. It flags gaps, classifies risk, and sends material cases to a human who decides. This page combines the group's prompts into one read for the day before. The answer keys are templated, so this page builds its argument from their workflows, records, risks and rollout, plus the vendor's prior-authorisation case. Anything this page constructs rather than takes from a source is labelled.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -19,13 +19,13 @@ The three personas in this group look like three products: a prior-authorisation
 
 ## 1. Frame the Copilot as a Drafter, Never a Decider
 
-Open by saying what the system is not. It does not make the clinical decision, the compliance ruling or the legal call. It gathers evidence, maps it to the governing rule, writes the draft and explains the risk. A named human approves. That is the whole design. Every component below exists to keep the cheap step from being mistaken for the expensive one.
+Open by saying what the system is not. It does not make the clinical decision, the compliance ruling or the legal call. It gathers evidence, maps it to the governing rule, writes the draft and explains the risk. A named human approves. Every component below keeps the cheap step from passing for the expensive one.
 
 > *"I would design this as a permission-aware prior-authorisation drafting system, not a clinical decision-maker. Every generated claim must point back to a source note, code, lab result, or payer rule. If evidence is missing, stale, or conflicting, the assistant should not invent language. It should flag the gap and route the case to a clinician."*
 
-The three answer tiers from the answer keys show what that framing buys. The weak answer connects the documents to a vector database and lets an LLM answer, maybe behind a chatbot UI. It ignores the workflow, the permission boundary, source freshness, evaluation, human approval and monitoring. The average answer builds RAG with citations and tests it on sample questions. It never separates low-risk assistance from high-risk actions. It never defines the data model or the rollout gates. The strong answer maps the workflow and the risk boundary first. It ingests approved sources with metadata, freshness and ACLs. It filters by permission before generation. It cites every claim, exposes uncertainty and missing evidence, and routes risky actions to approval. It proves all of that with golden cases, permission red-team tests, groundedness and citation metrics, and latency and cost budgets. The rollout is staged: offline prototype, shadow mode, read-only pilot, approved write-back.
+The answer keys grade three tiers of answer. The weak answer connects the documents to a vector database and lets an LLM answer, maybe behind a chatbot UI. It ignores the workflow, the permission boundary, source freshness, evaluation, human approval and monitoring. The average answer builds RAG with citations and tests it on sample questions. It never separates low-risk assistance from high-risk actions. It never defines the data model or the rollout gates. The strong answer maps the workflow and the risk boundary first. It ingests approved sources with metadata, freshness and ACLs. It filters by permission before generation. It cites every claim, exposes uncertainty and missing evidence, and routes risky actions to approval. It proves all of that with golden cases, permission red-team tests, groundedness and citation metrics, and latency and cost budgets. The rollout is staged: offline prototype, shadow mode, read-only pilot, approved write-back.
 
-Ask the discovery questions the answer keys share. Add the vendor case's domain ones. Each answer decides a component.
+Ask the discovery questions the answer keys share, plus the vendor case's domain questions. Each answer decides a component.
 
 | Question to ask | What the answer decides |
 |---|---|
@@ -41,7 +41,7 @@ Ask the discovery questions the answer keys share. Add the vendor case's domain 
 | How should the system behave when clinical notes conflict with payer rules? | The conflict policy: surface, prefer the approved current source, escalate |
 | Which PHI fields are necessary, and what is excluded from prompts and logs? | Data minimisation and the log redaction rules |
 
-Map the people. Each notices a different failure first. The vendor case names four for prior authorisation. The other two personas have their equivalents.
+Map the people: each notices a different failure first. The vendor case names four users for prior authorisation, and the other two personas have equivalents.
 
 | User | Workflow | Failure they notice first | What the copilot gives them | Approval role |
 |---|---|---|---|---|
@@ -50,13 +50,13 @@ Map the people. Each notices a different failure first. The vendor case names fo
 | Revenue-cycle, surveillance or legal-ops manager | Tracks denial patterns, false-positive burden, turnaround | A tool that adds review time without improving first-pass rate | Dashboards separating operational from safety metrics | Approves rollout stages |
 | Compliance or privacy officer | Reviews audit logs, access controls, PHI handling | A record accessed without a reason, or PHI in a log | Immutable audit of evidence IDs, policy versions, edits and approvals; least-privilege access | Any violation blocks release |
 
-Scope out loud before drawing. One document type, one policy source, draft-only. Internal drafts, not external submission. Human approval on every material case. Two assumptions are worth stating if withheld. The assistant is administrative drafting, and the professional judgement stays with the reviewer. A source that lacks ACL metadata is excluded from production retrieval until it is mapped.
+Scope out loud before drawing: one document type, one policy source, internal drafts only with no external submission, and human approval on every material case. If the interviewer withholds them, state two assumptions. The assistant does administrative drafting, and professional judgement stays with the reviewer. A source that lacks ACL metadata stays out of production retrieval until it is mapped.
 
 ## 2. State Requirements as Testable Constraints
 
 A requirement the reviewer cannot test is a preference. Say so. "Catch the risky ones" is a preference. "Recall above the agreed bar on severe violations, with the false-positive burden below the analyst's budget" is a constraint. Only the second one changes the architecture. Split the functional list with MoSCoW. The launch gate is then the smallest set that keeps the promise.
 
-The must-haves are five. Each is a test. Retrieve the governing rule for the case. That is the payer-policy version by payer, plan, procedure, diagnosis and date of service, the regulatory obligation by jurisdiction and product, or the playbook position by clause type. Extract the relevant evidence or clauses from the document and the records, mapped to that rule. Generate a draft with a citation to the exact source span for every claim, and never invent language where evidence is missing. Identify missing evidence, outdated or conflicting documentation and rule gaps, and route ambiguous or high-risk cases to the named human. Keep a complete audit trail of retrieved rules, generated text, reviewer actions and final state.
+There are five must-haves, and each is a test. Retrieve the governing rule for the case. That is the payer-policy version by payer, plan, procedure, diagnosis and date of service, the regulatory obligation by jurisdiction and product, or the playbook position by clause type. Extract the relevant evidence or clauses from the document and the records, mapped to that rule. Generate a draft with a citation to the exact source span for every claim, and never invent language where evidence is missing. Identify missing evidence, outdated or conflicting documentation and rule gaps, and route ambiguous or high-risk cases to the named human. Keep a complete audit trail of retrieved rules, generated text, reviewer actions and final state.
 
 The should-haves belong in the first usable version. Produce a denial-risk, deviation-risk or violation-risk explanation before the case leaves the system. Let the reviewer edit, approve, reject or override the draft in place. Show confidence, missing evidence and the escalation reason whenever the system is uncertain. Collect reviewer corrections for evaluation, never for model training without governance. Provide admin controls for source inclusion, document freshness, policy rules, blocked actions and audit export. Version every rule source so a decision is judged against the rule in force at the time of the request. Autonomous submission, fine-tuning, cross-tenant review and external communication can wait, and most of them should never arrive.
 
@@ -79,7 +79,7 @@ The non-functional requirements are the operating constraints, each stated so a 
 | Audit and compliance | Immutable log of queries, retrieved evidence IDs, policy versions, model and prompt version, policy decisions, reviewer edits, approvals and final output, with full evidence traceability for every generated statement |
 | Reliability | Fail closed on permission uncertainty, stale rules, missing citations and any high-risk write action. Degrade on retrieval quality. Low hallucination tolerance for clinical, payer or policy claims |
 
-Every must-have then needs an owner in the architecture. This table is the proof.
+Every must-have needs an owner in the architecture. This table maps each one.
 
 | Requirement | Primary component(s) |
 |---|---|

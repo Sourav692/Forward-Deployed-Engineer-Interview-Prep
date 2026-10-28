@@ -1,6 +1,6 @@
-# G05 — Sales Copilot: Cheat Sheet
+# G05 Sales Copilot: Cheat Sheet
 
-Use the [Main guide](../1_Interview_Guide/G05_Interview_Guide.md) to practice speaking and the [Deep Dive](../2_Technical_Deep_Dive/G05_Technical_Deep_Dive.md) for mechanisms. The [source](../4_Full_Design/G05_Full_Design.md) is the full reference.
+Use the [Main guide](../1_Interview_Guide/G05_Interview_Guide.md) to practise speaking and the [Deep Dive](../2_Technical_Deep_Dive/G05_Technical_Deep_Dive.md) for mechanisms. The [source](../4_Full_Design/G05_Full_Design.md) is the full reference.
 
 ## One sentence
 
@@ -26,16 +26,16 @@ Workflow and decision? Who uses/reviews? Which tasks read/draft/write? Which sou
 
 ## Rules
 
-1. Snapshot is a materialized view, not an authorisation decision; recheck after territory change.
+1. A snapshot is a materialised view and never authorises access; recheck after territory change.
 2. CRM org-wide defaults, owner, role hierarchy, territory, sharing rules, and field masks all matter.
 3. Structured counts and ID lookups use reviewed CRM operations, not vector similarity.
 4. Opportunity risk comes from fetched fields and interactions, not model memory.
-5. External claims require approved playbook/policy evidence; verifier **blocks**.
+5. External claims require approved playbook/policy evidence; the verifier blocks.
 6. Permission uncertainty and approval failures close the path.
 
 ## Source targets
 
-Interactive **3–8 s**. Example gates: ≥90% grounded claims, ≥95% citations, ≥80% task completion, ≥95% high-risk escalation, **zero permission violations and zero critical unsupported external claims**.
+Interactive 3–8 s. Example gates: ≥90% grounded claims, ≥95% citations, ≥80% task completion, ≥95% high-risk escalation, zero permission violations and zero critical unsupported external claims.
 
 ## Failure card
 
@@ -51,7 +51,7 @@ One connector + territory matrix → offline golden set → shadow → read-only
 
 ## Regression card
 
-Aggregate **96.7%/120** concealed regulated claims **83.3%/6**. Online unsupported claims **8.7% vs 1.2%** after model upgrade and warn-only verifier. Roll back route, restore block, add claim-level critical gates.
+Aggregate 96.7%/120 hid regulated claims at 83.3%/6. Online unsupported claims hit 8.7% vs 1.2% after model upgrade and warn-only verifier. Roll back route, restore block, add claim-level critical gates.
 
 ## Interview close
 

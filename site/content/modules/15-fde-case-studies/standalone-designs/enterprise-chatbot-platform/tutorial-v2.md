@@ -1,4 +1,4 @@
-# Enterprise Chatbot Platform — "Our Own ChatGPT"
+# Enterprise Chatbot Platform: "Our Own ChatGPT"
 
 ---
 
@@ -47,22 +47,22 @@
   - [Four endpoints](#four-endpoints)
   - [The riskiest component: the turn handler](#the-riskiest-component-the-turn-handler)
   - [The lines that carry the design](#the-lines-that-carry-the-design)
-  - [Idempotency, versioning, concurrency — three places, three reasons](#idempotency-versioning-concurrency--three-places-three-reasons)
+  - [Idempotency, versioning, concurrency: three places, three reasons](#idempotency-versioning-concurrency-three-places-three-reasons)
   - [Failures the whiteboard sketch omits](#failures-the-whiteboard-sketch-omits)
   - [Two tests that carry disproportionate weight](#two-tests-that-carry-disproportionate-weight)
 - [6. Security, Reliability, Failure Handling](#6-security-reliability-failure-handling)
   - [The unusual threat model](#the-unusual-threat-model)
   - [Isolation layers (each fails closed)](#isolation-layers-each-fails-closed)
   - [Failure table](#failure-table)
-  - [Walkthrough — the assistant as permission laundromat](#walkthrough--the-assistant-as-permission-laundromat)
-  - [Walkthrough — instructions hidden in an uploaded document](#walkthrough--instructions-hidden-in-an-uploaded-document)
-  - [Walkthrough — revocation the cache didn't hear about](#walkthrough--revocation-the-cache-didnt-hear-about)
-  - [Walkthrough — the provider is having a bad day](#walkthrough--the-provider-is-having-a-bad-day)
+  - [Walkthrough: the assistant as permission laundromat](#walkthrough-the-assistant-as-permission-laundromat)
+  - [Walkthrough: instructions hidden in an uploaded document](#walkthrough-instructions-hidden-in-an-uploaded-document)
+  - [Walkthrough: revocation the cache didn't hear about](#walkthrough-revocation-the-cache-didnt-hear-about)
+  - [Walkthrough: the provider is having a bad day](#walkthrough-the-provider-is-having-a-bad-day)
   - [The three tests that prove the boundary](#the-three-tests-that-prove-the-boundary)
   - [Three artifacts required before GA](#three-artifacts-required-before-ga)
 - [7. Delivery, Observability, Business Impact](#7-delivery-observability-business-impact)
   - [The hazard](#the-hazard)
-  - [Four phases — gates are measurements, not dates](#four-phases--gates-are-measurements-not-dates)
+  - [Four phases: gates are measurements, not dates](#four-phases-gates-are-measurements-not-dates)
   - [Metrics](#metrics)
   - [Three audiences, same telemetry](#three-audiences-same-telemetry)
   - [Configuration vs. adapter vs. shared service vs. core](#configuration-vs-adapter-vs-shared-service-vs-core)
@@ -87,14 +87,14 @@
 ## 0. The 60-Second Version
 
 - **Prompt:** a company of 40,000 employees asks us to "build us our own ChatGPT", grounded in internal data and wrapped in enterprise controls.
-- **What actually drives it:** an egress report in the case shows 6,400 staff copying company data into consumer AI tools today.
+- **What drives it:** an egress report in the case shows 6,400 staff copying company data into consumer AI tools today.
 - **The result we owe, not the feature:** shift AI usage off ungoverned consumer tools and onto a governed platform, keeping what made those tools appealing.
 - **What makes this case unusual:** our competitor is free, needs no setup and already sits on every employee's phone.
 - **Two bars that pull against each other:** governance (nothing leaves except under an agreement we hold) and adoption (TTFT near what the free tool gives).
 - **Where the design centres:** the context assembler. Permissions, cost, safety and quality all meet there.
 - **The one metric that counts:** consumer-AI egress volume, which the proxy logs already record.
 
-> **Interview pointer:** Name both bars, governance and adoption, in your first breath. Stating that tension early shows fastest that you see more here than "build ChatGPT".
+> **Interview pointer:** Name both bars, governance and adoption, in your first breath. Stating that tension early is the fastest way to show you see more than "build ChatGPT".
 
 ---
 
@@ -106,7 +106,7 @@
 - **General Counsel:** wants proof that deal documents never reach a third party's training set, and a way to produce one person's history when legal process requires it.
 - **Internal Comms:** the previous chatbot drew 400 users who came once each. If ours is worse than free, people stay with free.
 - **Platform lead:** what do 40,000 seats cost each month, and who pays?
-- **AI lead:** plain chat is the easy bit. The real project is grounding in internal systems *within each person's permissions*.
+- **AI lead:** plain chat is the easy bit. The hard part is grounding in internal systems *within each person's permissions*.
 
 ### Feature vs. business result
 
@@ -124,7 +124,7 @@
 | Platform operators | A single fleet they can operate that outlives any one vendor | Cannot be run at 40k |
 | Finance | A cost per employee per month they can defend | An unplanned budget review by month four |
 
-- **Jobs-to-be-done:** summarise, draft, explain and **find**. The model already handles the first three. Finding is where our engineering goes.
+- **Jobs-to-be-done:** summarise, draft, explain and find. The model already handles the first three; finding is where our engineering goes.
 
 ### Six discovery questions that change the architecture
 
@@ -135,7 +135,7 @@
 5. **Identity and residency:** is SSO the only login? Do we need regional deployments? Does a works council limit usage telemetry?
 6. **Build vs. buy:** what exactly stops us licensing a vendor's enterprise tier?
 
-> **Interview pointer:** Many candidates skip question 6, build vs. buy. Raise it yourself, before the interviewer does. In this scenario that ranks among the best discovery signals available.
+> **Interview pointer:** Many candidates skip question 6, build vs. buy. Raise it yourself, before the interviewer does. In this scenario it is one of the strongest discovery signals you can give.
 
 ### Assumption ledger (state aloud, don't bury)
 
@@ -161,7 +161,7 @@
 ### The trap
 
 - **Believing the scope.** The product we are told to copy took years to build. It spans chat, memory, retrieval, voice, images, code execution and a marketplace.
-- Lean hard on the **exclusions bucket**. Naming early what we will not build reads as strength, not retreat.
+- Lean hard on the exclusions bucket. Naming early what we will not build reads as strength.
 - Sort everything into four buckets: functional, nonfunctional, explicit exclusions and hard constraints.
 
 ### Deep-dive questions → what each decides
@@ -191,7 +191,7 @@
 - **No retrieval above the caller's access level.** Nothing from a document they cannot open may surface: not a chunk, title, snippet, citation or cached answer, *shared conversations included*.
 - **No uncontrolled egress.** Every permitted destination is listed, and the system enforces the list rather than trusting habit.
 - **A complete audit that reveals tampering.** It must answer "who saw what, and when".
-- **Capped spend per user.** No account can burn an unlimited budget before something stops it.
+- **Capped spend per user.** A hard ceiling stops any account before it burns an unlimited budget.
 
 ### Explicit MVP exclusions
 
@@ -236,7 +236,7 @@ flowchart TD
 
 ### When the interviewer won't answer
 
-- Keep moving. **Pick a default and give the reason, name the cost of being wrong, and invite a correction.**
+- Keep moving. Pick a default and give the reason, name the cost of being wrong, and invite a correction.
 - "I'll assume a commercial API on zero-retention terms, because it reaches the adoption bar fastest. Behind a provider abstraction, 'it's self-hosted after all' means only the capacity plan and a single adapter change. The architecture holds. If you want self-hosted, tell me and I'll change the order."
 
 ---

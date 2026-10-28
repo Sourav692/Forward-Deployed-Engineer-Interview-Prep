@@ -2,7 +2,7 @@
 
 ## 14. Cut the Eval Bill Without Blinding the Gate
 
-The pivot after a good design is #120: "costs are fine but the eval bill tripled." The answer starts from one fact. LLM-as-judge is inference too. Evaluation is the eighth cost driver, the one that runs off the request path where no interactive user ever sees it.
+The pivot after a good design is #120: "costs are fine but the eval bill tripled." The answer starts from the fact that LLM-as-judge is inference too. Evaluation is the eighth cost driver, the one that runs off the request path where no interactive user ever sees it.
 
 The source answer is four moves. Use a stratified sample instead of the full set. Use a cheaper judge with a periodic strong-judge audit. Run deltas only on changed prompts or models. Cache judge calls on unchanged pairs.
 
@@ -16,7 +16,7 @@ The self-drill card turns the same idea into the full answer shape.
 | Do not | Run the full strong-judge suite on every commit |
 | 60-second line | A gate nobody can afford gets bypassed. Tier the judges, sample on every change, run the full suite only where a release decision is made. |
 
-The risk named alongside the fix is real. Weak eval coverage misses quality regressions, and incident #91 is what that looks like. So cut cost by sampling the easy majority, never by thinning the critical slices. The regulated-claim slice runs in full on every release; the smoke tier samples the rest *(own construction)*.
+The source names the risk alongside the fix: weak eval coverage misses quality regressions, as incident #91 shows. So cut cost by sampling the easy majority, never by thinning the critical slices. The regulated-claim slice runs in full on every release; the smoke tier samples the rest *(own construction)*.
 
 Two levers connect the cost answer back to the design. The anchor's gap note calls human review almost certainly the most expensive unit cost. Better grader agreement therefore lowers cost per run by shrinking the human-review tail. And the judge cache is safe only on unchanged pairs. It is keyed on prompt version, model version and case, and never replaces a judgement the gate is meant to re-measure.
 
@@ -68,9 +68,9 @@ Every level can draw the pass, block or hold gate; the level shows in who trusts
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [RFC 9110 HTTP Semantics: 13.1.1 If-Match and 15.5.13 412](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match) — a failed If-Match returns 412 Precondition Failed, not 409
-- [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685) — LLM judges show verbosity bias
-- [AICPA & CIMA: SOC 2](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2) — SOC 2 control mapping
-- [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/) — deletion rights that trace retention must respect
-- V2 chapter 9 tutorial, "My Perspective on the Gaps" — the gap note calling human review the most expensive unit cost
+- [RFC 9110 HTTP Semantics: 13.1.1 If-Match and 15.5.13 412](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match): a failed If-Match returns 412 Precondition Failed, not 409
+- [Zheng et al. 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena](https://arxiv.org/abs/2306.05685): LLM judges show verbosity bias
+- [AICPA & CIMA: SOC 2](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2): SOC 2 control mapping
+- [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/): deletion rights that trace retention must respect
+- V2 chapter 9 tutorial, "My Perspective on the Gaps": the gap note calling human review the most expensive unit cost
 

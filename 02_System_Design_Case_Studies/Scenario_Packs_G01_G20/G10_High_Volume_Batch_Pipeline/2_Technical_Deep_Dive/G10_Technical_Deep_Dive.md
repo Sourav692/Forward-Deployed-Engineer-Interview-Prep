@@ -1,18 +1,18 @@
-# G10 — High-Volume Batch Inference Pipeline: Deep Dive
+# G10 High-Volume Batch Inference Pipeline: Deep Dive
 
 > Read with the unchanged [source](../4_Full_Design/G10_Full_Design.md). The [Main guide](../1_Interview_Guide/G10_Interview_Guide.md) is the interview path; the [Cheat Sheet](../3_Quick_Review/G10_Quick_Review.md) is the quick recall card.
 
 ## 1. Contract before machinery
 
-The question is recovery under a deadline. Get the output contract first: complete-only or partial publish; what to do with permanently bad records; acceptable fallback models; who approves changes. A queue cannot answer those product decisions. Store the policy with the job so an operator cannot improvise under pressure.
+The question is recovery under a deadline. Get the output contract first: complete-only or partial publish; what to do with permanently bad records; acceptable fallback models; who approves changes. Those are product decisions; a queue cannot make them. Store the policy with the job so an operator cannot improvise under pressure.
 
 Job creation should be idempotent. Expose create, status, pause and replay-failures operations, guarded by authorisation. Use ETags or equivalent conditional updates for operator actions. The job record pins snapshot ID, partition manifest, model/prompt/schema versions, deadline and publication rule. Preserve enough lineage to reproduce an individual result and the whole run.
 
 ## 2. Capacity arithmetic and cost
 
-100 million / six hours is about 4,630 records/s. Fifteen percent capacity margin brings the target to about 5,320. At 10× volume, the same window needs about 53,200/s including margin. If one record averages 270 tokens, the base run is **27 billion tokens**; include retries, long-tail records and output variance in the estimate. Check it as 100 million × 270 = 27 billion, not the tokens/s rate times one hour. A provider's tokens/s quota may be the real ceiling even if CPU workers look idle.
+100 million / six hours is about 4,630 records/s. Fifteen percent capacity margin brings the target to about 5,320. At 10× volume, the same window needs about 53,200/s including margin. If one record averages 270 tokens, the base run is 27 billion tokens; include retries, long-tail records and output variance in the estimate. Check it as 100 million × 270 = 27 billion, not the tokens/s rate times one hour. A provider's tokens/s quota may be the real ceiling even if CPU workers look idle.
 
-Plan with measured distributions: p50/p95 record tokens, model latency, batch efficiency, provider throttling, sink throughput and hot partitions. ETA is remaining work divided by observed *effective* throughput, adjusted for the straggler tail. An average-rate graph alone hides deadline failure.
+Plan with measured distributions: p50/p95 record tokens, model latency, batch efficiency, provider throttling, sink throughput and hot partitions. ETA is remaining work divided by observed effective throughput, adjusted for the straggler tail. An average-rate graph alone hides deadline failure.
 
 ## 3. State and replay
 
@@ -24,7 +24,7 @@ Transient errors include throttling, network failure and temporary sink outage. 
 
 Keep input and output encrypted, isolate tenants, scope snapshots and credentials, and avoid full customer payloads in queue messages or logs. Record operator actions and model version changes. A per-tenant rate coordinator prevents one customer from starving others; global controls protect provider quota. Circuit breaking stops repeated failing calls while retaining durable pending work.
 
-At 4 a.m. with 45% complete, calculate the throughput still required, then identify the limiting stage. Add workers only if provider and sink capacity permit. Splitting a straggler partition must preserve deterministic IDs. A fallback model changes output semantics, so it must be approved and versioned. If success is impossible, preserve the state, stop leasing and communicate the exact incomplete count. Partial output is a business rule, not an accident.
+At 4 a.m. with 45% complete, calculate the throughput still required, then identify the limiting stage. Add workers only if provider and sink capacity permit. Splitting a straggler partition must preserve deterministic IDs. A fallback model changes output semantics, so it must be approved and versioned. If success is impossible, preserve the state, stop leasing and communicate the exact incomplete count. Whether partial output may publish is a business rule, set before the run.
 
 ## 5. Variants and trade-offs
 
@@ -34,4 +34,4 @@ For nightly PDF summarisation, deduplicate by content hash and process only chan
 
 ## 6. Evidence to collect
 
-Track throughput, tokens/s, provider throttles, lease retries, oldest queued partition, predicted completion time, unique committed records, quarantine reasons, sink p95, cost per million and replay spend. Begin rollout on a representative token distribution, then 1%, 10% and higher load. Inject worker crash after write, provider quota exhaustion, and sink outage. A successful demo is not enough; demonstrate restart and reconciliation under those failures.
+Track throughput, tokens/s, provider throttles, lease retries, oldest queued partition, predicted completion time, unique committed records, quarantine reasons, sink p95, cost per million and replay spend. Begin rollout on a representative token distribution, then 1%, 10% and higher load. Inject worker crash after write, provider quota exhaustion, and sink outage. Show restart and reconciliation under those failures; a clean demo run does not prove recovery.

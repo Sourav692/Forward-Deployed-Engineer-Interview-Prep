@@ -6,12 +6,12 @@
 
 - Picture the design review. Security, operations and the customer's admin are all in the room, and within minutes someone asks the hard one: the payment went through, then the worker died. Now what?
 - That one injected fault teaches more than twelve questions about the happy path. It shows where the system's real edges lie.
-- Think about what the orchestration layer protects: money movement, approval state, messages to customers and the integrations further downstream. It must keep each of them safe from half-finished runs, replays, operator mistakes and hostile access. A design that cannot get through this drill is not yet a workflow system. It is a script with a database behind it, running on best effort.
+- Think about what the orchestration layer protects: money movement, approval state, messages to customers and the integrations further downstream. It must keep each of them safe from half-finished runs, replays, operator mistakes and hostile access. A design that fails this drill is a best-effort script with a database behind it.
 
 ### Threat Model Before Failure Policy
 
 - The design rests on four security controls:
-  - **Authorise starts, signals, and repairs at the correct strength.** Anyone who starts a workflow needs at least the permission required to read the customer object that workflow will change. Each signal (approval, rejection, resubmission, cancellation, override) must carry authentication, be limited to the right tenant and workflow instance, and pass a check against the current state machine. Repairs need the tightest control of all. They can skip the normal sequence and change a business effect after it has already happened.
+  - **Authorise starts, signals, and repairs at the correct strength.** Anyone who starts a workflow needs at least the permission required to read the customer object that workflow will change. Each signal (approval, rejection, resubmission, cancellation, override) must carry authentication, be limited to the right tenant and workflow instance, and pass a check against the current state machine. Repairs need the tightest control of all, because they can skip the normal sequence and change a business effect after it has already happened.
   - **Keep secrets out of history.** History is how the system remembers, which also makes it a target. A token, API key, password or full payment artifact stored there can be replayed or exported. It can also be shown to operators who need to see state but have no reason to see credentials. The safer pattern keeps only opaque references in history. At execution time the worker pulls a short-lived secret from a secret manager or a KMS-backed vault, with the narrowest scope and a clear expiry.
   - **Restrict operator mutation paths.** An operator's job is to pause, inspect and resume. It is not to rewrite state transitions at will, or to quietly record money as collected. Any manual change goes through a narrow repair API that validates input, checks versions and logs the approval. This is defence in depth: authenticated admin access, permission checks based on role, immutable audit logs and state-machine rules each guard one boundary from a different side.
   - **Audit every compensation and manual override.** Reversed payments, voided document approvals and hand-repaired CRM records must all leave a trail. Record who started the action, the reason, the instance it touched and the state version it aimed at. With that evidence, the post-incident review rests on facts rather than guesses.
@@ -20,7 +20,7 @@
 
 - In the interview, say out loud which branches fail open, which fail closed, which degrade, which queue and which need a person. Using those words with care is itself a sign of judgement.
 - Here is where the common branches land:
-  - **Fail closed**: approval completion, payment authorisation, repair mutations, and any step that could record a business effect that never really happened.
+  - **Fail closed**: approval completion, payment authorisation, repair mutations, and any step that could record a business effect that never happened.
   - **Degrade**: if the customer is happy with eventual delivery, email can fall back to queued sending or a later notice.
   - **Queue**: CRM sync, internal analytics updates and noncritical enrichment can wait in line while a transient outage clears.
   - **Human intervention**: approvals that are unclear, poison messages that keep failing, and policy exceptions that code cannot settle safely.
@@ -67,7 +67,7 @@ flowchart TD
 ### Failure Drill: Approval Waits Seven Days
 
 - In orchestration, a long wait is ordinary, not exceptional. The system has to provide durable timers, state that people can see, and a way to deal with stale instances.
-- **Detection**: this raises no failure alarm. A timeout threshold simply routes the instance to the queue that should act on it.
+- **Detection**: this raises no failure alarm. A timeout threshold routes the instance to the queue that should act on it.
 - **Containment**: do not burn worker capacity on polling that never ends.
 - **Recovery**: depending on policy, send the reminder again, escalate to a manager, or let the request expire.
 - **Prevention/design intent**: waiting is a first-class state in the workflow, not a sleep loop improvised for the occasion.
@@ -82,7 +82,7 @@ flowchart TD
 
 ### Failure Drill: Definition Changes While Instances Run
 
-- Treat this as versioning, not merely as a deployment concern.
+- Treat this as a versioning problem, not only a deployment concern.
 - **Detection**: the runtime notices that the definition hash or version does not match.
 - **Containment**: each old instance keeps running on the version it began with, unless someone has defined an explicit migration path.
 - **Recovery**: either route steps by version so old instances stay forward compatible, or run a controlled migration that is tested and audited.
@@ -118,11 +118,11 @@ flowchart TD
 - Before go-live, you should be able to walk through the audit evidence and the runbooks. Who may start a workflow? How does someone ask for a repair, and who signs it off? Where do compensation logs live? How does support get a replay explained to them? How do you prove that a crash did not lead to a duplicate payment?
 - Make that evidence searchable by tenant and workflow id. Keep it for as long as the customer's policy and jurisdictional rules require.
 - For observability, trace each transition with correlation ids. Emit counters for retries, compensations, dead-letter items and manual overrides. Raise an alert when the counts of requested, completed and compensated steps drift apart.
-- Knowing that something is broken is not enough. You want to know which tenant, which dependency and which failure policy is soaking up the impact right now.
+- Beyond knowing that something is broken, you want to know which tenant, which dependency and which failure policy is soaking up the impact right now.
 
 ### Interview-Sized Code Sketch: No-Double-Charge Invariant
 
-- The test is narrow but it matters: crash the workflow at the worst moment, and replay must still not repeat an irreversible side effect.
+- The test is narrow: crash the workflow at the worst moment, and replay must still not repeat an irreversible side effect.
 - Treat this as a teaching sketch sized for an interview. It leaves out persistence details, dependency wiring and the full workflow engine. A production build would put the event log on durable storage, add validation and pin library versions.
 
 ```python
@@ -182,7 +182,7 @@ async def test_crash_after_payment_does_not_charge_twice():
     assert payments.charge_count(order_id) == 1
 ```
 
-- What it teaches: the workflow has to keep enough state to tell "attempted" apart from "completed". Recovery must check that state before it decides to repeat the side effect.
+- The workflow has to keep enough state to tell "attempted" apart from "completed". Recovery must check that state before it decides to repeat the side effect.
 - A production version would also validate arguments, persist state, log in a structured format, handle timeouts, and pass an explicit idempotency key through to the payment gateway request.
 
 ### What to Say When the Interviewer Pushes on Trade-offs
@@ -190,5 +190,4 @@ async def test_crash_after_payment_does_not_charge_twice():
 - Customer wants faster recovery → automate more of the compensations, and accept a higher chance that an automated undo gets it wrong.
 - Business wants stronger correctness → fail closed more often, and accept deeper queues and more work for people.
 - Platform has to serve many tenants → draw sharper blast-radius boundaries and tighten operator permissions.
-- None of these is a footnote. Taken together, they are the architecture.
-- The production judgement signal: an FDE is accountable for safe rollout, support and incident response, not just the happy path. A good answer keeps the customer's business effect safe, holds on to evidence for the postmortem, and still pushes the workflow forward without repeating any irreversible action.
+- An FDE is accountable for safe rollout, support and incident response as well as the happy path. A good answer keeps the customer's business effect safe, holds on to evidence for the postmortem, and still pushes the workflow forward without repeating any irreversible action.

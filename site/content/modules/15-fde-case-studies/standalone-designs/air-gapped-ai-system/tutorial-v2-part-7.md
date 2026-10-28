@@ -6,7 +6,7 @@
 - Lead with what the customer gains, phrased the way they would say it: *"We want local AI we can maintain inside an air-gapped government network. Updates have to be controlled, nothing can lean on the internet, and we need an audit trail that stands up to scrutiny."*
 - It shows you heard the operating constraint, and it keeps you out of a stock chatbot design.
 - Before you draw anything, get the interviewer to confirm which boundary carries the most risk:
-  - What does the air gap actually protect?
+  - What does the air gap protect?
   - Is the isolation total, or do governed transfer points exist for media, packages and logs?
   - Are we deploying into one secure enclave, several disconnected sites, or a staged network split into separate trust zones?
   - Should analysts share one service, or do especially sensitive teams need their own isolated workstations?
@@ -65,7 +65,7 @@ flowchart LR
 
 ### Trade-Off: Model Size vs. Hardware Fit
 - This is usually the first tension interviewers probe.
-- Extraction and summaries may improve with a bigger model. The cost: it may not fit in local GPU memory, it answers slower, patching gets harder and the customer may have to buy or borrow hardware.
+- Extraction and summaries may improve with a bigger model. But it may not fit in local GPU memory, it answers slower, patching gets harder and the customer may have to buy or borrow hardware.
 - A smaller model fits easily and is simpler to support, yet may struggle with noisy documents, specialised vocabulary or long-context reasoning.
 - "Always biggest" and "always smallest" are both wrong. Optimise for the mission:
   - For triage or structured extraction, a reliable, well-tuned small model can beat a brittle large one that is costly to maintain.
@@ -75,10 +75,10 @@ flowchart LR
 ### Trade-Off: Containers vs. Virtual Appliances
 - Containers give portability, repeatable deployment and cleaner separation of concerns. They fit an enclave with an existing platform team and components refreshed one at a time.
 - A virtual appliance seals the stack in a fixed boundary with fewer moving parts, which some security teams find easier to review.
-- The real tension is operational complexity against governance simplicity:
+- The tension is operational complexity against governance simplicity:
   - Pick containers if efficient scaling, controlled patching and reusable components rank highest.
   - Pick an appliance if the customer prefers one tight, inspectable unit and slow, deliberate change.
-- Let the organisation decide, not purity. An existing hardened virtualisation standard favours the appliance. An existing secure container platform favours containers for upkeep and reuse.
+- Let the organisation's existing standards decide. An existing hardened virtualisation standard favours the appliance. An existing secure container platform favours containers for upkeep and reuse.
 
 ### Trade-Off: Update Frequency vs. Accreditation Cost
 - Frequent updates cut vulnerability exposure, lift model quality and speed feedback. Yet each one must be packaged, signed, transferred, verified, staged, tested and approved, and may trigger re-accreditation.
@@ -115,12 +115,12 @@ flowchart LR
   - New weights that alter embeddings, tokenisation or ranking behaviour may force an index rebuild or revalidation.
   - Index schema, embedding pipeline, prompts, tokeniser and model package form a single compatibility surface.
   - A pure runtime gain behind the same interface may keep the index. A representation change needs a rebuild, or a parallel index staged to compare outputs before traffic moves.
-  - You show the unwritten contract between retrieval and generation, and a safe upgrade path rather than just "updating the model."
+  - You show the unwritten contract between retrieval and generation, and a safe upgrade path rather than "updating the model."
 - **"How do you prove build provenance?"**
   - As chain of custody: where the artifact came from, which code built it, which dependencies went in and who approved its entry to the enclave.
   - The evidence: artifact hashes, reproducible build steps, pinned dependency manifests, tagged releases or signed commits, plus a verification record at every hand-off.
   - For detail, a build system emits attestations and policy checks verify them before install.
-  - Never claim absolute proof. You get strong evidence and a control you can defend, nothing magical. It ends the guesswork when an auditor or operator asks, "What exactly is running here?"
+  - Never claim absolute proof. You get strong evidence and a control you can defend. It ends the guesswork when an auditor or operator asks, "What exactly is running here?"
 
 ### Common Weak Answers and Repairs
 - **"Let's run our usual cloud stack on-prem."** → Repair: name the cloud dependencies that would breach the air-gap boundary, and the enclave-local services that replace them.
@@ -139,7 +139,7 @@ flowchart LR
 - **Security:** Did you cover provenance, identity, transfer controls, logging and rollback, while admitting no control makes risk vanish?
 - **Delivery:** Did you show the path from prototype through staged rollout to production support?
 - **Communication:** Were you crisp and structured, and did you welcome redirection?
-- Winning answers show judgement, not box count: what matters, what can wait, what needs control and how the customer gains.
+- Winning answers show judgement rather than box count: what matters, what can wait, what needs control and how the customer gains.
 
 ### The Final 90-Second Summary
 - *"I'd run document analysis inside the air gap as an enclave service under central management. Signed releases come in through a controlled import path. The model and index ship together as versioned bundles. Local observability lets us support it offline. On model size, I'd go as small as approved hardware allows while still passing the customer's quality bar on their documents. Accuracy matters, but so do hardware fit, update cost and accreditation friction. If the customer already runs a secure platform, I'd use containers. If governance simplicity comes first, I'd switch to a virtual appliance. My biggest risk is the tension between how often we update and how much review each update needs. A staged release train, signed artifacts and bundles we can roll back keep that in check. The first production gate: no bundle enters the enclave until it has proved, offline, that it is intact, complete and compatible. After that, an in-enclave canary has to show verified provenance, steady latency and a support runbook we've already tested."*

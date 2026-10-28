@@ -18,7 +18,7 @@ Add the warehouse side in the same breath. Warehouse compute per answer is the c
 
 ## Level calibration
 
-On this design the levels separate on who owns the meaning of a number and how a wrong one gets caught, not on how good the generated SQL is.
+On this design the levels separate on who owns the meaning of a number and how a wrong one gets caught. The quality of the generated SQL does not separate them.
 
 | Level | Sounds like | Missing |
 |---|---|---|
@@ -45,11 +45,11 @@ On this design the levels separate on who owns the meaning of a number and how a
 
 ## Check Yourself
 
-1. **Why is a wrong-definition answer more dangerous than a failed query?** The SQL ran, the chart rendered and the number looks plausible, so the executive has no way to know it is wrong and acts on it.
+1. **Why is a wrong-definition answer more dangerous than a failed query?** The SQL ran, the chart rendered and the number looks plausible, so the executive cannot tell it is wrong and acts on it.
 2. **What is consulted before any physical table, and why?** The semantic metric registry, because "revenue" must anchor on the governed definition before the system searches for tables the model thinks look relevant.
 3. **What number makes "ask when unsure" testable?** A confidence threshold on intent classification; the insurer supervisor clarifies below 60%.
 4. **Why parse SQL instead of regex-filtering it?** Regex cannot understand aliases, nested selects, CTEs, comments or obfuscation; a parser inspects statements, tables, columns, joins, functions, limits and aggregate semantics.
-5. **Where is row-level security enforced, and what is re-checked at execution?** In the warehouse, natively, with the read-only query run as the user so the policies apply to them, not to a shared service account; entitlement and policy are re-checked at the moment of execution so a user who lost access between planning and execution is refused.
+5. **Where is row-level security enforced, and what is re-checked at execution?** In the warehouse, natively, with the read-only query run as the user so the policies apply to them, not to a shared service account; entitlement and policy are re-checked at execution so a user who lost access between planning and execution is refused.
 6. **How is a summary that contradicts its table handled?** The summary is generated from the structured result and cross-checked; a mismatch returns the table alone and alerts the review queue.
 7. **State the fail-open versus fail-closed pattern by category.** Authorisation closed; connectivity degrade or queue; ambiguity human; suspicious scan closed and alert.
 8. **What is the release gate, and what is it not?** Semantic correctness against the governed definition judged by analyst review; not execution success on the golden set, which only proves the SQL ran.
@@ -75,10 +75,10 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Snowflake docs: Understanding row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) — row policies evaluate the role running the query
+- [Snowflake docs: Understanding row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro): row policies evaluate the role running the query
 - [Databricks docs: Row filters and column masks](https://docs.databricks.com/aws/en/data-governance/unity-catalog/filters-and-masks/) — filters and masks evaluate the session user, so run queries as the user
-- [OpenAI API docs: Function calling](https://developers.openai.com/api/docs/guides/function-calling) — guidance to keep the tool count per turn small
-- [Gan & Sun 2025, RAG-MCP: Mitigating Prompt Bloat in LLM Tool Selection](https://arxiv.org/abs/2505.03275) — tool-selection accuracy falls as the tool pool grows
+- [OpenAI API docs: Function calling](https://developers.openai.com/api/docs/guides/function-calling): guidance to keep the tool count per turn small
+- [Gan & Sun 2025, RAG-MCP: Mitigating Prompt Bloat in LLM Tool Selection](https://arxiv.org/abs/2505.03275): tool-selection accuracy falls as the tool pool grows
 - [Create and manage a Genie Agent (Databricks)](https://docs.databricks.com/aws/en/genie-agents/set-up) — analysts curate tables, instructions and example SQL
 - [Genie Agents concepts (Databricks)](https://docs.databricks.com/aws/en/genie-agents/concepts) — generated queries are always read-only and use each user's permissions
 - [AI/BI and Genie One release notes 2026 (Databricks)](https://docs.databricks.com/aws/en/ai-bi/release-notes/2026) — Genie renamed Genie One; Genie Spaces renamed Genie Agents
@@ -86,10 +86,10 @@ All paths are relative to the repository root.
 - [Use dashboard APIs to create and manage dashboards (Databricks)](https://docs.databricks.com/aws/en/dashboards/tutorials/dashboard-crud-api) — the Lakeview API still carries that name and can create and publish dashboards
 - [AI Gateway for serving endpoints (legacy), supported features (Databricks)](https://docs.databricks.com/aws/en/ai-gateway/overview-serving-endpoints) — guardrails and rate limits not supported on agent endpoints
 - [Configure guardrails (legacy) (Databricks)](https://docs.databricks.com/aws/en/ai-gateway/guardrails) — PII and safety guardrails on model endpoints
-- [CrewAI docs: Flows](https://docs.crewai.com/en/concepts/flows) — `@router` gives CrewAI deterministic branching
+- [CrewAI docs: Flows](https://docs.crewai.com/en/concepts/flows): `@router` gives CrewAI deterministic branching
 - [Agent memory and sessions (Databricks)](https://docs.databricks.com/aws/en/generative-ai/agent-framework/stateful-agents) — the documented checkpointer is Lakebase (Postgres), not Delta
 - [databricks_langchain CheckpointSaver API](https://api-docs.databricks.com/python/databricks-ai-bridge/latest/databricks_langchain.html) — the Lakebase-backed LangGraph checkpointer
 - [Use Supervisor Agent to create a coordinated multi-agent system (Databricks)](https://docs.databricks.com/aws/en/generative-ai/agent-bricks/multi-agent-supervisor) — the managed multi-agent option today
 - [Agent Bricks Supervisor Agent is Now GA (Databricks blog)](https://www.databricks.com/blog/agent-bricks-supervisor-agent-now-ga-orchestrate-enterprise-agents) — Supervisor Agent general availability
-- [BigQuery pricing](https://cloud.google.com/bigquery/pricing) — on-demand queries bill by bytes processed
+- [BigQuery pricing](https://cloud.google.com/bigquery/pricing): on-demand queries bill by bytes processed
 - [Databricks serverless billing](https://docs.databricks.com/aws/en/admin/system-tables/serverless-billing) — Databricks SQL bills compute time in DBUs

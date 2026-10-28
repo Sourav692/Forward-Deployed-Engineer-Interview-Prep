@@ -15,9 +15,9 @@ The product metric is the acceptance rate, because a completion the developer de
 | Cost per thousand completions | Within budget | Rises with flat traffic | Tokens in and out by model | Finance |
 | Developer productivity | Time-to-merge and rework rate improve for adopters vs a matched control | No difference | Controlled rollout, statistical power decided in advance | Product |
 
-The OpenAI-style practice prompt's follow-up asks how to evaluate whether the assistant improves developer productivity. Acceptance rate is necessary and not sufficient. Compare adopters against a matched control on time-to-merge, review rework and defect rate, decide in advance how large an improvement would matter, and test on enough developers to tell that improvement from noise. LLM outputs vary, so a handful of examples cannot declare a winner.
+The OpenAI-style practice prompt's follow-up asks how to evaluate whether the assistant improves developer productivity. Acceptance rate alone is not enough. Compare adopters against a matched control on time-to-merge, review rework and defect rate, decide in advance how large an improvement would matter, and test on enough developers to tell that improvement from noise. LLM outputs vary, so a handful of examples cannot declare a winner.
 
-Run the evaluation ladder cheapest first. Prompt unit tests on every template change, so a broken template or a missing variable fails before the expensive suite. The golden-set evaluation on change. A scheduled nightly run against yesterday's baseline, because a moving alias like `gpt-4o` can be repointed to a new snapshot with no commit on the customer's side, unless you pin a dated snapshot. A/B tests in production on prompts, retrieval strategies and models.
+Run the evaluation ladder cheapest first. Prompt unit tests on every template change, so a broken template or a missing variable fails before the expensive suite. Golden-set evaluation on every build change. A scheduled nightly run against yesterday's baseline, because a moving alias like `gpt-4o` can be repointed to a new snapshot with no commit on the customer's side, unless you pin a dated snapshot. A/B tests in production on prompts, retrieval strategies and models.
 
 ## 13. Roll Out One Repository at a Time
 

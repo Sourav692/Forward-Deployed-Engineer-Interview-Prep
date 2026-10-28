@@ -2,7 +2,7 @@
 
 ## 9. Degrade on Everything Except the Decision
 
-Design the failure path with the happy path. One rule organises the table. The human decision, the permission check and the citation fail closed. Everything else degrades visibly, with the gap labelled.
+Design the failure path with the happy path. One rule organises the table: the human decision, the permission check and the citation fail closed. Everything else degrades visibly, with the gap labelled.
 
 | Fails | Behaviour |
 |---|---|
@@ -20,7 +20,7 @@ Say what breaks first at scale. Bulk surveillance is a batch problem, so tier th
 
 ## 10. Gate the Release on Extraction, Citation and Escalation
 
-The answer keys share one evaluation table. The vendor case adds workflow and safety metrics on top. The gate is not a groundedness score alone. The citation incident passed a groundedness gate. It is four separate dimensions, each with its own dataset.
+The answer keys share one evaluation table. The vendor case adds workflow and safety metrics on top. A groundedness score alone cannot be the gate, because the citation incident passed one. The gate covers four separate dimensions, each with its own dataset.
 
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
@@ -53,7 +53,7 @@ The claims-processing follow-up asks how to prove the system is safe enough for 
 
 ## 11. Roll Out in Shadow, Then One Category at a Time
 
-Week one is not the whole diagram. It is one document type and one policy source. It is the extraction schema agreed with the SMEs. It is a golden set built from historical cases with their human decisions. The answer keys and the vendor case describe the same staircase.
+Week one covers one document type and one policy source, not the whole diagram. It needs the extraction schema agreed with the SMEs and a golden set built from historical cases with their human decisions. The answer keys and the vendor case describe the same staircase.
 
 | Stage | Gate |
 |---|---|
@@ -65,13 +65,13 @@ Week one is not the whole diagram. It is one document type and one policy source
 | Week 6-8 | Draft-only workflow actions behind human approval; one high-volume low-risk category first, such as imaging authorisation or one business unit |
 | After | Outcome measurement: approval rate, denial reasons, preparation time, override rate. Expand payers, categories or document types only while eval metrics, incident rate, latency and cost hold; keep the rollback plan |
 
-The OpenAI-style claims practice prompt gives the ordering rule for what to automate. Extraction, triage, summarisation and missing-information detection come first. Adjudication comes only after evaluation and governance. That is the risk tiers, applied over time.
+The OpenAI-style claims practice prompt gives the ordering rule for what to automate. Extraction, triage, summarisation and missing-information detection come first. Adjudication comes only after evaluation and governance. This ordering applies the risk tiers over time.
 
 ## 12. Survive the Red-Team Round
 
-The financial-compliance mock is the adversarial version of this design. It is the round to rehearse. Its customer wants "the AI to review all advisor messages and tell us which ones are risky". The demo caught banned phrases, missed subtle promissory language and followed instructions embedded inside emails. The strong framing is regulated decision support, not autonomous compliance judgement. Extract evidence, map it to policy clauses, propose risk labels with confidence, and preserve an audit trail. Launch requires high recall on severe violations, controlled false positives and explicit resistance to adversarial instructions.
+The financial-compliance mock is the adversarial version of this design. It is the round to rehearse. Its customer wants "the AI to review all advisor messages and tell us which ones are risky". The demo caught banned phrases, missed subtle promissory language and followed instructions embedded inside emails. Frame it as regulated decision support; the model never makes the compliance judgement. Extract evidence, map it to policy clauses, propose risk labels with confidence, and preserve an audit trail. Launch requires high recall on severe violations, controlled false positives and explicit resistance to adversarial instructions.
 
-The interviewer pushes on five objections in order. Each has a prepared shape.
+The interviewer pushes five objections in order. Prepare an answer for each.
 
 | Objection | Answer |
 |---|---|
@@ -81,13 +81,13 @@ The interviewer pushes on five objections in order. Each has a prepared shape.
 | 18 seconds per answer | Set the budget: batch overnight for bulk, p95 under 10 s for drill-down; decompose by stage; parallelise, cache embeddings, cut top-k before rerank, stream, small model for low risk. Do not remove citation verification; make it asynchronous for low-risk explanatory answers only |
 | Too expensive at scale | Cost per true issue found, not per request. Tiered screening: rules and small classifiers for bulk, the LLM only for borderline cases. Never downgrade the model globally; route by risk |
 
-The mock's five follow-ups are the ones to have ready. A retrieved document with malicious instructions is untrusted data: it can still sway the model, so it can never trigger an action or widen access. The red-team suite plants such instructions in documents, tickets, emails and logs. A correct answer that cites the wrong source is the incident in section 14. One customer seeing another's data is a tenant predicate on every retrieval, which the Secure Multi-Tenant AI Platform case owns. Cost after launch is the tiered screening above. What is human-approved versus automated is the risk tiers in section 8.
+Have the mock's five follow-ups ready. A retrieved document with malicious instructions is untrusted data: it can still sway the model, so it can never trigger an action or widen access. The red-team suite plants such instructions in documents, tickets, emails and logs. A correct answer that cites the wrong source is the incident in section 14. One customer seeing another's data is a tenant predicate on every retrieval, which the Secure Multi-Tenant AI Platform case owns. Cost after launch is the tiered screening above. What is human-approved versus automated is the risk tiers in section 8.
 
-The scoring rubric rewards the same things in every dimension. Quantified business value and failure cost. An explained data flow with auth, eval gates and rollback. Threat-modelled misuse, adversarial tests and launch gates. A phased launch with incident response, and executive-ready honesty about limits. The debrief line is to give concrete numbers: the p95 target, the acceptable false-positive rate, the minimum citation accuracy, the launch-blocking security threshold, and the expected ROI.
+The scoring rubric rewards the same things in every dimension: quantified business value and failure cost; an explained data flow with auth, eval gates and rollback; threat-modelled misuse, adversarial tests and launch gates; and a phased launch with incident response and executive-ready honesty about limits. The debrief advice is to give concrete numbers: the p95 target, the acceptable false-positive rate, the minimum citation accuracy, the launch-blocking security threshold, and the expected ROI.
 
 ## 13. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the copilot costs too much per document". The self-drill on the index answers it with the same architecture. The cheap-to-expensive boundary in section 4 was drawn for exactly this.
+The interviewer's pivot after a good design is "the copilot costs too much per document". The self-drill on the index answers it with the same architecture. The cheap-to-expensive boundary in section 4 exists for this.
 
 | | |
 |---|---|
@@ -96,7 +96,7 @@ The interviewer's pivot after a good design is "the copilot costs too much per d
 | Metric that proves it | Cost per document; tokens per document; escalation rate; extraction accuracy on a sampled audit |
 | Do not | Send the whole document to the premium model every time |
 
-The sixty-second line: extraction is cheap, judgement is expensive. Route pages to extraction. Route only the flagged risks to the strong model. Prove quality by sampling. Every strong cost answer is generated by four verbs in order. Measure, by tracing and attributing first. Route, matching model and path to risk. Bound, with limits on tokens, top-k, timeouts and budgets. Cache safely, with tenant, permission and version in the key.
+The sixty-second line: extraction is cheap, judgement is expensive. Route pages to extraction. Route only the flagged risks to the strong model. Prove quality by sampling. Every strong cost answer uses four verbs in order. Measure, by tracing and attributing first. Route, matching model and path to risk. Bound, with limits on tokens, top-k, timeouts and budgets. Cache safely, with tenant, permission and version in the key.
 
 ## 14. Debug the Incidents on This Design
 
@@ -126,7 +126,7 @@ An account executive asked whether a customer could terminate for convenience wi
   policy_action=allowed reason="answer_supported=true AND grounding_score>0.85"
 ```
 
-Detect: `answer_supported=true` with `citation_span_match=false`, and the true clause ranked seventh. Contain: roll back to `cite_v4`. Require citation span match for legal workflows. Route low citation-accuracy answers to human review. Root cause: `cite_v5` changed citation selection from "quote the exact supporting span" to "select the most concise citation from retrieved context". The verifier allowed it because it over-weighted groundedness and under-weighted span matching. The release gate never evaluated citation accuracy separately. Prevent: split evaluation into answer correctness, citation correctness and quote-span faithfulness. Add clause-type features to the reranker. Require the citation to come from the actual supporting span, and highlight the exact clause in the UI.
+Detect: `answer_supported=true` with `citation_span_match=false`, and the true clause ranked seventh. Contain: roll back to `cite_v4`. Require citation span match for legal workflows. Route low citation-accuracy answers to human review. Root cause: `cite_v5` changed citation selection from "quote the exact supporting span" to "select the most concise citation from retrieved context". The verifier allowed it because it over-weighted groundedness and under-weighted span matching. The release gate never evaluated citation accuracy separately. Prevent: split evaluation into answer correctness, citation correctness and quote-span faithfulness. Add clause-type features to the reranker. Require the citation to come from the span that supports the answer, and highlight the exact clause in the UI.
 
 > *"I would treat this as a high-severity citation faithfulness issue. The telemetry shows `answer_supported=true` but `citation_span_match=false`, with the real clause ranked 7th. I would roll back the citation generator, require span-level verification, and add separate citation accuracy evals. In legal workflows, a correct answer with a wrong citation can be more dangerous than an answer that clearly refuses."*
 

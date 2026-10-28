@@ -1,6 +1,6 @@
 # Logistics Exception Handling: Main Interview Guide
 
-**Exception handling** is: a shipment should have moved, it didn’t, ops must tell the customer or the carrier. Customs is not a chatbot decision.
+**Exception handling** means a shipment should have moved, did not, and ops must tell the customer or the carrier. Customs is not a chatbot decision.
 
 **This case covers one slice:** watch feeds, detect a hold/miss/weather, draft or auto-resolve only what policy allows. Humans always own customs.
 
@@ -8,18 +8,18 @@ End to end, as a missed scan in Frankfurt:
 
 1. **Carrier webhook or batch file** becomes one event.
 2. **We detect the exception** and pull shipment value, route, freeze rules.
-3. **Policy gate:** weather delay with a known playbook might auto-message; **customs always queues a human.**
-4. **Ops sees a draft** — next scan, customer text, proposed carrier call — not a silent write.
+3. **Policy gate:** a weather delay with a known playbook might auto-message; customs always queues a human.
+4. **Ops sees a draft** (next scan, customer text, proposed carrier call) instead of a silent write.
 5. **Allowed auto-resolve runs once** through a gateway with an audit row.
 6. **SAP/weather variants** add more signals; the gate does not get looser.
 
-That’s it: **feed → detect → policy → draft or narrow auto → audit.** “Just ping the carrier for every blip” stays out.
+The whole path is **feed → detect → policy → draft or narrow auto → audit.** “Just ping the carrier for every blip” stays out.
 
 > **Source:** [Sources and Full Design](/design/logistics-exception-handling#full-pack), especially sections 1–10. Use the [Deep Dive](/design/logistics-exception-handling#deep-dive) for gate, reliability and evaluation detail and the [Cheat Sheet](/design/logistics-exception-handling#cheat-sheet) for rehearsal.
 
 ## Anchor and related case
 
-This is a modest-user, high-stakes exception system. It watches carrier feeds, detects customs holds, missed scans and weather delays, then either drafts for an ops agent or auto-resolves a narrowly allowed case. **Customs and regulatory holds always go to a human.**
+This is a modest-user, high-stakes exception system. It watches carrier feeds, detects customs holds, missed scans and weather delays, then either drafts for an ops agent or auto-resolves a narrowly allowed case. Customs and regulatory holds always go to a human.
 
 | Case | Shared foundation | What changes |
 |---|---|---|
@@ -38,11 +38,11 @@ This is a modest-user, high-stakes exception system. It watches carrier feeds, d
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Ingest webhooks and CSV/EDI drops.**
 2. **Normalise and deduplicate.**
@@ -53,7 +53,7 @@ The easiest way to frame requirements in an interview is:
 7. **Let agents approve / edit / reject** all others.
 8. **Audit every verdict and action.** New carriers are adapters, not core rewrites.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -73,7 +73,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The resolution **agent/model drafts** an action and confidence; a separate deterministic policy gate decides whether execution is permitted. Shared versioned logic is deployed into US, EU and APAC regional data planes. EU records and audit data do not replicate out of the EU.
+The resolution agent/model drafts an action and confidence; a separate deterministic policy gate decides whether the action may run. Shared versioned logic is deployed into US, EU and APAC regional data planes. EU records and audit data never replicate out of the EU.
 
 ```mermaid
 flowchart TB
@@ -106,20 +106,20 @@ flowchart TB
 - Validate and deduplicate webhook events; parse scheduled files and emit only shipment-state differences. Both paths become one regional event schema, with batch detection lag visible.
 - Queue normalised events to absorb storms, then use rules or a small classifier to find customs, missed-scan and weather exceptions. Routine scans only update state.
 - Send exceptions to the resolution agent for an action draft, confidence and supporting signals. The agent cannot call carrier write APIs directly.
-- The independent gate checks customs/regulatory status **first**, using detection's type rather than the agent's label. Any customs or unknown case goes to a human.
+- The independent gate checks customs/regulatory status first, using detection's type, not the agent's label. Any customs or unknown case goes to a human.
 - For non-customs cases, only shipment value under $500 and confidence above the agreed threshold may auto-resolve; all others enter the regional approval queue.
 - An approved or eligible action uses scoped carrier credentials, an idempotency key and a circuit breaker. A flaky or non-idempotent carrier falls back to human handling.
 - Log every verdict, draft, approval/edit/rejection and execution in the regional audit store; keep EU data and access within the EU.
 
 ## Decisions, failures and evaluation
 
-**Customs is an invariant, not a threshold.** A high-confidence model cannot override it. A missing field fails to the human queue, and an unavailable audit store blocks action. A legacy carrier that cannot honor an idempotency key may need human-only handling because a timeout can otherwise cause double booking. A circuit breaker moves carrier failures to human review rather than retrying into a storm.
+**Customs is an invariant, not a threshold.** A high-confidence model cannot override it. A missing field fails to the human queue, and an unavailable audit store blocks action. A legacy carrier that cannot honour an idempotency key may need human-only handling, because a timeout could otherwise cause a double booking. A circuit breaker moves carrier failures to human review instead of retrying into a storm.
 
 **Two feed clocks:** polling a batch-only carrier every few seconds cannot make its 2–6-hour file arrive sooner. Keep separate time-to-detect p50/p95 for webhook and batch feeds. Show lateness on the draft. Queue depth and approval age are separate operational SLOs.
 
-**Release evidence:** replay labelled historical exceptions for recall and precision per type; adversarial customs cases must produce **zero auto-resolutions**; calibrate confidence above the auto threshold; test duplicate execution, EU-to-US access denial and audit completeness. Start offline, then shadow with all human actions, then one region/one integrated carrier for known-route missed scans. For rerouting benefit, use a matched holdout: the route not taken is not directly observable.
+**Release evidence:** replay labelled historical exceptions for recall and precision per type; adversarial customs cases must produce zero auto-resolutions; calibrate confidence above the auto threshold; test duplicate execution, EU-to-US access denial and audit completeness. Start offline, then shadow with all human actions, then one region/one integrated carrier for known-route missed scans. To measure rerouting benefit, use a matched holdout, because nobody can observe the route not taken.
 
-**Cost and latency:** keep model calls behind detection; template common missed-scan rebooks; cap agent steps, carrier calls and retries; route difficult human-read drafts to a stronger model only when useful. Cost scales with exceptions, not routine scan volume. During a weather burst, prioritise backlog by value and deadline and scale stateless detection; the human approval queue may become the real bottleneck.
+**Cost and latency:** keep model calls behind detection; template common missed-scan rebooks; cap agent steps, carrier calls and retries; send difficult human-read drafts to a stronger model only when it helps. Cost scales with exceptions, not routine scan volume. During a weather burst, prioritise backlog by value and deadline and scale stateless detection; the human approval queue may become the real bottleneck.
 
 ## Two-minute interview answer
 

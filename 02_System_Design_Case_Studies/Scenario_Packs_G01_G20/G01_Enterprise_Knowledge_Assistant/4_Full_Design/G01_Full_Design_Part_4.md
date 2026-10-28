@@ -2,7 +2,7 @@
 
 ## 13. Say What Changes on Databricks
 
-The design is the same on the Lakehouse; what changes is the deep dive, and it opens with a trap most candidates fall into. Draw the wrong design first, then break it.
+The design is the same on the Lakehouse. The deep dive changes, and it opens with a common trap. Draw the wrong design first, then break it.
 
 ```
    ✗  "UC governs the table, so the index is governed too"
@@ -15,14 +15,14 @@ Two facts, not one. First, Databricks AI Search (formerly Vector Search) does no
 
 > *"Row and column level permissions are not supported. However, you can implement your own application level ACLs using the filter API."*
 
-The index is a derived copy. The sync pipeline reads with its own identity and writes into a serving system with no concept of the caller. So there is no query-time principal for `is_account_group_member()` to evaluate. Second, and the docs now say this too, the index cannot even be created on a governed table:
+The index is a derived copy. The sync pipeline reads with its own identity and writes into a serving system with no concept of the caller. So there is no query-time principal for `is_account_group_member()` to evaluate. Second, as the docs now also state, the index cannot be created on a governed table at all:
 
 ```
 BadRequest: Table main.meridian_rag.chunks cannot have both
             row/column security and online materialized views.
 ```
 
-So the naive design is not just insecure, it does not build. The platform forces a physical split.
+So the naive design is insecure and also fails to build. The platform forces a physical split.
 
 ```
    kb.chunks              UNGOVERNED base table
@@ -36,7 +36,7 @@ So the naive design is not just insecure, it does not build. The platform forces
                           layer 2 - UC enforces ACL + PII masking
 ```
 
-Because the base table carries no policy, granting anyone `SELECT` on it bypasses the whole access model. Locking it to the pipeline identity stops being hygiene and becomes load-bearing. Write it down and audit it. One smaller gotcha costs an afternoon. `CREATE OR REPLACE TABLE` does not detach an attached row filter, so a half-finished run leaves the table un-indexable until the filter or the schema is dropped. That is why the setup is idempotent.
+Because the base table carries no policy, granting anyone `SELECT` on it bypasses the whole access model. Locking it to the pipeline identity is a security control. Write it down and audit it. A smaller gotcha can cost an afternoon: `CREATE OR REPLACE TABLE` does not detach an attached row filter, so a half-finished run leaves the table un-indexable until the filter or the schema is dropped. That is why the setup is idempotent.
 
 The two layers map directly. Layer 1 is the AI Search filter compiled from the caller's groups and passed on every query as the service principal, so unauthorised vectors are never scored. Layer 2 re-reads the returned chunk IDs from the governed view on behalf of the user (OBO is Public Preview in 2026), and the view's row predicate and PII mask are evaluated as that user.
 
@@ -102,7 +102,7 @@ The war story is the positional OR. On a Standard endpoint the filters are dicti
 {"grp_a OR grp_b": [True, True]}  # ✅  grp_a = true OR grp_b = true
 ```
 
-So the clause and its value array are built from the same list, so they cannot drift. It is one more reason to choose Storage-Optimized, whose filter is a SQL string that means exactly what it looks like.
+Build the clause and its value array from the same list so they cannot drift. It is one more reason to choose Storage-Optimized, whose filter is a SQL string that means exactly what it looks like.
 
 |          | Standard   | Storage-Optimized (choose) |
 | -------- | ---------- | -------------------------- |
@@ -145,18 +145,18 @@ Ask a Databricks interviewer three things. Is Unity Catalog the governance bound
 
 ## 14. Tell It as Something Built
 
-For "tell me about something you built", the same system is a story, and the beats stand alone so they can be played in whatever order the conversation goes. Lead with one sentence and then stop talking; the next question chooses the next beat.
+For "tell me about something you built", tell the same system as a story. Each beat stands alone, so you can play them in whatever order the conversation goes. Lead with one sentence and then stop talking; the next question chooses the next beat.
 
 > *"I built an enterprise AI search system where the hardest part wasn't finding the right answer. It was that the same question needed a different correct answer depending on who was asking, and I wanted to prove that boundary never breaks, not just hope it doesn't."*
 
-The business-problem beat is the persona table in plain words. A support platform where a Tier-1 agent, an account manager, an engineer and an outside contractor use one assistant, and each may see a different slice of the same customer's data. The account manager gets the contract terms without the root cause. The engineer gets the root cause without the contract terms. The contractor gets nothing. One wrong answer is a data leak. The bridge to technical is that it is an access-control problem before it is an AI problem, which is where the design effort went.
+The business-problem beat is the persona table in plain words. A support platform where a Tier-1 agent, an account manager, an engineer and an outside contractor use one assistant, and each may see a different slice of the same customer's data. The account manager gets the contract terms without the root cause. The engineer gets the root cause without the contract terms. The contractor gets nothing. One wrong answer is a data leak. Bridge to the technical part: it is an access-control problem before it is an AI problem, so that is where the design effort went.
 
-The two-checkpoint beat explains the layers without a term. A fast checkpoint at the door gets a request into the right neighbourhood of documents. A slower, careful one runs right before anything is handed over, because permissions may have changed in the gap. Most systems build the first and hope nothing changes. This one assumed it would.
+The two-checkpoint beat explains the layers without jargon. A fast checkpoint at the door gets a request into the right neighbourhood of documents. A slower, careful one runs right before anything is handed over, because permissions may have changed in the gap. Most systems build the first and hope nothing changes. This one assumed it would.
 
-The trust beat tells three mistakes, because that is more informative than a story where nothing went wrong. The system once accused itself of leaking a document to someone who was allowed to see it, because the test data was mislabelled. A security rule was found that no test exercised, because a stricter rule kept masking it. And one check passed or failed almost at random, because the AI's own judgement had been allowed to decide something security-critical. The security decision was pulled apart to always be a hard rule and never a model's mood.
+The trust beat tells three mistakes, because that is more informative than a story where nothing went wrong. The system once accused itself of leaking a document to someone who was allowed to see it, because the test data was mislabelled. One security rule had no test exercising it, because a stricter rule kept masking it. And one check passed or failed almost at random, because the AI's own judgement had been allowed to decide something security-critical. The fix made that security decision a hard rule, never a model's mood.
 
 The platform beat is the Databricks finding, generalised. A search index built from governed data does not inherit the data's governance, because it is a copy. A revocation in the source does not reach the index downstream, so the check has to happen again, live, at query time. That is true of any architecture where a vector index sits next to but separate from operational data.
 
-Deploy the limitations beat before being asked. The test set in that build is 22 documents. At that size almost every retrieval strategy scores well, so the differences between the six strategies benchmarked are mostly noise. Dense retrieval would be the right production choice for a corpus this small. What the size does not weaken is the zero-leak guarantee and the testing discipline behind it. For a real customer the corpus would be larger and tiered. The storage-isolation strategy would be designed for tenant growth up front, and the scale caveat instrumented from day one.
+Offer the limitations beat before you are asked. The test set in that build is 22 documents. At that size almost every retrieval strategy scores well, so the differences between the six strategies benchmarked are mostly noise. Dense retrieval would be the right production choice for a corpus this small. The small size does not weaken the zero-leak guarantee or the testing discipline behind it. For a real customer the corpus would be larger and tiered. The storage-isolation strategy would be designed for tenant growth up front, and the scale caveat instrumented from day one.
 
-Close on whichever thread the conversation ended on. On trust: an FDE's job is turning a technical guarantee into something a customer's security team can sign off on. On platforms: never assume a guarantee travels between systems until it has been verified on their specific platform. On limitations: better to say exactly where the edges of what has been proven are than to let them be found later.
+Close on whichever thread the conversation ended on. On trust: an FDE's job is turning a technical guarantee into something a customer's security team can sign off on. On platforms: never assume a guarantee travels between systems until it has been verified on their specific platform. On limitations: say exactly where the proven edges are before someone else finds them.

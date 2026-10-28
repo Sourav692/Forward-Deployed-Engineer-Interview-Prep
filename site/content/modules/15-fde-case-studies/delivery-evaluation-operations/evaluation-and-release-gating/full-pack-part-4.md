@@ -27,7 +27,7 @@ The shared schema becomes core product: run metadata and model, prompt, dataset 
 
 A concrete launch review reads like this. Coverage 97%. One severe regression escaped in the last 20 releases. Agreement 89%, acceptable only if the disagreement set is explainable. p95 run time 14 minutes against the 20-minute window. Cost $18 per release evaluation. Flaky rate 1.5%, concentrated in one ambiguous rubric dimension. Four of 5 known regression classes caught before release, 1 by canary, with a postmortem required on the missed class.
 
-Rollback triggers are as explicit as go/no-go gates. They are a bad canary signal, a spike in flaky cases, a post-release incident in an unchecked failure class, and a failed dependency that prevents trustworthy scoring.
+Rollback triggers are as explicit as go/no-go gates: a bad canary signal, a spike in flaky cases, a post-release incident in an unchecked failure class, and a failed dependency that prevents trustworthy scoring.
 
 ## 13. Deliver It in Fifty Minutes
 

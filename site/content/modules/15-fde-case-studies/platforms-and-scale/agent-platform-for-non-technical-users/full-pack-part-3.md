@@ -43,7 +43,7 @@ The same mechanism answers the two follow-ups the round always gets. How does a 
 
 ## 12. Name the Gaps Before the Interviewer Does
 
-The source project contains no LLM at all, on purpose, so every property can be proven with fast, reproducible tests. State that plainly, and never imply the demo proves an LLM planner is safe.
+The source project contains no LLM at all, on purpose, so every property can be proven with fast, reproducible tests. Say so plainly, and never imply the demo proves an LLM planner is safe.
 
 | Gap | Status | What to say |
 |---|---|---|
@@ -98,6 +98,6 @@ Fourth, the coverage discipline: every claim is marked *built and runnable* or *
 - **Moderate:** a `Connector` model with a vault abstraction, a real planner, sandboxed custom-tool review, canary migration between versions.
 - **Large:** a visual builder, and a real secrets manager with a distributed lock store.
 
-The one-breath restatement is worth memorising:
+Memorise the one-breath restatement:
 
 > *"We're building the safety and orchestration layer that sits between a non-technical user's plain-English intent and a real, destructive action — so that no matter which channel the trigger came from, the action only runs when it's actually supposed to, runs exactly once, and survives crashes and retries without ever surprising anyone."*

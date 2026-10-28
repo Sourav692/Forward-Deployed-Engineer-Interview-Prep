@@ -1,25 +1,25 @@
 # Observability and Production Diagnosis: Main Interview Guide
 
-**Diagnosis process** is: a user says “it’s slow and sometimes wrong.” You need the hop that hurt — without turning traces into a second copy of their tickets.
+**Diagnosis process:** a user says “it’s slow and sometimes wrong.” You need the hop that hurt, without turning traces into a second copy of their tickets.
 
-**This case covers one slice:** one correlation id through the AI path, redacted spans, tenant-scoped debug. Not a new product feature.
+**This case covers one slice:** one correlation id through the AI path, redacted spans and tenant-scoped debug. It adds no product feature.
 
 End to end, as Acme’s German refund flow:
 
 1. **Request gets a correlation id** at auth.
-2. **Each hop records time and outcome** — retrieval, model, tool — not the raw prompt by default.
+2. **Each hop records time and outcome** (retrieval, model, tool), but not the raw prompt by default.
 3. **A classifier redacts** before storage. “Retrieval 1.2s, 3 docs” yes; full SSN no.
 4. **Support sees Acme only.** L1 cannot open Globex tickets to “help debug.”
 5. **You see first token vs last sentence**, empty retrieval vs made-up answer vs tool 500.
 6. **Errors and outliers stay; most happy traffic is sampled.**
 
-That’s it: **trace the path → hide the secrets → find the hop.** Telemetry must not stall the user.
+The loop: **trace the path → hide the secrets → find the hop.** Telemetry must not stall the user.
 
 > **Full source:** [Sources and Full Design](/design/observability-and-production-diagnosis#full-pack), especially sections 1–9 for the anchor architecture and sections 10–15 for incidents and variants. Use the [Deep Dive](/design/observability-and-production-diagnosis#deep-dive) for diagnostic detail and the [Cheat Sheet](/design/observability-and-production-diagnosis#cheat-sheet) for rehearsal.
 
 ## The anchor and its family
 
-The anchor is a customer-facing AI application that is “slow and sometimes wrong.” The goal is to connect a complaint to a cause quickly **without making telemetry a second copy of customer data**. The same traces answer several related prompts.
+The anchor is a customer-facing AI application that is “slow and sometimes wrong.” The goal is to connect a complaint to a cause quickly without making telemetry a second copy of customer data. The same traces answer several related prompts.
 
 | Related case | Shared foundation | What changes |
 |---|---|---|
@@ -42,11 +42,11 @@ The anchor is a customer-facing AI application that is “slow and sometimes wro
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Propagate one correlation ID** through auth, tenant, retrieval, model, tools, post-process, and queues.
 2. **Collect structured per-hop timings and outcome tags.**
@@ -54,7 +54,7 @@ The easiest way to frame requirements in an interview is:
 4. **Let support find a request family without raw content.**
 5. **Keep an access audit** independent of sampled debug traces.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -94,7 +94,7 @@ flowchart TB
 - Trace retrieval, model/LLM, tool and post-processing timings with structured version, error and outcome metadata while the request continues to the user.
 - Export spans asynchronously through a bounded buffer. If export fails, serve the user and alert on the diagnostic gap.
 - Classify and redact sensitive fields before storage; use an HMAC fingerprint with a secret key where correlation is needed, and cap attribute cardinality.
-- Preferentially keep error and slow traces, with exemplars and incident overrides so rare failures remain diagnosable.
+- Bias retention towards error and slow traces, with exemplars and incident overrides so rare failures stay diagnosable.
 - Store only bounded, retention-limited traces; send platform-wide aggregates to the global dashboard and enforce tenant/role access for support views.
 - Write support access events to a separate, durable audit path so trace sampling cannot erase who viewed evidence.
 
@@ -102,11 +102,11 @@ flowchart TB
 
 Start with the user outcome: p95/p99, first-token time, failure/partial rate and affected tenant. Then split request time into retrieval, rerank, model queue, provider, tools and delivery. For a wrong answer, compare retrieved evidence with the answer: empty/stale/off-topic evidence points upstream; good evidence contradicted by the answer points to synthesis or prompt; one-tenant failures point to config, permission or integration state. Track completion, abandonment and support contacts alongside technical quality.
 
-**If sampling dropped the only bad trace:** compare complaints with trace coverage, temporarily raise fidelity for the affected slice, reconstruct from gateway/dependency evidence, mark the trace gap, then add error-class overrides and always-on exemplars. Do not claim the absence of a trace means no failure.
+**If sampling dropped the only bad trace:** compare complaints with trace coverage, temporarily raise fidelity for the affected slice, reconstruct from gateway/dependency evidence, mark the trace gap, then add error-class overrides and always-on exemplars. A missing trace does not mean no failure.
 
 **Latency incident #87:** p95 reached 22.18s against a 7s target. Retrieval 4.2s, reranker 3.1s, gateway queue 2.8s and provider 9.36s stacked after a larger reranker and model-route change. Roll back the route, cap candidates, enable a light-reranker fallback and keep EU traffic near an EU endpoint; load-test peak queue depth before repeating the experiment.
 
-**Cost incident #88:** requests rose only 7%, while input tokens rose 351%, cache hit rate fell from 67% to 4%, and a larger prompt crossed an expensive model-routing threshold. Roll back the template, restore compression and context caps, invalidate the flawed cache entries, and version cost gates. The cache key also lost `role_scope`, making this a permission incident as well as a budget incident.
+**Cost incident #88:** requests rose only 7%, while input tokens rose 351%, cache hit rate fell from 67% to 4%, and a larger prompt crossed an expensive model-routing threshold. Roll back the template, restore compression and context caps, invalidate the flawed cache entries, and version cost gates. The cache key also lost `role_scope`, so this is a permission incident as well as a budget incident.
 
 ## Failure policy, cost and rollout
 

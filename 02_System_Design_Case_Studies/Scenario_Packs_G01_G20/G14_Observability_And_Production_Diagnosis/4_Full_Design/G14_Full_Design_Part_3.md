@@ -35,7 +35,7 @@ The weak answer is "ask users to make shorter queries or switch to a cheaper mod
 
 ## 12. Answer the Neighbouring Prompts With the Same Traces
 
-Three prompts in the group look different and use the same instrument. Each one is answered by reading the anchor's traces at a different depth.
+Three prompts in the group look different but use the same instrument. Answer each by reading the anchor's traces at a different depth.
 
 **#53, latency regression.** "An enterprise customer reports that responses have become slow." First clarify which latency: time to first token, time between tokens, total completion time, or user-perceived latency. Then decompose across ten stages: client and network, authentication, middleware, retrieval, prompt construction, model prefill, token generation, tool calls, post-processing and streaming. Check input and output token counts and retrieval p95 and p99. Then check retry rates, rate-limit throttling and traffic patterns. Finish with model version, prompt changes, cache hit rates and regional routing. Incident #87 is this prompt with real numbers.
 
@@ -47,7 +47,7 @@ The follow-up is "would you fine-tune the model?" Classify the problem first. A 
 
 **#74, diagnose high latency in an LLM inference pipeline.** This is the layer below the application. Walk the full stack: tokenization, network, batch size, KV cache, post-processing. Two facts carry the answer *(from the additions file, section B)*. Prefill processes the whole prompt in parallel and sets time to first token, so it scales with input tokens. Decode generates one token at a time and sets tokens per second, so it scales with output tokens. A frozen UI points at prompt size, retrieval and queueing. An answer that starts fast then drags points at output length.
 
-Batch size trades throughput for per-request latency. With continuous batching nothing waits to fill; each decode step just gets slower as more sequences share it. The KV cache holds attention state for tokens already processed. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption. Post-processing is usually small, but a synchronous evaluator or logger on the hot path is not. The same stack walk anchors G20 on inference serving, so prepare it once.
+Batch size trades throughput for per-request latency. With continuous batching nothing waits to fill; each decode step gets slower as more sequences share it. The KV cache holds attention state for tokens already processed. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption. Post-processing is usually small, but a synchronous evaluator or logger on the hot path is not. The same stack walk anchors G20 on inference serving, so prepare it once.
 
 ## 13. Roll Out in Four Phases With Named Owners
 
@@ -73,7 +73,7 @@ The answer key gives a weekly version. SLOs come in weeks 0-1 and measurable "sl
 | Telemetry overhead | Added latency, compute, storage, network versus baseline | Platform and SRE | Overhead materially raises latency or cost |
 | Mean time to diagnose | First report or alert to a credible root-cause hypothesis | On-call engineering and support operations | Stops improving, or exceeds the response target |
 
-The go/no-go gate is explicit. If trace coverage falls below the minimum or overhead moves latency, the release pauses. Rollback triggers are concrete: loss of trace propagation, a spike in quality-event rate, or an unsustainable cost slope.
+The go/no-go gate: if trace coverage falls below the minimum or overhead moves latency, the release pauses. Rollback triggers are concrete: loss of trace propagation, a spike in quality-event rate, or an unsustainable cost slope.
 
 Decide what is product, adapter, service or configuration. Per-customer sampling rates, retention windows and alert thresholds are configuration. Ticketing and alerting integrations are adapters. Collection, redaction, correlation propagation and the access gateway are a shared service. The request lifecycle, outcome tags and the minimal schema are core product. That split keeps customer edge cases out of the core.
 

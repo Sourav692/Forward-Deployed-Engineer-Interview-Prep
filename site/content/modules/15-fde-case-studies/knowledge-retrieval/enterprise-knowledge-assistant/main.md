@@ -1,25 +1,25 @@
 # Enterprise Knowledge Assistant: Interview Guide
 
-**Knowledge work** is people looking up how the company actually runs: policies, runbooks, product docs. The same question is not the same answer if you are an intern vs a VP.
+**Knowledge work** is people looking up how the company runs: policies, runbooks, product docs. An intern and a VP can ask the same question and get different answers.
 
-**This case covers one slice:** ask an internal question and get a cited answer you are allowed to see. Not a general Google, not a ticket bot.
+**This case covers one slice:** ask an internal question and get a cited answer you are allowed to see. It is neither a general Google nor a ticket bot.
 
 End to end, as Priya (Tier-1 support):
 
 1. **She asks** “What’s the SLA for enterprise plus?”
-2. **We check who she is** — tenant, role, groups.
+2. **We check who she is:** tenant, role, groups.
 3. **We retrieve only docs she may open.** The VP handbook never enters the model.
 4. **The model writes from that pack** and cites the passages.
 5. **If sources disagree or evidence is thin**, we say so, or abstain, or escalate.
 6. **If she is later moved off that group**, yesterday’s cached hit is dead.
 
-That’s it: **who you are → what you may read → cited answer or stop.** Building a new policy is out of scope.
+**Who you are → what you may read → cited answer or stop.** Building a new policy is out of scope.
 
-> **Core idea:** This is not primarily a vector-search problem. It is a permission-aware RAG problem. Different employees can ask the same question and legitimately need different answers.
+> **Core idea:** This is a permission-aware RAG problem first and a vector-search problem second. Different employees can ask the same question and legitimately need different answers.
 
 ## The anchor case study
 
-Use this guide as the **master case study** for enterprise RAG and knowledge-assistant interviews. Learn the shared architecture here, then adapt it to each variant's dominant constraint.
+Use this guide as the master case study for enterprise RAG and knowledge-assistant interviews. Learn the shared architecture here, then adapt it to each variant's dominant constraint.
 
 | Related case | What changes from this case |
 |---|---|
@@ -88,7 +88,7 @@ Ask the questions that change a design decision. The [Full Design, section 1](/d
 | How fast must updates, deletions, and access revocations take effect? | If a doc is deleted or access is revoked, how long can it still appear in an answer? | Freshness SLO, tombstones, and how often you reconcile. |
 | Should answers synthesize across sources, and do citations need a passage or whole document? | Can we blend three docs into one answer, and must the citation be the exact paragraph? | Evidence mix, context budget, and citation grain. |
 | What should happen when evidence is weak, retrieval fails, or sources conflict? | If we only have a maybe, do we still answer, or say we don't know? | Answer, mark stale, abstain, or escalate. |
-| Who asks questions, who investigates wrong answers, and who owns an over-sharing incident? | When an intern sees a salary doc they shouldn't, who gets paged — and who may open the traces? | Personas, incident owner, and who can inspect traces. |
+| Who asks questions, who investigates wrong answers, and who owns an over-sharing incident? | When an intern sees a salary doc they shouldn't, who gets paged, and who may open the traces? | Personas, incident owner, and who can inspect traces. |
 | What are p95 latency, scale, residency, retention, and cost limits? | How fast, how many users, which country the data must stay in, and what we can spend? | Latency budget, partitioning, region, and how long logs are kept. |
 | Who may inspect traces, and what must an audit reconstruct? | After a leak scare, can we prove which docs went into the model and who was allowed to see them? | Logged IDs, versions, policy, evidence, and citation set. |
 
@@ -100,23 +100,23 @@ If answers are unavailable, state the assumptions before drawing: read-only, que
 
 ## 2. Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
-1. **Ingest enterprise sources** — Drive, SharePoint, Slack, Confluence/wiki, Jira/tickets, etc.
-2. **Normalise permissions** — convert source-specific ACLs/groups into a common authorisation model.
-3. **Retrieve authorised content** — unauthorised chunks must never enter model context.
-4. **Answer questions** — use retrieved evidence rather than unsupported model knowledge.
-5. **Provide citations** — citations should point to the actual supporting, authorised evidence.
-6. **Abstain when necessary** — if evidence is weak or unavailable, do not guess.
-7. **Handle changes** — propagate document updates, deletions, ACL changes and revocations.
-8. **Support different personas/tenants** — the same query can legitimately produce different results.
-9. **Audit decisions** — preserve enough information to explain why an answer was produced.
+1. **Ingest enterprise sources.** Drive, SharePoint, Slack, Confluence/wiki, Jira/tickets, etc.
+2. **Normalise permissions.** Convert source-specific ACLs/groups into a common authorisation model.
+3. **Retrieve authorised content.** Unauthorised chunks must never enter model context.
+4. **Answer questions.** Use retrieved evidence, not unsupported model knowledge.
+5. **Provide citations.** Citations point to the actual supporting, authorised evidence.
+6. **Abstain when necessary.** If evidence is weak or unavailable, do not guess.
+7. **Handle changes.** Propagate document updates, deletions, ACL changes and revocations.
+8. **Support different personas/tenants.** The same query can legitimately produce different results.
+9. **Audit decisions.** Keep enough information to explain why an answer was produced.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -212,7 +212,7 @@ Forbidden content must stay outside the model context.
 
 ## 4. Ingestion: normalise permissions first
 
-A connector does more than download documents. It translates each source's permission model into one internal representation.
+A connector downloads documents and translates each source's permission model into one internal representation.
 
 Keep:
 
@@ -256,17 +256,15 @@ Source event
 
 Use change events where possible, idempotent processing, backfill, tombstones and periodic reconciliation.
 
-Important distinction:
-
 > **Authorisation correctness and freshness correctness are different checks.**
 
-A connector can miss a delete while the ACL still looks valid. If freshness is outside the agreed SLO, fail closed or clearly withhold/label the answer.
+A connector can miss a delete while the ACL still looks valid. If freshness is outside the agreed SLO, fail closed, or withhold or label the answer.
 
 ---
 
 ## 6. Authorisation: two layers
 
-### Layer 1 — Pre-filter
+### Layer 1. Pre-filter
 
 Compile the user's identity/attributes into the search filter.
 
@@ -274,7 +272,7 @@ Examples: tenant, groups, clearance, region, project, customer/account, classifi
 
 This improves retrieval quality and latency because forbidden documents never compete for top-k.
 
-### Layer 2 — Authoritative post-check
+### Layer 2. Authoritative post-check
 
 Before generation, verify the final evidence set again.
 

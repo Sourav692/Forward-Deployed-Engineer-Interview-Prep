@@ -4,26 +4,26 @@
 
 The first pass is always too optimistic: a queue, a few workers and a model endpoint. That works at average load. It ignores the deadline, the retry rate and the hard last 5%.
 
-Derive the number live rather than reciting it. With 100,000,000 records and a window of 6 × 3,600 = 21,600 seconds, the base rate is about **4,630 records/second**. That is the floor, not a design. Adding 15% headroom for retries, stragglers and reconciliation gives a planning rate of about **5,320 records/second**.
+Derive the number live rather than reciting it. With 100,000,000 records and a window of 6 × 3,600 = 21,600 seconds, the base rate is about 4,630 records/second. That is only the floor. Adding 15% headroom for retries, stragglers and reconciliation gives a planning rate of about 5,320 records/second.
 
 | Scenario | Records | Window | Base rate | With 15% headroom |
 |---|---|---|---|---|
 | Current batch | 100M | 6 hours | ~4,630 rps | ~5,320 rps |
 | 10x growth | 1B | 6 hours | ~46,300 rps | ~53,200 rps |
 
-The 10x row is not tomorrow's expectation. It tests whether the design is fragile or absurdly overbuilt. Keep headroom and growth apart: headroom covers noise inside one batch, while growth covers next quarter's larger batch. State average, peak, growth and headroom rather than one point estimate.
+The 10x row tests whether the design is fragile or absurdly overbuilt; nobody expects it tomorrow. Keep headroom and growth apart: headroom covers noise inside one batch, while growth covers next quarter's larger batch. State average, peak, growth and headroom rather than one point estimate.
 
-Tokens turn the record rate into a factory. At 250 input plus 20 output tokens, each record costs 270 tokens before retries. I'd let that token figure, not the record count, drive partitioning and component choice.
+Tokens set the real load. At 250 input plus 20 output tokens, each record costs 270 tokens before retries. I'd let that token figure, not the record count, drive partitioning and component choice.
 
-Say the uncertainty out loud rather than hiding it:
+Say the uncertainty out loud:
 
 > *"At 100 million records, I would plan for about 4,630 records per second before retries. If the average prompt is smaller than expected, model throughput becomes easier; if the tail of large records is heavier, we need more headroom or more aggressive partitioning. I would size the system around the tail, not the mean."*
 
-The chapter treats cost only qualitatively. The V2 tutorial's author closes the gap with a live dollar formula, which is supplementary perspective and not chapter content. At 270 tokens a record and ~5,320 rps, the fleet sustains roughly 1.43M tokens/second. Across the window that is about 27B tokens for 100M records (100M × 270). Apply the per-million-token price for a cost per run, then divide by 100 for cost per million records. Retries of calls that actually ran re-spend the full 270 tokens each; a call rejected up front, such as a 429, generally costs nothing. At a 5% retry rate that is roughly 5% more spend. The 15% headroom is itself a cost line, and stragglers burn compute past the window. So the cost ceiling belongs inside the rate-limit coordinator's backoff behaviour, not in a separate finance conversation.
+The chapter treats cost only qualitatively. The V2 tutorial's author closes the gap with a live dollar formula, which is supplementary perspective and not chapter content. At 270 tokens a record and ~5,320 rps, the fleet sustains roughly 1.43M tokens/second. Across the window that is about 27B tokens for 100M records (100M × 270). Apply the per-million-token price for a cost per run, then divide by 100 for cost per million records. Retries of calls that ran re-spend the full 270 tokens each; a call rejected up front, such as a 429, generally costs nothing. At a 5% retry rate that is roughly 5% more spend. The 15% headroom is itself a cost line, and stragglers burn compute past the window. So the cost ceiling belongs inside the rate-limit coordinator's backoff behaviour, not in a separate finance conversation.
 
 ## 5. Draw the Architecture End to End
 
-The organising rule is that each layer owns a different kind of truth. The planner owns what "this batch" means. The queue owns who is working on what. The sink owns what has been published. Planner, manifest, forecaster and console are control-plane concerns that coordinate the run. Workers and sink are data-plane concerns that move records through the model into durable output. They scale and change at different rates, which is why they are drawn apart.
+Each layer owns a different kind of truth. The planner owns what "this batch" means. The queue owns who is working on what. The sink owns what has been published. Planner, manifest, forecaster and console are control-plane concerns that coordinate the run. Workers and sink are data-plane concerns that move records through the model into durable output. They scale and change at different rates, which is why they are drawn apart.
 
 The system with its planes and trust boundaries *(own construction)*:
 
@@ -179,7 +179,7 @@ The sketch deliberately omits multi-worker contention, logging, metrics, tracing
 
 ## 7. Scope Workers to Immutable Snapshots
 
-The most important security control is not on the model. It is that every worker processes a versioned snapshot that cannot change beneath it. A retry against a mutable table cannot prove what it retried.
+The most important security control sits outside the model: every worker processes a versioned snapshot that cannot change beneath it. A retry against a mutable table cannot prove what it retried.
 
 Snapshot immutability does three jobs at once. It removes ambiguity during retries, it makes evidence replayable after an incident, and it limits blast radius. A malformed or malicious tenant dataset touches only that tenant's snapshot, not a global table.
 
@@ -187,4 +187,4 @@ Keep raw payloads out of queue metadata. Messages carry only opaque identifiers,
 
 Record model version, code version, prompt or feature schema version and deployment identity for every run. That is how the team proves which artifact produced which result when a customer asks why today's classification differs from yesterday's.
 
-The chapter names no external framework, and the V2 author treats that as a gap. Their supplementary answer: ask which framework applies before claiming compliance. With personal data, purpose limitation and data minimisation apply to snapshot and result retention. In healthcare, HIPAA's audit-control rule applies to the audit trail; in finance, rules such as SEC 17a-4 or SOX do. SOC 2 is a voluntary audit report that customers in any industry may ask for. They also propose a per-run "processing basis" field on `BatchJob`. The controls are necessary but not sufficient without a named framework to test them against.
+The chapter names no external framework, and the V2 author treats that as a gap. Their supplementary answer is to ask which framework applies before claiming compliance. With personal data, purpose limitation and data minimisation apply to snapshot and result retention. In healthcare, HIPAA's audit-control rule applies to the audit trail; in finance, rules such as SEC 17a-4 or SOX do. SOC 2 is a voluntary audit report that customers in any industry may ask for. They also propose a per-run "processing basis" field on `BatchJob`. Without a named framework to test them against, the controls are necessary but not sufficient.

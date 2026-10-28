@@ -4,13 +4,13 @@
 
 ◷ 24 min
 
-This is a portfolio question, not a design question. Nothing gets drawn until the list has been cut. The answer is a repeatable way to turn thirty enthusiastic one-liners into a funded sequence with kill criteria, and the architecture only appears as the shared platform that makes later items cheaper. The page is the standalone pack for this case.
+Treat this as a portfolio question. Nothing gets drawn until the list has been cut. The answer is a repeatable way to turn thirty enthusiastic one-liners into a funded sequence with kill criteria, and the architecture only appears as the shared platform that makes later items cheaper.
 
 | Case | Where it comes from | What the source gives |
 |---|---|---|
 | #60 Prioritise AI Use Cases for a Large Enterprise | [FDE Problem Decomposition Question Bank](../../../03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md), Question 16 | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
 
-The source is talking points, not a worked answer. Everything marked *(own construction)* was built for this page from the arguments in this site's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
+The source is a set of talking points with no worked answer. Everything marked *(own construction)* was built for this page from the arguments in this site's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
 
 ---
 
@@ -20,7 +20,7 @@ The prompt, verbatim from Question 16:
 
 > "An executive gives you a list of 30 potential AI use cases. How do you decide what to build first?"
 
-The source's answer names ten criteria: business value, user pain, feasibility, data availability, integration complexity, risk, time to value, adoption likelihood, reusability and evaluation difficulty. It then states the one instruction that matters most: *"You should explicitly avoid selecting the most impressive demo."*
+The source's answer names ten criteria: business value, user pain, feasibility, data availability, integration complexity, risk, time to value, adoption likelihood, reusability and evaluation difficulty. It then gives the instruction that matters most: *"You should explicitly avoid selecting the most impressive demo."*
 
 It closes with the property list of a good first pick, verbatim:
 
@@ -37,7 +37,7 @@ The trap is real because demos and production reward different things. A demo hi
 
 ## 2. Ask What "Prioritise" Decides
 
-A ranking is only useful if it changes a decision. So the first question is which decision this one feeds. Each of the questions below changes the method, not just the answer *(own construction)*.
+A ranking is only useful if it changes a decision. So the first question is which decision this one feeds. Each of the questions below changes the method as well as the answer *(own construction)*.
 
 | QUESTION | WHAT CHANGES WITH THE ANSWER |
 |---|---|
@@ -68,7 +68,7 @@ Thirty ideas arrive as thirty sentences of different shapes. "Use AI for fraud" 
 | Business owner and SME | The person who signs the outcome, and the expert who labels the test set |
 | Kill criteria | The result that would stop it, written before the build |
 
-The card template is *(own construction)*. Its fields are the source's ten criteria and six properties, plus the delivery framework's intake rules. Filling thirty cards is a week of interviews, not a month. The delivery framework's rule applies here too: a stage is not done because time passed, it is done because a checkable thing is true.
+The card template is *(own construction)*. Its fields are the source's ten criteria and six properties, plus the delivery framework's intake rules. Filling thirty cards is a week of interviews, not a month. The delivery framework's rule applies here too: a stage is done when a checkable thing is true, not when time has passed.
 
 ## 4. Apply Gates Before Scoring Anything
 
@@ -101,11 +101,11 @@ The weights are a stated opinion, not a truth. Say them aloud so the interviewer
 
 ## 6. Estimate Value From Volume, Not From Enthusiasm
 
-Executive value estimates are usually a revenue number with no mechanism behind it. Rebuild each one from four factors: how often the step happens, how much it saves each time, what that time or loss is worth, and what share of users will actually change behaviour. The formula is *(own construction)*.
+Executive value estimates are usually a revenue number with no mechanism behind it. Rebuild each one from four factors: how often the step happens, how much it saves each time, what that time or loss is worth, and what share of users will change behaviour. The formula is *(own construction)*.
 
 > Annual value ≈ volume × saving per occurrence × unit cost × adoption rate
 
-Here is one worked estimate, with every input an assumption. Contact-centre wrap-up notes (#7 on the insurer's list): 1.2M calls a year, 3 minutes of wrap-up saved per call, $0.75 per agent-minute fully loaded, and 70% adoption. That comes to about $1.9M a year. The sponsor's slide said "$5M in productivity". The gap is the adoption factor and the difference between minutes saved and minutes that turn into lower cost.
+A worked estimate, with every input an assumption. Contact-centre wrap-up notes (#7 on the insurer's list): 1.2M calls a year, 3 minutes of wrap-up saved per call, $0.75 per agent-minute fully loaded, and 70% adoption. That comes to about $1.9M a year. The sponsor's slide said "$5M in productivity". The gap is the adoption factor and the difference between minutes saved and minutes that turn into lower cost.
 
 Three honesty rules keep this from becoming theatre. Separate hard savings, such as fewer contractor hours, from soft savings, such as minutes that go back into the same shift. Discount by adoption, using the pilot's measured rate once it exists. Subtract the run cost, because the cost cram sheet's executive question is "does the value justify the spend?", not "is there value?". Convert the result into the 1-to-5 band from section 5, and keep the dollar figure on the card, so the band can be challenged.
 

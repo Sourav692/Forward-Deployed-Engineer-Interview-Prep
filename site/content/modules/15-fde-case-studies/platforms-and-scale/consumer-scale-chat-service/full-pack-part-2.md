@@ -2,19 +2,19 @@
 
 ## 6. Stream Every Answer and Cancel the Ones Nobody Reads
 
-Stream every answer, and treat the closed connection as a cost signal. Streaming buys perceived latency, not real latency. The production study guide makes the point: total generation time is unchanged, but the first token arrives in well under a second instead of after the whole answer.
+Stream every answer, and treat the closed connection as a cost signal. Streaming buys perceived latency, not real latency. Per the production study guide, total generation time is unchanged, but the first token arrives in well under a second instead of after the whole answer.
 
-Use Server-Sent Events for the chat stream. The traffic is one-way from server to client after the request, SSE runs over plain HTTP, so it passes most proxies that don't buffer, and the browser's EventSource reconnects on its own. Keep WebSockets for the paths that genuinely need both directions at once, such as voice. Each stream carries a message ID, so a reconnect resumes from the persisted partial answer instead of regenerating it *(own construction)*.
+Use Server-Sent Events for the chat stream. After the request, traffic is one-way from server to client. SSE runs over plain HTTP, so it passes most proxies that don't buffer, and the browser's EventSource reconnects on its own. Keep WebSockets for paths that need both directions at once, such as voice. Each stream carries a message ID, so a reconnect resumes from the persisted partial answer instead of regenerating it *(own construction)*.
 
 A user who leaves mid-answer is still costing GPU time. The cost additions name this scenario: *"cancel the stream + any in-flight tool calls on abandon — otherwise you pay for tokens nobody read."* The gateway detects the closed connection and sends a cancel to the inference request. That frees the batch slot and its KV cache and stops any tool call in flight. The Stop button uses the same path. Measure abandonment against first-token time and answer length, because a rising abandon rate is often a first-token problem in disguise. The Observability and Production Diagnosis case’s card 15.10 carries the same lesson.
 
 ## 7. Route by Tier and Task, and Count What a Cascade Costs
 
-Route on two axes: the user's tier and the turn's difficulty. The tier sets which models a user may reach and at what quota. The task sets which of those models a turn actually needs. A greeting does not need the premium model; a long proof might.
+Route on two axes: the user's tier and the turn's difficulty. The tier sets which models a user may reach and at what quota. The task sets which of those models a turn needs. A greeting does not need the premium model; a long proof might.
 
-The cost additions quantify the lever. On Claude's current price list, output costs five times input on every tier; other vendors' ratios differ. A router that moves 80% of traffic from Opus 5.5 ($4/$20 per million input/output tokens) to Haiku 4.5 ($1/$5) is a ~4× unit-cost cut on that slice (list prices as of Sep 2026). That single sentence is what "model routing" is worth, and it belongs in the answer.
+The cost additions quantify the lever. On Claude's current price list, output costs five times input on every tier; other vendors' ratios differ. A router that moves 80% of traffic from Opus 5.5 ($4/$20 per million input/output tokens) to Haiku 4.5 ($1/$5) is a ~4× unit-cost cut on that slice (list prices as of Sep 2026). Say that sentence in the answer: it puts a number on "model routing".
 
-Then name the trade-off most candidates miss. Prompt caches are scoped to a model, so a cheap-to-medium-to-premium cascade means separate cold prefixes. On a chat product whose input is mostly repeated history, a cascade can forfeit more in cache than it saves in price. The additions give the rule: measure one strong model at lower effort before building the cascade. Route at the start of a conversation where possible, and keep a conversation on one model unless the user changes it *(own construction)*.
+Then name the trade-off. Prompt caches are scoped to a model, so a cheap-to-medium-to-premium cascade means separate cold prefixes. On a chat product whose input is mostly repeated history, a cascade can forfeit more in cache than it saves in price. The additions give the rule: measure one strong model at lower effort before building the cascade. Route at the start of a conversation where possible, and keep a conversation on one model unless the user changes it *(own construction)*.
 
 ## 8. Limit Per User, Queue Fairly Per Tier
 
@@ -22,11 +22,11 @@ A rate limit and a fair queue answer different questions, and a consumer service
 
 Put a token bucket per user at the gateway, sized by tier: messages per window and tokens per day. Count tokens, not only requests, because one long request can cost as much as, say, fifty short ones. Behind admission, feed a weighted fair queue per tier into the shared inference pools. A free-tier surge then waits longer, and paid users keep their latency *(own construction, from the Secure Multi-Tenant AI Platform case’s weighted-fair-queuing argument)*.
 
-Separate the two kinds of 429 when load spikes. The additions say it plainly: *"Separate provider 429s from your own gateway limits."* A self-inflicted limit is a policy decision. A provider or pool limit is a capacity event. Short term, retry with jitter onto a fallback model or region and shed non-interactive traffic. Long term, buy capacity and queue non-urgent work rather than retrying into the same wall. Abuse is a rate-limit problem too: per-account and per-IP limits, anomaly detection on bursts, and stricter quotas on new or unverified accounts *(own construction)*.
+Separate the two kinds of 429 when load spikes. As the additions put it: *"Separate provider 429s from your own gateway limits."* A self-inflicted limit is a policy decision. A provider or pool limit is a capacity event. Short term, retry with jitter onto a fallback model or region and shed non-interactive traffic. Long term, buy capacity and queue non-urgent work rather than retrying into the same wall. Abuse is a rate-limit problem too: per-account and per-IP limits, anomaly detection on bursts, and stricter quotas on new or unverified accounts *(own construction)*.
 
 ## 9. Moderate Both Directions and Treat Every File as Untrusted
 
-Moderate input before it reaches a GPU and output before it reaches a screen. The production guide's rule settles why both: the model can repeat something sensitive the user said two turns ago, so an input-only check never catches it. Input moderation buys half the cost; input plus output buys the multi-turn catch. A consumer chat product is multi-turn by definition.
+Moderate input before it reaches a GPU and output before it reaches a screen. The production guide explains why both: the model can repeat something sensitive the user said two turns ago, so an input-only check never catches it. Input moderation buys half the cost; input plus output buys the multi-turn catch. A consumer chat product is multi-turn by definition.
 
 Input moderation runs as a fast classifier at the gateway, before admission, so a blocked message never spends GPU time. Output moderation runs on the stream in chunks and can halt it mid-answer with an explanation. Moderation APIs score a fixed set of categories, and at default thresholds milder or app-specific abuse can still pass. The guide names two independent layers, the model's trained refusals and the moderation classifier, and neither substitutes for an app-specific policy. Track false positives as closely as false negatives, because over-blocking is a product failure users notice first *(own construction)*.
 

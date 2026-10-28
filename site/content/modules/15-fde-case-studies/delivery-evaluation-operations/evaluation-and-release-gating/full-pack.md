@@ -2,7 +2,7 @@
 
 *A gate strict enough to stop a bad release is slow enough that teams route around it.*
 
-An evaluation platform is not a dashboard of scores. It is a controlled decision about whether one change is safe to ship. This page consolidates the group's prompts into one read for the day before. The anchor design comes first. The neighbouring prompts, the incident and the cost pivot then come as deltas on the same gate.
+An evaluation platform makes a controlled decision about whether one change is safe to ship; a dashboard of scores is at most one view of it. This page folds the group's prompts into one read for the day before. The anchor design comes first; the neighbouring prompts, the incident and the cost pivot follow as deltas on the same gate.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -21,14 +21,14 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 The customer opens with one sentence. "We need one platform that lets 30 AI applications decide whether prompt, model, retrieval, or tool changes are safe to release." The first job is to restate it without smuggling in a design.
 
-A dashboard answers "what are the scores?" Nobody is obliged to act on that. The platform exists to answer "can this change ship?", and that question has an owner, a threshold and a record. So the goal is not the platform. The goal is making quality, safety, latency and cost regressions visible before and after deployment.
+A dashboard answers "what are the scores?" Nobody is obliged to act on that. The platform exists to answer "can this change ship?", and that question has an owner, a threshold and a record. So the goal is to make quality, safety, latency and cost regressions visible before and after deployment; the platform is the means.
 
 | Restatement | Why it is weak or strong |
 |---|---|
 | Weak: "Build an evaluation dashboard with test runs, scorecards, and approvals." | Feature-first. It never pins a baseline, never says what blocks a release, never names who may override |
 | Strong: "Build a release-gating system that helps teams compare a candidate AI change against the current baseline, detect quality, safety, latency, and cost regressions, and record the evidence behind a release decision." | Keeps the outcome in view. A dashboard becomes one possible interface to a controlled decision process |
 
-Four stakeholders hire the platform, and each asks a different question. Failing to separate them produces a system that is technically impressive but operationally unusable.
+Four stakeholders hire the platform, and each asks a different question. Blur them together and you get a system that is technically impressive and unusable in operation.
 
 | Stakeholder | The question they hire the platform to answer |
 |---|---|
@@ -37,7 +37,7 @@ Four stakeholders hire the platform, and each asks a different question. Failing
 | Safety lead | "Is this release safe enough for the risk profile?" |
 | Release manager | "Can I approve this with evidence?" |
 
-Ask the questions that change the design most. The six-question tree is worth reciting in order.
+Ask the questions that change the design most. Recite the six-question tree in order.
 
 | # | Question | What the answer decides |
 |---|---|---|
@@ -58,9 +58,9 @@ When the interviewer stays vague, protect the riskiest assumption. Assume the ga
 
 A requirement that cannot fail a test is a preference. "Fast gate" is a preference. "p95 run duration under 20 minutes in the release window" is a constraint, and only the constraint shapes the architecture.
 
-The functional requirements are what make this a gate rather than a dashboard. Split them with MoSCoW so the first release is the smallest trustworthy path *(the split is own construction; the items are the sources')*.
+The functional requirements make this a gate rather than a dashboard. Split them with MoSCoW so the first release is the smallest trustworthy path *(the split is own construction; the items are the sources')*.
 
-The must-haves are six. A release owner submits a candidate change, and the platform compares it to a pinned baseline and returns pass, block or hold with evidence. Datasets, prompts, models, tools and graders are versioned, because versioning is the only way to reproduce a decision later. Both deterministic and probabilistic evaluations run, since some checks must be stable and others depend on rubric judgement. Every candidate is compared against a pinned production baseline, never reported as an absolute score. Release policies are enforced per application, which is what turns analysis into action. Human review is supported, and reviewer disagreement is recorded as a first-class signal rather than discarded as noise.
+The must-haves are six. A release owner submits a candidate change, and the platform compares it to a pinned baseline and returns pass, block or hold with evidence. Datasets, prompts, models, tools and graders are versioned, because versioning is the only way to reproduce a decision later. Both deterministic and probabilistic evaluations run, since some checks must be stable and others depend on rubric judgement. Every candidate is compared against a pinned production baseline, never reported as an absolute score. Release policies are enforced per application, which turns analysis into action. Human review is supported, and reviewer disagreement is recorded as a first-class signal rather than discarded as noise.
 
 The should-haves follow once the gate is trusted. Privacy-safe production failures are sampled back into future suites so the test set evolves with the product. Online sampling watches live or shadow traffic after rollout. Latency and cost gates sit beside quality and safety.
 
@@ -95,9 +95,9 @@ Every requirement then needs an owner in the architecture. If a requirement has 
 
 ## 3. Size the Gate Against the Release Window
 
-The whiteboard version is a queue, a pool of workers, a results database and a dashboard. It works at average load and fails when the release train tightens. Sizing is what turns it into a design.
+The whiteboard version is a queue, a pool of workers, a results database and a dashboard. It works at average load and fails when the release train tightens. Sizing turns it into a design.
 
-The headline workload is not "30 apps". It is 30 applications × 20 candidate releases a day = 600 candidate evaluations a day. With 5,000 test cases each, that is 3,000,000 test-case executions a day. I'd assume each case needs 2–3 model or grader calls at minimum and 3–5 more realistically. So the platform makes roughly 6,000,000–15,000,000 model or evaluator calls a day.
+The headline workload is 30 applications × 20 candidate releases a day = 600 candidate evaluations a day, not "30 apps". With 5,000 test cases each, that is 3,000,000 test-case executions a day. I'd assume each case needs 2–3 model or grader calls at minimum and 3–5 more realistically. So the platform makes roughly 6,000,000–15,000,000 model or evaluator calls a day.
 
 | Window | Calls/sec needed | Approx. workers at 2.5 calls/sec each | Practical implication |
 |---|---|---|---|
@@ -106,7 +106,7 @@ The headline workload is not "30 apps". It is 30 applications × 20 candidate re
 
 The worker figure assumes one call every 400 ms, about 2.5 calls a second per worker at full utilisation. Real deployments add headroom for retries, tail latency and bursts.
 
-Average load answers "can we survive the day?" Peak load answers "can we survive the release window?" Those are different questions. A modest daily average still overwhelms the system if many applications submit in the same hour. So the pool is shared and elastic, with per-tenant quotas and admission control, so one application cannot starve the rest.
+Average load answers "can we survive the day?" Peak load answers "can we survive the release window?" A modest daily average still overwhelms the system if many applications submit in the same hour. The pool is therefore shared and elastic, with per-tenant quotas and admission control so one application cannot starve the rest.
 
 | Scenario | Candidate evaluations/day | Test-case executions/day | Design pressure |
 |---|---|---|---|

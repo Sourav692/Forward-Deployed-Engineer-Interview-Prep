@@ -40,7 +40,7 @@ Open with the outcome, then ask the judgement question. If everything cannot be 
 | 38–45 | Follow-up drill: 4 a.m., rebalancing, paying twice, partial publish (section 9) |
 | 45–50 | Close in ninety seconds, name the riskiest trade-off, specify the first rollout gate (section 12) |
 
-Running out of time before the trade-offs or the failure drill is how a technically strong answer scores as not interview-strong.
+A technically strong answer that runs out of time before the trade-offs or the failure drill still scores as a weak interview.
 
 The two-minute spoken answer, from the answer key:
 

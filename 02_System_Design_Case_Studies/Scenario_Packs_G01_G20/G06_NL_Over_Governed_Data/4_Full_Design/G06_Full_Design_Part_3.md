@@ -2,7 +2,7 @@
 
 ## 9. Fail Closed on Policy, Degrade on Everything Else
 
-A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human. Not every incident deserves the same reaction: a policy engine outage differs from a visualisation glitch, and a query scan that explodes cost differs from a benign cache miss. Memorise the pattern by category: authorisation closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
+A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human. Incidents deserve different reactions: a policy engine outage differs from a visualisation glitch, and a query scan that explodes cost differs from a benign cache miss. Memorise the pattern by category: authorisation closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
 
 | Situation | Preferred policy | Why |
 |---|---|---|
@@ -72,7 +72,7 @@ The summary contradicting the table is the fifth, already drawn in section 8. Ar
 - a dead-letter path with enough redacted context for support when a queued request keeps failing
 - a human escalation route for any ambiguous mapping or repeated semantic mismatch
 
-Human escalation is part of the design, not a sign of weakness.
+Treat human escalation as a designed path.
 
 Backpressure belongs to the background lane. Crawler and registry refresh jobs sit behind a queue with rate-limited bursts, so they never stampede the warehouse during peak query traffic. The query API degrades gracefully when metadata confidence drops. The compact failure policy reads as one flow:
 
@@ -92,7 +92,7 @@ request received
 
 ## 10. Gate the Release on Semantic Correctness, Not Execution Success
 
-A query that runs is not a query that is right. So the evaluation separates two things. Execution accuracy is proved by the golden-set replay. Semantic correctness is proved only by analyst review against the governed definition, and that is the release gate. Golden cases pair the user's natural-language question, the approved SQL and the expected result shape. They include easy examples, ambiguous paraphrases, edge cases with filters and time windows, and known traps where a valid query answers the wrong question.
+A query that runs can still be wrong, so the evaluation separates two things. Execution accuracy is proved by the golden-set replay. Semantic correctness is proved only by analyst review against the governed definition, and that is the release gate. Golden cases pair the user's natural-language question, the approved SQL and the expected result shape. They include easy examples, ambiguous paraphrases, edge cases with filters and time windows, and known traps where a valid query answers the wrong question.
 
 | Metric | Good threshold | Bad threshold | Dataset / method | Owner |
 |---|---:|---:|---|---|
@@ -114,11 +114,11 @@ Measure in four buckets, so model quality is never confused with operational hea
 
 A successful assistant changes behaviour. If executives keep asking analysts to re-check, the product has not solved the problem. The dashboard is layered the same way: business outcome on top, model quality in the middle, system health at the bottom. Each business metric is wired to the component that can move it. A trust drop then points at slow answers, too many clarifications, broken mapping, or policy blocks that feel arbitrary.
 
-Red-team the definitions, not only the SQL. Semantic substitution, where login activity stands in for paid activity. Schema drift that keeps a template plausible. Join explosions that pass every SQL check. Excessive scans that slow other tenants. Summary drift, where the table is right and the prose misstates the trend. And for the copilot personas: fabricated business reasons, leakage across regions or business units, stale dashboard refreshes presented as current, and an overconfident board-level narrative.
+Red-team the definitions as well as the SQL. Semantic substitution, where login activity stands in for paid activity. Schema drift that keeps a template plausible. Join explosions that pass every SQL check. Excessive scans that slow other tenants. Summary drift, where the table is right and the prose misstates the trend. For the copilot personas, add fabricated business reasons, leakage across regions or business units, stale dashboard refreshes presented as current, and an overconfident board-level narrative.
 
 ## 11. Roll Out Ten Metrics at a Time
 
-The rollout must prove three things in order. The assistant answers a narrow set of governed questions correctly. It does so safely under policy. Real users adopt it because it improves their workflow rather than impressing them in a demo. Left to right is increasing blast radius, not increasing ambition. The assistant advances only when the prior phase's exit criteria are met.
+The rollout must prove three things in order. The assistant answers a narrow set of governed questions correctly. It does so safely under policy. Real users adopt it because it improves their workflow rather than impressing them in a demo. Each phase left to right widens the blast radius. The assistant advances only when the prior phase's exit criteria are met.
 
 ```mermaid
 flowchart LR
@@ -138,9 +138,9 @@ flowchart LR
 | 6-8 | Executive release once the assistant consistently matches analyst-reviewed answers and escalation works |
 | After | Expand domain by domain, each with a named metric owner who approves definitions, reviews golden cases and owns semantic-layer changes |
 
-Name the owners, because a plan without owners is a hope. The metric owner approves definitions and golden cases. The application owner owns the runtime, prompt assembly, generation and API contracts. The data owner owns warehouse tables, the semantic layer and policy mappings. The security owner reviews access control, audit logging and blocked-query handling. The support owner receives escalations and coordinates rollback. Rollback triggers are a spike in policy violations, a drop in semantic correctness, a jump in bytes scanned, or users routing around the assistant because they stopped trusting it. Rollback is the mechanism that keeps a partial success from becoming an incident.
+Name the owners. The metric owner approves definitions and golden cases. The application owner owns the runtime, prompt assembly, generation and API contracts. The data owner owns warehouse tables, the semantic layer and policy mappings. The security owner reviews access control, audit logging and blocked-query handling. The support owner receives escalations and coordinates rollback. Rollback triggers are a spike in policy violations, a drop in semantic correctness, a jump in bytes scanned, or users routing around the assistant because they stopped trusting it. Rollback keeps a partial success from becoming an incident.
 
-Decide what is configuration, adapter, shared service and core product, because an FDE system creates leverage only when the next customer inherits the stable core and swaps the edges. Metric definitions, allowed domains and rollout thresholds are configuration. Warehouse and identity integrations are adapters. Query validation, policy enforcement, tracing and audit logging are shared services. Question understanding, explanation behaviour and safe query orchestration are the core. Five delivery items make it stick:
+Decide what is configuration, adapter, shared service and core product, because an FDE system pays off only when the next customer inherits the stable core and swaps the edges. Metric definitions, allowed domains and rollout thresholds are configuration. Warehouse and identity integrations are adapters. Query validation, policy enforcement, tracing and audit logging are shared services. Question understanding, explanation behaviour and safe query orchestration are the core. Five delivery items make it stick:
 
 - a canary on a small user group or metric set
 - staged migration of governed questions from analyst workflows

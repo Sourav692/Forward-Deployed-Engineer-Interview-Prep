@@ -15,13 +15,13 @@ Spend time in proportion to risk, not diagram size. The pacing below is the chap
 | 38–44 | Staged rollout, alert triggers, owners, the support workflow |
 | 44–50 | Executive summary; name the riskiest assumption and the first rollout gate |
 
-Four trade-offs must be defended. Full capture against privacy and cost: capture structure, keep a break-glass path. Head against tail sampling: prefer tail retention for slow and failed traces. Raw prompts against hashed metadata: store template ID, field presence, sanitized entity markers and fingerprints. Global dashboard against tenant views: build both, with a permission boundary.
+Defend four trade-offs. Full capture against privacy and cost: capture structure, keep a break-glass path. Head against tail sampling: prefer tail retention for slow and failed traces. Raw prompts against hashed metadata: store template ID, field presence, sanitized entity markers and fingerprints. Global dashboard against tenant views: build both, with a permission boundary.
 
 Repair the common weak answers on the spot. "Log everything and sort it out later" becomes a tiered capture strategy with named privacy and cost consequences. "Use tracing" becomes what is traced, how context propagates, and which layer each span isolates. "Sample 10 percent" becomes a question about the failure distribution. "Put it on one dashboard" becomes global health plus tenant-scoped debugging. "If the answer is wrong, the model is wrong" becomes a walk through auth, retrieval, prompt construction, tools and integrations.
 
 > *"My design goal is to connect user-visible failures to technical causes without collecting more sensitive data than we need. I would instrument the full request path with correlation IDs, structured spans, and bounded metadata across authentication, retrieval, model calls, and tools. I would store raw prompts and customer content only through a narrow, audited escalation path, because the default should be privacy-preserving and cost-aware. For debugging, I would rely on template IDs, document references, timing, error classes, and outcome labels so support can separate auth, retrieval, model, and integration problems. I'd use a global operational view plus tenant-scoped views for authorised support, and I'd prefer selective retention for slow or anomalous traces over blind random sampling so we do not lose the one bad trace. The riskiest trade-off is observability depth versus privacy and cost, and my first production rollout gate would be proving that the system can consistently identify the root cause of real customer incidents without exposing unnecessary content or overwhelming the team."*
 
-Two gap answers are worth having ready *(V2 gap note, supplementary)*. On build versus buy: buy the span plumbing, build the redaction and classification boundary, because "what counts as sensitive for this tenant" is business logic no vendor can own. On regulation: hashed prompts make a deletion request smaller, not trivial. A keyed hash tied to a user is still personal data under GDPR, so delete or unlink those fingerprints too, along with quarantine and break-glass records. The retention window should follow the customer's data-processing agreement.
+Have two gap answers ready *(V2 gap note, supplementary)*. On build versus buy: buy the span plumbing, build the redaction and classification boundary, because "what counts as sensitive for this tenant" is business logic no vendor can own. On regulation: hashed prompts make a deletion request smaller, not trivial. A keyed hash tied to a user is still personal data under GDPR, so delete or unlink those fingerprints too, along with quarantine and break-glass records. The retention window should follow the customer's data-processing agreement.
 
 ## 15. Answer Every Cost and Latency Pivot With a Card
 
@@ -35,7 +35,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Cheapest lever first | Spend circuit breaker first; attribute by tenant and feature; cap output; pause batch and eval; downgrade premium routing; tenant quotas; then root cause |
 | Metric that proves it | Cost per minute; tokens per request; model distribution; retry count; agent steps; tenant usage |
 | Do not | Kill the whole feature without diagnosis |
-| 60-second line | Contain, attribute, then diagnose. Keep low-cost safe paths online while disabling runaway paths. The real lesson is that budget guardrails must exist before launch. |
+| 60-second line | Contain, attribute, then diagnose. Keep low-cost safe paths online while disabling runaway paths. Budget guardrails must exist before launch. |
 
 ### 15.2 LLM cost increased 5× after rollout (#104)
 
@@ -45,7 +45,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Cheapest lever first | Cap max output length, pause expensive batch and eval jobs, route simple tasks to a smaller model, cap agent steps |
 | Metric that proves it | Cost and tokens per request; requests by feature; retry count; model distribution; output tokens; eval and batch spend |
 | Do not | Swap the model before breaking spend down by tenant, feature, model and prompt version |
-| 60-second line | The increase is likely from request shape, not just user count. I would isolate token growth, retries, agent steps, and batch jobs before changing the model. |
+| 60-second line | The increase likely comes from request shape rather than user count alone. I would isolate token growth, retries, agent steps, and batch jobs before changing the model. |
 
 ### 15.3 Latency jumped from 2 seconds to 20 seconds (#105)
 

@@ -2,7 +2,7 @@
 
 ## 4. Map Every Source With Its Permission Model
 
-The connector's real job is translating each source system's permission model into one internal model. Getting that translation wrong is one of the most common ways enterprise RAG leaks data, so map the permission model per source before choosing an embedding model.
+The connector's main job is to translate each source system's permission model into one internal model. A wrong translation is one of the most common ways enterprise RAG leaks data, so map each source's permission model before you choose an embedding model.
 
 | Data source                         | Format                           | Owner                      | Freshness                                            | Permission model                                                         | Risk                                                                                            |
 | ----------------------------------- | -------------------------------- | -------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
@@ -18,7 +18,7 @@ Document(id, source, title, version, owner, acl_policy_id, sensitivity, effectiv
 
 ## 5. Draw the Architecture End to End
 
-One diagram carries the whole design, and the two that follow are zoom-ins on its halves. The organising split is control plane against data plane: policy, configuration, credentials, schedules and evaluation rules live in the control plane, and every live question, evidence fetch, enforcement decision and answer lives in the data plane. A control-plane change is a release; a data-plane call is a request.
+One diagram carries the whole design; the two after it zoom in on its halves. The design splits into a control plane and a data plane. Policy, configuration, credentials, schedules and evaluation rules live in the control plane. Every live question, evidence fetch, enforcement decision and answer lives in the data plane. A control-plane change is a release; a data-plane call is a request.
 
 ```
 CONTROL PLANE                         a change here is a release
@@ -125,7 +125,7 @@ Components, in the order they exist and the order they fail:
 | LLM gateway and verifier      | One place for prompts, model choice, guardrails; reject any citation outside the permitted set             | Closed on citation failure                             |
 | Trace store, eval, dashboards | Replayable runs, golden set, leak suite, freshness and cost signals                                        | Degrades: answer still served, gap logged              |
 
-**Boundaries:** sync/async sits between ingest and query. Trust sits at ENFORCE — text the user cannot see exists only to its left. One owner each: sources own truth, metadata store owns versions and tombstones, indexes own derived search state, trace store owns what happened. Caches are keyed on tenant + permission signature + version and die on a permission change.
+**Boundaries:** sync/async sits between ingest and query. Trust sits at ENFORCE: text the user cannot see exists only to its left. One owner each: sources own truth, metadata store owns versions and tombstones, indexes own derived search state, trace store owns what happened. Caches are keyed on tenant + permission signature + version and die on a permission change.
 
 ## 6. Normalise Permissions at Ingestion and Refuse What Has None
 
@@ -159,7 +159,7 @@ Authorise first and enforce before generation, and encode that order in the grap
    filter                                                          REFUSE + escalate
 ```
 
-One request, before the boxes: Tier-3 asks about the March incident → resolve identity → search only their slice → re-check policy → rerank to six → generate with citations → verify each citation is real, permitted, and grounded. Hard parts are access control and retrieval quality. The vector database is almost irrelevant. Then pick a pattern:
+One request, before the boxes: Tier-3 asks about the March incident → resolve identity → search only their slice → re-check policy → rerank to six → generate with citations → verify each citation is real, permitted, and grounded. The hard parts are access control and retrieval quality; the choice of vector database barely matters. Then pick a pattern:
 
 ```
 (a) POST-FILTER: retrieve everything, drop what they can't see
@@ -178,7 +178,7 @@ One request, before the boxes: Tier-3 asks about the March incident → resolve 
     Pro: unauthorised chunks never scored, never ranked, never returned.
 ```
 
-Use (b) and (c) together: partition by tenant and pre-filter within it. That is defence in depth, because if the metadata filter is ever wrong the blast radius stops at the tenant boundary. Post-filtering is wrong twice over: it crowds a restricted user's top-k out with material they will never see, and it can leak through result counts if those are shown.
+Use (b) and (c) together: partition by tenant and pre-filter within it. That is defence in depth: if the metadata filter is ever wrong, the blast radius stops at the tenant boundary. Post-filtering is wrong twice over: it crowds a restricted user's top-k out with material they will never see, and it can leak through result counts if those are shown.
 
 Model the policy as attributes on both sides, not as roles. "EU engineers on the vuln-response team may read restricted advisories, but only after the embargo lifts" is one rule in ABAC and a combinatorial explosion of roles in RBAC.
 
@@ -206,7 +206,7 @@ Model the policy as attributes on both sides, not as roles. "EU engineers on the
 | 6 | external         | contractors can't read commercial sources |
 | 7 | default deny     | nothing granted it                        |
 
-The strongest single point in the round is that enforcement has two layers, and only the second one decides. The filter makes retrieval cheap; the post-check makes it correct.
+Enforcement has two layers, and only the second one decides. It is the strongest single point you can make in the round. The filter makes retrieval cheap; the post-check makes it correct.
 
 ```
  LAYER 1  PRE-FILTER  (cheap, approximate — an OPTIMISATION)
@@ -223,7 +223,7 @@ The strongest single point in the round is that enforcement has two layers, and 
           + obligations (redaction is a transform, not a filter)
 ```
 
-Payoffs: IdP removal is enforced on the next query after it syncs, no reindex. Layer 2 denying what layer 1 should have caught means the index is stale or the filter is broken — alert. The filter language is weaker than the policy: Chroma before 1.5 could not hold a list (1.5+ adds array metadata with `$contains`), so each group is `grp__engineering: true` and `$or` fakes overlap.
+Payoffs: an IdP removal takes effect on the next query after it syncs, with no reindex. If layer 2 denies what layer 1 should have caught, the index is stale or the filter is broken, so alert on it. The filter language is weaker than the policy: Chroma before 1.5 could not hold a list (1.5+ adds array metadata with `$contains`), so each group is `grp__engineering: true` and `$or` fakes overlap.
 
 Caches are a latency trick, invalidated on permission change, never a permission model. Query-time ACL is the control. Precompute only where permissions are stable. A stale materialized view outlives a revocation.
 
@@ -240,7 +240,7 @@ A prompt that says "do not reveal confidential information" is not access contro
 
 ## 8. Retrieve Hybrid, Fuse by Rank, Rerank After Enforcement
 
-Hybrid retrieval is the baseline, not the advanced option, because enterprise text is full of error codes, SKUs, ticket IDs and workspace IDs. Embeddings blur `MRD-5031` and `MRD-4290` because they look alike; BM25 treats them as rare tokens and nails them. BM25 in turn is fooled by common words on a paraphrase. Dense finds what means the same; lexical finds what says the same.
+Hybrid retrieval is the baseline, because enterprise text is full of error codes, SKUs, ticket IDs and workspace IDs. Embeddings blur `MRD-5031` and `MRD-4290` because they look alike; BM25 treats them as rare tokens and nails them. BM25 in turn is fooled by common words on a paraphrase. Dense finds what means the same; lexical finds what says the same.
 
 ```
   "What is MRD-4290?"            "telemetry disappears before it's saved"
@@ -259,7 +259,7 @@ Fuse with Reciprocal Rank Fusion, because a 0.82 cosine and a 14.3 BM25 score ar
 
 Where the interviewer wants a weight instead of a fusion, write `S_hybrid = α·S_vector + (1−α)·S_keyword` and say that α is a tuning parameter, not a constant. Exact titles, team names, error codes and ticket numbers push weight to keyword; conceptual questions push it to semantic. Expect the follow-up on how α is tuned, and answer "against a representative query set segmented by query type", never a number from memory.
 
-The other techniques each earn their cost in a specific situation, and reranking is often one of the biggest single wins.
+Each other technique earns its cost in a specific situation. Reranking is often one of the biggest single wins.
 
 | Technique                       | Fixes                                         | Cost                         |
 | ------------------------------- | --------------------------------------------- | ---------------------------- |
@@ -270,11 +270,11 @@ The other techniques each earn their cost in a specific situation, and reranking
 
 HyDE embeds a fake answer as the search probe and never shows it. Over-retrieve about 20, rerank to 6 (this design's numbers; tune on your eval set). A bi-encoder cannot compare question and document; a cross-encoder sees both.
 
-Rerank **after** ACL enforcement, so a restricted user's top-6 is the best of their pool. Rerank-then-filter hands them an empty context. Keep the candidate set tight. Widen context only for a synthesis task.
+Rerank after ACL enforcement, so a restricted user's top-6 is the best of their pool. Rerank-then-filter hands them an empty context. Keep the candidate set tight. Widen context only for a synthesis task.
 
 ## 9. Degrade on Everything Except Authorisation
 
-Design the failure path with the happy path, because a design that only describes success is half an architecture. The rule that organises the table is that authorisation fails closed and everything else degrades visibly. Say the last row slowly.
+Design the failure path alongside the happy path; a design that only describes success is half an architecture. Authorisation fails closed, and everything else degrades visibly. Say the last row slowly.
 
 | Fails                                 | Behaviour                                                                                                                                                    |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -288,6 +288,6 @@ Design the failure path with the happy path, because a design that only describe
 | Prompt injection in a ticket or wiki  | retrieved content is evidence, never instructions; it cannot alter the system prompt or unlock tools, and unauthorised text never entered the context anyway |
 | Policy engine unavailable             | fail closed. Refuse. Never fail open on authorisation                                                                                                        |
 
-**Missed deletion (the failure to rehearse):** user authenticates, stale chunk is still indexed, ACL passes (permissions are still valid — this is freshness, not access), reranker promotes it, generator is about to answer from a deleted policy. Fix: staleness label, suppress once confirmed, re-read the system of record, reconciliation job replays the delete. The trace shows a prior answer used a now-deleted document.
+**Missed deletion (the failure to rehearse):** user authenticates, stale chunk is still indexed, ACL passes (permissions are still valid; this is a freshness failure, not an access one), reranker promotes it, generator is about to answer from a deleted policy. Fix: staleness label, suppress once confirmed, re-read the system of record, reconciliation job replays the delete. The trace shows a prior answer used a now-deleted document.
 
 **What breaks at 10×:** per-request BM25 over the authorised pool. Replace with a lexical store that has native document security (OpenSearch DLS) or a cached per-group shard. Content-hash cache so only changed text is re-embedded. ACL sync is separate from re-embedding. LLM calls usually dominate latency: cache embeddings and retrieval, semantic-cache answers, parallelise fan-out, stream tokens.

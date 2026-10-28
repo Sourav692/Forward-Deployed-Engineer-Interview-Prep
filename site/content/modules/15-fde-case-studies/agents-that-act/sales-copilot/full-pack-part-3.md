@@ -2,7 +2,7 @@
 
 ## 8. Draft From Approved Claims and Preview Every Write
 
-An email draft is the copilot's most visible output. It is also the most dangerous one, because it leaves the building. The rule is that every outbound claim traces to an entry in the approved-claims playbook, and the claim verifier blocks rather than warns on anything it cannot trace. Pricing and discount language comes only from the versioned policy, and the copilot refuses to quote outside it.
+An email draft is the copilot's most visible output. It is also the most dangerous one, because it leaves the building. Every outbound claim must trace to an entry in the approved-claims playbook, and the claim verifier blocks anything it cannot trace instead of warning. Pricing and discount language comes only from the versioned policy, and the copilot refuses to quote outside it.
 
 Personalisation is drawn from the account's own record and interactions: the rep's last thread, the customer's stated priorities from the transcript, the open escalation. It is never drawn from the model's sense of what a company like this probably cares about. Discovery questions follow the same rule, generated from the playbook's objection list and the gaps in the CRM record.
 
@@ -29,7 +29,7 @@ Scale is bounded by the precompute lane. At ten times the accounts, shard the sn
 
 ## 10. Gate the Release on Claims, Not Fluency
 
-An eval suite that measures grammar, tone and general groundedness will pass a model that writes beautifully and invents a security certification. The scenario incident in section 14 is exactly that: a 96.7 percent pass rate on 120 cases hid an 83.3 percent pass rate on the six regulated-claim cases that mattered. The gate therefore has slices, and the critical slices pass independently or the release does not ship.
+An eval suite that measures grammar, tone and general groundedness will pass a model that writes beautifully and invents a security certification. In the scenario incident in section 14, a 96.7 percent pass rate on 120 cases hid an 83.3 percent pass rate on the six regulated-claim cases that mattered. The gate therefore has slices, and the critical slices pass independently or the release does not ship.
 
 | Metric | Good threshold | Bad threshold | Test dataset | Owner |
 |---|---:|---:|---|---|
@@ -55,7 +55,7 @@ Red-team the boundary directly:
 
 ## 11. Roll Out From Read-Only to Approved Write-Back
 
-Week one is not the whole diagram. It is one CRM connector, the territory mirror provably right for three reps in three territories, a golden set built from historical account briefs with the enablement team, and the permission red team standing.
+Week one is a slice of the diagram: one CRM connector, the territory mirror provably right for three reps in three territories, a golden set built from historical account briefs with the enablement team, and the permission red team standing.
 
 | Week | Gate |
 |---|---|
@@ -72,7 +72,7 @@ Close on the trade-offs and what would change them.
 | Decision | Chose | Would revisit if |
 |---|---|---|
 | Precomputed snapshot over live fan-out | Precompute on the calendar trigger, re-check permissions at serve time | Meetings were mostly unscheduled, then a fast partial snapshot on open |
-| Fixed CRM operations over NL-to-query | Fixed, reviewed operations through the tool gateway | The question set were genuinely open-ended and a validated query layer existed |
+| Fixed CRM operations over NL-to-query | Fixed, reviewed operations through the tool gateway | The question set were open-ended and a validated query layer existed |
 | Block over warn on unapproved claims | Block | Never for external drafts; warn is acceptable only for internal notes |
 | Draft-then-approve write-back | Every write previewed and approved | Low-risk field updates such as "last contacted" earned auto-approval after a clean pilot |
 

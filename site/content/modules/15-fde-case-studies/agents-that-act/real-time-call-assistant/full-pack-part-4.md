@@ -16,7 +16,7 @@ This group's pivot is #43, the playbook's Case 6. The prompt: "sales team wants 
 The source's architecture line: "before call → precompute context. During call → small prompt → fast model → streamed suggestion. After call → async summary + CRM update." Its recommendation: "separate real-time suggestions from slower enrichment."
 
 <!-- spelling: source -->
-Two latency drivers have no cost analogue, and the cram sheet names this case as their home. Both are "the actual cause behind #6 'executive demo is too slow' and Case 6 'sub-3-second sales assistant'." Cold starts make the first request after idle slow. The fix is minimum replicas, warmers and keep-alive, and the price is idle capacity. Sequential workflow design makes each step wait for the previous one for no reason. The fix is to parallelise independent calls, prefetch and push non-critical work async. The source sets one limit: "Do **not** parallelize unsafe side effects". In this design, the live lookup runs beside the model call, and the CRM write never runs in the live lane at all.
+Two latency drivers have no cost analogue, and the cram sheet names this case as their home. Both are "the actual cause behind #6 'executive demo is too slow' and Case 6 'sub-3-second sales assistant'." Cold starts make the first request after idle slow. The fix is minimum replicas, warmers and keep-alive, and the price is idle capacity. Sequential workflow design makes each step wait for the previous one for no reason. The fix is to parallelise independent calls, prefetch and push non-critical work async. The source sets one limit: "Do **not** parallelize unsafe side effects". In this design, the live lookup runs beside the model call, and the CRM write never runs in the live lane.
 
 One addition from beyond the playbook fits here. "Streaming works but users abandon mid-answer" is answered by measuring abandonment against first-token time and by cancelling the stream on abandon. In a call, the rep "abandons" by answering. So cancel the suggestion stream when the rep starts speaking; with providers that stop generating on cancel, that stops paying for tokens nobody will read *(own construction, applying the additions file's rule)*.
 
@@ -40,9 +40,9 @@ Every level can put a bullet on the rep's panel; the level shows in how cleanly 
 - Requirements are stated so a test can fail them, with the 3-second budget decomposed by stage and about a second of headroom.
 - Every input is personal data, so each carries a sensitivity and a permission, and the snapshot is built as the rep.
 - One diagram shows three lanes that share the snapshot and transcript store and nothing else, with privacy and action boundaries marked.
-- Precomputing the account snapshot is what removes the CRM from the three-second lane.
+- Precomputing the account snapshot removes the CRM from the three-second lane.
 - The live lane streams transcription, triggers only on answerable questions, and sends a small prompt to a small model.
-- Diarization keeps speakers straight, redaction runs on the stream before storage, and retention is enforced by a scheduler.
+- Diarization keeps speakers straight, redaction runs on the stream before storage, and a scheduler enforces retention.
 - The post-call lane uses a larger model and a fixed schema in which every item cites its transcript span.
 - The assistant proposes CRM changes with confidence scores, and a person approves every write.
 - Consent, redaction and the CRM write fail closed; everything else degrades, and the live lane degrades to silence.
@@ -67,21 +67,21 @@ Every level can put a bullet on the rep's panel; the level shows in how cleanly 
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [OpenAI API: Voice activity detection](https://developers.openai.com/api/docs/guides/realtime-vad) — server VAD silence threshold and the cost of short values
-- [OpenAI API reference: Realtime client events](https://developers.openai.com/api/reference/resources/realtime/client-events) — silence_duration_ms defaults to 500 ms
-- [AssemblyAI: Introducing Universal-Streaming](https://www.assemblyai.com/blog/introducing-universal-streaming) — ~300 ms streaming transcripts (vendor-reported)
-- [Artificial Analysis LLM leaderboard](https://artificialanalysis.ai/leaderboards/models) — ~0.4 s time to first token is at the fast end of hosted APIs
-- [Realtime Voice AI Agent project report (reference implementation)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/05_realtime_voice_ai_agent_with_rag/Docs/PROJECT_REPORT.md) — "<2 second response latency" is a stated aim, not a measurement
-- [18 U.S.C. 2511(2)(d)](https://www.law.cornell.edu/uscode/text/18/2511) — US federal one-party consent to record
-- [California Penal Code 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) — all-party consent in some states
-- [Deepgram docs: Models overview](https://developers.deepgram.com/docs/models-languages-overview) — Nova-3, Nova-2 and Flux (recommended for voice agents)
-- [pipecat-ai 0.0.100 on PyPI](https://pypi.org/project/pipecat-ai/0.0.100/) — DeepgramSTTService defaults to nova-3-general
-- [Twilio docs: Recordings resource](https://www.twilio.com/docs/voice/api/recording) — dual-channel recording puts each party on its own channel
-- [PCI SSC FAQ 1210: Are audio/voice recordings permitted to contain SAD?](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/are-audio-voice-recordings-permitted-to-contain-sensitive-authentication-data/) — card security codes cannot stay in recordings after authorisation, even encrypted
-- [PCI SSC: Protecting Telephone-based Payment Card Data](https://listings.pcisecuritystandards.org/documents/protecting_telephone-based_payment_card_data.pdf) — pausing or masking recording while card details are read out
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — spoken or written input can still steer the model
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — human approval before writes is the real control
-- [Ng & Abrecht 2015, Better Summarization Evaluation with Word Embeddings for ROUGE (arXiv 1508.06034)](https://arxiv.org/abs/1508.06034) — word-overlap scores penalise paraphrase
-- [Kryscinski et al. 2019, Neural Text Summarization: A Critical Evaluation (arXiv 1908.08960)](https://arxiv.org/abs/1908.08960) — ROUGE correlates weakly with human judgement
-- [OpenRouter help: Which providers stop billing when a stream is cancelled](https://openrouter.zendesk.com/hc/en-us/articles/51691588409883-How-do-I-cancel-a-streaming-request-and-which-providers-stop-billing-when-I-do) — cancelling a stream stops billing only on some providers
+- [OpenAI API: Voice activity detection](https://developers.openai.com/api/docs/guides/realtime-vad): server VAD silence threshold and the cost of short values
+- [OpenAI API reference: Realtime client events](https://developers.openai.com/api/reference/resources/realtime/client-events): silence_duration_ms defaults to 500 ms
+- [AssemblyAI: Introducing Universal-Streaming](https://www.assemblyai.com/blog/introducing-universal-streaming): ~300 ms streaming transcripts (vendor-reported)
+- [Artificial Analysis LLM leaderboard](https://artificialanalysis.ai/leaderboards/models): ~0.4 s time to first token is at the fast end of hosted APIs
+- [Realtime Voice AI Agent project report (reference implementation)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/05_realtime_voice_ai_agent_with_rag/Docs/PROJECT_REPORT.md): "<2 second response latency" is a stated aim, not a measurement
+- [18 U.S.C. 2511(2)(d)](https://www.law.cornell.edu/uscode/text/18/2511): US federal one-party consent to record
+- [California Penal Code 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632): all-party consent in some states
+- [Deepgram docs: Models overview](https://developers.deepgram.com/docs/models-languages-overview): Nova-3, Nova-2 and Flux (recommended for voice agents)
+- [pipecat-ai 0.0.100 on PyPI](https://pypi.org/project/pipecat-ai/0.0.100/): DeepgramSTTService defaults to nova-3-general
+- [Twilio docs: Recordings resource](https://www.twilio.com/docs/voice/api/recording): dual-channel recording puts each party on its own channel
+- [PCI SSC FAQ 1210: Are audio/voice recordings permitted to contain SAD?](https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/are-audio-voice-recordings-permitted-to-contain-sensitive-authentication-data/): card security codes cannot stay in recordings after authorisation, even encrypted
+- [PCI SSC: Protecting Telephone-based Payment Card Data](https://listings.pcisecuritystandards.org/documents/protecting_telephone-based_payment_card_data.pdf): pausing or masking recording while card details are read out
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): spoken or written input can still steer the model
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): human approval before writes is the real control
+- [Ng & Abrecht 2015, Better Summarization Evaluation with Word Embeddings for ROUGE (arXiv 1508.06034)](https://arxiv.org/abs/1508.06034): word-overlap scores penalise paraphrase
+- [Kryscinski et al. 2019, Neural Text Summarization: A Critical Evaluation (arXiv 1908.08960)](https://arxiv.org/abs/1908.08960): ROUGE correlates weakly with human judgement
+- [OpenRouter help: Which providers stop billing when a stream is cancelled](https://openrouter.zendesk.com/hc/en-us/articles/51691588409883-How-do-I-cancel-a-streaming-request-and-which-providers-stop-billing-when-I-do): cancelling a stream stops billing only on some providers
 

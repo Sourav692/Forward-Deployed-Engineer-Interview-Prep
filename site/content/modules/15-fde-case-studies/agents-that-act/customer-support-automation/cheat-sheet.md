@@ -18,7 +18,7 @@ Use the [Main guide](/design/customer-support-automation#main) for the spoken an
 2. Confidence is not permission; the gateway checks allowlist, threshold, freshness, and approval.
 3. Billing, orders, CRM, and identity remain systems of record.
 4. Every write is idempotent; reconcile an uncertain side effect before retry.
-5. Optimise **safe resolution**, not raw deflection.
+5. Optimise safe resolution, not raw deflection.
 
 ## Requirements to recall
 
@@ -41,7 +41,7 @@ Use the [Main guide](/design/customer-support-automation#main) for the spoken an
 
 ## Handoff payload
 
-Original message + identity status + intent/risk + evidence + policy checks + tool outputs/errors + attempted actions + **why automation stopped**.
+Original message + identity status + intent/risk + evidence + policy checks + tool outputs/errors + attempted actions + why automation stopped.
 
 ## Failures to rehearse
 

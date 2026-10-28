@@ -4,7 +4,7 @@
 
 ◷ 27 min
 
-This prompt sounds like one box on a diagram, and it is graded as four constraints that fight each other: uptime, safety, a daily budget and a latency ceiling. Treat the gateway as the one place where every model call is metered, screened, routed and recovered, and the fights become explicit trade-offs. This page is the standalone pack for this case.
+This prompt sounds like one box on a diagram, but it is graded as four constraints that fight each other: uptime, safety, a daily budget and a latency ceiling. Treat the gateway as the one place where every model call is metered, screened, routed and recovered, and the fights become explicit trade-offs.
 
 | Case | What it contributes here |
 |---|---|
@@ -22,7 +22,7 @@ The prompt, verbatim:
 
 "In front of an agent" has two readings, and the design needs both. The **edge face** sits between the customer and the agent. It screens what comes in and what goes out. The **model face** sits between the agent and the providers. An agent turn is rarely one call; the cost playbook's rule of thumb is that "one user request becomes 5–20 sub-requests." A gateway that only sees the customer's message cannot meter, retry or fail over the other calls.
 
-So route every model call the agent makes through the gateway's model face *(own construction)*. The deployed research platform in the Handbook does exactly this. Every agent and the evaluator call one shared gateway sidecar, naming a *function* rather than a model, and the gateway maps function to provider. Its reason carries straight over: "hard-coding a provider into every agent makes every outage, rate limit and pricing change a code change in five places."
+So route every model call the agent makes through the gateway's model face *(own construction)*. The deployed research platform in the Handbook does this. Every agent and the evaluator call one shared gateway sidecar, naming a *function* rather than a model, and the gateway maps function to provider. Its reason carries straight over: "hard-coding a provider into every agent makes every outage, rate limit and pricing change a code change in five places."
 
 Ask five questions before drawing, and state an assumption for each one the interviewer declines *(own construction)*.
 
@@ -73,7 +73,7 @@ Every must-have then needs an owner in the architecture *(own construction)*.
 
 ## 3. Price the $500 Day Before Drawing Anything
 
-The budget is an input to the design, not a line in the closing summary. Price one day of traffic first, and the design choices follow from where the money goes. Every number here is *own construction*, and the prices are illustrations; replace them with the current price sheet in the room.
+Treat the budget as a design input. Price one day of traffic first, and the design follows from where the money goes. Every number here is *own construction*, and the prices are illustrations; replace them with the current price sheet in the room.
 
 | Assumption | Value |
 |---|---|
@@ -100,8 +100,8 @@ A small call costs 2,000 × $0.15 + 250 × $0.60, per million, which is **$0.000
 | Guards | 15,000 × $0.00005 + 6,000 × $0.0001 | $1.35 |
 | **Total** | | **about $245, 49% of the budget** |
 
-Three readings come out of that table. First, the naive design fails. Send all 30,000 turns down the large-model agent path with no cache, and the day costs $1,125, which is 2.25 times the budget. Routing and caching are what make $500 possible at all.
+Three readings come out of that table. First, the naive design fails. Send all 30,000 turns down the large-model agent path with no cache, and the day costs $1,125, which is 2.25 times the budget. Routing and caching make $500 possible.
 
-Second, complex turns are 21% of traffic and 96% of spend. The budget lives or dies on the complex share, not on the guards or the router. If it rises from 30% to 40% of misses, the day costs about $323.
+Second, complex turns are 21% of traffic and 96% of spend. The complex share decides the budget; the guards and the router barely register. If it rises from 30% to 40% of misses, the day costs about $323.
 
 Third, the budget binds at about 61,000 turns a day with this mix. That is the growth ceiling to tell the interviewer, and it is why section 7 needs a pacer, not only a per-request cap.

@@ -1,4 +1,4 @@
-# G16 — Real-Time Call Assistant: Main Interview Guide
+# G16 Real-Time Call Assistant: Main Interview Guide
 
 **A sales call** has three clocks: hours before, three seconds while they talk, minutes after. Mixing those clocks makes the live panel freeze.
 
@@ -13,9 +13,9 @@ End to end, as Sara on an Acme call:
 5. **After hang-up**, a slower model drafts summary, actions, CRM fields.
 6. **Sara edits and approves** any CRM write.
 
-That’s it: **prep before → tiny live suggest → rich after, with a human on writes.** Voice-out and auto-send are out (that’s a different product).
+**Prep before → tiny live suggest → rich after, with a human on writes.** Voice-out and auto-send belong to a different product.
 
-> **Full source:** [Sources and Full Design](../4_Full_Design/G16_Full_Design.md), especially §§1–11 for the design and §14 for the sub-3-second pivot. Use the [Deep Dive](../2_Technical_Deep_Dive/G16_Technical_Deep_Dive.md) for budgets and evaluation and the [Cheat Sheet](../3_Quick_Review/G16_Quick_Review.md) for rehearsal. Much of the source design is explicitly its author's construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
+> **Full source:** [Sources and Full Design](../4_Full_Design/G16_Full_Design.md), especially §§1–11 for the design and §14 for the sub-3-second pivot. Use the [Deep Dive](../2_Technical_Deep_Dive/G16_Technical_Deep_Dive.md) for budgets and evaluation and the [Cheat Sheet](../3_Quick_Review/G16_Quick_Review.md) for rehearsal. Much of the source design is the author's own construction from a question prompt and latency drill; its time allocations are planning assumptions, not measured vendor guarantees.
 
 ## One call, three clocks
 
@@ -40,11 +40,11 @@ Before the call, hours are available to prepare permission-scoped account contex
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Ingest telephony audio with consent.**
 2. **Diarize speakers and stream ASR.**
@@ -54,7 +54,7 @@ The easiest way to frame requirements in an interview is:
 6. **Propose CRM field updates** with confidence; the rep corrects or approves.
 7. **Enforce retention** and record corrections for evaluation.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|

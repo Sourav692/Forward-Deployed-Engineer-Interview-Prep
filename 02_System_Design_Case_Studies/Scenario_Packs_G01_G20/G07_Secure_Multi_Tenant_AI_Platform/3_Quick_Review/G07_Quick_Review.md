@@ -1,4 +1,4 @@
-# G07 — Secure Multi-Tenant AI Platform: Cheat Sheet
+# G07 Secure Multi-Tenant AI Platform: Cheat Sheet
 
 Use the [Main guide](../1_Interview_Guide/G07_Interview_Guide.md) for the spoken design, the [Deep Dive](../2_Technical_Deep_Dive/G07_Technical_Deep_Dive.md) for mechanics, and the unchanged [source](../4_Full_Design/G07_Full_Design.md) for the full case.
 
@@ -36,10 +36,10 @@ Data classes? Residency for data/logs/backups? Shared versus dedicated exception
 
 ## Leak drill
 
-Acme request cited Globex document: v3 filter dropped tenant equality and connector flag skipped ACL. Roll back v3, purge caches, search mismatch traces, notify customer; add non-bypassable predicate, post-check, and negative release gate. **It is an isolation failure, not a model hallucination.**
+An Acme request cited a Globex document because the v3 filter dropped tenant equality and a connector flag skipped the ACL. Roll back v3, purge caches, search mismatch traces, notify customer; add non-bypassable predicate, post-check, and negative release gate. It is an isolation failure, not a model hallucination.
 
 ## Release and close
 
-Internal tenants → adversarial isolation suite → small shared tenants → policy-justified dedicated tier. Any unexplained boundary failure blocks promotion; confirmed cross-tenant incident target is zero. Track p95 and cost **per tenant**.
+Internal tenants → adversarial isolation suite → small shared tenants → policy-justified dedicated tier. Any unexplained boundary failure blocks promotion; confirmed cross-tenant incident target is zero. Track p95 and cost per tenant.
 
 “The control plane decides tenant policy, region, tier, and budgets; the data plane enforces scope at every store and inference boundary.”

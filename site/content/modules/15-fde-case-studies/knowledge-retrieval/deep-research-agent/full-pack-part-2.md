@@ -63,7 +63,7 @@ The delta from the anchor is the infrastructure. Four pieces carry it.
 
 The gateway means an outage, rate limit or price change is a config change, not a code change in five places. The guardrails run on both sides, because a model can produce harmful output from a benign prompt. The input check runs on raw user input, not on an agent's interpretation of it. pgvector turns the cache from short-lived to durable. A report evicted from Redis is still found at ≥ 0.88, and a related one in the 0.50–0.88 band seeds the Writer. PyRIT attacks through the same auth, rate-limit and guardrail path as a real user. A passing run is therefore genuine evidence the defences hold, not a test of a mock.
 
-Be precise about its shape. Layer 3 is a pipeline with a loop and a gate, closer to single-agent multi-step than to supervisor and workers. Its agents share one context and one tool set. What earns the split is the Critic's independent judgement and the bounded retry.
+Layer 3 is a pipeline with a loop and a gate, closer to single-agent multi-step than to supervisor and workers. Its agents share one context and one tool set. The Critic's independent judgement and the bounded retry earn the split.
 
 Name what it lacks, because that is the coverage-map habit. It has no per-user access control: one API key, no tenant model, so every user sees every cached report. That is fine for a research tool and wrong for an enterprise one, and it is exactly the anchor's per-user isolation requirement. It also has no deterministic release gate, since the judge scores are observability, not a gate.
 
@@ -71,11 +71,11 @@ Name what it lacks, because that is the coverage-map habit. It has no per-user a
 
 The mock prompt is "design a research system with a supervisor and workers". It is the anchor's implementation view. The supervisor plans N queries, workers execute them independently in parallel, and a synthesiser merges.
 
-State carries findings with `operator.add`, so parallel writes accumulate. Bound it with a hop cap and a per-run model-call budget. Then volunteer the honest trade-off. The supervisor's planning call is pure overhead if the query decomposition was predictable, and in that case hardcode it.
+State carries findings with `operator.add`, so parallel writes accumulate. Bound it with a hop cap and a per-run model-call budget. Then volunteer the trade-off: the supervisor's planning call is pure overhead if the query decomposition was predictable, so in that case hardcode it.
 
 Parallel is right here because the queries are independent. Parallel costs N calls at once, merge logic and partial failure. It buys the latency of the slowest branch rather than the sum. Sequential is right only when a later step needs an earlier one's result.
 
-Justify multi-agent by naming what it buys. The three honest reasons are real parallelism, distinct tool permissions per role, and context one agent cannot hold. This design has all three. It fans out searches, web agents hold different permissions from the document agent, and isolation keeps the parent's window small. If none of the three can be named, use one agent with more tools.
+Justify multi-agent by naming what it buys. The three valid reasons are real parallelism, distinct tool permissions per role, and context one agent cannot hold. This design has all three. It fans out searches, web agents hold different permissions from the document agent, and isolation keeps the parent's window small. If you cannot name any of the three, use one agent with more tools.
 
 Four costs belong in the answer *(from #103)*. A supervisor adds one model call per hop. Passing full history to every agent makes hop N pay for hops 1 to N-1, so pass a summary instead. Constrain routing with a `Literal` over the real agent names so the supervisor cannot route to one that does not exist. Parallel agents over one corpus duplicate retrieval, so share one retrieval step upstream.
 
@@ -100,15 +100,15 @@ The follow-up bank, with the shape of a strong answer:
 | Follow-up | Shape of a strong answer |
 |---|---|
 | How does this scale 10x? | Name the *binding constraint* first (here I'd expect provider quota), then the arithmetic, then which lever you'd pull and its cost |
-| What breaks first? | A specific component with a specific symptom and the metric that reveals it — never "hallucinations" |
+| What breaks first? | A specific component with a specific symptom and the metric that reveals it; never "hallucinations" |
 | How do you know it works? | The oracle, sampled online measurement, the offline gate, and the offline suite's power limitation |
 | What if the model gets worse? | Version pinning, evaluation before adoption, canary with guardrails, automatic rollback, a second provider behind an adapter |
 | How much does it cost? | The per-run arithmetic derived aloud, the blended figure, the levers with expected effect |
 | Where's the security boundary? | The gateway, the trifecta analysis, egress control on both the tool path and the rendering path |
-| What would you cut for a 2-week version? | A specific reduced scope that still has an oracle and a failure ladder — and what you would NOT cut, and why |
-| How do you handle a bad actor? | Rate limits, a cost governor per principal, anomalous tool-sequence detection — and that prompt defenses are rate-reducers, not boundaries |
+| What would you cut for a 2-week version? | A specific reduced scope that still has an oracle and a failure ladder, plus what you would NOT cut and why |
+| How do you handle a bad actor? | Rate limits, a cost governor per principal, anomalous tool-sequence detection, and the point that prompt defences are rate-reducers, not boundaries |
 
-Recover a round that goes sideways out loud. Behind on time: say so and reprioritise aloud. The interviewer keeps redirecting: stop defending the path, follow, and ask what they want to assess. A wrong number: correct it immediately. Self-correction is a strong signal, and an uncorrected error that was noticed is a weak one. An unfamiliar domain: say so and ask two questions that make it reasonable. The failure is not running out of time. It is running out of time without saying so.
+Recover a round that goes sideways out loud. Behind on time: say so and reprioritise aloud. The interviewer keeps redirecting: stop defending the path, follow, and ask what they want to assess. A wrong number: correct it immediately. Self-correction is a strong signal, and an uncorrected error that was noticed is a weak one. An unfamiliar domain: say so and ask two questions that make it reasonable. What fails a round is running out of time without saying so.
 
 The two-minute spoken answer *(own construction from the source's design)*:
 

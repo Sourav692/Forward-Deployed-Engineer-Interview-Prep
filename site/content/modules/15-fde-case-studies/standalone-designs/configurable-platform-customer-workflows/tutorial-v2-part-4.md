@@ -5,15 +5,15 @@
 ### The Red-Team Question
 
 - The security and operations review decides whether this platform ships or stays a good demo. Assume the hardest realistic request: deep workflow control for customers, a core that stays stable anyway, secrets kept per tenant, and one customer's broken config that never becomes everyone's outage.
-- A sharp reviewer asks: "A config goes live and its approvals loop forever. Then what?" The test is less about correct logic and more about whether the platform limits the damage, keeps the evidence and keeps serving every other tenant.
-- Here is the concrete answer. Before activation, the config pipeline turns away any cycle it can see. Some loops only appear after publish, through hidden state or a race. When that happens, the engine stops that workflow version and marks the bad revision inactive. Customers can still use the version that last worked. For audit and replay, the system logs who published, when, for which tenant, plus a snapshot of the rule graph. Loops will happen. The aim is that each one is dull, bounded and traced to a named change.
+- A sharp reviewer asks: "A config goes live and its approvals loop forever. Then what?" The test is whether the platform limits the damage, keeps the evidence and keeps serving every other tenant.
+- Before activation, the config pipeline turns away any cycle it can see. Some loops only appear after publish, through hidden state or a race. When that happens, the engine stops that workflow version and marks the bad revision inactive. Customers can still use the version that last worked. For audit and replay, the system logs who published, when, for which tenant, plus a snapshot of the rule graph. Loops will happen; make each one dull, bounded and traced to a named change.
 
 ### Four Security Controls
 
 - **Disallow arbitrary code by default.** Customers shape workflows through declarations: fields, validation rules, routing, approvals and adapter bindings. Custom code is a last resort; if ever allowed, it runs in a tightly limited sandbox or behind a separate, approval-gated extension path.
 - **Scope adapters and secrets per tenant.** Compartmentalise every integration so no tenant sees a neighbour's credentials, tokens or request bodies. Apply least privilege in two places: the runtime that carries out actions, and the control plane that publishes config. A support engineer allowed to read a tenant's config does not, by that fact, get to call that tenant's external systems.
 - **Validate rules for denial-of-service risk.** Rich validation can turn into a way to exhaust resources. Deeply nested conditions, unbounded regexes, huge lookup tables and recursive approval paths can each burn CPU or memory without limit. So the publish path checks shape, depth and size against fixed caps, and runs cycle detection, before any config goes live.
-- **Audit configuration publishers and versions.** Each change leaves a lasting record: the publisher, the diff, the review or approval gate it passed, and the version it replaced. It is not paperwork. With it, operations can find the revision that broke things, and security can confirm the change was authorised.
+- **Audit configuration publishers and versions.** Each change leaves a lasting record: the publisher, the diff, the review or approval gate it passed, and the version it replaced. With it, operations can find the revision that broke things, and security can confirm the change was authorised.
 - In the interview, pair each control with the failure it stops: running code, leaking secrets, abusing resources and losing track of who changed what.
 
 ### Failure-Policy Decision Table
@@ -27,13 +27,13 @@
 | The customer's action cannot be undone, for example a side effect in another system | **When in doubt, hand it to a human** | When the system has no safe way to undo, it must not guess |
 | Someone asks for custom code that looks suspicious | **Deny by default** | Execution rights need a clear trust boundary before the platform hands them out |
 
-- Lead with this table. It shows failure handling was designed up front, not improvised on the night.
+- Lead with this table. It shows you designed failure handling up front.
 
 ### Blast-Radius Containment Levels
 
 - **Tenant blast radius:** a broken config from one customer must leave every other customer's workflow state, secrets and run queue untouched.
 - **Region blast radius:** in a multi-region setup, keep a faulty deploy or a failing dependency inside the smallest region slice you can.
-- **Workflow blast radius:** freeze just the workflow definition or version at fault. The rest of the tenant keeps running, unless its control plane itself is compromised.
+- **Workflow blast radius:** freeze only the workflow definition or version at fault. The rest of the tenant keeps running, unless its control plane itself is compromised.
 - **Dependency blast radius:** when one adapter fails, fence it off. Other adapters carry on as normal.
 - Layer the defences. Validation is the first layer, the runtime sandbox the second and rate limits the third. Observability comes last and shows that the other three still hold.
 
@@ -41,11 +41,11 @@
 
 - The setup: a tenant publishes a workflow in which step A sends work to manager approval. Manager approval hands off to compliance approval. Compliance approval then sends it back to the manager, whenever a condition holds, and that condition never turns false.
 - A good answer covers four stages:
-  1. **Detection** — at publish time, static analysis finds the cycle where it can. A loop that only shows itself at runtime is caught by the engine, which spots the same state transitions repeating and trips a max-hop or max-revisit guard.
-  2. **Containment** — freeze that workflow version. Stop only the execution group it affects, and block any new run from starting on that revision.
-  3. **Recovery** — fall back to the last known-good version. If the workflow has already caused side effects, queue the affected requests for an operator to review.
-  4. **Prevention** — tighten graph validation and add test cases for cyclic approvals. Adopt a publish-time policy that refuses any config whose approval graph has no topological order.
-- Keep the evidence: the exact config revision, the trace of transitions and the history of operator actions. An error message alone does not support a forensic review; this record does.
+  1. **Detection**: at publish time, static analysis finds the cycle where it can. For a loop that only shows itself at runtime, the engine spots the same state transitions repeating and trips a max-hop or max-revisit guard.
+  2. **Containment**: freeze that workflow version. Stop only the execution group it affects, and block any new run from starting on that revision.
+  3. **Recovery**: fall back to the last known-good version. If the workflow has already caused side effects, queue the affected requests for an operator to review.
+  4. **Prevention**: tighten graph validation and add test cases for cyclic approvals. Adopt a publish-time policy that refuses any config whose approval graph has no topological order.
+- Keep the evidence: the exact config revision, the trace of transitions and the history of operator actions. A forensic review needs this record; an error message alone is not enough.
 
 ```mermaid
 flowchart TD
@@ -69,10 +69,10 @@ flowchart TD
 - **Timeouts:** give each adapter its own explicit timeout, so a single hung dependency cannot stall the full workflow.
 - **Retries:** retry only operations that are transient and idempotent. Cap the attempts and back off between them.
 - **Idempotency:** any write that the outside world can see carries an idempotency key, or some other way to dedupe, so a retry never repeats a side effect.
-- **Circuit breakers:** when a dependency is plainly sick, open the breaker. Traffic is shed at once rather than piling up as requests that are bound to fail.
+- **Circuit breakers:** when a dependency is plainly sick, open the breaker. It sheds traffic at once instead of letting doomed requests pile up.
 - **Dead-letter handling:** once automation has used up its safe retries, send the repeat failures to a dead-letter queue or a failure inbox.
 - **Human escalation:** a person must step in when the action cannot be undone, when the config is unclear, or when the evidence points to a policy breach and not a passing outage.
-- The point is not just handling errors: at each failure, the system picks the least dangerous next state.
+- At each failure, the system picks the least dangerous next state.
 
 ### Evidence, Runbooks, and Launch Gates
 
@@ -180,10 +180,10 @@ describe("publish", () => {
 });
 ```
 
-- The test does not claim the code is finished. What it does is make the invariant plain. If a config names an adapter the platform has never heard of, the tenant cannot activate it, and publish fails closed long before runtime.
+- The test makes the invariant plain without claiming the code is finished. If a config names an adapter the platform has never heard of, the tenant cannot activate it, and publish fails closed long before runtime.
 
 ### What to Say in the Interview
 
 - Show your judgement out loud. Arbitrary code is off unless explicitly allowed. Each tenant's secrets and adapters live in their own compartment. Risky rules are checked before they go live. Every publish leaves an audit trail. Each external dependency and each irreversible action has a named failure policy. Then link all of this to supportability: with evidence in hand, the platform can degrade, queue or block, and it never has to guess.
 - Hiring teams want someone who owns safe rollout, support and incident response beyond the happy path, and who guards the product core while customers still feel their workflows bend to fit them.
-- The lesson to carry away: give every external dependency and every irreversible action an explicit policy for failure and recovery. State that policy at four levels (tenant, region, workflow and dependency), and back it with a publish-time invariant so unsafe config never reaches production.
+- Give every external dependency and every irreversible action an explicit policy for failure and recovery. State that policy at four levels (tenant, region, workflow and dependency), and back it with a publish-time invariant so unsafe config never reaches production.

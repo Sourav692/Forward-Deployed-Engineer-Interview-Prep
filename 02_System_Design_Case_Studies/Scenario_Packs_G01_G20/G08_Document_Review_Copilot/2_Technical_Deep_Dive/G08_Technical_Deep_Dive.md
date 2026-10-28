@@ -1,4 +1,4 @@
-# G08 — Document Review Copilot: Deep Dive
+# G08 Document Review Copilot: Deep Dive
 
 The [Main guide](../1_Interview_Guide/G08_Interview_Guide.md) is the spoken design; the unchanged [source study](../4_Full_Design/G08_Full_Design.md) holds the full cases. This file keeps the mechanisms and the two incidents that are easiest to miss in a short answer.
 
@@ -14,7 +14,7 @@ The claims-processing variant adds OCR, anomaly signals, and claim-type rollout,
 
 ## 2. Ingestion, permission, and version seams
 
-Map EHR/FHIR, payer PDFs, regulatory library, advisor communications, CLM/playbook, and case systems by owner, freshness, ACL, and risk. EHR is patient/role scoped, contracts are matter/privilege scoped, compliance obligations vary by jurisdiction/product. A source without usable ACL metadata stays out of production retrieval. Rule versions are selected by effective/expiry date and case attributes, so a request can be judged against the rule in force on its date of service.
+Map EHR/FHIR, payer PDFs, regulatory library, advisor communications, CLM/playbook, and case systems by owner, freshness, ACL, and risk. EHR is patient/role scoped, contracts are matter/privilege scoped, compliance obligations vary by jurisdiction/product. A source without usable ACL metadata stays out of production retrieval. Select rule versions by effective/expiry date and case attributes, so each request is judged against the rule in force on its date of service.
 
 PDF layout is a correctness boundary. Detect tables, extract them in table mode, keep row or row-group chunks together with page anchors, and measure `table_count_detected`, `table_count_extracted`, `extraction_coverage`, and `layout_confidence`. Validate reading order; apply OCR/table fallback where needed. A high-risk policy below the agreed coverage threshold fails ingestion rather than warning. Store page-level coverage in retrieval metadata and rerun offline evaluation on parser or chunker changes.
 
@@ -28,18 +28,18 @@ Citation construction and verification are separate. The citation points to the 
 
 ## 4. Incident drill: right answer, wrong clause
 
-In [source §14](../4_Full_Design/G08_Full_Design.md#14-debug-the-incidents-on-this-design), the assistant answered a termination question correctly but cited a data-processing clause (12.4) instead of the actual termination clause (8.2). The true chunk ranked seventh. `answer_supported=true` and groundedness **0.91** masked `citation_span_match=false` and citation accuracy **0.38**. Citation generator `cite_v5` preferred concise retrieved text; the verifier over-weighted answer groundedness.
+In [source §14](../4_Full_Design/G08_Full_Design.md#14-debug-the-incidents-on-this-design), the assistant answered a termination question correctly but cited a data-processing clause (12.4) instead of the termination clause (8.2). The true chunk ranked seventh. `answer_supported=true` and groundedness 0.91 masked `citation_span_match=false` and citation accuracy 0.38. Citation generator `cite_v5` preferred concise retrieved text; the verifier over-weighted answer groundedness.
 
-Contain by rolling back the citation generator, requiring span match for legal workflows, and sending low-accuracy drafts to human review. Prevent with separate answer/citation/quote-span gates, clause-type features in reranking, and highlighting the actual supporting clause. The interviewer should hear: a correct answer with a false citation launders bad evidence into a professional decision.
+Contain by rolling back the citation generator, requiring span match for legal workflows, and sending low-accuracy drafts to human review. Prevent with separate answer/citation/quote-span gates, clause-type features in reranking, and highlighting the supporting clause. Tell the interviewer that a correct answer with a false citation launders bad evidence into a professional decision.
 
 ## 5. Incident drill: critical PDF table never indexed
 
-The other [source §14 incident](../4_Full_Design/G08_Full_Design.md#pdf-parser-drops-critical-tables-92) asks about a restricted-list trade exception above **€5M**. The answer missed the Head of Compliance plus Legal sign-off row. Parser `pdf_extract_v3.2` detected **17** tables but extracted **9**, or **52.9%**; pages **31–33** contained no text and the threshold matrix was absent. Ingestion still said success because the policy was classified as plain text. The regression affected rotated landscape tables.
+The other [source §14 incident](../4_Full_Design/G08_Full_Design.md#pdf-parser-drops-critical-tables-92) asks about a restricted-list trade exception above €5M. The answer missed the Head of Compliance plus Legal sign-off row. Parser `pdf_extract_v3.2` detected 17 tables but extracted 9, or 52.9%; pages 31–33 contained no text and the threshold matrix was absent. Ingestion still reported success because the policy was classified as plain text. The regression affected rotated landscape tables.
 
 Reprocess with OCR/table fallback, manually check the missing pages, and block autonomous answers on affected threshold questions until the corrected index is live. Prevent through table-heavy document classification, a hard coverage gate, parser visual/table regression cases, and retrieval metadata marking incomplete pages. Raising top-k cannot retrieve content that never entered the index.
 
 ## 6. Release, rollout, and cost detail
 
-Use historical cases with SME-labelled fields and human decisions. Source example goals are **≥90% supported claims**, **≥95% span citations**, **≥95% high-risk escalations**, **≥80% task completion**, and **zero** permission or PHI violations; set field-specific extraction bars and false-positive budgets with the customer. Red-team outdated rules, wrong patient, prompt injection in PDFs/messages, missing diagnosis or step therapy, “rule out” misread as confirmed, and “just submit it anyway.” In compliance, high recall on severe violations must be balanced with the reviewer’s false-positive workload.
+Use historical cases with SME-labelled fields and human decisions. Source example goals are ≥90% supported claims, ≥95% span citations, ≥95% high-risk escalations, ≥80% task completion, and zero permission or PHI violations; set field-specific extraction bars and false-positive budgets with the customer. Red-team outdated rules, wrong patient, prompt injection in PDFs/messages, missing diagnosis or step therapy, “rule out” misread as confirmed, and “just submit it anyway.” In compliance, balance high recall on severe violations against the reviewer’s false-positive workload.
 
 Roll out one document type and rule → offline golden set → shadow reviewer decisions → read-only pilot → draft-only low-risk category behind approval. Measure reviewer edits/overrides, packet preparation and review time, first-pass approval or denial, citation accuracy, p95, and cost per true issue. Bulk surveillance runs overnight: deterministic rules and small classifiers screen everything, the strong model handles the flagged fraction, and high-risk cases receive priority. Dedupe repeated templates by hash and batch non-urgent work; never save money by silently dropping citation or approval controls.

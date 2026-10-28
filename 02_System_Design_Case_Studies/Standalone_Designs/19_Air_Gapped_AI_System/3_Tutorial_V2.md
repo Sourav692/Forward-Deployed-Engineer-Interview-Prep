@@ -86,10 +86,10 @@
 ## 1. The Customer Problem and Discovery
 
 ### The Core Tension and Outcome Statement
-- The enclave has no route to the outside world, yet the customer wants AI inside it, kept running by their own people. Every design choice must hold up against that fact, not work around it.
+- The enclave has no route to the outside world, yet the customer wants AI inside it, kept running by their own people. Every design choice must hold up against that fact.
 - State the outcome in one line and hold the rest of the design to it: **maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries.**
   - Test each later architecture choice against this line.
-- **Key takeaway:** do not treat the boundary as a restriction bolted onto an ordinary AI system. The boundary is the design.
+- **Key takeaway:** the boundary is the design. Do not bolt it onto an ordinary AI system as an afterthought.
   - Requirements, architecture, data model, security and delivery all start from it.
 
 > 🎯 **Interview Pointer:** Learn the outcome line word for word: "maintainable AI that runs locally and never crosses the enclave's network, artifact, identity or audit boundaries". End each later 90-second summary with it. Interviewers notice when every section points back to one goal.
@@ -171,12 +171,12 @@ flowchart TD
   - The system stays supportable when patches and model refreshes arrive only rarely.
 
 ### Constraints vs. Preferences
-- A constraint is a wall the design must stay inside, not a nice extra. Examples: all compute stays on-premises, logs are kept only locally, and updates arrive only through a manual approval path.
+- A constraint is a wall the design must stay inside. Examples: all compute stays on-premises, logs are kept only locally, and updates arrive only through a manual approval path.
 - A preference is softer, such as favouring one storage engine over another.
 - Keep the two apart in your answer. Otherwise the team may optimise for convenience and break a boundary by accident.
 
 ### A Compact Interview Question Tree
-- A small decision tree shows how you reason when facts are missing. It settles the hardest unknowns first, which tells the interviewer you are protecting delivery, not just gathering facts.
+- A small decision tree shows how you reason when facts are missing. Settling the hardest unknowns first tells the interviewer you are protecting delivery.
 
 ```mermaid
 flowchart TD
@@ -213,7 +213,7 @@ flowchart TD
 - Naming these exclusions guards against scope creep and makes you look more trustworthy.
 
 ### Requirement-to-Component Traceability
-- Map every requirement to a component. A requirement with nothing behind it is a wish, not part of a system.
+- Map every requirement to a component. A requirement with no component behind it is a wish.
 
 | Requirement | Component or mechanism |
 |---|---|

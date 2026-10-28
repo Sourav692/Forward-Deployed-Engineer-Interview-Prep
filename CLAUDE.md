@@ -52,7 +52,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The scenario-pack cases (`/design/<slug>`, module 15) share one layout and one set of editorial rules, first built on the Enterprise Knowledge Assistant. Keep every new or edited case to them.
 
-- **The root markdown is not edited for the site.** Site-only changes live in `site/case-pages/` and `site/scripts/case-site-edits.mjs`, which run at sync time. Never hand-edit `site/content/`.
+- **Where an edit goes.** Prose and content fixes go in the root markdown, which the repo and the site share. Changes the site needs and the repo does not (the Databricks cut, case codes, symbols, introduction pages) live in `site/case-pages/` and `site/scripts/case-site-edits.mjs`, which run at sync time. Never hand-edit `site/content/`.
+- **Prose.** Case text follows the `no-ai-slop` rules: em dashes at most twice per file, no banned words (leverage, utilize, robust, crucial…), no "not just X but Y", colon reveals, metadiscourse or recap endings. Keep bullets, bold row labels and the "Interview Pointer" callouts: they are the cram format.
+- **Editing a case's source.** Keep heading text, fenced blocks (diagrams are cached by content), table shape, numbers and citation tokens unchanged, and never move text between `_Part_N` files. Leave lines that a `replace` rule targets alone, or update the rule: sync fails when a rule matches nothing (`assertReplaceRulesUsed`), because the line it rescued would otherwise be cut silently.
 - **Introduction page.** Each case has `site/case-pages/<slug>/introduction.md`. Sync adds it as the first tab (`intro`), and a case with one gets the chapters layout (`hasChapters` in `src/lib/scenario.ts`). Follow `site/case-pages/enterprise-knowledge-assistant/introduction.md`. Headings, in order:
   - `# <Case title>: Introduction`
   - `## Overview`: two or three short paragraphs covering the problem, the hard constraint and the design.

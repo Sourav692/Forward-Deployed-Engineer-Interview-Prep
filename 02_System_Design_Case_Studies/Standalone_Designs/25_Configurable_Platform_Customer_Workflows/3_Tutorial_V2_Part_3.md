@@ -4,44 +4,44 @@
 
 ### Four Core Records and Ownership
 
-- Abstractions do not convince an interviewer. Concrete state does. Tie the riskiest parts of the design to records, contracts and a little code. Say what is durable and what can change. Say what carries a version, what gets deployed, and what the system does when an identical request arrives a second time.
-- **`WorkflowTemplate(id, engine_version, schema)`** — the shared blueprint. Product and platform own it.
+- Interviewers trust concrete state over abstractions. Tie the riskiest parts of the design to records, contracts and a little code. Say what is durable and what can change. Say what carries a version, what gets deployed, and what the system does when an identical request arrives a second time.
+- **`WorkflowTemplate(id, engine_version, schema)`**: the shared blueprint. Product and platform own it.
   - `id` is the primary key. `engine_version` names the evaluator and renderer that can read this template. `schema` sets the permitted shape of fields, approvals and integrations.
   - Lifecycle: `draft` → `published`. Once published, the artifact never changes; new behaviour needs a new template version.
   - Retention: hold published templates for as long as the product or contract window lasts. Older tenant configs must still resolve against the precise template they were validated with. Drafts can be garbage-collected once they have sat idle for a safe period.
-- **`TenantConfig(tenant_id, template_id, version, values)`** — the overlay one customer applies on top of a template.
+- **`TenantConfig(tenant_id, template_id, version, values)`**: the overlay one customer applies on top of a template.
   - In practice the key is `(tenant_id, version)`. `values` carries only the tenant parameters that the template schema permits.
   - Lifecycle: `draft` → `validated` → `deployed` or `rolled_back`. When validation fails, the record goes back to `draft`/`needs_fix` and keeps its version number.
   - Retention: every published and rolled-back version stays, so audit and rollback both work. Drafts follow platform policy and are dropped once abandoned or superseded.
   - What the values mean for the business is the tenant's call. Validating and storing them is the platform's job.
-- **`AdapterDefinition(name, contract_version, permissions)`** — the contract for talking to one downstream system, such as CRM, ticketing, storage or messaging.
+- **`AdapterDefinition(name, contract_version, permissions)`**: the contract for talking to one downstream system, such as CRM, ticketing, storage or messaging.
   - `name` plus `contract_version` form the key. `permissions` lists the scopes and capabilities the adapter needs, so the platform can turn down a config that requests an adapter it has no safe way to call.
   - Lifecycle: the platform or integrations team runs it. Contracts ship as versions and retire only when no active tenant config still relies on them.
   - Retention: retired definitions stay around for past deployments and debugging. They are flagged inactive, so a new config cannot pick them.
-- **`ConfigDeployment(tenant_id, version, state)`** — the deployment ledger. It alone decides which of `draft` / `validated` / `deployed` / `rolled_back` / `failed` applies.
+- **`ConfigDeployment(tenant_id, version, state)`**: the deployment ledger. It alone decides which of `draft` / `validated` / `deployed` / `rolled_back` / `failed` applies.
   - Ops and support read this record to see which version is live at this moment.
   - Lifecycle: each state change is appended; nothing is rewritten in place. A rollback adds a fresh deployment event that points at an earlier good version.
   - Retention: hold the whole history for the full support and audit window. Incident reviews, customer support and change tracking all depend on it.
-- Separate owners stop the records from tangling. Product owns the template. The customer owns the tenant config. Integrations owns the adapter contract. Ops owns the deployment record. Once those lines blur, you get forks that call themselves flexibility.
+- Separate owners stop the records from tangling. Product owns the template. The customer owns the tenant config. Integrations owns the adapter contract. Ops owns the deployment record. Blur those lines and per-customer forks return.
 
-> 🎯 **Interview Pointer:** If asked what tells you which version is live, answer `ConfigDeployment`, not `TenantConfig`. Its state transitions are append-only. That ledger, not the config record, lets support see what is running now, and it turns a rollback into a new event rather than an edit in place.
+> 🎯 **Interview Pointer:** If asked what tells you which version is live, answer `ConfigDeployment`, not `TenantConfig`. Its state transitions are append-only. That ledger lets support see what is running now, and it turns a rollback into a new event rather than an edit in place.
 
 ### Four API Contracts
 
-- At interview scale, show one bounded declarative contract plus a write path that stops unsafe input before the registry ever sees it. The point is to prove three things: the platform takes limited configuration, checks it, and publishes it as an immutable version.
-- `POST /v1/configurations/validate` — takes a draft tenant config and hands back validation errors plus a normalised preview. It never publishes anything.
+- At interview scale, show one bounded declarative contract plus a write path that stops unsafe input before the registry ever sees it. It proves three things: the platform takes limited configuration, checks it, and publishes it as an immutable version.
+- `POST /v1/configurations/validate`: takes a draft tenant config and hands back validation errors plus a normalised preview. It never publishes anything.
   - Auth: a bearer token or session scoped to the caller's tenant. Authorisation permits validation only for tenants the caller is allowed to administer.
   - Body: `template_id`, `version`, `values`, and an optional `idempotency_key` so validation traces can be replayed. The call has no write effects, so retrying it is safe anyway.
   - Responses: `200 OK` for a good preview; `400 Bad Request` when the structure is wrong; `403 Forbidden` for a tenant mismatch or missing rights; `422 Unprocessable Content` when schema or policy rules fail.
-- `POST /v1/tenants/{id}/deployments` — starts a deployment for a tenant, usually from a config version that already passed validation. It returns the deployment ID and its state.
+- `POST /v1/tenants/{id}/deployments`: starts a deployment for a tenant, usually from a config version that already passed validation. It returns the deployment ID and its state.
   - Auth: the caller must belong to tenant `{id}` or hold a delegated ops role. The server refuses any attempt to deploy into another tenant.
   - Because this call creates something, it needs an idempotency key. The same key with an identical body gives back the same result. The same key with a different body gets `422 Unprocessable Content`, as the IETF Idempotency-Key draft recommends. If a retry arrives while the first request is still in progress, it gets `409 Conflict`.
   - Errors: `401 Unauthorized` when credentials are absent or expired; `403 Forbidden` when tenant permission is missing; `404 Not Found` when the named config version does not exist; `409 Conflict` for a stale optimistic-concurrency token or a key that is still in flight; `422 Unprocessable Content` when syntax passes but policy fails, or when a key is reused with a different payload.
-- `POST /v1/adapters/{name}/test` — runs an adapter mapping against a harmless test payload or a sandbox endpoint.
+- `POST /v1/adapters/{name}/test`: runs an adapter mapping against a harmless test payload or a sandbox endpoint.
   - Auth: limited to integration maintainers or tenant admins.
   - Body: the adapter name, a test payload, the mapping and an optional sandbox selector. An idempotency key is accepted too, so a retry does not produce a second test run or a second audit entry.
   - Errors: `404 Not Found` for an unknown adapter; `403 Forbidden` when permission is lacking; `422 Unprocessable Content` when the mapping cannot be applied; `502 Bad Gateway`, or something like it, when the sandbox dependency fails.
-- `POST /v1/deployments/{id}/rollback` — records a new rollback state for that tenant. The old deployment is left untouched.
+- `POST /v1/deployments/{id}/rollback`: records a new rollback state for that tenant. The old deployment is left untouched.
   - Auth: the caller needs tenant scope and either raised ops rights or an explicit sign-off route.
   - Body: identifies the target deployment or the earlier good version. It carries an idempotency key, because rollback writes state and may be retried after a failure.
   - On success the caller gets the new deployment record. The previous record is never overwritten.
@@ -77,7 +77,7 @@ sequenceDiagram
 
 ### The Smallest Safe Code Path: Config Publication
 
-- Config publication carries the most risk. Bad structure, broken mappings or faulty versioning at this step can take production down. The sketch below is small, yet it contains every control point that counts in a live system.
+- Config publication carries the most risk. Bad structure, broken mappings or faulty versioning at this step can take production down. The sketch below is small but contains every control point a live system needs.
 
 ```typescript
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
@@ -231,10 +231,10 @@ flowchart TD
 ### What the Whiteboard Version Omits on Purpose
 
 - A production service would also need:
-  - **Optimistic concurrency** — each write should state the template or config version it expects. Then two operators cannot race and silently overwrite each other. If the version travels in the body, a mismatch returns `409 Conflict`. If it travels in an `If-Match` header, HTTP calls for `412 Precondition Failed`.
-  - **Idempotency** — retrying after a timeout must never yield a second deployment or a second version.
-  - **Bounded, safe retries** — retry only failure types that are safe to repeat. A rejected validation or authorisation is not transient, so never replay it as if it were.
-  - **Observability** — each validation, deployment, adapter test and rollback should carry the request ID, the tenant ID, the idempotency key and the config version. Support can then rebuild exactly what happened without combing through application logs.
+  - **Optimistic concurrency**: each write should state the template or config version it expects, so two operators cannot race and silently overwrite each other. If the version travels in the body, a mismatch returns `409 Conflict`. If it travels in an `If-Match` header, HTTP calls for `412 Precondition Failed`.
+  - **Idempotency**: retrying after a timeout must never yield a second deployment or a second version.
+  - **Bounded, safe retries**: retry only failure types that are safe to repeat. Never replay a rejected validation or authorisation; it is not transient.
+  - **Observability**: each validation, deployment, adapter test and rollback should carry the request ID, the tenant ID, the idempotency key and the config version. Support can then rebuild exactly what happened without combing through application logs.
 
 ### Contract and Failure-Injection Tests
 
@@ -286,7 +286,7 @@ describe("publish", () => {
 });
 ```
 
-- The first, the contract test, shows the API turning away a config whose structure is fine but which breaks policy.
-- The second, for failure injection, feeds in an unsafe adapter definition and confirms that publishing fails closed.
+- The contract test shows the API rejecting a config that is structurally sound but breaks policy.
+- The failure-injection test feeds in an unsafe adapter definition and confirms that publishing fails closed.
 - A real service would add more: tests for duplicate idempotency keys, tests for deployment rollback, and a concurrency test proving that stale versions are refused.
-- Why this matters for hiring: teams need FDEs who can go from a customer's workflow pain to a state model, then to API semantics, then to validation code fit for production. That is the gap between sketching a system and shipping a platform others can support.
+- Teams hire FDEs who can go from a customer's workflow pain to a state model, then to API semantics, then to validation code fit for production.

@@ -2,7 +2,7 @@
 
 *A business user must be able to switch on an automation that moves real money, without being able to read the code that decides whether it should.*
 
-An agent platform is a safety and orchestration problem wearing an AI costume. The model can choose which value goes into an argument; everything that decides whether a destructive action runs is code. This page consolidates the group's prompts into one read for the day before. The group has one whiteboard script and one handbook module that teaches the same built project in prose.
+An agent platform is a safety and orchestration problem wearing an AI costume. The model can choose which value goes into an argument; everything that decides whether a destructive action runs is code. This page puts the group's prompts into one read for the day before. The group has one whiteboard script and one handbook module that teaches the same built project in prose.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -24,12 +24,12 @@ The prompt, as quoted in a company's system-design prep guide: *"Design an AI ag
 
 | Phrase in the prompt | What it really means |
 |---|---|
-| "AI agent" | Something that looks at an event and *takes an action* — reply, refund, escalate, tag — not just answers a question |
+| "AI agent" | Something that looks at an event and *takes an action* (reply, refund, escalate, tag) instead of only answering a question |
 | "platform" | Not one workflow: many tenants, each defining many workflows |
 | "for non-technical users to configure" | The person building the automation is not a programmer and should never need to read a stack trace |
 | "across multiple channels" | The same automation fires from email, Slack, a chat widget, a web form or a raw webhook |
 
-Five clarifying questions actually change the design. Ask them in this order.
+Five clarifying questions change the design. Ask them in this order.
 
 | Question | What it decides |
 |---|---|
@@ -62,9 +62,9 @@ The demo question that drives the round: *"Why didn't Cascade Robotics' $500 ref
 
 | Question | What actually happened |
 |---|---|
-| Wasn't the workflow autonomous? | Yes — but `issue_refund` was not allow-listed for autonomous use on this tenant, so it still needed a human |
-| Wasn't there budget? | The tenant's spend cap is $50. A $500 refund is refused outright — `spend_cap_exceeded` — never silently clamped down to the cap |
-| What if it retries and refunds twice? | It cannot — the idempotency key on that action exists after the first apply; a retry is a no-op |
+| Wasn't the workflow autonomous? | Yes, but `issue_refund` was not allow-listed for autonomous use on this tenant, so it still needed a human |
+| Wasn't there budget? | The tenant's spend cap is $50. A $500 refund is refused outright (`spend_cap_exceeded`), never silently clamped down to the cap |
+| What if it retries and refunds twice? | It cannot. The idempotency key on that action exists after the first apply, so a retry is a no-op |
 
 > *"Notice the refund cap isn't a nice-to-have — it's the difference between 'the agent can act autonomously' and 'the agent can act autonomously up to the point where a mistake actually costs real money, and then it stops and asks.'"*
 
@@ -87,7 +87,7 @@ The should-haves come after the safety core is trusted. They are a template libr
 
 | Constraint | Stated so it can be tested |
 |---|---|
-| Safety | A destructive action never executes without an explicit human approval or an explicit per-tenant allow-list entry — even on a fully autonomous workflow |
+| Safety | A destructive action never executes without an explicit human approval or an explicit per-tenant allow-list entry, even on a fully autonomous workflow |
 | Money | A $500 refund against a $50 cap is refused outright, never silently clamped; the cap uses the real dollar amount |
 | Idempotency | A retried or redelivered action never applies its side effect twice; external call count stays at 1 |
 | Durability | A crash mid-run never re-runs a step that already completed |
@@ -120,7 +120,7 @@ Write the nouns before the boxes, because the nouns are the contract every box s
 Event · Channel · WorkflowSpec (versioned) · Trigger · Step · Tool · Run · Guardrail · Principal
 ```
 
-Then narrate one event before drawing. A ticket webhook arrives, and a channel adapter normalises it into a canonical event. Routing finds the highest-priority live workflow that triggers on it and checks that no other run is already active on that ticket. The orchestrator executes the workflow's steps one at a time and checkpoints after each. A non-destructive step, such as drafting a reply, just runs. A destructive one, such as issuing a refund, goes through the guardrail first. It checks whether the workflow is live enough to act, whether this tool is allow-listed for autonomous use, whether a human is needed and whether it fits the spend cap. If it passes, it executes with an idempotency key, so a retry can never double-refund. Every decision, allowed or denied, is logged.
+Then narrate one event before drawing. A ticket webhook arrives, and a channel adapter normalises it into a canonical event. Routing finds the highest-priority live workflow that triggers on it and checks that no other run is already active on that ticket. The orchestrator executes the workflow's steps one at a time and checkpoints after each. A non-destructive step, such as drafting a reply, runs straight away. A destructive one, such as issuing a refund, goes through the guardrail first. It checks whether the workflow is live enough to act, whether this tool is allow-listed for autonomous use, whether a human is needed and whether it fits the spend cap. If it passes, it executes with an idempotency key, so a retry can never double-refund. Every decision, allowed or denied, is logged.
 
 The anchor's board, verbatim. Label the two independent decisions in routing.
 

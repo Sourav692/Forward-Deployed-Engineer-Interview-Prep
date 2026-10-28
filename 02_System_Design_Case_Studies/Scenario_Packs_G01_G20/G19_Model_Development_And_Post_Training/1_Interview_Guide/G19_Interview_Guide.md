@@ -1,10 +1,10 @@
-# G19 — Model Development and Post-Training: Main Interview Guide
+# G19 Model Development and Post-Training: Main Interview Guide
 
-> **Source:** [Sources and Full Design](../4_Full_Design/G19_Full_Design.md), especially §§1–12. Use the [Deep Dive](../2_Technical_Deep_Dive/G19_Technical_Deep_Dive.md) for methods and arithmetic and the [Cheat Sheet](../3_Quick_Review/G19_Quick_Review.md) for rehearsal. The source constructs the design from reported prompts; its run sizes and throughput are illustrations, not measured training results.
+> **Source:** [Sources and Full Design](../4_Full_Design/G19_Full_Design.md), especially §§1–12. Use the [Deep Dive](../2_Technical_Deep_Dive/G19_Technical_Deep_Dive.md) for methods and arithmetic and the [Cheat Sheet](../3_Quick_Review/G19_Quick_Review.md) for rehearsal. The design is built from reported prompts. Its run sizes and throughput are illustrations, not measured training results.
 
 ## The anchor and its variants
 
-The anchor is “design a model that solves math problems,” walking from data through supervised fine-tuning (SFT), post-training and evaluation. Three neighboring prompts change one constraint in that pipeline.
+The anchor prompt is “design a model that solves math problems.” The answer walks from data through supervised fine-tuning (SFT), post-training and evaluation. Three neighbouring prompts each change one constraint in that pipeline.
 
 | Case | Shared foundation | What changes |
 |---|---|---|
@@ -26,11 +26,11 @@ The anchor is “design a model that solves math problems,” walking from data 
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Collect answer-checkable examples.**
 2. **Deduplicate and decontaminate** against evaluation.
@@ -40,7 +40,7 @@ The easiest way to frame requirements in an interview is:
 6. **Update and checkpoint.**
 7. **Gate release** on held-out accuracy, general ability, safety, and contamination.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -59,7 +59,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The model is the **object being trained**, not an agent that approves its own release. Programs, calibrated graders and humans provide labels; deterministic experiment tracking and release policy decide which checkpoint advances. Evaluation failure loops back to data/error analysis.
+The model is what gets trained; it never approves its own release. Programs, calibrated graders and humans provide labels. Deterministic experiment tracking and release policy decide which checkpoint advances. A failed evaluation loops back to data and error analysis.
 
 ```mermaid
 flowchart LR
@@ -85,7 +85,7 @@ flowchart LR
 ### Step-by-step architecture
 
 - Collect problems with trustworthy answer labels, deduplicate near twins, remove evaluation overlap and record collection/label provenance.
-- Verify final answers where programs or symbolic checks can do so; send ambiguous or high-impact labels to humans. Mix general tasks to resist math-only forgetting.
+- Verify final answers where programs or symbolic checks can do so; send ambiguous or high-impact labels to humans. Mix in general tasks so the model keeps its non-math skills.
 - Start from a base model and use SFT to teach the worked-solution format, marked final answers and appropriate uncertainty; save a reproducible checkpoint.
 - Sample several answers from that checkpoint and score with a final-answer verifier, step grader or preference labels according to the target; audit high-reward examples for reward hacking.
 - Update the policy with a drift control or use DPO on preference pairs; log data hash, code, config, seed and optimizer/checkpoint state.
@@ -94,13 +94,13 @@ flowchart LR
 
 ## Choices to defend
 
-**SFT versus post-training:** SFT teaches the shape of a response. For checkable math, scored model attempts teach selection of correct answers. A final-answer verifier can reward correct numbers reached by bad working, so use step labels if reasoning validity matters. Preference pairs are better suited to tone and helpfulness. Keep a drift penalty and inspect high-reward samples, or the model learns the scorer’s blind spots.
+**SFT versus post-training:** SFT teaches the shape of a response. For checkable math, scored model attempts teach the model to pick correct answers. A final-answer verifier can reward correct numbers reached by bad working, so use step labels if reasoning validity matters. Preference pairs suit tone and helpfulness better. Keep a drift penalty and inspect high-reward samples, or the model learns the scorer’s blind spots.
 
-**Evaluation integrity:** split by source and time, inspect n-gram/embedding overlap, and report pass@1 with its sampling settings. A large offline gain can be leakage. Gate general ability, fabrication on ill-posed problems, harmful compliance and over-refusal, not only math accuracy. Do not tune repeatedly on the final test set.
+**Evaluation integrity:** split by source and time, inspect n-gram/embedding overlap, and report pass@1 with its sampling settings. A large offline gain can be leakage. Gate on general ability, fabrication on ill-posed problems, harmful compliance and over-refusal as well as math accuracy. Do not tune repeatedly on the final test set.
 
-**Compute budget:** size by `~6ND` training FLOPs, memory and effective throughput. Use LoRA/QLoRA for quick iteration; full fine-tuning only after a demonstrated adapter ceiling. For larger runs, use sharded state, parallelism appropriate to layer size, streamed data with recorded order and checkpoints including optimiser and loader position. Track evaluation gain per GPU-hour and kill stagnant runs.
+**Compute budget:** size by `~6ND` training FLOPs, memory and effective throughput. Use LoRA/QLoRA for quick iteration; move to full fine-tuning only after adapters hit a demonstrated ceiling. Larger runs need sharded state, parallelism matched to layer size, streamed data with recorded order, and checkpoints that include optimiser and loader position. Track evaluation gain per GPU-hour and kill stagnant runs.
 
-**Phone variant:** illustrative 3B weights need about **1.5GB at 4-bit** before KV cache and runtime overhead; a 1–2GB budget may require a smaller model, shorter context or both. Distill for task behaviour, quantize, train politeness preferences and measure the quantized student on the slowest supported phone.
+**Phone variant:** illustrative 3B weights need about 1.5GB at 4-bit before KV cache and runtime overhead; a 1–2GB budget may require a smaller model, shorter context or both. Distill for task behaviour, quantize, train politeness preferences and measure the quantized student on the slowest supported phone.
 
 ## Two-minute interview answer
 

@@ -2,7 +2,7 @@
 
 *An assistant that knows the account better than the rep, without ever seeing more of the CRM than the rep may.*
 
-The hard part of a sales copilot is not summarising an account. It is that every useful answer touches CRM records, call transcripts and pricing policy permissioned by territory, role and deal stage. One invented customer fact or unapproved claim can reach a customer's inbox. This page consolidates the group's prompts into one read for the day before. The group has no bespoke worked design, only a templated practice worksheet, so the CRM-permission and account-data detail here is added for this pack and marked where it appears.
+Summarising an account is the easy part of a sales copilot. Every useful answer touches CRM records, call transcripts and pricing policy permissioned by territory, role and deal stage. One invented customer fact or unapproved claim can reach a customer's inbox. This page consolidates the group's prompts into one read for the day before. The group has no bespoke worked design, only a templated practice worksheet, so the CRM-permission and account-data detail here is added for this pack and marked where it appears.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -16,7 +16,7 @@ The hard part of a sales copilot is not summarising an account. It is that every
 
 ## 1. Name the Workflow and the Risk Boundary Before Drawing Anything
 
-Do not start with the model. Start with the workflow. Which B2B sales workflow is slow, risky or inconsistent today? Who decides at the end of it? Which risk cannot be automated? A copilot that saves ten minutes and sends one unapproved claim has lost more than it saved. So the risk boundary is named before the first box.
+Do not start with the model. Start with the workflow. Which B2B sales workflow is slow, risky or inconsistent today? Who decides at the end of it? Which risk cannot be automated? A copilot that saves ten minutes and sends one unapproved claim has lost more than it saved, so name the risk boundary before the first box.
 
 The workflow is the pre-meeting hour. An account executive prepares for a meeting. They ask for an account summary, the opportunity risks, suggested discovery questions, email drafts and CRM update suggestions. Each of those five outputs sits on a different side of the risk boundary. The summary and risks are read-only assistance. The questions and drafts are draft-only. The CRM update is an action, and it needs explicit approval before write-back.
 

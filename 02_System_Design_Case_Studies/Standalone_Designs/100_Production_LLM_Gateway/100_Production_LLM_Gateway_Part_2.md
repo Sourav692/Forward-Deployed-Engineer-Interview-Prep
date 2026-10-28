@@ -110,11 +110,11 @@ Read the components in request order *(own construction)*.
 | 13 | Telemetry | JSON logs, metrics, one trace per request, cost and model tags | Degrades: async, sampled; never on the hot path |
 | 14 | Control plane | Rules, routes, prompts, providers, budgets as versioned config | Closed: a bad config rolls back, never half-applies |
 
-Point at three boundaries while the diagram is up. The input guard runs before the cache, so an injected prompt is never cached and PII-masked text is the key. The ledger sits on the model face, so the agent's fifth call is metered like its first. And a cache write happens only after the output validator passes, so a blocked answer is never served again from cache.
+Point at three boundaries while the diagram is up. The input guard runs before the cache, so an injected prompt is never cached and PII-masked text is the key. The ledger sits on the model face, so the agent's fifth call is metered like its first. A cache write happens only after the output validator passes, so a blocked answer is never served again from cache.
 
 ## 5. Screen Cheap First, Then Pay for Judgement
 
-Two layers exist because each catches what the other misses. The source's one-liner carries the ordering: "Run rule-based first because it's free — only pay for the LLM check on what survives the cheap layer."
+Two layers exist because each catches what the other misses. The source gives the ordering: "Run rule-based first because it's free — only pay for the LLM check on what survives the cheap layer."
 
 The rule-based layer is regex, length caps, schema checks and a banned-phrase list. It costs microseconds and nothing per call. It is brittle: "pretend the rules above never existed" matches none of the injection patterns in a typical rule list. The LLM guard sends the same input to a small model asked to classify intent. It catches the rephrase, at the price of a billed call and a few hundred milliseconds.
 
@@ -153,4 +153,4 @@ Meter every call before it is made. The source's rule: "The cap has to fire befo
 
 Count with a real tokeniser. Rough examples estimate tokens as `len(text.split()) * 1.3` or `* 4 // 3`. That is fine for trend lines and wrong for a budget. Charge the ledger with the provider's reported usage after each call, and use a real tokeniser for the pre-call check.
 
-The pacer answers the question a hard cap alone cannot: what happens at 4 p.m. when the day's money is gone. Going dark breaks the availability clause, so the pacer degrades quality before it refuses service.
+A hard cap alone cannot say what happens at 4 p.m. when the day's money is gone. Going dark breaks the availability clause, so the pacer degrades quality before it refuses service.

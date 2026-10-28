@@ -38,7 +38,7 @@ The two-minute summary to rehearse:
 
 ## 17. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the GPU bill is too high." There is no playbook drill for this group, so the card is *own construction*. It is built from the output-token and cold-start drivers and the additions file.
+The pivot after a good design is "the GPU bill is too high." There is no playbook drill for this group, so the card is *own construction*, built from the output-token and cold-start drivers and the additions file.
 
 | | |
 |---|---|
@@ -113,16 +113,16 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [NVIDIA H100 datasheet](https://resources.nvidia.com/en-us-gpu-resources/h100-datasheet-24306) — the assumed 20,000 tok/s prefill for an 8B model needs H100-class compute
-- [Hugging Face tokenizers: Decoders](https://huggingface.co/docs/tokenizers/api/decoders) — streaming decode must buffer partial characters
-- [Agrawal et al. 2024, Sarathi-Serve](https://arxiv.org/abs/2403.02310) — a long prefill stalls co-batched decodes; chunked prefill fixes it
-- [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html) — V1 preempts by recompute by default; chunked prefill
-- [Kwon et al. 2023, PagedAttention](https://arxiv.org/abs/2309.06180) — KV memory caps concurrency; max-length reservation wastes memory; paged, non-contiguous blocks
-- [vLLM API: CacheConfig](https://docs.vllm.ai/en/latest/api/vllm/config/cache.html) — default KV block size of 16 tokens
-- [Mitzenmacher 2001, The Power of Two Choices in Randomized Load Balancing](https://dl.acm.org/doi/10.1109/71.963420) — two random choices spread load almost as well as full information
-- [Mitzenmacher 2000, How Useful Is Old Information?](https://perso.ens-lyon.fr/loris.marchal/scheduling/Mitzenmacher.pdf) — two choices tolerate stale load data
-- [Thinking Machines 2025, Defeating Nondeterminism in LLM Inference](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/) — greedy output can differ across batch sizes and kernels
-- [NVIDIA blog: Reducing cold-start latency with Run:ai Model Streamer](https://developer.nvidia.com/blog/reducing-cold-start-latency-for-llm-inference-with-nvidia-runai-model-streamer) — weight loading alone can take seconds; provisioning is what takes minutes
-- [Azure SDK blog: Load models up to 6x faster with Run:ai Model Streamer](https://devblogs.microsoft.com/azure-sdk/eliminate-llm-cold-starts-load-models-up-to-6x-faster-with-azure-blob-storage-and-runai-model-streamer/) — faster weight streaming for cold starts
-- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/) — the engine aborts a request when the client disconnects
-- [vLLM issue #10087](https://github.com/vllm-project/vllm/issues/10087) — abort breaks when middleware fails to pass the disconnect on
+- [NVIDIA H100 datasheet](https://resources.nvidia.com/en-us-gpu-resources/h100-datasheet-24306): the assumed 20,000 tok/s prefill for an 8B model needs H100-class compute
+- [Hugging Face tokenizers: Decoders](https://huggingface.co/docs/tokenizers/api/decoders): streaming decode must buffer partial characters
+- [Agrawal et al. 2024, Sarathi-Serve](https://arxiv.org/abs/2403.02310): a long prefill stalls co-batched decodes; chunked prefill fixes it
+- [vLLM docs: Optimization and Tuning](https://docs.vllm.ai/en/latest/configuration/optimization.html): V1 preempts by recompute by default; chunked prefill
+- [Kwon et al. 2023, PagedAttention](https://arxiv.org/abs/2309.06180): KV memory caps concurrency; max-length reservation wastes memory; paged, non-contiguous blocks
+- [vLLM API: CacheConfig](https://docs.vllm.ai/en/latest/api/vllm/config/cache.html): default KV block size of 16 tokens
+- [Mitzenmacher 2001, The Power of Two Choices in Randomized Load Balancing](https://dl.acm.org/doi/10.1109/71.963420): two random choices spread load almost as well as full information
+- [Mitzenmacher 2000, How Useful Is Old Information?](https://perso.ens-lyon.fr/loris.marchal/scheduling/Mitzenmacher.pdf): two choices tolerate stale load data
+- [Thinking Machines 2025, Defeating Nondeterminism in LLM Inference](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/): greedy output can differ across batch sizes and kernels
+- [NVIDIA blog: Reducing cold-start latency with Run:ai Model Streamer](https://developer.nvidia.com/blog/reducing-cold-start-latency-for-llm-inference-with-nvidia-runai-model-streamer): weight loading alone can take seconds; provisioning is what takes minutes
+- [Azure SDK blog: Load models up to 6x faster with Run:ai Model Streamer](https://devblogs.microsoft.com/azure-sdk/eliminate-llm-cold-starts-load-models-up-to-6x-faster-with-azure-blob-storage-and-runai-model-streamer/): faster weight streaming for cold starts
+- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/): the engine aborts a request when the client disconnects
+- [vLLM issue #10087](https://github.com/vllm-project/vllm/issues/10087): abort breaks when middleware fails to pass the disconnect on

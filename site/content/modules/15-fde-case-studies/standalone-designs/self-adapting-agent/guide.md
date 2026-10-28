@@ -2,22 +2,22 @@
 
 *An agent that adapts to new tasks without supervision needs the freedom to change its own behaviour, and every change it makes is a regression nobody reviewed.*
 
-"Autonomously adapt" does not mean "retrain itself". Most adaptation belongs in cheap, reversible places, such as context, memory and procedures. Each change passes the same evaluation gate a human change would. This page is the standalone day-before pack for this case.
+"Autonomously adapt" does not mean "retrain itself". Most adaptation belongs in cheap, reversible places, such as context, memory and procedures. Each change passes the same evaluation gate a human change would. This page is the day-before pack for this case.
 
 | Case | What it contributes here |
 |---|---|
 | #80 Anthropic MLE: design an agentic AI system that can autonomously adapt to new tasks | Sections 1 to 14: the whole design on one running example |
 | Cost self-drill | Section 15 |
 
-**Much of this page is own construction, but its backbone is sourced.** No worked answer exists for this prompt. The prompt comes from the decomposition question bank, Tier 1 prompt 15. The spine comes from the Cracking book's learning chapter. Its four learning surfaces, skill promotion gate and data flywheel answer most of this prompt directly. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
+**Much of this page is own construction, but its backbone is sourced.** No worked answer exists for this prompt. The prompt comes from the decomposition question bank, Tier 1 prompt 15. The spine comes from the Cracking book's learning chapter, whose four learning surfaces, skill promotion gate and data flywheel answer most of this prompt. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
 
-The running example is the Cracking book's own: an internal operations agent. It handles requests such as "restart service X" and "roll back flag Y". New request types appear every week as teams ship new systems.
+The running example is the Cracking book's own: an internal operations agent. It handles requests such as "restart service X" and "roll back flag Y", and new request types appear every week as teams ship new systems.
 
 ---
 
 ## 1. Pin Down What "Adapt" Means Before Drawing Anything
 
-A system cannot be designed toward a verb nobody defined. "Adapt to new tasks" hides at least five different mechanisms. They differ by an order of magnitude in cost and by how easily a change can be undone.
+You cannot design toward a verb nobody defined. "Adapt to new tasks" hides at least five mechanisms, which differ by an order of magnitude in cost and in how easily you can undo a change.
 
 The Cracking book names four places an agent's improvement can live: context, memory, procedure and parameters. Each is roughly ten times slower and costlier to iterate on than the one before. This page adds prompt optimisation as a separate rung between procedure and parameters *(own construction)*. It changes behaviour broadly, like training, but stays reversible, like a prompt.
 
@@ -29,7 +29,7 @@ The Cracking book names four places an agent's improvement can live: context, me
 | 4. Prompt optimisation *(own construction)* | Instructions and examples searched against a scored dev set | A rewritten planner prompt that raises tool-choice accuracy | Hours to a day | Revert the prompt version |
 | 5. Parameters | Model weights | A tuned small router for the top task types | Days to weeks | Redeploy the old model |
 
-The book's rule is to work down this table, not up. In the book's view, most teams that reach for fine-tuning have not yet fixed their tool schemas, retrieval or example selection. Fine-tuning then bakes those defects into weights that take weeks to change.
+The book's rule is to work down this table, not up. In the book's view, most teams that reach for fine-tuning have not yet fixed their tool schemas, retrieval or example selection, and fine-tuning bakes those defects into weights that take weeks to change.
 
 Ask these questions before committing *(own construction)*.
 
@@ -42,7 +42,7 @@ Ask these questions before committing *(own construction)*.
 | How fast must a new task become reliable: hours, days or a quarter? | Hours forces the cheap rungs; a quarter permits training |
 | Is the adaptation per user, per tenant or global? | Per-tenant learning needs isolation in every store |
 
-A safe default, stated aloud if the interviewer does not answer, is this. New request types arrive weekly. Most have a checkable outcome. Writes to production systems are partly reversible. Adaptation is global, but each skill has a team owner.
+If the interviewer does not answer, state a safe default aloud: new request types arrive weekly, most have a checkable outcome, writes to production systems are partly reversible, and adaptation is global but each skill has a team owner.
 
 > *"Before I design anything I want 'adapt' pinned down. There are five places learning can live, from the context of one request up to the model's weights. Each rung costs roughly ten times more than the last and is harder to undo. I'll design from the cheap end and only climb when a measured gap forces it."*
 
@@ -50,9 +50,9 @@ A safe default, stated aloud if the interviewer does not answer, is this. New re
 
 A requirement that cannot fail a test is a wish. "Gets better over time" is a wish. "Success on a new task type reaches the baseline within 14 days without a regression on any existing type" is a constraint *(own construction throughout this section; thresholds are assumptions unless marked sourced)*.
 
-The functional must-haves are six. Recognise when a request does not match any known capability. Attempt it safely with a general fallback, escalating when confidence is low. Record every run with its outcome, so learning has evidence. Turn repeated successes into candidate skills, memories or prompt changes. Evaluate each candidate before it affects real traffic. Remove learned behaviour automatically when it starts to fail.
+There are six functional must-haves. Recognise when a request does not match any known capability. Attempt it safely with a general fallback, escalating when confidence is low. Record every run with its outcome, so learning has evidence. Turn repeated successes into candidate skills, memories or prompt changes. Evaluate each candidate before it affects real traffic. Remove learned behaviour automatically when it starts to fail.
 
-The should-haves come later. Per-tenant specialisation. A tuned small model for high-volume task types. A dashboard that shows owners what the agent learned this week.
+The should-haves come later: per-tenant specialisation, a tuned small model for high-volume task types, and a dashboard that shows owners what the agent learned this week.
 
 | Non-functional constraint | Stated so it can be tested |
 |---|---|
@@ -78,7 +78,7 @@ Each must-have needs an owner in the architecture.
 
 ## 3. Size the Adaptation Before Choosing a Rung
 
-Arithmetic decides which rungs are even affordable *(own construction; every input is an assumption, arithmetic is exact)*.
+Arithmetic decides which rungs you can afford *(own construction; every input is an assumption, arithmetic is exact)*.
 
 | Quantity | Assumed value | Consequence |
 |---|---|---|
@@ -89,13 +89,13 @@ Arithmetic decides which rungs are even affordable *(own construction; every inp
 | Offline eval suite per candidate | 640 cases, paired with baseline | 1,280 runs = $38.40 per candidate |
 | Candidates generated per week | 50 | $1,920 a week, about 46% of the $4,200 weekly serving bill |
 
-Two lessons fall out of the table. First, rare task types cannot be promoted quickly. At 30 requests a day, the shadow minimum alone takes a week, and that sets the honest time to competence. Second, candidate volume drives learning cost, not training. Fifty candidates a week breaks a 10% learning budget almost five times over. So the extractor must deduplicate and pre-filter before anything reaches the paid evaluation.
+Two lessons fall out of the table. First, rare task types cannot be promoted quickly. At 30 requests a day the shadow minimum alone takes a week, which sets the honest time to competence. Second, candidate volume drives learning cost, not training. Fifty candidates a week breaks a 10% learning budget almost five times over, so the extractor must deduplicate and pre-filter before anything reaches the paid evaluation.
 
-The sample-size arithmetic sets what the gate can even detect. The validation chapter gives it as n ≈ 15.7 × p(1−p) / δ² per arm. At a baseline of 0.8, 200 cases detect only differences of about 11 points. A 5-point gain needs about 1,000 cases per arm. So the 200-attempt shadow proves "not much worse", not "5 points better". Say that aloud; it is a rare and strong signal.
+The sample-size arithmetic sets what the gate can detect at all. The validation chapter gives it as n ≈ 15.7 × p(1−p) / δ² per arm. At a baseline of 0.8, 200 cases detect only differences of about 11 points. A 5-point gain needs about 1,000 cases per arm. So the 200-attempt shadow proves "not much worse", not "5 points better". Say that aloud; few candidates do.
 
 ## 4. Draw the Architecture as Two Loops With One Gate
 
-The runtime loop serves requests. The learning loop proposes changes. They meet at exactly one place, the evaluation gate. Nothing learned reaches live traffic without passing it *(own construction for every diagram in this section)*.
+The runtime loop serves requests. The learning loop proposes changes. They meet at one place, the evaluation gate, and nothing learned reaches live traffic without passing it *(own construction for every diagram in this section)*.
 
 ```
  ╔══════════════════════ CONTROL PLANE (every change is a version) ═════════════════════╗
@@ -197,22 +197,22 @@ flowchart TB
 
 ## 5. Detect the Unknown Before Trying to Handle It
 
-An agent cannot adapt to a task it has not noticed is new. The hardest failure is not "I do not know how". It is confidently forcing a new request into the nearest known skill *(own construction throughout this section)*.
+An agent cannot adapt to a task it has not noticed is new. The hardest failure is confidently forcing a new request into the nearest known skill; "I do not know how" is the easy case *(own construction throughout this section)*.
 
-Score novelty on three signals. The router's retrieval score against the skill catalogue falls below a threshold. The request names a system, tool or entity absent from every live skill. The router's top two candidates are close, so its choice is a coin flip. Any one of them routes the request to the general fallback instead of a skill.
+Score novelty on three signals. First, the router's retrieval score against the skill catalogue falls below a threshold. Second, the request names a system, tool or entity absent from every live skill. Third, the router's top two candidates are close, so its choice is a coin flip. Any one signal routes the request to the general fallback instead of a skill.
 
-Treat the fallback as a different operating mode. Cut the step budget. Allow read-only tools freely and require approval for writes. Escalate earlier. The first dozen runs of a new task type are both the riskiest and the most valuable. They carry the evidence every later rung learns from.
+Treat the fallback as a different operating mode. Cut the step budget. Allow read-only tools freely and require approval for writes. Escalate earlier. The first dozen runs of a new task type are the riskiest and the most valuable, because they carry the evidence every later rung learns from.
 
-The skill-loading pattern from the FDE handbook supports this. The agent starts with a lightweight catalogue of skill names and triggers. It loads one skill's full instructions only when selected, then releases that context. Trigger descriptions need counterexamples as well as examples, or the wrong skill activates. Evaluate triggering separately from execution. A skill that runs perfectly after the wrong trigger is still a wrong answer.
+The skill-loading pattern from the FDE handbook supports this. The agent starts with a lightweight catalogue of skill names and triggers. It loads one skill's full instructions only when selected, then releases that context. Trigger descriptions need counterexamples as well as examples, or the wrong skill activates. Evaluate triggering separately from execution: a skill that runs perfectly after the wrong trigger is still a wrong answer.
 
 ## 6. Adapt Within One Request Before Changing Anything Permanent
 
 The cheapest adaptation changes nothing that outlives the request. Rung 1 covers two mechanisms, both runtime-only.
 
-**Dynamic example selection.** A fixed set of examples in the system prompt is chosen for the average request, so it is optimal for none. Retrieve past runs similar to this request instead. Then rank them by recorded outcome, not just similarity. A similar run that went badly teaches the model to go badly. Enforce diversity so three near-duplicates do not crowd out the useful one. The book's scoring formula is λ × relevance − (1−λ) × redundancy + 0.15 × outcome score.
+**Dynamic example selection.** A fixed set of examples in the system prompt is chosen for the average request, so it is optimal for none. Retrieve past runs similar to this request instead. Then rank them by recorded outcome as well as similarity. A similar run that went badly teaches the model to go badly. Enforce diversity so three near-duplicates do not crowd out the useful one. The book's scoring formula is λ × relevance − (1−λ) × redundancy + 0.15 × outcome score.
 
-One cost follows. Examples sit above the user's turn, so swapping them per request breaks the prompt prefix cache from that point on. Only what sits above them, such as tool definitions and the fixed system prompt, still hits the cache. Where traffic clusters, cache one example set per cluster rather than choosing per request.
+One cost follows. Examples sit above the user's turn, so swapping them per request breaks the prompt prefix cache from that point on. Only what sits above them (tool definitions, the fixed system prompt) still hits the cache. Where traffic clusters, cache one example set per cluster rather than choosing per request.
 
-**Reflexion.** A failed attempt becomes a written lesson placed in context for the next attempt. The model itself does not change. The book says it works reliably only with three conditions: an external failure signal, a lesson specific enough to change behaviour, and a hard cap on attempts. "Expected ISO 8601 UTC, I sent local time" is a lesson. "Be more careful" is not. A model grading its own attempt without an external signal tends to produce confidently wrong lessons. Those lessons then contaminate every retry after them.
+**Reflexion.** A failed attempt becomes a written lesson placed in context for the next attempt; the model does not change. The book says it works reliably only with three conditions: an external failure signal, a lesson specific enough to change behaviour, and a hard cap on attempts. "Expected ISO 8601 UTC, I sent local time" is a lesson. "Be more careful" is not. A model grading its own attempt without an external signal tends to write confidently wrong lessons, which then contaminate every later retry.
 
 A Reflexion implementation splits the pattern into actor, evaluator and self-reflection roles. For #80, one design rule sits on top: the evaluator must be external. A validator, a test or an API response counts. The same model's opinion does not.

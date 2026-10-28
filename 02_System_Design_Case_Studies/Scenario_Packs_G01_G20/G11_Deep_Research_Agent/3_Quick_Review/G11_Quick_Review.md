@@ -1,4 +1,4 @@
-# G11 — Deep Research Agent: Cheat Sheet
+# G11 Deep Research Agent: Cheat Sheet
 
 [Main](../1_Interview_Guide/G11_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G11_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G11_Full_Design.md)
 

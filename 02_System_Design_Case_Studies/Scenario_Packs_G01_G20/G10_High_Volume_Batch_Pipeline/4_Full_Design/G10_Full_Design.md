@@ -4,7 +4,7 @@
 
 ◷ 35 min
 
-Throughput is not the hard part of this system. The hard part is the decision at 4 a.m., when the job is behind and someone has to choose what ships. This page consolidates the group's prompts into one read for the day before. The anchor is the nightly classification batch, and every other member is a delta on it.
+The hardest part of this system is the decision at 4 a.m., when the job is behind and someone has to choose what ships. This page consolidates the group's prompts into one read for the day before. The anchor is the nightly classification batch, and every other member is a delta on it.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -21,7 +21,7 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 The prompt sounds simple: classify 100 million records every night before 6:00 a.m. The room splits three ways at once. The business owner says, "We just need classifications ready by morning." The data platform lead says, "Only if it doesn't break the warehouse." The on-call engineer says, "Only if we can rerun it safely when the model or upstream feed fails."
 
-That disagreement is the real problem, not the throughput number. So restate the target before drawing anything.
+That disagreement, more than the throughput number, is the problem to solve. Restate the target before drawing anything.
 
 > *"Complete a replayable, cost-controlled batch by deadline with clear recovery decisions when behind schedule."*
 
@@ -43,13 +43,13 @@ Map the stakeholders next. Each one hires the platform for a different job, and 
 | Security owner | Reviews access to source records, outputs, logs | Sensitive data in queues and checkpoints | Opaque identifiers, encryption, audit trail | Access and retention |
 | Business sponsor | Justifies the recurring cost | A nightly fire drill | A predictable process at a known unit cost | The contingency policy, jointly with operations |
 
-The business does not decide batch retry semantics. The on-call engineer does not decide whether a stale classification is acceptable. The model owner does not own the downstream SLA. That division keeps the design aligned with reality rather than with one enthusiastic stakeholder.
+The business does not decide batch retry semantics. The on-call engineer does not decide whether a stale classification is acceptable. The model owner does not own the downstream SLA. That division stops one enthusiastic stakeholder from steering the design.
 
 ## 2. Ask the Partial-Result Question First
 
-The brief is incomplete on purpose. The interviewer may confirm the volume and the deadline, then stop. That is the test, not a trap.
+The brief is incomplete on purpose. The interviewer may confirm the volume and the deadline, then stop. The gap is the test.
 
-Protect the one constraint that most changes the architecture. **Can the batch be partial, or must it be all-or-nothing?** A late but correct job can be rerun or explained. A job that silently drops or duplicates records is much harder to trust. The partial-result answer sets the retry strategy, the checkpoint cadence and how much to spend on the last 10%.
+Ask first about the constraint that most changes the architecture: can the batch be partial, or must it be all-or-nothing? A late but correct job can be rerun or explained. A job that silently drops or duplicates records is much harder to trust. The partial-result answer sets the retry strategy, the checkpoint cadence and how much to spend on the last 10%.
 
 | Question | Design axis it unlocks |
 |---|---|

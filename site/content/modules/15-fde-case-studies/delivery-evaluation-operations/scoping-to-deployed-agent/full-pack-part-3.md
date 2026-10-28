@@ -11,7 +11,7 @@ The framework does not guarantee every engagement deploys in 14 days. It guarant
 | The golden set never gets customer sign-off | Evaluate is blocked; a customer-side failure the framework surfaces rather than routes around |
 | Success metrics are not met by day 14 | The go/no-go gate does not pass; "no-go" is a legitimate outcome |
 
-Scale here is not ten million chunks. It is one FDA running six engagements at once. The state machine does not change with portfolio size; capacity does. Gates start queueing behind a person's calendar rather than the customer. Designing that needs real engagement-duration data first, the same way embedding-cache hit rates need real query logs.
+Scale here means one FDA running six engagements at once, not ten million chunks. The state machine does not change with portfolio size; capacity does. Gates start queueing behind a person's calendar rather than the customer. Designing that needs real engagement-duration data first, the same way embedding-cache hit rates need real query logs.
 
 ## 12. Read the Northwind Numbers Honestly
 
@@ -27,7 +27,7 @@ Five metrics are computed on demand from the engagement's own history, never tra
 
 The run also shows 6 of 6 gates passed, `deployed True` on day 14, and one escalation, auto-raised on day 3 and resolved when the gate passed. The project has 17 gate-enforcement tests, deterministic, with no LLM anywhere.
 
-Read these as one engagement, run once. The eval score and time-to-value are demo-scripted, not measured on a real delivery. What is proven is that the pipeline enforces its own gates. Saying so before the interviewer asks is itself the signal.
+Read these as one engagement, run once. The eval score and time-to-value are demo-scripted, not measured on a real delivery. The run proves only that the pipeline enforces its own gates. Say so before the interviewer asks; that is the signal.
 
 ## 13. Read the Same Case in Prose
 
@@ -56,7 +56,7 @@ Write the time budget in the corner of the board.
 | 45–55 | Failure modes and scale, portfolio not chunks |
 | 55–60 | Close: trade-offs and what to build first |
 
-Announce the risk before the deep dive. Seven stages in order is not a hard problem. The hard part is making "done" mean something checkable instead of "time passed", and making the library real enough that week two does not turn into bespoke code.
+Announce the risk before the deep dive. Seven stages in order is easy. The hard part is making "done" mean something checkable instead of "time passed", and making the library real enough that week two does not turn into bespoke code.
 
 Summarise in three sentences at minute 55:
 
@@ -122,7 +122,7 @@ In this round the level shows in whether each gate is a decision with a named au
 - Every gate is a decision by an allowed role, with evidence, in order, and seniority is not an override.
 - Intake refuses rather than starting a clock against something unmeasurable.
 - The accelerator reuse rate, 83% on Northwind, turns "productised" into a number.
-- Risk mitigations are checks in code, with change-control named as the honest gap.
+- Risk mitigations are checks in code, with change-control named as the open gap.
 - A real gate still needs an evidence bar with a required shape, and the delivery process meets the same security bar as the product.
 - A stalled engagement names its gate, and scale means FDA capacity, not data volume.
 - The Northwind numbers are one engagement run once; the proof is that the gates enforce themselves.
@@ -147,9 +147,9 @@ In this round the level shows in whether each gate is a decision with a named au
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Demo script `run_engagement_demo.py` (reference implementation)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/scripts/run_engagement_demo.py) — the 0.83 eval score, "verified <2min" rollback and week-2 metrics are hard-coded evidence strings, not measurements
-- [Gate definitions `gates.py` (reference implementation)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/src/delivery_framework/gates.py) — the customer SME signs two gates; the FDA signs the eval and rollback gates
-- [Zendesk: Announcing the removal of API tokens](https://support.zendesk.com/hc/en-us/articles/10851263566234-Announcing-the-removal-of-API-tokens-as-an-authentication-method-for-API-requests) — API tokens are all-or-nothing; no new tokens from 27 Oct 2026, all off 30 Apr 2027
-- [Zendesk: Creating and using OAuth tokens with the API](https://developer.zendesk.com/documentation/authentication/creating-and-using-oauth-tokens-with-the-api/) — read-only access needs the OAuth `read` scope
-- [Atlassian: Scoped API tokens in Confluence Cloud](https://support.atlassian.com/confluence/kb/scoped-api-tokens-in-confluence-cloud/) — Confluence supports scoped tokens
+- [Demo script `run_engagement_demo.py` (reference implementation)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/scripts/run_engagement_demo.py): the 0.83 eval score, "verified <2min" rollback and week-2 metrics are hard-coded evidence strings, not measurements
+- [Gate definitions `gates.py` (reference implementation)](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/src/delivery_framework/gates.py): the customer SME signs two gates; the FDA signs the eval and rollback gates
+- [Zendesk: Announcing the removal of API tokens](https://support.zendesk.com/hc/en-us/articles/10851263566234-Announcing-the-removal-of-API-tokens-as-an-authentication-method-for-API-requests): API tokens are all-or-nothing; no new tokens from 27 Oct 2026, all off 30 Apr 2027
+- [Zendesk: Creating and using OAuth tokens with the API](https://developer.zendesk.com/documentation/authentication/creating-and-using-oauth-tokens-with-the-api/): read-only access needs the OAuth `read` scope
+- [Atlassian: Scoped API tokens in Confluence Cloud](https://support.atlassian.com/confluence/kb/scoped-api-tokens-in-confluence-cloud/): Confluence supports scoped tokens
 
