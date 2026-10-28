@@ -1,6 +1,6 @@
 # Delivery Under Pressure - Answer Key
 
-Spoken answers - 5 grounded, 1 partly grounded, 1 needing your input. Deliver them in your own cadence; the wording is a script, not a recitation.
+Spoken answers: 5 grounded, 1 partly grounded, 1 needing your input. Deliver them in your own cadence. Treat the wording as a guide; don't recite it.
 
 ## 1. A production issue at a customer site
 
@@ -35,15 +35,15 @@ Spoken answers - 5 grounded, 1 partly grounded, 1 needing your input. Deliver th
 
 > "First I separate blockers from incomplete work, using the release gate, not opinion. A blocker fails a hard criterion: an access or security test, data reconciliation, or a rollback path that has not been rehearsed. Everything else is incomplete work: polish, secondary reports, optional integrations. Then I shape the options technically. Reduced scope means a subset of workloads behind a feature flag. A phased go-live means one cutover wave with a tested rollback. A new date means naming the exact gate that is failing and when it will pass. I never ship around a failing security gate to hold a date. Upstream, I track gate pass rate, open defects by severity and reconciliation trend weekly. Those show the slip at week two."
 
-Hypothetical — testing judgement and instinct, not memory. Answer in order:
+This hypothetical tests judgement and instinct, not memory. Answer in order:
 
 - Raise it the same day. The cost of a late warning compounds; the cost of an early one is a conversation.
-- Go with options, not a problem — reduced scope for the date, full scope on a new date, or a phased go-live with a subset of workloads.
+- Go with options, not a problem: reduced scope for the date, full scope on a new date, or a phased go-live with a subset of workloads.
 - Separate what's genuinely blocking from what's merely incomplete. Much of "not ready" is polish that can follow the cutover.
 - Bring your own leadership in before the customer escalates, so nobody is surprised.
 - Name the decision-maker and the deadline for deciding. Ambiguity in a crisis is worse than a bad call.
 
-**Close with.** "In practice I try never to be in this position at day three — the trend is usually visible at week two if you're tracking the right leading indicator." Then name yours.
+**Close with.** "In practice I try never to be in this position at day three. The trend is usually visible at week two if you're tracking the right leading indicator." Then name yours.
 
 ## 3. Delivering bad news to a customer
 
@@ -55,13 +55,13 @@ Hypothetical — testing judgement and instinct, not memory. Answer in order:
 
 > "The root cause was context load on tool selection. Version one was a single agent with twenty-plus tools. Twenty tool schemas plus conversation history in one prompt degraded selection. Tracing showed it was structural, not a prompt-tuning problem. So I moved to a supervisor with four specialist agents, each with a narrow toolset. A confidence gate asks a clarifying question below 60%. I kept every existing tool and data asset, so the change was to routing, not a rewrite. Per-node tracing and a held-out evaluation set told me within days whether the pivot worked. It did, and we shipped inside the window. The sponsor got the mechanism and the fix on the same day."
 
-**GROUNDED — insurer v1 failure**
+**GROUNDED: insurer v1 failure**
 
-*"Mid-engagement at the insurer, my first architecture — one agent with twenty-plus tools — broke down in real testing. I was weeks into a window of about two months and the sponsor was expecting a working MVP.*
+*"Mid-engagement at the insurer, my first architecture, one agent with twenty-plus tools, broke down in real testing. I was weeks into a window of about two months and the sponsor was expecting a working MVP.*
 
-*I told them the same day, in three parts: what's broken — the agent is picking the wrong tool and degrading under context bloat; why, specifically — stuffing twenty tool schemas plus history into one prompt measurably hurts tool selection, it's not vague 'confusion'; and what I'm doing about it — a Supervisor pattern with specialist agents, keeping every existing tool and data asset so the change is bounded, with tracing so we'll know within days if it works.*
+*I told them the same day, in three parts. What's broken: the agent is picking the wrong tool and degrading under context bloat. Why, specifically: stuffing twenty tool schemas plus history into one prompt measurably hurts tool selection; it's not vague 'confusion'. What I'm doing about it: a Supervisor pattern with specialist agents, keeping every existing tool and data asset so the change is bounded, with tracing so we'll know within days if it works.*
 
-*Two rules I follow for bad news: never deliver a problem without the mechanism, because 'it doesn't work' invites panic and 'here's exactly why' invites trust; and never deliver it without the next step and its cost. The pivot worked and we shipped on time — but the thing the sponsor remembered was that they heard it from me first, with a plan."*
+*Two rules I follow for bad news: never deliver a problem without the mechanism, because 'it doesn't work' invites panic and 'here's exactly why' invites trust; and never deliver it without the next step and its cost. The pivot worked and we shipped on time, but what the sponsor remembered was hearing it from me first, with a plan."*
 
 ## 4. A customer who escalated over your head
 
@@ -73,7 +73,7 @@ Hypothetical — testing judgement and instinct, not memory. Answer in order:
 
 > "The root cause was the reporting format, not the delivery. My updates listed technical progress: pipelines built, tests passing, defects closed. The programme lead could not map that to risk or dates. After briefing my manager, I rebuilt the reporting. Each week became one page: milestones against the baseline plan, open risks with owners, decisions needed by date. The technical detail moved to an appendix for their engineers. I derived the summary from the same tracker the team worked from, so it could not drift from reality. The cost was an hour of writing a week. The escalation stopped, and they extended us into the next phase. Status now gets designed for its reader, not its author."
 
-**NEEDS INPUT — this one is yours to write.**
+**NEEDS INPUT: this one is yours to write.**
 
 **What's being tested:** composure, and whether you're defensive about your own competence.
 
@@ -82,9 +82,9 @@ To draft this, supply:
 1. Engagement and what triggered the escalation. Be honest about whether it was warranted.
 2. Whether you got ahead of it with your own leadership before they heard from the customer.
 3. What you conceded. Strong answers include a moment where you agreed with part of the complaint rather than defending the whole position.
-4. The resolution, and whether the account relationship recovered — with evidence, e.g. subsequent expansion or continued engagement.
+4. The resolution, and whether the account relationship recovered, with evidence such as subsequent expansion or continued engagement.
 
-**The trap.** Framing the customer as unreasonable. Even if they were, the interviewer is scoring how you talk about a difficult client while they're in the room hearing you do it.
+**The trap.** Framing the customer as unreasonable. Even if they were, the interviewer is scoring how you talk about a difficult client, and they're hearing you do it.
 
 ## 5. A fast decision with incomplete information
 
@@ -96,13 +96,13 @@ To draft this, supply:
 
 > "The root cause was context bloat. Twenty-plus tool schemas plus history in one context degraded tool selection. That told me specialisation addressed the cause, not a symptom. I re-architected into a Supervisor with specialist agents. The change touched orchestration only. Every tool and data asset stayed, so rolling back meant restoring the previous graph. Routing errors were the new risk. I contained them with a confidence gate: below 60%, the Supervisor asks a clarifying question rather than guessing. For verification, I added per-node MLflow tracing and a held-out evaluation set. Tracing showed which node made each routing decision. The evaluation set told me within days whether accuracy improved. It did, and the MVP shipped inside the original window."
 
-**GROUNDED — insurer live pivot from single agent to Supervisor**
+**GROUNDED: insurer live pivot from single agent to Supervisor**
 
-*"Mid-engagement at a large Asian life insurer, in real testing, my first architecture — one agent, one prompt, twenty-plus tools — was picking the wrong tool and degrading under context bloat. I was weeks into a window of about two months. I didn't have time to run a controlled study of alternative architectures.*
+*"Mid-engagement at a large Asian life insurer, in real testing, my first architecture (one agent, one prompt, twenty-plus tools) was picking the wrong tool and degrading under context bloat. I was weeks into a window of about two months. I didn't have time to run a controlled study of alternative architectures.*
 
-*The decision was to re-architect live into a Supervisor pattern with specialist agents. What I knew: the failure mechanism was specific — stuffing 20-plus tool schemas plus history into one context measurably degrades tool selection — so specialisation would address the cause, not just the symptom. What I didn't know: whether four specialists was the right number, or whether routing would introduce its own errors.*
+*I decided to re-architect live into a Supervisor pattern with specialist agents. What I knew: the failure mechanism was specific. Stuffing 20-plus tool schemas plus history into one context measurably degrades tool selection, so specialisation would address the cause, not the symptom. What I didn't know: whether four specialists was the right number, or whether routing would introduce its own errors.*
 
-*I bounded the risk three ways. I kept every existing tool and data asset and changed only the orchestration on top, so the pivot was reversible. I added a confidence gate — below 60%, the Supervisor asks a clarifying question instead of guessing — so a routing mistake becomes a question to the user rather than a wrong answer. And I put per-node MLflow tracing and a held-out eval set in place so I'd know within days whether it worked, not at the end. It did, and we shipped on time."*
+*I bounded the risk three ways. I kept every existing tool and data asset and changed only the orchestration on top, so the pivot was reversible. I added a confidence gate (below 60%, the Supervisor asks a clarifying question instead of guessing), so a routing mistake becomes a question to the user rather than a wrong answer. And I put per-node MLflow tracing and a held-out eval set in place so I'd know within days whether it worked, not at the end. It did, and we shipped on time."*
 
 ## 6. An irreversible, high-stakes decision
 
@@ -114,15 +114,15 @@ To draft this, supply:
 
 > "The decision was the agent's write path into production config tables. I designed the permission model from the ticket data, not from the agent's convenience. A couple of hundred historical tickets showed which operations the work needed. Each became one narrow, named tool. There was no general write access. Every action landed in the ticket as a finding for an engineer to confirm. Logic bugs went to a separate code-lookup agent. It does a deterministic one-file lookup and gives the model only that file. The ops agent never reasons over code it wasn't shown. The retrieval-strategy choice was the opposite case. It was reversible in an afternoon, so I benchmarked, shipped and documented when to revisit."
 
-**GROUNDED — lender production writes vs. Meridian retrieval-strategy choice**
+**GROUNDED: lender production writes vs. Meridian retrieval-strategy choice**
 
 *"I treat these two very differently, and I have a clean example of each.*
 
-*Routine, reversible: which retrieval strategy to ship in the RAG platform. I benchmarked six against one golden set, picked the cheapest one that met the bar, and documented when to revisit — at a larger corpus the answer might flip. That's a decision you make with data and can undo in an afternoon.*
+*Routine, reversible: which retrieval strategy to ship in the RAG platform. I benchmarked six against one golden set, picked the cheapest one that met the bar, and documented when to revisit: at a larger corpus the answer might flip. That's a decision you make with data and can undo in an afternoon.*
 
-*High-stakes, hard to reverse: at a large Indian consumer lender, whether the agent could write to production config tables on a live lending pipeline. A bad call to a config-update tool misroutes real loan leads at a regulated lender — you don't get to un-send those. So the process changed. I went through a couple of hundred historical tickets first to understand the real shape of the problem instead of assuming. I scoped every tool to a single, narrow, named operation rather than open write access. I kept a human in the loop: every action lands in the ticket as a finding for an engineer to confirm. And I built a separate code-lookup agent for logic bugs rather than letting the ops agent reason over source code it wasn't shown.*
+*High-stakes, hard to reverse: at a large Indian consumer lender, whether the agent could write to production config tables on a live lending pipeline. A bad call to a config-update tool misroutes real loan leads at a regulated lender. You don't get to un-send those. So the process changed. I went through a couple of hundred historical tickets first to understand the real shape of the problem instead of assuming. I scoped every tool to a single, narrow, named operation rather than open write access. I kept a human in the loop: every action lands in the ticket as a finding for an engineer to confirm. And I built a separate code-lookup agent for logic bugs rather than letting the ops agent reason over source code it wasn't shown.*
 
-*The pattern: for reversible calls, decide fast and measure. For irreversible ones, slow down at the blast radius, not the whole project — the triage and RAG layers still shipped quickly."*
+*For reversible calls, I decide fast and measure. For irreversible ones, I slow down at the blast radius, not across the whole project; the triage and RAG layers still shipped quickly."*
 
 ## 7. Short-term deliverable versus long-term goal
 
@@ -134,10 +134,10 @@ To draft this, supply:
 
 > "I shipped a known ceiling and kept the exit open. The supervisor worked: four specialists, confidence-gated routing. But its own tool list grew with each domain. That would recreate the context bloat that broke version one, one level up the stack. I didn't re-architect before the deadline. I made two cheap design choices instead. Prompts lived in a governed Delta table with a five-minute cache, so behaviour was tunable without a redeploy. The context index was resolved centrally, so specialists were already loosely coupled. When domain growth made the ceiling concrete, I moved to a deep agent pattern. Self-contained subagents, plus a memory-manager subagent. Loose coupling made that a refactor, not a rewrite."
 
-**GROUNDED — insurer (Supervisor now, Deep Agent later)**
+**GROUNDED: insurer (Supervisor now, Deep Agent later)**
 
-*"At the insurer I had about two months to deliver a working MVP, and partway through, the Supervisor architecture was working — four specialist agents, confidence-gated routing, all fine. But I could see the long-term problem: as domains grew, the Supervisor's own tool list was going to re-approach the exact context-bloat failure that killed my first single-agent design, one level up the stack.*
+*"At the insurer I had about two months to deliver a working MVP, and partway through, the Supervisor architecture was working: four specialist agents, confidence-gated routing, all fine. But I could see the long-term problem: as domains grew, the Supervisor's own tool list was going to re-approach the exact context-bloat failure that killed my first single-agent design, one level up the stack.*
 
 *The tension was: re-architect now into a Deep Agent pattern and risk the deadline, or ship the Supervisor and accept a known ceiling. I did neither purely. I shipped the Supervisor on time — the customer got days-to-minutes time-to-insight — but I made two choices that kept the long-term path open: prompts lived in a governed Delta table with a five-minute cache so behaviour could be tuned without a redeploy, and the Context Index was resolved centrally so specialists were already loosely coupled. Then, once domain growth made the ceiling concrete rather than theoretical, I evolved it into the Deep Agent pattern with self-contained subagents and a memory-manager subagent.*
 
-*The principle: ship the deliverable, but don't let it foreclose the strategic direction — and refactor when the pressure is real, not speculative."*
+*Ship the deliverable, but don't let it foreclose the strategic direction, and refactor when the pressure is real, not speculative."*

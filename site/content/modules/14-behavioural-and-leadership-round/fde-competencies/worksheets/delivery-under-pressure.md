@@ -12,7 +12,7 @@
 | PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
 | NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
 
-**Honesty rule.** Your strongest recurring signal is stating limits plainly - the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
+**Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 
 Most of these are failure-shaped. A loop where nothing ever went wrong reads as evasion.
 
@@ -24,12 +24,12 @@ Most of these are failure-shaped. A loop where nothing ever went wrong reads as 
 
 **Anchor:** the multi-agent deployment.
 
-- Situation — the specific incident:
+- Situation (the specific incident):
 - Task:
-- Action — what caught it, and what the post-incident conversation covered:
-- Result — recovery time and the durable fix added afterward:
+- Action (what caught it, and what the post-incident conversation covered):
+- Result (recovery time and the durable fix added afterward):
 
-**Prepare this one carefully.** Your résumé claims zero go-live escalations, and interviewers will probe it. Write the near-miss here — a specific hour, a specific decision:
+**Prepare this one carefully.** Your résumé claims zero go-live escalations, and interviewers will probe it. Write the near-miss here, with a specific hour and a specific decision:
 
 -
 
@@ -37,7 +37,7 @@ Most of these are failure-shaped. A loop where nothing ever went wrong reads as 
 
 > "Go-live is in three days and you know it won't be ready. What do you do?"
 
-Hypothetical — testing judgement and instinct, not memory. Answer in order:
+This hypothetical tests judgement and instinct, not memory. Answer in order:
 
 -
 -
@@ -70,12 +70,12 @@ Hypothetical — testing judgement and instinct, not memory. Answer in order:
 
 **What's being tested:** composure, and whether you're defensive about your own competence.
 
-- Engagement, and what triggered it — honestly, was it warranted?
+- Engagement, and what triggered it. Honestly, was it warranted?
 - Whether you got ahead of it with your own leadership first:
 - What you conceded:
-- The resolution, and whether the account recovered — with evidence:
+- The resolution, and whether the account recovered (with evidence):
 
-**Trap.** Framing the customer as unreasonable. Even if they were, the interviewer is scoring how you talk about a difficult client while they are in the room hearing you do it.
+**Trap.** Framing the customer as unreasonable. Even if they were, the interviewer is scoring how you talk about a difficult client, and they are hearing you do it.
 
 ## 5. A fast decision with incomplete information
 

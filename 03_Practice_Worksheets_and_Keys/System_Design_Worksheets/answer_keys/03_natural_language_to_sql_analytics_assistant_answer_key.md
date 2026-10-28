@@ -15,9 +15,9 @@ Try the worksheet before you read this key. Use it to see how a strong GenAI FDE
 ## Strong functional requirements
 - Core workflow: accept a question in plain language, map it to a governed metric, write SQL for the right dialect, validate it, run it read-only, and send back the answer with its SQL and lineage.
 - Look up the semantic metric registry first. Physical tables come later, so every answer rests on an approved definition.
-- Pull in just the tables, joins and freshness details the question needs. The full warehouse schema is never exposed.
+- Pull in only the tables, joins and freshness details the question needs. The full warehouse schema is never exposed.
 - When a question is ambiguous, ask. Never pick one of several plausible metrics without telling the user.
-- Turn the candidate SQL into an AST and apply policy to that tree. Raw text is not what gets checked.
+- Turn the candidate SQL into an AST and apply policy to that tree, not to the raw text.
 - Hand back the exact SQL, the metric lineage and any caveats, such as a stale snapshot, alongside the result.
 
 ## Strong non-functional requirements
@@ -51,7 +51,7 @@ Try the worksheet before you read this key. Use it to see how a strong GenAI FDE
 - Schema drift: a table gets renamed or a join key moves, and a template that used to work now returns output that still looks plausible.
 - Join explosions: rows multiply and totals swell, yet the query is valid and clears every SQL check.
 - Excessive scans: one heavy query uses up warehouse concurrency, slows other tenants and runs up a surprise bill before anyone spots it.
-- Summary drift: the rows are correct but the prose gets the trend wrong. Executives read the prose, not the rows, which makes this one dangerous.
+- Summary drift: the rows are correct but the prose gets the trend wrong. This one is dangerous because executives read the prose, not the rows.
 
 ## Rollout plan
 - Week 0-1: choose ten governed metrics whose definitions are stable, whose owners are known and whose business impact is visible. Write down the non-goals.
@@ -72,16 +72,16 @@ I'd set these thresholds for this case. They are not industry standards, so be r
 | Policy violations | Nothing got past the safety boundary | Zero escapes; repeated blocks get investigated | Policy decisions from the query-run audit |
 | Bytes scanned per answer | Each governed question has a bounded cost | Never 20% above the 7-day baseline | Warehouse query telemetry |
 | User trust score | People act on answers instead of checking them again | Meets the launch target and is not falling | In-product rating and a periodic survey |
-| p95 latency and escalation volume | Analysts really are better off | Inside target, with escalations falling | Request traces and analyst ticket counts |
+| p95 latency and escalation volume | Analysts are better off | Inside target, with escalations falling | Request traces and analyst ticket counts |
 
 ## Weak answer
 I'd point an LLM at the warehouse schema, let it write SQL, and execute whatever comes back. That is weak, because writing SQL is the easy part. Nobody owns the metric definitions, an unapproved reading of "revenue" slips through, and there is no AST validation, no cost limit and no way to catch an answer that is confidently wrong.
 
 ## Average answer
-I'd put metric definitions in a semantic layer, generate SQL from it, validate each query before it runs, and execute under a read-only account with row limits. I'd log every query. That is an improvement, but gaps remain. It never says what happens with an ambiguous question, what happens when the schema drifts, or what happens when the written summary contradicts the table underneath it.
+I'd put metric definitions in a semantic layer, generate SQL from it, validate each query before it runs, and execute under a read-only account with row limits. I'd log every query. Better, but it never says what happens with an ambiguous question, what happens when the schema drifts, or what happens when the written summary contradicts the table underneath it.
 
 ## Strong answer
-I'd stop calling this a text-to-SQL model. It's a governed decision-support system, and it only uses terms the business has already signed off. The metric registry comes before any physical table. An ambiguous question gets a clarifying question back, not a guess. Generated SQL becomes an AST and must pass policy and a scan budget before the read-only gateway sees it, and entitlements get checked again at execution. The proof is ten governed metrics, each with golden cases: a question, its approved SQL, the result we expect. Analysts get shadowed before an executive ever reads an answer. Producing SQL is the easy bit. The hard part is making sure valid SQL never answers the wrong business question without anyone noticing.
+I'd frame this as a governed decision-support system that only uses terms the business has already signed off. The metric registry comes before any physical table. An ambiguous question gets a clarifying question back, not a guess. Generated SQL becomes an AST and must pass policy and a scan budget before the read-only gateway sees it, and entitlements get checked again at execution. The proof is ten governed metrics, each with golden cases: a question, its approved SQL, the result we expect. Analysts get shadowed before an executive ever reads an answer. The hard part is making sure valid SQL never answers the wrong business question without anyone noticing.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
@@ -96,4 +96,4 @@ I'd stop calling this a text-to-SQL model. It's a governed decision-support syst
 | Communication | Talks about the model | Clear yet generic | Opens with the wrong-answer risk, names the trade-offs, ends on the first gate |
 
 ## Final 2-minute spoken answer
-I wouldn't begin with the model. The obvious pitch is to have an LLM write the SQL, and it fails straight away, because writing SQL isn't the hard part. What's hard is that "revenue" might be booked, recognised or collected. A query that is syntactically perfect but uses the wrong definition is a governance failure that looks like a working feature. So I'd reframe it: we're building decision support that is governed, and it only speaks in terms the business has agreed. From day one that means three things. First, governed metric definitions held in a semantic layer. Second, a read-only, cost-capped boundary that wraps the warehouse. Third, a clear way to say "I'm not sure which definition you mean" rather than guessing. In the architecture, the query API authenticates the caller and resolves entitlements. The metric registry is checked before any physical table. The schema retriever fetches only what the question needs. Ambiguity sends a clarifying question back. Generated SQL becomes an AST, has to clear policy and a scan budget, and only then runs through a read-only gateway with a timeout and a row cap. To prove it, I'd take ten governed metrics and build golden cases of question, approved SQL and expected result. Analysts get shadowed before executives see anything. Then it grows domain by domain, and every domain has a named metric owner. Success isn't a fast answer. It's an answer nobody feels they need to check again.
+I wouldn't begin with the model. The obvious pitch is to have an LLM write the SQL, and it fails straight away. The hard part is that "revenue" might be booked, recognised or collected. A query that is syntactically perfect but uses the wrong definition is a governance failure that looks like a working feature. So I'd reframe it: we're building decision support that is governed, and it only speaks in terms the business has agreed. From day one that means three things. First, governed metric definitions held in a semantic layer. Second, a read-only, cost-capped boundary that wraps the warehouse. Third, a clear way to say "I'm not sure which definition you mean" rather than guessing. In the architecture, the query API authenticates the caller and resolves entitlements. The metric registry is checked before any physical table. The schema retriever fetches only what the question needs. Ambiguity sends a clarifying question back. Generated SQL becomes an AST, has to clear policy and a scan budget, and only then runs through a read-only gateway with a timeout and a row cap. To prove it, I'd take ten governed metrics and build golden cases of question, approved SQL and expected result. Analysts get shadowed before executives see anything. Then it grows domain by domain, and every domain has a named metric owner. Success is an answer nobody feels they need to check again.

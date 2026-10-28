@@ -1,6 +1,6 @@
 # Pushback and Saying No - Answer Key
 
-Spoken answers - 2 grounded, 3 partly grounded. Deliver them in your own cadence; the wording is a script, not a recitation.
+Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence. Treat the wording as a guide; don't recite it.
 
 ## 1. A request that is the wrong thing to build
 
@@ -12,13 +12,13 @@ Spoken answers - 2 grounded, 3 partly grounded. Deliver them in your own cadence
 
 > "The technical objection was the write path, not the autonomy. The investigation is read-only: triage, retrieval over past tickets, code lookup. Writing to config tables that route live loan leads is a different risk class. A wrong write misroutes real customers, silently. So I split the system at that boundary. The agent posts the root cause and the proposed change to the ticket. An engineer confirms before anything is written. Investigation runs in minutes, so most of the manual effort still goes away. I gave up end-to-end resolution time. In return, every production config change has a named reviewer. I also flagged the triage classifier's brittleness to phrasing drift as the next gap. Autonomy can widen once the proposals have a track record."
 
-**GROUNDED — lender autonomy + insurer open-ended search**
+**GROUNDED: lender autonomy + insurer open-ended search**
 
 *"I don't say no; I show them what the request costs in their own terms and offer the version that gets them the outcome.*
 
-*At the lender the intuitive ask is a fully autonomous agent that fixes tickets end to end. The wrong part isn't the ambition — it's letting an LLM write to config tables that route live loan leads at a regulated lender. So I gave them the outcome — automated investigation, root cause in the ticket in minutes — with the write gated behind an engineer's confirmation, and I named the trade: slower resolution, zero unreviewed changes. They chose it once they saw the blast radius.*
+*At the lender the intuitive ask is a fully autonomous agent that fixes tickets end to end. The ambition is fine; the wrong part is letting an LLM write to config tables that route live loan leads at a regulated lender. So I gave them the outcome (automated investigation, root cause in the ticket in minutes) with the write gated behind an engineer's confirmation, and I named the trade: slower resolution, zero unreviewed changes. They chose it once they saw the blast radius.*
 
-*At the insurer the ask was open-ended enterprise search. Right outcome, wrong first step — it would have doubled the governance surface before the narrow slice was proven. It went on the roadmap with a precondition, and the customer heard 'next,' not 'no.'*
+*At the insurer the ask was open-ended enterprise search. Right outcome, wrong first step: it would have doubled the governance surface before the narrow slice was proven. It went on the roadmap with a precondition, and the customer heard 'next,' not 'no.'*
 
 *The customer is almost always right about the pain and often wrong about the mechanism. My job is to fix the mechanism without dismissing the pain."*
 
@@ -36,9 +36,9 @@ Spoken answers - 2 grounded, 3 partly grounded. Deliver them in your own cadence
 
 **Anchor:** the tier-1 bank migration.
 
-- **Situation.** Multi-region programs almost always contain a sequencing disagreement — [which region first, or big-bang versus phased cutover].
+- **Situation.** Multi-region programmes almost always contain a sequencing disagreement: [which region first, or big-bang versus phased cutover].
 - **Action.** Frame the disagreement as risk, not preference. Argue from the escalation surface: what happens to APAC trading hours if EMEA cutover goes wrong, and who is awake to fix it.
-- **Result.** Zero go-live escalations across all three regions — cite this as vindication, briefly, without gloating.
+- **Result.** Zero go-live escalations across all three regions. Cite this as vindication, briefly, without gloating.
 
 **The trap.** Picking a disagreement you won easily. Choose one where you had to concede something.
 
@@ -52,11 +52,11 @@ Spoken answers - 2 grounded, 3 partly grounded. Deliver them in your own cadence
 
 > "Scope control needs a measurable definition of done. Ours had four criteria, fixed before the build. Self-serve governed answers replacing a days-long BI queue. Zero leaks on the governed test set. Explainability, meaning every answer traces to a governed source. Acceptable latency. The slice was two business units in one market. Every new request got one test: does it move one of those criteria inside the window? Open-ended enterprise search, more markets and more document types all failed it. Each went on the expansion path with a technical precondition: the zero-leak gate holds on the first slice. The data foundation passed the test. Without governed metric views, explainability and zero leaks were unreachable."
 
-**GROUNDED — insurer**
+**GROUNDED: insurer**
 
-*"By deciding what 'done' means with the sponsor before the build, so scope creep has something to be measured against. At the insurer the success bar was agreed up front — self-serve, governed answers replacing a BI queue that took days, with zero leaks, explainability, and acceptable latency, on two business units in one market.*
+*"By deciding what 'done' means with the sponsor before the build, so scope creep has something to be measured against. At the insurer we agreed the success bar up front: self-serve, governed answers replacing a BI queue that took days, with zero leaks, explainability, and acceptable latency, on two business units in one market.*
 
-*When requests came in — open-ended enterprise search, more markets, more document types — I didn't refuse them; I asked whether they moved that bar within the roughly two-month window. Most didn't. They went on a written expansion path with a stated precondition — 'once the zero-leak gate holds on the first slice' — so the customer heard 'next,' not 'no.'*
+*When requests came in (open-ended enterprise search, more markets, more document types), I didn't refuse them. I asked whether they moved that bar within the roughly two-month window. Most didn't. They went on a written expansion path with a stated precondition, 'once the zero-leak gate holds on the first slice', so the customer heard 'next,' not 'no.'*
 
 *Where I did absorb extra scope was the data foundation, because without governed metric views the agreed bar was unreachable. That's the test: scope that serves the agreed outcome, I take on; scope that adds surface without moving the outcome, I sequence. And I have that conversation myself, directly with the sponsor, rather than routing it through a delivery lead."*
 
@@ -70,11 +70,11 @@ Spoken answers - 2 grounded, 3 partly grounded. Deliver them in your own cadence
 
 > "The access rules came from a role by document type by market matrix. Only the insurer's compliance and business teams could sign it off. In my build, that matrix fed the policy layer, the evaluation set and the leak gate. So I tracked it as a dated dependency, with the list of build steps it blocked. When the review ran late, I showed the sponsor that list. We re-sequenced. Work that did not depend on the matrix moved forward: the data foundation, tracing and orchestration. Policy enforcement and leak testing waited for the signed matrix. Hard-coding a draft matrix would have meant rework, and a test set built on unapproved rules."
 
-**PARTLY GROUNDED — insurer access matrix / compliance dependency.** `[FILL: a concrete dependency that slipped]`
+**PARTLY GROUNDED: insurer access matrix / compliance dependency.** `[FILL: a concrete dependency that slipped]`
 
 *"By making their dependencies explicit and visible from the start, so a slip is a shared fact rather than a surprise. At a large Asian life insurer the policy rules came from a role-by-document-type-by-market access matrix that only the customer's compliance and business teams could sign off. That sign-off was on the plan as a named dependency with a date, not an assumption inside my timeline. `[FILL: what slipped and how you raised it — e.g., 'when the compliance review ran late I showed the sponsor exactly which build steps were blocked on it, and we re-sequenced rather than absorbed it'].`*
 
-*Two rules: never absorb a customer slip silently — it teaches them the dates don't matter — and always frame it as their outcome at risk, not my inconvenience."*
+*Two rules: never absorb a customer slip silently, because it teaches them the dates don't matter, and always frame it as their outcome at risk, not my inconvenience."*
 
 ## 5. Pushing back on your own company's roadmap
 
@@ -93,4 +93,4 @@ Spoken answers - 2 grounded, 3 partly grounded. Deliver them in your own cadence
 - **Action.** [A specific case where a customer requirement wasn't served by the product as shipped and you either built around it or carried it back to engineering. Overwatch and an internal accelerator both started as gaps between what the product did and what the field needed.]
 - **Result.** [Whether it shipped, or whether the workaround became reusable IP.]
 
-**Why this question exists.** They're checking you'll advocate for the customer internally, not just represent the company externally. FDE roles fail when the engineer becomes a pure sales extension.
+**Why this question exists.** They're checking that you'll advocate for the customer inside your own company as well as represent the company to the customer. FDE roles fail when the engineer becomes a pure sales extension.

@@ -12,9 +12,9 @@
 | PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
 | NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
 
-**Honesty rule.** Your strongest recurring signal is stating limits plainly - the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
+**Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 
-The distinction running through every question here: "no" backed by evidence you generated is the senior version. "No" backed by opinion is the junior version.
+In every question here, a "no" backed by evidence you generated is the senior version. A "no" backed by opinion is the junior version.
 
 ## 1. A request that is the wrong thing to build
 
@@ -79,7 +79,7 @@ Write the mechanism first, then one proof.
 
 **Anchor:** the access matrix / compliance dependency at a large Asian life insurer.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 Write the mechanism first, then one proof.
 
@@ -101,7 +101,7 @@ Write the mechanism first, then one proof.
 
 **Anchor:** your field-to-product feedback loop.
 
-- Action — a customer requirement the product as shipped didn't serve, and what you did:
-- Result — whether it shipped, or whether the workaround became reusable IP:
+- Action (a customer requirement the product as shipped didn't serve, and what you did):
+- Result (whether it shipped, or whether the workaround became reusable IP):
 
-**Why this question exists.** They are checking you will advocate for the customer internally, not just represent the company externally. FDE roles fail when the engineer becomes a pure sales extension.
+**Why this question exists.** They are checking that you will advocate for the customer inside your own company as well as represent the company to the customer. FDE roles fail when the engineer becomes a pure sales extension.

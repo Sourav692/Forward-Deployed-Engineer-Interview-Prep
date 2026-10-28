@@ -1,7 +1,7 @@
 # Secure Multi-Tenant AI Platform - Case Study Worksheet
 
 ## 1. Interview prompt
-As the FDE, design a GenAI **Secure Multi-Tenant AI Platform**. A single application serves 500 enterprise tenants. Each one needs its data kept apart, steady performance, and control over the region its data lives in. The failure to fear most is a query that runs without its tenant predicate.
+As the FDE, design a GenAI **Secure Multi-Tenant AI Platform**. A single application serves 500 enterprise tenants. Each one needs its data kept apart, steady performance, and control over the region its data lives in. The worst failure is a query that runs without its tenant predicate.
 
 ## 2. Clarify the customer problem
 - Which classes of data are in scope, and which are out?

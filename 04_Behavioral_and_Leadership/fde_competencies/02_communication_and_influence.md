@@ -12,9 +12,9 @@
 | PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
 | NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
 
-**Honesty rule.** Your strongest recurring signal is stating limits plainly - the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
+**Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 
-Several of these are method questions. They are where candidates ramble, so write the moves as a numbered sequence and keep them. The last question is a timed drill, not an interview question.
+Several of these are method questions, and candidates ramble on them. Write the moves as a numbered sequence and stick to it. The last question is a timed drill, not an interview question.
 
 ## 1. Simplifying a technical message for a broad audience
 
@@ -48,7 +48,7 @@ Several of these are method questions. They are where candidates ramble, so writ
 
 > "The technical buyer and the economic buyer wanted different things."
 
-**Anchor:** the insurer. This is the strongest story in the section — it ties the work to a commercial result, which most engineers cannot do.
+**Anchor:** the insurer. It's the strongest story in the section because it ties the work to a commercial result, which most engineers cannot do.
 
 - What the platform team wanted:
 - What the budget holder was measuring:
@@ -80,7 +80,7 @@ Method question. Four moves, in order:
 
 **Anchor:** the insurer's data / BI team and compliance.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:
@@ -106,7 +106,7 @@ Method question. Four moves, in order:
 
 **You must supply, before this answer is usable:**
 
-- who — a solutions architect, a delivery lead, a product engineer — and what the:
+- who (a solutions architect, a delivery lead, a product engineer) and what the:
 - the trace, the benchmark, the ticket data:
 - outcome, and what the relationship looked like afterwards:
 
@@ -116,7 +116,7 @@ Method question. Four moves, in order:
 
 **Anchor:** a large Asian life insurer (headquartered in Asia, multi-market APAC), a large Indian consumer lender, a global tier-1 bank (APAC/EMEA/AMER).
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:
@@ -125,7 +125,7 @@ Method question. Four moves, in order:
 
 **You must supply, before this answer is usable:**
 
-- the bank — the migration of hundreds of millions of events a day spanned APAC, EMEA, and AMER teams:
+- the bank (the migration of hundreds of millions of events a day spanned APAC, EMEA, and AMER teams):
 - one concrete example:
 
 ## 8. Communication that was misunderstood
@@ -134,7 +134,7 @@ Method question. Four moves, in order:
 
 **Anchor:** from the day-to-day doc's "ticket says X, customer meant Y" pattern.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:

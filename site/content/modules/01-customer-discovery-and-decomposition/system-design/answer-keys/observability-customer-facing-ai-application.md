@@ -5,7 +5,7 @@ Work through the worksheet on your own first, then compare. This key models the 
 ## Strong discovery questions
 - When someone says "slow", which latency percentile do they mean, on which path, and in which workflow?
 - When someone says "wrong", do they mean a bad answer, no answer, an invented fact, or a tool error shown to the user?
-- Which tenants and users feel this most? Instrumentation should begin where the pain is real.
+- Which tenants and users feel this most? Start instrumenting where the pain is.
 - What may the team capture without asking, and what do contracts or the law put out of bounds?
 - Can support diagnose a failure on its own, or does every case end up with engineering?
 - How much overhead can telemetry add before it starts to change how production behaves?
@@ -21,12 +21,12 @@ Work through the worksheet on your own first, then compare. This key models the 
 - Label each request with what the user saw: success, a partial answer, or escalation. A complaint can then be matched to telemetry.
 
 ## Strong non-functional requirements
-- Latency: instrumentation must never be what causes the outage. Treat telemetry overhead as a budget we set up front, not something we notice later.
+- Latency: instrumentation must never cause the outage. Set a telemetry overhead budget up front.
 - Availability: if telemetry export fails, diagnosis gets worse, but the user's request still goes through.
 - Security: by default we never capture full prompts, raw customer documents or secrets. Sensitive fields get classified and hashed before anything is stored.
 - Compliance: audit logs say who accessed what. Debugging traces say what failed where. The two stay in separate stores.
 - Reliability: no single global sampling rule may cover every error path, because the one rare failure we need would vanish.
-- Cost: volume grows with four things: how many requests arrive, how many traces we keep, how long we retain them and what fraction we sample. So the first thing to design is the list of things we will not collect.
+- Cost: volume grows with four things: how many requests arrive, how many traces we keep, how long we retain them and what fraction we sample. So design the list of things we will not collect first.
 
 ## Architecture explanation
 - Tracing comes first. Spans are structured, redaction is selective, and from the edge inwards each request keeps one stable correlation ID.
@@ -36,7 +36,7 @@ Work through the worksheet on your own first, then compare. This key models the 
 - The store has two separate readers. One is a global dashboard across tenants that shows only aggregates; the other is a set of tenant-scoped views for support triage.
 - A support and access gateway applies role-based, tenant-scoped permissions. Looking into one customer's incident can never reveal another customer's data.
 - Retention and redaction are applied at export time, by an audit and redaction pipeline. Together with code and the collector, it gives defence in depth.
-- Sampling is a deliberate control, not a trade-off we put up with. Slow traces, error traces and anomalies are kept by preference, and some exemplars are always kept.
+- Sampling is a deliberate control. Slow traces, error traces and anomalies are kept by preference, and some exemplars are always kept.
 
 ## Data model / integration assumptions
 - Records: Request holds tenant_id, user_id and prompt. ExportedTrace holds spans, result_status, query_hash, prompt_class, tenant_id and correlation_id. It keeps only bounded structured attributes and never a raw prompt.
@@ -51,7 +51,7 @@ Work through the worksheet on your own first, then compare. This key models the 
 - A bug in the tenant-ID formatter blows up metric cardinality, and the metrics backend turns into the incident.
 - Raw prompts or documents find their way into a log sink. The observability stack is now a fresh place for data to leak.
 - Trace context drops at a queue boundary. Spans become orphans, and requests seem to disappear after the async handoff.
-- Support tooling skimps on least privilege. One misconfigured view then covers every tenant, not just the one being investigated.
+- Support tooling skimps on least privilege. One misconfigured view then covers every tenant instead of only the one being investigated.
 
 ## Rollout plan
 - Week 0-1: set user-facing SLOs before anything else, and have the customer stakeholder sign off on what "good enough" means.
@@ -63,11 +63,11 @@ Work through the worksheet on your own first, then compare. This key models the 
 - After pilot: extend instrumentation only while trace coverage and telemetry overhead both remain inside budget.
 
 ## Evaluation plan
-These thresholds are my own choices for this case, not industry standards. Expect to defend them, not just state them.
+These thresholds are my own choices for this case, not industry standards. Expect to defend them.
 
 | Metric | What it proves | Strong threshold | Dataset / method |
 |---|---|---|---|
-| Trace coverage | Telemetry really contains the bad request | Enough that each complaint can be matched to a trace | Compare complaint intake against sampled traces |
+| Trace coverage | Telemetry contains the bad request | Enough that each complaint can be matched to a trace | Compare complaint intake against sampled traces |
 | Mean time to diagnose | Support explains failures without handing them on | Drops once the support workflow ships | Incident timeline, from first report to root cause |
 | Redaction pass rate | Observability has not opened a new exposure surface | No raw prompt or secret in any sink, ever | Red-team tests plus automated PII and secret scanners |
 | Telemetry overhead | Production is not being skewed by instrumentation | Inside the overhead budget we agreed | Latency and cost measured with export on and off |
@@ -78,10 +78,10 @@ These thresholds are my own choices for this case, not industry standards. Expec
 I'd add logging to every service and put a dashboard on top. This is weak because more data is not more insight. It never pins down "slow" or "wrong", no correlation ID links a complaint to a request, and the telemetry becomes a fresh privacy and cost problem in its own right.
 
 ## Average answer
-I'd add distributed tracing with correlation IDs, time every hop, redact the sensitive fields and sample traces to keep cost down. Support would get a dashboard. That is a step up, yet gaps remain. Uniform sampling may discard the very failure we are chasing. Audit access is not kept apart from debugging traces. And nothing caps the cardinality of attributes.
+I'd add distributed tracing with correlation IDs, time every hop, redact the sensitive fields and sample traces to keep cost down. Support would get a dashboard. Better, but uniform sampling may discard the very failure we are chasing. Audit access is not kept apart from debugging traces, and nothing caps the cardinality of attributes.
 
 ## Strong answer
-I'd push back on the vague complaint and break it into three parts: latency, correctness and diagnosability. Then I'd make the first design choice an unusual one: what we will leave out. Excluded: secrets, raw documents, full prompts and unbounded labels. Included: an outcome tag, tool results, model version and prompt-template version, retrieval evidence, timing for each hop and a stable correlation ID. Classification and salted hashing run before storage, so we keep correlation without keeping content. Sampling favours the traces that matter instead of picking at random, because the failure we were warned about is sampling that drops the one bad trace. Success is an operational test. Starting from an alert, support should land on the request family and account for the failure, with sensitive content never in view.
+I'd push back on the vague complaint and break it into three parts: latency, correctness and diagnosability. Then my first design choice would be what we leave out. Excluded: secrets, raw documents, full prompts and unbounded labels. Included: an outcome tag, tool results, model version and prompt-template version, retrieval evidence, timing for each hop and a stable correlation ID. Classification and salted hashing run before storage, so we keep correlation without keeping content. Sampling favours the traces that matter instead of picking at random, because the failure we were warned about is sampling that drops the one bad trace. Success is an operational test. Starting from an alert, support should land on the request family and account for the failure, with sensitive content never in view.
 
 ## Interviewer scorecard
 | Area | 1 - Weak | 3 - Average | 5 - Strong |
@@ -96,4 +96,4 @@ I'd push back on the vague complaint and break it into three parts: latency, cor
 | Communication | Shows the dashboard | Clear but generic | Opens on the dropped-trace failure, says what stays uncollected, ends on the support test |
 
 ## Final 2-minute spoken answer
-I'd hold off on picking tools. The customer tells us the AI is slow, sometimes wrong, and they can't see why. That one complaint hides three problems. Is the request slow, and at which stage? Is the answer wrong, and is retrieval or generation to blame? And could someone account for a failure without being buried under telemetry or putting customer content at risk? So my first two questions pin down the terms. For slow, I want the percentile and the path. Wrong means a bad answer, an empty one, an invented fact, or a tool error the user saw. Next comes the design choice most people skip, which is deciding what we won't collect. By default, full prompts, raw customer documents, secrets and open-ended free-form labels are excluded. What we keep: a tag for what the user saw, tool results, model version and prompt-template version, retrieval evidence, how long each hop took, and a stable correlation ID with tenant context. Before anything is stored durably, a sensitivity classifier swaps content for a salted hash, so we keep correlation and drop the content. The trace store has a fixed retention window. It serves two readers that never mix. One is a dashboard of aggregates across all tenants. The other is support views scoped to one tenant, sitting behind a gateway that enforces least privilege. The drill I'd anchor on is sampling that loses the only bad trace. So sampling favours the traces that matter, with overrides per error class and exemplars that are always kept. The test is operational. From an alert, support can reach the precise request family and say why it failed, and nothing sensitive ever crosses their screen.
+I'd hold off on picking tools. The customer tells us the AI is slow, sometimes wrong, and they can't see why. That one complaint hides three problems. Is the request slow, and at which stage? Is the answer wrong, and is retrieval or generation to blame? And could someone account for a failure without being buried under telemetry or putting customer content at risk? So my first two questions pin down the terms. For slow, I want the percentile and the path. Wrong means a bad answer, an empty one, an invented fact, or a tool error the user saw. Next I'd decide what we won't collect. By default, full prompts, raw customer documents, secrets and open-ended free-form labels are excluded. What we keep: a tag for what the user saw, tool results, model version and prompt-template version, retrieval evidence, how long each hop took, and a stable correlation ID with tenant context. Before anything is stored durably, a sensitivity classifier swaps content for a salted hash, so we keep correlation and drop the content. The trace store has a fixed retention window. It serves two readers that never mix. One is a dashboard of aggregates across all tenants. The other is support views scoped to one tenant, sitting behind a gateway that enforces least privilege. The drill I'd anchor on is sampling that loses the only bad trace. So sampling favours the traces that matter, with overrides per error class and exemplars that are always kept. The test is operational. From an alert, support can reach the precise request family and say why it failed, and nothing sensitive ever crosses their screen.

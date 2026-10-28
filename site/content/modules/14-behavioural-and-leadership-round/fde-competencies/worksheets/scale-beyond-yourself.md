@@ -12,7 +12,7 @@
 | PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
 | NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
 
-**Honesty rule.** Your strongest recurring signal is stating limits plainly - the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
+**Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 
 Several keys here end in a bracketed number that still needs filling. Fill those before the loop.
 
@@ -31,7 +31,7 @@ Several keys here end in a bracketed number that still needs filling. Fill those
 
 **You must supply, before this answer is usable:**
 
-- where these have actually been reused — a colleague, an enablement session, an internal:
+- where these have actually been reused (a colleague, an enablement session, an internal):
 
 ## 2. Making yourself unnecessary on an account
 
@@ -55,7 +55,7 @@ Method question. Three habits:
 
 - Anchor:
 - The distinction you draw (teaching the pattern versus the solution):
-- Result — evidence of downstream independence:
+- Result (evidence of downstream independence):
 
 ## 4. Field feedback pushed into product
 
@@ -64,8 +64,8 @@ Method question. Three habits:
 **Also asked as:** "How have you fed what you learned in the field back into the product?"
 
 - Anchor:
-- Action — what made it product feedback rather than a customer request:
-- Result — lead with the number:
+- Action (what made it product feedback rather than a customer request):
+- Result (lead with the number):
 
 ## 5. Reuse or buy versus build
 
@@ -86,7 +86,7 @@ Method question. Three habits:
 
 **Anchor:** same evidence as question 1.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:
@@ -95,7 +95,7 @@ Method question. Three habits:
 
 **You must supply, before this answer is usable:**
 
-- who picked it up — engineers on the team, a later engagement, an internal pattern:
+- who picked it up (engineers on the team, a later engagement, an internal pattern):
 
 ## 7. Something innovative you built
 

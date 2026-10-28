@@ -1,10 +1,10 @@
 # Configurable Platform for Customer-Specific Workflows - Case Study Worksheet
 
 ## 1. Interview prompt
-As the FDE, your job is to shape a **Configurable Platform for Customer-Specific Workflows**. Ten customers share one platform, yet each wants its own fields, approval steps, branding and integrations. The thing to avoid is ending up with ten separate forks.
+As the FDE, your job is to shape a **Configurable Platform for Customer-Specific Workflows**. Ten customers share one platform, yet each wants its own fields, approval steps, branding and integrations. Avoid ending up with ten separate forks.
 
 ## 2. Clarify the customer problem
-- Which of the differences keep coming back, and which really happen only once?
+- Which of the differences keep coming back, and which happen only once?
 - Who writes the configuration: our engineers, the customer's admins, or both?
 - Does each configuration have to keep working, unchanged, across core releases?
 - Where is custom code allowed: in the core, in a sandbox, or only inside adapters?

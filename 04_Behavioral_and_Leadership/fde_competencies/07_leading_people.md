@@ -12,7 +12,7 @@
 | PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
 | NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
 
-**Honesty rule.** Your strongest recurring signal is stating limits plainly - the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
+**Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 
 **The three hiring and retention questions (1 to 3) are NEEDS YOUR INPUT.** Nothing in the repo covers hiring or retention. The key gives the shape of a strong answer and the stance your stories imply. If you have never owned hiring, say so and pivot to how you evaluate engineers you have worked alongside or interviewed.
 
@@ -55,7 +55,7 @@ Write the mechanism first, then one proof.
 
 **You must supply, before this answer is usable:**
 
-- real channels you've used — referrals outside your immediate network, non-traditional:
+- real channels you've used (referrals outside your immediate network, non-traditional):
 - one concrete example of a hire or debrief where this changed the outcome:
 
 ## 3. Retaining a high performer at risk of leaving
@@ -71,9 +71,9 @@ Write the mechanism first, then one proof.
 
 **You must supply, before this answer is usable:**
 
-- who, role, why they were at risk — bored, blocked, undervalued, under-scoped:
-- what you diagnosed — usually it's scope or growth, not money:
-- concrete action — gave them the highest-blast-radius piece of the engagement, put them:
+- who, role, why they were at risk (bored, blocked, undervalued, under-scoped):
+- what you diagnosed (usually scope or growth, not money):
+- concrete action (gave them the highest-blast-radius piece of the engagement, put them):
 
 ## 4. Diagnosing a report's development area
 
@@ -83,7 +83,7 @@ Write the mechanism first, then one proof.
 
 **Anchor:** the "ambiguity vs. technical" coaching pattern from the day-to-day doc.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:
@@ -94,7 +94,7 @@ Write the mechanism first, then one proof.
 
 - engineer, engagement:
 - what changed:
-- outcome — role change, ownership of a workstream, customer-facing time:
+- outcome (role change, ownership of a workstream, customer-facing time):
 
 ## 5. Addressing underperformance directly
 
@@ -109,8 +109,8 @@ Write the mechanism first, then one proof.
 
 **You must supply, before this answer is usable:**
 
-- who, what the gap was — missed commitments, work that didn't match customer intent:
-- what support you gave — pairing, design review before code, clearer tickets:
+- who, what the gap was (missed commitments, work that didn't match customer intent):
+- what support you gave (pairing, design review before code, clearer tickets):
 
 ## 6. Inspecting work and giving consequences fairly
 
@@ -134,7 +134,7 @@ Write the mechanism first, then one proof.
 
 **Anchor:** day-to-day doc.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:
@@ -144,4 +144,4 @@ Write the mechanism first, then one proof.
 **You must supply, before this answer is usable:**
 
 - what you delegated:
-- outcome — and ideally that the person now owns that area:
+- outcome (ideally, that the person now owns that area):

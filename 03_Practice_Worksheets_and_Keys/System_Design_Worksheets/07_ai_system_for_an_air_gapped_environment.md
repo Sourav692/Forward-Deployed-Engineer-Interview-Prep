@@ -1,7 +1,7 @@
 # AI System for an Air-Gapped Environment - Case Study Worksheet
 
 ## 1. Interview prompt
-You are the FDE asked to bring GenAI capability into an **Air-Gapped Environment**, a network with no route to the internet. Treat that boundary as the heart of the design, not as an obstacle to work around.
+You are the FDE asked to bring GenAI capability into an **Air-Gapped Environment**, a network with no route to the internet. Make that boundary the centre of the design.
 
 ## 2. Clarify the customer problem
 - Which classification level covers the data, and which handling rules come with it?

@@ -2,7 +2,7 @@
 
 You do not need a different story for every interview question. A few real moments can answer many questions. This page breaks those moments into sixteen short stories and shows you which questions each one can answer.
 
-How to use this page: start with the short spoken answer. Then practise the full story out loud in about two minutes. In an interview, listen for what the question is really about: a setback, a difficult decision, ownership, or working with people. Choose the story that best shows that skill. You can use one story for several questions by changing the part you focus on.
+How to use this page: start with the short spoken answer. Then practise the full story out loud in about two minutes. In an interview, listen for what the question is about: a setback, a difficult decision, ownership, or working with people. Choose the story that best shows that skill. You can use one story for several questions by changing the part you focus on.
 
 Be honest. Only use results and numbers you can prove. If a story says it is partly grounded, add your own real detail before using it. Never pretend a missing detail is true.
 
@@ -31,7 +31,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: two conversations in discovery
 
-**Engagement:** A large Asian life insurer, a hands-on build of about two months. **Grounding:** PARTLY GROUNDED — the discovery is real; you supply who, if anyone, told you to bring compliance in sooner, and one concrete cross-region friction.
+**Engagement:** A large Asian life insurer, a hands-on build of about two months. **Grounding:** PARTLY GROUNDED. The discovery is real; you supply who, if anyone, told you to bring compliance in sooner, and one concrete cross-region friction.
 
 **Say it in one line:** "The brief said natural-language answers over data, but talking to the users and to compliance separately showed me that access control was the real job."
 
@@ -46,13 +46,13 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: starting narrow when the sponsor wanted wide
 
-**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED — you supply who pushed for the wider launch, how the sponsor responded, and who was on your team.
+**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED. You supply who pushed for the wider launch, how the sponsor responded, and who was on your team.
 
 **Say it in one line:** "The sponsor wanted every business unit and every market at once; I argued for proving it on two units in one market first, and I framed it as their risk, not my convenience."
 
 - **Situation:** The instinct was to launch wide: every business unit, every market, every document type, plus open-ended enterprise search on top of the BI use case. We had about two months.
 - **Task:** Protect the outcome without sounding like I was offering less.
-- **Action:** I disagreed early and made it about their exposure: access-control mistakes compound if you scale before you've proven the model, and a leak at launch is the kind of failure that ends an AI programme at an insurer. I agreed the success bar with the sponsor up front — self-serve, governed answers replacing a BI queue that took days, with zero leaks, explainability and acceptable latency — and every new request went on a written expansion path with a precondition: once the zero-leak gate holds on the first slice. Compliance was in the room, and they were the strongest voice for the narrow start.
+- **Action:** I disagreed early and made it about their exposure: access-control mistakes compound if you scale before you've proven the model, and a leak at launch is the kind of failure that ends an AI programme at an insurer. I agreed the success bar with the sponsor up front (self-serve, governed answers replacing a BI queue that took days, with zero leaks, explainability and acceptable latency), and every new request went on a written expansion path with a precondition: once the zero-leak gate holds on the first slice. Compliance was in the room, and they were the strongest voice for the narrow start.
 - **Result:** The MVP shipped on that slice, time-to-insight went from days to minutes on it, and the expansion conversation happened on the back of a result rather than a promise. The customer heard "next", not "no".
 
 **What it proves:** disagreeing with a customer without losing them, framing risk in the customer's terms, scope discipline on a fixed window, focus on the one outcome that matters
@@ -67,7 +67,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 - **Situation:** My first design was one agent, one prompt, twenty-plus tools. It worked in demos. In real testing it kept picking the wrong tool, and accuracy dropped as the context grew.
 - **Task:** Fix it inside a shrinking window without losing the sponsor's confidence.
-- **Action:** I told the sponsor the same day, in three parts: what's broken, the exact mechanism — twenty tool schemas plus history in one prompt measurably hurts tool selection — and the fix with its cost. Tracing showed it was a structure problem, not a tuning problem, so I moved to a Supervisor with four specialist agents, kept every existing tool and data asset so the change was bounded, added a confidence gate that asks a clarifying question below 60%, and put per-node tracing and a held-out eval set in place so I'd know within days if I was wrong again.
+- **Action:** I told the sponsor the same day, in three parts: what's broken, the exact mechanism (twenty tool schemas plus history in one prompt measurably hurts tool selection), and the fix with its cost. Tracing showed a structure problem, not a tuning problem. So I moved to a Supervisor with four specialist agents and kept every existing tool and data asset, so the change was bounded. I added a confidence gate that asks a clarifying question below 60%, and put per-node tracing and a held-out eval set in place so I'd know within days if I was wrong again.
 - **Result:** It worked, and we shipped on time. What the sponsor remembered was that they heard it from me first, with a plan.
 
 **What it proves:** calm when my own design fails, bad news delivered early and with the mechanism, deciding fast with incomplete information, changing course when the structure is the problem
@@ -91,13 +91,13 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: hand-building the supervisor
 
-**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED — the build and the result are real; for the product-feedback questions you supply who you shared it with and what came of it.
+**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED. The build and the result are real; for the product-feedback questions you supply who you shared it with and what came of it.
 
 **Say it in one line:** "The platform's managed multi-agent feature wasn't an option for this customer at the time, so I hand-built the supervisor rather than hand their launch to a roadmap nobody in the room controlled."
 
 - **Situation:** I had about two months to replace a BI queue where an ad-hoc question took days and a dashboard took weeks, with no large delivery team behind me. The managed multi-agent feature was exactly the pattern I needed, and the flattering thing for me to demo, but it wasn't an option for this customer at the time.
 - **Task:** Ship a production-grade MVP whose core path didn't depend on a timeline neither of us controlled.
-- **Action:** I used managed services wherever they were good enough — a managed text-to-SQL service for the BI specialist, because its SQL is always read-only and the insurer's own analysts could curate it — and built only where there was a gap. The Supervisor became an 8-node LangGraph state machine: classify intent with a confidence score, ask a clarifying question below 60%, resolve governed assets once through a central Context Index, route to one of four specialists, compose the answer. To the sponsor I put it in their terms: "If that feature slips, your launch slips. I'd rather own more code than hand your timeline to a roadmap."
+- **Action:** I used managed services wherever they were good enough and built only where there was a gap. For the BI specialist that meant a managed text-to-SQL service, because its SQL is always read-only and the insurer's own analysts could curate it. The Supervisor became an 8-node LangGraph state machine: classify intent with a confidence score, ask a clarifying question below 60%, resolve governed assets once through a central Context Index, route to one of four specialists, compose the answer. To the sponsor I put it in their terms: "If that feature slips, your launch slips. I'd rather own more code than hand your timeline to a roadmap."
 - **Result:** The MVP shipped in the window. Time-to-insight went from days to minutes, and dashboards went from weeks in a queue to self-serve. Adoption grew after rollout, and every time I report that, I say it's a correlated signal, not a controlled experiment.
 
 **What it proves:** build-versus-buy judgement, the company's real interest over my own profile, resourcefulness with a small team, honest attribution, explaining a risk to an executive in their terms
@@ -106,14 +106,14 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: building the data foundation nobody owned
 
-**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED — the build is real; you supply who on the data team was wary and the concrete sign that they came round.
+**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED. The build is real; you supply who on the data team was wary and the concrete sign that they came round.
 
 **Say it in one line:** "The data layer was on paper someone else's problem, but agents can't be governed if the data isn't, so I built it myself, with the customer's data team rather than around them."
 
 - **Situation:** The engagement was scoped to the agent layer. The data foundation the agents would query was, on paper, someone else's job, and the BI and data team whose queue I was replacing had every reason to be wary of me.
 - **Task:** Make every answer traceable to governed data, inside about two months.
-- **Action:** I built the foundation myself, inside their governed catalogue: bronze tables for products, agents, customers, policies, claims and policy documents; silver enrichment joins; and a handful of reviewed, governed metric views on top. The agents query those views, never raw tables, and the assets the data team had reviewed and endorsed were prioritised in the Context Index routing, so their governance decisions were literally what the agents obeyed.
-- **Result:** Every number traces back to governed data, which is the property the customer actually needed. The system didn't replace the data team; it made their governed data the thing every business user finally reached. The honest flip side: doing it myself was right here, but it's also the fastest way to become the bottleneck.
+- **Action:** I built the foundation myself, inside their governed catalogue: bronze tables for products, agents, customers, policies, claims and policy documents; silver enrichment joins; and a handful of reviewed, governed metric views on top. The agents query those views, never raw tables, and the Context Index routing prioritises the assets the data team had reviewed and endorsed, so the agents obey the data team's governance decisions directly.
+- **Result:** Every number traces back to governed data, which is the property the customer needed. The system didn't replace the data team; it made their governed data the thing every business user finally reached. The honest flip side: doing it myself was right here, but it's also the fastest way to become the bottleneck.
 
 **What it proves:** ownership outside my lane, influence without authority, ramping up on a domain by building in it, winning over a sceptical team, knowing the cost of my own habits
 
@@ -123,7 +123,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **Engagement:** A large Asian life insurer, later rebuilt as a reference system. **Grounding:** GROUNDED.
 
-**Say it in one line:** "The vector index didn't inherit the source's row-level rules, so I built two checkpoints — a fast one at the door and a careful one right before generation — and explained it to compliance without a word of jargon."
+**Say it in one line:** "The vector index didn't inherit the source's row-level rules, so I built two checkpoints (a fast one at the door and a careful one right before generation) and explained it to compliance without a word of jargon."
 
 - **Situation:** Compliance, legal, security and a business sponsor, none of them engineers, had to sign off on how the retrieval agent enforced access over policy and claims documents with health disclosures. And the platform's vector index is a derived copy: a revoked grant at the source doesn't reach it.
 - **Task:** Build access control that can't go quietly stale, and explain it so non-engineers could reason about it.
@@ -136,12 +136,12 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The lender: a couple of hundred tickets, three problems
 
-**Engagement:** A large Indian consumer lender — an agent for the IT-support desk behind their lead-routing pipeline. **Grounding:** GROUNDED.
+**Engagement:** A large Indian consumer lender: an agent for the IT-support desk behind their lead-routing pipeline. **Grounding:** GROUNDED.
 
 **Say it in one line:** "The ask was 'automate IT-support tickets'; I read a couple of hundred real tickets before writing any code, found three problems rather than one, and built three routes rather than one bot."
 
 - **Situation:** The lender's lead-routing pipeline sends loan leads into their CRM and dialer. When it misbehaves, an engineer raises a ticket and investigates by hand across logs, control flags and config. I'd never seen their system before.
-- **Task:** Work out what the problem really looked like before designing anything.
+- **Task:** Work out what the problem looked like before designing anything.
 - **Action:** I went through a couple of hundred historical tickets. More than half were config-table refresh and sync requests, a real slice were log-exclusion investigations, and a small share were bugs in the rules-engine code. So I built a triage layer that narrows the toolset before the agent runs, three investigation routes using retrieval over past tickets rather than a hand-coded rules tree, and a separate code-lookup agent that does a deterministic one-file lookup and hands the model only that file, with four fixed questions.
 - **Result:** A working triage-to-root-cause system whose shape came from their data, not my assumption. The same review showed about a third of tickets were clarification round-trips my design didn't handle, and I flagged that as the next gap instead of pretending it was solved. The next step for the code-lookup agent is an AST-based code graph, which I've designed but not shipped.
 
@@ -172,7 +172,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 - **Situation:** I committed to compressing ticket resolution time at the lender, and I shipped a working triage-to-root-cause system.
 - **Task:** Report the result honestly.
-- **Action:** I hadn't instrumented resolution time per ticket type from the start, so there was no clean baseline. I can defend an estimate — roughly half of ticket volume was a strong fit for automation — but I don't quote it as a result. I say plainly that I don't have a client-confirmed number.
+- **Action:** I hadn't instrumented resolution time per ticket type from the start, so there was no clean baseline. I can defend an estimate (roughly half of ticket volume was a strong fit for automation), but I don't quote it as a result. I say plainly that I don't have a client-confirmed number.
 - **Result:** The limit stands: there's no proven delta. What changed is how I work. I agree the success metric and instrument it before the first line of code, and the measurement plan is now part of the scoping document.
 
 **What it proves:** honesty about limits, refusing to claim a number I can't prove, owning a shortfall, a lasting change in practice
@@ -183,7 +183,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 **Engagement:** The Meridian Assist reference build, a 22-document governed RAG system, with the gate first agreed with the insurer's compliance team. **Grounding:** GROUNDED.
 
-**Say it in one line:** "One leak on the governed test set and the build doesn't ship — not a low leak rate, zero — and a security decision is never left to the model's judgement."
+**Say it in one line:** "One leak on the governed test set and the build doesn't ship (zero, not a low leak rate), and a security decision is never left to the model's judgement."
 
 - **Situation:** The usual bar for an AI system is a quality score plus "the model refuses nicely". I also had a security test that passed most of the time, and the temptation was to call it flaky and move on.
 - **Task:** Set a bar that holds whoever wrote the code, me included.
@@ -205,7 +205,7 @@ If your interview loop is organised around leadership principles, this table sho
 - **Action:** I stopped and traced it before anything else. The manager had just been reassigned that case, so my test data was stale, not the system. I'd also mislabelled my own test data by confusing "not relevant to this question" with "not allowed to see it". I wrote up the alarm, the false alarm and my own mistake, and added a check so those two ideas can't be mixed up again.
 - **Result:** The system was fine; the lesson was mine. A false security alarm is worse than none, because people learn to ignore it. I now walk security teams through this story, false alarm included.
 
-**What it proves:** holding myself to my own bar, admitting a mistake in the open, incident discipline — contain, diagnose, communicate, prevent — and trust built through disclosure
+**What it proves:** holding myself to my own bar, admitting a mistake in the open, incident discipline (contain, diagnose, communicate, prevent), and trust built through disclosure
 
 **Answers:** [Ownership, Standards, and Failure · Q5](/practice/ownership-standards-and-failure#section-5), [Leading People · Q6](/practice/leading-people#section-6), [Ownership, Standards, and Failure · Q3](/practice/ownership-standards-and-failure#section-3), [Communication and Influence · Q4](/practice/communication-and-influence#section-4)
 
@@ -216,8 +216,8 @@ If your interview loop is organised around leadership principles, this table sho
 **Say it in one line:** "Every retrieval strategy scored perfectly, including the one I'd bet on, and I wrote down that the table proved the security gate, not which strategy wins at real scale."
 
 - **Situation:** I benchmarked six retrieval strategies, from keyword and dense to hybrid and a decomposition-plus-reranking approach I'd put real effort into and expected to win. Every one scored 22 of 22 on the golden set: recall 1.0, groundedness 1.0, zero leaks.
-- **Task:** Decide what to ship, and what the numbers actually proved.
-- **Action:** My favourite was simply the slowest and most expensive, so I shipped dense retrieval and said plainly that the sophisticated one hadn't earned its keep. Then I separated the claims. The corpus is 22 documents, so retrieval is easy and the differences are noise. The table proves the zero-leak gate and the testing discipline. It proves nothing about which strategy wins at 200,000 documents.
+- **Task:** Decide what to ship, and what the numbers proved.
+- **Action:** My favourite was the slowest and most expensive, so I shipped dense retrieval and said plainly that the sophisticated one hadn't earned its keep. Then I separated the claims. The corpus is 22 documents, so retrieval is easy and the differences are noise. The table proves the zero-leak gate and the testing discipline. It proves nothing about which strategy wins at 200,000 documents.
 - **Result:** The limit is written in the docs, along with what would make the bigger claim true: re-run the benchmark at a representative corpus size. Good numbers on the wrong question are the most dangerous kind, because nobody argues with them.
 
 **What it proves:** letting data overrule my own preference, saying no to the impressive option, honest limits on a good-looking result, fast decisions where the call is easy to undo
@@ -241,7 +241,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## Financial services: red-teaming before saying no
 
-**Engagement:** A financial-services engagement on multi-agent guardrails. **Grounding:** PARTLY GROUNDED — you supply which client, the exact decisioning path they wanted automated, and where the red-team findings went afterwards.
+**Engagement:** A financial-services engagement on multi-agent guardrails. **Grounding:** PARTLY GROUNDED. You supply which client, the exact decisioning path they wanted automated, and where the red-team findings went afterwards.
 
 **Say it in one line:** "They wanted agents in a decisioning path with no human in the loop; instead of arguing from principle, I red-teamed it, brought the failures to the table, and offered a version that kept the automation."
 
@@ -256,16 +256,16 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## Beyond one engagement: patterns that travel
 
-**Engagement:** Across my engagements at the platform vendor I worked for. **Grounding:** PARTLY GROUNDED — you supply a reuse count or the effort saved, and who picked the patterns up.
+**Engagement:** Across my engagements at the platform vendor I worked for. **Grounding:** PARTLY GROUNDED. You supply a reuse count or the effort saved, and who picked the patterns up.
 
 **Say it in one line:** "The same multi-agent scaffolding kept coming back on other accounts, so I turned it into reusable assets and taught the pattern, not the solution."
 
 - **Situation:** The multi-agent patterns from the insurer kept recurring on other accounts, and I was rebuilding the same scaffolding each time.
 - **Task:** Stop rebuilding it per engagement, and make myself unnecessary on the accounts.
-- **Action:** I generalised the working pieces — the Supervisor–Worker skeleton, tracing conventions, memory tiering, the evaluation harness — into reusable assets, and contributed 40+ scripts to the global codebase. I taught the patterns through partner tech talks to 125+ architects and founded a local practitioner meetup. The specialisation lesson from the insurer became the triage layer I built in at the lender from the start, and an open-source contribution and an internal accelerator both began as gaps between what the product did and what the field needed.
+- **Action:** I generalised the working pieces (the Supervisor–Worker skeleton, tracing conventions, memory tiering, the evaluation harness) into reusable assets, and contributed 40+ scripts to the global codebase. I taught the patterns through partner tech talks to 125+ architects and founded a local practitioner meetup. The specialisation lesson from the insurer became the triage layer I built in at the lender from the start, and an open-source contribution and an internal accelerator both began as gaps between what the product did and what the field needed.
 - **Result:** The 40+ scripts and the 125+ architects are real. I don't have a reuse count or an effort-saved number yet, so I don't claim one.
 
-**What it proves:** multiplying other people rather than just executing, teaching the why so others can design the next one, carrying field learning back to the product, impact beyond a single project
+**What it proves:** multiplying other people rather than only executing, teaching the why so others can design the next one, carrying field learning back to the product, impact beyond a single project
 
 **Answers:** [Communication and Influence · Q4](/practice/communication-and-influence#section-4), [Pushback and Saying No · Q5](/practice/pushback-and-saying-no#section-5), [Scale Beyond Yourself · Q1](/practice/scale-beyond-yourself#section-1), [Scale Beyond Yourself · Q2](/practice/scale-beyond-yourself#section-2), [Scale Beyond Yourself · Q3](/practice/scale-beyond-yourself#section-3), [Scale Beyond Yourself · Q4](/practice/scale-beyond-yourself#section-4), [Scale Beyond Yourself · Q6](/practice/scale-beyond-yourself#section-6)
 
@@ -273,27 +273,27 @@ If your interview loop is organised around leadership principles, this table sho
 
 None of the stories above answers these honestly. Most are failure-shaped or about managing people, and a loop that hears only successes scores you as evasive. Find a real moment of your own for each.
 
-- [Customer Focus and Discovery · Q5](/practice/customer-focus-and-discovery#section-5) — a project you really did mis-scope, told as "I didn't ask X", not "they didn't tell me X". A multi-region migration is a likely home.
-- [Delivery Under Pressure · Q1](/practice/delivery-under-pressure#section-1) — a real incident at a customer site, with the hour, the decision, the recovery time and the lasting fix. A near-miss you name beats a spotless record.
-- [Delivery Under Pressure · Q3](/practice/delivery-under-pressure#section-3) (asked another way) — a deadline that slipped, which you raised early, with options and your own escalation path. Not a weekend rescue.
-- [Delivery Under Pressure · Q4](/practice/delivery-under-pressure#section-4) — a customer who went over your head, where you agreed with part of the complaint and the account recovered.
-- [Ownership, Standards, and Failure · Q2](/practice/ownership-standards-and-failure#section-2) (asked another way) — an approach you killed after real invested effort, with the evidence and the rebuild cost. The insurer's first-architecture pivot may fit if you can say how much was built and what the rebuild cost.
-- [Leading People · Q1](/practice/leading-people#section-1) — a hiring loop you changed, ideally towards "prove it, don't assert it".
-- [Leading People · Q3](/practice/leading-people#section-3) — a strong person at risk of leaving, and what you changed. Usually it's scope or growth, not money.
-- [Leading People · Q2](/practice/leading-people#section-2) — the real channels you've sourced from, and a debrief where fixed criteria changed the outcome.
-- [Communication and Influence · Q8](/practice/communication-and-influence#section-8) — a handover that carried the task but not the customer's intent, and what you changed in how you write tickets.
-- [Leading People · Q4](/practice/leading-people#section-4) — an engineer whose "technical" questions were really unresolved scope, and what changed once you coached the skill.
-- [Leading People · Q4](/practice/leading-people#section-4) (asked another way) — someone you gave real blast radius, put in front of a customer, and sponsored, and where they are now.
-- [Scale Beyond Yourself · Q3](/practice/scale-beyond-yourself#section-3) (asked another way) — a real new joiner you brought up to speed: customer intent first, then the success bar, then design review before code.
-- [Communication and Influence · Q6](/practice/communication-and-influence#section-6) (asked another way) — hard feedback to a peer or senior, backed by a trace, a benchmark or ticket data rather than opinion.
-- [Leading People · Q5](/practice/leading-people#section-5) — a direct conversation about work against an agreed bar. If you've only led as a senior IC, say so, then give the closest real example.
-- [Delivery Under Pressure · Q3](/practice/delivery-under-pressure#section-3) (asked another way) — a commitment you missed and raised before anyone found out. If nothing fits, the lender's unproven metric is the honest adjacent example.
-- [Pushback and Saying No · Q4](/practice/pushback-and-saying-no#section-4) — a customer-side dependency that really slipped, and how you showed which work was blocked instead of absorbing it.
-- [Ownership, Standards, and Failure · Q7](/practice/ownership-standards-and-failure#section-7) (asked another way) — harsh criticism you checked for truth before deciding how you felt about it.
-- [Communication and Influence · Q6](/practice/communication-and-influence#section-6) — a disagreement with a person, not with your own first design, settled with evidence.
-- [Leading People · Q7](/practice/leading-people#section-7) — work you'd rather have kept and handed over, made safe by a design review before the code existed.
-- [Delivery Under Pressure · Q1](/practice/delivery-under-pressure#section-1) (asked another way) — a real production incident and what you did in the first hour. The false-alarm leak is only an adjacent fallback.
-- [Communication and Influence · Q9](/practice/communication-and-influence#section-9) — one project of your own, told to a CFO in three minutes: translate each term as you say it, give the analogy first, and add the technical layer only if they ask for it.
+- [Customer Focus and Discovery · Q5](/practice/customer-focus-and-discovery#section-5): a project you really did mis-scope, told as "I didn't ask X", not "they didn't tell me X". A multi-region migration is a likely home.
+- [Delivery Under Pressure · Q1](/practice/delivery-under-pressure#section-1): a real incident at a customer site, with the hour, the decision, the recovery time and the lasting fix. A near-miss you name beats a spotless record.
+- [Delivery Under Pressure · Q3](/practice/delivery-under-pressure#section-3) (asked another way): a deadline that slipped, which you raised early, with options and your own escalation path. Not a weekend rescue.
+- [Delivery Under Pressure · Q4](/practice/delivery-under-pressure#section-4): a customer who went over your head, where you agreed with part of the complaint and the account recovered.
+- [Ownership, Standards, and Failure · Q2](/practice/ownership-standards-and-failure#section-2) (asked another way): an approach you killed after real invested effort, with the evidence and the rebuild cost. The insurer's first-architecture pivot may fit if you can say how much was built and what the rebuild cost.
+- [Leading People · Q1](/practice/leading-people#section-1): a hiring loop you changed, ideally towards "prove it, don't assert it".
+- [Leading People · Q3](/practice/leading-people#section-3): a strong person at risk of leaving, and what you changed. Usually it's scope or growth, not money.
+- [Leading People · Q2](/practice/leading-people#section-2): the real channels you've sourced from, and a debrief where fixed criteria changed the outcome.
+- [Communication and Influence · Q8](/practice/communication-and-influence#section-8): a handover that carried the task but not the customer's intent, and what you changed in how you write tickets.
+- [Leading People · Q4](/practice/leading-people#section-4): an engineer whose "technical" questions were really unresolved scope, and what changed once you coached the skill.
+- [Leading People · Q4](/practice/leading-people#section-4) (asked another way): someone you gave real blast radius, put in front of a customer, and sponsored, and where they are now.
+- [Scale Beyond Yourself · Q3](/practice/scale-beyond-yourself#section-3) (asked another way): a real new joiner you brought up to speed: customer intent first, then the success bar, then design review before code.
+- [Communication and Influence · Q6](/practice/communication-and-influence#section-6) (asked another way): hard feedback to a peer or senior, backed by a trace, a benchmark or ticket data rather than opinion.
+- [Leading People · Q5](/practice/leading-people#section-5): a direct conversation about work against an agreed bar. If you've only led as a senior IC, say so, then give the closest real example.
+- [Delivery Under Pressure · Q3](/practice/delivery-under-pressure#section-3) (asked another way): a commitment you missed and raised before anyone found out. If nothing fits, the lender's unproven metric is the honest adjacent example.
+- [Pushback and Saying No · Q4](/practice/pushback-and-saying-no#section-4): a customer-side dependency that slipped, and how you showed which work was blocked instead of absorbing it.
+- [Ownership, Standards, and Failure · Q7](/practice/ownership-standards-and-failure#section-7) (asked another way): harsh criticism you checked for truth before deciding how you felt about it.
+- [Communication and Influence · Q6](/practice/communication-and-influence#section-6): a disagreement with a person, not with your own first design, settled with evidence.
+- [Leading People · Q7](/practice/leading-people#section-7): work you'd rather have kept and handed over, made safe by a design review before the code existed.
+- [Delivery Under Pressure · Q1](/practice/delivery-under-pressure#section-1) (asked another way): a real production incident and what you did in the first hour. The false-alarm leak is only an adjacent fallback.
+- [Communication and Influence · Q9](/practice/communication-and-influence#section-9): one project of your own, told to a CFO in three minutes: translate each term as you say it, give the analogy first, and add the technical layer only if they ask for it.
 
 ## Build your own story bank
 
