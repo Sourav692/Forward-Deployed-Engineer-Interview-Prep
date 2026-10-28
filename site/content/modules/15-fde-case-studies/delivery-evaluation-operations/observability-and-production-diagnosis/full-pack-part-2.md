@@ -16,7 +16,7 @@ Three tests turn the design into executable contracts:
 | Privacy invariant: a request containing `person@example.com` | The address never appears in the exported JSON; the query hash is present; the classification is "sensitive" |
 | Failure injection: the retriever raises a timeout after acceptance | The failure is still observable; the trace summary is written in a `finally` block with an `outcome="partial_failure"` field |
 
-The last test protects the chapter's central failure drill directly. Sampling and redaction must never make a failure invisible.
+The last test guards the chapter's central failure drill: sampling and redaction must never hide a failure.
 
 Telemetry attributes are schema-validated at ingestion. Unknown high-cardinality fields are rejected or collapsed into a bounded "other" bucket. Queue serialisation contracts carry trace context, idempotency key and tenant scope explicitly, or traces break silently at async handoffs.
 
@@ -37,7 +37,7 @@ The first move under this injection is to contain impact, preserve evidence and 
 
 ## 8. Name the Failure Policy for Every Layer
 
-Every dependency needs an explicit answer to one question: what happens when it is gone? Five terms carry that answer consistently. Fail open continues with reduced visibility. Fail closed refuses the action when integrity, privacy or authorisation would be compromised. Degrade serves a reduced but safe experience. Queue buffers with explicit bounds and retention. Human intervention escalates when risk or ambiguity is too high for automation.
+Every dependency needs an explicit answer to one question: what happens when it is gone? Use five terms for the answer. Fail open continues with reduced visibility. Fail closed refuses the action when integrity, privacy or authorisation would be compromised. Degrade serves a reduced but safe experience. Queue buffers with explicit bounds and retention. Human intervention escalates when risk or ambiguity is too high for automation.
 
 | Failure | Policy |
 |---|---|
@@ -50,7 +50,7 @@ Every dependency needs an explicit answer to one question: what happens when it 
 | Repeated downstream timeouts | Trip a circuit breaker; serve a safe degraded response or queue if the workflow permits |
 | Evidence buffer full | Dead-letter the overflow into a restricted quarantine queue with an incident marker, then alert a human |
 
-The reason each row differs is the useful thing to say aloud. A user-facing answer can sometimes degrade; an audit trail usually cannot. A retriever timeout can be retried; a permission check cannot be guessed.
+Say aloud why the rows differ. A user-facing answer can sometimes degrade; an audit trail usually cannot. A retriever timeout can be retried; a permission check cannot be guessed.
 
 Name the blast radius along four axes: tenant, region, workflow and dependency. A raw-prompt leak is usually tenant-scoped but workflow-wide. A queue-boundary trace break can hit one integration path across many tenants. A model outage may be regional. A misconfigured support tool can span every tenant.
 
@@ -63,7 +63,7 @@ Four more named failures get the same drill.
 | Trace context breaks at a queue | A trace starts, then vanishes after async handoff; orphan spans; a spike in "unknown root" events | Propagate a minimal correlation envelope through the queue | Stitch spans by correlation ID and timestamp; mark the join as reconstructed | Queue contracts carry trace context, idempotency key and tenant scope, and are tested |
 | Quality metric improves while adoption falls | Pair technical metrics with completion rate, retries, abandonment, support contacts | Treat it as a product problem, not a hotfix | Product review, metric reset, possibly roll back the latest change | Track task completion and business outcome, not usage volume alone |
 
-The abuse case deserves one sentence of its own. A developer adds a raw prompt field to a debug span to speed triage. It works once, then becomes the easiest way to move PII into every downstream system. The fix is a redaction policy, an exporter guardrail, and a test that fails whenever exported telemetry contains raw sensitive strings.
+In the abuse case, a developer adds a raw prompt field to a debug span to speed triage. It works once, then becomes the easiest way to move PII into every downstream system. The fix is a redaction policy, an exporter guardrail, and a test that fails whenever exported telemetry contains raw sensitive strings.
 
 Inject sampler loss, queue-boundary breakage, redaction regressions and dependency timeouts in staging. Chaos practice proves the failure policy works before production forces the discovery.
 
@@ -73,7 +73,7 @@ A dashboard built from component metrics shows rates without telling anyone whet
 
 The top panel shows the user outcome: latency percentile, failure rate, incident volume. The middle panel shows likely causes: retrieval success, tool success, model error class, token cost. The bottom panel shows support mechanics: trace coverage, redaction rate, queue age for incidents, mean time to diagnose.
 
-The correctness question has a precise answer. Compare the retrieved evidence with the final answer. If retrieval is empty, stale or off-topic, the fault is upstream. If retrieval looked good but the answer contradicts it, suspect the model or prompt construction. If the bad answer appears for only one tenant, suspect tenant configuration, access control or integration state before blaming the shared model.
+To answer the correctness question, compare the retrieved evidence with the final answer. If retrieval is empty, stale or off-topic, the fault is upstream. If retrieval looked good but the answer contradicts it, suspect the model or prompt construction. If the bad answer appears for only one tenant, suspect tenant configuration, access control or integration state before blaming the shared model.
 
 ```mermaid
 flowchart TD
@@ -84,9 +84,9 @@ flowchart TD
   CONTRADICT -->|"No, only one tenant affected"| TENANT["Suspect: Tenant config,<br/>access control, or<br/>integration state"]
 ```
 
-The diagnostic signals that make this possible are the ones section 2 kept. Request and tenant correlation IDs. Retrieval query fingerprints and document identifiers, not raw text. Model version, prompt template version and generation settings. Tool call status, latency and error class. Outcome tags.
+This works because of the signals section 2 kept: request and tenant correlation IDs; retrieval query fingerprints and document identifiers, not raw text; model version, prompt template version and generation settings; tool call status, latency and error class; and outcome tags.
 
-Alert on customer harm or likely impending harm, not on telemetry volume. Good triggers are sustained latency above the SLO and elevated error rates. So are repeated empty retrievals, a spike in fallback responses, and critical tool failures. A sudden rise in "wrong answer" feedback for one tenant or cohort belongs on the list too.
+Alert on customer harm or likely impending harm, not on telemetry volume. Good triggers are sustained latency above the SLO, elevated error rates, repeated empty retrievals, a spike in fallback responses and critical tool failures. So is a sudden rise in "wrong answer" feedback for one tenant or cohort.
 
 ## 10. Walk Through the Latency Spike
 

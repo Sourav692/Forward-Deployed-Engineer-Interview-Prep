@@ -2,7 +2,7 @@
 
 *Resolve the routine ticket fast enough to matter, without letting a fluent model take an action or make a promise it was never authorised to make.*
 
-The product is not a chatbot that answers everything. It is a routed service that must decide when to act, when to ask for approval, and when to stop. A fluent model is one input to that decision, never its authority. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
+The product is a routed service that must decide when to act, when to ask for approval, and when to stop. A chatbot that answers everything fails that test. A fluent model is one input to that decision, never its authority. This page combines the group's prompts into one read for the day before. Every other case in the group is a delta on it.
 
 | Case in the group                                              | What it contributes here                                                               |
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
@@ -19,7 +19,7 @@ The product is not a chatbot that answers everything. It is a routed service tha
 
 ## 1. Reframe the Chatbot as a Routed Decision Pipeline
 
-Open with the harm case, not the architecture. The ask sounds like "automate routine support", and the single reframe interviewers listen for is that the product must decide when to act, when to ask, and when to stop. Say it in the first minute, because it sets up every gate that follows.
+Open with the harm case before any architecture. The ask sounds like "automate routine support". Reframe it: the product must decide when to act, when to ask, and when to stop. Interviewers listen for that reframe. Say it in the first minute; it sets up every gate that follows.
 
 > *"I'd like to optimise for the outcome first: reduce handling time and cost without increasing incorrect or harmful resolutions. I'll clarify the highest-risk intents, estimate scale, sketch the control flow, and then spend most of my time on escalation, safety and rollout."*
 
@@ -40,7 +40,7 @@ Ask the questions that move risk boundaries. Name the six discovery areas fast a
 | Which categories carry legal, financial or safety risk and must stay human-reviewed in the first release? | The risk tags the router assigns and the non-goals list                                             |
 | What is the refund threshold above which approval is mandatory, and who owns that policy?                 | The one number the gateway checks on every money-moving action                                      |
 
-Interviewers often answer only half of these on purpose, to see whether the candidate can assume without gambling on the highest-risk area. Safe defaults exist. Chat and email but no phone means a text-based model. An unknown language mix means the dominant language plus a fallback escalation path. Unknown volume means scalable but not over-engineered. Dangerous assumptions weaken the control boundary. They are that identity is always verified, that any request can be automated, that the model's answer is inherently safe, and that the CRM is always the source of truth. When in doubt, protect the highest-risk constraint first: no unauthorised action and no confidently wrong answer on sensitive topics.
+Interviewers often answer only half of these on purpose, to see whether the candidate can assume without gambling on the highest-risk area. Safe defaults exist. Chat and email but no phone means a text-based model. An unknown language mix means the dominant language plus a fallback escalation path. Unknown volume means scalable but not over-engineered. Dangerous assumptions weaken the control boundary: that identity is always verified, that any request can be automated, that the model's answer is inherently safe, and that the CRM is always the source of truth. When in doubt, protect the highest-risk constraint first: no unauthorised action and no confidently wrong answer on sensitive topics.
 
 Map the people, because each notices a different failure first.
 
@@ -76,7 +76,7 @@ The non-functional requirements tier by risk rather than one flat SLO.
 | Reliability  | A dependency timeout or incomplete context degrades into a safe handoff rather than forcing an answer;`409` when a state transition is no longer permitted, `422` when typed validation fails                          |
 | Cost         | Judged by`NetValue = V_time_saved − C_model − C_wrong_resolution − C_recontact`, never by deflection rate alone                                                                                                       |
 
-Every requirement has an owning component, and the traceability table is the proof.
+Every requirement has an owning component:
 
 | Requirement                                   | Primary component(s)                                                 |
 | --------------------------------------------- | -------------------------------------------------------------------- |
@@ -90,6 +90,6 @@ Every requirement has an owning component, and the traceability table is the pro
 | Fast human takeover                           | One-click escalation and context packaging                           |
 | Complete action auditability                  | Append-only event trail with actor, time and reason                  |
 
-Size for the load that breaks the system, not the average. The practice numbers are 2 million tickets a month, 100 QPS peak and 20 languages. Two million a month is about 67,000 a day, but a morning spike after a product incident or a billing change arrives far above that. At 100 QPS the control plane cannot be a single-threaded pipeline. Twenty languages make English-only assumptions unsafe. Turn volume into calls, because tickets times one is not the model bill. Assume 70 percent routine, 20 percent ambiguous and 10 percent escalated. Routine is 1.4M tickets times 2 calls, or 2.8M. Ambiguous is 0.4M times 3, or 1.2M. Escalated is 0.2M times 1, or 0.2M. That is about 4.2M model calls a month, plus retries, moderation and tools. Retrieval runs 1.4M plus 0.8M plus up to 0.2M, so 2.2M to 2.4M calls a month. Retrieval therefore dominates freshness logic, cache design and failure isolation; it is not a cheap helper. Handled only by people, a queue this size needs well over a thousand full-time agents (assuming ~1,500 tickets per agent a month). Deflecting 30 to 50 percent of tickets (a conservative planning assumption) shows up as delayed hiring, less overtime and agents moved to complex cases, not as half a team eliminated.
+Size for the load that breaks the system, not the average. The practice numbers are 2 million tickets a month, 100 QPS peak and 20 languages. Two million a month is about 67,000 a day, but a morning spike after a product incident or a billing change arrives far above that. At 100 QPS the control plane cannot be a single-threaded pipeline. Twenty languages make English-only assumptions unsafe. Turn volume into calls, because tickets times one is not the model bill. Assume 70 percent routine, 20 percent ambiguous and 10 percent escalated. Routine is 1.4M tickets times 2 calls, or 2.8M. Ambiguous is 0.4M times 3, or 1.2M. Escalated is 0.2M times 1, or 0.2M. That is about 4.2M model calls a month, plus retries, moderation and tools. Retrieval runs 1.4M plus 0.8M plus up to 0.2M, so 2.2M to 2.4M calls a month. Retrieval therefore drives freshness logic, cache design and failure isolation. Handled only by people, a queue this size needs well over a thousand full-time agents (assuming ~1,500 tickets per agent a month). Deflecting 30 to 50 percent of tickets (a conservative planning assumption) shows up as delayed hiring, less overtime and agents moved to complex cases, not as half a team eliminated.
 
 The NetValue equation is the most reusable move on the board. Start with time saved. Subtract model and retrieval cost. Subtract the cost of a confidently wrong resolution, which I'd expect to outweigh the model bill in most support settings. Subtract the cost of a repeat contact. A system that saves ten seconds per ticket and raises recontact is not a win. At 10× growth, revisit partitioning rather than server count: split online answering from offline summarisation, isolate escalation traffic from routine classification, and move long-running enrichment out of the critical path. Peak concurrency and escalation rate control the architecture more than the exact monthly count.

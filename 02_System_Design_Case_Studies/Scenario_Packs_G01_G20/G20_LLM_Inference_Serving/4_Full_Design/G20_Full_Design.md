@@ -15,7 +15,7 @@ These prompts look like AI questions and are graded as distributed-systems quest
 | #74 OpenAI favourite: diagnose high latency in an LLM inference pipeline | Section 15: the stack walk, shared with G14 |
 | Self-drill for G20 *(own construction)* | Section 17 |
 
-**Read this first.** No worked design exists for this group, and the sources have no notes on continuous batching, paged attention or any serving engine. The design on this page is therefore *own construction*. It is built from general serving practice. It is grounded where the sources do speak: the air-gapped chapter's replica memory and sizing formula, and the cost playbook additions on prefill, decode, Little's Law and goodput. Every number below is a stated assumption, never a benchmark. In the room, say "I would replace these with a load test of the actual model."
+**Read this first.** No worked design exists for this group, and the sources have no notes on continuous batching, paged attention or any serving engine. The design on this page is therefore *own construction*, built from general serving practice. It is grounded where the sources do speak: the air-gapped chapter's replica memory and sizing formula, and the cost playbook additions on prefill, decode, Little's Law and goodput. Every number below is a stated assumption, never a benchmark. In the room, say "I would replace these with a load test of the actual model."
 
 ---
 
@@ -43,7 +43,7 @@ A requirement that cannot fail a test is a preference. "Fast" is a preference. "
 
 The must-haves come straight from #76's wording. Accept generation requests with a prompt, a token limit, sampling parameters and a stream flag. Batch them onto GPUs. Route each batch or sequence to a GPU with capacity. Deliver the response to the right caller, streamed or whole. Detect a failed GPU and move its work elsewhere. Reject or queue excess load rather than collapse under it.
 
-The should-haves make it operable. Per-tenant quotas and priorities. Cancellation when a caller disconnects. Prefix reuse for repeated system prompts. Rolling model upgrades without dropping traffic. Metrics that separate queue wait from service time.
+The should-haves make it operable: per-tenant quotas and priorities, cancellation when a caller disconnects, prefix reuse for repeated system prompts, rolling model upgrades without dropping traffic, and metrics that separate queue wait from service time.
 
 | Constraint | Stated so it can be tested |
 |---|---|
@@ -88,9 +88,9 @@ That chapter also warns that a candidate who talks GPU count without throughput 
 | Peak arrival | 1,000 rps |
 | Utilisation target | 70% |
 
-One request costs 1,000 ÷ 20,000 + 250 ÷ 2,500 = 0.05 + 0.10 = **0.15 replica-seconds**. At 1,000 rps that is 150 replicas of pure work. Divided by 0.70, provision **about 214 replicas**. Decode is two-thirds of the bill, so output tokens are the lever that matters most.
+One request costs 1,000 ÷ 20,000 + 250 ÷ 2,500 = 0.05 + 0.10 = 0.15 replica-seconds. At 1,000 rps that is 150 replicas of pure work. Divided by 0.70, provision about 214 replicas. Decode is two-thirds of the bill, so output tokens are the biggest lever.
 
-**Step two: concurrency by Little's Law.** Work in flight equals arrival rate times time in system *(additions file, section B3)*. Each sequence streams at about 2,500 ÷ 64 ≈ 39 tokens/s, or roughly 26 ms a token. A request therefore lives about 0.5 s to first token plus 250 × 26 ms ≈ 6.4 s, so ~7 s in total. At 1,000 rps that is **~7,000 sequences in flight**. At 64 slots a replica, that needs ~110 replicas' worth of slots.
+**Step two: concurrency by Little's Law.** Work in flight equals arrival rate times time in system *(additions file, section B3)*. Each sequence streams at about 2,500 ÷ 64 ≈ 39 tokens/s, or roughly 26 ms a token. A request therefore lives about 0.5 s to first token plus 250 × 26 ms ≈ 6.4 s, so ~7 s in total. At 1,000 rps that is ~7,000 sequences in flight. At 64 slots a replica, that needs ~110 replicas' worth of slots.
 
 **Step three: take the larger number.** Compute says 214 and slots say 110, so compute binds. Provision about 214, then add N+1 per zone for failover. Say both checks aloud. A reviewer trusts the number that survived two independent methods.
 
@@ -189,12 +189,12 @@ Read the components in request order *(own construction)*.
 | 12 | Autoscaler | Scales on queue depth and KV use, not on CPU | Degrades: headroom absorbs the minutes a new replica often takes to provision and load |
 | 13 | Rollout controller | Drains a replica before upgrade; canaries a new model version | Closed: a failing canary stops the rollout |
 
-Point at three boundaries while the diagram is up. Admission is the only place load is refused, so no queue downstream grows without limit. The router decides where but never how, because only the replica sees its memory. And the request ID is the thread through everything, so a response can never reach the wrong caller.
+Point at three boundaries while the diagram is up. Admission is the only place load is refused, so no queue downstream grows without limit. The router decides where but never how, because only the replica sees its memory. The request ID is the thread through everything, so a response can never reach the wrong caller.
 
 ## 5. Tokenize at the Edge, Not on the GPU
 
 Tokenization is CPU work, and CPU work on the GPU's request thread steals time from the most expensive machine in the building. Move it to the gateway.
 
-Tokenizing early buys three things. The admission controller can charge a tenant by real tokens, not by request count. The router can estimate KV memory before it picks a replica. And a malformed or oversized prompt fails before it reaches a queue. Cap input length at the gateway and return a clear error, because one 100,000-token prompt can monopolise a replica's prefill.
+Tokenizing early buys three things. The admission controller can charge a tenant by real tokens, not by request count. The router can estimate KV memory before it picks a replica. A malformed or oversized prompt fails before it reaches a queue. Cap input length at the gateway and return a clear error, because one 100,000-token prompt can monopolise a replica's prefill.
 
 Detokenization runs at the other end, incrementally. Some tokens are partial characters, so the streaming layer must buffer until a complete character exists. Stop sequences are checked on text, not tokens, for the same reason.

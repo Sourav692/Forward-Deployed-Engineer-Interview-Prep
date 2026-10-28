@@ -1,18 +1,18 @@
-# G09 — Enterprise Coding Assistant: Deep Dive
+# G09 Enterprise Coding Assistant: Deep Dive
 
 The [Main guide](../1_Interview_Guide/G09_Interview_Guide.md) is the spoken answer. This backs it with mechanisms from the unchanged [source study](../4_Full_Design/G09_Full_Design.md), especially §§3–13.
 
 ## 1. Context and index design
 
-The extension gathers current function and file, cursor, open tabs, imports, repository structure, language, recent edits, and compiler errors. Each signal consumes tokens and carries a permission. Rank nearby code above distant history; a whole repository is never a prompt. Build the index incrementally on push, with symbol/file/dependency chunks so a function or class and its imports remain a coherent unit. Mirror code-host repository ACLs into chunk metadata and recheck authorisation at retrieval. Deleted helpers must disappear from the index promptly enough to avoid stale suggestions.
+The extension gathers current function and file, cursor, open tabs, imports, repository structure, language, recent edits, and compiler errors. Each signal consumes tokens and carries a permission. Rank nearby code above distant history; a whole repository is never a prompt. Build the index incrementally on push, with symbol/file/dependency chunks so a function or class and its imports remain a coherent unit. Mirror code-host repository ACLs into chunk metadata and recheck authorisation at retrieval. Remove deleted helpers from the index fast enough that suggestions never call them.
 
-An ordinary RAG-style vector result is not an authoritative count, ID lookup, or API-existence check. Use the symbol index to resolve names and to validate suggested API calls. Internal documentation and project conventions may be indexed under their own access rules. For cross-repository retrieval, the developer must have read access to every snippet included; a single allowed current file is not permission to see neighboring private repositories.
+An ordinary RAG-style vector result is not an authoritative count, ID lookup, or API-existence check. Use the symbol index to resolve names and to validate suggested API calls. Internal documentation and project conventions may be indexed under their own access rules. For cross-repository retrieval, the developer must have read access to every snippet included; a single allowed current file is not permission to see neighbouring private repositories.
 
 ## 2. Cache correctness and invalidation
 
-Cache before embedding, retrieval, and model inference. Exact matching is the safe first step; semantic matching raises hit rate but introduces false equivalence between prompts that look alike and require different code. A cache key includes tenant, permission signature, repository/content version, prompt/model route, language, and task context where relevant. A role or repository ACL change invalidates affected entries. A cached completion is still validated before display. Prompt-prefix caching saves static system and convention tokens; embedding caching saves unchanged chunk work. Neither is a substitute for tenant and repository scope.
+Cache before embedding, retrieval, and model inference. Exact matching is the safe first step; semantic matching raises hit rate but introduces false equivalence between prompts that look alike and require different code. A cache key includes tenant, permission signature, repository/content version, prompt/model route, language, and task context where relevant. A role or repository ACL change invalidates affected entries. A cached completion is still validated before display. Prompt-prefix caching saves static system and convention tokens; embedding caching saves unchanged chunk work. Neither replaces tenant and repository scope.
 
-The cache-first headline applies to repeated requests; a miss still uses the context funnel and permission-filtered index. Keep a measurable false-hit budget, not just a hit-rate goal. A cross-scope hit is a security incident even if the code happens to compile.
+The cache-first headline applies to repeated requests; a miss still uses the context funnel and permission-filtered index. Set a measurable false-hit budget next to the hit-rate goal. A cross-scope hit is a security incident even if the code happens to compile.
 
 ## 3. Task routing, LLM role, and validation
 
@@ -22,7 +22,7 @@ The LLM proposes code; the validation service decides what the editor can show. 
 
 ## 4. Budget arithmetic and scale
 
-The source’s illustrative decomposition is **10 + 40 + 200 + 50 = 300 ms**: cache, context, streamed inference, validation. Because the target is **under** 300 ms at p95, that sum leaves no margin; optimise a stage or reserve headroom for network and queue tails before calling the plan an SLO. Track first token and full completion separately. Streaming reduces perceived wait, not generation time. Suppress a late completion rather than display it after the developer has typed past it.
+The source’s illustrative decomposition is **10 + 40 + 200 + 50 = 300 ms**: cache, context, streamed inference, validation. Because the target is under 300 ms at p95, that sum leaves no margin; optimise a stage or reserve headroom for network and queue tails before calling the plan an SLO. Track first token and full completion separately. Streaming reduces perceived wait, not generation time. Suppress a late completion rather than display it after the developer has typed past it.
 
 At millions of developers, keystrokes are bursty. Keep APIs stateless, indexes sharded by repository/region, indexing asynchronous on push, and GPU inference capacity autoscaled near users. Rate limits protect shared pools; slow refactors cannot consume the completion queue. At 10×, the source expects index pressure to bind first, so measure shard lookup p95 and cache churn as well as model saturation.
 

@@ -1,4 +1,4 @@
-# G02 — Customer Support Automation: Main Interview Guide, part 2
+# G02 Customer Support Automation: Main Interview Guide, part 2
 
 ## 4. Decide what can happen
 
@@ -8,15 +8,15 @@
 | Order status                                               | Verify identity if account-specific; fetch current order status; answer only from the returned facts.                |
 | Refund, cancellation, address or payment change            | Check live facts and assurance; gateway applies allowlist and threshold; require approval where policy says so.      |
 | Legal/safety issue, unclear language, conflicting evidence | Escalate with reason codes and context.                                                                              |
-| Tool timeout after an action may have executed             | Mark pending, inspect action record or ledger, then confirm, continue waiting, or escalate. Never blindly repeat it. |
+| Tool timeout after an action may have executed             | Mark pending, inspect action record or ledger, then confirm, continue waiting, or escalate. Never retry it without checking. |
 
-Use a planner only when the request truly spans systems, such as refunding an order, cancelling a warranty, notifying shipping, and creating a ticket. A simple “track my order” request should take the direct lookup path. Keep session context, cross-session customer history, and enterprise knowledge as separate memory layers; they have different freshness and privacy rules.
+Use a planner only when the request spans systems, such as refunding an order, cancelling a warranty, notifying shipping, and creating a ticket. A simple “track my order” request should take the direct lookup path. Keep session context, cross-session customer history, and enterprise knowledge as separate memory layers; they have different freshness and privacy rules.
 
 ## 5. Make actions and handoffs reliable
 
 Keep a versioned `Case`, an immutable `ProposedAction`, and a `Handoff`. Every write boundary needs an idempotency key; the action record can use an argument hash to recognise a duplicate without storing raw sensitive arguments. Check `Case.version` so automation cannot overwrite a human’s newer decision. A duplicate customer message should return the existing case, not create a second one.
 
-A useful handoff contains: original message; identity status; parsed intent and risk; retrieved evidence; policy checks; tool outputs and error codes; attempted or pending actions; and the exact reason automation stopped. Prioritise the human queue by risk and impact. A transcript alone makes the agent repeat work and hides the failed control.
+A good handoff contains: original message; identity status; parsed intent and risk; retrieved evidence; policy checks; tool outputs and error codes; attempted or pending actions; and the exact reason automation stopped. Prioritise the human queue by risk and impact. A transcript alone makes the agent repeat work and hides the failed control.
 
 ## 6. Failure playbook
 
@@ -32,7 +32,7 @@ Retries are bounded and jittered, failed jobs remain inspectable, and timeouts n
 
 ## 7. Scale, latency, and cost
 
-The source’s sizing exercise assumes **2M tickets/month, 100 QPS peak, and 20 languages**. With an illustrative 70% routine / 20% ambiguous / 10% escalated mix and 2 / 3 / 1 model calls respectively, that is about **4.2M model calls/month**, before retries and moderation. The same assumptions imply roughly **2.2M–2.4M retrieval calls/month**. Treat these as interview assumptions, not measured production demand.
+The source’s sizing exercise assumes 2M tickets/month, 100 QPS peak, and 20 languages. With an illustrative 70% routine / 20% ambiguous / 10% escalated mix and 2 / 3 / 1 model calls respectively, that is about 4.2M model calls/month, before retries and moderation. The same assumptions imply roughly 2.2M–2.4M retrieval calls/month. Treat these as interview assumptions, not measured production demand.
 
 | Pressure                            | Design response                                                                                                                                                            |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -60,7 +60,7 @@ Before launch, require stable retrieval on target intents, representative human 
 4. **Add one tool class at a time:** ticket tagging, read-only lookup, then increasingly sensitive actions with explicit approval gates.
 5. **Canary and review:** sample automated outcomes; keep a kill switch per intent and per tool; roll back the drifting slice.
 
-When asked for “80% autonomy in six months,” first ask **80% of what**—tickets, intents, or cases resolved without recontact? Let safe automation and repeat-contact results determine expansion, especially for money-moving and legal requests.
+When asked for “80% autonomy in six months,” first ask: 80% of what? Tickets, intents, or cases resolved without recontact? Let safe automation and repeat-contact results determine expansion, especially for money-moving and legal requests.
 
 ## 10. Variants and implementation hooks
 

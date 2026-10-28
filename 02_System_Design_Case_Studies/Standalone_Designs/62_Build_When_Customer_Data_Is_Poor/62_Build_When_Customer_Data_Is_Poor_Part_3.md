@@ -34,13 +34,13 @@ The round rewards spending the first third on diagnosis. A candidate who draws t
 
 **The two-minute spoken answer.**
 
-> "I wouldn't start with a model. I'd first find out whether the data can support a measurable improvement in one specific decision. So I'd pick that decision with the customer and spend a week measuring the data it depends on. That means null and placeholder rates, a join test across systems, freshness, and — most important — two experts relabelling the same hundred records so I know whether the historical labels are ground truth or noise. That gives me a scorecard. If the field the decision depends on is red and nothing can route around it, the honest answer is a data project first. Usually something can: extraction from documents doesn't need historical labels, and a review queue turns every correction into a trusted label. So phase one ships extraction with confidence scores and human review. Quality gates at ingestion quarantine bad records rather than defaulting them, and a data contract fixes the worst defects at source. Evaluation starts from a small adjudicated set, reported per segment and split by time. I'd say out loud that a set that small only catches large regressions. Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode."
+> "I wouldn't start with a model. I'd first find out whether the data can support a measurable improvement in one specific decision. So I'd pick that decision with the customer and spend a week measuring the data it depends on. That means null and placeholder rates, a join test across systems, freshness, and, most important, two experts relabelling the same hundred records so I know whether the historical labels are ground truth or noise. That gives me a scorecard. If the field the decision depends on is red and nothing can route around it, the honest answer is a data project first. Usually something can: extraction from documents doesn't need historical labels, and a review queue turns every correction into a trusted label. So phase one ships extraction with confidence scores and human review. Quality gates at ingestion quarantine bad records rather than defaulting them, and a data contract fixes the worst defects at source. Evaluation starts from a small adjudicated set, reported per segment and split by time. I'd say out loud that a set that small only catches large regressions. Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode."
 
 **Likely follow-ups.** The source gives none for this question, so these are *(own construction)*, each with a one-line answer.
 
 - *"The customer says there's no time for a readiness week."* Then scope it to two days on one decision; skipping it means discovering the same facts in production, more expensively.
 - *"What if the experts themselves disagree?"* Their disagreement is a finding. Write a label guide, adjudicate, and measure κ again. A task humans cannot agree on cannot have an accuracy target.
-- *"Can't a large model just handle messy data?"* It can read messy text well. It cannot recover a fact that is missing or wrong. And it cannot be evaluated against labels nobody trusts.
+- *"Can't a large model just handle messy data?"* It can read messy text well. It cannot recover a fact that is missing or wrong. It also cannot be evaluated against labels nobody trusts.
 - *"How do you know the data is getting better?"* Quarantine rate, placeholder rate on new records and κ against adjudicated labels, tracked on the same dashboard as model quality.
 
 ## 15. Answer the Cost Pivot in Ten Minutes
@@ -111,16 +111,16 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2 (last question), 5, 14 (opening) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md` — Question 18 (#62), the reusable answer template, the mistakes to avoid |
+| 1, 2 (last question), 5, 14 (opening) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: Question 18 (#62), the reusable answer template, the mistakes to avoid |
 | 10 | Same file, Question 11 and its "What if there is no labelled data?" follow-up |
-| 3, 9, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md` — dataset hygiene gates and the 94% → ~78% routing case |
-| 4, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md` — Cohen's kappa and the 0.60 floor, sample-size arithmetic, stratification, datasheets |
-| 3, 4, 5, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` and `04_Gates_Risks_Metrics.md` — data-readiness days, `data_access_granted`, "start day 1, escalate day 3", refuse at intake, shadow mode |
-| 8 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/03_Ingestion_Pipeline.md` — quarantine not default, content hash, freshness and dead-letter records |
-| 10 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md` — the false-alarm label war story |
-| 5, 10 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/04_rag_and_retrieval_INTERVIEW_TUTORIAL.md` — eval set without labelled data |
-| 8 | `05_FDE_Delivery_and_Scoping/Delivery_and_Collaboration/10. Cross Team Collaboration.md` — data contracts and two-phase delivery |
-| 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/` — the measure, route, bound, cache-safely sequence |
+| 3, 9, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md`: dataset hygiene gates and the 94% → ~78% routing case |
+| 4, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md`: Cohen's kappa and the 0.60 floor, sample-size arithmetic, stratification, datasheets |
+| 3, 4, 5, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` and `04_Gates_Risks_Metrics.md`: data-readiness days, `data_access_granted`, "start day 1, escalate day 3", refuse at intake, shadow mode |
+| 8 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/03_Ingestion_Pipeline.md`: quarantine not default, content hash, freshness and dead-letter records |
+| 10 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md`: the false-alarm label war story |
+| 5, 10 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: eval set without labelled data |
+| 8 | `05_FDE_Delivery_and_Scoping/Delivery_and_Collaboration/10. Cross Team Collaboration.md`: data contracts and two-phase delivery |
+| 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/`: the measure, route, bound, cache-safely sequence |
 
 Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md) for gates and intake refusal; [G13 Evaluation and Release Gating](../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) for the release gate; [G01 Enterprise Knowledge Assistant](../../Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/4_Full_Design/G01_Full_Design.md) for messy enterprise documents and permission normalisation; [G06 NL Over Governed Data](../../Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/4_Full_Design/G06_Full_Design.md) for governed metric definitions; [Decomposition Classics](../Decomposition_Classics_67_68_69/) for #68, the bank-fraud case built on inconsistent labels.
 
@@ -128,5 +128,5 @@ Sections 2 (all questions but the last), 3 (the table), 4 (procedure, scorecard,
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Snorkel: Rapid Training Data Creation with Weak Supervision (Ratner et al., 2017)](https://arxiv.org/abs/1711.10160) — labelling functions vote, and their accuracies are estimated without ground truth
-- [Cohen (1960), A Coefficient of Agreement for Nominal Scales](https://doi.org/10.1177/001316446002000104) — kappa as agreement corrected for chance
+- [Snorkel: Rapid Training Data Creation with Weak Supervision (Ratner et al., 2017)](https://arxiv.org/abs/1711.10160): labelling functions vote, and their accuracies are estimated without ground truth
+- [Cohen (1960), A Coefficient of Agreement for Nominal Scales](https://doi.org/10.1177/001316446002000104): kappa as agreement corrected for chance

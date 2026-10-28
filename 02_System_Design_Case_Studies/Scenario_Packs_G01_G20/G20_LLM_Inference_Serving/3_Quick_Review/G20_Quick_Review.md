@@ -1,4 +1,4 @@
-# G20 — LLM Inference Serving: Cheat Sheet
+# G20 LLM Inference Serving: Cheat Sheet
 
 [Main](../1_Interview_Guide/G20_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G20_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G20_Full_Design.md)
 
@@ -21,7 +21,7 @@ Health evicts sick GPUs; disconnect cancels and frees KV.
 - Static generative batches wait for the longest output; continuous batches release finished sequences.
 - KV memory, not request count, decides GPU placement; source example ≈128KiB KV/token.
 - Unstreamed failed requests retry under budget; streamed ones need explicit continuation/partial-error semantics.
-- Refuse early with bounded queues; optimise **goodput**, not raw throughput.
+- Refuse early with bounded queues; optimise goodput, not raw throughput.
 
 ## Variants
 

@@ -140,7 +140,7 @@ Point at three boundaries while the diagram is up *(own construction)*. The thre
 
 ## 5. Precompute the Account Context Before the Call Starts
 
-A live CRM lookup can't be counted on to fit inside three seconds. The CRM's own latency is out of the design's control, and its tail is worse than its median. So the account context is built before the call, when there is time. The drill names this lever first: "precompute account context".
+You cannot count on a live CRM lookup fitting inside three seconds. The CRM's own latency is out of the design's control, and its tail is worse than its median. So the account context is built before the call, when there is time. The drill names this lever first: "precompute account context".
 
 The snapshot holds the account summary, open opportunities with stage and next step, the last interactions, open support cases, and the approved answers for the account's segment. This is the same snapshot G05 section 5 builds for the pre-meeting hour, and the same rules carry over. It runs as the rep. It is cached on the account and the rep's permission signature. A role or territory change invalidates it.
 
@@ -150,7 +150,7 @@ A snapshot is a copy, and copies go stale. Mark each field with its age. Keep th
 
 ## 6. Stream the Transcript and Suggest From a Small Prompt
 
-Streaming changes when the rep sees the first word, not how long generation takes. The cram sheet says it plainly: "Streaming improves *perceived* latency. It does not reduce total latency or cost." The live lane therefore does two different things. It streams transcription so the text is ready when the customer stops. And it keeps the prompt small so the model's first token comes fast.
+Streaming changes when the rep sees the first word, not how long generation takes. The cram sheet puts it this way: "Streaming improves *perceived* latency. It does not reduce total latency or cost." The live lane therefore does two things. It streams transcription so the text is ready when the customer stops. And it keeps the prompt small so the model's first token comes fast.
 
 Voice activity detection starts the clock. The voice project uses Silero for it, with Deepgram Nova-3 (Pipecat's default model) for real-time speech-to-text. Streaming ASR emits partial text as the customer speaks and a final segment at the pause. Only the final segment triggers a suggestion, because partials change *(own construction)*.
 

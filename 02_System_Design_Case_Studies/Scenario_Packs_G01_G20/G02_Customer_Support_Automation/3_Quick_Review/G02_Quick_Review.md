@@ -1,4 +1,4 @@
-# G02 — Customer Support Automation: Cheat Sheet
+# G02 Customer Support Automation: Cheat Sheet
 
 Use the [Main guide](../1_Interview_Guide/G02_Interview_Guide.md) for the spoken answer and the [Deep Dive](../2_Technical_Deep_Dive/G02_Technical_Deep_Dive.md) for technical follow-ups. The [source case](../4_Full_Design/G02_Full_Design.md) remains the full reference.
 
@@ -18,7 +18,7 @@ Use the [Main guide](../1_Interview_Guide/G02_Interview_Guide.md) for the spoken
 2. Confidence is not permission; the gateway checks allowlist, threshold, freshness, and approval.
 3. Billing, orders, CRM, and identity remain systems of record.
 4. Every write is idempotent; reconcile an uncertain side effect before retry.
-5. Optimise **safe resolution**, not raw deflection.
+5. Optimise safe resolution, not raw deflection.
 
 ## Requirements to recall
 
@@ -41,7 +41,7 @@ Use the [Main guide](../1_Interview_Guide/G02_Interview_Guide.md) for the spoken
 
 ## Handoff payload
 
-Original message + identity status + intent/risk + evidence + policy checks + tool outputs/errors + attempted actions + **why automation stopped**.
+Original message + identity status + intent/risk + evidence + policy checks + tool outputs/errors + attempted actions + why automation stopped.
 
 ## Failures to rehearse
 

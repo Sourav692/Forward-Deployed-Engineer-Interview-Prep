@@ -34,7 +34,7 @@ After this case you can:
 
 ## What it assumes
 
-Comfort with LLM serving basics (tokens, batching and streaming), caching, rate limiting and basic cloud architecture. The related reviews at the foot of each section cover each one.
+Comfort with LLM serving basics (tokens, batching and streaming), caching, rate limiting and basic cloud architecture. The related reviews at the foot of each section cover them.
 
 ## How to use it
 

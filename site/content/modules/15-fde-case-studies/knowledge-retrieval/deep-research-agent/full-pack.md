@@ -2,7 +2,7 @@
 
 *Every extra search round makes the answer better grounded and the run slower and dearer, and the web pages that ground it are also the attack surface.*
 
-A research agent does not fail because it is hard to call a model. It fails when an unbounded fan-out quietly spends the budget. It also fails when a fetched page reaches data it should never have seen. This page covers the group's prompts in one read for the day before. It pairs one worked whiteboard design with one deployed system and one mock prompt.
+A research agent fails when an unbounded fan-out quietly spends the budget, or when a fetched page reaches data it should never have seen. This page covers the group's prompts in one read for the day before. It pairs one worked whiteboard design with one deployed system and one mock prompt.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -35,7 +35,7 @@ The must-haves are five *(the MoSCoW split is own construction; the items are th
 
 The should-haves come after the core path is trusted. Probe a cache before planning. Replan when coverage is thin. Grade agreement between sources. Answer "not enough evidence" rather than guess.
 
-Read-only is a requirement, not an omission. There are no writes, so no approval subsystem is needed. Say so explicitly, because the interviewer is listening for whether the autonomy question was asked.
+Read-only is a deliberate requirement. There are no writes, so you need no approval subsystem. Say so out loud: the interviewer is listening for whether you asked the autonomy question.
 
 | Constraint | Stated so it can be tested |
 |---|---|
@@ -64,7 +64,7 @@ Every must-have then needs an owner in the architecture *(own construction)*.
 
 State is the contract between the planner, the sub-agents and the synthesiser. Parallel branches that write one key under a last-write-wins rule lose all results but one. LangGraph refuses this with an `InvalidUpdateError` when the key has no reducer, but a hand-rolled merge loses the data silently. That is the fan-out data-loss defect.
 
-The anchor's state carries seven things. Run and user identity. The goal. A dependency-aware plan. An evidence list with a *concatenating* merge rule. Tool errors. The draft and its verification score. Step and replan counters, and a budget dict summed across branches.
+The anchor's state carries seven things: run and user identity, the goal, a dependency-aware plan, an evidence list with a *concatenating* merge rule, tool errors, the draft and its verification score, and step and replan counters with a budget dict summed across branches.
 
 | Field | Why it is there |
 |---|---|
@@ -201,13 +201,13 @@ Context rot compounds the cost problem. Model accuracy degrades as the window fi
 
 Isolate when a subtask's intermediate steps are not needed downstream. That is the common case for research, verification and extraction. Share context only when steps must reason across each other's intermediates, which is rarer than it feels. On a ten-step run, isolation can shrink the parent's input tokens a lot, but sub-agents bill their own tokens, so measure the total.
 
-Isolation gives up one thing: auditability across the boundary. Store each sub-agent's full trace and link it from the parent's span. Otherwise a wrong conclusion becomes unexplainable.
+Isolation costs you auditability across the boundary. Store each sub-agent's full trace and link it from the parent's span. Otherwise a wrong conclusion becomes unexplainable.
 
 Isolation is also the security boundary. A web sub-agent that never holds user-document scope cannot leak a private document, whatever a fetched page tells it to do. Section 7 builds on this.
 
 ## 6. Say the Arithmetic Aloud
 
-Numbers said out loud are the senior signal. Derive them in front of the interviewer rather than quoting them. The derivation is the part being scored.
+Saying the numbers out loud is the senior signal. Derive them in front of the interviewer instead of quoting them, because the derivation is what gets scored.
 
 | Step | Arithmetic | Result |
 |---|---|---|
@@ -217,27 +217,27 @@ Numbers said out loud are the senior signal. Derive them in front of the intervi
 | Concurrency to provision | 120 ÷ 0.70 utilisation target | around 170 |
 | Naive cost | 7 steps, ≈ 30K input tokens plus output, all on the premium model | Blows the $0.20 budget |
 
-Little's Law says work in flight equals arrival rate times mean time in system. It is the one formula that turns a throughput number into a capacity number. Name it by name.
+Little's Law says work in flight equals arrival rate times mean time in system. It turns a throughput number into a capacity number. Name it.
 
-Three levers bring the naive run under $0.20. Sub-agent isolation means the parent sees hundreds of tokens, not raw pages, so the planner's calls stay cheap — though each sub-agent still pays for the pages it reads. Prefix caching covers the stable instructions and tool definitions. Tier routing sends extraction and summarisation to a small model and keeps the reasoning tier for the plan and verification only.
+Three levers bring the naive run under $0.20. Sub-agent isolation means the parent sees hundreds of tokens, not raw pages, so the planner's calls stay cheap, though each sub-agent still pays for the pages it reads. Prefix caching covers the stable instructions and tool definitions. Tier routing sends extraction and summarisation to a small model and keeps the reasoning tier for the plan and verification only.
 
-At 10x, I'd expect provider quota to bind before compute. Name it first, then the arithmetic, then which lever to pull and what it costs.
+At 10x, I'd expect provider quota to bind before compute. Name the quota first, then the arithmetic, then which lever to pull and what it costs.
 
 ## 7. Volunteer the Trifecta Analysis Before Anyone Asks
 
 The lethal trifecta is three capabilities that are dangerous together. They are reading private data, processing untrusted content, and communicating externally. An agent holding all three can be told by a web page to send a user's documents somewhere.
 
-This agent reads private data and processes untrusted web content. It has no external communication tool, so the third leg looks absent. It is not. The rendered answer is itself a channel. A Markdown image whose URL encodes private text is exfiltration the moment the client fetches it.
+This agent reads private data and processes untrusted web content. It has no external communication tool, so the third leg looks absent, but the rendered answer is itself a channel. A Markdown image whose URL encodes private text is exfiltration the moment the client fetches it.
 
-So an egress firewall on the rendering path is mandatory. It strips Markdown images, non-allowlisted links and fetch-inducing markup. Web sub-agents hold zero user-document scope. An injection in a fetched page cannot reach the private corpus, even in principle. That is privilege separation, and it should be stated in those words.
+The rendering path therefore needs an egress firewall. It strips Markdown images, non-allowlisted links and fetch-inducing markup. Web sub-agents hold zero user-document scope. An injection in a fetched page cannot reach the private corpus, even in principle. Call it privilege separation, in those words.
 
 Prompt defences are rate-reducers, not boundaries. Keep them, and never present them as the control. The boundary is the gateway, the scope separation, and egress control on both the tool path and the rendering path.
 
 ## 8. Bound the Loop in Both Directions
 
-A research run can fail by stopping too early or by never stopping. Stopping early abandons solvable work. Never stopping burns budget on unsolvable work. Termination needs care in both directions.
+A research run can fail by stopping too early or by never stopping. Stopping early abandons solvable work. Never stopping burns budget on unsolvable work.
 
-The mock (#103) combines three defences, all read by one routing function. An explicit done flag from the supervisor. A hard hop cap. A no-progress check that compares this delegation with the last one.
+The mock (#103) combines three defences, all read by one routing function: an explicit done flag from the supervisor, a hard hop cap, and a no-progress check that compares this delegation with the last one.
 
 ```python
 MAX_HOPS = 8
@@ -254,8 +254,8 @@ def route(state) -> Literal["agent", "give_up", "end"]:
     return "agent"
 ```
 
-The no-progress signature is the piece people leave out. A hop cap alone still lets a supervisor and worker burn the whole budget rejecting and retrying the identical request. It only bounds how much they burn. The signature catches the loop on hop two instead of hop eight.
+Do not skip the no-progress signature. A hop cap alone still lets a supervisor and worker burn the whole budget rejecting and retrying the identical request. It only bounds how much they burn. The signature catches the loop on hop two instead of hop eight.
 
-The canonical multi-agent failure is exactly this: the supervisor rejects, the worker retries the same way, the supervisor rejects again. The third defence is feedback specific enough for the worker to change its approach.
+This is the canonical multi-agent failure. The supervisor rejects, the worker retries the same way, and the supervisor rejects again. The third defence is feedback specific enough for the worker to change its approach.
 
 Every ceiling returns partial results with a reason rather than raising. Add the per-run budget as a fourth ceiling: the anchor's budget dict, summed across branches, stops the run at $0.20. The deployed platform (#12) uses the same shape. Its Critic loops back to Search while under `agent_max_iterations`, and a YES or an exhausted budget ends the graph.

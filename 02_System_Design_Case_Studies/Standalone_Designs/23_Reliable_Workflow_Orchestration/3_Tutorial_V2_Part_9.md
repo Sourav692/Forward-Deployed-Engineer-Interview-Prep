@@ -4,27 +4,27 @@
 
 We scored this tutorial twice against our fixed 20-item decomposition rubric. On the second review the weak spots got smaller but did not disappear. Two still fall short: how much each workflow costs (the cost SLI and cost-per-workflow wording) and how widely the design deals with regulation and compliance. The list below marks both as Partial.
 
-**Phase 1 — Problem Framing & Discovery**
+**Phase 1: Problem Framing & Discovery**
 - **Item 1 (turning a feature request into a business outcome):** Full. Section 1 opens by stating the outcome first.
 - **Item 2 (who the stakeholders and personas are):** Full. Section 1 maps each stakeholder to the job they need done.
 - **Item 3 (questions whose answers reshape the architecture):** Full. Section 2 lays them out as a question tree.
 - **Item 4 (splitting and ranking requirements):** Full. Section 2 sorts them into must, should and could, and separates functional from nonfunctional.
 - **Item 5 (a clear fence around scope):** Full. Section 2 lists the non-goals under "What the MVP Will Not Support."
 
-**Phase 2 — Estimation & Architecture**
+**Phase 2: Estimation & Architecture**
 - **Item 6 (rough sizing of scale and capacity):** Full. Section 3 estimates workflows, activities, storage and throughput.
 - **Item 7 (what drives unit cost):** Partial. Section 3 counts cost among its six SLIs, yet never works out an infrastructure figure per workflow.
 - **Item 8 (the architecture and data flow from start to finish):** Full. Section 4 gives the component map, the trust boundaries and the sequence diagrams.
 - **Item 9 (records and API contracts):** Full. Section 5 defines four core records and four API endpoints.
 - **Item 10 (build or buy, vendor and model choice):** Absent. Section 8's follow-up drills touch on it once and move on.
 
-**Phase 3 — Trade-offs, Security & Reliability**
+**Phase 3: Trade-offs, Security & Reliability**
 - **Item 11 (named trade-offs, each with a fair verdict):** Full. Section 8 weighs four pairs.
 - **Item 12 (threats and the controls against them):** Full. Section 6 sets out four security controls.
 - **Item 13 (drills for failure and reliability):** Full. Section 6 runs five named drills, each with detect, contain, recover and prevent steps.
 - **Item 14 (how we test it):** Full. Section 5 has a contract test for idempotency, and Section 6 injects a crash and checks the replay.
 
-**Phase 4 — Delivery, Governance & Communication**
+**Phase 4: Delivery, Governance & Communication**
 - **Item 15 (metrics in layers, plus observability):** Full. Section 7 builds a scorecard with six layers.
 - **Item 16 (staged rollout, risks and rollback gates):** Full. Section 7 plans four phases, each with an owner, exit criteria and a rollback trigger, and adds a risk register.
 - **Item 17 (depth on regulation and governance):** Partial. We handle audit evidence, retention, residency and data minimisation, but we never name an outside framework such as SOX or GDPR.
@@ -51,10 +51,10 @@ We scored this tutorial twice against our fixed 20-item decomposition rubric. On
 **Item 17: going deeper on regulation and governance (Partial).**
 - I'd name the frameworks an interviewer is probably fishing for and pin each one to a part we already built. First, PCI-DSS. If the orchestrator would ever handle card data, push that data to the payment gateway and hold only opaque references. This matches the "keep secrets out of history" control in Section 6 and shrinks PCI scope.
 - Second, SOX-style controls, if an approval counts as a financial authorisation. The `ActivityReceipt` record and the audit-log fields in Section 5 already give a SOX auditor the evidence trail they would request.
-- Third, GDPR and data minimisation, if an internal system handles customer PII. We would enforce it through the retention policy that Section 5 sets on `HistoryEvent`. My framing: governance is just rules on records we already keep, not a new stream of work.
+- Third, GDPR and data minimisation, if an internal system handles customer PII. We would enforce it through the retention policy that Section 5 sets on `HistoryEvent`. I'd frame governance as rules on records we already keep, rather than a new stream of work.
 
 **Item 18: responsible AI, past the failure everyone expects (Partial).**
-- Our design touches AI in just one place: before an LLM-driven step changes state, it must pass "typed validation and policy checks" (Section 5). I'd take that further with a concrete case. Suppose an LLM misreads or misroutes an approval. It could quietly approve something a human should have seen. That is an irreversible business effect, the same kind the failure-policy table in Section 6 already tells us to fail closed on.
+- Our design touches AI in one place: before an LLM-driven step changes state, it must pass "typed validation and policy checks" (Section 5). I'd take that further with a concrete case. Suppose an LLM misreads or misroutes an approval. It could quietly approve something a human should have seen. That is an irreversible business effect, the same kind the failure-policy table in Section 6 already tells us to fail closed on.
 - So responsible AI needs no new framework. It plugs into the decision table we already have. Treat any model output that could start a payment, finish an approval or trigger a repair as untrusted input. Route it through the same human-review lane we already keep for irreversible or ambiguous compensation.
 
 ## Key Takeaways
@@ -87,11 +87,11 @@ On this design the levels separate on how well the answer protects one business 
 
 ## Sources (checked 27 Sep 2026)
 
-- [IETF draft-ietf-httpapi-idempotency-key-header-07](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html) — 400 for a missing key, 409 while the first request is in flight, 422 for a reused key with a different payload
-- [Datatracker: Idempotency-Key header draft status](https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/) — expired Internet-Draft, not an RFC
-- [Stripe API: Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — provider-side idempotency keys; keys can be pruned after 24 hours
-- [AWS Architecture Blog: Exponential Backoff and Jitter](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/) — capped exponential backoff with jitter
-- [AWS Price List API: Amazon S3, us-east-1](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/us-east-1/index.json) — S3 Standard at $0.023 per GB-month
-- [Amazon EBS pricing](https://aws.amazon.com/ebs/pricing/) — gp3 at $0.08 per GB-month in US East
-- [PCI SSC: PCI DSS Tokenization Guidelines](https://listings.pcisecuritystandards.org/documents/Tokenization_Guidelines_Info_Supplement.pdf) — tokenisation can reduce PCI DSS scope; tokens that can start a transaction may stay in scope
-- [GDPR Article 5 (EUR-Lex)](https://eur-lex.europa.eu/eli/reg/2016/679/oj) — data minimisation and storage limitation principles
+- [IETF draft-ietf-httpapi-idempotency-key-header-07](https://www.ietf.org/archive/id/draft-ietf-httpapi-idempotency-key-header-07.html): 400 for a missing key, 409 while the first request is in flight, 422 for a reused key with a different payload
+- [Datatracker: Idempotency-Key header draft status](https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/): expired Internet-Draft, not an RFC
+- [Stripe API: Idempotent requests](https://docs.stripe.com/api/idempotent_requests): provider-side idempotency keys; keys can be pruned after 24 hours
+- [AWS Architecture Blog: Exponential Backoff and Jitter](https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/): capped exponential backoff with jitter
+- [AWS Price List API: Amazon S3, us-east-1](https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/us-east-1/index.json): S3 Standard at $0.023 per GB-month
+- [Amazon EBS pricing](https://aws.amazon.com/ebs/pricing/): gp3 at $0.08 per GB-month in US East
+- [PCI SSC: PCI DSS Tokenization Guidelines](https://listings.pcisecuritystandards.org/documents/Tokenization_Guidelines_Info_Supplement.pdf): tokenisation can reduce PCI DSS scope; tokens that can start a transaction may stay in scope
+- [GDPR Article 5 (EUR-Lex)](https://eur-lex.europa.eu/eli/reg/2016/679/oj): data minimisation and storage limitation principles

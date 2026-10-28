@@ -33,7 +33,7 @@ import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative, resolve } from 'node:path'
 import { TITLE_OVERRIDES, TRACKS, readingMinutes, tabMeta } from '../src/lib/editorial.ts'
 import { CASEBOOK_MODULE, scenarioHref } from '../src/lib/scenario.ts'
-import { applySiteEdits, introFor, renumberSections } from './case-site-edits.mjs'
+import { applySiteEdits, assertReplaceRulesUsed, introFor, renumberSections } from './case-site-edits.mjs'
 import { UNLINK, gitDates, stripClockLine, stripRepoReferences, unlinkRepoLinks } from './learn.mjs'
 
 export const CASE_STUDY_MODULE_ID = CASEBOOK_MODULE
@@ -166,7 +166,7 @@ const slugOf = (folder) => folder.replace(/^G\d+_/, '').replace(/_/g, '-').toLow
 /** Name from the Main guide's heading: `# G01 — Enterprise Knowledge Assistant: Interview Guide`. */
 function nameFrom(mainMarkdown, folder) {
   const line = mainMarkdown.split('\n').find((l) => l.startsWith('# ')) ?? ''
-  const match = line.match(/^#\s+G\d+\s*[—–-]\s*(.+?)\s*:\s*(Main\s+)?Interview Guide\s*$/i)
+  const match = line.match(/^#\s+G\d+(?:\s*[—–-])?\s+(.+?)\s*:\s*(Main\s+)?Interview Guide\s*$/i)
   return match ? match[1] : folder.replace(/^G\d+_/, '').replace(/_/g, ' ')
 }
 
@@ -182,7 +182,7 @@ function stripHeadingCodes(markdown) {
     .map((line) => {
       if (/^\s*(```|~~~)/.test(line)) fenced = !fenced
       if (fenced || !/^#{1,6} /.test(line)) return line
-      return line.replace(/^(#{1,6} )G\d{2} [—–-] /, '$1').replace(/ \(#\d+\)\s*$/, '')
+      return line.replace(/^(#{1,6} )G\d{2}(?: [—–-])? /, '$1').replace(/ \(#\d+\)\s*$/, '')
     })
     .join('\n')
 }
@@ -342,6 +342,7 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
         sources.set(tab.id, edited.markdown)
         if (edited.cutSection) cut.add(tab.id.replace(/-part-\d+$/, ''))
       }
+      assertReplaceRulesUsed(c.slug)
       // A document that lost a section is renumbered; its parts share one numbering.
       const byDocument = Map.groupBy(c.tabs, (tab) => tab.id.replace(/-part-\d+$/, ''))
       for (const [doc, tabs] of byDocument) {

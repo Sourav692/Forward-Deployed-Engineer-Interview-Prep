@@ -1,4 +1,4 @@
-# G08 — Document Review Copilot: Cheat Sheet
+# G08 Document Review Copilot: Cheat Sheet
 
 Use the [Main guide](../1_Interview_Guide/G08_Interview_Guide.md) for the spoken answer, the [Deep Dive](../2_Technical_Deep_Dive/G08_Technical_Deep_Dive.md) for mechanisms, and the unchanged [source](../4_Full_Design/G08_Full_Design.md) for the full case.
 
@@ -19,7 +19,7 @@ Which document and decision? Who approves? Which current rule version? What fiel
 ## Six rules
 
 1. One spine covers prior authorisation, compliance, and contracts; swap the schema, governing rule, and approver.
-2. Missing/low-confidence evidence is a gap, not text to invent.
+2. Missing or low-confidence evidence is a gap; never invent text to fill it.
 3. High-risk PDF with missing tables fails ingestion; retrieval cannot recover absent content.
 4. A correct answer with a wrong citation is high severity; verify the exact span used.
 5. Patient, matter, tenant, PHI, and privilege boundaries apply before prompts and at output.
@@ -27,7 +27,7 @@ Which document and decision? Who approves? Which current rule version? What fiel
 
 ## Source examples
 
-Interactive **3–8 s**; packet **10–20 s**; bulk surveillance overnight. Example gates: **≥90% grounded claims, ≥95% span citations, ≥95% high-risk escalation, ≥80% task completion, zero permission/PHI violations**. Agree final bars per customer.
+Interactive 3–8 s; packet 10–20 s; bulk surveillance overnight. Example gates: ≥90% grounded claims, ≥95% span citations, ≥95% high-risk escalation, ≥80% task completion, zero permission/PHI violations. Agree final bars per customer.
 
 ## Two incidents
 
@@ -38,6 +38,6 @@ Interactive **3–8 s**; packet **10–20 s**; bulk surveillance overnight. Exam
 
 ## Cost and rollout
 
-Rules and small models screen every page; strong LLM only on flagged risk. Measure tokens/document, flagged fraction, extraction quality, and cost per **true issue found**. One type + rule → golden historical cases → shadow → read-only pilot → approved draft-only rollout.
+Rules and small models screen every page; strong LLM only on flagged risk. Measure tokens/document, flagged fraction, extraction quality, and cost per true issue found. One type + rule → golden historical cases → shadow → read-only pilot → approved draft-only rollout.
 
 “Extraction is cheap; judgement is expensive. The citation and human decision remain release gates.”

@@ -1,10 +1,10 @@
-# Self-Adapting Agent — FDE Interview Template
+# Self-Adapting Agent: FDE Interview Template
 
 ## 1. Problem Statement
 
-Build an AI agent that can improve over time when it sees new tasks, **without allowing it to randomly change production behaviour**.
+Build an AI agent that improves over time as it sees new tasks, without letting it change production behaviour at random.
 
-The key idea is:
+One rule runs through the design:
 
 > A self-adapting agent should first learn through context, memory, reusable skills, and prompt changes. Updating model weights should be the last option.
 
@@ -34,7 +34,7 @@ Cheap + easy to rollback
 Expensive + harder to rollback
 ```
 
-### Level 1 — Context
+### Level 1. Context
 
 The agent does not permanently learn anything.
 
@@ -52,7 +52,7 @@ Agent loads:
 - Relevant memory
 ```
 
-### Level 2 — Memory
+### Level 2. Memory
 
 The system stores reusable facts.
 
@@ -63,7 +63,7 @@ payment-service-X must be drained
 before restart.
 ```
 
-### Level 3 — Skill / Procedure
+### Level 3. Skill / Procedure
 
 The system learns a reusable workflow.
 
@@ -79,11 +79,11 @@ Safe Restart Skill
 5. Restore traffic
 ```
 
-### Level 4 — Prompt Optimisation
+### Level 4. Prompt Optimisation
 
 If the planner repeatedly makes the same mistake, we can test multiple prompt versions and promote the best one.
 
-### Level 5 — Model Weights
+### Level 5. Model Weights
 
 Fine-tuning or retraining.
 
@@ -95,7 +95,7 @@ Use this only when cheaper mechanisms are not enough.
 Context → Memory → Skill → Prompt → Weights
 ```
 
-Always move from **cheap and reversible** toward **expensive and harder to rollback**.
+Always move from cheap and reversible toward expensive and hard to roll back.
 
 ---
 
@@ -118,7 +118,7 @@ The system should be able to:
 
 ## 4. Non-Functional Requirements
 
-Important production requirements:
+Production requirements:
 
 ### Reliability
 
@@ -214,7 +214,7 @@ flowchart TD
 
 ## 6. Core Architecture Principle
 
-The architecture has **two loops and one gate**.
+The architecture has two loops and one gate.
 
 ```text
 Runtime Loop
@@ -341,9 +341,7 @@ Now it receives:
 restart new serverless service
 ```
 
-A bad router may force this request into the closest known skill.
-
-That is risky.
+A bad router may force this request into the closest known skill, which is risky.
 
 ### Signals for novelty
 
@@ -387,9 +385,7 @@ Approval for Risky Writes
 Earlier Human Escalation
 ```
 
-Why?
-
-Because the system has less confidence about the task.
+The system has less confidence about the task, so it gets less freedom.
 
 ### Production problem solved
 
@@ -506,7 +502,7 @@ Do not start by asking:
 
 > Which vector database should I use?
 
-The more important question is:
+Ask this first:
 
 > What information is allowed to become memory?
 
@@ -702,7 +698,7 @@ Stable high-volume behavior
     → Maybe fine-tuning
 ```
 
-Do not use fine-tuning just to teach changing business facts.
+Do not fine-tune to teach business facts that change.
 
 ---
 
@@ -876,7 +872,7 @@ Auto-Demote
 Previous Skill / Safe Fallback
 ```
 
-This is important because production environments change.
+Production environments change, so live skills need monitoring.
 
 ---
 
@@ -1124,7 +1120,7 @@ Evaluation Cost
 
 ## 25. Security and Governance
 
-Important controls:
+Controls:
 
 ### Tool Gateway
 
@@ -1243,7 +1239,7 @@ Restart Orion payment service.
 
 The system has never seen Orion before.
 
-### Step 1 — Route
+### Step 1. Route
 
 ```text
 Request
@@ -1259,7 +1255,7 @@ Result:
 NOVEL TASK
 ```
 
-### Step 2 — Safe Fallback
+### Step 2. Safe Fallback
 
 The general agent gets tighter controls.
 
@@ -1273,7 +1269,7 @@ Create plan
 
 Risky writes require approval.
 
-### Step 3 — Execute
+### Step 3. Execute
 
 The agent discovers:
 
@@ -1296,7 +1292,7 @@ External monitoring returns:
 SUCCESS
 ```
 
-### Step 4 — Trace
+### Step 4. Trace
 
 Store:
 
@@ -1311,7 +1307,7 @@ cost
 outcome
 ```
 
-### Step 5 — Memory Candidate
+### Step 5. Memory Candidate
 
 Proposed memory:
 
@@ -1330,7 +1326,7 @@ Permitted?    Yes
 
 Store it.
 
-### Step 6 — Skill Candidate
+### Step 6. Skill Candidate
 
 After repeated successful executions:
 
@@ -1340,7 +1336,7 @@ safe_orion_restart(service)
 
 is created.
 
-### Step 7 — Evaluate
+### Step 7. Evaluate
 
 Run:
 
@@ -1352,11 +1348,11 @@ Cost tests
 Latency tests
 ```
 
-### Step 8 — Shadow
+### Step 8. Shadow
 
 Candidate observes real requests without controlling them.
 
-### Step 9 — Promote
+### Step 9. Promote
 
 If healthy:
 
@@ -1364,7 +1360,7 @@ If healthy:
 Candidate → LIVE
 ```
 
-### Step 10 — Environment Changes
+### Step 10. Environment Changes
 
 Later Orion API changes.
 
@@ -1534,7 +1530,7 @@ Advanced Automated Learning
 Selective Fine-Tuning
 ```
 
-The reason is simple:
+The reason:
 
 > Production observability and safety must exist before autonomous improvement.
 
@@ -1631,7 +1627,7 @@ human review process
 
 ## 33. What to Remember for Interview
 
-If you remember only the core ideas, remember these:
+If you remember nothing else, remember these:
 
 1. **Adaptation ladder**
 
@@ -1669,7 +1665,7 @@ Offline Eval
 
 9. Evaluate the full trajectory, not only the final answer.
 
-10. The agent can learn **how** to do something, but policy decides **what it is allowed to do**.
+10. The agent can learn how to do something, but policy decides what it is allowed to do.
 
 ---
 
@@ -1707,6 +1703,6 @@ Promote
 Monitor + Auto-Demote
 ```
 
-The key principle is:
+In one line:
 
 > **Self-adapting should mean controlled learning, not uncontrolled self-modification.**

@@ -65,7 +65,7 @@ Every level can put a gateway in front of a model pool; the level shows in how t
 
 | Level | Sounds like | Missing |
 |---|---|---|
-| Senior | Says the model is stateless and the product is not, sizes 100M daily users down to about 280,000 open streams, and walks admit, assemble, stream, persist: gateway quotas and input moderation, a durable conversation store, a bounded context builder, and SSE that cancels on abandon. | Fairness between tiers under overload, cache-aware routing, and what a regional failover really costs. |
+| Senior | Says the model is stateless and the product is not, sizes 100M daily users down to about 280,000 open streams, and walks admit, assemble, stream, persist: gateway quotas and input moderation, a durable conversation store, a bounded context builder, and SSE that cancels on abandon. | Fairness between tiers under overload, cache-aware routing, and what a regional failover costs. |
 | Staff | Adds the operational judgement: a rate limit decides whether and a fair queue decides when, a byte-exact stable prefix with soft session affinity, a cascade weighed against the cache it forfeits, and cold failover that sheds the free tier first. Treats a system-prompt change as a release that also moves cache and cost. | Who owns quotas, prompts and moderation thresholds as policy, and how deletion and residency hold across every store. |
 | Principal | Keeps policy central and enforcement regional, steers by cost per daily active user and cost per successful conversation, and makes memory the user can inspect and erase a product commitment. Plans how files, search, a code sandbox and later voice join without widening the trust boundary. | Real per-replica throughput, KV memory and traffic shape; every sizing figure here is a placeholder until measured. |
 
@@ -93,7 +93,7 @@ Every level can put a gateway in front of a model pool; the level shows in how t
 2. **Walk the sizing from 100M daily users to open streams.** 1B messages a day, about 11,600/s average, about 35,000/s at a 3× peak; at 8 s per answer, Little's Law gives about 280,000 open streams.
 3. **Why does time to first token depend on history length?** Prefill processes the whole prompt before the first token, and history is most of the prompt.
 4. **What does the context builder send on turn 40 of a conversation?** The frozen system prompt, a rolling summary, the recent turns, relevant user memory and file chunks, then the new message, in that order.
-5. **Why SSE rather than WebSockets for chat?** The stream is one-way after the request, SSE runs over plain HTTP, so it passes most proxies that don't buffer, and the browser's EventSource reconnects on its own.
+5. **Why SSE rather than WebSockets for chat?** The stream is one-way after the request. SSE runs over plain HTTP, so it passes most proxies that don't buffer, and the browser's EventSource reconnects on its own.
 6. **What happens when a user closes the tab mid-answer?** The gateway cancels the inference request and any tool call, freeing the batch slot and KV cache; the partial answer is already persisted.
 7. **Why can a model cascade raise cost on a chat product?** Prompt caches are scoped to a model, so each model in the cascade starts cold on a prompt that is mostly repeated history.
 8. **How do a rate limit and a fair queue differ?** The limit decides whether a request may proceed; the queue decides the order admitted requests are served under load.
@@ -121,12 +121,12 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Artificial Analysis LLM leaderboard (TTFT column)](https://artificialanalysis.ai/leaderboards/models) — real first-token times are hundreds of ms to over a second, not milliseconds
-- [WHATWG HTML Standard: Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html) — SSE over plain HTTP, EventSource auto-reconnect, proxies that drop idle connections
-- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/) — disconnect aborts the request and frees its slot; KV reuse is compute, not a per-token price, when self-hosted
-- [vLLM issue #10087](https://github.com/vllm-project/vllm/issues/10087) — abort on disconnect can break behind middleware, so cancellation must be propagated
-- [Claude docs: Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) — Opus 5.5 is the current Opus; Opus 5 is legacy
-- [Claude docs: Pricing](https://platform.claude.com/docs/en/about-claude/pricing) — Opus 5.5 $4/$20 and Haiku 4.5 $1/$5 per million tokens (4×); output is 5× input on every Claude tier
-- [Claude docs: Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — caches are per model, exact-prefix matched in tools → system → messages order, and broken by volatile content
-- [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching) — exact-prefix matching and per-model caches on another vendor
-- [OpenAI API docs: Moderation](https://developers.openai.com/api/docs/guides/moderation) — moderation returns category scores; thresholds and policy are the app's job
+- [Artificial Analysis LLM leaderboard (TTFT column)](https://artificialanalysis.ai/leaderboards/models): real first-token times are hundreds of ms to over a second, not milliseconds
+- [WHATWG HTML Standard: Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html): SSE over plain HTTP, EventSource auto-reconnect, proxies that drop idle connections
+- [vLLM docs: OpenAI-compatible server](https://docs.vllm.ai/en/stable/serving/openai_compatible_server/): disconnect aborts the request and frees its slot; KV reuse is compute, not a per-token price, when self-hosted
+- [vLLM issue #10087](https://github.com/vllm-project/vllm/issues/10087): abort on disconnect can break behind middleware, so cancellation must be propagated
+- [Claude docs: Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): Opus 5.5 is the current Opus; Opus 5 is legacy
+- [Claude docs: Pricing](https://platform.claude.com/docs/en/about-claude/pricing): Opus 5.5 $4/$20 and Haiku 4.5 $1/$5 per million tokens (4×); output is 5× input on every Claude tier
+- [Claude docs: Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): caches are per model, exact-prefix matched in tools → system → messages order, and broken by volatile content
+- [OpenAI API docs: Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching): exact-prefix matching and per-model caches on another vendor
+- [OpenAI API docs: Moderation](https://developers.openai.com/api/docs/guides/moderation): moderation returns category scores; thresholds and policy are the app's job

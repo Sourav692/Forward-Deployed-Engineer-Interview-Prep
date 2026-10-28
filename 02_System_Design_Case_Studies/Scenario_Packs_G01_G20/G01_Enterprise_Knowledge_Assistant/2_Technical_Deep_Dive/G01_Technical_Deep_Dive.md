@@ -1,6 +1,6 @@
-# G01 — Enterprise Knowledge Assistant: Deep Dive
+# G01 Enterprise Knowledge Assistant: Deep Dive
 
-This is the technical backup for the Main Interview Guide. It keeps the details you may need when the interviewer goes deeper.
+Technical backup for the Main Interview Guide: the details you need when the interviewer goes deeper.
 
 **Model and agent roles:** The query planner may split a multi-hop question, while the LLM gateway generates from the final authorised evidence set. The assistant is primarily a RAG workflow; ACL/ABAC enforcement and citation verification remain deterministic.
 
@@ -41,7 +41,7 @@ Revalidate final evidence before generation.
 
 Catches: live revocation, stale ACLs, time embargoes, need-to-know, redaction obligations and changes between retrieval and generation.
 
-The interview sentence:
+Say it like this:
 
 > “I don't want unauthorised content retrieved and discarded. I want it excluded from the search competition and then checked again before generation.”
 
@@ -129,7 +129,7 @@ BM25/lexical retrieval is good for exact identifiers such as ticket IDs, policy 
 
 RRF combines rankings without requiring scores to be directly comparable.
 
-Tune retrieval on representative queries. Do not assume one dense/lexical setting is optimal for every query type.
+Tune retrieval on representative queries. No single dense/lexical setting is best for every query type.
 
 ---
 
@@ -158,7 +158,7 @@ Reduce it when:
 
 ## 9. Evidence selection
 
-Do not blindly pass top-k.
+Do not pass top-k straight to the model.
 
 Consider:
 
@@ -198,7 +198,7 @@ Abstain when:
 - retrieval confidence is insufficient
 - risk requires human review
 
-Do not reveal that a forbidden document exists merely to explain an abstention.
+Do not reveal that a forbidden document exists to explain an abstention.
 
 ---
 
@@ -384,7 +384,7 @@ A persona-by-document visibility matrix is strong evidence.
 
 ## 22. Project-story lessons
 
-Useful lessons to discuss if asked about mistakes:
+Lessons to discuss if asked about mistakes:
 
 - test data can be mislabelled and create false leak signals
 - a stricter policy can mask another untested policy
@@ -392,4 +392,4 @@ Useful lessons to discuss if asked about mistakes:
 - copied search state does not automatically inherit source governance
 - small retrieval benchmarks can hide real-scale differences
 
-Be explicit about what was actually verified versus assumed.
+Say what you verified and what you assumed.

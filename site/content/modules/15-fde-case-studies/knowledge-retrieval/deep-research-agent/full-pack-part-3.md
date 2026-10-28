@@ -28,7 +28,7 @@ The levelling rubric describes what to say, not who the candidate is.
 |---|---|---|
 | Mid | Correct components, names a framework, describes a working happy path | Numbers, failure design, trade-offs stated as choices |
 | Senior | Requirements as numbers, names the control pattern *and the rejected alternative*, walks a degradation ladder, does cost arithmetic | Organisational consequences, migration path, second-order effects |
-| Staff | All of the above, plus: what to build first and why, what to deliberately *not* build, how the design changes at 10x, the measurement that would falsify it | Little — at this level differences are about scope of influence |
+| Staff | All of the above, plus: what to build first and why, what to deliberately *not* build, how the design changes at 10x, the measurement that would falsify it | Little; at this level differences are about scope of influence |
 | Principal | All of the above, framed as a multi-year bet for the organisation: one gateway with a second provider behind an adapter, so a provider outage or price change is a config change; per-user isolation and a deterministic release gate as shared platform rules, the two things the deployed platform lacks. If the grade distribution stays poor, they move investment to the corpus, not the architecture. | The real arrival bursts, service-time distribution and the citation standard a reviewer would accept, which only the customer's own data can settle |
 
 ## Key Takeaways
@@ -44,7 +44,7 @@ The levelling rubric describes what to say, not who the candidate is.
 - Every failed branch degrades to a gap note, and empty is typed apart from unavailable.
 - The grade distribution is the falsifying metric, and trajectory evaluation matters more than outcome alone.
 - The deployed platform proves the boxes are real, and lacks per-user access control and a release gate.
-- The supervisor–worker build fans out N independent queries, with the honest caveat that predictable decomposition should be hardcoded.
+- The supervisor–worker build fans out N independent queries, with the caveat that predictable decomposition should be hardcoded.
 - The 45-minute script, the follow-up bank and the rubric decide the level more than the diagram does.
 - The cost pivot is answered by capping rounds, deduplicating, compressing and caching by topic.
 
@@ -66,23 +66,23 @@ The levelling rubric describes what to say, not who the candidate is.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [LangGraph docs: INVALID_CONCURRENT_GRAPH_UPDATE](https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE) — parallel writes to a key with no reducer raise an error; silent loss needs a hand-rolled merge
-- [Liu et al. 2023, Lost in the Middle](https://arxiv.org/abs/2307.03172) — information in the middle of a long context is used less reliably
-- [Chroma Research 2025, Context Rot](https://www.trychroma.com/research/context-rot) — accuracy degrades as input length grows
-- [Anthropic Engineering: How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) — multi-agent runs use many more total tokens; isolation does not cut the bill by itself
-- [Little 1961, A Proof for the Queuing Formula L = λW](https://pubsonline.informs.org/doi/10.1287/opre.9.3.383) — Little's Law uses mean time in system
-- [Claude docs: Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) — current model tiers
-- [Claude docs: Pricing](https://platform.claude.com/docs/en/about-claude/pricing) — per-token prices behind the $0.20 run budget
-- [Claude docs: Rate limits](https://platform.claude.com/docs/en/api/rate-limits) — provider quotas that can bind at 10x
-- [Simon Willison: The lethal trifecta for AI agents (16 June 2025)](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) — private data plus untrusted content plus an outbound channel
-- [MSRC: How Microsoft defends against indirect prompt injection attacks (Jul 2025)](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks) — Markdown image exfiltration; prompt defences reduce rates but are not boundaries
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — prompt injection has no complete prompt-level fix
-- [Cemri et al., Why Do Multi-Agent LLM Systems Fail? (arXiv 2503.13657)](https://arxiv.org/abs/2503.13657) — failures spread across design, coordination and verification, not routing alone
-- [AWS Bedrock User Guide: Use the ApplyGuardrail API](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-use-independent-api.html) — guardrails can screen input before any model call
-- [tensorzero/tensorzero on GitHub](https://github.com/tensorzero/tensorzero) — repository archived on 12 June 2026
-- [GroqDocs: Model deprecations](https://console.groq.com/docs/deprecations) — `llama-3.1-8b-instant` retired for free and developer tiers in Aug 2026
-- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations) — GPT-4o still offered
-- [OpenAI API docs: GPT-4o model page](https://developers.openai.com/api/docs/models/gpt-4o) — GPT-4o still listed
-- [microsoft/PyRIT](https://github.com/microsoft/PyRIT) — Crescendo, Skeleton Key and XPIA attacks
-- [Reference build: `app/auth.py`](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/03_enterprise_multi_agent_research_platform/CODE/app/auth.py) and [`app/cache.py`](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/03_enterprise_multi_agent_research_platform/CODE/app/cache.py) — one API key, no tenant model, shared report cache
+- [LangGraph docs: INVALID_CONCURRENT_GRAPH_UPDATE](https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE): parallel writes to a key with no reducer raise an error; silent loss needs a hand-rolled merge
+- [Liu et al. 2023, Lost in the Middle](https://arxiv.org/abs/2307.03172): information in the middle of a long context is used less reliably
+- [Chroma Research 2025, Context Rot](https://www.trychroma.com/research/context-rot): accuracy degrades as input length grows
+- [Anthropic Engineering: How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system): multi-agent runs use many more total tokens; isolation does not cut the bill by itself
+- [Little 1961, A Proof for the Queuing Formula L = λW](https://pubsonline.informs.org/doi/10.1287/opre.9.3.383): Little's Law uses mean time in system
+- [Claude docs: Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): current model tiers
+- [Claude docs: Pricing](https://platform.claude.com/docs/en/about-claude/pricing): per-token prices behind the $0.20 run budget
+- [Claude docs: Rate limits](https://platform.claude.com/docs/en/api/rate-limits): provider quotas that can bind at 10x
+- [Simon Willison: The lethal trifecta for AI agents (16 June 2025)](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/): private data plus untrusted content plus an outbound channel
+- [MSRC: How Microsoft defends against indirect prompt injection attacks (Jul 2025)](https://www.microsoft.com/en-us/msrc/blog/2025/07/how-microsoft-defends-against-indirect-prompt-injection-attacks): Markdown image exfiltration; prompt defences reduce rates but are not boundaries
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): prompt injection has no complete prompt-level fix
+- [Cemri et al., Why Do Multi-Agent LLM Systems Fail? (arXiv 2503.13657)](https://arxiv.org/abs/2503.13657): failures spread across design, coordination and verification, not routing alone
+- [AWS Bedrock User Guide: Use the ApplyGuardrail API](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-use-independent-api.html): guardrails can screen input before any model call
+- [tensorzero/tensorzero on GitHub](https://github.com/tensorzero/tensorzero): repository archived on 12 June 2026
+- [GroqDocs: Model deprecations](https://console.groq.com/docs/deprecations): `llama-3.1-8b-instant` retired for free and developer tiers in Aug 2026
+- [OpenAI API docs: Deprecations](https://developers.openai.com/api/docs/deprecations): GPT-4o still offered
+- [OpenAI API docs: GPT-4o model page](https://developers.openai.com/api/docs/models/gpt-4o): GPT-4o still listed
+- [microsoft/PyRIT](https://github.com/microsoft/PyRIT): Crescendo, Skeleton Key and XPIA attacks
+- [Reference build: `app/auth.py`](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/03_enterprise_multi_agent_research_platform/CODE/app/auth.py) and [`app/cache.py`](https://github.com/Sourav692/ai-engineering-demystified-14-projects/blob/db71e98600bf98c145b6172968da489e05220352/projects/03_enterprise_realtime_capstones/03_enterprise_multi_agent_research_platform/CODE/app/cache.py): one API key, no tenant model, shared report cache
 

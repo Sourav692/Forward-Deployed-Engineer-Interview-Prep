@@ -19,7 +19,7 @@
   - Do the downstream systems accept idempotency keys, block replays, or take a unique business reference? → If yes, retries are safe; if not, the orchestrator has to wrap each call in its own deduplication layer.
   - If a definition changes mid-flight, how do older running instances stay compatible? → This bites the moment someone wants a new approval step while 10,000 old workflows are live.
 - Partial answers are no reason to stall. State your assumptions out loud and tie each one to the risk it covers.
-  - The safest anchor here: payment is the riskiest step and cannot be reversed. Whatever else degrades, the design must still block a second payment.
+  - The safest anchor here is that payment is the riskiest step and cannot be reversed. Whatever else degrades, the design must still block a second payment.
 
 ### From Discovery to Requirements
 
@@ -28,12 +28,12 @@
   - **Should**: versioned workflow definitions, so running instances can evolve without breaking.
   - **Could**: deeper analytics, bespoke dashboards, or branching rules users configure themselves, as long as none of them puts correctness at risk.
 - The reason behind each must-have:
-  - Durable state machine — the workflow outlives a crashed process and waits out long pauses.
-  - Persisted transition history — operators can see what happened, and a restarted worker recovers its intent from the record instead of guessing.
-  - Idempotent activity execution — retries will happen. A retry with no deduplication is just a duplicate side effect under a nicer name.
-  - Retry and timeout policies — outside systems break, slow down, and sometimes stay silent forever.
-  - Human signals and timers — an approval usually arrives as a business event, not as an API callback.
-  - Saga compensation and operator recovery — some steps can be reversed and some cannot, and the design has to show which is which.
+  - Durable state machine: the workflow outlives a crashed process and waits out long pauses.
+  - Persisted transition history: operators can see what happened, and a restarted worker recovers its intent from the record instead of guessing.
+  - Idempotent activity execution: retries will happen. A retry with no deduplication is a duplicate side effect under a nicer name.
+  - Retry and timeout policies: outside systems break, slow down, and sometimes stay silent forever.
+  - Human signals and timers: an approval usually arrives as a business event, not as an API callback.
+  - Saga compensation and operator recovery: some steps can be reversed and some cannot, and the design has to show which is which.
 
 ### Functional vs Nonfunctional Requirements
 
@@ -50,13 +50,13 @@
 
 - Constraints shrink the set of safe designs. Preferences make the system nicer to use, but they can give way.
 - For this prompt:
-  - Irreversible payment handling — a constraint.
-  - Human approval latency — a constraint if the business really waits days, a preference if approvals usually land within hours.
-  - Workflow versioning — a constraint as soon as the customer confirms that in-flight cases will outlive a deployment.
-  - A polished dashboard — a preference.
+  - Irreversible payment handling: a constraint.
+  - Human approval latency: a constraint if the business waits days, a preference if approvals usually land within hours.
+  - Workflow versioning: a constraint as soon as the customer confirms that in-flight cases will outlive a deployment.
+  - A polished dashboard: a preference.
 - Saying the label aloud for each item shows you can keep scope creep out of the architecture.
 
-> 🎯 **Interview Pointer:** If the interviewer adds a "nice to have" partway through, label it as a constraint or a preference before you respond to it. Few habits signal architectural discipline under pressure as clearly.
+> 🎯 **Interview Pointer:** If the interviewer adds a "nice to have" partway through, label it as a constraint or a preference before you respond to it. That shows architectural discipline under pressure.
 
 ### What the MVP Will Not Support
 

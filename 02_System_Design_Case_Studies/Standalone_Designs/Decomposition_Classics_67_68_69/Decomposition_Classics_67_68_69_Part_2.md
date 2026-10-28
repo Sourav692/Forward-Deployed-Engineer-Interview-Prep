@@ -6,7 +6,7 @@
 
 ### 6.1 Clarify the mission
 
-"Unify fraud detection" can mean three different projects. One is a single case queue for investigators. Another is one shared set of rules. The third is one new model. They carry different risk, and the 90-day window only fits the first honestly.
+"Unify fraud detection" can mean three different projects. One is a single case queue for investigators. Another is one shared set of rules. The third is one new model. They carry different risk, and only the first honestly fits in 90 days.
 
 | Ask | Assumed answer | Implication |
 |---|---|---|
@@ -14,7 +14,7 @@
 | Which fraud types matter most? | Card fraud and account takeover | Scope the first model to one type |
 | What does the regulator expect before a model changes decisions? | Model risk review with documented validation | Plan a validation phase inside the 90 days |
 | Can legacy systems be switched off? | No; all three stay live through the period | Run beside them, in shadow |
-| Who owns "confirmed fraud"? | Each legacy team, each with its own definition | Label reconciliation is a workstream, not a footnote |
+| Who owns "confirmed fraud"? | Each legacy team, each with its own definition | Label reconciliation is its own workstream |
 
 ### 6.2 Name stakeholders and metrics
 
@@ -32,7 +32,7 @@ The north-star metric is fraud losses caught per investigator hour. Guardrails s
 | Investigator case notes | Free text | All three teams | On case close | Why a case was confirmed or cleared | Inconsistent wording; the richest signal, the least structured |
 | Chargebacks and customer disputes | Events | Card operations | Weeks to months (card dispute windows often run to about 120 days) | Late but independent ground truth | Arrives long after the transaction |
 
-The prompt's hardest constraint is in this table. "None of the data is labelled consistently" has two layers. The definitions differ between systems, and missing labels mean different things in each. A model trained on the union of the three would learn three definitions of fraud at once.
+The prompt's hardest constraint sits in this table. "None of the data is labelled consistently" has two layers: the definitions differ between systems, and a missing label means something different in each. A model trained on the union of the three would learn three definitions of fraud at once.
 
 ### 6.4 Plan the ninety days
 
@@ -46,13 +46,13 @@ Sequence by risk. The riskiest unknown is whether one consistent label can exist
 | 61–80 | **Shadow model.** A first model on one fraud type, scoring in shadow beside legacy rules | Beats legacy rules on the relabelled holdout at the agreed false-positive rate | Model risk |
 | 81–90 | **Validate and decide.** Model documentation, validation pack, go or no-go for a limited pilot | Model risk approval, or a documented reason to wait | Model risk; compliance |
 
-The honest 90-day deliverable is the single queue plus a validated shadow model. It is not a new production model deciding on transactions. Saying so early is the regulatory realism the source asks for.
+The honest 90-day deliverable is the single queue plus a validated shadow model, not a new production model deciding on transactions. Say so early; that is the regulatory realism the source asks for.
 
 ### 6.5 Choose the model last
 
-The first value comes with no model at all. Entity resolution plus a single queue reveals fraud that crosses the three systems, and none of them could see it alone.
+The first value comes with no model at all. Entity resolution plus a single queue shows fraud that crosses the three systems, which none of them could see alone.
 
-The model then follows from the labels. With a few thousand relabelled cases, a gradient-boosted classifier over transaction features is the sensible first choice. It is explainable enough for model risk review. Graph features over the resolved entities come next, since fraud rings show up as shared devices and accounts. A language model earns one bounded role: summarising case notes for investigators, and extracting structured reasons from them to help relabelling. A human still confirms every label.
+The model then follows from the labels. With a few thousand relabelled cases, a gradient-boosted classifier over transaction features is the sensible first choice. Model risk reviewers can follow its explanations. Graph features over the resolved entities come next, since fraud rings show up as shared devices and accounts. A language model gets one bounded role: summarising case notes for investigators, and extracting structured reasons from them to help relabelling. A human still confirms every label.
 
 ### 6.6 Draw the architecture
 
@@ -98,7 +98,7 @@ flowchart LR
 
 ### 6.7 Evaluate against a label you trust
 
-Hold out a relabelled sample that no training run ever sees. Compare the shadow model with the legacy rules on that holdout, at a fixed false-positive rate. A higher catch rate at the same customer friction is the claim to prove.
+Hold out a relabelled sample that no training run ever sees. Compare the shadow model with the legacy rules on that holdout, at a fixed false-positive rate. The claim to prove is a higher catch rate at the same customer friction.
 
 Score chargebacks separately, as a late but independent check. They arrive weeks or months after the transaction, so they validate rather than train. Measure the note summariser against investigator judgement on a sample, never as a label source.
 
@@ -124,7 +124,7 @@ Assume the interviewer says system C's vendor will not release data for 60 days.
 
 ### 7.1 Clarify the mission
 
-The source says this case tests safety-first decomposition. The first safety question is what the system is allowed to do. The answer that survives a hospital's review is narrow: flag risk for a nurse or pharmacist, never change an order.
+The source says this case tests safety-first decomposition. Start with what the system may do. The only answer that survives a hospital's review is narrow: flag risk for a nurse or pharmacist, never change an order.
 
 | Ask | Assumed answer | Implication |
 |---|---|---|
@@ -134,7 +134,7 @@ The source says this case tests safety-first decomposition. The first safety que
 | What alerts already exist? | Pharmacy checks at order time | Avoid duplicating them, and avoid adding noise |
 | Who governs clinical decision support? | A pharmacy and therapeutics committee | It approves thresholds and rules |
 
-Alert fatigue is the constraint that hides behind "safety-first." A system that fires constantly gets ignored, and I'd argue an ignored alert is worse than none. So precision is a safety property here, not a nice-to-have.
+Alert fatigue hides behind "safety-first." A system that fires constantly gets ignored, and I'd argue an ignored alert is worse than none. So precision is a safety property here.
 
 ### 7.2 Name stakeholders and metrics
 
@@ -150,7 +150,7 @@ The north-star metric is the measured rate of target errors per 1,000 doses admi
 | Pharmacy dispensing logs | Rows per dispense | Pharmacy | Real time | What left the pharmacy, when | Dispensed is not administered |
 | Nurse assignment schedules | Nurse to patient to shift | Nursing management | Per shift | Who was responsible, and their load | Swaps and float staff not updated |
 
-The gap between the first two rows is the finding. The data shows ordered and dispensed. It may not show administered. If bedside barcode scanning exists, administration records close the gap. If not, the first slice has to measure errors by reconciling orders against dispensing times.
+The finding is the gap between the first two rows. The data shows ordered and dispensed. It may not show administered. If bedside barcode scanning exists, administration records close the gap. If not, the first slice has to measure errors by reconciling orders against dispensing times.
 
 ### 7.4 Sequence by risk
 
@@ -161,15 +161,15 @@ The gap between the first two rows is the finding. The data shows ordered and di
 | 3 | Retrospective rules, validated by pharmacists | Proves precision before anything reaches a ward |
 | 4 | Advisory alerts on one ward, in shadow first | Adoption and alert fatigue are tested on real shifts |
 
-The nurse schedule enters at step two, not as a target. The question is whether errors rise with patient load or at handover. The answer should drive staffing and handover decisions. It should never become a score for individual nurses. A tool seen as surveillance tends to lose honest incident reports.
+The nurse schedule enters at step two, not as a target. It answers whether errors rise with patient load or at handover. That answer should drive staffing and handover decisions, never a score for individual nurses. A tool seen as surveillance tends to lose honest incident reports.
 
 ### 7.5 Build the first slice
 
 The first slice is retrospective. Take three months of post-surgical orders for the target drugs. Reconcile each scheduled dose against dispensing and administration records. Flag doses that were late, missed, or outside the weight-based range. Pharmacists review a sample of flags and mark each true or false.
 
-That gives a baseline error rate and a precision figure for the rules at the same time. No patient is touched.
+That gives a baseline error rate and a precision figure for the rules at once, without touching a patient.
 
-The model comes last. Rules cover the first version: dose range per kilogram, time windows for time-critical drugs, duplicate therapy. A learned risk score comes later, ranking which patients need a pharmacist review first. A language model's role is narrow: extracting weight or allergy from free-text notes when the structured field is empty. That extraction always goes to a human for confirmation.
+The model comes last. Rules cover the first version: dose range per kilogram, time windows for time-critical drugs, duplicate therapy. A learned risk score comes later, ranking which patients need a pharmacist review first. A language model has one narrow role: extracting weight or allergy from free-text notes when the structured field is empty. A human confirms every extraction.
 
 ### 7.6 Draw the architecture
 
@@ -215,9 +215,9 @@ flowchart LR
 
 ### 7.7 Evaluate for precision and harm, not accuracy
 
-Three numbers gate the pilot. The first is precision of flags, measured by pharmacist review; low precision breeds alert fatigue. The second is recall on known incidents: how many reported errors the rules would have caught. The third is the measured error rate on the pilot ward against a matched ward.
+Three numbers gate the pilot. First, precision of flags, measured by pharmacist review; low precision breeds alert fatigue. Second, recall on known incidents: how many reported errors the rules would have caught. Third, the measured error rate on the pilot ward against a matched ward.
 
-Watch alert load per nurse per shift as a hard ceiling. Read override reasons weekly. A cluster of identical overrides is a rule that is wrong.
+Watch alert load per nurse per shift as a hard ceiling. Read override reasons weekly. A cluster of identical overrides means a rule is wrong.
 
 ### 7.8 Name the failure modes
 
@@ -231,6 +231,6 @@ Watch alert load per nurse per shift as a hard ceiling. Read override reasons we
 
 ### 7.9 Adapt when administration records do not exist
 
-Assume the interviewer says there is no bedside scanning. Re-derive: measure what can be measured, which is ordered against dispensed timing. Say what that misses. Wrong-patient and wrong-time administration stay invisible. The strongest recommendation may then be bedside scanning itself, not software. Saying so is the "is AI the right solution" judgement the question bank asks for.
+Assume the interviewer says there is no bedside scanning. Re-derive: measure what can be measured, which is ordered against dispensed timing. Say what that misses: wrong-patient and wrong-time administration stay invisible. The strongest recommendation may then be bedside scanning itself, not software. Saying so is the "is AI the right solution" judgement the question bank asks for.
 
 ---

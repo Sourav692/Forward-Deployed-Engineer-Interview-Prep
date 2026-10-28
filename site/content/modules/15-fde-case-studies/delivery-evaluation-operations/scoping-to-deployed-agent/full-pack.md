@@ -2,7 +2,7 @@
 
 *Two weeks is fast enough to lose the customer's trust by cutting a corner, and slow enough to prove the process never needed one.*
 
-This is not a software architecture question, even though it is asked in a system design round. It is an operating-model question, and the design is a state machine whose gates are code rather than trust. The page consolidates the group's prompts into one read for the day before.
+It comes up in a system design round, but this is an operating-model question. The design is a state machine whose gates are code rather than trust. The page puts the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -17,7 +17,7 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 ## 1. Frame the Round as an Operating-Model Question
 
-Say the framing sentence in the first two minutes. It names the real test before any box is drawn.
+Say the framing sentence in the first two minutes. It names the test before you draw any box.
 
 > *"This isn't really a software architecture question — it's an operating-model question. Anyone can draw a pipeline with seven boxes. The signal is whether each box is a real, enforced gate or just a status someone reports honestly. I designed it so the gates are code, not trust."*
 
@@ -27,7 +27,7 @@ That splits the answer into two questions, and a strong answer spends its time o
 
 | QUESTION THE ROUND IS REALLY ASKING | WHAT ANSWERS IT |
 |---|---|
-| How do we know each stage is safe to leave, not just that time passed? | Gates: a named, checkable condition, signed off by the right role, never by the person closest to the work |
+| How do we know each stage is safe to leave, beyond the fact that time passed? | Gates: a named, checkable condition, signed off by the right role, never by the person closest to the work |
 | How do we make two weeks achievable for a different customer every time? | A library of reusable assets that most of each stage is assembled from, not written |
 
 A weak answer draws seven boxes labelled scoping, data, build, test and launch, then stops. That is a checklist, and checklists get skipped under deadline pressure. Restate the problem in one breath when asked:
@@ -90,9 +90,9 @@ Both are measurable from data the customer already has, not "the agent should be
 | Data access | Read-only access (for Zendesk, OAuth with the `read` scope; its API tokens are all-or-nothing and being retired), scoped to the engagement, revoked at handover | The delivery process holds live customer credentials |
 | Repeatability | Accelerator reuse rate tracked per engagement (83% on Northwind) | The measure of productised versus bespoke |
 
-**Constraints.** Two calendar weeks. A customer SME who has other work. Security review before any connection is made. Three of the six gates need a customer signature, so customer-side delay is the default risk.
+**Constraints.** Two calendar weeks, a customer SME who has other work, and a security review before any connection is made. Three of the six gates need a customer signature, so customer-side delay is the default risk.
 
-**Non-goals, said out loud.** Real infrastructure provisioning under "configure, do not code". A running eval harness, since the Evaluate stage references one. More than one engagement at a time. A versioned rollback mechanism, since the gate attests that rollback was tested elsewhere. The honest limit sits above all four: some engagements should not be two weeks, and knowing which ones to reject is part of the framework.
+**Non-goals, said out loud.** Real infrastructure provisioning under "configure, do not code"; a running eval harness, since the Evaluate stage references one; more than one engagement at a time; and a versioned rollback mechanism, since the gate attests that rollback was tested elsewhere. One limit sits above all four: some engagements should not be two weeks, and knowing which ones to reject is part of the framework.
 
 ## 4. Draw the Architecture End to End
 

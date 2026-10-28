@@ -6,7 +6,7 @@ The two counts that gate every expansion are unsafe actions and duplicate effect
 
 | Metric | What it proves | Strong threshold | Dataset / method | Owner |
 |---|---|---|---|---|
-| Unsafe action count | The control boundary actually held | Zero in any sensitive workflow | Audit review, incident tickets, rule checks | Incident commander / ops lead |
+| Unsafe action count | The control boundary held | Zero in any sensitive workflow | Audit review, incident tickets, rule checks | Incident commander / ops lead |
 | Duplicate-effect count | Retries and replays cannot double-charge | Zero; any occurrence alerts immediately | Idempotency logs and reconciliation reports | Reliability engineer |
 | Policy denial rate | Denials reflect real policy, not a broken prompt | Stable against baseline; spikes investigated | Policy engine logs | Platform / trust-and-safety |
 | Approval rate and delay | Human gates protect without stalling the workflow | Delay within SLO; rate stable | Approval service logs | Business operations |

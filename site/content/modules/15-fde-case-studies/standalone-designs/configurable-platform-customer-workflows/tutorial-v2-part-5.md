@@ -4,11 +4,11 @@
 
 ### Rollout as a Series of Proofs
 
-- When the prototype works, the customer stops asking whether the platform can do the job. They start asking whether they can trust it in production, with their own data, their own approval chains and their own support staff. Here the FDE's role shifts. The clever demo is done; the work now is to turn the architecture into staged delivery, with a measurable gate at every stage.
+- When the prototype works, the customer stops asking whether the platform can do the job. They start asking whether they can trust it in production, with their own data, their own approval chains and their own support staff. Now the FDE stops building demos and turns the architecture into staged delivery, with a measurable gate at every stage.
 - Do not plan one big go-live. Plan a sequence of proofs:
-  - Start with a workflow that several customers already share. Pick its least contested form: a single approval path, a single integration, a single field set and a single brand surface. The aim is depth, not breadth. Show that a real customer need fits the platform with no fork.
-  - Next, bring on one willing customer who copes with loose ends and gives feedback quickly. Name an owner on your side, keep a single production gate, and know the rollback path before the first publish. Release as a canary first, to a thin slice of traffic or to one low-risk group of tenants. The opening launch stays tiny on purpose: support should be able to trace each event, each rejected config and each request sent to a downstream system.
-  - Widen the configuration surface only when evidence keeps showing three things: the current surface meets real demand, it cuts duplicated work, and it adds no incident risk. That discipline is what separates a platform from a growing pile of tenant-specific debt.
+  - Start with a workflow that several customers already share. Pick its least contested form: a single approval path, a single integration, a single field set and a single brand surface. Go deep: show that a real customer need fits the platform with no fork.
+  - Next, bring on one willing customer who copes with loose ends and gives feedback quickly. Name an owner on your side, keep a single production gate, and know the rollback path before the first publish. Release as a canary first, to a thin slice of traffic or to one low-risk group of tenants. Keep the first launch small enough that support can trace each event, each rejected config and each request sent to a downstream system.
+  - Widen the configuration surface only when evidence keeps showing three things: the current surface meets real demand, it cuts duplicated work, and it adds no incident risk. Without that rule, the platform turns into a growing pile of tenant-specific debt.
 
 ### The Four-Phase Rollout Plan
 
@@ -41,7 +41,7 @@ flowchart LR
   P4 -->|"go/no-go:<br/>2nd/3rd customer reuse works"| DONE["Reusable product pattern"]
 ```
 
-> **Interview pointer:** Interviewers tend to push on the gates between phases, so know all four by heart. The pattern is stable. The customer accepts the support and rollback model. The evidence shows config cuts custom work. Customers two and three reuse it with no fresh build. These gates are what stop a rollout from becoming "we shipped because the demo went well."
+> **Interview pointer:** Interviewers tend to push on the gates between phases, so know all four by heart. The pattern is stable. The customer accepts the support and rollback model. The evidence shows config cuts custom work. Customers two and three reuse it with no fresh build. These gates stop a rollout from becoming "we shipped because the demo went well."
 
 ### The Six-Metric Scorecard
 
@@ -64,7 +64,7 @@ flowchart LR
 
 - Lead with the customer's story, then drill down into the machinery. A headline might read, with illustrative numbers: "Onboarding for this customer took under two days. It needed zero manual config edits and one validation retry, and there was no incident after launch."
 - Under that headline sit the internal signals, broken out by tenant: rollout status, publish latency, adapter errors, blocked approval loops and failed schema validations.
-- This is how to answer "what do we watch after launch?". CPU, logs and queue depth are not enough. The dashboard should link what the customer sees as success to the failure modes inside the system.
+- Use this to answer "what do we watch after launch?". CPU, logs and queue depth are not enough. The dashboard should link what the customer sees as success to the failure modes inside the system.
 
 ### Ownership Before Launch
 
@@ -72,12 +72,12 @@ flowchart LR
 - **Platform owner:** looks after the shared core, the config schema and the publish service.
 - **FDE:** turns the customer's workflow into supported configuration, checks the assumptions and runs the rollout.
 - **Support lead:** handles customer communication, triage and escalation during the pilot.
-- **SRE / operations lead:** is responsible for monitoring, carrying out rollbacks and release health.
+- **SRE / operations lead:** owns monitoring, rollback execution and release health.
 - **Customer admin / champion:** tests the workflow in their own environment and signs off that it is ready.
 
 ### Go/No-Go and Rollback Triggers
 
-- Go/no-go gate: a config may publish only when four things hold. Validation passes. The adapters it depends on are healthy. The rollback plan has been rehearsed. And the customer champion agrees that their business process and the configured workflow still line up.
+- Go/no-go gate: a config may publish only when four things hold. Validation passes. The adapters it depends on are healthy. The team has rehearsed the rollback plan. The customer champion agrees that their business process and the configured workflow still line up.
 - Rollback trigger: roll back on any one of these. Validation keeps failing. Integrations throw errors nobody predicted. Incidents climb among the earliest group of tenants. A new config pattern starts to make approvals unstable.
 - For a stateful workflow, write the migration plan and the rollback plan separately. Moving state is a different job from reverting code.
 - Ship a launch package of four documents: a short guide for admins, a runbook for support, a rollback checklist and a change log. The change log lists which parts customers may configure, which stay fixed, and which go to engineering for review.
@@ -110,5 +110,5 @@ flowchart TD
 | Customer confusion during rollout | FDE | Training, playbooks and guided setup | Support volume is high, or validation errors keep repeating |
 | Unsupported fork pressure | Product manager | Clear grounds for refusing bespoke code, plus a review board for exceptions | A request cannot be expressed in configuration |
 
-- Treat this register as part of how the platform is run, not as an appendix.
-- What this shows an employer: a forward-deployed team wants people who carry a piece of work past the prototype until customers adopt it, and who then distil what customers said into a pattern the product can reuse. Call the platform finished once three things are true: customers rely on it, the workflow keeps improving, and operations can run it with no heroics needed. That is the moment "customisable" turns into "supportable".
+- Treat this register as part of running the platform, not an appendix.
+- Forward-deployed teams want people who carry work past the prototype until customers adopt it, then distil what customers said into a pattern the product can reuse. Call the platform finished once three things are true: customers rely on it, the workflow keeps improving, and operations can run it with no heroics.

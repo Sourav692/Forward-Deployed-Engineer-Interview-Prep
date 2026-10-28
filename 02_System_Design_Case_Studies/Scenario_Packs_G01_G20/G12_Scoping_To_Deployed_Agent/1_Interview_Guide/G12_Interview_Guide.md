@@ -1,19 +1,19 @@
-# G12 — Scoping to Deployed Agent: Main Interview Guide
+# G12 Scoping to Deployed Agent: Main Interview Guide
 
-**Delivery process** is: customer wants an agent, you ship something real in two weeks, with a named person who can say stop.
+A customer wants an agent, and you ship something real in two weeks, with a named person who can say stop.
 
-**G12 covers one slice:** intake → gates → a small live agent → rollback. Not “we’ll figure production out later.” The source uses a Northwind support-triage demo.
+**G12 covers one slice:** intake → gates → a small live agent → rollback, with production planned now instead of “we’ll figure production out later.” The source uses a Northwind support-triage demo.
 
 End to end, as Northwind tickets:
 
-1. **Intake:** success is “first response under five minutes,” not “launch an agent.” SME and sources named now.
-2. **Security and data access** — Zendesk + Confluence + Salesforce read. If that’s a six-week ticket, two weeks is a lie.
+1. **Intake:** success is “first response under five minutes,” not “launch an agent.” Name the SME and sources now.
+2. **Security and data access:** Zendesk + Confluence + Salesforce read. If that’s a six-week ticket, two weeks is a lie.
 3. **Configure, golden set, baseline eval.**
 4. **Shadow, then a tested rollback** (kill send in two minutes).
 5. **Limited production.** Humans still send. Autonomy is earned.
 6. **Sponsor go/no-go and handover.** A failed gate does not become a quiet exception.
 
-That’s it: **name the outcome → prove each gate → ship small → own rollback.** Open-ended custom planners wait.
+The whole flow is name the outcome → prove each gate → ship small → own rollback. Open-ended custom planners wait.
 
 > **Source:** [Sources and Full Design](../4_Full_Design/G12_Full_Design.md). The [Deep Dive](../2_Technical_Deep_Dive/G12_Technical_Deep_Dive.md) covers gate mechanics and limitations; the [Cheat Sheet](../3_Quick_Review/G12_Quick_Review.md) is for rehearsal.
 
@@ -36,20 +36,20 @@ Do not start the engagement clock without measurable success metrics, a named SM
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 **Delivery**
 
-1. **Intake and scope** — measurable outcome, named SME, named sources.
+1. **Intake and scope:** measurable outcome, named SME, named sources.
 2. **Evidence-backed security and data access.**
 3. **Configure the agent and sign a golden set.**
 4. **Baseline evaluation, shadow, tested rollback.**
-5. **Limited production, sponsor go/no-go, handover** — runbook, dashboard, owner.
-6. **Advance only after each gate** — authorised role and evidence recorded.
+5. **Limited production, sponsor go/no-go, handover:** runbook, dashboard, owner.
+6. **Advance only after each gate,** with the authorised role and evidence recorded.
 
 **Northwind agent (demo)**
 
@@ -58,7 +58,7 @@ The easiest way to frame requirements in an interview is:
 3. **Redact sensitive data; draft grounded replies; apply escalation rules.**
 4. **Keep people in control of sending** while autonomy is earned.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement           | Example target / constraint                                                                        |
 | --------------------- | -------------------------------------------------------------------------------------------------- |
@@ -77,7 +77,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture: delivery gates and the deployed agent
 
-The delivery state machine is deterministic; an LLM does not approve its own release. Within the delivered support agent, model calls can classify and draft replies. The latter architecture is a source-grounded design sketch, not a claim that every runtime component was implemented in the source demo.
+The delivery state machine is deterministic; an LLM does not approve its own release. Within the delivered support agent, model calls can classify and draft replies. The agent runtime half is a design sketch grounded in the source; the source demo did not implement every runtime component.
 
 ```mermaid
 flowchart TB
@@ -135,7 +135,7 @@ For cost, agree on cost per resolved ticket at intake; bound model steps and tok
 
 ## Evaluation and rollout
 
-Golden tickets must cover the top categories, retrieval misses, PII, policy escalations and cases where a draft should not be sent. Measure response time, zero-edit sends, groundedness, escalation correctness, human overrides, rollback time, cost per resolved ticket and week-four retention when it actually exists. Shadow before limited production; refuse broad rollout until sponsor-approved metrics and rollback evidence hold.
+Golden tickets must cover the top categories, retrieval misses, PII, policy escalations and cases where a draft should not be sent. Measure response time, zero-edit sends, groundedness, escalation correctness, human overrides, rollback time, cost per resolved ticket and week-four retention once it exists. Shadow before limited production; refuse broad rollout until sponsor-approved metrics and rollback evidence hold.
 
 ## Two-minute interview answer
 

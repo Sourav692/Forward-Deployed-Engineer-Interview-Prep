@@ -1,4 +1,4 @@
-# G09 — Enterprise Coding Assistant: Main Interview Guide
+# G09 Enterprise Coding Assistant: Main Interview Guide
 
 **Coding in an IDE** is type, get a suggestion, keep going. If the ghost text is late, you already typed past it. If it used a repo you cannot clone, that’s a leak.
 
@@ -7,17 +7,17 @@
 End to end, as intern Alex typing in a private repo:
 
 1. **Keystroke.** We know Alex’s identity and what the code host says they can read.
-2. **We take a tiny context** — cursor, file, imports — not the whole company.
+2. **We take a tiny context** (cursor, file, imports), not the whole company.
 3. **Cache or retrieve only snippets inside that ACL.** Recheck before the model.
 4. **A small model streams a short completion** in about 200 ms, inside a 300 ms total.
 5. **A gate drops** invented APIs, secrets, license clashes. Timeout → show nothing.
 6. **“Explain this function”** is a slower, larger-model path. Accepts are logged without keeping source.
 
-That’s it: **tiny permitted context → fast suggest → validate or stay silent.** Training on private code stays out unless they contract it.
+**Tiny permitted context → fast suggest → validate or stay silent.** Training on private code stays out unless the customer contracts for it.
 
 An inline completion must arrive before the developer’s next keystroke **and** respect a private repository’s permissions. Design the context funnel and latency budget first. Do not send the whole repository to a large model, and do not let a cached or retrieved snippet cross an access boundary.
 
-The [source study](../4_Full_Design/G09_Full_Design.md) combines the under-300 ms coding-assistant anchor with the enterprise private-repository variant. The latter adds incremental indexing, repository ACLs, licensing and productivity proof; it keeps the same fast completion spine.
+The [source study](../4_Full_Design/G09_Full_Design.md) combines the under-300 ms coding-assistant anchor with the enterprise private-repository variant. The private-repository variant adds incremental indexing, repository ACLs, licensing and productivity proof on the same fast completion spine.
 
 ## 1. Questions to ask the interviewer
 
@@ -28,29 +28,29 @@ The [source study](../4_Full_Design/G09_Full_Design.md) combines the under-300 m
 | How much of the repository may be used? What does the code host say this developer can read? | Can it complete from a private repo this intern cannot clone? | Permission mirror, symbol index, and context budget. |
 | Can code leave the customer’s environment? Is training on private code allowed? | Does a private snippet go to a public API, and may we train on it? | Cloud vs private deploy, masking, and the provider contract. |
 | What kinds of output must be blocked: nonexistent API, secret, unsafe pattern, license conflict? | If it invents an API or pastes an AWS key, do we still show it? | Validation gate and release suite. |
-| What would prove developer value beyond clicks or suggestions served? | Did people accept junk completions, or did they actually finish PRs faster? | Acceptance slices and a productivity comparison. |
+| What would prove developer value beyond clicks or suggestions served? | Did people accept junk completions, or did they finish PRs faster? | Acceptance slices and a productivity comparison. |
 | What is the peak typing load and model-cost budget? | At 10 a.m., can a keystroke storm bankrupt the GPU bill? | Cache, rate limits, inference capacity, and completion length cap. |
 
 ## 2. Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
-1. **Complete inline** — single- and multi-line in the IDE.
-2. **Ground in the repository** — only under code-host ACLs.
-3. **Validate before display** — syntax, APIs, secrets, license, unsafe patterns.
-4. **Record accept / partial-accept / reject** — without retaining source.
-5. **Route slower tasks separately** — explain, tests, bug fix, refactor, Q&A, code search.
-6. **Index incrementally on push** — symbol, file, dependency, not a generic token dump.
+1. **Complete inline:** single- and multi-line in the IDE.
+2. **Ground in the repository:** only under code-host ACLs.
+3. **Validate before display:** syntax, APIs, secrets, license, unsafe patterns.
+4. **Record accept / partial-accept / reject** without retaining source.
+5. **Route slower tasks separately:** explain, tests, bug fix, refactor, Q&A, code search.
+6. **Index incrementally on push:** by symbol, file and dependency, not as a generic token dump.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
-| **Latency** | p95 inline **<300 ms** end to end. Illustrative split: ~10 ms cache, ~40 ms context, ~200 ms streamed small-model, ~50 ms validation — leave headroom. |
+| **Latency** | p95 inline **<300 ms** end to end. Illustrative split: ~10 ms cache, ~40 ms context, ~200 ms streamed small-model, ~50 ms validation; leave headroom. |
 | **UX on miss** | Cache hit is faster; a slow request is suppressed rather than shown after the user has moved on. |
 | **Security** | No training on private code without consent; no source in telemetry; mask secrets before context leaves the IDE; fail closed on stale access or validation. |
 | **Scale** | Millions of developers and bursty keystrokes; stateless APIs, sharded indexes, GPU inference; measure p95 under load. |
@@ -115,7 +115,7 @@ flowchart LR
 
 The funnel is **repository → relevant signals → ranked snippets → prompt**. Local file and cursor are high value; nearby symbols and imports beat distant history. Retrieve project helpers and internal APIs semantically, but use code-aware chunks so a function/class and its imports stay together. The index’s symbol map also checks whether a suggested API exists.
 
-Exact-match caching is the safest start. Semantic caching can reuse similar completions but may confidently serve a wrong answer for two nearby requests; tune conservatively and never match across tenant, repository permission, or version boundaries. Put the cache **before** embedding and retrieval. Prompt-prefix and unchanged-chunk embedding caches help without substituting for permission checks.
+Exact-match caching is the safest start. Semantic caching can reuse similar completions but may confidently serve a wrong answer for two nearby requests; tune conservatively and never match across tenant, repository permission, or version boundaries. Put the cache before embedding and retrieval. Prompt-prefix and unchanged-chunk embedding caches also help, but they never replace permission checks.
 
 Completion uses a small model; multi-line may use a medium tier where the budget permits; explain, tests, bug fix, refactor, and architecture questions take a larger reasoning route. The task type comes from the user action, not a model’s guess. A refactor request must not queue ahead of keystroke completions.
 
@@ -130,11 +130,11 @@ Completion uses a small model; multi-line may use a medium tier where the budget
 | Secret in input/output | Mask input before model; suppress output and audit safely. |
 | Large model unavailable | Explicit slow-path task queues with visible status; hot path remains unaffected. |
 
-At 10×, partition indexes by repository and region, re-index on push asynchronously, autoscale inference for bursty typing, and rate-limit abusive paths. Trace input context size, output tokens, cache hit rate, first-token time, total p95, acceptance, and cost per thousand completions. Trim context and cap generated length before moving every request to a stronger model. Streaming improves when the developer sees tokens; it does not shorten total generation time.
+At 10×, partition indexes by repository and region, re-index on push asynchronously, autoscale inference for bursty typing, and rate-limit abusive paths. Trace input context size, output tokens, cache hit rate, first-token time, total p95, acceptance, and cost per thousand completions. Trim context and cap generated length before moving every request to a stronger model. Streaming shows the developer tokens sooner; it does not shorten total generation time.
 
 ## 6. Evaluation and rollout
 
-**Product metric:** accepted and partially accepted completions, sliced by task, language, and repository. Acceptance is necessary but not sufficient: compare adopters with a matched control on time-to-merge, review rework, and defects with effect and sample size chosen in advance. **Safety gates:** zero secret/license and cross-repository leaks, hallucinated APIs blocked by validation, p95 under 300 ms at peak, first token under the source’s example **100 ms** target where achievable. Nightly regression catches drift from a repointed model alias even without a code change.
+**Product metric:** accepted and partially accepted completions, sliced by task, language, and repository. Acceptance alone is not enough. Compare adopters with a matched control on time-to-merge, review rework, and defects with effect and sample size chosen in advance. **Safety gates:** zero secret/license and cross-repository leaks, hallucinated APIs blocked by validation, p95 under 300 ms at peak, first token under the source’s example 100 ms target where achievable. Nightly regression catches drift from a repointed model alias even without a code change.
 
 Roll out one repository with real permissions and three developers with different access → cache/local-context path → ACL-filtered retrieval and leak suite → silent suggestions → live completion for one team → expand repositories and slower tasks one at a time. Source and prompts are never training data without explicit consent.
 

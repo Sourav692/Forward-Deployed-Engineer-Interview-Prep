@@ -4,7 +4,7 @@
 
 Derive a fact's key from what the fact is, and an event's key from nothing at all. Re-stating "call me Sam" should update one row, not add a second. A fresh random key per write guarantees nothing ever overwrites.
 
-The study guide states the rule as a pair. If a fact can change, its key must be stable. If a fact is a fresh event, a fresh key is correct. Mixing them up is how semantic memory quietly turns into a pile of duplicate facts.
+The study guide states the rule as a pair. If a fact can change, its key must be stable. If a fact is a fresh event, a fresh key is correct. Mix them up and semantic memory quietly turns into a pile of duplicate facts.
 
 **Handle a conflict explicitly.** The source answer overwrites the existing key and keeps the previous value one version back. That makes "you told me X last month, now Y" answerable instead of silently lost. Add a timestamp and the source turn to each value, so the assistant can say when it learned something *(own construction)*.
 
@@ -22,7 +22,7 @@ Session memory needs the same discipline in a different form. A TTL marks entrie
 
 ## 9. Search With an Index, Not a Scan
 
-Search long-term memory by relevance, because a scan's cost grows with how much has been stored. An unfiltered scan over a namespace is invisible at 5 facts and slow and noisy at 500. The source answer puts an embedding index on the semantic and episodic namespaces. Recall at 1,000+ saved items then becomes a vector query, not a full scan, and that is what keeps p95 under 300ms as history grows.
+Search long-term memory by relevance, because a scan's cost grows with how much has been stored. An unfiltered scan over a namespace is invisible at 5 facts and slow and noisy at 500. The source answer puts an embedding index on the semantic and episodic namespaces. Recall at 1,000+ saved items then becomes a vector query instead of a full scan, which keeps p95 under 300ms as history grows.
 
 Many simple memory demos skip this. Their long-term search is an unfiltered scan or a similarity check by the model, with no real embedding index. That is the difference between working with 10 memories and working with 10,000.
 
@@ -60,7 +60,7 @@ Put timeouts on each read. When episode search misses its timeout, answer withou
 
 ## 11. Take `user_id` From Auth, Never From the Model
 
-Read the isolation key from the server-side session on every request, because anything the model can set, a prompt can set. The source answer states it plainly: `user_id` comes from server-side session or auth config, never from a tool-call argument the model could set. Every namespace tuple includes it.
+Read the isolation key from the server-side session on every request, because anything the model can set, a prompt can set. The source answer says `user_id` comes from server-side session or auth config, never from a tool-call argument the model could set. Every namespace tuple includes it.
 
 The study guide's debugging advice follows. When two users see each other's memories, audit namespace derivation first. The usual cause is a `user_id` sourced from the wrong place. A `thread_id` used by mistake as the long-term namespace causes the opposite bug: memory collapses back to per-conversation.
 
@@ -80,7 +80,7 @@ Governance follows from the same design *(own construction, building on the FDE 
 
 Measure whether the assistant remembers, not whether it sounds as if it does. A fluent answer that invents a preference is worse than one that asks again. Few worked examples cover memory-quality evaluation, so building it is the strong move.
 
-The harness comes straight from the study guide's take-home. Plant a fact early in a long synthetic conversation. Ask for it 20 turns later. Score full history, sliding window and summarisation against each other on recall and cost. Extend it across conversations for this design: plant in thread A, ask in thread B a simulated week later *(own construction)*.
+The harness comes from the study guide's take-home. Plant a fact early in a long synthetic conversation. Ask for it 20 turns later. Score full history, sliding window and summarisation against each other on recall and cost. Extend it across conversations for this design: plant in thread A, ask in thread B a simulated week later *(own construction)*.
 
 | Worry | Metric that answers it |
 |---|---|

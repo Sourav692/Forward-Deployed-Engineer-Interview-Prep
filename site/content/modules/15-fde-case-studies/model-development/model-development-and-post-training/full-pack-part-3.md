@@ -2,11 +2,11 @@
 
 ## 12. Decide When Parameter Updates Earn Their Cost
 
-Training is the most expensive way to change a model's behaviour, so defend it before proposing it. The Cracking book's learning chapter orders four places improvement can live: context, memory, procedure and parameters. Each is slower and costlier to change than the one before; the book calls it roughly ten times per step, as a rough order, not a measurement. Work down that list, not up.
+Training is the most expensive way to change a model's behaviour, so defend it before proposing it. The Cracking book's learning chapter orders four places improvement can live: context, memory, procedure and parameters. Each is slower and costlier to change than the one before; the book puts it at roughly ten times per step, an order of magnitude rather than a measurement. Work down that list, not up.
 
-The book names three situations where parameter updates decisively win. Strict format or protocol adherence at high volume, where a small tuned model can often match a larger prompted one at a fraction of serving cost. Domain vocabulary the base model lacks. A hard cost or latency ceiling after cheaper surfaces are exhausted, where distillation buys the ceiling back. It is equally blunt about the losing case: knowledge gaps are mainly a retrieval problem, and fine-tuning is a weak, unreliable way to teach a model new facts.
+The book names three situations where parameter updates win. Strict format or protocol adherence at high volume, where a small tuned model can often match a larger prompted one at a fraction of serving cost. Domain vocabulary the base model lacks. A hard cost or latency ceiling after cheaper surfaces are exhausted, where distillation buys the ceiling back. It is as blunt about where they lose: knowledge gaps are mainly a retrieval problem, and fine-tuning is a weak, unreliable way to teach a model new facts.
 
-Map the four prompts onto that rule *(own construction)*. The math model (#84) wins on reasoning behaviour that prompting cannot install. The training system (#73) is parameter updates by definition. The harm-versus-help model (#81) wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer. The phone model (#83) is the latency-ceiling case exactly. Say the rule aloud before the pipeline, because it shows the choice was earned rather than assumed.
+Map the four prompts onto that rule *(own construction)*. The math model (#84) wins on reasoning behaviour that prompting cannot install. The training system (#73) is parameter updates by definition. The harm-versus-help model (#81) wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer. The phone model (#83) is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
 
 A tuned model freezes its task definition, which is the cost the book asks to name. When the business definition changes, a tuned model needs retraining where a prompt needs an edit. Keep a prompted fallback path for that reason.
 
@@ -25,12 +25,12 @@ Spend the hour on the scorer and the eval, because that is where these prompts s
 | 45–55 | Eval | Five slices, sampling settings with every number, leakage suspected first |
 | 55–60 | Pivot | Whichever constraint the interviewer adds: compute (section 9), harm (10), device (11) |
 
-The interviewer will change a constraint mid-round; the question bank says so explicitly. Map the new constraint to the stage it changes and re-derive only that stage. "You now have a tenth of the compute" changes model size and the SFT-versus-RL split. "It must run offline on a laptop" changes deploy. "Legal says no synthetic data" changes data collection and pushes harder on the verifier.
+The interviewer will change a constraint mid-round; the question bank says so. Map the new constraint to the stage it changes and re-derive only that stage. "You now have a tenth of the compute" changes model size and the SFT-versus-RL split. "It must run offline on a laptop" changes deploy. "Legal says no synthetic data" changes data collection and pushes harder on the verifier.
 
 | Follow-up | Strong answer |
 |---|---|
 | How do you know the eval is not contaminated? | Overlap check between train and test by n-grams and embeddings; remove any hit; report results only on the clean set |
-| Why not just SFT on more solutions? | SFT teaches the shape of an answer; finding answers to unseen problems comes from training on the model's own attempts against a checker |
+| Why not SFT on more solutions instead? | SFT teaches the shape of an answer; finding answers to unseen problems comes from training on the model's own attempts against a checker |
 | Why keep a drift penalty? | Without it the policy games the scorer's blind spots: formatting tricks, padding, confident wrong answers |
 | DPO or RLHF? | DPO for preference data, simpler and usually more stable; RL with a verifier where correctness is checkable by program |
 | How do you stop general ability collapsing? | Mix general data into SFT and post-training; regression suite with a maximum allowed drop in the gate |
@@ -46,7 +46,7 @@ The interviewer's pivot after a good design is "the training bill is out of cont
 | Cheapest lever first | Ablate data mixes and rewards on a small model first; adapters (LoRA) for iteration, full fine-tune only when an adapter plateaus; fewer samples per prompt on easy problems; checkpoint on a fixed interval with data position; stop runs whose eval stops improving per GPU-hour |
 | Metric that proves it | Eval score gained per GPU-hour; model FLOPs utilisation; GPU-hours lost to restarts; rollout tokens per accepted training example |
 | Do not | Launch the full-scale run to find out whether the recipe works, or tune hyperparameters against the test set |
-| 60-second line | Training spend is experiments, not runs. Prove the recipe small, iterate with adapters, spend rollouts where problems are hard, and checkpoint so a failure costs minutes. The metric is eval gained per GPU-hour. |
+| 60-second line | Treat training spend as a series of experiments. Prove the recipe small, iterate with adapters, spend rollouts where problems are hard, and checkpoint so a failure costs minutes. The metric is eval gained per GPU-hour. |
 
 The four verbs from the cost playbook still generate the answer. Measure, by attributing GPU-hours to stage and experiment. Route, by matching method to need: adapters for iteration, full fine-tune for the final run, distillation for serving. Bound, with a budget per stage and a kill rule. Cache safely, by reusing verified synthetic data and scored rollouts across experiments when the policy has not moved far.
 
@@ -98,17 +98,17 @@ Every level can name SFT and RL; the level shows in which stage gets the budget 
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Kaplan et al. 2020, Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361) — training ≈ 6 × parameters × tokens FLOPs; generation ≈ 2 × parameters per token
-- [Rajbhandari et al. 2019, ZeRO](https://arxiv.org/abs/1910.02054) — ~16 bytes per parameter for mixed-precision Adam (≈112 GB for 7B)
-- [Hoffmann et al. 2022, Training Compute-Optimal LLMs (Chinchilla)](https://arxiv.org/abs/2203.15556) — ~20 training tokens per parameter
-- [AutoTrain LLM fine-tuning parameters](https://huggingface.co/docs/autotrain/main/en/params/llm_finetuning_params) — current flag names `--peft` and `--quantization int4`
-- [Singhal et al. 2023, A Long Way to Go: Length Correlations in RLHF](https://arxiv.org/abs/2310.03716) — graders favour longer answers
-- [Hosking et al. 2023, Human Feedback is not Gold Standard](https://arxiv.org/abs/2309.16349) — graders favour assertive, confident answers
-- [Rafailov et al. 2023, Direct Preference Optimization](https://arxiv.org/abs/2305.18290) — DPO trains on preference pairs with no separate reward model
-- [Xu et al. 2024, Is DPO Superior to PPO for LLM Alignment?](https://arxiv.org/abs/2404.10719) — well-tuned PPO can match or beat DPO
-- [Lambert et al. 2024, Tulu 3 (RLVR)](https://arxiv.org/abs/2411.15124) — RL with a programmatic verifier works well where correctness is checkable
-- [DeepSeek-AI 2025, DeepSeek-R1](https://arxiv.org/abs/2501.12948) — rule-based rewards for math and code
-- [PyTorch blog: Quantization-Aware Training for LLMs](https://pytorch.org/blog/quantization-aware-training/) — QAT loses less quality than post-training quantisation
-- [Ovadia et al. 2023, Fine-Tuning or Retrieval?](https://arxiv.org/abs/2312.05934) — RAG beats fine-tuning for injecting new facts; fine-tuning does so weakly
-- [Zhao et al. 2024, LoRA Land](https://arxiv.org/abs/2405.00732) — small LoRA-tuned models often match larger prompted ones on narrow tasks, varying by task
+- [Kaplan et al. 2020, Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361): training ≈ 6 × parameters × tokens FLOPs; generation ≈ 2 × parameters per token
+- [Rajbhandari et al. 2019, ZeRO](https://arxiv.org/abs/1910.02054): ~16 bytes per parameter for mixed-precision Adam (≈112 GB for 7B)
+- [Hoffmann et al. 2022, Training Compute-Optimal LLMs (Chinchilla)](https://arxiv.org/abs/2203.15556): ~20 training tokens per parameter
+- [AutoTrain LLM fine-tuning parameters](https://huggingface.co/docs/autotrain/main/en/params/llm_finetuning_params): current flag names `--peft` and `--quantization int4`
+- [Singhal et al. 2023, A Long Way to Go: Length Correlations in RLHF](https://arxiv.org/abs/2310.03716): graders favour longer answers
+- [Hosking et al. 2023, Human Feedback is not Gold Standard](https://arxiv.org/abs/2309.16349): graders favour assertive, confident answers
+- [Rafailov et al. 2023, Direct Preference Optimization](https://arxiv.org/abs/2305.18290): DPO trains on preference pairs with no separate reward model
+- [Xu et al. 2024, Is DPO Superior to PPO for LLM Alignment?](https://arxiv.org/abs/2404.10719): well-tuned PPO can match or beat DPO
+- [Lambert et al. 2024, Tulu 3 (RLVR)](https://arxiv.org/abs/2411.15124): RL with a programmatic verifier works well where correctness is checkable
+- [DeepSeek-AI 2025, DeepSeek-R1](https://arxiv.org/abs/2501.12948): rule-based rewards for math and code
+- [PyTorch blog: Quantization-Aware Training for LLMs](https://pytorch.org/blog/quantization-aware-training/): QAT loses less quality than post-training quantisation
+- [Ovadia et al. 2023, Fine-Tuning or Retrieval?](https://arxiv.org/abs/2312.05934): RAG beats fine-tuning for injecting new facts; fine-tuning does so weakly
+- [Zhao et al. 2024, LoRA Land](https://arxiv.org/abs/2405.00732): small LoRA-tuned models often match larger prompted ones on narrow tasks, varying by task
 

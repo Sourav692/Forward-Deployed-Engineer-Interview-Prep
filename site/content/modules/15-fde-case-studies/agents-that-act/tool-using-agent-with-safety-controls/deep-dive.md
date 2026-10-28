@@ -15,7 +15,7 @@ An approval is a durable record of reviewer, time, rationale, exact payload, ten
 ## 2. Nine components and their failure behaviour
 
 | Component | Control it owns | If unavailable |
-|---|---|
+|---|---|---|
 | Planner | Next bounded proposal, stop condition, step budget | Pause and escalate. |
 | Task state store | Durable workflow progress | Stop writes; no untracked continuation. |
 | Tool registry | Declared schemas, data class, risk label | Undeclared tool cannot run. |
@@ -32,13 +32,13 @@ The user boundary ends at authentication, planner boundary at proposal, policy b
 
 Use `Impact × Likelihood × Irreversibility` as a qualitative risk aid, not a numeric proof. A public FAQ read may be autonomous; a CRM update may need preconditions; a refund may need human approval; some exports or permission changes are blocked. Refund reversibility in software does not erase customer, finance, or abuse costs.
 
-The source’s planning anchor is **50k users, 20 QPS peak, 10 actions/task**: roughly 200 tool actions/s. Iterative plans may reach 40–60 model calls/s. With about 1 s of planner compute/task, the planner needs roughly 20 core-seconds per second at peak, plus slack for tails. Illustrative 5 KB decision + 20 KB audit/task gives about 100–400 KB/s and 8.6–34.6 GB/day raw before indexing/replication. At 10× peak, ask what saturates first: planner, approval queue, adapter, ledger, or refund service. At 10× lower load, simplify deployment but keep the same safety boundary.
+The source’s planning anchor is 50k users, 20 QPS peak, and 10 actions/task, roughly 200 tool actions/s. Iterative plans may reach 40–60 model calls/s. With about 1 s of planner compute/task, the planner needs roughly 20 core-seconds per second at peak, plus slack for tails. Illustrative 5 KB decision + 20 KB audit/task gives about 100–400 KB/s and 8.6–34.6 GB/day raw before indexing/replication. At 10× peak, ask what saturates first: planner, approval queue, adapter, ledger, or refund service. At 10× lower load, simplify deployment but keep the same safety boundary.
 
 Cap concurrency by user, tool, and globally; also cap value and destination. Partition ordered work by account or workflow so conflicting writes do not race. Reads can run in parallel; writes and approvals must follow state transitions. Long workflows return a job ID and continue asynchronously.
 
 ## 4. Integrations at enterprise scale
 
-The layers have different jobs: **REST/SOAP/SQL execute; function calling lets a model select a tool; MCP advertises tools/resources; an agent framework coordinates multi-step work.** MCP does not replace the underlying API. Direct REST is enough for a fixed deterministic workflow, while a planner earns its overhead only when a request spans systems.
+The layers have different jobs. REST/SOAP/SQL execute; function calling lets a model select a tool; MCP advertises tools/resources; an agent framework coordinates multi-step work. MCP does not replace the underlying API. Direct REST is enough for a fixed deterministic workflow, while a planner earns its overhead only when a request spans systems.
 
 Putting 1,500 functions from 100 applications into every prompt makes selection and schema maintenance brittle. A registry loads only task-relevant tool descriptions and carries typed arguments, data class, risk, and scopes. At 500+ applications/200k employees, scale stateless planner/gateway services, use per-user and per-app quotas, keep long work async, and place region-local gateways/tool servers where data residency requires it.
 
@@ -46,7 +46,7 @@ The model never receives a broad API key. A trusted service propagates enterpris
 
 ## 5. Security and failure drills
 
-The four controls are a set: untrusted tool observations, no broad long-lived credentials, validation of proposals, and ceilings on steps/spend/amount/destinations. Add defense in depth: policy, broker, idempotent gateway, ledger, and kill switch. Scope failures by tenant, region, workflow, and dependency.
+The four controls are a set: untrusted tool observations, no broad long-lived credentials, validation of proposals, and ceilings on steps/spend/amount/destinations. Add defence in depth: policy, broker, idempotent gateway, ledger, and kill switch. Scope failures by tenant, region, workflow, and dependency.
 
 | Drill | Expected behaviour |
 |---|---|
@@ -71,13 +71,13 @@ Rollout: read-only triage/draft → narrow reversible CRM writes with owner/reve
 
 Agent steps and tool calls, including retries after rejected or failed actions, are the common cost driver. Profile model planning versus downstream tool wait versus approval. If planner-heavy, route common intents deterministically and combine safe reads; if tool-heavy, cache safe reads in-request and prefetch; if approval-heavy, improve proposal clarity and risk classification, never bypass approval.
 
-For a **tool loop**, inspect the trace for repeated tool/observation pairs and missing state transitions, then impose max steps, result cache, clear stopping criteria, and tool-selection tests. For a **tool timeout**, find the critical path, parallelise independent reads, set per-tool deadlines, and move slow side effects to an async job with status. Measure steps, tool latency, retries, timeouts, and cost before and after.
+For a tool loop, inspect the trace for repeated tool/observation pairs and missing state transitions, then impose max steps, result cache, clear stopping criteria, and tool-selection tests. For a tool timeout, find the critical path, parallelise independent reads, set per-tool deadlines, and move slow side effects to an async job with status. Measure steps, tool latency, retries, timeouts, and cost before and after.
 
 ## 8. Refund near miss: planner failure, gateway success
 
-The source incident’s support agent asked to handle delayed VIP shipments. The planner selected `refund_customer` for 18 orders. A €740 request exceeded a €250 no-approval threshold; six calls were blocked, 12 allowed, and no unauthorised money moved. A planner prompt designed to be “more action-oriented” omitted bulk approval boundaries. The unchanged gateway policy blocked the high-value actions.
+In the source incident, a support agent asked the agent to handle delayed VIP shipments. The planner selected `refund_customer` for 18 orders. A €740 request exceeded a €250 no-approval threshold; six calls were blocked, 12 allowed, and no unauthorised money moved. A planner prompt designed to be “more action-oriented” omitted bulk approval boundaries. The unchanged gateway policy blocked the high-value actions.
 
-Contain by disabling bulk refund planning, forcing VIP refunds into review-ticket mode, adding user confirmation, and auditing the 12 allowed actions. Prevent with threshold-aware schemas, policy simulation, a separate action-risk check, better planner examples, and non-bypassable gateway enforcement. Treat it as a near miss even though the money gate held; the proposal distribution deteriorated.
+Contain by disabling bulk refund planning, forcing VIP refunds into review-ticket mode, adding user confirmation, and auditing the 12 allowed actions. Prevent with threshold-aware schemas, policy simulation, a separate action-risk check, better planner examples, and non-bypassable gateway enforcement. Treat it as a near miss even though the money gate held, because the proposal distribution got worse.
 
 ## 9. Interview trade-offs
 

@@ -16,20 +16,20 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 ## 1. Ask the Four Questions That Decide the Design
 
-This case is framed as an FDE round, and it runs in interview order. Clarifying questions come first, each answer is recorded, and each answer's implication is drawn out. In this format the questions *are* the design.
+This case is framed as an FDE round, and it runs in interview order. Clarifying questions come first; you record each answer and draw out its implication. In this format, the questions shape the design.
 
 The prompt: the FDE is embedded with a mid-size logistics customer. They want an AI exception-handling assistant that watches their shipment pipeline and detects disruptions: customs holds, missed carrier scans, weather delays. It either auto-resolves them or drafts a resolution for a human ops agent to approve. It works across multiple carriers and a mix of real-time and batch feeds.
 
 | Asked | Answer | Implication |
 |---|---|---|
-| **Data volume and freshness per carrier?** | Mixed. ~60% of carriers push real-time webhooks — scan events, status changes — ~200 events/s combined at peak. ~40%, mostly smaller regional carriers, provide batch file drops (CSV/EDI) every 2–6 hours, a few thousand records each | Ingestion needs **both** a streaming path and a scheduled batch path feeding the same pipeline — not a single uniform interface |
-| **Who are the users, and what scale?** | Internal only — the customer's ops team. ~150 agents across three shifts, ~40 concurrent at peak during shift handoff, each handling 30–50 cases a day | **Low-DAU, high-stakes-per-interaction.** Scale pressure comes from event throughput, not concurrent users — a very different sizing profile from a consumer assistant |
-| **What is the auto-resolve vs human-approval boundary?** | Value- and confidence-based: under $500 shipment value + high confidence → auto-resolve. **Customs/regulatory holds → always human, regardless of confidence.** Over $500, or below the confidence threshold → always human | **The core risk-boundary decision.** It defines a policy layer in front of every auto-resolution, with customs as a distinct always-gated path — not just a low-confidence case |
-| **Regional or multi-tenant topology?** | One customer, one assistant experience, operating across US, EU and APAC with different carriers per region — and the customer requires that **EU data stays in the EU** (their requirement; GDPR itself allows transfers with safeguards) | Rules out a single global deployment or data store. Regional data isolation behind one coherent experience |
+| **Data volume and freshness per carrier?** | Mixed. ~60% of carriers push real-time webhooks (scan events, status changes), ~200 events/s combined at peak. ~40%, mostly smaller regional carriers, provide batch file drops (CSV/EDI) every 2–6 hours, a few thousand records each | Ingestion needs both a streaming path and a scheduled batch path feeding the same pipeline, not a single uniform interface |
+| **Who are the users, and what scale?** | Internal only: the customer's ops team. ~150 agents across three shifts, ~40 concurrent at peak during shift handoff, each handling 30–50 cases a day | **Low-DAU, high-stakes-per-interaction.** Scale pressure comes from event throughput, not concurrent users. That is a very different sizing profile from a consumer assistant |
+| **What is the auto-resolve vs human-approval boundary?** | Value- and confidence-based: under $500 shipment value + high confidence → auto-resolve. Customs/regulatory holds → always human, regardless of confidence. Over $500, or below the confidence threshold → always human | **The core risk-boundary decision.** It defines a policy layer in front of every auto-resolution, with customs as a distinct always-gated path, separate from the low-confidence case |
+| **Regional or multi-tenant topology?** | One customer, one assistant experience, operating across US, EU and APAC with different carriers per region, and the customer requires that EU data stays in the EU (their requirement; GDPR itself allows transfers with safeguards) | Rules out a single global deployment or data store. Regional data isolation behind one coherent experience |
 
-Each answer moved a box. That adaptation is the signal the round scores. The example the source gives for auto-resolve is concrete: rebooking a missed scan on a known route.
+Each answer moved a box. That adaptation is the signal the round scores. The source's auto-resolve example is rebooking a missed scan on a known route.
 
-The mock session in the source folder ran exactly these four questions. It ended on the architecture prompt below, which is the place to practise picking up from:
+The mock session in the source folder ran exactly these four questions. It ended on the architecture prompt below; practise picking up from there:
 
 > *"Walk me through your high-level architecture. What are the major components, and how does an event — say, a missed carrier scan — flow through the system from ingestion to either auto-resolution or a human agent's queue?"*
 
@@ -63,11 +63,11 @@ The non-functional list is the source's. The measurable targets in the right col
 | Cost | Cost-efficient at a modest, bounded user scale (150 agents, not millions of consumers) | Cost per resolved exception, with the model called only on detected exceptions |
 | Extensibility | New carriers without a redeploy of the core | Adapter contract test passes before a carrier goes live |
 
-The constraint that dominates the rest is the customs rule. It is not a threshold to tune. It is an invariant the gate must hold for every input, including a model that is wrong and confident.
+The customs rule dominates the rest. The gate holds it as an invariant for every input, including a model that is wrong and confident, and nobody tunes it like a threshold.
 
 ## 3. Size by Event Throughput, Not by Users
 
-This system is not scale-constrained by users. It is constrained by event throughput and correctness. I'd treat forty concurrent agents as a single-server load. Two hundred events a second, bursting during a regional storm, is the real sizing problem.
+Event throughput and correctness constrain this system, not user count. I'd treat forty concurrent agents as a single-server load. Two hundred events a second, bursting during a regional storm, is the real sizing problem.
 
 The arithmetic below is own construction from the source's figures. Say it aloud, because it decides where the model sits.
 
@@ -79,11 +79,11 @@ The arithmetic below is own construction from the source's figures. Say it aloud
 | Concurrent approvers at peak | ~40, during shift handoff | The approval queue, not the model, is the human bottleneck |
 | Batch drops | every 2–6 hours, a few thousand records each | Batch exceptions surface hours late by design |
 
-The gap between the first two rows and the third is the design. Most events are routine scans. Detection is a rules-and-classifier layer on the stream, and the resolution model runs only on the small fraction that is actually an exception. Put the model on the event stream and cost and latency scale with every scan. Put it behind detection and they scale with disruptions.
+The gap between the first two rows and the third is the design. Most events are routine scans. Detection is a rules-and-classifier layer on the stream, and the resolution model runs only on the small fraction that is an exception. Put the model on the event stream and cost and latency scale with every scan. Put it behind detection and they scale with disruptions.
 
 ## 4. Draw the Architecture End to End
 
-Two ingestion paths, one exception pipeline, a policy gate before anything acts. That sentence is the whole design, and the diagram should say it before any box is explained.
+Two ingestion paths, one exception pipeline, a policy gate before anything acts. The diagram should say that before you explain any box.
 
 The source's own diagram, kept verbatim:
 
@@ -194,19 +194,19 @@ Read the components in the order an event meets them. The component names and re
 | 06 | Policy Gate | Customs first, then value and confidence; the auto-versus-human verdict | Closed: any missing field or error means human |
 | 07 | Auto-resolve executor | Executes the resolution with an idempotency key behind a circuit breaker | Degrades to the human queue when the carrier API is flaky |
 | 08 | Human approval queue | Ops agents approve, edit or reject drafted resolutions | Alerts on depth during shift handoff |
-| 09 | Carrier / ops systems | The systems of record that actually move the shipment | Outside the design; guarded by least-privilege scopes |
+| 09 | Carrier / ops systems | The systems of record that move the shipment | Outside the design; guarded by least-privilege scopes |
 | 10 | Audit log | Every gate verdict and every action, with confidence and reasoning | Closed: an action that cannot be logged does not run |
 | 11 | Shared control plane | Logic, routing, policy definitions, UI, versioned identically per region | A bad release rolls back everywhere at once |
 | 12 | Regional data plane | Event store, any vector store, audit log; never replicates across regions | Closed at the region boundary |
 
-Point at three things while the diagram is up *(own construction)*. The gate is its own box, not a check inside the agent. Both ingestion paths converge after ingestion, not before. And the region boundary cuts through storage, not through logic.
+Point at three things while the diagram is up *(own construction)*. The gate is its own box, not a check inside the agent. Both ingestion paths converge after ingestion, not before. The region boundary cuts through storage, not through logic.
 
 ## 5. Unify Streaming and Batch After Ingestion, Not Before
 
 Forcing the 40% batch-only carriers onto a fake "real-time" interface buys nothing. It means polling a file drop every few seconds. The data does not get fresher, and only the infrastructure gets more complex. A poll cannot make a carrier report sooner than it reports.
 
-Both paths converge *after* ingestion instead. Webhook ingest validates and deduplicates, then pushes onto the stream immediately. Detection must be genuinely low-latency on this path. Batch ingest picks up the carrier's drop on its schedule, every 2–6 hours. It parses the drop and **diffs it against the last known state per shipment**, so only changes enter the stream. Both paths write the same normalised event schema. Detection never needs to know which path an event came from.
+Both paths converge *after* ingestion instead. Webhook ingest validates and deduplicates, then pushes onto the stream immediately. Detection must be low-latency on this path. Batch ingest picks up the carrier's drop on its schedule, every 2–6 hours. It parses the drop and diffs it against the last known state per shipment, so only changes enter the stream. Both paths write the same normalised event schema. Detection never needs to know which path an event came from.
 
-A missed scan on a batch carrier is inherently detected late. **Surface that latency to agents rather than hide it.** It changes how urgently they should act. Tag every batch-sourced exception with its detection lag, and show it on the draft.
+A missed scan on a batch carrier is detected late by design. Surface that latency to agents instead of hiding it, because it changes how urgently they should act. Tag every batch-sourced exception with its detection lag, and show it on the draft.
 
 The same idea appears as channel adapters in the Agent Platform for Non-Technical Users case. Here the channels are carrier feeds.

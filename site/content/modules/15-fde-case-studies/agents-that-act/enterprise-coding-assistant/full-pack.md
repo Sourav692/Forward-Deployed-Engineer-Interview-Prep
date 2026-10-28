@@ -2,7 +2,7 @@
 
 *A completion has to arrive before the developer's next keystroke, and it has to know the private codebase without leaking it.*
 
-A coding assistant is a context-engineering problem before it is a model problem, because "must feel instant" and "must understand the whole repository" pull in opposite directions. This group has one worked design and one question-bank prompt, so the page is shorter than its siblings; it consolidates the group's prompts into one read for the day before.
+A coding assistant is a context-engineering problem before it is a model problem, because "must feel instant" and "must understand the whole repository" pull in opposite directions. This group has one worked design and one question-bank prompt, so the page is shorter than its siblings and folds the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -17,9 +17,9 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 ## 1. Set the Latency Budget Before Drawing Anything
 
-Ask whether suggestions are real-time as the user types, because the answer sets the latency budget before anything else is designed. It is yes, and the budget is under 300 ms. Everything after that is a way of spending 300 ms.
+Ask whether suggestions are real-time as the user types; the answer sets the latency budget before you design anything else. The answer is yes, with a budget under 300 ms. Everything after that is a way of spending 300 ms.
 
-The prompt: design an AI-powered coding assistant like GitHub Copilot with real-time completion, code explanation, unit-test generation, bug fixing, refactoring and developer Q&A, integrated into the IDE. Explain how context engineering, semantic retrieval, model routing, semantic caching and output validation combine to keep suggestions fast, accurate and safe. The enterprise version narrows it: a large company wants an internal coding assistant grounded in its private repositories.
+The prompt: design an AI-powered coding assistant like GitHub Copilot with real-time completion, code explanation, unit-test generation, bug fixing, refactoring and developer Q&A, integrated into the IDE. Explain how context engineering, semantic retrieval, model routing, semantic caching and output validation keep suggestions fast, accurate and safe. The enterprise version narrows it: a large company wants an internal coding assistant grounded in its private repositories.
 
 | Question | Answer | What it decides |
 |---|---|---|
@@ -83,7 +83,7 @@ The OpenAI-style practice prompt adds the indexing side: repository indexing wit
 
 ## 4. Draw the Architecture End to End
 
-The organising rule is cache first, retrieve only on a miss, route by task complexity. The semantic cache is the load-bearing latency optimisation. The common case, a completion the assistant has effectively seen before, skips embedding, retrieval and often the large model entirely.
+The organising rule is cache first, retrieve only on a miss, route by task complexity. The semantic cache is the load-bearing latency optimisation. The common case, a completion the assistant has already seen, skips embedding, retrieval and often the large model.
 
 The source's own diagram, kept verbatim:
 

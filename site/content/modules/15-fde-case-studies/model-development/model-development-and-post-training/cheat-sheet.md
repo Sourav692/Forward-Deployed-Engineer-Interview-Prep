@@ -10,7 +10,7 @@ Math level? Final answer or valid working? Tools allowed? Who uses it? Base-mode
 
 `Checkable data → dedupe/decontaminate → SFT format → sample model attempts → verifier/step/preference score → controlled update → held-out eval gate → optional distill/quantize → serve → reviewed data feedback`
 
-The model is trained; deterministic checks and human labels control advancement.
+The model is only trained; deterministic checks and human labels decide which checkpoint advances.
 
 ## Numbers are source assumptions
 
@@ -18,9 +18,9 @@ Training ≈ `6ND` FLOPs; generation ≈ `2N` FLOPs/token. 7B × 50M SFT tokens 
 
 ## Gate and pivots
 
-- SFT teaches format; verified rollouts optimise correctness. Step grading is needed when working itself matters.
+- SFT teaches format; verified rollouts optimise correctness. Add step grading when the working itself matters.
 - Decontaminate and split by source/time; report pass@1 and sampling settings.
-- Gate math, general regression, ill-posed answers, harmful compliance **and** over-refusal.
+- Gate math, general regression, ill-posed answers, harmful compliance and over-refusal.
 - Compute pivot: small ablations, adapters, targeted rollouts, full-state checkpoints, eval gain/GPU-hour.
 - Phone pivot: student model, 4-bit weights plus KV/runtime, and on-device politeness/latency/battery checks.
 

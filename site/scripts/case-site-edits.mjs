@@ -137,7 +137,7 @@ function nameCodes(text, codes, own) {
   const cap = (s, str, at) => (sentenceStart(str, at) ? s[0].toUpperCase() + s.slice(1) : s)
   return (
     text
-      .replace(/^(#{1,6}) G\d{2} — /gm, '$1 ')
+      .replace(/^(#{1,6}) G\d{2}(?: [—–-])? /gm, '$1 ')
       .replace(/\[G\d{2} ([^\]]+)\]/g, '[$1]')
       .replace(/\bG\d{2}[–-]G\d{2}\b/g, 'the scenario-pack cases')
       // Its own page: "this case".
@@ -159,6 +159,20 @@ function nameCodes(text, codes, own) {
   )
 }
 
+const matched = new Set()
+
+/**
+ * Throws if one of a case's `replace` rules matched none of its documents. A stale rule
+ * is not harmless: the line it rewrote may now be dropped by the cut instead, silently.
+ * Call it once the case's documents have all been through `applySiteEdits`.
+ */
+export function assertReplaceRulesUsed(slug) {
+  const stale = (CASE_SITE_EDITS[slug]?.replace ?? []).filter(([from]) => !matched.has(from))
+  if (stale.length) {
+    throw new Error(`Site edits for ${slug}: replace rules match nothing (the source changed?): ${stale.map(([f]) => JSON.stringify(f)).join(', ')}`)
+  }
+}
+
 /**
  * Applies the site-only edits to one document's markdown. `ctx.codes` maps each case
  * code to its title and `ctx.own` is the page's own code (null for a standalone case).
@@ -167,7 +181,10 @@ function nameCodes(text, codes, own) {
  */
 export function applySiteEdits(slug, markdown, file, ctx) {
   let text = markdown
-  for (const [from, to] of CASE_SITE_EDITS[slug]?.replace ?? []) text = text.split(from).join(to)
+  for (const [from, to] of CASE_SITE_EDITS[slug]?.replace ?? []) {
+    if (text.includes(from)) matched.add(from)
+    text = text.split(from).join(to)
+  }
   text = nameCodes(wordSymbols(text), ctx.codes, ctx.own ?? 'G00')
 
   const out = []

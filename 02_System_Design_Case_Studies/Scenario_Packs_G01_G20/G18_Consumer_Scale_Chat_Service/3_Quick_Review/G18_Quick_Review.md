@@ -1,4 +1,4 @@
-# G18 — Consumer-Scale Chat Service: Cheat Sheet
+# G18 Consumer-Scale Chat Service: Cheat Sheet
 
 [Main](../1_Interview_Guide/G18_Interview_Guide.md) · [Deep Dive](../2_Technical_Deep_Dive/G18_Technical_Deep_Dive.md) · [Unchanged source](../4_Full_Design/G18_Full_Design.md)
 
@@ -20,7 +20,7 @@ Disconnect cancels model and tools. User scope comes from auth at every store an
 
 - The model is stateless; the product is not.
 - Store every turn, send only the summary/recent turns/relevant memory.
-- Rate limit decides **whether**; fair queue decides **when**.
+- Rate limit decides whether a request runs; fair queue decides when.
 - Stable byte-exact prefix and warm replica save input prefill; a model cascade may lose that cache.
 - Streaming improves perceived latency; cancellation saves actual GPU cost.
 

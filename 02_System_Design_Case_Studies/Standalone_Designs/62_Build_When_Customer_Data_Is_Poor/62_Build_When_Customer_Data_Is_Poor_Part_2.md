@@ -117,21 +117,21 @@ Read the components in dependency order *(own construction)*:
 
 A defect caught at ingestion costs one rejected record. The same defect caught after the model costs a wrong recommendation, a reviewer's time, and some trust. So the gates sit before extraction, not in the output guardrail.
 
-The enterprise RAG design's ingestion pipeline states the rule in one line: "An unmappable document is quarantined, not defaulted to `internal`." Defaulting is how a latent defect gets indexed. The same rule applies to a warranty claim. A claim with a placeholder serial number is flagged as missing, never assigned a guessed value. The pipeline also records per-source `last_synced_at` and every rejected document with its reason. It keeps those queryable after the process exits, not just printed. That is the quarantine box in section 7.
+The enterprise RAG design's ingestion pipeline states the rule in one line: "An unmappable document is quarantined, not defaulted to `internal`." Defaulting is how a latent defect gets indexed. The same rule applies to a warranty claim. A claim with a placeholder serial number is flagged as missing, never assigned a guessed value. The pipeline also records per-source `last_synced_at` and every rejected document with its reason. It keeps those queryable after the process exits rather than only printing them. That is the quarantine box in section 7.
 
-Content hashing belongs here too. The same pipeline hashes each document's text and skips re-embedding anything unchanged. In the claims design, that hash stops re-extraction of scanned invoices that have not changed. Extraction is the most expensive step, so this matters for cost as well as correctness.
+Content hashing belongs here too. The same pipeline hashes each document's text and skips re-embedding anything unchanged. In the claims design, that hash stops re-extraction of scanned invoices that have not changed. Extraction is the most expensive step, so the hash saves cost as well as stopping duplicates from looking new.
 
-Repairing at the pipeline treats the symptom. Repairing at source treats the cause. The FDE cross-team case resolved exactly this conflict with data contracts. Software teams wanted speed, while data and AI teams needed stable, high-quality data. "Data contracts turned an ownership argument into an interface agreement." In this design, the contract makes serial number required at entry and fixes one failure-code list across both ERPs. The pipeline's quarantine report becomes the evidence that the contract is needed.
+Repairing at the pipeline treats the symptom. Repairing at source treats the cause. The FDE cross-team case resolved this conflict with data contracts. Software teams wanted speed, while data and AI teams needed stable, high-quality data. "Data contracts turned an ownership argument into an interface agreement." In this design, the contract makes serial number required at entry and fixes one failure-code list across both ERPs. The pipeline's quarantine report becomes the evidence that the contract is needed.
 
 ## 9. Grow Labels From the Review Queue
 
-Poor labels are a starting condition, not a permanent one. The review queue is the machine that turns adjuster time into trusted labels. Design it that way from day one *(own construction)*.
+Poor labels are a starting condition, not a permanent one. The review queue turns adjuster time into trusted labels. Design it that way from day one *(own construction)*.
 
 Three rules make corrections usable as labels. First, the correction happens in the tool, on the field, with the original value kept. A reviewer who fixes a claim in the ERP directly leaves no trace the system can learn from. Second, each correction records who made it and when. Labels from a reviewer with low agreement can then be weighted down. Third, disagreements go to adjudication, not to whoever clicked last.
 
 The Cracking book's dataset hygiene applies unchanged. Deduplicate first, because "100,000 raw traces might be a few thousand distinct problems". Split held-out cases by time and user, never at random. Route low-agreement, high-impact cases to human adjudication. It also names the trap in automatic labels. An automatic outcome label such as "user didn't complain" is not the same as "correct." For claims, "approved and not disputed" is a weak label, not a gold one.
 
-Weak supervision earns its place on the failure-code field, where κ was 0.52. Three cheap rules vote: a keyword map from description to code, the part's historical most-common failure, and the extraction model's own guess. Each vote is scored against the adjudicated sample. Where the rules agree with high confidence, the label is used for training. Where they disagree, the claim goes to the review queue. The disagreement itself is the signal that tells the system where people are needed.
+Weak supervision earns its place on the failure-code field, where κ was 0.52. Three cheap rules vote: a keyword map from description to code, the part's historical most-common failure, and the extraction model's own guess. Each vote is scored against the adjudicated sample. Where the rules agree with high confidence, the label is used for training. Where they disagree, the claim goes to the review queue. The disagreement tells the system where people are needed.
 
 Synthetic claims fill one gap only: rare failure modes the history lacks, such as a new pump model with no claims yet. They are tagged as synthetic in the label store and excluded from any headline metric.
 
@@ -143,11 +143,11 @@ The source material gives three ways to seed it. The RAG study guide suggests mi
 
 Size the set honestly. The Cracking book's arithmetic is `n ≈ 15.7 × p(1−p) / δ²` per arm, to detect a difference δ near a success rate p. At p = 0.8, a 5-point gain needs ~1,000 cases per arm. A 200-case suite cannot reliably detect anything smaller than ~11 points. A 100-claim seed set therefore gates only large changes. Say so, and detect smaller changes through paired evaluation on the same cases, or through production metrics.
 
-Stratify the set and report per stratum. The book's list is intent, tenant size, data recency and difficulty. For claims it becomes ERP source, product line, attachment type and period. Aggregate accuracy hides a collapse on scanned claims from the acquired ERP, which is exactly where the data is worst.
+Stratify the set and report per stratum. The book's list is intent, tenant size, data recency and difficulty. For claims it becomes ERP source, product line, attachment type and period. Aggregate accuracy hides a collapse on scanned claims from the acquired ERP, which is where the data is worst.
 
 Include the "insufficient data" case at a realistic rate. A system never shown a claim that should be returned for more information learns to always decide. The book makes the same point about refusal and escalation cases.
 
-Watch the labels in the eval set as closely as the system under test. The enterprise RAG golden set's first war story is a label defect, not a system defect. A document was reported as leaked to an account manager who was permitted to read it. It was simply irrelevant. The fix split the label into two fields, one that gates and one that is only tracked, plus a test that stops the labels drifting again. Its lesson travels: *a false alarm from a bad label costs as much trust as a real failure.*
+Watch the labels in the eval set as closely as the system under test. The enterprise RAG golden set's first war story is a label defect, not a system defect. A document was reported as leaked to an account manager who was permitted to read it. It was irrelevant. The fix split the label into two fields, one that gates and one that is only tracked, plus a test that stops the labels drifting again. The lesson carries over to claims: *a false alarm from a bad label costs as much trust as a real failure.*
 
 Ship the set with a datasheet: collection window, filters, dedup method, split strategy, label source and known biases. The Cracking book's estimate is that an hour of documentation saves weeks of debugging six months later.
 
@@ -157,7 +157,7 @@ The hardest part of this case is a conversation, not a component. Nobody enjoys 
 
 Lead with measurements, not adjectives. "Your data is messy" invites a defence. "38% of claims are coded OTHER, and two of your adjusters agree on the code about half the time beyond chance" invites a plan. The scorecard exists partly to make this conversation factual.
 
-Frame phase 0 as value, not as delay. The readiness week already produces things the customer can use. It shows where the claim backlog is duplicated across the two ERPs. It gives a measured estimate of how much adjuster time goes to hunting for facts in scans. And it produces an agreed code list the business needed anyway. A data contract that stops "OTHER" at entry improves every report the customer runs, with or without AI.
+Frame phase 0 as value, not as delay. The readiness week already produces things the customer can use. It shows where the claim backlog is duplicated across the two ERPs. It gives a measured estimate of how much adjuster time goes to hunting for facts in scans. It also produces an agreed code list the business needed anyway. A data contract that stops "OTHER" at entry improves every report the customer runs, with or without AI.
 
 Offer a narrow first win alongside the repair. Extraction of serial numbers and invoice amounts from scans is useful on day one and needs no historical labels. It shortens every claim while the failure-code work matures. The customer then sees progress on the same dashboard where the data problems are tracked.
 

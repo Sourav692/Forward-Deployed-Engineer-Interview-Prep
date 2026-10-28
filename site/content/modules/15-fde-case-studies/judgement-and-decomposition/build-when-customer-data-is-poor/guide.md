@@ -1,8 +1,8 @@
 # Build an AI System When the Customer's Data Is Poor
 
-*The customer wants value this quarter, and the data can only prove what it actually contains.*
+*The customer wants value this quarter, and the data can only prove what it contains.*
 
-Poor data is not a reason to refuse the work. It is a reason to change what gets built first. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [the Scoping to Deployed Agent case](/design/scoping-to-deployed-agent#full-pack) and the gating discipline of [the Evaluation and Release Gating case](/design/evaluation-and-release-gating#full-pack) without repeating them.
+Poor data changes what gets built first. It is no reason to refuse the work. The page answers case #62 from the OpenAI Applied problem-decomposition bank. It follows the scoping discipline of [the Scoping to Deployed Agent case](/design/scoping-to-deployed-agent#full-pack) and the gating discipline of [the Evaluation and Release Gating case](/design/evaluation-and-release-gating#full-pack) without repeating them.
 
 | Case | What the page adds |
 |---|---|
@@ -30,7 +30,7 @@ The bank's list of mistakes to avoid applies with extra force here. "Starting wi
 
 ## 2. Ask the Questions That Decide Whether Data Matters
 
-Not every data problem blocks every use case. The clarifying questions find out which defects touch the decision the customer actually wants improved.
+Not every data problem blocks every use case. The clarifying questions find out which defects touch the decision the customer wants improved.
 
 | QUESTION | WHAT CHANGES WITH THE ANSWER |
 |---|---|
@@ -43,7 +43,7 @@ Not every data problem blocks every use case. The clarifying questions find out 
 | What data may leave which boundary? | Whether scanned documents can go to a hosted model |
 | Is a rules or reporting fix enough? | Whether AI is the right solution at all |
 
-The last question is on the source's list for a reason. Some "AI projects" are a missing dropdown on an entry form. Fixing the form beats building a model to guess what the dropdown would have said. Saying so is a signal of judgement, not a failure to sell.
+The last question comes from the source's list. Some "AI projects" are a missing dropdown on an entry form. Fixing the form beats building a model to guess what the dropdown would have said. Saying so is a signal of judgement, not a failure to sell.
 
 The bank's reusable opening fits this case well. Clarify the outcome, user, workflow, constraints and success measure, then state assumptions. The difference here is one extra promise: "and I will measure the data before I trust it."
 
@@ -62,9 +62,9 @@ The bank's reusable opening fits this case well. Clarify the outcome, user, work
 | Biased or unrepresentative | History covers some segments, not others | Record counts by segment and period against current traffic | Any claim of accuracy outside the covered segments | Stratified sampling; explicit out-of-scope segments |
 | Access-restricted | Data exists, but the project cannot use it | Sources with access granted versus requested | Everything downstream of that source | Escalate by day 3; design around the gap |
 
-Two rows deserve emphasis, because in my experience they fool teams most often.
+In my experience, two rows fool teams most often.
 
-**Inconsistent labels are worse than missing labels.** A missing label is visibly missing. An inconsistent one looks like ground truth, gets trained on, and then scores the model's copied errors as correct. The Cracking book's routing case is the canonical example. A fine-tune reported 94% accuracy against an 81% prompted baseline, then reached only ~78% in production. One of three compounding causes was that labels came from a previous version of the same system's routing decisions. The model learned the old system's errors, and evaluation marked them right. After deduplication, a split by time and a human-adjudicated relabel, the honest number came out near 83%. Production matched it within two points.
+**Inconsistent labels are worse than missing labels.** A missing label is visibly missing. An inconsistent one looks like ground truth, gets trained on, and then scores the model's copied errors as correct. The Cracking book's routing case shows it. A fine-tune reported 94% accuracy against an 81% prompted baseline, then reached only ~78% in production. One of three compounding causes was that labels came from a previous version of the same system's routing decisions. The model learned the old system's errors, and evaluation marked them right. After deduplication, a split by time and a human-adjudicated relabel, the honest number came out near 83%. Production matched it within two points.
 
 **Access restrictions are a data-quality problem in disguise.** The delivery framework in the Scoping to Deployed Agent case treats data access as its own risk, with a mechanism attached: "Start day 1, escalate day 3". Data nobody can read has quality zero, whatever it contains.
 
@@ -97,11 +97,11 @@ The scorecard scores only the dimensions the target decision depends on *(own co
 
 The thresholds are assumptions to adjust per domain. The decision rule is not. A red on a dimension the chosen design depends on means redesign or wait. A red on a dimension the design can route around means narrow the scope and say so in writing.
 
-The delivery framework in the Scoping to Deployed Agent case already has the slot for this week. It allocates days 3–4 to data readiness, and its gate is `data_access_granted`, signed by the customer SME. The scorecard is what raises the evidence bar behind that signature. Access being live is necessary. Access to data that scores red is not readiness.
+The delivery framework in the Scoping to Deployed Agent case already has the slot for this week. It allocates days 3–4 to data readiness, and its gate is `data_access_granted`, signed by the customer SME. The scorecard raises the evidence bar behind that signature. Access being live is necessary. Access to data that scores red is not readiness.
 
 ## 5. Decide What to Build Anyway, or Say Not Yet
 
-Poor data rules out some designs and barely affects others. The move is to pick a design whose weakest input is one the data can supply *(own construction)*.
+Poor data rules out some designs and barely affects others. Pick a design whose weakest input is one the data can supply *(own construction)*.
 
 | DESIGN THAT TOLERATES POOR DATA | WHY IT TOLERATES IT | WHAT IT STILL NEEDS |
 |---|---|---|
@@ -116,4 +116,4 @@ Weak supervision needs a gloss. Instead of hand-labelling every record, write se
 
 Synthetic data carries the sharpest caveat. The RAG study guide's advice on eval sets applies directly: "a small, real eval beats a synthetic one for customer-specific evaluation." Synthetic examples fill gaps in coverage. They cannot tell anyone how the system performs on this customer's records.
 
-Say "not yet" when three things line up. The target decision depends on a field that scores red. No design can route around it. And no human process exists that could generate the missing truth. The honest answer then is a data project with a date, not an AI project with a hope. The delivery framework's intake rule says the same thing about metrics: "Refuse to start. A two-week clock against an unmeasurable goal is worse than no clock."
+Say "not yet" when three things line up: the target decision depends on a field that scores red, no design can route around it, and no human process exists that could generate the missing truth. The honest answer then is a data project with a date, not an AI project with a hope. The delivery framework's intake rule says the same thing about metrics: "Refuse to start. A two-week clock against an unmeasurable goal is worse than no clock."

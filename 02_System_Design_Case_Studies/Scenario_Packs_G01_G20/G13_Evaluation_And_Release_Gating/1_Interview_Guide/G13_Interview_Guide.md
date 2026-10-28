@@ -1,19 +1,19 @@
-# G13 — Evaluation and Release Gating: Main Interview Guide
+# G13 Evaluation and Release Gating: Main Interview Guide
 
-**Release process** is: you want to change a prompt or model on a live app. A dashboard is not a decision. **Pass, block, or hold** is.
+**Release process:** you want to change a prompt or model on a live app, and someone has to decide pass, block, or hold. A dashboard does not decide.
 
-**G13 covers one slice:** a shared gate for ~30 apps vs a pinned production baseline. Not auto-tuning.
+**G13 covers one slice:** a shared gate for ~30 apps vs a pinned production baseline. Auto-tuning is out of scope.
 
 End to end, as the refund-bot prompt change:
 
 1. **Someone files a release** with frozen artifacts (prompt, model, retrieval, policy).
-2. **A versioned suite and rubric run** in a sandbox — not on live customers.
+2. **A versioned suite and rubric run** in a sandbox, never on live customers.
 3. **Deterministic checks plus a calibrated LLM grader** score quality, safety, latency, cost.
-4. **Policy compares to the pinned live version.** Groundedness −2% might auto-block or wait for a human — they already said which.
+4. **Policy compares to the pinned live version.** Groundedness −2% might auto-block or wait for a human; the owners set which in advance.
 5. **Hold goes to the risk owner**, not a random engineer override.
 6. **A prod miss becomes a golden-set case** before the next ship.
 
-That’s it: **pin candidate → eval vs baseline → pass/block/hold → learn.** Shipping on vibes stays out.
+**Pin candidate → eval vs baseline → pass/block/hold → learn.** No shipping on vibes.
 
 > **Source:** [Sources and Full Design](../4_Full_Design/G13_Full_Design.md). The [Deep Dive](../2_Technical_Deep_Dive/G13_Technical_Deep_Dive.md) expands the gate, graders and incident; the [Cheat Sheet](../3_Quick_Review/G13_Quick_Review.md) is for rehearsal.
 
@@ -34,13 +34,13 @@ Build a shared platform for 30 AI applications that makes a controlled **pass, b
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
-1. **Pin candidate artifacts** — prompt, model, retrieval, tool, policy.
+1. **Pin candidate artifacts:** prompt, model, retrieval, tool, policy.
 2. **Select versioned suites and rubrics.**
 3. **Run deterministic and model-based checks.**
 4. **Compare to the pinned production baseline.**
@@ -49,7 +49,7 @@ The easiest way to frame requirements in an interview is:
 7. **Record decisions, owners, and overrides.**
 8. **Sample production failures** into a reviewed test pipeline.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -70,7 +70,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The LLM grader provides one calibrated score, while deterministic checks, policy code and human authority control the release. Candidate applications and evaluation inputs run in a sandbox; the decision plane reads only validated completed results.
+The LLM grader gives one calibrated score; deterministic checks, policy code and human authority control the release. Candidate applications and evaluation inputs run in a sandbox; the decision plane reads only validated completed results.
 
 ```mermaid
 flowchart LR
@@ -102,7 +102,7 @@ flowchart LR
 
 **Quality** uses task-specific outcomes and a confidence-aware lower bound on candidate delta. **Safety** has an independent floor: better average quality cannot compensate for a safety regression. **Latency** and **cost** have agreed envelopes. Missing evidence blocks; thin evidence holds. A critical slice must pass on its own. For nondeterministic outputs, use repeated trials and outcome equivalence rather than exact text match.
 
-The source's sales-copilot incident shows why: the release suite passed **96.7% of 120 cases**, but only **six** covered regulated claims, with an **83.3%** pass on that slice. Production unsupported claims reached **8.7% versus 1.2% baseline** after a model route change and a policy evaluator changed from block to warn-only. Roll back the route, restore blocking, review affected drafts, and add claim-level cases for security status, ROI and customer-logo permission. Version the policy mode so it cannot bypass the gate.
+In the source's sales-copilot incident, the release suite passed 96.7% of 120 cases, but only six covered regulated claims, and that slice passed at 83.3%. Unsupported claims in production reached 8.7% versus 1.2% baseline after a model route change and a policy evaluator's switch from block to warn-only. Roll back the route, restore blocking, review affected drafts, and add claim-level cases for security status, ROI and customer-logo permission. Version the policy mode so it cannot bypass the gate.
 
 ## Grader trust, cost and rollout
 
@@ -114,4 +114,4 @@ Roll out on one critical app with an advisory recommendation; calibrate graders 
 
 ## Two-minute interview answer
 
-“I would build a release decision system, not just an evaluation dashboard. I pin the candidate and production baseline, run versioned cases in an isolated worker pool, score deterministic checks and calibrated LLM rubrics, and store immutable evidence. A policy engine compares quality, safety, latency and cost separately, with critical slices passing independently. Missing results block, thin samples hold, and humans handle disputes and overrides. I would start advisory on one critical app, validate the grader against humans, then harden the gate and expand. Post-release incidents become labelled regression cases, and the gate's own cost and escape rate are measured.”
+“I would build a release decision system, with an evaluation dashboard as one view of it. I pin the candidate and production baseline, run versioned cases in an isolated worker pool, score deterministic checks and calibrated LLM rubrics, and store immutable evidence. A policy engine compares quality, safety, latency and cost separately, with critical slices passing independently. Missing results block, thin samples hold, and humans handle disputes and overrides. I would start advisory on one critical app, validate the grader against humans, then harden the gate and expand. Post-release incidents become labelled regression cases, and the gate's own cost and escape rate are measured.”

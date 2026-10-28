@@ -1,6 +1,6 @@
-# G07 — Secure Multi-Tenant AI Platform: Deep Dive
+# G07 Secure Multi-Tenant AI Platform: Deep Dive
 
-The [Main guide](../1_Interview_Guide/G07_Interview_Guide.md) is the spoken answer. This is technical backup for the unchanged [source study](../4_Full_Design/G07_Full_Design.md), especially §§3–14.
+The [Main guide](../1_Interview_Guide/G07_Interview_Guide.md) is the spoken answer. This page is the technical backup, drawn from the unchanged [source study](../4_Full_Design/G07_Full_Design.md), especially §§3–14.
 
 ## 1. Immutable tenant context and authority
 
@@ -16,11 +16,11 @@ Three tenancy tiers trade cost for separation: shared rows with database enforce
 
 ## 3. Admission, fairness, and unit economics
 
-The source’s exercise is **500 tenants, 50k active users, 200 QPS peak, 20× skew**. Average QPS per tenant is 0.4, which cannot size peak concurrency, retries, failover, and long-tail inference. At 10× the planning case is **5,000 tenants and 2,000 QPS**; expect cache churn, noisy neighbors, and more regional partitions before merely adding one bigger inference pool.
+The source’s exercise is 500 tenants, 50k active users, 200 QPS peak, 20× skew. Average QPS per tenant is 0.4, which cannot size peak concurrency, retries, failover, and long-tail inference. At 10× the planning case is 5,000 tenants and 2,000 QPS. Expect cache churn, noisy neighbours, and more regional partitions; one bigger inference pool will not cover it.
 
-`C_tenant = C_fixed/N + C_usage + C_isolation`. Attribute tokens, storage, retrieval, egress, and reserved capacity per tenant. Enforce token, concurrency, burst, and monetary budgets before inference; a post-call bill is not a budget gate. Rate limit admission with a token bucket per tenant, and use weighted fair queuing across per-tenant queues to share the workers proportionally. Premium reserved lanes protect contractual performance without forcing every tenant into a dedicated cluster. Quotas too tight create artificial failures; quotas too loose shift one tenant’s burst onto its neighbors.
+`C_tenant = C_fixed/N + C_usage + C_isolation`. Attribute tokens, storage, retrieval, egress, and reserved capacity per tenant. Enforce token, concurrency, burst, and monetary budgets before inference; a post-call bill is not a budget gate. Rate limit admission with a token bucket per tenant, and use weighted fair queuing across per-tenant queues to share the workers proportionally. Premium reserved lanes protect contractual performance without forcing every tenant into a dedicated cluster. Quotas too tight create artificial failures; quotas too loose shift one tenant’s burst onto its neighbours.
 
-For one high-usage tenant, segment by key, user, feature, time, prompt version, tokens/request, batch jobs, and agent steps. Determine whether this is healthy adoption, a loop, abuse, or missing quota. Support the first with capacity planning; throttle or pause the others, then add contract-aligned budgets and alerts.
+For one high-usage tenant, segment by key, user, feature, time, prompt version, tokens/request, batch jobs, and agent steps. Decide whether this is healthy adoption, a loop, abuse, or missing quota. Support the first with capacity planning; throttle or pause the others, then add contract-aligned budgets and alerts.
 
 ## 4. Region, outage, and offboarding contracts
 
@@ -30,9 +30,9 @@ Export and delete require an inventory of every tenant-owned surface: relational
 
 ## 5. Cross-tenant retrieval incident: trace-first diagnosis
 
-The [source §14](../4_Full_Design/G07_Full_Design.md#14-debug-the-cross-tenant-leak) records an Acme answer citing a Globex renewal addendum. The request was `tenant_id=acme`; retrieved chunks included `doc_tenant_id=globex`. Filter version `v3` applied only `visibility in ['public','internal']`, omitting `tenant_id == 'acme'`. The ACL enforcer then skipped its check under `pre_authorized_connector_flag=true`. The response evaluator detected a critical violation **after `response_served=true`**. A rollout had reached **15% of Acme traffic**, so the live filter version and canary cohort matter.
+The [source §14](../4_Full_Design/G07_Full_Design.md#14-debug-the-cross-tenant-leak) records an Acme answer citing a Globex renewal addendum. The request was `tenant_id=acme`; retrieved chunks included `doc_tenant_id=globex`. Filter version `v3` applied only `visibility in ['public','internal']`, omitting `tenant_id == 'acme'`. The ACL enforcer then skipped its check under `pre_authorized_connector_flag=true`. The response evaluator flagged a critical violation only after `response_served=true`. A rollout had reached 15% of Acme traffic, so check the live filter version and canary cohort.
 
-Trace request → actual filter → chunk tenants → ACL decision → prompt/citation. Search all traces on `v3` for tenant mismatch; compare with v2 controls rather than relying on a UI reproduction. Contain by disabling v3, blocking any mismatched chunk before context, purging suspect answer caches, holding affected contract answers for human review, and notifying the customer. Root cause is two supposedly independent layers trusting a connector shortcut. Prevent with a non-bypassable server-side tenant predicate, hard post-retrieval invariant, removal of connector-level ACL bypass, negative release tests, and `cross_tenant_retrieval_count` by tenant, connector, and filter version. This is a confidentiality incident, not a hallucination.
+Trace request → actual filter → chunk tenants → ACL decision → prompt/citation. Search all traces on `v3` for tenant mismatch; compare with v2 controls rather than relying on a UI reproduction. Contain by disabling v3, blocking any mismatched chunk before context, purging suspect answer caches, holding affected contract answers for human review, and notifying the customer. Root cause: two supposedly independent layers both trusted a connector shortcut. Prevent with a non-bypassable server-side tenant predicate, hard post-retrieval invariant, removal of connector-level ACL bypass, negative release tests, and `cross_tenant_retrieval_count` by tenant, connector, and filter version. This is a confidentiality incident, not a hallucination.
 
 ## 6. Release evidence and operations
 

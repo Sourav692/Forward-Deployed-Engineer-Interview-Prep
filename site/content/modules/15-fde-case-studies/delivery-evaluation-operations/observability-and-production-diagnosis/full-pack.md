@@ -2,7 +2,7 @@
 
 *Capture enough to explain every failure without turning the telemetry into a second copy of the customer's data.*
 
-"The AI is slow and sometimes wrong, and nobody knows why" is three problems wearing one sentence. This page consolidates the group's prompts into one read for the day before. The anchor design comes first. Two incident walk-throughs follow, then the neighbouring prompts, then a card for every cost and latency pivot the group contains.
+"The AI is slow and sometimes wrong, and nobody knows why" is three problems wearing one sentence. This page combines the group's prompts into one read for the day before. The anchor design comes first. Two incident walk-throughs follow, then the neighbouring prompts, then a card for every cost and latency pivot the group contains.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -22,11 +22,11 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 ## 1. Split "Slow and Sometimes Wrong" Into Three Problems
 
-The customer is not asking for logging. The customer is asking to connect a user-visible failure to a technical cause, fast, safely, and without drowning operators in noise. A vague complaint cannot be instrumented, so the first job is to make it measurable.
+The customer wants to connect a user-visible failure to a technical cause, fast, safely, and without drowning operators in noise. More logging does not do that. A vague complaint cannot be instrumented, so the first job is to make it measurable.
 
 Good discovery separates three problems the complaint compresses. Latency asks whether the request is slow, and where in the pipeline. Correctness asks whether the answer is wrong, and whether the fault is upstream in retrieval or downstream in the model or a tool. Diagnosability asks whether support and engineering can explain a failure without exposing sensitive content.
 
-Each stakeholder wants a different signal. Support wants to triage a complaint without waiting on engineering. Engineering wants to know whether the fault is retrieval, the model or a tool integration. Security wants assurance that telemetry does not become a new exposure surface. The executive sponsor wants proof that quality improves release over release, not just green dashboards.
+Each stakeholder wants a different signal. Support wants to triage a complaint without waiting on engineering. Engineering wants to know whether the fault is retrieval, the model or a tool integration. Security wants assurance that telemetry does not become a new exposure surface. The executive sponsor wants proof that quality improves release over release, which green dashboards alone do not give.
 
 | Question | Why it changes the design |
 |---|---|
@@ -54,7 +54,7 @@ The unusual first design decision is the no-capture list. Full capture maximises
 | Timing at each hop of the pipeline | |
 | User-visible outcome tags: success, partial answer, escalation | |
 
-The balanced verdict is not "never capture." Capture enough structure to diagnose most incidents. Redact by default and record hashes or stable references. Keep a narrow, audited break-glass path for approved deep debugging, with time-bounded retention.
+"Never capture" goes too far the other way. Capture enough structure to diagnose most incidents. Redact by default and record hashes or stable references. Keep a narrow, audited break-glass path for approved deep debugging, with time-bounded retention.
 
 The interviewer usually injects this as a hidden constraint mid-round: the customer will not allow raw prompts to be broadly retained. A design that started from "capture everything" has to restart. A design that started from the no-capture list only has to name its break-glass path.
 
@@ -62,7 +62,7 @@ The interviewer usually injects this as a hidden constraint mid-round: the custo
 
 A requirement that cannot fail a test is a preference. "Observable" is a preference. "Support moves from a complaint to the request family without seeing raw content" is a constraint, and it shapes the architecture.
 
-The functional requirements are six. Support the core workflow: a support agent moves from a user complaint to the exact request family and explains the failure without seeing raw sensitive content. Attach a stable correlation ID to every request and propagate trace context across services, integrations and queue boundaries. Capture per-hop timing across authentication, tenant resolution, retrieval, model call, tool use, post-processing and delivery. Record retrieval evidence, model version, prompt template version, generation settings and tool outcomes as structured attributes. Keep an aggregate global dashboard for platform health separate from tenant-scoped views for customer debugging. Tag every request with a user-visible outcome, so complaints map to telemetry.
+There are six functional requirements. Support the core workflow: a support agent moves from a user complaint to the exact request family and explains the failure without seeing raw sensitive content. Attach a stable correlation ID to every request and propagate trace context across services, integrations and queue boundaries. Capture per-hop timing across authentication, tenant resolution, retrieval, model call, tool use, post-processing and delivery. Record retrieval evidence, model version, prompt template version, generation settings and tool outcomes as structured attributes. Keep an aggregate global dashboard for platform health separate from tenant-scoped views for customer debugging. Tag every request with a user-visible outcome, so complaints map to telemetry.
 
 | Constraint | Stated so it can be tested |
 |---|---|
@@ -90,7 +90,7 @@ Every requirement then needs an owner in the architecture *(own construction)*.
 
 The chapter frames estimation around collection policy, not raw QPS. Telemetry volume, storage and query load all scale with sampling rate, cardinality bounds and retention window. Observability data is not free, and instrumentation that is not budgeted becomes the outage.
 
-The chapter itself gives no numbers. The V2 gap note supplies a worked version, and it is worth saying aloud because it lands on a surprising conclusion.
+The chapter itself gives no numbers. The V2 gap note supplies a worked version; say it aloud in the interview, because its conclusion surprises people.
 
 | Step | Figure (V2 gap note, supplementary) |
 |---|---|
@@ -104,7 +104,7 @@ The chapter itself gives no numbers. The V2 gap note supplies a worked version, 
 
 The note's conclusion, which I'd defend at this scale, is that storage is not the constraint. Classifier CPU and redaction-policy correctness are. Every span passes through the classifier before storage, so the classifier sits on the observability path's critical line.
 
-Sampling is a control, not a compromise. Head sampling decides at the start of a request, which is simple and cheap but blind to how the request ends. Tail sampling decides after the request completes, so it can keep slow and failed traces, but it needs more infrastructure and careful policy. The interview-safe position is preferential retention for latency-heavy, error-heavy and anomalous traces.
+Sampling is a deliberate control. Head sampling decides at the start of a request, which is simple and cheap but blind to how the request ends. Tail sampling decides after the request completes, so it can keep slow and failed traces, but it needs more infrastructure and careful policy. The interview-safe position is to retain latency-heavy, error-heavy and anomalous traces first.
 
 ```mermaid
 flowchart TD

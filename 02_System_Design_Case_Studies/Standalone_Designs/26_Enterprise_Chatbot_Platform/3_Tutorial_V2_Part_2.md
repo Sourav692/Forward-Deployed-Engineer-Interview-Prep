@@ -1,23 +1,23 @@
-# Enterprise Chatbot Platform — "Our Own ChatGPT", part 2
+# Enterprise Chatbot Platform: "Our Own ChatGPT", part 2
 
 ## 3. Scale, SLOs, and Capacity
 
 ### Load shape
 
-- Expect enterprise chat traffic to be **lumpy**: a sharp spike from 8:30 to 10:00, a lunch dip, a smaller afternoon peak, and near silence overnight.
+- Expect enterprise chat traffic to be lumpy: a sharp spike from 8:30 to 10:00, a lunch dip, a smaller afternoon peak, and near silence overnight.
 - My working numbers: 40,000 employees, of whom 12,000 are DAU; each has 8 conversations a day, with 6 turns in each.
 - That makes **576,000 turns a day**, or 16 a second across a 10-hour day. With an assumed morning peak 2.5× higher, we reach **about 40 turns a second**.
-- Plan for four things: average, peak, growth and skew. Growth headroom is not speculation, because adoption is the *goal*. Skew comes from power users and scripts.
+- Plan for four things: average, peak, growth and skew. Build in growth headroom, because adoption is the goal. Skew comes from power users and scripts.
 
 ### The number that actually sizes the system
 
 - A REST call at 40 requests a second, 50 ms each, keeps about 2 requests open. **A chat stream at 40 turns a second, lasting an assumed 20 seconds, keeps 800 connections open.**
 - Use Little's Law here rather than request rate: $\text{concurrent streams} = \text{arrival rate} \times \text{hold time} = 40 \times 20 = 800$.
-- **This figure sizes** the relay tier, the load balancer's connection limits, the provider concurrency quota and the deployment strategy.
+- This figure sizes the relay tier, the load balancer's connection limits, the provider concurrency quota and the deployment strategy.
 - Long-lived streams defeat autoscaling on request count and naive round-robin. Idle proxies also close a stream that falls silent for 60 seconds during a slow tool call; nginx and AWS ALB both do so by default. Heartbeats fix that.
-- When a rolling restart severs connections, it is no longer a blip. Users see a **product failure**.
+- A rolling restart that severs these connections is a product failure that users see.
 
-> 🎯 **Interview Pointer:** Open the sizing with 800 concurrent streams, not raw QPS. That figure drives the relay tier and the provider quota. Interviewers pick up on Little's Law used in place of plain request-rate maths.
+> 🎯 **Interview Pointer:** Open the sizing with 800 concurrent streams, not raw QPS. That figure drives the relay tier and the provider quota. Interviewers notice when you use Little's Law instead of plain request-rate maths.
 
 ### The cost trap: quadratic history
 
@@ -33,7 +33,7 @@
 - **Token quota per user:** limits spend and boxes in scripted or compromised accounts.
 - **Concurrency cap per user:** a person needs one or two streams. Fifty means a script.
 - **Budget per department:** cost lands on a cost centre, and an overspending team shows up before the invoice.
-- **Burst allowance:** a genuine heavy session should not be throttled into a poor experience.
+- **Burst allowance:** a real heavy session should not be throttled into a poor experience.
 - **Priority classes:** when capacity is short, interactive turns beat background jobs.
 - **The tension:** too tight, and people hit artificial walls, go back to the consumer tool, and the project fails. Too loose, and one script spends the quarter's budget.
 
@@ -84,7 +84,7 @@ These figures scale up my working assumptions. None is measured.
 ### Recovery bar (decide before the happy path)
 
 - **The likeliest outage sits upstream, outside our control.**
-- **Fail over** to a second provider. This only counts if we tested its answer quality in advance rather than live.
+- **Fail over** to a second provider. This counts only if we tested its answer quality in advance, not live.
 - **Degrade** to a smaller model with a clear label. A labelled weaker answer beats an error.
 - **Shed** background work so interactive users keep capacity.
 - **Preserve** the message the user typed, always. It is the cheapest reliability win, and teams often forget it.
@@ -121,8 +121,8 @@ These figures scale up my working assumptions. None is measured.
 | Gateway + session | Checks the SSO token; admits and shapes traffic | Corporate network → platform | Data |
 | Conversation service | Owns conversation and message state; authorises each turn | Application authority | Data |
 | Policy & DLP | Classifies input, scans streamed output, blocks or redacts | Egress control | Data + control policy |
-| **Context assembler** | Builds the prompt within budget; **the riskiest boundary in the system** | Prompt construction | Data |
-| Retrieval + connectors | Fetches only candidates the caller's **live** permissions allow | Source-system access | Data |
+| **Context assembler** | Builds the prompt within budget; the riskiest boundary in the system | Prompt construction | Data |
+| Retrieval + connectors | Fetches only candidates the caller's live permissions allow | Source-system access | Data |
 | Assistant registry | Stores, versions and governs assistant definitions and their scopes | Publishing / delegation | Control |
 | Model router | Picks provider, deployment and model by class, cost and health | Vendor selection | Control + data hooks |
 | Provider adapters | Hide vendor API differences; handle retries and timeouts | External vendor | Data |
@@ -173,9 +173,9 @@ flowchart TB
     style DEG fill:#c77b30,stroke:#7a4a18,color:#fff
 ```
 
-- **Overlay 1:** a restricted class is blocked or rerouted, **and the block is audited**. "We stopped it" counts as evidence only once recorded.
-- **Overlay 2:** **drop the chunk** whenever the ACL resolver fails. An ACL service that is down must never widen access.
-- **Overlay 3:** if the provider fails, fall back to a labelled smaller model. Never an error page.
+- **Overlay 1:** a restricted class is blocked or rerouted, and the block is audited. "We stopped it" counts as evidence only once it is recorded.
+- **Overlay 2:** drop the chunk whenever the ACL resolver fails. An ACL service outage must never widen access.
+- **Overlay 3:** if the provider fails, fall back to a labelled smaller model, never an error page.
 
 ### Sequence with both failure branches
 
@@ -229,20 +229,20 @@ sequenceDiagram
 - **Message state belongs to the conversation service.** The relay passes it each finished turn. The admin console goes *through* it, never around it.
 - **The assistant registry owns delegation.** An assistant's scope caps access; it never grants it. Effective scope = assistant scope ∩ viewer permissions.
 - **We write audit records on the action path, append-only,** and never rebuild them from logs later.
-- **Consistency differs by data.** The retrieval index may be eventually consistent, because staleness only costs quality. **Permissions may not**, because a stale revocation is an incident. Say this outright; it marks a senior candidate.
+- **Consistency differs by data.** The retrieval index may be eventually consistent, because staleness costs only quality. Permissions may not, because a stale revocation is an incident. Say this outright; interviewers read it as a senior signal.
 
 ### MVP vs. evolution
 
 - **MVP:** a gateway, a conversation service, a single provider adapter and a single retrieval connector, plus the policy layer, store and audit. Assistants, attachments and a second provider all wait.
-- **Then, by value:** second provider for reliability, scanned attachments as the top user request, assistant registry for leverage, federated connectors for breadth, model tiering for cost.
+- **Then, by value:** second provider for reliability, scanned attachments as the top user request, assistant registry so departments build their own, federated connectors for breadth, model tiering for cost.
 - **Tie each step to a trigger, not a date:** "we add the second provider after the first one's first incident, and that incident will come."
 
 ### The five differentiators
 
-- Authorising again on **every turn**, not once per session.
-- The rule that **intersects assistant scope** with viewer permissions.
-- Retrieval that **fails closed** when an ACL lookup fails.
-- Failure handling built **for streaming**.
-- Treating the provider as something **we expect to lose**.
+- Authorising again on every turn, not once per session.
+- The rule that intersects assistant scope with viewer permissions.
+- Retrieval that fails closed when an ACL lookup fails.
+- Failure handling built for streaming.
+- Treating the provider as something we expect to lose.
 
 ---

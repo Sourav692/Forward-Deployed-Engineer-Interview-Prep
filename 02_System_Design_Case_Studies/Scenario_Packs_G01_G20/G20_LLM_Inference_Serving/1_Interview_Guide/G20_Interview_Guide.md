@@ -1,10 +1,10 @@
-# G20 — LLM Inference Serving: Main Interview Guide
+# G20 LLM Inference Serving: Main Interview Guide
 
 > **Source:** [Sources and Full Design](../4_Full_Design/G20_Full_Design.md), especially §§1–11 for the anchor and §§12–15 for variants. Use the [Deep Dive](../2_Technical_Deep_Dive/G20_Technical_Deep_Dive.md) for scheduling, KV and failover mechanics and the [Cheat Sheet](../3_Quick_Review/G20_Quick_Review.md) for rehearsal. The source states that its serving design and all capacity figures are constructed examples, not measurements of an actual engine.
 
 ## Anchor and related prompts
 
-The anchor asks for end-to-end batching of LLM requests, including **which GPU has capacity** and **what happens when one fails**. A GPU is a stateful server with a KV-memory budget. Prefill drives time to first token; decode drives per-token speed and completion time.
+The anchor asks for end-to-end batching of LLM requests, including which GPU has capacity and what happens when one fails. A GPU is a stateful server with a KV-memory budget. Prefill drives time to first token; decode drives per-token speed and completion time.
 
 | Case | Shared foundation | What changes |
 |---|---|---|
@@ -26,11 +26,11 @@ The anchor asks for end-to-end batching of LLM requests, including **which GPU h
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Validate and tokenize requests.**
 2. **Apply per-tenant token budgets.**
@@ -40,7 +40,7 @@ The easiest way to frame requirements in an interview is:
 6. **Handle replica / zone failure; reject overload early.**
 7. **Canary/drain model versions** and split queue vs service metrics.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -48,7 +48,7 @@ The easiest way to frame requirements in an interview is:
 | **Reliability** | 99.9% explicit completion or failure; no lost or misdelivered request. |
 | **Fairness** | Tenant fairness; bounded queue; goodput within SLO. |
 | **Headroom** | ≤70% measured replica capacity; queueing delay climbs steeply past roughly 70–80% (rule of thumb). |
-| **Sizing (illustrative)** | 1,000 in / 250 out tokens; replica 20K in tok/s prefill (assumed, H100-class), 2.5K out tok/s decode ⇒ 0.15 replica-s/request. 1,000 rps at 70% ≈ **214 replicas**. ~7 s/request ⇒ ~7,000 in flight; 64 seq/replica ⇒ ~110 slot replicas — compute is tighter. |
+| **Sizing (illustrative)** | 1,000 in / 250 out tokens; replica 20K in tok/s prefill (assumed, H100-class), 2.5K out tok/s decode ⇒ 0.15 replica-s/request. 1,000 rps at 70% ≈ **214 replicas**. ~7 s/request ⇒ ~7,000 in flight; 64 seq/replica ⇒ ~110 slot replicas; compute is tighter. |
 
 ### Interview shortcut
 
@@ -92,17 +92,17 @@ flowchart TB
 
 **Continuous versus static batching:** static generative batches wait for the longest output; short requests waste slots. Iteration-level batching lets each sequence leave as soon as it finishes. A size-or-time flush suits one-GPU fixed-shape synchronous work; variable-length generation still benefits from continuous batching.
 
-**KV memory is capacity:** the source's illustrative 32-layer, eight-KV-head, 128-dimension fp16 model uses about **128KiB of KV per token**. A 1,250-token sequence uses ~160MB; an 8,000-token sequence uses ~1GB. Paged allocation reduces reservation waste and fragmentation. The router must use free KV, not round-robin or only running-request count. Prefix affinity saves prefill only while the preferred replica has headroom.
+**KV memory is capacity:** the source's illustrative 32-layer, eight-KV-head, 128-dimension fp16 model uses about 128KiB of KV per token. A 1,250-token sequence uses ~160MB; an 8,000-token sequence uses ~1GB. Paged allocation reduces reservation waste and fragmentation. The router must use free KV, not round-robin or only running-request count. Prefix affinity saves prefill only while the preferred replica has headroom.
 
-**Failover:** liveness alone misses a hung GPU. Add readiness and a one-token deep probe. A failed replica loses its KV. Before any token streamed, retry elsewhere. After streaming, rebuilding state from prompt plus emitted text very likely matches under greedy decoding, but batch size and GPU kernels can still shift the floating-point results; sampling can diverge, so an explicit partial error may be the honest product choice. Cap retries and retain spare zone capacity to avoid a retry storm while replacement GPUs warm.
+**Failover:** liveness alone misses a hung GPU. Add readiness and a one-token deep probe. A failed replica loses its KV. Before any token streamed, retry elsewhere. After streaming, rebuilding state from prompt plus emitted text very likely matches under greedy decoding. Batch size and GPU kernels can still shift the floating-point results, and sampling can diverge, so an explicit partial error may be the honest product choice. Cap retries and retain spare zone capacity to avoid a retry storm while replacement GPUs warm.
 
 **Cost:** measure goodput per GPU-hour, batch occupancy, KV use, queue wait and cost per million output tokens. Cap output and cancel abandoned streams before buying more GPUs. Move non-interactive work to a batch tier and use prefix caching only on identical prefixes.
 
 ## Variants and evaluation
 
-For #75, a single GPU batcher flushes at 100 requests **or** a short wait; each synchronous caller has a request-ID future and timeout, and the queue is bounded. For #77, price the workload before saying 100K rps: the source's assumed chat shape implies ~21,400 replicas at 70%, while short completions imply ~2,570. Use independent cells and global backpressure so one hot tenant or deploy does not damage the fleet. For #79, lead a review with the three highest risks and their fixes.
+For #75, a single GPU batcher flushes at 100 requests or after a short wait; each synchronous caller has a request-ID future and timeout, and the queue is bounded. For #77, price the workload before saying 100K rps: the source's assumed chat shape implies ~21,400 replicas at 70%, while short completions imply ~2,570. Use independent cells and global backpressure so one hot tenant or deploy does not damage the fleet. For #79, lead a review with the three highest risks and their fixes.
 
-Track p50/p95 TTFT, TPOT, queue wait, service time, prefill/decode throughput, prefix hit rate, KV occupancy/preemptions, cancellation delay, explicit failures and **goodput** (requests finished within SLO). Load-test actual prompt/output distributions, zone failure, stale capacity heartbeats, long-prefill interference and overload before claiming the illustrative replica count works.
+Track p50/p95 TTFT, TPOT, queue wait, service time, prefill/decode throughput, prefix hit rate, KV occupancy/preemptions, cancellation delay, explicit failures and goodput (requests finished within SLO). Load-test actual prompt/output distributions, zone failure, stale capacity heartbeats, long-prefill interference and overload before claiming the illustrative replica count works.
 
 ## Two-minute interview answer
 

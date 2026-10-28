@@ -2,7 +2,7 @@
 
 ## 14. Debug the Cross-Tenant Leak
 
-The scenario's incident is the design's failure mode observed in production, and it tests whether debugging goes beyond "retrieval quality". Frame it as a multi-tenant isolation failure, never as a hallucination.
+This incident is the design's failure mode seen in production. It tests whether your debugging goes beyond "retrieval quality". Frame it as a multi-tenant isolation failure, never as a hallucination.
 
 Acme uses an enterprise support copilot over customer contracts, escalation policies and entitlements. The vector database stores chunks from several enterprise customers in one collection, with `tenant_id`, `doc_tenant_id`, `visibility`, `source_connector`, `acl_hash` and `metadata_filter_version` on each chunk. The intended invariant is that `tenant_id` on the request matches `doc_tenant_id` on every retrieved chunk, and the ACL service authorises each chunk before it reaches the prompt. On 2026-07-08 a support agent asked whether Acme customers could receive premium onboarding under the 2026 renewal terms. The assistant said yes and cited a "Premium Success Addendum" that belonged to Globex.
 
@@ -32,7 +32,7 @@ Acme uses an enterprise support copilot over customer contracts, escalation poli
   tenant_id=acme doc_tenant_id=globex human_review=false
 ```
 
-**Detect.** Start from the known bad answer and open the full trace. Compare `tenant_id` on the request with `doc_tenant_id` on the retrieved chunks, read the filter expression the retriever actually used, and check whether ACL was evaluated per chunk. The telemetry already says it. The filter dropped the tenant equality. Two Globex chunks came back. The ACL check was skipped because of a connector flag. The response evaluator flagged a critical isolation violation after the response was served. Then query every trace on `metadata_filter_version=v3` for `tenant_id != doc_tenant_id`, and compare the canary cohort with the control cohort still on v2. Do not re-run the question in the UI; it may not reproduce the canary route, the cache state or the retrieval order. The path is trace-first: request, filter, retrieved chunks, ACL decision, prompt context, citation.
+**Detect.** Start from the known bad answer and open the full trace. Compare `tenant_id` on the request with `doc_tenant_id` on the retrieved chunks, read the filter expression the retriever actually used, and check whether ACL was evaluated per chunk. The telemetry already shows what happened. The filter dropped the tenant equality. Two Globex chunks came back. The ACL check was skipped because of a connector flag. The response evaluator flagged a critical isolation violation after the response was served. Then query every trace on `metadata_filter_version=v3` for `tenant_id != doc_tenant_id`, and compare the canary cohort with the control cohort still on v2. Do not re-run the question in the UI; it may not reproduce the canary route, the cache state or the retrieval order. The path is trace-first: request, filter, retrieved chunks, ACL decision, prompt context, citation.
 
 **Contain.** Disable `metadata_filter_version=v3`. Purge affected answer-cache entries. Block every response where any retrieved chunk has `tenant_id != doc_tenant_id`. Force human review for contract-entitlement answers generated in the incident window. Notify the customer, because a leaked clause can expose pricing, support commitments or regulated data.
 
@@ -110,14 +110,14 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) — trust only verified tokens, claims or sessions, never client-set fields
-- [New name for Azure Active Directory (Microsoft Learn)](https://learn.microsoft.com/en-us/entra/fundamentals/new-name) — Azure AD is now Microsoft Entra ID
-- [PostgreSQL docs: Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html) — owners, superusers and BYPASSRLS roles skip RLS unless FORCE ROW LEVEL SECURITY is set
-- [HHS: Guidance on HIPAA & Cloud Computing](https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html) — HIPAA does not require single-tenant hosting
-- [OCC Bulletin 2023-17: Interagency Guidance on Third-Party Relationships](https://www.occ.gov/news-issuances/bulletins/2023/bulletin-2023-17.html) — bank rules are risk-based, not a single-tenant mandate
-- [AWS KMS cryptography essentials (envelope encryption)](https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html) — what per-tenant data keys wrapped by a master key protect
-- [Demers, Keshav, Shenker 1989: Analysis and Simulation of a Fair Queueing Algorithm](https://dl.acm.org/doi/10.1145/75247.75248) — fair queuing shares a saturated resource proportionally
-- [RFC 2697: A Single Rate Three Color Marker](https://www.rfc-editor.org/rfc/rfc2697) — a token bucket meters rate; it does not schedule fairly
-- [ICO: Right to erasure](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-erasure/) — backups can be kept "beyond use" until overwritten on schedule
-- [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/) — the erasure duty itself
-- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — cross-tenant leaks from missing vector access controls
+- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html): trust only verified tokens, claims or sessions, never client-set fields
+- [New name for Azure Active Directory (Microsoft Learn)](https://learn.microsoft.com/en-us/entra/fundamentals/new-name): Azure AD is now Microsoft Entra ID
+- [PostgreSQL docs: Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html): owners, superusers and BYPASSRLS roles skip RLS unless FORCE ROW LEVEL SECURITY is set
+- [HHS: Guidance on HIPAA & Cloud Computing](https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html): HIPAA does not require single-tenant hosting
+- [OCC Bulletin 2023-17: Interagency Guidance on Third-Party Relationships](https://www.occ.gov/news-issuances/bulletins/2023/bulletin-2023-17.html): bank rules are risk-based, not a single-tenant mandate
+- [AWS KMS cryptography essentials (envelope encryption)](https://docs.aws.amazon.com/kms/latest/developerguide/kms-cryptography.html): what per-tenant data keys wrapped by a master key protect
+- [Demers, Keshav, Shenker 1989: Analysis and Simulation of a Fair Queueing Algorithm](https://dl.acm.org/doi/10.1145/75247.75248): fair queuing shares a saturated resource proportionally
+- [RFC 2697: A Single Rate Three Color Marker](https://www.rfc-editor.org/rfc/rfc2697): a token bucket meters rate; it does not schedule fairly
+- [ICO: Right to erasure](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-erasure/): backups can be kept "beyond use" until overwritten on schedule
+- [GDPR Article 17: Right to erasure](https://gdpr-info.eu/art-17-gdpr/): the erasure duty itself
+- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/): cross-tenant leaks from missing vector access controls

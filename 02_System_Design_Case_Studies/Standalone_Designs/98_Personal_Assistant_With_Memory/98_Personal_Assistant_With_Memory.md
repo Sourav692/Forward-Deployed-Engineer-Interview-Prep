@@ -4,7 +4,7 @@
 
 ◷ 24 min
 
-A memory system is not one database with a bigger context window. It is four scopes of state, each with its own key, its own write rule and its own way to go wrong. This page turns this case into one read for the day before.
+A memory system is four scopes of state, not one database with a bigger context window. Each scope has its own key, its own write rule and its own way to go wrong.
 
 | Case | What it contributes here |
 |---|---|
@@ -23,7 +23,7 @@ The prompt, verbatim from the source:
 
 ## 1. Clarify What "Remembers You" Means Before Choosing a Store
 
-Ask what the user expects the assistant to remember before drawing a box. "Remembers you" hides four different promises. Hold the conversation. Keep preferences for good. Recall what it did last week. Keep one user's life out of another's view. Each promise needs a different store with a different lifetime.
+Ask what the user expects the assistant to remember before drawing a box. "Remembers you" hides four promises: hold the conversation, keep preferences for good, recall what it did last week, and keep one user's life out of another's view. Each promise needs a different store with a different lifetime.
 
 The clarifying questions *(own construction)*:
 
@@ -78,7 +78,7 @@ Every requirement then needs an owner *(own construction)*.
 
 ## 3. Size the Memory Before the Model
 
-Say the arithmetic aloud, because it shows why an index and a pruning policy are not optional. Every number is an assumption for the whiteboard *(own construction)*. The method is what gets scored.
+Say the arithmetic aloud, because it shows why the design needs an index and a pruning policy. Every number is an assumption for the whiteboard *(own construction)*. The method is what gets scored.
 
 | Step | Assumption | Result |
 |---|---|---|
@@ -93,7 +93,7 @@ Say the arithmetic aloud, because it shows why an index and a pruning policy are
 | Vector size | 1,024 dims × 4 bytes | ≈ 4 KB per episode vector, ≈ 400 GB at the cap |
 | Summary calls | One per ~15 turns *(source threshold)* | 2 per user a day, ≈ 2M extra model calls, about 7% on top of 30M |
 
-Three conclusions follow. The episode cap is what bounds the index, because without it 5M writes a day grow without limit. The read rate is modest, so latency depends on the index, not on throughput. The summary calls are a real line on the bill, so the threshold is a cost lever and not just a quality setting.
+Three conclusions follow. The episode cap bounds the index; without it, 5M writes a day grow without limit. The read rate is modest, so latency depends on the index, not on throughput. The summary calls are a real line on the bill, so the threshold is a cost lever as well as a quality setting.
 
 ## 4. Draw the Architecture End to End
 
@@ -213,7 +213,7 @@ Point at three boundaries while the diagram is up *(own construction)*. The isol
 
 Give each kind of memory its own scope, because each answers a different question. A `thread_id` answers "which conversation". A `user_id` namespace answers "which person". A system that has only the first forgets everyone between conversations. A system that confuses them leaks memory across users.
 
-The study guide's taxonomy maps directly onto the prompt's four promises.
+The study guide's taxonomy maps onto the prompt's four promises.
 
 | Scope | Holds | Key | Write rule | Read rule | Lifetime |
 |---|---|---|---|---|---|

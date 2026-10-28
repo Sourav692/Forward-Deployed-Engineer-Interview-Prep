@@ -11,7 +11,7 @@ The executive variant adds `KPIValue`, dashboard refresh time, and a cited `Insi
 ## 2. Query routing and ambiguity
 
 | Question | Route | Reason |
-|---|---|
+|---|---|---|
 | “Revenue last week” | Versioned metric view and structured query | A financial definition and grain must be selected. |
 | “How many high-priority tickets?” | Structured count/filter | Semantic search does not count a complete set. |
 | “Status of ticket #4821?” | Exact ID lookup | Approximate retrieval is unnecessary. |
@@ -23,7 +23,7 @@ If a word maps to multiple metrics, present the supported definitions, ask, refu
 
 The LLM proposes SQL from a narrow, authorised metric and schema context. A dialect-aware parser builds an AST and policy checks the statement type, physical tables, columns, functions, joins, aggregate semantics, limits, date filters, and cross-join/fan-out risk. Regex cannot reliably detect nested queries, aliases, CTEs, comments, or obfuscation. A hidden-column request must fail even if the SQL is syntactically valid.
 
-Authorisation has several independent controls: least-privileged read-only credentials, warehouse-native row and column policies evaluated for the end user (on-behalf-of), not a shared service account, entitlements rechecked at execution, filtered schema metadata, and redacted result/log handling. The model cannot rewrite access predicates. A cost estimator checks bytes, time, and row limits before admission; a live timeout cancels overruns. Auto-run only on a high-confidence, approved, low-cost pattern; otherwise show a draft or request privileged review. Do not retry policy denial with a stronger model.
+Authorisation has several independent controls: least-privileged read-only credentials; warehouse-native row and column policies evaluated for the end user (on-behalf-of) rather than a shared service account; entitlements rechecked at execution; filtered schema metadata; and redacted result/log handling. The model cannot rewrite access predicates. A cost estimator checks bytes, time, and row limits before admission; a live timeout cancels overruns. Auto-run only on a high-confidence, approved, low-cost pattern; otherwise show a draft or request privileged review. Do not retry policy denial with a stronger model.
 
 ## 4. Failure drills and evidence
 
@@ -35,13 +35,13 @@ Authorisation has several independent controls: least-privileged read-only crede
 | Excessive scan | Estimate before running; use bounded date window or pre-aggregation, otherwise stop and ask. | Per-metric scan budgets and trend alerting. |
 | Prose summary disagrees with table | Reject prose and return table, SQL, lineage; notify review queue. | Numeric cross-check against structured result. |
 
-Authorisation failure closes the request. A brief warehouse outage can queue or degrade if freshness permits. A summary outage can return the table. A business-definition conflict goes to the metric owner or analyst. Treat a suspicious row count or scan volume as a correctness and reliability problem, not merely a billing issue.
+Authorisation failure closes the request. A brief warehouse outage can queue or degrade if freshness permits. A summary outage can return the table. A business-definition conflict goes to the metric owner or analyst. Treat a suspicious row count or scan volume as a correctness and reliability problem as well as a billing issue.
 
 ## 5. Evaluation and delivery mechanics
 
 Golden cases pair natural-language question, approved SQL, and expected result shape, including paraphrases, grain and date traps, unauthorised columns, large scans, and ambiguity. Execution accuracy asks whether the SQL runs and matches the expected result; **semantic correctness** asks whether it answers the governed business question and is the release gate. Analysts judge subtle wrong answers in shadow mode. Zero escaped policy violations is a separate gate. The source uses a trust target of **4.2/5 or 80% positive** as an example; falling trust matters even if usage rises. Compare warehouse compute per answer (bytes scanned or credit time) with the seven-day baseline and investigate **>20%** drift.
 
-The rollout is ten owned metrics, then golden replay, then analyst shadowing, then executive release, then domain expansion. Metric owners approve definitions and cases; application owners run orchestration and generation; data owners manage warehouse and policy mappings; security reviews access and audit; support receives escalations. Rollback on semantic mismatch, policy leakage, scan-cost jump, or sustained trust decline.
+The rollout is ten owned metrics, then golden replay, then analyst shadowing, then executive release, then domain expansion. Metric owners approve definitions and cases; application owners run orchestration and generation; data owners manage warehouse and policy mappings; security reviews access and audit; support receives escalations. Roll back on semantic mismatch, policy leakage, scan-cost jump, or sustained trust decline.
 
 ## 6. When a supervisor is justified
 

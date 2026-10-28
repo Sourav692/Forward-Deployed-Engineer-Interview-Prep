@@ -70,7 +70,7 @@ Follow-ups beyond the bank's adoption question *(own construction)*:
 
 | Follow-up | Answer |
 |---|---|
-| Why not just autoscale? | LLM load does not correlate with CPU, as the cram sheet notes; the limits are provider tokens per minute, cost and fairness |
+| Why not autoscale? | LLM load does not correlate with CPU, as the cram sheet notes; the limits are provider tokens per minute, cost and fairness |
 | Build the fallback now or later? | Now, warm, with its own eval; a cold fallback fails the first time it matters |
 | What do you cut to launch faster? | The answer cache and the model cascade; never identity, permission filtering or rollback |
 | How do you know the router is right? | A labelled sample of real traffic; misroute rate against cost saved |
@@ -86,7 +86,7 @@ The interviewer's pivot: "The pilot cost $400 a month. Finance just saw the fore
 | Cheapest lever first | Route easy intents to the small model; cache the frozen prefix; cap and trim output; move non-interactive work to the batch API; budgets per department before the call |
 | Metric that proves it | Cost per successful task by department and intent; cache-read share of input tokens; output tokens per answer; share of traffic per model; misroute rate |
 | Do not | Cut quality globally by downgrading every request, or cache answers without the user's permission scope in the key |
-| 60-second line | The forecast grew with request shape, not just users. I would route easy intents to a small model, cache the stable prefix, cap output, batch what nobody waits for, and give every department a budget enforced before the call, then prove it with cost per successful task. |
+| 60-second line | The forecast grew with request shape more than with users. I would route easy intents to a small model, cache the stable prefix, cap output, batch what nobody waits for, and give every department a budget enforced before the call, then prove it with cost per successful task. |
 
 The cram sheet's incident line applies unchanged: *"The increase is likely from request shape, not just user count. I would isolate token growth, retries, agent steps, and batch jobs before changing the model."* Its roadmap sentence is the right shape for finance: first instrument the bottlenecks, then apply safe quick wins, and finally redesign heavy workflows with routing, caching and async processing.
 
@@ -101,7 +101,7 @@ The levels split on whether the thousandfold jump is treated as a capacity probl
 | Level | Sounds like | Missing |
 |---|---|---|
 | Senior | Sizes 240,000 requests a day down to about 20 a second and 7.8M tokens a minute, then puts one gateway in front of every call with per-user token buckets, retry inside a circuit breaker, a warm fallback and permission-filtered retrieval. Cuts the naive $122,000 month with routing, prefix caching and an output cap. | Who owns the prompt, the budget and the pager, and how 100,000 people arrive without a launch-day cliff. |
-| Staff | Walks the tenfold steps and names what breaks at each: identity, then capacity, then fairness. Adds a weighted fair queue per department, an eval set rebuilt from real traffic and gated on slices, cohort waves with a pointer-flip rollback, and named owners with runbooks and a support ladder. | Whether anyone actually changes how they work, and what the provider relationship needs beyond one quarter. |
+| Staff | Walks the tenfold steps and names what breaks at each: identity, then capacity, then fairness. Adds a weighted fair queue per department, an eval set rebuilt from real traffic and gated on slices, cohort waves with a pointer-flip rollback, and named owners with runbooks and a support ladder. | Whether anyone changes how they work, and what the provider relationship needs beyond one quarter. |
 | Principal | Treats adoption as the deliverable, measuring week-4 retention and override rate per cohort and investigating a flat curve like a bug. Starts the capacity commitment weeks ahead, tells the customer the service cannot promise more uptime than its provider gives, and keeps per-department prompts as configuration behind one gate, never a fork. | The real department mix, active share and current prices, which only the first cohorts and the price sheet can confirm. |
 
 ## Key Takeaways
@@ -141,6 +141,6 @@ The levels split on whether the thousandfold jump is treated as a capacity probl
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing) — Claude Sonnet 5 at $2/$10 and Claude Haiku 4.5 at $1/$5 per million tokens; cache reads at 0.1× input; Batch API at 50% off
-- [Anthropic prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) — minimum cacheable prompt length: 1,024 tokens for Sonnet 5, 4,096 for Haiku 4.5
+- [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing): Claude Sonnet 5 at $2/$10 and Claude Haiku 4.5 at $1/$5 per million tokens; cache reads at 0.1× input; Batch API at 50% off
+- [Anthropic prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): minimum cacheable prompt length: 1,024 tokens for Sonnet 5, 4,096 for Haiku 4.5
 

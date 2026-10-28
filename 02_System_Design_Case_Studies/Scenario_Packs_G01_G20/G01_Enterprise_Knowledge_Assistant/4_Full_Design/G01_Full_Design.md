@@ -4,7 +4,7 @@
 
 ◷ 38 min
 
-The hard part of this system is not finding the right passage. It is that a Tier-1 agent, a Tier-3 engineer and an account manager must get different correct answers to the same question. So the design starts from access control and earns retrieval quality second. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
+The hard part of this system is that a Tier-1 agent, a Tier-3 engineer and an account manager must get different correct answers to the same question. Finding the right passage comes second. So the design starts from access control and works on retrieval quality inside it. This page combines the group's prompts into one read for the day before. Every other case in the group is a delta on it.
 
 | Case in the group                                                | What it contributes here                                                   |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -22,11 +22,11 @@ The hard part of this system is not finding the right passage. It is that a Tier
 
 ## 1. Name Permission Fidelity as the Constraint Before Drawing Anything
 
-Open with the outcome and the risk, not the architecture. An assistant that answers well but leaks is worse than no assistant, so permission fidelity is the load-bearing constraint and retrieval quality is the second problem. Say it in the first two minutes, because the interviewer decides where the hour goes based on this opening.
+Open with the outcome and the risk before any architecture. An assistant that answers well but leaks is worse than no assistant, so permission fidelity is the load-bearing constraint and retrieval quality is the second problem. Say it in the first two minutes: the interviewer uses your opening to decide where the hour goes.
 
 > *"Anyone can build multi-source RAG. The thing that makes this hard is that a Tier-1 agent, a Tier-3 engineer and an account manager must get different correct answers to the same question, so access control isn't a feature I add at the end, it decides the shape of the retrieval path. I'll design around that."*
 
-The technology-agnostic form from the tutorial does the same work when the room is less technical:
+For a less technical room, use the technology-agnostic version from the tutorial:
 
 > *"We need an internal knowledge assistant for employees across departments. The assistant should answer questions using approved content from Drive, SharePoint, Slack, wikis, and support tickets, but only from material the requesting user is allowed to see. The success metric is grounded answers with citations, low hallucination risk, and freshness that matches source updates. I'd start by clarifying authority sources, permission inheritance, freshness expectations, and what the business wants to happen when the system is unsure or the sources conflict."*
 
@@ -60,7 +60,7 @@ Each stakeholder notices a different failure first. Optimise only for the employ
 
 **Support persona (same architecture):** agent asks a customer/problem question → cited answer from policy, product docs, past tickets → next step, optional draft ticket note. Reads run automatically. Any write-back is previewed and human-approved. Extra sources: Zendesk, Salesforce Service Cloud, Jira.
 
-**Scope before the first box:** read-only Q&A, five sources, ABAC, multi-tenant, sub-3 s. Writes and streaming ingest are out. If they withhold assumptions: permissions at query time; citations point at the passage, not the title.
+**Scope before the first box:** read-only Q&A, five sources, ABAC, multi-tenant, sub-3 s. Writes and streaming ingest are out. If they give no assumptions, state yours: permissions at query time; citations point at the passage, not the title.
 
 ## 2. State Requirements as Testable Constraints
 
@@ -86,7 +86,7 @@ A requirement that cannot fail a test is a preference. "Make it fast" is a prefe
 | Constraint   | Testable form                                                                                                                                                                                         |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Latency      | p95, never "fast enough". In this design, target p95 of 3–8 s; under 3 s if it must feel like chat; longer work goes async. Slice identity → ACL → retrieval → rerank → generate; each stage times out and degrades, never fails open |
-| Availability | Connector, index or model down: partial coverage, labelled staleness, or refuse — never a silent guess                                                                                                |
+| Availability | Connector, index or model down: partial coverage, labelled staleness, or refuse; never a silent guess                                                                                                |
 | Cost         | Embedding, index and tokens estimated separately. Cost per answer. Cache stable docs; prune retrieval; small models for classification; expensive reasoning only where risk justifies it              |
 | Security     | SSO via the IdP; ABAC over source ACLs; filter before the model; revocations fan out to indexes and caches; secrets never in prompts; no training on customer data unless the contract allows it      |
 | Audit        | Immutable: source event IDs, index/ACL versions, request ID, retrieved docs, policy decision, model/prompt version, exact citation set shown                                                          |
@@ -107,7 +107,7 @@ Every Must has an owner:
 
 ## 3. Size on Peak QPS and Permission Refresh
 
-Round numbers, not a capacity plan. Each figure kills a naive design.
+These are round numbers, not a capacity plan. Each one rules out a naive design.
 
 | Quantity     | Figure     | What it forces                                                                                                                                |
 | ------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -118,10 +118,10 @@ Round numbers, not a capacity plan. Each figure kills a naive design.
 
 Say these five in the room:
 
-1. Size on **peak QPS and refresh**, not "we indexed once."
+1. Size on peak QPS and refresh, not "we indexed once."
 2. Slice the latency budget: identity/ACL (cheap) vs retrieve vs rerank vs generate (expensive). Timeouts degrade; they never fail open.
 3. Cache by tenant + permission signature + index version, so repeats skip rerank and generate.
 4. Pre-filter inside search. Never retrieve forbidden chunks and throw them away.
 5. Ingestion is async; query is sync. Event + backfill + reconciliation is how 50M stays permission-correct.
 
-Rough check: 100 QPS × 3 s generate ≈ 300 in-flight generations. That is a serving problem. 20 QPS hides it.
+Rough check: 100 QPS × 3 s generate ≈ 300 in-flight generations, a serving problem that 20 QPS hides.

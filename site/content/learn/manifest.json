@@ -1914,7 +1914,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/",
-      "estMinutes": 64,
+      "estMinutes": 63,
       "href": "/design/evaluation-and-release-gating"
     },
     {
@@ -1958,7 +1958,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
-      "estMinutes": 49,
+      "estMinutes": 47,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -1980,7 +1980,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/",
-      "estMinutes": 48,
+      "estMinutes": 47,
       "href": "/design/model-development-and-post-training"
     },
     {
@@ -2297,7 +2297,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
-      "estMinutes": 90,
+      "estMinutes": 89,
       "href": "/design/customer-support-automation"
     },
     {
@@ -2319,7 +2319,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/",
-      "estMinutes": 65,
+      "estMinutes": 66,
       "href": "/design/sre-incident-response-agent"
     },
     {
@@ -2330,7 +2330,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/",
-      "estMinutes": 69,
+      "estMinutes": 68,
       "href": "/design/sales-copilot"
     },
     {
@@ -2341,7 +2341,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/",
-      "estMinutes": 77,
+      "estMinutes": 75,
       "href": "/design/nl-over-governed-data"
     },
     {
@@ -2374,7 +2374,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/",
-      "estMinutes": 51,
+      "estMinutes": 50,
       "href": "/design/deep-research-agent"
     },
     {
@@ -2462,7 +2462,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/19_Air_Gapped_AI_System/",
-      "estMinutes": 98,
+      "estMinutes": 97,
       "href": "/design/air-gapped-ai-system"
     },
     {
@@ -2473,7 +2473,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/23_Reliable_Workflow_Orchestration/",
-      "estMinutes": 107,
+      "estMinutes": 105,
       "href": "/design/reliable-workflow-orchestration"
     },
     {
@@ -2484,7 +2484,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/25_Configurable_Platform_Customer_Workflows/",
-      "estMinutes": 93,
+      "estMinutes": 91,
       "href": "/design/configurable-platform-customer-workflows"
     },
     {
@@ -2495,7 +2495,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/26_Enterprise_Chatbot_Platform/",
-      "estMinutes": 76,
+      "estMinutes": 75,
       "href": "/design/enterprise-chatbot-platform"
     },
     {
@@ -2550,7 +2550,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/",
-      "estMinutes": 37,
+      "estMinutes": 36,
       "href": "/design/decomposition-classics-67-68-69"
     },
     {

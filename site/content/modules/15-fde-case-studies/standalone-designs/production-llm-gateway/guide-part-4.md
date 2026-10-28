@@ -26,11 +26,11 @@ The study guide gives the rubric; each line maps to a section of this page.
 | States a concrete latency budget breakdown, not just "keep it fast." | Section 9 |
 | Volunteers the failure mode of their own design (what still breaks, and what they'd add next). | Sections 11 and 12 |
 
-Three things on this page go beyond the rubric, and they are what a senior answer adds. The dollar arithmetic that shows the budget binds on the complex share. The collisions between the 3 s budget and the agent path, the retries and streaming. And a residency answer that constrains the fallback chain itself.
+A senior answer adds three things beyond the rubric: the dollar arithmetic that shows the budget binds on the complex share; the collisions between the 3 s budget and the agent path, the retries and streaming; and a residency answer that constrains the fallback chain itself.
 
 ## 14. Deliver It in Forty-Five Minutes
 
-The hour belongs to the four constraints, because those are the words in the prompt. Spend it in this order *(own construction)*.
+The forty-five minutes belong to the four constraints, because those are the words in the prompt. Spend it in this order *(own construction)*.
 
 | Minutes | What to say |
 |---|---|
@@ -93,7 +93,7 @@ The levels split on whether the four constraints are met one at a time, traded a
 
 ## Check Yourself
 
-1. **Why must the gateway sit under the agent's model calls, not just in front of the customer's message?** The cost playbook's rule of thumb puts one agent turn at 5–20 sub-requests. Metering, retry and failover that see only the first call miss the rest.
+1. **Why must the gateway sit under the agent's model calls, and not only in front of the customer's message?** The cost playbook's rule of thumb puts one agent turn at 5–20 sub-requests. Metering, retry and failover that see only the first call miss the rest.
 2. **Price the day aloud.** 14,700 simple turns × $0.00045 ≈ $6.61; 6,300 complex turns × $0.0375 ≈ $236.25; router and guards ≈ $2.40. About $245, with complex turns 96% of it.
 3. **What does the naive design cost?** All 30,000 turns on the large-model agent path with no cache: $1,125, 2.25 times the budget.
 4. **Why does the input guard run before the cache?** So an injected prompt is never cached, and the cache key is the PII-masked text.
@@ -111,6 +111,6 @@ The levels split on whether the four constraints are met one at a time, traded a
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [OpenAI API pricing](https://developers.openai.com/api/docs/pricing) — GPT-4o mini ($0.15/$0.60) and GPT-4o ($2.50/$10.00) are still listed at the illustrative prices used in section 3
-- [OpenAI moderation guide](https://developers.openai.com/api/docs/guides/moderation) — the fixed category taxonomy (including harassment), per-category scores and the `flagged` flag
+- [OpenAI API pricing](https://developers.openai.com/api/docs/pricing): GPT-4o mini ($0.15/$0.60) and GPT-4o ($2.50/$10.00) are still listed at the illustrative prices used in section 3
+- [OpenAI moderation guide](https://developers.openai.com/api/docs/guides/moderation): the fixed category taxonomy (including harassment), per-category scores and the `flagged` flag
 

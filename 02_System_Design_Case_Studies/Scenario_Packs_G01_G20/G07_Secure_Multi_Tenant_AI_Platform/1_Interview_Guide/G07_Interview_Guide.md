@@ -1,23 +1,23 @@
-# G07 — Secure Multi-Tenant AI Platform: Main Interview Guide
+# G07 Secure Multi-Tenant AI Platform: Main Interview Guide
 
-**Multi-tenant AI** is one platform, many customers. Cheaper than a stack per customer. The failure is **Acme seeing Globex’s docs**, in a cache, a log, or a prompt.
+Multi-tenant AI means one platform serving many customers, which costs less than a stack per customer. The failure to design against is Acme seeing Globex’s docs in a cache, a log, or a prompt.
 
 **G07 covers one slice:** identity → tenant stamp that never changes → every store and model call respects it. Not “put tenant_id on a row and hope.”
 
 End to end, as Acme user Maya asking her assistant:
 
 1. **SSO proves Maya is Acme.** That tenant id is frozen on the request.
-2. **Quotas and region** — maybe Frankfurt only, including logs.
+2. **Quotas and region apply.** Acme may be Frankfurt-only, logs included.
 3. **Retrieval, cache, and the model see only Acme bytes.**
-4. **If Globex is noisy**, fair queues protect Maya; we don’t leak by sharing a hot cache key.
+4. **If Globex is noisy**, fair queues protect Maya, and no hot cache key is shared across tenants.
 5. **Spend is metered before the model call**, so Acme cannot burn Globex’s budget.
 6. **If Acme leaves**, we prove keys and copies are gone.
 
-That’s it: **verify tenant once → enforce everywhere → meter and isolate.** Arbitrary tenant plugins stay out.
+**Verify tenant once → enforce everywhere → meter and isolate.** Arbitrary tenant plugins stay out.
 
-The promise is one affordable AI platform for many customers **without a cross-tenant read, write, cache hit, or model context leak**. A tenant ID on a row is insufficient. Derive tenant context from verified identity once, keep it immutable, and enforce it independently at every storage and inference boundary.
+The goal is one affordable AI platform for many customers with no cross-tenant read, write, cache hit, or model context leak. A tenant ID on a row does not achieve that. Derive tenant context once from verified identity, keep it immutable, and enforce it independently at every storage and inference boundary.
 
-G07 is the [source study](../4_Full_Design/G07_Full_Design.md)’s anchor for the shared platform, per-tenant budget, noisy-neighbor, and cross-tenant retrieval cases.
+G07 anchors the [source study](../4_Full_Design/G07_Full_Design.md)’s cases on the shared platform, per-tenant budgets, noisy neighbours, and cross-tenant retrieval.
 
 | Variant | Shared foundation | What changes |
 |---|---|---|
@@ -34,17 +34,17 @@ G07 is the [source study](../4_Full_Design/G07_Full_Design.md)’s anchor for th
 | Are residency rules hard, customer-specific, or preferences? Do logs and backups count? | If a German tenant’s data cannot leave Frankfurt, do chat logs and backups count? | Regional placement and what must stay local. |
 | Which tenants may share, and what qualifies for dedicated capacity, keys, or clusters? | Can tenant A sit next to tenant B on the same GPU, or do banks get their own cluster? | Tiers and how much isolation you pay for. |
 | What does “predictable performance” mean per tenant? What is peak skew? | If one tenant sends 20× traffic, do the other 499 get slow? | Quotas, fair queues, and reserved lanes. |
-| Do customers federate identity or bring keys? What does verified deletion require? | When a customer leaves, can we prove every copy — including keys — is gone? | Membership mapping, keys, inventory, and offboarding. |
+| Do customers federate identity or bring keys? What does verified deletion require? | When a customer leaves, can we prove every copy, keys included, is gone? | Membership mapping, keys, inventory, and offboarding. |
 | Which budgets are contractual, and can tenants choose model tiers? | Can a tenant burn $10k overnight on a frontier model, or do we stop them before the call? | Pre-call admission, routing, metering, and billing. |
 | What proof must an auditor or incident commander see? | After a suspected leak, can we show tenant B’s docs never entered tenant A’s context? | Isolation tests, tenant-scoped audit, and retention. |
 
 ## 2. Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Onboard tenants and configure policy.**
 2. **Stamp immutable tenant context** on every request from verified identity.
@@ -54,12 +54,12 @@ The easiest way to frame requirements in an interview is:
 6. **Offer a dedicated tier** for justified exceptions.
 7. **Coordinate export and deletion** when a tenant leaves.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
 | **Security** | Zero confirmed cross-tenant exposure; security failures fail closed. |
-| **Fairness** | One tenant cannot cause unbounded latency for neighbors. |
+| **Fairness** | One tenant cannot cause unbounded latency for its neighbours. |
 | **Observability** | Measure p95 and cost by tenant, not only fleet average. |
 | **Audit** | Control-plane changes are auditable. |
 | **Scale (illustrative)** | 500 tenants, 50,000 active users, 200 QPS peak, 20× workload skew. Mean 0.4 QPS/tenant hides heavy tenants. |
@@ -69,7 +69,7 @@ Unit economics: `C_tenant = C_fixed/N + C_usage + C_isolation`. Share when safe;
 
 ### First release
 
-No arbitrary tenant plugins in the core, no universal custom runtime, no cross-region active-active writes for everyone, no unlimited model choice at launch. Model selection is an approved platform capability, not tenant-supplied execution.
+No arbitrary tenant plugins in the core, no universal custom runtime, no cross-region active-active writes for everyone, no unlimited model choice at launch. Tenants pick from platform-approved models; they cannot supply their own code to run.
 
 ### Interview shortcut
 
@@ -121,13 +121,13 @@ flowchart LR
 - **Step 1.** Validate the identity token and map the principal through the tenant directory; ignore tenant IDs supplied in a request body.
 - **Step 2.** Create immutable actor, tenant, role, and region context, then evaluate policy for the specific action and resource.
 - **Step 3.** Route only to an allowed region and shared or dedicated tier; select tenant-specific keys and retention policy.
-- **Step 4.** Meter tokens, concurrency, and budget **before** inference; a tenant over quota queues or is rejected without stalling neighbors.
+- **Step 4.** Meter tokens, concurrency, and budget before inference. A tenant over quota is queued or rejected without stalling its neighbours.
 - **Step 5.** Tenant-aware services read and write scoped DB rows, object namespaces, cache keys, queue envelopes, and vector indexes. A missing scope fails closed.
 - **Step 6.** Apply tenant filtering at vector ingestion and query, then independently check `request.tenant_id == chunk.doc_tenant_id` before building the LLM prompt.
 - **Step 7.** Route the permitted request to fair shared or reserved LLM inference. Validate typed model output before any persistence or downstream action.
 - **Step 8.** Emit tenant-scoped audit and usage events; return the answer only within the verified context.
 
-**Agent role:** this is a multi-tenant **AI platform**, not one universal autonomous agent. It can host RAG assistants and bounded agents. Every model prompt, retrieval, tool call, cache hit, output, and trace inherits the same immutable tenant context; agent plans are proposals checked by platform policy.
+**Agent role:** a multi-tenant AI platform that hosts RAG assistants and bounded agents, rather than one universal autonomous agent. Every model prompt, retrieval, tool call, cache hit, output, and trace inherits the same immutable tenant context. Agent plans are proposals that platform policy checks.
 
 ## 4. The seven isolation layers
 
@@ -141,7 +141,7 @@ flowchart LR
 | Vector index | Tenant scoped at ingestion and search, with a post-retrieval tenant invariant. |
 | Key | Raw storage yields only ciphertext; a leaked tenant key opens one tenant, not all, and destroying it crypto-shreds that tenant. |
 
-Default to shared infrastructure with enforced tenant rows for the common case. A separate namespace adds a stronger boundary without a whole deployment; a dedicated cluster/region/key set is for requirements the shared tier cannot safely or economically meet. Least privilege applies to every service identity. The blast radius is measured by tenant, region, workflow, and dependency.
+Default to shared infrastructure with enforced tenant rows. A separate namespace gives a stronger boundary without a whole deployment. Reserve a dedicated cluster, region, or key set for requirements the shared tier cannot meet safely or economically. Give every service identity least privilege. Measure blast radius by tenant, region, workflow, and dependency.
 
 ## 5. Fairness, regions, and failures
 
@@ -154,14 +154,14 @@ Define policy centrally and enforce it regionally when residency requires. Data,
 | Missing tenant predicate, mismatched chunk, or region route | Reject, audit, and stop the affected path. |
 | Cache key missing tenant | Disable path, invalidate entries, inspect what was served. |
 | Queue leaks metadata | Quarantine, investigate, rotate credentials if necessary. |
-| One tenant exhausts quota | Throttle or degrade **that tenant** while preserving fair service. |
+| One tenant exhausts quota | Throttle or degrade only that tenant; keep service fair for the rest. |
 | Key or policy authority unavailable | Fail closed for protected data or actions. |
 
 Export and deletion need a tenant inventory across rows, blobs, embeddings, caches, queues, logs, and backups, plus verified completion and retention exceptions. A database delete alone is not offboarding.
 
 ## 6. Evaluation, rollout, and interview close
 
-**Release gate:** an adversarial isolation suite for cross-tenant object reads, stale cache, replayed tokens, malformed filters, namespace collisions, missing predicates, and vector retrieval. Any unexplained boundary failure stops promotion; confirmed cross-tenant incidents target zero. Track per-tenant p95, quota rejection, cost, and regional failover against agreed SLOs.
+**Release gate:** an adversarial isolation suite for cross-tenant object reads, stale cache, replayed tokens, malformed filters, namespace collisions, missing predicates, and vector retrieval. Any unexplained boundary failure stops promotion. The target for confirmed cross-tenant incidents is zero. Track per-tenant p95, quota rejection, cost, and regional failover against agreed SLOs.
 
 Roll out internal tenants → negative isolation suite → small shared tenants with conservative quotas → dedicated tier by policy and economics. Canary, rollback, operator runbooks, support training, and audited admin actions are part of delivery.
 

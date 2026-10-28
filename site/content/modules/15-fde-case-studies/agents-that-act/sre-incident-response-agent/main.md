@@ -1,6 +1,6 @@
 # SRE Incident Response Agent: Main Interview Guide
 
-**Incident response** is: pages go off, someone finds a cause, someone changes production. Wrong rollback at 3 a.m. is worse than a slow summary.
+In **incident response**, pages go off, someone finds a cause, and someone changes production. A wrong rollback at 3 a.m. is worse than a slow summary.
 
 **This case covers one slice:** collapse the alert storm, look with read-only tools, then *suggest* a fix. Humans still approve writes.
 
@@ -10,10 +10,10 @@ End to end, as checkout 5xx after a deploy:
 2. **We attach service, last deploy, owner, freeze.**
 3. **We read metrics, logs, traces in parallel** and mark empty vs down vs denied.
 4. **A strong model ranks causes** from that pack, with citations and coverage gaps.
-5. **It proposes a rollback command**, blast radius, runbook, dry-run — it does not run it.
+5. **It proposes a rollback command** with blast radius, runbook, and dry-run. It does not run it.
 6. **Owner/commander click yes.** One gateway executes once. Timeline records it.
 
-That’s it: **dedupe → read → hypothesize → propose → human → maybe write.** Auto-restart of prod is later, if ever.
+The flow: **dedupe → read → hypothesize → propose → human → maybe write.** Auto-restart of prod comes later, if ever.
 
 > **Core idea:** Dedupe the alert storm, investigate with read-only tools, show evidence and missing sources, then stage any mitigation for human approval. The agent runs outside the failure it is investigating.
 
@@ -23,7 +23,7 @@ Use this guide for the interview. The [Deep Dive](/design/sre-incident-response-
 
 > “The agent may query anything it is authorised to read and change nothing on its own. A ten-second approval is acceptable during an incident; an autonomous rollback based on a wrong hypothesis is not. I’ll optimise for a useful, evidence-backed summary within 30 seconds, even when telemetry is degraded.”
 
-The dependency inversion is the distinctive risk: the observability stack the agent queries may be degraded by the same incident. It must disclose source coverage and distinguish “nothing found” from “source unavailable.”
+The distinctive risk is dependency inversion: the same incident may degrade the observability stack the agent queries. The agent must disclose source coverage and tell “nothing found” apart from “source unavailable.”
 
 ### Questions to ask the interviewer
 
@@ -32,12 +32,12 @@ The [Full Design discovery, section 1](/design/sre-incident-response-agent#full-
 | Question to ask                                                                         | What it's really asking                                                                              | What you then decide                                                       |
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | Which alert class and responder decision are in scope first?                            | Are we helping with "checkout 5xx" first, or trying to cover every page in week one?                 | Pilot slice, golden set, and which runbooks you load.                      |
-| Who is on call, who owns the service, and who approves a mitigation?                    | When we want to roll back, whose phone buzzes — on-call, service owner, or incident commander?      | Identity, ownership map, and who can approve a write.                      |
-| Which diagnostics are read-only, which writes may be proposed, and which are forbidden? | Can it run logs itself, only*suggest* a restart, and never run a destructive command?              | Tool allowlist and the exact write line.                                   |
+| Who is on call, who owns the service, and who approves a mitigation?                    | When we want to roll back, whose phone buzzes: on-call, service owner, or incident commander?       | Identity, ownership map, and who can approve a write.                      |
+| Which diagnostics are read-only, which writes may be proposed, and which are forbidden? | Can it run logs itself, only *suggest* a restart, and never run a destructive command?              | Tool allowlist and the exact write line.                                   |
 | Which telemetry sources are authoritative, fresh, and permissioned?                     | If Prometheus is down in the same outage, do we pretend we looked, or say we couldn't see?           | Parallel reads, ACLs, coverage status, and stale warnings.                 |
 | What alert burst and first-output target must hold?                                     | When 400 alerts hit in 90 seconds, can we still give a useful summary in 30?                         | Dedupe capacity and the 30-second budget.                                  |
-| What evidence must support a cause or proposed command?                                 | If we recommend a rollback, can we show the deploy, the metric, and the runbook — or is it a guess? | Citations, confidence, simulation, and when to refuse.                     |
-| What proves a 30-day pilot helped?                                                      | After a month, did responders actually use the summaries, or just ignore them?                       | Precision, acceptance, time to a useful summary, and how often we reverse. |
+| What evidence must support a cause or proposed command?                                 | If we recommend a rollback, can we show the deploy, the metric, and the runbook, or is it a guess?   | Citations, confidence, simulation, and when to refuse.                     |
+| What proves a 30-day pilot helped?                                                      | After a month, did responders use the summaries or ignore them?                                  | Precision, acceptance, time to a useful summary, and how often we reverse. |
 | What audit and rollback evidence is required?                                           | After a bad rollback, can we reconstruct who approved it and what command ran?                       | Incident timeline, proposal record, and change controls.                   |
 
 If the interviewer cannot provide all numbers, state assumptions for throughput, latency, horizon, accuracy, cost, autonomy, data class, and recovery. Name the oracle: post-incident review of the hypothesis and outcome.
@@ -52,20 +52,20 @@ If the interviewer cannot provide all numbers, state assumptions for throughput,
 
 ## 2. Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
-1. **Correlate the alert** — logs, metrics, traces, deploys, flags, and approved runbooks.
-2. **Rank hypotheses** — evidence, uncertainty, and source coverage.
-3. **Run read-only diagnostics** — only authorised tools, automatically.
-4. **Propose a mitigation** — exact command, blast radius, evidence, runbook, freeze, simulation where possible.
-5. **Route writes through humans** — service owner / incident commander, then one tool gateway.
-6. **Record the timeline** — policy decisions, source gaps, and outcomes for replay.
+1. **Correlate the alert** with logs, metrics, traces, deploys, flags, and approved runbooks.
+2. **Rank hypotheses** with evidence, uncertainty, and source coverage.
+3. **Run read-only diagnostics** automatically, with authorised tools only.
+4. **Propose a mitigation**: exact command, blast radius, evidence, runbook, freeze, and simulation where possible.
+5. **Route writes through humans**: service owner or incident commander, then one tool gateway.
+6. **Record the timeline**: policy decisions, source gaps, and outcomes for replay.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -130,21 +130,21 @@ flowchart LR
 
 Collapse related alerts into one incident before spending model calls. Attach new alerts to an active investigation and cap concurrent runs per service. Build context from service topology, deploys, flags, owners, and freeze status. Query telemetry in parallel with bounded lookback; pre-aggregate log signatures, metric buckets, trace samples, and deploy diffs before they become model tokens. Use the strong model for a small set of ranked hypotheses, not raw-log search.
 
-Every tool returns one typed state: **SUCCESS, EMPTY, UNAVAILABLE, DENIED, INVALID**. `EMPTY` means the query worked and found nothing; `UNAVAILABLE` means the source did not answer. Neither is evidence for the same conclusion. `DENIED` is a dead end to the model; details go into the human audit, not a workaround hint.
+Every tool returns one typed state: `SUCCESS`, `EMPTY`, `UNAVAILABLE`, `DENIED`, or `INVALID`. `EMPTY` means the query worked and found nothing; `UNAVAILABLE` means the source did not answer. Never treat the two as the same evidence. To the model, `DENIED` is a dead end; the details go into the human audit, never into a hint for working around it.
 
-The mitigation is always a proposal first. Compute blast radius from the service catalog/topology, cite evidence and runbook, check change freeze and simulation, then route to the right humans. Approval is bound to the proposal and expires. The gateway authorises before validating arguments so unauthorised callers cannot learn a protected tool schema from validation errors.
+A mitigation always starts as a proposal. Compute blast radius from the service catalog/topology, cite evidence and runbook, check change freeze and simulation, then route to the right humans. Approval is bound to the proposal and expires. The gateway authorises before validating arguments so unauthorised callers cannot learn a protected tool schema from validation errors.
 
 ## 5. Latency, scale, and cost
 
-At the source’s burst of **400 alerts/90 s**, one investigation per alert would overload the telemetry stack and produce noisy summaries. Dedupe/correlation should take under a second; context building ~1–2 s; parallel telemetry fan-out ~5–10 s for the slowest source; strong-model synthesis ~10–15 s in this budget, streamed; verification completes the under-30-second first output. Track time to first useful hypothesis, not only final response time.
+At the source’s burst of 400 alerts/90 s, one investigation per alert would overload the telemetry stack and produce noisy summaries. Dedupe/correlation should take under a second; context building ~1–2 s; parallel telemetry fan-out ~5–10 s for the slowest source; strong-model synthesis ~10–15 s in this budget, streamed; verification completes the under-30-second first output. Track time to first useful hypothesis, not only final response time.
 
-At 10×, provider quotas and telemetry rate limits likely bind first. Per-service caps and pre-aggregation keep strong-model calls tied to real incidents rather than alert count. Profile input tokens and serial steps before choosing a faster model. Cache versioned service catalogs/runbooks, shrink lookback and top-k, and parallelise independent read-only calls. Spend is per resolved investigation; it remains visible even when a SEV-1 justifies a larger budget.
+At 10×, provider quotas and telemetry rate limits likely bind first. Per-service caps and pre-aggregation keep strong-model calls tied to real incidents rather than alert count. Profile input tokens and serial steps before choosing a faster model. Cache versioned service catalogs/runbooks, shrink lookback and top-k, and parallelise independent read-only calls. Measure spend per resolved investigation, and keep it visible even when a SEV-1 justifies a larger budget.
 
 ## 6. Failure and safety playbook
 
 | Failure                             | Safe response                                                                                |
 | ----------------------------------- | -------------------------------------------------------------------------------------------- |
-| Metrics/logs/traces slow or missing | Return`UNAVAILABLE` or partial coverage within timeout; lower confidence and name the gap. |
+| Metrics/logs/traces slow or missing | Return `UNAVAILABLE` or partial coverage within timeout; lower confidence and name the gap. |
 | Deploy metadata absent              | State that deploy correlation was not possible.                                              |
 | Runbook stale or absent             | Mark proposal unguided/stale; do not imply approval.                                         |
 | Injection in log/runbook            | Treat content as data; exclude flagged chunks; no tool authority from text.                  |
@@ -170,7 +170,7 @@ For a 45-minute round: requirements and oracle (8), records/action space (4), ar
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
 | Restart automatically?         | Read-only first, then suggestions, then human-approved execution; autonomy only for proven low-risk reversible work. |
 | What breaks at 10×?           | Telemetry quotas and provider limits; cap per service and pre-aggregate.                                             |
-| What if a source says nothing? | Show whether it was`EMPTY` or `UNAVAILABLE`; never infer from a missing source.                                  |
+| What if a source says nothing? | Show whether it was `EMPTY` or `UNAVAILABLE`; never infer from a missing source.                                  |
 | Slow prototype?                | Decompose stages, parallelise reads, send less telemetry, stream, keep verification.                                 |
 | How do you know it helps?      | Post-incident hypothesis precision, source coverage, responder acceptance, reversal rate.                            |
 

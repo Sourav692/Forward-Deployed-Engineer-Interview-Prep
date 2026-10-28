@@ -1,4 +1,4 @@
-# G06 — Natural Language over Governed Data: Cheat Sheet
+# G06 Natural Language over Governed Data: Cheat Sheet
 
 Use the [Main guide](../1_Interview_Guide/G06_Interview_Guide.md) for the spoken answer, the [Deep Dive](../2_Technical_Deep_Dive/G06_Technical_Deep_Dive.md) for mechanisms, and the unchanged [source](../4_Full_Design/G06_Full_Design.md) for the full case.
 
@@ -22,7 +22,7 @@ Who owns the first ten metrics? Semantic layer exists? Warehouse and dialect? Na
 2. Ask about “revenue” when more than one approved definition fits.
 3. Parse the AST; do not rely on regex or prompt rules to stop unsafe SQL.
 4. Read-only credentials, execution-time entitlement check, warehouse-native row/column security, scan budget.
-5. A summary that contradicts the table is rejected; return the table alone.
+5. Reject a summary that contradicts the table; return the table alone.
 
 ## Case numbers, with context
 

@@ -18,7 +18,7 @@ The spine is the same in every persona. The interviewer will pick one. Learn the
 
 The claims-processing prompt from the OpenAI-style practice set is the same spine again. Its discussion list is classification, OCR and structured extraction, policy lookup, missing-information detection, fraud or anomaly signals, human review thresholds, explainability, regulatory constraints, PII protection, evaluation against human decisions, and gradual rollout by claim type. Its one instruction is to avoid promising full automation. Start with extraction, triage, summarisation and missing-information detection before any adjudication.
 
-Map each source with its permission model before choosing an embedding model. The connector's job is translating that model into one internal representation.
+Map each source with its permission model before choosing an embedding model. The connector translates each permission model into one internal representation.
 
 | Data source | Format | Owner | Freshness | Permission model | Risk |
 |---|---|---|---|---|---|
@@ -31,7 +31,7 @@ Map each source with its permission model before choosing an embedding model. Th
 
 ## 4. Draw the Architecture End to End
 
-One diagram carries the whole design. It is this page's construction from the three answer keys and the vendor case. The organising split is control plane against data plane. Rule versions, schemas, risk thresholds, credentials and evaluation gates live in the control plane. Every document, extraction, comparison, draft and approval lives in the data plane. A control-plane change is a release. A data-plane call is a case.
+One diagram carries the design. This page constructed it from the three answer keys and the vendor case. The organising split is control plane against data plane. Rule versions, schemas, risk thresholds, credentials and evaluation gates live in the control plane. Every document, extraction, comparison, draft and approval lives in the data plane. A control-plane change is a release. A data-plane call is a case.
 
 ```
  ╔══════════════════════════════ CONTROL PLANE (changes are releases) ═══════════════════════════════╗
@@ -110,7 +110,7 @@ flowchart LR
     RR & EX & CMP & DR & CIT & VF & APP --> AUD
 ```
 
-Read the components in dependency order. That is the order they exist and the order they fail.
+Read the components in dependency order, which is the order they exist and the order they fail.
 
 | Component | Responsibility | Fails how |
 |---|---|---|
@@ -126,11 +126,11 @@ Read the components in dependency order. That is the order they exist and the or
 | Approval workflow | Named approver edits, approves, rejects; nothing external leaves without it | Closed: no approver, no submission |
 | Audit, trace, eval, dashboards | Rule IDs and versions, evidence IDs, draft, edits, approval; golden and red-team evals; operational and safety metrics apart | Degrades: case still served, gap logged |
 
-Three boundaries are worth pointing at with the diagram up. Each one is a line on the board. The cheap-to-expensive boundary sits between EXTRACT and DRAFT. Everything to the left runs a small model on every page. Everything to the right runs the strong model only on what was flagged. The trust boundary sits at VERIFY: no citation leaves that was not the span used and permitted. And the decision boundary sits at ROUTE: to its left the system drafts and explains, to its right a named human decides.
+With the diagram up, point at three boundaries, each a line on the board. The cheap-to-expensive boundary sits between EXTRACT and DRAFT. Everything to the left runs a small model on every page. Everything to the right runs the strong model only on what was flagged. The trust boundary sits at VERIFY: no citation leaves that was not the span used and permitted. The decision boundary sits at ROUTE: to its left the system drafts and explains, to its right a named human decides.
 
 ## 5. Make the Extraction Schema the Seam
 
-The schema is where the copilot stops being a chatbot. It becomes a workflow. Structured extraction with a typed schema per document type is the one component every downstream step depends on. Comparison, risk tiering and citation all key on fields, not on prose. A model cannot compare evidence to criteria it has not first named.
+The schema turns the copilot from a chatbot into a workflow. Structured extraction with a typed schema per document type is the one component every downstream step depends on. Comparison, risk tiering and citation all key on fields, not on prose. A model cannot compare evidence to criteria it has not first named.
 
 For prior authorisation the fields are payer, plan, procedure, diagnosis codes, date of service, prior therapies, labs, imaging and the clinical facts that map to each payer requirement. For compliance they are document type, jurisdiction, business unit, the obligation that applies, and the evidence span that meets or breaks it. For contracts they are clause type, the normalised clause text, the counterparty, the jurisdiction and the confidentiality level. Every record in the answer keys is a row in one of those schemas. The EvidenceLink, Finding and RiskFinding records are the join between an extracted field and the rule it was compared against, with a confidence.
 
@@ -138,7 +138,7 @@ Two rules follow. In this design, extraction runs on the cheap model and on ever
 
 ## 6. Refuse to Index What the Parser Dropped
 
-A model cannot reason over data that never reached the index. That is the whole section. Table-heavy policy documents are where that happens silently. A plain text-extraction PDF loader usually flattens a table into disconnected fragments. The header row and the data rows land in different chunks with no schema linking them. The parser incident in section 14 is exactly this. 17 tables detected, 9 extracted, pages 31 to 33 missing. An escalation-threshold matrix that was never indexed.
+A model cannot reason over data that never reached the index. In table-heavy policy documents, data goes missing silently. A plain text-extraction PDF loader usually flattens a table into disconnected fragments. The header row and the data rows land in different chunks with no schema linking them. The parser incident in section 14 is this failure: 17 tables detected, 9 extracted, pages 31 to 33 missing, and an escalation-threshold matrix never indexed.
 
 The chunking reference gives the rule. For PDFs, validate extraction order before trusting chunk boundaries. Keep page-number metadata as the only anchor back to the source. Extract tables separately with a table-mode parser rather than as prose. For tables, chunk by row or row group and never split a row. Use zero overlap, because rows are independent records. Then gate ingestion on what the parser reports: `extraction_coverage`, `table_count_detected`, `table_count_extracted` and `layout_confidence`. Fail a high-risk policy document when table coverage falls below the agreed threshold instead of logging a warning. Classify documents as policy-with-tables when they are. The incident's gate only warned because the document had been labelled plain policy text.
 
@@ -146,15 +146,15 @@ Store page-level extraction coverage in the retrieval metadata. A query that lan
 
 ## 7. Cite the Span That Supported the Claim, Then Verify It
 
-Answer correctness and citation correctness are separate dimensions. In a regulated workflow the second one is what the reviewer relies on. A correct answer with a wrong citation is more dangerous than a refusal. The reviewer trusts the citation and repeats it in a negotiation or a submission.
+Answer correctness and citation correctness are separate dimensions. In a regulated workflow the second one is what the reviewer relies on. A correct answer with a wrong citation is more dangerous than a refusal, because the reviewer trusts the citation and repeats it in a negotiation or a submission.
 
-So the citation builder quotes the exact span the drafting step used. Not the most concise chunk, not the highest-ranked chunk nearby. The verifier then checks two things before anything leaves. The cited span actually contains the claim. The user is permitted to see it. A span mismatch fails closed. The citation incident in section 14 shows the alternative. A citation generator was changed to prefer concise citations. A verifier over-weighted answer groundedness. A termination clause was cited to the data-processing addendum.
+The citation builder quotes the exact span the drafting step used, rather than the most concise or highest-ranked chunk nearby. Before anything leaves, the verifier checks two things: the cited span contains the claim, and the user may see it. A span mismatch fails closed. The citation incident in section 14 shows the alternative. A changed citation generator preferred concise citations, the verifier over-weighted answer groundedness, and the draft cited the data-processing addendum for a termination clause.
 
-Playbook comparison in the contract persona is the same mechanism pointed at a rule. Each extracted clause is compared against the playbook's preferred position for its type. A deviation is flagged with a rationale. The copilot proposes the playbook's fallback language rather than inventing its own. Material deviations route to counsel. A fallback is never accepted without a lawyer's approval. In the compliance persona the rule citation is the obligation text by jurisdiction and product. The finding carries the evidence span and a severity.
+Playbook comparison in the contract persona is the same mechanism pointed at a rule. The copilot compares each extracted clause against the playbook's preferred position for its type and flags a deviation with a rationale. It proposes the playbook's fallback language rather than inventing its own. Material deviations route to counsel. A fallback is never accepted without a lawyer's approval. In the compliance persona the rule citation is the obligation text by jurisdiction and product. The finding carries the evidence span and a severity.
 
 ## 8. Handle Sensitive Data as a Boundary, Not a Setting
 
-PHI, privileged material and financial data change where content may travel. Not only who may read it. Minimise what enters the prompt to the fields the task needs. Redact unnecessary PHI from logs. Store policy and evidence IDs rather than raw content with every generated claim. Keep patient-level and matter-level access restrictions in retrieval, never in the prompt. Break-the-glass access, where it exists, is audited with a reason. No training on customer data unless the contract allows it. No vendor system sees raw content that the data classification forbids.
+PHI, privileged material and financial data change where content may travel, as well as who may read it. Minimise what enters the prompt to the fields the task needs. Redact unnecessary PHI from logs. Store policy and evidence IDs rather than raw content with every generated claim. Keep patient-level and matter-level access restrictions in retrieval, never in the prompt. Break-the-glass access, where it exists, is audited with a reason. No training on customer data unless the contract allows it. No vendor system sees raw content that the data classification forbids.
 
 The regulated-industry prompt from the OpenAI-style practice set is a checklist for this section. Each item already has a home in the design:
 

@@ -2,7 +2,7 @@
 
 *Every user expects the first token instantly and the whole history remembered, while every remembered token is paid for again on the next turn.*
 
-"Design ChatGPT" is not a model question. It is a distributed-systems question about conversation state, token streaming, admission control and cost at hundreds of millions of users. This page consolidates the group's prompts into one read for the day before.
+"Design ChatGPT" is a distributed-systems question about conversation state, token streaming, admission control and cost at hundreds of millions of users. This page consolidates the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -38,7 +38,7 @@ The weak answer draws a load balancer in front of a model and stops. It forgets 
 
 A requirement that cannot fail a test is a preference. "Fast" is a preference. "Time to first token under one second at p95" is a constraint, and only the second shapes the architecture. The split below is *own construction*.
 
-The must-haves are six. Send a message and receive a streamed answer. Keep and list conversation history per user, with rename and delete. Carry context across turns within a conversation. Enforce per-user and per-tier usage limits. Moderate input and output. Stop generation on request or when the client leaves.
+There are six must-haves. Send a message and receive a streamed answer. Keep and list conversation history per user, with rename and delete. Carry context across turns within a conversation. Enforce per-user and per-tier usage limits. Moderate input and output. Stop generation on request or when the client leaves.
 
 The should-haves round out a competitive product: file uploads, web search, a code sandbox, cross-conversation memory the user can inspect and erase, regenerate and edit-and-resend, and sharing a conversation by link. Voice and image generation come later.
 
@@ -66,7 +66,7 @@ Every must-have then needs an owner in the architecture *(own construction)*.
 
 ## 3. Size It From Daily Users Down to GPUs
 
-Say the arithmetic aloud, because it decides whether multi-region and caching are optional. They are not. Every number below is an assumption for the whiteboard *(own construction)*. The method is what gets scored.
+Say the arithmetic aloud, because it shows that multi-region and caching are required. Every number below is an assumption for the whiteboard *(own construction)*. The interviewer scores the method.
 
 | Step | Assumption | Result |
 |---|---|---|
@@ -81,7 +81,7 @@ Say the arithmetic aloud, because it decides whether multi-region and caching ar
 | Streams per model replica | 100 concurrent, batched | ≈ 2,800 replicas at peak |
 | Storage | ~2 KB text per message | ≈ 2 TB of conversation text a day |
 
-Little's Law is `concurrency = throughput × latency`, from the cost study guide. It turns latency work into capacity work: halving the answer length halves the concurrent streams to provision. The input line explains why prefix caching matters more here than anywhere. Seventy million input tokens a second are mostly history the model already processed last turn.
+Little's Law is `concurrency = throughput × latency`, from the cost study guide. It turns latency work into capacity work: halving the answer length halves the concurrent streams to provision. The input line is why prefix caching matters more here than anywhere: seventy million input tokens a second are mostly history the model already processed last turn.
 
 Split the two latency phases before going further. Prefill processes the whole prompt in parallel and sets time to first token, so it scales with input tokens. Decode generates one token at a time and sets total time, so it scales with output tokens. A bloated history is a first-token problem. A verbose answer is a completion-time problem.
 
@@ -207,6 +207,6 @@ Store everything and send little. The memory study guide draws the line: trimmin
 
 The conversation service writes every message durably, keyed by `(user_id, conversation_id)`. It also persists the partial answer as tokens stream. A disconnected user then reconnects to the text generated so far rather than to nothing. The store is sharded by `user_id`, so one user's history lives on one shard and a list-conversations call touches one partition.
 
-The context builder assembles each turn in a fixed order: system prompt, rolling summary, recent turns, memory facts, retrieved file chunks, then the new message. A sliding window alone loses anything that scrolls out. Summarisation keeps a condensed record once the buffer crosses a threshold, at the cost of one extra model call per compression. The memory guide's worked answer folds the buffer at about 15 turns, an illustrative threshold rather than a rule, so cost stays flat on long chats. The failure to volunteer is losing a detail the summariser judged unimportant.
+The context builder assembles each turn in a fixed order: system prompt, rolling summary, recent turns, memory facts, retrieved file chunks, then the new message. A sliding window alone loses anything that scrolls out. Summarisation keeps a condensed record once the buffer crosses a threshold, at the cost of one extra model call per compression. The memory guide's worked answer folds the buffer at about 15 turns, an illustrative threshold rather than a rule, so cost stays flat on long chats. Volunteer the failure mode: the summariser can drop a detail it judged unimportant.
 
-Cross-conversation memory is a different store with a different key. A checkpoint key answers "which conversation"; a user namespace answers "which person". Semantic memory holds stable facts under a stable key that overwrites in place. Episodic memory appends one record per completed task and is pruned. The isolation rule from the memory guide is non-negotiable: read `user_id` from the server-side session on every request, never from a tool argument the model could set. Make memory visible and erasable in the product, because a user who cannot see a remembered fact cannot correct it.
+Cross-conversation memory is a different store with a different key. A checkpoint key answers "which conversation"; a user namespace answers "which person". Semantic memory holds stable facts under a stable key that overwrites in place. Episodic memory appends one record per completed task and is pruned. The memory guide's isolation rule has no exceptions: read `user_id` from the server-side session on every request, never from a tool argument the model could set. Make memory visible and erasable in the product, because a user who cannot see a remembered fact cannot correct it.

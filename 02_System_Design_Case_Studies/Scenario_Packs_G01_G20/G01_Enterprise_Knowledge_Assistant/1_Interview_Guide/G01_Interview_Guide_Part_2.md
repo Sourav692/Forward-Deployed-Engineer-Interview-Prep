@@ -1,4 +1,4 @@
-# G01 — Enterprise Knowledge Assistant: Interview Guide, part 2
+# G01 Enterprise Knowledge Assistant: Interview Guide, part 2
 
 ## 7. ABAC
 
@@ -29,7 +29,7 @@ Use hybrid retrieval.
 
 **RRF:** combine rank from dense and lexical systems.
 
-Then rerank the **authorised** candidate pool.
+Then rerank the authorised candidate pool.
 
 Correct order:
 
@@ -42,7 +42,7 @@ Authorize
  → Generate
 ~~~
 
-Not retrieve → rerank everything → remove forbidden documents.
+Never: retrieve → rerank everything → remove forbidden documents.
 
 ---
 
@@ -62,13 +62,13 @@ Use:
 4. compression if needed
 5. generation
 
-A small, high-quality evidence set is usually better than prompt stuffing.
+A small, high-quality evidence set usually beats prompt stuffing.
 
 ---
 
 ## 10. Generation, citations and abstention
 
-The LLM should answer from selected evidence.
+The LLM answers from the selected evidence.
 
 ~~~text
 Evidence
@@ -79,7 +79,7 @@ Evidence
  → User
 ~~~
 
-Every citation must refer to evidence the user is authorised to see and that actually supports the claim.
+Every citation must refer to evidence the user is authorised to see and that supports the claim.
 
 If evidence is insufficient:
 
@@ -96,7 +96,7 @@ Possible outcomes:
 
 ## 11. Prompt injection
 
-Retrieved documents are **data, not instructions**.
+Retrieved documents are data, not instructions.
 
 A wiki page can contain malicious text telling the model to ignore its instructions. The model must not turn that into a tool action or security decision.
 
@@ -110,7 +110,7 @@ Use:
 - output checks
 - human approval for risky writes
 
-Prompt injection is not solved by prompting alone.
+Prompting alone does not solve prompt injection.
 
 ---
 
@@ -138,7 +138,7 @@ Evaluate separate layers.
 - cross-tenant leakage
 - revoked/deleted document tests
 
-**Leakage is a release gate, not merely a metric.** One exposure blocks release.
+**Leakage is a release gate.** One exposure blocks release.
 
 ### Freshness
 
@@ -165,7 +165,7 @@ Example personas:
 
 Run the same questions as each identity.
 
-The question is not just “did we get the right answer?” but:
+Change the question from “did we get the right answer?” to:
 
 > **“Did each persona get the right authorised answer?”**
 
@@ -208,9 +208,9 @@ Use round numbers as reasoning examples.
 | <8 s | Relaxed interactive target in this design |
 | ~100 ms | Generation cannot stay on the hot path |
 
-At 100 QPS and ~3 seconds of generation, there can be roughly 300 in-flight generations. That is a serving problem.
+At 100 QPS and ~3 seconds of generation, roughly 300 generations are in flight at once, which makes this a serving problem.
 
-Latency should be budgeted across:
+Budget latency across:
 
 **identity/auth → retrieval → rerank → generation → verification**
 
@@ -222,7 +222,7 @@ Use permission-aware caching, bounded top-k, selective reranking, model routing,
 
 ## 16. Scalability, latency & cost: production design
 
-Use one framework: **measure the workload, find the bottleneck, then bound or route the expensive work without weakening authorisation or answer quality.**
+Use one framework: measure the workload, find the bottleneck, then bound or route the expensive work without weakening authorisation or answer quality.
 
 | Concern | What drives it | Production choices | What to measure |
 |---|---|---|---|
@@ -247,7 +247,7 @@ Use one framework: **measure the workload, find the bottleneck, then bound or ro
 
 ## 17. Safe caching
 
-Never cache simply:
+Never key the cache on the query alone:
 
 ~~~text
 query → answer
@@ -262,7 +262,7 @@ tenant
 + query
 ~~~
 
-Potentially also model/prompt version.
+Consider adding model/prompt version.
 
 Invalidate on ACL changes, deletes, source updates and index/policy changes.
 
@@ -270,7 +270,7 @@ Invalidate on ACL changes, deletes, source updates and index/policy changes.
 
 ## 18. Multi-tenancy
 
-Isolation should exist across:
+Isolate tenants across:
 
 - identity
 - authorisation
@@ -349,13 +349,11 @@ Use:
 - precomputation for common queries
 - streaming where appropriate
 
-This becomes closer to a permission-aware search product with a cached-answer layer.
+At that point the system is closer to a permission-aware search product with a cached-answer layer.
 
 ---
 
 ## 22. Databricks
-
-Important lesson:
 
 > **Governed source data does not automatically make a copied search index governed.**
 
@@ -376,7 +374,7 @@ Ask the interviewer:
 3. How faithfully must source permissions be mirrored?
 4. What is the revocation SLO?
 
-Prove the design with a persona-by-document visibility matrix rather than only verbal claims.
+Prove the design with a persona-by-document visibility matrix, not verbal claims alone.
 
 ---
 
@@ -434,10 +432,10 @@ Five beats:
 
 > **Permission first. Retrieval second. Generation third.**
 
-Remember the flow:
+The flow:
 
 **Identity → Authorisation → Pre-filter → Hybrid retrieval → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate.**
 
-And the release rule:
+The release rule:
 
 > **Leak count must be zero.**

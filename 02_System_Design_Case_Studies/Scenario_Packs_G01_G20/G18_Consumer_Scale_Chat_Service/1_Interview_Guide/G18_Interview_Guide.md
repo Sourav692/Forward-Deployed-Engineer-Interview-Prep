@@ -1,25 +1,25 @@
-# G18 — Consumer-Scale Chat Service: Main Interview Guide
+# G18 Consumer-Scale Chat Service: Main Interview Guide
 
-**Consumer chat** is ChatGPT-shaped: many people, many turns, stream tokens, remember the thread, don’t go bankrupt on GPUs. The **model is stateless**; the **product is not**.
+Consumer chat is ChatGPT-shaped: many people, many turns, streamed tokens, a remembered thread, and no going bankrupt on GPUs. The model is stateless; the product is not.
 
-**G18 covers one slice:** sessions, streaming, admission, moderation, cost. Not training the foundation model.
+**G18 covers one slice:** sessions, streaming, admission, moderation and cost. Training the foundation model is out of scope.
 
 End to end, as free-tier user Sam:
 
-1. **Sam hits send.** Admission and quotas — paid may skip the line.
-2. **We load the conversation** (and deletion rules). Not the whole history dumped raw if it won’t fit.
+1. **Sam hits send.** Admission and quotas run first; paid users may skip the line.
+2. **We load the conversation** (and deletion rules). If the whole history won’t fit, we don’t dump it in raw.
 3. **Moderation on the way in.**
-4. **A GPU pool streams tokens.** Batching and fair queues keep neighbors alive.
-5. **Moderation on the way out.** Tools (files, search, code) are sandboxed and step-capped if they exist.
-6. **Turn is stored.** If inference dies, failover — don’t pretend the chat never happened.
+4. **A GPU pool streams tokens.** Batching and fair queues keep neighbours alive.
+5. **Moderation on the way out.** Tools (files, search, code), if they exist, are sandboxed and step-capped.
+6. **Turn is stored.** If inference dies, fail over; don’t pretend the chat never happened.
 
-That’s it: **admit → load state → infer stream → moderate → persist.** “We’ll train a new model in this round” stays out unless they ask.
+The path is admit → load state → infer stream → moderate → persist. Leave “We’ll train a new model in this round” out unless they ask.
 
 > **Source:** [Sources and Full Design](../4_Full_Design/G18_Full_Design.md), especially §§1–12. Use the [Deep Dive](../2_Technical_Deep_Dive/G18_Technical_Deep_Dive.md) for sizing and trade-offs and the [Cheat Sheet](../3_Quick_Review/G18_Quick_Review.md) for rehearsal. The source builds its design from one-line “Design ChatGPT/Claude” prompts; all scale figures are explicit whiteboard assumptions, not measured service facts.
 
 ## The anchor and variant
 
-“Design ChatGPT” asks for a **stateful product around a stateless model**: conversations, streaming, admission, moderation and token cost at consumer scale. The “Design the Claude chat service” variant uses the same architecture, with more emphasis on batching, GPU capacity, queues and failover. There is no separate worked design for either prompt.
+“Design ChatGPT” asks for a stateful product around a stateless model: conversations, streaming, admission, moderation and token cost at consumer scale. The “Design the Claude chat service” variant uses the same architecture, with more emphasis on batching, GPU capacity, queues and failover. There is no separate worked design for either prompt.
 
 ## Questions to ask the interviewer
 
@@ -34,11 +34,11 @@ That’s it: **admit → load state → infer stream → moderate → persist.**
 
 ## Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements in an interview like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
 1. **Send and stream messages.**
 2. **Persist, list, rename, delete conversations.**
@@ -49,7 +49,7 @@ The easiest way to frame requirements in an interview is:
 
 Files, search, sandboxed code, inspectable memory, and sharing are follow-on features.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -102,9 +102,9 @@ flowchart TB
 
 ## Key trade-offs and failure modes
 
-**Store everything, send little.** A rolling summary prevents context growth from making every turn slower and costlier, but can lose a detail; recent turns and user-visible memory mitigate that. Keep a stable, byte-exact prompt prefix and deterministic tool order for cache reuse. A model cascade may start a cold cache on each model, so compare total cost per successful conversation before routing across models.
+**Store everything, send little.** A rolling summary stops context growth from making every turn slower and costlier. It can lose a detail; recent turns and user-visible memory cover that. Keep a stable, byte-exact prompt prefix and deterministic tool order for cache reuse. A model cascade may start a cold cache on each model, so compare total cost per successful conversation before routing across models.
 
-**Admission versus fairness:** a user token bucket decides whether a request enters; a weighted fair queue decides when an admitted request runs. Count tokens, not only messages. Under saturation, reject early with a retry signal rather than growing an unbounded queue. Separate your own quota 429 from provider/pool capacity events.
+**Admission versus fairness:** a user token bucket decides whether a request enters; a weighted fair queue decides when an admitted request runs. Count tokens, not only messages. Under saturation, reject early with a retry signal instead of growing an unbounded queue. Separate your own quota 429 from provider/pool capacity events.
 
 **Trust boundary:** user ID comes from the authenticated session, never a model tool argument. Files are scanned and parsed asynchronously, retrieval is user-filtered, and code tools use a credential-free sandbox. Moderate both input and streamed output; calibrate false positives and false negatives. Delete history, memory, files and caches consistently when requested.
 

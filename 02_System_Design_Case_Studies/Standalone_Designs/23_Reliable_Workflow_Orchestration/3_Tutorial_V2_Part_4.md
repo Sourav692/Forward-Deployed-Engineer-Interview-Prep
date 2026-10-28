@@ -11,18 +11,18 @@
 
 - Draw a line between the control plane and the data plane before anything else. Without it, the parts never fall into place.
 - Components:
-  - **Workflow definition registry** — holds the approved workflow templates. It is the source of truth for their step order, their retry and timeout rules, and which compensation undoes which step.
-  - **Durable history store** — the system of record. It logs every attempt, signal, state transition, receipt and final outcome.
-  - **Workflow scheduler** — derives the next runnable transition from durable history and hands it off to run.
-  - **Activity task queues** — buffer the handoff from scheduler decisions to the workers.
-  - **Workers** — make external calls, apply internal side effects and run local validation.
-  - **Timer service** — brings a workflow back after a delay, at a deadline, or when a human wait ends.
-  - **Signal/approval gateway** — takes explicit signals from people or systems and releases the workflow waiting on them.
-  - **Compensation engine** — after a terminal failure, runs business actions that undo, as far as they can, the steps already finished.
-  - **Operations UI** — shows live state, who is blocking whom, and the retry history, with pause, resume and override controls.
+  - **Workflow definition registry**: holds the approved workflow templates. It is the source of truth for their step order, their retry and timeout rules, and which compensation undoes which step.
+  - **Durable history store**: the system of record. It logs every attempt, signal, state transition, receipt and final outcome.
+  - **Workflow scheduler**: derives the next runnable transition from durable history and hands it off to run.
+  - **Activity task queues**: buffer the handoff from scheduler decisions to the workers.
+  - **Workers**: make external calls, apply internal side effects and run local validation.
+  - **Timer service**: brings a workflow back after a delay, at a deadline, or when a human wait ends.
+  - **Signal/approval gateway**: takes explicit signals from people or systems and releases the workflow waiting on them.
+  - **Compensation engine**: after a terminal failure, runs business actions that undo, as far as they can, the steps already finished.
+  - **Operations UI**: shows live state, who is blocking whom, and the retry history, with pause, resume and override controls.
 - **Control plane** = the scheduler, the registry, the timer service, the signal gateway, the operations UI and the compensation engine. They decide what happens next.
 - **Data plane** = the queues and the workers. They do the work.
-- Everything rests on this split. It lets decision-making scale apart from side-effect execution.
+- This split lets decision-making scale apart from side-effect execution.
 
 ### Top-Down Architecture and Trust Boundaries
 
@@ -77,9 +77,9 @@ flowchart TB
 ```
 
 - Three trust boundaries exist. Each needs its own authentication, authorisation and logging policy; do not merge them into one generic "service layer":
-  - **Public/customer-facing API** — takes the start request and its idempotency key, but cannot count on the caller retrying with care.
-  - **Worker edge** — the outside systems here may fail, time out or only partly finish.
-  - **Human approval path** — slow, error-prone, and every decision on it must be auditable.
+  - **Public/customer-facing API**: takes the start request and its idempotency key, but cannot count on the caller retrying with care.
+  - **Worker edge**: the outside systems here may fail, time out or only partly finish.
+  - **Human approval path**: slow, error-prone, and every decision on it must be auditable.
 
 ### State Ownership and Consistency
 
@@ -140,7 +140,7 @@ sequenceDiagram
 
 ### Failure-Path Overlay: Worker Crash After Payment
 
-- Rehearse this failure above all others: the payment goes through, and then the **worker crashes**.
+- Rehearse this failure above all others: the payment goes through, and then the worker crashes.
 - Event sequence:
   - The caller starts the workflow and supplies an idempotency key.
   - The API records the scheduled transition in history.
@@ -195,22 +195,22 @@ flowchart TD
 
 - **Synchronous**: validating the start request, authentication, permission checks, writing the first history event, handing back the workflow ID, and most reads from the operations UI.
 - **Asynchronous**: activity dispatch, approval waits, timer wakeups, retries, compensation, and most calls to downstream integrations.
-- The boundary does real work. It keeps the API quick to answer while the business process behind it waits for days.
+- The boundary keeps the API quick to answer while the business process behind it waits for days.
 - Make everything synchronous → a fragile chain of requests that snaps as soon as a human is slow.
 - Make everything asynchronous without a solid history model → nobody can explain what happened, and operators lose control.
 
 ### Queues, Backpressure, Caches, and Policy Placement
 
-- Queues sit at the seam between scheduling and execution; they do not belong in the state store. There they soak up bursts of demand and stop slow workers from holding up the rest.
+- Queues sit at the seam between scheduling and execution, not in the state store. There they soak up bursts of demand and stop slow workers from holding up the rest.
 - Apply backpressure in the scheduler and on the queue admission path. If one tenant, partition or dependency backs up, throttle new dispatches so retries cannot swamp the fleet.
 - Use caches only for data that is read often and carries little risk, such as workflow definitions and UI summaries. A cache must never be the sole home of execution state.
 - Enforce each policy near the point where its decision is made: retry limits in the scheduler, approval rules in the signal gateway, and permission checks ahead of any compensation or manual override.
-- How history and queue load spread out depends on the partitioning key: tenant ID, workflow ID, or a customer/process key. The aim is fewer hot spots, plus causal order wherever the business needs it; sharding for raw scale alone misses the point. When two steps for one process instance must never race, choose a key that puts them in the same partition.
+- How history and queue load spread out depends on the partitioning key: tenant ID, workflow ID, or a customer/process key. Aim for fewer hot spots and causal order wherever the business needs it, not raw scale alone. When two steps for one process instance must never race, choose a key that puts them in the same partition.
 
 ### Why This Decomposition Matters
 
-- A product owner thinks in invoices and approvals. An engineering team thinks in retries, locks and queue depth. Both must be able to follow this one architecture, and being able to speak to both is a strong signal in the job market.
-- Use the diagram to tell four stories: **data, identity, state and failure**.
+- A product owner thinks in invoices and approvals. An engineering team thinks in retries, locks and queue depth. Both must be able to follow this one architecture, and speaking to both is a strong hiring signal.
+- Use the diagram to tell four stories: data, identity, state and failure.
   - Data moves from the caller to history, on to the scheduler and the worker, and back.
   - Identity is carried by auth, by idempotency keys and by approval context.
   - State is kept in durable history.

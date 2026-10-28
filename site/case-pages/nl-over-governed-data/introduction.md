@@ -6,7 +6,7 @@ Executives and analysts want to ask a business question in plain words, such as 
 
 The design anchors every question to a versioned, owner-approved metric before it exposes any physical schema. When a term fits more than one approved meaning, the system asks or sends the question to an analyst. The LLM proposes SQL; a parser checks the query tree against policy and a scan budget, and a read-only gateway runs it under the warehouse's row and column security. The answer carries the SQL, lineage and freshness, the prose is checked against the numbers, and every run is audited for replay.
 
-This is the anchor for an executive dashboard assistant, a retail demand forecast explainer and an insurer's governed data assistant. They reuse the same query path and change the explanation and review workflow.
+This case anchors an executive dashboard assistant, a retail demand forecast explainer and an insurer's governed data assistant. They reuse the same query path and change the explanation and review workflow.
 
 ## The core idea
 

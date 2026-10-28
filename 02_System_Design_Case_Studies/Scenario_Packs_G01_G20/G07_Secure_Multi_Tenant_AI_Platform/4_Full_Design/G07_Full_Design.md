@@ -4,7 +4,7 @@
 
 ◷ 43 min
 
-The dangerous failure is not a bad answer. It is a query, cache lookup, queue message or export that runs without a tenant predicate and reads whatever matches. This page consolidates the group's prompts into one read for the day before. It holds the chapter 2 worksheet and answer key, the tutorial's high-yield sections, the two cost scenarios and the cross-tenant leak incident. The two-layer enforcement mechanics are owned by G01 section 6 and referenced here rather than repeated.
+The dangerous failure is a query, cache lookup, queue message or export that runs without a tenant predicate and reads whatever matches, which is far worse than a bad answer. This page consolidates the group's prompts into one read for the day before. It holds the chapter 2 worksheet and answer key, the tutorial's high-yield sections, the two cost scenarios and the cross-tenant leak incident. G01 section 6 owns the two-layer enforcement mechanics; this page references them instead of repeating them.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -17,7 +17,7 @@ The dangerous failure is not a bad answer. It is a query, cache lookup, queue me
 
 ## 1. Separate the Feature From the Business Result
 
-Open with the outcome, not the topology. The feature asked for is one AI application for 500 enterprise tenants. The business result is a cost-efficient shared platform with defensible isolation, plus a dedicated path for the exceptions. Opening with Kubernetes, a vector database and a model gateway signals feature-first thinking, and that is the tell an FDE interviewer listens for.
+Open with the outcome, not the topology. The feature asked for is one AI application for 500 enterprise tenants. The business result is a cost-efficient shared platform with defensible isolation, plus a dedicated path for the exceptions. Opening with Kubernetes, a vector database and a model gateway signals feature-first thinking, which is exactly what an FDE interviewer listens for.
 
 > *"Support 500 enterprise tenants preserving isolation, predictable performance and regional controls. I'd clarify shared versus dedicated tenants, cross-region data limits, and success criteria per stakeholder. Default: a shared control plane with tenant-aware data and inference paths, strong authorisation at every boundary, and an escape hatch for premium tenants that need dedicated infrastructure."*
 
@@ -43,7 +43,7 @@ Only about six questions fit a forty-five-minute interview, so ask the ones that
 | Do customers bring their own identity provider and their own keys, and is deletion hard or best-effort? | Federation, key management and the deletion workflow |
 | What is the workload shape, steady, bursty, skewed or mixed, and what noisy-neighbour tolerance is acceptable? | Quotas, admission control, queue isolation, reserved capacity |
 
-The three answer tiers show what the opening buys. The weak answer uses microservices and Kubernetes, puts a tenant_id column on every row and adds row-level security. It is solution-first, names no customer outcome, and treats one row label as the whole enforcement stack. The average answer builds a shared platform with per-tenant authorisation, quotas, regional routing, audit logging and per-tenant latency monitoring. It never says where tenant context originates, never makes every isolation layer agree, and never defines when a customer graduates to dedicated infrastructure. The strong answer defaults to shared because pooled economics are the point across 500 tenants. It derives tenant context once from verified identity, never from the request body, and makes it immutable. The control plane decides policy, region, quota and key; the data plane enforces at the gateway, the services and every store. Seven layers enforce independently, a missing predicate fails closed, and an adversarial isolation suite gates every external tenant.
+Compare three answer tiers. The weak answer uses microservices and Kubernetes, puts a tenant_id column on every row and adds row-level security. It is solution-first, names no customer outcome, and treats one row label as the whole enforcement stack. The average answer builds a shared platform with per-tenant authorisation, quotas, regional routing, audit logging and per-tenant latency monitoring. It never says where tenant context originates, never makes every isolation layer agree, and never defines when a customer graduates to dedicated infrastructure. The strong answer defaults to shared because pooled economics are the point across 500 tenants. It derives tenant context once from verified identity, never from the request body, and makes it immutable. The control plane decides policy, region, quota and key; the data plane enforces at the gateway, the services and every store. Seven layers enforce independently, a missing predicate fails closed, and an adversarial isolation suite gates every external tenant.
 
 State assumptions if the interviewer withholds answers, and choose the ones that protect the most dangerous failure. Assume tenants bring their own identity provider. Assume regional restrictions apply to stored data and inference logs. Assume premium customers may pay for dedicated capacity. Assume model selection is already approved. Have the line for interviewer silence ready:
 
@@ -51,9 +51,9 @@ State assumptions if the interviewer withholds answers, and choose the ones that
 
 ## 2. State Requirements as Testable Constraints
 
-Split the conversation into four buckets, functional requirements, non-functional requirements, explicit exclusions and hard constraints, because the trap here is premature certainty. The interviewer only answers half the questions.
+Split the conversation into four buckets: functional requirements, non-functional requirements, explicit exclusions and hard constraints. The trap is premature certainty, because the interviewer answers only half the questions.
 
-The functional requirements are ordered by value, and the order matters: the control plane is foundational and the dedicated tier is an escape hatch, not a default.
+The functional requirements are in value order. The control plane is foundational; the dedicated tier is an escape hatch, not a default.
 
 1. **Tenant-aware control plane.** Onboard tenants, assign policies, provision configuration, manage keys, record admin actions.
 2. **Isolated data-plane request path.** Every request carries tenant identity, policy context and authorisation through the whole call chain.
@@ -62,7 +62,7 @@ The functional requirements are ordered by value, and the order matters: the con
 5. **Auditable administration.** Answer who changed what, when, under which tenant context.
 6. **Dedicated deployment tier where justified.** An explicit escape hatch for exceptional customers.
 
-The first five are must-haves, because each protects a highest-risk failure mode. Richer quota tuning and broader automation are should-haves. Advanced tenant analytics and convenience workflows are could-haves, and a could-have never expands the core design or delays launch. If a tenant's must-have cannot be satisfied safely in the shared tier, that is the justification for the dedicated path.
+The first five are must-haves, because each protects a highest-risk failure mode. Richer quota tuning and broader automation are should-haves. Advanced tenant analytics and convenience workflows are could-haves, and a could-have never expands the core design or delays launch. A tenant whose must-have the shared tier cannot meet safely is the justification for the dedicated path.
 
 Exclude these from the MVP unless the interviewer pushes, because each expands the trust surface or the support burden:
 
@@ -73,7 +73,7 @@ Exclude these from the MVP unless the interviewer pushes, because each expands t
 - manual exception handling for every onboarding request
 - ad hoc shared-secret administration outside the control plane
 
-The safety goals are stated as measurable constraints, and so are the operating constraints.
+State the safety goals and the operating constraints so each one can be tested.
 
 | Constraint | Stated so it can be tested |
 |---|---|
@@ -104,7 +104,7 @@ Every requirement then needs the component that enforces it. If a requirement ha
 
 A design that is plausible at average traffic fails exactly when customers feel pain. Size for average, peak, growth and skew, with round numbers whose only job is to force decisions: 500 tenants, 50,000 active users, 200 QPS peak, 20x workload skew.
 
-At 200 QPS across 500 tenants the average tenant looks trivial at 0.4 QPS. With 20x skew a few large tenants drive a material share of peak. So no uniform-tenant assumption is safe for queue sizing, cache partitioning, rate limiting, retry policy or noisy-neighbour protection. The most consequential estimate is usually the shape of peak concurrency after retries, fan-out and long-tail latency, not raw QPS. Targeting exactly the naive peak is already broken. Reserve headroom for tenant concentration, retried requests, failover overhead, deploy-time capacity loss and growth before the next tuning cycle.
+At 200 QPS across 500 tenants the average tenant looks trivial at 0.4 QPS. With 20x skew a few large tenants drive a material share of peak. So no uniform-tenant assumption is safe for queue sizing, cache partitioning, rate limiting, retry policy or noisy-neighbour protection. The estimate that matters most is usually peak concurrency after retries, fan-out and long-tail latency, rather than raw QPS. A design sized exactly to the naive peak is already broken. Reserve headroom for tenant concentration, retried requests, failover overhead, deploy-time capacity loss and growth before the next tuning cycle.
 
 Pair pooled capacity with four per-tenant controls. A token quota caps monthly or hourly usage to protect spend and fairness. A concurrency quota stops one tenant saturating worker pools or model backends. A burst quota allows short spikes without immediate throttling. Reserved capacity protects contractual performance for premium tenants. Name the trade-off: quotas too tight produce artificial customer-visible failures, quotas too loose let one tenant consume the shared budget.
 
@@ -117,7 +117,7 @@ Anchor SLOs in the customer workflow rather than in what the platform team prefe
 - security indicators as authorisation failures, policy denials and blocked cross-tenant attempts
 - cost per request, per tenant and per successful task
 
-Tie one to a workflow aloud. If this powers support agents, the latency budget must preserve the agent's interaction loop, or a technically successful response arrives functionally useless.
+Tie one to a workflow aloud. If this powers support agents, the latency budget must preserve the agent's interaction loop, or a technically successful response arrives too late to be useful.
 
 The unit economics settle the shared-versus-dedicated argument.
 
@@ -136,6 +136,6 @@ The first term is shared platform cost spread across N tenants. The second is th
 | Shared capacity strategy | pooled plus quotas | pooled plus stricter partitioning |
 | Isolation posture | shared by default, dedicated for exceptions | more dedicated pools, more explicit regional controls |
 
-What changes at 10x is not the table but the dominant risk. Noisy neighbours, cache churn and operational complexity shift the architecture from one shared tier with guardrails to tiered tenancy with explicit partitioning. Define the per-region recovery objective before the happy path too, since RPO and RTO decide replication, failover routing and queue durability. And define the missing-tenant-predicate drill up front: can a request, query, export, cache lookup or admin action cross a tenant boundary if a filter is omitted? A design without that test is incomplete.
+At 10x the dominant risk changes as well as the numbers. Noisy neighbours, cache churn and operational complexity shift the architecture from one shared tier with guardrails to tiered tenancy with explicit partitioning. Define the per-region recovery objective before the happy path too, since RPO and RTO decide replication, failover routing and queue durability. Define the missing-tenant-predicate drill up front as well: can a request, query, export, cache lookup or admin action cross a tenant boundary if a filter is omitted? A design without that test is incomplete.
 
 > *"I will size for average, peak, and growth; reserve headroom for skew and failover; give each tenant token and concurrency quotas; and tie latency and availability targets to the customer's workflow. I prefer pooled economics for the common case, but I will pay for stronger isolation when the risk, performance, or regional requirement justifies it."*

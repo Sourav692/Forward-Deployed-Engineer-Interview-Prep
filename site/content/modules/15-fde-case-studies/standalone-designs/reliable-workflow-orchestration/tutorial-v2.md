@@ -92,24 +92,24 @@
 
 - Here is the ask: a single process has to drive a document sign-off, a payment, an email and updates in three in-house systems. Any one of those steps may break, or may sit idle for days.
 - The people around the table want different things from day one:
-  - The business sponsor simply wants every case to reach the end.
+  - The business sponsor wants every case to reach the end.
   - The operations lead asks for retries, a clear view of each case and a way to roll back.
   - The application team does not want yet another fragile web of direct integrations.
   - The auditor needs proof of each approval: who gave it, at what time and under which control.
 - Resist naming a tool first. Put the problem into a single sentence that does not yet pick a product.
-- A weak, feature-led version: "Let's build an orchestrator that calls the payment, email and three internal APIs". It is accurate, yet it puts the wiring ahead of the result the customer actually wants.
+- A weak, feature-led version: "Let's build an orchestrator that calls the payment, email and three internal APIs". It is accurate, yet it puts the wiring ahead of the result the customer wants.
 - A strong, outcome-led version: "apply each business effect of a long-running process exactly once, keep its state visible, and compensate when a step fails."
   - That one line already demands idempotency, durable state, retries, pauses for human approval, auditability and compensating actions.
-  - It also exposes what the job really is. We guard a business transaction spread over days, not a stream of messages.
+  - It also names the job: guarding a business transaction spread over days, rather than a stream of messages.
 - Framing it like this shows the habit panels hire FDEs for: you take vague customer words and turn them into a goal you can measure.
 
 ### Stakeholder Map and Jobs-to-Be-Done
 
 - Group the four stakeholder sets by the job each needs done, not by title. Lump them together and you will optimise the wrong part of the system.
-  - **Workflow participants** — they need to "look at a case and decide, with the full context in front of them."
-  - **Operations teams** — they need to "spot stuck cases, learn the cause and bring each one back safely."
-  - **Application developers** — they need to "connect a system once, without writing bespoke retry code for every corner case."
-  - **Auditors** — they need to "rebuild the trail of decisions and check that each control held."
+  - **Workflow participants**: they need to "look at a case and decide, with the full context in front of them."
+  - **Operations teams**: they need to "spot stuck cases, learn the cause and bring each one back safely."
+  - **Application developers**: they need to "connect a system once, without writing bespoke retry code for every corner case."
+  - **Auditors**: they need to "rebuild the trail of decisions and check that each control held."
 - Reliability means something different to each. Participants want clarity. Operators want to recover cases without crossing integration boundaries. Auditors want a trail they can follow.
 - A strong answer meets every group's need, and no single group gets to steer the whole design.
 
@@ -117,7 +117,7 @@
 
 - An opening you could say out loud in the room:
   - "So we have a document sign-off, a payment, an email and three in-house systems to coordinate, and each step might fail or stall for days. First I'd pin down whose workflow this is, which business event counts as done, and which steps need a person to approve and which run on their own. My working goal: apply each business effect of a long-running process exactly once, keep its state visible, and compensate when a step fails. Unless you say otherwise, I'll take durable state, retries, an audit history and recovery from worker crashes as given. Next I'd size the volume, the latency and how much failure we can absorb. Then I'd build the orchestration, security and observability on top of those numbers."
-- In under two minutes that opening repeats the ask, names who it serves, sets the goal and flags each assumption where facts are missing. Under time pressure this is how you compress: ask fewer questions, and make each one count.
+- In under two minutes that opening repeats the ask, names who it serves, sets the goal and flags each assumption where facts are missing. Under time pressure, compress by asking fewer questions and making each one count.
 
 ### Highest-Leverage Discovery Questions
 
@@ -142,7 +142,7 @@
 
 ### The Assumption Ledger
 
-- Think of the assumption ledger as a running list of things you treat as true until the customer says otherwise. It is a working tool, not paperwork.
+- Think of the assumption ledger as a running list of things you treat as true until the customer says otherwise.
 - Every entry worth writing has four fields:
   - **Assumption**: the belief you are acting on for now
   - **Impact**: how the design changes if it holds or fails
@@ -183,6 +183,6 @@
 
 ### The Interview Signal Hiring Teams Listen For
 
-- Panels check more than your diagrams. They watch whether you can go from a customer's pain to real technical leverage without sliding into vague platform talk.
+- Panels check more than your diagrams. They watch whether you can go from a customer's pain to a concrete technical design without sliding into vague platform talk.
 - The best candidates make the problem specific. They name the people, state their assumptions out loud and describe success in words the customer would use.
 - Draw the architecture only once you can say whose workflow is changing and how success gets measured. Before that point, you are listing software features, not designing a system the business can rely on.

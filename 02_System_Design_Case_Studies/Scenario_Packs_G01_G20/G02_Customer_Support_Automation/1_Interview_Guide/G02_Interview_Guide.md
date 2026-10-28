@@ -1,19 +1,19 @@
-# G02 — Customer Support Automation: Main Interview Guide
+# G02 Customer Support Automation: Main Interview Guide
 
-**Support process** is a customer has a problem, someone answers or acts, and we close the case without making money or data worse.
+**Support process:** a customer has a problem, someone answers or acts, and we close the case without making money or data worse.
 
-**G02 covers one slice:** chat/email/voice in, then answer, get approval, or hand off. Not a free-form company agent.
+**G02 covers one slice:** chat/email/voice in, then answer, get approval, or hand off. A free-form company agent is out of scope.
 
 End to end, as a double-charge ticket:
 
-1. **Message lands** — “You billed me twice.”
+1. **Message lands:** “You billed me twice.”
 2. **We verify it’s them** before any account tool.
 3. **We look up live billing and the refund policy.**
 4. **A model drafts a reply or a refund proposal.** It does not pay anyone yet.
 5. **A policy gate checks** identity, amount, freshness, duplicates.
 6. **Safe FAQ goes out. Money waits for a human. Unclear cases get a full handoff pack.**
 
-That’s it: **verify → facts → draft → gate → answer, approve, or escalate.** Lawsuits and open negotiation stay human.
+**Verify → facts → draft → gate → answer, approve, or escalate.** Lawsuits and open negotiation stay human.
 
 > **Core idea:** Build a routed decision pipeline that knows when to answer, when to ask for approval, and when to hand off. The model can draft and recommend; verified identity and a deterministic policy gateway decide whether an account action may happen.
 
@@ -23,7 +23,7 @@ The unchanged [source case](../4_Full_Design/G02_Full_Design.md) is the full ref
 
 > “I want to reduce handling time and cost without increasing incorrect or harmful resolutions. I’ll identify which requests can be answered, which need approval, and which need a human. Then I’ll design the identity, policy, action, and handoff boundaries around those decisions.”
 
-Use a double-charge request as the running example. A fluent reply is not enough: the system must verify the customer, check live billing facts, apply the refund policy, avoid a duplicate refund, and hand off cleanly if anything is uncertain.
+Use a double-charge request as the running example. Beyond a fluent reply, the system must verify the customer, check live billing facts, apply the refund policy, avoid a duplicate refund, and hand off cleanly if anything is uncertain.
 
 ### Questions to ask the interviewer
 
@@ -31,7 +31,7 @@ These questions set the first-release boundary. The [source case, §1](../4_Full
 
 | Question to ask | What it's really asking | What you then decide |
 | --- | --- | --- |
-| Which channels are in scope, and what are monthly volume and peak concurrency? | Is this chat-only, or also email and voice — and how many tickets hit at once on Monday morning? | Channel gateway, capacity, and whether voice joins the same pipeline. |
+| Which channels are in scope, and what are monthly volume and peak concurrency? | Is this chat-only, or also email and voice, and how many tickets hit at once on Monday morning? | Channel gateway, capacity, and whether voice joins the same pipeline. |
 | Which intents may be answered or acted on automatically, and which need approval? | Can it answer "where's my order" alone, or must a human approve a refund? | Risk tags, tool policy, and what v1 may do. |
 | How is the customer verified, and which account or payment fields are sensitive? | Before we show the last four of the card, how do we know it's actually them? | Assurance level, and which tools stay locked until auth. |
 | What is the approval threshold for refunds, and who owns that policy? | At what amount does a manager have to click yes, and who wrote that rule? | The money check on every refund. Do not invent a threshold. |
@@ -56,21 +56,21 @@ Learn the shared decision pipeline here, then change the boundary that dominates
 
 ## 2. Requirements: Functional + Non-Functional
 
-The easiest way to frame requirements in an interview is:
+Frame requirements like this:
 
 > **Functional = what the system does. Non-functional = how well it does it and what constraints it must satisfy.**
 
-### Functional requirements — what the system must do
+### Functional requirements: what the system must do
 
-1. **Normalise intake** — chat, email, web, or voice transcripts into one case envelope.
-2. **Classify intent and risk** — before choosing an answer or action path.
-3. **Verify identity** — before account data or account tools.
-4. **Retrieve live facts** — approved policy and current customer/order state; draft from evidence.
-5. **Gate proposed actions** — authorisation, validation, freshness, threshold, and approval.
-6. **Escalate with context** — conversation, evidence, attempted actions, and why automation stopped.
-7. **Audit the case** — decisions, tool calls, overrides, and outcomes.
+1. **Normalise intake.** Turn chat, email, web, or voice transcripts into one case envelope.
+2. **Classify intent and risk.** Do it before choosing an answer or action path.
+3. **Verify identity.** Do it before exposing account data or account tools.
+4. **Retrieve live facts.** Fetch approved policy and current customer/order state; draft from evidence.
+5. **Gate proposed actions.** Check authorisation, validation, freshness, threshold, and approval.
+6. **Escalate with context.** Pass the conversation, evidence, attempted actions, and why automation stopped.
+7. **Audit the case.** Record decisions, tool calls, overrides, and outcomes.
 
-### Non-functional requirements — how well / under what constraints
+### Non-functional requirements: how well / under what constraints
 
 | Requirement | Example target / constraint |
 |---|---|
@@ -79,7 +79,7 @@ The easiest way to frame requirements in an interview is:
 | **Security** | Customer text untrusted; tools scoped per workflow; identity before account access. |
 | **Reliability** | Timeouts and incomplete facts → safe handoff; reconcile possible side effects before retry. |
 | **Auditability** | Actor, model/tool/policy versions, validated fields, decision, and override in an immutable trail. |
-| **Cost and outcome** | Net value per resolved case, including wrong resolutions and repeat contacts — not raw deflection. |
+| **Cost and outcome** | Net value per resolved case, including wrong resolutions and repeat contacts, not raw deflection. |
 
 ### First release
 
@@ -139,7 +139,7 @@ flowchart LR
 - **Step 7.** **Execute and record.** Send permitted actions through the scoped tool gateway to the system of record; audit the decision and outcome.
 
 
-**Model and agent role:** The LLM drafts and proposes; a bounded agent planner coordinates only requests that truly span systems. Simple lookups use direct routes. Neither the LLM nor the planner authorises an account action; the deterministic gateway and human approval path do that.
+**Model and agent role:** The LLM drafts and proposes; a bounded agent planner coordinates only requests that span systems. Simple lookups use direct routes. Neither the LLM nor the planner authorises an account action; the deterministic gateway and human approval path do that.
 
 **Three boundaries to point at:**
 
@@ -147,4 +147,4 @@ flowchart LR
 - **Authorisation:** the model proposes; the tool policy gateway checks identity, allowed action, thresholds, freshness, and human approval. Confidence never grants permission.
 - **Sync/async:** accept and route promptly; run permitted longer actions in the background with status and reconciliation.
 
-The automation layer owns the **case workflow and evidence of its decisions**. CRM, identity, order, and billing systems remain authoritative for customer facts and money. Policy articles are versioned; live account or billing state is fetched before an action.
+The automation layer owns the case workflow and the evidence of its decisions. CRM, identity, order, and billing systems remain authoritative for customer facts and money. Policy articles are versioned; live account or billing state is fetched before an action.

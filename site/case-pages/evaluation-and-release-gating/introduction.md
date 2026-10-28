@@ -10,7 +10,7 @@ The same gate answers two neighbouring prompts: a model that got worse after an 
 
 ## The core idea
 
-The grader scores, while policy and authorised people decide, and a candidate ships only when complete evidence clears every slice.
+The grader scores, policy and authorised people decide, and a candidate ships only when complete evidence clears every slice.
 
 ```mermaid
 flowchart LR

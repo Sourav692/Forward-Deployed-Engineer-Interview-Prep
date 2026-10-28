@@ -3,7 +3,7 @@
 ## 3. Scale Estimates, SLOs, and Capacity
 
 ### Anchor the Load Envelope to Customer Reality
-- Candidates often slip on the first pass. They picture an on-prem service that analyses documents, guess at a few dozen active users, and settle on one model replica behind a queue. That holds up on an average day. Then the customer names a deadline, their busiest day or a date by which the backlog must be gone, and the plan falls over.
+- Candidates often slip on the first pass. They picture an on-prem service that analyses documents, guess at a few dozen active users, and settle on one model replica behind a queue. That holds up on an average day. Then the customer names a deadline (their busiest day, or a date by which the backlog must be gone) and the plan falls over.
 - An enclave gives you little or no room to scale out later. Get the capacity plan right before anything ships.
 - Start from how the customer really works. The case fixes four facts: 1,000 users, 20 QPS at peak, a corpus of 50 million pages, and a GPU pool that cannot grow.
   - Those figures pick the architecture for you. The options are batch processing, online interactive extraction, or a split where indexing runs asynchronously under a smaller interactive layer.
@@ -34,7 +34,7 @@
   - Batch buffers, with slack for fragmentation: 2 GB.
   - Sum: about 22 GB of GPU memory for each replica.
   - A 24 GB card leaves too thin a margin for a noisy batch or a context longer than planned. You would probably step up to a 32 GB GPU, or else pick a smaller model, cap context harder, or quantise further.
-  - Treat the estimate as a way to decide, not an exact promise. Its job is to show whether today's class of hardware can carry the workload at all.
+  - Use the estimate to decide whether today's class of hardware can carry the workload at all. It is not an exact promise.
 
 ### The Replica Sizing Formula
 - One equation drives the sizing:
@@ -45,7 +45,7 @@ $$
 
 - Terms: *QPS* is how fast requests arrive. *Tokens_request* is the mean token work in one request. *TokensPerSecond_replica* is what a single replica can sustain. *UtilizationTarget* is the share of peak capacity you will spend before latency gets too bad.
 - The top of the fraction turns request rate into token demand. The bottom turns one replica into the capacity it can really offer once headroom is set aside.
-- Suppose the answer is larger than the fixed GPU pool. Hoping harder is not a plan. Cut the token work in each request, use a smaller model, batch harder, relax the SLO, shift work into offline preprocessing, or agree to a smaller interactive feature set.
+- If the answer is larger than the fixed GPU pool, cut the token work in each request, use a smaller model, batch harder, relax the SLO, shift work into offline preprocessing, or agree to a smaller interactive feature set.
 
 ```mermaid
 flowchart TD
@@ -73,7 +73,7 @@ $$
   - Not all of the 20 QPS may be LLM inference. Much of it could be retrieval or metadata lookups.
   - Chunking, caching or form-based extraction might shrink the average model work behind each request.
   - The customer's workflow could really be batch-first. Then a queue with a nightly SLA is the better fit.
-- This is why you estimate at all: the arithmetic forces the design towards something real.
+- The arithmetic forces the design towards something real. That is why you estimate at all.
 
 > **Interview pointer:** Interviewers often choose numbers that give a ridiculous replica count on purpose. They want to see whether you cling to the result or question the assumed request mix. State the formula, reach the awkward number, then move to how the workload shape could change. Do not ask for more hardware.
 
@@ -85,7 +85,7 @@ $$
 | Baseline illustrative case | 20 | 2,000 | 40,000 tokens/sec of demand, counted before headroom | The toy formula gives 477 replicas, a sign that this request mix cannot fit the fixed GPU pool | Steers you to batch or offline processing, less work in each request, or a far smaller model fraction |
 | 10x growth case | 200 | 2,000 | 400,000 tokens/sec of demand, counted before headroom | About 4,760 replicas on the same toy assumptions | Shows the same architecture would break badly; you would need to partition the workload, precompute, or serve it another way |
 
-- Direction matters more than the exact figures. In an enclave, ten times the load is not fixed by buying more of the same. The fixed GPU pool, the storage and the operational process cannot stretch on demand.
+- Read the direction more than the exact figures. In an enclave you cannot fix ten times the load by buying more of the same: the fixed GPU pool, the storage and the operational process cannot stretch on demand.
 
 ### What Changes First at 10x Growth
 - More users? Identity, audit and queueing feel the strain before raw inference does.

@@ -12,7 +12,7 @@ The Slack adapter shows why adapters are more than field mapping. It classifies 
 
 Routing asks two independent questions, so it runs two independent checks. Priority answers a configuration question: which workflow is *supposed* to win. The entity lock answers a safety question: can two workflows ever mutate the same ticket at once.
 
-Routing runs in three steps. First, match: return every workflow whose tenant, status and trigger fit, where a `Trigger` is `(channel, event_type, priority)`. A `DRAFT` workflow never matches a real event, and that single rule is what makes authoring safe. Second, prioritise: the highest `priority` wins. Third, lock: `acquire_lock(target_entity_id, run_id)` refuses if another run is active on the same entity. `route()` returns the selected workflow or a named reason, `no_trigger_match` or `entity_locked`. It never returns a silent no-op.
+Routing runs in three steps. First, match: return every workflow whose tenant, status and trigger fit, where a `Trigger` is `(channel, event_type, priority)`. A `DRAFT` workflow never matches a real event, and that one rule makes authoring safe. Second, prioritise: the highest `priority` wins. Third, lock: `acquire_lock(target_entity_id, run_id)` refuses if another run is active on the same entity. `route()` returns the selected workflow or a named reason, `no_trigger_match` or `entity_locked`. It never returns a silent no-op.
 
 Cascade Robotics' fixture builds the conflict on purpose. `wf_ticket_triage` at priority 10 and `wf_legacy_ticket_tagger` at priority 1 share the trigger `webhook / ticket.created`. The triage workflow wins.
 
@@ -22,7 +22,7 @@ Build only priority, and a configuration mistake becomes a concurrent-mutation b
 
 ## 7. Keep Control Flow in Data, and Let the Model Fill Only Typed Values
 
-The signal the prompt tests is whether deterministic control flow is split from probabilistic reasoning. The model may decide *that* a refund is warranted. It never decides the shape of the call that moves money.
+The prompt tests whether you split deterministic control flow from probabilistic reasoning. The model may decide *that* a refund is warranted. It never decides the shape of the call that moves money.
 
 ```
   Bad:   tool_call("issue a refund of about fifty dollars for this order")
@@ -31,7 +31,7 @@ The signal the prompt tests is whether deterministic control flow is split from 
 
 A `WorkflowSpec` is a declarative document: `workflow_id`, `version`, `status`, `triggers`, `steps`, `max_steps`, `max_cost_usd`. Each `Step` names a tool and an `args_template`, such as `{"amount_usd": "{payload.refund_amount}"}`, resolved from the event at execution. The orchestrator does not execute the spec as code; it walks it. Nobody, human or model, changes the list at runtime.
 
-That is exactly the artefact a non-technical user can review. *"Refund anyone under $50"* becomes a form showing the trigger, the `amount < $50` condition and the `issue_refund` action. The user confirms it before anything runs. The user approves a form instead of trusting a black box.
+A non-technical user can review that artefact. *"Refund anyone under $50"* becomes a form showing the trigger, the `amount < $50` condition and the `issue_refund` action. The user confirms it before anything runs.
 
 Five determinism controls are all built and tested.
 
@@ -45,7 +45,7 @@ Five determinism controls are all built and tested.
 
 The registry holds four tools: `draft_reply`, `issue_refund`, `close_ticket`, `tag_ticket`. Two are destructive and two are not. `destructive` is declared once at registration, so the guardrail asks "is this one of the tagged ones?" and never "does this call look risky?" A guardrail cannot reason about risk it is not told about explicitly. `scopes` lists what the tool may touch, which is the start of least privilege for connector credentials.
 
-The non-technical half of the problem has five constraints, and the sources are honest about which exist.
+The non-technical half of the problem has five constraints, and the sources say which exist.
 
 | Constraint | In plain language | Built? |
 |---|---|---|
@@ -59,7 +59,7 @@ Versioning follows from the same idea. `WorkflowStore` keeps every published ver
 
 ## 8. Checkpoint Every Step and Run One Loop for Resume
 
-A recovery path that is different code from the normal path gets tested only during incidents. So there is no recovery path. There is one loop that always starts wherever `next_step_index` says.
+A recovery path that is different code from the normal path gets tested only during incidents, so there is no separate recovery path. One loop always starts wherever `next_step_index` says.
 
 ```
   Run 1: step 0 (draft) -> CHECKPOINT -> step 1 (refund, needs approval) -> PAUSED
@@ -73,7 +73,7 @@ A recovery path that is different code from the normal path gets tested only dur
   same idempotency_key already exists -> no-op. The refund never fires twice.
 ```
 
-The checkpoint is not a separate mechanism; it is one integer on the `Run`. `resume()` and a fresh `run_workflow()` call the same `_continue()` loop, so the recovery path is exercised on every run. The demo proves it by actually crashing. `run_workflow(..., crash_after_step=0)` sets the state to `CRASHED` after the checkpoint is saved, and `resume()` continues from step 1. The external call count shows step 0 never ran again.
+The checkpoint is one integer on the `Run`. `resume()` and a fresh `run_workflow()` call the same `_continue()` loop, so the recovery path is exercised on every run. The demo proves it with a real crash. `run_workflow(..., crash_after_step=0)` sets the state to `CRASHED` after the checkpoint is saved, and `resume()` continues from step 1. The external call count shows step 0 never ran again.
 
 A run ends in exactly one of `COMPLETED`, `PAUSED_FOR_APPROVAL` or `HALTED_BUDGET`, plus `CRASHED` as a transient state that `resume()` clears. There is no fourth "it just stopped and nobody knows" path.
 
@@ -93,4 +93,4 @@ Two real bugs from building the project are the strongest material in the round.
 
 > **"Idempotency has to cover every side effect of a step, not just its most obvious one."** Cost accounting is a side effect too.
 
-The anchor links bug 1 to a false-security-alarm bug in the RAG project. Both are safety checks that look like they measure something while quietly measuring the wrong quantity. Note one detail when quoting: the story uses a $5 cap, while the Cascade Robotics tenant policy uses $50. Both figures are the sources'; they are different scenarios.
+The anchor links bug 1 to a false-security-alarm bug in the RAG project. Both are safety checks that look like they measure something while quietly measuring the wrong quantity. When quoting, note that the story uses a $5 cap, while the Cascade Robotics tenant policy uses $50. Both figures are the sources'; they are different scenarios.

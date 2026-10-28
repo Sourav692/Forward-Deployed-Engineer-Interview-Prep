@@ -39,7 +39,7 @@ The source's seven methods, verbatim: rubric-based human assessment, action-item
 | Is every field the CRM needs filled? | Coverage of required fields |
 | Did the CRM end up right? | CRM update accuracy |
 | How much did the rep have to fix? | User-edit distance |
-| Did the follow-up actually happen? | Downstream task completion |
+| Did the follow-up happen? | Downstream task completion |
 
 Precision and recall on action items is the sharpest of these. It turns an open-ended summary into a checklist with a right answer. Label a golden set of calls with their true action items. Measure how many the system found and how many it invented. An invented action item is the worse error, because it becomes a promise nobody made.
 
@@ -56,7 +56,7 @@ Launch the lane with no latency risk first *(own construction)*. The post-call s
 | Week 1–2 | Transcription, redaction, post-call summary for one team, one language | Zero unredacted PII in storage; WER and diarization error measured |
 | Week 3–4 | Action items and CRM proposals, review-only | Action-item precision and recall on the golden set; edit distance trending down |
 | Week 5–6 | Live suggestions for five reps, one call type | p95 first bullet under 3 s; timeout rate stated; accept rate above an agreed bar |
-| Week 7–8 | More call types, then a second language | Metrics hold per slice, not just on average |
+| Week 7–8 | More call types, then a second language | Metrics hold in every slice as well as on average |
 | After | Narrow auto-apply for fields with proven accuracy | Measured accuracy on that field, reviewed monthly |
 
 ## 13. Deliver It in Sixty Minutes

@@ -15,13 +15,13 @@ The interviewer's pivot after a good design is "now it has to run under a strict
 | Metrics that prove it | Recall@k, citation correctness, cost per request, retrieval latency, model latency, human escalation rate                                                                                                                                                                                   |
 | Recommendation        | Pilot with a limited document set, define the high-risk categories, instrument cost and latency from day one                                                                                                                                                                                |
 
-**100 ms pivot** ("naive RAG is 1.5 s"): generation cannot be on the hot path. Slice the 1.5 s, then remove stages. Cache query embeddings and retrieval on tenant + permission signature + index version. Semantic cache returns a previously verified, permission-checked answer. Pre-filter inside search. Skip rerank on cache hits and high-confidence single-source matches. Stream the first token; precompute the head of the query distribution off-path. 100 ms is a search product with a cached-answer layer, not chat. Metrics: first byte, cache hit rate by tenant, leak count stays 0 — a cache is one of the easiest places to leak across permissions.
+**100 ms pivot** ("naive RAG is 1.5 s"): generation cannot be on the hot path. Slice the 1.5 s, then remove stages. Cache query embeddings and retrieval on tenant + permission signature + index version. Semantic cache returns a previously verified, permission-checked answer. Pre-filter inside search. Skip rerank on cache hits and high-confidence single-source matches. Stream the first token; precompute the head of the query distribution off-path. 100 ms is a search product with a cached-answer layer, not chat. Metrics: first byte, cache hit rate by tenant, leak count stays 0 (a cache is one of the easiest places to leak across permissions).
 
 **Sixty-second budget line:** citations and escalation for legal quality, top-k and routing for budget, no heavy rerank on every query for the 8 s target. Pilot a limited corpus with cost instrumented from day one. Order: measure → route → bound → cache safely (tenant, permission, version in the key).
 
 ## 16. Debug the Incidents on This Design
 
-Incidents and production scenarios on this system are not new designs; they are questions about where the design would have caught the failure. Answer each as detect, contain, root cause, prevent, and point at the section that answers it.
+Treat each incident or production scenario on this system as a question about where the design would have caught the failure. Answer each as detect, contain, root cause, prevent, and point at the section that answers it.
 
 | #   | Case                                                            | Answer from                                                                                                                                |
 | --- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -37,7 +37,7 @@ Incidents and production scenarios on this system are not new designs; they are 
 
 ## Level calibration
 
-On this design the levels separate on how far the permission boundary reaches beyond the query path, not on how clever the retrieval is.
+On this design the levels separate on how far the permission boundary reaches beyond the query path; retrieval cleverness matters less.
 
 | Level | Sounds like | Missing |
 |---|---|---|
@@ -97,14 +97,14 @@ All paths are relative to the repository root.
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [OWASP Top 10 for LLM Apps 2025 – LLM08 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — permission-mapping and cache leaks are known RAG risks
-- [Pinecone: The Missing WHERE Clause in Vector Search](https://www.pinecone.io/learn/vector-search-filtering/) — post-filtering shrinks the usable top-k
-- [Qdrant: Pre-Filtering vs Post-Filtering](https://qdrant.tech/blog/pre-filtering-vs-post-filtering/) — post-filtering can return fewer than k results
-- [Chroma Docs – Metadata Filtering](https://docs.trychroma.com/docs/querying-collections/metadata-filtering) — array metadata and `$contains` in Chroma 1.5+
-- [Cormack, Clarke & Buettcher 2009, Reciprocal Rank Fusion (SIGIR)](https://cormack.uwaterloo.ca/cormacksigir09-rrf.pdf) — RRF formula and k = 60
-- [Anthropic, Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval) — reranking gain versus contextual embeddings
-- [OpenSearch document-level security](https://docs.opensearch.org/latest/security/access-control/document-level-security/) — OpenSearch DLS as a lexical store with native doc security
-- [Microsoft 365 Copilot federated connectors overview](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/federated-connectors-overview) — federated search limits on ranking and latency
+- [OWASP Top 10 for LLM Apps 2025 – LLM08 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/): permission-mapping and cache leaks are known RAG risks
+- [Pinecone: The Missing WHERE Clause in Vector Search](https://www.pinecone.io/learn/vector-search-filtering/): post-filtering shrinks the usable top-k
+- [Qdrant: Pre-Filtering vs Post-Filtering](https://qdrant.tech/blog/pre-filtering-vs-post-filtering/): post-filtering can return fewer than k results
+- [Chroma Docs – Metadata Filtering](https://docs.trychroma.com/docs/querying-collections/metadata-filtering): array metadata and `$contains` in Chroma 1.5+
+- [Cormack, Clarke & Buettcher 2009, Reciprocal Rank Fusion (SIGIR)](https://cormack.uwaterloo.ca/cormacksigir09-rrf.pdf): RRF formula and k = 60
+- [Anthropic, Introducing Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval): reranking gain versus contextual embeddings
+- [OpenSearch document-level security](https://docs.opensearch.org/latest/security/access-control/document-level-security/): OpenSearch DLS as a lexical store with native doc security
+- [Microsoft 365 Copilot federated connectors overview](https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/federated-connectors-overview): federated search limits on ranking and latency
 - [Databricks AI Search (formerly Vector Search)](https://docs.databricks.com/aws/en/vector-search/vector-search) — product rename, no row/column-level permissions, capacity
 - [Azure Databricks platform release notes](https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/) — June 2026 rename of Vector Search to AI Search
 - [Databricks: Row filters and column masks](https://docs.databricks.com/aws/en/data-governance/unity-catalog/filters-and-masks/) — no AI Search index on a governed table; masks are access control
@@ -112,11 +112,11 @@ All paths are relative to the repository root.
 - [Databricks: Agent authentication](https://docs.databricks.com/aws/en/generative-ai/agent-framework/agent-authentication) — on-behalf-of-user auth is Public Preview, admin-enabled
 - [Databricks: is_account_group_member function](https://docs.databricks.com/aws/en/sql/language-manual/functions/is_account_group_member) — account-group checks at query time
 - [Databricks: Configure SCIM provisioning for Okta](https://docs.databricks.com/aws/en/admin/users-groups/scim/okta) — group removals arrive via SCIM push
-- [Microsoft Entra: How application provisioning works](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/how-provisioning-works) — Entra provisioning runs on sync cycles
+- [Microsoft Entra: How application provisioning works](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/how-provisioning-works): Entra provisioning runs on sync cycles
 - [Databricks: ai_mask function](https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_mask) — ai_mask is a generative transform, not access control
 - [Query an AI Search index (Azure Databricks)](https://learn.microsoft.com/en-us/azure/databricks/ai-search/query-ai-search) — filter syntax, positional OR, SQL-string filters, hybrid and reranker
 - [Databricks AI Search performance guide](https://docs.databricks.com/aws/en/ai-search/best-practices) — Standard vs Storage-Optimized latency, capacity and cost
 - [Databricks blog: Announcing Storage-Optimized Endpoints](https://www.databricks.com/blog/announcing-storage-optimized-endpoints-vector-search) — up to 7× lower cost
 - [databricks-ai-search on PyPI](https://pypi.org/project/databricks-ai-search/) — `DatabricksReranker` object and the SDK package rename
-- [Artificial Analysis LLM leaderboard (TTFT)](https://artificialanalysis.ai/leaderboards/models) — fastest APIs ~0.4 s to first token, so 100 ms rules out live generation
-- [Google Drive Help: Learn about folders with limited access](https://support.google.com/drive/answer/14254362?hl=en-GB) — folder permissions inherit, but a limited-access folder blocks inherited access
+- [Artificial Analysis LLM leaderboard (TTFT)](https://artificialanalysis.ai/leaderboards/models): fastest APIs ~0.4 s to first token, so 100 ms rules out live generation
+- [Google Drive Help: Learn about folders with limited access](https://support.google.com/drive/answer/14254362?hl=en-GB): folder permissions inherit, but a limited-access folder blocks inherited access

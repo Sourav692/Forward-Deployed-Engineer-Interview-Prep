@@ -58,7 +58,7 @@ flowchart TB
   BROKER --> GATEWAY
 ```
 
-Read the nine components in dependency order, because that is the order they have to exist and the order they fail.
+Read the nine components in dependency order: the order they have to exist and the order they fail.
 
 | Component | Responsibility | Trust boundary | Fails how |
 |---|---|---|---|
@@ -123,7 +123,7 @@ The data model follows from the walk, and two records must never be conflated. A
 
 ## 6. Layer the Integrations and Propagate Identity Through Every Call
 
-The tool layer is where the "agent over 100+ applications" case joins this one. REST, function calling, MCP and agent frameworks are layers, not competing technologies, and the test is whether they are treated that way.
+The tool layer is where the "agent over 100+ applications" case joins this one. REST, function calling, MCP and agent frameworks are layers, not competing technologies, and the interviewer checks whether you treat them that way.
 
 ```
  agent framework     coordinates more than one decision across a multi-step task
@@ -146,7 +146,7 @@ REST is ideal when the interface is stable, operations are deterministic and no 
 
 Agent frameworks earn their place when a request needs multi-step reasoning. "Prepare a renewal report for our top customers and email their managers" means finding customers, retrieving CRM data, generating a report, storing a PDF and sending an email. No single function coordinates that. A single agent suits one tool, a short workflow and deterministic execution. A multi-agent shape suits planning across many domains with independent specialists. "Create a Jira ticket" with an orchestrator would be overhead.
 
-The tool registry is what makes this scale. Loading every MCP server up front does not scale. The registry sits between the planner and the universe of servers and loads only the ones relevant to the current task, keeping the prompt small. In this design the registry also carries the arg schema, the data class and the risk label. That is what lets the policy point decide without asking the model. At 500+ applications and 200,000 employees the rest of the scaling list is short:
+The tool registry is what makes this scale. Loading every MCP server up front does not scale. The registry sits between the planner and the universe of servers and loads only the ones relevant to the current task, keeping the prompt small. In this design the registry also carries the arg schema, the data class and the risk label, so the policy point can decide without asking the model. At 500+ applications and 200,000 employees the rest of the scaling list is short:
 
 - caching of employee profiles, org hierarchy and holiday calendar
 - stateless horizontal scaling of planner, gateway and LLM routing
@@ -154,15 +154,15 @@ The tool registry is what makes this scale. Loading every MCP server up front do
 - async execution that returns a job ID for long workflows
 - regional gateways, region-local MCP servers and data-residency controls
 
-The security principle in one sentence: no application trusts the LLM; applications trust enterprise identity. Every request propagates the user's identity, an OAuth token, RBAC or ABAC, and an audit record, and the gateway attaches the identity so no backend ever trusts the model directly. That is identity propagation, and it is the same rule as the credential broker: the model receives context to reason with, never a secret to act with.
+No application trusts the LLM; applications trust enterprise identity. Every request propagates the user's identity, an OAuth token, RBAC or ABAC, and an audit record, and the gateway attaches the identity so no backend ever trusts the model directly. That is identity propagation, and it is the same rule as the credential broker: the model receives context to reason with, never a secret to act with.
 
 The reported Salesforce prompt asks for the loop, the tool interfaces, the memory design, the orchestration and the safety in one architecture, and the shape above answers it. The loop is propose, validate, decide, execute, record, repeat, with a step budget. Tool interfaces are the registry's typed schemas with data class and risk. Memory is the task state store for workflow progress plus the ledger for what happened, and neither is business truth. Orchestration is the planner choosing one bounded action at a time over a queue partitioned by account. Safety is every layer below the planner.
 
 ## 7. Hold the Four Security Controls as One Set
 
-Security starts from the hostile case, not the happy path. A message that looks like ordinary customer email is a prompt injection asking the agent to ignore policy, pull a privileged record and issue an unauthorised refund. The right move is not to debate whether the model understands the instruction. It is to contain the blast radius, preserve evidence and keep every irreversible action behind deterministic checks. The model sees information; it does not inherit trust.
+Security starts from the hostile case, not the happy path. A message that looks like ordinary customer email is a prompt injection asking the agent to ignore policy, pull a privileged record and issue an unauthorised refund. Do not debate whether the model understands the instruction. Contain the blast radius, preserve evidence and keep every irreversible action behind deterministic checks. The model sees information; it does not inherit trust.
 
-Four controls answer almost any "how do you secure an agent with tool access" question, and they are memorised as a set. Treat tool observations as untrusted. A CRM response, ticket thread, database row or fetched page can carry hostile instructions. If the model can read it, the model can be manipulated by it, so tool output is never a command, a policy override or an approval signal. Never give the model broad, long-lived credentials. A broker mints capability tokens tied to one tenant, one workflow, one action type and one expiry window. If the broker is down, writes fail closed. Validate output before downstream use. The model may propose "refund $5,000", and a $500 task limit rejects it however confident the model sounds. Validation is where policy becomes enforceable. Bound the dangerous dimensions with hard ceilings on tool calls, per-task spend, maximum refund amount, allowable CRM objects and destinations.
+Four controls answer almost any "how do you secure an agent with tool access" question, so memorise them as a set. Treat tool observations as untrusted. A CRM response, ticket thread, database row or fetched page can carry hostile instructions. If the model can read it, the model can be manipulated by it, so tool output is never a command, a policy override or an approval signal. Never give the model broad, long-lived credentials. A broker mints capability tokens tied to one tenant, one workflow, one action type and one expiry window. If the broker is down, writes fail closed. Validate output before downstream use. The model may propose "refund $5,000", and a $500 task limit rejects it however confident the model sounds. Validation is where policy becomes enforceable. Bound the dangerous dimensions with hard ceilings on tool calls, per-task spend, maximum refund amount, allowable CRM objects and destinations.
 
 Blast radius is a design variable along four axes: tenant, region, workflow and dependency. A single-tenant outage beats a cross-tenant incident. A regional backlog beats a global write failure. A refund-workflow failure should not block email triage. A broker outage should not take down read-only analytics that can safely degrade. Defence in depth means no single control is load-bearing. The model is constrained by policy, the action layer validates output, the broker scopes identity, the gateway tracks idempotency, the ledger preserves evidence, and the operator can kill the workflow. When asked for the single most important control, name all six.
 

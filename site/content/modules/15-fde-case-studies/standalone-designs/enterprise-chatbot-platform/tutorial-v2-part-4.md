@@ -1,4 +1,4 @@
-# Enterprise Chatbot Platform — "Our Own ChatGPT", part 4
+# Enterprise Chatbot Platform: "Our Own ChatGPT", part 4
 
 ## 7. Delivery, Observability, Business Impact
 
@@ -7,7 +7,7 @@
 - In two weeks the demo will wow people. Then everyone wants all 40,000 employees on it, before the permission model has faced live ACLs on production corpora.
 - **The delivery plan turns that excitement into risk taken in a deliberate order.**
 
-### Four phases — gates are measurements, not dates
+### Four phases: gates are measurements, not dates
 
 I chose these cohort sizes, week ranges and gate thresholds for this case. They are not an industry norm.
 
@@ -37,12 +37,12 @@ flowchart LR
 | Metric | Class | Why it exists |
 |---|---|---|
 | Consumer-AI egress volume | Business | The headline figure; the reason the money was approved |
-| Weekly active / eligible | Product | **Adoption is the safety outcome**: if few use it, the exposure stays |
+| Weekly active / eligible | Product | Adoption is the safety outcome: if few use it, the exposure stays |
 | p95 / p99 TTFT | Platform | The adoption bar, set by the free tool people already use |
 | Turn completion rate | Platform | A stream that dies at 80% still shows a healthy HTTP status |
 | Regeneration rate | Product | A strong hidden quality signal; people retry when an answer missed |
 | Thumbs-down + free text | Product | The direct signal, and seed material for evals |
-| Citation click-through | Product | Shows people *trust* the grounding, not just that it appears |
+| Citation click-through | Product | Shows people trust the grounding, which citations merely appearing cannot show |
 | Permission-boundary violations | Governance | Aim for zero; any one is an incident, not a chart point |
 | Policy block rate **+ false-positive rate** | Governance | Always read as a pair (see below) |
 | Permission-drift divergence | Governance | Index against live ACLs; finds a missed revocation before a user does |
@@ -79,7 +79,7 @@ These figures are made up to show the format, not taken from a real deployment.
 | DLP over-blocks and annoys users | M | H | False-positive rate as a primary metric; quick appeals | Security + product |
 | **Works council or privacy body objects to usage telemetry** | M | H | Aggregate analytics by default; consult before Phase 2, not after | Legal + HR |
 
-- **Few candidates add that final row.** In European subsidiaries a works-council consultation can really delay a launch like this.
+- Few candidates add that final row. In European subsidiaries a works-council consultation can delay a launch like this.
 
 ### Business impact statement
 
@@ -87,7 +87,7 @@ The format, with invented numbers:
 
 > "We moved AI use off unmanaged consumer tools and onto a platform that classifies each prompt, honours existing permissions on each retrieval and audits each turn. Measured consumer-AI egress fell ~78% over two quarters, with 61% of staff active weekly. Staff report saving ~3 hours a week; we read that as a direction, not a precise figure. It costs ~$22 per active user a month versus a ~$30 vendor seat at list price; two connectors no vendor sells justify the gap."
 
-- **Structure:** risk removed first, then adoption, then **a frank caveat on the soft figure**, then cost and why building paid off.
+- **Structure:** risk removed first, then adoption, then a frank caveat on the soft figure, then cost and why building paid off.
 - Interviewers notice fast when self-reported time saved gets passed off as hard ROI.
 
 ### Rollout and metric layers
@@ -130,21 +130,21 @@ flowchart LR
 | Min | Do |
 |---|---|
 | 0–5 | Set out the outcome; name the two bars and where they clash |
-| 5–12 | Discovery, **and bring up build-vs-buy before you are asked** |
+| 5–12 | Discovery, and bring up build-vs-buy before you are asked |
 | 12–18 | Sizing: 800 concurrent streams first, then provider TPM |
 | 18–28 | Architecture in dependency order; the coherence rule |
 | 28–36 | Argue the five trade-offs |
-| 36–43 | Failure walkthroughs; **start with the over-scoped assistant** |
+| 36–43 | Failure walkthroughs; start with the over-scoped assistant |
 | 43–47 | Delivery: four phases, measured gates, and config vs. adapter vs. core |
 | 47–50 | Wrap up: built, left out, first production gate |
 
 ### Five trade-offs, balanced
 
-- **Buy vs. build.** *Plenty of candidates never raise it, so bringing it up first stands out.* Buying gives a mature product in weeks; the vendor runs the models and carries much of the compliance. Building gives connectors and deployments no vendor offers, and control of the data path. **Honestly, it's a hybrid: buy the model; build orchestration, connectors and governance.** Building because it sounds fun is disqualifying.
+- **Buy vs. build.** Plenty of candidates never raise it, so bringing it up first stands out. Buying gives a mature product in weeks; the vendor runs the models and carries much of the compliance. Building gives connectors and deployments no vendor offers, and control of the data path. **Recommend a hybrid: buy the model; build orchestration, connectors and governance.** Building because it sounds fun is disqualifying.
 - **Vendor API vs. self-hosted.** An API gives top quality for the effort and no GPUs to run, but data leaves your network and the per-token bill climbs with success. Self-hosting gives a hard boundary, flat cost at volume and an air-gap option, but a lower quality ceiling and an upgrade load teams underrate. **Begin with the API behind an abstraction, and run your own models only where a data class demands it.**
-- **Full history vs. compaction.** Sending everything is simple and exact, but cost grows quadratically and one day the context overflows *quietly and badly*. Compaction holds cost near flat and lets chats run on, though a detail sometimes drops out. **Launch with the sliding window, add summarisation when telemetry asks for it, and keep the head pinned.**
+- **Full history vs. compaction.** Sending everything is simple and exact, but cost grows quadratically and one day the context overflows, quietly and badly. Compaction holds cost near flat and lets chats run on, though a detail sometimes drops out. **Launch with the sliding window, add summarisation when telemetry asks for it, and keep the head pinned.**
 - **Always-on vs. tool-invoked retrieval.** Retrieving on every turn grounds answers reliably, yet "rewrite this paragraph" needs no corpus search. A model-invoked tool is cheaper and quicker, but its choice can misfire either way and it opens a path for injection. **Middle route: a cheap intent classifier plus a narrow retrieval tool whose output still passes the permission filter.** The number to cite: retrieval taking 400 ms consumes about 40% of a TTFT budget of 1 second.
-- **Strict DLP vs. adoption.** Each false positive teaches staff the approved tool is unreliable. A handful sends them back to consumer tools, and the exposure returns in full. **Respond unevenly: hard blocks for narrow, clear-cut categories; warn and log for vague ones; a named owner for the false-positive rate.** Say it plainly: *"a control that pushes people onto unsanctioned tools leaves security worse off overall."*
+- **Strict DLP vs. adoption.** Each false positive teaches staff the approved tool is unreliable. A handful sends them back to consumer tools, and the exposure returns in full. **Tier the response: hard blocks for narrow, clear-cut categories; warn and log for vague ones; a named owner for the false-positive rate.** Say it plainly: *"a control that pushes people onto unsanctioned tools leaves security worse off overall."*
 
 ### Five follow-ups, compressed
 
@@ -200,6 +200,6 @@ flowchart LR
 
 ### One sentence
 
-- A platform that staff **pick over the free option**. Prompts get classified before they leave. Retrieval obeys the asker's live permissions. Every turn leaves an audit trail. And you have already planned for the day the provider disappears. Here **uptake is no vanity number; it is the safety result.**
+- A platform that staff pick over the free option. Prompts get classified before they leave, retrieval obeys the asker's live permissions, every turn leaves an audit trail, and the day the provider disappears is already planned for. Here uptake is the safety result.
 
 ---

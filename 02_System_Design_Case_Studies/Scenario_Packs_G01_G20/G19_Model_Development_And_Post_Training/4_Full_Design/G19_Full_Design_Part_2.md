@@ -2,9 +2,9 @@
 
 ## 7. Reward Correct Answers, Not Confident Ones
 
-Post-training is where the model learns to find answers, because it is trained on its own attempts rather than on someone else's solutions. The loop is always the same shape. Sample several answers per problem. Score them. Push the model toward the higher-scoring ones.
+In post-training the model learns to find answers, because it trains on its own attempts rather than on someone else's solutions. The loop is always the same shape. Sample several answers per problem. Score them. Push the model toward the higher-scoring ones.
 
-The scorer is the whole design, and math offers three choices *(own construction)*.
+The scorer drives the design, and math offers three choices *(own construction)*.
 
 | Scorer | What it checks | When to use it | Risk |
 |---|---|---|---|
@@ -12,7 +12,7 @@ The scorer is the whole design, and math offers three choices *(own construction
 | Reward model on steps | Is each step of the working valid? | Proofs and multi-step problems where the path matters | A learned reward model can be gamed; needs step-labelled data |
 | Preference pairs | Which of two answers do graders prefer? | Style, clarity, tutoring tone, anything not checkable by program | Graders prefer confident, long answers unless told otherwise |
 
-Two update methods sit on top of the scorer. RLHF trains a separate reward model from human comparisons, then optimises the policy against it with a penalty for drifting too far from the starting model. DPO, direct preference optimisation, skips the separate reward model. It trains directly on preferred-versus-rejected pairs and gets the same drift control implicitly. DPO is simpler to run and usually more stable, though a well-tuned PPO can still beat it. RL with a verifier is stronger when correctness can be checked by program, which is exactly the math case.
+Two update methods sit on top of the scorer. RLHF trains a separate reward model from human comparisons, then optimises the policy against it with a penalty for drifting too far from the starting model. DPO, direct preference optimisation, skips the separate reward model. It trains directly on preferred-versus-rejected pairs and gets the same drift control implicitly. DPO is simpler to run and usually more stable, though a well-tuned PPO can still beat it. RL with a verifier is stronger when a program can check correctness, as it can in math.
 
 The drift penalty is not optional. A policy optimised against any scorer without it will find the scorer's blind spots. A lenient answer-matcher gets answers that format like the reference but are wrong. A length-biased reward model gets padding. Keep the penalty, and audit high-reward samples by hand every round.
 
@@ -20,14 +20,14 @@ The drift penalty is not optional. A policy optimised against any scorer without
 
 ## 8. Evaluate on Problems the Model Has Never Seen
 
-An eval score is only as honest as the wall between training and test data. The Cracking book's worked example makes the point. A fine-tune reported 94% on a held-out set against an 81% baseline, then hit only about 78% in production. The held-out set was split at random from traces with heavy duplication. After dedup, a time-based split and human relabelling, the retrained model's honest score was near 83%, and its later production result landed within two points of that. When an offline gain looks surprisingly large, suspect leakage first.
+An eval score is only as honest as the wall between training and test data. The Cracking book's worked example shows why. A fine-tune reported 94% on a held-out set against an 81% baseline, then hit only about 78% in production. The held-out set was split at random from traces with heavy duplication. After dedup, a time-based split and human relabelling, the retrained model's honest score was near 83%, and its later production result landed within two points of that. When an offline gain looks surprisingly large, suspect leakage first.
 
 Build the eval suite in five slices *(own construction)*.
 
 | Worry | Measure |
 |---|---|
 | Does it solve problems it has never seen? | Pass@1 on a decontaminated held-out set, split by source and time |
-| Is the working right, not just the answer? | Graded sample of solutions; answer-consistent working rate |
+| Is the working right as well as the answer? | Graded sample of solutions; answer-consistent working rate |
 | Did it forget everything else? | Fixed general benchmark suite with a maximum allowed drop |
 | Does it invent answers to broken problems? | Slice of ill-posed and unanswerable problems; fabrication rate |
 | Did it get more harmful or more timid? | Harmful-request set and benign-but-scary set, both reported (section 10) |
@@ -54,7 +54,7 @@ Distribute the work in the order the memory forces it.
 
 The data constraint is a pipeline problem. Stream shards from object storage rather than loading a dataset. Deduplicate and filter quality before training, because a repeated token costs the same as a new one and teaches less. Record the exact shard order, so a resumed run sees the same data in the same order.
 
-Checkpointing is the reliability story. At hundreds of GPUs over days, some hardware will fail. Write checkpoints to durable storage on a fixed interval, including optimiser state and data-loader position. Resume automatically from the last good one. Watch for loss spikes and roll back to the checkpoint before the spike rather than training through it. Track model FLOPs utilisation as the efficiency metric, because GPU-hours spent waiting on communication or input are spent without learning.
+Checkpointing is how the run survives failure. At hundreds of GPUs over days, some hardware will fail. Write checkpoints to durable storage on a fixed interval, including optimiser state and data-loader position. Resume automatically from the last good one. Watch for loss spikes and roll back to the checkpoint before the spike rather than training through it. Track model FLOPs utilisation as the efficiency metric: a GPU-hour spent waiting on communication or input teaches the model nothing.
 
 > *"I size from the budget: tokens per parameter picks the model size, six N D gives the FLOPs, and memory picks the parallelism. Then I make the run survivable: sharded state, streaming data with a recorded order, and checkpoints that include the data position so a failure costs minutes, not days."*
 
@@ -81,9 +81,9 @@ Size the weights first. Memory for weights is parameters × bytes per parameter.
 | 3B parameters | 6 GB | 3 GB | 1.5 GB |
 | 1B parameters | 2 GB | 1 GB | 0.5 GB |
 
-A phone shares its memory with the operating system and other apps. Assume a budget of 1 to 2 GB for the model *(assumption)*. That points at about a 1B model at 4-bit; a 3B model needs ~1.5 GB for weights alone, so it only fits at the top of that budget. The air-gapped chapter's sizing adds the reminder that weights are not the whole bill: runtime overhead, the KV cache at the target context length and buffers come on top. Cap the context length, because the KV cache grows with it.
+A phone shares its memory with the operating system and other apps. Assume a budget of 1 to 2 GB for the model *(assumption)*. That points at about a 1B model at 4-bit; a 3B model needs ~1.5 GB for weights alone, so it only fits at the top of that budget. The air-gapped chapter's sizing adds that weights are not the whole bill: runtime overhead, the KV cache at the target context length and buffers come on top. Cap the context length, because the KV cache grows with it.
 
-Two techniques make the small model good enough. Distillation trains the small student on a large teacher's outputs. Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload. The Cracking book names a hard cost or latency ceiling as one of the three situations where parameter updates earn their cost, and distillation is how. Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, loses less quality than quantising after the fact.
+Two techniques make the small model good enough. Distillation trains the small student on a large teacher's outputs. Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload. The Cracking book names a hard cost or latency ceiling as one of the three situations where parameter updates earn their cost, and distillation is how you meet it. Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, loses less quality than quantising after the fact.
 
 Politeness is a preference target, trained like harmlessness. Write a short tone policy. Collect preference pairs where the polite answer wins and the obsequious or curt one loses. Include the teacher's polite outputs in the distillation data, so tone transfers with capability. Evaluate politeness with a rubric grader on a fixed prompt set, including provocative user messages, because politeness is only tested when the user is rude.
 

@@ -7,10 +7,10 @@ A GPU is efficient only when it multiplies many rows at once, so batching is the
 | Strategy | How a batch forms | How it ends | Right for |
 |---|---|---|---|
 | Static | Wait for N requests | When the longest sequence finishes | Fixed-shape offline work only |
-| Dynamic | Flush at N requests **or** a max wait, such as 10 ms | When the batch's forward pass finishes | Fixed-shape models: embeddings, classifiers, rerankers |
+| Dynamic | Flush at N requests or after a max wait, such as 10 ms | When the batch's forward pass finishes | Fixed-shape models: embeddings, classifiers, rerankers |
 | Continuous (iteration-level) | New sequences join at every decode step | Each sequence leaves the moment it finishes | Generative LLMs with variable output length |
 
-Static batching fails generative traffic for one reason. A batch finishes when its longest member finishes. A 10-token answer batched with a 1,000-token answer waits for the long one, and its slot sits idle for 990 steps. Continuous batching fixes this by scheduling at the level of a single decode step. Every iteration, the scheduler removes finished sequences and admits waiting ones into the freed slots.
+Static batching fails generative traffic because a batch finishes only when its longest member finishes. A 10-token answer batched with a 1,000-token answer waits for the long one, and its slot sits idle for 990 steps. Continuous batching fixes this by scheduling at the level of a single decode step. Every iteration, the scheduler removes finished sequences and admits waiting ones into the freed slots.
 
 Prefill complicates the picture. A long prompt's prefill can stall every decoding sequence in the batch for tens of milliseconds, which shows up as a per-token latency spike. Split long prefills into chunks and interleave them with decode steps. This trades a little first-token time for the new request against smooth streaming for everyone else. Say that trade aloud; it is the same throughput-versus-latency tension the tagline names.
 
@@ -29,7 +29,7 @@ The arithmetic, for the illustrative model *(own construction; the architecture 
 | Head dimension | 128 |
 | Bytes per value (fp16) | 2 |
 
-Per token: 2 (keys and values) × 32 × 8 × 128 × 2 bytes = **128 KiB**. The anchor sequence of 1,250 tokens needs about 160 MB. Sixty-four of them need about 10 GB, which fits beside 16 GB of fp16 weights on an 80 GB card. Now raise the context to 8,000 tokens. One sequence needs about 1 GB, and a ~50 GB KV pool holds only ~50 sequences. **Context length divides concurrency.** This is why the router must know free KV, not just request counts.
+Per token: 2 (keys and values) × 32 × 8 × 128 × 2 bytes = 128 KiB. The anchor sequence of 1,250 tokens needs about 160 MB. Sixty-four of them need about 10 GB, which fits beside 16 GB of fp16 weights on an 80 GB card. Now raise the context to 8,000 tokens. One sequence needs about 1 GB, and a ~50 GB KV pool holds only ~50 sequences. Context length divides concurrency, which is why the router must track free KV rather than request counts.
 
 Reserving each sequence's maximum length up front wastes most of that memory, because most sequences stop early. Paged attention allocates KV in small fixed-size blocks, such as 16 tokens, on demand. Blocks need not be contiguous, so fragmentation mostly disappears. Blocks can also be shared. Requests with an identical system prompt point at the same prefix blocks, which is prefix caching at the serving layer.
 
@@ -37,7 +37,7 @@ When the pool fills anyway, the scheduler must choose a victim. Preempt the lowe
 
 ## 8. Route by Free Capacity, Not by Turn
 
-Round-robin assumes every request costs the same, and here none do. The follow-up "how do you determine which GPU has capacity?" is answered by a capacity registry *(own construction)*.
+Round-robin assumes every request costs the same, and here none do. The answer to the follow-up "how do you determine which GPU has capacity?" is a capacity registry *(own construction)*.
 
 Each replica publishes its state on a heartbeat of about one second, and piggybacks it on every response. The state is free KV blocks, sequences running, sequences waiting, and health. The router scores a replica by the free KV left after reserving the new request's estimated tokens. Queue length breaks ties.
 
@@ -57,7 +57,7 @@ A GPU fails in ways a process check cannot see. The process stays alive while th
 
 A failed replica takes its KV cache with it, so in-flight sequences cannot continue elsewhere. The recovery depends on what the caller has already seen. If no token has streamed, retry the request from scratch on another replica. The caller sees only extra latency. If tokens have streamed, re-prefill the prompt plus the emitted tokens on a new replica and continue. Greedy decoding makes that continuation very likely to match, but not guaranteed, because batch size and GPU kernels can change the floating-point results. With sampling, the text may diverge. The honest alternative is an explicit error with the partial output, and the product decides which.
 
-Retries need a budget. When a zone degrades, naive retries multiply load exactly when capacity drops, which is a retry storm. Cap retries at a fixed share of traffic, such as 10%, with jittered backoff. Key them by `request_id` so a duplicate is detected, not re-run. Keep N+1 headroom per zone, and fail over between zones at the router. A new GPU replica often takes minutes to provision, pull the image and load weights, so headroom, not autoscaling, absorbs a sudden loss *(the cold-start driver, CORE_8 drivers file)*.
+Retries need a budget. When a zone degrades, naive retries multiply load just as capacity drops, which is a retry storm. Cap retries at a fixed share of traffic, such as 10%, with jittered backoff. Key them by `request_id` so a duplicate is detected, not re-run. Keep N+1 headroom per zone, and fail over between zones at the router. A new GPU replica often takes minutes to provision, pull the image and load weights, so headroom, not autoscaling, absorbs a sudden loss *(the cold-start driver, CORE_8 drivers file)*.
 
 ## 10. Admit Less Work Before the Queue Admits Too Much
 
@@ -73,13 +73,13 @@ Streaming changes perceived latency, not total latency. A user reading the first
 
 Stream over server-sent events or a websocket, and flush per token. Watch for proxies that buffer responses; one buffering hop turns streaming back into a seven-second wait. Report TTFT and TPOT as separate SLOs, because they break for different reasons *(additions file, section D)*.
 
-Cancellation is a cost control, not only a courtesy. When a caller disconnects, the sequence can keep decoding if any hop fails to pass the disconnect on, burning GPU time on tokens nobody reads *(additions file, section E)*. Propagate the disconnect to the scheduler, which evicts the sequence and frees its KV blocks at the next step.
+Cancellation is a cost control as well as a courtesy. When a caller disconnects, the sequence can keep decoding if any hop fails to pass the disconnect on, burning GPU time on tokens nobody reads *(additions file, section E)*. Propagate the disconnect to the scheduler, which evicts the sequence and frees its KV blocks at the next step.
 
 ## 12. Shrink It to One GPU for the Synchronous Variant (#75)
 
 #75 is the anchor with the distribution removed: one GPU, up to 100 inputs per batch, callers who block and wait. The whole design becomes intake, a batcher, the GPU and a way back to the right caller.
 
-The mechanism *(own construction)*. The HTTP handler assigns a `request_id`, parks a future for it, and enqueues the request. A batcher thread flushes when it holds 100 requests **or** when the oldest has waited, say, 20 ms. The GPU worker runs the batch. The demultiplexer resolves each future by `request_id`, and the handler returns. A timeout on the future turns a stuck batch into an error rather than a hung connection.
+The mechanism *(own construction)*. The HTTP handler assigns a `request_id`, parks a future for it, and enqueues the request. A batcher thread flushes when it holds 100 requests or when the oldest has waited, say, 20 ms. The GPU worker runs the batch. The demultiplexer resolves each future by `request_id`, and the handler returns. A timeout on the future turns a stuck batch into an error rather than a hung connection.
 
 Say the arithmetic. Assume a full batch of 100 takes 200 ms. Maximum throughput is then 500 requests per second. At 400 rps the GPU runs at 80% and queues start to form in bursts. Latency is wait time plus queue time plus 200 ms. Synchronous callers each hold a connection, so by Little's Law 400 rps at ~0.3 s holds about 120 open connections. That is trivial until overload, when it grows without limit. Bound the queue at two batches, 200 requests, and return 503 with Retry-After beyond that.
 
@@ -125,6 +125,6 @@ The checklist *(own construction)*:
 | No request ID through the pipeline | Responses can reach the wrong caller | Demux by `request_id` end to end |
 | No cancellation | Abandoned requests burn GPU time | Propagate disconnect, free KV |
 | Tokenizing on the GPU thread | CPU work stalls the most expensive resource | Tokenize at the gateway |
-| One latency metric | Queue wait masquerades as a slow model | Separate TTFT, TPOT, queue wait and service time |
+| One latency metric | Queue wait looks like a slow model | Separate TTFT, TPOT, queue wait and service time |
 
 Deliver it as a conversation, not a verdict. A review that ranks three fixes and explains the failure each prevents shows seniority. Eleven findings read aloud shows only that the list was memorised.

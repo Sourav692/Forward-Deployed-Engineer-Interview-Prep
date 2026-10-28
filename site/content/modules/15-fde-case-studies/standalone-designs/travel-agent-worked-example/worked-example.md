@@ -14,7 +14,7 @@ The first draft was a rigid pipeline. Five agents fanned out, and then *all* of 
 
 ### 1 · Rate limiting belongs inside the API gateway
 
-In the draft, Rate Limiter hung off the load balancer as its own box, side by side with the gateway. No line left it, so anything sent there went nowhere. Rate limiting is not a route. It is *a rule the gateway applies to every request*. A separate box implies a component, and rate limiting is a behaviour.
+In the draft, Rate Limiter hung off the load balancer as its own box, side by side with the gateway. No line left it, so anything sent there went nowhere. Rate limiting is *a rule the gateway applies to every request*, not a route. A separate box implies a component, and rate limiting is a behaviour.
 
 ### 2 · The semantic cache is checked before any agent spawns
 
@@ -26,11 +26,11 @@ A single compulsory retrieval box after all five agents made every agent query t
 
 ### 4 · Tool calling, MCP and external APIs sit alongside the agents
 
-In the draft, all five agents passed in sequence through a shared LLM box, a shared tool-calling box and a shared MCP registry. That reads as though the request gets a single turn in total. Booking actually calls the Flight and Payment MCP servers *during its own work*; it cannot wait until four other agents finish. The redraw makes the LLM, the MCP registry, the external APIs and the vector DBs a shared backend that each agent calls on demand.
+In the draft, all five agents passed in sequence through a shared LLM box, a shared tool-calling box and a shared MCP registry. That reads as though the request gets a single turn in total. Booking calls the Flight and Payment MCP servers *during its own work*; it cannot wait until four other agents finish. The redraw makes the LLM, the MCP registry, the external APIs and the vector DBs a shared backend that each agent calls on demand.
 
 ### 5 · A synthesiser agent replaces the missing aggregation step
 
-Nothing in the draft explained how five parallel results became a single reply. The flow simply carried on as one line, as though merging took care of itself. It does not. In the fix, a named Synthesiser Agent gathers the output of each agent that ran and settles any clash between them before the user sees anything. A Policy ruling that overrides a Booking choice is the classic example.
+Nothing in the draft explained how five parallel results became a single reply. The flow carried on as one line, as though merging took care of itself. In the fix, a named Synthesiser Agent gathers the output of each agent that ran and settles any clash between them before the user sees anything. A Policy ruling that overrides a Booking choice is the classic example.
 
 ## The corrected architecture
 
@@ -67,7 +67,7 @@ flowchart TB
   RESP --> MON[Monitoring & Logging<br/>latency · token usage · per-agent execution traces · cache hit rate · alerts — spans every stage above]
 ```
 
-On a cache hit, the user gets a reply and no agent starts. If it misses, the supervisor spawns just the agents this query calls for, and each one pulls from the shared backend only what its own task needs. The synthesiser merges their results into one answer, which is also saved to the cache.
+On a cache hit, the user gets a reply and no agent starts. If it misses, the supervisor spawns only the agents this query calls for, and each one pulls from the shared backend only what its own task needs. The synthesiser merges their results into one answer, which is also saved to the cache.
 
 ## Components
 
@@ -90,9 +90,9 @@ On a cache hit, the user gets a reply and no agent starts. If it misses, the sup
 
 1. A user sends a request.
 2. Authentication confirms who they are, the load balancer picks an instance, and the gateway enforces rate limits before passing the request to the supervisor.
-3. **First**, the supervisor looks up the semantic cache.
+3. First, the supervisor looks up the semantic cache.
 4. A hit returns at once, and no agent is spawned.
-5. On a miss, the supervisor starts just the agents this query calls for.
+5. On a miss, the supervisor starts only the agents this query calls for.
 6. Inside its own loop, an agent that needs context makes a tool call to the matching regional vector DB.
 7. In that same loop, it calls external APIs via the MCP registry.
 8. The synthesiser gathers the outputs, settles conflicts and writes one grounded reply.
@@ -108,13 +108,13 @@ On a cache hit, the user gets a reply and no agent starts. If it misses, the sup
 | Availability | Regions run active-active |
 | Performance | Semantic cache placed *ahead of* the fan-out; Redis; CDN; tuned vector search |
 | Security | OAuth, JWT, encryption, RBAC, managed secrets |
-| Cost | A cache-first design where the cache really does gate spawning; small models for easy tasks; routing by region |
+| Cost | A cache-first design where the cache gates spawning; small models for easy tasks; routing by region |
 | Observability | Metrics, logs, a distributed trace per agent, dashboards, alerts |
 | Maintainability | Modular agents that each own their tools; CI/CD; infrastructure as code |
 
 ## Trade-offs worth naming out loud
 
-**Shared retrieval service vs per-agent RAG.** One shared retrieval layer gives you a single place to enforce data residency and guardrails, but every agent then depends on that one service. Per-agent retrieval matches how frameworks such as LangGraph and CrewAI wire tools to each agent, yet without governance you end up running several copies of the embedding stack. You can defend either choice. What is actually wrong is placing RAG beside the agents *as if it were one of them*; it is infrastructure, or a tool.
+**Shared retrieval service vs per-agent RAG.** One shared retrieval layer gives you a single place to enforce data residency and guardrails, but every agent then depends on that one service. Per-agent retrieval matches how frameworks such as LangGraph and CrewAI wire tools to each agent, yet without governance you end up running several copies of the embedding stack. You can defend either choice. The real mistake is placing RAG beside the agents *as if it were one of them*; it is infrastructure, or a tool.
 
 **Single agent vs multi-agent.** Every extra agent adds coordination and a synthesis step you must pay for. Pay it when sub-tasks differ in their tools or guardrails, or must scale on their own. Booking and Policy plainly do. Module 07 sets out the full rule for deciding.
 
@@ -151,7 +151,7 @@ Each of the five fixes turns into a question you can put to any multi-agent diag
 
 - List the five structural fixes. Which principle from the last document does each one apply?
 - Why does the position of a semantic cache decide whether it saves anything?
-- When teams argue shared versus per-agent RAG, what mistake actually matters?
+- When teams argue shared versus per-agent RAG, which mistake matters?
 - Which job of the synthesiser is hidden when a diagram just "carries on as one line"?
 - Redraw the corrected architecture without looking.
 
@@ -186,8 +186,8 @@ On the travel assistant, the levels split on whether the candidate only fixes th
 
 ## Sources (checked 27 Sep 2026)
 
-- [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html) — OIDC is the identity layer on OAuth 2.0; OAuth alone does not authenticate a user
-- [MCP specification — Tools](https://modelcontextprotocol.io/specification/2025-06-18/server/tools) — clients discover tools with `tools/list` and get `list_changed` notifications, which is the dynamic discovery the registry relies on
-- [Agents — CrewAI docs](https://docs.crewai.com/en/concepts/agents) — each agent carries its own `tools` list, so per-agent tool wiring is the framework default
-- [Semantic caching with Redis LangCache](https://redis.io/tutorials/semantic-caching-with-redis-langcache/) — semantic caches match similar questions by embedding similarity, not exact text
-- [GDPR Article 46 — transfers subject to appropriate safeguards](https://gdpr-info.eu/art-46-gdpr/) — GDPR allows safeguarded transfers, so regional stores help with residency requirements rather than being what compliance means
+- [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html): OIDC is the identity layer on OAuth 2.0; OAuth alone does not authenticate a user
+- [MCP specification: Tools](https://modelcontextprotocol.io/specification/2025-06-18/server/tools): clients discover tools with `tools/list` and get `list_changed` notifications, which is the dynamic discovery the registry relies on
+- [Agents (CrewAI docs)](https://docs.crewai.com/en/concepts/agents): each agent carries its own `tools` list, so per-agent tool wiring is the framework default
+- [Semantic caching with Redis LangCache](https://redis.io/tutorials/semantic-caching-with-redis-langcache/): semantic caches match similar questions by embedding similarity, not exact text
+- [GDPR Article 46: transfers subject to appropriate safeguards](https://gdpr-info.eu/art-46-gdpr/): GDPR allows safeguarded transfers, so regional stores help with residency requirements rather than being what compliance means

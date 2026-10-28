@@ -34,13 +34,13 @@ The round rewards spending the first third on diagnosis. A candidate who draws t
 
 **The two-minute spoken answer.**
 
-> "I wouldn't start with a model. I'd first find out whether the data can support a measurable improvement in one specific decision. So I'd pick that decision with the customer and spend a week measuring the data it depends on. That means null and placeholder rates, a join test across systems, freshness, and — most important — two experts relabelling the same hundred records so I know whether the historical labels are ground truth or noise. That gives me a scorecard. If the field the decision depends on is red and nothing can route around it, the honest answer is a data project first. Usually something can: extraction from documents doesn't need historical labels, and a review queue turns every correction into a trusted label. So phase one ships extraction with confidence scores and human review. Quality gates at ingestion quarantine bad records rather than defaulting them, and a data contract fixes the worst defects at source. Evaluation starts from a small adjudicated set, reported per segment and split by time. I'd say out loud that a set that small only catches large regressions. Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode."
+> "I wouldn't start with a model. I'd first find out whether the data can support a measurable improvement in one specific decision. So I'd pick that decision with the customer and spend a week measuring the data it depends on. That means null and placeholder rates, a join test across systems, freshness, and, most important, two experts relabelling the same hundred records so I know whether the historical labels are ground truth or noise. That gives me a scorecard. If the field the decision depends on is red and nothing can route around it, the honest answer is a data project first. Usually something can: extraction from documents doesn't need historical labels, and a review queue turns every correction into a trusted label. So phase one ships extraction with confidence scores and human review. Quality gates at ingestion quarantine bad records rather than defaulting them, and a data contract fixes the worst defects at source. Evaluation starts from a small adjudicated set, reported per segment and split by time. I'd say out loud that a set that small only catches large regressions. Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode."
 
 **Likely follow-ups.** The source gives none for this question, so these are *(own construction)*, each with a one-line answer.
 
 - *"The customer says there's no time for a readiness week."* Then scope it to two days on one decision; skipping it means discovering the same facts in production, more expensively.
 - *"What if the experts themselves disagree?"* Their disagreement is a finding. Write a label guide, adjudicate, and measure κ again. A task humans cannot agree on cannot have an accuracy target.
-- *"Can't a large model just handle messy data?"* It can read messy text well. It cannot recover a fact that is missing or wrong. And it cannot be evaluated against labels nobody trusts.
+- *"Can't a large model just handle messy data?"* It can read messy text well. It cannot recover a fact that is missing or wrong. It also cannot be evaluated against labels nobody trusts.
 - *"How do you know the data is getting better?"* Quarantine rate, placeholder rate on new records and κ against adjudicated labels, tracked on the same dashboard as model quality.
 
 ## 15. Answer the Cost Pivot in Ten Minutes
@@ -111,6 +111,6 @@ Related packs, for cross-reference rather than repetition: [Scoping to Deployed 
 
 ### Fact-check sources (checked 27 Sep 2026)
 
-- [Snorkel: Rapid Training Data Creation with Weak Supervision (Ratner et al., 2017)](https://arxiv.org/abs/1711.10160) — labelling functions vote, and their accuracies are estimated without ground truth
-- [Cohen (1960), A Coefficient of Agreement for Nominal Scales](https://doi.org/10.1177/001316446002000104) — kappa as agreement corrected for chance
+- [Snorkel: Rapid Training Data Creation with Weak Supervision (Ratner et al., 2017)](https://arxiv.org/abs/1711.10160): labelling functions vote, and their accuracies are estimated without ground truth
+- [Cohen (1960), A Coefficient of Agreement for Nominal Scales](https://doi.org/10.1177/001316446002000104): kappa as agreement corrected for chance
 
