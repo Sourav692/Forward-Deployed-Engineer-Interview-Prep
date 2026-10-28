@@ -380,3 +380,29 @@
 
 /* A page head's heavy rule already opens the first section under it (the topic hubs). */
 .editorial-page .cb-case-head + section .cb-opens { border-top: 0; padding-top: 0; }
+
+/* Start and Learn ------------------------------------------------------------------ */
+
+/* A numbered sequence (the practice loop): the step number set in the display face, no badge. */
+.editorial-page .cb-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; border-top: var(--rule-hair) solid var(--color-rule-2); }
+.editorial-page .cb-steps > li { counter-increment: step; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); column-gap: 1rem; padding: 0.875rem 0; border-bottom: var(--rule-hair) solid var(--color-rule); }
+.editorial-page .cb-steps > li::before { content: counter(step); grid-row: span 2; font-family: var(--font-display); font-weight: var(--display-weight); font-variation-settings: "wdth" 75, "opsz" 48; font-size: var(--text-row); line-height: 1.15; color: var(--color-accent); font-variant-numeric: lining-nums tabular-nums; }
+.editorial-page .cb-step-title { font-family: var(--font-display); font-weight: 500; font-variation-settings: "wdth" 85, "opsz" 24; font-size: var(--text-row); line-height: 1.15; color: var(--color-ink); }
+.editorial-page .cb-step-body { margin-top: 0.25rem; font-size: 1rem; line-height: 1.5; color: var(--color-ink-2); max-width: 60ch; }
+
+/* A stage's number before its title on /learn. */
+.editorial-page .cb-stage-number { margin-right: 0.75rem; color: var(--color-accent); }
+
+/* A ruled entry (a track on /learn): a hairline over it, the condensed title, the objective, the facts. */
+.editorial-page .cb-entry { border-top: var(--rule-hair) solid var(--color-rule-2); padding: 1.25rem 0 1.75rem; }
+.editorial-page .cb-entry-title { font-size: var(--text-h2); line-height: 1; }
+.editorial-page .cb-entry-title a { color: var(--color-ink); text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.12em; transition: text-decoration-color var(--dur-short) var(--ease-out); }
+.editorial-page .cb-entry:hover .cb-entry-title a { text-decoration-color: var(--color-accent); }
+.editorial-page .cb-entry-body { margin-top: 0.75rem; font-size: 1rem; line-height: 1.5; color: var(--color-ink-2); max-width: 46ch; }
+.editorial-page .cb-entry-facts { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 1rem; font-family: var(--font-display); font-weight: 500; font-variation-settings: "opsz" 12; font-size: var(--text-sm); color: var(--color-muted); font-variant-numeric: lining-nums tabular-nums; }
+
+/* A small head inside a list (a module row, a path's track): the row face, not the display cut. */
+.editorial-page .cb-small-head { font-weight: 500; font-variation-settings: "wdth" 85, "opsz" 24; letter-spacing: 0; font-size: 1.125rem; line-height: 1.2; }
+
+/* The hero's On this page rows wrap: a stage title is longer than a section name. */
+.editorial-page .cb-hero-side nav[aria-label='On this page'] a { white-space: normal; }

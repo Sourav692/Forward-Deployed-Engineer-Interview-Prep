@@ -4,6 +4,7 @@ import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { Suspense } from 'react'
 import { allMinutes, isRequired, learnTracks } from '@/lib/learn'
+import { LEARN_STAGES } from '@/lib/learn-stages'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
 import { PathBanner } from '@/components/learn/PathFlagIslands'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
@@ -13,7 +14,8 @@ import { siteCounts } from '@/components/areas/data'
 
 /**
  * /learn: the curriculum overview (FE-06). A static Server Component. The track cards
- * render here on the server; filtering and progress are client islands.
+ * render here on the server; filtering and progress are client islands. Editorial theme:
+ * the hero indexes the five stages, and each stage lists its tracks as ruled entries.
  */
 
 export const metadata: Metadata = pageMetadata({
@@ -33,19 +35,45 @@ export default async function LearnPage() {
   }))
 
   return (
-    <>
+    <div className="pb-16">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Learn', path: '/learn' }])} />
-      <header className="mb-8 max-w-3xl">
-        <h1 className="mt-2 text-3xl font-semibold tracking-[-0.02em]">Learn</h1>
-        <p className="mt-3 text-base text-muted">
-          {counts.learnTracks} tracks grouped into five learning stages, about {counts.learnHours} hours in all.
-          Follow your chosen path or start with the gaps you need to fill. Open a track to see its modules. Worksheets,
-          mock interviews and final-week revision are under{' '}
-          <Link href="/interview" className="text-accent underline underline-offset-2">
-            Interview
-          </Link>
-          .
-        </p>
+      <header className="cb-hero">
+        <div>
+          <h1>Learn</h1>
+          <p className="cb-standfirst">
+            {counts.learnTracks} tracks in five learning stages, about {counts.learnHours} hours in all. Open a track to
+            see its modules.
+          </p>
+        </div>
+        <div className="cb-hero-side">
+          <p>
+            Follow your chosen path or start with the gaps you need to fill. The worksheets are in{' '}
+            <Link href="/practice" className="underline underline-offset-2">
+              Practice
+            </Link>
+            ; mock interviews and the final-week review are in{' '}
+            <Link href="/interview" className="underline underline-offset-2">
+              Interview
+            </Link>
+            .
+          </p>
+          <nav aria-label="On this page" className="mt-5">
+            <ul className="cb-rows">
+              {LEARN_STAGES.map((stage, i) => (
+                <li key={stage.slug} className="cb-row">
+                  <a href={`#${stage.slug}`} className="cb-row-link">
+                    <span className="cb-row-title">
+                      {i + 1}. {stage.title}
+                    </span>
+                    <span className="cb-row-facts">
+                      {stage.tracks.length} {stage.tracks.length === 1 ? 'track' : 'tracks'}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </header>
       <StorageNotice />
       <PathBanner />
@@ -53,7 +81,9 @@ export default async function LearnPage() {
       <Suspense fallback={<StaticTrackGrid items={items} />}>
         <TrackBrowser items={items} minutes={minutes} />
       </Suspense>
-      <SuggestTopic hub="Learn" />
-    </>
+      <div className="mt-24">
+        <SuggestTopic hub="Learn" />
+      </div>
+    </div>
   )
 }

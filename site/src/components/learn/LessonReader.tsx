@@ -1,9 +1,7 @@
 import { Diagram } from '@/components/Diagram'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
 import { toPlainText, type ReadingSection } from '@/lib/reading'
-import { Byline } from '@/components/Byline'
 import { LessonTabs } from '@/components/learn/LessonTabs'
-import { TwinLinks } from '@/components/PageIntro'
 import type { TwinLink } from '@/lib/twins'
 import type { ExplorerData } from '@/lib/explorers/types'
 import { PageHead } from '@/components/editorial/PageHead'
@@ -27,10 +25,10 @@ const RECALL_CARD = /^One-Page Memory Card\b/
  * note ("From the FDE Handbook") and, for third-party material (`publish: 'credited'`),
  * the credit line.
  *
- * `tag` is set on area-served lessons (/interview): the head becomes the Editorial
- * PageHead, tagged with the area, with the same facts as a ruled spec line.
+ * The head is the Editorial PageHead, tagged with the area (`tag`: Learn or Interview),
+ * with the reading time and source as a ruled spec line.
  */
-export function LessonReader({ page, twins = [], explorer, tag }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null; tag?: string }) {
+export function LessonReader({ page, twins = [], explorer, tag }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null; tag: string }) {
   const { lesson, doc, sourceNote, creditHtml } = page
   const card = doc.sections.findIndex((s) => s.title && RECALL_CARD.test(s.title))
   const sourceLinks = { ...explorer?.readingLinks, ...Object.fromEntries(doc.sections.filter((s) => s.title).map((s) => [toPlainText(s.title!), `#${s.id}`])) }
@@ -38,45 +36,25 @@ export function LessonReader({ page, twins = [], explorer, tag }: { page: Lesson
     // `break-words` lets long unbroken tokens (file paths in inline code, URLs) wrap
     // instead of pushing the page sideways; tables and code blocks scroll in their own box.
     <article className={`lesson-reading break-words ${explorer ? 'max-w-none' : ''}`} aria-labelledby="lesson-title">
-      {tag ? (
-        <PageHead
-          tag={tag}
-          title={lesson.title}
-          facts={[
-            ...(lesson.estMinutes ? [{ term: 'Reading time', value: formatMinutes(lesson.estMinutes) }] : []),
-            ...(sourceNote ? [{ term: 'Source', value: sourceNote }] : []),
-          ]}
-          updated={lesson.updated}
-          twins={twins}
-          report={{ title: lesson.title, path: lesson.href }}
-        >
-          {creditHtml && (
-            <p className="mt-3 text-sm text-muted">
-              <span className="font-semibold text-text">Credit: </span>
-              <span dangerouslySetInnerHTML={{ __html: creditHtml }} />
-            </p>
-          )}
-        </PageHead>
-      ) : (
-      <header className={`border-b border-border pb-5 ${explorer ? 'max-w-[68ch]' : ''}`}>
-        <h1 id="lesson-title" className="text-balance">
-          {lesson.title}
-        </h1>
-        <Byline updated={lesson.updated} report={{ title: lesson.title, path: lesson.href }} />
-        <TwinLinks links={twins} />
-        <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
-          {lesson.estMinutes ? <span>{formatMinutes(lesson.estMinutes)} read</span> : null}
-          {lesson.estMinutes && sourceNote ? <span aria-hidden="true">·</span> : null}
-          {sourceNote && <span>{sourceNote}</span>}
-        </p>
+      <PageHead
+        tag={tag}
+        title={lesson.title}
+        titleId="lesson-title"
+        facts={[
+          ...(lesson.estMinutes ? [{ term: 'Reading time', value: formatMinutes(lesson.estMinutes) }] : []),
+          ...(sourceNote ? [{ term: 'Source', value: sourceNote }] : []),
+        ]}
+        updated={lesson.updated}
+        twins={twins}
+        report={{ title: lesson.title, path: lesson.href }}
+      >
         {creditHtml && (
-          <p className="mt-2 rounded-md border border-border bg-surface-2 px-3 py-2 text-sm text-muted">
+          <p className="mt-3 text-sm text-muted">
             <span className="font-semibold text-text">Credit: </span>
             <span dangerouslySetInnerHTML={{ __html: creditHtml }} />
           </p>
         )}
-      </header>
-      )}
+      </PageHead>
 
       {explorer ? <LessonExperience data={explorer} sourceLinks={sourceLinks}><div className="max-w-[68ch]"><Sections sections={doc.sections} /></div></LessonExperience> : <div className="mt-6">
         {card > 0 ? (

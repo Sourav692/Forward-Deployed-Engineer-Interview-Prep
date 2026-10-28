@@ -15,6 +15,7 @@ export type PageFact = { term: string; value: ReactNode }
 export function PageHead({
   tag,
   title,
+  titleId,
   standfirst,
   facts,
   updated,
@@ -24,6 +25,8 @@ export function PageHead({
 }: {
   tag?: string
   title: string
+  /** The h1's id, when a wrapper is labelled by it (a lesson's article). */
+  titleId?: string
   standfirst?: ReactNode
   facts: PageFact[]
   updated?: string | null
@@ -40,7 +43,9 @@ export function PageHead({
   return (
     <header className="cb-case-head">
       {tag && <span className="cb-tag">{tag}</span>}
-      <h1 className={tag ? 'mt-4' : undefined}>{title}</h1>
+      <h1 id={titleId} className={tag ? 'mt-4' : undefined}>
+        {title}
+      </h1>
       {standfirst && <p className="cb-purpose-text mt-4 max-w-[40rem]">{standfirst}</p>}
       <dl className="cb-facts">
         {all.map((f) => (

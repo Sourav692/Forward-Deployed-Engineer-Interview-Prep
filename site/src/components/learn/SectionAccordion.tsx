@@ -28,7 +28,7 @@ export function SectionAccordion({
   /** Anchor id, so breadcrumbs can link to `#<section slug>`. */
   id: string
   title: string
-  /** Short line under the title, e.g. "3 modules · 6 h". */
+  /** Short line under the title, e.g. "3 modules, 6 h". */
   meta?: ReactNode
   children: ReactNode
 }) {
