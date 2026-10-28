@@ -39,7 +39,7 @@ These are logical responsibilities. A small implementation can combine some in o
 
 ### 3. Essential Concepts
 
-#### 1. API Gateway — User → Application Control
+#### 1. API Gateway: User → Application Control
 
 Own application-entry authentication, request validation, tenant context, and user/tenant rate limits or quotas. Coordinate with authorisation services; downstream data and tools still enforce their own access checks.
 
@@ -51,7 +51,7 @@ User → API Gateway → Application
 
 **API Gateway = User → Application control.** It does not own model-provider selection.
 
-#### 2. Model Gateway — Application → Model Control
+#### 2. Model Gateway: Application → Model Control
 
 Centralise model routing, provider abstraction, compatible fallback, bounded retries, provider limits, and token/cost tracking when those needs justify it.
 
@@ -63,7 +63,7 @@ Application → Model Gateway → Model A / B
 
 **Model Gateway = Application → Model control.** Fallback must preserve required capabilities, data restrictions, and acceptable quality.
 
-#### 3. Router — Choose the Capability
+#### 3. Router: Choose the Capability
 
 Select retrieval, live tools, a workflow, or human handling. Use rules or classifiers where sufficient.
 
@@ -77,7 +77,7 @@ Request ────┼→ Order lookup
 
 Capability routing differs from choosing which model provider processes a model call.
 
-#### 4. Orchestrator — Coordinate the Work
+#### 4. Orchestrator: Coordinate the Work
 
 Manage steps, branches, tool calls, timeouts, retries, checkpoints, and approval transitions. It may execute a fixed workflow or host a bounded agent loop.
 
@@ -91,7 +91,7 @@ Read order → Check policy → Approval needed?
 
 The orchestrator coordinates; policy authorises; the executor performs the business write.
 
-#### 5. State Store — Preserve Context and Progress
+#### 5. State Store: Preserve Context and Progress
 
 Store relevant session, workflow, approval, and completed-operation state. Durable state allows restart or delayed approval without relying on process memory.
 
@@ -103,7 +103,7 @@ Workflow → Checkpoint → Worker restart → Resume
 
 A checkpoint alone does not prevent duplicate side effects. Record action identifiers and reconcile uncertain external results.
 
-#### 6. Cache — Reuse Safe Results
+#### 6. Cache: Reuse Safe Results
 
 Cache eligible response, retrieval, or tool results. Choose keys, lifetime, invalidation, and tenant/permission scope to meet freshness and access requirements.
 
@@ -116,7 +116,7 @@ Request → Valid scoped cache hit? → Reuse
 
 Current transactional data needs an explicit freshness rule. Similar-looking requests are not automatically safe to share through a semantic cache.
 
-#### 7. Queue / Event Bus — Decouple Work and Communication
+#### 7. Queue / Event Bus: Decouple Work and Communication
 
 A work queue lets workers process tasks separately from the immediate request. An event bus distributes notifications about events to interested consumers.
 
@@ -144,7 +144,7 @@ These are patterns, not necessarily separate products. Queues buffer bursts but 
 | Long tasks or burst absorption | Queue + workers | Decouple execution | Queue delay and duplicate delivery |
 | Multiple reactions to a business event | Event distribution | Decouple consumers | Delivery and ordering management |
 
-#### Support Example — Add Only What Is Needed
+#### Support Example: Add Only What Is Needed
 
 ```text
 User → API Gateway → Router
@@ -292,5 +292,5 @@ Check failure behaviour too: a queue does not add capacity, a checkpoint does no
 
 ## Sources (checked 27 Sep 2026)
 
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — checkpoints don't stop duplicate side effects; at-least-once redelivery
-- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts) — checkpoints don't stop duplicate side effects
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): checkpoints don't stop duplicate side effects; at-least-once redelivery
+- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts): checkpoints don't stop duplicate side effects

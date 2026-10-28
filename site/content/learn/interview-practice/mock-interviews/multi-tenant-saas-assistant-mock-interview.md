@@ -2,7 +2,7 @@
 
 *Answering from each customer's own account makes the assistant useful, and a single cross-tenant answer makes it unsellable.*
 
-Tenant isolation is not a prompt instruction. Treat it as a system invariant carried by every query, cache key and log, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
+Treat tenant isolation as a system invariant carried by every query, cache key and log, never as a prompt instruction, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
 **Objectives:**
 

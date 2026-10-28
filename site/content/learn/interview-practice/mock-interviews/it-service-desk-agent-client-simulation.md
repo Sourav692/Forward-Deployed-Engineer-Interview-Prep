@@ -1,6 +1,6 @@
 # IT Service Desk Agent Client Simulation
 
-This is a 45-minute client simulation in which the interviewer plays a customer who wants an agent that takes actions, and answers only what is asked. Every action the customer names hides an approval, an audit trail or a data problem that surfaces only if you ask about it. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you actually asked about.
+This is a 45-minute client simulation in which the interviewer plays a customer who wants an agent that takes actions, and answers only what is asked. Every action the customer names hides an approval, an audit trail or a data problem that surfaces only if you ask about it. With a partner, hand them this page and have them reveal a constraint only when your question earns it; alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you asked about.
 
 ## The Customer
 
@@ -30,7 +30,7 @@ He cares about the backlog and response times, about plant downtime, and about g
 
 "We already have a self-service password reset portal, and office staff use it. Plant workers mostly log in on shared terminals and never enrolled a second sign-in factor, so the portal can't verify them, and they call the desk instead."
 
-**Why it matters:** The real blocker on resets is identity verification, not ticket handling. An agent that resets a password for someone it cannot verify is an account-takeover path. Part of the right answer may be an enrolment drive rather than AI, and saying so builds trust.
+**Why it matters:** The blocker on resets is identity verification, not ticket handling. An agent that resets a password for someone it cannot verify is an account-takeover path. Part of the right answer may be an enrolment drive rather than AI, and saying so builds trust.
 
 </details>
 
@@ -48,7 +48,7 @@ He cares about the backlog and response times, about plant downtime, and about g
 
 "If a terminal, scanner or label printer on the line goes down, the line can stop. Those tickets must reach plant support within [response target for line-down tickets]. A misrouted one costs us [cost of an hour of line downtime]."
 
-**Why it matters:** The most expensive error is not a wrong fix but a wrong priority. Line-down detection needs high recall, any doubt should escalate rather than wait, and these tickets should never sit behind an automated resolution attempt.
+**Why it matters:** A wrong priority costs more than a wrong fix. Line-down detection needs high recall, any doubt should escalate rather than wait, and these tickets should never sit behind an automated resolution attempt.
 
 </details>
 

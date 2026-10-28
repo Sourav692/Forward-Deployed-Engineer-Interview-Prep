@@ -48,7 +48,7 @@ Code is optional. A clear prototype outline earns the same marks as a working pr
 
 ### Framing
 
-The pain is not reading contracts. It is that every contract waits in one queue for scarce lawyer time, whether it is routine or unusual. The first release should get routine contracts through faster without a lawyer, and send unusual ones to a lawyer with the issues already found.
+The pain is that every contract waits in one queue for scarce lawyer time, whether it is routine or unusual. The first release should get routine contracts through faster without a lawyer, and send unusual ones to a lawyer with the issues already found.
 
 Sending redlines to counterparties without a person is out of scope. It would be the company stating a legal position to a third party, and only lawyers, or contract managers within the playbook, may do that.
 
@@ -72,7 +72,7 @@ Everything runs inside [approved hosting region]. Contract text is never used fo
 
 ### Evaluation
 
-Before the pilot, I would run the historical contracts through the tool: first drafts in, then compare what it flags with what actually changed in the final signed version, and have a lawyer grade a sample. The launch gates, agreed with the head of legal, would be: no missed out-of-playbook clause in the high-risk types (liability and indemnity), quoted text always correct, and lawyer agreement above a threshold she sets.
+Before the pilot, I would run the historical contracts through the tool: first drafts in, then compare what it flags with what changed in the final signed version, and have a lawyer grade a sample. The launch gates, agreed with the head of legal, would be: no missed out-of-playbook clause in the high-risk types (liability and indemnity), quoted text always correct, and lawyer agreement above a threshold she sets.
 
 ### Risks (Abridged)
 

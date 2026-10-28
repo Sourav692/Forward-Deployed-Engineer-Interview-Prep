@@ -5153,7 +5153,7 @@ export const LESSONS: CurriculumLesson[] = [
     kind: 'sync',
     publish: 'own',
     // Split for length (ENH-25): the closing sections are the next lesson.
-    sections: { exclude: ['🎯 Full Case-Study Practice', 'Phase 1 — Problem Decomposition', 'Phase 2 — Architecture', 'Phase 3 — Production Scale', 'Phase 4 — Production Quality', 'Phase 5 — Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
+    sections: { exclude: ['Full Case-Study Practice', 'Phase 1: Problem Decomposition', 'Phase 2: Architecture', 'Phase 3: Production Scale', 'Phase 4: Production Quality', 'Phase 5: Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
   },
   {
     slug: 'roadmap-full-practice-and-checklists',
@@ -5162,7 +5162,7 @@ export const LESSONS: CurriculumLesson[] = [
     home: 'final-week',
     kind: 'sync',
     publish: 'own',
-    sections: { include: ['🎯 Full Case-Study Practice', 'Phase 1 — Problem Decomposition', 'Phase 2 — Architecture', 'Phase 3 — Production Scale', 'Phase 4 — Production Quality', 'Phase 5 — Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
+    sections: { include: ['Full Case-Study Practice', 'Phase 1: Problem Decomposition', 'Phase 2: Architecture', 'Phase 3: Production Scale', 'Phase 4: Production Quality', 'Phase 5: Interview Mastery', 'Sources (checked 27 Sep 2026)'] },
   },
   {
     slug: 'rapid-revision-guide',

@@ -1,4 +1,4 @@
-# Module 16 — Security & Enterprise Multi-Tenancy
+# Module 16: Security & Enterprise Multi-Tenancy
 
 ## Concise Interview Module
 
@@ -25,7 +25,7 @@ Authenticate identity → Resolve trusted tenant/scope
 
 ### 3. Essential Concepts
 
-#### 1. Authentication — Establish Identity
+#### 1. Authentication: Establish Identity
 
 Verify who or what is calling, including users, services, and workers. Derive trusted tenant context from verified identity or controlled membership, not model-generated fields.
 
@@ -35,7 +35,7 @@ Verify who or what is calling, including users, services, and workers. Derive tr
 Verified identity → Trusted tenant membership → Request context
 ```
 
-#### 2. Authorisation and RBAC — Decide Permitted Operations
+#### 2. Authorisation and RBAC: Decide Permitted Operations
 
 Authorisation asks what that identity may do. Role-based access control (RBAC) assigns permissions through roles; resource ownership and tenant scope may require additional checks.
 
@@ -47,7 +47,7 @@ Identity + role + resource + operation + tenant → Allow / deny
 
 Check resource-level access, not only whether a tool name is permitted.
 
-#### 3. Permission-Aware RAG — Keep Restricted Evidence Out
+#### 3. Permission-Aware RAG: Keep Restricted Evidence Out
 
 Retrieval-augmented generation (RAG) must enforce current access before restricted content enters model context. Preserve source permissions through ingestion and query execution.
 
@@ -61,7 +61,7 @@ Employee identity → Allowed document scope
 
 Update permissions, deletions, and cache scope; filtering the final answer is too late to prevent unauthorised context exposure.
 
-#### 4. Least-Privilege Tools — Limit Enterprise Reach
+#### 4. Least-Privilege Tools: Limit Enterprise Reach
 
 Expose only necessary operations and use scoped credentials outside model context. Separate reads from writes and enforce access again at execution.
 
@@ -75,7 +75,7 @@ Model proposes → Validate inputs → Authorize resource/action
 
 Agent recommends → Policy decides → Executor acts. Human approval, where required, does not grant unrelated access.
 
-#### 5. Tenant Isolation — Cover More Than the Database
+#### 5. Tenant Isolation: Cover More Than the Database
 
 Scope documents/indexes, caches, state, queues, tool credentials, logs, audit records, and results. Choose shared or separated resources according to required isolation and operational trade-offs.
 
@@ -87,7 +87,7 @@ Tenant scope → Data / cache / state / jobs / tools / output
 
 Data isolation and resource fairness are separate needs. A tenant can harm others' latency without accessing their data.
 
-#### 6. Secrets — Keep Credentials in Trusted Execution
+#### 6. Secrets: Keep Credentials in Trusted Execution
 
 Manage credentials through controlled secret storage and scoped runtime access. Do not embed them in prompts, retrieved documents, tool descriptions, or unrestricted telemetry.
 
@@ -95,7 +95,7 @@ Manage credentials through controlled secret storage and scoped runtime access. 
 
 Define rotation and access ownership appropriate to the integration.
 
-#### 7. Sensitive Data — Minimise Across the Whole Lifecycle
+#### 7. Sensitive Data: Minimise Across the Whole Lifecycle
 
 Confirm what data is necessary, which providers may process it, and retention/access requirements for prompts, outputs, caches, logs, and backups. Mask or redact where it preserves required functionality.
 
@@ -107,7 +107,7 @@ Collect necessary data → Approved processing
 
 > “I’d inspect every copy of sensitive data, not only the primary database.”
 
-#### 8. Data Residency — Follow Data Through Dependencies
+#### 8. Data Residency: Follow Data Through Dependencies
 
 Confirm the exact regional boundary and processing/storage restrictions with the customer. Include models, retrieval, tools, telemetry, backups, failover, and support access where relevant.
 
@@ -121,7 +121,7 @@ Regional application → Approved regional data/model paths
 
 Do not infer a universal legal requirement from geography; translate the stated customer constraint into architecture.
 
-#### 9. Defense in Depth — Do Not Let Text Grant Authority
+#### 9. Defense in Depth: Do Not Let Text Grant Authority
 
 Treat user text, retrieved documents, and tool outputs as untrusted input. Use validation, permissions, policy, and execution controls outside model discretion.
 
@@ -181,7 +181,7 @@ Application-entry checks establish identity and tenant context. Model-call contr
 
 > “I’d enforce document access before evidence enters model context.”
 
-> “Tenant isolation must include caches, jobs, state, logs, and results, not just database rows.”
+> “Tenant isolation must include caches, jobs, state, logs, and results, as well as database rows.”
 
 > “I’d trace residency through models and failover as well as the application host.”
 
@@ -261,10 +261,10 @@ Neither replaces resource checks in retrieval or enterprise tools. Provider sele
 
 ## Sources (checked 27 Sep 2026)
 
-- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/) — access control before model context; permission-aware retrieval
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — access control before model context; untrusted retrieved and tool input
-- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — permission-aware retrieval
-- [European Commission: Rules on international data transfers](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/rules-international-data-transfers_en) — GDPR transfers vs residency
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — untrusted retrieved and tool input
-- [Amazon Bedrock User Guide: Cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html) — cross-region inference
-- [Amazon Bedrock User Guide: Geographic cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html) — cross-region inference
+- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/): access control before model context; permission-aware retrieval
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): access control before model context; untrusted retrieved and tool input
+- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/): permission-aware retrieval
+- [European Commission: Rules on international data transfers](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/rules-international-data-transfers_en): GDPR transfers vs residency
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): untrusted retrieved and tool input
+- [Amazon Bedrock User Guide: Cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html): cross-region inference
+- [Amazon Bedrock User Guide: Geographic cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html): cross-region inference

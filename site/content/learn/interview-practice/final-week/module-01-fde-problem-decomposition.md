@@ -33,9 +33,9 @@ Architecture
 
 Use this as a coverage checklist. The customer's answer decides the next question.
 
-### 3. Essential Concepts — Ten Questions to Memorise
+### 3. Essential Concepts: Ten Questions to Memorise
 
-#### 1. Business — Why does the customer need this?
+#### 1. Business: Why does the customer need this?
 
 “We need an AI agent” tells you their proposed solution. Find the problem it should solve.
 
@@ -49,7 +49,7 @@ Use this as a coverage checklist. The customer's answer decides the next questio
 Goal: reduce manual work without hurting service
 ```
 
-#### 2. Current Workflow — Where does the work get stuck?
+#### 2. Current Workflow: Where does the work get stuck?
 
 Understand the human steps, existing systems, and bottleneck. This tells you what to automate or assist.
 
@@ -62,7 +62,7 @@ Ticket → Read → Search policy → Check order
 
 Follow up: “Which step takes the most time or causes the most mistakes?”
 
-#### 3. Users and Scale — Who uses it, and how much work arrives?
+#### 3. Users and Scale: Who uses it, and how much work arrives?
 
 Identify customers, employees, managers, and administrators. Ask about normal traffic, peaks, concurrent work, and growth; user count alone does not describe load.
 
@@ -76,7 +76,7 @@ Manager       → Approval
 Users ≠ requests/second ≠ concurrent workflows
 ```
 
-#### 4. Data — What information is needed, and how fresh?
+#### 4. Data: What information is needed, and how fresh?
 
 Find the sources, formats, freshness needs, and access permissions. Separate reference knowledge from live system state.
 
@@ -89,7 +89,7 @@ Current refund status → System of record   → API/tool
 
 RAG means retrieval-augmented generation: retrieve relevant knowledge to support the model's answer.
 
-#### 5. Autonomy — What is the AI allowed to do?
+#### 5. Autonomy: What is the AI allowed to do?
 
 Answering, recommending, and executing create different requirements. Clarify permitted actions and approval rules before designing an agent.
 
@@ -105,7 +105,7 @@ Answer → Recommend → Act
 
 Human-in-the-loop (HITL) means a human participates in the decision or approval workflow. Risk depends on the actual action and customer policy.
 
-#### 6. Success — What measurable result matters?
+#### 6. Success: What measurable result matters?
 
 Agree on a baseline and target across business outcome, AI quality, system performance, and cost. Confirm the customer's numbers; examples are not universal targets.
 
@@ -120,7 +120,7 @@ Cost:     cost per successfully resolved case
 
 Reducing human-handled tickets is useful only if resolution quality and customer satisfaction remain acceptable.
 
-#### 7. Failure — What should happen when it cannot complete safely?
+#### 7. Failure: What should happen when it cannot complete safely?
 
 Ask about missing evidence, ambiguous requests, dependency failure, and unavailable approvers. Define a safe fallback rather than letting the model guess.
 
@@ -135,7 +135,7 @@ Risky action      → Stop or request approval
 
 A timeout after an action does not prove the action failed. Check its status before retrying; duplicate refunds must be prevented.
 
-#### 8. Security — What boundaries must the system respect?
+#### 8. Security: What boundaries must the system respect?
 
 Clarify access control, tenant isolation, personally identifiable information (PII), retention, approved providers, and data residency where relevant.
 
@@ -148,7 +148,7 @@ Identity → Permission scope → Authorized retrieval
 
 Enforce access before restricted information enters the model's context. A prompt is not an access-control boundary.
 
-#### 9. Integrations — Which systems must it read or change?
+#### 9. Integrations: Which systems must it read or change?
 
 Check whether APIs exist, which operations are read-only or write-capable, and whether dependencies are slow, unreliable, or asynchronous.
 
@@ -162,7 +162,7 @@ Issue refund      → Controlled write tool
 
 Enterprise integration may be the hardest part even when the AI reasoning is simple.
 
-#### 10. Operating Envelope — How well must it work?
+#### 10. Operating Envelope: How well must it work?
 
 Non-functional requirements (NFRs) describe how well the system must work. Clarify latency, availability, throughput, and cost by workload.
 
@@ -321,7 +321,7 @@ Use answers to guide the next question. Then check what you missed.
 | “Policy documents” | RAG; sources, freshness, permissions |
 | “Current order status” | Live API/tool; system of record |
 | “Issue refunds” | Allowed actions, policy, approval, safe execution |
-| “100K users” | Peak workload and concurrency, not just user count |
+| “100K users” | Peak workload and concurrency, not user count alone |
 | “Fast and cheap” | Measurable latency and cost envelope |
 | “API unavailable” | Safe fallback, retry conditions, escalation |
 
@@ -343,7 +343,7 @@ Controlled business action   → Policy + executor
 Approval required            → HITL
 ```
 
-These are design consequences to confirm, not boxes to add automatically.
+Confirm each design consequence before adding the box.
 
 ### Handoff to Requirements
 
@@ -357,5 +357,5 @@ Do not invent numbers. Confirm a baseline and target. A timeout after a write ne
 
 ## Sources (checked 27 Sep 2026)
 
-- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/) — access control before model context
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — access control before model context
+- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/): access control before model context
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): access control before model context

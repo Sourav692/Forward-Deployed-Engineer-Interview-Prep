@@ -51,7 +51,7 @@ export const MODES: Record<ContentMode, { label: string; summary: string }> = {
   revision: {
     label: 'Revision',
     summary:
-      'Condensed recall for concepts you have already studied — not a first introduction to them.',
+      'Condensed recall for concepts you have already studied. Learn a new concept from its lesson first.',
   },
 }
 
@@ -500,7 +500,7 @@ export const REVIEWS: Review[] = [
     learnFirst: ['system-design/natural-language-to-sql-analytics-assistant', 'core/executive-dashboard-copilot'],
     goDeeper: ['agents-that-act/real-time-call-assistant', 'platforms-and-scale/llm-inference-serving'] },
   { number: 11, dir: 'module-11-cost-optimization', title: 'Cost Optimisation',
-    blurb: 'Cost attribution, context growth, model routing, and cost per successful task — not per request.',
+    blurb: 'Cost attribution, context growth, model routing, and cost measured per successful task rather than per request.',
     learnFirst: ['system-design/high-volume-batch-inference-system', 'core/retail-demand-explainer'],
     goDeeper: ['platforms-and-scale/high-volume-batch-pipeline', 'platforms-and-scale/agent-platform-for-non-technical-users', 'standalone-designs/production-llm-gateway'] },
   { number: 12, dir: 'module-12-reliability-and-failure-handling', title: 'Reliability and Failure Handling',
@@ -553,8 +553,8 @@ export const LAST_DAY_GUIDES = [
     title: 'Rapid Revision Guide',
     eyebrow: 'Final rehearsal',
     blurb:
-      'The whole interview flow compressed into one pass — discovery, requirements, ' +
-      'components, retrieval, agents and operations — for the last read before the loop.',
+      'The whole interview flow in one pass (discovery, requirements, components, ' +
+      'retrieval, agents and operations), for the last read before the loop.',
   },
 ] as const
 
@@ -709,7 +709,7 @@ export const REVISION_META: EditorialMeta = {
   audience: FDE_AUDIENCE,
   difficulty: 'Intermediate',
   prerequisites: [
-    'You have already studied these concepts — through the practice worksheets and case studies, or elsewhere',
+    'You have already studied these concepts, in the practice worksheets and case studies or elsewhere',
   ],
   outcomes: [
     'Recall the mental model, gotchas and trigger phrases for each topic under time pressure',
@@ -724,7 +724,7 @@ export const ORIENTATION_META: EditorialMeta = {
   mode: 'orientation',
   audience: FDE_AUDIENCE,
   difficulty: 'Foundation',
-  prerequisites: ['None — this is the place to start'],
+  prerequisites: ['None: this is the place to start'],
   outcomes: [
     'Know the order of an FDE design answer and which review covers each step',
   ],

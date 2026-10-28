@@ -23,7 +23,7 @@ Use a rollout path appropriate to the change. Shadow and canary serve different 
 
 ### 3. Essential Concepts
 
-#### 1. Version the Behaviour — More Than the Model
+#### 1. Version the Behaviour: More Than the Model
 
 Track prompts, model/configuration, tools and schemas, routing, retrieval settings, corpus/index versions where feasible, policy, and evaluation artifacts.
 
@@ -35,13 +35,13 @@ Release identity → Prompt + model + tools + retrieval + policy
 
 Include workflow/state-schema compatibility for long-running tasks. A model rollback alone may not restore previous behaviour.
 
-#### 2. Offline Evaluation — Compare Before Exposure
+#### 2. Offline Evaluation: Compare Before Exposure
 
 Evaluate representative held-out normal, edge, failure, and high-risk cases against the baseline. Check task success, constraints, latency, and cost.
 
 > “Improving twenty examples is encouraging, but I’d check coverage and critical regressions before release.”
 
-#### 3. Release Gates — Define Pass/Fail Criteria
+#### 3. Release Gates: Define Pass/Fail Criteria
 
 Agree on acceptable quality, prohibited failures, operational limits, and required evidence before evaluating the candidate.
 
@@ -53,7 +53,7 @@ Quality + policy + task success + latency/cost criteria
 
 > “A better average should not override a serious permission or action-safety regression.”
 
-#### 4. Shadow Traffic — Evaluate Without User-Facing Actions
+#### 4. Shadow Traffic: Evaluate Without User-Facing Actions
 
 Run the candidate alongside the current path for comparison while the current path serves the user. Use sandboxed or read-only operation paths for candidate actions.
 
@@ -66,7 +66,7 @@ Request ─┬→ Current → User / real execution
 
 Shadow calls can still incur cost, load, and data exposure. Control access and resource budgets, and note that shadow results may not capture user reactions to candidate output.
 
-#### 5. Canary — Expose a Limited Real Cohort
+#### 5. Canary: Expose a Limited Real Cohort
 
 Route a small eligible cohort to the candidate, then monitor real quality, task outcomes, errors, latency, and cost against the baseline.
 
@@ -80,7 +80,7 @@ Small candidate cohort → Observe → Expand or revert
 
 Use consistent assignment where conversation/workflow continuity matters. A tiny cohort may not cover rare failures or all tenant types.
 
-#### 6. Feature Flags — Control Scope
+#### 6. Feature Flags: Control Scope
 
 Enable behaviour by tenant, cohort, capability, or version. Flags can support limited exposure and fast disabling without a full deployment.
 
@@ -88,7 +88,7 @@ Enable behaviour by tenant, cohort, capability, or version. Flags can support li
 
 Flags must cover the actual execution path, not only the UI. Avoid silently changing a pending approval's action semantics.
 
-#### 7. Rollback — Restore a Known Compatible Version
+#### 7. Rollback: Restore a Known Compatible Version
 
 Keep a tested rollback path and know what happens to active workflows, state changes, and already completed business actions.
 
@@ -100,7 +100,7 @@ Regression → Stop expansion → Route new work to baseline
 
 > “Rollback restores software behaviour; completed refunds need separate business reconciliation.”
 
-#### 8. Kill Switch — Stop Execution Quickly
+#### 8. Kill Switch: Stop Execution Quickly
 
 Disable the affected action, tool, tenant, or agent capability at a trusted boundary. Keep safe unaffected functions where possible.
 
@@ -108,7 +108,7 @@ Disable the affected action, tool, tenant, or agent capability at a trusted boun
 
 A kill switch stops permitted new execution according to its scope; it cannot undo a submitted payment.
 
-#### 9. Monitor and Feed Back — Release Continues After Deployment
+#### 9. Monitor and Feed Back: Release Continues After Deployment
 
 Track candidate/baseline versions, segment outcomes, errors, escalations, delayed results, and customer feedback. Add discovered failures to regression coverage.
 
@@ -148,7 +148,7 @@ Track candidate/baseline versions, segment outcomes, errors, escalations, delaye
 
 ### 7. Interview Phrases
 
-> “I’d version the behaviour, not just the model name.”
+> “I’d version everything that shapes behaviour, not only the model name.”
 
 > “Shadow compares without candidate business writes; canary tests limited real exposure.”
 

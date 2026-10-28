@@ -4,7 +4,7 @@
 
 ◷ 6 min
 
-Compliance review is not a classification task to hand to a model. Frame it as regulated decision support with an audit trail, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
+Frame compliance review as regulated decision support with an audit trail rather than a classification task handed to a model, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
 **Objectives:**
 
@@ -97,7 +97,7 @@ Asked for a concise answer, the strong candidate says:
 
 > "I would frame this as regulated decision support, not autonomous compliance judgement. The system should extract evidence, map it to policy clauses, propose risk labels with confidence, and preserve an audit trail. Launch requires high recall on severe violations, controlled false positives, and explicit resistance to adversarial instructions inside reviewed communications."
 
-The strong answer changes what the system outputs: evidence mapped to policy clauses, not a verdict. That keeps the regulatory decision with a person and gives audit something to check.
+The strong answer has the system output evidence mapped to policy clauses instead of a verdict. That keeps the regulatory decision with a person and gives audit something to check.
 
 To reach 5 / 5, add concrete numbers from the customer's baseline and propose a dashboard or a mock launch plan.
 

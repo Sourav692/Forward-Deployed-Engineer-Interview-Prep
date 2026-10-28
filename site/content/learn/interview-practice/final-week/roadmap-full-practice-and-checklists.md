@@ -1,10 +1,10 @@
 # Interview Learning Roadmap: Full Practice and Checklists
 
-### 🎯 Full Case-Study Practice
+### Full Case-Study Practice
 
 These should be solved **without looking at the earlier modules**.
 
-#### Case 1 — Customer Support Agent
+#### Case 1: Customer Support Agent
 
 > A large e-commerce company wants an AI customer-support system that can answer questions, check orders and issue refunds.
 
@@ -24,7 +24,7 @@ Discovery
 
 ---
 
-#### Case 2 — Enterprise Knowledge Assistant
+#### Case 2: Enterprise Knowledge Assistant
 
 > A multinational company wants a ChatGPT-style assistant over millions of internal documents, but employees have different access permissions.
 
@@ -41,7 +41,7 @@ Evaluation
 
 ---
 
-#### Case 3 — Logistics Exception Agent
+#### Case 3: Logistics Exception Agent
 
 > A logistics company wants AI to detect shipment exceptions and automatically resolve routine cases.
 
@@ -60,7 +60,7 @@ Audit
 
 ---
 
-#### Case 4 — SRE Incident Agent
+#### Case 4: SRE Incident Agent
 
 > An enterprise wants an AI agent that investigates production incidents and can execute remediation actions.
 
@@ -79,7 +79,7 @@ Audit
 
 ---
 
-#### Case 5 — Deep Research Agent
+#### Case 5: Deep Research Agent
 
 > Build an enterprise research agent that searches multiple sources and may run for 10–20 minutes.
 
@@ -97,7 +97,7 @@ Evaluation
 
 ---
 
-#### Case 6 — Multi-Tenant AI Platform
+#### Case 6: Multi-Tenant AI Platform
 
 > Build a shared AI platform supporting 100 enterprise customers and multiple LLM providers.
 
@@ -118,7 +118,7 @@ Observability
 
 ## Recommended Learning Sequence
 
-### Phase 1 — Problem Decomposition
+### Phase 1: Problem Decomposition
 
 ```text
 Module 1 — Discovery
@@ -130,7 +130,7 @@ Module 3 — Non-Functional Requirements
 
 ---
 
-### Phase 2 — Architecture
+### Phase 2: Architecture
 
 ```text
 Module 4 — Core Components
@@ -144,7 +144,7 @@ Module 8 — Policy / HITL
 
 ---
 
-### Phase 3 — Production Scale
+### Phase 3: Production Scale
 
 ```text
 Module 9  — Scaling
@@ -157,7 +157,7 @@ Module 12 — Reliability
 
 ---
 
-### Phase 4 — Production Quality
+### Phase 4: Production Quality
 
 ```text
 Module 13 — Evaluation
@@ -170,7 +170,7 @@ Module 16 — Security
 
 ---
 
-### Phase 5 — Interview Mastery
+### Phase 5: Interview Mastery
 
 ```text
 Module 17 — Trade-Offs
@@ -183,9 +183,9 @@ At this stage:
 
 ---
 
-## 🔥 Trigger → Concept Cheat Sheet
+## Trigger → Concept Cheat Sheet
 
-The objective is not to memorise definitions.
+Skip memorising definitions.
 
 Train yourself to hear a customer/interviewer statement and automatically recognise the architecture concern.
 
@@ -390,18 +390,18 @@ but more infrastructure
 
 ## One-Line FDE Framework
 
-> **Start from the customer problem, turn discovery into measurable requirements, build the simplest happy-path architecture, and then pressure-test it across scale, latency, cost, reliability, security, AI quality and operations—adding components only when a requirement justifies them.**
+> **Start from the customer problem, turn discovery into measurable requirements, build the simplest happy-path architecture, and then pressure-test it across scale, latency, cost, reliability, security, AI quality and operations, adding components only when a requirement justifies them.**
 
 ---
 
 ### Sources (checked 27 Sep 2026)
 
-- [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/) — SLI, SLO and SLA definitions
-- [Google SRE Workbook - Canarying Releases](https://sre.google/workbook/canarying-releases/) — canary as a partial, time-limited rollout that is evaluated
-- [AWS Builders' Library - Timeouts, retries and backoff with jitter](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter) — retries can amplify an outage; backoff and jitter
-- [Azure Architecture Center - Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker) — stop calling a failing dependency for a while
-- [Amazon SQS Developer Guide - Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) — retry, then move to a DLQ
-- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests) — idempotency keys prevent a double refund on retry
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — at-least-once delivery; checkpoints don't stop duplicate side effects
-- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/) — permission-aware retrieval
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — least privilege and controlled tools for agents
+- [Google SRE Book - Service Level Objectives](https://sre.google/sre-book/service-level-objectives/): SLI, SLO and SLA definitions
+- [Google SRE Workbook - Canarying Releases](https://sre.google/workbook/canarying-releases/): canary as a partial, time-limited rollout that is evaluated
+- [AWS Builders' Library - Timeouts, retries and backoff with jitter](https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter): retries can amplify an outage; backoff and jitter
+- [Azure Architecture Center - Circuit Breaker pattern](https://learn.microsoft.com/en-us/azure/architecture/patterns/circuit-breaker): stop calling a failing dependency for a while
+- [Amazon SQS Developer Guide - Dead-letter queues](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html): retry, then move to a DLQ
+- [Stripe API reference - Idempotent requests](https://docs.stripe.com/api/idempotent_requests): idempotency keys prevent a double refund on retry
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): at-least-once delivery; checkpoints don't stop duplicate side effects
+- [OWASP GenAI LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/): permission-aware retrieval
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): least privilege and controlled tools for agents

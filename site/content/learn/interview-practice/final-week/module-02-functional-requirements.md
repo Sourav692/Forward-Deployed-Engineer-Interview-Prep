@@ -42,7 +42,7 @@ FR4 Permissions  FR8 Act       FR12 Feedback
 
 ### 3. Essential Concepts
 
-#### 1. FR1 Understand — Accept the Request and Identify the Need
+#### 1. FR1 Understand: Accept the Request and Identify the Need
 
 Support the required inputs and identify what the user wants. Clarify ambiguity before using tools or acting.
 
@@ -55,7 +55,7 @@ Support the required inputs and identify what the user wants. Clarify ambiguity 
 
 Mention text, voice, documents, or events only when required.
 
-#### 2. FR2 Context — Keep Relevant Conversation and Workflow State
+#### 2. FR2 Context: Keep Relevant Conversation and Workflow State
 
 Maintain what is needed to continue the task: the order being discussed, prior decisions, or pending approval. Avoid blindly sending the entire conversation to the model.
 
@@ -71,7 +71,7 @@ Refund approval pending → Resume after decision
 
 Conversation context supports follow-up questions. Workflow state tracks progress and pending work.
 
-#### 3. FR3 Retrieve + FR4 Permissions — Use Authorised Knowledge
+#### 3. FR3 Retrieve + FR4 Permissions: Use Authorised Knowledge
 
 Retrieve relevant information from approved enterprise sources, within the current user's access scope. Retrieval-augmented generation (RAG) uses retrieved knowledge to support an answer.
 
@@ -89,7 +89,7 @@ User identity + permission scope
 
 Permissions also apply to tools and actions. A prompt asking the model to hide restricted data is not access enforcement.
 
-#### 4. FR5 Route — Choose the Right Capability
+#### 4. FR5 Route: Choose the Right Capability
 
 Route requests to knowledge retrieval, a live tool, a workflow, or a human. The requirement does not imply separate agents for every request type.
 
@@ -103,7 +103,7 @@ Request → Route├→ Order status   → Live tool
 
 Routing can use rules or a classifier where sufficient; use model reasoning when the task requires it.
 
-#### 5. FR6 Reason — Produce an Answer or Recommendation
+#### 5. FR6 Reason: Produce an Answer or Recommendation
 
 Use available evidence to answer, determine eligibility, or propose a next step. State missing information rather than inventing it.
 
@@ -117,7 +117,7 @@ Policy + order facts → Eligibility recommendation
 
 The model's recommendation does not replace authoritative business-policy checks.
 
-#### 6. FR7 Tool — Access Live Systems
+#### 6. FR7 Tool: Access Live Systems
 
 Read current state through approved APIs or tools. Validate inputs and enforce access for the requested operation.
 
@@ -133,7 +133,7 @@ Current result → Response
 
 Maintained policy knowledge and current transactional state need different access paths.
 
-#### 7. FR8 Act + FR9 HITL — Execute Permitted Actions
+#### 7. FR8 Act + FR9 HITL: Execute Permitted Actions
 
 Execute approved changes through controlled tools. Human-in-the-loop (HITL) adds review or approval when customer policy or risk requires it.
 
@@ -152,7 +152,7 @@ Agent recommends → Policy checks
 
 Give the reviewer the request, evidence, recommendation, and policy reason. Approval does not remove permission checks or safe execution requirements.
 
-#### 8. FR10 Failure — Define Uncertainty and Failure Behaviour
+#### 8. FR10 Failure: Define Uncertainty and Failure Behaviour
 
 Define what the user or operator experiences when the system cannot complete the task safely.
 
@@ -167,7 +167,7 @@ Refund status unknown → Reconcile before another write
 
 Do not report a refund as completed without confirmation. Retries must not create duplicate side effects; detailed retry and idempotency design comes later.
 
-#### 9. FR11 Audit + FR12 Feedback — Record What Happened and Whether It Worked
+#### 9. FR11 Audit + FR12 Feedback: Record What Happened and Whether It Worked
 
 Record the evidence, important decisions, tool operations, approvals, and final result. Capture feedback and actual outcomes for evaluation.
 
@@ -207,7 +207,7 @@ Model Gateway = Application → Model control
 
 User/tenant request controls belong at the API Gateway boundary. Model-provider routing and fallback belong at the Model Gateway boundary. Neither gateway replaces permission checks in retrieval or downstream tools.
 
-#### Example — Customer Support
+#### Example: Customer Support
 
 Customer asks for policy answers, order status, and eligible refunds.
 
@@ -277,7 +277,7 @@ Start with 6–8 grouped requirements in the interview, rather than reciting all
 
 > “Alongside the happy path, I’ll define what happens when evidence, tools, or approval are unavailable.”
 
-> “I’ll measure whether the task completed, not just whether the response sounded helpful.”
+> “I’ll measure whether the task completed; a helpful-sounding response doesn’t prove that.”
 
 ### 8. Practice Questions
 
@@ -370,6 +370,6 @@ For action failures, never claim completion without confirmation. Unknown status
 
 ## Sources (checked 27 Sep 2026)
 
-- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/) — access control before model context
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — access control before model context
-- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410) — chain-of-thought is not always faithful
+- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/): access control before model context
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): access control before model context
+- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410): chain-of-thought is not always faithful

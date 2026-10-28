@@ -4,7 +4,7 @@
 
 ◷ 6 min
 
-An incident copilot is not an auto-fixer. Design it to show evidence and hypotheses, read-only by default, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
+Design the incident copilot to show evidence and hypotheses instead of fixing things itself, read-only by default, using the answer moves from [Running and Scoring a Mock Interview](01_Running_and_Scoring_a_Mock_Interview.md).
 
 **Objectives:**
 

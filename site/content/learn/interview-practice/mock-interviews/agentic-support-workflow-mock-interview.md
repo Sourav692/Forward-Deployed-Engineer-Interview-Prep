@@ -2,7 +2,7 @@
 
 *An agent that handles tickets end to end saves the most agent time, but it must never be the thing that decides a refund.*
 
-The pilot did not fail on wording. It refunded the wrong order and trusted a stale event, so practise separating proposal from execution, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
+The pilot refunded the wrong order and trusted a stale event, so practise separating proposal from execution, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
 **Objectives:**
 

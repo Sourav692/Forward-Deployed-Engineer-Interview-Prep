@@ -32,7 +32,7 @@ The triangle is a reasoning aid, not a law: some changes improve several dimensi
 
 ### 3. Essential Concepts
 
-#### 1. Hard Constraints vs Preferences — Know What Cannot Be Traded Away
+#### 1. Hard Constraints vs Preferences: Know What Cannot Be Traded Away
 
 Separate required permission, policy, residency, and action-correctness boundaries from negotiable latency, cost, or feature preferences.
 
@@ -45,7 +45,7 @@ Long research completion  → May be acceptable if agreed
 
 Clarify conflicts rather than silently dropping a requirement.
 
-#### 2. Stronger vs Smaller Model — Match Capability to Need
+#### 2. Stronger vs Smaller Model: Match Capability to Need
 
 A more capable model may improve difficult-task quality but increase cost or latency. A smaller model may meet simple-task requirements more efficiently.
 
@@ -58,7 +58,7 @@ Hard task   → Stronger model if measured benefit justifies it
 
 Include fallback attempts and manual rework in the comparison, not only per-call price.
 
-#### 3. More Retrieval — Balance Evidence Coverage and Noise
+#### 3. More Retrieval: Balance Evidence Coverage and Noise
 
 More candidates may improve recall but add reranking work, context noise, and latency. Better selection can sometimes improve quality and efficiency together.
 
@@ -71,7 +71,7 @@ More candidates → Possible recall gain
 
 Permissions remain enforced regardless of retrieval size.
 
-#### 4. More Agents or Critic Calls — Require Measured Value
+#### 4. More Agents or Critic Calls: Require Measured Value
 
 Specialists or a critic can improve some tasks, but add model calls, handoffs, state, and failure paths.
 
@@ -84,7 +84,7 @@ Candidate with critic → Compare against simpler baseline
 
 Independent subtasks may run in parallel. Dependent reasoning hops still extend the critical path.
 
-#### 5. Caching — Exchange Repeated Work for Freshness Management
+#### 5. Caching: Exchange Repeated Work for Freshness Management
 
 Caching can reduce latency and cost. It introduces expiry, invalidation, access-scope, and source-version concerns.
 
@@ -97,7 +97,7 @@ Current refund status → Freshness requirement decides reuse
 
 Do not present cache hits as a benefit when reused results are incorrect or unauthorised.
 
-#### 6. Autonomy vs Human Review — Balance Workload and Consequences
+#### 6. Autonomy vs Human Review: Balance Workload and Consequences
 
 Automatic execution can reduce human work and waiting, but requires reliable policy, permissions, safe writes, and recovery. Review adds context checking but also delay and reviewer workload.
 
@@ -111,7 +111,7 @@ Agent recommends → Policy decides → Executor acts
 
 Human approval is not permission to bypass other controls, and a confident model is not an authorisation source.
 
-#### 7. Sync vs Async — Match Interaction to Task Duration
+#### 7. Sync vs Async: Match Interaction to Task Duration
 
 Synchronous execution gives a direct result for short work. Async execution lets long tasks continue with status and results, but adds durable state and a different user interaction.
 
@@ -119,7 +119,7 @@ Synchronous execution gives a direct result for short work. Async execution lets
 
 Async reduces client blocking; it does not necessarily shorten task completion or increase underlying processing capacity.
 
-#### 8. Shared vs Isolated Resources — Balance Efficiency and Isolation
+#### 8. Shared vs Isolated Resources: Balance Efficiency and Isolation
 
 Shared infrastructure can use capacity efficiently but needs tenant scoping, fairness, and blast-radius controls. Dedicated resources may strengthen isolation but increase cost and operational effort.
 
@@ -127,7 +127,7 @@ Shared infrastructure can use capacity efficiently but needs tenant scoping, fai
 
 Data isolation and resource fairness remain distinct concerns in either design.
 
-#### 9. Reversibility and Evidence — Explain When You Would Change Your Mind
+#### 9. Reversibility and Evidence: Explain When You Would Change Your Mind
 
 Prefer a choice you can measure and adjust when uncertainty is high. Define the signal that would justify a more complex alternative.
 
@@ -151,7 +151,7 @@ Provisional choice → Observe metric → Threshold / requirement changes
 | Long research task | Async job + durable state | Fit interaction to duration | Status/result delivery complexity |
 | Strong tenant guarantees | Isolation + fairness controls | Protect data and service | Resource cost and operational effort |
 
-**Support example:** cache eligible policy retrieval, use a sufficient model for simple questions, read live order data for refund decisions, and keep deterministic policy in code. Evaluate any added critic or specialist against resolved cases, latency, and cost—not just nicer wording.
+**Support example:** cache eligible policy retrieval, use a sufficient model for simple questions, read live order data for refund decisions, and keep deterministic policy in code. Evaluate any added critic or specialist against resolved cases, latency, and cost, rather than nicer wording.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -255,7 +255,7 @@ State a revisit condition: a changed workload, unacceptable tail latency, insuff
 
 ## Sources (checked 27 Sep 2026)
 
-- [Liu et al. 2023, Lost in the Middle: How Language Models Use Long Contexts (arXiv 2307.03172)](https://arxiv.org/abs/2307.03172) — extra context adds noise
-- [Shi et al. 2023, Large Language Models Can Be Easily Distracted by Irrelevant Context (arXiv 2302.00093)](https://arxiv.org/abs/2302.00093) — extra context adds noise
-- [Anthropic Engineering, How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) — multi-agent overhead
-- [Cemri et al. 2025, Why Do Multi-Agent LLM Systems Fail? (MAST, arXiv 2503.13657)](https://arxiv.org/abs/2503.13657) — multi-agent overhead
+- [Liu et al. 2023, Lost in the Middle: How Language Models Use Long Contexts (arXiv 2307.03172)](https://arxiv.org/abs/2307.03172): extra context adds noise
+- [Shi et al. 2023, Large Language Models Can Be Easily Distracted by Irrelevant Context (arXiv 2302.00093)](https://arxiv.org/abs/2302.00093): extra context adds noise
+- [Anthropic Engineering, How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system): multi-agent overhead
+- [Cemri et al. 2025, Why Do Multi-Agent LLM Systems Fail? (MAST, arXiv 2503.13657)](https://arxiv.org/abs/2503.13657): multi-agent overhead

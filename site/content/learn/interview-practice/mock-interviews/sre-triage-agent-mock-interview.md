@@ -2,7 +2,7 @@
 
 *An SRE copilot is most valuable mid-incident, which is exactly when a confident wrong root cause does the most damage.*
 
-An incident copilot is not an auto-fixer. Design it to show evidence and hypotheses, read-only by default, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
+Design the incident copilot to show evidence and hypotheses instead of fixing things itself, read-only by default, using the answer moves from [Running and Scoring a Mock Interview](/interview/mock-interviews/running-and-scoring-a-mock-interview).
 
 **Objectives:**
 

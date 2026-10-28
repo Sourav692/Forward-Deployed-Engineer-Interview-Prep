@@ -38,7 +38,7 @@ Did the answer use it correctly?
 
 ### 3. Essential Concepts
 
-#### 1. Data Choice — Knowledge vs Live State
+#### 1. Data Choice: Knowledge vs Live State
 
 Use RAG for maintained policies, manuals, and enterprise reference material. Query current transactional state through approved APIs or tools when freshness requires it.
 
@@ -51,7 +51,7 @@ Use RAG for maintained policies, manuals, and enterprise reference material. Que
 
 Some requests need both: retrieve eligibility policy and read the current order before recommending a refund.
 
-#### 2. Parse and Maintain Sources — Make Evidence Usable
+#### 2. Parse and Maintain Sources: Make Evidence Usable
 
 Extract content faithfully, including headings, tables, and scanned text where needed. Carry source identifiers, versions, timestamps, and access metadata into the index.
 
@@ -64,7 +64,7 @@ Policy source → Parsed content → Indexed evidence
 
 An answer cannot reliably use evidence that was omitted, corrupted, or left outdated during ingestion.
 
-#### 3. Chunking — Keep Enough Meaning Together
+#### 3. Chunking: Keep Enough Meaning Together
 
 Split content into searchable units while preserving context. Prefer meaningful boundaries such as sections when practical.
 
@@ -78,7 +78,7 @@ Useful unit → Rule + relevant exceptions
 
 No chunk size is universally correct. Preserve the link to the source and surrounding content.
 
-#### 4. Embeddings and Search — Match Meaning and Exact Terms
+#### 4. Embeddings and Search: Match Meaning and Exact Terms
 
 Embeddings represent content for similarity search. Vector search helps with related meaning; keyword search helps with exact identifiers and terms. Hybrid search combines signals from both.
 
@@ -92,7 +92,7 @@ Both needed           → Consider hybrid search
 
 Embedding similarity is a relevance signal, not proof that a statement is correct.
 
-#### 5. Metadata and Permissions — Narrow the Search Safely
+#### 5. Metadata and Permissions: Narrow the Search Safely
 
 Use trusted identity, tenant, and access scope to constrain retrieval. Metadata can also select the correct region, product, language, or policy version.
 
@@ -106,7 +106,7 @@ Trusted identity → Allowed scope → Search eligible content
 
 Enforce access before content reaches the model. Handle permission changes and tenant-scoped caches; retrieved document instructions do not become authority to bypass controls.
 
-#### 6. Reranking and Context Selection — Keep the Best Evidence
+#### 6. Reranking and Context Selection: Keep the Best Evidence
 
 Reranking reorders retrieved candidates using an additional relevance assessment. Context selection then chooses what fits the answer's evidence needs and model budget.
 
@@ -118,7 +118,7 @@ Candidate set → Optional rerank → Select evidence → Context
 
 Deduplicate and preserve important exceptions. More context can add noise, latency, and cost.
 
-#### 7. Recall vs Precision — Find Enough Without Too Much Noise
+#### 7. Recall vs Precision: Find Enough Without Too Much Noise
 
 Recall asks how much relevant evidence was found. Precision asks how much retrieved evidence is relevant. Define the evidence labels and retrieval cutoff in evaluation.
 
@@ -131,11 +131,11 @@ Many irrelevant results  → Precision concern
 
 Evaluate representative questions, including exact terms, ambiguous requests, restricted documents, and missing-answer cases.
 
-#### 8. Groundedness — Support the Answer With Evidence
+#### 8. Groundedness: Support the Answer With Evidence
 
 Require the answer's claims to be supported by the selected context. Cite actual supporting sources and acknowledge missing or conflicting evidence.
 
-> “I’d check whether each important claim is supported, not merely whether the answer includes a citation.”
+> “I’d check whether each important claim is supported; a citation alone doesn’t show that.”
 
 ```text
 Enough relevant evidence → Supported answer + source
@@ -144,7 +144,7 @@ Insufficient evidence   → Clarify / explain limit / escalate
 
 Groundedness is not the same as truth: a faithfully quoted outdated policy can still be wrong for today's case.
 
-#### 9. Diagnose by Stage — Do Not Blame the Model First
+#### 9. Diagnose by Stage: Do Not Blame the Model First
 
 Inspect the evidence path before changing models or prompts.
 
@@ -316,8 +316,8 @@ Retrieve refund policy and read live order data, then produce an evidence-based 
 
 ## Sources (checked 27 Sep 2026)
 
-- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/) — access control before model context
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — access control before model context; untrusted retrieved and tool input
-- [Liu et al. 2023, Lost in the Middle: How Language Models Use Long Contexts (arXiv 2307.03172)](https://arxiv.org/abs/2307.03172) — extra context adds noise
-- [Shi et al. 2023, Large Language Models Can Be Easily Distracted by Irrelevant Context (arXiv 2302.00093)](https://arxiv.org/abs/2302.00093) — extra context adds noise
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — untrusted retrieved and tool input
+- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/): access control before model context
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): access control before model context; untrusted retrieved and tool input
+- [Liu et al. 2023, Lost in the Middle: How Language Models Use Long Contexts (arXiv 2307.03172)](https://arxiv.org/abs/2307.03172): extra context adds noise
+- [Shi et al. 2023, Large Language Models Can Be Easily Distracted by Irrelevant Context (arXiv 2302.00093)](https://arxiv.org/abs/2302.00093): extra context adds noise
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): untrusted retrieved and tool input

@@ -31,7 +31,7 @@ MEASURE → LIMIT → ADMIT → QUEUE FAIRLY
 
 ### 3. Essential Concepts
 
-#### 1. Throughput and Concurrency — Translate Demand
+#### 1. Throughput and Concurrency: Translate Demand
 
 Throughput is work completed per unit time. Concurrency is work in progress at once. Ask about normal/peak arrivals, task duration, model calls per task, and tenant mix.
 
@@ -44,7 +44,7 @@ Concurrent work ≈ arrival rate × average time in system
 
 Use compatible units and validate with measurements. This average relationship does not size tail-latency headroom or overloaded queues by itself.
 
-#### 2. Bottlenecks — Scale the Constrained Resource
+#### 2. Bottlenecks: Scale the Constrained Resource
 
 Workers, state stores, retrieval, provider token/request limits, and enterprise APIs all have capacity ceilings.
 
@@ -58,7 +58,7 @@ Model quota unchanged → No extra end-to-end capacity
 
 Agent call counts and token usage can make identical request rates produce very different load.
 
-#### 3. Stateless Workers + Durable State — Scale and Recover
+#### 3. Stateless Workers + Durable State: Scale and Recover
 
 Keep authoritative task progress outside individual worker memory. Add workers horizontally while preserving session, workflow, approval, and action state.
 
@@ -72,7 +72,7 @@ Load distribution → Worker A / B / C
 
 Coordinate ownership so two workers do not execute the same action concurrently. Idempotency and reconciliation still protect external writes.
 
-#### 4. Rate Limiting — Control Allowed Demand
+#### 4. Rate Limiting: Control Allowed Demand
 
 Enforce user or tenant request/token quotas over a defined interval. This protects fairness and limits excessive consumption.
 
@@ -84,7 +84,7 @@ Tenant exceeds allowance → Throttle / reject / defer
 
 Limits need a defined unit, scope, and burst allowance. Request count alone may not capture expensive long-running tasks.
 
-#### 5. Admission Control — Protect Current Capacity
+#### 5. Admission Control: Protect Current Capacity
 
 Decide whether the system can accept more work now while meeting its operating limits.
 
@@ -100,7 +100,7 @@ Bounded defer / reject with clear status
 
 Admission can consider active work, queue age, model limits, and task cost class.
 
-#### 6. Queues and Backpressure — Buffer Within Limits
+#### 6. Queues and Backpressure: Buffer Within Limits
 
 Queues absorb temporary bursts or enable async processing. Backpressure slows or stops upstream production when downstream capacity is constrained.
 
@@ -114,7 +114,7 @@ Incoming work → Bounded queue → Workers
 
 If arrivals remain above service capacity, backlog keeps growing. A queue does not solve sustained overload.
 
-#### 7. Fair Scheduling and Multi-Tenancy — Prevent Noisy Neighbors
+#### 7. Fair Scheduling and Multi-Tenancy: Prevent Noisy Neighbors
 
 Use tenant-aware quotas, concurrency limits, or weighted scheduling so one tenant does not monopolize shared model and worker resources.
 
@@ -128,7 +128,7 @@ Tenant C jobs ─┘
 
 A noisy neighbor consumes shared resources and degrades others. Equal request counts may still be unfair if tasks have different token/time costs.
 
-#### 8. Autoscaling and Load Shedding — Add Capacity or Refuse Work
+#### 8. Autoscaling and Load Shedding: Add Capacity or Refuse Work
 
 Scale from signals that reflect the bottleneck, such as active work, queue age, and worker utilisation. When capacity cannot grow fast enough, reject or defer work according to a clear priority policy.
 
@@ -268,7 +268,7 @@ Scheduler/orchestrator capacity controls connect the boundaries into one task bu
 
 ## Sources (checked 27 Sep 2026)
 
-- [Claude docs - Rate limits](https://platform.claude.com/docs/en/api/rate-limits) — provider rate limits cap throughput
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — checkpoints don't stop duplicate side effects; at-least-once redelivery
-- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts) — checkpoints don't stop duplicate side effects
-- [Little 1961, A Proof for the Queuing Formula L = λW](https://pubsonline.informs.org/doi/10.1287/opre.9.3.383) — Little's Law
+- [Claude docs - Rate limits](https://platform.claude.com/docs/en/api/rate-limits): provider rate limits cap throughput
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): checkpoints don't stop duplicate side effects; at-least-once redelivery
+- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts): checkpoints don't stop duplicate side effects
+- [Little 1961, A Proof for the Queuing Formula L = λW](https://pubsonline.informs.org/doi/10.1287/opre.9.3.383): Little's Law

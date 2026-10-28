@@ -1,4 +1,4 @@
-# Module 6 — Agentic Architecture
+# Module 6: Agentic Architecture
 
 ## Concise Interview Module
 
@@ -37,7 +37,7 @@ Business actions still follow: **Agent recommends → Policy decides → Executo
 
 ### 3. Essential Concepts
 
-#### 1. Workflow vs Agent — Match Flexibility to the Task
+#### 1. Workflow vs Agent: Match Flexibility to the Task
 
 A workflow follows defined steps and branches. An agent can choose steps or tools based on the task and results. Added flexibility brings more variability and evaluation needs.
 
@@ -50,7 +50,7 @@ Investigate an unfamiliar issue → Bounded agent may help
 
 The presence of a model call does not automatically make a workflow an agent.
 
-#### 2. Single vs Multi-Agent — Require a Concrete Benefit
+#### 2. Single vs Multi-Agent: Require a Concrete Benefit
 
 Start with the simplest design that meets the requirement. Consider multiple agents when distinct expertise, scoped permissions, or independent subtasks provide a measurable benefit.
 
@@ -68,7 +68,7 @@ Possible parallel work → Integrate and verify results
 
 More agents add calls, coordination, handoff errors, state, and evaluation overhead. Parallel work helps only when dependencies allow it.
 
-#### 3. Routing — Assign Work to the Right Capability
+#### 3. Routing: Assign Work to the Right Capability
 
 Use explicit rules, classifiers, or reasoning according to the ambiguity. Pass only the task context and access scope the recipient needs.
 
@@ -80,7 +80,7 @@ Request → Route → Retrieval / tool / workflow / agent / human
 
 Routing to a capability differs from model-provider routing at the Model Gateway.
 
-#### 4. Tool Calling — Make Model Requests Controlled Operations
+#### 4. Tool Calling: Make Model Requests Controlled Operations
 
 Expose approved tools with clear inputs and outputs. Validate arguments, authorise operations, apply timeouts, and return usable results or errors.
 
@@ -96,7 +96,7 @@ Execute → Observe result → Decide next step
 
 Read tools and write tools need different controls. Tool output and retrieved content are data, not permission to override system rules.
 
-#### 5. Execution Bounds — Stop Loops and Budget Runaway
+#### 5. Execution Bounds: Stop Loops and Budget Runaway
 
 Bound steps, tool calls, tokens, retries, elapsed time, and cost. Define completion and no-progress stopping conditions.
 
@@ -111,7 +111,7 @@ Within budget? → Authorized? → Making progress?
 
 Limits should match the workload. A retry budget must not reset endlessly inside a tool loop.
 
-#### 6. State and Durable Execution — Recover Progress
+#### 6. State and Durable Execution: Recover Progress
 
 Store task identifiers, relevant context, completed steps, tool results, pending approvals, and action status when recovery is needed.
 
@@ -125,7 +125,7 @@ Complete step → Save progress → Crash
 
 Durable execution does not mean external actions happen exactly once automatically. Use idempotency and status reconciliation where writes can be repeated or become uncertain.
 
-#### 7. Approval and Execution — Separate Reasoning From Authority
+#### 7. Approval and Execution: Separate Reasoning From Authority
 
 Use deterministic policy and permission checks for business actions. Persist approval state if humans may respond later.
 
@@ -139,7 +139,7 @@ Propose → Policy / access check → Approval if required
 
 Approval must be tied to the proposed action and relevant inputs. If the action changes, revalidate the approval and policy.
 
-#### 8. Agent Trajectory — Inspect the Path, Not Private Reasoning
+#### 8. Agent Trajectory: Inspect the Path, Not Private Reasoning
 
 The trajectory is the observable sequence of steps, tool requests/results, state transitions, and completion or escalation.
 
@@ -151,7 +151,7 @@ Request → Route → Tool A → Observation → Tool B → Result
 
 In my design, evaluation and audit rely on decision summaries, evidence and tool calls, not the model's private chain-of-thought, which is often hidden and not always faithful.
 
-#### 9. Evaluate Outcome and Efficiency — A Finished Loop Is Not Success
+#### 9. Evaluate Outcome and Efficiency: A Finished Loop Is Not Success
 
 Check routing, tool selection, arguments, policy compliance, recovery, task success, latency, and cost. Include ambiguous, failing, and malicious-input cases.
 
@@ -325,10 +325,10 @@ Inspect observable operations and evidence rather than private model chain-of-th
 
 ## Sources (checked 27 Sep 2026)
 
-- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution) — checkpoints don't stop duplicate side effects
-- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts) — checkpoints don't stop duplicate side effects
-- [Anthropic Engineering, How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) — multi-agent overhead
-- [Cemri et al. 2025, Why Do Multi-Agent LLM Systems Fail? (MAST, arXiv 2503.13657)](https://arxiv.org/abs/2503.13657) — multi-agent overhead
-- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410) — chain-of-thought is not always faithful
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — untrusted retrieved and tool input
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — untrusted retrieved and tool input
+- [Temporal blog - Idempotency and durable execution](https://temporal.io/blog/idempotency-and-durable-execution): checkpoints don't stop duplicate side effects
+- [LangGraph docs - Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts): checkpoints don't stop duplicate side effects
+- [Anthropic Engineering, How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system): multi-agent overhead
+- [Cemri et al. 2025, Why Do Multi-Agent LLM Systems Fail? (MAST, arXiv 2503.13657)](https://arxiv.org/abs/2503.13657): multi-agent overhead
+- [Chen et al. 2025, Reasoning Models Don't Always Say What They Think (arXiv 2505.05410)](https://arxiv.org/abs/2505.05410): chain-of-thought is not always faithful
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): untrusted retrieved and tool input
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): untrusted retrieved and tool input

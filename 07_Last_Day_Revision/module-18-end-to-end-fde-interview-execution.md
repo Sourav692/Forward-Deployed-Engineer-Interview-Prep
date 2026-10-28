@@ -1,4 +1,4 @@
-# Module 18 — End-to-End FDE Interview Execution
+# Module 18: End-to-End FDE Interview Execution
 
 ## Concise Interview Module
 
@@ -37,7 +37,7 @@ NFRs are non-functional requirements. RAG is retrieval-augmented generation. HIT
 
 ### 3. Essential Concepts
 
-#### 1. Open With Discovery — Start Above the Architecture
+#### 1. Open With Discovery: Start Above the Architecture
 
 Clarify the business outcome and current workflow. Let customer answers guide questions about users, scale, data, autonomy, success, failures, and constraints.
 
@@ -49,7 +49,7 @@ Clarify the business outcome and current workflow. Let customer answers guide qu
                  → Refund actions?
 ```
 
-#### 2. Summarise Requirements — Confirm Before Designing
+#### 2. Summarise Requirements: Confirm Before Designing
 
 State capabilities and measurable operating limits separately. Include access boundaries, permitted writes, approvals, and safe failure behaviour.
 
@@ -62,7 +62,7 @@ Must meet: Agreed quality, latency, availability, cost, security
 
 Do not invent targets as customer facts. Label provisional assumptions explicitly.
 
-#### 3. Draw the Small Happy Path — Assign Responsibilities
+#### 3. Draw the Small Happy Path: Assign Responsibilities
 
 Start with the minimum components that satisfy confirmed needs. Explain each box through its requirement.
 
@@ -79,7 +79,7 @@ User → API Gateway → Router / workflow
 
 API Gateway = User → Application control. Model Gateway = Application → Model control. Add centralised model-call control when provider routing, limits, fallback, or tracking requires it.
 
-#### 4. Walk One Real Request — Make the Diagram Concrete
+#### 4. Walk One Real Request: Make the Diagram Concrete
 
 Follow inputs, trusted identity, evidence, live reads, model calls, policy, action, and actual outcome. Identify context and durable state where needed.
 
@@ -93,7 +93,7 @@ Facts + policy → Recommend → Authorize/policy check
                            Confirm and audit
 ```
 
-#### 5. Choose Autonomy Deliberately — Workflow Before Unneeded Complexity
+#### 5. Choose Autonomy Deliberately: Workflow Before Unneeded Complexity
 
 Use defined workflows for known steps and rules. Add bounded reasoning where observations need to guide the next step. Justify multi-agent coordination with a concrete benefit.
 
@@ -101,7 +101,7 @@ Use defined workflows for known steps and rules. Add bounded reasoning where obs
 
 Bound tools, steps, retries, tokens, time, and cost. A model's confidence is not authority to perform a business write.
 
-#### 6. Stress-Test the Design — Scale, Latency, Cost
+#### 6. Stress-Test the Design: Scale, Latency, Cost
 
 Translate user count into peak requests, concurrent tasks, and model/tool demand. Identify the bottleneck, protect capacity, and keep tenants fair and isolated.
 
@@ -113,7 +113,7 @@ Cost    → Attribute usage → Cost per successful task
 
 > “I’d optimise the measured bottleneck while preserving the agreed quality and safety floor.”
 
-#### 7. Explain Failure and Recovery — Include Unknown Writes
+#### 7. Explain Failure and Recovery: Include Unknown Writes
 
 Classify failures; set deadlines, bounded safe retries, fallback, and escalation. Persist long tasks and approval state. Reconcile writes that may have completed remotely.
 
@@ -125,7 +125,7 @@ Policy down    → Sensitive action blocked/deferred
 
 > “A timeout does not prove a refund failed; recovery must not issue it twice.”
 
-#### 8. Evaluate, Release, Operate — Close the Production Loop
+#### 8. Evaluate, Release, Operate: Close the Production Loop
 
 Evaluate retrieval, supported answers, tool arguments, policy compliance, and confirmed task outcomes. Version behaviour, gate candidates, and limit exposure with appropriate rollout controls.
 
@@ -190,7 +190,7 @@ Name what would change the design: new workload, stricter residency, failed qual
 
 > “I’ll close with evaluation, rollout, operating visibility, and the main trade-offs.”
 
-### 8. Practice Questions — Full Cases
+### 8. Practice Questions: Full Cases
 
 Solve without opening earlier modules. Use the five-stage flow and explain one request, one failure, and one trade-off.
 

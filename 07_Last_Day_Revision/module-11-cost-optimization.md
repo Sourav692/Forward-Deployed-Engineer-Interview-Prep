@@ -1,4 +1,4 @@
-# Module 11 — Cost Optimisation
+# Module 11: Cost Optimisation
 
 ## Concise Interview Module
 
@@ -32,7 +32,7 @@ Avoid double-counting model charges: input/output token charges are part of mode
 
 ### 3. Essential Concepts
 
-#### 1. Attribution — Find What Changed
+#### 1. Attribution: Find What Changed
 
 Track cost by task type, tenant, model, input/output usage, call count, tool use, retries, and outcomes. Compare workload mix as well as total traffic.
 
@@ -47,7 +47,7 @@ Bill ↑ → More tasks?
 
 Pricing units differ across providers and tools. Use observed usage and applicable billing rates rather than invented universal prices.
 
-#### 2. Model Routing — Use Sufficient Capability
+#### 2. Model Routing: Use Sufficient Capability
 
 Use cheaper models for tasks they can reliably handle and stronger models when evaluation shows a need. Route by task and risk, with verified fallback behaviour.
 
@@ -60,7 +60,7 @@ Complex task          → Stronger model when justified
 
 Routing and fallback add their own calls and complexity. Cheap attempts followed by repeated expensive recovery may not save money.
 
-#### 3. Context Optimisation — Send What the Task Needs
+#### 3. Context Optimisation: Send What the Task Needs
 
 Select relevant evidence, remove duplication, and preserve essential facts. For long conversations, combine recent turns with reliable summaries and structured task state.
 
@@ -73,11 +73,11 @@ Growing history → Relevant recent turns
 
 Summaries can omit or distort facts. Check their effect on task quality; maintain authoritative action and approval state separately.
 
-#### 4. Output Control — Avoid Unnecessary Generation
+#### 4. Output Control: Avoid Unnecessary Generation
 
 Choose concise output formats and task-appropriate output limits. Long answers increase cost and may increase completion latency.
 
-> “For a status lookup, a short factual response is enough; it does not need a long explanation.”
+> “For a status lookup, a short factual response is enough.”
 
 ```text
 Task needs status → Status + necessary explanation
@@ -85,7 +85,7 @@ Task needs status → Status + necessary explanation
 
 Do not truncate essential evidence, structured tool arguments, or a required user-facing explanation to save tokens.
 
-#### 5. Caching — Reuse Eligible Work
+#### 5. Caching: Reuse Eligible Work
 
 Cache repeated retrieval, tool, or response results only within correct tenant/access scope and freshness limits. Provider prompt caching is a separate reuse mechanism with provider-specific billing behaviour.
 
@@ -111,7 +111,7 @@ Five calls/task → Purpose of each?
 
 Fewer calls can reduce both cost and latency. Preserve controls and check whether fewer steps increase failed attempts.
 
-#### 7. Agent and Retry Bounds — Cap Amplification
+#### 7. Agent and Retry Bounds: Cap Amplification
 
 Set budgets for steps, tools, tokens, retries, time, and cost. Stop repeated no-progress behaviour with a defined status or escalation.
 
@@ -123,9 +123,9 @@ Small cost per call × uncontrolled calls = Large task cost
 
 Count nested retries and fallback attempts. Never save money by removing idempotency, policy, or permission checks around business actions.
 
-#### 8. Batch Processing — Trade Urgency for Efficiency
+#### 8. Batch Processing: Trade Urgency for Efficiency
 
-Group eligible background work or use batch processing when completion deadlines allow it. Verify whether the execution/billing mechanism actually saves cost.
+Group eligible background work or use batch processing when completion deadlines allow it. Verify whether the execution/billing mechanism saves cost.
 
 > “For non-interactive work, I'd consider batching if the customer's completion window permits it.”
 
@@ -135,7 +135,7 @@ Background jobs → Batch / scheduled processing → Results later
 
 Batching may add delay and recovery complexity. It is not suitable for every interactive support request, and batching alone does not guarantee a discount.
 
-#### 9. Cost per Successful Task — Preserve the Business Outcome
+#### 9. Cost per Successful Task: Preserve the Business Outcome
 
 Measure attempts, failures, escalations, and human rework alongside automated success. Define what successful completion means before comparing designs.
 
@@ -287,8 +287,8 @@ Central model usage tracking helps, but complete attribution also includes tools
 
 ## Sources (checked 27 Sep 2026)
 
-- [Claude docs - Pricing](https://platform.claude.com/docs/en/about-claude/pricing) — pricing units differ
-- [AWS Bedrock User Guide - Use the ApplyGuardrail API](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-use-independent-api.html) — pricing units differ
-- [Claude docs - Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) — provider prompt caching billing; batch discounts
-- [OpenAI API docs - Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching) — provider prompt caching billing
-- [OpenAI API docs - Batch API](https://developers.openai.com/api/docs/guides/batch) — batch discounts
+- [Claude docs - Pricing](https://platform.claude.com/docs/en/about-claude/pricing): pricing units differ
+- [AWS Bedrock User Guide - Use the ApplyGuardrail API](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-use-independent-api.html): pricing units differ
+- [Claude docs - Models overview](https://platform.claude.com/docs/en/about-claude/models/overview): provider prompt caching billing; batch discounts
+- [OpenAI API docs - Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching): provider prompt caching billing
+- [OpenAI API docs - Batch API](https://developers.openai.com/api/docs/guides/batch): batch discounts

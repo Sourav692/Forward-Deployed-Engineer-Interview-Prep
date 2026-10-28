@@ -1,4 +1,4 @@
-# Module 10 — Latency Optimisation
+# Module 10: Latency Optimisation
 
 ## Concise Interview Module
 
@@ -33,7 +33,7 @@ Do not double-count time already included inside another measured span. Parallel
 
 ### 3. Essential Concepts
 
-#### 1. P50/P95/P99 — Inspect the Distribution
+#### 1. P50/P95/P99: Inspect the Distribution
 
 P50 is the median. P95 and P99 show slower-tail behaviour: 95% or 99% of measured requests complete at or below those values.
 
@@ -47,7 +47,7 @@ P99 very slow → Some users still wait too long
 
 Compare consistent measurement windows and task types. Aggregate improvements can hide a badly affected tenant or workload.
 
-#### 2. Trace the Request — Locate the Critical Path
+#### 2. Trace the Request: Locate the Critical Path
 
 Measure queue, retrieval, model, tool, and network spans, including repeated calls. Look at the slow requests themselves.
 
@@ -59,7 +59,7 @@ Queue 4s → Retrieval 1s → Model 2s → Tool 4s → Overhead 1s
 
 These times are illustrative. Identify which stages are sequential and which overlap.
 
-#### 3. Time to First Token and Streaming — Improve Perceived Waiting
+#### 3. Time to First Token and Streaming: Improve Perceived Waiting
 
 Time to first token (TTFT) measures when model output begins; user-visible first useful output may occur later. Streaming displays partial output while generation continues.
 
@@ -72,7 +72,7 @@ Streamed:     Wait → Partial output → Full response
 
 Do not stream an action as successful before execution is confirmed. Partial output must remain safe and not expose unverified sensitive information.
 
-#### 4. Parallelisation — Overlap Independent Work
+#### 4. Parallelisation: Overlap Independent Work
 
 Run independent retrieval or read-tool calls together when permissions, dependency limits, and correctness allow it.
 
@@ -86,7 +86,7 @@ Parallel:   Read A ─┐
 
 The parallel path is governed by the slowest necessary branch plus overhead. Parallelism can increase load and does not justify unordered business writes.
 
-#### 5. Reduce Sequential Model Hops — Remove Unnecessary Reasoning Calls
+#### 5. Reduce Sequential Model Hops: Remove Unnecessary Reasoning Calls
 
 Inspect router, planner, agent, critic, and writer calls. Combine or replace steps only when their purpose is preserved.
 
@@ -100,7 +100,7 @@ Five model hops → Identify required functions
 
 Do not remove policy, authorisation, or evaluation controls merely to reduce latency.
 
-#### 6. Retrieval — Optimise the Evidence Path
+#### 6. Retrieval: Optimise the Evidence Path
 
 Measure query embedding, search, filtering, reranking, and context construction. Tune candidate counts, indexing, and caching against quality requirements.
 
@@ -112,7 +112,7 @@ Search candidates → Rerank if useful → Select context
 
 Permission-safe cache reuse can help; stale or unauthorised evidence is not an acceptable speed improvement.
 
-#### 7. Tools — Control Slow Dependencies
+#### 7. Tools: Control Slow Dependencies
 
 Measure enterprise API latency, set deadlines, reuse results only within freshness limits, and use fallback or async completion where the use case allows it.
 
@@ -124,7 +124,7 @@ Slow tool → Deadline → Safe fallback / defer / escalate
 
 For write timeouts, reconcile the operation's status before retry. Stopping waiting does not cancel a remote side effect automatically.
 
-#### 8. Queue Wait — Protect Tail Latency Under Load
+#### 8. Queue Wait: Protect Tail Latency Under Load
 
 Separate time waiting for capacity from actual processing. Apply admission control, tenant-aware limits, bounded queues, and useful capacity scaling.
 
@@ -137,7 +137,7 @@ Peak load: Long wait  + similar processing
 
 An unbounded queue can make every request late instead of rejecting excess work clearly.
 
-#### 9. Async Delivery — Change the Interaction for Long Tasks
+#### 9. Async Delivery: Change the Interaction for Long Tasks
 
 For work that legitimately takes minutes, return a task identifier and provide status, progress, and result retrieval rather than holding one interactive request open.
 

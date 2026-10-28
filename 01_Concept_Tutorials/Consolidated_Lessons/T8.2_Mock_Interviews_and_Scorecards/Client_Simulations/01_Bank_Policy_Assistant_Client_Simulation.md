@@ -1,6 +1,6 @@
 # Bank Policy Assistant Client Simulation
 
-This is a 45-minute client simulation, the conversation at the heart of most FDE loops: the interviewer plays the customer and answers only what is asked, so a constraint you never ask about stays hidden and still costs you marks. With a partner, hand them this page and have them reveal a constraint only when your question earns it. Alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you actually asked about.
+This is a 45-minute client simulation, the conversation at the heart of most FDE loops: the interviewer plays the customer and answers only what is asked, so a constraint you never ask about stays hidden and still costs you marks. With a partner, hand them this page and have them reveal a constraint only when your question earns it. Alone, read the opening brief, write your questions down, then open one constraint at a time, and only for a topic you asked about.
 
 ## The Customer
 

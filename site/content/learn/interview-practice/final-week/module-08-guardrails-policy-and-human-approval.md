@@ -30,7 +30,7 @@ Execute Human       Stop
 
 ### 3. Essential Concepts
 
-#### 1. Deterministic Policy — Encode the Business Rule
+#### 1. Deterministic Policy: Encode the Business Rule
 
 Put explicit eligibility, amount, region, and approval rules in a trusted policy or code path. Models can extract facts and propose actions; authoritative rules decide permission.
 
@@ -42,7 +42,7 @@ Facts + action + identity → Versioned rule → Allow / review / deny
 
 If the source facts are incomplete or untrusted, a deterministic rule can still receive bad inputs. Validate the facts and source of authority too.
 
-#### 2. Risk Classification — Match Controls to Consequences
+#### 2. Risk Classification: Match Controls to Consequences
 
 Consider financial impact, reversibility, sensitive data, affected users, and uncertainty. Agree on classes and controls with the customer.
 
@@ -56,7 +56,7 @@ Prohibited action         → Deny
 
 Illustrative refund thresholds are examples, not universal policy. Define boundary values and the cases between thresholds explicitly.
 
-#### 3. Least Privilege — Limit What the Agent Can Reach
+#### 3. Least Privilege: Limit What the Agent Can Reach
 
 Grant only the data and operations needed for the current task and user's authority. Read and write scopes should be separate where appropriate.
 
@@ -66,9 +66,9 @@ Grant only the data and operations needed for the current task and user's author
 User authority + task scope → Allowed tools and actions
 ```
 
-Enforce checks in execution and data access, not merely in the model's instructions.
+Enforce checks in execution and data access, not only in the model's instructions.
 
-#### 4. Human-in-the-Loop — Give the Reviewer a Real Decision
+#### 4. Human-in-the-Loop: Give the Reviewer a Real Decision
 
 Human-in-the-loop (HITL) should include the requested action, evidence, recommendation, policy reason, and approve/reject choices.
 
@@ -80,9 +80,9 @@ Action + target + amount + evidence
 Policy reason + recommendation + expiry
 ```
 
-Review is not automatically a guarantee of correctness. Make the decision clear and restrict who may approve.
+Review does not guarantee correctness. Make the decision clear and restrict who may approve.
 
-#### 5. Durable Approval — Wait Without Losing State
+#### 5. Durable Approval: Wait Without Losing State
 
 Persist the proposed action and approval status. Resume through an authorised approval event or lookup; define rejection, expiration, and unavailable-approver behaviour.
 
@@ -98,7 +98,7 @@ Propose → Persist pending → Wait
 
 Bind approval to the action and relevant inputs. If the amount, recipient, or facts change, recheck policy and obtain new approval where needed. Handle repeated approval events without duplicate writes.
 
-#### 6. Fail-Open vs Fail-Closed — Choose by Operation
+#### 6. Fail-Open vs Fail-Closed: Choose by Operation
 
 Fail-open permits an operation when a check fails; fail-closed blocks it. For sensitive writes, missing policy or permission checks should stop execution.
 
@@ -111,7 +111,7 @@ Policy unavailable → Sensitive write blocked / deferred
 
 Do not disable the whole application automatically. Decide what can safely continue within established boundaries.
 
-#### 7. Kill Switch — Stop the Dangerous Capability
+#### 7. Kill Switch: Stop the Dangerous Capability
 
 Provide a trusted operational control to disable a tool, action type, tenant, or agent path. Check it at the execution boundary.
 
@@ -124,7 +124,7 @@ Disable refund writes → Block new execution
 
 A switch cannot undo a completed action. Define what happens to already submitted work and pending approvals.
 
-#### 8. Defense in Depth — Enforce at Multiple Relevant Boundaries
+#### 8. Defense in Depth: Enforce at Multiple Relevant Boundaries
 
 Combine input validation, scoped retrieval/tools, policy, approval, execution checks, and audit. Retrieved text or tool output cannot grant new authority.
 
@@ -178,7 +178,7 @@ Input → Data/tool scopes → Policy → Approval → Executor
 
 > “I’d fail closed for sensitive writes while keeping safe unaffected capabilities available.”
 
-> “The kill switch belongs at the execution boundary, where it can actually block the side effect.”
+> “The kill switch belongs at the execution boundary, where it can block the side effect.”
 
 ### 8. Practice Questions
 
@@ -263,6 +263,6 @@ Sensitive write without successful authorisation or required policy check → st
 
 ## Sources (checked 27 Sep 2026)
 
-- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/) — access control before model context
-- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) — access control before model context; untrusted retrieved and tool input
-- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) — untrusted retrieved and tool input
+- [OWASP GenAI LLM07:2025 System Prompt Leakage](https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/): access control before model context
+- [OWASP GenAI LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/): access control before model context; untrusted retrieved and tool input
+- [OWASP GenAI LLM01:2025 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/): untrusted retrieved and tool input
