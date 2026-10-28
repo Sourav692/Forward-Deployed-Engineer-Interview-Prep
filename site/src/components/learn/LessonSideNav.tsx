@@ -31,6 +31,9 @@ export function LessonSideNav({
   const headings: TocHeading[] = doc.sections
     .filter((s): s is typeof s & { title: string } => !!s.title)
     .map((s) => ({ id: s.id, html: s.title }))
+  // A grouped module (the final week's days) heads each group's first lesson with its title
+  // and drops the running number, which would clash with the review numbers.
+  const groupAt = new Map((mod.groups ?? []).map((g) => [g.lessons[0], g.title]))
 
   const body = (
     <nav aria-label={`${mod.title}: lessons and contents`} className="text-[0.8125rem]">
@@ -55,6 +58,7 @@ export function LessonSideNav({
           const isCurrent = l.slug === current
           return (
             <li key={l.slug}>
+              {groupAt.has(l.slug) && <span className="mb-1 mt-3 block px-2 text-xs font-medium text-subtle">{groupAt.get(l.slug)}</span>}
               <Link
                 href={l.href}
                 aria-current={isCurrent ? 'page' : undefined}
@@ -64,7 +68,7 @@ export function LessonSideNav({
                   focusRing,
                 )}
               >
-                <span className={cx('w-5 shrink-0 tabular-nums', isCurrent ? 'text-accent' : 'text-subtle')}>{i + 1}</span>
+                {!mod.groups && <span className={cx('w-5 shrink-0 tabular-nums', isCurrent ? 'text-accent' : 'text-subtle')}>{i + 1}</span>}
                 <span className="min-w-0 flex-1">{l.title}</span>
               </Link>
               {isCurrent && headings.length > 0 && (

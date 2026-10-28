@@ -1,4 +1,4 @@
-# Module 6: Agentic Architecture
+# Review 6: Agentic Architecture
 
 ## Concise Interview Module
 

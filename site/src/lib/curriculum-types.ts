@@ -58,6 +58,9 @@ export type CurriculumTrack = {
   sections: CurriculumSection[]
 }
 
+/** One named group of a module's lessons; `id` is the module page anchor. */
+export type LessonGroup = { id: string; title: string; note: string; lessons: string[] }
+
 export type CurriculumModule = {
   slug: string
   /** Display code such as `T2.4`. May change; the slug may not. */
@@ -89,6 +92,12 @@ export type CurriculumModule = {
   lessons: string[]
   /** Lesson slugs homed in another module that this module also uses. */
   seeAlso: string[]
+  /**
+   * Optional reading plan: the lessons split into named groups (the final week's Day 1 to
+   * Day 6). Together the groups list `lessons` exactly, in order (`check:curriculum`).
+   * The module page, its lesson sidebar and the /interview hub show them.
+   */
+  groups?: LessonGroup[]
   /**
    * Another page lists this module's lessons, so the module page links there instead of
    * repeating the list (T5.5 and the casebook, ENH-16). The lessons still count for progress.

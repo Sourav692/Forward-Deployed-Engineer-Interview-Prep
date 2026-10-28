@@ -1,11 +1,16 @@
 # Last-Day Revision
 
-Rapid recall material for the days before an interview. The site publishes it at `/fde-last-day-prep`.
+Recall material for the interview week. The site publishes it as the Final Week Review at `/interview/final-week`, one lesson per file, laid out as a six-day plan (the `groups` of the `final-week` module in `site/src/lib/curriculum.ts`).
 
-| File | Use |
-|---|---|
-| `Roadmap.md` | The 18-review sequence in five phases: decomposition, architecture, production scale, production quality, mastery |
-| `Rapid_Revision_Guide.md` | One-sitting revision of the whole sequence |
-| `module-01-…` to `module-18-…` | The 18 reviews (shown on the site as Review 01–18) |
-| `trigger-to-concept-cheat-sheet.md` | Interview trigger phrases mapped to concepts |
-| `html/` | Concise module and one-page memory card per review; copied into `site/public/fde-last-day-prep/` by sync |
+| Day | Files | Use |
+|---|---|---|
+| Day 1 | `Roadmap.md` (first part), `module-01-…` to `module-03-…` | The plan, then problem decomposition |
+| Day 2 | `module-04-…` to `module-08-…` | Architecture |
+| Day 3 | `module-09-…` to `module-12-…` | Production scale |
+| Day 4 | `module-13-…` to `module-16-…` | Production quality |
+| Day 5 | `module-17-…`, `module-18-…`, `Roadmap.md` (full practice and checklists) | Interview mastery |
+| Day 6 | `Rapid_Revision_Guide.md`, `trigger-to-concept-cheat-sheet.md` | Last-day recall |
+
+- The `module-NN-…` files are the 18 reviews, numbered Review 1 to Review 18. Each ends with an `## One-Page Memory Card` section, which the site shows as the review's Recall card tab, so keep that heading.
+- `Roadmap.md` is one source for two lessons: its `## Full Case-Study Practice`, `## Phase N: …` and `## Sources` sections are the second lesson. The split is the `sections` rule on both roadmap lessons in `curriculum.ts`, so renaming one of those headings means updating that rule.
+- File names stay as they are: the lesson URLs and saved progress use them.

@@ -536,28 +536,6 @@ export const REVIEWS: Review[] = [
 /** A review's lesson page. Its one-page memory card is the lesson's Recall card tab (`#recall-card`). */
 export const reviewHref = (r: Review) => `${LAST_DAY.href}/${r.dir}`
 
-/** The final week's two guides, its first two lessons (found by `source`). */
-export const LAST_DAY_GUIDES = [
-  {
-    id: 'roadmap',
-    source: 'Roadmap.md',
-    title: 'Learning Roadmap',
-    eyebrow: 'Start here',
-    blurb:
-      'The mental model behind all eighteen reviews: what to ask, what requirement it ' +
-      'creates, which component answers it, and the trade-off it introduces.',
-  },
-  {
-    id: 'rapid-revision',
-    source: 'Rapid_Revision_Guide.md',
-    title: 'Rapid Revision Guide',
-    eyebrow: 'Final rehearsal',
-    blurb:
-      'The whole interview flow in one pass (discovery, requirements, components, ' +
-      'retrieval, agents and operations), for the last read before the loop.',
-  },
-] as const
-
 // ---------------------------------------------------------------- scorecard remediation
 
 /** Weak on a scorecard row? These reviews cover it. Keys are the row's area label. */

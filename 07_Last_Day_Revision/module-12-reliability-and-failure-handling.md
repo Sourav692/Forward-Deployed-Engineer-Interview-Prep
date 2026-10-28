@@ -1,4 +1,4 @@
-# Module 12: Reliability & Failure Handling
+# Review 12: Reliability & Failure Handling
 
 ## Concise Interview Module
 
