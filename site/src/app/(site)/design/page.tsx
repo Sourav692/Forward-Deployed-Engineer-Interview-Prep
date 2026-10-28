@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Suspense } from 'react'
 import { FilteredGroups } from '@/components/areas/FilteredGroups'
 import { LEVEL_LABEL } from '@/lib/editorial'
 import { ModuleProgress } from '@/components/Progress'
-import { AreaGroup, AreaHeader, AreaSection, LinkList, TextLink } from '@/components/areas/Area'
+import { CaseGroup } from '@/components/casebook/CaseGroup'
 import { LIVE, moduleGroups, siteCounts } from '@/components/areas/data'
 import { learnHref } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
@@ -30,56 +31,67 @@ export default async function DesignPage() {
   const { groups, scenarios } = await moduleGroups(LIVE.casebook)
   const counts = await siteCounts()
 
+  // Hallmark, Editorial theme (casebook.css): the name and its argument, then the cases
+  // as a contents page, theme by theme, and the method note last.
   return (
-    <div className="py-12">
+    <div className="pb-24">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Casebook', path: '/design' }])} />
-      <AreaHeader eyebrow="Worked system designs" title="Casebook">
-        <p>
-          {counts.designs} complete system designs, grouped by the kind of system they build. {counts.layeredDesigns} of them read
-          at three depths: the answer you would say in the interview, the technical deep dive behind it, and a quick
-          review for the night before. Choose a case to study the architecture, trade-offs and failure modes in depth.
-        </p>
-      </AreaHeader>
-      <aside id="method" aria-label="Learn the design method" className="mt-6 max-w-3xl scroll-mt-20 rounded-lg border border-border bg-surface p-4 text-sm sm:p-5">
-        <p className="text-muted">
-          Need a structure for your answer? The AI Systems Design track in Learn teaches the framework, whiteboard
-          timing and reusable patterns. Its Classic AI designs module takes nine systems through that method in
-          short lessons, each with an interactive explorer. Return here for the complete worked designs.
-        </p>
-        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
-          <TextLink href={learnHref.track(METHOD_TRACK)}>Learn the design method</TextLink>
-          <TextLink href={learnHref.module({ track: METHOD_TRACK, slug: CLASSIC_MODULE })}>Open Classic AI designs</TextLink>
+      <header className="cb-hero">
+        <div>
+          <h1>Casebook</h1>
+          <p className="cb-standfirst">
+            {counts.designs} worked system designs, grouped by the kind of system they build.
+          </p>
         </div>
-      </aside>
-      <div className="mt-6">
-        <ModuleProgress scenarios={scenarios} />
-      </div>
+        <div className="cb-hero-side">
+          <p>
+            {counts.layeredDesigns} of them read at three depths: the answer you would say in the interview, the
+            technical deep dive behind it, and a quick review for the night before.
+          </p>
+          <div className="mt-6">
+            <ModuleProgress scenarios={scenarios} plain />
+          </div>
+        </div>
+      </header>
 
-      <AreaSection
-        id="cases"
-        title="Cases by Theme"
-        description="One line per case; filter by theme, level or reading time. Open a case to choose its depth from the tabs at the top of the page."
-      >
+      <section id="cases" aria-labelledby="cases-heading" className="scroll-mt-20">
+        <div className="cb-opens mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-2">
+          <h2 id="cases-heading" className="cb-section-head">
+            Cases by theme
+          </h2>
+          <p className="cb-label text-[0.9375rem] text-muted">Filter by theme, level or reading time.</p>
+        </div>
         <Suspense
           fallback={
-            <div className="space-y-4">
+            <div>
               {groups.map((g) => (
-                <AreaGroup
-                  key={g.id}
-                  id={g.id}
-                  title={g.title}
-                  blurb={g.blurb}
-                  action={{ label: `${g.items.length} ${g.items.length === 1 ? 'case' : 'cases'}`, href: g.href }}
-                >
-                  <LinkList items={g.items} />
-                </AreaGroup>
+                <CaseGroup key={g.id} group={g} unit={['case', 'cases']} />
               ))}
             </div>
           }
         >
-          <FilteredGroups groups={groups} levels={LEVEL_LABEL} noun="designs" unit={['case', 'cases']} time />
+          <FilteredGroups groups={groups} levels={LEVEL_LABEL} noun="designs" unit={['case', 'cases']} time contents />
         </Suspense>
-      </AreaSection>
+      </section>
+
+      <aside id="method" aria-label="Learn the design method" className="cb-well mt-24 scroll-mt-20 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
+        <h2 className="text-[1.75rem] leading-none">Need a structure for your answer?</h2>
+        <div className="mt-4 lg:mt-0">
+          <p className="max-w-[60ch] text-base">
+            The AI Systems Design track in Learn teaches the framework, whiteboard timing and reusable patterns. Its
+            Classic AI designs module takes nine systems through that method in short lessons, each with an interactive
+            explorer. Return here for the complete worked designs.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link href={learnHref.track(METHOD_TRACK)} className="cb-btn cb-btn--primary">
+              Learn the design method
+            </Link>
+            <Link href={learnHref.module({ track: METHOD_TRACK, slug: CLASSIC_MODULE })} className="cb-btn">
+              Open Classic AI designs
+            </Link>
+          </div>
+        </div>
+      </aside>
     </div>
   )
 }

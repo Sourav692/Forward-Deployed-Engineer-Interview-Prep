@@ -1,0 +1,332 @@
+/* Hallmark · shape: index (contents rows) for /design, app screen (reading view) for /design/<slug> · genre: editorial · theme: Editorial (locked: shared with the landing page, tokens in landing/tokens.css) · redesign: full · job: read
+ * hero: Settled (/design), none (case pages: app screen) · nav: kept (site shell) · footer: kept (site shell) · imagery: the product (the case list as a magazine contents page; the reading view), no photographs · signature: the casebook set as a contents page, each case a ruled row with its level and reading time
+ * axes: light/display-condensed/chromatic-green · posture: restrained · scope: /design and /design/<slug>, tokens on .casebook · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H3 E4 S4 R4 V4 · weakest: H, the index hero is a word and two sentences with the reading progress beside it; the contents rows below carry the page */
+/* Hallmark · waive 72 · div.casebook paints its paper with a 100vmax spread shadow, so its 0px edge is the container edge · no text sits in a box; the casebook has no cards */
+/* Hallmark · waive 44c · the /design hero is the name, one standfirst and the progress action; the contents head and the theme filters sit in the same 1440x900 screen · the index's object is the list, so the list starts in the fold instead of a taller hero */
+/* Hallmark · waive 79 · the space under the /design hero holds the contents head and the theme filters, not empty paper · the list is the index's object, so it starts in the first screen instead of a taller hero */
+/* Hallmark · waive 49b · links inside the Introduction's sections table wrap at 320px because table cells keep an 8rem minimum · the table scrolls sideways with a sticky first column, so the full link stays readable */
+/* Hallmark · dropped the AreaGroup count link markup on /design · the same link (the theme's href, "N cases") renders in CaseGroup as .cb-group-count */
+/* Hallmark · dismissed 77 · the index is a contents page (hero, eight themes, the method note) and a case page is a reading screen; neither is a landing strip */
+/* Hallmark · answered F19 · 400 reading, 500 labels, 800 heads; 600 is bold inside reading text only, where the source marks a term */
+/* Hallmark · kept accessible names "Continue →", "Next: Part N →" and "Practise this as a worksheet →" as aria-labels (the e2e suite reads them); the visible labels drop the glued arrow (63) */
+
+/*
+ * The casebook's system (Hallmark, Editorial theme), scoped to `.casebook` (the /design
+ * layout's wrapper). Colour and font tokens come from landing/tokens.css under
+ * [data-theme='editorial']; this file sets the scale, re-points the site's tokens so
+ * shared components take the theme, and styles the reading view. Rules here are not in
+ * a cascade layer, so they win over Tailwind utilities on the same element: keep every
+ * selector under `.casebook`.
+ */
+.casebook {
+  --rule-hair: 1px;
+  --rule-heavy: 4px;
+  --tracking-display: -0.012em;
+  --display-weight: 800;
+  --text-sm: 0.875rem;
+  --text-body: 1.125rem;
+  --text-display: clamp(4rem, 1.5rem + 9vw, 10rem);
+  --text-h1: clamp(2.5rem, 1.5rem + 3.5vw, 4.25rem);
+  --text-section: clamp(2rem, 1.25rem + 2.5vw, 3rem);
+  --text-h2: clamp(1.625rem, 1.2rem + 1.2vw, 2.125rem);
+  --text-h3: 1.375rem;
+  --text-row: clamp(1.25rem, 1rem + 0.6vw, 1.5rem);
+  --text-lead: clamp(1.25rem, 1rem + 0.8vw, 1.625rem);
+  --dur-short: 220ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* The site's tokens, re-pointed for the casebook only. */
+  --bg: var(--color-paper);
+  --surface: var(--color-paper);
+  --surface-2: var(--color-paper-2);
+  --border: var(--color-rule);
+  --border-strong: var(--color-rule-2);
+  --input-border: var(--color-rule-2);
+  --text: var(--color-ink);
+  --text-muted: var(--color-muted);
+  --text-subtle: var(--color-muted);
+  --accent: var(--color-ink);
+  --accent-hover: var(--color-ink-2);
+  --accent-soft: var(--color-paper-3);
+  --accent-ring: var(--color-focus);
+  --success: var(--color-accent);
+  --success-soft: var(--color-paper-2);
+  --danger: var(--color-error);
+
+  /* The paper runs edge to edge behind the capped container, without 100vw. */
+  background: var(--color-paper);
+  box-shadow: 0 0 0 100vmax var(--color-paper);
+  clip-path: inset(0 -100vmax);
+  color: var(--color-ink-2);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  font-optical-sizing: auto;
+  font-variant-numeric: oldstyle-nums;
+  caret-color: var(--color-accent);
+}
+
+.dark .casebook { font-weight: 350; }
+.casebook :where(*) { border-radius: 0; }
+.casebook ::selection { background: color-mix(in oklab, var(--color-accent) 22%, transparent); color: var(--color-ink); }
+
+/* Heads: Bricolage condensed at 800, one weight and one colour, sentence case. */
+.casebook :is(h1, h2, h3) {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-variation-settings: "wdth" 75, "opsz" 96;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+  font-variant-numeric: lining-nums tabular-nums;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+/* Labels, controls, nav, captions and table heads: the display face at its label cut. */
+.casebook :is(button, nav, label, th, small, figcaption, [role='group'], .cb-label) {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+/* Shared components set some labels in tracked capitals; the theme never does (54). */
+.casebook .uppercase { text-transform: none; letter-spacing: 0; }
+
+.casebook a { text-decoration-color: var(--color-rule-2); text-underline-offset: 0.2em; }
+.casebook a:hover { text-decoration-color: var(--color-accent); }
+.casebook :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* Controls: an ink block and an ink-outlined block, square, label face. */
+.casebook .cb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.125rem;
+  border: var(--rule-hair) solid var(--color-ink);
+  background: none;
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+}
+.casebook .cb-btn:hover { background: var(--color-paper-3); }
+.casebook .cb-btn--primary { background: var(--color-ink); color: var(--color-paper); }
+.casebook .cb-btn--primary:hover { background: var(--color-ink-2); }
+.casebook .cb-btn--done { border-color: var(--color-accent); color: var(--color-accent); }
+.casebook .cb-btn--done:hover { background: var(--color-paper-2); }
+.casebook .cb-btn:active { transform: translateY(1px); }
+.casebook .cb-btn svg { flex: none; }
+@media (max-width: 22rem) { .casebook .cb-btn { padding-inline: 0.75rem; font-size: 0.8125rem; } }
+
+/* Index ----------------------------------------------------------------------- */
+
+.casebook .cb-hero {
+  display: grid;
+  gap: 2.5rem;
+  align-items: end;
+  padding-block: 3.5rem 4rem;
+}
+@media (min-width: 64rem) {
+  .casebook .cb-hero { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); padding-block: 4.5rem 4rem; }
+}
+.casebook .cb-hero h1 { font-size: var(--text-display); line-height: 0.92; }
+.casebook .cb-standfirst {
+  margin-top: 1.5rem;
+  max-width: 34ch;
+  font-size: var(--text-lead);
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+.casebook .cb-hero-side { border-top: var(--rule-heavy) solid var(--color-ink); padding-top: 1.25rem; }
+.casebook .cb-hero-side p { font-size: 1rem; color: var(--color-ink-2); max-width: 40ch; }
+
+.casebook .cb-opens { border-top: var(--rule-heavy) solid var(--color-ink); padding-top: 1.25rem; }
+.casebook .cb-section-head { font-size: var(--text-section); line-height: 1; }
+
+/* A theme: its name and argument on the left, its cases as ruled rows on the right. */
+.casebook .cb-group {
+  display: grid;
+  gap: 1.25rem 2.5rem;
+  border-top: var(--rule-heavy) solid var(--color-ink);
+  padding-top: 1.25rem;
+  scroll-margin-top: 5rem;
+}
+@media (min-width: 64rem) {
+  .casebook .cb-group { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+}
+.casebook .cb-group + .cb-group { margin-top: 4rem; }
+.casebook .cb-group h3 { font-size: var(--text-h2); line-height: 1; }
+.casebook .cb-group-blurb { margin-top: 0.75rem; font-size: 1rem; line-height: 1.5; max-width: 38ch; }
+.casebook .cb-group-count { margin-top: 1rem; display: inline-block; font-size: var(--text-sm); color: var(--color-ink); text-decoration: underline; }
+
+.casebook .cb-rows { list-style: none; margin: 0; padding: 0; border-top: var(--rule-hair) solid var(--color-rule-2); }
+.casebook .cb-row { border-bottom: var(--rule-hair) solid var(--color-rule); }
+.casebook .cb-row-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 1.5rem;
+  align-items: baseline;
+  padding: 0.875rem 0;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.casebook .cb-row-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "wdth" 85, "opsz" 24;
+  font-size: var(--text-row);
+  line-height: 1.15;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color var(--dur-short) var(--ease-out);
+}
+.casebook .cb-row-link:hover .cb-row-title { text-decoration-color: var(--color-accent); }
+.casebook .cb-row-facts {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: var(--text-sm);
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.casebook .cb-row-twin {
+  display: inline-block;
+  margin: -0.375rem 0 0.875rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  text-decoration: underline;
+}
+
+/* On this page: one line per section title; the full title is in the link's title attribute. */
+.casebook nav[aria-label='On this page'] a { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Filter chips: square, 44px, the label face; a long theme row scrolls sideways on a phone. */
+.casebook [role='group'] button { min-height: 44px; padding-inline: 0.875rem; white-space: nowrap; font-size: 0.875rem; }
+.casebook [role='group'] button[aria-pressed='true'] { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+@media (max-width: 40rem) {
+  .casebook [role='group'][aria-label='Theme'] { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.25rem; scrollbar-width: thin; }
+}
+
+/* The method note: a paper well under a hairline, never a raised card. */
+.casebook .cb-well {
+  background: var(--color-paper-2);
+  border-top: var(--rule-hair) solid var(--color-rule-2);
+  padding: 1.5rem;
+}
+
+/* Case page -------------------------------------------------------------------- */
+
+.casebook .cb-case-head { padding-block: 1.5rem 2rem; border-bottom: var(--rule-heavy) solid var(--color-ink); margin-bottom: 2.5rem; }
+.casebook .cb-case-head h1 { font-size: var(--text-h1); line-height: 0.95; max-width: 18ch; }
+.casebook .cb-tag {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+.casebook .cb-facts {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.75rem 0 0;
+  border-top: var(--rule-hair) solid var(--color-rule-2);
+}
+.casebook .cb-facts > div { padding: 0.75rem 1.5rem 0 0; }
+.casebook .cb-facts > div + div { border-left: var(--rule-hair) solid var(--color-rule); padding-left: 1.5rem; }
+@media (max-width: 40rem) {
+  .casebook .cb-facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .casebook .cb-facts > div, .casebook .cb-facts > div + div { border-left: 0; padding: 0.75rem 1rem 0 0; }
+}
+.casebook .cb-facts dt { font-family: var(--font-display); font-weight: 500; font-variation-settings: "opsz" 12; font-size: 0.8125rem; color: var(--color-muted); }
+.casebook .cb-facts dd { margin: 0.125rem 0 0; font-family: var(--font-display); font-weight: 500; font-variation-settings: "opsz" 12; font-size: 1rem; color: var(--color-ink); font-variant-numeric: lining-nums tabular-nums; }
+
+/* The contents sidebar: the open page carries a heavy ink bar, never a filled pill. */
+.casebook .cb-nav-item {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.375rem 0.625rem;
+  border-left: 3px solid transparent;
+  background: none;
+  color: var(--color-muted);
+  text-align: left;
+  transition: color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+}
+.casebook .cb-nav-item:hover { color: var(--color-ink); border-left-color: var(--color-rule-2); }
+.casebook .cb-nav-item[data-state='within'] { color: var(--color-ink); }
+.casebook .cb-nav-item[aria-current='page'] { color: var(--color-ink); border-left-color: var(--color-ink); }
+.casebook .cb-nav-min { flex: none; font-size: 0.8125rem; color: var(--color-muted); font-variant-numeric: lining-nums tabular-nums; }
+
+/* What a document is for: its name and time as a label, the purpose as a standfirst. */
+.casebook .cb-purpose { margin-bottom: 2.5rem; max-width: 46rem; }
+.casebook .cb-purpose-label { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-size: var(--text-sm); color: var(--color-muted); }
+.casebook .cb-purpose-label strong { color: var(--color-ink); font-weight: 500; }
+.casebook .cb-purpose-text { margin-top: 0.5rem; font-size: var(--text-lead); line-height: 1.3; color: var(--color-ink); }
+
+.casebook .cb-part-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: var(--rule-heavy) solid var(--color-ink);
+}
+.casebook .cb-resume {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 2.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-paper-2);
+  border-top: var(--rule-hair) solid var(--color-rule-2);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  font-size: 1rem;
+  color: var(--color-ink);
+}
+
+/* Reading text: Source Serif at 18px, heads condensed, tables on hairlines. */
+.casebook .reading { font-size: var(--text-body); line-height: 1.6; color: var(--color-ink-2); max-width: 46rem; }
+.casebook section > h2 { font-size: var(--text-h2); line-height: 1.05; margin-bottom: 1.25rem; padding-top: 1rem; border-top: var(--rule-hair) solid var(--color-rule-2); }
+.casebook .reading h3 { font-size: var(--text-h3); line-height: 1.15; margin-top: 2rem; }
+.casebook .reading :is(h4, h5) { font-family: var(--font-display); font-weight: var(--display-weight); font-variation-settings: "wdth" 75, "opsz" 24; letter-spacing: var(--tracking-display); color: var(--color-ink); font-size: 1.0625rem; }
+.casebook .reading strong { color: var(--color-ink); font-weight: 600; }
+.casebook .reading a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-rule-2); }
+.casebook .reading a:hover { text-decoration-color: var(--color-accent); }
+.casebook .reading code { font-size: 0.875em; background: var(--color-paper-2); border: 0; }
+.casebook .reading blockquote { border-left: var(--rule-heavy) solid var(--color-ink); background: none; font-style: italic; color: var(--color-ink); padding-left: 1.25rem; }
+.casebook .reading hr { border-top: var(--rule-hair) solid var(--color-rule-2); }
+.casebook .reading .table-wrap { border: 0; border-top: 2px solid var(--color-ink); border-bottom: var(--rule-hair) solid var(--color-rule-2); max-width: none; }
+.casebook .reading table { font-size: 0.9375rem; }
+.casebook .reading th { background: none; color: var(--color-ink); font-size: 0.875rem; border-bottom: var(--rule-hair) solid var(--color-rule-2); }
+.casebook .reading :is(td, th) { border-color: var(--color-rule); }
+.casebook .code-block { background: var(--color-paper-2); border: 0; border-top: var(--rule-hair) solid var(--color-rule-2); }
+.casebook .mermaid-figure { border-color: var(--color-rule); }
+@media (max-width: 639px) {
+  .casebook.casebook .reading .table-wrap :is(td, th):first-child { background: var(--color-paper); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .casebook *, .casebook *::before, .casebook *::after { transition-duration: 0.01ms; }
+  .casebook .cb-btn:active { transform: none; }
+}

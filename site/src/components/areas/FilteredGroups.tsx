@@ -5,6 +5,7 @@ import type { Level } from '@/lib/editorial'
 import { ChipGroup, type ChipOption } from '@/components/learn/ChipGroup'
 import { COPY } from '@/components/learn/copy'
 import { Button, EmptyState } from '@/components/ui'
+import { CaseGroup } from '@/components/casebook/CaseGroup'
 import { AreaGroup, LinkList } from './Area'
 import type { GroupItem, TrackGroup } from './data'
 
@@ -31,6 +32,7 @@ export function FilteredGroups({
   noun,
   unit,
   time = false,
+  contents = false,
 }: {
   groups: TrackGroup[]
   levels: Record<Level, string>
@@ -39,6 +41,8 @@ export function FilteredGroups({
   /** Each group's count label: ['case', 'cases']. */
   unit: [string, string]
   time?: boolean
+  /** Render each group as a casebook contents block (`CaseGroup`) instead of a card. */
+  contents?: boolean
 }) {
   const params = useSearchParams()
   const router = useRouter()
@@ -85,8 +89,8 @@ export function FilteredGroups({
         {visible} of {total} {noun} shown
       </p>
       {shown.length > 0 ? (
-        <div className="space-y-4">
-          {shown.map((g) => (
+        <div className={contents ? undefined : 'space-y-4'}>
+          {shown.map((g) => contents ? <CaseGroup key={g.id} group={g} unit={unit} /> : (
             <AreaGroup
               key={g.id}
               id={g.id}

@@ -67,6 +67,7 @@ The scenario-pack cases (`/design/<slug>`, module 15) share one layout and one s
   - `## Practise it`: only when the case has a twin worksheet (`RELATED_CASE` in `editorial.ts`); link it at `/practice/<worksheet-slug>`.
   - Link each section by its tab id (`#main`, `#deep-dive`, `#cheat-sheet`, `#full-pack`) and give its part count. Never hardcode reading minutes.
 - **Mandatory and optional.** Interview Guide, Technical Deep Dive and Quick Review are mandatory for interview preparation. Full Design is optional reference material (`OPTIONAL_TABS` in `scenario.ts`).
+- **Look.** Every casebook page uses the landing page's Editorial theme (Hallmark): `src/app/(site)/design/layout.tsx` applies the fonts (`src/lib/editorial-fonts.ts`) and the tokens (`components/landing/tokens.css`), and `components/casebook/casebook.css` re-points the site's tokens under `.casebook` and holds the `cb-*` classes (contents rows, spec line, square ink buttons, the sidebar's ink bar). Keep new casebook UI on those classes: square corners, condensed heads, no middle-dot meta, no arrows glued to labels (keep a tested accessible name as an `aria-label`).
 - **Chapters layout** (`src/components/CaseStudyView.tsx`):
   - **Sidebar:** a left sidebar lists Introduction, then each document with its parts (`<tab>-part-<n>`, from the ENH-25 split) nested under it.
     - An optional document's parts stay folded until it is open.
