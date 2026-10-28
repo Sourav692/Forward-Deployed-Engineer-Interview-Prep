@@ -12,7 +12,7 @@ import { JsonLd } from '@/components/JsonLd'
 
 /**
  * /interview: the interview prep area (FE-11). It is the home of the interview
- * practice track (worksheets, mock interviews, final week), whose module and lesson
+ * practice track (mock interviews, final week), whose module and lesson
  * pages live at /interview/<module>/<lesson> rather than under /learn, and it links
  * to the final week (/interview/final-week, ENH-18) and the five topic hubs
  * (/interview/hubs/<hub>). Company-specific packs have their own area at /company-prep.
@@ -22,11 +22,14 @@ export const metadata: Metadata = pageMetadata({
   path: '/interview',
   title: 'Interview',
   description:
-    'Interview preparation: technical worksheets, mock interviews and scorecards, and the final-week review.',
+    'Interview preparation: mock interviews and scorecards, the final-week review and the interview topic hubs.',
 })
 
-/** Company loops is a company-prep module; it is surfaced under Company Prep, not here. */
-const COMPANY_MODULE = 'company-loops'
+/**
+ * Modules whose home is another area, kept off this hub so a page is listed once:
+ * company loops sit under Company Prep, the technical worksheets under /practice.
+ */
+const ELSEWHERE = new Set(['company-loops', 'case-study-worksheets'])
 const FINAL_WEEK = 'final-week'
 
 /** The final week's two guides are its first lessons; found by source file. */
@@ -40,7 +43,7 @@ export default async function InterviewPage() {
   const counts = await siteCounts()
   // On-hold modules stay off the hub (audit check FV-03); their own pages still exist.
   const practiceModules = curriculumModules(INTERVIEW_TRACK).filter(
-    (m) => m.slug !== COMPANY_MODULE && m.status !== 'on-hold',
+    (m) => !ELSEWHERE.has(m.slug) && m.status !== 'on-hold',
   )
 
   return (
@@ -56,7 +59,7 @@ export default async function InterviewPage() {
       <AreaSection
         id="practice-modules"
         title="Interview Practice and Revision"
-        description="Prove readiness under realistic conditions: technical worksheets, mock interviews with scorecards, and the final week."
+        description="Prove readiness under realistic conditions: mock interviews with scorecards, and the final week. The technical worksheets are in Practice."
       >
         <div className="space-y-2">
           {practiceModules.map((m) => (

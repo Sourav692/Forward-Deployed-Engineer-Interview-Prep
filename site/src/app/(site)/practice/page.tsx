@@ -6,43 +6,38 @@ import { FilteredGroups } from '@/components/areas/FilteredGroups'
 import { ModuleProgress } from '@/components/Progress'
 import { ContentsGroup } from '@/components/editorial/ContentsGroup'
 import { SuggestTopic } from '@/components/areas/SuggestTopic'
-import { LIVE, curriculumModules, moduleGroups } from '@/components/areas/data'
-import { ModuleCard } from '@/components/learn/ModuleCard'
+import { LIVE, moduleGroups } from '@/components/areas/data'
 import { LEVEL_LABEL, STORY_BANK } from '@/lib/editorial'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 
 /**
  * /practice: the practice index (FE-11), the one place the worksheets are listed. Links to
- * the technical and behavioural worksheets at /practice/<slug> and the Story Bank (ENH-17),
- * and the mock-interview module. Projects have no source yet (plan §15 Q14), so
- * the page does not mention them (audit check FV-03).
+ * the technical and behavioural worksheets at /practice/<slug> and the Story Bank (ENH-17).
+ * Mock interviews live under /interview, so they are not listed here. Projects have no
+ * source yet (plan §15 Q14), so the page does not mention them (audit check FV-03).
  */
 
 export const metadata: Metadata = pageMetadata({
   path: '/practice',
   title: 'Practice',
   description:
-    'Worksheets you fill in and score against a model answer, behavioural questions with a story bank, and timed mock interviews.',
+    'Worksheets you fill in and score against a model answer, and behavioural questions with a story bank.',
 })
-
-const MOCKS_MODULE = 'mock-interviews'
 
 export default async function PracticePage() {
   const [worksheets, behavioural] = await Promise.all([
     moduleGroups(LIVE.worksheets),
     moduleGroups(LIVE.behavioural),
   ])
-  const mocks = curriculumModules('interview-practice').filter((m) => m.slug === MOCKS_MODULE)
 
   const sections = [
     { href: '#worksheets', label: 'Technical worksheets', count: `${worksheets.scenarios.length} worksheets` },
     { href: '#behavioural', label: 'Behavioural and leadership', count: `${behavioural.scenarios.length} worksheets` },
-    { href: '#mocks', label: 'Mock interviews', count: `${mocks.length} ${mocks.length === 1 ? 'module' : 'modules'}` },
   ]
 
   // Hallmark, Editorial theme (editorial.css): the name and what practice means here, an
-  // index of the three areas, then each area opened by a heavy rule with its pages as
+  // index of the two areas, then each area opened by a heavy rule with its pages as
   // contents rows.
   return (
     <div className="pb-24">
@@ -111,18 +106,6 @@ export default async function PracticePage() {
         <div className="mt-16">
           {behavioural.groups.map((g) => (
             <ContentsGroup key={g.id} group={g} unit={['worksheet', 'worksheets']} />
-          ))}
-        </div>
-      </PracticeSection>
-
-      <PracticeSection
-        id="mocks"
-        title="Mock interviews"
-        description="Full rounds under time, scored against the interviewer rubric. The mock formats and scorecards are in the module below."
-      >
-        <div className="space-y-2">
-          {mocks.map((m) => (
-            <ModuleCard key={m.slug} module={m} />
           ))}
         </div>
       </PracticeSection>
