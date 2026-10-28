@@ -12,7 +12,7 @@
 | PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
 | NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
 
-**Honesty rule.** Your strongest recurring signal is stating limits plainly - the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
+**Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 
 ## 1. What they need versus what they ask for
 
@@ -38,7 +38,7 @@ Write the mechanism first, then one proof.
 
 > "How do you run discovery with a client who doesn't know what they want?"
 
-This is a method question, not a story question. Give the process first, then one illustration.
+It's a method question. Give the process first, then one story to illustrate it.
 
 Write your four moves, in the order you would run them:
 
@@ -69,7 +69,7 @@ Write your four moves, in the order you would run them:
 
 -
 
-**Say out loud.** Week one was spent reducing uncertainty, not producing artifacts.
+**Say out loud.** I spent week one reducing uncertainty, not producing artifacts.
 
 ## 4. Easy for your team versus best for the customer
 
@@ -88,7 +88,7 @@ Write your four moves, in the order you would run them:
 
 **What's being tested:** whether your estimates are calibrated, and whether you notice mid-flight or only at the deadline.
 
-**Likely anchor:** the tier-1 bank migration across APAC/EMEA/AMER. Multi-region scope is where estimates usually break.
+**Likely anchor:** the tier-1 bank migration across APAC/EMEA/AMER. Estimates usually break on multi-region scope.
 
 - Engagement and roughly when:
 - The commitment you made, in specific terms (timeline, workload count, performance target):
@@ -97,4 +97,4 @@ Write your four moves, in the order you would run them:
 - Actual delivery versus the original commitment:
 - What you now ask for in discovery that you didn't ask for then:
 
-**Trap.** Blaming discovery quality without owning that discovery was your job. Say "I didn't ask X," not "they didn't tell me X."
+**Trap.** Blaming poor discovery when discovery was your job. Say "I didn't ask X," not "they didn't tell me X."

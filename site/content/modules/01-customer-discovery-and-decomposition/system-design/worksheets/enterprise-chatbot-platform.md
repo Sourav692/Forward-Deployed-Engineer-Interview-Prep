@@ -1,7 +1,7 @@
 # Enterprise Chatbot Platform - Case Study Worksheet
 
 ## 1. Interview prompt
-As the FDE, you are asked to build an **Enterprise Chatbot Platform** that 40,000 employees will use. What is really pushing the project is that 6,400 of those staff already paste company data into consumer AI tools.
+As the FDE, you are asked to build an **Enterprise Chatbot Platform** that 40,000 employees will use. The project exists because 6,400 of those staff already paste company data into consumer AI tools.
 
 ## 2. Clarify the customer problem
 - Should we call a commercial API, host models ourselves, or mix the two by data class?

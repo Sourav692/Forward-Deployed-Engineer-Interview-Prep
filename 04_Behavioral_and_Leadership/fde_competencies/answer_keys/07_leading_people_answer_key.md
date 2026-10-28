@@ -1,6 +1,6 @@
 # Leading People - Answer Key
 
-Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Deliver them in your own cadence; the wording is a script, not a recitation.
+Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Say them in your own cadence: adapt the wording, don't recite it.
 
 **The three hiring and retention questions (1 to 3) are NEEDS YOUR INPUT.** Nothing in the repo covers hiring or retention. The key gives the shape of a strong answer and the stance your stories imply. If you have never owned hiring, say so and pivot to how you evaluate engineers you have worked alongside or interviewed.
 
@@ -16,7 +16,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Deliver th
 
 **Suggested spine (fill with a real loop you've been part of):**
 
-*"The bar I hold — and the one I'd push a hiring loop toward — is 'prove it, don't assert it.' In my own work I don't say 'we added guardrails'; I reproduce the $500-refund scenario and show exactly why it paused for a human. So in interviews `[FILL: which loop / role / company]` I `[FILL: what you changed — e.g., replaced a whiteboard-only design round with 'defend a claim against a running system', added a question on stating the limits of your own result]`. The signal I care about most is whether a candidate volunteers the edge of what they've proven — the 22-document caveat, the 'no client-confirmed metric' admission — because that's the person I trust in front of a regulated customer. Outcome: `[FILL]`."*
+*"The bar I hold, and the one I'd push a hiring loop toward, is 'prove it, don't assert it.' In my own work I don't say 'we added guardrails'; I reproduce the $500-refund scenario and show exactly why it paused for a human. So in interviews `[FILL: which loop / role / company]` I `[FILL: what you changed — e.g., replaced a whiteboard-only design round with 'defend a claim against a running system', added a question on stating the limits of your own result]`. The signal I care about most is whether a candidate volunteers the edge of what they've proven (the 22-document caveat, the 'no client-confirmed metric' admission), because that's the person I trust in front of a regulated customer. Outcome: `[FILL]`."*
 
 ## 2. Sourcing and evaluating for diverse perspectives
 
@@ -30,7 +30,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Deliver th
 
 **Suggested spine:**
 
-*"Sourcing: `[FILL: real channels you've used — referrals outside your immediate network, non-traditional backgrounds, internal transfers from BI/analyst teams].` Evaluation: I keep the criteria fixed before the loop starts — the same way I agreed the zero-leak gate with compliance before writing code — so the bar can't drift toward 'people like me' after the fact. I weight evidence of judgement (stating limits, catching your own bugs) over pedigree. `[FILL: one concrete example of a hire or debrief where this changed the outcome]`."*
+*"Sourcing: `[FILL: real channels you've used — referrals outside your immediate network, non-traditional backgrounds, internal transfers from BI/analyst teams].` Evaluation: I keep the criteria fixed before the loop starts, the same way I agreed the zero-leak gate with compliance before writing code, so the bar can't drift toward 'people like me' after the fact. I weight evidence of judgement (stating limits, catching your own bugs) over pedigree. `[FILL: one concrete example of a hire or debrief where this changed the outcome]`."*
 
 ## 3. Retaining a high performer at risk of leaving
 
@@ -44,7 +44,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Deliver th
 
 **Suggested spine:**
 
-*"`[FILL: who, role, why they were at risk — bored, blocked, undervalued, under-scoped].` I `[FILL: what you diagnosed — usually it's scope or growth, not money]`. `[FILL: concrete action — gave them the highest-blast-radius piece of the engagement, put them in front of the customer, sponsored them for X]`. Outcome: `[FILL]`."* Your day-to-day doc's stance to anchor on: *"unblock first, protect deep-work time for the decisions that matter, don't be the bottleneck"* — retention is usually the same problem.
+*"`[FILL: who, role, why they were at risk — bored, blocked, undervalued, under-scoped].` I `[FILL: what you diagnosed — usually it's scope or growth, not money]`. `[FILL: concrete action — gave them the highest-blast-radius piece of the engagement, put them in front of the customer, sponsored them for X]`. Outcome: `[FILL]`."* Your day-to-day doc's stance to anchor on: *"unblock first, protect deep-work time for the decisions that matter, don't be the bottleneck"*. Retention is usually the same problem.
 
 ## 4. Diagnosing a report's development area
 
@@ -56,11 +56,11 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Deliver th
 
 > "The signal was in the design questions themselves. Should a filter apply at retrieval or at generation? Technically, both work. The real fork is a policy choice. At retrieval, the model never sees the document. At generation, it sees it and must withhold it. Which one is acceptable depends on what the customer treats as sensitive. Only the customer could decide that. So I stopped resolving those forks myself. I asked the engineer to name the customer decision behind each question and take it to the claims manager. Their design docs then listed open customer decisions with owners. Within weeks they ran their own clarification calls, and their designs stopped drifting from customer intent."
 
-**PARTLY GROUNDED — the "ambiguity vs. technical" coaching pattern from the day-to-day doc.** You must supply the person and the outcome. If you've never had a formal direct report, say "an engineer on my engagement team."
+**PARTLY GROUNDED: the "ambiguity vs. technical" coaching pattern from the day-to-day doc.** You must supply the person and the outcome. If you've never had a formal direct report, say "an engineer on my engagement team."
 
-*"`[FILL: engineer, engagement].` They kept bringing me what looked like technical questions — 'should this filter apply at the retrieval layer or the generation layer?' — and I'd answer them. After a few of these I noticed the pattern: most weren't technical questions at all. They were ambiguous scope the customer hadn't resolved, showing up as a design fork.*
+*"`[FILL: engineer, engagement].` They kept bringing me what looked like technical questions ('should this filter apply at the retrieval layer or the generation layer?'), and I'd answer them. After a few of these I noticed the pattern: most weren't technical questions at all. They were ambiguous scope the customer hadn't resolved, showing up as a design fork.*
 
-*So I stopped answering the instance and started coaching the underlying skill. When they brought the next one, I asked: 'What would the claims manager say if you asked them?' — and sent them to find out. `[FILL: what changed — e.g., they started running their own discovery calls, their designs stopped drifting from customer intent].` `[FILL: outcome — role change, ownership of a workstream, customer-facing time].`*
+*So I stopped answering the instance and started coaching the underlying skill. When they brought the next one, I asked, 'What would the claims manager say if you asked them?' and sent them to find out. `[FILL: what changed — e.g., they started running their own discovery calls, their designs stopped drifting from customer intent].` `[FILL: outcome — role change, ownership of a workstream, customer-facing time].`*
 
 *The diagnosis mattered more than the fix: an engineer who can tell the difference between 'I don't know how' and 'nobody has decided what' is one you can put in front of a customer."*
 
@@ -76,7 +76,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Deliver th
 
 **NEEDS YOUR INPUT.** Suggested spine. If the honest answer is "as a senior IC, my version of this was addressing work that drifted from the customer's intent," say that.
 
-*"`[FILL: who, what the gap was — missed commitments, work that didn't match customer intent, quality below the agreed bar].` I had the conversation early and specific: here is the agreed standard `[e.g., the zero-leak gate / the customer's success bar]`, here is where the work is against it, here is what changes by when. I separated the person from the work — the bar wasn't personal, it was the one we'd agreed with the customer. `[FILL: what support you gave — pairing, design review before code, clearer tickets].` Outcome: `[FILL — improved / moved to a better-fit role / exited]`."*
+*"`[FILL: who, what the gap was — missed commitments, work that didn't match customer intent, quality below the agreed bar].` I had the conversation early and specific: here is the agreed standard `[e.g., the zero-leak gate / the customer's success bar]`, here is where the work is against it, here is what changes by when. I separated the person from the work: the bar was the one we'd agreed with the customer, not a personal one. `[FILL: what support you gave — pairing, design review before code, clearer tickets].` Outcome: `[FILL — improved / moved to a better-fit role / exited]`."*
 
 ## 6. Inspecting work and giving consequences fairly
 
@@ -88,27 +88,27 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Deliver th
 
 > "I make the standard executable wherever possible. On governed retrieval work, the release gate is an evaluation harness over a golden set. One leak fails the release. It applies to every author, including me. When the gate flagged my own reference build, I stopped and traced the case. A claims manager had been reassigned, and my test labels were stale. I had confused 'not relevant to this question' with 'not allowed to see it.' I added a check that keeps those two labels separate. A second check fails if the security documentation drifts from the running policy code. Design review before code covers what the harness cannot: boundaries, data flow and fit to customer intent."
 
-**GROUNDED — from the day-to-day doc + the eval-gate discipline**
+**GROUNDED: from the day-to-day doc + the eval-gate discipline**
 
 *"I inspect at two points, and neither is 'end of sprint.'*
 
-*First, before code: I review designs before they're built, because a wrong turn caught at the design stage costs an hour and caught after it ships costs a customer relationship. Second, daily and lightweight: I review what the team produced with two lenses — is it correct, and does it match what the customer actually asked for, which isn't always what the ticket says. Drift between those two is the thing I most want to catch today rather than next week.*
+*First, before code: I review designs before they're built, because a wrong turn caught at the design stage costs an hour and caught after it ships costs a customer relationship. Second, daily and lightweight: I review what the team produced with two lenses. Is it correct, and does it match what the customer asked for, which isn't always what the ticket says? I most want to catch drift between those two today rather than next week.*
 
-*For fairness, I make the standard mechanical wherever I can, so consequences follow from the bar, not from my mood. On the governed RAG work the release gate is a harness: one leak on the test set and it doesn't ship, whoever wrote it. I hold myself to the same gate — when it flagged a leak on my own reference build, I stopped, traced it, and wrote it up, including that it turned out to be a false alarm from stale test data. Positive consequences are the same in reverse: the engineer whose design survives review gets the next higher-blast-radius piece and more customer-facing time. That's the reward that actually matters on an engagement team."*
+*For fairness, I make the standard mechanical wherever I can, so consequences follow from the bar, not from my mood. On the governed RAG work the release gate is a harness: one leak on the test set and it doesn't ship, whoever wrote it. I hold myself to the same gate. When it flagged a leak on my own reference build, I stopped, traced it, and wrote it up, including that it turned out to be a false alarm from stale test data. Positive consequences work the same way in reverse: the engineer whose design survives review gets the next higher-blast-radius piece and more customer-facing time. On an engagement team, that's the reward that counts."*
 
 ## 7. Delegating something you'd rather have done
 
 **CEO-ready answer.**
 
-> "The work I keep is the work only I should do. Everything else, someone else owns, or I become the bottleneck. At a large Asian life insurer, I wanted to keep the evaluation dataset. It was interesting work. I handed it to a junior engineer instead. Two things made that safe. First, a design review before any code existed, so a wrong turn cost an hour. Second, a ticket that carried the customer's intent, not just the task. She now owns that area. My rule: if I'm the only person who can make a decision, that's my failure, not my value."
+> "The work I keep is the work only I should do. Everything else, someone else owns, or I become the bottleneck. At a large Asian life insurer, I wanted to keep the evaluation dataset. It was interesting work. I handed it to a junior engineer instead. Two things made that safe. First, a design review before any code existed, so a wrong turn cost an hour. Second, a ticket that carried the customer's intent as well as the task. She now owns that area. My rule: if I'm the only person who can make a decision, that's my failure, not my value."
 
 **Technical-interviewer answer.**
 
-> "I kept the decisions with the largest blast radius: the access model and the release gate. The evaluation dataset was high-leverage but recoverable, so it was safe to hand off. The ticket defined the case schema first: question, user role, expected sources, sources that must not appear. The design review agreed coverage per business unit and the pass rule before any case was written. Leak cases were hard pass or fail. Answer quality was scored separately, as a softer check. I reviewed her first batch of cases, not her code. After that, her changes went through normal review like anyone else's. The cost was a slower first week. The result is an evaluation set someone else owns and extends without me."
+> "I kept the decisions with the largest blast radius: the access model and the release gate. The evaluation dataset was high-value but recoverable, so it was safe to hand off. The ticket defined the case schema first: question, user role, expected sources, sources that must not appear. The design review agreed coverage per business unit and the pass rule before any case was written. Leak cases were hard pass or fail. Answer quality was scored separately, as a softer check. I reviewed her first batch of cases, not her code. After that, her changes went through normal review like anyone else's. The cost was a slower first week. The result is an evaluation set someone else owns and extends without me."
 
-**PARTLY GROUNDED — day-to-day doc.** `[FILL: the specific piece and who took it]`
+**PARTLY GROUNDED: day-to-day doc.** `[FILL: the specific piece and who took it]`
 
-*"On an engagement like the one at a large Asian life insurer there's a temptation to keep the interesting work — the orchestration layer, the access-control design — and hand off the rest. I try to invert that: the work I keep is the work only I should be doing, meaning the highest-blast-radius decisions where being wrong fails silently. Everything else, someone on the team should own, or I become the bottleneck.*
+*"On an engagement like the one at a large Asian life insurer there's a temptation to keep the interesting work (the orchestration layer, the access-control design) and hand off the rest. I try to invert that. The work I keep is the work only I should be doing: the highest-blast-radius decisions, where being wrong fails silently. Everything else, someone on the team should own, or I become the bottleneck.*
 
 *`[FILL: what you delegated — e.g., a specialist agent, the evaluation dataset, the Genie Space curation — and to whom].` The way I make delegation safe isn't checking the code afterwards; it's a design review before the code exists, so the cost of a wrong turn is an hour, and a ticket that carries the customer's intent, not just the task. `[FILL: outcome — and ideally that the person now owns that area].`*
 

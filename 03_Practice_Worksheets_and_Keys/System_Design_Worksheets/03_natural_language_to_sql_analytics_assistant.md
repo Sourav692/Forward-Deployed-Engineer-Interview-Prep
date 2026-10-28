@@ -1,7 +1,7 @@
 # Natural-Language-to-SQL Analytics Assistant - Case Study Worksheet
 
 ## 1. Interview prompt
-Your GenAI FDE task is a **Natural-Language-to-SQL Analytics Assistant**. Every week, executives repeat the same questions, and analysts turn each one into a query by hand. The worst outcome is not broken SQL. It is SQL that runs cleanly but answers a different business question from the one asked.
+Your GenAI FDE task is a **Natural-Language-to-SQL Analytics Assistant**. Every week, executives repeat the same questions, and analysts turn each one into a query by hand. Broken SQL is bad. SQL that runs cleanly but answers a different business question from the one asked is worse.
 
 ## 2. Clarify the customer problem
 - Who defines each metric, and how often does a definition change?

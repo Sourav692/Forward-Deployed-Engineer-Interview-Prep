@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T05:04:20.341Z",
+  "generatedAt": "2026-10-28T06:40:13.446Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -14,70 +14,70 @@
               "order": 1,
               "title": "Internal Knowledge Assistant for Enterprise Support",
               "minutes": 3,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "sales-copilot",
               "order": 2,
               "title": "Sales Copilot for Account Executives",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "financial-compliance-reviewer",
               "order": 3,
               "title": "Financial Compliance Review Copilot",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "healthcare-prior-auth-assistant",
               "order": 4,
               "title": "Healthcare Prior Authorisation Assistant",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "legal-contract-copilot",
               "order": 5,
               "title": "Legal Contract Review Copilot",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "sre-triage-agent",
               "order": 6,
               "title": "SRE Incident Triage Agent",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "multi-tenant-saas-support",
               "order": 7,
               "title": "Multi-Tenant SaaS Support Assistant",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "retail-demand-explainer",
               "order": 8,
               "title": "Retail Demand Forecast Explanation Assistant",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "service-now-ticket-agent",
               "order": 9,
               "title": "ServiceNow Ticket Agent",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "executive-dashboard-copilot",
               "order": 10,
               "title": "Executive Dashboard Assistant",
               "minutes": 2,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             }
           ]
         },
@@ -91,28 +91,28 @@
               "order": 1,
               "title": "Enterprise Knowledge Assistant with RAG",
               "minutes": 4,
-              "updated": "2026-10-12"
+              "updated": "2026-10-28"
             },
             {
               "slug": "secure-multi-tenant-ai-platform",
               "order": 2,
               "title": "Secure Multi-Tenant AI Platform",
               "minutes": 3,
-              "updated": "2026-10-12"
+              "updated": "2026-10-28"
             },
             {
               "slug": "natural-language-to-sql-analytics-assistant",
               "order": 3,
               "title": "Natural-Language-to-SQL Analytics Assistant",
               "minutes": 4,
-              "updated": "2026-10-12"
+              "updated": "2026-10-28"
             },
             {
               "slug": "ai-customer-support-automation",
               "order": 4,
               "title": "Customer Support Automation",
               "minutes": 3,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "ai-system-for-an-air-gapped-environment",
@@ -126,21 +126,21 @@
               "order": 6,
               "title": "Evaluation and Release Gating",
               "minutes": 4,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "high-volume-batch-inference-system",
               "order": 7,
               "title": "High-Volume Batch Inference Pipeline",
               "minutes": 4,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "tool-using-ai-agent-with-safety-controls",
               "order": 8,
               "title": "Tool-Using Agent with Safety Controls",
               "minutes": 4,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "reliable-workflow-orchestration-system",
@@ -154,7 +154,7 @@
               "order": 10,
               "title": "Observability for a Customer-Facing AI Application",
               "minutes": 3,
-              "updated": "2026-10-12"
+              "updated": "2026-10-28"
             },
             {
               "slug": "configurable-platform-customer-specific-workflows",
@@ -187,49 +187,49 @@
               "order": 1,
               "title": "Customer Focus and Discovery",
               "minutes": 4,
-              "updated": "2026-10-08"
+              "updated": "2026-10-28"
             },
             {
               "slug": "communication-and-influence",
               "order": 2,
               "title": "Communication and Influence",
               "minutes": 5,
-              "updated": "2026-10-08"
+              "updated": "2026-10-28"
             },
             {
               "slug": "pushback-and-saying-no",
               "order": 3,
               "title": "Pushback and Saying No",
               "minutes": 4,
-              "updated": "2026-10-08"
+              "updated": "2026-10-28"
             },
             {
               "slug": "delivery-under-pressure",
               "order": 4,
               "title": "Delivery Under Pressure",
               "minutes": 4,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "ownership-standards-and-failure",
               "order": 5,
               "title": "Ownership, Standards, and Failure",
               "minutes": 6,
-              "updated": "2026-10-13"
+              "updated": "2026-10-28"
             },
             {
               "slug": "scale-beyond-yourself",
               "order": 6,
               "title": "Scale Beyond Yourself",
               "minutes": 4,
-              "updated": "2026-10-08"
+              "updated": "2026-10-28"
             },
             {
               "slug": "leading-people",
               "order": 7,
               "title": "Leading People",
               "minutes": 5,
-              "updated": "2026-10-12"
+              "updated": "2026-10-28"
             }
           ]
         }
@@ -1496,5 +1496,5 @@
       ]
     }
   ],
-  "storyBankUpdated": "2026-10-11"
+  "storyBankUpdated": "2026-10-28"
 }

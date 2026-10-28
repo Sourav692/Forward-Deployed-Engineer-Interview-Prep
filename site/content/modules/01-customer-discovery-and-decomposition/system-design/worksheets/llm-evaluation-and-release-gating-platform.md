@@ -1,7 +1,7 @@
 # LLM Evaluation and Release-Gating Platform - Case Study Worksheet
 
 ## 1. Interview prompt
-You are the FDE asked to build an **Evaluation and Release Gating**. Thirty AI applications will share it, and each team uses it to judge whether a change is safe to ship. If teams stop trusting the gate, they will simply go around it.
+You are the FDE asked to build an **Evaluation and Release Gating** platform. Thirty AI applications will share it, and each team uses it to judge whether a change is safe to ship. If teams stop trusting the gate, they will go around it.
 
 ## 2. Clarify the customer problem
 - Which changes count as a release, and what proof does each one need?
@@ -72,7 +72,7 @@ Start from a rendered diagram and shape it to fit this case. Cover each part bel
 ## 10. Weak vs strong answer
 **Weak:** "I'd put up a dashboard that shows eval runs and scorecards."
 
-**Strong:** "I'd store each candidate and its baseline as fixed, versioned artifacts. I'd measure the difference against thresholds set per application. Missing evidence fails the gate. A sample too small to call means hold, not approve. And before any of that counts, I'd check the graders agree with humans."
+**Strong:** "I'd store each candidate and its baseline as fixed, versioned artifacts. I'd measure the difference against thresholds set per application. Missing evidence fails the gate. A sample too small to call means hold, not approve. Before any of that counts, I'd check the graders agree with humans."
 
 ## 11. Candidate scorecard
 | Area | 1 | 3 | 5 | Score |

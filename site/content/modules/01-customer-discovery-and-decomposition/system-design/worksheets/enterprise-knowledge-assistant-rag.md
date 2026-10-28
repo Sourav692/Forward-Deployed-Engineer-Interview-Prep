@@ -1,7 +1,7 @@
 # Enterprise Knowledge Assistant with RAG - Case Study Worksheet
 
 ## 1. Interview prompt
-You are the FDE on a GenAI build: an **Enterprise Knowledge Assistant with RAG**. Staff want answers drawn from Drive, SharePoint, Slack, wikis and tickets. Retrieval quality matters, but the risk that can sink the project is permissions: nobody may see content they could not open in the source.
+You are the FDE on a GenAI build: an **Enterprise Knowledge Assistant with RAG**. Staff want answers drawn from Drive, SharePoint, Slack, wikis and tickets. Retrieval quality matters, but permissions can sink the project. Nobody may see content they could not open in the source.
 
 ## 2. Clarify the customer problem
 - When two sources disagree, which one wins, and who decides?

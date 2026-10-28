@@ -1,7 +1,7 @@
 # ServiceNow Ticket Automation Agent - Case Study Worksheet
 
 ## 1. Interview prompt
-Design a GenAI FDE solution for **ServiceNow Ticket Automation Agent**. The customer has ambiguous requirements, sensitive data, and expects a production rollout, not a demo.
+Design a GenAI FDE solution for **ServiceNow Ticket Automation Agent**. The requirements are vague, the data is sensitive, and the customer expects a production rollout.
 
 ## 2. Clarify the customer problem
 - What business process is broken today?

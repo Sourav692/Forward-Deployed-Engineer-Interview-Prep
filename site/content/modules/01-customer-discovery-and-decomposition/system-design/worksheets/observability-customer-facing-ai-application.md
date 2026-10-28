@@ -1,7 +1,7 @@
 # Observability for a Customer-Facing AI Application - Case Study Worksheet
 
 ## 1. Interview prompt
-Your brief as the FDE is to plan and put in place proper **Observability of a Customer-Facing AI Application**. According to the customer, the AI is slow, it is sometimes wrong, and no one can say why. Before choosing what to capture, settle what you will refuse to capture.
+As the FDE, you plan and build **Observability of a Customer-Facing AI Application**. According to the customer, the AI is slow, it is sometimes wrong, and no one can say why. Before choosing what to capture, settle what you will refuse to capture.
 
 ## 2. Clarify the customer problem
 - When people say slow, which percentile do they mean, and on which path?
@@ -62,7 +62,7 @@ Start from a rendered diagram and shape it to fit this case. Cover each part bel
 - Exporting telemetry is what causes the outage
 
 ## 9. Rollout plan
-1. Write down the SLOs users actually feel before anything else.
+1. Write down the SLOs users feel before anything else.
 2. Turn "slow" and "wrong" into things you can measure.
 3. Add instrumentation to one critical path.
 4. Check every export for raw content.

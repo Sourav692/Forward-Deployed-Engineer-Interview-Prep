@@ -12,7 +12,7 @@
 | PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
 | NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
 
-**Honesty rule.** Your strongest recurring signal is stating limits plainly - the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
+**Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 
 ### The four beats of a credible failure answer
 
@@ -22,8 +22,8 @@ Most of the questions below are failure-shaped. Airtime matters more than conten
 |---|---|---|
 | Own the call | ~10% | One sentence. No throat-clearing. |
 | What you missed | ~40% | The beat candidates skip. Skipping it reads as evasion. |
-| The correction | ~25% | What you actually did once you knew. |
-| What changed | ~25% | The durable change. This is what separates senior from mid. |
+| The correction | ~25% | What you did once you knew. |
+| What changed | ~25% | The durable change. It separates senior from mid. |
 
 ## 1. A project that failed or missed expectations
 
@@ -120,9 +120,9 @@ Write the mechanism first, then one proof.
 
 **Also asked as:** "Tell me about a time you received harsh or unexpected criticism. How did you respond?"
 
-**Anchor:** "bring compliance into the first round of discovery" is listed in your material on a large Asian life insurer as a lesson; frame it as feedback only if it actually came from a stakeholder.
+**Anchor:** "bring compliance into the first round of discovery" is listed in your material on a large Asian life insurer as a lesson; frame it as feedback only if a stakeholder gave it to you.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:
@@ -185,7 +185,7 @@ Write the mechanism first, then one proof.
 
 **Anchor:** your material implies the honest answer; validate it.
 
-**Partly grounded** - the spine is real, the marked details are not. Supply them below.
+**Partly grounded.** The spine is real; the marked details are not. Supply them below.
 
 - Situation:
 - Task:
