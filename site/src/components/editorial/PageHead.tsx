@@ -6,10 +6,10 @@ import type { TwinLink } from '@/lib/twins'
 export type PageFact = { term: string; value: ReactNode }
 
 /**
- * The head of a casebook or practice page (Hallmark, Editorial theme): the area as the
+ * The head of a casebook, practice or interview page (Hallmark, Editorial theme): the area as the
  * one green tag, the title as a condensed head, an optional standfirst, then the facts
  * as a ruled spec line with the author and last-updated date, never a dot-joined meta
- * string. `children` (Before you start, a note) sit under the report link.
+ * string. `children` (Before you start, a note, a status badge) sit under the report link.
  * Styles are in editorial.css (`cb-case-head`, `cb-facts`, `cb-tag`).
  */
 export function PageHead({
@@ -28,8 +28,8 @@ export function PageHead({
   facts: PageFact[]
   updated?: string | null
   twins?: TwinLink[]
-  /** The page the report is about: its title and path go in the email subject. */
-  report: { title: string; path: string }
+  /** The page the report is about: its title and path go in the email subject. Index pages have none. */
+  report?: { title: string; path: string }
   children?: ReactNode
 }) {
   const all: PageFact[] = [
@@ -51,11 +51,13 @@ export function PageHead({
         ))}
       </dl>
       <TwinLinks links={twins} />
-      <p className="cb-label mt-3 text-[0.875rem]">
-        <a href={reportHref(report)} className="underline">
-          Report an issue
-        </a>
-      </p>
+      {report && (
+        <p className="cb-label mt-3 text-[0.875rem]">
+          <a href={reportHref(report)} className="underline">
+            Report an issue
+          </a>
+        </p>
+      )}
       {children}
     </header>
   )

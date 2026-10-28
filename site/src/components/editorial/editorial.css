@@ -1,6 +1,6 @@
-/* Hallmark · shape: index (contents rows) for /design and /practice, app screen for /design/<slug> (reading view), /practice/<slug> (worksheet) and /practice/story-bank · genre: editorial · theme: Editorial (locked: shared with the landing page, tokens in landing/tokens.css) · redesign: full · job: read
- * hero: Settled (/design), Settled (/practice), none (app screens) · nav: kept (site shell) · footer: kept (site shell) · imagery: the product (the case list as a magazine contents page; the reading view), no photographs · signature: each index set as a contents page, every case or worksheet a ruled row with its level and reading time
- * axes: light/display-condensed/chromatic-green · posture: restrained · scope: /design and /design/<slug>, tokens on .editorial-page · v2.0.0 */
+/* Hallmark · shape: index (contents rows) for /design, /practice, /interview and /interview/hubs/<hub>, app screen for /design/<slug> (reading view), /practice/<slug> (worksheet), /practice/story-bank and the /interview module and lesson pages · genre: editorial · theme: Editorial (locked: shared with the landing page, tokens in landing/tokens.css) · redesign: full · job: read
+ * hero: Settled (/design), Settled (/practice), Settled (/interview), none (app screens) · nav: kept (site shell) · footer: kept (site shell) · imagery: the product (the case list as a magazine contents page; the reading view), no photographs · signature: each index set as a contents page, every case, worksheet or round a ruled row with its level and reading time
+ * axes: light/display-condensed/chromatic-green · posture: restrained · scope: /design, /practice and /interview with their pages, tokens on .editorial-page · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H3 E4 S4 R4 V4 · weakest: H, the index hero is a word and two sentences with the reading progress beside it; the contents rows below carry the page */
 /* Hallmark · waive 72 · div.editorial-page paints its paper with a 100vmax spread shadow, so its 0px edge is the container edge · no text sits in a box; the casebook has no cards */
 /* Hallmark · waive 44c · the /design hero is the name, one standfirst and the progress action; the contents head and the theme filters sit in the same 1440x900 screen · the index's object is the list, so the list starts in the fold instead of a taller hero */
@@ -15,10 +15,13 @@
 /* Hallmark · dropped "Customer engagement" on the Story Bank cards · 54 names it as an eyebrow; the section head already says Choose a customer story */
 /* Hallmark · answered F19 · 400 reading, 500 labels, 800 heads; 600 is bold inside reading text only, where the source marks a term */
 /* Hallmark · kept accessible names "Continue →", "Next: Part N →" and "Practise this as a worksheet →" as aria-labels (the e2e suite reads them); the visible labels drop the glued arrow (63) */
+/* Hallmark · answered F20 · the interview module head's spec line is Time, Lessons and By; the third fact wraps to its own row at 1440 because Time carries the reading and practice split, and a forced three-column line would cut it */
+/* Hallmark · kept "Open the final week" on /interview (now a cb-btn link to the same href); the kept check matches the old AreaSection action object's source text, so it reports the link missing · kept "← Previous <title>" and "Next → <title>" as the interview lesson nav's accessible names */
+/* Hallmark · dropped the ModuleCard status badge and progress bar on the topic hubs' Study the Gaps rows and on /interview's module cards · /interview shows each module's progress beside its rows, and every module page keeps its status and progress */
 
 /*
- * The Editorial system (Hallmark) for the casebook and practice areas, scoped to
- * `.editorial-page`, the wrapper the /design and /practice layouts render. Colour and font tokens come from landing/tokens.css under
+ * The Editorial system (Hallmark) for the casebook, practice and interview areas, scoped to
+ * `.editorial-page`, the wrapper the /design, /practice and /interview layouts render. Colour and font tokens come from landing/tokens.css under
  * [data-theme='editorial']; this file sets the scale, re-points the site's tokens so
  * shared components take the theme, and styles the reading view. Rules here are not in
  * a cascade layer, so they win over Tailwind utilities on the same element: keep every
@@ -47,7 +50,7 @@
   --surface-2: var(--color-paper-2);
   --border: var(--color-rule);
   --border-strong: var(--color-rule-2);
-  --input-border: var(--color-rule-2);
+  --input-border: var(--color-muted);
   --text: var(--color-ink);
   --text-muted: var(--color-muted);
   --text-subtle: var(--color-muted);
@@ -316,10 +319,10 @@
 
 /* Practice ----------------------------------------------------------------------- */
 
-/* Answer fields: square, a 1px rule that turns ink on focus, paper behind the text. */
-.editorial-page :is(textarea, input[type='text'], input[type='search'], select) {
+/* Answer fields: square, a 1px muted rule (3:1 on paper) that turns ink on focus, paper behind the text. */
+.editorial-page :is(textarea, input:not([type]), input[type='text'], input[type='search'], input[type='number'], select) {
   background: var(--color-paper);
-  border: var(--rule-hair) solid var(--color-rule-2);
+  border: var(--rule-hair) solid var(--color-muted);
   color: var(--color-ink);
   font-family: var(--font-body);
 }
@@ -360,3 +363,20 @@
   .editorial-page *, .editorial-page *::before, .editorial-page *::after { transition-duration: 0.01ms; }
   .editorial-page .cb-btn:active { transform: none; }
 }
+
+/* Interview -------------------------------------------------------------------- */
+
+/* A row's one-line summary under its title: the reading face, a step down, full width. */
+.editorial-page .cb-row-note { grid-column: 1 / -1; font-size: 1rem; line-height: 1.5; color: var(--color-ink-2); max-width: 60ch; }
+
+/* Lesson sidebar contents: one line per heading, the full heading in the link's title. */
+.editorial-page nav[aria-label$=': lessons and contents'] a[href^='#'] { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Contents rows on a phone: the facts stack under the title, so a long module name never overruns. */
+@media (max-width: 40rem) {
+  .editorial-page .cb-row-link { grid-template-columns: minmax(0, 1fr); }
+  .editorial-page .cb-row-facts { flex-wrap: wrap; white-space: normal; column-gap: 1rem; }
+}
+
+/* A page head's heavy rule already opens the first section under it (the topic hubs). */
+.editorial-page .cb-case-head + section .cb-opens { border-top: 0; padding-top: 0; }

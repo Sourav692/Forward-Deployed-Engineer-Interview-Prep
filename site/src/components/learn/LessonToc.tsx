@@ -62,6 +62,8 @@ export function LessonToc({ headings }: { headings: TocHeading[] }) {
             <a
               href={`#${h.id}`}
               aria-current={isActive ? 'location' : undefined}
+              // The full heading as a tooltip, for themes that cut the link to one line.
+              title={h.html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;/g, '’').replace(/&quot;/g, '"')}
               className={cx(
                 '-ml-px block rounded-r-sm border-l py-1 pl-3 pr-1 text-[0.8125rem] leading-snug transition-colors motion-reduce:transition-none',
                 isActive

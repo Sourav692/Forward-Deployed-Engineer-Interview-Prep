@@ -21,7 +21,7 @@ export async function ReviewLinks({ lessonSlug }: { lessonSlug: string }) {
         <span className="font-semibold text-text">{label}</span>{' '}
         {refs.map((r, i) => (
           <span key={scenarioHref(r)}>
-            {i > 0 && <span aria-hidden> · </span>}
+            {i > 0 && ', '}
             <Link href={scenarioHref(r)} className="text-accent underline underline-offset-2 hover:text-accent-hover">
               {qualifiedTitle(r)}
             </Link>
