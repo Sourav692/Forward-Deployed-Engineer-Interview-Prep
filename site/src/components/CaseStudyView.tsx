@@ -201,31 +201,23 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
     return (
       <div key={p.tab} hidden={active !== p.tab}>
         {d.tab === 'intro' && resume && (
-          <div className="no-print mb-6 flex flex-wrap items-center gap-3 rounded-lg border border-accent/40 bg-accent-soft/50 px-4 py-3 text-[0.875rem]">
+          <div className="cb-resume no-print">
             <span>You were reading {partName(resume)}.</span>
-            <button
-              type="button"
-              onClick={() => selectTab(resume, true)}
-              className="rounded-md bg-accent px-3 py-1.5 font-semibold text-white hover:bg-accent-hover dark:text-bg"
-            >
-              Continue →
+            <button type="button" onClick={() => selectTab(resume, true)} aria-label="Continue →" className="cb-btn cb-btn--primary">
+              Continue
             </button>
           </div>
         )}
         <ReadingPanel doc={p.doc} drawDiagrams={visited.has(p.tab)} toc={!chapters} title={!chapters} />
         <div id={`end-${p.tab}`} aria-hidden />
 
-        <div className="no-print mt-12 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-surface p-4">
+        <div className="cb-part-foot no-print">
           {d.tab !== 'intro' && (
             <button
               type="button"
               onClick={() => toggleRead(p.tab)}
               aria-pressed={done}
-              className={`flex items-center gap-2 rounded-md px-3.5 py-2 text-[0.875rem] font-semibold transition-colors ${
-                done
-                  ? 'bg-success-soft text-success hover:opacity-90'
-                  : 'bg-accent text-white hover:bg-accent-hover dark:text-bg'
-              }`}
+              className={`cb-btn ${done ? 'cb-btn--done' : 'cb-btn--primary'}`}
             >
               {done && <Check className="h-4 w-4" />}
               {done ? `${name} marked as read` : `Mark ${name} as read`}
@@ -240,7 +232,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
             <button
               type="button"
               onClick={() => window.print()}
-              className="rounded-md border border-border px-3.5 py-2 text-[0.875rem] font-semibold transition-colors hover:border-border-strong"
+              className="cb-btn"
             >
               Print or save as PDF
             </button>
@@ -250,18 +242,20 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
               <button
                 type="button"
                 onClick={() => selectTab(d.parts[pi - 1].tab, true)}
-                className="rounded-md border border-border px-3.5 py-2 text-[0.875rem] font-semibold transition-colors hover:border-border-strong"
+                aria-label={`← Part ${pi}`}
+                className="cb-btn"
               >
-                ← Part {pi}
+                Previous: Part {pi}
               </button>
             )}
             {next && (
               <button
                 type="button"
                 onClick={() => selectTab(next.tab, true)}
-                className="rounded-md border border-border px-3.5 py-2 text-[0.875rem] font-semibold transition-colors hover:border-border-strong"
+                aria-label={`${d.tab === 'intro' ? 'Start' : 'Next'}: ${next.label} →`}
+                className="cb-btn cb-btn--primary"
               >
-                {d.tab === 'intro' ? 'Start' : 'Next'}: {next.label} →
+                {d.tab === 'intro' ? 'Start' : 'Next'}: {next.label}
               </button>
             )}
           </div>
@@ -286,11 +280,16 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
         {/* What this tab is for, so a reader landing on it from search knows where
             it sits in the case — the tab row alone does not say. */}
         {d.purpose && d.tab !== 'intro' && current <= 0 && (
-          <p className="no-print mb-6 max-w-3xl rounded-lg bg-surface-2/60 px-4 py-2.5 text-[0.875rem] leading-relaxed text-muted">
-            <span className="font-semibold text-text">{d.label}</span> · {d.minutes} min
-            {split && ` in ${d.parts.length} parts`}
-            {d.optional && ' · optional'} — {d.purpose}
-          </p>
+          <div className="cb-purpose no-print">
+            <p className="cb-purpose-label">
+              <strong>{d.label}</strong>
+              <span>
+                {d.minutes} min{split && ` in ${d.parts.length} parts`}
+              </span>
+              {d.optional && <span>Optional</span>}
+            </p>
+            <p className="cb-purpose-text">{d.purpose}</p>
+          </div>
         )}
         {d.parts.map((p, pi) => part(d, di, p, pi))}
       </div>
@@ -304,7 +303,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
     return (
       <article className="case-chapters">
         <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
-          <div className="no-print sticky top-[3.75rem] z-20 -mx-4 mb-6 border-b border-border bg-bg/95 px-4 backdrop-blur-md lg:top-20 lg:z-auto lg:mx-0 lg:mb-0 lg:self-start lg:border-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none">
+          <div className="no-print sticky top-[3.75rem] z-20 -mx-4 mb-6 border-b border-border bg-bg px-4 lg:top-20 lg:z-auto lg:mx-0 lg:mb-0 lg:self-start lg:border-0 lg:bg-transparent lg:px-0">
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
@@ -313,7 +312,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
               className="flex w-full items-center justify-between gap-3 py-3 text-left text-[0.875rem] font-semibold lg:hidden"
             >
               <span>
-                Contents <span className="font-normal text-muted">· {activeLabel}</span>
+                Contents: <span className="text-muted">{activeLabel}</span>
               </span>
               <span aria-hidden className={`transition-transform ${menuOpen ? 'rotate-180' : ''}`}>▾</span>
             </button>
@@ -335,11 +334,11 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                         minutes={d.tab === 'intro' ? undefined : d.minutes}
                       >
                         <span className="font-medium">{d.label}</span>
-                        {d.optional && <span className="ml-1.5 text-[0.75rem] font-normal text-subtle">optional</span>}
+                        {d.optional && <span className="ml-1.5 text-[0.8125rem] text-muted">optional</span>}
                       </NavItem>
                       {here && !split && <SectionLinks doc={d.parts[0].doc} />}
                       {split && (here || !d.optional) && (
-                        <ul className="mb-1 ml-3 space-y-0.5 border-l border-border pl-2">
+                        <ul className="mb-1 ml-3 space-y-0.5 pl-1">
                           {d.parts.map((p, pi) => (
                             <li key={p.tab}>
                               <NavItem
@@ -361,7 +360,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
                 })}
               </ul>
               {hydrated && (
-                <p className="mt-4 border-t border-border pt-3 text-[0.75rem] tabular-nums text-subtle">
+                <p className="cb-label mt-4 border-t border-border pt-3 text-[0.8125rem] text-muted">
                   {counted.filter(isRead).length} of {counted.length} read
                 </p>
               )}
@@ -387,7 +386,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
       {documents.length > 1 && (
       <div
         ref={tabsRef}
-        className="no-print sticky top-[3.75rem] z-20 -mx-4 mb-8 border-y border-border bg-bg/85 px-4 backdrop-blur-md sm:mx-0 sm:rounded-lg sm:border sm:px-2"
+        className="no-print sticky top-[3.75rem] z-20 -mx-4 mb-8 border-y border-border bg-bg px-4 sm:mx-0 sm:rounded-lg sm:border sm:px-2"
       >
         <div role="tablist" aria-label="Case study documents" className="flex gap-1 overflow-x-auto py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {documents.map((d) => {
@@ -473,19 +472,14 @@ function NavItem({
       onClick={onClick}
       aria-current={current === true ? 'page' : undefined}
       aria-label={label}
-      className={`flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-left transition-colors ${
-        current === true
-          ? 'bg-accent-soft text-accent'
-          : current === 'within'
-            ? 'text-text'
-            : 'text-muted hover:bg-surface-2 hover:text-text'
-      }`}
+      data-state={current === 'within' ? 'within' : undefined}
+      className="cb-nav-item"
     >
       <span className="min-w-0 flex-1">{children}</span>
       {done ? (
         <Check className="h-3.5 w-3.5 shrink-0 text-success" />
       ) : (
-        minutes !== undefined && <span className="shrink-0 text-[0.75rem] tabular-nums text-subtle">{minutes} min</span>
+        minutes !== undefined && <span className="cb-nav-min">{minutes} min</span>
       )}
     </button>
   )
@@ -520,6 +514,7 @@ export function ReadingPanel({
                 <li key={s.id}>
                   <a
                     href={`#${s.id}`}
+                    title={s.title!.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&')}
                     className="-ml-px block border-l border-transparent py-1 pl-3 text-[0.8125rem] leading-snug text-muted transition-colors hover:border-accent hover:text-text"
                     dangerouslySetInnerHTML={{ __html: s.title! }}
                   />

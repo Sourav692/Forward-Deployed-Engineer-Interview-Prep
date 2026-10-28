@@ -42,9 +42,12 @@ function useProgress(scenarios: ScenarioRef[]) {
 export function ModuleProgress({
   scenarios,
   readingNoun = 'case studies',
+  plain = false,
 }: {
   scenarios: ScenarioRef[]
   readingNoun?: string
+  /** "Start: <title>" as the casebook's ink block (`cb-btn` in casebook.css), whose theme keeps arrows out of labels. */
+  plain?: boolean
 }) {
   const progress = useProgress(scenarios)
   // Reading modules count pages read, not worksheets mastered.
@@ -88,9 +91,11 @@ export function ModuleProgress({
       {next && (
         <Link
           href={scenarioHref(next)}
-          className="rounded-md bg-accent px-3.5 py-2 text-[0.875rem] font-semibold text-white transition-colors dark:text-bg hover:bg-accent-hover"
+          className={plain ? 'cb-btn cb-btn--primary' : 'rounded-md bg-accent px-3.5 py-2 text-[0.875rem] font-semibold text-white transition-colors dark:text-bg hover:bg-accent-hover'}
         >
-          {done + started > 0 ? 'Continue' : 'Start'} → {next.title}
+          {done + started > 0 ? 'Continue' : 'Start'}
+          {plain ? ': ' : ' → '}
+          {next.title}
         </Link>
       )}
     </div>

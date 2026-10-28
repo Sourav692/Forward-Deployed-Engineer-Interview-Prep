@@ -1,11 +1,11 @@
 import { familyMeta, getRelated } from '@/lib/content'
+import { AUTHOR, MODES, formatDate, reportHref } from '@/lib/editorial'
 import { documentsOf, hasChapters, scenarioHref, type CaseDocument, type CaseStudy } from '@/lib/scenario'
 import { learningResourceJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
-import { Byline } from '@/components/Byline'
 import { CaseStudyView } from '@/components/CaseStudyView'
 import { Breadcrumbs, type Crumb } from '@/components/learn/Breadcrumbs'
-import { BeforeYouStart, Fact, MetaStrip, TwinLinks, WhereNext } from '@/components/PageIntro'
+import { BeforeYouStart, Fact, TwinLinks, WhereNext } from '@/components/PageIntro'
 import { pageTwins } from '@/lib/twins'
 
 export const caseDescription = (study: CaseStudy) =>
@@ -33,7 +33,7 @@ export async function CaseStudyPage({
   const minutes = documents.reduce((sum, d) => sum + d.minutes, 0)
 
   return (
-    <div className="py-10">
+    <div className="pb-20 pt-8">
       <JsonLd
         data={learningResourceJsonLd({
           name: study.title,
@@ -46,27 +46,41 @@ export async function CaseStudyPage({
       />
       <Breadcrumbs items={crumbs} />
 
-      <header className="mb-6 max-w-3xl">
-        <div className="mb-2 text-[0.8125rem] font-semibold text-accent">{study.ref.trackTitle}</div>
-        <h1 className="text-[2rem] font-bold leading-[1.2] tracking-[-0.02em]">{study.title}</h1>
-        <Byline updated={study.ref.updated} report={{ title: study.title, path: scenarioHref(study.ref) }} />
+      {/* Hallmark, Editorial theme (casebook.css): the theme as the one green tag, the
+          title as a condensed head, the facts as a ruled spec line, no dot-joined meta. */}
+      <header className="cb-case-head">
+        <span className="cb-tag">{study.ref.trackTitle}</span>
+        <h1 className="mt-4">{study.title}</h1>
+        <dl className="cb-facts">
+          <div>
+            <dt>Kind</dt>
+            <dd>{MODES[meta.mode].label}</dd>
+          </div>
+          <div>
+            <dt>Level</dt>
+            <dd>{meta.difficulty}</dd>
+          </div>
+          <div>
+            <dt>Reading time</dt>
+            <dd>{documents.length > 1 ? `${documents.length} documents, ${minutes} min in total` : `${minutes} min`}</dd>
+          </div>
+          <div>
+            <dt>By</dt>
+            <dd>{AUTHOR}</dd>
+          </div>
+          {study.ref.updated && (
+            <div>
+              <dt>Last updated</dt>
+              <dd>{formatDate(study.ref.updated)}</dd>
+            </div>
+          )}
+        </dl>
         <TwinLinks links={twins} />
-        <div className="mt-3">
-          <MetaStrip
-            meta={meta}
-            minutes={documents.length === 1 ? minutes : null}
-            extra={
-              documents.length > 1 && (
-                <>
-                  <span aria-hidden>·</span>
-                  <span>
-                    {documents.length} documents, {minutes} min in total
-                  </span>
-                </>
-              )
-            }
-          />
-        </div>
+        <p className="cb-label mt-3 text-[0.875rem]">
+          <a href={reportHref({ title: study.title, path: scenarioHref(study.ref) })} className="underline">
+            Report an issue
+          </a>
+        </p>
         {/* A chapters case says all of this on its Introduction page instead. */}
         {!hasChapters(study) && (
           <BeforeYouStart meta={meta}>
@@ -105,8 +119,8 @@ function ReadingOrder({ study, documents }: { study: CaseStudy; documents: CaseD
         {study.sources ? (
           <>
             The references for every tab are in{' '}
-            <a href={`#${study.sources.anchor}`} className="text-accent underline underline-offset-2 hover:text-accent-hover">
-              {study.sources.label} → {study.sources.title}
+            <a href={`#${study.sources.anchor}`} className="whitespace-nowrap text-accent underline underline-offset-2 hover:text-accent-hover">
+              {study.sources.label}, {study.sources.title}
             </a>
             .
           </>
@@ -125,7 +139,7 @@ function DocumentLink({ document: d }: { document: CaseDocument }) {
         {d.label}
       </a>{' '}
       <span className="text-subtle">
-        · {d.minutes} min{d.parts.length > 1 && `, ${d.parts.length} parts`}
+        ({d.minutes} min{d.parts.length > 1 && `, ${d.parts.length} parts`})
       </span>
     </>
   )

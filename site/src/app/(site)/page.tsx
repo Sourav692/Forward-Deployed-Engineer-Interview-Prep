@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
+import { editorialDisplay, editorialSerif } from '@/lib/editorial-fonts'
 import Link from 'next/link'
-import { Bricolage_Grotesque, Source_Serif_4 } from 'next/font/google'
 import { siteCounts } from '@/components/areas/data'
 import { LinkButton, cx } from '@/components/ui'
 import { PracticePreview } from '@/components/landing/PracticePreview'
@@ -18,16 +18,13 @@ import { ExpressLane } from '@/components/start/ExpressLane'
  * scroll camera study. It says what the site is, who it is for and what each area
  * does, then sends the reader to /start or /learn.
  *
- * The page carries its own type and palette (tokens.css, scoped by `data-theme`),
- * loaded here so the fonts ship on this route only. The rest of the site is unchanged.
+ * The page carries its own type and palette (tokens.css, scoped by `data-theme`, and the
+ * faces in `lib/editorial-fonts.ts`), which the casebook shares; other routes are unchanged.
  *
  * Every number on this page is computed from `curriculum.ts` or the synced manifest,
  * so the coverage claim cannot drift from what is actually published.
  */
 
-// Variable fonts: `wdth` gives Bricolage its condensed magazine proportion, `opsz` its label cut.
-const display = Bricolage_Grotesque({ subsets: ['latin'], axes: ['wdth', 'opsz'], variable: '--font-bricolage', display: 'swap' })
-const serif = Source_Serif_4({ subsets: ['latin'], axes: ['opsz'], style: ['normal', 'italic'], variable: '--font-source-serif', display: 'swap' })
 
 const TAGLINE = 'Learn the foundations, work through real designs, and practise the decisions interviewers test.'
 const LEDE = 'Learn the foundations, work through real designs, practise what interviewers test.'
@@ -77,7 +74,7 @@ export default async function HomePage() {
   ]
 
   return (
-    <div data-theme="editorial" className={cx(display.variable, serif.variable, styles.home)}>
+    <div data-theme="editorial" className={cx(editorialDisplay.variable, editorialSerif.variable, styles.home)}>
       <JsonLd data={webSiteJsonLd()} />
       <section aria-labelledby="hero-heading" className={styles.hero}>
         <div>
