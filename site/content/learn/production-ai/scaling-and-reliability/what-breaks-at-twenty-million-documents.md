@@ -42,7 +42,7 @@ Today's ingestion is one process with a synchronous embedding loop and a content
 
 **Dead-letter poison pills.** Some files fail: a corrupt PDF, bad encoding, an empty file. Quarantine each with its reason and keep the batch moving.
 
-**Use the platform's incremental pipeline.** On Databricks the production answer is incremental loading, a distributed job with batched embeddings, Delta tables and a synced vector index. It is a pipeline, not a bigger script. This one is verbal.
+**Use the platform's incremental pipeline.** On a managed data platform the production answer is incremental loading, a distributed job with batched embeddings, versioned tables and a synced vector index. It is a pipeline, not a bigger script. This one is verbal.
 
 ## Do the Throughput Arithmetic Out Loud
 

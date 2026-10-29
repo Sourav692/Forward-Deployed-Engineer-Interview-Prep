@@ -20,8 +20,8 @@ An in-process Chroma collection per tenant is fine up to roughly 10⁵ to 10⁶ 
 
 | Option | When it fits |
 |---|---|
-| Databricks Vector Search | Governed by Unity Catalog, synced from Delta, hundreds of millions of vectors, access control through catalog filters |
-| A managed vector database (Pinecone, Weaviate, Milvus, Qdrant, sharded pgvector) | Off Databricks, with native sharding, replica reads and metadata-filtered approximate search |
+| A data platform's built-in vector search | Governed by the platform's catalogue, synced from its tables, hundreds of millions of vectors, access control through catalogue filters |
+| A managed vector database (Pinecone, Weaviate, Milvus, Qdrant, sharded pgvector) | Outside such a platform, with native sharding, replica reads and metadata-filtered approximate search |
 | Self-hosted sharded approximate search behind a router | Only with full control and the operations team to run it; rarely right for an enterprise |
 
 ## Give Any Index the Same Five Mechanisms

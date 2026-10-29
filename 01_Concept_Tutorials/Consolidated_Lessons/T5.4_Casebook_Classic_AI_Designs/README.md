@@ -16,6 +16,8 @@ The module is organised **per design case**, not per design pattern. Interviews 
 | 8 | [Safe Workflow Automation for Non-Technical Users](08_Safe_Workflow_Automation_for_Non_Technical_Users.md) | `safe-workflow-automation-for-non-technical-users` |
 | 9 | [Delivering an Agent in Two Weeks with Enforced Gates](09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md) | `delivering-an-agent-in-two-weeks-with-enforced-gates` |
 
+Lesson 7 and its explorer (`databricks_rag_explorer.json`) are Databricks-specific and are not published on the site. They wait for a platform track, listed under future additions in the production plan; the lesson's old URLs redirect to lesson 6.
+
 ## Sources
 
 All own material, under `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/`:

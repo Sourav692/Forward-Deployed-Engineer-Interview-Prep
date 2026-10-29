@@ -96,7 +96,7 @@ An allow is not always unconditional. This is the part of ABAC people forget exi
 
 A filter answers yes or no; an obligation answers *yes, and transform*. A vector store cannot return "this chunk with emails masked", so obligations run after retrieval.
 
-A real failure is worth knowing. On Databricks the mask is a SQL `regexp_replace`. A `\w` class was eaten by the Python-to-Spark-SQL escaping chain, so the mask looked attached and redacted nothing. Use explicit character ranges and always assert on real data. This bug shipped and was caught only by reading the output.
+A real failure is worth knowing. In one build the mask was a SQL `regexp_replace`. A `\w` class was eaten by the Python-to-Spark-SQL escaping chain, so the mask looked attached and redacted nothing. Use explicit character ranges and always assert on real data. This bug shipped and was caught only by reading the output.
 
 ## Worked Example: One Ticket, Two Readers
 

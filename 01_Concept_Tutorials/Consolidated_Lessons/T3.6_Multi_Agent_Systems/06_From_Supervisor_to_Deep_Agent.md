@@ -32,7 +32,7 @@ flowchart LR
         A1["Single agent<br/>20+ tools, full history"] -->|context bloat,<br/>tool confusion| A2["Degraded accuracy"]
     end
     subgraph S2["Stage 2 — Supervisor Pattern (shipped)"]
-        B1["Supervisor<br/>(LangGraph, 8 nodes)"] --> B2["Genie Agent<br/>(Text-to-SQL)"]
+        B1["Supervisor<br/>(LangGraph, 8 nodes)"] --> B2["BI Agent<br/>(Text-to-SQL)"]
         B1 --> B3["Multi-Tool Agent<br/>(SQL + RAG)"]
         B1 --> B4["Data Analysis Agent<br/>(stats/anomaly)"]
         B1 --> B5["Visualization Agent<br/>(Lakeview API)"]
@@ -73,14 +73,14 @@ The supervisor graph ran in a fixed order.
 
 ```
 classify_intent -> clarify_or_disambiguate -> resolve_assets_with_context_index
-    -> route_to_{genie | multi_tool | analysis | visualization} -> compose_answer
+    -> route_to_{bi | multi_tool | analysis | visualization} -> compose_answer
 ```
 
-`classify_intent` sorts the question into simple KPI, deep analysis, document lookup, visualisation, or conversational, with a confidence score. `clarify_or_disambiguate` fires only below the 60% threshold. "Show me the numbers" gets a clarifying question, not a guess. `resolve_assets_with_context_index` lets the supervisor, and only the supervisor, search a Context Index of 16 assets: Genie Spaces, metric views, tables, and document indexes. Endorsed assets rank first. A `route_to_*` node delegates to one of four specialists with the resolved asset list in shared graph state. `compose_answer` turns the specialist's structured output into a cited answer.
+`classify_intent` sorts the question into simple KPI, deep analysis, document lookup, visualisation, or conversational, with a confidence score. `clarify_or_disambiguate` fires only below the 60% threshold. "Show me the numbers" gets a clarifying question, not a guess. `resolve_assets_with_context_index` lets the supervisor, and only the supervisor, search a Context Index of 16 assets: text-to-SQL spaces, metric views, tables, and document indexes. Endorsed assets rank first. A `route_to_*` node delegates to one of four specialists with the resolved asset list in shared graph state. `compose_answer` turns the specialist's structured output into a cited answer.
 
 ## Resolve Data Assets Once, at the Supervisor
 
-Why should only the supervisor search for assets? Suppose the Genie agent and the Multi-Tool agent each ran their own retrieval. They could resolve the same question to different tables. In insurance, two answers to one question are worse than one slow answer.
+Why should only the supervisor search for assets? Suppose the BI agent and the Multi-Tool agent each ran their own retrieval. They could resolve the same question to different tables. In insurance, two answers to one question are worse than one slow answer.
 
 Centralising costs one extra hop of latency. It buys a single, auditable source of truth for the data behind any answer. This is the handoff rule from [Handoffs and Permission Scope](04_Handoffs_and_Permission_Scope.md): the specialist receives a resolved, trusted package, not a licence to go and find things.
 
@@ -90,12 +90,12 @@ Each of the four specialists embodies a trade-off.
 
 | Agent | Role and tools | The trade-off it embodies |
 |---|---|---|
-| Genie | Business-intelligence specialist on the managed Genie Space text-to-SQL service | Less flexible than a hand-built text-to-SQL chain, but far smaller prompt- and SQL-injection surface, and non-engineers can curate the tables |
-| Multi-Tool | Generalist with model-generated SQL and retrieval over policy documents | The one place generated SQL was allowed, for ad hoc questions outside Genie's curated scope, under deliberately narrower governance |
+| BI | Business-intelligence specialist on a managed text-to-SQL service | Less flexible than a hand-built text-to-SQL chain, but far smaller prompt- and SQL-injection surface, and non-engineers can curate the tables |
+| Multi-Tool | Generalist with model-generated SQL and retrieval over policy documents | The one place generated SQL was allowed, for ad hoc questions outside the BI agent's curated scope, under deliberately narrower governance |
 | Data Analysis | Statistics: z-score anomaly detection and trend statistics | Kept deterministic: thresholds are computed, not reasoned about, so the model cannot invent a plausible but wrong number |
 | Visualisation | Creates dashboards through the Lakeview REST API | Publishes real, clickable dashboards rather than a static image, closing the loop on the weeks-long dashboard wait |
 
-The Genie and Multi-Tool split is a familiar decision made per specialist: fixed operations by default over open natural-language queries. The safe path is the default. The open path exists, scoped and governed, for what the safe path cannot cover.
+The BI and Multi-Tool split is a familiar decision made per specialist: fixed operations by default over open natural-language queries. The safe path is the default. The open path exists, scoped and governed, for what the safe path cannot cover.
 
 ## Build Governance Underneath
 
@@ -113,7 +113,7 @@ The platform's managed multi-agent feature was not available to this customer at
 
 As analytics domains grew, the supervisor's own tool list began to approach the original bloat. It was the Stage 1 failure, one level up. The fix was the same principle again: specialise further.
 
-The design evolved into a deep agent. An orchestrator delegates to fully self-contained sub-agents, each with its own prompt, small toolset, and context window. Four domain sub-agents covered customer analytics, distribution channels, policy and underwriting, and claims. Each had its own Genie Space and its own gold and silver tables. A memory-manager sub-agent owned long-term memory across conversations, in a Delta table with five categories: preference, fact, decision, project, and feedback. The orchestrator had to check and update it every turn.
+The design evolved into a deep agent. An orchestrator delegates to fully self-contained sub-agents, each with its own prompt, small toolset, and context window. Four domain sub-agents covered customer analytics, distribution channels, policy and underwriting, and claims. Each had its own text-to-SQL space and its own gold and silver tables. A memory-manager sub-agent owned long-term memory across conversations, in a Delta table with five categories: preference, fact, decision, project, and feedback. The orchestrator had to check and update it every turn.
 
 | Question | Supervisor | Deep agent: orchestrator and sub-agents |
 |---|---|---|
@@ -122,7 +122,7 @@ The design evolved into a deep agent. An orchestrator delegates to fully self-co
 | When does it fit? | A bounded set of specialists, where consistent shared lookups matter | The supervisor's own tool list has started to bloat and domains keep growing |
 | What does it cost? | One extra hop for central resolution | More infrastructure: more endpoints, more moving parts |
 
-Neither shape is better in general. The deep agent is what to evolve to when the supervisor meets the tool-bloat trigger one level up. Here it cost more Genie Spaces, more serving endpoints, and more moving parts. In exchange, it set a ceiling on tool-selection degradation that does not return as the system grows. For a system meant to scale across business units and markets, that ceiling mattered more than simplicity.
+Neither shape is better in general. The deep agent is what to evolve to when the supervisor meets the tool-bloat trigger one level up. Here it cost more text-to-SQL spaces, more serving endpoints, and more moving parts. In exchange, it set a ceiling on tool-selection degradation that does not return as the system grows. For a system meant to scale across business units and markets, that ceiling mattered more than simplicity.
 
 > **Warning: say what the numbers do and do not prove.** Adoption grew after rollout, but that is a correlational signal, not a controlled experiment. Claiming the assistant caused the growth overstates the evidence.
 
@@ -158,7 +158,7 @@ That is the shape of an honest result: measured gains, a clearly labelled weak s
    Independent retrieval per specialist could resolve one question to different tables. Centralising costs one extra hop of latency and buys a single, auditable source of truth.
 
 3. **What triggered the second pivot, and what did the deep-agent shape cost?**
-   The supervisor's own tool list grew back toward the original bloat as domains grew. The deep agent cost more Genie Spaces, serving endpoints, and moving parts, in exchange for a ceiling on tool-selection degradation.
+   The supervisor's own tool list grew back toward the original bloat as domains grew. The deep agent cost more text-to-SQL spaces, serving endpoints, and moving parts, in exchange for a ceiling on tool-selection degradation.
 
 ## References
 

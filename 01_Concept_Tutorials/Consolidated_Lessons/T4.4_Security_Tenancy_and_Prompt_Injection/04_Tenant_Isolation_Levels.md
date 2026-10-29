@@ -28,7 +28,7 @@ Start at level 1. Nobody spins up a dedicated cluster for the first ten customer
 
 The default is only honest if the data layer enforces it. Suppose isolation means "every engineer remembered to add `WHERE tenant_id = …`". A future API that forgets the clause returns another company's data. That is the standard multi-tenant leak. An application cannot enforce a rule that one of its endpoints forgot to apply.
 
-The real rule: *the store itself will not return a row unless the request is already scoped to one tenant.* Two forms meet it. One is row-level security bound to the session. On Databricks, Unity Catalog row-level security and dynamic views using `is_account_group_member` let tenant A see only its own data. The other is physically separate indexes or schemas, so there is no shared pile of rows to leak across. The per-tenant Chroma collection in [Why Access Control Shapes Enterprise RAG](../T4.1_Enterprise_RAG_in_Production/01_Why_Access_Control_Shapes_Enterprise_RAG.md) is that second form.
+The real rule: *the store itself will not return a row unless the request is already scoped to one tenant.* Two forms meet it. One is row-level security bound to the session. Row-level security and dynamic views that check the caller's group membership let tenant A see only its own data. The other is physically separate indexes or schemas, so there is no shared pile of rows to leak across. The per-tenant Chroma collection in [Why Access Control Shapes Enterprise RAG](../T4.1_Enterprise_RAG_in_Production/01_Why_Access_Control_Shapes_Enterprise_RAG.md) is that second form.
 
 > **Warning: an application-level filter is a convenience, not the wall.** If every query depends on a developer adding a `WHERE` clause, the isolation guarantee is only as good as the least careful endpoint. Put the tenant check where no endpoint can skip it.
 
@@ -68,4 +68,4 @@ Three sentences cover the level, the enforcement point and the ladder. Missing a
 
 ## References
 
-**Sources:** `04_Prompt_Injection_Egress_Tenancy.md` (FDE Handbook, Cross-Cutting Concerns): "3 · Multi-tenancy — pick a level and justify it" and "Checkpoint". `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §6 "Databricks Implementation" (Unity Catalog row-level security and dynamic views).
+**Sources:** `04_Prompt_Injection_Egress_Tenancy.md` (FDE Handbook, Cross-Cutting Concerns): "3 · Multi-tenancy — pick a level and justify it" and "Checkpoint".

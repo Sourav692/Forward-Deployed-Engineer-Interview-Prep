@@ -96,7 +96,7 @@ The two normalise steps are the ones that need the full score distribution on ev
 
 Whichever method is used, the weight is not a constant to guess. The sources show 0.4/0.6, 0.3/0.7 and `alpha` 0.5. Each says to tune it on a labelled set that mixes natural-language and exact-token queries. The right value differs by corpus: tickets skew token-heavy, wiki articles skew semantic.
 
-Check the platform before building fusion by hand. The retrieval-strategies tutorial notes that Databricks Vector Search's hybrid mode, and stacks that pair Elasticsearch with dense vectors, already do this fusion natively.
+Check the platform before building fusion by hand. The retrieval-strategies tutorial notes that managed vector search services with a hybrid mode, and stacks that pair Elasticsearch with dense vectors, already do this fusion natively.
 
 ## Worked Example: An Error Code in a Support Search
 

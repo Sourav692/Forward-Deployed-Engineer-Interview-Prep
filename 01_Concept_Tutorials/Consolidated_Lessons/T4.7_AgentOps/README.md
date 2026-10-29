@@ -1,6 +1,6 @@
 # T4.7 AgentOps: Versioning, Rollout, CI/CD, and Red Teaming: Consolidated Lessons
 
-These eight lessons are the site's teaching copy of module T4.7 "AgentOps: versioning, rollout, CI/CD, red teaming". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/agentops`.
+These lessons are the site's teaching copy of module T4.7 "AgentOps: versioning, rollout, CI/CD, red teaming". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/agentops`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -12,6 +12,8 @@ These eight lessons are the site's teaching copy of module T4.7 "AgentOps: versi
 | 6 | [Red Teaming and Layered Guardrails](06_Red_Teaming_and_Layered_Guardrails.md) | `red-teaming-and-layered-guardrails` |
 | 7 | [Infrastructure as Code and the Release Pipeline](07_Infrastructure_as_Code_and_the_Release_Pipeline.md) | `infrastructure-as-code-and-the-release-pipeline` |
 | 8 | [Practise AgentOps Interview Questions](08_Practise_AgentOps_Interview_Questions.md) | `practise-agentops` |
+
+Lessons 3 and 4 are Databricks-specific and are not published on the site (`publish: 'excluded'` in `site/src/lib/curriculum.ts`). They wait for a platform track, listed under future additions in the production plan; their old URLs redirect to lesson 1 and to the access-control lesson of T4.1.
 
 ## Sources
 
