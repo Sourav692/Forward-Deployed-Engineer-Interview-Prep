@@ -1,26 +1,49 @@
 import { expect, test } from '@playwright/test'
 
-test('Learn stages keep track filters and empty states working', async ({ page }) => {
+test('Learn lists eight topic groups as cards, with Coming soon for empty ones', async ({ page }) => {
   await page.goto('/learn')
-  const main = page.getByRole('main')
-  await expect(main.getByRole('heading', { level: 2 })).toHaveText([
-    '1.Start and Build Foundations',
-    '2.Build AI Applications',
-    '3.Make AI Production-Ready',
-    '4.Design and Deliver for Customers',
-    '5.Demonstrate Your Capability',
+  const groups = page.getByRole('list', { name: 'Topic groups' })
+  await expect(groups.getByRole('heading', { level: 2 })).toHaveText([
+    'Start here',
+    'AI Engineering',
+    'Harness Engineering',
+    'Inference Engineering',
+    'AI System Design',
+    'Forward Deployed Engineering',
+    'Coding',
+    'Career',
   ])
-  await expect(main.getByRole('heading', { level: 3 })).toHaveCount(9)
-  await page.goto('/learn?req=optional')
-  await expect(main.getByRole('heading', { level: 3 })).toHaveCount(2)
-  await expect(main.getByRole('heading', { name: '2.Build AI Applications', exact: true })).toHaveCount(0)
+  // Coming soon groups have no page, so their titles are not links.
+  for (const name of ['Harness Engineering', 'Inference Engineering', 'Coding']) {
+    await expect(groups.getByRole('link', { name, exact: true })).toHaveCount(0)
+  }
+  await expect(groups.getByText('Coming soon')).toHaveCount(3)
+  // A card lists its tracks as links, one click from /learn.
+  await groups.getByRole('list', { name: 'AI Engineering tracks' }).getByRole('link', { name: 'Agentic Systems' }).click()
+  await expect(page).toHaveURL(/\/learn\/agentic-systems$/)
+  await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'AI Engineering' })).toHaveAttribute('href', '/learn/topics/ai-engineering')
+})
+
+test('a group page keeps track filters and empty states working', async ({ page }) => {
+  await page.goto('/learn')
+  await page.getByRole('link', { name: 'Start here', exact: true }).click()
+  await expect(page).toHaveURL(/\/learn\/topics\/start-here$/)
+  const main = page.getByRole('main')
+  const cards = main.getByRole('heading', { level: 2 })
+  await expect(cards).toHaveCount(2)
+  await page.goto('/learn/topics/start-here?req=optional')
+  await expect(cards).toHaveText(['Engineering Foundations for AI'])
   await page.reload()
-  await expect(main.getByRole('heading', { level: 3 })).toHaveCount(2)
-  await page.goto('/learn?req=required&progress=completed')
-  await expect(main.getByRole('heading', { level: 3 })).toHaveCount(0)
-  await expect(main.getByRole('button', { name: 'Clear filters' })).toBeVisible()
+  await expect(cards).toHaveCount(1)
+  await page.goto('/learn/topics/start-here?req=required&progress=completed')
+  await expect(cards).toHaveCount(0)
   await main.getByRole('button', { name: 'Clear filters' }).click()
-  await expect(main.getByRole('heading', { level: 3 })).toHaveCount(9)
+  await expect(cards).toHaveCount(2)
+})
+
+test('Coming soon groups have no page', async ({ page }) => {
+  const response = await page.goto('/learn/topics/coding')
+  expect(response?.status()).toBe(404)
 })
 
 test('track sections show the regrouped modules in teaching order', async ({ page }) => {

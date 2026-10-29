@@ -55,6 +55,22 @@ export function TrackProgress({ trackSlug, minutes }: { trackSlug: string; minut
   )
 }
 
+/** Topic group progress for the /learn cards: its tracks weighted by their hours. */
+export function GroupProgress({ weights, minutes }: { weights: Record<string, number>; minutes: Record<string, number> }) {
+  const fraction = useProgress(() => {
+    const total = Object.values(weights).reduce((a, b) => a + b, 0)
+    return Object.entries(weights).reduce((sum, [slug, w]) => sum + trackProgress(slug, minutes).fraction * w, 0) / total
+  })
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex-1">
+        <ProgressBar value={fraction ?? 0} label="Group progress" />
+      </div>
+      <span className="shrink-0 text-xs tabular-nums text-muted">{Math.round((fraction ?? 0) * 100)}%</span>
+    </div>
+  )
+}
+
 /**
  * Read state for one row of a module's reading list. Synced lessons show a tick once
  * read (they are marked from the lesson page). Live lessons open another page, so the

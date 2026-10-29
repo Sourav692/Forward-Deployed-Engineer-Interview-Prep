@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * FilterBar and the filtered track grid for /learn (FE-06).
+ * FilterBar and the filtered track grid for a Learn topic group page (FE-06).
  *
  * Filter state lives in the URL (`?req=required&progress=in-progress`), so a filtered
  * view can be shared and survives a refresh. The page itself is static, so it cannot
@@ -17,8 +17,6 @@ import { useProgress } from '@/lib/progress/useProgress'
 import { Button, EmptyState } from '@/components/ui'
 import { COPY } from './copy'
 import { ChipGroup, type ChipOption as Option } from './ChipGroup'
-import { LEARN_STAGES } from '@/lib/learn-stages'
-
 
 const REQ: Option[] = [
   { value: '', label: 'All' },
@@ -75,7 +73,7 @@ export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: 
         {visible.length} of {items.length} tracks shown
       </p>
       {visible.length ? (
-        <GroupedTracks items={visible} />
+        <TrackGrid items={visible} />
       ) : (
         <EmptyState
           title={COPY.filterEmptyTitle}
@@ -96,33 +94,15 @@ export function TrackBrowser({ items, minutes }: { items: TrackItem[]; minutes: 
 export function StaticTrackGrid({ items }: { items: TrackItem[] }) {
   return (
     <div className="mt-[3.25rem]">
-      <GroupedTracks items={items} />
+      <TrackGrid items={items} />
     </div>
   )
 }
 
-/** Share the same grouping before hydration and after requirement/progress filtering. */
-function GroupedTracks({ items }: { items: TrackItem[] }) {
+function TrackGrid({ items }: { items: TrackItem[] }) {
   return (
-    <div className="space-y-20">
-      {LEARN_STAGES.map((stage, index) => {
-        const tracks = stage.tracks.flatMap((slug) => items.filter((item) => item.slug === slug))
-        if (!tracks.length) return null
-        return (
-          <section key={stage.slug} id={stage.slug} aria-labelledby={`stage-${stage.slug}`} className="scroll-mt-24">
-            <div className="cb-opens mb-6 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
-              <h2 id={`stage-${stage.slug}`} className="cb-section-head">
-                <span className="cb-stage-number">{index + 1}.</span>
-                {stage.title}
-              </h2>
-              <p className="mt-4 max-w-[60ch] text-base lg:mt-1">{stage.summary}</p>
-            </div>
-            <ul className="grid gap-x-10 sm:grid-cols-2">
-              {tracks.map((item) => <li key={item.slug} className="flex">{item.node}</li>)}
-            </ul>
-          </section>
-        )
-      })}
-    </div>
+    <ul className="grid gap-x-10 sm:grid-cols-2">
+      {items.map((item) => <li key={item.slug} className="flex">{item.node}</li>)}
+    </ul>
   )
 }

@@ -7,6 +7,7 @@ import { marked } from 'marked'
 import { getCheckpoint } from './checkpoints'
 import { LESSONS, MODULES, TRACKS } from './curriculum'
 import { INTERVIEW_TRACK, MODULE_HOMES, curriculumHref, isLearnTrack } from './curriculum-href'
+import { groupHref, groupOfTrack } from './learn-stages'
 import type {
   CurriculumLesson,
   CurriculumModule,
@@ -82,15 +83,19 @@ export const trackLabel = (track: Pick<CurriculumTrack, 'title'>) =>
   track.title
 
 /**
- * The breadcrumb trail above a module: Learn and the track for a Learn track, or just
- * the area for a track served elsewhere (Interview has one track, so no track crumb).
+ * The breadcrumb trail above a track's own crumb: Learn and its topic group for a Learn
+ * track, or just the area for a track served elsewhere (Interview has one track).
  */
-export function trackTrail(track: CurriculumTrack): { label: string; href: string }[] {
+export function groupTrail(track: CurriculumTrack): { label: string; href: string }[] {
   if (track.slug === INTERVIEW_TRACK) return [{ label: 'Interview', href: '/interview' }]
-  return [
-    { label: 'Learn', href: learnHref.index() },
-    { label: trackLabel(track), href: learnHref.track(track.slug) },
-  ]
+  const group = groupOfTrack(track.slug)
+  return [{ label: 'Learn', href: learnHref.index() }, ...(group ? [{ label: group.title, href: groupHref(group.slug) }] : [])]
+}
+
+/** The breadcrumb trail above a module: the group trail, then the track for a Learn track. */
+export function trackTrail(track: CurriculumTrack): { label: string; href: string }[] {
+  if (track.slug === INTERVIEW_TRACK) return groupTrail(track)
+  return [...groupTrail(track), { label: trackLabel(track), href: learnHref.track(track.slug) }]
 }
 
 // ── Lookups ────────────────────────────────────────────────────────────────
