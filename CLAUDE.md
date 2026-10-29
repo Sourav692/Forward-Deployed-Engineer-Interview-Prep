@@ -70,6 +70,23 @@ The site is meant to be the single place for AI Engineering and Forward Deployed
 - **Overlaps.** Before adding a Harness Engineering lesson, check the `agentic-systems` modules "Context and memory" and "Reliable workflows and coordination". Before adding an Inference Engineering lesson, check the `production-ai` module "Operations and performance". Give each topic one canonical home and cross-link from the other, so no topic is taught twice.
 - **Out of scope:** ML research, classical data science, computer vision and diffusion, and classic MLOps.
 
+## Page layout (whole site)
+
+Every page follows one layout, decided on 30 October 2026 after the casebook trial: a wide page with an Inter body, like a course site. Keep new pages and areas on it. Do not add per-area widths or fonts.
+
+- **Shell.** The header, `<main id="main">` and footer cap at 90rem (`max-w-[90rem]` in `site/src/app/layout.tsx`) and centre, so the gutters grow on wider screens.
+- **Fonts.**
+  - Body text is Inter everywhere. The body rule in `site/src/app/globals.css` and `--font-body` in `site/src/components/landing/tokens.css` both name `var(--font-inter)`.
+  - Never use `var(--font-sans)` for this: Tailwind inlines it, so it is empty at runtime and the text falls back to the system font.
+  - Headings and labels keep the condensed display face (Bricolage Grotesque, `--font-display`).
+  - No serif body text.
+- **Reading column.**
+  - Lessons (Learn and Interview), case pages, worksheets and the Last-Day guides read in a column up to 60rem wide, centred beside any sidebar.
+  - The classes are `.lesson-reading` and the lesson page's content column, `.case-main`, and `.editorial-page .reading`.
+  - Reading text is 16px on a 24px line.
+- **Line length.** Paragraphs, lists and blockquotes inside `.reading` or `.prose` cap at 75ch, about 75 characters per line. Tables, code blocks and diagrams use the full column.
+- **New pages.** Reuse these classes instead of setting a new `max-width` or `font-family`. Check the page at 1440px and 390px: there must be no horizontal scroll on a phone.
+
 ## Case pages on the site (casebook)
 
 The scenario-pack cases (`/design/<slug>`, module 15) share one layout and one set of editorial rules, first built on the Enterprise Knowledge Assistant. Keep every new or edited case to them.

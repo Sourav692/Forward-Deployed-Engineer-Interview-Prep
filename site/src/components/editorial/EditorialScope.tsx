@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { cx } from '@/components/ui'
-import { editorialDisplay, editorialSerif } from '@/lib/editorial-fonts'
+import { editorialDisplay } from '@/lib/editorial-fonts'
 import '@/components/landing/tokens.css'
 import './editorial.css'
 
@@ -12,7 +12,7 @@ import './editorial.css'
  */
 export function EditorialScope({ children }: { children: ReactNode }) {
   return (
-    <div data-theme="editorial" className={cx(editorialDisplay.variable, editorialSerif.variable, 'editorial-page')}>
+    <div data-theme="editorial" className={cx(editorialDisplay.variable, 'editorial-page')}>
       {children}
     </div>
   )

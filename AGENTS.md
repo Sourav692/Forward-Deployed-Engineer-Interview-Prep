@@ -19,6 +19,7 @@
 
 - The site is organised on two axes: Learn by topic and Interview by round. See "Site structure (groups)" in [CLAUDE.md](CLAUDE.md) and the plan `.website_spec/status/todo/implementation_plan_site-groups-and-structure.md`.
 - Learn has eight topic groups in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`): Start here, AI Engineering, Harness Engineering, Inference Engineering, AI System Design, Forward Deployed Engineering, Coding, Career. Groups are navigation only, empty groups stay hidden, and every Learn track sits in exactly one group.
+- Page layout for every page: a 90rem shell, an Inter body (name `var(--font-inter)`, never the empty `var(--font-sans)`), condensed display headings, a reading column up to 60rem, and paragraphs capped at 75ch. See "Page layout (whole site)" in [CLAUDE.md](CLAUDE.md); reuse its classes instead of new widths or fonts.
 
 ## Content and publishing safety
 

@@ -19,7 +19,7 @@
   --color-band: oklch(16% 0.012 280);
   --color-band-ink: oklch(97% 0.007 86);
   --font-display: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-source-serif), "Source Serif 4", ui-serif, Georgia, serif;
+  --font-body: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 .dark [data-theme='editorial'] {

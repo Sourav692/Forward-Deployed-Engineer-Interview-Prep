@@ -125,7 +125,8 @@ body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans);
+  /* --font-sans is inlined by Tailwind and empty at runtime, so name Inter's variable directly. */
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -213,7 +214,7 @@ body {
  */
 @layer components {
   .lesson-reading {
-    max-width: 68ch;
+    max-width: 60rem;
     font-size: 1rem;
     line-height: 1.5rem;
     color: var(--text);

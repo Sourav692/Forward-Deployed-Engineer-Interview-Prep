@@ -69,7 +69,6 @@
   font-size: var(--text-body);
   line-height: 1.55;
   font-optical-sizing: auto;
-  font-variant-numeric: oldstyle-nums;
   caret-color: var(--color-accent);
   padding-bottom: var(--section-gap-s);
 }
