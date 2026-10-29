@@ -15,6 +15,11 @@
 - The platform brief is `00_Start_Here/Platform_Blueprint.html`; its local source prompt is `.website_spec/reference/website_prompt.md`.
 - Website design docs, specs, audits, plans, task boards and QA reports live in `.website_spec/` (gitignored, owner's clone only). Put new ones there, never in `site/` or another committed folder. The production plan is `.website_spec/status/in-progress/2026-10-05-production-implementation-plan.md`; its board is `.website_spec/tasks/README.md`. Plans sit in `.website_spec/status/<state>/` (index `.website_spec/status/README.md`); reference docs in `.website_spec/reference/`.
 
+## Site structure
+
+- The site is organised on two axes: Learn by topic and Interview by round. See "Site structure (groups)" in [CLAUDE.md](CLAUDE.md) and the plan `.website_spec/status/todo/implementation_plan_site-groups-and-structure.md`.
+- Learn has eight topic groups in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`): Start here, AI Engineering, Harness Engineering, Inference Engineering, AI System Design, Forward Deployed Engineering, Coding, Career. Groups are navigation only, empty groups stay hidden, and every Learn track sits in exactly one group.
+
 ## Content and publishing safety
 
 - `site/content/` and `site/public/fde-last-day-prep/` are generated but committed deployment snapshots. Never edit them directly. Edit their root source, then run `npm run sync` from `site/`.

@@ -51,6 +51,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - An all-caps token on 3+ pages must be added to `GLOSSARY` or `NOT_ACRONYMS` in `glossary.ts`, or `check:content` fails.
 - Adding a module/track/scenario touches many files: follow "Adding a module, track or scenario" below.
 
+## Site structure (groups)
+
+The site is meant to be the single place for AI Engineering and Forward Deployed Engineering preparation. It is organised on two axes, decided on 30 October 2026. Plan: `.website_spec/status/todo/implementation_plan_site-groups-and-structure.md`. Research: `.website_spec/reference/2026-10-30-platform-review-and-site-groups.html`.
+
+- **Learn by topic.** Learn tracks sit in eight topic groups, in this order:
+  1. Start here
+  2. AI Engineering
+  3. Harness Engineering
+  4. Inference Engineering
+  5. AI System Design
+  6. Forward Deployed Engineering
+  7. Coding
+  8. Career
+- **Groups are navigation only.** They are defined in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`), and track ids, URLs and progress never depend on them. Every Learn track sits in exactly one group. A group with no published track stays hidden; never show an empty "coming soon" group. Until Part 1 of the plan ships, `LEARN_STAGES` still holds the five journey stages.
+- **Interview by round.** The interview area follows the rounds of a real loop: recruiter screen, coding, AI-assisted coding, AI system design, decomposition or case study, customer scenario, behavioural, demo or take-home. A new interview page belongs to one round.
+- **Placing new content.** A new track goes in the group for its discipline. Behavioural, portfolio, resume and negotiation material goes in Career, not Forward Deployed Engineering. AI System Design stays in Learn.
+- **Overlaps.** Before adding a Harness Engineering lesson, check the `agentic-systems` modules "Context and memory" and "Reliable workflows and coordination". Before adding an Inference Engineering lesson, check the `production-ai` module "Operations and performance". Give each topic one canonical home and cross-link from the other, so no topic is taught twice.
+- **Out of scope:** ML research, classical data science, computer vision and diffusion, and classic MLOps.
+
 ## Case pages on the site (casebook)
 
 The scenario-pack cases (`/design/<slug>`, module 15) share one layout and one set of editorial rules, first built on the Enterprise Knowledge Assistant. Keep every new or edited case to them.
