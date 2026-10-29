@@ -71,7 +71,6 @@
   font-size: var(--text-body);
   line-height: 1.55;
   font-optical-sizing: auto;
-  font-variant-numeric: oldstyle-nums;
   caret-color: var(--color-accent);
 }
 
@@ -338,8 +337,10 @@
 .editorial-page .story-bank-card:hover { transform: none; }
 .editorial-page .story-bank-card h3 { font-size: var(--text-h3); }
 
-/* Reading text: Source Serif at 18px, heads condensed, tables on hairlines. */
-.editorial-page .reading { font-size: var(--text-body); line-height: 1.6; color: var(--color-ink-2); max-width: 46rem; }
+/* Reading text: Inter at 16/24 in a 60rem column, heads condensed, tables on hairlines. */
+.editorial-page .reading { font-size: 1rem; line-height: 1.5rem; color: var(--color-ink-2); max-width: 60rem; }
+/* Prose keeps a readable line; tables, code and diagrams use the full 60rem column. */
+.editorial-page :is(.reading, .prose) :is(p, ul, ol, blockquote) { max-width: 75ch; }
 .editorial-page section > h2 { font-size: var(--text-h2); line-height: 1.05; margin-bottom: 1.25rem; padding-top: 1rem; border-top: var(--rule-hair) solid var(--color-rule-2); }
 .editorial-page .reading h3 { font-size: var(--text-h3); line-height: 1.15; margin-top: 2rem; }
 .editorial-page .reading :is(h4, h5) { font-family: var(--font-display); font-weight: var(--display-weight); font-variation-settings: "wdth" 75, "opsz" 24; letter-spacing: var(--tracking-display); color: var(--color-ink); font-size: 1.0625rem; }
@@ -407,9 +408,6 @@
 /* The hero's On this page rows wrap: a stage title is longer than a section name. */
 .editorial-page .cb-hero-side nav[aria-label='On this page'] a { white-space: normal; }
 
-/* Casebook: a wider page with an Inter reading body, like a course site (chosen 29 October 2026).
-   The shell grows from 64rem to 90rem on casebook pages only; the case text runs up to 60rem,
-   centred beside the chapters sidebar. */
-body:has(.casebook-wide) :is(#main, header > div, footer > div) { max-width: 90rem; }
-.editorial-page .casebook-wide .case-main { max-width: 60rem; margin-inline: auto; }
-.editorial-page .casebook-wide .reading { max-width: 60rem; font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif; font-size: 1rem; line-height: 1.5rem; font-variant-numeric: normal; }
+/* Case pages: the chapter text column is centred beside the sidebar at the shared 60rem width
+   (page layout chosen 30 October 2026; see "Page layout" in CLAUDE.md). */
+.editorial-page .case-main { max-width: 60rem; margin-inline: auto; }

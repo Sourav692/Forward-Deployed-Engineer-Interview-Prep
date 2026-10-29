@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { editorialDisplay, editorialSerif } from '@/lib/editorial-fonts'
+import { editorialDisplay } from '@/lib/editorial-fonts'
 import Link from 'next/link'
 import { siteCounts } from '@/components/areas/data'
 import { LinkButton, cx } from '@/components/ui'
@@ -74,7 +74,7 @@ export default async function HomePage() {
   ]
 
   return (
-    <div data-theme="editorial" className={cx(editorialDisplay.variable, editorialSerif.variable, styles.home)}>
+    <div data-theme="editorial" className={cx(editorialDisplay.variable, styles.home)}>
       <JsonLd data={webSiteJsonLd()} />
       <section aria-labelledby="hero-heading" className={styles.hero}>
         <div>

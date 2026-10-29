@@ -72,7 +72,7 @@ export default async function RootLayout({
         {/* The layout stays a Server Component. Only TopNav, MobileNav, BottomBar,
             SearchDialog and ThemeToggle are Client Components ('use client'). */}
         <header className="shell-chrome no-print sticky top-0 z-30 border-b border-border bg-bg/85 backdrop-blur-md">
-          <div className="mx-auto flex h-[3.75rem] max-w-5xl items-center gap-2 px-4 sm:px-6 lg:gap-4">
+          <div className="mx-auto flex h-[3.75rem] max-w-[90rem] items-center gap-2 px-4 sm:px-6 lg:gap-4">
             <MobileNav />
             <Logo />
             <TopNav />
@@ -83,12 +83,12 @@ export default async function RootLayout({
           </div>
         </header>
 
-        <main id="main" className="mx-auto max-w-5xl px-4 sm:px-6">
+        <main id="main" className="mx-auto max-w-[90rem] px-4 sm:px-6">
           {children}
         </main>
 
         <footer className="shell-chrome no-print mt-24 border-t border-border">
-          <div className="mx-auto max-w-5xl space-y-3 px-4 py-8 text-[0.8125rem] text-subtle sm:px-6">
+          <div className="mx-auto max-w-[90rem] space-y-3 px-4 py-8 text-[0.8125rem] text-subtle sm:px-6">
             <p>
               {SITE.name} — {SITE.tagline}. Your answers are stored in this browser only.
             </p>

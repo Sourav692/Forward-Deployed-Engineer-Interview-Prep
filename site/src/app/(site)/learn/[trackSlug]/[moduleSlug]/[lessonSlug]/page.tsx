@@ -93,7 +93,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
       />
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <LessonSideNav track={track} module={mod} lessons={siblings} current={lesson.slug} doc={doc} />
-        <div className="min-w-0">
+        <div className="mx-auto w-full min-w-0 max-w-[60rem]">
           <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg border border-border bg-surface px-3 py-2">
             <Link href={learnHref.module(mod)} className={cx('rounded-sm text-[0.8125rem] font-semibold hover:text-accent', focusRing)}>
               {mod.title}
