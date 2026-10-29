@@ -367,7 +367,7 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
             </nav>
           </div>
 
-          <div ref={tabsRef} className="min-w-0 scroll-mt-20">
+          <div ref={tabsRef} className="case-main min-w-0 scroll-mt-20">
             {documents.map(panel)}
           </div>
         </div>

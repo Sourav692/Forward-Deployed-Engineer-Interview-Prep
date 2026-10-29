@@ -406,3 +406,10 @@
 
 /* The hero's On this page rows wrap: a stage title is longer than a section name. */
 .editorial-page .cb-hero-side nav[aria-label='On this page'] a { white-space: normal; }
+
+/* Casebook: a wider page with an Inter reading body, like a course site (chosen 29 October 2026).
+   The shell grows from 64rem to 90rem on casebook pages only; the case text runs up to 60rem,
+   centred beside the chapters sidebar. */
+body:has(.casebook-wide) :is(#main, header > div, footer > div) { max-width: 90rem; }
+.editorial-page .casebook-wide .case-main { max-width: 60rem; margin-inline: auto; }
+.editorial-page .casebook-wide .reading { max-width: 60rem; font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif; font-size: 1rem; line-height: 1.5rem; font-variant-numeric: normal; }
