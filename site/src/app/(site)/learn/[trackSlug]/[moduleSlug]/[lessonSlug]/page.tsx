@@ -18,6 +18,12 @@ import { cx, focusRing } from '@/components/ui'
 import { lessonExplorer } from '@/lib/explorers/load'
 import { LISTED_ELSEWHERE, isLearnTrack } from '@/lib/curriculum-href'
 
+/** Layout preview: option 1 widens and centres the column; option 2 also sets the body in Inter. */
+const LAYOUT_PREVIEW: Record<string, 'wide' | 'wide-sans'> = {
+  'logs-metrics-and-traces': 'wide',
+  'the-run-trace': 'wide-sans',
+}
+
 /**
  * Lesson page (FE-07). One static page per synced, published lesson: the params come
  * from the sync manifest, and `dynamicParams = false` turns any other URL into a 404.
@@ -62,6 +68,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   // The scenario mocks (every T8.2 lesson after the method lesson) get a timer and a scorer (FE-15).
   const mockRounds = mod.slug === MOCK_MODULE ? mockRoundsFor(lesson.slug) : []
   const scenarioMock = mockRounds.length > 0
+  // Layout preview (feat/lesson-width-preview): two lessons try an Educative-style wide column.
+  const layout = LAYOUT_PREVIEW[lesson.slug]
   // The Editorial head is tagged with the area the lesson is served under.
   const area = isLearnTrack(track.slug) ? 'Learn' : 'Interview'
 
@@ -119,7 +127,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             </div>
           )}
 
-          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} tag={area} />
+          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} tag={area} layout={layout} />
 
           {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} rounds={mockRounds} />}
 

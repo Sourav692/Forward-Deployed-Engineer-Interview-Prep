@@ -28,14 +28,14 @@ const RECALL_CARD = /^One-Page Memory Card\b/
  * The head is the Editorial PageHead, tagged with the area (`tag`: Learn or Interview),
  * with the reading time and source as a ruled spec line.
  */
-export function LessonReader({ page, twins = [], explorer, tag }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null; tag: string }) {
+export function LessonReader({ page, twins = [], explorer, tag, layout }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null; tag: string; layout?: 'wide' | 'wide-sans' }) {
   const { lesson, doc, sourceNote, creditHtml } = page
   const card = doc.sections.findIndex((s) => s.title && RECALL_CARD.test(s.title))
   const sourceLinks = { ...explorer?.readingLinks, ...Object.fromEntries(doc.sections.filter((s) => s.title).map((s) => [toPlainText(s.title!), `#${s.id}`])) }
   return (
     // `break-words` lets long unbroken tokens (file paths in inline code, URLs) wrap
     // instead of pushing the page sideways; tables and code blocks scroll in their own box.
-    <article className={`lesson-reading break-words ${explorer ? 'max-w-none' : ''}`} aria-labelledby="lesson-title">
+    <article className={`lesson-reading break-words ${explorer ? 'max-w-none' : ''} ${layout ? 'lesson-wide' : ''} ${layout === 'wide-sans' ? 'lesson-sans' : ''}`} aria-labelledby="lesson-title">
       <PageHead
         tag={tag}
         title={lesson.title}
