@@ -53,6 +53,8 @@ test('path flow: landing → start → keyboard diagnostic → path flag on /lea
 
   await page.goto('/learn')
   await expect(page.getByText('You are following the')).toBeVisible()
+  // Track cards, with their path summary, sit on the topic group pages.
+  await page.goto('/learn/topics/ai-engineering')
   await expect(page.getByText('Your path:').first()).toBeVisible()
 })
 

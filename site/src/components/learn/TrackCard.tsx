@@ -21,11 +21,11 @@ export function TrackCard({ track, minutes }: { track: CurriculumTrack; minutes:
         {trackTag(track) && <span className="text-xs font-semibold tabular-nums text-subtle">{trackTag(track)}</span>}
         <Tag tone={isRequired(track) ? 'accent' : 'neutral'}>{REQUIREMENT_LABEL[track.required]}</Tag>
       </div>
-      <h3 className="cb-entry-title mt-3">
+      <h2 className="cb-entry-title mt-3">
         <Link href={learnHref.track(track.slug)} className={cx('after:absolute after:inset-0', focusRing)}>
           {track.title}
         </Link>
-      </h3>
+      </h2>
       <p className="cb-entry-body">{track.objective}</p>
       <p className="cb-entry-facts">
         <span>About {trackHours(track)} h</span>

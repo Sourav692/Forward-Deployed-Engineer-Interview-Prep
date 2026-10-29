@@ -6,6 +6,7 @@ import { INTERVIEW_HUBS } from '@/lib/curriculum'
 import type { CurriculumModule } from '@/lib/curriculum-types'
 import { hubHref } from '@/lib/curriculum-href'
 import { getLearnManifest, getTracks, learnHref, learnTracks, trackModules } from '@/lib/learn'
+import { groupHref, liveGroups } from '@/lib/learn-stages'
 import { PATHS } from '@/lib/paths'
 import { MODULE_AREAS, scenarioHref } from '@/lib/scenario'
 import { absoluteUrl } from '@/lib/seo'
@@ -50,6 +51,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
     add(learnHref.track(track.slug), newest(mods.map((m) => moduleDate.get(m.slug))))
   }
+  // Coming soon groups have no page, so only live groups are listed.
+  for (const g of liveGroups()) add(groupHref(g.slug), newest(g.tracks.map((t) => dated.get(learnHref.track(t)))))
   add('/learn', newest(learnTracks().map((t) => dated.get(learnHref.track(t.slug)))))
   for (const hub of INTERVIEW_HUBS) {
     add(hubHref(hub.slug), newest([...hub.practice.map((s) => lessonDate.get(s)), ...hub.modules.map((s) => moduleDate.get(s))]))

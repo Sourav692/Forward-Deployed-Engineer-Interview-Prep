@@ -70,15 +70,21 @@ export function findPrerequisiteCycle(modules: CurriculumModule[]): string[] | n
 
 // Slugs (UX-01)
 unique('track', TRACKS.map((t) => t.slug))
-unique('learning stage', LEARN_STAGES.map((stage) => stage.slug))
-const stagedTracks = LEARN_STAGES.flatMap((stage) => stage.tracks)
-unique('staged track', stagedTracks)
+unique('topic group', LEARN_STAGES.map((group) => group.slug))
+const stagedTracks = LEARN_STAGES.flatMap((group) => group.tracks)
+unique('grouped track', stagedTracks)
 for (const track of TRACKS.filter((track) => isLearnTrack(track.slug))) {
-  if (!stagedTracks.includes(track.slug)) fail(`Learn track ${track.slug} has no learning stage`)
+  if (!stagedTracks.includes(track.slug)) fail(`Learn track ${track.slug} has no topic group`)
 }
 for (const slug of stagedTracks) {
-  if (!TRACKS.some((track) => track.slug === slug && isLearnTrack(slug))) fail(`learning stage references unknown Learn track ${slug}`)
+  if (!TRACKS.some((track) => track.slug === slug && isLearnTrack(slug))) fail(`topic group references unknown Learn track ${slug}`)
 }
+// A group with no tracks is a Coming soon card, which needs its planned topics.
+for (const group of LEARN_STAGES) {
+  if (!group.tracks.length && !group.planned) fail(`topic group ${group.slug} has no tracks and no planned topics`)
+}
+// Group pages live at /learn/topics/<group>; a track with that slug would be shadowed.
+if (TRACKS.some((t) => t.slug === 'topics')) fail('track slug "topics" collides with the /learn/topics route')
 unique('module', MODULES.map((m) => m.slug))
 unique('lesson', LESSONS.map((l) => l.slug))
 for (const t of TRACKS) unique(`section (${t.slug})`, t.sections.map((s) => s.slug))

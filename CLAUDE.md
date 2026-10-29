@@ -53,7 +53,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Site structure (groups)
 
-The site is meant to be the single place for AI Engineering and Forward Deployed Engineering preparation. It is organised on two axes, decided on 30 October 2026. Plan: `.website_spec/status/todo/implementation_plan_site-groups-and-structure.md`. Research: `.website_spec/reference/2026-10-30-platform-review-and-site-groups.html`.
+The site is meant to be the single place for AI Engineering and Forward Deployed Engineering preparation. It is organised on two axes, decided on 30 October 2026. Plan: `.website_spec/status/in-progress/implementation_plan_site-groups-and-structure.md`. Research: `.website_spec/reference/2026-10-30-platform-review-and-site-groups.html`.
 
 - **Learn by topic.** Learn tracks sit in eight topic groups, in this order:
   1. Start here
@@ -64,7 +64,13 @@ The site is meant to be the single place for AI Engineering and Forward Deployed
   6. Forward Deployed Engineering
   7. Coding
   8. Career
-- **Groups are navigation only.** They are defined in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`), and track ids, URLs and progress never depend on them. Every Learn track sits in exactly one group. A group with no published track stays hidden; never show an empty "coming soon" group. Until Part 1 of the plan ships, `LEARN_STAGES` still holds the five journey stages.
+- **Groups are navigation only.** They are defined in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`), and track ids, URLs and progress never depend on them. Every Learn track sits in exactly one group (`check:curriculum` enforces it).
+- **Group cards and pages.**
+  - `/learn` shows the eight groups as square, bordered cards (`components/learn/GroupCard.tsx`, `cb-group-card` in `editorial.css`). A card shows the group's number, title, summary, track count, hours and progress. It does not list track names.
+  - A live group's card is one link to its page at `/learn/topics/<group>`, which lists its tracks with the requirement and progress filters.
+  - A group with no tracks yet is a Coming soon card (dashed border, second paper). It shows its `planned` topics, has no link and no page (its URL is a 404), and stays out of the sitemap. Never promise a date.
+  - Breadcrumbs on Learn track, module and lesson pages run Learn, group, track (`groupTrail` and `trackTrail` in `site/src/lib/learn.ts`).
+  - No track may use the slug `topics`.
 - **Interview by round.** The interview area follows the rounds of a real loop: recruiter screen, coding, AI-assisted coding, AI system design, decomposition or case study, customer scenario, behavioural, demo or take-home. A new interview page belongs to one round.
 - **Placing new content.** A new track goes in the group for its discipline. Behavioural, portfolio, resume and negotiation material goes in Career, not Forward Deployed Engineering. AI System Design stays in Learn.
 - **Overlaps.** Before adding a Harness Engineering lesson, check the `agentic-systems` modules "Context and memory" and "Reliable workflows and coordination". Before adding an Inference Engineering lesson, check the `production-ai` module "Operations and performance". Give each topic one canonical home and cross-link from the other, so no topic is taught twice.

@@ -9,6 +9,7 @@ import {
   formatMinutes,
   getModuleBySlug,
   getTrack,
+  groupTrail,
   learnHref,
   trackMinutes,
   trackParams,
@@ -62,7 +63,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
       <JsonLd
         data={[
           breadcrumbJsonLd([
-            { name: 'Learn', path: learnHref.index() },
+            ...groupTrail(track).map((c) => ({ name: c.label, path: c.href })),
             { name: track.title, path: learnHref.track(track.slug) },
           ]),
           courseJsonLd({
@@ -73,7 +74,7 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
           }),
         ]}
       />
-      <Breadcrumbs items={[{ label: 'Learn', href: learnHref.index() }, { label: track.title }]} />
+      <Breadcrumbs items={[...groupTrail(track), { label: track.title }]} />
       <div className="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10">
         <SideNav track={track} />
         <div className="min-w-0">
