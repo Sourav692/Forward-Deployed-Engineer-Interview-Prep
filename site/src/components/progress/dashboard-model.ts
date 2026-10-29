@@ -1,6 +1,6 @@
 /**
  * What the progress pages show, computed in the browser from the `fd:v1` store (FE-16).
- * The rules are written down in `.website_spec/2026-10-05-learn-ux.md` § Dashboard (UX-07).
+ * The rules are written down in `.website_spec/reference/2026-10-05-learn-ux.md` § Dashboard (UX-07).
  * Plain functions over store getters: only client islands call them, inside
  * `useProgress`, so they re-run whenever progress changes.
  */

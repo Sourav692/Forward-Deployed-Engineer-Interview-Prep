@@ -132,7 +132,7 @@ export type ReadingList = {
   /**
    * The list that counts for this module's progress and completion: the home
    * lessons, or the see-also lessons when the module owns none (T1.5; see
-   * .website_spec/2026-10-05-canonical-homes.md).
+   * .website_spec/reference/2026-10-05-canonical-homes.md).
    */
   main: LearnLesson[]
   /** True when `main` is the see-also list. */

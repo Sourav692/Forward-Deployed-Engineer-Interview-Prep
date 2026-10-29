@@ -6,7 +6,7 @@ import { dashboardData } from '@/lib/dashboard'
 /**
  * /progress (FE-16): next up, interview readiness, revision queue, finish-by date,
  * track progress, recent activity and bookmarks. A static shell; the dashboard island
- * reads this browser's progress after hydration (`.website_spec/2026-10-05-learn-ux.md` § Dashboard).
+ * reads this browser's progress after hydration (`.website_spec/reference/2026-10-05-learn-ux.md` § Dashboard).
  */
 
 export const metadata: Metadata = {
