@@ -46,7 +46,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T0.2_The_FDE_Role/03_A_Senior_FDEs_Day.md",
       "estMinutes": 5,
       "href": "/learn/orientation/the-fde-role/a-senior-fdes-day",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "practise-fde-role",
@@ -482,7 +482,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T2.4_Retrieval_Hybrid_Rerank_and_Query_Transformation/02_Hybrid_Search_and_Rank_Fusion.md",
       "estMinutes": 8,
       "href": "/learn/llm-and-retrieval/retrieval-hybrid-rerank/hybrid-search-and-rank-fusion",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "query-transformation",
@@ -1124,7 +1124,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.6_Multi_Agent_Systems/06_From_Supervisor_to_Deep_Agent.md",
       "estMinutes": 11,
       "href": "/learn/agentic-systems/multi-agent-systems/from-supervisor-to-deep-agent",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "anatomy-of-a-deployed-multi-agent-platform",
@@ -1256,7 +1256,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/02_The_Seven_Access_Rules.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/the-seven-access-rules",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "pushing-policy-into-the-index",
@@ -1448,7 +1448,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/04_Tenant_Isolation_Levels.md",
       "estMinutes": 5,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/tenant-isolation-levels",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "fair-sharing-between-tenants",
@@ -1458,9 +1458,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.4_Security_Tenancy_and_Prompt_Injection/05_Fair_Sharing_Between_Tenants.md",
-      "estMinutes": 7,
+      "estMinutes": 6,
       "href": "/learn/production-ai/security-tenancy-prompt-injection/fair-sharing-between-tenants",
-      "updated": "2026-10-12"
+      "updated": "2026-10-29"
     },
     {
       "slug": "practise-security-and-tenancy",
@@ -1676,7 +1676,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/01_What_Breaks_at_Twenty_Million_Documents.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/scaling-and-reliability/what-breaks-at-twenty-million-documents",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "scaling-the-index-and-access-control",
@@ -1688,7 +1688,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.6_Scaling_and_Reliability/02_Scaling_the_Index_and_Access_Control.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/scaling-and-reliability/scaling-the-index-and-access-control",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "capacity-latency-and-cost-at-scale",
@@ -1767,42 +1767,6 @@
       "updated": "2026-10-12"
     },
     {
-      "slug": "agentops-mapped-to-databricks",
-      "title": "AgentOps Mapped to Databricks",
-      "track": "production-ai",
-      "module": "agentops",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/03_AgentOps_Mapped_to_Databricks.md",
-      "estMinutes": 7,
-      "href": "/learn/production-ai/agentops/agentops-mapped-to-databricks",
-      "updated": "2026-10-12"
-    },
-    {
-      "slug": "enterprise-rag-on-a-governed-lakehouse",
-      "title": "Enterprise RAG on a Governed Lakehouse",
-      "track": "production-ai",
-      "module": "agentops",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md",
-      "estMinutes": 8,
-      "href": "/learn/production-ai/agentops/enterprise-rag-on-a-governed-lakehouse",
-      "updated": "2026-10-12"
-    },
-    {
-      "slug": "enterprise-rag-on-a-governed-lakehouse-running-and-auditing",
-      "title": "Enterprise RAG on a Governed Lakehouse: Running and Auditing",
-      "track": "production-ai",
-      "module": "agentops",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md",
-      "estMinutes": 7,
-      "href": "/learn/production-ai/agentops/enterprise-rag-on-a-governed-lakehouse-running-and-auditing",
-      "updated": "2026-10-12"
-    },
-    {
       "slug": "channel-adapters-and-human-escalation",
       "title": "Channel Adapters and Human Escalation",
       "track": "production-ai",
@@ -1834,9 +1798,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/07_Infrastructure_as_Code_and_the_Release_Pipeline.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/production-ai/agentops/infrastructure-as-code-and-the-release-pipeline",
-      "updated": "2026-10-05"
+      "updated": "2026-10-29"
     },
     {
       "slug": "practise-agentops",
@@ -1846,9 +1810,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/08_Practise_AgentOps_Interview_Questions.md",
-      "estMinutes": 8,
+      "estMinutes": 6,
       "href": "/learn/production-ai/agentops/practise-agentops",
-      "updated": "2026-10-12"
+      "updated": "2026-10-29"
     },
     {
       "slug": "four-learning-surfaces",
@@ -2228,30 +2192,6 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
       "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag-retrieval-and-release",
-      "updated": "2026-10-16"
-    },
-    {
-      "slug": "access-controlled-rag-on-databricks",
-      "title": "Access-Controlled RAG on Databricks",
-      "track": "ai-systems-design",
-      "module": "classic-ai-designs",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
-      "estMinutes": 8,
-      "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks",
-      "updated": "2026-10-16"
-    },
-    {
-      "slug": "access-controlled-rag-on-databricks-testing-and-operations",
-      "title": "Access-Controlled RAG on Databricks: Testing and Operations",
-      "track": "ai-systems-design",
-      "module": "classic-ai-designs",
-      "kind": "sync",
-      "publish": "own",
-      "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md",
-      "estMinutes": 11,
-      "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-rag-on-databricks-testing-and-operations",
       "updated": "2026-10-16"
     },
     {
@@ -2889,7 +2829,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T7.1_Telling_the_Build_Story/06_The_Technical_Implementation_Flow.md",
       "estMinutes": 10,
       "href": "/learn/communication-and-behavioural/telling-the-build-story/the-technical-implementation-flow",
-      "updated": "2026-10-08"
+      "updated": "2026-10-29"
     },
     {
       "slug": "proof-versus-knowledge",

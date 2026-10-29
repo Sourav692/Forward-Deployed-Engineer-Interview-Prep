@@ -1095,15 +1095,12 @@ export const MODULES: CurriculumModule[] = [
     lessons: [
       'prompt-versioning-rollout-and-rollback',
       'testing-prompt-changes',
-      'agentops-mapped-to-databricks',
-      'enterprise-rag-on-a-governed-lakehouse',
-      'enterprise-rag-on-a-governed-lakehouse-running-and-auditing',
       'channel-adapters-and-human-escalation',
       'red-teaming-and-layered-guardrails',
       'infrastructure-as-code-and-the-release-pipeline',
       'practise-agentops',
     ],
-    seeAlso: ['gate-releases-on-quality', 'roll-out-changes-gradually', 'access-controlled-rag-on-databricks', 'anatomy-of-a-deployed-multi-agent-platform'],
+    seeAlso: ['gate-releases-on-quality', 'roll-out-changes-gradually', 'access-controlled-enterprise-rag', 'anatomy-of-a-deployed-multi-agent-platform'],
   },
   {
     slug: 'model-adaptation-and-serving',
@@ -1221,12 +1218,10 @@ export const MODULES: CurriculumModule[] = [
       'logistics-exceptions-designing-around-a-policy-gate',
       'access-controlled-enterprise-rag',
       'access-controlled-enterprise-rag-retrieval-and-release',
-      'access-controlled-rag-on-databricks',
-      'access-controlled-rag-on-databricks-testing-and-operations',
       'safe-workflow-automation-for-non-technical-users',
       'delivering-an-agent-in-two-weeks-with-enforced-gates',
     ],
-    seeAlso: ['prompt-injection-and-egress-control', 'red-teaming-and-layered-guardrails', 'prompt-versioning-rollout-and-rollback', 'enterprise-rag-on-a-governed-lakehouse'],
+    seeAlso: ['prompt-injection-and-egress-control', 'red-teaming-and-layered-guardrails', 'prompt-versioning-rollout-and-rollback', 'why-access-control-shapes-enterprise-rag'],
   },
   // Compatibility metadata for case links and saved progress. The cases live in
   // Casebook; this module is no longer listed or assigned in the Learn curriculum.
@@ -3766,7 +3761,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/03_AgentOps_Mapped_to_Databricks.md',
     home: 'agentops',
     kind: 'sync',
-    publish: 'own',
+    // Databricks-specific: off the site until the platform track (production plan, future additions).
+    publish: 'excluded',
   },
   {
     slug: 'enterprise-rag-on-a-governed-lakehouse',
@@ -3774,7 +3770,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md',
     home: 'agentops',
     kind: 'sync',
-    publish: 'own',
+    // Databricks-specific: off the site until the platform track (production plan, future additions).
+    publish: 'excluded',
     // Split for length (ENH-25): the closing sections are the next lesson.
     sections: { exclude: ['Run the Query as the User', 'Retrieve, Evaluate, and Audit on the Platform', 'Weigh the Trade-Offs Honestly', 'Worked Example: What the Live Run Proved', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
@@ -3784,7 +3781,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Consolidated_Lessons/T4.7_AgentOps/04_Enterprise_RAG_on_a_Governed_Lakehouse.md',
     home: 'agentops',
     kind: 'sync',
-    publish: 'own',
+    // Databricks-specific: off the site until the platform track (production plan, future additions).
+    publish: 'excluded',
     sections: { include: ['Run the Query as the User', 'Retrieve, Evaluate, and Audit on the Platform', 'Weigh the Trade-Offs Honestly', 'Worked Example: What the Live Run Proved', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {
@@ -4106,7 +4104,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    // Databricks-specific: off the site until the platform track (production plan, future additions).
+    publish: 'excluded',
     // Split for length (ENH-25): the closing sections are the next lesson.
     sections: { exclude: ['Test Leaks Where Enforcement Happens', 'Observe, Isolate Tenants, and Fail Closed', 'Separate What Ran From What Was Designed', 'Worked Example: A Tier-1 Agent Asks About Vertex', 'Close on Unity Catalog and SCIM', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
@@ -4116,7 +4115,8 @@ export const LESSONS: CurriculumLesson[] = [
     source: '01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/07_Access_Controlled_RAG_on_Databricks.md',
     home: 'classic-ai-designs',
     kind: 'sync',
-    publish: 'own',
+    // Databricks-specific: off the site until the platform track (production plan, future additions).
+    publish: 'excluded',
     sections: { include: ['Test Leaks Where Enforcement Happens', 'Observe, Isolate Tenants, and Fail Closed', 'Separate What Ran From What Was Designed', 'Worked Example: A Tier-1 Agent Asks About Vertex', 'Close on Unity Catalog and SCIM', 'Key Takeaways', 'Check Yourself', 'References'] },
   },
   {

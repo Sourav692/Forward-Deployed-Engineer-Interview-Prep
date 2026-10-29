@@ -299,8 +299,6 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'The chip models run on. Usually the biggest cost line.' },
   { term: 'CPU', group: 'Performance and cost', expand: false,
     plain: 'A general-purpose processor.' },
-  { term: 'DBU', expansion: 'Databricks Unit', group: 'Performance and cost',
-    plain: 'How Databricks bills: you pay for compute time, not for bytes scanned.' },
   { term: 'CDN', expansion: 'content delivery network', group: 'Performance and cost',
     plain: 'Servers around the world that cache content close to users.' },
   { term: 'SSE', expansion: 'server-sent events', group: 'Performance and cost',
@@ -375,8 +373,6 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'An open-source library that scores a retrieval-augmented generation pipeline on faithfulness, relevance and context quality.' },
   { term: 'CDC', expansion: 'change data capture', group: 'Retrieval and data',
     plain: 'Streaming each insert, update and delete from a source database so downstream copies stay current without full reloads.' },
-  { term: 'UC', expansion: 'Unity Catalog', group: 'Retrieval and data',
-    plain: 'Databricks’ governance layer: one place for table, model and file permissions, lineage and audit.' },
   { term: 'RDS', expansion: 'Amazon Relational Database Service', group: 'Retrieval and data',
     plain: 'AWS’s managed PostgreSQL, MySQL and similar databases.' },
   { term: 'XPIA', expansion: 'cross-prompt injection attack', group: 'Security and compliance',
@@ -446,8 +442,6 @@ export const NOT_ACRONYMS = new Set([
   'IF', 'IS', 'AND', 'OR', 'ACT', 'GW', 'MRD', 'TKT', 'AD', 'VS', 'USD', 'APJ',
   // Mermaid flowchart direction keyword (flowchart TD)
   'TD',
-  // SQL column type in the T5.4 and T4 Databricks row-filter examples (sensitivity_lvl INT).
-  'INT',
 ])
 
 export const glossaryAnchor = (term: string) =>

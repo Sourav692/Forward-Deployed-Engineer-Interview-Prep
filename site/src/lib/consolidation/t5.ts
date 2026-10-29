@@ -32,7 +32,12 @@ export const RENAMED_T5: Record<string, string | null> = {
   'classic-ai-designs/enterprise-rag-with-access-control':
     'classic-ai-designs/access-controlled-enterprise-rag',
   'classic-ai-designs/whiteboard-scripts-enterprise-rag-on-databricks':
-    'classic-ai-designs/access-controlled-rag-on-databricks',
+    'classic-ai-designs/access-controlled-enterprise-rag',
+  // The Databricks case left the site on 29 October 2026 (a future addition in the
+  // production plan); its two lessons go to the vendor-neutral case.
+  'classic-ai-designs/access-controlled-rag-on-databricks': 'classic-ai-designs/access-controlled-enterprise-rag',
+  'classic-ai-designs/access-controlled-rag-on-databricks-testing-and-operations':
+    'classic-ai-designs/access-controlled-enterprise-rag-retrieval-and-release',
   'classic-ai-designs/agent-platform-for-non-technical-users':
     'classic-ai-designs/safe-workflow-automation-for-non-technical-users',
   'classic-ai-designs/scoping-doc-to-deployed-agent-in-two-weeks':

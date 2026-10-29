@@ -37,21 +37,6 @@ The platform's README fixes a strict order. Configure cloud credentials. Bootstr
 
 The order encodes dependencies. The backend must exist before Terraform runs. Infrastructure comes before secrets, because the vault has to exist. Secrets come before the first deploy, because containers read them at startup. Getting this order wrong is the most common first-day failure, so writing it down is part of the deliverable.
 
-## Use Bundles on Databricks
-
-On a lakehouse the same discipline is Databricks Asset Bundles (DABs). Pipelines, jobs, Vector Search indexes, serving endpoints, the app, and the row-filter and column-mask SQL ship as one bundle, deployed dev to staging to prod. Including the security policy SQL in the bundle is what a typical application bundle would not do. Prompts live in the MLflow Prompt Registry. The pipeline gates on evaluation regression, `no_leak` equal to 1.0 and SQL permission assertions. The serving endpoint is canaried through traffic splitting.
-
-| Concern | AWS platform | Databricks |
-|---|---|---|
-| Infrastructure as code | Terraform | DABs |
-| Build and deploy | GitHub Actions to ECR to ECS | DABs deploy per environment |
-| Secrets | Secrets Manager, read at startup | Secret scopes; on-behalf-of-user tokens at request time |
-| Rollback | Automatic on a failed ECS health check | Alias re-point plus endpoint config |
-| Release gate | None built; evaluation is observability only | `mlflow.genai.evaluate()`, `no_leak` and SQL assertions |
-| Scheduled verification | EventBridge triggering PyRIT weekly | A scheduled evaluation job and production monitoring |
-
-The Databricks column has a release gate and the AWS one does not. That is not a platform difference. It is a difference in what the two projects chose to build, and a coverage map should record it.
-
 ## Assemble the AI Release Pipeline
 
 Put together, a change to an AI system moves through this pipeline.
@@ -94,7 +79,6 @@ Nobody clicked anything in a console, and every gate that could have stopped the
 - Infrastructure as code makes the environment reviewable and rebuildable, and teardown in one command proves it.
 - Every push builds and deploys automatically, and a failed health check rolls back without a human.
 - Set up in dependency order, and read secrets from a vault at startup instead of baking them in.
-- On Databricks, bundles carry pipelines, indexes, endpoints and the security SQL through dev, staging and prod with gates.
 - The AI release pipeline stacks tests, a zero-leak evaluation gate, shadow, canary, pointer-flip promotion and scheduled verification.
 
 ## Check Yourself
@@ -102,12 +86,12 @@ Nobody clicked anything in a console, and every gate that could have stopped the
 1. **Why is the Terraform state backend bootstrapped separately?**
    Terraform cannot create the storage it uses to hold its own state, so the backend must exist first.
 
-2. **What triggers an automatic rollback in the AWS pipeline, and what is the Databricks equivalent?**
-   A new ECS deployment failing health checks. On Databricks, rollback is re-pointing the alias and updating the endpoint config.
+2. **What triggers an automatic rollback in the AWS pipeline?**
+   A new ECS deployment failing health checks. No human decides.
 
-3. **What does the Databricks bundle include that a typical application bundle would not?**
-   The row-filter and column-mask SQL, so the security policy ships and is reviewed with the code.
+3. **Why must the secrets be in the vault before the first deploy?**
+   Containers read them once at startup, so a container started before the secrets exist cannot run.
 
 ## References
 
-**Sources:** `06_Infra_And_CICD.md` (FDE Handbook, AgentOps and platform): "The AWS platform", "Setup order, and why", "The Databricks equivalent", "The pipeline, assembled", Interview lens and Checkpoint. `03_Enterprise_RAG_On_Databricks.md` (FDE Handbook): "Multi-tenancy and CI/CD".
+**Sources:** `06_Infra_And_CICD.md` (FDE Handbook, AgentOps and platform): "The AWS platform", "Setup order, and why", "The pipeline, assembled", Interview lens and Checkpoint.

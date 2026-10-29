@@ -39,11 +39,16 @@ export const RENAMED_T4: Record<string, string | null> = {
   'cost-and-latency/module-09-caching-in-genai-systems': 'cost-and-latency/caching-in-genai-systems',
   'scaling-and-reliability/scaling-to-20m-documents': 'scaling-and-reliability/what-breaks-at-twenty-million-documents',
   'agentops/prompt-versioning-rollout-rollback': 'agentops/prompt-versioning-rollout-and-rollback',
-  'agentops/agentops-on-databricks': 'agentops/agentops-mapped-to-databricks',
-  'agentops/enterprise-rag-on-databricks': 'agentops/enterprise-rag-on-a-governed-lakehouse',
+  'agentops/agentops-on-databricks': 'agentops/prompt-versioning-rollout-and-rollback',
+  'agentops/enterprise-rag-on-databricks': 'enterprise-rag-in-production/why-access-control-shapes-enterprise-rag',
   'agentops/multi-channel-and-hitl-escalation': 'agentops/channel-adapters-and-human-escalation',
   'agentops/red-teaming': 'agentops/red-teaming-and-layered-guardrails',
   'agentops/infra-and-cicd': 'agentops/infrastructure-as-code-and-the-release-pipeline',
-  'agentops/production-and-platform-judgment-agentops-on-databricks': 'agentops/agentops-mapped-to-databricks',
+  'agentops/production-and-platform-judgment-agentops-on-databricks': 'agentops/prompt-versioning-rollout-and-rollback',
+  // The Databricks lessons left the site on 29 October 2026 (a future addition in the
+  // production plan); their URLs go to the vendor-neutral lessons on the same ground.
+  'agentops/agentops-mapped-to-databricks': 'agentops/prompt-versioning-rollout-and-rollback',
+  'agentops/enterprise-rag-on-a-governed-lakehouse': 'enterprise-rag-in-production/why-access-control-shapes-enterprise-rag',
+  'agentops/enterprise-rag-on-a-governed-lakehouse-running-and-auditing': 'enterprise-rag-in-production/why-access-control-shapes-enterprise-rag',
   'model-adaptation-and-serving/ch08-learning-in-agentic-systems': 'model-adaptation-and-serving/four-learning-surfaces',
 }

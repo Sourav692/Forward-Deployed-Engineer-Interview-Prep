@@ -22,7 +22,7 @@ A blocked engineer is the highest-leverage problem of the morning. Many "technic
 
 ## Keep Mid-Morning for the Highest-Risk Decision
 
-Mid-morning is for work only the senior FDE should do: the architecture decision with real trade-offs, the genuinely hard piece of the pipeline, or a design review before code is written. On the source's engagement with a large Asian life insurer, this meant a two-layer access-control pattern. A fast metadata pre-filter ran at the vector-search layer, and a live re-check against Unity Catalog ran just before generation.
+Mid-morning is for work only the senior FDE should do: the architecture decision with real trade-offs, the genuinely hard piece of the pipeline, or a design review before code is written. On the source's engagement with a large Asian life insurer, this meant a two-layer access-control pattern. A fast metadata pre-filter ran at the vector-search layer, and a live re-check against the governed catalogue ran just before generation.
 
 The reason was risk, not novelty. Getting that boundary wrong does not fail loudly; it fails silently. Reviewing designs before implementation catches a wrong turn while it is still cheap.
 

@@ -8,7 +8,6 @@ export const EXPLORERS = [
   { id: 'recruiting-platform', lessons: ['recruiting-platform-explainable-ranking-human-decisions'], stem: 'recruiting_platform' },
   { id: 'logistics-exceptions', lessons: ['logistics-exceptions-designing-around-a-policy-gate'], stem: 'logistics_exceptions' },
   { id: 'enterprise-rag', lessons: ['access-controlled-enterprise-rag', 'access-controlled-enterprise-rag-retrieval-and-release'], stem: 'enterprise_rag' },
-  { id: 'databricks-rag', lessons: ['access-controlled-rag-on-databricks', 'access-controlled-rag-on-databricks-testing-and-operations'], stem: 'databricks_rag' },
   { id: 'workflow-automation', lessons: ['safe-workflow-automation-for-non-technical-users'], stem: 'workflow_automation' },
   { id: 'two-week-delivery', lessons: ['delivering-an-agent-in-two-weeks-with-enforced-gates'], stem: 'two_week_delivery' }
 ].map(({ stem, ...entry }) => ({ ...entry, source: `${root}/${stem}_explorer.json`, html: `${root}/${stem}_fde_explorer.html` }))

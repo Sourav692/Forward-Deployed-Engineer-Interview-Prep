@@ -695,7 +695,6 @@ const AMERICAN =
   /^(?:un|re|pre|de|mis)?(?:behaviors?|behavioral(?:ly)?|authoriz(?:e|es|ed|ing|ation|ations|er|ers)|optimiz(?:e|es|ed|ing|ation|ations|er|ers)|organiz(?:e|es|ed|ing|ation|ations|ational|er|ers)|judgments?|(?:normaliz|summariz|paralleliz|prioritiz|recogniz|utiliz|minimiz|maximiz|categoriz|standardiz|emphasiz|realiz|specializ|generaliz|finaliz|visualiz|customiz|memoriz|characteriz|centraliz|decentraliz|serializ|synchroniz|operationaliz|apologiz|criticiz|analyz|paralyz|catalyz)(?:e|es|ed|ing|ation|ations|er|ers|able)|(?:label|cancel|model|travel|signal|fuel|channel|level|total)(?:ed|ing|er|ers)|centers?|centered|centering)$/i
 const SPELLING_ALLOWED: [RegExp, string][] = [
   [/(?:Cost and )?Latency Optimization Playbook/g, 'title of a third-party playbook'],
-  [/storage-optimized/gi, 'Databricks Vector Search endpoint type'],
   [/evaluator-optimizer/gi, "Anthropic's name for a workflow pattern"],
   [/\b(?:items|justify|place-items|self|text)-center\b/g, 'Tailwind utility class'],
 ]

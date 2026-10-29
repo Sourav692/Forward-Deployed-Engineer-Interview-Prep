@@ -52,10 +52,6 @@ A daily spend cap acts on that total. Above 90% of the cap, the tenant is alerte
 
 > **Warning: a spend cap is not an injection defence.** It limits how much a tenant can spend. It does not prove that a particular expensive action was authorised. [Prompt Injection and Egress Control](03_Prompt_Injection_and_Egress_Control.md) explains why relying on it there is luck.
 
-## Map the Controls to a Platform
-
-On Databricks, the quick reference maps these controls to platform features. Model Serving gives per-endpoint rate limits in queries per second, and routing tags can send a tenant to a dedicated pool. Unity Catalog row-level security and dynamic views keep each tenant's data separate. Inference tables tag every request with `tenant_id`, cost and tokens, and a Delta table aggregates spend by tenant and date.
-
 ## Worked Example: Three Tenants, One Bad Day
 
 Three tenants share one serving endpoint. By mid-afternoon, tenant A has spent $12.50 of a $50.00 daily cap. Tenant B has spent $48.90, over 90%, so it receives an alert. Tenant C has spent $52.10, over its cap, so its new requests are blocked until midnight UTC.
@@ -74,7 +70,6 @@ Each control answered a different question: whether a request may proceed, in wh
 - Weighted fair queuing, or a token bucket per tenant feeding a shared pool, shares throughput proportionally instead of first come, first served.
 - Per-tenant quotas, circuit breakers and query timeouts bound each tenant, and a rate-limited request should cost nothing.
 - Spend caps alert at 90% and block at 100%, and they depend on attributing every request's cost to a tenant.
-- On Databricks, serving rate limits, Unity Catalog row-level security and inference-table cost tags implement the same controls.
 - Each control answers one question, so none substitutes for another.
 
 ## Check Yourself
@@ -90,4 +85,4 @@ Each control answered a different question: whether a request may proceed, in wh
 
 ## References
 
-**Sources:** `01_Identity_Secrets_Tenant_Fairness.md` (FDE Handbook, Cross-Cutting Concerns): "4 · Queue fairness". `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgement): §4 "Queue fairness". `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §6 "Fair Resource Sharing: Per-Tenant Limits & Spend Caps", including "Fair Sharing Architecture", "Rate Limiting Strategies", "Cost Attribution & Spend Caps", "Databricks Implementation" and "Interview Answer Template". `05_The_Query_Graph.md` (FDE Handbook, Enterprise RAG): "The entry point" and "Degradation, everywhere".
+**Sources:** `01_Identity_Secrets_Tenant_Fairness.md` (FDE Handbook, Cross-Cutting Concerns): "4 · Queue fairness". `01-identity-secrets-and-tenant-fairness.md` (Production and Platform Judgement): §4 "Queue fairness". `Cross_Cutting_System_Design_Quick_Reference_v2.md`: §6 "Fair Resource Sharing: Per-Tenant Limits & Spend Caps", including "Fair Sharing Architecture", "Rate Limiting Strategies", "Cost Attribution & Spend Caps" and "Interview Answer Template". `05_The_Query_Graph.md` (FDE Handbook, Enterprise RAG): "The entry point" and "Degradation, everywhere".

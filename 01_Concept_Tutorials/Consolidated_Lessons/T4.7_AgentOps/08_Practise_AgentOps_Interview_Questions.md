@@ -9,7 +9,6 @@ AgentOps questions test whether a candidate has shipped changes to a live AI sys
 **Objectives:**
 
 - walk a prompt change from edit to monitoring and name every gate;
-- ground the generic answer in platform mechanisms when asked;
 - answer the channel, escalation, red-teaming and infrastructure follow-ups.
 
 ---
@@ -33,23 +32,6 @@ A provider silently changing what a model version points to. A scheduled nightly
 
 **"How many examples do you need to call an A/B result?"**
 Enough to separate the improvement that matters from noise, decided before the test. LLM output varies, so small samples mislead, and stopping early is not allowed.
-
-## Ground It on a Platform
-
-**"You described the design generically. Have you actually done it?"**
-Map each step: registered models in Unity Catalog addressed by alias, promotion gated on `mlflow.genai.evaluate()` with a judge calibrated by MemAlign against SME labels, canary through a Model Serving traffic split, and rollback as an alias re-point plus endpoint update. Traces go into Unity Catalog tables. Audit, cost and drift come from system tables. See [AgentOps Mapped to Databricks](03_AgentOps_Mapped_to_Databricks.md).
-
-**"Why answer generically first?"**
-Leading with vendor names reads as name-dropping; leading with architecture and then grounding it reads as someone who shipped it.
-
-**"State the two Vector Search facts and the design they force."**
-The index does not enforce row filters or column masks, and it will not build on a table that has them. So an ungoverned base table, readable only by the sync principal, feeds both the index and a governed dynamic view. See [Enterprise RAG on a Governed Lakehouse](04_Enterprise_RAG_on_a_Governed_Lakehouse.md).
-
-**"What does on-behalf-of-user identity change, and what still runs as the service principal?"**
-The governed-view query runs as the user, so row filters and masks apply automatically. The Vector Search query still runs as the service principal, which is why the index filter is not the authority.
-
-**"What is the honest gap in the lakehouse audit trail?"**
-The audit table covers Delta reads, not Vector Search queries. Log what the index returned before enforcement into a Delta audit table; rows dropped by the view are an alertable disagreement signal.
 
 ## Serve Channels and Escalate
 
@@ -91,7 +73,6 @@ The answer never says "we are careful". It names a gate at each step, which is w
 ## Key Takeaways
 
 - A prompt change is a deployment with two gates, shadow, canary, pointer-flip rollback and nightly checks.
-- Ground the generic answer in platform mechanisms only after giving it, and know the half-done rollback bug.
 - Channels change latency and format only; escalation has five obligations.
 - Red teaming runs weekly on the real path, as every persona, and a successful attack blocks the release.
 - Infrastructure is code, secrets come from a vault, and every stop in the pipeline is automatic.
@@ -104,9 +85,9 @@ The answer never says "we are careful". It names a gate at each step, which is w
 2. **Why does the high-clearance contractor persona matter for red teaming?**
    It exercises rules that an anonymous or low-privilege attacker would never reach, such as the external-user block.
 
-3. **What is the difference between the AWS and Databricks pipelines' release gates?**
-   The Databricks build gates on evaluation, `no_leak` and SQL assertions; the AWS project built none. That reflects what each project chose to build, not the platform.
+3. **Why answer a release question generically before naming any vendor's tools?**
+   Leading with vendor names reads as name-dropping; leading with the architecture and then grounding it reads as someone who shipped it.
 
 ## References
 
-**Sources:** `01_Prompt_Versioning_Rollout_Rollback.md`, `02_AgentOps_On_Databricks.md`, `03_Enterprise_RAG_On_Databricks.md`, `04_Multi_Channel_And_HITL_Escalation.md`, `05_Red_Teaming.md` and `06_Infra_And_CICD.md` (FDE Handbook, AgentOps and platform): Checkpoints and Interview lens sections. `04-agentops-on-databricks.md` and `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgement): "What to say". `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §4 questions 5 and 7 (external answers not reused), §7 skeptical staff engineer questions.
+**Sources:** `01_Prompt_Versioning_Rollout_Rollback.md`, `04_Multi_Channel_And_HITL_Escalation.md`, `05_Red_Teaming.md` and `06_Infra_And_CICD.md` (FDE Handbook, AgentOps and platform): Checkpoints and Interview lens sections. `03-cost-latency-cicd-rigor-and-build-vs-buy.md` (Production and Platform Judgement): "What to say". `12_production_and_operations_INTERVIEW_TUTORIAL.md`: §4 questions 5 and 7 (external answers not reused), §7 skeptical staff engineer questions.
