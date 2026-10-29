@@ -66,9 +66,9 @@ The site is meant to be the single place for AI Engineering and Forward Deployed
   8. Career
 - **Groups are navigation only.** They are defined in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`), and track ids, URLs and progress never depend on them. Every Learn track sits in exactly one group (`check:curriculum` enforces it).
 - **Group cards and pages.**
-  - `/learn` shows the eight groups as cards (`components/learn/GroupCard.tsx`).
-  - A live group's card opens its page at `/learn/topics/<group>`, which lists its tracks with the requirement and progress filters. Its card also lists each track as a link, so a track stays one click from `/learn`, and shows the group's progress.
-  - A group with no tracks yet is a Coming soon card. It shows its `planned` topics, has no link and no page (its URL is a 404), and stays out of the sitemap. Never promise a date.
+  - `/learn` shows the eight groups as square, bordered cards (`components/learn/GroupCard.tsx`, `cb-group-card` in `editorial.css`). A card shows the group's number, title, summary, track count, hours and progress. It does not list track names.
+  - A live group's card is one link to its page at `/learn/topics/<group>`, which lists its tracks with the requirement and progress filters.
+  - A group with no tracks yet is a Coming soon card (dashed border, second paper). It shows its `planned` topics, has no link and no page (its URL is a 404), and stays out of the sitemap. Never promise a date.
   - Breadcrumbs on Learn track, module and lesson pages run Learn, group, track (`groupTrail` and `trackTrail` in `site/src/lib/learn.ts`).
   - No track may use the slug `topics`.
 - **Interview by round.** The interview area follows the rounds of a real loop: recruiter screen, coding, AI-assisted coding, AI system design, decomposition or case study, customer scenario, behavioural, demo or take-home. A new interview page belongs to one round.

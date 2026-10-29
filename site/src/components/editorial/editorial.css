@@ -411,3 +411,10 @@
 /* Case pages: the chapter text column is centred beside the sidebar at the shared 60rem width
    (page layout chosen 30 October 2026; see "Page layout" in CLAUDE.md). */
 .editorial-page .case-main { max-width: 60rem; margin-inline: auto; }
+
+/* Topic group cards on /learn: square, hairline-bordered boxes. A live card is one link and
+   firms its border on hover or focus; a Coming soon card sits on the second paper, dashed. */
+.editorial-page .cb-group-card { border: var(--rule-hair) solid var(--color-rule-2); background: var(--color-paper); padding: 1.5rem 1.5rem 1.25rem; transition: border-color var(--dur-short) var(--ease-out); }
+.editorial-page .cb-group-card:not(.is-soon):is(:hover, :focus-within) { border-color: var(--color-ink); }
+.editorial-page .cb-group-card:hover .cb-entry-title a { text-decoration-color: var(--color-accent); }
+.editorial-page .cb-group-card.is-soon { background: var(--color-paper-2); border-style: dashed; }

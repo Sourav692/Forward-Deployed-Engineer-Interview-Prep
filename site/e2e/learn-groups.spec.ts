@@ -18,9 +18,10 @@ test('Learn lists eight topic groups as cards, with Coming soon for empty ones',
     await expect(groups.getByRole('link', { name, exact: true })).toHaveCount(0)
   }
   await expect(groups.getByText('Coming soon')).toHaveCount(3)
-  // A card lists its tracks as links, one click from /learn.
-  await groups.getByRole('list', { name: 'AI Engineering tracks' }).getByRole('link', { name: 'Agentic Systems' }).click()
-  await expect(page).toHaveURL(/\/learn\/agentic-systems$/)
+  // A live card opens its group page, and the group shows in the track's breadcrumb.
+  await groups.getByRole('link', { name: 'AI Engineering', exact: true }).click()
+  await expect(page).toHaveURL(/\/learn\/topics\/ai-engineering$/)
+  await page.getByRole('link', { name: 'Agentic Systems', exact: true }).click()
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'AI Engineering' })).toHaveAttribute('href', '/learn/topics/ai-engineering')
 })
 

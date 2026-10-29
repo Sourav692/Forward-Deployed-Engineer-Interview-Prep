@@ -54,7 +54,7 @@ export default async function LearnPage() {
       </header>
       <StorageNotice />
       <PathBanner />
-      <ul aria-label="Topic groups" className="mt-[3.25rem] grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
+      <ul aria-label="Topic groups" className="mt-[3.25rem] grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {LEARN_STAGES.map((group, i) => (
           <li key={group.slug} className="flex">
             <GroupCard
