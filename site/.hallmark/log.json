@@ -1,0 +1,61 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Index (contents rows) + app screen (reading view)",
+  "theme": "editorial",
+  "axes": "light/display-condensed/chromatic-green",
+  "hero": "Settled",
+  "nav": "kept",
+  "footer": "kept",
+  "imagery": "the product: the case list as a contents page, the reading view",
+  "photos": [],
+  "entry": "/design",
+  "fingerprint": "settled|contents-rows|well",
+  "sections": [
+   "Hero (name, standfirst, progress)",
+   "Contents (eight themes as ruled rows)",
+   "Well (the method note)"
+  ],
+  "signature": "the casebook set as a magazine contents page, each case a ruled row with its level and reading time",
+  "waived": [
+   "72",
+   "44c",
+   "79",
+   "49b"
+  ],
+  "prompt": "casebook index and case reading pages for an FDE interview prep site",
+  "date": "2026-10-28"
+ },
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "page",
+  "shape": "Marquee Hero (Counter hero swap)",
+  "theme": "editorial",
+  "axes": "light/display-condensed/chromatic-green",
+  "hero": "Counter",
+  "nav": "kept",
+  "footer": "kept",
+  "imagery": "the product: practice card and journey",
+  "photos": [],
+  "entry": "/",
+  "fingerprint": "counter|pinned|rows|beside-pairs|index|band-tables|close",
+  "sections": [
+   "Hero (practice card)",
+   "Pinned (journey)",
+   "Rows (areas)",
+   "Grid 2x2 beside head (different)",
+   "Index (who)",
+   "Band + Table (coverage)",
+   "Close"
+  ],
+  "signature": "the discovery question answered in the hero, scored against a strong answer",
+  "waived": [
+   "72"
+  ],
+  "prompt": "interview prep and learning site for engineers moving into forward deployed and AI systems roles",
+  "date": "2026-10-27"
+ }
+]
