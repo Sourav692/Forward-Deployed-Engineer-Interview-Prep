@@ -3,7 +3,7 @@ import { CASE_STUDY, LESSON, READY_MODULE, WORKSHEET, hydrated, tabTo } from './
 
 // A11Y-02 checks that can be automated (plan §11 "Manual checks per template"):
 // reflow at 200 % and 400 % zoom, visible focus, and reduced motion. Screen-reader
-// passes stay manual; see .website_spec/2026-10-05-phase-1-qa-report.md.
+// passes stay manual; see .website_spec/reference/2026-10-05-phase-1-qa-report.md.
 
 const TEMPLATES = ['/', '/start', '/learn', '/learn/orientation', READY_MODULE, LESSON, WORKSHEET, CASE_STUDY]
 

@@ -12,8 +12,8 @@
 - `site/` is the only JavaScript project. It uses Next.js 16, React 19, Tailwind v4, and npm. Run npm commands from `site/` only.
 - Skills: Claude Code gets the Sourav692 skills from the `sourav-skills` plugin, so this repo has no `.claude/skills/`. Codex skills are npx installs in `.agents/skills/` (tracked in `skills-lock.json`). Update them with `.agents/update-skills.sh`, never `npx skills update`: it re-adds `.claude/skills` symlinks. Add one with `npx skills@latest add <owner/repo> -s <name> -a codex -y`.
 - Before changing Next.js code, read the relevant local Next documentation in `site/node_modules/next/dist/docs/`. Also follow [site/AGENTS.md](site/AGENTS.md).
-- The platform brief is `00_Start_Here/Platform_Blueprint.html`; its local source prompt is `.website_spec/website_prompt.md`.
-- Website design docs, specs, audits, plans, task boards and QA reports live in `.website_spec/` (gitignored, owner's clone only). Put new ones there, never in `site/` or another committed folder. The production plan is `.website_spec/2026-10-05-production-implementation-plan.md`; its board is `.website_spec/tasks/README.md`.
+- The platform brief is `00_Start_Here/Platform_Blueprint.html`; its local source prompt is `.website_spec/reference/website_prompt.md`.
+- Website design docs, specs, audits, plans, task boards and QA reports live in `.website_spec/` (gitignored, owner's clone only). Put new ones there, never in `site/` or another committed folder. The production plan is `.website_spec/status/in-progress/2026-10-05-production-implementation-plan.md`; its board is `.website_spec/tasks/README.md`. Plans sit in `.website_spec/status/<state>/` (index `.website_spec/status/README.md`); reference docs in `.website_spec/reference/`.
 
 ## Content and publishing safety
 
@@ -52,4 +52,4 @@ Run from `site/`, in this order after content, sync, editorial, glossary, or sit
 - Branch names use `<type>/<short-kebab-description>`; include the task ID for task-board work, such as `feat/FE-04-search-index`.
 - Use `feat:`, `content:`, `fix:`, `docs:`, `refactor:`, or `chore:` conventional commit prefixes.
 - Keep unrelated existing changes out of task commits. Stage only files belonging to the task.
-- Follow `.website_spec/2026-09-27-content-architecture-and-editorial-style.md` for content writing.
+- Follow `.website_spec/reference/2026-09-27-content-architecture-and-editorial-style.md` for content writing.

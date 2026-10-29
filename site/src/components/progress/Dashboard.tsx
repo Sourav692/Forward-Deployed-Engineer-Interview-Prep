@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * The /progress dashboard (FE-16), built to `.website_spec/2026-10-05-learn-ux.md` § Dashboard.
+ * The /progress dashboard (FE-16), built to `.website_spec/reference/2026-10-05-learn-ux.md` § Dashboard.
  * Everything is read from this browser's `fd:v1` store after hydration, so the server
  * renders skeletons and the first client render matches them. Empty-first: a widget
  * appears with its first data, and nothing shows a number the learner never produced.

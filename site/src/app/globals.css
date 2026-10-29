@@ -207,7 +207,7 @@ body {
 
 /*
  * Lesson reading column (DS-04). Applies the type scale from
- * .website_spec/2026-10-05-design-tokens.md: 16/24 body, 68ch measure, headings on the
+ * .website_spec/reference/2026-10-05-design-tokens.md: 16/24 body, 68ch measure, headings on the
  * 18/28 to 30/36 steps. In the components layer so Tailwind utilities still win,
  * and only pages that opt in with `.lesson-reading` change.
  */

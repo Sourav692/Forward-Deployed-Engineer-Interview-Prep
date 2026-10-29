@@ -4,7 +4,7 @@ import { cx } from '@/components/ui'
 export type Crumb = { label: string; href?: string }
 
 /**
- * Breadcrumbs (FE-03, rules in .website_spec/2026-10-05-learn-ux.md): Learn › Track ›
+ * Breadcrumbs (FE-03, rules in .website_spec/reference/2026-10-05-learn-ux.md): Learn › Track ›
  * Section › Module › Lesson. The last crumb is the current page (`aria-current`).
  *
  * Under 640 px (a 375 px phone) the middle crumbs collapse to "…" and every label

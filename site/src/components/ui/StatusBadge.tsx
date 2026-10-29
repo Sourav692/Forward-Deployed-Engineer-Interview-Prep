@@ -2,7 +2,7 @@
 
 /**
  * StatusBadge (DS-03). One colour, one icon and a visible text label per status, so
- * no status relies on colour alone. Mapping: .website_spec/2026-10-05-design-tokens.md.
+ * no status relies on colour alone. Mapping: .website_spec/reference/2026-10-05-design-tokens.md.
  *
  * The optional rule tooltip is not hover-only: the badge becomes focusable, the
  * tooltip shows on hover and on keyboard focus, Escape hides it, and its text is
