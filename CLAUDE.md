@@ -53,7 +53,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Site structure (groups)
 
-The site is meant to be the single place for AI Engineering and Forward Deployed Engineering preparation. It is organised on two axes, decided on 30 October 2026. Plan: `.website_spec/status/in-progress/implementation_plan_site-groups-and-structure.md`. Research: `.website_spec/reference/2026-10-30-platform-review-and-site-groups.html`.
+The site is meant to be the single place for AI Engineering and Forward Deployed Engineering preparation. It is organised on two axes, decided on 30 October 2026. Plan: `.website_spec/status/on-hold/implementation_plan_site-groups-and-structure.md`. Research: `.website_spec/reference/2026-10-30-platform-review-and-site-groups.html`.
 
 - **Learn by topic.** Learn tracks sit in eight topic groups, in this order:
   1. Start here

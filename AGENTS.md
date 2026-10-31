@@ -17,7 +17,7 @@
 
 ## Site structure
 
-- The site is organised on two axes: Learn by topic and Interview by round. Interview rounds are `INTERVIEW_ROUNDS` in `site/src/lib/curriculum.ts`, shown as cards on `/interview` with a page per live round at `/interview/rounds/<round>`; every interview page belongs to one round. See "Site structure (groups)" in [CLAUDE.md](CLAUDE.md) and the plan `.website_spec/status/in-progress/implementation_plan_site-groups-and-structure.md`.
+- The site is organised on two axes: Learn by topic and Interview by round. Interview rounds are `INTERVIEW_ROUNDS` in `site/src/lib/curriculum.ts`, shown as cards on `/interview` with a page per live round at `/interview/rounds/<round>`; every interview page belongs to one round. See "Site structure (groups)" in [CLAUDE.md](CLAUDE.md) and the plan `.website_spec/status/on-hold/implementation_plan_site-groups-and-structure.md`.
 - Learn has eight topic groups in `LEARN_STAGES` (`site/src/lib/learn-stages.ts`): Start here, AI Engineering, Harness Engineering, Inference Engineering, AI System Design, Forward Deployed Engineering, Coding, Career. Groups are navigation only and every Learn track sits in exactly one group. `/learn` shows them as cards; a live group opens `/learn/topics/<group>`, and a group with no tracks is an unlinked Coming soon card with its planned topics.
 - Page layout for every page: a 90rem shell, an Inter body (name `var(--font-inter)`, never the empty `var(--font-sans)`), condensed display headings, a reading column up to 60rem, and paragraphs capped at 75ch. See "Page layout (whole site)" in [CLAUDE.md](CLAUDE.md); reuse its classes instead of new widths or fonts.
 
