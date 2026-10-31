@@ -15,7 +15,7 @@
  * 4. Fails when a sitemap page's <title> or <h1> carries a code (T2.4, I3, G07, #19,
  *    Review 05; ENH-20), or lacks exactly one canonical link to itself, an
  *    `og:image`, a favicon or exactly one `<h1>` (audit checks PR-02, PR-03, PR-10),
- *    or when a lesson, case or worksheet lacks its "By … · Last updated …" line (PQ-15),
+ *    or when a lesson, case or worksheet lacks its author and last-updated date (PQ-15),
  *    or one of those content pages lacks a report link (PR-15).
  * 5. Fails when a fixed source in `src/lib/redirects.ts` does not answer with exactly
  *    one 308 (307 when temporary) to its destination, or that destination is not a 200
@@ -31,6 +31,15 @@ import { MODULES } from '../src/lib/curriculum.ts'
 import { AUTHOR, STORY_BANK } from '../src/lib/editorial.ts'
 import { REDIRECTS } from '../src/lib/redirects.ts'
 import { scenarioHref } from '../src/lib/scenario.ts'
+
+// A content page names its author and last-updated date (PQ-15) in one of two forms:
+// the `Byline` string ("By … · Last updated …") or the Editorial `PageHead` spec line,
+// a `<dl class="cb-facts">` with "By" and "Last updated" terms.
+const DATE = '\\d{1,2} \\w{3} \\d{4}'
+const BYLINE = [
+  new RegExp(`By ${AUTHOR} · Last updated ${DATE}`),
+  new RegExp(`<dt>By</dt><dd>${AUTHOR}</dd></div><div><dt>Last updated</dt><dd>${DATE}</dd>`),
+]
 
 const BASE = (process.env.BASE_URL ?? 'http://localhost:3307').replace(/\/$/, '')
 const CONCURRENCY = 12
@@ -127,9 +136,7 @@ function headProblems(path, html) {
   if (!/<link\b[^>]*\brel="(?:shortcut )?icon"/.test(html)) problems.push('no favicon')
   const h1 = html.match(/<h1[\s>]/g)?.length ?? 0
   if (h1 !== 1) problems.push(`${h1} <h1> elements`)
-  if (bylined.has(path) && !new RegExp(`By ${AUTHOR} · Last updated \\d{1,2} \\w{3} \\d{4}`).test(html)) {
-    problems.push('no "By … · Last updated …" line')
-  }
+  if (bylined.has(path) && !BYLINE.some((re) => re.test(html))) problems.push('no author and last-updated date')
   const content = bylined.has(path)
   if (content && !/<a\b[^>]*\bhref="mailto:[^"]*\?subject=[^"]*"[^>]*>Report an issue<\/a>/.test(html)) {
     problems.push('no "Report an issue" link')
