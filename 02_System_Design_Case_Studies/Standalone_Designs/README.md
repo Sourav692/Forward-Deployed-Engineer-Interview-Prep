@@ -2,6 +2,8 @@
 
 One-off designs that are not part of the G01–G20 scenario packs. Each folder is one case, published on the site under the FDE Case Studies module.
 
+Inside each case folder, every site tab has its own numbered subfolder named after the tab, such as `1_Interview_Casebook/04_Interview_Casebook.md` or `3_Tutorial/19_Tutorial.md`. Long documents continue in `_Part_N.md` files beside part 1. The Worksheet and Model Answer tabs of cases 19, 23, 25 and 26 are read from `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/`, so they have no copy here. `STANDALONE` in `site/scripts/case-studies.mjs` lists every file.
+
 | Folder | Case |
 |---|---|
 | `04_Recruiting_Platform` | AI-powered recruiting platform |

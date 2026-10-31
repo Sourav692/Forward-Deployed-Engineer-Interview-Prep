@@ -1,6 +1,6 @@
 # The Travel Agent: Worked Example
 
-> **Before this:** [The Twelve-Part Design Framework](../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/01_The_Twelve_Part_Design_Framework.md) and [Design Principles as Tie-Breakers](../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md)
+> **Before this:** [The Twelve-Part Design Framework](../../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/01_The_Twelve_Part_Design_Framework.md) and [Design Principles as Tie-Breakers](../../../../01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/04_Design_Principles_as_Tie_Breakers.md)
 
 ## Why this matters
 
@@ -182,7 +182,7 @@ On the travel assistant, the levels split on whether the candidate only fixes th
 | Staff | "Shared retrieval versus per-agent RAG is a deliberate choice: shared for residency and guardrails, or per-agent with governance so embedding infrastructure isn't duplicated. I'd run it like a platform, with per-agent traces, cache hit rate and token usage on dashboards, smaller models for simple agents, and retries and failover per region." | Who owns each regional vector DB and the MCP tool registry, and the rule for when a new agent earns its coordination overhead. |
 | Principal | "AMER, EMEA and APJ stores buy residency and latency, and one global store buys simpler operations, so I'd make that call region by region on an active-active footprint. Then I'd turn the five fixes into a review standard every team's multi-agent diagram has to pass." | Each region's residency rules and the real traffic mix, which only the customer can supply. Until then, [cache hit-rate target] and [p95 target] stay open. |
 
-**Next →** [The 60-Minute Whiteboard Method](../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md)
+**Next →** [The 60-Minute Whiteboard Method](../../../../01_Concept_Tutorials/FDE_Handbook/02_System_Design_Fundamentals/05_The_60_Minute_Whiteboard_Method.md)
 
 ## Sources (checked 27 Sep 2026)
 

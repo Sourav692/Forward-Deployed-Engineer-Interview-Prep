@@ -10,7 +10,7 @@ This prompt sounds like one box on a diagram, but it is graded as four constrain
 |---|---|
 | #100 Production LLM gateway under real constraints (study-guide mock design) | The whole page. The prompt, the rubric and the strong answer come from the study guide; sections 3, 9 and 11 extend them |
 
-**Read this first.** The source is short: a prompt, a seven-point rubric and a seven-bullet strong answer, in section 6 of the [production and operations interview tutorial](../../../01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md). Every figure it gives is kept verbatim below. The patterns behind it (retry, breaker, fallback, degradation, guardrails, caching, routing, budgets) come from the same study guide. The traffic, prices and dollar arithmetic are *own construction*, and every number marked *(assumption)* is a whiteboard illustration, not a sourced figure. The source names data residency as its own open gap; section 11 closes it.
+**Read this first.** The source is short: a prompt, a seven-point rubric and a seven-bullet strong answer, in section 6 of the [production and operations interview tutorial](../../../../01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md). Every figure it gives is kept verbatim below. The patterns behind it (retry, breaker, fallback, degradation, guardrails, caching, routing, budgets) come from the same study guide. The traffic, prices and dollar arithmetic are *own construction*, and every number marked *(assumption)* is a whiteboard illustration, not a sourced figure. The source names data residency as its own open gap; section 11 closes it.
 
 The prompt, verbatim:
 
@@ -36,7 +36,7 @@ Ask five questions before drawing, and state an assumption for each one the inte
 
 The weak answer draws "user → gateway → LLM" and adds retries. The strong answer names the two faces in the first two minutes. It then says each constraint in the prompt belongs to one of them: safety to the edge face, uptime and budget to the model face, latency to both.
 
-Keep this gateway distinct from the "deterministic gateway" in [G02 Customer Support Automation](../../Scenario_Packs_G01_G20/G02_Customer_Support_Automation/4_Full_Design/G02_Full_Design.md) section 6. That one decides which *actions* an agent may take. This one decides how *model traffic* is screened, paid for and recovered. A real support product has both.
+Keep this gateway distinct from the "deterministic gateway" in [G02 Customer Support Automation](../../../Scenario_Packs_G01_G20/G02_Customer_Support_Automation/4_Full_Design/G02_Full_Design.md) section 6. That one decides which *actions* an agent may take. This one decides how *model traffic* is screened, paid for and recovered. A real support product has both.
 
 > *"I'll treat the gateway as two faces. The edge face screens the customer's input and the agent's output. The model face sits under every model call the agent makes, so retries, failover and the budget see all of them, not just the first."*
 

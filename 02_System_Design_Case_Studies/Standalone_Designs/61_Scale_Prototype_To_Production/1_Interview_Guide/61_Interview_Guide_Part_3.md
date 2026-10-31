@@ -152,7 +152,7 @@ All paths are relative to the repository root.
 | 9, 10 | `01_Concept_Tutorials/FDE_Handbook/08_AgentOps_And_Platform/01_Prompt_Versioning_Rollout_Rollback.md`: gates, shadow, canary, pointer-flip rollback, per-user A/B |
 | 10 | `01_Concept_Tutorials/FDE_Handbook/08_AgentOps_And_Platform/06_Infra_And_CICD.md`: the assembled pipeline |
 | 10, 11, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: six gates, evidence bar, override rate, week-4 retention |
-| 7 | `02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/100_Production_LLM_Gateway.md`, sections 5–10 (gateway internals) |
+| 7 | `02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/1_Interview_Guide/100_Interview_Guide.md`, sections 5–10 (gateway internals) |
 | 7 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/4_Full_Design/G07_Full_Design.md`, sections 7 and 8 |
 | 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md`, sections 5–8 and 14 |
 | 6, 13 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/4_Full_Design/G14_Full_Design.md` (observability design and cost cards) |

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T09:05:15.260Z",
+  "generatedAt": "2026-10-31T07:30:49.259Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1126,7 +1126,7 @@
                 }
               ],
               "minutes": 24,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "travel-agent-worked-example",
@@ -1143,7 +1143,7 @@
                 }
               ],
               "minutes": 22,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "air-gapped-ai-system",
@@ -1192,7 +1192,7 @@
                 }
               ],
               "minutes": 97,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "reliable-workflow-orchestration",
@@ -1245,7 +1245,7 @@
                 }
               ],
               "minutes": 105,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "configurable-platform-customer-workflows",
@@ -1290,7 +1290,7 @@
                 }
               ],
               "minutes": 91,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -1327,7 +1327,7 @@
                 }
               ],
               "minutes": 75,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "self-adapting-agent",
@@ -1352,7 +1352,7 @@
                 }
               ],
               "minutes": 47,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "personal-assistant-with-memory",
@@ -1373,7 +1373,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "production-llm-gateway",
@@ -1398,7 +1398,7 @@
                 }
               ],
               "minutes": 37,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             }
           ]
         },
@@ -1426,7 +1426,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "scale-prototype-to-production",
@@ -1447,7 +1447,7 @@
                 }
               ],
               "minutes": 35,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -1468,7 +1468,7 @@
                 }
               ],
               "minutes": 35,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "decomposition-classics-67-68-69",
@@ -1489,7 +1489,7 @@
                 }
               ],
               "minutes": 36,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             }
           ]
         }
