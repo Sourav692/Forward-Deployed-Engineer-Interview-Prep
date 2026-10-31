@@ -491,11 +491,7 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'What happens when this call is retried?',
     commonMistakes: ['Assuming exactly-once delivery', 'blocking calls inside `async def`'],
     lessons: [],
-    seeAlso: [
-      'durability-and-idempotency',
-      'retries-and-fallbacks',
-      'module-12-reliability-and-failure-handling',
-    ],
+    seeAlso: ['durability-and-idempotency', 'retries-and-fallbacks', 'module-12-reliability-and-failure-handling'],
   },
   {
     slug: 'coding-interview-patterns',
@@ -537,7 +533,6 @@ export const MODULES: CurriculumModule[] = [
       'tool-schema-design',
       'typed-tool-results-and-teachable-errors',
       'the-tool-gateway-and-code-sandboxing',
-      'the-model-context-protocol',
       'tool-selection-at-scale',
       'practise-tool-design-interview-questions',
     ],
@@ -561,8 +556,6 @@ export const MODULES: CurriculumModule[] = [
     commonMistakes: ['Stuffing everything into the prompt'],
     lessons: [
       'control-placement',
-      'orchestration-topologies',
-      'planning-and-self-correction-patterns',
       'the-four-context-operations',
       'deterministic-context-assembly',
       'context-rot-and-sub-agent-isolation',
@@ -588,12 +581,11 @@ export const MODULES: CurriculumModule[] = [
     lessons: [
       'the-confirmation-gate-and-memoization',
       'retries-and-fallbacks',
-      'parallel-and-sequential-tool-calls',
       'observability-for-tool-calls',
       'the-eight-guard-checks',
       'practise-robust-agents',
     ],
-    seeAlso: ['why-agents-need-state', 'checkpoints-interrupts-and-human-approval', 'retries-fan-out-and-streaming', 'human-approval-and-applied-single-agent-builds-overview', 'multi-agent-applied-builds-and-deep-agents-overview'],
+    seeAlso: ['why-llms-forget-classic-memory-classes', 'interrupts-and-human-in-the-loop', 'async-and-streaming', 'human-approval-and-applied-single-agent-builds-overview', 'multi-agent-applied-builds-and-deep-agents-overview'],
   },
   {
     slug: 'agentic-workflow-platforms',
@@ -645,7 +637,7 @@ export const MODULES: CurriculumModule[] = [
       'output-guardrails-and-refusals',
       'practise-enterprise-rag',
     ],
-    seeAlso: ['production-retrieval-pipelines', 'the-evaluation-pyramid', 'the-run-trace'],
+    seeAlso: ['retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search', 'the-evaluation-pyramid', 'the-run-trace'],
   },
   {
     slug: 'evaluation-and-release-gates',
@@ -695,7 +687,7 @@ export const MODULES: CurriculumModule[] = [
       'fair-sharing-between-tenants',
       'practise-security-and-tenancy',
     ],
-    seeAlso: ['g07-secure-multi-tenant-ai-platform', 'the-model-context-protocol', 'red-teaming-and-layered-guardrails'],
+    seeAlso: ['g07-secure-multi-tenant-ai-platform', 'from-a-tool-calling-chatbot-to-mcp', 'red-teaming-and-layered-guardrails'],
   },
   {
     slug: 'observability-and-diagnosis',
@@ -772,11 +764,7 @@ export const MODULES: CurriculumModule[] = [
       'failover-graceful-degradation-and-kill-switches',
       'practise-scaling-and-reliability',
     ],
-    seeAlso: [
-      'scale-prototype-to-production',
-      'g18-consumer-scale-chat-service',
-      'g10-high-volume-batch-pipeline',
-    ],
+    seeAlso: ['scale-prototype-to-production', 'g18-consumer-scale-chat-service', 'g10-high-volume-batch-pipeline'],
   },
   {
     slug: 'agentops',
@@ -1005,18 +993,7 @@ export const MODULES: CurriculumModule[] = [
       'choosing-the-first-use-case',
       'practise-decomposition-interview-cases',
     ],
-    seeAlso: [
-      'internal-knowledge-assistant',
-      'sales-copilot',
-      'financial-compliance-reviewer',
-      'healthcare-prior-auth-assistant',
-      'legal-contract-copilot',
-      'sre-triage-agent',
-      'multi-tenant-saas-support',
-      'retail-demand-explainer',
-      'service-now-ticket-agent',
-      'executive-dashboard-copilot',
-    ],
+    seeAlso: ['internal-knowledge-assistant', 'sales-copilot', 'financial-compliance-reviewer', 'healthcare-prior-auth-assistant', 'legal-contract-copilot', 'sre-triage-agent', 'multi-tenant-saas-support', 'retail-demand-explainer', 'service-now-ticket-agent', 'executive-dashboard-copilot'],
   },
   {
     slug: 'scoping-an-fde-project',
@@ -1060,13 +1037,7 @@ export const MODULES: CurriculumModule[] = [
     interviewProbe: 'Which use case first?',
     commonMistakes: ['Ignoring business value'],
     lessons: [],
-    seeAlso: [
-      'choosing-the-first-use-case',
-      'prioritize-ai-use-cases',
-      'scale-prototype-to-production',
-      'build-when-customer-data-is-poor',
-      'decomposition-classics-67-68-69',
-    ],
+    seeAlso: ['choosing-the-first-use-case', 'prioritize-ai-use-cases', 'scale-prototype-to-production', 'build-when-customer-data-is-poor', 'decomposition-classics-67-68-69'],
   },
   {
     slug: 'delivery-stages-and-gates',
@@ -1115,10 +1086,7 @@ export const MODULES: CurriculumModule[] = [
       'diagnosing-low-adoption',
     ],
     gapNote: 'A lesson on adoption and change management (the sources cover rollout, value estimation and metrics).',
-    seeAlso: [
-      'prioritize-ai-use-cases',
-      'risk-checks-and-delivery-metrics',
-    ],
+    seeAlso: ['prioritize-ai-use-cases', 'risk-checks-and-delivery-metrics'],
   },
   {
     slug: 'debugging-customer-environment',
