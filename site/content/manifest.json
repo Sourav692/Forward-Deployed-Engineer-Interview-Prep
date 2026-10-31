@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T17:03:13.994Z",
+  "generatedAt": "2026-10-31T18:06:02.588Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1116,6 +1116,10 @@
               "order": 4,
               "title": "AI-Powered Recruiting Platform",
               "tabs": [
+                {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
                 {
                   "id": "casebook",
                   "label": "Interview Casebook"

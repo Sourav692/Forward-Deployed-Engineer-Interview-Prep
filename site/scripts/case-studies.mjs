@@ -274,16 +274,14 @@ async function collectCases(root, standaloneRoot, repoRoot) {
     if (missing.length || extra.length) {
       throw new Error(`${c.folder}: declared files do not match disk (missing: ${missing.join(', ') || '—'}; undeclared: ${extra.join(', ') || '—'})`)
     }
-    cases.push({
-      theme: c.theme,
-      dir,
-      slug: c.folder.replace(/^\d+_/, '').replace(/_/g, '-').toLowerCase(),
-      order: c.number,
-      title: c.title,
-      tabs: c.files.flatMap(([file, id]) =>
-        withParts({ id, file: basename(file), src: isRepoPath(file) ? join(repoRoot, file) : join(dir, file) }),
-      ),
-    })
+    const slug = c.folder.replace(/^\d+_/, '').replace(/_/g, '-').toLowerCase()
+    const tabs = c.files.flatMap(([file, id]) =>
+      withParts({ id, file: basename(file), src: isRepoPath(file) ? join(repoRoot, file) : join(dir, file) }),
+    )
+    // A standalone case with an introduction page reads as chapters, like a scenario pack.
+    const intro = introFor(slug)
+    if (intro) tabs.unshift({ id: 'intro', file: basename(intro), src: intro, label: labelOf('intro') })
+    cases.push({ theme: c.theme, dir, slug, order: c.number, title: c.title, tabs })
   }
   return cases
 }
