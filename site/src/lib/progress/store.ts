@@ -12,9 +12,10 @@
  * `storage` event. Nothing here leaves the browser.
  *
  * Runtime imports use explicit `.ts` paths so `scripts/check-progress-store.ts` can run
- * this file under plain `node`.
+ * this file under plain `node`. Curriculum data comes from the generated
+ * `curriculum-index.ts`, never `curriculum.ts`, which would ship to every page.
  */
-import { LESSONS, MODULES, RENAMED, TRACKS } from '../curriculum.ts'
+import { INDEX_MODULES, INDEX_RENAMED, INDEX_TRACKS } from '../curriculum-index.ts'
 import { notifyProgress, storageAvailable } from '../storage.ts'
 import { rollup } from './rules.ts'
 import { studyTime } from '../study-time.ts'
@@ -143,13 +144,11 @@ export function lessonReadAt(moduleSlug: string, lessonSlug: string): string | u
   return readJson<LessonReadRecord>(lessonKey(moduleSlug, lessonSlug))?.readAt
 }
 
-export function markLessonRead(moduleSlug: string, lessonSlug: string, now = Date.now()): boolean {
+/** `title` labels the activity entry; callers pass it, since the store has no lesson titles. */
+export function markLessonRead(moduleSlug: string, lessonSlug: string, now = Date.now(), title?: string): boolean {
   const record: LessonReadRecord = { readAt: iso(now) }
   const ok = writeJson(lessonKey(moduleSlug, lessonSlug), record)
-  if (ok) {
-    const lesson = LESSONS.find((l) => l.slug === lessonSlug)
-    logActivity({ kind: 'lesson-read', itemId: `${moduleSlug}/${lessonSlug}`, label: lesson?.title }, now)
-  }
+  if (ok) logActivity({ kind: 'lesson-read', itemId: `${moduleSlug}/${lessonSlug}`, label: title }, now)
   return ok
 }
 
@@ -164,7 +163,7 @@ export function markLessonUnread(moduleSlug: string, lessonSlug: string): void {
  * a pair is migrated once, and marking the new lesson unread later sticks. A withdrawn
  * lesson (`null`) keeps its key. Returns how many read marks moved.
  */
-export function migrateRenamedProgress(renamed: Record<string, string | null> = RENAMED): number {
+export function migrateRenamedProgress(renamed: Record<string, string | null> = INDEX_RENAMED): number {
   let moved = 0
   let changed = false
   for (const [from, to] of Object.entries(renamed)) {
@@ -329,27 +328,23 @@ export interface ProgressSummary {
 }
 
 /**
- * The share of a module's home lessons read, weighted by each lesson's `estMinutes`
+ * The share of a module's home lessons read, weighted by each lesson's reading minutes
  * when known. A lesson without an estimate weighs the mean of the known ones, or 1
  * when none are known, so the rollup is an equal split until estimates arrive.
  *
- * `minutes` (lesson slug → minutes) overrides the curriculum estimates. Learn pages
- * pass the sync manifest's `estMinutes` here, since the curriculum file carries none.
+ * `minutes` (lesson slug → minutes) is the sync manifest's `estMinutes`, which Learn pages
+ * pass in; the curriculum carries no lesson estimates.
  */
 export function moduleProgress(moduleSlug: string, minutes?: Readonly<Record<string, number>>): ProgressSummary {
-  const mod = MODULES.find((m) => m.slug === moduleSlug)
+  const mod = INDEX_MODULES.find((m) => m.slug === moduleSlug)
   if (!mod) return { fraction: 0, lessonsRead: 0, lessonsTotal: 0 }
-  const lessons = mod.lessons.map((slug) => {
-    const lesson = LESSONS.find((l) => l.slug === slug)
-    return lesson && minutes?.[slug] ? { ...lesson, estMinutes: minutes[slug] } : lesson
-  })
-  const known = lessons.map((l) => l?.estMinutes).filter((m): m is number => typeof m === 'number' && m > 0)
+  const known = mod.lessons.map((slug) => minutes?.[slug]).filter((m): m is number => typeof m === 'number' && m > 0)
   const fallback = known.length ? known.reduce((s, m) => s + m, 0) / known.length : 1
   let lessonsRead = 0
-  const parts = mod.lessons.map((slug, i) => {
+  const parts = mod.lessons.map((slug) => {
     const read = isLessonRead(moduleSlug, slug)
     if (read) lessonsRead++
-    const est = lessons[i]?.estMinutes
+    const est = minutes?.[slug]
     return { minutes: typeof est === 'number' && est > 0 ? est : fallback, fraction: read ? 1 : 0 }
   })
   return { fraction: rollup(parts), lessonsRead, lessonsTotal: mod.lessons.length }
@@ -364,8 +359,8 @@ export function moduleProgress(moduleSlug: string, minutes?: Readonly<Record<str
 export function trackProgress(trackSlug: string, minutes?: Readonly<Record<string, number>>): ProgressSummary {
   let lessonsRead = 0
   let lessonsTotal = 0
-  const listed = new Set(TRACKS.find((t) => t.slug === trackSlug)?.sections.flatMap((s) => s.modules) ?? [])
-  const parts = MODULES.filter((m) => listed.has(m.slug) && m.lessons.length > 0).map((m) => {
+  const listed = new Set(INDEX_TRACKS.find((t) => t.slug === trackSlug)?.modules ?? [])
+  const parts = INDEX_MODULES.filter((m) => listed.has(m.slug) && m.lessons.length > 0).map((m) => {
     const p = moduleProgress(m.slug, minutes)
     lessonsRead += p.lessonsRead
     lessonsTotal += p.lessonsTotal

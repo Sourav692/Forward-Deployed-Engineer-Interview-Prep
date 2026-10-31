@@ -5,7 +5,7 @@
  * reads localStorage). Server pages describe each module with a `ModuleInput`, so
  * the islands never need the sync manifest.
  */
-import { LESSONS, MODULES } from '@/lib/curriculum'
+import { INDEX_MODULES, OTHER_HOMES } from '@/lib/curriculum-index'
 import type { ModuleStatus } from '@/lib/curriculum-types'
 import { checkPrerequisites, checkpointId, revisionReason, rollup, type PrerequisiteCheck, type RevisionReason } from '@/lib/progress/rules'
 import { getModuleRecord, isLessonRead, latestConfidence, listAttempts, moduleProgress, readKind, type ProgressSummary } from '@/lib/progress/store'
@@ -26,7 +26,7 @@ export type ModuleInput = {
   checkpoint: boolean
 }
 
-const homeOf = new Map(LESSONS.map((l) => [l.slug, l.home]))
+const homeOf = new Map([...INDEX_MODULES.flatMap((m) => m.lessons.map((l) => [l, m.slug] as const)), ...Object.entries(OTHER_HOMES)])
 
 /** Read state lives under the lesson's home module, whichever module links to it. */
 export const lessonHome = (lessonSlug: string) => homeOf.get(lessonSlug) ?? ''
@@ -39,7 +39,7 @@ export const isRead = (lessonSlug: string) => isLessonRead(lessonHome(lessonSlug
  * that only has see-also lessons (T1.5) the same weighted rollup runs over them.
  */
 export function readingProgress(input: Pick<ModuleInput, 'slug' | 'reading' | 'minutes'>): ProgressSummary {
-  const mod = MODULES.find((m) => m.slug === input.slug)
+  const mod = INDEX_MODULES.find((m) => m.slug === input.slug)
   const ownsList = !!mod && mod.lessons.length > 0 && mod.lessons.length === input.reading.length
   if (ownsList) return moduleProgress(input.slug, input.minutes)
   const known = Object.values(input.minutes)
@@ -88,7 +88,7 @@ export function prerequisiteCheck(prereqs: ModuleInput['prereqs']): Prerequisite
 export function firstUnmetPrerequisite(prereqs: ModuleInput['prereqs']): string | undefined {
   const { missing, failed } = prerequisiteCheck(prereqs)
   const slug = prereqs.find((p) => missing.includes(p.slug) || failed.includes(p.slug))?.slug
-  return MODULES.find((m) => m.slug === slug)?.title
+  return INDEX_MODULES.find((m) => m.slug === slug)?.title
 }
 
 /**

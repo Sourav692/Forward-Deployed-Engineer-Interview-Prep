@@ -35,7 +35,7 @@ export function LessonActions({
       markLessonUnread(moduleSlug, lessonSlug)
       return
     }
-    if (markLessonRead(moduleSlug, lessonSlug)) toast(COPY.toastRead)
+    if (markLessonRead(moduleSlug, lessonSlug, Date.now(), title)) toast(COPY.toastRead)
     else toast(COPY.saveFailed, 'error')
   }
 
