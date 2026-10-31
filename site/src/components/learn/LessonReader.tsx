@@ -1,4 +1,5 @@
 import { Diagram } from '@/components/Diagram'
+import { AnimatedDiagram } from '@/components/learn/AnimatedDiagram'
 import { LabFrame } from '@/components/learn/LabFrame'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
 import { toPlainText, type ReadingSection } from '@/lib/reading'
@@ -91,6 +92,8 @@ function Sections({ sections }: { sections: ReadingSection[] }) {
                 <Diagram key={i} code={chunk.code} />
               ) : chunk.kind === 'lab' ? (
                 <LabFrame key={i} src={chunk.src} title={chunk.title} />
+              ) : chunk.kind === 'animated' ? (
+                <AnimatedDiagram key={i} html={chunk.html} />
               ) : (
                 <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
               ),

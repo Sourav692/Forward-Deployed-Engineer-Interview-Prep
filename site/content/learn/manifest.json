@@ -262,7 +262,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m01_python_data_refresher/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/python-and-data-toolkit-refresher/python-and-data-toolkit-refresher-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "numpy-pandas-and-matplotlib",
@@ -298,7 +298,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m01_python_data_refresher/06_concurrency_threads_processes_the_gil_and_asyncio_22_runnable_scripts.md",
       "estMinutes": 6,
       "href": "/learn/ai-engineering-foundations/python-and-data-toolkit-refresher/concurrency-threads-processes-the-gil-and-asyncio-22-runnable-scripts",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "python-and-data-toolkit-refresher-interview-questions",
@@ -322,7 +322,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/llm-provider-apis-and-model-selection-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "calling-commercial-llm-apis-openai-and-gemini",
@@ -370,7 +370,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/04_reasoning_effort_levers_and_cost.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/reasoning-effort-levers-and-cost",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "llm-provider-apis-and-model-selection-interview-questions",
@@ -394,7 +394,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/hugging-face-models-and-gradio-demos/hugging-face-models-and-gradio-demos-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "hub-setup-datasets-and-models",
@@ -418,7 +418,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/02_pipelines_tokenization_and_pretrained_models.md",
       "estMinutes": 7,
       "href": "/learn/ai-engineering-foundations/hugging-face-models-and-gradio-demos/pipelines-tokenization-and-pretrained-models",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "building-demos-with-gradio",
@@ -454,7 +454,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m04_fine_tuning_fundamentals/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/fine-tuning-fundamentals/fine-tuning-fundamentals-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "why-fine-tune",
@@ -514,7 +514,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m04_fine_tuning_fundamentals/05_training.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/fine-tuning-fundamentals/training",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "evaluation",
@@ -562,7 +562,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_prompt_engineering_patterns/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/prompt-and-context-engineering/prompt-engineering-patterns/prompt-engineering-patterns-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "core-prompt-patterns",
@@ -586,7 +586,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_prompt_engineering_patterns/02_reasoning_prompts_chain_of_thought_self_consistency_least_to_most_react.md",
       "estMinutes": 7,
       "href": "/learn/prompt-and-context-engineering/prompt-engineering-patterns/reasoning-prompts-chain-of-thought-self-consistency-least-to-most-react",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-same-tasks-across-models",
@@ -658,7 +658,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m06_multimodal_prompting/02_multimodal_prompting_with_gpt_4o.md",
       "estMinutes": 6,
       "href": "/learn/prompt-and-context-engineering/multimodal-prompting/multimodal-prompting-with-gpt-4o",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "exercise-financial-report-analysis",
@@ -694,7 +694,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m07_langchain_core/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/langchain-core-models-prompts-and-parsers-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "langchain-introduction-and-the-1-x-package-split",
@@ -790,7 +790,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m08_lcel_runnables_and_chains/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-runnables-and-chains-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "lcel-and-the-runnable-interface",
@@ -850,7 +850,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m08_lcel_runnables_and_chains/05_summarization_stuff_map_reduce_refine.md",
       "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/summarization-stuff-map-reduce-refine",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "lcel-runnables-and-chains-interview-questions",
@@ -874,7 +874,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m09_langgraph_core/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-and-langgraph/langchain-and-langgraph-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "state-graphs-and-reducers",
@@ -958,7 +958,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m10_langgraph_runtime/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/langgraph-runtime-persistence-hitl-and-streaming-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "checkpointing-and-threads",
@@ -1018,7 +1018,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m10_langgraph_runtime/05_retry_policies_and_bounded_cycles.md",
       "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/retry-policies-and-bounded-cycles",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "state-management-in-practice",
@@ -1054,7 +1054,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_rag_lifecycle/00_overview.md",
       "estMinutes": 3,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-knowledge-problem-hallucination-freshness-context-window-growth-rag-vs-fine",
@@ -1114,7 +1114,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_rag_lifecycle/05_the_rag_lifecycle_and_a_measured_baseline.md",
       "estMinutes": 3,
       "href": "/learn/llm-and-retrieval/rag-from-first-principles/the-rag-lifecycle-and-a-measured-baseline",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "rag-from-first-principles-interview-questions",
@@ -1138,7 +1138,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m12_document_ingestion/00_overview.md",
       "estMinutes": 3,
       "href": "/learn/ingestion-and-indexing-pipeline/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-document-abstraction-and-metadata-design",
@@ -1198,7 +1198,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m12_document_ingestion/06_custom_loaders_with_lazy_loading.md",
       "estMinutes": 1,
       "href": "/learn/ingestion-and-indexing-pipeline/document-ingestion-and-metadata-design/custom-loaders-with-lazy-loading",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "document-ingestion-and-metadata-design-interview-questions",
@@ -1234,7 +1234,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m13_chunking/01_splitter_fundamentals_character_recursive_token_and_structure_aware.md",
       "estMinutes": 4,
       "href": "/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/splitter-fundamentals-character-recursive-token-and-structure-aware",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "semantic-chunking-breakpoints-on-embedding-distance",
@@ -1294,7 +1294,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m14_embeddings/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/embeddings-and-model-selection-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "embedding-fundamentals-similarity-metrics-and-model-selection",
@@ -1342,7 +1342,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m14_embeddings/04_production_concerns_batching_caching_and_similarity_behaviour.md",
       "estMinutes": 3,
       "href": "/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/production-concerns-batching-caching-and-similarity-behaviour",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "embeddings-and-model-selection-interview-questions",
@@ -1366,7 +1366,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m15_vector_stores/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/ingestion-and-indexing-pipeline/vector-stores-and-index-operations/vector-stores-and-index-operations-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "index-operations-create-query-update-delete-persist",
@@ -1450,7 +1450,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m16_advanced_indexing/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/advanced-indexing-strategies-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "multi-representation-indexing-search-summaries-return-documents",
@@ -1486,7 +1486,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m16_advanced_indexing/03_hierarchical_indices_summary_tier_and_detail_tier.md",
       "estMinutes": 3,
       "href": "/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/hierarchical-indices-summary-tier-and-detail-tier",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "question-side-indexing-hype-and-document-augmentation",
@@ -1534,7 +1534,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m17_retrievers_hybrid_search/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-retriever-interface-and-its-search-modes",
@@ -1582,7 +1582,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m17_retrievers_hybrid_search/04_maximal_marginal_relevance_for_diversity.md",
       "estMinutes": 3,
       "href": "/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/maximal-marginal-relevance-for-diversity",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "multi-faceted-filtering",
@@ -1630,7 +1630,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m18_query_transformation/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "query-rewriting-and-expansion",
@@ -1654,7 +1654,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m18_query_transformation/03_rag_fusion_with_reciprocal_rank_fusion.md",
       "estMinutes": 5,
       "href": "/learn/retrieval-quality-engineering/query-transformation-and-routing/rag-fusion-with-reciprocal-rank-fusion",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "hyde-embed-a-hypothetical-answer",
@@ -1714,7 +1714,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m19_reranking_post_retrieval/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "two-stage-retrieval-retrieve-wide-rerank-narrow",
@@ -1810,7 +1810,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m20_end_to_end_rag_systems/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/complete-rag-applications/end-to-end-rag-systems/end-to-end-rag-systems-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "environment-setup-and-a-complete-rag-system",
@@ -1894,7 +1894,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m21_multimodal_rag/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/complete-rag-applications/multimodal-rag/multimodal-rag-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "shared-text-image-embedding-space-with-clip",
@@ -1930,7 +1930,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m21_multimodal_rag/03_page_image_retrieval_with_colpali.md",
       "estMinutes": 4,
       "href": "/learn/complete-rag-applications/multimodal-rag/page-image-retrieval-with-colpali",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "multimodal-rag-interview-questions",
@@ -1954,7 +1954,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m22_llamaindex/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/complete-rag-applications/framework-fluency-llamaindex/framework-fluency-llamaindex-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "simple-pdf-and-csv-rag-in-llamaindex",
@@ -2002,7 +2002,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m22_llamaindex/04_sentence_window_retrieval.md",
       "estMinutes": 4,
       "href": "/learn/complete-rag-applications/framework-fluency-llamaindex/sentence-window-retrieval",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "framework-fluency-llamaindex-interview-questions",
@@ -2026,7 +2026,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m23_agent_loop_and_tools/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/the-agent-loop-and-tool-calling-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "agentic-patterns-from-scratch-reflection-tool-use-react-planning",
@@ -2110,7 +2110,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m24_react_agents/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/react-agents-and-langchain-create-agent-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-react-loop-in-langgraph-tool-calling-vs-react",
@@ -2206,7 +2206,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m25_agentic_workflow_patterns/01_prompt_chaining_with_quality_gates.md",
       "estMinutes": 5,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/prompt-chaining-with-quality-gates",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "routing-by-handler-and-by-model-tier",
@@ -2242,7 +2242,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m25_agentic_workflow_patterns/04_orchestrator_worker_with_the_send_api.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/orchestrator-worker-with-the-send-api",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "evaluator-optimizer-loops-always-bounded-langgraph-vs-lcel",
@@ -2278,7 +2278,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m26_planning_reflection_reasoning/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/planning-reflection-and-reasoning-patterns/planning-reflection-and-reasoning-patterns-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "plan-and-execute-vs-react-decompose-execute-replan",
@@ -2302,7 +2302,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m26_planning_reflection_reasoning/04_chain_of_verification_and_constitutional_critique.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/planning-reflection-and-reasoning-patterns/chain-of-verification-and-constitutional-critique",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "self-consistency-tree-of-thoughts-and-lats",
@@ -2338,7 +2338,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m27_human_approval_applied_agents/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/human-approval-and-applied-single-agent-builds/human-approval-and-applied-single-agent-builds-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "dry-run-harness-and-human-approval",
@@ -2362,7 +2362,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m27_human_approval_applied_agents/04_text_to_sql_workflow_vs_react_agent.md",
       "estMinutes": 6,
       "href": "/learn/agentic-systems/human-approval-and-applied-single-agent-builds/text-to-sql-workflow-vs-react-agent",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "llm-workflow-apps-review-analyst-it-support-desk-tailored-writer-quiz-generator",
@@ -2398,7 +2398,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "retriever-as-a-tool-grade-then-rewrite-in-langgraph",
@@ -2446,7 +2446,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m29_crag_and_self_rag/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-and-self-correcting-rag/self-correcting-rag-crag-and-self-rag/self-correcting-rag-crag-and-self-rag-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "corrective-rag-in-langgraph-with-web-search-fallback",
@@ -2470,7 +2470,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m29_crag_and_self_rag/02_self_rag_retrieve_or_not_relevance_groundedness_utility.md",
       "estMinutes": 5,
       "href": "/learn/agentic-and-self-correcting-rag/self-correcting-rag-crag-and-self-rag/self-rag-retrieve-or-not-relevance-groundedness-utility",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "trade-offs-when-correction-is-worth-the-extra-calls",
@@ -2506,7 +2506,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m30_adaptive_rag_routing/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/adaptive-rag-and-query-routing-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "router-agentic-rag-over-multiple-knowledge-bases",
@@ -2542,7 +2542,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m30_adaptive_rag_routing/03_adaptive_rag_vector_store_vs_web_with_hallucination_grading.md",
       "estMinutes": 4,
       "href": "/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/adaptive-rag-vector-store-vs-web-with-hallucination-grading",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "strategy-per-query-type",
@@ -2578,7 +2578,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m31_rag_as_agent_tool/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/agentic-and-self-correcting-rag/rag-as-an-agent-tool/rag-as-an-agent-tool-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "rag-as-a-tool-inside-a-langgraph-agent",
@@ -2638,7 +2638,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m32_reliability_feedback/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/agentic-and-self-correcting-rag/reliability-feedback-loops-and-diversity/reliability-feedback-loops-and-diversity-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "reliable-rag-relevance-checks-hallucination-checks-source-highlighting",
@@ -2662,7 +2662,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m32_reliability_feedback/02_retrieval_with_a_user_feedback_loop.md",
       "estMinutes": 7,
       "href": "/learn/agentic-and-self-correcting-rag/reliability-feedback-loops-and-diversity/retrieval-with-a-user-feedback-loop",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "dartboard-rag-relevance-and-diversity-together",
@@ -2698,7 +2698,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "why-llms-forget-classic-memory-classes",
@@ -2734,7 +2734,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m33_conversational_memory_rag/03_trimming_windowing_and_summary_memory.md",
       "estMinutes": 4,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/trimming-windowing-and-summary-memory",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "conversational-rag-with-history-aware-retrieval",
@@ -2782,7 +2782,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m34_long_term_agentic_memory/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/memory-and-multi-agent-rag/memory-and-state/memory-and-state-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "cross-thread-memory-with-a-store",
@@ -2842,7 +2842,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m34_long_term_agentic_memory/05_memgpt_tiers_voyager_skill_library_agent_workflow_memory.md",
       "estMinutes": 6,
       "href": "/learn/memory-and-multi-agent-rag/memory-and-state/memgpt-tiers-voyager-skill-library-agent-workflow-memory",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "memory-and-state-interview-questions",
@@ -2866,7 +2866,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m35_multi_agent_architectures/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/memory-and-multi-agent-rag/multi-agent-architectures/multi-agent-architectures-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "monolithic-vs-multi-agent-a-crew-from-scratch",
@@ -2926,7 +2926,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m35_multi_agent_architectures/05_handoffs_and_swarms.md",
       "estMinutes": 5,
       "href": "/learn/memory-and-multi-agent-rag/multi-agent-architectures/handoffs-and-swarms",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "multi-agent-architectures-interview-questions",
@@ -2962,7 +2962,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m36_collaboration_parallel_agents/01_blackboard_architectures.md",
       "estMinutes": 4,
       "href": "/learn/memory-and-multi-agent-rag/collaboration-control-and-parallel-agents/blackboard-architectures",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "debate",
@@ -3010,7 +3010,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m36_collaboration_parallel_agents/05_parallel_agents_async_nodes_and_streaming.md",
       "estMinutes": 7,
       "href": "/learn/memory-and-multi-agent-rag/collaboration-control-and-parallel-agents/parallel-agents-async-nodes-and-streaming",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "collaboration-control-and-parallel-agents-interview-questions",
@@ -3034,7 +3034,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/memory-and-multi-agent-rag/multi-agent-applied-builds-and-deep-agents/multi-agent-applied-builds-and-deep-agents-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "hotel-system-environment-coordinator-reservation-agent-compliance",
@@ -3082,7 +3082,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/05_research_systems_supervisor_financial_research_summarisation_full_research_system.md",
       "estMinutes": 5,
       "href": "/learn/memory-and-multi-agent-rag/multi-agent-applied-builds-and-deep-agents/research-systems-supervisor-financial-research-summarisation-full-research-syste",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
@@ -3118,7 +3118,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/mcp-foundations-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "from-a-tool-calling-chatbot-to-mcp",
@@ -3190,7 +3190,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/06_remote_servers_and_deployment.md",
       "estMinutes": 4,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-foundations/remote-servers-and-deployment",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "mcp-foundations-interview-questions",
@@ -3214,7 +3214,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agent-protocols-mcp-and-a2a/building-mcp-servers-and-clients/building-mcp-servers-and-clients-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "single-server-mcp-with-resources",
@@ -3262,7 +3262,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/05_transports_sse_and_streamable_http.md",
       "estMinutes": 5,
       "href": "/learn/agent-protocols-mcp-and-a2a/building-mcp-servers-and-clients/transports-sse-and-streamable-http",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "building-mcp-servers-and-clients-interview-questions",
@@ -3346,7 +3346,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/05_rag_over_mcp_with_langchain.md",
       "estMinutes": 4,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/rag-over-mcp-with-langchain",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "research-assistant-with-mcp-and-langgraph",
@@ -3358,7 +3358,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/06_research_assistant_with_mcp_and_langgraph.md",
       "estMinutes": 4,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/research-assistant-with-mcp-and-langgraph",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "deploying-an-mcp-server-on-ec2",
@@ -3394,7 +3394,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m41_a2a_protocol/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agent-protocols-mcp-and-a2a/a2a-agent-to-agent-protocol/a2a-agent-to-agent-protocol-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "a2a-basics-agent-cards-tasks-messages",
@@ -3430,7 +3430,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m41_a2a_protocol/03_cross_framework_agent_interop.md",
       "estMinutes": 4,
       "href": "/learn/agent-protocols-mcp-and-a2a/a2a-agent-to-agent-protocol/cross-framework-agent-interop",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "capstone-agentic-rag-with-mcp-and-a2a",
@@ -3466,7 +3466,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m42_hierarchical_memory_rag/00_overview.md",
       "estMinutes": 3,
       "href": "/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/hierarchical-and-memory-augmented-retrieval-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "raptor-clustering-and-recursive-summarisation",
@@ -3526,7 +3526,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m43_knowledge_graphs_neo4j/00_overview.md",
       "estMinutes": 2,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/knowledge-graphs-with-neo4j-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "graph-fundamentals-and-cypher",
@@ -3562,7 +3562,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m43_knowledge_graphs_neo4j/03_natural_language_graph_qa_text_to_cypher.md",
       "estMinutes": 2,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/natural-language-graph-qa-text-to-cypher",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "vector-indexes-on-graph-nodes",
@@ -3622,7 +3622,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m44_graphrag/00_overview.md",
       "estMinutes": 3,
       "href": "/learn/hierarchical-memory-and-graph-rag/graphrag-techniques/graphrag-techniques-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "concept-graph-traversal",
@@ -3694,7 +3694,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_architecture_and_capstone/m45_architecture_synthesis/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/agentic-rag-architectures-choosing-a-design-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-agentic-rag-architecture-map",

@@ -7,12 +7,80 @@
 
 `pipeline()` from `transformers` loads a tokenizer and a model from one Hub repo and runs three steps on every call: pre-processing (the tokenizer turns text into token ids), the forward pass (the model turns ids into numbers) and post-processing (those numbers become a label, a span or generated text). Notebook `02a` runs it for sentiment, named entities, question answering and translation; `01b` uses it to label 1,066 movie reviews and computes accuracy against the dataset's labels.
 
-```mermaid
-flowchart LR
-    X[/"Ticket text"/] --> T["Tokenizer<br/>tokens, ids"]
-    T --> M["Model<br/>logits"]
-    M --> P["Post-process<br/>softmax, id2label"]
-    P --> Y[/"label, score"/]
+```animated
+<figure class="anim sheet" aria-labelledby="anim-pipeline-cap">
+  <div class="anim__canvas" tabindex="0" aria-label="Inside a pipeline, scrolls sideways on a narrow screen">
+    <svg viewBox="0 0 800 330" role="img" aria-labelledby="anim-pipeline-title anim-pipeline-desc">
+      <title id="anim-pipeline-title">Inside a sentiment-analysis pipeline</title>
+      <desc id="anim-pipeline-desc">The ticket “My refund took three weeks.” goes through the tokenizer, which splits it into nine tokens including [CLS] and [SEP] and maps them to ids. The model returns two logits. Post-processing applies softmax and looks up the label for the larger probability, NEGATIVE or POSITIVE, and returns it with its score.</desc>
+      <defs>
+        <marker id="ah-pipeline" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 0 L8 4 L0 8 z"/></marker>
+      </defs>
+
+      <g class="n-1"><rect class="box" x="16" y="28" width="130" height="44"/><text class="label" x="81" y="50">Ticket text</text></g>
+      <g class="n-2 n-3"><rect class="box" x="186" y="28" width="190" height="44"/><text class="label" x="281" y="50">Tokenizer</text></g>
+      <g class="n-4"><rect class="box" x="416" y="28" width="140" height="44"/><text class="label" x="486" y="50">Model</text></g>
+      <g class="n-5 n-6"><rect class="box" x="596" y="28" width="188" height="44"/><text class="label" x="690" y="50">Post-process</text></g>
+      <path class="edge e-2 in-2" d="M146 50 H183" marker-end="url(#ah-pipeline)"/>
+      <path class="edge e-4 in-4" d="M376 50 H413" marker-end="url(#ah-pipeline)"/>
+      <path class="edge e-5 in-5" d="M556 50 H593" marker-end="url(#ah-pipeline)"/>
+
+      <g class="in-1">
+        <rect class="doc" x="16" y="96" width="130" height="56"/>
+        <text class="small" x="81" y="114">My refund took</text>
+        <text class="small" x="81" y="134">three weeks.</text>
+      </g>
+
+      <g class="in-2">
+        <text class="small" x="281" y="100">tokens</text>
+        <text class="fig" x="281" y="124">[CLS] my ref ##und</text>
+        <text class="fig" x="281" y="144">took three weeks</text>
+        <text class="fig" x="281" y="164">. [SEP]</text>
+      </g>
+      <g class="in-3">
+        <text class="small" x="281" y="200">input_ids</text>
+        <text class="fig" x="281" y="224">101 2026 25416</text>
+        <text class="fig" x="281" y="244">8630 2165 2093</text>
+        <text class="fig" x="281" y="264">3134 1012 102</text>
+      </g>
+
+      <g class="in-4">
+        <text class="small" x="486" y="100">logits, shape [1, 2]</text>
+        <rect class="chunk" x="446" y="116" width="60" height="16"/>
+        <rect class="chunk" x="446" y="140" width="60" height="16"/>
+        <text class="fig" x="530" y="124">0</text>
+        <text class="fig" x="530" y="148">1</text>
+      </g>
+
+      <g class="in-5">
+        <text class="small" x="690" y="100">softmax</text>
+        <text class="fig" x="690" y="124">p0 + p1 = 1</text>
+      </g>
+      <g class="in-6">
+        <text class="small" x="690" y="160">id2label</text>
+        <text class="fig" x="690" y="184">0 NEGATIVE</text>
+        <text class="fig" x="690" y="204">1 POSITIVE</text>
+        <rect class="doc" x="606" y="226" width="168" height="56"/>
+        <text class="fig" x="690" y="246">label: the larger</text>
+        <text class="fig" x="690" y="266">score: its p</text>
+        <rect class="hit" x="606" y="290" width="168" height="6"/>
+      </g>
+    </svg>
+  </div>
+  <div class="anim__controls" hidden>
+    <button class="anim__btn" type="button" data-act="prev">Previous</button>
+    <button class="anim__btn" type="button" data-act="play" aria-pressed="false">Play</button>
+    <button class="anim__btn" type="button" data-act="next">Next</button>
+  </div>
+  <ol class="anim__steps" id="anim-pipeline-cap">
+    <li><button type="button">Text</button><span>A Larkspur ticket arrives: “My refund took three weeks.”</span></li>
+    <li><button type="button">Tokens</button><span>The tokenizer lower-cases it and splits it into nine tokens; “refund” becomes <code>ref</code> and <code>##und</code>.</span></li>
+    <li><button type="button">Ids</button><span>Each token becomes its row number in the vocabulary, from 101 for <code>[CLS]</code> to 102 for <code>[SEP]</code>.</span></li>
+    <li><button type="button">Model</button><span>DistilBERT reads the nine ids and returns two numbers, one per class.</span></li>
+    <li><button type="button">Softmax</button><span>Softmax turns the two logits into probabilities that sum to 1.</span></li>
+    <li><button type="button">Label</button><span>The config’s <code>id2label</code> names the larger one, and the pipeline returns that label with its probability as the score.</span></li>
+  </ol>
+</figure>
 ```
 
 For a Larkspur ticket, *My refund took three weeks.*, the sentiment pipeline's tokenizer produces nine ids: `[CLS] my ref ##und took three weeks . [SEP]`. The model returns two logits, softmax turns them into probabilities, and the model's `config.json` maps index 0 to `NEGATIVE` and 1 to `POSITIVE`. Each step can go wrong on its own. A ticket longer than the model's 512 positions has to be truncated at the tokenizer, a model trained on movie reviews misreads billing language in the forward pass, and a two-label head cannot say "billing" or "outage" at all.

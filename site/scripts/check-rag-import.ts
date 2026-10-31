@@ -4,8 +4,8 @@
  */
 import assert from 'node:assert/strict'
 import { britishSpelling } from '../src/lib/spelling.ts'
-import { britishText, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
-import { parseLabFence, parseReading } from '../src/lib/reading.ts'
+import { britishText, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
+import { parseAnimatedFence, parseLabFence, parseReading } from '../src/lib/reading.ts'
 
 assert.equal(britishSpelling('Summarization'), 'Summarisation')
 assert.equal(britishSpelling('analyzing'), 'analysing')
@@ -49,5 +49,17 @@ assert.ok(lab.indexOf('<style>') < lab.indexOf('_site-tokens.css'), 'site tokens
 for (const bad of ['fetch(u)', 'new WebSocket(u)', 'import("x")', '<img src="https://x.org/a.png">', 'url(https://x.org/a.png)']) {
   assert.throws(() => siteLab(`<head></head><script>${bad}</script>`, 'x.html'), /makes a request/)
 }
+
+// Animated diagrams lose their comments, take British spelling and may not run script or make requests (FE-12).
+const figure = '<!-- Animated version of x. -->\n<figure class="anim sheet"><svg><path marker-end="url(#ah)"/><title>Summarize</title></svg></figure>'
+const anim = siteAnimation(figure, 'x.anim.html')
+assert.equal(anim, '<figure class="anim sheet"><svg><path marker-end="url(#ah)"/><title>Summarise</title></svg></figure>')
+assert.deepEqual(parseReading(`# T\n\n## A\n\n\`\`\`animated\n${anim}\n\`\`\`\n`, 'lesson').sections[0].chunks, [{ kind: 'animated', html: anim }])
+for (const bad of ['<script>x()</script>', '<g onclick="x()">', '<image href="https://x.org/a.png"/>', '<rect style="fill: url(https://x.org/a)"/>']) {
+  const html = `<figure class="anim">${bad}</figure>`
+  assert.throws(() => siteAnimation(html, 'x.anim.html'), /not allowed/)
+  assert.equal(parseAnimatedFence(html), null)
+}
+assert.equal(parseAnimatedFence('<div class="anim"></div>'), null)
 
 console.log('rag import transforms: all checks pass')

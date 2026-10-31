@@ -142,6 +142,7 @@ if (twoH1.title !== 'Title' || twoH1.sections[0]?.title !== 'Second') {
   failures.push('reading.ts: a second # heading did not become a section')
 }
 let diagramTotal = 0
+let animatedTotal = 0
 
 const manifest = JSON.parse(await readFile(join(CONTENT, 'manifest.json'), 'utf8'))
 
@@ -589,7 +590,11 @@ for (const file of [...learnOnDisk].filter((f) => expectedFiles.has(f)).sort()) 
         if (!existsSync(join(SITE_ROOT, 'public', chunk.src))) failures.push(`${label}: lab ${chunk.src} is not in public/`)
         continue
       }
-      if (/language-mermaid/.test(chunk.html)) failures.push(`${label}: a mermaid fence rendered as prose`)
+      if (chunk.kind === 'animated') {
+        animatedTotal++
+        continue
+      }
+      if (/language-(?:mermaid|animated)/.test(chunk.html)) failures.push(`${label}: a mermaid or animated fence rendered as prose`)
       for (const [, href] of chunk.html.matchAll(/(?:href|src)="([^"]*)"/g)) {
         if (!/^(https?:|mailto:|#|\/)/.test(href)) failures.push(`${label}: link still points into the repo: ${href}`)
       }
@@ -919,6 +924,7 @@ try {
 
 console.log(rows.join('\n'))
 console.log(`\n  ${diagramTotal} mermaid diagram(s) parsed across answer keys and case studies`)
+console.log(`  ${animatedTotal} animated diagram(s) in Learn lessons`)
 
 if (failures.length) {
   console.error(`\n${failures.length} problem(s):`)

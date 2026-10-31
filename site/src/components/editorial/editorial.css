@@ -426,3 +426,57 @@
 .editorial-page .cb-lab-card { border: var(--rule-hair) solid var(--color-rule-2); background: var(--color-paper); padding: 1.25rem 1.5rem; }
 .editorial-page .cb-lab-card__title { margin-top: 0.25rem; font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; line-height: 1.25; color: var(--color-ink); }
 .editorial-page .cb-lab-card__lead { margin-top: 0.25rem; font-size: 0.875rem; color: var(--color-muted); }
+/*
+ * Animated diagram in a lesson (FE-13, AnimatedDiagram.tsx), ported from the course's
+ * scripts/site/theory-anim.css. The figure shows its finished frame until script adds .is-anim,
+ * so readers without script, or with reduced motion before they press Play, see the whole diagram.
+ * Script sets data-step="k" (the current step) and classes s1..sk (every step reached so far):
+ *   .in-N appears at step N; .mv-N moves in at step N from its --from offset;
+ *   .n-N is a node and .e-N an edge marked while step N is current. Figures have at most 8 steps.
+ */
+.editorial-page .anim { --color-node: var(--color-paper); --dur-long: 420ms; --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); --font-outlier: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin: 0; padding: 1rem 1.5rem 1.5rem; border: var(--rule-hair) solid var(--color-rule-2); background: var(--color-paper-2); }
+.editorial-page .anim__canvas { overflow-x: auto; }
+.editorial-page .anim svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.editorial-page .anim .lane { fill: none; stroke: var(--color-rule-2); stroke-width: 1; }
+.editorial-page .anim .lane-label { font: 500 14px var(--font-display); fill: var(--color-muted); }
+.editorial-page .anim .box { fill: var(--color-node); stroke: var(--color-muted); stroke-width: 1; transition: stroke var(--dur-short) var(--ease-out); }
+.editorial-page .anim .label { font: 500 15px var(--font-display); fill: var(--color-ink); text-anchor: middle; dominant-baseline: middle; }
+.editorial-page .anim .small { font: 400 13px var(--font-display); fill: var(--color-ink-2); text-anchor: middle; dominant-baseline: middle; }
+.editorial-page .anim .fig { font: 400 13px var(--font-outlier); fill: var(--color-ink); text-anchor: middle; dominant-baseline: middle; }
+.editorial-page .anim .edge { fill: none; stroke: var(--color-muted); stroke-width: 1.25; transition: stroke var(--dur-short) var(--ease-out); }
+.editorial-page .anim .edge.dashed { stroke-dasharray: 5 4; }
+.editorial-page .anim .ah { fill: var(--color-muted); fill: context-stroke; }
+.editorial-page .anim .doc { fill: var(--color-node); stroke: var(--color-ink-2); stroke-width: 1; }
+.editorial-page .anim .line { stroke: var(--color-muted); stroke-width: 1.5; }
+.editorial-page .anim .chunk { fill: var(--color-ink-2); }
+.editorial-page .anim .vec { fill: var(--color-muted); }
+.editorial-page .anim .hit { fill: var(--color-accent); }
+.editorial-page .anim .hit-line { stroke: var(--color-accent); stroke-width: 2; }
+.editorial-page .anim .tok { fill: var(--color-accent); opacity: 0; transition: transform 900ms var(--ease-in-out), opacity var(--dur-short) var(--ease-out); }
+.editorial-page .anim.is-anim[data-step] .tok { opacity: 1; }
+.editorial-page .anim.is-anim :is([class*='in-'], [class*='mv-']) { transition: opacity var(--dur-long) var(--ease-out), transform 900ms var(--ease-in-out); }
+.editorial-page .anim.is-anim:not(.s1) .in-1, .editorial-page .anim.is-anim:not(.s2) .in-2, .editorial-page .anim.is-anim:not(.s3) .in-3, .editorial-page .anim.is-anim:not(.s4) .in-4,
+.editorial-page .anim.is-anim:not(.s5) .in-5, .editorial-page .anim.is-anim:not(.s6) .in-6, .editorial-page .anim.is-anim:not(.s7) .in-7, .editorial-page .anim.is-anim:not(.s8) .in-8 { opacity: 0; }
+.editorial-page .anim.is-anim:not(.s1) .mv-1, .editorial-page .anim.is-anim:not(.s2) .mv-2, .editorial-page .anim.is-anim:not(.s3) .mv-3, .editorial-page .anim.is-anim:not(.s4) .mv-4,
+.editorial-page .anim.is-anim:not(.s5) .mv-5, .editorial-page .anim.is-anim:not(.s6) .mv-6, .editorial-page .anim.is-anim:not(.s7) .mv-7, .editorial-page .anim.is-anim:not(.s8) .mv-8 { opacity: 0; transform: var(--from); }
+.editorial-page .anim[data-step='1'] .n-1 .box, .editorial-page .anim[data-step='2'] .n-2 .box, .editorial-page .anim[data-step='3'] .n-3 .box, .editorial-page .anim[data-step='4'] .n-4 .box,
+.editorial-page .anim[data-step='5'] .n-5 .box, .editorial-page .anim[data-step='6'] .n-6 .box, .editorial-page .anim[data-step='7'] .n-7 .box, .editorial-page .anim[data-step='8'] .n-8 .box { stroke: var(--color-accent); stroke-width: 2.5; }
+.editorial-page .anim[data-step='1'] .e-1, .editorial-page .anim[data-step='2'] .e-2, .editorial-page .anim[data-step='3'] .e-3, .editorial-page .anim[data-step='4'] .e-4,
+.editorial-page .anim[data-step='5'] .e-5, .editorial-page .anim[data-step='6'] .e-6, .editorial-page .anim[data-step='7'] .e-7, .editorial-page .anim[data-step='8'] .e-8 { stroke: var(--color-accent); stroke-width: 2; }
+.editorial-page .anim__controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.editorial-page .anim__controls[hidden] { display: none; }
+.editorial-page .anim__btn { min-height: 44px; padding: 0 1rem; border: var(--rule-hair) solid var(--color-ink); background: transparent; color: var(--color-ink); font-size: var(--text-sm); line-height: 1; cursor: pointer; transition: background-color var(--dur-short) var(--ease-out); }
+.editorial-page .anim__btn:hover, .editorial-page .anim__btn[aria-pressed='true'] { background: var(--color-paper-3); }
+.editorial-page .anim__btn[aria-pressed='true'] { border-color: var(--color-accent); }
+.editorial-page .anim__steps { list-style: none; margin: 1rem 0 0; padding: 0; counter-reset: step; border-top: var(--rule-hair) solid var(--color-rule); }
+.editorial-page .anim__steps li { counter-increment: step; display: grid; grid-template-columns: 3ch 7.5rem minmax(0, 1fr); gap: 0.5rem; align-items: center; padding: 0.125rem 0; border-bottom: var(--rule-hair) solid var(--color-rule); font-size: var(--text-sm); line-height: 1.5; color: var(--color-muted); }
+.editorial-page .anim__steps li::before { content: counter(step); font-family: var(--font-outlier); }
+.editorial-page .anim__steps button { justify-self: start; min-height: 44px; padding: 0; border: 0; background: none; text-align: left; white-space: nowrap; font-size: var(--text-sm); line-height: 1.3; color: var(--color-ink-2); text-decoration: underline; text-decoration-color: var(--color-rule-2); text-underline-offset: 3px; cursor: pointer; }
+.editorial-page .anim__steps button:hover, .editorial-page .anim__steps button[aria-current='step'] { color: var(--color-ink); text-decoration-color: var(--color-accent); }
+.editorial-page .anim__steps li:has(> [aria-current='step']) { color: var(--color-ink); }
+.editorial-page .anim__steps li:has(> [aria-current='step'])::before { color: var(--color-accent); }
+@media (max-width: 40rem) {
+  .editorial-page .anim { padding: 0.75rem 1rem 1rem; }
+  .editorial-page .anim__steps li { grid-template-columns: 3ch minmax(0, 1fr); }
+  .editorial-page .anim__steps li > span { grid-column: 2; }
+}
