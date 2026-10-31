@@ -20,6 +20,8 @@
     "check:paths": "node scripts/check-paths.ts",
     "check:bundle": "node scripts/check-bundle.mjs",
     "check:routes": "node scripts/check-routes.mjs",
+    "import:rag-theory": "node scripts/rag-theory-import.mjs",
+    "check:rag-import": "node scripts/check-rag-import.ts",
     "test:e2e": "playwright test"
   },
   "dependencies": {

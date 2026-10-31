@@ -407,7 +407,7 @@ export function sliceMarkdown(markdown, lesson) {
 }
 
 /** GitHub's heading anchor: lower case, punctuation dropped, spaces to hyphens. */
-const githubSlug = (text) =>
+export const githubSlug = (text) =>
   text
     .toLowerCase()
     .replace(/<[^>]*>/g, '')
@@ -416,7 +416,7 @@ const githubSlug = (text) =>
     .replace(/\s/g, '-')
 
 /** The id the reading pipeline (src/lib/reading.ts) gives a lesson's `## ` section. */
-const readingSlug = (text) =>
+export const readingSlug = (text) =>
   text
     .toLowerCase()
     .replace(/<[^>]*>/g, '')

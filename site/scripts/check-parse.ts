@@ -36,6 +36,7 @@ import {
 import { existsSync } from 'node:fs'
 import ts from 'typescript'
 import { GLOSSARY, NOT_ACRONYMS } from '../src/lib/glossary.ts'
+import { americanWords } from '../src/lib/spelling.ts'
 import { SEARCH_AREA_BUDGET_BYTES, SEARCH_AREAS } from '../src/lib/search-areas.ts'
 import { LESSONS, MODULES as CURRICULUM_MODULES } from '../src/lib/curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from '../src/lib/curriculum-href.ts'
@@ -687,21 +688,11 @@ for (const [token, files] of acronymPages) {
 // behavior, judgment) as whole words. Skipped: code, inline code, link
 // targets, external link titles, HTML tags, paths and identifiers, and the block after a
 // `<!-- spelling: source -->` marker (a quote from an American source). SPELLING_ALLOWED
-// names the product, title and pattern names that keep their own spelling. Site copy is
+// (src/lib/spelling.ts, shared with the RAG theory import) names the product, title and
+// pattern names that keep their own spelling. Site copy is
 // read from src/ as string literals and JSX text that contain a space, so ids, slugs,
 // paths, identifiers and comments never count.
 const SPELLING_IS_ERROR = true
-const AMERICAN =
-  /^(?:un|re|pre|de|mis)?(?:behaviors?|behavioral(?:ly)?|authoriz(?:e|es|ed|ing|ation|ations|er|ers)|optimiz(?:e|es|ed|ing|ation|ations|er|ers)|organiz(?:e|es|ed|ing|ation|ations|ational|er|ers)|judgments?|(?:normaliz|summariz|paralleliz|prioritiz|recogniz|utiliz|minimiz|maximiz|categoriz|standardiz|emphasiz|realiz|specializ|generaliz|finaliz|visualiz|customiz|memoriz|characteriz|centraliz|decentraliz|serializ|synchroniz|operationaliz|apologiz|criticiz|analyz|paralyz|catalyz)(?:e|es|ed|ing|ation|ations|er|ers|able)|(?:label|cancel|model|travel|signal|fuel|channel|level|total)(?:ed|ing|er|ers)|centers?|centered|centering)$/i
-const SPELLING_ALLOWED: [RegExp, string][] = [
-  [/(?:Cost and )?Latency Optimization Playbook/g, 'title of a third-party playbook'],
-  [/evaluator-optimizer/gi, "Anthropic's name for a workflow pattern"],
-  [/\b(?:items|justify|place-items|self|text)-center\b/g, 'Tailwind utility class'],
-]
-const americanWords = (text: string): string[] => {
-  for (const [re] of SPELLING_ALLOWED) text = text.replace(re, ' ')
-  return [...text.replace(/\S*[_/\\]\S*/g, ' ').matchAll(/[A-Za-z]+/g)].map((m) => m[0]).filter((w) => AMERICAN.test(w))
-}
 const proseOf = (markdown: string): string =>
   markdown
     .replace(/<!-- spelling: source -->[\s\S]*?(?:\n[ \t]*\n|$)/g, ' ')
