@@ -436,12 +436,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Write idiomatic Python: data types, control flow, functions and PEP 8",
-    "scope": "Course module M01. Plus about 2.5 h of notebook work on GitHub.",
+    "scope": "Course module M01. Plus about 2 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Data warm-up: load a CSV into pandas and into SQLite, answer five questions both ways, and expose one of them through a small Flask endpoint.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's nightly evaluation sends 200 golden questions to the model. A teammate rewrote it with `asyncio.gather` to make it faster, and it takes exactly as long as before. What do you look for?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Normalising rows with `np.linalg.norm` without `keepdims=True`",
+      "Building SQL with an f-string instead of a `?` placeholder",
+      "Calling blocking `llm.invoke` inside `async def` and expecting concurrency"
+    ],
     "lessons": [
       "python-and-data-toolkit-refresher-overview",
       "numpy-pandas-and-matplotlib",
@@ -517,12 +521,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Call the OpenAI and Gemini chat APIs directly from Python",
-    "scope": "Course module M02. Plus about 2.5 h of notebook work on GitHub.",
+    "scope": "Course module M02. Plus about 2 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Generator choice: answer 20 questions with a fast model, a reasoning model at two effort levels and an open model, and record accuracy, latency and cost per answer.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur moves its answer generator from `gpt-4o-mini` to `o4-mini`. The monthly bill triples, yet the answers in the transcripts are the same length as before. Where did the money go, and how do you show it?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Assuming `token=None` sends an unauthenticated Hugging Face call",
+      "Estimating a reasoning model's cost from its visible reply",
+      "Raising reasoning effort when the answer needs a missing fact"
+    ],
     "lessons": [
       "llm-provider-apis-and-model-selection-overview",
       "calling-commercial-llm-apis-openai-and-gemini",
@@ -547,7 +555,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Model demo: wrap an open embedding or text model from the Hub in a Gradio app that shows its output for a user-entered query.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur indexes each handbook page as one chunk with `all-MiniLM-L6-v2`. Support says \"How fast does support answer a ticket?\" never finds the FAQ page, though the answer is on it. What do you check?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Loading weights from the `main` branch instead of a pinned commit hash",
+      "Embedding a page longer than `max_seq_length`, so its tail is cut",
+      "Building the pipeline inside the Gradio event function"
+    ],
     "lessons": [
       "hugging-face-models-and-gradio-demos-overview",
       "hub-setup-datasets-and-models",
@@ -628,7 +640,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "RAG or fine-tune: for one narrow task, compare the M11 RAG baseline with a small fine-tuned model on the same questions and write down which wins and why.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur fine-tuned a small model on 2,000 support transcripts. In testing it answers the refund question correctly, then keeps going: it repeats the policy sentence until the response hits its token limit. What do you check?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Fine-tuning facts that change, such as the refund window, instead of retrieving them",
+      "Changing the prompt format at serving time but not in training",
+      "Training on rows with no end token, so answers never stop"
+    ],
     "lessons": [
       "fine-tuning-fundamentals-overview",
       "why-fine-tune",
@@ -651,12 +667,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Apply persona, flipped-interaction, N-shot, directional-stimulus, template and meta-language patterns",
-    "scope": "Course module M05. Plus about 2.5 h of notebook work on GitHub.",
+    "scope": "Course module M05. Plus about 2 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Prompt bake-off: write three prompts for grading whether a retrieved passage answers a question, and measure their agreement with your own labels on 30 pairs.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's relevance grader labels the `refund-timing` chunk \"no\" for \"How long does a refund take?\", so the assistant answers \"I don't know\". The grader is a few-shot prompt. How do you debug it?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "A grading prompt whose only no example is on an unrelated topic",
+      "Majority voting when one wrong answer is more common than the right one",
+      "Passing replies on without parsing and validating the JSON contract"
+    ],
     "lessons": [
       "prompt-engineering-patterns-overview",
       "core-prompt-patterns",
@@ -681,7 +701,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Report reader: answer five questions about a chart-heavy PDF page by prompting a multimodal model with the page image.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur summarises recorded export walkthroughs with GPT-4o, sampling a frame every 3 seconds. A customer's summary says the export \"may not have finished\", but the recording shows an \"Export ready\" toast. What went wrong, and how do you fix it?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Sending files inline above the 20 MB cap instead of uploading them",
+      "Sampling video frames at a gap longer than the shortest event",
+      "Checking that the balance sheet adds up in the prompt, not in code"
+    ],
     "lessons": [
       "multimodal-prompting-overview",
       "multimodal-prompting-with-gemini",
@@ -700,12 +724,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Call commercial and open-source models natively and through LangChain",
-    "scope": "Course module M07. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "Course module M07. Plus about 3 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Structured answers: build a prompt template and parser that turn a question plus three passages into a JSON answer with a citations list.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's refund answers start failing: about one request in fifty raises `OutputParserException` after a model upgrade. The previous model never did. Where do you look first?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Migrating `ConversationBufferMemory` by changing only its import path",
+      "Shipping an `init_chat_model` provider swap without checking the golden questions",
+      "Typing citations as `list[str]`, so invented passage ids pass"
+    ],
     "lessons": [
       "langchain-core-models-prompts-and-parsers-overview",
       "langchain-introduction-and-the-1-x-package-split",
@@ -754,12 +782,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Compose Runnables with the pipe operator and run them with invoke, batch and stream",
-    "scope": "Course module M08. Plus about 2.5 h of notebook work on GitHub.",
+    "scope": "Course module M08. Plus about 2 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Chain rewrite: rebuild one legacy chain as LCEL, add a branch that routes short and long inputs differently, and compare outputs.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's nightly job runs `triage_chain.batch()` over 2,000 support tickets. Last night it died at ticket 1,412 with a rate-limit error and wrote nothing. What do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Using `RunnableParallel` and losing the question a later step needs",
+      "A `RunnableBranch` default that returns a fixed apology instead of a handoff",
+      "Treating no build-time warning from `load_summarize_chain` as proof it is safe"
+    ],
     "lessons": [
       "lcel-runnables-and-chains-overview",
       "lcel-and-the-runnable-interface",
@@ -780,12 +812,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build a StateGraph with nodes, edges and reducers, including MessagesState",
-    "scope": "Course module M09. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "Course module M09. Plus about 3 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "First graph: build a graph that classifies a question, routes it to one of two nodes, and returns a structured answer.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "After a refactor of Larkspur's support graph, token cost per conversation doubles and the model starts repeating the customer's question back. No test fails. What do you look for?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Returning the whole message list from nodes under an `operator.add` reducer",
+      "Leaving the destination list out of a conditional edge",
+      "Putting the database client and secrets in graph state"
+    ],
     "lessons": [
       "langchain-and-langgraph-overview",
       "state-graphs-and-reducers",
@@ -811,7 +847,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Approval loop: add a checkpointer and an interrupt before the answer node of your M09 graph, resume it after approval, and stream the steps.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Finance reports that refund-99 was paid out twice, and the billing team says it got two approval requests for it. The approval itself was given once. How do you investigate?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Sending a notice above `interrupt()`, so it repeats on every resume",
+      "Bumping the loop's attempt counter in the router function",
+      "Retrying a refund call with no key, so the customer is refunded twice"
+    ],
     "lessons": [
       "langgraph-runtime-persistence-hitl-and-streaming-overview",
       "checkpointing-and-threads",
@@ -833,12 +873,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Explain the knowledge problem RAG solves: stale training data, private data, hallucination, and context-window limits",
-    "scope": "Course module M11. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "Course module M11. Plus about 3 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Baseline pipeline: build the canonical lifecycle notebook end to end on the course corpus and save its retrieval and answer metrics. Every later module reports its improvement against this baseline.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support assistant answers billing questions from the handbook. The policy team changes the refund window on Monday. A teammate proposes fine-tuning the model on the new handbook. What do you recommend, and what has to happen on Monday?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Dropping every chunk below a fixed cosine of 0.5",
+      "Re-running `from_texts` without `ids=`, so chunks come back twice",
+      "Tuning the prompt when the evidence never reached the top-k"
+    ],
     "lessons": [
       "rag-from-first-principles-overview",
       "the-knowledge-problem-hallucination-freshness-context-window-growth-rag-vs-fine",
@@ -859,12 +903,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Load text, Markdown, CSV, JSON, PDF, Word, web pages, transcripts and papers into `Document` objects",
-    "scope": "Course module M12. Plus about 4.5 h of notebook work on GitHub.",
+    "scope": "Course module M12. Plus about 4 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Multi-source ingestor: load a mixed folder (PDF, DOCX, Markdown, CSV, one web page) into Documents that share one metadata schema (source, type, section, page, date).",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "A customer uploads 4,000 product manuals as PDFs: two-column layouts, spec tables, scanned appendices. You have a week to make them searchable. How do you choose a parsing approach?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Storing a title only in metadata and expecting queries to match it",
+      "Moving the plan name into `metadata_columns`, so it is never embedded",
+      "Trusting a `silent_errors=True` run without counting distinct `source` values"
+    ],
     "lessons": [
       "document-ingestion-and-metadata-design-overview",
       "the-document-abstraction-and-metadata-design",
@@ -907,7 +955,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Chunking bake-off: index the same corpus with recursive, semantic and proposition chunking at three sizes each, and compare hit rate and answer faithfulness against the M11 baseline.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Your support assistant tells a customer \"Annual plans are refundable within 30 days\" and the customer gets a refund denied: they had used 300 GB of traffic. The retrieved chunk is correct as far as it goes. What happened, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Setting an overlap shorter than the piece of the answer that gets cut",
+      "Reusing a semantic chunking threshold tuned on another corpus",
+      "Grading propositions with the same model that wrote them"
+    ],
     "lessons": [
       "chunking-and-indexing-overview",
       "splitter-fundamentals-character-recursive-token-and-structure-aware",
@@ -927,12 +979,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Explain dense embeddings, dimensions and cosine / dot-product / Euclidean similarity",
-    "scope": "Course module M14. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "Course module M14. Plus about 3 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Embedding shoot-out: compare one hosted and two open-source models on a 30-question golden set and pick one, writing down the cost and latency per 1,000 chunks.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support assistant was fine on Friday. On Monday every answer is vague, and the logged top-1 similarity for golden questions has fallen from its usual range to near zero. Nobody touched the prompt. What do you check first?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Shipping 64 dimensions because recall@1 is perfect on six queries",
+      "Scoring by dot product with `HuggingFaceEmbeddings` left unnormalised",
+      "Sharing the cache's default empty namespace across two embedding models"
+    ],
     "lessons": [
       "embeddings-and-model-selection-overview",
       "embedding-fundamentals-similarity-metrics-and-model-selection",
@@ -969,7 +1025,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Living index: stand up pgvector with Docker, ingest the M12 corpus, then change, add and delete source files and show that the record manager re-indexes only what changed.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur cut the annual refund window from 30 days to 14 and the nightly sync ran. A week later the assistant still tells some customers \"30 days\". The new chunk is in the index. What happened, and how do you fix it?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Minting a fresh UUID for every chunk on each ingestion run",
+      "Relying on a tenant metadata filter for access control",
+      "Running `full` cleanup when the loader returned only some files"
+    ],
     "lessons": [
       "vector-stores-and-index-operations-overview",
       "index-operations-create-query-update-delete-persist",
@@ -995,7 +1055,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Index redesign: apply parent-document retrieval and contextual chunk headers to the baseline and report the change in hit rate and answer quality.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "You switched the Larkspur support bot to parent-document retrieval with no parent splitter. Hit rate went up, but cost per answer tripled and outage answers now quote refund rules. What happened, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Testing summary keys on topic questions but never on details",
+      "Persisting the child vectors but keeping parents in an `InMemoryStore`",
+      "Keeping the title and section path in metadata instead of chunk text"
+    ],
     "lessons": [
       "advanced-indexing-strategies-overview",
       "multi-representation-indexing-search-summaries-return-documents",
@@ -1021,7 +1085,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Hybrid upgrade: add BM25 to the vector retriever, tune the fusion weights on the golden set, and find three queries that only hybrid search answers.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur moved support search from keyword search to embeddings. Agents now report that pasting an order ID such as `ORD-88213` returns general refund-policy chunks instead of the one note that mentions that order. What happened, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Mixing up distance and relevance score directions when setting a threshold",
+      "Tuning `k1` and `b` before fixing the whitespace-only BM25 tokeniser",
+      "Tuning RRF's `c` when evidence sits below the hand-over depth"
+    ],
     "lessons": [
       "retrieval-hybrid-rerank-overview",
       "the-retriever-interface-and-its-search-modes",
@@ -1048,7 +1116,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Query-transformation matrix: run multi-query, RAG-Fusion, HyDE and decomposition on the same 30 questions and record which question types each one helps, which it hurts, and the added latency and cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "You ship RAG-Fusion for Larkspur's support assistant. A customer asks \"What happens if my server goes down?\" and gets reboot instructions instead of the SLA credit policy. Recall on the golden set went up. What happened?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Passing the expanded query, not the original question, to the answer prompt",
+      "Returning `doc.id` values from the fusion merge instead of documents",
+      "Splitting free-text decomposition output on newlines instead of structured output"
+    ],
     "lessons": [
       "query-transformation-and-routing-overview",
       "query-rewriting-and-expansion",
@@ -1116,7 +1188,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Precision stack: add a cross-encoder reranker over a top-50 hybrid retrieval and measure the gain at top-5, plus the latency budget it consumes.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "You add a cross-encoder reranker over the top 50 for Larkspur's support assistant. Latency per question jumps, and answers to “How long does a refund take?” are no better. Where do you look?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Expecting a reranker to fix evidence missing from the first-stage candidates",
+      "Loading the `CrossEncoder` inside `rerank_documents` on every question",
+      "Keeping a chunk only when the model replies exactly `\"True\"`"
+    ],
     "lessons": [
       "post-retrieval-optimisation-and-reranking-overview",
       "two-stage-retrieval-retrieve-wide-rerank-narrow",
@@ -1143,7 +1219,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Module lab, AI research assistant: package ingestion, retrieval, structured answers with citations and session history into one class (05/10/11).",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "A Larkspur customer forwards a support answer about annual-plan refunds. Its citation quotes \"Annual plans are fully refundable for 30 days\" and points to page 0 of the handbook. Neither the sentence nor a page 0 exists. What happened, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Giving the model no permitted way to say it does not know",
+      "Answering averages from top-k rows instead of routing to a query engine",
+      "Retrieving twice with `RunnableParallel`, so shown sources differ from the context"
+    ],
     "lessons": [
       "end-to-end-rag-systems-overview",
       "environment-setup-and-a-complete-rag-system",
@@ -1164,12 +1244,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Embed text and images in one space with CLIP and answer with a multimodal LLM",
-    "scope": "Course module M21. Plus about 2.5 h of notebook work on GitHub.",
+    "scope": "Course module M21. Plus about 2 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Chart-aware RAG: index a report that holds key numbers only in figures and show which of the three approaches answers questions about them.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur moves its quarterly service report into the handbook as a PDF. Customers ask which month missed the availability target, and the assistant says the handbook does not say. The text pipeline has not changed. What happened, and how do you confirm it?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Raising `k` to reach images that rank below every text chunk",
+      "Captioning figures without the printed values and labels questions need",
+      "Indexing page images with ColPali for text-heavy reports with few charts"
+    ],
     "lessons": [
       "multimodal-rag-overview",
       "shared-text-image-embedding-space-with-clip",
@@ -1193,7 +1277,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Port one of your Part VI pipelines (hybrid + rerank) to LlamaIndex and confirm the metrics match.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "You port Larkspur's hybrid retriever to LlamaIndex: a FAISS `IndexFlatL2` vector store and BM25, fused with `QueryFusionRetriever(mode=\"relative_score\")`. The fused top result is now the least relevant handbook passage. What happened?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Porting a character chunk size to `SentenceSplitter`, which counts tokens",
+      "Feeding `IndexFlatL2` distances into a fusion that assumes higher is better",
+      "Dropping cross-encoder nodes below 0, as if logits were probabilities"
+    ],
     "lessons": [
       "framework-fluency-llamaindex-overview",
       "simple-pdf-and-csv-rag-in-llamaindex",
@@ -1218,7 +1306,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Retriever as a tool, by hand: wrap your Part VII retriever as a tool, run it through your own tool loop with no framework, and log every tool call and error.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support agent returns a 500 whenever a customer mistypes a server name (\"Is web-9 up?\"). The logs show `ValueError: Unknown server 'web-9'`. The tool works for valid names. What is wrong, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "No `max_rounds` cap on a hand-written ReAct loop",
+      "Vague tool descriptions that cause wrong or missing calls",
+      "Letting tool exceptions escape instead of returning an error `ToolMessage`"
+    ],
     "lessons": [
       "the-agent-loop-and-tool-calling-overview",
       "agentic-patterns-from-scratch-reflection-tool-use-react-planning",
@@ -1256,7 +1348,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "ReAct research agent: give a `create_agent` agent your RAG retriever and a web-search tool, add a middleware that blocks off-topic questions, and compare its answers with your Part VII system.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support agent cost three times as much yesterday as the day before. Traces show some runs making a dozen `search_handbook` calls with reworded queries before giving up. What do you check, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Raising the call cap when the index stored questions without answers",
+      "Making `refund_amount` required, so the model invents a value",
+      "Sending a new user message to a thread paused for approval"
+    ],
     "lessons": [
       "react-agents-and-langchain-create-agent-overview",
       "the-react-loop-in-langgraph-tool-calling-vs-react",
@@ -1299,7 +1395,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Pattern mapping: rebuild query decomposition (M18) as orchestrator–worker and an answer-quality check as evaluator–optimizer, then compare latency and cost with the chain versions.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's reply drafter is an evaluator-optimizer loop. After an evaluator model upgrade, p95 latency triples and cost per ticket doubles, but no request fails. What happened, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Retrying the quality gate with the extractor at temperature 0",
+      "Trying the cheap model first and escalating only on bad answers",
+      "Wiring fixed workers with `add_edge`, so the orchestrator's plan drives nothing"
+    ],
     "lessons": [
       "agentic-workflow-patterns-overview",
       "prompt-chaining-with-quality-gates",
@@ -1320,12 +1420,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Compare ReAct with plan-and-execute and add replanning",
-    "scope": "Course module M26. Plus about 5.5 h of notebook work on GitHub.",
+    "scope": "Course module M26. Plus about 5 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Verified answers: add chain-of-verification to your RAG answer step and measure how many unsupported claims it removes on the golden set.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's cancellation assistant, a plan-and-execute agent, told a customer their data is kept for 12 months after cancelling. The handbook says 30 days. The trace shows the retention lookup ran. What went wrong, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Setting `max_iterations` with no room for replanning after a wrong result",
+      "Verifying each claim in a call that can still see the draft",
+      "Trusting a majority vote when the samples share a systematic error"
+    ],
     "lessons": [
       "planning-reflection-and-reasoning-patterns-overview",
       "plan-and-execute-vs-react-decompose-execute-replan",
@@ -1416,12 +1520,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Put a dry-run and approval gate in front of consequential actions",
-    "scope": "Course module M27. Plus about 4.5 h of notebook work on GitHub.",
+    "scope": "Course module M27. Plus about 4 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "SQL or vectors: answer the same 20 questions over a product catalogue with CSV RAG (M20) and with the text-to-SQL agent, and record which wins for each question type.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's status agent published \"a root-cause report within 48 hours\". The reviewer approved a preview that said 72 hours, and the audit log shows the approve. How did this happen, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Generating the dry-run preview inside the review node before `interrupt()`",
+      "Counting sale lines in generated SQL where the question needs summed `Quantity`",
+      "Asking the model to merge checked parts instead of rendering a template"
+    ],
     "lessons": [
       "human-approval-and-applied-single-agent-builds-overview",
       "dry-run-harness-and-human-approval",
@@ -1472,7 +1580,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Grader loop: add a relevance grader and a two-retry rewrite loop to your Part VII system and log how often each path fires on the golden set.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "A week after the Larkspur handbook moved to a new document system, the support assistant's LLM bill doubled while traffic stayed flat. Traces show most questions now making three retrievals. What happened, and what do you check first?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Passing a chunk that is about the topic but lacks the answer",
+      "Comparing `binary_score` exactly with \"yes\" without normalising it first",
+      "Leaving off-topic questions for the document grader to reject"
+    ],
     "lessons": [
       "agentic-rag-foundations-grading-and-query-rewriting-overview",
       "retriever-as-a-tool-grade-then-rewrite-in-langgraph",
@@ -1502,12 +1614,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build CRAG: grade documents, rewrite the query, fall back to web search (Tavily)",
-    "scope": "Course module M29. Plus about 4.5 h of notebook work on GitHub.",
+    "scope": "Course module M29. Plus about 4 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Out-of-corpus stress test: send questions the corpus cannot answer and compare the baseline, CRAG and Self-RAG on refusals, web fallbacks and hallucinated answers.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support assistant runs CRAG with a web fallback. A customer asks what happens when their server goes down, and the assistant quotes another provider's availability guarantee. The handbook has the right answer. What went wrong, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Falling back to web search for a private handbook's policies",
+      "Updating the iteration counter inside a routing function instead of a node",
+      "Adding more checks when the missing evidence was never retrieved"
+    ],
     "lessons": [
       "self-correcting-rag-crag-and-self-rag-overview",
       "corrective-rag-in-langgraph-with-web-search-fallback",
@@ -1531,7 +1647,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Support desk router: route billing, technical and general questions to separate knowledge bases, escalate negative-sentiment tickets, and report routing accuracy.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support assistant started answering \"Apologies, I was not able to answer your question\" to customers who ask how long their data is kept after they cancel. The retention chunk is in the general knowledge base. How do you find the fault?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Writing the category filter onto the shared retriever's `search_kwargs`",
+      "Routing on sentiment alone, so calm customers with urgent problems slip through",
+      "Indexing a new topic without adding it to the router's prompt"
+    ],
     "lessons": [
       "adaptive-rag-and-query-routing-overview",
       "router-agentic-rag-over-multiple-knowledge-bases",
@@ -1556,7 +1676,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Two-tool agent: give an agent a private-docs RAG tool and a web-search tool, and tune the tool descriptions until it picks the right one on 20 mixed questions.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur adds a `web_search` tool to the support agent. A week later a customer asks \"Can I get a refund on my annual plan?\" and the agent quotes another provider's refund policy. How do you find out what happened?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Tool descriptions that never say where each tool's scope stops",
+      "Trusting tuned tool descriptions without checking held-out questions",
+      "Keeping the Chainlit index and agent in module globals"
+    ],
     "lessons": [
       "rag-as-an-agent-tool-overview",
       "rag-as-a-tool-inside-a-langgraph-agent",
@@ -1575,12 +1699,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Add relevance checks, hallucination checks and source highlighting",
-    "scope": "Course module M32. Plus about 2.5 h of notebook work on GitHub.",
+    "scope": "Course module M32. Plus about 2 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Feedback flywheel: simulate 100 thumbs-up / thumbs-down events and show the effect on ranking for the affected queries.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "A Larkspur customer asks how long a refund takes. The assistant answers with a number of business days that differs from the handbook, and the hallucination grader marked the answer grounded. How do you work out what failed?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Expecting the relevance grader to recover chunks retrieval never returned",
+      "Prompting the generator to answer based upon its own knowledge",
+      "Folding rated answers into the index without dates or source chunks"
+    ],
     "lessons": [
       "reliability-feedback-loops-and-diversity-overview",
       "reliable-rag-relevance-checks-hallucination-checks-source-highlighting",
@@ -1604,7 +1732,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Follow-up test: write 15 three-turn conversations and compare retrieval hit rate on turns two and three with and without history-aware query rewriting.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "After a refactor, Larkspur's assistant answers first questions well, but follow-ups like \"How long do I have?\" now cite billing chunks. Nothing in the retriever changed. How do you find the cause?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Retrieving on the literal follow-up question without a standalone rewrite",
+      "Adding summary memory to chats that rarely pass three turns",
+      "Passing an empty summary on every turn, wiping the running summary"
+    ],
     "lessons": [
       "conversation-memory-and-conversational-rag-overview",
       "why-llms-forget-classic-memory-classes",
@@ -1647,7 +1779,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Personal RAG: give your assistant semantic memory of user preferences and show that answers in a new thread use them.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "A Larkspur customer reports that the assistant greeted him as Dana and mentioned her annual business plan. How do you find out how one customer's memory reached another?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Letting the model fill in `user_id` as an ordinary tool argument",
+      "Trusting TTL expiry on `SqliteStore` without running a sweeper",
+      "Preloading facts with `store.search()` and no `limit=`"
+    ],
     "lessons": [
       "memory-and-state-overview",
       "cross-thread-memory-with-a-store",
@@ -1673,7 +1809,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Specialist retrievers: replace the single router from M30 with a supervisor over three specialist RAG agents and compare routing accuracy and cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support swarm sometimes takes a minute to fail. The trace shows billing and operations handing the same customer back and forth until LangGraph raises `GraphRecursionError`. What do you look at, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Switching to the specialist team on one judge score for one company",
+      "Letting a yes-or-no critic give the verdict instead of code",
+      "Putting a counter with an adding reducer in the shared `TeamState`"
+    ],
     "lessons": [
       "multi-agent-architectures-overview",
       "monolithic-vs-multi-agent-a-crew-from-scratch",
@@ -1699,7 +1839,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Parallel retrieval: run the sub-questions of a decomposed query as parallel agents and stream partial answers, then report the latency saved.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support assistant now answers each part of a compound question in a parallel branch. Since the change, some replies to \"refund, export and outage credits\" questions say nothing about credits, and the trace shows two synthesizer outputs for one request. What happened, and how do you fix it?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Relying on `recursion_limit` instead of a specialist-call cap to stop the controller",
+      "Having agents debate which of two retrieved refund policies is current",
+      "Joining parallel branches with separate edges instead of a list edge"
+    ],
     "lessons": [
       "collaboration-control-and-parallel-agents-overview",
       "blackboard-architectures",
@@ -1725,7 +1869,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Research team: build a supervisor with a RAG researcher, a web researcher and a writer that cites sources, then test it on edge cases (no results, conflicting sources, tool failure).",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support desk is built like the hotel system: a coordinator, a compliance checker over account-privacy rules, and a billing agent. A customer asked for the billing email of another company's account and got it. The trace shows the compliance checker never ran. How do you find out why, and how do you stop it happening again?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Routing by searching the coordinator's reply text for agent names",
+      "Sharing one `messages` key across parallel hotel branches with same-named tools",
+      "Assuming `USE_SANDBOX=true` runs commands in a sandbox rather than `LocalShellBackend`"
+    ],
     "lessons": [
       "multi-agent-applied-builds-and-deep-agents-overview",
       "hotel-system-environment-coordinator-reservation-agent-compliance",
@@ -1763,7 +1911,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Retriever over MCP: expose your Part VII retriever as an MCP tool and call it from an MCP client chatbot.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support bot connects to a filesystem server rooted at the project folder. Someone adds a second filesystem server rooted at `./handbook`. Now the bot says files it read yesterday “do not exist”. How do you find the cause?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Putting parameter limits in docstring `Args:` lines instead of the type",
+      "Connecting two servers whose tool names collide in `tool_to_session`",
+      "Relying on FastMCP's default host inside a Docker container"
+    ],
     "lessons": [
       "mcp-foundations-overview",
       "from-a-tool-calling-chatbot-to-mcp",
@@ -1807,12 +1959,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build single-server MCP projects with tools and resources",
-    "scope": "Course module M39. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "Course module M39. Plus about 3 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Two servers, one client: put your retriever and a web-search tool in separate MCP servers and route between them from one client.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's assistant moved from held sessions to `MultiServerMCPClient.get_tools()` to simplify the code. Since then the `handbook` server's in-memory embedding cache never hits, and p95 latency has doubled. What happened?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Returning an error dict instead of raising when a tool call fails",
+      "Loading every server in one `get_tools()` call, so one failure loses all",
+      "Load-balancing stateful Streamable HTTP without routing by `mcp-session-id`"
+    ],
     "lessons": [
       "building-mcp-servers-and-clients-overview",
       "single-server-mcp-with-resources",
@@ -1864,7 +2020,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Shared retrieval: connect the RAG-over-MCP server to two different clients (a LangGraph agent and Claude Desktop or a local agent) and compare answers.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's LangGraph support assistant loads the handbook server with `MultiServerMCPClient.get_tools()`. Latency per answer grows with the number of retrieval calls, and the server's startup log line appears once per call. What is happening, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Printing banners to stdout on a stdio server instead of stderr",
+      "Letting the model do the arithmetic while the servers only move cells",
+      "Trusting `similarity_score` from a squared-L2 collection as cosine"
+    ],
     "lessons": [
       "mcp-applications-and-rag-over-mcp-overview",
       "your-first-mcp-server-and-a-local-agent",
@@ -1887,12 +2047,16 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Describe agents with Agent Cards and exchange tasks and messages",
-    "scope": "Course module M41. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "Course module M41. Plus about 3 h of notebook work on GitHub.",
     "prerequisites": [],
     "deliverable": "Agent as a service: put your agentic RAG graph behind A2A and call it from an agent built in a different framework.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support desk agent calls the handbook agent over A2A, then passes the reply to a writer agent. Customers start getting answers that quote `context_id=` and `TaskStatus(`. Nothing errored. Where do you look?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Re-raising after setting a task to `failed`, leaking raw exception text",
+      "Reading `str(result)` from a Task instead of its status message parts",
+      "Routing to the document agent by keyword, so web questions misroute"
+    ],
     "lessons": [
       "a2a-agent-to-agent-protocol-overview",
       "a2a-basics-agent-cards-tasks-messages",
@@ -1917,7 +2081,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Global-question test: ask ten 'summarise / compare across the whole corpus' questions and compare flat RAG, RAPTOR and LightRAG.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's assistant says cancelled accounts lose data immediately, although the source passage describes a retention window. The retrieved summary omits that window. How do you debug it?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Quoting a condition from a summary without checking its source passages",
+      "Updating the source index but not the memory entries derived from it",
+      "Removing a withdrawn passage without recomputing the merged graph profiles"
+    ],
     "lessons": [
       "hierarchical-and-memory-augmented-retrieval-overview",
       "raptor-clustering-and-recursive-summarisation",
@@ -1941,7 +2109,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Domain KG: extract a graph from 20 documents in your domain, load it into Neo4j, and answer five multi-hop questions that vector RAG gets wrong.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's EU export plan disappears after a handbook update, although its passage still exists. How do you locate the failure?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Merging a node on name and bio instead of a stable key",
+      "Trusting a read-only prompt and `allow_dangerous_requests` to protect the database",
+      "Flattening a conditional sentence into an unconditional `SUPPORTS` edge"
+    ],
     "lessons": [
       "knowledge-graphs-with-neo4j-overview",
       "graph-fundamentals-and-cypher",
@@ -1968,7 +2140,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "GraphRAG vs RAPTOR vs hybrid: run the same global and multi-hop question set through each and write a one-page recommendation including indexing cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's cancellation answer reaches an export node but misses the retention condition. Where do you look first?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Trusting `max_context_length=4000` to cap the traversal's context",
+      "Reading the fixed citation confidence of 0.9 as a measured score",
+      "Quoting the configured 10000-token maximum as global search's cost"
+    ],
     "lessons": [
       "graphrag-techniques-overview",
       "concept-graph-traversal",
@@ -1993,7 +2169,11 @@ export const RAG_MODULES: CurriculumModule[] = [
     "deliverable": "Architecture review: write a two-page design document for your capstone that justifies each component against a simpler alternative.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support assistant moved from plain RAG to Self-RAG. Latency is several times higher, and “What happens if my server goes down?” still gets a wrong answer. What happened, and what do you change?",
-    "commonMistakes": [],
+    "commonMistakes": [
+      "Comparing designs by query-time calls while ignoring index-time LLM work",
+      "Judging retrieval and generation from one end-to-end correctness score",
+      "Adding Self-RAG to recover evidence that retrieval missed from the top k"
+    ],
     "lessons": [
       "agentic-rag-architectures-choosing-a-design-overview",
       "the-agentic-rag-architecture-map",
