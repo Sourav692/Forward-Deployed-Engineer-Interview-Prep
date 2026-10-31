@@ -10,6 +10,7 @@ test('labs may be framed by the site only, make no requests and are not indexed'
   const lab = await request.get(LAB)
   expect(lab.headers()['content-security-policy']).toContain("frame-ancestors 'self'")
   expect(lab.headers()['content-security-policy']).toContain("connect-src 'none'")
+  expect(lab.headers()['content-security-policy']).toContain('sandbox allow-scripts')
   expect(lab.headers()['x-robots-tag']).toBe('noindex')
   expect(await lab.text()).not.toContain('fonts.googleapis.com')
 })
@@ -26,6 +27,11 @@ test('a lesson frames its lab, sized to the lab with no inner scrollbar', async 
   expect(await frame.evaluate(() => document.documentElement.scrollHeight - window.innerHeight)).toBeLessThanOrEqual(2)
   // The sandbox keeps the lab off this origin, so it cannot read the learner's progress.
   expect(await frame.evaluate(() => { try { return String(localStorage.length) } catch { return 'blocked' } })).toBe('blocked')
+})
+
+test('a lab opened full screen is sandboxed too', async ({ page }) => {
+  await page.goto(LAB)
+  expect(await page.evaluate(() => { try { return String(localStorage.length) } catch { return 'blocked' } })).toBe('blocked')
 })
 
 test('a framed lab follows the site theme', async ({ page }) => {

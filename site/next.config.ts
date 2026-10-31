@@ -35,11 +35,12 @@ const CSP =
 
 /**
  * The RAG course labs (Phase 2, SEC-01) are static pages under /labs that lessons frame. They
- * may be framed by this origin only and make no requests (the theory import fails on any), and
- * lessons frame them with `sandbox="allow-scripts"`, so they cannot reach this origin's storage.
+ * may be framed by this origin only and make no requests (the theory import fails on any). The
+ * `sandbox allow-scripts` directive gives a lab an opaque origin however it is opened, framed
+ * or full screen, so its scripts can never read this origin's storage (the learner's progress).
  * Lessons need no change: `default-src 'self'` already lets them frame same-origin pages.
  */
-const LAB_CSP = CSP.replace("frame-ancestors 'none'", "frame-ancestors 'self'").replace("connect-src 'self'", "connect-src 'none'")
+const LAB_CSP = `${CSP.replace("frame-ancestors 'none'", "frame-ancestors 'self'").replace("connect-src 'self'", "connect-src 'none'")}; sandbox allow-scripts`
 
 const nextConfig: NextConfig = {
   async redirects() {

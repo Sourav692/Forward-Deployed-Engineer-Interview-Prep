@@ -16,12 +16,17 @@
   --color-muted: oklch(48% 0.010 75);
   --color-rule: oklch(85% 0.009 85);
   --color-rule-2: oklch(64% 0.010 80);
-  --color-accent: oklch(49% 0.130 152);
+  /* A step darker than the site's 49 %: labs set accent text on accent-tinted panels. */
+  --color-accent: oklch(45% 0.125 152);
   --color-accent-2: var(--color-accent);
+  --color-accent-wash: color-mix(in oklab, var(--color-accent) 14%, var(--color-paper));
   --color-accent-ink: oklch(98% 0.005 88);
   --color-focus: oklch(52% 0.135 152);
   --color-success: var(--color-accent);
+  --color-success-2: var(--color-accent);
   --color-error: oklch(52% 0.19 27);
+  --color-error-2: var(--color-error);
+  --color-node: var(--color-paper);
   --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-outlier: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -37,7 +42,7 @@ html.dark {
   --color-muted: oklch(70% 0.010 75);
   --color-rule: oklch(31% 0.009 85);
   --color-rule-2: oklch(52% 0.010 80);
-  --color-accent: oklch(62% 0.105 152);
+  --color-accent: oklch(67% 0.105 152);
   --color-accent-ink: oklch(15% 0.010 88);
   --color-focus: oklch(66% 0.11 152);
   --color-error: oklch(70% 0.15 27);
