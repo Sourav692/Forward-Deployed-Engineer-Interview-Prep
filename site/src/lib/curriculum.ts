@@ -329,7 +329,7 @@ export const MODULES: CurriculumModule[] = [
     // walkthrough and the path diagnostic this module once planned to add.
     status: 'ready',
     practiceMinutes: 30,
-    objective: 'Pick a path and know how to study each mode',
+    objective: 'Pick a path and know how each area of the site works',
     scope: 'Platform use only; no technical content',
     prerequisites: [],
     deliverable: 'Complete the path diagnostic → chosen path',
@@ -1520,7 +1520,7 @@ export const INTERVIEW_ROUNDS: InterviewRound[] = [
   {
     slug: 'coding',
     title: 'Coding',
-    summary: 'Working code under time, plus the backend and infrastructure questions asked around it.',
+    summary: 'The backend and infrastructure questions asked around working code. Timed coding problems are still being written.',
     format: '45 to 60 minutes, shared editor',
     tests: [
       'You clarify the input and edge cases before you type.',

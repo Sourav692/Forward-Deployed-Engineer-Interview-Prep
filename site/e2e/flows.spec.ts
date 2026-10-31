@@ -659,7 +659,7 @@ test('entry points: express lane, Frontier Lab hours, diagnostic links', async (
     await expect(page.getByRole('link', { name: 'Go straight to the final-week review' })).toHaveAttribute('href', '/interview/final-week')
   }
   await expect(page.getByRole('link', { name: 'Forward Deployed Engineer: Frontier Lab Loop' })).toBeVisible()
-  await expect(page.getByText(/Loop variant of the .+ path · about \d+ h/)).toBeVisible()
+  await expect(page.getByText(/Loop variant of the .+ path, about \d+ h/)).toBeVisible()
   await page.goto('/learn/orientation')
   await hydrated(page)
   // Sections start collapsed on narrow screens.

@@ -19,10 +19,10 @@ export const metadata: Metadata = {
 }
 
 const AREAS = [
-  { href: '/learn', title: 'Learn', note: 'The curriculum, by track and module.' },
+  { href: '/learn', title: 'Learn', note: 'The curriculum, by topic group, track and module.' },
   { href: '/design', title: 'Casebook', note: 'The casebook of worked system designs.' },
-  { href: '/practice', title: 'Practice', note: 'Worksheets, behavioural questions and mocks.' },
-  { href: '/interview', title: 'Interview', note: 'Final-week review and company prep.' },
+  { href: '/practice', title: 'Practice', note: 'Technical and behavioural worksheets, and the story bank.' },
+  { href: '/interview', title: 'Interview', note: 'The interview rounds, mock interviews and the final-week review.' },
 ]
 
 export default function NotFound() {

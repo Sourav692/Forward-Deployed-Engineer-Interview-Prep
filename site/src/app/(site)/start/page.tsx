@@ -8,7 +8,7 @@ import { PersonaCards } from '@/components/start/PersonaCards'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
 import Link from 'next/link'
 import { EditorialSection } from '@/components/editorial/EditorialSection'
-import { PERSONAS } from '@/lib/paths'
+import { PATHS } from '@/lib/paths'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { ExpressLane } from '@/components/start/ExpressLane'
@@ -34,7 +34,7 @@ export default function StartPage() {
   )
   const sections = [
     { href: '#diagnostic', label: 'Take the Diagnostic', count: '10 questions' },
-    { href: '#personas', label: 'Pick a starting point', count: `${PERSONAS.length} paths` },
+    { href: '#personas', label: 'Pick a starting point', count: `${PATHS.length} paths` },
     { href: '#how-it-works', label: 'How the site works', count: '4 areas' },
   ]
   // Editorial theme (editorial.css): the name and what a path does, the short ways out,
