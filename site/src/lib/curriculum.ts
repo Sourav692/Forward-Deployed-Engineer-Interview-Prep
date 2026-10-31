@@ -246,7 +246,7 @@ export const TRACKS: CurriculumTrack[] = [
     title: 'AI Systems Design',
     objective: 'Produce a structured 45–60 min design answer',
     forWhom: 'All',
-    prerequisites: ['llm-and-retrieval', 'production-ai', 'production-ai'],
+    prerequisites: ['llm-and-retrieval', 'agentic-systems', 'production-ai'],
     prerequisiteNote: 'T2–T4 (T4 can run in parallel)',
     required: 'yes',
     exitCompetencies: ['Run the 12-part framework within time and defend trade-offs'],

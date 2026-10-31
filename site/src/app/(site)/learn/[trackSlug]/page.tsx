@@ -53,10 +53,8 @@ export default async function TrackPage({ params }: { params: Promise<Params> })
   const track = getTrack((await params).trackSlug)
   if (!track) notFound()
 
-  const prereqTracks = track.prerequisites
-    .filter((s, i, all) => all.indexOf(s) === i)
-    .map((s) => getTrack(s))
-    .filter((t) => !!t)
+  // `check:curriculum` rejects unknown and repeated prerequisites.
+  const prereqTracks = track.prerequisites.map((s) => getTrack(s)).filter((t) => !!t)
 
   return (
     <>
