@@ -418,3 +418,7 @@
 .editorial-page .cb-group-card:not(.is-soon):is(:hover, :focus-within) { border-color: var(--color-ink); }
 .editorial-page .cb-group-card:hover .cb-entry-title a { text-decoration-color: var(--color-accent); }
 .editorial-page .cb-group-card.is-soon { background: var(--color-paper-2); border-style: dashed; }
+/* Interactive lab in a lesson (FE-06): a ruled card with the lab's name and an Open link. */
+.editorial-page .cb-lab-card { border: var(--rule-hair) solid var(--color-rule-2); background: var(--color-paper); padding: 1.25rem 1.5rem; }
+.editorial-page .cb-lab-card__title { margin-top: 0.25rem; font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; line-height: 1.25; color: var(--color-ink); }
+.editorial-page .cb-lab-card__lead { margin-top: 0.25rem; font-size: 0.875rem; color: var(--color-muted); }

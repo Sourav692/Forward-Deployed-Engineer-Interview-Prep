@@ -548,13 +548,13 @@ export function ReadingPanel({
                     ) : (
                       <div key={i} className="h-40 rounded-lg border border-dashed border-border" />
                     )
-                  ) : (
+                  ) : chunk.kind === 'html' ? (
                     <div
                       key={i}
                       className="prose reading"
                       dangerouslySetInnerHTML={{ __html: chunk.html }}
                     />
-                  ),
+                  ) : null,
                 )}
               </div>
             </section>

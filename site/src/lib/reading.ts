@@ -11,13 +11,26 @@ import { marked, type Links, type Token, type Tokens, type TokensList } from 'ma
  *  - at each `## ` heading, so a tab gets a table of contents and search can land on
  *    a section;
  *  - at each ```mermaid fence, which the page draws as a diagram instead of printing
- *    its source.
+ *    its source;
+ *  - at each ```lab fence (`src: /labs/…` and `title: …` lines, written by the RAG theory
+ *    import), which a lesson shows as a card that opens the lab. A fence whose src is not
+ *    under /labs/ stays a code block.
  *
  * Section ids are prefixed with the tab id, because all four tabs are in the DOM at
  * once and two of them can share a heading such as "Key Takeaways".
  */
 
-export type ReadingChunk = { kind: 'html'; html: string } | { kind: 'diagram'; code: string }
+export type ReadingChunk =
+  | { kind: 'html'; html: string }
+  | { kind: 'diagram'; code: string }
+  | { kind: 'lab'; src: string; title: string }
+
+/** A ```lab fence's lab, or null when it is not a well-formed link to a file under /labs/. */
+export function parseLabFence(code: string): { src: string; title: string } | null {
+  const src = code.match(/^src: (\/labs\/[\w./-]+\.html)$/m)?.[1]
+  const title = code.match(/^title: (.+)$/m)?.[1].trim()
+  return src && title && !src.includes('..') ? { src, title } : null
+}
 
 export type ReadingSection = {
   /** Anchor id, unique across the whole page. */
@@ -100,6 +113,12 @@ export function parseReading(markdown: string, idPrefix: string): ReadingDocumen
     if (token.type === 'code' && (token as Tokens.Code).lang?.trim() === 'mermaid') {
       flush()
       current.chunks.push({ kind: 'diagram', code: (token as Tokens.Code).text })
+      continue
+    }
+    const lab = token.type === 'code' && (token as Tokens.Code).lang?.trim() === 'lab' && parseLabFence((token as Tokens.Code).text)
+    if (lab) {
+      flush()
+      current.chunks.push({ kind: 'lab', ...lab })
       continue
     }
     pending.push(token)
