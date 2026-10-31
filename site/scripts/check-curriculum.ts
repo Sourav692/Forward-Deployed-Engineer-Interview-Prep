@@ -13,7 +13,7 @@
  * drop a heading or name a heading the source lacks.
  */
 import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
-import { INTERVIEW_ROUNDS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
+import { INTERVIEW_ROUNDS, LESSONS, MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { MODULE_HOMES, isLearnTrack } from '../src/lib/curriculum-href.ts'
 import { LEARN_STAGES } from '../src/lib/learn-stages.ts'
 import { REVIEWS, TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
@@ -217,6 +217,12 @@ for (const m of MODULES) {
 for (const [from, to] of Object.entries(RETIRED_MODULES)) {
   if (moduleBySlug.has(from)) fail(`RETIRED_MODULES key ${from} is still a module`)
   if (!moduleBySlug.has(to)) fail(`RETIRED_MODULES maps ${from} to ${to}, which is not a module`)
+}
+
+for (const [mod, oldTrack] of Object.entries(MOVED_MODULES)) {
+  if (!moduleBySlug.has(mod) && !(mod in RETIRED_MODULES)) fail(`MOVED_MODULES key ${mod} is neither a module nor retired`)
+  if (!TRACKS.some((t) => t.slug === oldTrack)) fail(`MOVED_MODULES maps ${mod} to ${oldTrack}, which is not a track`)
+  if (moduleBySlug.get(mod)?.track === oldTrack) fail(`MOVED_MODULES: ${mod} is still in ${oldTrack}`)
 }
 
 // The whole redirect map (ENH-15). A destination that another entry's source matches

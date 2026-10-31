@@ -1758,9 +1758,9 @@ export const RENAMED: Record<string, string | null> = {
 
 /**
  * Modules removed from the curriculum, keyed by slug, valued by the module that took over
- * their material (same track). next.config.ts redirects each module page there. Their
- * lessons keep `null` RENAMED entries for the slug guard, but emit no lesson redirect:
- * the module redirect covers them, and a second rule would only add a chain.
+ * their material (same track, unless MOVED_MODULES names the old one). next.config.ts
+ * redirects each module page there. Their lessons keep RENAMED entries for the slug guard,
+ * but emit no lesson redirect unless the module is in MOVED_MODULES.
  */
 export const RETIRED_MODULES: Record<string, string> = {
   // 2026-10-08: T7.3 and T7.4 merged into T7.2 The behavioural round; T7.5 had no lessons
@@ -1769,6 +1769,15 @@ export const RETIRED_MODULES: Record<string, string> = {
   'hiring-manager-round': 'building-the-story-bank',
   'executive-communication': 'telling-the-build-story',
 }
+
+/**
+ * Modules that left their track, live or retired: module slug -> the track it used to sit in
+ * (FE-14, AI Engineering integration). redirects.ts sends the old /learn/<track>/<module>
+ * URLs from there: the module page, each RENAMED lesson straight to its replacement, and any
+ * other lesson to the same lesson in the module's new track. A retired module listed here
+ * gets its lesson redirects too, which RETIRED_MODULES alone does not give.
+ */
+export const MOVED_MODULES: Record<string, string> = {}
 
 const DISCOVERY_WORKSHEETS = [
   'internal-knowledge-assistant',
