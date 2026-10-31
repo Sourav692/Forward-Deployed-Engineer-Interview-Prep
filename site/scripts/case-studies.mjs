@@ -106,56 +106,60 @@ const THEMES = THEME_GROUPS.map(([id, groups]) => {
 /**
  * Standalone cases, keyed by folder under `02_System_Design_Case_Studies/Standalone_Designs/`. `number`
  * orders them and is the case number from CASE_STUDY_INDEX.xlsx.
- * `files` are `[file, tabId]`, published as tabs; `archived` are `[file, label]`,
- * superseded versions that stay in the repo only: not published, not linked, not
- * searched. Every `.md` in the
- * folder must be in one list or the other, so a new file cannot silently go unpublished.
- * A file given as a repo-relative path (it contains `/`) is read from its canonical
- * location instead of the case folder, so a case reuses a worksheet or tutorial
- * without keeping a copy.
+ * Each case folder holds one subfolder per tab, named after the tab's label and
+ * numbered by its position (`1_Interview_Casebook/04_Interview_Casebook.md`), with any
+ * `_Part_N.md` files beside part 1. `files` are `[file, tabId]`, published as tabs, with
+ * `file` relative to the case folder; `archived` are `[file, label]`, superseded
+ * versions that stay in the repo only: not published, not linked, not searched. Every
+ * `.md` in the folder (subfolders included) must be in one list or the other, so a new
+ * file cannot silently go unpublished. A file given as a repo-relative path (it starts
+ * with a root folder such as `03_…/`) is read from its canonical location instead of
+ * the case folder, so a case reuses a worksheet or tutorial without keeping a copy.
  * A case's interactive worksheet twin is listed in RELATED_CASE (src/lib/editorial.ts).
  */
 const SYSTEM_DESIGN_WORKSHEETS = '03_Practice_Worksheets_and_Keys/System_Design_Worksheets'
 const LONG_FORM_V1 = '02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1'
 /** Worksheet and key come from the System Design worksheets; only the V2 tutorial is local. */
-const worksheetSet = (slug) => [
+const worksheetSet = (slug, num) => [
   [`${SYSTEM_DESIGN_WORKSHEETS}/${slug}.md`, 'worksheet'],
   [`${SYSTEM_DESIGN_WORKSHEETS}/answer_keys/${slug}_answer_key.md`, 'answer-key'],
-  ['3_Tutorial_V2.md', 'tutorial-v2'],
+  [`3_Tutorial/${num}_Tutorial.md`, 'tutorial-v2'],
 ]
 const v1Archive = (chapter) => [[`${LONG_FORM_V1}/${chapter}.md`, 'Tutorial V1 (superseded)']]
-const isRepoPath = (file) => file.includes('/')
-const guide = (file) => [[file, 'guide']]
+/** Repo roots are `00_` to `99_`; a case's own tab folders start with one digit (`1_…`). */
+const isRepoPath = (file) => /^\d{2}_[^/]+\//.test(file)
+/** A case that is one document: the Interview Guide tab, in `1_Interview_Guide/`. */
+const guide = (prefix) => [[`1_Interview_Guide/${prefix}_Interview_Guide.md`, 'guide']]
 
 const STANDALONE = [
   { folder: '04_Recruiting_Platform', theme: 'standalone-designs', number: 4, title: 'AI-Powered Recruiting Platform',
-    files: [['1_Handbook_Casebook_Recruiting_Platform.md', 'casebook'], ['2_FDE_Recruiting_Platform_Design_long.md', 'full-design']] },
+    files: [['1_Interview_Casebook/04_Interview_Casebook.md', 'casebook'], ['2_Reference_Design/04_Reference_Design.md', 'full-design']] },
   { folder: '14_Travel_Agent_Worked_Example', theme: 'standalone-designs', number: 14, title: 'Travel Agent: the 12-Part Framework Worked Through',
-    files: [['1_Handbook_Worked_Example_Travel_Agent.md', 'worked-example'], ['2_FDE_System_Design_Overview_source.md', 'framework-overview']] },
+    files: [['1_Worked_Example/14_Worked_Example.md', 'worked-example'], ['2_12_Part_Framework/14_12_Part_Framework.md', 'framework-overview']] },
   { folder: '19_Air_Gapped_AI_System', theme: 'standalone-designs', number: 19, title: 'AI System for an Air-Gapped Environment',
-    files: worksheetSet('07_ai_system_for_an_air_gapped_environment'),
+    files: worksheetSet('07_ai_system_for_an_air_gapped_environment', 19),
     archived: v1Archive('chapter-7-ai-system-for-an-air-gapped-environment-tutorial') },
   { folder: '23_Reliable_Workflow_Orchestration', theme: 'standalone-designs', number: 23, title: 'Reliable Workflow Orchestration System',
-    files: worksheetSet('13_reliable_workflow_orchestration_system'),
+    files: worksheetSet('13_reliable_workflow_orchestration_system', 23),
     archived: v1Archive('chapter-13-reliable-workflow-orchestration-system-tutorial') },
   { folder: '25_Configurable_Platform_Customer_Workflows', theme: 'standalone-designs', number: 25, title: 'Configurable Platform for Customer-Specific Workflows',
-    files: worksheetSet('17_configurable_platform_customer_specific_workflows'),
+    files: worksheetSet('17_configurable_platform_customer_specific_workflows', 25),
     archived: v1Archive('chapter-17-configurable-platform-customer-specific-workflows-tutorial') },
   { folder: '26_Enterprise_Chatbot_Platform', theme: 'standalone-designs', number: 26, title: 'Enterprise Chatbot Platform',
-    files: worksheetSet('21_enterprise_chatbot_platform'),
+    files: worksheetSet('21_enterprise_chatbot_platform', 26),
     archived: [
       ...v1Archive('chapter-21-enterprise-chatbot-platform-tutorial-condensed'),
       [`${LONG_FORM_V1}/chapter-21-enterprise-chatbot-platform-tutorial.md`, 'Original uncondensed tutorial'],
     ] },
   { folder: '80_Self_Adapting_Agent', theme: 'standalone-designs', number: 80, title: 'Agent That Adapts to New Tasks',
-    files: [['80_Self_Adapting_Agent.md', 'guide'], ['self_adapting_agent_fde_interview_template.md', 'interview-template']] },
-  { folder: '98_Personal_Assistant_With_Memory', theme: 'standalone-designs', number: 98, title: 'Personal Assistant That Remembers You', files: guide('98_Personal_Assistant_With_Memory.md') },
-  { folder: '100_Production_LLM_Gateway', theme: 'standalone-designs', number: 100, title: 'Production LLM Gateway', files: guide('100_Production_LLM_Gateway.md') },
-  { folder: '60_Prioritize_AI_Use_Cases', theme: 'judgement-and-decomposition', number: 60, title: 'Prioritise AI Use Cases for a Large Enterprise', files: guide('60_Prioritize_AI_Use_Cases.md') },
-  { folder: '61_Scale_Prototype_To_Production', theme: 'judgement-and-decomposition', number: 61, title: 'Scale a Prototype from 100 to 100,000 Users', files: guide('61_Scale_Prototype_To_Production.md') },
-  { folder: '62_Build_When_Customer_Data_Is_Poor', theme: 'judgement-and-decomposition', number: 62, title: 'Build When the Customer\u2019s Data Is Poor', files: guide('62_Build_When_Customer_Data_Is_Poor.md') },
+    files: [['1_Interview_Guide/80_Interview_Guide.md', 'guide'], ['2_Answer_Template/80_Answer_Template.md', 'interview-template']] },
+  { folder: '98_Personal_Assistant_With_Memory', theme: 'standalone-designs', number: 98, title: 'Personal Assistant That Remembers You', files: guide('98') },
+  { folder: '100_Production_LLM_Gateway', theme: 'standalone-designs', number: 100, title: 'Production LLM Gateway', files: guide('100') },
+  { folder: '60_Prioritize_AI_Use_Cases', theme: 'judgement-and-decomposition', number: 60, title: 'Prioritise AI Use Cases for a Large Enterprise', files: guide('60') },
+  { folder: '61_Scale_Prototype_To_Production', theme: 'judgement-and-decomposition', number: 61, title: 'Scale a Prototype from 100 to 100,000 Users', files: guide('61') },
+  { folder: '62_Build_When_Customer_Data_Is_Poor', theme: 'judgement-and-decomposition', number: 62, title: 'Build When the Customer\u2019s Data Is Poor', files: guide('62') },
   { folder: 'Decomposition_Classics_67_68_69', theme: 'judgement-and-decomposition', number: 67, title: 'Decomposition Classics: 911, Bank Fraud, Medication Errors',
-    files: guide('Decomposition_Classics_67_68_69.md') },
+    files: guide('Decomposition_Classics_67_68_69') },
 ]
 
 const isPublished = (group) => PUBLISHED === null || PUBLISHED.includes(group)
@@ -258,7 +262,7 @@ async function collectCases(root, standaloneRoot, repoRoot) {
   for (const c of STANDALONE) {
     if (!THEMES.some((t) => t.id === c.theme)) throw new Error(`${c.folder}: unknown theme ${c.theme}`)
     const dir = join(standaloneRoot, c.folder)
-    const files = (await readdir(dir)).filter((f) => f.endsWith('.md'))
+    const files = (await readdir(dir, { recursive: true })).filter((f) => f.endsWith('.md')).map((f) => f.split('\\').join('/'))
     const declared = [...c.files, ...(c.archived ?? [])].map(([f]) => f)
     const declaredFiles = declared.filter((f) => !isRepoPath(f))
     const missing = [

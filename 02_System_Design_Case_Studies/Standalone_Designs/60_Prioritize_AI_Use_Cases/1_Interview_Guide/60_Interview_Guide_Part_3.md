@@ -28,7 +28,7 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 | "Two items tie. How do you break it?" | Platform reuse, then evaluability. The one that makes later items cheaper, or can be proven faster, goes first |
 | "What if a business unit builds its own anyway?" | Offer the gateway and eval harness as the cheaper path. Shadow AI is a symptom of a slow front door, not a policy problem |
 | "What if leadership changes the priorities mid-programme?" | The register absorbs it. Re-score with new weights in public, and show what moves and what it costs to switch |
-| "How do you prioritise with no data at all?" | Score data readiness honestly, fund discovery for the top value items, and let wave 0 produce the data. [#62](../62_Build_When_Customer_Data_Is_Poor/) covers the playbook |
+| "How do you prioritise with no data at all?" | Score data readiness honestly, fund discovery for the top value items, and let wave 0 produce the data. [#62](../../62_Build_When_Customer_Data_Is_Poor/) covers the playbook |
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
@@ -118,7 +118,7 @@ All paths are relative to the repository root.
 | 10 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/05_Cross_Team_Collaboration.md`: two-phase delivery and narrowing the first build |
 | 2, 3 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/02_End_To_End_AI_Delivery_Six_Stages.md`: anchor on business value and quantified impact |
 
-Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md) for gate mechanics; [G13 Evaluation and Release Gating](../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) for the eval harness; [#61 Scale a Prototype to Production](../61_Scale_Prototype_To_Production/) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](../62_Build_When_Customer_Data_Is_Poor/) for items blocked on data readiness; [Decomposition Classics #67–#69](../Decomposition_Classics_67_68_69/) for decomposing a single chosen use case; [#100 Production LLM Gateway](../100_Production_LLM_Gateway/) for the gateway enabler.
+Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](../../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md) for gate mechanics; [G13 Evaluation and Release Gating](../../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) for the eval harness; [#61 Scale a Prototype to Production](../../61_Scale_Prototype_To_Production/) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](../../62_Build_When_Customer_Data_Is_Poor/) for items blocked on data readiness; [Decomposition Classics #67–#69](../../Decomposition_Classics_67_68_69/) for decomposing a single chosen use case; [#100 Production LLM Gateway](../../100_Production_LLM_Gateway/) for the gateway enabler.
 
 Sections 2, 3 (the card), 4 (the gates table), 5 to 13, 14 (script, spoken answer and follow-ups apart from the first) and 15 are own construction. They were built for this page from the sources' arguments and are not source material. The repo has no worked portfolio-prioritisation case.
 
