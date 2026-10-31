@@ -5,7 +5,6 @@ import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { EditorialSection } from '@/components/editorial/EditorialSection'
 import { PageHead } from '@/components/editorial/PageHead'
 import { JsonLd } from '@/components/JsonLd'
-import { INTERVIEW_ROUNDS } from '@/lib/curriculum'
 import { roundHref } from '@/lib/curriculum-href'
 import { lessonRow, liveRounds, moduleRow, practiseCount, type Row } from '@/lib/interview-rounds'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
@@ -37,7 +36,6 @@ export default async function RoundPage({ params }: { params: Promise<Params> })
   const round = getRound((await params).roundSlug)
   if (!round) notFound()
 
-  const number = INTERVIEW_ROUNDS.indexOf(round) + 1
   const live = liveRounds()
   const at = live.indexOf(round)
   const prev = live[at - 1]
@@ -61,7 +59,7 @@ export default async function RoundPage({ params }: { params: Promise<Params> })
         ])}
       />
       <Breadcrumbs items={[{ label: 'Interview', href: '/interview' }, { label: round.title }]} />
-      <PageHead tag={`Round ${number}`} title={round.title} standfirst={round.summary} facts={facts} />
+      <PageHead tag="Interview round" title={round.title} standfirst={round.summary} facts={facts} />
 
       <EditorialSection id="tests" title="What It Tests" description="A strong answer shows all three.">
         <ol className="cb-rows">

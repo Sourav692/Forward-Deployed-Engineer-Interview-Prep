@@ -13,12 +13,10 @@ import { GroupProgress } from './ProgressIslands'
  */
 export function GroupCard({
   group,
-  number,
   tracks,
   minutes,
 }: {
   group: LearnGroup
-  number: number
   tracks: CurriculumTrack[]
   minutes: Record<string, number>
 }) {
@@ -28,7 +26,6 @@ export function GroupCard({
   return (
     <article className={cx('cb-group-card relative flex w-full flex-col', !live && 'is-soon')}>
       <div className="flex min-h-6 flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold tabular-nums text-subtle">{String(number).padStart(2, '0')}</span>
         {!live && <Tag>Coming soon</Tag>}
       </div>
       <h2 className="cb-entry-title mt-3">

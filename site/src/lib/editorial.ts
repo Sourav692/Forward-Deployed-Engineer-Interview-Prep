@@ -143,7 +143,7 @@ export const UTILITY_NAV = [{ id: 'progress', label: 'Progress', href: '/progres
  * every width. "Report an issue" follows these.
  */
 export const FOOTER_NAV = [
-  { id: 'guide', label: 'How this works', href: '/start#how-it-works', match: [] },
+  { id: 'guide', label: 'How the site works', href: '/start#how-it-works', match: [] },
   { id: 'glossary', label: 'Glossary', href: '/glossary', match: ['/glossary'] },
   { id: 'library', label: 'Library', href: '/library', match: ['/library'] },
   { id: 'credits', label: 'Credits', href: '/library/credits', match: ['/library/credits'] },
@@ -399,7 +399,7 @@ export const TABS: Record<string, { label: string; purpose: string; short?: stri
   },
   guide: {
     label: 'Interview Guide',
-    purpose: 'The complete case in one document, with no companion tabs.',
+    purpose: 'Start here. The complete case, from the prompt to the likely follow-ups.',
   },
   'interview-template': {
     label: 'Answer Template',
@@ -895,6 +895,9 @@ export const LEVELS: Record<string, Level> = {
   'judgement-and-decomposition/build-when-customer-data-is-poor': 'core',
   'judgement-and-decomposition/decomposition-classics-67-68-69': 'foundation',
 }
+
+/** The level a case or worksheet page shows: its `LEVELS` entry, so the page matches its listing card, else the family difficulty. */
+export const itemLevel = (key: string, fallback: string) => (LEVELS[key] ? LEVEL_LABEL[LEVELS[key]] : fallback)
 
 /**
  * Content-type qualifier appended where a scenario name is not unique across the site —

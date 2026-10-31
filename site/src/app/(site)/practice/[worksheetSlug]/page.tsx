@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { familyMeta, getAllScenarios, getRelated, getScenario } from '@/lib/content'
-import { MODES } from '@/lib/editorial'
+import { MODES, itemLevel } from '@/lib/editorial'
 import { ScenarioView } from '@/components/ScenarioView'
 import { BeforeYouStart, WhereNext } from '@/components/PageIntro'
 import { PageHead } from '@/components/editorial/PageHead'
@@ -82,8 +82,8 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
         title={scenario.title}
         facts={[
           { term: 'Kind', value: MODES[meta.mode].label },
-          { term: 'Level', value: meta.difficulty },
-          ...(ref.minutes ? [{ term: 'Time', value: `${ref.minutes} min` }] : []),
+          { term: 'Level', value: itemLevel(`${ref.trackId}/${ref.slug}`, meta.difficulty) },
+          ...(ref.minutes ? [{ term: 'Reading time', value: `${ref.minutes} min` }] : []),
           ...(meta.personalisation ? [{ term: 'Progress', value: 'Track each answer as you practise' }] : []),
         ]}
         updated={ref.updated}

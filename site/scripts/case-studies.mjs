@@ -358,7 +358,8 @@ export async function syncCaseStudies({ repoRoot, outDir, sourceUrls }) {
         const file = tab.src ?? join(c.dir, tab.file)
         const markdown = stripHeadingCodes(unlinkRepoLinks(rewriteLinks(sources.get(tab.id), file, ctx)))
         await writeFile(join(outBase, `${tab.id}.md`), markdown)
-        minutes += readingMinutes(markdown)
+        // The Introduction is the case's landing page; the page leaves it out of the reading time, so the listing does too.
+        if (tab.id !== 'intro') minutes += readingMinutes(markdown)
       }
       scenarios.push({
         slug: c.slug,

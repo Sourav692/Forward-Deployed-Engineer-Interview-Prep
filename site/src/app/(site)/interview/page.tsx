@@ -30,12 +30,15 @@ export const metadata: Metadata = pageMetadata({
 })
 
 const FINAL_WEEK = 'final-week'
+const MOCKS = 'mock-interviews'
 
 export default async function InterviewPage() {
   const counts = await siteCounts()
   const finalWeek = curriculumModules(INTERVIEW_TRACK).find((m) => m.slug === FINAL_WEEK)
   if (!finalWeek) throw new Error(`No interview module "${FINAL_WEEK}"`)
   const finalWeekLessons = readingList(finalWeek).main
+  const mocks = curriculumModules(INTERVIEW_TRACK).find((m) => m.slug === MOCKS)
+  if (!mocks) throw new Error(`No interview module "${MOCKS}"`)
 
   // Hallmark, Editorial theme (editorial.css): the name and what the area is for, then
   // the rounds as square bordered cards (the Learn group card piece), then the final week.
@@ -55,6 +58,10 @@ export default async function InterviewPage() {
             {liveRounds().length} of {INTERVIEW_ROUNDS.length} rounds are ready. The technical worksheets are also in{' '}
             <Link href="/practice" className="underline underline-offset-2">
               Practice
+            </Link>
+            , and every mock interview is in{' '}
+            <Link href={curriculumHref(INTERVIEW_TRACK, MOCKS)} className="underline underline-offset-2">
+              {mocks.title}
             </Link>
             .
           </p>
@@ -83,9 +90,9 @@ export default async function InterviewPage() {
         description="In the order most loops run them. Companies drop or merge rounds, so check your loop and start with the rounds you will face."
       >
         <ul aria-label="Interview rounds" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {INTERVIEW_ROUNDS.map((round, i) => (
+          {INTERVIEW_ROUNDS.map((round) => (
             <li key={round.slug} className="flex">
-              <RoundCard round={round} number={i + 1} />
+              <RoundCard round={round} />
             </li>
           ))}
         </ul>
@@ -132,13 +139,12 @@ export default async function InterviewPage() {
  * A live round's title opens its page, stretched over the card so the card is one tab
  * stop. A planned round shows its topics and has no link.
  */
-function RoundCard({ round, number }: { round: InterviewRound; number: number }) {
+function RoundCard({ round }: { round: InterviewRound }) {
   const live = !round.planned
   const practise = practiseCount(round)
   return (
     <article className={cx('cb-group-card relative flex w-full flex-col', !live && 'is-soon')}>
       <div className="flex min-h-6 flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold tabular-nums text-subtle">Round {String(number).padStart(2, '0')}</span>
         {!live && <Tag>Coming soon</Tag>}
       </div>
       <h2 className="cb-entry-title mt-3">

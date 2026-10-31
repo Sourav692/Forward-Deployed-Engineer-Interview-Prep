@@ -78,7 +78,7 @@ export default async function DesignPage() {
         <h2 className="text-[1.75rem] leading-none">Need a structure for your answer?</h2>
         <div className="mt-4 lg:mt-0">
           <p className="max-w-[60ch] text-base">
-            The AI Systems Design track in Learn teaches the framework, whiteboard timing and reusable patterns. Its
+            The AI System Design track in Learn teaches the framework, whiteboard timing and reusable patterns. Its
             Classic AI designs module takes nine systems through that method in short lessons, each with an interactive
             explorer. Return here for the complete worked designs.
           </p>

@@ -6,7 +6,7 @@ import { cache } from 'react'
 import { marked } from 'marked'
 import { getCheckpoint } from './checkpoints'
 import { LESSONS, MODULES, TRACKS } from './curriculum'
-import { INTERVIEW_TRACK, MODULE_HOMES, curriculumHref, isLearnTrack } from './curriculum-href'
+import { INTERVIEW_TRACK, LISTED_ELSEWHERE, MODULE_HOMES, curriculumHref, isLearnTrack } from './curriculum-href'
 import { groupHref, groupOfTrack } from './learn-stages'
 import type {
   CurriculumLesson,
@@ -121,6 +121,16 @@ export function getSection(mod: CurriculumModule): CurriculumSection | undefined
 
 export const trackModules = (track: CurriculumTrack): CurriculumModule[] =>
   track.sections.flatMap((s) => s.modules.map((slug) => getModuleBySlug(slug)).filter((m): m is CurriculumModule => !!m))
+
+/**
+ * A track's modules as previous and next see them: none listed elsewhere, and no Coming
+ * soon or On hold module except the open one, so a sequence never leads to an empty page
+ * (audit check PQ-17).
+ */
+export const sequenceModules = (track: CurriculumTrack, current: string): CurriculumModule[] =>
+  trackModules(track).filter(
+    (m) => !LISTED_ELSEWHERE.has(m.slug) && (m.slug === current || (m.status !== 'coming-soon' && m.status !== 'on-hold')),
+  )
 
 export const getCurriculumLesson = (slug: string): CurriculumLesson | undefined => LESSONS.find((l) => l.slug === slug)
 
