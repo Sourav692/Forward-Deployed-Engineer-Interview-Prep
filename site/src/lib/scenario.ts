@@ -162,8 +162,8 @@ export type CaseDocument = {
  */
 export const hasChapters = (study: CaseStudy) => study.docs[0]?.tab === 'intro'
 
-/** Tabs a chapters case marks optional for interview preparation. */
-const OPTIONAL_TABS = new Set(['full-pack'])
+/** Tabs a chapters case marks optional for interview preparation: the scenario packs' Full Design and the recruiting case's Reference Design. */
+const OPTIONAL_TABS = new Set(['full-pack', 'full-design'])
 
 /**
  * Folds a case's part tabs (`<id>-part-<n>`) into documents. Part ids stay the tab ids
