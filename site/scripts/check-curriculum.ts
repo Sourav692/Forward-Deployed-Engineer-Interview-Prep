@@ -98,6 +98,7 @@ const moduleBySlug = new Map(MODULES.map((m) => [m.slug, m]))
 const lessonBySlug = new Map(LESSONS.map((l) => [l.slug, l]))
 for (const t of TRACKS) {
   for (const p of t.prerequisites) if (!trackBySlug.has(p)) fail(`track ${t.code}: unknown prerequisite "${p}"`)
+  if (new Set(t.prerequisites).size !== t.prerequisites.length) fail(`track ${t.code}: a prerequisite is listed twice`)
   for (const s of t.sections) {
     for (const m of s.modules) {
       const mod = moduleBySlug.get(m)
@@ -110,6 +111,7 @@ const listedInSections = new Set(TRACKS.flatMap((t) => t.sections.flatMap((s) =>
 for (const m of MODULES) {
   if (!listedInSections.has(m.slug) && !(`${m.track}/${m.slug}` in MODULE_HOMES)) fail(`module ${m.code} is in no section`)
   for (const p of m.prerequisites) if (!moduleBySlug.has(p)) fail(`module ${m.code}: unknown prerequisite "${p}"`)
+  if (new Set(m.prerequisites).size !== m.prerequisites.length) fail(`module ${m.code}: a prerequisite is listed twice`)
   for (const l of [...m.lessons, ...m.seeAlso]) if (!lessonBySlug.has(l)) fail(`module ${m.code}: unknown lesson "${l}"`)
   // A reading plan must list the module's lessons exactly, in order, or a lesson drops off the page.
   if (m.groups && m.groups.flatMap((g) => g.lessons).join() !== m.lessons.join()) fail(`module ${m.code}: groups do not list its lessons exactly, in order`)
