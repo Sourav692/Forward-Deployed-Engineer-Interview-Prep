@@ -147,17 +147,28 @@ export type CurriculumLesson = {
 }
 
 /**
- * An interview topic hub (DATA-07), shown at `/interview/hubs/<slug>`. A hub is an index
- * onto practice that already exists: it lists lessons and modules by slug, so their
- * titles and URLs come from the curriculum and never drift. It holds no question text.
+ * One round of a real interview loop (plan Part 4), shown at `/interview/rounds/<slug>`.
+ * A round is an index onto pages that already exist: it lists lessons and modules by
+ * slug, so their titles and URLs come from the curriculum and never drift. Every
+ * interview page belongs to one round. A round with no content yet sets `planned` and
+ * has no page: /interview shows it as a Coming soon card.
  */
-export type InterviewHub = {
+export type InterviewRound = {
   /** URL id. Never change one after it ships. */
   slug: string
   title: string
+  /** What the interviewer is testing, in one sentence. */
   summary: string
-  /** Published lesson slugs to practise with, interview-question lessons first. */
-  practice: string[]
-  /** Module slugs to study when practice shows a gap. */
-  modules: string[]
+  /** How the round usually runs. */
+  format: string
+  /** Three things a strong answer shows. */
+  tests: string[]
+  /** Learn module slugs to study first. */
+  study: string[]
+  /** Published lesson slugs to practise with, in titled groups. */
+  practise: { title: string; lessons: string[] }[]
+  /** Published lesson slugs of the timed mock interviews for this round. */
+  mocks: string[]
+  /** The topics planned for a round with no content yet. */
+  planned?: string
 }

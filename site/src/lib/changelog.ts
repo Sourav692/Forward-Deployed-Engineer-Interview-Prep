@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-10-31',
+    title: 'Interview by round',
+    summary:
+      'The interview area now follows the rounds of a real loop, from the recruiter screen to the demo or take-home. Each round says what the interviewer tests and lists what to study in Learn, what to practise and the mock interview to run. The five topic hubs became rounds, and their old links redirect.',
+  },
+  {
     date: '2026-10-12',
     title: 'Release B: level calibration, client simulations and rights',
     summary:

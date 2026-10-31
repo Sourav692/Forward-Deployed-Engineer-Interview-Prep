@@ -195,16 +195,23 @@ test('mock flow: score a full round → pass rule applied → result survives re
   await expect(page.getByText(/^Weakest dimension:/)).toContainText('Security')
 })
 
-test('interview hubs: /interview → hub → a practice lesson; unknown hubs 404', async ({ page }) => {
+test('interview rounds: /interview → round → a mock; planned and unknown rounds 404; old hubs redirect', async ({ page }) => {
   await page.goto('/interview')
-  await page.getByRole('region', { name: 'Interview Topic Hubs' }).getByRole('link', { name: /^AI Systems Design/ }).click()
-  await expect(page).toHaveURL('/interview/hubs/ai-systems-design')
-  await expect(page.getByRole('heading', { level: 1, name: 'AI Systems Design' })).toBeVisible()
+  const rounds = page.getByRole('list', { name: 'Interview rounds' })
+  await expect(rounds.getByRole('heading', { level: 2 })).toHaveCount(8)
+  await expect(rounds.getByRole('article').filter({ hasText: 'Coming soon' }).getByRole('link')).toHaveCount(0)
 
-  await page.getByRole('region', { name: 'Practise' }).getByRole('link', { name: /Internal Knowledge Assistant Mock Interview/ }).click()
+  await rounds.getByRole('link', { name: 'AI System Design' }).click()
+  await expect(page).toHaveURL('/interview/rounds/ai-system-design')
+  await expect(page.getByRole('heading', { level: 1, name: 'AI System Design' })).toBeVisible()
+
+  await page.getByRole('region', { name: 'Mock Interview' }).getByRole('link', { name: /Internal Knowledge Assistant Mock Interview/ }).click()
   await expect(page).toHaveURL(MOCK_LESSON)
 
-  expect((await page.request.get('/interview/hubs/no-such-hub')).status()).toBe(404)
+  expect((await page.request.get('/interview/rounds/ai-assisted-coding')).status()).toBe(404)
+  expect((await page.request.get('/interview/rounds/no-such-round')).status()).toBe(404)
+  await page.goto('/interview/hubs/ai-systems-design')
+  await expect(page).toHaveURL('/interview/rounds/ai-system-design')
 })
 
 test('progress: empty first, then readiness and the revision queue follow what the learner does', async ({ page }) => {

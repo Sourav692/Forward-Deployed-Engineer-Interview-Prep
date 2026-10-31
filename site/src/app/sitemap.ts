@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
 import { getAllScenarios, getStoryBank } from '@/lib/content'
 import { CHANGELOG } from '@/lib/changelog'
 import { STORY_BANK } from '@/lib/editorial'
-import { INTERVIEW_HUBS } from '@/lib/curriculum'
 import type { CurriculumModule } from '@/lib/curriculum-types'
-import { hubHref } from '@/lib/curriculum-href'
+import { roundHref } from '@/lib/curriculum-href'
+import { liveRounds } from '@/lib/interview-rounds'
 import { getLearnManifest, getTracks, learnHref, learnTracks, trackModules } from '@/lib/learn'
 import { groupHref, liveGroups } from '@/lib/learn-stages'
 import { PATHS } from '@/lib/paths'
@@ -18,7 +18,7 @@ import { absoluteUrl } from '@/lib/seo'
  * too. So are `/company-prep` and planned modules, which have no content yet.
  *
  * Every entry has `lastModified`: a page's own source date from the sync (`updated`),
- * the newest date among its items for an index (module, track, path, hub, area), and the
+ * the newest date among its items for an index (module, track, path, round, area), and the
  * newest changelog date for a page with no source of its own.
  */
 
@@ -54,8 +54,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Coming soon groups have no page, so only live groups are listed.
   for (const g of liveGroups()) add(groupHref(g.slug), newest(g.tracks.map((t) => dated.get(learnHref.track(t)))))
   add('/learn', newest(learnTracks().map((t) => dated.get(learnHref.track(t.slug)))))
-  for (const hub of INTERVIEW_HUBS) {
-    add(hubHref(hub.slug), newest([...hub.practice.map((s) => lessonDate.get(s)), ...hub.modules.map((s) => moduleDate.get(s))]))
+  // Planned rounds have no page, so only live rounds are listed.
+  for (const r of liveRounds()) {
+    const lessons = [...r.practise.flatMap((g) => g.lessons), ...r.mocks]
+    add(roundHref(r.slug), newest([...lessons.map((s) => lessonDate.get(s)), ...r.study.map((s) => moduleDate.get(s))]))
   }
   for (const path of PATHS) add(`/start/paths/${path.id}`, newest(Object.keys(path.moduleFlags).map((s) => moduleDate.get(s))))
   add('/start', newest([...moduleDate.values()]))
