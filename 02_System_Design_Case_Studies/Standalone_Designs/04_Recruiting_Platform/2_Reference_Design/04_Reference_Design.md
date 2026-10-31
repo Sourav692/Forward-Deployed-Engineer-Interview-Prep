@@ -8,7 +8,7 @@ The prompt: build a recruiting platform where AI supports the recruiter at every
 
 ---
 
-## 1 · Define the problem space
+## 1. Define the problem space
 
 **From first resume to final hire.**
 
@@ -46,7 +46,7 @@ Below are the clarifying questions, with the answers this case takes as given. I
 
 ---
 
-## 2 · High-level architecture
+## 2. High-level architecture
 
 **Two intake lanes that merge into a single ranking pipeline.**
 
@@ -93,7 +93,7 @@ Think of structured extraction as the line between documents and data. On one si
 
 ---
 
-## 3 · Step-by-step request flow
+## 3. Step-by-step request flow
 
 **How a job posting becomes a booked interview.**
 
@@ -110,7 +110,7 @@ Think of structured extraction as the line between documents and data. On one si
 
 ---
 
-## 4 · Explainable candidate ranking
+## 4. Explainable candidate ranking
 
 **Weighted signals you can inspect, not a hidden pass or fail.**
 
@@ -120,7 +120,7 @@ Here is a weighting I would open with. It is my own starting point, not an indus
 
 ---
 
-## 5 · Major components
+## 5. Major components
 
 **Sixteen services, one job apiece.**
 
@@ -145,7 +145,7 @@ Here is a weighting I would open with. It is my own starting point, not an indus
 
 ---
 
-## 6 · AI-specific design considerations
+## 6. AI-specific design considerations
 
 **What interviewers are listening for.**
 
@@ -163,7 +163,7 @@ Here is a weighting I would open with. It is my own starting point, not an indus
 
 ---
 
-## 7 · Scalability considerations
+## 7. Scalability considerations
 
 **Keeping up with thousands of resumes an hour.**
 
@@ -183,7 +183,7 @@ When a popular posting brings a surge of applications, two things keep the syste
 
 ---
 
-## 8 · Security & fairness
+## 8. Security & fairness
 
 **Candidate data is sensitive, and hiring decisions have legal consequences.**
 
@@ -211,7 +211,7 @@ No AI ranking or score goes straight to a decision. A recruiter approves it or o
 
 ---
 
-## 9 · Tradeoffs
+## 9. Tradeoffs
 
 **Six choices, and the price of each.**
 
@@ -226,7 +226,7 @@ No AI ranking or score goes straight to a decision. A recruiter approves it or o
 
 ---
 
-## 10 · Common follow-up questions
+## 10. Common follow-up questions
 
 **Three questions that come up again and again.**
 
@@ -257,7 +257,7 @@ No AI ranking or score goes straight to a decision. A recruiter approves it or o
 
 ---
 
-## 11 · Final design summary
+## 11. Final design summary
 
 **AI across the whole workflow, with a person at the point of decision.**
 

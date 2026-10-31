@@ -18,11 +18,11 @@ A handbook is not a reading list. Learn the three principles and the four levels
 
 The material is written for a reader with Python and a little experience of an LLM API. It aims to take that reader from "what is RAG?" to designing, building, securing and narrating an enterprise agentic system. Three principles shape it.
 
-**Grounded in implementations.** Concepts point to working code in a companion course, pinned to one fixed revision. When a lesson says a check re-runs on every candidate, a function and a test exist to inspect. The Capstone build module explains how that companion revision is recorded.
+**Grounded in implementations.** Concepts point to working code in a companion course, pinned to one fixed revision. When a lesson says a check re-runs on every candidate, a function and a test exist to inspect. The [Build From a Pinned Revision](../T9.1_Capstone_Build/02_Build_From_a_Pinned_Revision.md) lesson explains how that companion revision is recorded.
 
 **Problem before solution.** Every lesson opens with the failure the concept prevents. A reader who understands the failure can rebuild the solution under pressure. A reader who memorised the solution cannot.
 
-**Honest about what is proven.** The source projects were built with a *coverage map*: for each claim, is it shown in code, or is it cheat-sheet knowledge? That discipline runs through every later track.
+**Honest about what is proven.** The projects behind the material were built with a *coverage map*: for each claim, is it shown in code, or is it cheat-sheet knowledge? That discipline runs through every later track.
 
 ## Climb Four Levels, Not One Long List
 
@@ -39,7 +39,7 @@ Finishing Level 1 means explaining RAG and agents from first principles and hold
 
 ## Read Every Lesson the Same Way
 
-Every source document follows one shape, so a reader always knows where they are. It opens with why the topic matters, then teaches the concept with diagrams, tables and code pointers. It closes with an interview lens, a pointer into the companion code, and a checkpoint.
+Each chapter of the handbook behind these lessons follows one shape, so a reader always knows where they are. It opens with why the topic matters, then teaches the concept with diagrams, tables and code pointers. It closes with an interview lens, a pointer into the companion code, and a checkpoint.
 
 Two of those closing parts deserve a word. The **interview lens** is kept on purpose. An interview is a compressed version of the real job: explain a design, defend its trade-offs, say what changes at ten times the scale. The sentences that carry an interview also carry a design review with a customer's security team.
 

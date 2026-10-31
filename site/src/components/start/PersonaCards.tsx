@@ -29,13 +29,13 @@ export function PersonaCards() {
         )
       })}
       {/* Loop variants get their own row, with hours, next to their base path (ON-06). The
-          line keeps its dot: the e2e suite reads "Loop variant of the … path · about N h". */}
+          e2e suite reads "Loop variant of the … path, about N h". */}
       {PATHS.filter((p) => p.variantOf).map((variant) => (
         <li key={variant.id} className="cb-row">
           <Link href={`/start/paths/${variant.id}`} className="cb-row-link">
             <span className="cb-row-title">{variant.title}</span>
             <span className="cb-row-facts">
-              Loop variant of the {getPathById(variant.variantOf!)?.title} path · about {variant.estHours} h
+              Loop variant of the {getPathById(variant.variantOf!)?.title} path, about {variant.estHours} h
             </span>
             <span className="cb-row-note">{variant.summary}</span>
           </Link>

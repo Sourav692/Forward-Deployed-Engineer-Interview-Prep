@@ -13,9 +13,27 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-10-31',
+    title: 'Classic designs agree with their cases, and audit fixes',
+    summary:
+      'The seven classic AI design lessons in Learn now give the same answers as their full cases in the casebook: the same caps, gates, cache rules and failure handling. A site audit then found small loose ends from this month\'s changes, now fixed. Casebook cards show the same reading time and level as the case page, worksheet and case twins are labelled the same way, previous and next skip modules that are not ready yet, and /interview links every mock interview.',
+  },
+  {
+    date: '2026-10-31',
     title: 'Interview by round',
     summary:
       'The interview area now follows the rounds of a real loop, from the recruiter screen to the demo or take-home. Each round says what the interviewer tests and lists what to study in Learn, what to practise and the mock interview to run. The five topic hubs became rounds, and their old links redirect.',
+  },
+  {
+    date: '2026-10-30',
+    title: 'Learn by topic, on a wider page',
+    summary:
+      'Learn is now organised into eight topic groups, from Start here to Career, each with its own page of tracks, hours and progress. Groups still being written show as Coming soon cards with their planned topics. Every page now uses one wide layout with an Inter body and a reading column of up to 60rem, so lessons, cases and worksheets read the same way.',
+  },
+  {
+    date: '2026-10-28',
+    title: 'A new look, and cases as chapters',
+    summary:
+      'The home page, casebook, practice and interview areas share one editorial design. Each case now opens on an introduction and reads one part at a time, with a sidebar of its documents and parts, previous and next buttons, and a mark for each part you finish. The final-week review is grouped into six days.',
   },
   {
     date: '2026-10-12',
