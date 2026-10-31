@@ -16,7 +16,7 @@ The demonstrated engine has no LLM. A future model proposes values or a draft sp
 
 - Priority chooses which workflow *should* run; a lock stops two that *can* collide.
 - Resume and fresh execution share one loop at `next_step_index`.
-- Key idempotency on `{run_id}:{step_name}` and check it before authorisation or billing.
+- Key idempotency on `{tenant_id}:{run_id}:{step_name}:{args_hash}` and check it after caller and tenant access, before authorisation or billing.
 - Guardrail denies in order: step cap, real-dollar spend cap, shadow, not-live, missing destructive-action authority.
 - Promote `DRAFT → TESTING → SHADOW → LIVE → AUTONOMOUS`, one step at a time, never self-approved.
 

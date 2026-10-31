@@ -107,6 +107,9 @@ flowchart LR
         GW --> ID[Verify identity and assurance]
         ID --> ROUTE[Intent and risk router: rules or model]
         ROUTE --> FACTS[Approved policy and live account facts]
+        ROUTE -->|Single lookup such as order status| LOOKUP[Direct read-only lookup, no draft or gate]
+        LOOKUP --> SOR
+        LOOKUP --> ANSWER
         ROUTE -->|Multi-system request| PLAN[Bounded support-agent planner]
         PLAN --> FACTS
         FACTS --> DRAFT[LLM response generator: draft or proposed action]
@@ -132,7 +135,7 @@ flowchart LR
 
 - **Step 1.** **Receive the request.** The channel gateway normalises chat, email, web, or voice into a support case.
 - **Step 2.** **Verify the customer.** Check identity and assurance; failed verification permits only generic help or handoff, not account actions.
-- **Step 3.** **Route by intent and risk.** Rules or a small model classify the request; only a multi-system case invokes a bounded support-agent planner.
+- **Step 3.** **Route by intent and risk.** Rules or a small model classify the request; a single lookup such as order status takes the direct read-only path under the verified identity, and only a multi-system case invokes a bounded support-agent planner.
 - **Step 4.** **Gather facts.** Retrieve approved policy and live account facts; the LLM response generator then drafts a reply or proposed tool action.
 - **Step 5.** **Gate the proposal.** The deterministic policy gate checks identity, allowed tools, thresholds, freshness, and required approval.
 - **Step 6.** **Choose the outcome.** Return a safe answer, send a case with context to a human, or obtain approval for an action that needs it.

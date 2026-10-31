@@ -480,7 +480,7 @@
               "title": "Check customs before value and confidence",
               "component": "Policy Gate",
               "short": "Policy permits",
-              "what": "This is not customs or regulatory work. The gate then checks value below $500 and confidence above the configured threshold, and permits this low-risk action.",
+              "what": "This is not customs or regulatory work. The gate then checks value below $500 and confidence that meets the configured threshold, and permits this low-risk action.",
               "why": "Reversing that order would allow a confident model to bypass customs review.",
               "next": "Next: Open the carrier circuit after a timeout.",
               "input": {
@@ -1458,7 +1458,7 @@
               "title": "Check customs before value and confidence",
               "component": "Policy Gate",
               "short": "Policy permits",
-              "what": "This is not customs or regulatory work. The gate then checks value below $500 and confidence above the configured threshold, and permits this low-risk action.",
+              "what": "This is not customs or regulatory work. The gate then checks value below $500 and confidence that meets the configured threshold, and permits this low-risk action.",
               "why": "Reversing that order would allow a confident model to bypass customs review.",
               "next": "Next: Open the carrier circuit after a timeout.",
               "input": {
@@ -1703,7 +1703,7 @@
         }
       ],
       "revision": {
-        "pitch": "I would start with the four clarifying answers because each changes the architecture. Carriers have both webhooks and scheduled files, so I would keep two intake paths and converge after normalisation. Batch detection stays late by design and the agent sees that freshness. Detection produces a typed exception, then a resolution agent drafts an action and confidence. A separate Policy Gate checks customs first: it always needs a human, regardless of value or confidence. Only non-customs cases under the value boundary and above the configured confidence threshold can auto-resolve. Higher risk becomes an explained ops draft. Carrier calls need least-privilege credentials, idempotency and circuit breakers. I would share versioned logic across regions but keep EU event data and audit logs in the EU. This is a low-user-count system where event throughput, approval capacity and correct actions matter more than concurrent chat sessions.",
+        "pitch": "I would start with the four clarifying answers because each changes the architecture. Carriers have both webhooks and scheduled files, so I would keep two intake paths and converge after normalisation. Batch detection stays late by design and the agent sees that freshness. Detection produces a typed exception, then a resolution agent drafts an action and confidence. A separate Policy Gate checks customs first: it always needs a human, regardless of value or confidence. Only non-customs cases under the value boundary whose confidence meets the configured threshold can auto-resolve. Higher risk becomes an explained ops draft. Carrier calls need least-privilege credentials, idempotency and circuit breakers. I would share versioned logic across regions but keep EU event data and audit logs in the EU. This is a low-user-count system where event throughput, approval capacity and correct actions matter more than concurrent chat sessions.",
         "flow": "Webhook or batch → regional normalised stream → detect → draft → customs-first Policy Gate → authorised execution or human queue → regional audit",
         "requirements": [
           [

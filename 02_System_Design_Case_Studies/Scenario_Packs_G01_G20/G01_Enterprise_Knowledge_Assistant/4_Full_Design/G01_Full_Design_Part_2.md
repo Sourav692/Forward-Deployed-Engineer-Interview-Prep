@@ -280,7 +280,7 @@ Design the failure path alongside the happy path; a design that only describes s
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Model provider down                   | fail over to secondary/smaller model; queue + backoff                                                                                                        |
 | Vector store down                     | fall back to keyword search and say the answer is degraded                                                                                                   |
-| Connector stale                       | answer from what's fresh, surface the staleness                                                                                                              |
+| Connector stale                       | answer with a staleness label; refuse only when permission data is stale                                                                                     |
 | Reranker unavailable                  | fall back to fusion order; trace records it                                                                                                                  |
 | Low retrieval confidence              | refuse and escalate to a human                                                                                                                               |
 | Stale ACL cache serves a revoked user | short-lived permission cache with a versioned identity snapshot, revocation on IdP change events, a bounded and stated stale window; layer 2 catches it      |

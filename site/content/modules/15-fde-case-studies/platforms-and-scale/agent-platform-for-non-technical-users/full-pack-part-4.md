@@ -93,11 +93,11 @@ Anyone can wire a model to a tool; the level shows in how much of the dangerous 
 ## Check Yourself
 
 1. **Why is "the hard part is trust" a stronger framing than "the hard part is tool selection"?** Tool calling is a standard API feature; the tested question is how a non-programmer can trust an automation to do only what they meant under model error, retries and crashes.
-2. **Why did Cascade Robotics' $500 refund not fire on an autonomous workflow?** `issue_refund` was not on the tenant's autonomous allow-list, and $500 exceeded the $50 spend cap. It was refused, not clamped.
+2. **Why did Cascade Robotics' $500 refund not fire on an autonomous workflow?** Under ordered deny, the spend cap fires first: $500 exceeded the $50 cap, so the step was refused with `spend_cap_exceeded`, not clamped, and the run halted. `issue_refund` was also not on the tenant's autonomous allow-list, so even after an authorised cap change it would pause for a human.
 3. **Why does routing need both priority and an entity lock?** Priority is configuration, choosing which workflow should win. The lock is safety, stopping two runs mutating one entity, and it holds even when priority is misconfigured.
 4. **What does the model decide, and what does it never decide?** It may decide that an action is warranted and which value fills an argument. It never decides the call's shape or the control flow, which are a typed schema and a fixed step list.
 5. **Why must `resume()` and `run_workflow()` share one loop?** A separate recovery path is second code whose bugs surface only in incidents; one loop starting at `next_step_index` is exercised on every run.
-6. **Why is the idempotency key on the action rather than the run?** A run legitimately retries; keying `{run_id}:{step_name}` deduplicates the specific side effect while letting the loop rerun.
+6. **Why is the idempotency key on the action rather than the run?** A run legitimately retries; keying `{tenant_id}:{run_id}:{step_name}:{args_hash}` deduplicates the specific side effect while letting the loop rerun.
 7. **Explain bug 2 in one sentence.** A replayed refund skipped the side effect but was still charged against the spend cap, so the idempotency check moved before authorisation because cost accounting is a side effect too.
 8. **Give an example that trips the step budget but not the spend cap, and one that does the reverse.** A 30-step chain of cheap steps halts at a 5-step cap; a single $500 refund trips a $50 cap on step one.
 9. **What question does each rollout gate answer?** DRAFT: wired correctly? TESTING: correct on realistic data? SHADOW: correct decisions on live traffic, writes mocked? LIVE: will a human vouch for each action? Then AUTONOMOUS.

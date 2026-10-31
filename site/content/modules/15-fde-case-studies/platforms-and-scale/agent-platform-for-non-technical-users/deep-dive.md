@@ -14,9 +14,9 @@ Adapters normalise once at the edge. The router matches tenant, `LIVE` status an
 
 ## 3. One execution loop and action-level idempotency
 
-`run_workflow()` and `resume()` enter the same loop at `next_step_index`. After each completed step, the run checkpoints the next index. A crash after step 0 resumes at step 1, so step 0 is not deliberately re-run. At-least-once delivery can still replay an action around a crash, so its external side effect needs an idempotency key like `{run_id}:{step_name}` and a durable shared store. The same key must be passed to a provider when the provider supports it.
+`run_workflow()` and `resume()` enter the same loop at `next_step_index`. After each completed step, the run checkpoints the next index. A crash after step 0 resumes at step 1, so step 0 is not deliberately re-run. At-least-once delivery can still replay an action around a crash, so its external side effect needs an idempotency key like `{tenant_id}:{run_id}:{step_name}:{args_hash}` and a durable shared store. The same key must be passed to a provider when the provider supports it.
 
-Check the action's applied key before authorisation. The source found that a refund replay skipped the second refund but charged the spend budget again, causing a false cap denial. Idempotency must cover every side effect: the visible API call, cost accounting and audit semantics. A replay of an already-applied action is a free no-op and may advance the checkpoint.
+After caller and tenant access checks, look up the action's applied key before authorisation. The source found that a refund replay skipped the second refund but charged the spend budget again, causing a false cap denial. Idempotency must cover every side effect: the visible API call, cost accounting and audit semantics. A replay of an already-applied action is a free no-op and may advance the checkpoint.
 
 ## 4. Guardrail order and the $500 story
 

@@ -145,9 +145,9 @@ Refund Request → AI Validation → Approval Required? ─yes─▶ Manager App
                                           └──no──▶ Execute
 ```
 
-The AI validates first, so most requests never reach a human. Only those crossing a risk or value threshold route to a manager queue before execution. That set is refunds above the threshold, VIP escalations, account deletion, legal or compliance requests, and changes to payment information.
+The AI validates first, and the design goal is that most requests never reach a human; measure the approval-queue volume rather than assume it. Only those crossing a risk or value threshold route to a manager queue before execution. That set is refunds above the threshold, VIP escalations, account deletion, legal or compliance requests, and changes to payment information.
 
-Not every request needs a planner. "Track my order" is a single tool call. "My laptop arrived damaged. Refund the order, cancel the warranty, notify shipping, and create a high-priority ticket" requires planning across Knowledge, CRM, Refund, Ticket, Shipping and Notification agents and merging the results. That is when a planner earns its cost. Simple requests take a single agent or a direct tool call, which is faster and cheaper. RAG, tool calling and memory sit side by side as capabilities the orchestrator draws on, not as a pipeline every request passes through. "What is your refund policy?" retrieves from the knowledge base. "Refund my order" invokes a business system. An LLM does neither by itself.
+Not every request needs a planner. "Track my order" is a single tool call. "My laptop arrived damaged. Refund the order, cancel the warranty, notify shipping, and create a high-priority ticket" needs one bounded planner to coordinate knowledge, CRM, refund, ticket, shipping and notification calls and merge the results. That is when a planner earns its cost. Simple requests take a single agent or a direct tool call, which is faster and cheaper. RAG, tool calling and memory sit side by side as capabilities the orchestrator draws on, not as a pipeline every request passes through. "What is your refund policy?" retrieves from the knowledge base. "Refund my order" invokes a business system. An LLM does neither by itself.
 
 Memory has three layers, and keeping them apart keeps each one fixable.
 

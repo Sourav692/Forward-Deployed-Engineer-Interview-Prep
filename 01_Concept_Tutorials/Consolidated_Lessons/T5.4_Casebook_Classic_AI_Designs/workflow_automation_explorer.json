@@ -520,11 +520,11 @@
               "title": "Check whether this exact action already applied",
               "component": "Action replay check",
               "short": "Check replay first",
-              "what": "The action key run-42:refund has no recorded application. This is a fresh action, so policy and spend checks may run.",
+              "what": "The action key cascade:run-42:refund:<args_hash> has no recorded application. This is a fresh action, so policy and spend checks may run.",
               "why": "A replay must be a free no-op before authorisation or cost is counted again.",
               "next": "Next: Halt before the next side effect.",
               "input": {
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "already_applied": false
@@ -543,12 +543,12 @@
               "title": "Apply step, spend and autonomy rules in order",
               "component": "Guardrail engine",
               "short": "Guardrail permits",
-              "what": "The step budget remains available and the real $3 refund fits the $5 cap. The workflow is live, autonomous and issue_refund is allow-listed, so this action is authorised.",
+              "what": "The step budget remains available and the real $3 refund fits the $50 cap. The workflow is live, autonomous and issue_refund is allow-listed, so this action is authorised.",
               "why": "A nominal tool fee cannot stand in for the money the customer is about to spend.",
               "next": "Next: Apply the refund once and persist its result.",
               "input": {
                 "refund_usd": 3,
-                "remaining_cap_usd": 5,
+                "remaining_cap_usd": 50,
                 "mode": "autonomous",
                 "tool_allowlisted": true
               },
@@ -574,13 +574,13 @@
               "title": "Apply the refund once and persist its result",
               "component": "Tool executor + Durable run state + Run event log",
               "short": "Execute and checkpoint",
-              "what": "The scoped tool executes under run-42:refund. Its result and the financial cost are recorded once, then the next-step checkpoint advances.",
+              "what": "The scoped tool executes under cascade:run-42:refund:<args_hash>. Its result and the financial cost are recorded once, then the next-step checkpoint advances.",
               "why": "Durability, idempotency and accounting must describe the same action.",
-              "next": "Next: Treat a redelivery as a free pre-authorised no-op.",
+              "next": "Next: Check access, then treat a redelivery as a free no-op.",
               "input": {
                 "order_id": "O-42",
                 "amount_usd": 3,
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "receipt": "refund-42",
@@ -826,8 +826,8 @@
         },
         {
           "id": "real-money-blocked",
-          "label": "$500 refund, $5 cap",
-          "outcome": "The run halts before execution because the real $500 action exceeds the $5 cap.",
+          "label": "$500 refund, $50 cap",
+          "outcome": "The run halts before execution because the real $500 action exceeds the $50 cap.",
           "stages": [
             {
               "title": "Normalise a tenant-owned billing event",
@@ -936,11 +936,11 @@
               "title": "Check whether this exact action already applied",
               "component": "Action replay check",
               "short": "Check replay first",
-              "what": "The action key run-42:refund has no recorded application. This is a fresh action, so policy and spend checks may run.",
+              "what": "The action key cascade:run-42:refund:<args_hash> has no recorded application. This is a fresh action, so policy and spend checks may run.",
               "why": "A replay must be a free no-op before authorisation or cost is counted again.",
               "next": "Next: Halt before the next side effect.",
               "input": {
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "already_applied": false
@@ -959,12 +959,12 @@
               "title": "Halt on real money before autonomy",
               "component": "Guardrail engine + Run event log",
               "short": "Cap blocks execution",
-              "what": "The guardrail compares the $500 refund to the remaining $5 cap and halts with a named reason. No allow-list or approval status bypasses this cap in the source rule set.",
+              "what": "The guardrail compares the $500 refund to the remaining $50 cap and halts with a named reason. No allow-list or approval status bypasses this cap in the source rule set.",
               "why": "The reference bug charged a nominal tool fee and missed the real financial exposure.",
-              "next": "The run halts before execution because the real $500 action exceeds the $5 cap.",
+              "next": "The run halts before execution because the real $500 action exceeds the $50 cap.",
               "input": {
                 "financial_amount_usd": 500,
-                "remaining_cap_usd": 5
+                "remaining_cap_usd": 50
               },
               "output": {
                 "status": "HALTED",
@@ -1272,11 +1272,11 @@
               "title": "Check whether this exact action already applied",
               "component": "Action replay check",
               "short": "Check replay first",
-              "what": "The action key run-42:refund has no recorded application. This is a fresh action, so policy and spend checks may run.",
+              "what": "The action key cascade:run-42:refund:<args_hash> has no recorded application. This is a fresh action, so policy and spend checks may run.",
               "why": "A replay must be a free no-op before authorisation or cost is counted again.",
               "next": "Next: Halt before the next side effect.",
               "input": {
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "already_applied": false
@@ -1300,7 +1300,7 @@
               "next": "Next: Pause durably until the reviewer decides.",
               "input": {
                 "amount_usd": 3,
-                "remaining_cap_usd": 5,
+                "remaining_cap_usd": 50,
                 "mode": "autonomous",
                 "tool_allowlisted": false
               },
@@ -1596,11 +1596,11 @@
               "title": "Check whether this exact action already applied",
               "component": "Action replay check",
               "short": "Check replay first",
-              "what": "The action key run-42:refund has no recorded application. This is a fresh action, so policy and spend checks may run.",
+              "what": "The action key cascade:run-42:refund:<args_hash> has no recorded application. This is a fresh action, so policy and spend checks may run.",
               "why": "A replay must be a free no-op before authorisation or cost is counted again.",
               "next": "Next: Halt before the next side effect.",
               "input": {
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "already_applied": false
@@ -1624,7 +1624,7 @@
               "next": "Next: Apply the refund once and persist its result.",
               "input": {
                 "reviewer_role": "billing_approver",
-                "action": "run-42:refund",
+                "action": "cascade:run-42:refund:<args_hash>",
                 "amount_usd": 3
               },
               "output": {
@@ -1645,13 +1645,13 @@
               "title": "Apply the refund once and persist its result",
               "component": "Tool executor + Durable run state + Run event log",
               "short": "Execute and checkpoint",
-              "what": "The scoped tool executes under run-42:refund. Its result and the financial cost are recorded once, then the next-step checkpoint advances.",
+              "what": "The scoped tool executes under cascade:run-42:refund:<args_hash>. Its result and the financial cost are recorded once, then the next-step checkpoint advances.",
               "why": "Durability, idempotency and accounting must describe the same action.",
-              "next": "Next: Treat a redelivery as a free pre-authorised no-op.",
+              "next": "Next: Check access, then treat a redelivery as a free no-op.",
               "input": {
                 "order_id": "O-42",
                 "amount_usd": 3,
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "receipt": "refund-42",
@@ -1676,14 +1676,14 @@
               ]
             },
             {
-              "title": "Treat a redelivery as a free pre-authorised no-op",
+              "title": "Check access, then treat a redelivery as a free no-op",
               "component": "Action replay check + Run event log",
               "short": "Free replay",
-              "what": "The same action key arrives again after the confirmed application. The replay record returns the existing result before policy or cost is counted again.",
+              "what": "The same action key arrives again after the confirmed application. After caller and tenant access checks, the replay record returns the existing result before policy or cost is counted again.",
               "why": "Skipping the duplicate refund but charging its cost twice is still a correctness bug.",
               "next": "The resumed refund applies once. A later retry is a free no-op and never counts the $3 twice.",
               "input": {
-                "action_key": "run-42:refund",
+                "action_key": "cascade:run-42:refund:<args_hash>",
                 "already_applied": true
               },
               "output": {
@@ -2205,11 +2205,11 @@
               "title": "Check whether this exact action already applied",
               "component": "Action replay check",
               "short": "Check replay first",
-              "what": "The action key run-42:refund has no recorded application. This is a fresh action, so policy and spend checks may run.",
+              "what": "The action key cascade:run-42:refund:<args_hash> has no recorded application. This is a fresh action, so policy and spend checks may run.",
               "why": "A replay must be a free no-op before authorisation or cost is counted again.",
               "next": "Next: Halt before the next side effect.",
               "input": {
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "already_applied": false
@@ -2600,11 +2600,11 @@
               "title": "Check whether this exact action already applied",
               "component": "Action replay check",
               "short": "Check replay first",
-              "what": "The action key run-42:refund has no recorded application. This is a fresh action, so policy and spend checks may run.",
+              "what": "The action key cascade:run-42:refund:<args_hash> has no recorded application. This is a fresh action, so policy and spend checks may run.",
               "why": "A replay must be a free no-op before authorisation or cost is counted again.",
               "next": "Next: Halt before the next side effect.",
               "input": {
-                "action_key": "run-42:refund"
+                "action_key": "cascade:run-42:refund:<args_hash>"
               },
               "output": {
                 "already_applied": false
@@ -2777,7 +2777,7 @@
           "Is it multi-tenant from day one?"
         ],
         "tradeoff": "A fixed step list is predictable and testable but less flexible than an open-ended planner. Keep the same guardrail even if a model later chooses the next step.",
-        "failure": "A $500 refund must not pass a $5 cap because the tool’s nominal fee is small. A repeated confirmed refund must not charge the budget twice.",
+        "failure": "A $500 refund must not pass a $50 cap because the tool’s nominal fee is small. A repeated confirmed refund must not charge the budget twice.",
         "ops": [
           [
             "Scale",
@@ -2827,7 +2827,7 @@
         {
           "section": "Count the Real Money, Not a Nominal Fee",
           "where": "Explore flow",
-          "note": "The $500/$5 example halts on the real financial amount; the replay branch adds zero cost."
+          "note": "The $500/$50 example halts on the real financial amount; the replay branch adds zero cost."
         },
         {
           "section": "Make Runs Durable and Retries Harmless",
@@ -2845,7 +2845,7 @@
           "note": "The fixed-workflow trade-off is compressed; detailed week-one scope remains in the lesson."
         },
         {
-          "section": "Worked Example: A $500 Refund on a $5 Cap",
+          "section": "Worked Example: A $500 Refund on a $50 Cap",
           "where": "Explore flow",
           "note": "The source’s nominal-fee and duplicate-cost bugs have separate branches."
         },

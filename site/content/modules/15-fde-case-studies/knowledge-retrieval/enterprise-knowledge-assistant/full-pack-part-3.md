@@ -78,7 +78,7 @@ Spend minutes in proportion to risk, not diagram size. Authorisation and freshne
 | 45–55  | Failure modes (section 9) and back-of-envelope scale (section 3)  |
 | 55–60  | Close: three sentences, trade-offs, week one (section 11)         |
 
-Nouns before boxes: Tenant, Principal, Group, Compartment, Document, Chunk, ACL, Query, Run, Trace, Citation. Raise multi-tenancy, security, observability, and evaluation before they ask. Tenant ID is in the request context and enforced in the data layer. Per-tenant rate limits and token budgets handle noisy neighbours.
+Nouns before boxes: Tenant, Principal, Group, Compartment, Document, Chunk, ACL, Query, Run, Trace, Citation. Raise multi-tenancy, security, observability, and evaluation before they ask. Tenant ID comes from the verified session, never the request body, and is enforced in the data layer. Per-tenant rate limits and token budgets handle noisy neighbours.
 
 The three-sentence close:
 
@@ -104,7 +104,7 @@ The follow-ups arrive in a predictable order, and each has a prepared answer.
 | Follow-up | Answer |
 | --------- | ------ |
 | How do you prove users never see a passage they cannot open? | Authorise before a passage can enter context or the response. Query-time effective permissions. A disallowed citation rejects or rewrites the response. Suite: known-denied docs, group changes, adversarial queries; retrieval, reranker, assembler, and citation renderer share one policy |
-| Access today, gone tomorrow? | Pre-filter is a snapshot. Post-check re-resolves live, so revocation hits the next query. Short permission cache, versioned identity, IdP change events. If signals lag, state the max stale window |
+| Access today, gone tomorrow? | Pre-filter is a snapshot. Post-check re-resolves live, so revocation hits the next query after the IdP sync. Short permission cache, versioned identity, IdP change events. If signals lag, state the max stale window |
 | Confident but wrong? | Citation check against the retrieval set, groundedness on a silent labelled set, abstain on weak evidence, trace which stage failed. Confidence follows evidence, not tone |
 | Re-index after a chunking change? | Versioned migration: old and new side by side, new index version, offline eval, small traffic slice, leak tests again, rollback kept |
 | LLM-powered enterprise search (OpenAI-style practice prompt) | This design. Open with section 1. Spend the time on permission layers and the leak gate |

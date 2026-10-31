@@ -46,7 +46,7 @@ The functional list is the source's. The priority split and the acceptance colum
 | Must | Ingest shipment events from carriers, real-time and batch | Both paths write the same normalised schema; a batch diff emits only changed shipments |
 | Must | Detect disruptions: customs holds, missed scans, weather delays | Recall per exception type measured on a labelled replay set (section 10) |
 | Must | Classify each exception by type, value and confidence | Every exception reaching the gate carries all three fields; a missing field routes to a human |
-| Must | Auto-resolve low-risk, low-value, high-confidence cases | Only under $500, only above the threshold, never customs |
+| Must | Auto-resolve low-risk, low-value, high-confidence cases | Only under $500, only when confidence meets the threshold, never customs |
 | Must | Draft a proposed resolution for everything else and route it to a human ops agent | The draft shows the action, the signals and the confidence |
 | Must | Let an ops agent approve, edit or reject a drafted resolution | Each choice is logged with the agent's identity and the original draft |
 | Must | Maintain a full audit trail of every decision, automated or human | Any resolution can be reconstructed from the audit log alone |

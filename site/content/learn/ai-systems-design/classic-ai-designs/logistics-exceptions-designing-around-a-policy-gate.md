@@ -58,14 +58,14 @@ A missed scan on a batch carrier is detected late by design. Surface that latenc
 
 ```mermaid
 flowchart TB
-    R["Proposed resolution"] --> C{"Customs or regulatory?"}
-    C -->|Yes| H["Human approval required"]
+    R["Proposed resolution<br/>exception type from detection"] --> C{"Customs or regulatory?"}
+    C -->|Yes or unknown| H["Human approval required"]
     C -->|No| V{"Value below $500<br/>and confidence meets threshold?"}
     V -->|Yes| A["Eligible for automatic execution"]
     V -->|No or unknown| H
 ```
 
-The customs check runs first and short-circuits everything else. This mirrors the customer's own framing: customs is a hard compliance boundary, not something that competes with a confidence score. Only after that check does the value and confidence rule apply. It is the same structure as deny-rules-first in access control, and as short-circuiting in [Scale, Reliability, and Security](/learn/ai-systems-design/design-framework/scale-reliability-and-security).
+The customs check runs first and short-circuits everything else. This mirrors the customer's own framing: customs is a hard compliance boundary, not something that competes with a confidence score. Only after that check does the value and confidence rule apply. The gate reads the exception type from the detection service, never from the agent's own label, so an agent that mislabels a customs hold as a weather delay cannot talk its way past it. An unknown customs status goes to a person too. It is the same structure as deny-rules-first in access control, and as short-circuiting in [Scale, Reliability, and Security](/learn/ai-systems-design/design-framework/scale-reliability-and-security).
 
 > **Warning: checking confidence before the customs carve-out builds the forbidden system.** If the gate asks "confident and under $500?" first, a high-confidence model could, in principle, auto-resolve a customs hold. That is exactly what the customer ruled out. State the ordering out loud in the round.
 
@@ -117,7 +117,7 @@ Ask: "Which shipment and carrier? What is the last authoritative update? Who own
 
 A regional EU carrier drops its CSV file four hours after the last one. Batch ingest diffs it against the last known state and finds one shipment with no scan since yesterday. Only that change enters the EU stream, and the record never leaves the EU data plane. Detection flags a missed scan and records that it came from the batch path, so the agent sees it was detected late.
 
-The Resolution Agent drafts a reschedule with high confidence on a $320 shipment. The gate first asks whether this is a customs hold. It is not. It then checks value and confidence: under $500 and above threshold, so it auto-resolves. For this example, assume the carrier honours an idempotency contract. Reuse the same key and arguments on a safe retry; otherwise reconcile status before any repeat call. Each step, its rationale, and the carrier receipt land in the EU audit log.
+The Resolution Agent drafts a reschedule with high confidence on a $320 shipment. The gate first asks whether this is a customs hold. It is not. It then checks value and confidence: under $500 and the confidence meets the threshold, so it auto-resolves. For this example, assume the carrier honours an idempotency contract. Reuse the same key and arguments on a safe retry; otherwise reconcile status before any repeat call. Each step, its rationale, and the carrier receipt land in the EU audit log.
 
 Change one fact and the path changes. Were the exception a customs hold, the first check would send it to a person regardless of the $320 value or the confidence. One boundary decides, and everything else feeds it correctly and acts on its verdict safely.
 

@@ -20,7 +20,7 @@ Scope a state machine with named roles, required evidence, and versioned acceler
 
 ## Refuse What Cannot Be Measured
 
-Northwind agrees two scenario targets before day 1: first response under 5 minutes for the top 3 ticket categories, and 60% zero-edit sends among eligible tickets by week 4. Define the eligible population, data source, baseline, and observation window. Refuse intake without measurable criteria or an assigned SME.
+Northwind agrees two scenario targets before day 1: first response under 5 minutes for the top 3 ticket categories, and 60% zero-edit sends among eligible tickets by week 4. Define the eligible population, data source, baseline, and observation window. Refuse intake without measurable criteria, an assigned SME or named data sources.
 
 The week-4 target cannot be proved on day 14. Agree a separate limited-release acceptance rule and an owner for the later measurement. If the sponsor requires week-4 evidence before any release, the two-week launch must wait.
 
@@ -30,12 +30,12 @@ Intake starts the clock only after readiness. Each stage needs its authorised ga
 
 ```mermaid
 flowchart TB
-    S["Scoping<br/>days 1-2"] -->|Security reviewer signs security_review| D["Data Ready<br/>days 3-4"]
-    D -->|Customer SME signs data_access| C["Configure<br/>days 5-7"]
-    C -->|Customer SME signs golden_set| E["Evaluate<br/>days 8-9"]
-    E -->|FDA signs eval_baseline| H["Shadow<br/>days 10-11"]
+    S["Scoping<br/>days 1-2"] -->|Security reviewer signs security_review_passed| D["Data Ready<br/>days 3-4"]
+    D -->|Customer SME signs data_access_granted| C["Configure<br/>days 5-7"]
+    C -->|Customer SME signs golden_set_signed_off| E["Evaluate<br/>days 8-9"]
+    E -->|FDA signs eval_baseline_met| H["Shadow<br/>days 10-11"]
     H -->|FDA signs rollback_tested| L["Limited production<br/>days 12-13"]
-    L --> G{"Day 14 sponsor decision<br/>valid success_metrics evidence?"}
+    L --> G{"Day 14 sponsor signs success_metrics_met<br/>limited-release rule met?"}
     G -->|Yes| P["Deploy with runbook<br/>and follow-up measurement"]
     G -->|No or unavailable| N["No-go or remain limited<br/>do not claim acceptance"]
     X["Day 3 data access pending<br/>escalate once"] -.-> D
@@ -59,15 +59,15 @@ Risk mitigation becomes automatic too. The plan's rule "data access delays: star
 
 ## Measure Reuse to Prove the Process Is Productised
 
-Every stage needs assets: a connector, a prompt template, a guardrail policy. Pulling one from the library records it as reused. Building one because it is missing records it as custom, and logs it. The reuse rate is reused pulls divided by total pulls.
+Every stage needs assets: a connector, a prompt template, an escalation (guardrail) policy. Pulling one from the library records it as reused. Building one because it is missing records it as custom, and logs it. The reuse rate is reused pulls divided by total pulls.
 
-A reuse number makes the process inspectable; it does not prove that reused assets meet this customer's requirements. On Northwind the rate is 83%: 5 of 6 assets came straight from the library, and one guardrail policy was custom. Tracked across engagements, that ratio shows whether the framework works or is quietly sliding back to bespoke code.
+A reuse number makes the process inspectable; it does not prove that reused assets meet this customer's requirements. On Northwind the rate is 83%: 5 of 6 assets came straight from the library, and one custom escalation (guardrail) policy was built. Tracked across engagements, that ratio shows whether the framework works or is quietly sliding back to bespoke code.
 
 Be honest about what the library is. It is a list of names. Its entries are named assets, such as `zendesk_connector` and `golden_set_harness`, not the connector code or the eval harness itself. A real harness exists in the RAG design and could be wired into the Evaluate stage instead of asserting a score. That wiring is not done yet. The gate mechanism is real; the number behind one piece of evidence currently is not.
 
 ## Name Which Mitigations Are Real
 
-The plan names four risks. The reference build implements some and not others.
+The plan names four risks. The reference build implements three of them.
 
 | Risk | Mitigation | Built? |
 |---|---|---|
@@ -76,7 +76,7 @@ The plan names four risks. The reference build implements some and not others.
 | Unmeasurable success criteria | Refuse to start | Yes, in `intake()` |
 | No customer SME | Contractual prerequisite | Yes, in `intake()` |
 
-The sources disagree with themselves here. The table marks three of four as built, while the closing summary says two of four mitigations are automatic checks in code. One reading is that two are automatic and one is an intake refusal, but the script does not say so. Either way, showing three real and naming the fourth gap beats claiming four and being caught out on a follow-up.
+Three of four are built. The day-3 escalation is an automatic check, the two intake refusals stop an engagement before it starts, and change control is the named gap. The source's closing summary says two of four, but its own table marks three, so quote the table. Showing three real and naming the fourth gap beats claiming four and being caught out on a follow-up.
 
 ## Treat a Stall as a Visible Outcome
 
@@ -98,7 +98,7 @@ Summarise in three sentences. A seven-stage pipeline blocks every transition beh
 | Decision | Chose | Would revisit if |
 |---|---|---|
 | Role-gated sign-off over self-certification | Six named gates with authorised signer roles | A single-person delivery team where role separation is impossible; then gates compress, not disappear |
-| Hard refusal at intake over "start and hope" | Refuse unmeasurable or no-SME requests | A strategic customer where the business accepts the risk; then intake needs an explicit override with its own sign-off |
+| Hard refusal at intake over "start and hope" | Refuse unmeasurable, no-SME or no-source requests | A strategic customer where the business accepts the risk; then intake needs an explicit override with its own sign-off |
 | Automatic escalation over manual tracking | Day-3 auto-escalation on data access | Mitigations multiply and a dashboard becomes clearer; then a rules engine, not hard-coded checks |
 
 For the forward-deployed close, rolling this out internally does not start with all seven stages. Pick the two gates most often skipped under deadline pressure, which in the author's experience are the golden-set sign-off and the rollback test. Make just those structurally unskippable first. Test these controls before expanding the rollout.
@@ -115,11 +115,11 @@ Ask: "What can be measured by day 14, and what needs four weeks? Who signs each 
 
 ### Follow the Blocked Gate
 
-Northwind passes intake: both metrics are measurable and an SME is assigned. Days 1 to 2 are Scoping, and the security reviewer signs `security_review` with evidence attached. Data Ready begins, but on day 3 the `data_access` gate is still pending with the customer SME.
+Northwind passes intake: both metrics are measurable, an SME is assigned and the three data sources are named. Days 1 to 2 are Scoping. Impatient, the FDA tries to sign `security_review_passed` themselves. The role check denies it with `wrong_role`, logs it and leaves the state unchanged, however senior the FDA is. The security reviewer then signs with evidence attached. Data Ready begins, but on day 3 the `data_access_granted` gate is still pending with the customer SME.
 
-`check_escalation_triggers()` fires once and writes the escalation to the event log, with nobody needing to remember. Impatient, the FDA tries to sign `data_access`. The role check denies it, logs it and leaves the state unchanged. The engagement has not slipped silently; it is visibly stuck at a named gate for a named reason.
+`check_escalation_triggers()` fires once and writes the escalation to the event log, with nobody needing to remember. The SME then signs `data_access_granted` with "looks good" as evidence. The gate denies it with `no_evidence`, because an approval with no artefact behind it is not a sign-off. The engagement has not slipped silently; it is visibly stuck at a named gate for a named reason.
 
-When the SME signs, Configure pulls five of six assets from the library and builds one guardrail policy custom: 83% reuse. On day 14, the sponsor checks the agreed limited-release evidence. The week-4 zero-edit target remains pending. Release requires a valid day-14 acceptance rule; otherwise the gate stays blocked. Either way, the outcome traces to gates and evidence, not to time passed.
+When the SME signs with the live-access checks attached, Configure pulls five of six assets from the library and builds one custom escalation (guardrail) policy: 83% reuse. On day 14, the sponsor checks the agreed limited-release evidence. The week-4 zero-edit target remains pending. Release requires a valid day-14 acceptance rule; otherwise the gate stays blocked. Either way, the outcome traces to gates and evidence, not to time passed.
 
 | Line that carries the round | Point it makes |
 |---|---|
@@ -135,11 +135,12 @@ When the SME signs, Configure pulls five of six assets from the library and buil
 ```json
 {
   "engagement": "northwind-42",
-  "stage": "data_ready",
-  "gate": "data_access",
+  "stage": "scoping",
+  "gate": "security_review_passed",
   "trusted_signer_role": "FDA",
-  "required_role": "customer_sme",
-  "decision": "denied_role_mismatch",
+  "required_role": "security_reviewer",
+  "decision": "denied",
+  "reason": "wrong_role",
   "state_changed": false
 }
 ```
@@ -148,7 +149,7 @@ The authenticated role comes from application identity, not the submitted sign-o
 
 ## Explain the Design in 60 Seconds
 
-> "I'd treat two-week delivery as a repeatable readiness process. Intake would require measurable criteria and a customer SME. Each stage would have a named gate, authorised signer, and evidence tied to the engagement version. A delivery lead could not self-certify security or customer data access.
+> "I'd treat two-week delivery as a repeatable readiness process. Intake would require measurable criteria, a customer SME and named data sources. Each stage would have a named gate, authorised signer, and evidence tied to the engagement version. A delivery lead could not self-certify security or customer data access.
 >
 > I'd escalate late dependencies automatically and show blocked stages clearly. Reused assets would be versioned and tested, with custom work recorded. Day-14 release would use evidence available then; a week-4 outcome would remain a later measurement. Missing evidence would mean no-go, not an invented pass. I'd start with a narrow rollout, a tested rollback, and portfolio metrics showing where people or approvals become the bottleneck."
 
@@ -157,11 +158,11 @@ The authenticated role comes from application identity, not the submitted sign-o
 ## Key Takeaways
 
 - Frame the round as an operating-model question: are the gates enforced, or just reported?
-- Refuse engagements without measurable metrics or an SME; readiness drives the clock.
+- Refuse engagements without measurable metrics, an SME or named data sources; readiness drives the clock.
 - Each gate names who signs it, and `advance_stage()` cannot skip a stage.
 - A sign-off needs the right role, real evidence and every earlier gate passed; escalations fire automatically.
 - The reuse rate, 83% on Northwind, measures whether the process is productised.
-- State which mitigations are built, and note that the source counts them inconsistently.
+- State that three of four mitigations are built, and name change control as the gap.
 - Denials, stalls and a no-go are logged, visible outcomes; scale is portfolio capacity, not data volume.
 - Close by making the two most-skipped gates unskippable first.
 
@@ -171,7 +172,7 @@ The authenticated role comes from application identity, not the submitted sign-o
    The person closest to the work is not automatically authorised to certify it is safe. Each gate allows only named roles, with deny overrides.
 
 2. **What does the 83% reuse rate measure on Northwind?**
-   5 of 6 assets came from the accelerator library and one guardrail policy was custom. Tracked across engagements, it shows whether delivery stays productised.
+   5 of 6 assets came from the accelerator library and one escalation (guardrail) policy was custom. Tracked across engagements, it shows whether delivery stays productised.
 
 3. **Is a day-14 no-go a failure of the framework?**
    No. It is a legitimate outcome; the framework's job is to show exactly which gate stopped the engagement and why.

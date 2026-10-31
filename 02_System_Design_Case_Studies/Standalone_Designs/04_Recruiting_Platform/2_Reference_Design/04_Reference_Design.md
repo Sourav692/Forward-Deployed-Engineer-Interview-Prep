@@ -4,7 +4,7 @@
 
 The prompt: build a recruiting platform where AI supports the recruiter at every stage. It screens resumes, matches candidates to job descriptions, drafts interview questions, scores candidates, books interviews and helps hiring managers decide. The scope covers the full journey, from the first resume upload to the hiring decision.
 
-`thousands of resumes an hour` · `ranking you can explain` · `a human makes the call` · `built for EEOC and GDPR`
+`thousands of resumes an hour` · `ranking you can explain` · `a human makes the call` · `EEOC and GDPR controls`
 
 ---
 
@@ -50,7 +50,7 @@ Below are the clarifying questions, with the answers this case takes as given. I
 
 **Two intake lanes that merge into a single ranking pipeline.**
 
-Resumes and job descriptions arrive on separate upload lanes, and each lane has its own parser. Both lanes feed one structured extraction service. After that, a single pipeline builds candidate profiles, embeds them and ranks candidates by similarity. The pipeline then splits in two: one branch drafts interview questions and the other runs AI-judged scoring. The branches rejoin in an evaluation pipeline. A human recruiter reviews its output, and only then do scheduling and candidate messages go out.
+Resumes and job descriptions arrive on separate upload lanes, and each lane has its own parser. Both lanes feed one structured extraction service. After that, a single pipeline builds candidate profiles, embeds them and ranks candidates by similarity. Ranking feeds interview question drafting, and once the interview or assessment is over, the AI judge scores it. The evaluation pipeline then combines those scores with the rest of the evidence. A human recruiter reviews its output, and only then do scheduling and candidate messages go out.
 
 ```
 Recruiter Portal
@@ -75,10 +75,11 @@ OCR / Document Parser         JD Parser
        Similarity Search Engine
                 │
           Candidate Ranking
-┌──────────────┴──────────────┐
-Interview Question         AI Judge
-Generator                  Scoring
-└──────────────┬──────────────┘
+                │
+     Interview Question Generator
+                │
+          AI Judge Scoring
+                │
          Evaluation Pipeline
                 │
         Human Recruiter Review
@@ -105,7 +106,7 @@ Think of structured extraction as the line between documents and data. On one si
 7. **❓ Interview question generation.** The LLM drafts questions for this role and this person. It works from the JD, the candidate's background, the skills they lack and their past projects, and it can produce coding, system design, behavioural or domain questions.
 8. **⚖️ AI judge evaluation.** When an interview or coding test is done, the AI judge rates technical accuracy, clarity of communication, the approach to the problem and fit with the job. It returns structured feedback and a provisional score.
 9. **🧑‍💼 Human recruiter review.** A recruiter or hiring manager reads the ranking, the AI scores, the interview summaries and the suggestion, and then makes the hiring decision. This step adds accountability and a human check on bias. Both vanish if the reviewer approves whatever the AI ranked, so the reviewer must have real power to overrule it.
-10. **📅 Interview scheduling.** When a candidate makes the shortlist, the platform checks when interviewers are free, picks suitable slots, sends calendar invites, tells the candidate and updates the ATS with no manual work.
+10. **📅 Interview scheduling.** Once the recruiter approves a candidate for interview, the platform checks when interviewers are free, picks suitable slots, sends calendar invites, tells the candidate and updates the ATS. Nothing is booked before that approval.
 
 ---
 
@@ -113,7 +114,7 @@ Think of structured extraction as the line between documents and data. On one si
 
 **Weighted signals you can inspect, not a hidden pass or fail.**
 
-A single similarity number is not enough to rank people. The engine blends several signals: semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. An explicit weight per signal lets a recruiter understand the ranking and an auditor accept it; one opaque model score allows neither.
+A single similarity number is not enough to rank people. The engine blends several signals: semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. An explicit weight per signal lets a recruiter understand the ranking and an auditor inspect it; one opaque model score allows neither. The weights do not by themselves establish fairness or job relevance.
 
 Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience level ~20% · domain expertise ~15% · other signals (location, certifications, availability) ~10%. With the weights on show, a recruiter can see the reasons behind each candidate's place, not only the place itself.
 
@@ -190,7 +191,7 @@ When a popular posting brings a surge of applications, two things keep the syste
 - Safeguard Personally Identifiable Information (PII).
 - Apply role-based access control to recruiters and hiring managers.
 - Keep an audit log of every AI recommendation and every hiring action.
-- Meet the requirements of GDPR, CCPA and EEOC.
+- Agree with the privacy and legal owners which GDPR, CCPA and EEOC requirements apply. These controls support compliance; they do not certify it.
 - Let candidates ask for their data to be deleted.
 - Track model fairness and bias across protected groups.
 
@@ -240,7 +241,7 @@ No AI ranking or score goes straight to a decision. A recruiter approves it or o
 
 **🎯 How do you improve candidate matching accuracy?**
 
-- Match with semantic embeddings, not keywords alone.
+- Never match on keywords alone. Evaluate lexical and semantic matching on a labelled set first, and expect a hybrid of the two to win.
 - Blend several ranking signals: skills, experience, projects and certifications.
 - Feed recruiter feedback into the ranking models.
 - Keep measuring precision and recall against past hiring outcomes.

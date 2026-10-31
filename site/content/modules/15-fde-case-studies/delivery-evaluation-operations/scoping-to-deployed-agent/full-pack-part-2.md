@@ -13,7 +13,7 @@ The order is not optional. Configuring against unconnected data fails, evaluatin
 | 8–9 | Evaluate and iterate | Golden set signed off as representative; baseline clears the bar | "eval_baseline_report.pdf - 0.83 vs 0.75 agreed baseline" (scripted value, no eval harness run) | FDA |
 | 10–11 | Shadow mode | Agent sees real traffic, decides, takes no action; humans compare | 5 shadow approvals, 2 overridden; "rollback_runbook.md - tested in staging, verified <2min" (scripted text, not timed) | FDA |
 | 12–13 | Limited production | Agent acts for real with a human approving, and a tested rollback | 6 approvals, 1 overridden; cumulative override rate 0.27 | — |
-| 14 | Go/no-go and handover | The day-1 metric was met; runbook, dashboards, owner handed over | "Week-2 metrics: first-response 4m12s, 63% zero-edit sends" (scripted evidence text in the demo, not measured); `handover_runbook.md`, `dashboards_live.url` | Sponsor |
+| 14 | Go/no-go and handover | The agreed limited-release acceptance rule was met; runbook, dashboards, owner handed over; the week-4 target is measured later by a named owner | "Week-2 metrics: first-response 4m12s, 63% zero-edit sends" (scripted evidence text in the demo, not measured); `handover_runbook.md`, `dashboards_live.url` | Sponsor |
 
 The table's last two evidence columns come from `scripts/run_engagement_demo.py`. Shadow mode and limited production are the same two-step trust ladder as Module 05's `SHADOW` and `LIVE`. Never let a system's first real action also be the first time nobody is watching.
 
@@ -80,7 +80,7 @@ The trade-off has a revisit condition. A strategic customer may be accepted desp
 
 The library holds connectors, prompt templates, an eval harness, guardrail policies and dashboard templates. By name: `zendesk_connector`, `confluence_connector`, `salesforce_connector`, `support_triage_prompt`, `groundedness_prompt`, `golden_set_harness` ("recall@k / MRR / groundedness / leak-rate harness"), `pii_redaction_policy`, `destructive_action_gate`, `eval_baseline_dashboard`, `cost_attribution_dashboard`.
 
-In the Northwind demo run the rate is 83%: 5 of 6 assets came straight from the library, and one guardrail policy was custom. A rising custom-build count is the early signal that two weeks is about to slip. Tracked across engagements, the ratio says whether the framework works or is quietly turning bespoke again.
+In the Northwind demo run the rate is 83%: 5 of 6 assets came straight from the library, and one custom escalation (guardrail) policy was built. A rising custom-build count is the early signal that two weeks is about to slip. Tracked across engagements, the ratio says whether the framework works or is quietly turning bespoke again.
 
 Say what the library is not. The entries are named assets, not the connector code or the eval harness. The real harness exists one project over, in the RAG platform, and wiring the Evaluate stage to call it is on the punch list. The gate mechanism is real; the number behind one piece of evidence is not yet.
 

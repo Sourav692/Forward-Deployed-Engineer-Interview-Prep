@@ -99,7 +99,7 @@ Human review is required here, but does not automatically remove bias. The [EEOC
 
 **"How do we reduce bias?"** Mask demographic information where appropriate and use diverse training and evaluation data. Track fairness metrics continuously, require human approval, explain rankings transparently and audit regularly.
 
-**"How do we improve matching accuracy?"** Compare lexical and semantic retrieval on relevant roles, and combine signals only when evaluation supports them. Feed recruiter feedback into the ranking model, measure precision and recall against historical outcomes, and tune prompts and retrieval on feedback.
+**"How do we improve matching accuracy?"** Do not rely on keywords alone. Compare lexical and semantic retrieval on a labelled set of relevant roles first, and expect a hybrid to win; combine signals only when evaluation supports them. Feed recruiter feedback into the ranking model, measure precision and recall against historical outcomes, and tune prompts and retrieval on feedback.
 
 **"How do we personalise for recruiters?"** Learn from previous decisions and prioritise candidates similar to successful hires, while monitoring for bias. Set question difficulty by seniority, weight team-specific skills, and let recruiters configure weights. "Similar to successful hires" can copy past bias, which is why the monitoring clause is not optional.
 

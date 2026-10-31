@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T07:30:49.259Z",
+  "generatedAt": "2026-10-31T08:35:08.775Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -291,7 +291,7 @@
                 }
               ],
               "minutes": 75,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "nl-over-governed-data",
@@ -469,8 +469,8 @@
                   "label": "Full Design 5"
                 }
               ],
-              "minutes": 89,
-              "updated": "2026-10-28"
+              "minutes": 91,
+              "updated": "2026-10-31"
             },
             {
               "slug": "tool-using-agent-with-safety-controls",
@@ -634,7 +634,7 @@
                 }
               ],
               "minutes": 58,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "real-time-call-assistant",
@@ -712,7 +712,7 @@
                 }
               ],
               "minutes": 50,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             }
           ]
         },
@@ -850,7 +850,7 @@
                 }
               ],
               "minutes": 56,
-              "updated": "2026-10-28"
+              "updated": "2026-10-31"
             },
             {
               "slug": "consumer-scale-chat-service",
@@ -967,8 +967,8 @@
                   "label": "Full Design 3"
                 }
               ],
-              "minutes": 48,
-              "updated": "2026-10-28"
+              "minutes": 50,
+              "updated": "2026-10-31"
             },
             {
               "slug": "evaluation-and-release-gating",

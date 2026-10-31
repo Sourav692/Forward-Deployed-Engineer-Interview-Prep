@@ -10,7 +10,7 @@ Primary constraint:
 
 ## Core architecture
 
-**Identity → Authorisation → Pre-filter → Hybrid Retrieval → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate**
+**Identity → Authorisation → Pre-filter → Hybrid Retrieval → Policy check → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate**
 
 Security loop:
 
@@ -46,7 +46,7 @@ Security loop:
 
 Correct order:
 
-**Authorise → Retrieve → Fuse → Rerank → Evidence → Generate**
+**Authorise → Retrieve → Fuse → Enforce → Rerank → Evidence → Generate**
 
 ## Freshness
 

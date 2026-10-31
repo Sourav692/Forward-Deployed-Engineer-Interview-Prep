@@ -22,7 +22,7 @@ More context is not always better. Irrelevant context increases cost and can red
 
 ## 6. Cache First, Retrieve on a Miss
 
-A cache placed after the expensive work saves nothing. The semantic cache sits immediately in front of the embedding service, the vector database and the model, so a hit skips all three.
+A cache placed after the expensive work saves nothing. The scoped completion cache sits immediately in front of the embedding service, the vector database and the model, so a valid hit skips all three and goes to output validation.
 
 What gets cached is what repeats: framework boilerplate, standard algorithms, popular API usage. Semantic matching allows reuse even when requests are phrased differently. Two more caches sit beside it *(own construction, from the cross-cutting doc)*. A prompt-prefix cache holds the static top of every prompt, the system instructions and the repository conventions, so only the tail is re-tokenised. An embedding cache holds vectors for chunks that have not changed since the last push.
 
@@ -37,13 +37,13 @@ Not every task needs the largest model, and not every context signal is worth it
 | Task | Model |
 |---|---|
 | Next-word completion | Small, low-latency |
-| Multi-line completion | Medium |
+| Multi-line completion | Medium where the budget permits |
 | Code explanation | Larger reasoning |
 | Bug fixing | Larger reasoning |
 | Refactoring | Larger reasoning |
 | Architecture questions | Most capable |
 
-The router reads the task type from the request, not from the model's opinion of it. Completion is the hot path and gets the small model always. Explain, test generation, bug fixing and refactoring are things a developer waits for, so they can afford the larger model and its latency. Each choice has a cost.
+The router reads the task type from the request, not from the model's opinion of it. Inline completion is the hot path and always gets the small model; multi-line completion may use the medium model where the budget permits. Explain, test generation, bug fixing and refactoring are things a developer waits for, so they can afford the larger model and its latency. Each choice has a cost.
 
 | Decision | Pros | Cons |
 |---|---|---|
@@ -68,9 +68,9 @@ Decomposing the latency target turns "< 300 ms" from a requirement into a design
 
 | Stage | Budget | Why it stays there |
 |---|---|---|
-| Cache check | ~10 ms | Exact and prefix lookups; a hit ends the request here |
+| Cache check | ~10 ms | Exact and prefix lookups; a valid hit goes straight to output validation |
 | Context assembly | ~40 ms | Local signals plus one permission-filtered retrieval |
-| Model inference, streamed | ~200 ms | The small model; first token well inside the budget |
+| Model inference, streamed | ~200 ms | The small model, or medium for multi-line where the budget permits; first token well inside the budget |
 | Validation | ~50 ms | Parse, symbol check, secret and licence filters; this uses the last of the 300 ms, so no margin is left |
 
 The cache check and context assembly stay cheap. Most of the budget goes to streamed inference. Validation takes the last 50 ms, so the split leaves no margin; trim a stage to make room for network and queueing. Streaming fixes perceived latency only. Generation takes exactly as long, but the developer sees the first token instead of waiting for the last, so streaming does not replace backend optimisation.

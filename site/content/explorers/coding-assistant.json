@@ -89,7 +89,7 @@
           },
           {
             "id": "cache",
-            "label": "Semantic cache",
+            "label": "Scoped cache",
             "sub": "Scoped reusable result",
             "x": 850,
             "y": 55,
@@ -416,7 +416,7 @@
             },
             {
               "title": "Check a repository-scoped cache",
-              "component": "Semantic cache",
+              "component": "Scoped cache",
               "short": "Cache miss",
               "what": "The cache looks for a compatible completion in this repository revision and context. This request misses, so it needs retrieval.",
               "why": "A hit can avoid embeddings, retrieval and generation work; stale private-code results must not cross scope.",
@@ -504,7 +504,7 @@
               "title": "Route by the task, then generate",
               "component": "Model router + Selected model",
               "short": "Route and generate",
-              "what": "This is a multi-line completion, so the router selects the source design’s medium model route. It generates a completion using compute_gst(subtotal).",
+              "what": "This is a multi-line completion and the budget permits it, so the router selects the medium model route. It generates a completion using compute_gst(subtotal).",
               "why": "A large reasoning model is not needed for every keystroke.",
               "next": "Next: Validate before the suggestion is shown.",
               "input": {
@@ -830,7 +830,7 @@
             },
             {
               "title": "Reuse a compatible cached completion",
-              "component": "Semantic cache",
+              "component": "Scoped cache",
               "short": "Cache hit",
               "what": "The scoped cache has a completion for this repository revision and context. It returns that candidate without a retrieval or model call.",
               "why": "Skipping expensive work helps the common path only when the cached result is still compatible.",
@@ -1043,7 +1043,7 @@
             },
             {
               "title": "Check a repository-scoped cache",
-              "component": "Semantic cache",
+              "component": "Scoped cache",
               "short": "Cache miss",
               "what": "The cache looks for a compatible completion in this repository revision and context. This request misses, so it needs retrieval.",
               "why": "A hit can avoid embeddings, retrieval and generation work; stale private-code results must not cross scope.",
@@ -1435,7 +1435,7 @@
         }
       ],
       "revision": {
-        "pitch": "I would treat this as context engineering under a latency budget. The IDE sends the current task and a narrow, permission-scoped view of the workspace. We mask secrets and respect cloud or private deployment policy. A compatible semantic-cache hit can skip retrieval and inference. On a miss, semantic search finds relevant code and existing helpers from a background-built index. The prompt builder ranks those signals and fits the task template into the context window. The router uses a small route for simple completion and stronger routes for harder tasks. Before anything reaches the IDE, validation checks syntax, security and whether the referenced APIs actually exist. Invalid output is suppressed or regenerated within a bounded budget. The developer remains in control of the edit. The source’s 300 millisecond budget is a target to measure, not evidence that this explorer meets it.",
+        "pitch": "I would treat this as context engineering under a latency budget. The IDE sends the current task and a narrow, permission-scoped view of the workspace. We mask secrets and respect cloud or private deployment policy. A compatible scoped-cache hit can skip retrieval and inference. On a miss, semantic search finds relevant code and existing helpers from a background-built index. The prompt builder ranks those signals and fits the task template into the context window. The router uses a small route for simple completion and stronger routes for harder tasks. Before anything reaches the IDE, validation checks syntax, security and whether the referenced APIs actually exist. Invalid output is suppressed or regenerated within a bounded budget. The developer remains in control of the edit. The source’s 300 millisecond budget is a target to measure, not evidence that this explorer meets it.",
         "flow": "Permitted context → scoped cache → retrieval on a miss → prompt funnel → task-based model route → validation → developer-controlled suggestion",
         "requirements": [
           [
@@ -1500,7 +1500,7 @@
         {
           "section": "Route Models by Task",
           "where": "Explore flow and revision",
-          "note": "The example routes multi-line completion to a medium model. The full task table remains in the lesson."
+          "note": "The example routes multi-line completion to a medium model where the budget permits. The full task table remains in the lesson."
         },
         {
           "section": "Decompose the Latency Budget",

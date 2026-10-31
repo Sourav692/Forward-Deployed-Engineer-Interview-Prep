@@ -2132,7 +2132,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/02_Customer_Support_Assistant_Knowledge_Actions_and_Approval.md",
       "estMinutes": 12,
       "href": "/learn/ai-systems-design/classic-ai-designs/customer-support-assistant-knowledge-actions-and-approval",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "coding-assistant-context-engineering-under-300-ms",
@@ -2144,7 +2144,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/03_Coding_Assistant_Context_Engineering_Under_300_ms.md",
       "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/coding-assistant-context-engineering-under-300-ms",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "recruiting-platform-explainable-ranking-human-decisions",
@@ -2156,7 +2156,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/04_Recruiting_Platform_Explainable_Ranking_Human_Decisions.md",
       "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/recruiting-platform-explainable-ranking-human-decisions",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "logistics-exceptions-designing-around-a-policy-gate",
@@ -2168,7 +2168,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/05_Logistics_Exceptions_Designing_Around_a_Policy_Gate.md",
       "estMinutes": 12,
       "href": "/learn/ai-systems-design/classic-ai-designs/logistics-exceptions-designing-around-a-policy-gate",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "access-controlled-enterprise-rag",
@@ -2180,7 +2180,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
       "estMinutes": 7,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "access-controlled-enterprise-rag-retrieval-and-release",
@@ -2192,7 +2192,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
       "estMinutes": 11,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag-retrieval-and-release",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "safe-workflow-automation-for-non-technical-users",
@@ -2202,9 +2202,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/08_Safe_Workflow_Automation_for_Non_Technical_Users.md",
-      "estMinutes": 13,
+      "estMinutes": 14,
       "href": "/learn/ai-systems-design/classic-ai-designs/safe-workflow-automation-for-non-technical-users",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "delivering-an-agent-in-two-weeks-with-enforced-gates",
@@ -2216,7 +2216,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/09_Delivering_an_Agent_in_Two_Weeks_with_Enforced_Gates.md",
       "estMinutes": 13,
       "href": "/learn/ai-systems-design/classic-ai-designs/delivering-an-agent-in-two-weeks-with-enforced-gates",
-      "updated": "2026-10-16"
+      "updated": "2026-10-31"
     },
     {
       "slug": "g01-enterprise-knowledge-assistant",
@@ -2237,7 +2237,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
-      "estMinutes": 89,
+      "estMinutes": 91,
       "href": "/design/customer-support-automation"
     },
     {
@@ -2325,7 +2325,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
-      "estMinutes": 48,
+      "estMinutes": 50,
       "href": "/design/scoping-to-deployed-agent"
     },
     {

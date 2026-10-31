@@ -90,7 +90,7 @@ A requirement that cannot fail a test is a preference. "Make it fast" is a prefe
 | Cost         | Embedding, index and tokens estimated separately. Cost per answer. Cache stable docs; prune retrieval; small models for classification; expensive reasoning only where risk justifies it              |
 | Security     | SSO via the IdP; ABAC over source ACLs; filter before the model; revocations fan out to indexes and caches; secrets never in prompts; no training on customer data unless the contract allows it      |
 | Audit        | Immutable: source event IDs, index/ACL versions, request ID, retrieved docs, policy decision, model/prompt version, exact citation set shown                                                          |
-| Reliability  | Fail closed on permissions, deletion sync, citation check, stale data. Degrade on retrieval quality. Queue background reindex                                                                         |
+| Reliability  | Fail closed on permissions, stale permission data, deletion sync, citation check. Label stale content. Degrade on retrieval quality. Queue background reindex                                         |
 
 Every Must has an owner:
 
