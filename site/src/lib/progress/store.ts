@@ -14,7 +14,7 @@
  * Runtime imports use explicit `.ts` paths so `scripts/check-progress-store.ts` can run
  * this file under plain `node`.
  */
-import { LESSONS, MODULES, TRACKS } from '../curriculum.ts'
+import { LESSONS, MODULES, RENAMED, TRACKS } from '../curriculum.ts'
 import { notifyProgress, storageAvailable } from '../storage.ts'
 import { rollup } from './rules.ts'
 import { studyTime } from '../study-time.ts'
@@ -155,6 +155,32 @@ export function markLessonRead(moduleSlug: string, lessonSlug: string, now = Dat
 
 export function markLessonUnread(moduleSlug: string, lessonSlug: string): void {
   remove(lessonKey(moduleSlug, lessonSlug))
+}
+
+/**
+ * Carries read marks across lesson retirements (FE-15). For each RENAMED pair, a lesson read
+ * under its old key counts as read under the lesson that replaced it, unless that lesson has
+ * its own record, and the old key goes. Removing it makes this safe to run on every load:
+ * a pair is migrated once, and marking the new lesson unread later sticks. A withdrawn
+ * lesson (`null`) keeps its key. Returns how many read marks moved.
+ */
+export function migrateRenamedProgress(renamed: Record<string, string | null> = RENAMED): number {
+  let moved = 0
+  let changed = false
+  for (const [from, to] of Object.entries(renamed)) {
+    const oldKey = lessonKey(...(from.split('/') as [string, string]))
+    const old = to ? readRaw(oldKey) : null
+    if (old === null || !to) continue
+    const newKey = lessonKey(...(to.split('/') as [string, string]))
+    if (readRaw(newKey) === null) {
+      if (!setRaw(newKey, old)) continue
+      moved++
+    }
+    removeRaw(oldKey)
+    changed = true
+  }
+  if (changed) notifyProgress()
+  return moved
 }
 
 // ── Modules: confidence, notes, open anyway ────────────────────────────────

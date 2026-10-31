@@ -204,5 +204,20 @@ check('import replaces stale keys', storage.getItem('fd:v1:learn:lesson:stale/le
 const sorted = (d: Record<string, string>) => Object.entries(d).sort(([a], [b]) => a.localeCompare(b))
 check('round trip is identical', sorted(store.exportProgress(NOW).data), sorted(exported.data))
 
+// ── Retired lessons: read marks follow RENAMED (FE-15) ─────────────────────
+store.resetProgress()
+const RENAMES = { 'old/a': 'new/a', 'old/b': 'new/b', 'old/c': null }
+storage.setItem('fd:v1:learn:lesson:old/a', '{"readAt":"2026-01-01"}')
+storage.setItem('fd:v1:learn:lesson:old/b', '{"readAt":"2026-01-02"}')
+storage.setItem('fd:v1:learn:lesson:new/b', '{"readAt":"2026-02-02"}')
+storage.setItem('fd:v1:learn:lesson:old/c', '{"readAt":"2026-01-03"}')
+check('migration copies one mark', store.migrateRenamedProgress(RENAMES), 1)
+check('old read mark moves to its replacement', storage.getItem('fd:v1:learn:lesson:new/a'), '{"readAt":"2026-01-01"}')
+check('migration never overwrites the new lesson', storage.getItem('fd:v1:learn:lesson:new/b'), '{"readAt":"2026-02-02"}')
+check('migrated old keys go', [storage.getItem('fd:v1:learn:lesson:old/a'), storage.getItem('fd:v1:learn:lesson:old/b')], [null, null])
+check('a withdrawn lesson keeps its key', storage.getItem('fd:v1:learn:lesson:old/c'), '{"readAt":"2026-01-03"}')
+store.markLessonUnread('new', 'a')
+check('a second run changes nothing', [store.migrateRenamedProgress(RENAMES), store.isLessonRead('new', 'a')], [0, false])
+
 console.log(`${passes} passed, ${failures} failed`)
 if (failures) process.exit(1)

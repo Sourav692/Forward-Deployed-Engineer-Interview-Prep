@@ -29,6 +29,7 @@ import {
   isLessonRead,
   listActivity,
   listBookmarks,
+  migrateRenamedProgress,
   moduleProgress,
   storageAvailable,
   trackProgress,
@@ -36,6 +37,7 @@ import {
 
 let version = 0
 const listeners = new Set<() => void>()
+let migrated = false
 
 function bump() {
   version++
@@ -48,6 +50,11 @@ function onStorage(e: StorageEvent) {
 }
 
 function subscribe(listener: () => void): () => void {
+  // Once per page load, before anything shows progress: move read marks of retired lessons.
+  if (!migrated) {
+    migrated = true
+    migrateRenamedProgress()
+  }
   if (listeners.size === 0) {
     window.addEventListener(PROGRESS_EVENT, bump)
     window.addEventListener('storage', onStorage)
