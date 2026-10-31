@@ -47,7 +47,9 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
   // In code order (T1.3 before T1.4), whatever the curriculum's section grouping (IA-12).
   const byCode = (a: { code: string }, b: { code: string }) => a.code.localeCompare(b.code, 'en', { numeric: true })
   const tracks = getTracks().map((t) => ({ track: t, modules: [...trackModules(t)].sort(byCode) }))
-  const counts = FLAG_ORDER.map((f) => ({ f, n: Object.values(path.moduleFlags).filter((x) => x === f).length }))
+  // Count the modules this page lists, so the totals match the rows (a hidden registry module is not one of them).
+  const listed = tracks.flatMap((t) => t.modules)
+  const counts = FLAG_ORDER.map((f) => ({ f, n: listed.filter((m) => path.moduleFlags[m.slug] === f).length }))
 
   return (
     <>

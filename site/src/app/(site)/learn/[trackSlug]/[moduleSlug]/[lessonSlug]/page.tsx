@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { breadcrumbJsonLd, learningResourceJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
-import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput, trackModules, trackTrail } from '@/lib/learn'
+import { capitalise, getLessonPage, learnHref, lessonParams, moduleInput, sequenceModules, trackTrail } from '@/lib/learn'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { LessonActions } from '@/components/learn/LessonActions'
 import { LessonReader } from '@/components/learn/LessonReader'
@@ -16,7 +16,7 @@ import { MockTimer } from '@/components/progress/MockTimer'
 import { MOCK_MINUTES, MOCK_MODULE, mockRoundsFor } from '@/components/progress/mock-rubric'
 import { cx, focusRing } from '@/components/ui'
 import { lessonExplorer } from '@/lib/explorers/load'
-import { LISTED_ELSEWHERE, isLearnTrack } from '@/lib/curriculum-href'
+import { isLearnTrack } from '@/lib/curriculum-href'
 
 /**
  * Lesson page (FE-07). One static page per synced, published lesson: the params come
@@ -53,7 +53,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   if (!page) notFound()
   const { lesson, track, section, module: mod, siblings, doc, prev, next, index, count } = page
   // After a module's last lesson, Next goes on to the following module, not back to this one.
-  const order = trackModules(track).filter((m) => !LISTED_ELSEWHERE.has(m.slug))
+  const order = sequenceModules(track, mod.slug)
   const nextModule = order[order.findIndex((m) => m.slug === mod.slug) + 1]
   const input = moduleInput(mod)
   const trail = trackTrail(track)

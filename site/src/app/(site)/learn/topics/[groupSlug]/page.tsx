@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { allMinutes, getTrack, isRequired, learnHref, trackHours } from '@/lib/learn'
-import { LEARN_STAGES, groupHref, liveGroups } from '@/lib/learn-stages'
+import { groupHref, liveGroups } from '@/lib/learn-stages'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { StaticTrackGrid, TrackBrowser, type TrackItem } from '@/components/learn/FilterBar'
 import { StorageNotice } from '@/components/learn/ProgressIslands'
@@ -44,7 +44,6 @@ export default async function GroupPage({ params }: { params: Promise<Params> })
     required: isRequired(t),
     node: <TrackCard track={t} minutes={minutes} />,
   }))
-  const number = LEARN_STAGES.indexOf(group) + 1
 
   return (
     <div className="pb-16">
@@ -56,7 +55,7 @@ export default async function GroupPage({ params }: { params: Promise<Params> })
       />
       <Breadcrumbs items={[{ label: 'Learn', href: learnHref.index() }, { label: group.title }]} />
       <PageHead
-        tag={`Group ${number}`}
+        tag="Topic group"
         title={group.title}
         standfirst={group.summary}
         facts={[

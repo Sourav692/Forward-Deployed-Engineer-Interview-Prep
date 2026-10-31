@@ -1878,7 +1878,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/",
-      "estMinutes": 63,
+      "estMinutes": 59,
       "href": "/design/evaluation-and-release-gating"
     },
     {
@@ -1889,7 +1889,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/",
-      "estMinutes": 78,
+      "estMinutes": 74,
       "href": "/design/secure-multi-tenant-ai-platform"
     },
     {
@@ -1900,7 +1900,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis/",
-      "estMinutes": 67,
+      "estMinutes": 64,
       "href": "/design/observability-and-production-diagnosis"
     },
     {
@@ -1922,7 +1922,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G18_Consumer_Scale_Chat_Service/",
-      "estMinutes": 47,
+      "estMinutes": 43,
       "href": "/design/consumer-scale-chat-service"
     },
     {
@@ -1933,7 +1933,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G10_High_Volume_Batch_Pipeline/",
-      "estMinutes": 65,
+      "estMinutes": 61,
       "href": "/design/high-volume-batch-pipeline"
     },
     {
@@ -1944,7 +1944,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G19_Model_Development_And_Post_Training/",
-      "estMinutes": 47,
+      "estMinutes": 44,
       "href": "/design/model-development-and-post-training"
     },
     {
@@ -1955,7 +1955,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/",
-      "estMinutes": 52,
+      "estMinutes": 48,
       "href": "/design/llm-inference-serving"
     },
     {
@@ -2226,7 +2226,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/",
-      "estMinutes": 75,
+      "estMinutes": 72,
       "href": "/design/enterprise-knowledge-assistant"
     },
     {
@@ -2237,7 +2237,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G02_Customer_Support_Automation/",
-      "estMinutes": 91,
+      "estMinutes": 87,
       "href": "/design/customer-support-automation"
     },
     {
@@ -2248,7 +2248,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G03_Tool_Using_Agent_With_Safety_Controls/",
-      "estMinutes": 78,
+      "estMinutes": 74,
       "href": "/design/tool-using-agent-with-safety-controls"
     },
     {
@@ -2259,7 +2259,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G04_SRE_Incident_Response_Agent/",
-      "estMinutes": 66,
+      "estMinutes": 62,
       "href": "/design/sre-incident-response-agent"
     },
     {
@@ -2270,7 +2270,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G05_Sales_Copilot/",
-      "estMinutes": 68,
+      "estMinutes": 64,
       "href": "/design/sales-copilot"
     },
     {
@@ -2281,7 +2281,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/",
-      "estMinutes": 75,
+      "estMinutes": 71,
       "href": "/design/nl-over-governed-data"
     },
     {
@@ -2292,7 +2292,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G08_Document_Review_Copilot/",
-      "estMinutes": 66,
+      "estMinutes": 62,
       "href": "/design/document-review-copilot"
     },
     {
@@ -2303,7 +2303,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G09_Enterprise_Coding_Assistant/",
-      "estMinutes": 58,
+      "estMinutes": 55,
       "href": "/design/enterprise-coding-assistant"
     },
     {
@@ -2314,7 +2314,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G11_Deep_Research_Agent/",
-      "estMinutes": 50,
+      "estMinutes": 46,
       "href": "/design/deep-research-agent"
     },
     {
@@ -2325,7 +2325,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
-      "estMinutes": 51,
+      "estMinutes": 48,
       "href": "/design/scoping-to-deployed-agent"
     },
     {
@@ -2336,7 +2336,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G15_Agent_Platform_For_Non_Technical_Users/",
-      "estMinutes": 56,
+      "estMinutes": 52,
       "href": "/design/agent-platform-for-non-technical-users"
     },
     {
@@ -2347,7 +2347,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/",
-      "estMinutes": 55,
+      "estMinutes": 51,
       "href": "/design/real-time-call-assistant"
     },
     {
@@ -2358,7 +2358,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G17_Logistics_Exception_Handling/",
-      "estMinutes": 50,
+      "estMinutes": 46,
       "href": "/design/logistics-exception-handling"
     },
     {

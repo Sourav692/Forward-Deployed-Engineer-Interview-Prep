@@ -37,23 +37,33 @@ export function SideNav({
                 if (!m || LISTED_ELSEWHERE.has(slug)) return null
                 const current = slug === currentModule
                 const gap = m.status === 'coming-soon' ? 'Coming soon' : m.status === 'on-hold' ? 'On hold' : null
+                const body = (
+                  <>
+                    {moduleTag(m) && <span className={cx('w-9 shrink-0 tabular-nums', current ? 'text-accent' : 'text-subtle')}>{moduleTag(m)}</span>}
+                    <span className="min-w-0 flex-1">
+                      {m.title}
+                      {gap && <span className="block text-xs font-normal text-muted">{gap}</span>}
+                    </span>
+                  </>
+                )
+                // A Coming soon or On hold module stays on the map but is not a link: it has nothing to open yet (PQ-17).
                 return (
                   <li key={slug}>
-                    <Link
-                      href={learnHref.module(m)}
-                      aria-current={current ? 'page' : undefined}
-                      className={cx(
-                        'flex items-start gap-2 rounded-md px-2 py-1.5',
-                        current ? 'bg-accent-soft font-semibold text-accent' : 'text-text hover:bg-surface-2',
-                        focusRing,
-                      )}
-                    >
-                      {moduleTag(m) && <span className={cx('w-9 shrink-0 tabular-nums', current ? 'text-accent' : 'text-subtle')}>{moduleTag(m)}</span>}
-                      <span className="min-w-0 flex-1">
-                        {m.title}
-                        {gap && <span className="block text-xs font-normal text-muted">{gap}</span>}
-                      </span>
-                    </Link>
+                    {gap && !current ? (
+                      <span className="flex items-start gap-2 px-2 py-1.5 text-muted">{body}</span>
+                    ) : (
+                      <Link
+                        href={learnHref.module(m)}
+                        aria-current={current ? 'page' : undefined}
+                        className={cx(
+                          'flex items-start gap-2 rounded-md px-2 py-1.5',
+                          current ? 'bg-accent-soft font-semibold text-accent' : 'text-text hover:bg-surface-2',
+                          focusRing,
+                        )}
+                      >
+                        {body}
+                      </Link>
+                    )}
                   </li>
                 )
               })}
