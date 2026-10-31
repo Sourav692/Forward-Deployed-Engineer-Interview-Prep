@@ -33,6 +33,14 @@ const CSP =
     "form-action 'self'",
   ].join('; ')
 
+/**
+ * The RAG course labs (Phase 2, SEC-01) are static pages under /labs that lessons frame. They
+ * may be framed by this origin only and make no requests (the theory import fails on any), and
+ * lessons frame them with `sandbox="allow-scripts"`, so they cannot reach this origin's storage.
+ * Lessons need no change: `default-src 'self'` already lets them frame same-origin pages.
+ */
+const LAB_CSP = CSP.replace("frame-ancestors 'none'", "frame-ancestors 'self'").replace("connect-src 'self'", "connect-src 'none'")
+
 const nextConfig: NextConfig = {
   async redirects() {
     return REDIRECTS
@@ -48,6 +56,15 @@ const nextConfig: NextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
+      // Later rules win for the same header key, so these override the CSP above for labs.
+      {
+        source: '/labs/:path*',
+        headers: [
+          { key: 'Content-Security-Policy', value: LAB_CSP },
+          { key: 'X-Robots-Tag', value: 'noindex' },
+        ],
+      },
+      { source: '/learn-assets/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex' }] },
     ]
   },
 }

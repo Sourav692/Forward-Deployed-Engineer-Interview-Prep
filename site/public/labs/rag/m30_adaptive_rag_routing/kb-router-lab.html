@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Routing confidence and the fallback</title>
 <meta name="description" content="M30 lab: eighteen Larkspur support tickets routed to three knowledge bases by real TF-IDF scores; raise the score floor and read misroutes, fallbacks and searches per ticket.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* Hallmark · shape: app screen · genre: editorial · theme: Almanac (by request, the course's lab system) · build: new lab in the M11 lab's shell
  * nav: top bar, the wordmark and the lab's name · signature: the routing ledger, one row per ticket with the knowledge base it reaches, beside a step chart of misroutes and fallbacks against the floor · states: full only; the page computes every value itself, so it has no loading, empty or error state
@@ -160,6 +157,8 @@ html.embedded .sheet.ledgers { order: 2; }
 }
 </style>
 <script>if (window.self !== window.top) document.documentElement.classList.add("embedded");</script>
+<link rel="stylesheet" href="/labs/_site-tokens.css">
+<script src="/labs/_site-lab.js"></script>
 </head>
 <body>
 <noscript><p class="container note">This lab computes its scores, table and chart in the page and needs JavaScript.</p></noscript>

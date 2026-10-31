@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Plan or react: the call budget</title>
 <meta name="description" content="M26 lab: the same Larkspur Cloud question run by a ReAct agent, a fixed plan and a plan that replans; move the lookups, the wrong results and the cap and read LLM calls, tokens and whether the answer is complete.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* Hallmark · shape: app screen · genre: editorial · theme: Almanac (deal 3/3, seed course-notes-interactive-labs-bf72·b66d38f5·2026-10-29·r0) · redesign: none, new lab in the M11 lab system
  * nav: top bar, the wordmark and the lab's name · signature: the three-agent ledger, one row per agent with its LLM calls, tokens and the state of its answer, the wrong chunk the only magenta mark · states: full only; the page computes every value itself, so it has no loading, empty or error state
@@ -148,6 +145,8 @@ html.embedded .reading { order: 2; }
 html.embedded .sheet.ledgersheet { order: 3; }
 </style>
 <script>if (window.self !== window.top) document.documentElement.classList.add("embedded");</script>
+<link rel="stylesheet" href="/labs/_site-tokens.css">
+<script src="/labs/_site-lab.js"></script>
 </head>
 <body>
 <noscript><p class="container note">This lab runs the three agents in the page and needs JavaScript.</p></noscript>

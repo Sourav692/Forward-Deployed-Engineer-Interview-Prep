@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stuff, map-reduce or refine</title>
 <meta name="description" content="M08 lab: split a Larkspur handbook document with a port of RecursiveCharacterTextSplitter, route it by length with a RunnableBranch, and count the model calls and rounds each summarisation strategy needs.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* Hallmark · shape: app screen · genre: editorial · theme: Almanac (deal 3/3, seed course-notes-interactive-labs-bf72·m08-summarise·2026-10-31·r0) · redesign: full
  * nav: top bar, the wordmark and the lab's name · signature: the rounds timeline, one lane per strategy, with the lane the router picks in magenta · states: full only; the page computes every value itself, so it has no loading, empty or error state
@@ -155,6 +152,8 @@ html.embedded .sheet.chunks { order: 2; }
 }
 </style>
 <script>if (window.self !== window.top) document.documentElement.classList.add("embedded");</script>
+<link rel="stylesheet" href="/labs/_site-tokens.css">
+<script src="/labs/_site-lab.js"></script>
 </head>
 <body>
 <noscript><p class="container note">This lab splits the text and counts the calls in the page and needs JavaScript.</p></noscript>

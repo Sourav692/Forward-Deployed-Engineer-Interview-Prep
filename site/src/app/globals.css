@@ -202,6 +202,16 @@ body {
   margin-block: 0.35rem;
   padding-left: 0.25rem;
 }
+/* Figures (Phase 2, DS-02): the RAG course's SVG diagrams keep their own light sheet, framed
+   by a hairline and scaled down to the column on a phone. */
+.prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border: 1px solid var(--border);
+}
+
 .prose li::marker {
   color: var(--text-subtle);
 }

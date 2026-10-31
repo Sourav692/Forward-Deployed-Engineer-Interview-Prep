@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fan-out and the concurrency cap</title>
 <meta name="description" content="M25 lab: the step durations measured in the lesson 25.3 notebooks, scheduled the way a thread pool runs parallel branches; move the concurrency cap and read the wall time.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* Hallmark · shape: app screen · genre: editorial · theme: Almanac (deal 3/3, seed course-notes-interactive-labs-bf72·m25-fanout·2026-10-30·r0) · redesign: full
  * nav: top bar, the wordmark and the lab's name · signature: the timeline, with the magenta fan-in rule where the slowest branch ends and the merge step begins · states: full only; the page computes every value itself, so it has no loading, empty or error state
@@ -147,6 +144,8 @@ html.embedded .sheet.check { order: 2; }
 }
 </style>
 <script>if (window.self !== window.top) document.documentElement.classList.add("embedded");</script>
+<link rel="stylesheet" href="/labs/_site-tokens.css">
+<script src="/labs/_site-lab.js"></script>
 </head>
 <body>
 <noscript><p class="container note">This lab computes its timeline in the page and needs JavaScript.</p></noscript>

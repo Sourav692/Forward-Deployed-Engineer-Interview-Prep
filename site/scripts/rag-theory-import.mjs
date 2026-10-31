@@ -22,6 +22,10 @@
  *  - American spellings become British (src/lib/spelling.ts), except the names it allows
  *    and external link titles; "TL;DR" headings become "In short"; a bare "M13" becomes a
  *    link to that module's overview.
+ * Labs are rewritten for the site (Phase 2, FE-08): their Google Fonts links go (font-src 'self'
+ * blocks them) and they load /labs/_site-tokens.css and /labs/_site-lab.js, which give them the
+ * site's tokens, embedded mode and theme. A lab that would make a request (fetch, XHR, sockets,
+ * dynamic import, an external src, href or url()) fails the import (SEC-02): labs run offline.
  * The import fails on a placeholder (TODO, TBD, XXX, [FILL) and when the course
  * repository has uncommitted theory changes, so `source.json` names the exact commit.
  */
@@ -100,6 +104,21 @@ export function transformLine(line, { link, moduleLink }) {
       })
       .join('')
   )
+}
+
+// ------------------------------------------------------------------ labs
+
+const REQUESTS = /\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|\bimport\s*\(|\b(?:src|href)=["']?https?:|url\(\s*["']?https?:/
+
+/** A lab as the site serves it: no Google Fonts, the site's tokens and glue script, no requests. */
+export function siteLab(html, name) {
+  const out = html
+    .replace(/[ \t]*<link[^>]+fonts\.(?:googleapis|gstatic)\.com[^>]*>\n?/g, '')
+    .replace('</head>', '<link rel="stylesheet" href="/labs/_site-tokens.css">\n<script src="/labs/_site-lab.js"></script>\n</head>')
+  if (!out.includes('/labs/_site-lab.js')) throw new Error(`${name}: no </head> to add the site tokens to`)
+  const request = out.match(REQUESTS)
+  if (request) throw new Error(`${name}: makes a request (${request[0]}); labs must run offline`)
+  return out
 }
 
 // ------------------------------------------------------------------ course pages
@@ -267,7 +286,8 @@ export function importTheory(from) {
   }
   for (const [src, dest] of copies) {
     mkdirSync(dirname(dest), { recursive: true })
-    cpSync(src, dest)
+    if (dest.endsWith('.html')) writeFileSync(dest, siteLab(readFileSync(src, 'utf8'), posix(relative(from, src))))
+    else cpSync(src, dest)
   }
   writeFileSync(join(OUT, 'source.json'), `${JSON.stringify({ repo: REPO, commit }, null, 2)}\n`)
   writeFileSync(
