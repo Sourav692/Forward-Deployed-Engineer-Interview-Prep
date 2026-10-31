@@ -57,3 +57,26 @@ Synthesis needs judgement. The notebook's judge reads the trace of *Calculate 15
 - **A single trace scored 5 out of 5 proves little.** The scores mean something across a fixed golden set, compared before and after one change, as with the [baseline in M11](/learn/llm-and-retrieval/rag-from-first-principles/the-rag-lifecycle-and-a-measured-baseline#lesson-baseline-first-optimisation).
 
 Add trace-level counts to the per-call scores: rounds per run, error `ToolMessage`s per tool, and crashed runs. They are cheap to log and catch the failures the lab shows, where the answer never arrives.
+
+## Check yourself
+
+<details>
+<summary>1. Why does it matter whether a tool failure reaches the model as a message or escapes as an exception?</summary>
+
+As an error `ToolMessage`, the model can explain the failure or retry with better arguments. As an exception, `graph.invoke` raises and the user gets nothing. You send it to the model either by returning the error from the tool or by letting the `ToolNode` catch it.
+
+</details>
+
+<details>
+<summary>2. A customer asks whether web-9 is up, and the server-status tool raises ValueError. Under which error-handling setting does the run still answer, and how does the model help?</summary>
+
+Only `handle_tool_errors=True`. The default re-raises exceptions raised inside the tool, and `False` re-raises everything, so both crash. With `True` the exception text reaches the model, and because it lists the customer's servers (`db-1` and `web-1`), the model can name them.
+
+</details>
+
+<details>
+<summary>3. After a description edit, the tool selection score drops while the input score holds. Where do you look, and why is no model needed to score it?</summary>
+
+Look at the description: a selection drop points at the description, an input drop at the schema. Both scores come from the message trace, by comparing the called names and arguments with each golden question's expected calls. Only synthesis needs an LLM judge.
+
+</details>

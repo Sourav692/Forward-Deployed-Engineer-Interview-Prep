@@ -56,3 +56,26 @@ Rule 4 is enforced twice: the prompt tells the SQL agent that guest names are pr
 The same split applies to the outcome. The agent's reply is not proof that it booked; the `reservations` table is. Notebook 01b checks for exactly one new row for Dana Lee, and a reply that only says it booked counts as a failure.
 
 Routing is the one place the lesson keeps a weak design on purpose. The coordinator forwards by writing an agent's name, and `mentioned_agent()` looks for that name (or the same words with a space) in the reply. Any reply that mentions an agent routes there: *I can't involve the reservation assistant until you give me dates* forwards to the reservation agent. The fix is a typed router, where the model returns its choice as a structured-output field and there is no reply text to search; notebook 05b routes that way.
+
+## Check yourself
+
+<details>
+<summary>1. The SQL agent's prompt already says guest names are private. Why does notebook 01b also make the guest_name column unreadable in SQLite?</summary>
+
+Only the database guard survives a model that ignores its prompt. The authorizer returns `SQLITE_IGNORE` for `reservations.guest_name`, so the column reads as NULL while `SELECT *` still works. A refused booking says when the room is taken, never who took it, so rule 4 holds in the refusal too.
+
+</details>
+
+<details>
+<summary>2. After a COMPLIANT verdict, the coordinator's reply names the checker again while forwarding Dana Lee's booking. Why does the turn not loop back to the checker?</summary>
+
+`checked_since_last_guest_message()` walks back through the messages and finds a `compliance` verdict after the latest guest message. The router then drops `compliance_checker` from the names it looks for, so the reply routes to the reservation agent.
+
+</details>
+
+<details>
+<summary>3. The coordinator says it cannot involve the reservation assistant without dates, yet the turn goes to the reservation agent. Why, and what is the fix?</summary>
+
+`mentioned_agent()` routes to any agent whose name appears in the reply, even in a refusal. The fix is a typed router: the model returns its choice as a structured-output field, so there is no reply text to search. Notebook 05b routes that way.
+
+</details>

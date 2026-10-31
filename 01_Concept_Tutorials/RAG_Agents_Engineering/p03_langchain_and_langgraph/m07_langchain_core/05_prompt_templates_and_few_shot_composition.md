@@ -64,3 +64,26 @@ flowchart TD
 Templates compose with `+`. Adding two `PromptTemplate` objects concatenates the text and merges the variables: a passages part plus a question part gives one template with `['passages', 'question']`. `ChatPromptTemplate` objects add the same way, message list to message list. `PipelinePromptTemplate`, the 0.x class for this, is in neither `langchain-core` 1.7.0 nor `langchain-classic`.
 
 A template is data, so it can be versioned like code. In 1.x, `dumps` and `loads` from `langchain_core.load` save and restore it as JSON. `loads` takes `allowed_objects=[PromptTemplate]`: deserialising rebuilds objects from the file's contents, so you name the classes you trust. The older `.save()` still runs and warns that it was deprecated in `langchain-core` 1.2.21 and will be removed in 2.0.0.
+
+## Check yourself
+
+<details>
+<summary>1. In the Larkspur answer prompt, why do the input variables drop from four names to three after calling partial for the format instructions?</summary>
+
+`.partial()` fills the `format_instructions` slot once, at build time, so callers never pass it. What remains is `history`, `passages` and `question`; `history` is a `MessagesPlaceholder` that takes a whole message list at call time.
+
+</details>
+
+<details>
+<summary>2. You want the model to return Larkspur answers in an exact JSON citation format. Should you describe the format or show it, and what must you watch for?</summary>
+
+Show it. One or two examples of a question, its passages and the exact JSON answer show the citation format better than a description; `FewShotChatMessagePromptTemplate` adds each as a human message and an AI reply. Examples written inside a template string need their braces doubled, or `"answer"` becomes a variable and formatting raises `KeyError`.
+
+</details>
+
+<details>
+<summary>3. Two of the four template mistakes pass without an error. Which two, and how do you catch them?</summary>
+
+A typo in the `input_variables` you pass, which is recomputed from the template text unless `validate_template=True`, and `.partial()` for a slot the template does not have, which is ignored. Printing `input_variables` and the formatted messages once, before the first model call, catches both.
+
+</details>

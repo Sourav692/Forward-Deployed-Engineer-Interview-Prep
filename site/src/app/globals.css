@@ -211,6 +211,23 @@ body {
   margin: 1.5rem auto;
   border: 1px solid var(--border);
 }
+/* Reveal blocks: the RAG course's Check yourself questions (Phase 3, DATA-07) and the mock
+   interviews' hidden constraints. The question is the summary; the answer opens under it. */
+.prose details {
+  border-block: 1px solid var(--border);
+}
+.prose details + details {
+  border-top: 0;
+}
+.prose summary {
+  cursor: pointer;
+  padding-block: 0.625rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.prose details > :not(summary) {
+  margin-block: 0.25rem 0.75rem;
+}
 
 .prose li::marker {
   color: var(--text-subtle);

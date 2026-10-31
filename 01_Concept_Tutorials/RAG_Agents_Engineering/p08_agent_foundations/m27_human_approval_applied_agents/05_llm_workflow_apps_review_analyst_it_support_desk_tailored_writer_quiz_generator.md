@@ -31,3 +31,26 @@ The notebooks repeat five rules:
 On the Larkspur handbook the same shape triages the support queue. One structured call per ticket returns the language, a category (refund, outage, sizing) and a draft reply. Code routes outage tickets to the incident template, checks that every number in a reply appears in the handbook (the 30-day refund window, the 99.95% availability target), and holds any reply that fails for a person. A reply that issues a refund is an action, so it goes through the approval gate from [27.1](01_dry_run_harness_and_human_approval.md#lesson-approval-gates).
 
 These apps are workflows in the sense of lesson 27.4: the same steps every time, cheap, easy to test. Choose an agent only when the next step depends on what the model finds.
+
+## Check yourself
+
+<details>
+<summary>1. Why do the workflow apps render the final document from a template instead of asking the model to merge the checked parts?</summary>
+
+A model asked to merge a checked summary and checked questions could reword them after the checks ran. A template cannot, so what the user reads is exactly what passed the checks.
+
+</details>
+
+<details>
+<summary>2. The writer's fact sheet gives RAM, screen sizes and a battery rating but no camera figure, and an advert claims 50 MP. What catches it?</summary>
+
+The code check that every number in the output appears in the source flags "50 MP" as invented. String and number checks are cheap enough to run on every call. The Larkspur triage version runs the same check against the handbook's numbers, such as the 30-day refund window.
+
+</details>
+
+<details>
+<summary>3. For the multilingual support desk, should you use one structured call per ticket or the four-step translate chain?</summary>
+
+The notebook measures both on the same tickets before choosing. One structured call makes a quarter of the LLM calls, and the chain's free-text steps can leak a code fence or "The customer message in English is:" into the reply.
+
+</details>

@@ -101,3 +101,26 @@ title: Sentence window lab
 The window is stored, not computed at query time. Each node holds its window and a copy of its sentence in metadata: on the handbook that is 5,249 characters of metadata at `window_size=1`, 9,313 at 3 and 12,342 at 5, against 1,380 characters of sentence text. At the notebook's default the metadata is 6.75 times the text, held in the docstore or the vector store's payload for every node.
 
 [M19's enrichment windows](/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/context-enrichment-windows) do the same job with character chunks and a neighbour lookup at query time. LlamaIndex moves the work to indexing time and the unit to the sentence, and `04a` compares it against a `SentenceSplitter()` index at its 1,024-token default, both at `similarity_top_k=1`. Both of `04a`'s pipelines are handed the same FAISS store, which stays empty for the reason in [22.1](/learn/complete-rag-applications/framework-fluency-llamaindex/simple-pdf-and-csv-rag-in-llamaindex#lesson-nodes); each `VectorStoreIndex` builds its own in-memory store.
+
+## Check yourself
+
+<details>
+<summary>1. Why can changing the window size never fix a retrieval miss?</summary>
+
+The window is excluded from the embedding, so the vector is the sentence alone and every sentence scores the same at every window size. The window only changes what the model reads after retrieval, when `MetadataReplacementPostProcessor` swaps the node's text for its `window` metadata.
+
+</details>
+
+<details>
+<summary>2. For the question about exporting data after cancelling, at top-k of 1, what window size do you need, and why does a larger one change nothing?</summary>
+
+A window of 2, because the "Settings, then Data" sentence sits two places back from the retrieved one; that window holds both facts in 272 characters. The exports section is its own Document with four sentences, and a window never crosses a Document boundary, so every window from 2 up sends the same 272 characters.
+
+</details>
+
+<details>
+<summary>3. At top-k of 2 and window size 3, the refund-timing question sends the model 1,241 characters. What is wasted, and what do you do?</summary>
+
+The two retrieved sentences are two places apart, so their windows share 5 sentences, and 1,241 characters cover only 9 distinct sentences. Merge overlapping windows before synthesis whenever `k` is above 1.
+
+</details>

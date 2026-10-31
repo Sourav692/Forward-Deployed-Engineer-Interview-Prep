@@ -55,3 +55,26 @@ flowchart LR
 Use the snapshot's own `config` when you fork. The [06a notebook](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m10_langgraph_runtime/notebooks/06a_LangGraph_State_Management.ipynb) notes that a hand-built config without `checkpoint_ns` breaks `update_state`.
 
 A replayed node runs its code again. If `execute` sends a refund, replay sends another one; [lesson 10.6](06_state_management_in_practice.md#lesson-resume-and-side-effects) shows how to make that harmless.
+
+## Check yourself
+
+<details>
+<summary>1. How does one compiled graph with a checkpointer serve every Larkspur customer at once without mixing their conversations?</summary>
+
+The `thread_id` in the config is the key. Calls with the same id share one saved history, so a second turn sees the first; calls with different ids never see each other. The checkpointer saves a snapshot of the whole state after every step, filed under that id.
+
+</details>
+
+<details>
+<summary>2. The finished refund-17 thread holds 6 checkpoints. You fork it from step 2, setting risk to high, and continue. How many checkpoints are there now, and what happens to the original branch?</summary>
+
+9. `update_state` writes a new checkpoint (source `update`, step 3, still waiting on `execute`) whose parent is the old one, and continuing the fork runs `execute` and `done` on it. The original branch stays in the history.
+
+</details>
+
+<details>
+<summary>3. Larkspur runs several workers that share threads, and threads must survive a restart. Which saver do you choose?</summary>
+
+`PostgresSaver`. `InMemorySaver` is gone on restart, and `SqliteSaver` writes a file that suits one process on one machine. The graph code does not change between savers, so the workers stay stateless and any of them can continue any thread.
+
+</details>

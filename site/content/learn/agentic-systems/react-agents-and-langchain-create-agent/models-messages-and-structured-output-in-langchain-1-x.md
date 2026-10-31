@@ -39,3 +39,26 @@ Three details matter in production:
 Not every model supports structured output. `llm.profile` (LangChain 1.1) reports capabilities from the open `models.dev` data; for `gpt-4o-mini` it lists `structured_output: true`, `tool_calling: true` and `max_input_tokens: 128000`. Branch on it rather than guessing.
 
 The two optional notebooks cover the parts underneath. `init_chat_model` builds a model for any provider behind one interface, with streaming and batching. Messages are the unit of context: `SystemMessage`, `HumanMessage`, `AIMessage` and `ToolMessage`, and the list you pass is all the model sees. An `AIMessage` that asks for a tool usually has `content=""` and carries the call in `.tool_calls`, so print both when you debug a run.
+
+## Check yourself
+
+<details>
+<summary>1. When should a structured-output schema be a Pydantic model rather than a TypedDict?</summary>
+
+When the data crosses a trust boundary. Pydantic returns an instance and raises if the provider sends a string where you declared an `int`; a `TypedDict` returns a plain `dict` with no validation and hands you the string.
+
+</details>
+
+<details>
+<summary>2. A ticket schema has a required refund amount, and the model writes a number even for questions that mention no refund. What change stops it?</summary>
+
+Make the field optional with a `None` default, for example `refund_amount: float | None = Field(None, description=...)`. A required field forces the model to write a value, while an optional one lets it leave a missing fact empty.
+
+</details>
+
+<details>
+<summary>3. You add a field description inside a TypedDict with an equals Field call, yet the field stays required and the model never sees the description. What happened?</summary>
+
+`= Field(...)` inside a `TypedDict` is silently discarded. `NotRequired[...]` will not help either, because LangChain's schema converter rejects it. Put the default and description in `Annotated[float | None, None, "description"]`, or switch to Pydantic.
+
+</details>

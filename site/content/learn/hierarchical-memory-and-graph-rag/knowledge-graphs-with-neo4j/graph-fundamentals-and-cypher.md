@@ -33,3 +33,26 @@ Pass `feature="export"` and `region="eu"` as parameters. Reusing `p` requires on
 The notebook uses `GraphDatabase.driver`, sessions, `session.execute_write` and `session.run`. Keep a driver open for its intended lifetime, consume query results while their session is open, and close it when finished. Some notebook helper functions close the shared driver in `finally`; running cells out of order can therefore require recreating it.
 
 For diagnosis, inspect the returned paths and their source facts before asking a model to phrase the result. A fluent answer cannot supply a relationship the query failed to match.
+
+## Check yourself
+
+<details>
+<summary>1. Why are relationship types and directions modelling decisions, and what can it mean when an expected edge is absent?</summary>
+
+Direction encodes meaning: `Plan SUPPORTS Feature` permits a different question from `Feature DEPENDS_ON Service`, so you choose types before any retrieval runs. A graph answers only relationships you stored or can derive from them. An absent edge can mean the extraction missed it, not that the claim is false.
+
+</details>
+
+<details>
+<summary>2. The EU export query reuses one variable p in both patterns. What goes wrong if each pattern binds its own plan variable?</summary>
+
+Reusing `p` requires one plan to satisfy both facts: it supports export and it is available in the EU. Independent variables admit unrelated matches, such as one plan with export and another plan in the EU region. `DISTINCT` only removes repeated rows; it does not repair duplicate entity identities.
+
+</details>
+
+<details>
+<summary>3. A model-phrased answer says no plan supports export in the EU, and you expected one. What do you inspect before the wording?</summary>
+
+The returned paths and their source facts. A fluent answer cannot supply a relationship the query failed to match, so check whether the pattern matched the stored labels, directions and identifiers before asking a model to phrase the result.
+
+</details>

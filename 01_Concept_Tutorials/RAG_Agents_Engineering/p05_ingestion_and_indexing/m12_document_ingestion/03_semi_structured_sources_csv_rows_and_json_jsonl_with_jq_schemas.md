@@ -47,3 +47,26 @@ flowchart LR
 One more from the notebook: passing `csv_args={"fieldnames": [...]}` to rename columns on a file that already has a header row turns that header into a Document. The notebook's five-row `data.csv` loads as six Documents, and the first one reads `Property ID: Property_ID`, `Address: Address`. Rename the columns in the file instead, or drop that first Document.
 
 `JSONLoader` splits the same decision across two arguments. `content_key` names the field that becomes `page_content`, and `metadata_func(record, metadata)` copies the fields you want to filter on. The notebook copies `sender_name` and `timestamp_ms`, so a query can ask for one person's messages in a time range. The loader adds `source` as an absolute path and `seq_num` counting from 1, while `CSVLoader` writes `source` as you passed it and counts `row` from 0. Lesson 12.5 maps these differences onto one schema.
+
+## Check yourself
+
+<details>
+<summary>1. What does the jq schema passed to JSONLoader decide, and why does it matter for retrieval?</summary>
+
+It decides where one Document starts, and so the smallest thing retrieval can return. On `chat_data.json`, `.` gives one Document of 1,612 characters, while `.messages[]` gives 11, one per message. A path that misses on some records still yields an empty Document, so count empty Documents after every load.
+
+</details>
+
+<details>
+<summary>2. You load plans.csv with metadata columns set to plan and price and no content columns. What text gets embedded for the Business row, and what breaks?</summary>
+
+The text becomes `vcpu: 4\nmemory_gb: 16\ntraffic_tb: 5`, because `metadata_columns` alone removes those columns from the text. The word "Business" is gone from the embedding, so a question about the Business plan cannot match it. List `plan` in `content_columns` too, and cast `price_usd` to `int`, since it stays the string `'48'`.
+
+</details>
+
+<details>
+<summary>3. A five-row CSV loads as six Documents, and the first one reads Property ID: Property_ID. What caused it?</summary>
+
+The loader was given `csv_args={"fieldnames": [...]}` to rename columns on a file that already has a header row, so the header was read as a data row. Rename the columns in the file instead, or drop that first Document.
+
+</details>

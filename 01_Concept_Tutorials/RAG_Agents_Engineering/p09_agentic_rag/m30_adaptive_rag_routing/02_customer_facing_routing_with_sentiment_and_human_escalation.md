@@ -52,3 +52,26 @@ Sentiment is a proxy for "a person should handle this". It misses a calm custome
 | Needless escalation | An agent's time on a question the handbook answers | Escalated tickets an agent closes with a handbook link |
 
 Other triggers belong beside sentiment: a router that fell back to searching every knowledge base, an answer the hallucination grader rejected (lesson 30.3), or the same customer asking the same question twice.
+
+## Check yourself
+
+<details>
+<summary>1. Why does the router check sentiment before it checks the topic?</summary>
+
+The order is the policy. Checked first, a negative ticket goes to a person and never reaches the knowledge base, however well the router would have classified its topic. An angry customer wants a person, not a retrieved answer.
+
+</details>
+
+<details>
+<summary>2. A calm Larkspur customer writes that their production server is down right now. Where should it go, and what risk does sentiment-only routing carry?</summary>
+
+To the on-call engineer, the Larkspur equivalent of the clinic's Distress route. Sentiment misses a calm customer with an urgent problem, so this ticket may get a handbook answer: a missed escalation. Count it from tickets the customer reopens or escalates after an automated answer, and add triggers beside sentiment.
+
+</details>
+
+<details>
+<summary>3. The clinic notebook's form node polls widgets in a loop until Submit is pressed. Why does that fail in a service, and what replaces it?</summary>
+
+The node holds the graph open, so it ties up a worker per waiting customer, and a restart loses every form in progress. Use `interrupt()`: the node pauses with the form it needs, the state is saved under the `thread_id`, and `Command(resume=form_values)` continues later. With a persistent checkpointer the paused ticket survives a restart.
+
+</details>

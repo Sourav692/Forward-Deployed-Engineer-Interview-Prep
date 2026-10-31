@@ -69,3 +69,26 @@ The voting graph gives each reviewer one concern (injection, secrets handling, i
 The threshold trades false alarms against misses. Raising it to 3 blocks less often: fewer false alarms, more misses. Lowering it to 1 blocks on any single flag. On the unsafe snippet the validation reviewer flagged the SQL injection too, outside its own concern, so the votes are not fully independent; count on that when you set the threshold.
 
 For Larkspur, voting fits a check before a reply goes out: does it promise a refund the policy does not allow, does it quote the right refund window, does it commit to a support response time. Three narrow reviewers and a threshold are easier to tune than one judge asked about everything.
+
+## Check yourself
+
+<details>
+<summary>1. Why does a fan-out's wall time follow its slowest branch rather than the sum of its branches?</summary>
+
+The targets of a fan-out run in the same step, concurrently, and the fan-in node waits until all of them finish. So the cost is the step before, plus the slowest branch, plus the merge: the three story sections took 10.6 s, against about 13.4 s in sequence.
+
+</details>
+
+<details>
+<summary>2. Under a concurrency cap of 2, the story sections take 1.6, 4.7 and 7.0 seconds. Should you submit the fastest or the slowest branch first?</summary>
+
+The slowest first. Submitted as written, `setting` (7.0 s) gets a slot at once and the request still takes 10.6 s, the same as with no cap. Submitted fastest first, `setting` waits 1.6 s for a slot, the merge starts at 8.6 s and the request takes 12.2 s.
+
+</details>
+
+<details>
+<summary>3. The security vote blocks code at 2 of 3 flags and raises too many false alarms. Which way do you move the threshold, and what does it cost?</summary>
+
+Raise it to 3. The aggregator then blocks less often: fewer false alarms, but more misses. Allow for the votes not being fully independent, since the validation reviewer flagged the SQL injection outside its own concern.
+
+</details>

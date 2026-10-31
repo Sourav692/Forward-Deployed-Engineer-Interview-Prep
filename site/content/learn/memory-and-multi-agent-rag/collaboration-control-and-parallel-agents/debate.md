@@ -39,3 +39,26 @@ Debate earns its cost on questions with legitimate trade-offs and no single corr
 On the Larkspur handbook that line is easy to draw. "How long does a refund take?" has one answer, 5 to 10 business days, and belongs to retrieval. "Should the support assistant stop retrieving and put the whole handbook in a long-context prompt?" is a trade-off between cost per call, accuracy on facts buried mid-context and access control ([M11](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-interview-questions)'s fifth interview question); a debate transcript and its judged verdict are a useful input to that decision. When two retrieved chunks disagree, for example an old and a new refund policy, fix the index first with version metadata and a filter ([M12](/learn/ingestion-and-indexing-pipeline/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview)) rather than asking two agents to argue about which one is current.
 
 Known weaknesses: both debaters can miss a consideration neither persona was primed to raise, a weak persona makes the debate lopsided, and the judge is a single point of bias unless its prompt keeps it even-handed.
+
+## Check yourself
+
+<details>
+<summary>1. Why must each debater rebut the opponent's strongest recent point before adding one or two of its own?</summary>
+
+Without the rebuttal rule the debate turns into two parallel monologues, and the judge has nothing to weigh. Engagement is what lets the judge's verdict name the strongest point from each side and the weak or overstated claims.
+
+</details>
+
+<details>
+<summary>2. How many LLM calls does the notebook's three-round debate cost against a single call, and what do the extra calls buy?</summary>
+
+`2N + 1` calls, so 7 for `N = 3` (six turns and one verdict), against 1. They buy a transcript, the strongest point from each side and a judged recommendation. A capable model often hedges on its own, so the single call is the baseline to compare against.
+
+</details>
+
+<details>
+<summary>3. Two retrieved Larkspur chunks give an old and a new refund policy. Should two agents debate which one is current?</summary>
+
+No. Fix the index first with version metadata and a filter ([M12](/learn/ingestion-and-indexing-pipeline/document-ingestion-and-metadata-design/document-ingestion-and-metadata-design-overview)). Debate earns its cost on trade-offs with no single correct answer; a factual question such as how long a refund takes (5 to 10 business days) belongs to retrieval.
+
+</details>

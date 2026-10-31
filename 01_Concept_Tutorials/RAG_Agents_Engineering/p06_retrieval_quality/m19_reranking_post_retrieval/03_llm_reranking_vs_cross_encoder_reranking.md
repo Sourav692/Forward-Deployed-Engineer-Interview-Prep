@@ -24,3 +24,26 @@ Each failure shows up in the notebook code:
 The notebook's last example builds a corpus of five chunks to show why reranking helps. Three are short sentences that repeat the question's words without naming the city ("The capital of France is great."), and two are longer passages about visiting Paris. `compare_rag_techniques` prints the top 2 by plain similarity next to the top 2 from the LLM reranker. The notebook does not save its outputs, so run it to see which chunks each method picks.
 
 For Larkspur's support assistant the choice comes down to traffic and stakes. A cross-encoder runs locally with no per-call fee and no parsing step to fail, so it is the default second stage. An LLM reranker earns its cost on low-volume, high-stakes questions where it can follow an instruction a cross-encoder cannot, such as "prefer the current policy over the archived one". A middle path is to let the cross-encoder cut 50 to 10 and the LLM order the last 10. Whichever you pick, compare them on golden-set precision@5 and p95 latency together.
+
+## Check yourself
+
+<details>
+<summary>1. How do the listwise and pointwise LLM rerankers differ in calls per question and in what the model sees?</summary>
+
+Listwise (19.1) makes one call holding every numbered candidate, so the model sees them all and returns an order as text to parse. Pointwise (19.3) makes one call per candidate, 15 in the example and up to 30 in `CustomRetriever`, and the model rates each chunk from 1 to 10 without seeing the others.
+
+</details>
+
+<details>
+<summary>2. The pointwise reranker scores 15 candidates in whole numbers from 1 to 10. What happens to the ranking, and why does it matter?</summary>
+
+There must be ties, since 15 candidates share 10 possible scores. Python's sort is stable, so tied chunks keep their stage-1 order, and the reranker decides less of the final order than it appears to.
+
+</details>
+
+<details>
+<summary>3. Which reranker should Larkspur's support assistant use by default, and when does an LLM reranker earn its cost?</summary>
+
+A cross-encoder by default: it runs locally, has no per-call fee and no parsing step to fail. An LLM reranker earns its cost on low-volume, high-stakes questions that need an instruction such as "prefer the current policy over the archived one". A middle path lets the cross-encoder cut 50 to 10 and the LLM order those 10; compare on precision@5 and p95 latency together.
+
+</details>

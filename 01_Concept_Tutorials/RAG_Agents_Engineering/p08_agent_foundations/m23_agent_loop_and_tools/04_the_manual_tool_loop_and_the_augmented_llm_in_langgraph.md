@@ -53,3 +53,26 @@ flowchart LR
 The solid edges are `04b`'s graph. *Explain AI in 2 bullets* ends at the first `END` with a direct answer. *What is the latest news on OpenAI product releases* calls `search_web`, and the run ends on the raw Tavily JSON in a `ToolMessage`: nobody reads the result, the user gets no sentence, and a second, dependent call is impossible.
 
 That graph is an augmented LLM. One more edge makes it an agent: `tools` back to the model instead of to `END` (the dashed line). Lesson 23.5's `create_tool_agent` adds it with `graph.add_edge("tools", "agent")`, and the graph becomes the loop in the module's mental model.
+
+## Check yourself
+
+<details>
+<summary>1. Why does every ToolMessage carry the id of the tool call it answers?</summary>
+
+The `tool_call_id` pairs a result with its request. With two parallel calls the model would otherwise get two unlabelled strings and no way to tell which tool produced which. OpenAI's API also rejects a history in which a tool call has no matching `ToolMessage`, so dropping a failed call's result breaks the next request.
+
+</details>
+
+<details>
+<summary>2. A customer asks if web-1 is running and if a reboot changes its IP. How many messages does the trace hold, and why are both tools requested at once?</summary>
+
+Five: the `HumanMessage`, one `AIMessage` with two calls (`get_server_status` and `search_handbook`), two `ToolMessage`s and the final `AIMessage`. Neither call depends on the other, so the model asks for both at once and saves a round trip.
+
+</details>
+
+<details>
+<summary>3. The graph from the second notebook answers a news question with raw Tavily JSON and no sentence. What is missing, and which one change fixes it?</summary>
+
+The `tools` node goes straight to `END`, so nobody reads the result and no dependent call is possible. That graph is an augmented LLM. Adding the edge from `tools` back to the model (`graph.add_edge("tools", "agent")` in lesson 23.5's `create_tool_agent`) makes it an agent loop.
+
+</details>

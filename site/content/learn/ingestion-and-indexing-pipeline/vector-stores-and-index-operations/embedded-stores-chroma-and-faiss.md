@@ -43,3 +43,26 @@ Both run inside your Python process with no server. They differ in what they do 
 The filter difference shows up as missing results. In a check run for this page, a FAISS store held 25 chunks tagged `t="no"` that sat close to the query and 3 tagged `t="yes"` further away. `similarity_search(q, k=3, filter={"t": "yes"})` returned 0 results, because none of the 3 was among the 20 nearest candidates; with `fetch_k=28` it returned all 3. Chroma, asked for `k=5` with a filter only 2 entries match, returned those 2.
 
 The notebooks' guidance: start with Chroma for anything you might keep, choose FAISS for a static corpus you search often, and move to a hosted store (lesson 15.3) when you need concurrent writers or more than one machine.
+
+## Check yourself
+
+<details>
+<summary>1. Why can an approximate nearest-neighbour index miss the right chunk without anyone noticing?</summary>
+
+An ANN index visits only a small part of the collection and gives up the guarantee of the true top k. A miss raises no error: the index returns the next-best chunk with a normal-looking score, so a recall drop shows up as worse answers. Measure recall@k against an exact search on your own queries, and raise `ef_search` until the misses stop mattering for the golden set.
+
+</details>
+
+<details>
+<summary>2. A FAISS store holds 25 chunks tagged no near the query and 3 tagged yes further away. A search filtered to yes with k of 3 returns nothing. Why?</summary>
+
+The FAISS wrapper filters in Python after ranking, on the `fetch_k=20` nearest candidates, and none of the 3 matching chunks was among them. With `fetch_k=28` it returns all 3. Chroma filters inside the store before ranking, so it returns every match up to `k`.
+
+</details>
+
+<details>
+<summary>3. Your index needs several writers at once across more than one machine. Is Chroma or FAISS the right choice?</summary>
+
+Neither. Both run inside your Python process with no server, so the notebooks' guidance is to move to a hosted store (lesson 15.3) when you need concurrent writers or more than one machine. On one machine, choose Chroma for anything you might keep and update, and FAISS for a static corpus you search often.
+
+</details>

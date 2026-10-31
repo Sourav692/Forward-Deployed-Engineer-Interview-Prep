@@ -36,3 +36,26 @@ The module objectives sort the architectures into five families. Each family add
 Memory ([M33](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview), [M34](/learn/memory-and-multi-agent-rag/memory-and-state/memory-and-state-overview)) cuts across all five. A follow-up such as *How long do I have?* needs rewriting into a standalone question before any of these architectures can retrieve for it.
 
 The families also stack. The [M28](/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview) agent is a tool-based loop with a self-correcting grader; adaptive RAG in [M30](/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/adaptive-rag-and-query-routing-overview) is a router in front of two graders. When a design names several families, count each component's calls separately, so a later review can remove one without guessing what it cost.
+
+## Check yourself
+
+<details>
+<summary>1. What common unit does the lesson use to compare the architectures, and what does that unit leave out?</summary>
+
+Model calls per question, because every architecture is the [M11](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) pipeline with components added: plain RAG is 1 call, routing and tool loops 2 to 7, and self-correcting loops climb to 10 and 20. It leaves out index-time LLM work, which is the main cost of collapsed-tree RAPTOR and GraphRAG, so those have no counted query cost on the axis.
+
+</details>
+
+<details>
+<summary>2. The agentic RAG agent with query rewriting is a tool-based loop with a self-correcting grader. How should a design document count its cost?</summary>
+
+Count each component's calls separately: the loop's calls and the grader's calls. A later review can then remove one component and know what it saves, instead of guessing from a single total.
+
+</details>
+
+<details>
+<summary>3. A customer asks a follow-up, How long do I have?, and every architecture retrieves the wrong chunks. What is missing?</summary>
+
+Memory ([M33](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview), [M34](/learn/memory-and-multi-agent-rag/memory-and-state/memory-and-state-overview)), which cuts across all five families. The follow-up has to be rewritten into a standalone question using the conversation before any architecture can retrieve for it.
+
+</details>

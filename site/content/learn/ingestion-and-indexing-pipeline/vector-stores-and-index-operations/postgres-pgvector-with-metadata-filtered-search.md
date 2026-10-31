@@ -41,3 +41,26 @@ flowchart LR
 Adding an ANN index to pgvector moves it towards post-filtering. The [pgvector README](https://github.com/pgvector/pgvector) says: "With approximate indexes, filtering is applied *after* the index is scanned." Its example: if a condition matches 10% of rows, an HNSW scan with the default `hnsw.ef_search` of 40 leaves "only 4 rows" on average. From version 0.8.0, iterative index scans (`SET hnsw.iterative_scan = strict_order` or `relaxed_order`) keep scanning until enough rows pass the filter.
 
 The symptom of post-filtering is a query that asks for `k = 5` and gets 2. Log `len(results)` beside `k` on every filtered query; raising `k` hides the problem without fixing it.
+
+## Check yourself
+
+<details>
+<summary>1. Why is a metadata filter on the tenant not enough for access control?</summary>
+
+A caller who omits the filter sees everything. Enforce the filter in the service that builds the query, or give each tenant its own namespace or collection (lesson 15.3).
+
+</details>
+
+<details>
+<summary>2. A filter dict with source and category as two keys works on PGVector. What happens when the same code moves to Chroma, and how should it be written?</summary>
+
+PGVector reads the two keys as AND, but Chroma raises `ValueError: Expected where to have exactly one operator`. Write `{"$and": [{...}, {...}]}`, the portable form, whenever code may move between stores.
+
+</details>
+
+<details>
+<summary>3. You add an HNSW index to pgvector, and a filtered query asking for 5 results now returns 2. What happened, and what do you change?</summary>
+
+With an approximate index, pgvector applies the filter after scanning the index, so it behaves like post-filtering: a condition matching 10% of rows leaves about 4 rows at the default `hnsw.ef_search` of 40. From version 0.8.0, iterative index scans keep scanning until enough rows pass the filter. Log `len(results)` beside `k` on every filtered query, because raising `k` hides the problem without fixing it.
+
+</details>

@@ -56,3 +56,26 @@ Compare it with the schema notebook 01a wrote by hand. That one gave each parame
 FastMCP also infers an output schema from the return type. For the Larkspur `search_handbook` tool, which returns `str`, the definition carries `"outputSchema": {"properties": {"result": {"title": "Result", "type": "string"}}, "required": ["result"], "title": "search_handbookOutput", "type": "object"}`, and every call returns the text twice: once in `content` and once in `structuredContent`. The notebook's chatbot passes only `result.content` to the model, so the copy costs bytes on the wire and nothing in the prompt.
 
 Test a server before writing a client. The MCP Inspector launches it the way a client would, `npx @modelcontextprotocol/inspector uv run research_server.py`, and lets you list and call tools by hand. If a tool works in the Inspector and fails in the chatbot, look in the client first.
+
+## Check yourself
+
+<details>
+<summary>1. Where does FastMCP take each part of a tool definition from, and where do the docstring's parameter descriptions end up?</summary>
+
+The name comes from the function name, the description from the whole docstring, the types and `required` from the type hints, and `default` from the Python default. Nothing fills the property descriptions: the `Args:` lines stay inside the tool description, so the model reads parameter help only as free text.
+
+</details>
+
+<details>
+<summary>2. The Larkspur search tool needs a chunk count between 1 and 12 that the model can see in the schema. How do you declare it?</summary>
+
+Put the help and the limits in the type: `Annotated[int, Field(description="Number of chunks to return", ge=1, le=12)]`. SDK 1.30.0 then adds `description`, `minimum` and `maximum` to that property. An `Args:` line in the docstring would only add free text to the tool description.
+
+</details>
+
+<details>
+<summary>3. A tool works when you call it by hand in the MCP Inspector but fails inside your chatbot. Where do you look first?</summary>
+
+In the client. The Inspector launches the server the way a client would and calls the tool directly, so a pass there shows the server and the tool work. Test the server in the Inspector before writing a client, so this split is available when something breaks.
+
+</details>
