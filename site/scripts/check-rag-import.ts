@@ -5,6 +5,7 @@
 import assert from 'node:assert/strict'
 import { britishSpelling } from '../src/lib/spelling.ts'
 import { britishText, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
+import { parseLabFence, parseReading } from '../src/lib/reading.ts'
 
 assert.equal(britishSpelling('Summarization'), 'Summarisation')
 assert.equal(britishSpelling('analyzing'), 'analysing')
@@ -32,5 +33,13 @@ assert.equal(interview, '# Interview questions\n\n### 1. Q?\n')
 assert.equal(spotlight, 'Interview Spotlight: 5 Questions')
 assert.equal(trimLessonPage('# T\n\n*[M11 theory](../README.md) · Lesson 11.2 · Notebooks: [`a.ipynb`](b) · [All theory pages](c)*\n\n## A\n'),
   '# T\n\n*Notebooks: [`a.ipynb`](b)*\n\n## A\n')
+
+// The ```lab fence the import writes becomes a lab chunk in the lesson (FE-05).
+const fence = '```lab\nsrc: /labs/rag/m11_rag_lifecycle/top-k-retrieval-lab.html\ntitle: Top-k and the baseline\n```'
+assert.deepEqual(parseReading(`# T\n\n## A\n\n${fence}\n`, 'lesson').sections[0].chunks, [
+  { kind: 'lab', src: '/labs/rag/m11_rag_lifecycle/top-k-retrieval-lab.html', title: 'Top-k and the baseline' },
+])
+assert.equal(parseLabFence('src: https://evil.example/x.html\ntitle: X'), null)
+assert.equal(parseLabFence('src: /labs/../secret.html\ntitle: X'), null)
 
 console.log('rag import transforms: all checks pass')
