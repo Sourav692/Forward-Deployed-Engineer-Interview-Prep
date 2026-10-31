@@ -14,7 +14,9 @@ import { marked, type Links, type Token, type Tokens, type TokensList } from 'ma
  *    its source;
  *  - at each ```lab fence (`src: /labs/…` and `title: …` lines, written by the RAG theory
  *    import), which a lesson shows as a card that opens the lab. A fence whose src is not
- *    under /labs/ stays a code block.
+ *    under /labs/ stays a code block;
+ *  - at each ```animated fence (an SVG figure the RAG theory import wrote), which a lesson
+ *    draws and steps through. A fence that is not such a figure stays a code block.
  *
  * Section ids are prefixed with the tab id, because all four tabs are in the DOM at
  * once and two of them can share a heading such as "Key Takeaways".
@@ -24,12 +26,23 @@ export type ReadingChunk =
   | { kind: 'html'; html: string }
   | { kind: 'diagram'; code: string }
   | { kind: 'lab'; src: string; title: string }
+  | { kind: 'animated'; html: string }
 
 /** A ```lab fence's lab, or null when it is not a well-formed link to a file under /labs/. */
 export function parseLabFence(code: string): { src: string; title: string } | null {
   const src = code.match(/^src: (\/labs\/[\w./-]+\.html)$/m)?.[1]
   const title = code.match(/^title: (.+)$/m)?.[1].trim()
   return src && title && !src.includes('..') ? { src, title } : null
+}
+
+/**
+ * An ```animated fence's figure, or null when it is not one. The import already refuses a figure
+ * with script, handlers or requests; this repeats the check, because the page inserts it as HTML.
+ */
+export function parseAnimatedFence(code: string): string | null {
+  const html = code.trim()
+  const unsafe = /<(?:script|iframe|object|embed|foreignObject)\b|\son[a-z]+\s*=|\s(?:src|href|xlink:href)\s*=|url\(\s*["']?(?!#)/i
+  return html.startsWith('<figure class="anim') && html.endsWith('</figure>') && !unsafe.test(html) ? html : null
 }
 
 export type ReadingSection = {
@@ -119,6 +132,12 @@ export function parseReading(markdown: string, idPrefix: string): ReadingDocumen
     if (lab) {
       flush()
       current.chunks.push({ kind: 'lab', ...lab })
+      continue
+    }
+    const animated = token.type === 'code' && (token as Tokens.Code).lang?.trim() === 'animated' && parseAnimatedFence((token as Tokens.Code).text)
+    if (animated) {
+      flush()
+      current.chunks.push({ kind: 'animated', html: animated })
       continue
     }
     pending.push(token)

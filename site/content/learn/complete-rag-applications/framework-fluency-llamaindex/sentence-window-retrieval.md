@@ -7,15 +7,71 @@
 
 Small chunks match a question precisely and large chunks answer it completely ([M13](/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview)). A sentence window does both: it embeds single sentences and, once one is retrieved, sends the model the sentences around it. LlamaIndex builds it from two pieces, a node parser at indexing time and a postprocessor at query time.
 
-```mermaid
-flowchart LR
-    subgraph index["Indexing"]
-        D[Document] --> P["SentenceWindowNodeParser<br/>one node per sentence"] --> E["Embed the<br/>sentence only"]
-    end
-    subgraph query["Query"]
-        R["Retrieve<br/>top-k sentences"] --> M["MetadataReplacement<br/>text = window"] --> L["Synthesizer<br/>reads windows"]
-    end
-    E --> R
+```animated
+<figure class="anim sheet" aria-labelledby="anim-swin-cap">
+  <div class="anim__canvas" tabindex="0" aria-label="Sentence window retrieval, scrolls sideways on a narrow screen">
+    <svg viewBox="0 0 800 352" role="img" aria-labelledby="anim-swin-title anim-swin-desc">
+      <title id="anim-swin-title">Sentence window retrieval</title>
+      <desc id="anim-swin-desc">The handbook’s two Documents are split into 17 sentence nodes, 13 for refunds and 4 for exports, and each sentence is embedded alone. The question about a refund after 45 days retrieves the 30-day full-refund rule at 0.6922. The postprocessor replaces it with its window of one sentence on each side, so the model reads 284 characters, with the prorated rule, instead of the bare 142.</desc>
+      <defs>
+        <marker id="ah-swin" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 0 L8 4 L0 8 z"/></marker>
+      </defs>
+      <g class="n-1">
+        <rect class="doc" x="40" y="106" width="28" height="36"/><path class="line" d="M45 116 H63 M45 124 H63 M45 132 H58"/>
+        <rect class="doc" x="40" y="262" width="28" height="36"/><path class="line" d="M45 272 H63 M45 280 H63 M45 288 H58"/>
+      </g>
+      <text class="small" x="54" y="160">refunds</text>
+      <text class="small" x="54" y="316">exports</text>
+      <path class="edge e-1 in-1" d="M70 124 H105" marker-end="url(#ah-swin)"/>
+      <path class="edge e-1 in-1" d="M70 280 H105" marker-end="url(#ah-swin)"/>
+      <g class="in-1">
+        <rect class="chunk" x="110" y="30" width="140" height="10"/><rect class="chunk" x="110" y="46" width="140" height="10"/><rect class="chunk" x="110" y="62" width="140" height="10"/><rect class="chunk" x="110" y="78" width="140" height="10"/><rect class="chunk" x="110" y="94" width="140" height="10"/><rect class="chunk" x="110" y="110" width="140" height="10"/><rect class="chunk" x="110" y="126" width="140" height="10"/><rect class="chunk" x="110" y="142" width="140" height="10"/><rect class="chunk" x="110" y="158" width="140" height="10"/><rect class="chunk" x="110" y="174" width="140" height="10"/><rect class="chunk" x="110" y="190" width="140" height="10"/><rect class="chunk" x="110" y="206" width="140" height="10"/><rect class="chunk" x="110" y="222" width="140" height="10"/><rect class="chunk" x="110" y="252" width="140" height="10"/><rect class="chunk" x="110" y="268" width="140" height="10"/><rect class="chunk" x="110" y="284" width="140" height="10"/><rect class="chunk" x="110" y="300" width="140" height="10"/>
+        <text class="small" x="180" y="336">17 sentence nodes</text>
+      </g>
+      <g class="in-2">
+        <circle class="vec" cx="300" cy="35" r="5"/><circle class="vec" cx="300" cy="51" r="5"/><circle class="vec" cx="300" cy="67" r="5"/><circle class="vec" cx="300" cy="83" r="5"/><circle class="vec" cx="300" cy="99" r="5"/><circle class="vec" cx="300" cy="115" r="5"/><circle class="vec" cx="300" cy="131" r="5"/><circle class="vec" cx="300" cy="147" r="5"/><circle class="vec" cx="300" cy="163" r="5"/><circle class="vec" cx="300" cy="179" r="5"/><circle class="vec" cx="300" cy="195" r="5"/><circle class="vec" cx="300" cy="211" r="5"/><circle class="vec" cx="300" cy="227" r="5"/><circle class="vec" cx="300" cy="257" r="5"/><circle class="vec" cx="300" cy="273" r="5"/><circle class="vec" cx="300" cy="289" r="5"/><circle class="vec" cx="300" cy="305" r="5"/>
+        <text class="small" x="300" y="336">sentence only</text>
+      </g>
+      <g class="n-3"><rect class="box" x="470" y="24" width="180" height="40"/><text class="label" x="560" y="44">Question</text></g>
+      <g class="n-4"><rect class="box" x="470" y="96" width="180" height="40"/><text class="label" x="560" y="116">Retrieve top 1</text></g>
+      <g class="n-5"><rect class="box" x="470" y="168" width="180" height="40"/><text class="label" x="560" y="188">Replace with window</text></g>
+      <g class="n-6"><rect class="box" x="470" y="240" width="180" height="40"/><text class="label" x="560" y="260">Synthesizer</text></g>
+      <path class="edge e-4 in-4" d="M560 64 V93" marker-end="url(#ah-swin)"/>
+      <path class="edge e-5 in-5" d="M560 136 V165" marker-end="url(#ah-swin)"/>
+      <path class="edge e-6 in-6" d="M560 208 V237" marker-end="url(#ah-swin)"/>
+
+      <g class="in-3"><text class="small" x="725" y="36">refund after</text><text class="small" x="725" y="54">45 days?</text></g>
+      <g class="in-4">
+        <rect class="hit" x="110" y="126" width="140" height="10"/>
+        <circle class="hit" cx="300" cy="131" r="5"/>
+        <text class="fig" x="725" y="116">0.6922</text>
+      </g>
+      <path class="edge dashed e-4 in-4" d="M308 131 C390 131 390 116 467 116" marker-end="url(#ah-swin)"/>
+      <g class="in-5">
+        <path class="hit-line" d="M104 106 H98 V156 H104"/>
+        <path class="hit-line" d="M256 106 H262 V156 H256"/>
+        <text class="small" x="725" y="180">window_size</text><text class="small" x="725" y="198">= 1</text>
+      </g>
+      <g class="in-6">
+        <text class="fig" x="725" y="252">284 chars</text>
+        <text class="small" x="725" y="270">not 142</text>
+      </g>
+    </svg>
+  </div>
+  <div class="anim__controls" hidden>
+    <button class="anim__btn" type="button" data-act="prev">Previous</button>
+    <button class="anim__btn" type="button" data-act="play" aria-pressed="false">Play</button>
+    <button class="anim__btn" type="button" data-act="next">Next</button>
+  </div>
+  <ol class="anim__steps" id="anim-swin-cap">
+    <li><button type="button">Split</button><span>SentenceWindowNodeParser makes one node per sentence: 13 for refunds, 4 for exports.</span></li>
+    <li><button type="button">Embed</button><span>Each node is embedded from its sentence alone; the window waits in its metadata.</span></li>
+    <li><button type="button">Question</button><span>A customer asks “Can I get a refund on an annual plan after 45 days?”</span></li>
+    <li><button type="button">Retrieve</button><span>The nearest sentence is the 30-day full-refund rule, at 0.6922. It does not answer the question.</span></li>
+    <li><button type="button">Replace</button><span>MetadataReplacementPostProcessor swaps in the window: the sentence before it and the prorated rule after it.</span></li>
+    <li><button type="button">Synthesize</button><span>The model reads 284 characters instead of 142, and the answer is among them.</span></li>
+  </ol>
+</figure>
 ```
 
 **`SentenceWindowNodeParser`** splits each Document into sentences with NLTK's Punkt tokenizer and makes one node per sentence. For sentence `i` it stores two metadata fields: the sentences from `i - window_size` to `i + window_size` joined with spaces (`window`), and the sentence itself (`original_text`; `04a` renames it `original_sentence`). It adds both keys to the node's excluded embed and LLM metadata, so the vector is the sentence alone. `window_size` defaults to 3, seven sentences in all, as `04a`'s comment says, and must be greater than 0: `window_size=0` fails validation. A window never crosses into another Document.

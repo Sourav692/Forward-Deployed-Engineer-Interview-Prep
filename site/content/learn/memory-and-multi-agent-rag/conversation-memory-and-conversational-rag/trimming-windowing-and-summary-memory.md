@@ -9,14 +9,70 @@ A history that keeps everything grows on every turn (lesson 33.1). The cheap way
 
 The notebook keeps the last `MAX_RECENT = 4` messages verbatim. After each answer it appends the exchange; when the recent list passes four messages, the oldest exchange goes to a summariser chain with the current summary, and the updated summary replaces the old one in the system prompt.
 
-```mermaid
-flowchart LR
-    T[/Turn N/] --> A["Answer from summary,<br/>recent messages, question"]
-    A --> B["Append the exchange<br/>to the recent list"]
-    B --> C{"More than 4<br/>recent messages?"}
-    C -- yes --> F["Fold the oldest exchange<br/>into the summary"]
-    C -- no --> N[Next turn]
-    F --> N
+```animated
+<figure class="anim sheet" aria-labelledby="anim-fold-cap">
+  <div class="anim__canvas" tabindex="0" aria-label="Summary memory over five turns, scrolls sideways on a narrow screen">
+    <svg viewBox="0 0 800 344" role="img" aria-labelledby="anim-fold-title anim-fold-desc">
+      <title id="anim-fold-title">Summary memory over five turns</title>
+      <desc id="anim-fold-desc">Each row is what the model receives on one turn: a running summary, at most four recent messages verbatim, and the new question. Turns 1 to 3 send the recent messages only. After turns 3, 4 and 5 the oldest exchange is folded into the summary, so turn 4 receives a summary of turn 1 and turn 5 a summary of turns 1 and 2. The summariser runs three times in five turns.</desc>
+      <text class="lane-label" x="110" y="24">Summary</text>
+      <text class="lane-label" x="262" y="24">Recent, verbatim</text>
+      <text class="lane-label" x="486" y="24">Question</text>
+      <text class="lane-label" x="600" y="24">After answering</text>
+      <g class="in-1 n-1">
+        <text class="label" x="44" y="70">Turn 1</text>
+        <rect class="box" x="486" y="52" width="48" height="36"/><text class="fig" x="510" y="70">U1</text>
+      </g>
+      <g class="in-2 n-2">
+        <text class="label" x="44" y="128">Turn 2</text>
+        <rect class="box" x="370" y="110" width="48" height="36"/><text class="fig" x="394" y="128">U1</text>
+        <rect class="box" x="424" y="110" width="48" height="36"/><text class="fig" x="448" y="128">A1</text>
+        <rect class="box" x="486" y="110" width="48" height="36"/><text class="fig" x="510" y="128">U2</text>
+      </g>
+      <g class="in-3 n-3">
+        <text class="label" x="44" y="186">Turn 3</text>
+        <rect class="box" x="262" y="168" width="48" height="36"/><text class="fig" x="286" y="186">U1</text>
+        <rect class="box" x="316" y="168" width="48" height="36"/><text class="fig" x="340" y="186">A1</text>
+        <rect class="box" x="370" y="168" width="48" height="36"/><text class="fig" x="394" y="186">U2</text>
+        <rect class="box" x="424" y="168" width="48" height="36"/><text class="fig" x="448" y="186">A2</text>
+        <rect class="box" x="486" y="168" width="48" height="36"/><text class="fig" x="510" y="186">U3</text>
+        <text class="small" x="672" y="186">folds turn 1, call 1</text>
+      </g>
+      <g class="in-4 n-4">
+        <text class="label" x="44" y="244">Turn 4</text>
+        <rect class="doc" x="110" y="226" width="132" height="36"/><path class="hit-line" d="M111 227 V261"/><text class="small" x="176" y="244">summary: turn 1</text>
+        <rect class="box" x="262" y="226" width="48" height="36"/><text class="fig" x="286" y="244">U2</text>
+        <rect class="box" x="316" y="226" width="48" height="36"/><text class="fig" x="340" y="244">A2</text>
+        <rect class="box" x="370" y="226" width="48" height="36"/><text class="fig" x="394" y="244">U3</text>
+        <rect class="box" x="424" y="226" width="48" height="36"/><text class="fig" x="448" y="244">A3</text>
+        <rect class="box" x="486" y="226" width="48" height="36"/><text class="fig" x="510" y="244">U4</text>
+        <text class="small" x="672" y="244">folds turn 2, call 2</text>
+      </g>
+      <g class="in-5 n-5">
+        <text class="label" x="44" y="302">Turn 5</text>
+        <rect class="doc" x="110" y="284" width="132" height="36"/><path class="hit-line" d="M111 285 V319"/><text class="small" x="176" y="302">summary: turns 1, 2</text>
+        <rect class="box" x="262" y="284" width="48" height="36"/><text class="fig" x="286" y="302">U3</text>
+        <rect class="box" x="316" y="284" width="48" height="36"/><text class="fig" x="340" y="302">A3</text>
+        <rect class="box" x="370" y="284" width="48" height="36"/><text class="fig" x="394" y="302">U4</text>
+        <rect class="box" x="424" y="284" width="48" height="36"/><text class="fig" x="448" y="302">A4</text>
+        <rect class="box" x="486" y="284" width="48" height="36"/><text class="fig" x="510" y="302">U5</text>
+        <text class="small" x="672" y="302">folds turn 3, call 3</text>
+      </g>
+    </svg>
+  </div>
+  <div class="anim__controls" hidden>
+    <button class="anim__btn" type="button" data-act="prev">Previous</button>
+    <button class="anim__btn" type="button" data-act="play" aria-pressed="false">Play</button>
+    <button class="anim__btn" type="button" data-act="next">Next</button>
+  </div>
+  <ol class="anim__steps" id="anim-fold-cap">
+    <li><button type="button">Turn 1</button><span>The customer says they are on the annual Team plan. The model receives the question alone.</span></li>
+    <li><button type="button">Turn 2</button><span>They report a double charge. Turn 1 comes back word for word.</span></li>
+    <li><button type="button">Turn 3</button><span>They add that both charges land on the 3rd. After the answer the recent list holds six messages, so turn 1 is folded into a summary: the first summariser call.</span></li>
+    <li><button type="button">Turn 4</button><span>They ask for the duplicate to be refunded. The model gets the summary of turn 1 and turns 2 and 3 verbatim; turn 2 is folded next.</span></li>
+    <li><button type="button">Turn 5</button><span>They ask which plan they are on. That fact from turn 1 now lives only in the summary. By the end of this turn the summariser has run three times.</span></li>
+  </ol>
+</figure>
 ```
 
 Over five turns of a Larkspur billing ticket, the prompt never holds more than one summary, four recent messages and the question. From turn 3 on, every turn folds one exchange, so the summariser runs three times in five turns. On turn 5 the customer asks which plan they are on; they said so in turn 1, which by then survives only in the summary. A window of the last two exchanges would hold turns 3 and 4 and could not answer.

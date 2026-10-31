@@ -17,8 +17,9 @@
  *    of its `## ` section. Labs link to /labs/rag/<module>/, SVG figures to
  *    /learn-assets/rag/<module>/ (both copied into public/), anything else in the course
  *    repository to GitHub. A link that resolves to nothing fails the import;
- *  - `<!-- lab: … -->` becomes a ```lab fence (src and title lines); `<!-- animated: … -->`
- *    markers are dropped, so the Mermaid diagram they follow shows;
+ *  - `<!-- lab: … -->` becomes a ```lab fence (src and title lines); a Mermaid diagram followed
+ *    by `<!-- animated: … -->` becomes an ```animated fence holding that SVG figure (FE-12),
+ *    which shows its finished frame without script, so the Mermaid version is not kept;
  *  - American spellings become British (src/lib/spelling.ts), except the names it allows
  *    and external link titles; "TL;DR" headings become "In short"; a bare "M13" becomes a
  *    link to that module's overview.
@@ -26,6 +27,8 @@
  * blocks them) and they load /labs/_site-tokens.css and /labs/_site-lab.js, which give them the
  * site's tokens, embedded mode and theme. A lab that would make a request (fetch, XHR, sockets,
  * dynamic import, an external src, href or url()) fails the import (SEC-02): labs run offline.
+ * An animated figure that could run script or make a request (a script, an event handler, an
+ * src or href, an external url()) fails the import, as a lab does.
  * The import fails on a placeholder (TODO, TBD, XXX, [FILL) and when the course
  * repository has uncommitted theory changes, so `source.json` names the exact commit.
  */
@@ -119,6 +122,21 @@ export function siteLab(html, name) {
   const request = out.match(REQUESTS)
   if (request) throw new Error(`${name}: makes a request (${request[0]}); labs must run offline`)
   return out
+}
+
+/**
+ * An animated diagram (`diagrams/*.anim.html`) as the ```animated fence body (FE-12): the figure
+ * without the file's comments, its text in British spelling. Fails on anything that could run
+ * script or make a request; the only url() allowed is a reference to the figure's own markers.
+ */
+export function siteAnimation(html, name) {
+  const fig = html.replace(/\s*<!--[\s\S]*?-->/g, '').trim()
+  if (!fig.startsWith('<figure class="anim')) throw new Error(`${name}: not an animated figure`)
+  const bad = fig.match(/<(?:script|iframe|object|embed|foreignObject)\b|\son[a-z]+\s*=|\s(?:src|href|xlink:href)\s*=|url\(\s*["']?(?!#)|```/i)
+  if (bad) throw new Error(`${name}: ${bad[0]} is not allowed in an animated diagram`)
+  return fig
+    .replace(/>([^<]+)</g, (_, text) => `>${britishText(text)}<`)
+    .replace(/\saria-label="([^"]*)"/g, (_, text) => ` aria-label="${britishText(text)}"`)
 }
 
 // ------------------------------------------------------------------ course pages
@@ -259,13 +277,26 @@ export function importTheory(from) {
       return m && basename(m.dir) !== p.mod ? `[${code}](${rel(m.overview)})` : null
     }
     let md = p.md
-      .replace(/^<!-- animated: \S+ -->\n?/gm, '')
+      .replace(/^```mermaid\n(?:(?!```)[\s\S])*```\n<!-- animated: (\S+) -->$/gm, (_, anim) => {
+        const file = resolve(dirname(p.src), anim)
+        if (!existsSync(file)) {
+          errors.push(`${where}: animated diagram ${anim} is missing`)
+          return ''
+        }
+        try {
+          return `\`\`\`animated\n${siteAnimation(readFileSync(file, 'utf8'), posix(relative(from, file)))}\n\`\`\``
+        } catch (e) {
+          errors.push(`${where}: ${e.message}`)
+          return ''
+        }
+      })
       .replace(/^<!-- lab: (\S+) -->$/gm, (_, lab) => {
         const file = resolve(dirname(p.src), lab)
         const title = existsSync(file) ? readFileSync(file, 'utf8').match(/<title>([\s\S]*?)<\/title>/)?.[1].trim() : null
         if (!title) errors.push(`${where}: lab ${lab} is missing or has no <title>`)
         return `\`\`\`lab\nsrc: ${link(lab)}\ntitle: ${title}\n\`\`\``
       })
+    for (const [mark] of md.matchAll(/^<!-- animated: \S+ -->$/gm)) errors.push(`${where}: ${mark} does not follow a Mermaid diagram`)
     md = mapProseLines(md, (line) => transformLine(line, { link, moduleLink }))
     if (PLACEHOLDER.test(md)) errors.push(`${where}: placeholder ${md.match(PLACEHOLDER)[0]}`)
     p.md = `${HEADER}${md.replace(/\n{3,}/g, '\n\n').trim()}\n`
