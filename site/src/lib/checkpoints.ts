@@ -33,24 +33,24 @@ export type Checkpoint = {
 export const CHECKPOINTS: Checkpoint[] = [
   // T2.4 pilot, drafted from the module's seven lessons: every answer rests on a quoted
   // lesson sentence, listed in the DATA-10 PR for owner review.
-  // Since the AI Engineering integration this module is course module M17 (hybrid search,
-  // fusion, MMR, filtering). The query-transformation, control-loop and the two measurement
-  // items now rest on M18, M29 and M11: rewrite them against M17 before more checkpoints ship.
+  // Since the AI Engineering integration this module is course module M17. On 31 October 2026
+  // items q1, q3, q5 and q7 (chunking, HyPE, corrective RAG, measurement: now taught in M13,
+  // M16, M29 and M11) gave way to q9 to q12, drafted from M17's search-modes and fusion lessons.
   {
     module: 'retrieval-hybrid-rerank',
     items: [
       {
-        id: 'q1',
-        skillId: 'measurement',
-        prompt: 'A support bot\'s top hit for a refund question is about refunds but never states the refund window. When you print the retrieved chunks, you see the sentence giving the window landed in the next chunk, and that chunk was not retrieved. What is the right fix?',
+        id: 'q9',
+        skillId: 'search-modes',
+        prompt: 'The Larkspur assistant retrieves with plain similarity search at k=3. Asked about a product Larkspur does not sell, it still answers from three unrelated handbook chunks. What is the first defence?',
         options: [
-          { id: 'a', text: 'Add a cross-encoder reranker over the top 20 so the right chunk rises to the top.' },
-          { id: 'b', text: 'Tighten the generation prompt so the model makes better use of the context it was given.' },
-          { id: 'c', text: 'Fix the chunking so the window sentence stays with its topic, then re-measure recall@5 on the failing questions.' },
-          { id: 'd', text: 'Raise the similarity threshold so only the strongest matches reach the prompt.' },
+          { id: 'a', text: 'Raise k to 10 so the model sees enough context to notice nothing matches.' },
+          { id: 'b', text: 'Switch to MMR so the three chunks at least differ from each other.' },
+          { id: 'c', text: 'Add multi-query retrieval so the question is reworded several ways.' },
+          { id: 'd', text: 'Retrieve with a score threshold, so only chunks above a tuned relevance cut-off reach the prompt, possibly none.' },
         ],
-        correctOptionId: 'c',
-        explanation: 'The chunk holding the fact never reached the candidate set, so this is a recall failure caused by chunking. A reranker only reorders the candidates it is given and cannot add a missing one.',
+        correctOptionId: 'd',
+        explanation: 'Similarity search always returns k chunks, however far away they are. A score threshold is the first defence: it can return nothing, so a question the index cannot answer gets no false evidence.',
       },
       {
         id: 'q2',
@@ -66,17 +66,17 @@ export const CHECKPOINTS: Checkpoint[] = [
         explanation: 'RRF ignores raw scores and adds up 1 / (k + rank) from every list a document appears in. At k=60 rank 1 is worth only slightly more than rank 2, so two second places beat one first place.',
       },
       {
-        id: 'q3',
-        skillId: 'query-transformation',
-        prompt: 'A help-centre corpus changes rarely and gets a very high volume of queries. Short user questions keep missing the long, answer-shaped chunks that hold the answers. Which technique fits best?',
+        id: 'q10',
+        skillId: 'search-modes',
+        prompt: 'In a Chroma store set to cosine, similarity_search_with_score gives the best chunk 0.35375, and you plan to keep chunks with score_threshold=0.3 in the similarity_score_threshold mode. What is true?',
         options: [
-          { id: 'a', text: 'HyDE, because writing a hypothetical answer for each query adapts at once to a changed corpus.' },
-          { id: 'b', text: 'Multi-query rewriting, because the user\'s words differ from the document\'s.' },
-          { id: 'c', text: 'Self-query retrieval, because the questions need structured metadata filters.' },
-          { id: 'd', text: 'HyPE, because generating the questions each chunk answers at ingestion removes the model cost per query.' },
+          { id: 'a', text: '0.35375 is a distance, where lower is closer; as a relevance score it is 1 - 0.35375 = 0.64625, which the threshold mode compares against 0.3.' },
+          { id: 'b', text: '0.35375 is a relevance score, so the chunk only just clears the 0.3 threshold.' },
+          { id: 'c', text: 'Both methods return the same number, so the threshold can be tuned from either.' },
+          { id: 'd', text: 'Chroma uses cosine by default, so the threshold carries over unchanged to any embedding model.' },
         ],
-        correctOptionId: 'd',
-        explanation: 'Short questions that fail to match long answer chunks are the gap HyDE and HyPE close. HyPE pays one batched model call per chunk at index time, so it suits high query volume over a fairly static corpus.',
+        correctOptionId: 'a',
+        explanation: 'similarity_search_with_score returns a distance (lower is closer); the threshold mode uses a relevance score (higher is closer), which for cosine is 1 - distance. A threshold belongs to one embedding model and one distance function, and Chroma uses Euclidean distance unless told otherwise.',
       },
       {
         id: 'q4',
@@ -92,17 +92,17 @@ export const CHECKPOINTS: Checkpoint[] = [
         explanation: 'MMR picks its diverse set from the fetch_k candidates, so if fetch_k barely exceeds k there is nothing to trade and λ makes no difference. Set fetch_k to several times k, such as 20 for a k of 3.',
       },
       {
-        id: 'q5',
-        skillId: 'control-loops',
-        prompt: 'A support search covers a help-centre wiki, tickets and release notes. Answers from the existing documents are reliable, but new error codes appear before anyone documents them. The data is internal and must not be sent to a public search. Which control loop and fallback fit?',
+        id: 'q11',
+        skillId: 'hybrid-and-fusion',
+        prompt: 'You fuse dense and BM25 results with weighted score fusion: min-max normalise each list per query, then rank by alpha * vector + (1 - alpha) * bm25. A user asks a question the corpus cannot answer. What do the fused scores look like?',
         options: [
-          { id: 'a', text: 'Self-RAG, because grading the final answer catches hallucination.' },
-          { id: 'b', text: 'Adaptive RAG, so each question type gets its own retrieval strategy.' },
-          { id: 'c', text: 'Corrective RAG-style grading that sends cases below the threshold to a human queue with the retrieved context attached.' },
-          { id: 'd', text: 'Plain RAG with a larger top-k, since the corpus will eventually document the new codes.' },
+          { id: 'a', text: 'All close to 0, because no chunk is relevant to either retriever.' },
+          { id: 'b', text: 'Confident: the best chunk in each list still gets 1.0, because min-max is relative to the current query\'s results.' },
+          { id: 'c', text: 'Undefined, because min-max fails when every score is low.' },
+          { id: 'd', text: 'Exactly alpha for the top chunk, since only the dense side can score an unanswerable question.' },
         ],
-        correctOptionId: 'c',
-        explanation: 'Undocumented error codes are a coverage gap, and Corrective RAG is the loop for a corpus known to be incomplete. Because the data is internal, the low-confidence fallback goes to a human queue rather than a public web search.',
+        correctOptionId: 'b',
+        explanation: 'Min-max maps the best chunk to 1.0 and the worst to 0.0 for every query, even when nothing is relevant, so an unanswerable question produces confident-looking scores. The same alpha also weighs the two retrievers differently from one question to the next.',
       },
       {
         id: 'q6',
@@ -118,17 +118,17 @@ export const CHECKPOINTS: Checkpoint[] = [
         explanation: 'Reranking before the access filter ranks documents the user cannot see, wastes top-k slots and leaves them a thin context. Reranking after access enforcement makes their top 6 the best of their own documents.',
       },
       {
-        id: 'q7',
-        skillId: 'measurement',
-        prompt: 'A team runs six retrieval strategies against a 22-document golden set. Every strategy scores recall@k of 1.00, and HyDE has a slightly higher mean reciprocal rank than the rest. What is the right conclusion?',
+        id: 'q12',
+        skillId: 'hybrid-and-fusion',
+        prompt: 'An EnsembleRetriever fuses dense and BM25 with weights 0.7 and 0.3 and the default constant of 60. For an exact-ID question the dense retriever misses the ID chunk entirely, and BM25 ranks it first. Where does it land?',
         options: [
-          { id: 'a', text: 'Ship HyDE, since it has the highest mean reciprocal rank of the six.' },
-          { id: 'b', text: 'Ship the combination of every strategy, since combining them cannot lower recall.' },
-          { id: 'c', text: 'Drop the golden set, since a metric that every strategy maxes out is useless.' },
-          { id: 'd', text: 'Treat the differences as noise, keep the harness and rerun it on a realistically sized corpus before promoting any strategy.' },
+          { id: 'a', text: 'First, because BM25 ranked it first and RRF rewards the top of any list.' },
+          { id: 'b', text: 'Tied with the dense first place, because RRF ignores the weights.' },
+          { id: 'c', text: 'Below every chunk the dense retriever returns at rank 82 or better, since 0.3 / 61 is smaller than 0.7 / (60 + 82).' },
+          { id: 'd', text: 'Nowhere, because EnsembleRetriever drops chunks that only one retriever returns.' },
         ],
-        correctOptionId: 'd',
-        explanation: 'A tiny corpus makes every technique look perfect, so this table cannot justify any one of them. The value is that the harness exists, so the same comparison on a large corpus can decide whether a strategy earns its cost.',
+        correctOptionId: 'c',
+        explanation: 'RRF adds w / (60 + rank) per retriever. A chunk only BM25 returns, at rank 1 with weight 0.3, scores 0.3 / 61 = 0.0049, less than any dense result down to rank 82. With equal weights it would tie the dense first place, so weights decide whether a BM25-only hit can surface.',
       },
       {
         id: 'q8',
