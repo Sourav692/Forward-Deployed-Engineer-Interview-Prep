@@ -59,7 +59,7 @@ A two-week clock started against something nobody can measure is worse than no c
 | Tier-1 ticket first-response time drops below 5 minutes for the top 3 ticket categories | Ticket timestamps |
 | Agent-drafted replies are sent with no human edit on at least 60% of eligible tickets by week 4 | Edit history |
 
-Both are measurable from data the customer already has, not "the agent should be helpful". Say that aloud: if a metric cannot be measured this cleanly, intake refuses rather than starting a clock against it.
+Both are measurable from data the customer already has, not "the agent should be helpful". Say that aloud: if a metric cannot be measured this cleanly, intake refuses rather than starting a clock against it. The week-4 target cannot be proved on day 14, so intake also agrees a limited-release acceptance rule for the day-14 gate and names the owner who measures the week-4 target later.
 
 **Functional requirements of the delivery framework.** Most are the source's; the MoSCoW split is *(own construction)*.
 
@@ -106,21 +106,21 @@ Engagement · Stage · Gate · Principal (role) · Artifact · AcceleratorAsset 
 
 Narrate one engagement end to end before drawing:
 
-> *"A scoping request comes in. Intake checks it's actually measurable and has an SME assigned, or refuses it outright. Accepted, it enters day 1 at the Scoping stage. Each of the next six stages is blocked behind a named gate, signed off only by the role authorised for that gate — the FDA cannot sign the security gate, no matter how senior. Every stage pulls what it needs from a reusable accelerator library before building anything custom. On day 14, if the agreed success metrics were actually met, the sponsor signs the go/no-go gate and the engagement deploys with a runbook and dashboards handed over."*
+> *"A scoping request comes in. Intake checks it's actually measurable, has an SME assigned and names its data sources, or refuses it outright. Accepted, it enters day 1 at the Scoping stage. Each of the next six stages is blocked behind a named gate, signed off only by the role authorised for that gate — the FDA cannot sign the security gate, no matter how senior. Every stage pulls what it needs from a reusable accelerator library before building anything custom. On day 14, if the agreed limited-release acceptance rule was actually met, the sponsor signs the go/no-go gate and the engagement deploys with a runbook and dashboards handed over, while a named owner measures the week-4 target later."*
 
 The source's pipeline, kept verbatim. Label every gate with who signs it.
 
 ```
- SCOPING ──> gate:security_review ──> DATA READY ──> gate:data_access ──> CONFIGURE
+ SCOPING ──> gate:security_review_passed ──> DATA READY ──> gate:data_access_granted ──> CONFIGURE
   (1-2)         (security reviewer)     (3-4)           (customer SME)      (5-7)
                                             |
                                    day 3, still pending?
                                    AUTO-ESCALATE
                                             v
-      gate:golden_set ──> EVALUATE ──> gate:eval_baseline ──> SHADOW
+      gate:golden_set_signed_off ──> EVALUATE ──> gate:eval_baseline_met ──> SHADOW
        (customer SME)       (8-9)          (FDA)              (10-11)
                                                                    |
-      gate:rollback_tested ──> LIMITED PROD ──> gate:success_metrics ──> GO/NO-GO
+      gate:rollback_tested ──> LIMITED PROD ──> gate:success_metrics_met ──> GO/NO-GO
              (FDA)                (12-13)            (sponsor)              (14)
                                                                                 |
                                                                           DEPLOYED
@@ -165,18 +165,18 @@ flowchart LR
     REQ([Scoping request]) --> IN{Intake: measurable metric?<br/>SME? sources named?}
     IN -- no --> REF([Refused, no clock])
     IN -- yes --> S1[1 Scoping<br/>days 1-2]
-    S1 --> G1{security_review<br/>security reviewer}
+    S1 --> G1{security_review_passed<br/>security reviewer}
     G1 --> S2[2 Data readiness<br/>days 3-4]
     S2 -. day 3 still pending .-> ESC[Auto-escalate]
-    S2 --> G2{data_access<br/>customer SME}
+    S2 --> G2{data_access_granted<br/>customer SME}
     G2 --> S3[3 Configure<br/>days 5-7]
-    S3 --> G3{golden_set<br/>customer SME}
+    S3 --> G3{golden_set_signed_off<br/>customer SME}
     G3 --> S4[4 Evaluate<br/>days 8-9]
-    S4 --> G4{eval_baseline<br/>FDA}
+    S4 --> G4{eval_baseline_met<br/>FDA}
     G4 --> S5[5 Shadow<br/>days 10-11]
     S5 --> G5{rollback_tested<br/>FDA}
     G5 --> S6[6 Limited prod<br/>days 12-13]
-    S6 --> G6{success_metrics<br/>sponsor}
+    S6 --> G6{success_metrics_met<br/>sponsor}
     G6 --> S7[7 Go/no-go<br/>day 14] --> DEP([Deployed + runbook])
     LIB[(Accelerator library)] -.pull or build.-> S1 & S3
 ```

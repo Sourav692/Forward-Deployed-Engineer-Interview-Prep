@@ -26,7 +26,7 @@ On this design the levels separate on what the answer owns beyond the 300 ms hot
 |---|---|---|
 | Senior | Decomposes the 300 ms p95 as 10, 40, 200 and 50, then trims a stage for headroom. Puts a permission-scoped exact cache in front of retrieval, sends completion to the small model and explain or refactor to the larger one, and suppresses anything late or unvalidated. | Keeping the index honest: re-indexing on push with the permission mirror, refusing chunks with a stale ACL version, and what shows zero cross-repository leaks before release. |
 | Staff | Adds the two-layer check, ACL metadata at indexing and a recheck at retrieval, and treats a cross-scope cache hit as an incident. Makes the leak and planted-secret suites a Security-owned release gate, runs silent mode first, then adds repositories one at a time while p95, acceptance and zero leaks hold. | What changes at 10×, where the index binds first, plus cost per thousand completions, a repointed model alias and whether acceptance proves productivity. |
-| Principal | Treats every control-plane change as a release: versioned prompts, cache thresholds and validation rules, plus dated model snapshots with a nightly regression for a repointed alias. Makes training consent and private deployment contract terms, proves productivity against a matched control, and keeps any run-tests or open-PR chat mode a separate acting-agent surface off the completion lane. | The effect size worth paying for, the slow-path p95 and the semantic cache's false-hit budget depend on the customer's repositories and risk appetite, so they wait for discovery. |
+| Principal | Treats every control-plane change as a release: versioned prompts, cache thresholds and validation rules, plus dated model snapshots with a nightly regression for a repointed alias. Makes training consent and private deployment contract terms, proves productivity against a matched control, and keeps any run-tests or open-PR chat mode a separate acting-agent surface off the completion lane. | The effect size worth paying for, the slow-path p95 and the false-hit budget of any later semantic cache depend on the customer's repositories and risk appetite, so they wait for discovery. |
 
 ## Key Takeaways
 
@@ -35,7 +35,7 @@ On this design the levels separate on what the answer owns beyond the 300 ms hot
 - Every context signal carries a cost and a permission, and retrieved code enters the prompt only under the code host's ACL.
 - One diagram shows cache first, retrieve on a miss, route by task, with a hot path and a slow path that share the index and nothing else.
 - Context engineering is a funnel from repository to signals to ranked context to prompt, and the repository is never sent.
-- The semantic cache sits in front of the expensive path and never matches across permission scopes.
+- The scoped completion cache sits in front of the expensive path and never matches across permission scopes.
 - The router sends completion to a small model and everything a developer waits for to a larger one.
 - Validation checks syntax, hallucinated APIs against the symbol index, secrets, licence and unsafe patterns before anything reaches the editor.
 - Ten, forty, two hundred, fifty is the budget said aloud, and streaming changes perceived latency only.
@@ -48,7 +48,7 @@ On this design the levels separate on what the answer owns beyond the 300 ms hot
 
 ## Check Yourself
 
-1. **Why is the semantic cache placed in front of the embedding service rather than after retrieval?** A cache after the fan-out saves nothing; in front, a hit skips embedding, retrieval and often the large model.
+1. **Why is the completion cache placed in front of the embedding service rather than after retrieval?** A cache after the fan-out saves nothing; in front, a valid hit skips embedding, retrieval and the model, and goes to output validation.
 2. **What does each stage of the funnel remove?** Repository to signals removes unrelated files; signals to ranked context removes distant history; ranked context to prompt fits the model's window.
 3. **Decompose the 300 ms budget.** About 10 ms cache check, 40 ms context assembly, 200 ms streamed inference, 50 ms validation. That sums to the full 300 ms, so trim one stage to leave headroom.
 4. **Why is "detect hallucinated APIs" on the validation list?** A completion that calls a method that does not exist looks correct until it compiles; the symbol index built at indexing time is what the check runs against.

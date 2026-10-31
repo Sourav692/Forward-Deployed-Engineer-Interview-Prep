@@ -37,6 +37,7 @@ Correct order:
 Authorize
  → Retrieve
  → Fuse
+ → Enforce policy
  → Rerank
  → Select evidence
  → Generate
@@ -236,7 +237,7 @@ Use one framework: measure the workload, find the bottleneck, then bound or rout
 2. **Protect the invariant.** Authorisation pre-filtering and the final policy check stay in place. A timeout or cache hit must never bypass permissions or serve stale revoked content.
 3. **Optimise the measured bottleneck.** Profile each stage before choosing a fix. Reduce candidate count or skip reranking only when evaluation shows quality remains acceptable; route up to a stronger model for high-risk or difficult synthesis.
 4. **Scale ingestion separately.** Queue connector work, make it idempotent, process changes incrementally, and reconcile periodically. This prevents backfills from competing with interactive serving.
-5. **Set safe degradation paths.** On a deadline, stop optional reranking or return fewer verified results; if authorization/freshness cannot be established, fail closed and abstain.
+5. **Set safe degradation paths.** On a deadline, stop optional reranking or return fewer verified results; if authorisation or permission freshness cannot be established, fail closed and abstain; label stale content instead of refusing it.
 6. **Prove the trade-off.** Replay representative queries across personas and track answer quality, citation correctness, leakage, latency and cost together. Zero leakage remains a release gate.
 
 **Interview-ready answer:**
@@ -290,7 +291,7 @@ A cross-tenant principal with broad groups must still return zero results for an
 
 **LLM down:** retrieval-only result if useful/safe, otherwise abstain.
 
-**Connector down:** serve only data still inside its freshness SLO.
+**Connector down:** answer with a staleness label; refuse only when its permission data is stale.
 
 **Permission service down:** fail closed.
 
@@ -408,7 +409,7 @@ Five beats:
 
 The flow:
 
-**Identity → Authorisation → Pre-filter → Hybrid retrieval → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate.**
+**Identity → Authorisation → Pre-filter → Hybrid retrieval → Policy check → Rerank → Evidence → LLM → Verify → Answer/Abstain/Escalate.**
 
 The release rule:
 

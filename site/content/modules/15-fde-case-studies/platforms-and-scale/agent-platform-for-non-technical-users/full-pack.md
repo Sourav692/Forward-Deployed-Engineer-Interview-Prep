@@ -45,7 +45,7 @@ Then scope out loud:
 
 ## 2. Anchor Every Answer on One $500 Refund
 
-One concrete tenant keeps every later claim testable. Cascade Robotics wants Tier-1 support triage across two channels: a Zendesk webhook for new tickets, and an `#support-escalations` Slack channel for urgent messages. A high-priority ticket gets a drafted reply. A billing complaint also gets an automatic refund up to $50; above that, a human must approve. A duplicate or retried step must never issue a second refund.
+One concrete tenant keeps every later claim testable. Cascade Robotics wants Tier-1 support triage across two channels: a Zendesk webhook for new tickets, and an `#support-escalations` Slack channel for urgent messages. A high-priority ticket gets a drafted reply. A billing complaint also gets an automatic refund up to $50, a hard cap. A refund above it is refused outright, even with approval; raising the cap is a separate, authorised policy change. A duplicate or retried step must never issue a second refund.
 
 The user's request, in their own words: *"If a customer messages us anywhere asking for a refund and it's under $50, just refund them. Don't bother me for small stuff."* The platform must silently guarantee six things the user never has to name.
 
@@ -62,7 +62,7 @@ The demo question that drives the round: *"Why didn't Cascade Robotics' $500 ref
 
 | Question | What actually happened |
 |---|---|
-| Wasn't the workflow autonomous? | Yes, but `issue_refund` was not allow-listed for autonomous use on this tenant, so it still needed a human |
+| Wasn't the workflow autonomous? | Yes, but autonomy never bypasses the cap, which denies first under ordered deny. `issue_refund` was also not allow-listed for autonomous use on this tenant, so even after an authorised cap change it would pause for a human |
 | Wasn't there budget? | The tenant's spend cap is $50. A $500 refund is refused outright (`spend_cap_exceeded`), never silently clamped down to the cap |
 | What if it retries and refunds twice? | It cannot. The idempotency key on that action exists after the first apply, so a retry is a no-op |
 
@@ -107,7 +107,7 @@ Every must-have then needs an owner in the architecture *(own construction)*.
 | Declarative, versioned workflows | Workflow store |
 | Typed arguments | Tool registry with `validate_args()` |
 | Crash-safe execution | Orchestrator checkpoint, `next_step_index` |
-| No double side effect | Idempotency store keyed `{run_id}:{step_name}` |
+| No double side effect | Idempotency store keyed `{tenant_id}:{run_id}:{step_name}:{args_hash}` |
 | Budget, cap, stage, approval | Guardrail engine, `authorize_step()` |
 | Rollout discipline | `promote()` with role checks |
 | Replayable record | Run trace |

@@ -13,7 +13,7 @@ Every step of every run goes through one decision. `authorize_step()` returns `D
 | 5 | `needs_human_approval` | Destructive, not allow-listed for autonomous use on this tenant, and no approver present |
 | — | `autonomous_allowlisted` / `human_approved` | The two ways a destructive step is actually allowed to run |
 
-Non-destructive steps pass after the two budget checks. Destructive steps must clear all five rules and then match one of the two allows. The whiteboard script draws the same logic as a seven-line ladder, with "non-destructive? just run it" as its third rung. The handbook's five-rule table is the cleaner version to draw.
+Non-destructive steps pass after the two budget checks. Destructive steps must clear all five rules and then match one of the two allows, so the full set is seven rules: five deny, two allow. The whiteboard script draws the same logic as a seven-line ladder, with "non-destructive? just run it" as its third rung. The handbook's five-rule table is the cleaner version to draw.
 
 The step budget and the spend cap count different things; they are not two severities of one check. The step budget counts how many steps a run has taken, so it catches a loop no matter how cheap each step is. The spend cap counts the dollars one step is about to spend, so it catches one expensive action on step one. Both halt and escalate. Neither retries, and neither clamps the amount down to fit.
 

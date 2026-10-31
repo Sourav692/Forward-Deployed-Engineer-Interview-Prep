@@ -21,10 +21,10 @@ The prompt asks for a customer-support platform in the style of Salesforce Einst
 | Answering only, or executing actions? | **Both** | Retrieval *and* action paths |
 | Where does product knowledge live? | Docs, knowledge base, CRM, order management, ticketing | Exactly the shape RAG is built for |
 | Can the AI make business decisions independently, such as a $5,000 refund? | No | Human-in-the-loop for sensitive operations |
-| Scale? | ~1M conversations/day globally | Cost optimisation is first-class |
+| Scale? | ~1M conversations/day globally (this consumer-support scenario) | Cost optimisation is first-class |
 | Should it remember previous conversations? | Yes | Conversational memory on top of enterprise knowledge |
 
-These are scenario assumptions. Ask who owns approval thresholds, which tenant/customer may see each document, and how asynchronous applications report completion. Name the policy owner before implementing a refund rule.
+These are scenario assumptions. Ask who owns approval thresholds, which tenant/customer may see each document, and how asynchronous applications report completion. Name the policy owner before implementing a refund rule. The Customer Support Automation case sizes a different scenario, 2M tickets a month at 100 QPS peak.
 
 ## Draw Capabilities as Peers, Not a Pipeline
 
@@ -81,7 +81,7 @@ flowchart TB
     X --> O["Record payment receipt"]
 ```
 
-Policy checks decide which requests need approval. Measure the queue volume rather than assuming most requests bypass it.
+Policy checks decide which requests need approval. The design goal is that most requests never reach a human, so measure the queue volume rather than assume the goal is met.
 
 > **Warning: the LLM never bypasses application authorisation.** Every tool call propagates enterprise identity, OAuth, RBAC/ABAC and audit. Business systems stay the source of truth. An approval queue protects nothing if the model can reach the refund system under its own authority.
 
@@ -93,7 +93,7 @@ Run refunds, warranty cancellations and shipping investigations asynchronously. 
 
 Globally, run regional gateways and orchestrators. Partition knowledge indexes by geography where residency requires it. Keep stateless services active-active and customer data within compliance boundaries. Route each user to the nearest healthy region.
 
-The full request path puts the semantic cache immediately after the gateway and rate limiter. Only an eligible, revalidated hit bypasses generation. On a miss, the path runs orchestrator, specialist agents, then the shared capability layer. That layer holds RAG over partitioned vector stores, short- and long-term memory, MCP tool calls and a model gateway. Approval precedes high-risk writes. Backend receipts determine the response. Monitor the whole path.
+The full request path puts the semantic cache after the gateway, rate limiter and intent classifier. Only an eligible, revalidated hit bypasses generation. On a miss, one bounded orchestrator plans the calls through the shared capability layer. That layer holds RAG over partitioned vector stores, short- and long-term memory, MCP tool calls and a model gateway. Approval precedes high-risk writes. Backend receipts determine the response. Monitor the whole path.
 
 | Technology | Best use | Advantages | Trade-offs |
 |---|---|---|---|
@@ -127,7 +127,7 @@ Both cases agree on one principle: the application, never the LLM, is the source
 
 ## Raise the Four Gaps Both Designs Leave
 
-Four concepts are missing from both cases, and a senior interviewer waits for them.
+Four concepts are missing from both handbook designs (this assistant and the enterprise assistant), and a senior interviewer waits for them. The Customer Support Automation case closes two of them. It treats customer text as untrusted data, and it derives model and retrieval call volumes from 2M tickets a month.
 
 | Gap | Why it matters | Where to bring it from |
 |---|---|---|
@@ -150,7 +150,7 @@ Ask: "Which order and damaged item? Do you want the warranty cancelled too?" Res
 
 A customer writes: "My laptop arrived damaged. Refund the order, cancel the warranty, notify shipping, and create a high-priority ticket." The gateway authenticates the customer, and the semantic cache misses because the request is specific. The orchestrator sees four actions across systems, so the planner decomposes it.
 
-Short-term memory resolves "the order" to the laptop order from earlier in the session. The refund agent drafts the refund through the payments MCP server. Its value crosses the approval threshold, so it goes to the manager queue rather than executing. Independent warranty, shipping, and ticket work proceeds only where policy permits. Work dependent on the refund waits for its outcome. The cancellation and investigation run asynchronously. The customer gets "your request has been submitted" at once.
+Short-term memory resolves "the order" to the laptop order from earlier in the session. The orchestrator drafts the refund through the payments MCP server. Its value crosses the approval threshold, so it goes to the manager queue rather than executing. Independent warranty, shipping, and ticket work proceeds only where policy permits. Work dependent on the refund waits for its outcome. The cancellation and investigation run asynchronously. The customer gets "your request has been submitted" at once.
 
 Every capability played its own part. Memory resolved a reference, tools acted, the planner coordinated, and approval held back the one action that moves real money. No step needed RAG, and none was forced through it.
 
@@ -196,7 +196,7 @@ A stable operation ID helps only when the backend supports deduplication. Bound 
 - Use a controller for dependencies; several steps do not automatically require several agents.
 - Keep short-term, long-term customer and enterprise knowledge apart, because they fail differently.
 - Route refunds above a threshold, VIP escalations, deletions, legal requests and payment changes through human approval, after AI validation.
-- Scale with statelessness, partitioned embeddings, a semantic cache after the gateway, async work, rate limits and model routing.
+- Scale with statelessness, partitioned embeddings, a semantic cache after the intent classifier, async work, rate limits and model routing.
 - The enterprise and support designs combine into one agentic spine.
 - Both leave four gaps: guardrails, prompt versioning, disaster recovery, and derived capacity numbers.
 

@@ -67,7 +67,7 @@ A recovery path that is different code from the normal path gets tested only dur
   [process restarts / human takes an hour to approve]
 
   resume(): reads next_step_index=1, re-enters at step 1 - step 0 NEVER re-runs.
-  Approval granted -> step 1 executes -> idempotency_key = "run_id:refund" recorded.
+  Approval granted -> step 1 executes -> idempotency_key = "{tenant_id}:{run_id}:{step_name}:{args_hash}" recorded.
 
   If step 1 is somehow attempted again (a redelivered event, a retry):
   same idempotency_key already exists -> no-op. The refund never fires twice.
@@ -83,13 +83,13 @@ The verified happy path, from `scripts/run_workflow_demo.py`: `run_001` on `wf_t
 
 ## 9. Key Idempotency on the Action, and Cover Every Side Effect
 
-A run legitimately retries after a transient failure, so a run-level "already started" flag cannot stop one step from firing twice. The key goes on the action: `idempotency_key = f"{run_id}:{step_name}"`. `_apply_side_effect()` returns `True` only the first time a key is seen. Reruns of the loop are fine; reruns of an already-applied side effect are not. The verified result: before retry, 1 apply; after retry, still 1 apply.
+A run legitimately retries after a transient failure, so a run-level "already started" flag cannot stop one step from firing twice. The key goes on the action: `idempotency_key = f"{tenant_id}:{run_id}:{step_name}:{args_hash}"`. The reference build keyed on `{run_id}:{step_name}` alone; adding the tenant and an arguments hash stops a retry with different arguments, or another tenant's run, from matching. `_apply_side_effect()` returns `True` only the first time a key is seen. Reruns of the loop are fine; reruns of an already-applied side effect are not. The verified result: before retry, 1 apply; after retry, still 1 apply.
 
 Two real bugs from building the project are the strongest material in the round. Tell them as stories.
 
-**Bug 1: the spend cap checked the wrong number.** A $500 refund on a workflow with a $5 spend cap passed authorisation. The cost function charged a flat, nominal fee per tool call, which is fine for drafting a reply. The refund used the same fee, so the cap was checking against $0.00 every time. It conflated the operational cost of running a step with the dollars that step spends on the customer's behalf. The fix: a financial tool's cost is the real amount in its own arguments, `args["amount_usd"]`.
+**Bug 1: the spend cap checked the wrong number.** A $500 refund on a workflow with a $5 spend cap passed authorisation. The cost function charged a flat, nominal fee per tool call, which is fine for drafting a reply. The refund used the same fee, so the cap was checking against the nominal 0.02 USD every time. It conflated the operational cost of running a step with the dollars that step spends on the customer's behalf. The fix: a financial tool's cost is the real amount in its own arguments, `args["amount_usd"]`.
 
-**Bug 2: idempotency covered the side effect but not its cost.** After the first fix, an approved run whose refund step was retried started failing with `spend_cap_exceeded`. Nothing extra had happened in the real world. The idempotency guard correctly skipped the second refund, but the retry still went through `authorize_step()` and its cost was added to the run total again. The fix moves the idempotency check before authorisation. A replay of an applied key is a free, pre-authorised no-op that never touches the budget or the approval logic.
+**Bug 2: idempotency covered the side effect but not its cost.** After the first fix, an approved run whose refund step was retried started failing with `spend_cap_exceeded`. Nothing extra had happened in the real world. The idempotency guard correctly skipped the second refund, but the retry still went through `authorize_step()` and its cost was added to the run total again. The fix moves the idempotency check before authorisation. After the caller and tenant access checks, a replay of an applied key is a free no-op that never touches the budget or the approval logic.
 
 > **"Idempotency has to cover every side effect of a step, not just its most obvious one."** Cost accounting is a side effect too.
 

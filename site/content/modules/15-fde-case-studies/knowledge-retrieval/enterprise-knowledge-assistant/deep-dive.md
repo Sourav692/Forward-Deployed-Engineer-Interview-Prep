@@ -346,7 +346,7 @@ For legal/high-risk RAG, keep mandatory citations and escalation while routing s
 ## 20. Failure playbook
 
 ### Stale index
-Detect with freshness/reconciliation metrics. Contain by refusing or labelling stale data. Prevent with events, tombstones and reconciliation.
+Detect with freshness/reconciliation metrics. Contain by labelling stale content; refuse only when permission data is stale. Prevent with events, tombstones and reconciliation.
 
 ### Prompt injection
 Treat retrieved text as data. Block unsafe tool calls at the gateway.

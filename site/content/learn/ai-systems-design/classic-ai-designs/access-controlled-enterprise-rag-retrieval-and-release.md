@@ -13,9 +13,9 @@ Fuse the two with Reciprocal Rank Fusion. A cosine score of 0.82 and a BM25 scor
 | Decomposition | Multi-hop questions no single chunk answers | 1 LLM call, only when needed |
 | Reranking | Recall-optimised retrieval is imprecise | Evaluate quality gain against latency |
 
-HyDE deliberately hallucinates a plausible answer and searches with its embedding, because a fake answer looks more like a real answer than a question does. The fake answer is only a search probe and is never shown. Reranking compares the query and candidates more closely. It can improve precision, but the gain must be evaluated on this corpus. Over-retrieve 20–50, rerank to 5. A bi-encoder embeds question and document separately; a cross-encoder sees them together.
+HyDE deliberately hallucinates a plausible answer and searches with its embedding, because a fake answer looks more like a real answer than a question does. The fake answer is only a search probe and is never shown. Reranking compares the query and candidates more closely. It can improve precision, but the gain must be evaluated on this corpus. Over-retrieve about 20, rerank to 6. A bi-encoder embeds question and document separately; a cross-encoder sees them together.
 
-Order matters here too. Reranking runs after ACL enforcement, so a restricted user's top 5 is the best of their own authorised pool. Post-filtering after reranking would rank documents they cannot see and hand them an empty context.
+Order matters here too. Reranking runs after ACL enforcement, so a restricted user's top 6 is the best of their own authorised pool. Post-filtering after reranking would rank documents they cannot see and hand them an empty context.
 
 ## Gate Releases on Zero Leaks
 
@@ -35,7 +35,7 @@ The reference build found an evaluation bug worth telling. Its first labels conf
 |---|---|
 | Model provider down | Fail over to a secondary or smaller model; queue and back off |
 | Vector store down | Use permission-enforced keyword search; otherwise refuse. Mark degraded answers |
-| Connector stale | Serve only evidence whose permission freshness is valid; disclose content staleness |
+| Connector stale | Answer with a staleness label; refuse only when permission data is stale |
 | Reranker unavailable | Fall back to fusion order; the trace records it |
 | Low retrieval confidence | Refuse and escalate to a human |
 | Policy engine unavailable | Fail closed. Refuse. Never fail open on authorisation |
@@ -122,7 +122,7 @@ If the policy service fails, refuse before generation. If permitted evidence is 
 ## Check Yourself
 
 1. **Why is post-filtering wrong even if it never shows a forbidden document?**
-   It shrinks the user's top results, crowding them out with material they cannot see, and result counts leak information. Pre-filtering narrows the candidate set; authoritative checks still run before model context is built.
+   It shrinks the user's top results, crowding them out with material they cannot see, and result counts can leak information if shown. Pre-filtering narrows the candidate set; authoritative checks still run before model context is built.
 
 2. **What does the post-check catch that the pre-filter cannot?**
    Embargo dates evaluated against "now", need-to-know list semantics, live revocation on a stale index, and redaction obligations.

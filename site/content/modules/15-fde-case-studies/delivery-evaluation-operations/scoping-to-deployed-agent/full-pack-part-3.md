@@ -9,7 +9,7 @@ The framework does not guarantee every engagement deploys in 14 days. It guarant
 | A hard gate genuinely fails, not late but denied | The engagement stays at its current stage; the failure is a first-class event, not a silent stall |
 | The wrong person attempts a sign-off | Denied, logged, state unchanged; no partial progress |
 | The golden set never gets customer sign-off | Evaluate is blocked; a customer-side failure the framework surfaces rather than routes around |
-| Success metrics are not met by day 14 | The go/no-go gate does not pass; "no-go" is a legitimate outcome |
+| The limited-release acceptance rule is not met by day 14 | The go/no-go gate does not pass; "no-go" is a legitimate outcome, and the week-4 target stays pending with its named owner |
 
 Scale here means one FDA running six engagements at once, not ten million chunks. The state machine does not change with portfolio size; capacity does. Gates start queueing behind a person's calendar rather than the customer. Designing that needs real engagement-duration data first, the same way embedding-cache hit rates need real query logs.
 
@@ -67,7 +67,7 @@ The source's summary says two of four, while its own risk table marks three of f
 | Decision | Chose | Would revisit if |
 |---|---|---|
 | Role-gated sign-off over self-certification | Six named gates, six named authorities | A single-person delivery team where role separation is impossible; gates compress, they do not disappear |
-| Hard refusal at intake over "start and hope" | Refuse unmeasurable or SME-less requests | A strategic customer the business accepts anyway; add an explicit override with its own sign-off |
+| Hard refusal at intake over "start and hope" | Refuse unmeasurable, SME-less or source-less requests | A strategic customer the business accepts anyway; add an explicit override with its own sign-off |
 | Automatic escalation over manual tracking | Day-3 auto-escalate on data access | Mitigations multiply and a dashboard is clearer than N checks; then it becomes a rules engine |
 
 Close forward-deployed. Week one of an internal rollout is not all seven stages. Pick the two gates most often skipped under deadline pressure, the golden-set sign-off and the rollback test, and make only those structurally unskippable. That proves gates as code change behaviour before anyone argues about the other five.
@@ -96,7 +96,7 @@ The pivot after a good answer is "who pays for the pilot, and what stops it runn
 | Do not | Instrument cost after the pilot proves value |
 | 60-second line | Cost is a success metric agreed at intake, not a cleanup after go-live. Cap the agent, sample the evals, and report cost per resolved ticket in the same dashboard as quality. |
 
-The card fits the framework without a new box *(own construction)*. Cost per resolved ticket becomes a third success metric at intake, so the refusal rule covers it: no baseline, no clock. `cost_attribution_dashboard` is already in the library, so it is pulled on day 1, not built on day 13. And `success_metrics_met` then certifies cost alongside first-response time and zero-edit sends.
+The card fits the framework without a new box *(own construction)*. Cost per resolved ticket becomes a third success metric at intake, so the refusal rule covers it: no baseline, no clock. `cost_attribution_dashboard` is already in the library, so it is pulled on day 1, not built on day 13. And `success_metrics_met` then certifies cost alongside first-response time in the day-14 limited-release acceptance rule, while the week-4 zero-edit target is measured later by its named owner.
 
 Every strong cost answer follows four verbs in order. Measure cost per resolved ticket from day 1. Route only the top 3 categories to the agent. Bound steps, tokens and eval volume. Cache safely, never across customers.
 
@@ -108,7 +108,7 @@ In this round the level shows in whether each gate is a decision with a named au
 
 | Level | Sounds like | Missing |
 |---|---|---|
-| Senior | Seven stages in fixed order, each behind a role-gated sign-off with evidence, and intake that refuses an unmeasurable metric or a missing SME. The Northwind agent drafts, a human sends, and rollback is tested in shadow before limited production. | Who acts when the SME misses a deadline, what free-text evidence fails to prove, and the customer credentials the delivery process itself holds. |
+| Senior | Seven stages in fixed order, each behind a role-gated sign-off with evidence, and intake that refuses an unmeasurable metric, a missing SME or no named data sources. The Northwind agent drafts, a human sends, and rollback is tested in shadow before limited production. | Who acts when the SME misses a deadline, what free-text evidence fails to prove, and the customer credentials the delivery process itself holds. |
 | Staff | Adds the people around the gates: the day-3 auto-escalation, an explicit override path for a strategic customer, a checklist evidence bar for the security gate, and credentials vaulted and revoked at handover. Reads the Northwind numbers as scripted and says so before being asked. | The portfolio view: one FDA running six engagements, where gates queue behind a person's calendar rather than the customer. |
 | Principal | Treats the accelerator library as an owned, versioned asset shared across teams, and the reuse rate across engagements as the test of whether delivery is productised. Decides which engagements should not be two weeks, and whether customers' gate evidence and test sets are separated by a tag or physically. | Real engagement-duration data from a portfolio of deliveries, which is needed before sizing how many engagements one FDA can carry. |
 
@@ -137,7 +137,7 @@ In this round the level shows in whether each gate is a decision with a named au
 3. **State the three deny rules.** `wrong_role`, `no_evidence`, `prior_gate_incomplete`, deny overriding, every attempt logged.
 4. **What separates `golden_set_signed_off` from `eval_baseline_met`?** The first certifies the test is representative, signed by the SME; the second certifies the agent passed it, signed by the FDA.
 5. **Why refuse at intake instead of warning?** A clock against an unmeasurable goal is worse than no clock, and an engagement without an SME cannot pass the two SME gates, so nothing after them.
-6. **What does the reuse rate measure, and what is Northwind's?** Reused pulls over total pulls; 83%, five of six, with one custom guardrail policy.
+6. **What does the reuse rate measure, and what is Northwind's?** Reused pulls over total pulls; 83%, five of six, with one custom escalation (guardrail) policy.
 7. **How can a structurally real gate still be a rubber stamp?** Free-text evidence cannot prove adversarial testing happened; require a checklist.
 8. **What breaks first at scale?** FDA capacity, with gates queueing behind a calendar rather than the customer.
 9. **Which risk mitigation is not built?** Scope-creep change-control, which would reuse `sign_off()` with the sponsor role.

@@ -16,6 +16,8 @@ Resolution Agent output (action + confidence + shipment value + exception type)
                      Auto-Resolve          Human Approval Queue
 ```
 
+The diagram is the source's. In this design the exception type comes from the detection service, not from the agent's output, and a missing or unknown type goes to the Human Approval Queue like a customs hold.
+
 **The customs check runs first and short-circuits everything else.** A confidence score cannot outvote a rule it is never compared with. This mirrors the customer's framing: customs is a hard compliance boundary and never competes with a confidence score. Only after that check does the value-and-confidence rule apply.
 
 State the ordering out loud. A candidate who checks confidence before the customs carve-out has built a system where a high-confidence model could, in principle, auto-resolve a customs hold, the one outcome the customer ruled out. It is the same structure as deny-rules-first in the Tool-Using Agent with Safety Controls tool gateway, and the same short-circuit logic.
@@ -35,7 +37,7 @@ The customer requires EU data to stay in the EU, so a single global deployment i
                              never leaves EU)
 ```
 
-An ops agent in any region sees the same UI and the same policy. Only storage is partitioned. Name the pattern (*shared logic, isolated data*) instead of only drawing three boxes. It is the tenancy ladder from the Secure Multi-Tenant AI Platform case, applied at the region level instead of the customer level.
+An ops agent in any region sees the same UI and the same policy. Execution, storage, model calls, telemetry and support access are partitioned by region. Name the pattern (*shared logic, isolated data*) instead of only drawing three boxes. It is the tenancy ladder from the Secure Multi-Tenant AI Platform case, applied at the region level instead of the customer level.
 
 Mirror residency at the application layer too. An EU agent's session cannot query US shipment data, and vice versa, by default. Storage isolation alone leaves the application free to join across regions.
 
@@ -78,7 +80,7 @@ The plan below is own construction, built on the anchor's components. Each layer
 | Did detection catch the disruption at all? | Recall per exception type on a labelled replay of historical shipments |
 | Did it flag routine scans as disruptions? | Precision per type; false-alarm rate per agent shift |
 | Would the gate ever auto-resolve a customs hold? | Invariant test: adversarial customs cases with forced high confidence; required result zero |
-| Is the confidence score honest? | Calibration curve on the replay set; error rate of auto-resolved cases above the threshold |
+| Is the confidence score honest? | Calibration curve on the replay set; error rate of auto-resolved cases at or above the threshold |
 | Are drafts good enough to approve? | Approve-unedited, approve-edited and reject rates per exception type |
 | Did the resolution unstick the shipment? | Outcome join: delivered within the revised ETA, from SAP, days later |
 | Does a retry ever double-book? | Fault-injection test: kill the executor mid-call, replay, count bookings |

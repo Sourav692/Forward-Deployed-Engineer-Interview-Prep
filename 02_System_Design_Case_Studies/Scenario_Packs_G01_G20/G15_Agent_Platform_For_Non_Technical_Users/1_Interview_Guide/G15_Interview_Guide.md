@@ -104,7 +104,7 @@ flowchart TB
 - Routing matches only that tenant's live workflow, chooses highest priority and returns a named reason if none matches; an entity lock prevents concurrent mutations of the same ticket.
 - The orchestrator pins the workflow version and resumes at `next_step_index`, using the same loop for fresh and restarted runs.
 - Before a step runs, it resolves values and validates the tool's typed schema. A model may supply proposed values, but cannot change the spec or tool signature in the demo.
-- An action-level idempotency key is checked before authorisation, so a replayed side effect is a no-op and is not charged again.
+- An action-level idempotency key is checked after caller and tenant access checks and before authorisation, so a replayed side effect is a no-op and is not charged again.
 - The guardrail checks the tighter workflow/tenant step and spend caps, shadow/live stage and destructive-tool allow-list or human approval. Deny wins; approval pauses safely.
 - Only an allowed step calls the scoped tool. The orchestrator records the outcome, checkpoints, logs every decision and continues or finishes.
 

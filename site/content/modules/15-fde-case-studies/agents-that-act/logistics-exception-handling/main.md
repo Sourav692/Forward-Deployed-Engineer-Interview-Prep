@@ -85,7 +85,7 @@ flowchart TB
   D -->|exception| A[Resolution agent: draft + confidence + reasons]
   A --> C{Customs or regulatory hold?}
   C -->|yes or unknown| H[Regional human approval queue]
-  C -->|no| V{Value below $500 and confidence high?}
+  C -->|no| V{Value below $500 and confidence meets threshold?}
   V -->|no or missing| H
   V -->|yes| E[Idempotent scoped executor]
   H -->|approve or edit| E
@@ -107,7 +107,7 @@ flowchart TB
 - Queue normalised events to absorb storms, then use rules or a small classifier to find customs, missed-scan and weather exceptions. Routine scans only update state.
 - Send exceptions to the resolution agent for an action draft, confidence and supporting signals. The agent cannot call carrier write APIs directly.
 - The independent gate checks customs/regulatory status first, using detection's type, not the agent's label. Any customs or unknown case goes to a human.
-- For non-customs cases, only shipment value under $500 and confidence above the agreed threshold may auto-resolve; all others enter the regional approval queue.
+- For non-customs cases, only shipment value under $500 and confidence that meets the agreed threshold may auto-resolve; all others enter the regional approval queue.
 - An approved or eligible action uses scoped carrier credentials, an idempotency key and a circuit breaker. A flaky or non-idempotent carrier falls back to human handling.
 - Log every verdict, draft, approval/edit/rejection and execution in the regional audit store; keep EU data and access within the EU.
 
@@ -117,7 +117,7 @@ flowchart TB
 
 **Two feed clocks:** polling a batch-only carrier every few seconds cannot make its 2–6-hour file arrive sooner. Keep separate time-to-detect p50/p95 for webhook and batch feeds. Show lateness on the draft. Queue depth and approval age are separate operational SLOs.
 
-**Release evidence:** replay labelled historical exceptions for recall and precision per type; adversarial customs cases must produce zero auto-resolutions; calibrate confidence above the auto threshold; test duplicate execution, EU-to-US access denial and audit completeness. Start offline, then shadow with all human actions, then one region/one integrated carrier for known-route missed scans. To measure rerouting benefit, use a matched holdout, because nobody can observe the route not taken.
+**Release evidence:** replay labelled historical exceptions for recall and precision per type; adversarial customs cases must produce zero auto-resolutions; calibrate confidence at and above the auto threshold; test duplicate execution, EU-to-US access denial and audit completeness. Start offline, then shadow with all human actions, then one region/one integrated carrier for known-route missed scans. To measure rerouting benefit, use a matched holdout, because nobody can observe the route not taken.
 
 **Cost and latency:** keep model calls behind detection; template common missed-scan rebooks; cap agent steps, carrier calls and retries; send difficult human-read drafts to a stronger model only when it helps. Cost scales with exceptions, not routine scan volume. During a weather burst, prioritise backlog by value and deadline and scale stateless detection; the human approval queue may become the real bottleneck.
 

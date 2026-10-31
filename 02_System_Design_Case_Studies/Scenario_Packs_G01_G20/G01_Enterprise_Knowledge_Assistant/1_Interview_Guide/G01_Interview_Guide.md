@@ -259,7 +259,7 @@ Use change events where possible, idempotent processing, backfill, tombstones an
 
 > **Authorisation correctness and freshness correctness are different checks.**
 
-A connector can miss a delete while the ACL still looks valid. If freshness is outside the agreed SLO, fail closed, or withhold or label the answer.
+A connector can miss a delete while the ACL still looks valid. If content freshness is outside the agreed SLO, answer with a staleness label; if permission data is stale, fail closed.
 
 ---
 

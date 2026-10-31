@@ -32,7 +32,7 @@ Retries are bounded and jittered, failed jobs remain inspectable, and timeouts n
 
 ## 7. Scale, latency, and cost
 
-The source’s sizing exercise assumes 2M tickets/month, 100 QPS peak, and 20 languages. With an illustrative 70% routine / 20% ambiguous / 10% escalated mix and 2 / 3 / 1 model calls respectively, that is about 4.2M model calls/month, before retries and moderation. The same assumptions imply roughly 2.2M–2.4M retrieval calls/month. Treat these as interview assumptions, not measured production demand.
+The source’s sizing exercise for this case assumes 2M tickets/month, 100 QPS peak, and 20 languages; the ~1M conversations a day figure belongs to the separate consumer-support assistant scenario. With an illustrative 70% routine / 20% ambiguous / 10% escalated mix and 2 / 3 / 1 model calls respectively, that is about 4.2M model calls/month, before retries and moderation. The same assumptions imply roughly 2.2M–2.4M retrieval calls/month. Treat these as interview assumptions, not measured production demand.
 
 | Pressure                            | Design response                                                                                                                                                            |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

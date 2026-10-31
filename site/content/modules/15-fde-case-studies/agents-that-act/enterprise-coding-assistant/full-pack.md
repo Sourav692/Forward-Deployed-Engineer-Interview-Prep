@@ -83,7 +83,7 @@ The OpenAI-style practice prompt adds the indexing side: repository indexing wit
 
 ## 4. Draw the Architecture End to End
 
-The organising rule is cache first, retrieve only on a miss, route by task complexity. The semantic cache is the load-bearing latency optimisation. The common case, a completion the assistant has already seen, skips embedding, retrieval and often the large model.
+The organising rule is cache first, retrieve only on a miss, route by task complexity. The scoped completion cache, exact match first, is the load-bearing latency optimisation. A valid hit, a completion the assistant has already seen in the same scope, skips embedding, retrieval and the model, and goes straight to output validation. Measure the hit rate rather than assume hits are the common case.
 
 The source's own diagram, kept verbatim:
 
@@ -119,6 +119,8 @@ Small Fast Model   Large Reasoning Model
                │
           IDE Suggestions
 ```
+
+In the source drawing a cache hit rejoins at the prompt builder. This design ends a valid hit at output validation instead, so a hit never calls a model.
 
 The same system drawn with its planes and lanes *(own construction)*: a control plane that changes by release, and three data-plane lanes that run per request or per push.
 
@@ -175,9 +177,9 @@ flowchart LR
     subgraph HOT[Hot path, under 300 ms]
         K[Keystroke] --> EXT[IDE extension] --> AUTH[AuthN + licence] --> GW[Gateway, rate limit]
         GW --> FUN[Context funnel: file, cursor, edits, imports]
-        FUN --> CACHE{Prefix + semantic cache}
-        CACHE -- hit --> PB[Prompt builder]
-        CACHE -- miss --> RET[Permission-filtered retrieval] --> PB
+        FUN --> CACHE{Prefix + scoped completion cache}
+        CACHE -- completion hit --> VAL
+        CACHE -- miss --> RET[Permission-filtered retrieval] --> PB[Prompt builder]
         PB --> SM[Small fast model, streamed] --> VAL[Validate: syntax, hallucinated API, secrets, licence]
         VAL -- pass --> IDE[Stream to editor]
         VAL -- fail --> RG[Regenerate or suppress]
@@ -213,7 +215,7 @@ Read the components in dependency order. The fourteen are the source's; the fail
 | 07 | Vector Database | Stores embeddings for semantic retrieval | Degrades: no retrieved snippets, say so in telemetry |
 | 08 | Semantic Search | Retrieves relevant code and documentation | Closed on permission check; degrades on availability |
 | 09 | Prompt Builder | Constructs optimised prompts | Closed: a broken template fails the prompt unit test before release |
-| 10 | Semantic Cache | Reuses responses for similar requests | Degrades to a miss; never serves across permission scopes |
+| 10 | Completion Cache | Reuses completions within the same scope, exact match first | Degrades to a miss; never serves across permission scopes |
 | 11 | Model Router | Selects the best model based on task complexity | Degrades to the small model |
 | 12 | LLM Inference Service | Generates code and explanations | Degrades: fail over region or model; suppress on timeout |
 | 13 | Validation Service | Checks syntax, security, and quality | Closed: no validation, no suggestion |

@@ -16,7 +16,7 @@ The cache-first headline applies to repeated requests; a miss still uses the con
 
 ## 3. Task routing, LLM role, and validation
 
-Inline completion gets the small low-latency model and a short output cap. Multi-line completion can use a medium route if it fits the SLO. Explicit explanation, tests, bug fixes, refactors, and architecture Q&A use the larger reasoning model and a slower lane. The router reads the IDE task type, not the model’s opinion. Persistent IDE connections, close-to-user inference, streaming, limited retrieved context, and supported decoding optimisations help the hot path.
+Inline completion gets the small low-latency model and a short output cap. Multi-line completion can use a medium route where the budget permits. Explicit explanation, tests, bug fixes, refactors, and architecture Q&A use the larger reasoning model and a slower lane. The router reads the IDE task type, not the model’s opinion. Persistent IDE connections, close-to-user inference, streaming, limited retrieved context, and supported decoding optimisations help the hot path.
 
 The LLM proposes code; the validation service decides what the editor can show. Parse syntax and format, check symbols/APIs against the index, scan for secrets and license conflicts, apply unsafe-pattern filters, and suppress or regenerate invalid output. On the slow path, static analysis and test execution can be added where their latency is acceptable. Retrieved comments are data, not prompt instructions. If chat mode gains tools such as “run tests” or “open PR,” it becomes an acting agent and needs scoped tool authority and approval outside the completion route.
 

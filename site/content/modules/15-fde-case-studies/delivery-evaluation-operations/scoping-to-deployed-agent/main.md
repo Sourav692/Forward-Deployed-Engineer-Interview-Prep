@@ -87,7 +87,7 @@ flowchart TB
     D --> C[Configure / signed golden set]
     C --> E[Baseline evaluation]
     E --> H[Shadow / rollback test]
-    H --> L[Limited production / success metrics]
+    H --> L[Limited production / limited-release rule]
     L --> G[Sponsor go / no-go + handover]
   end
   subgraph Agent[Northwind support agent runtime]
@@ -110,7 +110,7 @@ flowchart TB
 2. Security and data-access reviewers sign their own gates with evidence before the agent touches customer data.
 3. The team pulls reusable connectors, prompts, evals and dashboards, then builds only the customer-specific escalation policy; the SME signs the golden set.
 4. A baseline evaluation tests quality and safety. Shadow mode compares agent behaviour without granting unrestricted sending, and the team proves rollback.
-5. Limited production measures agreed success metrics. The sponsor makes the day-14 go/no-go decision; the team hands over a runbook, dashboard, owner and credentials plan.
+5. Limited production checks the agreed limited-release acceptance rule. The sponsor makes the day-14 go/no-go decision on that rule, and a named owner measures the week-4 target later; the team hands over a runbook, dashboard, owner and credentials plan.
 6. At runtime, a Zendesk ticket is redacted, classified by a model, enriched with scoped KB/CRM context, drafted by an LLM, checked for grounding and escalation, and sent only under the chosen human approval policy.
 
 ## Gates, evidence and ownership
@@ -129,7 +129,7 @@ The gate API should reject wrong roles, missing evidence and skipped prior stage
 
 ## Trade-offs, cost and honest limits
 
-Northwind reuses five of six accelerator components (about 83%); the bespoke part is escalation policy. The demo script hard-codes 4m12s first response, 63% zero-edit sends, a .83 evaluation score against a .75 baseline, and a rollback note saying under two minutes; none of these was measured or timed. Week-four retention was not observed; `None` does not mean zero. The source's deterministic gate demo has 17 tests but does not implement full agent provisioning, eval-harness wiring, scope-change approval, versioned rollback or multi-engagement operations. State those gaps plainly in the interview.
+Northwind reuses five of six accelerator components (about 83%); the bespoke part is the custom escalation (guardrail) policy. The demo script hard-codes 4m12s first response, 63% zero-edit sends, a .83 evaluation score against a .75 baseline, and a rollback note saying under two minutes; none of these was measured or timed. Week-four retention was not observed; `None` does not mean zero. The source's deterministic gate demo has 17 tests but does not implement full agent provisioning, eval-harness wiring, scope-change approval, versioned rollback or multi-engagement operations. State those gaps plainly in the interview.
 
 For cost, agree on cost per resolved ticket at intake; bound model steps and tokens, reuse common connectors, and sample evaluation proportionally to risk. Keep customer credentials in a vault with scoped access and revoke or transfer them at handover. Record tenant boundaries and override rate. A low-cost pilot that fails its outcome metric is not success.
 

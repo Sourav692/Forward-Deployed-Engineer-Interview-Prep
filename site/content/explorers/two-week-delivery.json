@@ -442,11 +442,11 @@
               "title": "Let the security reviewer sign the scoping gate",
               "component": "Scoping · days 1–2",
               "short": "Security sign-off",
-              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "what": "During scoping the authorised security reviewer signs security_review_passed with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
               "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
               "next": "Next: Require the customer SME’s data-access evidence.",
               "input": {
-                "gate": "security_review",
+                "gate": "security_review_passed",
                 "signer_role": "security_reviewer",
                 "evidence": "review-42"
               },
@@ -468,11 +468,11 @@
               "title": "Require the customer SME’s data-access evidence",
               "component": "Data ready · days 3–4",
               "short": "Data sign-off",
-              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "what": "The customer SME verifies the required source access and signs data_access_granted. The state machine advances to Configure, one transition at a time.",
               "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
               "next": "Next: Reuse assets and obtain golden-set sign-off.",
               "input": {
-                "gate": "data_access",
+                "gate": "data_access_granted",
                 "signer_role": "customer_sme",
                 "evidence": "source-access-checks-42"
               },
@@ -494,14 +494,14 @@
               "title": "Reuse assets and obtain golden-set sign-off",
               "component": "Configure · days 5–7 + Accelerator library",
               "short": "Reuse and golden set",
-              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "what": "Configure records five reused assets and one custom escalation (guardrail) policy. The customer SME signs the golden set before the engagement may evaluate.",
               "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
               "next": "Next: Attach evaluation evidence and FDA approval.",
               "input": {
                 "asset_pulls": 6,
                 "reused": 5,
                 "custom": [
-                  "guardrail_policy"
+                  "escalation_guardrail_policy"
                 ],
                 "golden_set_signer": "customer_sme"
               },
@@ -533,7 +533,7 @@
               "why": "Gate enforcement and evidence production are separate responsibilities.",
               "next": "Next: Refuse to advance without tested rollback.",
               "input": {
-                "gate": "eval_baseline",
+                "gate": "eval_baseline_met",
                 "signer_role": "fda",
                 "evidence": "baseline-report-42"
               },
@@ -611,7 +611,7 @@
               "title": "Let the sponsor make the evidence-bound go/no-go",
               "component": "Go/no-go · day 14",
               "short": "Sponsor decides",
-              "what": "The sponsor reviews the agreed day-14 evidence and signs success_metrics for the scoped release. The future week-4 live check remains explicitly open.",
+              "what": "The sponsor reviews the agreed day-14 evidence and signs success_metrics_met for the scoped release. The future week-4 live check remains explicitly open.",
               "why": "The sponsor owns the decision; the delivery lead cannot silently change what counts as success.",
               "next": "Next: Hand over the scoped deployment and permanent record.",
               "input": {
@@ -850,8 +850,8 @@
         },
         {
           "id": "wrong-role",
-          "label": "FDA tries to sign the customer data gate",
-          "outcome": "The sign-off is denied and logged. The engagement remains DATA_READY with no partial advance.",
+          "label": "FDA signs the security gate; SME signs data access without evidence",
+          "outcome": "Both sign-offs are denied and logged. The engagement remains DATA_READY with no partial advance.",
           "stages": [
             {
               "title": "Accept only an engagement ready to start",
@@ -886,25 +886,34 @@
               ]
             },
             {
-              "title": "Let the security reviewer sign the scoping gate",
+              "title": "Deny the FDA at the security gate",
               "component": "Scoping · days 1–2",
-              "short": "Security sign-off",
-              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
-              "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
+              "short": "Wrong role denied",
+              "what": "The impatient FDA tries to sign security_review_passed themselves. The gate permits only the security reviewer, so the attempt is denied with wrong_role and logged. The security reviewer then signs with non-empty evidence.",
+              "why": "Seniority is not an override. The delivery lead cannot self-certify a security gate simply because the deadline is near.",
               "next": "Next: Require the customer SME’s data-access evidence.",
               "input": {
-                "gate": "security_review",
-                "signer_role": "security_reviewer",
-                "evidence": "review-42"
+                "gate": "security_review_passed",
+                "attempts": [
+                  {
+                    "signer_role": "fda",
+                    "evidence": "I reviewed it"
+                  },
+                  {
+                    "signer_role": "security_reviewer",
+                    "evidence": "review-42"
+                  }
+                ]
               },
               "output": {
-                "gate": "passed",
+                "fda_attempt": "denied: wrong_role",
+                "security_reviewer_attempt": "passed",
                 "next_stage": "DATA_READY"
               },
               "checks": [
                 {
                   "kind": "Exact",
-                  "text": "Verify allowed role, non-empty evidence and predecessor gates."
+                  "text": "A role mismatch is denied before evidence is checked; only the allowed role advances the gate."
                 }
               ],
               "nodeIds": [
@@ -912,25 +921,26 @@
               ]
             },
             {
-              "title": "Deny the wrong signer without changing state",
+              "title": "Deny a sign-off with no evidence",
               "component": "Data ready · days 3–4 + Engagement event log",
-              "short": "Wrong role denied",
-              "what": "The impatient FDA attempts data_access. The gate permits only the customer SME role, so the attempt is denied and logged.",
-              "why": "The person closest to the work is not automatically authorised to certify customer access.",
-              "next": "The sign-off is denied and logged. The engagement remains DATA_READY with no partial advance.",
+              "short": "No evidence denied",
+              "what": "The customer SME signs data_access_granted with \"looks good\" as evidence. An approval with no artefact behind it is not a sign-off, so the attempt is denied with no_evidence and logged.",
+              "why": "The right role is necessary but not sufficient; the gate needs evidence that the sources actually connected.",
+              "next": "Both sign-offs are denied and logged. The engagement remains DATA_READY with no partial advance.",
               "input": {
-                "gate": "data_access",
-                "signer_role": "fda",
-                "evidence": "I checked it"
+                "gate": "data_access_granted",
+                "signer_role": "customer_sme",
+                "evidence": "looks good"
               },
               "output": {
                 "decision": "denied",
+                "reason": "no_evidence",
                 "stage": "DATA_READY"
               },
               "checks": [
                 {
                   "kind": "Exact",
-                  "text": "Role mismatch leaves the gate and stage unchanged."
+                  "text": "A denied sign-off leaves the gate and stage unchanged."
                 }
               ],
               "nodeIds": [
@@ -1046,11 +1056,11 @@
               "title": "Let the security reviewer sign the scoping gate",
               "component": "Scoping · days 1–2",
               "short": "Security sign-off",
-              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "what": "During scoping the authorised security reviewer signs security_review_passed with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
               "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
               "next": "Next: Require the customer SME’s data-access evidence.",
               "input": {
-                "gate": "security_review",
+                "gate": "security_review_passed",
                 "signer_role": "security_reviewer",
                 "evidence": "review-42"
               },
@@ -1072,12 +1082,12 @@
               "title": "Keep the missing data gate pending",
               "component": "Data ready · days 3–4",
               "short": "Data gate pending",
-              "what": "On day 3 data_access still has no customer SME sign-off. The framework retains DATA_READY.",
+              "what": "On day 3 data_access_granted still has no customer SME sign-off. The framework retains DATA_READY.",
               "why": "Time passed is not evidence that permissions work.",
               "next": "Next: Escalate once and retain the stall.",
               "input": {
                 "day": 3,
-                "gate": "data_access",
+                "gate": "data_access_granted",
                 "status": "pending"
               },
               "output": {
@@ -1211,19 +1221,21 @@
               "title": "Refuse the unmeasurable engagement",
               "component": "Engagement intake",
               "short": "Intake refuses",
-              "what": "The request says only make the agent helpful and has no assigned SME. Intake cannot define a measurable pass, so it refuses the engagement.",
+              "what": "The request says only make the agent helpful and has no assigned SME or named data sources. Intake cannot define a measurable pass, so it refuses the engagement.",
               "why": "Starting a clock against an undefined success target hides risk instead of accelerating delivery.",
               "next": "Intake refuses the engagement. No day-1 scoping clock or downstream gate begins.",
               "input": {
                 "request": "Make our agent helpful in two weeks.",
                 "measurable_metric": null,
-                "customer_sme": null
+                "customer_sme": null,
+                "data_sources": null
               },
               "output": {
                 "intake": "refused",
                 "reason": [
                   "unmeasurable metrics",
-                  "no SME"
+                  "no SME",
+                  "no named data sources"
                 ]
               },
               "checks": [
@@ -1293,11 +1305,11 @@
               "title": "Let the security reviewer sign the scoping gate",
               "component": "Scoping · days 1–2",
               "short": "Security sign-off",
-              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "what": "During scoping the authorised security reviewer signs security_review_passed with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
               "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
               "next": "Next: Require the customer SME’s data-access evidence.",
               "input": {
-                "gate": "security_review",
+                "gate": "security_review_passed",
                 "signer_role": "security_reviewer",
                 "evidence": "review-42"
               },
@@ -1319,11 +1331,11 @@
               "title": "Require the customer SME’s data-access evidence",
               "component": "Data ready · days 3–4",
               "short": "Data sign-off",
-              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "what": "The customer SME verifies the required source access and signs data_access_granted. The state machine advances to Configure, one transition at a time.",
               "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
               "next": "Next: Reuse assets and obtain golden-set sign-off.",
               "input": {
-                "gate": "data_access",
+                "gate": "data_access_granted",
                 "signer_role": "customer_sme",
                 "evidence": "source-access-checks-42"
               },
@@ -1349,7 +1361,7 @@
               "why": "An internal opinion that the examples look good is not the customer’s agreed evaluation baseline.",
               "next": "The engagement remains in Configure. Evaluation cannot start without the customer’s golden-set sign-off.",
               "input": {
-                "gate": "golden_set",
+                "gate": "golden_set_signed_off",
                 "customer_sme_signature": null,
                 "asset_pulls": 6
               },
@@ -1360,7 +1372,7 @@
               "checks": [
                 {
                   "kind": "Exact",
-                  "text": "No code path jumps Configure to Evaluate while golden_set is pending."
+                  "text": "No code path jumps Configure to Evaluate while golden_set_signed_off is pending."
                 }
               ],
               "nodeIds": [
@@ -1521,11 +1533,11 @@
               "title": "Let the security reviewer sign the scoping gate",
               "component": "Scoping · days 1–2",
               "short": "Security sign-off",
-              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "what": "During scoping the authorised security reviewer signs security_review_passed with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
               "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
               "next": "Next: Require the customer SME’s data-access evidence.",
               "input": {
-                "gate": "security_review",
+                "gate": "security_review_passed",
                 "signer_role": "security_reviewer",
                 "evidence": "review-42"
               },
@@ -1547,11 +1559,11 @@
               "title": "Require the customer SME’s data-access evidence",
               "component": "Data ready · days 3–4",
               "short": "Data sign-off",
-              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "what": "The customer SME verifies the required source access and signs data_access_granted. The state machine advances to Configure, one transition at a time.",
               "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
               "next": "Next: Reuse assets and obtain golden-set sign-off.",
               "input": {
-                "gate": "data_access",
+                "gate": "data_access_granted",
                 "signer_role": "customer_sme",
                 "evidence": "source-access-checks-42"
               },
@@ -1573,14 +1585,14 @@
               "title": "Reuse assets and obtain golden-set sign-off",
               "component": "Configure · days 5–7 + Accelerator library",
               "short": "Reuse and golden set",
-              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "what": "Configure records five reused assets and one custom escalation (guardrail) policy. The customer SME signs the golden set before the engagement may evaluate.",
               "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
               "next": "Next: Attach evaluation evidence and FDA approval.",
               "input": {
                 "asset_pulls": 6,
                 "reused": 5,
                 "custom": [
-                  "guardrail_policy"
+                  "escalation_guardrail_policy"
                 ],
                 "golden_set_signer": "customer_sme"
               },
@@ -1612,7 +1624,7 @@
               "why": "Gate enforcement and evidence production are separate responsibilities.",
               "next": "Next: Refuse to advance without tested rollback.",
               "input": {
-                "gate": "eval_baseline",
+                "gate": "eval_baseline_met",
                 "signer_role": "fda",
                 "evidence": "baseline-report-42"
               },
@@ -1688,7 +1700,7 @@
               "title": "Keep the release at no-go",
               "component": "Go/no-go · day 14 + Engagement event log",
               "short": "Sponsor no-go",
-              "what": "The sponsor cannot pass success_metrics on failed evidence. The framework logs no-go and blocks deployment.",
+              "what": "The sponsor cannot pass success_metrics_met on failed evidence. The framework logs no-go and blocks deployment.",
               "why": "A visible no-go is a legitimate outcome of the framework.",
               "next": "The sponsor records no-go. There is no deployment handover and no deadline-based override.",
               "input": {
@@ -1911,11 +1923,11 @@
               "title": "Let the security reviewer sign the scoping gate",
               "component": "Scoping · days 1–2",
               "short": "Security sign-off",
-              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "what": "During scoping the authorised security reviewer signs security_review_passed with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
               "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
               "next": "Next: Require the customer SME’s data-access evidence.",
               "input": {
-                "gate": "security_review",
+                "gate": "security_review_passed",
                 "signer_role": "security_reviewer",
                 "evidence": "review-42"
               },
@@ -1937,11 +1949,11 @@
               "title": "Require the customer SME’s data-access evidence",
               "component": "Data ready · days 3–4",
               "short": "Data sign-off",
-              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "what": "The customer SME verifies the required source access and signs data_access_granted. The state machine advances to Configure, one transition at a time.",
               "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
               "next": "Next: Reuse assets and obtain golden-set sign-off.",
               "input": {
-                "gate": "data_access",
+                "gate": "data_access_granted",
                 "signer_role": "customer_sme",
                 "evidence": "source-access-checks-42"
               },
@@ -1963,14 +1975,14 @@
               "title": "Reuse assets and obtain golden-set sign-off",
               "component": "Configure · days 5–7 + Accelerator library",
               "short": "Reuse and golden set",
-              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "what": "Configure records five reused assets and one custom escalation (guardrail) policy. The customer SME signs the golden set before the engagement may evaluate.",
               "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
               "next": "Next: Attach evaluation evidence and FDA approval.",
               "input": {
                 "asset_pulls": 6,
                 "reused": 5,
                 "custom": [
-                  "guardrail_policy"
+                  "escalation_guardrail_policy"
                 ],
                 "golden_set_signer": "customer_sme"
               },
@@ -2002,7 +2014,7 @@
               "why": "Gate enforcement and evidence production are separate responsibilities.",
               "next": "Next: Refuse to advance without tested rollback.",
               "input": {
-                "gate": "eval_baseline",
+                "gate": "eval_baseline_met",
                 "signer_role": "fda",
                 "evidence": "baseline-report-42"
               },
@@ -2063,7 +2075,7 @@
                 "evidence_available": false
               },
               "output": {
-                "success_metrics": "unproven"
+                "success_metrics_met": "unproven"
               },
               "checks": [
                 {
@@ -2300,11 +2312,11 @@
               "title": "Let the security reviewer sign the scoping gate",
               "component": "Scoping · days 1–2",
               "short": "Security sign-off",
-              "what": "During scoping the authorised security reviewer signs security_review with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
+              "what": "During scoping the authorised security reviewer signs security_review_passed with non-empty evidence. The framework checks the signer role and keeps the next transition blocked until it passes.",
               "why": "The delivery lead cannot self-certify a security gate simply because the deadline is near.",
               "next": "Next: Require the customer SME’s data-access evidence.",
               "input": {
-                "gate": "security_review",
+                "gate": "security_review_passed",
                 "signer_role": "security_reviewer",
                 "evidence": "review-42"
               },
@@ -2326,11 +2338,11 @@
               "title": "Require the customer SME’s data-access evidence",
               "component": "Data ready · days 3–4",
               "short": "Data sign-off",
-              "what": "The customer SME verifies the required source access and signs data_access. The state machine advances to Configure, one transition at a time.",
+              "what": "The customer SME verifies the required source access and signs data_access_granted. The state machine advances to Configure, one transition at a time.",
               "why": "Waiting for permissions is an explicit blocked gate, not quiet schedule drift.",
               "next": "Next: Reuse assets and obtain golden-set sign-off.",
               "input": {
-                "gate": "data_access",
+                "gate": "data_access_granted",
                 "signer_role": "customer_sme",
                 "evidence": "source-access-checks-42"
               },
@@ -2352,14 +2364,14 @@
               "title": "Reuse assets and obtain golden-set sign-off",
               "component": "Configure · days 5–7 + Accelerator library",
               "short": "Reuse and golden set",
-              "what": "Configure records five reused assets and one custom guardrail policy. The customer SME signs the golden set before the engagement may evaluate.",
+              "what": "Configure records five reused assets and one custom escalation (guardrail) policy. The customer SME signs the golden set before the engagement may evaluate.",
               "why": "A library only supports repeatability if reuse is recorded and customer examples are approved.",
               "next": "Next: Attach evaluation evidence and FDA approval.",
               "input": {
                 "asset_pulls": 6,
                 "reused": 5,
                 "custom": [
-                  "guardrail_policy"
+                  "escalation_guardrail_policy"
                 ],
                 "golden_set_signer": "customer_sme"
               },
@@ -2391,7 +2403,7 @@
               "why": "Gate enforcement and evidence production are separate responsibilities.",
               "next": "Next: Refuse to advance without tested rollback.",
               "input": {
-                "gate": "eval_baseline",
+                "gate": "eval_baseline_met",
                 "signer_role": "fda",
                 "evidence": "baseline-report-42"
               },

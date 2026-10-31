@@ -41,7 +41,7 @@ flowchart TB
     V -->|Unsafe or stale| D["Suppress suggestion"]
 ```
 
-A valid completion-cache hit can skip retrieval and generation. Key it by tenant, repository, permissions, revision, and nearby context. Measure the hit rate; do not assume it is the common case.
+A valid completion-cache hit can skip retrieval and generation. Key it by tenant, repository, permissions, revision, prompt and model version, and nearby context. Measure the hit rate; do not assume it is the common case.
 
 ## Trace One Keystroke to an Accepted Suggestion
 
@@ -73,7 +73,7 @@ Routing is the same trade as context collection: spend latency only where it buy
 | Task | Model |
 |---|---|
 | Next-word completion | Small, low-latency |
-| Multi-line completion | Medium |
+| Multi-line completion | Medium where the budget permits |
 | Code explanation | Larger reasoning |
 | Bug fixing | Larger reasoning |
 | Refactoring | Larger reasoning |
@@ -120,7 +120,7 @@ For an explicit edit, ask: "Should totals include tax, and which rounding rule a
 
 A developer types `def calculate_total(items):` in a repository that already has a tax helper. The cache check takes about 10 ms and misses, because this file is new. Context assembly takes about 40 ms. It keeps the current file, its imports and the open tabs, and drops unrelated files. Semantic search over the repository index surfaces the existing `compute_gst()` helper.
 
-The task is a multi-line completion, so the router picks the medium model. The illustrative inference allocation is roughly 200 ms; it is not a measured result. Validation spends about 50 ms parsing the code and confirming that `compute_gst()` really exists. The suggestion reuses the helper instead of writing a second tax function.
+The task is a multi-line completion and the budget permits it, so the router picks the medium model. The illustrative inference allocation is roughly 200 ms; it is not a measured result. Validation spends about 50 ms parsing the code and confirming that `compute_gst()` really exists. The suggestion reuses the helper instead of writing a second tax function.
 
 Each piece of the design paid for itself in one keystroke. The funnel found the helper, the router avoided the large model, and validation guarded against an invented API.
 
@@ -161,15 +161,15 @@ A suggestion is not an applied change. Recheck permissions and freshness even on
 - Check a scoped, fresh completion cache; validate hits before display.
 - Collect relevant signals, retrieve permitted code, route, generate, and validate before display.
 - Context engineering is a funnel from millions of tokens down to a prompt that fits the window.
-- Route small models to completions and larger reasoning models to explanation, bug fixing, refactoring and architecture.
+- Route small models to inline completions, a medium model to multi-line completion where the budget permits, and larger reasoning models to explanation, bug fixing, refactoring and architecture.
 - Split the budget into ~10 ms cache, ~40 ms context, ~200 ms streamed inference and ~50 ms validation.
 - Treat source code as the most sensitive asset: no training without consent, permission-aware retrieval, secret masking and private deployment.
 - Have answers ready on code leakage, getting under 300 ms, and personalisation.
 
 ## Check Yourself
 
-1. **Why is the semantic cache placed before embedding and retrieval?**
-   A valid, scoped hit can skip retrieval and generation. Measure hit rates and validate against the current code context.
+1. **Why is the scoped exact-match cache placed before embedding and retrieval?**
+   A valid, scoped hit can skip retrieval and generation. Start with exact matching; semantic matching raises the hit rate but can serve a wrong answer for a similar request. Measure hit rates and validate against the current code context.
 
 2. **Decompose the 300 ms budget.**
    About 10 ms cache, 40 ms context, 200 ms inference, and 50 ms validation: 300 ms before extra overhead, not a measured end-to-end guarantee.
@@ -178,7 +178,7 @@ A suggestion is not an applied change. Recheck permissions and freshness even on
    The model produces plausible code, not verified code. A call to a function that does not exist would compile in the developer's head and fail in their build.
 
 4. **What must be in the completion-cache scope?**
-   Tenant, repository, permissions, revision, and relevant code context; revalidate the result before display.
+   Tenant, repository, permissions, revision, prompt and model version, and relevant code context; revalidate the result before display.
 
 5. **Who decides whether a suggested edit is applied?**
    The developer. A validated suggestion is still only a proposal.

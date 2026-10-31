@@ -43,10 +43,8 @@ flowchart TD
     L --> M[Candidate Ranking]
 
     M --> N[Interview Question Generator]
-    M --> O[AI Judge Scoring]
-
-    N --> P[Evaluation Pipeline]
-    O --> P
+    N -->|after the interview or assessment| O[AI Judge Scoring]
+    O --> P[Evaluation Pipeline]
 
     P --> Q[Human Recruiter Review]
     Q --> R[Interview Scheduler]
@@ -70,7 +68,7 @@ flowchart TD
 
 ## Step 4. The deep dive: explainable ranking
 
-The ranking does not rest on a single similarity number. It blends semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. Explicit weights let a recruiter follow the ranking and an auditor accept it; one opaque score allows neither.
+The ranking does not rest on a single similarity number. It blends semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. Explicit weights let a recruiter follow the ranking and an auditor inspect it; one opaque score allows neither. The weights do not by themselves make the ranking fair or job-relevant.
 
 Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience ~20% · domain expertise ~15% · everything else ~10%. With weights like these on show, a recruiter can see the reasons behind a candidate's place as well as the place.
 
@@ -82,7 +80,7 @@ Keep the application servers stateless so they scale out. Process documents asyn
 
 ## Security and fairness: candidate data is sensitive; hiring decisions carry legal weight
 
-Encrypt data both when stored and when moving. Guard PII. Give recruiters and hiring managers role-based access through RBAC. Write an audit record for every AI suggestion and every hiring action. Meet GDPR, CCPA and EEOC duties, and honour candidates who ask for their data to be deleted. Watch the models for bias across protected groups continuously, not once at launch.
+Encrypt data both when stored and when moving. Guard PII. Give recruiters and hiring managers role-based access through RBAC. Write an audit record for every AI suggestion and every hiring action. Agree with the privacy and legal owners which GDPR, CCPA and EEOC duties apply, and honour candidates who ask for their data to be deleted. These controls support compliance; they do not certify it. Watch the models for bias across protected groups continuously, not once at launch.
 
 ```
 AI Ranking & Scores → Human Recruiter Review → Approve or Override → Final Hiring Decision
@@ -106,7 +104,7 @@ No AI ranking reaches a decision without a person in between.
 
 **How do you reduce bias?** Hide or mask demographic details where that makes sense. Train and test on varied data. Track fairness metrics continuously. Keep a human sign-off on every hire. Explain each ranking openly. Audit on a regular schedule.
 
-**How do you improve matching accuracy?** Match on embeddings, not keywords. Blend several ranking signals. Feed recruiter feedback back into the ranker. Measure precision and recall against past hiring outcomes. Tune prompts and retrieval using that same feedback.
+**How do you improve matching accuracy?** Never match on keywords alone. Evaluate lexical and semantic matching on a labelled set first, and expect a hybrid of the two to win. Blend several ranking signals. Feed recruiter feedback back into the ranker. Measure precision and recall against past hiring outcomes. Tune prompts and retrieval using that same feedback.
 
 **How do you personalise for recruiters?** Learn from each recruiter's earlier decisions. Lift candidates who resemble past successful hires, *and watch that step closely for bias*. Set question difficulty by the seniority of the role. Reflect the skills a given team needs. Let recruiters adjust the weights themselves.
 
@@ -130,7 +128,7 @@ The design is one AI workflow from end to end: structured extraction, matching b
 - Run matching in two modes: batches for bulk intake, and close to live when a recruiter searches.
 - Embeddings match on meaning, so a search for "LLM Engineer" can surface people who list RAG, prompt engineering or agentic AI.
 - Rank on explicit weighted signals, opening at semantic similarity ~30%, skills ~25%, experience ~20% and domain ~15%, with ~10% for the rest.
-- Explicit weights let a recruiter follow the ranking and an auditor accept it, and one opaque score allows neither.
+- Explicit weights let a recruiter follow the ranking and an auditor inspect it, and one opaque score allows neither. They do not by themselves make the ranking fair.
 - The AI judge scores against a fixed rubric and explains each score, but the decision is never its to make.
 - When confidence falls below a set threshold, a person must review the case.
 - Human review only adds accountability and a bias check if the reviewer has real power to overrule the ranking.

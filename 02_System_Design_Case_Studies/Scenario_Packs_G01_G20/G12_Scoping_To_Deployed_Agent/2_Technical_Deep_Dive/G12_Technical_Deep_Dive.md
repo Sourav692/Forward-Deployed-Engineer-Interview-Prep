@@ -10,13 +10,13 @@ The primary system is a deterministic delivery state machine: intake, gated prog
 
 Intake requires a measurable target and baseline, named SME and named sources. Ask whether the two-week SLA is a target or commitment; who owns go/no-go; what is reused; what a failed gate means; and whether scaling is per team or across an organisation. These answers change staffing, access and the schedule. A missing SME or data source is an intake failure, not a hidden implementation task.
 
-The seven-stage sequence is security review, data access, configuration/golden set, baseline evaluation, shadow/rollback, limited-production success metrics and go/no-go. The source's day ranges are 1–2, 3–4, 5–7, 8–9, 10–11, 12–13 and day 14. Data access still pending on day 3 auto-escalates. Each gate records signer role and evidence, and the engagement moves to the next stage only when the previous gate is complete. A deny overrides an earlier optimistic state. Audit every attempt, including rejected sign-offs.
+The seven-stage sequence is security review, data access, configuration/golden set, baseline evaluation, shadow/rollback, limited production against the limited-release acceptance rule, and go/no-go. The source's day ranges are 1–2, 3–4, 5–7, 8–9, 10–11, 12–13 and day 14. Data access still pending on day 3 auto-escalates. Each gate records signer role and evidence, and the engagement moves to the next stage only when the previous gate is complete. A deny overrides an earlier optimistic state. Audit every attempt, including rejected sign-offs.
 
 Free-text evidence can rubber-stamp a gate, so the production form should require structured security controls, dataset lineage, signed golden set, baseline report and rollback evidence. Separate the people who build from those who approve risk. Sponsor approval should cite measured metrics, not only a checkbox.
 
 ## 3. Accelerator reuse and agent runtime
 
-Reusable connectors, prompt templates, eval harness, guardrails and dashboards shorten the calendar. Northwind uses five of six standard components; custom escalation logic is the exception. Record `pull_or_build` for each component so teams can see where bespoke work accumulates. Reuse must still be adapted to tenant identity and customer policy.
+Reusable connectors, prompt templates, eval harness, guardrails and dashboards shorten the calendar. Northwind uses five of six standard components; the custom escalation (guardrail) policy is the exception. Record `pull_or_build` for each component so teams can see where bespoke work accumulates. Reuse must still be adapted to tenant identity and customer policy.
 
 The proposed runtime path is Zendesk ticket → PII redaction → classification of the top three categories → Confluence KB plus Salesforce read-only retrieval → grounded LLM draft → groundedness and escalation checks → human review/send policy → telemetry. Keep source credentials scoped, secrets in a vault and customer data segregated. A retrieval miss should trigger abstention or escalation. The source does not demonstrate an autonomous action loop; avoid calling the LLM draft an independent release authority.
 

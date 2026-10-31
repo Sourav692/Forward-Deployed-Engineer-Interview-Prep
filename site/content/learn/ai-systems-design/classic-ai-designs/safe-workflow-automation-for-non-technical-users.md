@@ -20,7 +20,7 @@ Ask whether workflows read or write, what a bad action could cost, and whether t
 
 Cascade handles Tier-1 support through Zendesk webhooks and Slack escalations. A high-priority ticket gets a drafted reply; a billing complaint may request a refund.
 
-The source's introduction describes an approval threshold, while its runtime demonstrates a hard spend cap. Keep those separate: approval may permit an otherwise eligible action, but cannot override a hard budget. A cap change needs its own authorised configuration change.
+The handbook source's introduction describes an approval threshold, while its runtime demonstrates a hard spend cap. Keep those separate: approval may permit an otherwise eligible action, but cannot override a hard budget. A cap change needs its own authorised configuration change.
 
 Track event, channel, workflow version, trigger, step, tool, run, guardrail, and principal. Route one event, lock its ticket, and checkpoint each step. Destructive actions need validated arguments, policy permission, application authorisation, and an authoritative receipt.
 
@@ -31,7 +31,7 @@ flowchart TB
     E["Channel payload"] --> A["Adapter<br/>validate and normalise event"]
     A --> R["Routing<br/>tenant and priority match"]
     R --> L{"Entity lock available?"}
-    L -->|No| W["Wait or reject conflict"]
+    L -->|No| W["Refuse<br/>entity_locked"]
     L -->|Yes| O["Orchestrator<br/>load workflow and checkpoint"]
     O --> V["Validate arguments<br/>and evaluate guardrails"]
     V -->|Needs approval| P["Pause<br/>no destructive execution"]
@@ -53,17 +53,17 @@ The model may propose a refund and its arguments. The schema constrains their sh
 
 ## Order the Guardrail Rules So Deny Wins
 
-The script introduces its guardrail as "five ordered rules, deny overrides", but then lists seven. The seven are the full set.
+The script introduces its guardrail as "five ordered rules, deny overrides", then draws a seven-line ladder. Count the full set as seven rules: five deny, two allow. Draw the five deny rules in order. A non-destructive step runs once it passes the two budget checks; a destructive step must clear all five deny rules and then match one of the two allows.
 
 | # | Rule | Outcome |
 |---|---|---|
-| 1 | Step budget exceeded? | Halt; do not loop |
-| 2 | Spend cap exceeded? | Halt; do not loop. Uses the real dollar amount for a refund |
-| 3 | Non-destructive? | Run it |
-| 4 | Shadow mode? | No destructive execution; drafts and simulation only |
-| 5 | Below live status? | Destructive steps disabled entirely |
-| 6 | Autonomous and allow-listed? | Auto-approved |
-| 7 | Otherwise | Needs a real human with the right role |
+| 1 | Step budget exceeded? | Deny and halt; do not loop |
+| 2 | Spend cap exceeded? | Deny and halt; do not loop. Uses the real dollar amount for a refund |
+| 3 | Shadow mode? | Deny destructive execution; drafts and simulation only |
+| 4 | Below live status? | Deny; destructive steps disabled entirely |
+| 5 | Destructive, not allow-listed, no approver? | Deny and pause for a real human with the right role |
+| 6 | Autonomous and allow-listed? | Allow; auto-approved |
+| 7 | Approved by a human with the right role? | Allow |
 
 Autonomous status raises the ceiling on which actions can skip approval. It never removes the ceiling. A destructive tool not explicitly allow-listed still needs a human on a fully autonomous workflow, and the spend cap applies at every status.
 
@@ -71,7 +71,7 @@ Rules 1 and 2 are not two severities of one check; they count different things. 
 
 ## Count the Real Money, Not a Nominal Fee
 
-The reference build found a bug worth telling. A $500 refund on a workflow with a $5 spend cap passed authorisation. Every tool shared one cost function that charged a flat, nominal fee per call. That suits drafting a reply, which spends no real money. But the refund used the same flat fee, so the cap checked against a few cents every time, whatever the refund's size.
+The reference build found a bug worth telling. A $500 refund on a test workflow with a $5 spend cap, a separate story from Cascade's $50 policy, passed authorisation. Every tool shared one cost function that charged a flat, nominal fee per call. That suits drafting a reply, which spends no real money. But the refund used the same flat fee, so the cap checked against a few cents every time, whatever the refund's size.
 
 Two quantities were conflated: the operational cost of running a step, and the dollars the step spends on the customer's behalf. A cap cannot limit money it never measures. The fix makes a financial tool's cost the real amount in its own arguments. It is the same family of bug as the false leak alarm in [Access-Controlled Enterprise RAG](/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag): a check that looks protective but measures the wrong quantity.
 
@@ -95,7 +95,7 @@ flowchart TB
 
 There is no separate crash-recovery path. `resume()` and a fresh run call the same loop, which always starts at `next_step_index`, whether that is 0 or mid-workflow. One loop means one set of bugs to find, not two.
 
-The key identifies a particular action, not just a run or tool name. The reference uses `run_id:refund`; a production workflow with repeated refund steps also needs a stable step identity and unchanged arguments.
+The key identifies a particular action, not just a run or tool name. Key it as `{tenant_id}:{run_id}:{step_name}:{args_hash}`, so a workflow with repeated refund steps keeps a stable step identity and unchanged arguments in every key.
 
 ## Raise Tenancy, Security, and Failure Unprompted
 
@@ -127,21 +127,21 @@ The runtime owns workflow selection, destructive-action permission, and replay h
 
 Start with one channel, one non-destructive workflow, and tested guardrails. The source reports 21 deterministic tests; this editorial pass does not rerun that reference runtime. Ask who owns policy, how autonomy is earned, and how cross-channel actions share one durable run.
 
-## Worked Example: A $500 Refund on a $5 Cap
+## Worked Example: A $500 Refund on a $50 Cap
 
 > **Added production guidance:** the clarification, payload, and recovery contract below are illustrative extensions to the reference runtime.
 
 ### Clarify the Financial Boundary
 
-Ask: "Is $5 a hard budget or an approval threshold? Who may change it? Which refund operation is this, and does the payment backend deduplicate requests?" Approval alone cannot make a $500 action fit a $5 hard cap.
+Ask: "Is $50 a hard budget or an approval threshold? Who may change it? Which refund operation is this, and does the payment backend deduplicate requests?" Approval alone cannot make a $500 action fit a $50 hard cap.
 
 ### Follow the Blocked Refund
 
 A billing complaint arrives through the Zendesk webhook. Routing picks the highest-priority live workflow and takes the entity lock on the ticket. Step 0 drafts a reply: non-destructive, so it runs and checkpoints.
 
-Step 1 proposes `issue_refund(order_id, amount_usd=500)`. The arguments validate. The step budget is fine. The spend cap compares $500, the real amount, against $5 and halts the step with a named reason. Under the buggy cost function, the cap would have seen a few cents and approved it.
+Step 1 proposes `issue_refund(order_id, amount_usd=500)`. The arguments validate. The step budget is fine. The spend cap compares $500, the real amount, against Cascade's $50 cap and halts the step with a named reason. Under the buggy cost function, the cap would have seen a few cents and approved it.
 
-Now suppose the tenant raises the cap, the workflow is autonomous, but `issue_refund` is not allow-listed. Rule 7 applies, so the run pauses for a human with the right role. Approval an hour later resumes at step 1, never re-running step 0, and records `run_id:refund`. A redelivered event hits the idempotency check first and becomes a free no-op. No refund repeats, and no cost is counted twice.
+Now suppose the tenant raises the cap, the workflow is autonomous, but `issue_refund` is not allow-listed. Rule 5 denies it, so the run pauses for a human with the right role. Approval an hour later resumes at step 1, never re-running step 0, and records the key `cascade:run-42:refund:<args_hash>`. A redelivered event passes the caller and tenant access check, then hits the idempotency check and becomes a free no-op. No refund repeats, and no cost is counted twice.
 
 | Line that carries the round | Point it makes |
 |---|---|
@@ -158,7 +158,7 @@ Now suppose the tenant raises the cap, the workflow is autonomous, but `issue_re
 {
   "trusted_scope": {"tenant": "cascade", "run": "run-42"},
   "proposal": {"tool": "issue_refund", "amount_usd": 500},
-  "policy": {"spend_cap_usd": 5, "version": "v3"},
+  "policy": {"spend_cap_usd": 50, "version": "v3"},
   "decision": "halt_spend_cap_exceeded",
   "payment_status": "not_started"
 }
@@ -170,7 +170,7 @@ The application derives scope and checks policy. The guardrail rejection is the 
 
 > "I'd separate workflow authoring from the guarded runtime. Each event would be normalised, matched within its tenant, and checked against an entity lock. A versioned workflow would run through one checkpointed execution loop.
 >
-> The model could propose arguments, but schemas, hard budgets, tool allow-lists, and approval roles would control execution. A $500 refund under a $5 cap would halt, even with approval. I'd persist operation intent and receipts, reconcile uncertain payments, and deduplicate both the business effect and financial budget debit. The reference's in-memory stores demonstrate the shape; production needs durable shared state and backend idempotency support. I'd begin with one channel and non-destructive work."
+> The model could propose arguments, but schemas, hard budgets, tool allow-lists, and approval roles would control execution. A $500 refund under a $50 cap would halt, even with approval. I'd persist operation intent and receipts, reconcile uncertain payments, and deduplicate both the business effect and financial budget debit. The reference's in-memory stores demonstrate the shape; production needs durable shared state and backend idempotency support. I'd begin with one channel and non-destructive work."
 
 ---
 
@@ -180,7 +180,7 @@ The application derives scope and checks policy. The guardrail rejection is the 
 - Anchor on a refund cap: autonomy up to the point where a mistake costs real money.
 - Route with a priority match and an independent entity lock; one checkpointed loop serves fresh and resumed runs.
 - Typed tools constrain model proposals; policy and backend authorisation control money movement.
-- Order the seven guardrail rules so deny wins; budget counts steps and the cap counts dollars.
+- Order the seven guardrail rules (five deny, two allow) so deny wins; budget counts steps and the cap counts dollars.
 - A spend cap must measure the real money a step spends, not a nominal fee.
 - Resume and fresh runs share one loop; idempotency belongs to the action and must cover cost too.
 - Tenant IDs, scoped tools and a destructive flag carry security; failures halt or pause with a named reason.
@@ -204,7 +204,7 @@ The application derives scope and checks policy. The guardrail rejection is the 
    No. Reconcile the gap between remote execution and local receipt persistence, with a supported backend contract.
 
 6. **What needs to identify a repeated action?**
-   Tenant, run, stable step identity, and the same arguments. A tool name alone may identify several legitimate steps.
+   Tenant, run, stable step identity, and the same arguments, keyed as `{tenant_id}:{run_id}:{step_name}:{args_hash}`. A tool name alone may identify several legitimate steps.
 
 7. **Can a replay skip caller access checks?**
    No. Verify caller and tenant before returning an existing protected receipt; do not apply its financial debit again.
