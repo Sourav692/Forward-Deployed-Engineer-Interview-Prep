@@ -13,7 +13,8 @@ import { ReviewLinks } from '@/components/learn/ReviewLinks'
 import { lessonTwins } from '@/lib/twins'
 import { MockScorer } from '@/components/progress/MockScorer'
 import { MockTimer } from '@/components/progress/MockTimer'
-import { MOCK_MINUTES, MOCK_MODULE, mockRoundsFor } from '@/components/progress/mock-rubric'
+import { MOCK_ANSWER_SECTIONS, MOCK_MINUTES, MOCK_MODULE, mockRoundsFor } from '@/components/progress/mock-rubric'
+import { SpeakModeProvider, SpeakPanel } from '@/components/progress/SpeakMode'
 import { cx, focusRing } from '@/components/ui'
 import { lessonExplorer } from '@/lib/explorers/load'
 import { LISTED_ELSEWHERE, isLearnTrack } from '@/lib/curriculum-href'
@@ -113,15 +114,21 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
 
           <ReviewLinks lessonSlug={lesson.slug} />
 
-          {scenarioMock && (
-            <div className="mb-6">
-              <MockTimer minutes={MOCK_MINUTES} />
-            </div>
+          {scenarioMock ? (
+            // Speak mode (ENH-33): the same timer and scorer, with the model answers left out.
+            <SpeakModeProvider>
+              <SpeakPanel minutes={MOCK_MINUTES} scoreHref="#score" timer={false} />
+              <div className="mb-6">
+                <MockTimer minutes={MOCK_MINUTES} />
+              </div>
+              <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} tag={area} speakHides={MOCK_ANSWER_SECTIONS} />
+              <div id="score" className="scroll-mt-24">
+                <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} rounds={mockRounds} />
+              </div>
+            </SpeakModeProvider>
+          ) : (
+            <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} tag={area} />
           )}
-
-          <LessonReader page={page} twins={await lessonTwins(lesson.slug)} explorer={await lessonExplorer(lesson.slug)} tag={area} />
-
-          {scenarioMock && <MockScorer lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} rounds={mockRounds} />}
 
           <div className="mt-10 border-t border-border pt-6">
             <LessonActions moduleSlug={mod.slug} lessonSlug={lesson.slug} title={lesson.title} href={lesson.href} />

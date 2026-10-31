@@ -28,6 +28,7 @@ import {
 import { Blocks } from './Blocks'
 import { AnswerKeyReveal } from './AnswerKeyReveal'
 import { ScenarioToolbar } from './ScenarioToolbar'
+import { SpeakModeProvider, SpeakPanel, useSpeakMode } from './progress/SpeakMode'
 
 const SAVE_DEBOUNCE_MS = 400
 type AnswerStatusFilter = 'all' | Status
@@ -36,7 +37,22 @@ type AnswerStatusFilter = 'all' | Status
  * Behavioural pages are a focused answer library: the answer is visible immediately,
  * while each question keeps its own preparation status in local storage.
  */
-export function ScenarioView({
+/**
+ * Countdown for speak mode (ENH-33) on a worksheet: the middle of the toolbar timer's
+ * 15, 30 and 45 minutes. The behavioural story bank gets no speak mode: it has no answer
+ * fields to hide.
+ */
+const SPEAK_MINUTES = 30
+
+export function ScenarioView(props: { scenario: Scenario; behavioral?: boolean }) {
+  return (
+    <SpeakModeProvider>
+      <ScenarioBody {...props} />
+    </SpeakModeProvider>
+  )
+}
+
+function ScenarioBody({
   scenario,
   behavioral = false,
 }: {
@@ -44,6 +60,8 @@ export function ScenarioView({
   behavioral?: boolean
 }) {
   const id = `${scenario.ref.trackId}/${scenario.ref.slug}`
+  const { on: speak } = useSpeakMode()
+  const scoreSection = scenario.sections.find((s) => s.blocks.some((b) => b.kind === 'scorecard'))
 
   // State starts empty on both server and client so the first client render matches
   // the prerendered HTML exactly; saved values arrive in the effect below.
@@ -224,6 +242,8 @@ export function ScenarioView({
         />
       )}
 
+      {!behavioral && scoreSection && <SpeakPanel minutes={SPEAK_MINUTES} scoreHref={`#section-${scoreSection.index}`} />}
+
       {behavioral && (
         <>
           <BehavioralReadingGuide />
@@ -283,13 +303,16 @@ export function ScenarioView({
                   onAnswer={handleAnswer}
                   onScore={handleScore}
                   onAddRow={handleAddRow}
+                  speak={speak}
                 />
 
-                <AnswerKeyReveal
-                  key={`${section.index}-${revealAll}`}
-                  sections={section.answerKey}
-                  defaultOpen={revealAll}
-                />
+                {!speak && (
+                  <AnswerKeyReveal
+                    key={`${section.index}-${revealAll}`}
+                    sections={section.answerKey}
+                    defaultOpen={revealAll}
+                  />
+                )}
               </>
             )}
           </section>
@@ -301,7 +324,7 @@ export function ScenarioView({
         )}
       </div>
 
-      {scenario.closing && <ClosingCard section={scenario.closing} />}
+      {scenario.closing && !speak && <ClosingCard section={scenario.closing} />}
 
       <PrevNext
         prev={scenario.prev && { href: scenarioHref(scenario.prev), title: qualifiedTitle(scenario.prev) }}

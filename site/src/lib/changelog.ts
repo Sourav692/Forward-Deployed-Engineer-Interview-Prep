@@ -13,6 +13,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-10-31',
+    title: 'Speak your answer',
+    summary:
+      'Worksheets and scenario mocks have a "Speak your answer" mode. It hides the answer fields and model answers, runs a countdown, and leaves the rubric for scoring yourself afterwards. Nothing is recorded, and your scores save to the same place as in written mode.',
+  },
+  {
+    date: '2026-10-31',
     title: 'Interview by round',
     summary:
       'The interview area now follows the rounds of a real loop, from the recruiter screen to the demo or take-home. Each round says what the interviewer tests and lists what to study in Learn, what to practise and the mock interview to run. The five topic hubs became rounds, and their old links redirect.',

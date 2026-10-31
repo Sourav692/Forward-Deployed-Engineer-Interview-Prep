@@ -28,6 +28,8 @@ const PAGES: [string, string][] = [
   ['library', '/library'],
   ['credits', '/library/credits'],
   ['worksheet', WORKSHEET],
+  ['worksheet in speak mode', `${WORKSHEET}?mode=speak`],
+  ['mock in speak mode', `${MOCK_LESSON}?mode=speak`],
   ['story bank', '/practice/story-bank'],
   ['case study', CASE_STUDY],
   ['final-week review', '/interview/final-week/module-05-rag-and-enterprise-data'],

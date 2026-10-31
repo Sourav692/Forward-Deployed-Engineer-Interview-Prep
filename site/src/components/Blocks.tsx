@@ -21,6 +21,8 @@ export type BlocksProps = {
   onAddRow?: (blockId: string) => void
   /** Level of in-block sub-headings: `h3` directly under a section's `h2`, else `h4`. */
   subheading?: 'h3' | 'h4'
+  /** Speak mode (ENH-33): answer fields are left out; the scorecard stays. */
+  speak?: boolean
 }
 
 export function Blocks(props: BlocksProps) {
@@ -106,11 +108,13 @@ function Editable({
   placeholder,
   answers,
   onAnswer,
+  speak,
 }: {
   id: string
   label: string
   placeholder?: string
 } & BlocksProps) {
+  if (speak) return <span className="text-[0.9375rem] italic text-subtle">Say it out loud</span>
   if (!onAnswer) return <span className="text-subtle">—</span>
   return (
     <AutoTextarea

@@ -6,6 +6,7 @@ import type { TwinLink } from '@/lib/twins'
 import type { ExplorerData } from '@/lib/explorers/types'
 import { PageHead } from '@/components/editorial/PageHead'
 import { LessonExperience } from '@/components/explorers/LessonExperience'
+import { SpeakHidden } from '@/components/progress/SpeakMode'
 
 /**
  * A final-week review's "One-Page Memory Card" H2 opens a second tab, Recall card (owner
@@ -28,7 +29,20 @@ const RECALL_CARD = /^One-Page Memory Card\b/
  * The head is the Editorial PageHead, tagged with the area (`tag`: Learn or Interview),
  * with the reading time and source as a ruled spec line.
  */
-export function LessonReader({ page, twins = [], explorer, tag }: { page: LessonPage; twins?: TwinLink[]; explorer?: ExplorerData | null; tag: string }) {
+export function LessonReader({
+  page,
+  twins = [],
+  explorer,
+  tag,
+  speakHides,
+}: {
+  page: LessonPage
+  twins?: TwinLink[]
+  explorer?: ExplorerData | null
+  tag: string
+  /** Section titles left out in speak mode (ENH-33): a scenario mock's model answers. */
+  speakHides?: RegExp
+}) {
   const { lesson, doc, sourceNote, creditHtml } = page
   const card = doc.sections.findIndex((s) => s.title && RECALL_CARD.test(s.title))
   const sourceLinks = { ...explorer?.readingLinks, ...Object.fromEntries(doc.sections.filter((s) => s.title).map((s) => [toPlainText(s.title!), `#${s.id}`])) }
@@ -71,30 +85,40 @@ export function LessonReader({ page, twins = [], explorer, tag }: { page: Lesson
             </div>
           </>
         ) : (
-          <Sections sections={doc.sections} />
+          <Sections sections={doc.sections} speakHides={speakHides} />
         )}
       </div>}
     </article>
   )
 }
 
-function Sections({ sections }: { sections: ReadingSection[] }) {
+function Sections({ sections, speakHides }: { sections: ReadingSection[]; speakHides?: RegExp }) {
   return (
     <div className="space-y-8">
-      {sections.map((section) => (
-        <section key={section.id} id={section.id} className="scroll-mt-24" aria-label={section.title ? undefined : 'Introduction'}>
-          {section.title && <h2 className="mt-0" dangerouslySetInnerHTML={{ __html: section.title }} />}
-          <div className="space-y-4">
-            {section.chunks.map((chunk, i) =>
-              chunk.kind === 'diagram' ? (
-                <Diagram key={i} code={chunk.code} />
-              ) : (
-                <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
-              ),
-            )}
-          </div>
-        </section>
-      ))}
+      {sections.map((section) => {
+        const el = (
+          <section key={section.id} id={section.id} className="scroll-mt-24" aria-label={section.title ? undefined : 'Introduction'}>
+            {section.title && <h2 className="mt-0" dangerouslySetInnerHTML={{ __html: section.title }} />}
+            <div className="space-y-4">
+              {section.chunks.map((chunk, i) =>
+                chunk.kind === 'diagram' ? (
+                  <Diagram key={i} code={chunk.code} />
+                ) : (
+                  <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
+                ),
+              )}
+            </div>
+          </section>
+        )
+        const title = section.title ? toPlainText(section.title) : ''
+        return speakHides?.test(title) ? (
+          <SpeakHidden key={section.id} label={`"${title}"`}>
+            {el}
+          </SpeakHidden>
+        ) : (
+          el
+        )
+      })}
     </div>
   )
 }

@@ -20,6 +20,13 @@ export interface MockDimension {
 
 export const MOCK_MINUTES = 45
 
+/**
+ * The sections of a scenario mock that give the answer away: left out in speak mode
+ * (ENH-33) until the learner turns it off. The brief, the rounds and the scoring guide stay.
+ */
+export const MOCK_ANSWER_SECTIONS =
+  /^(Check Your Answer|Compare Weak|Worked Example|Key Takeaways|Check Yourself|What a Strong Candidate Says|Common Mistakes)/
+
 /** Lesson 01 teaches the method; the five lessons after it are the scenario mocks. */
 export const MOCK_MODULE = 'mock-interviews'
 export const MOCK_METHOD_LESSON = 'running-and-scoring-a-mock-interview'

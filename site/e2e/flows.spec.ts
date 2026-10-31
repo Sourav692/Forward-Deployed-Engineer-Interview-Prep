@@ -471,6 +471,58 @@ test('casebook: old case URL redirects and saved progress survives the move', as
   await expect(page.getByRole('link', { name: 'Open Classic AI designs' })).toHaveAttribute('href', '/learn/ai-systems-design/classic-ai-designs')
 })
 
+// ENH-33: speak mode leaves out the answer fields and model answers, runs the countdown,
+// and keeps the page's own rubric; self-scores save to the written mode's keys.
+test('speak mode: a worksheet hides its answer fields, counts down, and keeps self-scores', async ({ page }) => {
+  await page.clock.install()
+  await page.goto(WORKSHEET)
+  await hydrated(page)
+  await expect(page.locator('textarea').first()).toBeVisible()
+
+  await page.getByRole('button', { name: 'Speak your answer' }).click()
+  await expect(page).toHaveURL(`${WORKSHEET}?mode=speak`)
+  await expect(page.getByRole('button', { name: 'Speak your answer' })).toHaveAttribute('aria-pressed', 'true')
+  await expect(page.locator('textarea')).toHaveCount(0)
+  await expect(page.getByText('Say it out loud').first()).toBeVisible()
+  await expect(page.getByRole('button', { name: /model answer/i })).toHaveCount(0)
+
+  await page.getByRole('button', { name: 'Start timer' }).click()
+  await page.clock.fastForward('30:00')
+  await expect(page.getByText('Time is up. Wrap up in one sentence, then score the round.')).toBeVisible()
+
+  await page.getByRole('link', { name: 'score yourself' }).click()
+  await page.getByRole('button', { name: /^Level 3/ }).first().click()
+  const key = 'fd:v1:scores:core/internal-knowledge-assistant'
+  await expect.poll(async () => (await fdStorage(page))[key]).toContain('3')
+
+  await page.reload()
+  await hydrated(page)
+  await expect(page.locator('textarea')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: /^Level 3/ }).first()).toHaveAttribute('aria-pressed', 'true')
+
+  await page.getByRole('button', { name: 'Speak your answer' }).click()
+  await expect(page).not.toHaveURL(/mode=speak/)
+  await expect(page.locator('textarea').first()).toBeVisible()
+})
+
+test('speak mode: a mock hides its model answers and keeps the scorer', async ({ page }) => {
+  await page.goto(MOCK_LESSON)
+  await hydrated(page)
+  const worked = page.getByRole('heading', { level: 2, name: /^Worked Example/ })
+  await expect(worked).toBeVisible()
+
+  await page.getByRole('button', { name: 'Speak your answer' }).click()
+  await expect(worked).toHaveCount(0)
+  await expect(page.getByText(/"Worked Example.*" is hidden while you speak\./)).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: 'Read the Brief, Then Start the Clock' })).toBeVisible()
+  await expect(page.getByRole('timer')).toHaveCount(1)
+  await expect(page.getByRole('button', { name: /^Save .* score$/ })).toBeVisible()
+
+  await page.reload()
+  await hydrated(page)
+  await expect(worked).toHaveCount(0)
+})
+
 // ENH-17: worksheets moved to /practice/<slug>. Answers key on track/slug, not the URL,
 // so an answer saved under that key loads after following the old URL.
 test('practice: old worksheet URL redirects and saved answers still load', async ({ page }) => {
