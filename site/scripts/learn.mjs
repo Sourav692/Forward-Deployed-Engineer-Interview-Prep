@@ -577,7 +577,8 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveM
       if (decision === 'outside-allow-list') notes.push(`${lesson.slug}: source outside the allow-list, not read (${lesson.source})`)
       // A retired lesson whose material moved (RENAMED) keeps its inbound repo links on
       // the site: they go to the lesson that replaced it, not to GitHub.
-      const target = decision === 'excluded' ? RENAMED[lessonKey(lesson)] : null
+      // Keyed on `publish`, not the decision: a retired module's lessons decide as 'no-home'.
+      const target = lesson.publish === 'excluded' ? RENAMED[lessonKey(lesson)] : null
       if (target) {
         const [moduleSlug, lessonSlug] = target.split('/')
         const mod = moduleBySlug.get(moduleSlug)

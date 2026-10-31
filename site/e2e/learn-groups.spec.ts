@@ -21,7 +21,7 @@ test('Learn lists eight topic groups as cards, with Coming soon for empty ones',
   // A live card opens its group page, and the group shows in the track's breadcrumb.
   await groups.getByRole('link', { name: 'AI Engineering', exact: true }).click()
   await expect(page).toHaveURL(/\/learn\/topics\/ai-engineering$/)
-  await page.getByRole('link', { name: 'Agentic Systems', exact: true }).click()
+  await page.getByRole('link', { name: 'Agent Foundations for RAG', exact: true }).click()
   await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).getByRole('link', { name: 'AI Engineering' })).toHaveAttribute('href', '/learn/topics/ai-engineering')
 })
 
@@ -47,22 +47,32 @@ test('Coming soon groups have no page', async ({ page }) => {
   expect(response?.status()).toBe(404)
 })
 
-test('track sections show the regrouped modules in teaching order', async ({ page }) => {
-  for (const [track, sections] of [
-    ['llm-and-retrieval', ['Model fundamentals', 'Build the retrieval pipeline', 'Framework implementation']],
-    ['agentic-systems', ['Agent execution and tools', 'Context and memory', 'Reliable workflows and coordination']],
-    ['production-ai', ['Security and governed data', 'Evaluation and safe releases', 'Operations and performance', 'Model adaptation']],
-  ] as const) {
-    await page.goto(`/learn/${track}`)
-    for (const name of sections) await expect(page.getByRole('button', { name: new RegExp(`^${name}`) })).toBeVisible()
-  }
-  await page.goto('/learn/agentic-systems')
-  const section = page.getByRole('button', { name: /^Reliable workflows and coordination/ })
+test('AI Engineering lists the course tracks in part order, then production AI', async ({ page }) => {
+  await page.goto('/learn/topics/ai-engineering')
+  await expect(page.getByRole('main').getByRole('heading', { level: 2 })).toHaveText([
+    'AI Engineering Foundations',
+    'Prompt & Context Engineering',
+    'LangChain & LangGraph Fundamentals',
+    'RAG Foundations',
+    'The Ingestion & Indexing Pipeline',
+    'Retrieval Quality Engineering',
+    'Building Complete RAG Applications',
+    'Agent Foundations for RAG',
+    'Agentic & Self-Correcting RAG',
+    'Memory & Multi-Agent RAG',
+    'Agent Protocols: MCP & A2A',
+    'Hierarchical, Memory & Graph RAG',
+    'Architecture Synthesis & Capstone',
+    'Production AI Systems',
+  ])
+})
+
+test('production AI starts with the agent engineering modules moved from agentic systems', async ({ page }) => {
+  await page.goto('/learn/production-ai')
+  const sections = ['Agent engineering in production', 'Security and governed data', 'Evaluation and safe releases', 'Operations and performance', 'Model adaptation']
+  for (const name of sections) await expect(page.getByRole('button', { name: new RegExp(`^${name}`) })).toBeVisible()
+  const section = page.getByRole('button', { name: /^Agent engineering in production/ })
   if ((await section.getAttribute('aria-expanded')) === 'false') await section.click()
-  const links = page.locator('#reliable-and-multi-agent-systems').getByRole('link')
-  const hrefs = await links.evaluateAll((elements) => elements.map((el) => el.getAttribute('href')))
-  const workflow = hrefs.findIndex((href) => href?.endsWith('/agentic-workflow-platforms'))
-  const multiAgent = hrefs.findIndex((href) => href?.endsWith('/multi-agent-systems'))
-  expect(workflow).toBeGreaterThanOrEqual(0)
-  expect(multiAgent).toBeGreaterThan(workflow)
+  const hrefs = await page.locator('#agent-engineering-in-production').getByRole('link').evaluateAll((elements) => elements.map((el) => el.getAttribute('href')))
+  expect(hrefs.some((href) => href?.endsWith('/production-ai/agentic-workflow-platforms'))).toBe(true)
 })

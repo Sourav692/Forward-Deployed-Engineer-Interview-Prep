@@ -409,6 +409,21 @@ export const GLOSSARY: GlossaryEntry[] = [
     plain: 'The recruiting system that holds candidates, applications and hiring stages.' },
   { term: 'CCTV', expansion: 'closed-circuit television', group: 'Business and domain', expand: false,
     plain: 'Private video surveillance cameras and their recordings.' },
+  // ---------------------------------------------------------------- added with the AI Engineering course (DATA-04)
+  { term: 'A2A', expansion: 'Agent2Agent', group: 'Agents and tools',
+    plain: "An open protocol for one agent to call another: it reads the other agent's card, sends it a task and reads back status and results." },
+  { term: 'RPC', expansion: 'remote procedure call', group: 'Agents and tools',
+    plain: 'Calling a function that runs somewhere else as if it were local. MCP and A2A send their calls as JSON-RPC messages.' },
+  { term: 'ADK', expansion: 'Agent Development Kit', group: 'Agents and tools',
+    plain: "Google's framework for building agents; its agents can call each other over A2A." },
+  { term: 'CLI', expansion: 'command-line interface', group: 'Agents and tools',
+    plain: 'A program you drive by typing commands in a terminal.' },
+  { term: 'RAPTOR', group: 'Retrieval and data', expand: false,
+    plain: 'A retrieval index that clusters chunks and summarises each cluster, again and again, so a broad question can match a summary instead of a single chunk.' },
+  { term: 'UUID', expansion: 'universally unique identifier', group: 'Retrieval and data',
+    plain: 'A 128-bit identifier. An ingestion job that mints a fresh one on every run cannot tell it has indexed a document before.' },
+  { term: 'LRU', expansion: 'least recently used', group: 'Performance and cost',
+    plain: 'A cache eviction rule: when the cache is full, drop the entry that has gone unused the longest.' },
 ]
 
 /**
@@ -442,6 +457,12 @@ export const NOT_ACRONYMS = new Set([
   'IF', 'IS', 'AND', 'OR', 'ACT', 'GW', 'MRD', 'TKT', 'AD', 'VS', 'USD', 'APJ',
   // Mermaid flowchart direction keyword (flowchart TD)
   'TD',
+  // AI Engineering course lessons (DATA-04): the halves of TF-IDF, code keywords and types
+  // (LangGraph END, SQLite PRAGMA, Postgres JSONB, the A2A JSONRPC transport), fragments of
+  // inline code (ORD-88213, /PATH/TO/), names (AWS EC2, BAAI, the ARC benchmark, the SIGIR and
+  // NAACL conferences), a file type and a Roman numeral (Part II).
+  'TF', 'IDF', 'END', 'PRAGMA', 'JSONB', 'JSONRPC', 'ORD', 'TO', 'EC2', 'BAAI', 'ARC', 'SIGIR', 'NAACL',
+  'DOCX', 'II',
 ])
 
 export const glossaryAnchor = (term: string) =>

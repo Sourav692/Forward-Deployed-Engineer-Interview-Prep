@@ -576,7 +576,7 @@ test('casebook filters: count, filter, survive a reload and clear', async ({ pag
 for (const width of [1280, 390]) {
   test(`diagrams fit their column at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })
-    for (const path of ['/design/decomposition-classics-67-68-69', '/learn/llm-and-retrieval/langchain-and-langgraph/composing-pipelines-with-langchain']) {
+    for (const path of ['/design/decomposition-classics-67-68-69', '/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-and-the-runnable-interface']) {
       await page.goto(path)
       const figures = page.locator('.mermaid-figure:visible')
       // Diagrams draw as they near the viewport (hidden tabs wait for their tab). Bring each

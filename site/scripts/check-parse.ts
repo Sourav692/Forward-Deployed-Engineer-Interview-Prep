@@ -190,6 +190,7 @@ async function checkReading(mod: {
               diagrams++
               continue
             }
+            if (chunk.kind !== 'html') continue
             if (/language-mermaid/.test(chunk.html)) {
               failures.push(`${label}: a mermaid fence rendered as prose in "${section.title ?? 'intro'}"`)
             }
@@ -407,7 +408,7 @@ for (const mod of manifest.modules) {
 /** A site-internal href resolves to a route, a tab of a route, or a public file. */
 function resolvesInternally(href: string): boolean {
   const [path, hash = ''] = href.split('#')
-  if (path.endsWith('.html')) return existsSync(join(SITE_ROOT, 'public', decodeURIComponent(path)))
+  if (/\.(html|svg)$/.test(path)) return existsSync(join(SITE_ROOT, 'public', decodeURIComponent(path)))
   const clean = path.replace(/\/$/, '') || '/'
   if (!routes.has(clean)) return false
   const tabs = tabsByPage.get(clean)
@@ -581,6 +582,11 @@ for (const file of [...learnOnDisk].filter((f) => expectedFiles.has(f)).sort()) 
     for (const chunk of section.chunks) {
       if (chunk.kind === 'diagram') {
         diagramTotal++
+        continue
+      }
+      // A lab card (FE-05) opens a static file the theory import copied into public/.
+      if (chunk.kind === 'lab') {
+        if (!existsSync(join(SITE_ROOT, 'public', chunk.src))) failures.push(`${label}: lab ${chunk.src} is not in public/`)
         continue
       }
       if (/language-mermaid/.test(chunk.html)) failures.push(`${label}: a mermaid fence rendered as prose`)
