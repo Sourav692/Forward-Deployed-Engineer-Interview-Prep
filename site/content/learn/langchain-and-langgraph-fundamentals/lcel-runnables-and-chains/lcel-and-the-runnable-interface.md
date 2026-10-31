@@ -36,3 +36,26 @@ Most pipe errors are a type mismatch at one of these arrows: a function that exp
 **`batch` and `stream` come for free, with two details.** The default `batch` runs `invoke` on a thread pool, and with a single input it skips the pool and runs inline, so a one-item batch shows no speed-up. A `RunnableLambda` that wraps a generator streams each `yield`: notebook 01b's `streaming_processor` yields four strings for `"building scalable data solutions"`, one per word. Called with `invoke` instead, the same Runnable returns all four strings added together into one, which is rarely what you want.
 
 For the Larkspur assistant this means one test harness covers every part. The same three lines that check the refund prompt (`invoke`, print, assert) check the retriever, the parser and the finished chain.
+
+## Check yourself
+
+<details>
+<summary>1. Why can the same few test lines check the Larkspur refund prompt, the retriever, the parser and the finished chain?</summary>
+
+Each of them is a Runnable with the same fixed methods: `invoke`, `batch`, `stream` and their async forms. Code that runs one runs any of them, so the same three lines (`invoke`, print, assert) work on every part.
+
+</details>
+
+<details>
+<summary>2. An existing function takes two parameters, a and b. How do you put it in a pipe?</summary>
+
+Wrap it in a lambda that unpacks a dict: `RunnableLambda(lambda d: sum_values(d["a"], d["b"]))`. `invoke` passes exactly one argument, so a two-parameter lambda raises `TypeError` for the missing `b`. Dicts are the usual choice because prompt templates read their variables from one and `RunnableParallel` returns one.
+
+</details>
+
+<details>
+<summary>3. A pipe of prompt, model and your own formatting function fails with a type error. How do you find the broken step?</summary>
+
+Invoke each step alone and print what it returns, as notebook 02a does. The data changes shape at every arrow (dict, then `ChatPromptValue`, then `AIMessage`, then `str`), and most pipe errors are a mismatch at one of them, such as a function that expects a string receiving an `AIMessage`.
+
+</details>

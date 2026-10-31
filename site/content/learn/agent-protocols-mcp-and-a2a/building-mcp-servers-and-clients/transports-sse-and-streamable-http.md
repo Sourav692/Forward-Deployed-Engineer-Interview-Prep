@@ -111,3 +111,26 @@ Project 04's client mixes transports behind one agent. `config/servers.json` lis
 - **Streamable HTTP, stateless** for tools that keep no per-client state and must scale out: Larkspur's `status` search can run as many replicas as it needs, and any of them can answer any request.
 
 Lesson 39.3's Databricks server ends with `mcp.run()`. In SDK 1.30.0 `run()` defaults to `transport="stdio"`, so as written the server reads its standard input instead of listening for HTTP. A server that a platform reaches by URL needs `transport="streamable-http"` and must listen on the host and port the platform expects.
+
+## Check yourself
+
+<details>
+<summary>1. Over SSE, every POST the client sends gets 202 Accepted. Where does the answer arrive, and what does that mean for the session?</summary>
+
+On the long-lived `GET /sse` stream, as an event matched by JSON-RPC id. The whole session lives on that one connection: when the GET ends, the server drops the session id, so a proxy that closes idle connections will cut it.
+
+</details>
+
+<details>
+<summary>2. Two Larkspur servers with held sessions make 8 tool calls over Streamable HTTP. How many HTTP requests do stateful and stateless mode use, and where does the gap come from?</summary>
+
+18 stateful and 14 stateless. Stateful setup takes 4 requests per server (`initialize`, the notification, a GET for the server's own stream, `tools/list`) and a `DELETE /mcp` to close; stateless takes 3 and has nothing to close. Each tool call is 1 POST in both modes.
+
+</details>
+
+<details>
+<summary>3. A stateful Streamable HTTP client behind a load balancer starts getting 404 Session not found. What happened, and what do you change?</summary>
+
+The server does not know the session id: it came from another replica, or it expired after 1,800 seconds with no request in flight. The client has to initialise again. With several replicas, route by `mcp-session-id`, or run stateless if the tools keep no per-client state.
+
+</details>

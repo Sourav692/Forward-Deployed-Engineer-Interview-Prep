@@ -65,3 +65,26 @@ The tell is the score itself: if the best match for a question that plainly has 
 The defence is cheap: write the model name and dimensions into the index metadata when you build it, and have the query service compare them with its own configuration before it serves a request.
 
 The other notebook topics, `embed_query` against `embed_documents` and caching, are on the [lesson 14.4 page](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/production-concerns-batching-caching-and-similarity-behaviour); dimensions and the `dimensions` parameter are on the [lesson 14.2 page](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/hosted-embeddings-openai-models-and-dimensions).
+
+## Check yourself
+
+<details>
+<summary>1. Why do cosine, dot product and Euclidean distance rank chunks identically when every vector has length 1?</summary>
+
+With unit vectors the dot product equals the cosine, and Euclidean distance is √(2 − 2·cos), which falls as cosine rises. All three then return the same chunks in the same order. That is why the first thing to print about a new model is the norm of one of its vectors.
+
+</details>
+
+<details>
+<summary>2. In the lab, the plans-overview vector is stretched to 1.5 times its length. Which chunk does dot product rank first for the refund-timing question, and what does cosine do?</summary>
+
+Dot product ranks `plans-overview` first; it overtakes from 1.15× onward, because its cosine of 0.866 is not far below `refund-timing`'s 0.998. Cosine never moves and keeps `refund-timing` first. Normalising every vector makes all three metrics agree with cosine.
+
+</details>
+
+<details>
+<summary>3. After a config change, the top match for an answerable question scores near zero, and no error is raised. What do you suspect first, and what prevents it?</summary>
+
+A model mismatch: chunks and questions embedded by different models, such as `text-embedding-3-small` and `text-embedding-3-large` truncated to 1536, give vectors of the same shape from unrelated coordinate systems. Write the model name and dimensions into the index metadata when you build it. Have the query service compare them with its own configuration before it serves a request.
+
+</details>

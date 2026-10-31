@@ -71,3 +71,26 @@ A one-phrase edit changes the fingerprint as completely as a new sentence, so an
 The gate enforces whatever the reviewer decides. Approve the uptime post in the lab and it reaches the feed. A gate protects only as much as its reviewers read, and the module page's interview questions cover how to measure that.
 
 `HumanInTheLoopMiddleware` ([M24](../m24_react_agents/00_overview.md)) gives a `create_agent` agent the same pause before a tool call, built on the same `interrupt()` and checkpointer ([M10](../../p03_langchain_and_langgraph/m10_langgraph_runtime/00_overview.md)). Building the gate by hand adds the two parts this lesson needs: a preview of the effect and a fingerprint that ties the approval to it.
+
+## Check yourself
+
+<details>
+<summary>1. Why must the dry run be its own graph node before the review node, rather than code inside the review node?</summary>
+
+On resume LangGraph re-runs the paused node from the top, so anything placed before `interrupt()` in the review node runs twice. A preview generated there could differ from the one the reviewer approved.
+
+</details>
+
+<details>
+<summary>2. The eu-west post is approved, then 72 hours is edited to 48 hours before it publishes. What happens, and what does the audit log show?</summary>
+
+The fingerprint at publish is `11673ae3c1d4`, not the approved `c4e9e330698e`, so the publish node returns `REFUSED: the post differs from the approved preview`. The audit log still shows an `approve`, and that is correct: the reviewer approved `c4e9e330698e`. Any edit after review needs a new preview and a new decision.
+
+</details>
+
+<details>
+<summary>3. A reviewer answers the approval prompt with yes. Does the post go out, and why is that the right behaviour?</summary>
+
+No. The gate fails closed: `normalize_decision` strips and lowercases the answer and accepts only the exact word `approve`, so `yes` and `approved` are rejections, logged as unclear answers. An ambiguous answer should never publish.
+
+</details>

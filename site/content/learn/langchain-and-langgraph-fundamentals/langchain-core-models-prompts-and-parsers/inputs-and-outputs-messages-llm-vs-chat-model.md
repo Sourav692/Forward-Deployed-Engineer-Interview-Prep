@@ -58,3 +58,26 @@ ChatPromptValue(messages=[
 ```
 
 A string sent to a chat model becomes one `HumanMessage`, so nothing is lost. A message list sent to a completion model is flattened into `System:` and `Human:` lines of plain text, which the model continues like any other text; the system instruction becomes a hint instead of a role it was trained to follow. That is why every chain in this course uses a chat model, and why a completion model appears only in notebook 04b, for contrast.
+
+## Check yourself
+
+<details>
+<summary>1. Why can the model answer "What did we discuss so far?" in notebook 04a, when a chat model keeps no state between calls?</summary>
+
+Because the app sends the earlier turns again. After each call it appends the model's `AIMessage` and the next question to the list and sends the whole list, so the model reads the conversation from its input, not from memory.
+
+</details>
+
+<details>
+<summary>2. Larkspur's assistant reaches its twentieth turn. What does each new call cost, and what can the app do about it?</summary>
+
+Every earlier turn is paid for again as input tokens on every call, so history needs a bound ([M33](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview)). The history is data the app holds, so it can trim, summarise or filter it before sending, and a template takes it through a `MessagesPlaceholder`.
+
+</details>
+
+<details>
+<summary>3. A teammate sends a system and a human message to a completion model, and the system rule is ignored. Why?</summary>
+
+The message list is flattened into `System:` and `Human:` lines of plain text, which the model continues like any other text. The system instruction becomes a hint instead of a role the model was trained to follow. That is why every chain in the course uses a chat model.
+
+</details>

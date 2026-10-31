@@ -52,3 +52,26 @@ For Larkspur, the same shape fits an answer review: three graders read one draft
 The cellular-automata notebook has no controller at all. Every cell of a warehouse grid is a small agent with one local rule: its distance to the packing station is 1 plus the smallest distance among its neighbours. Applied to every cell at once, tick after tick, the rule spreads a distance wave around the walls, and a carrier reaches the station by always stepping to the neighbour with the lowest value. The notebook checks the emergent paths against a global breadth-first search over the same grid, then walls off a cell next to the station and shows the path rerouting with no change to the code.
 
 This is the far end of the control range in this module: no controller, only a local rule applied everywhere in synchronous ticks. It solves a global problem without a planner, at the cost of many cheap updates, and the notebook trusts the result only after the breadth-first check.
+
+## Check yourself
+
+<details>
+<summary>1. A router and a meta-controller each make one structured-output call before any work starts. What does each one choose?</summary>
+
+A router chooses which specialist answers inside one fixed graph. A meta-controller chooses which whole architecture runs (a direct answer, a search agent, a planner or a debate), each wrapped as a plain `(query: str) -> str` callable it never sees inside. A blackboard controller differs from both by deciding again after every contribution.
+
+</details>
+
+<details>
+<summary>2. A Larkspur customer asks whether there is an incident right now. Which strategy should the meta-controller pick, and why not direct_answer?</summary>
+
+`search_agent`, because only the live status page knows the answer. `direct_answer` suits a self-contained fact the model already knows, such as what a vCPU is. A misrouted request still gets an answer, which is why the notebook compares each chosen route with the route the request was written for.
+
+</details>
+
+<details>
+<summary>3. All three ensemble analysts end with Buy, and the CIO recommends Hold. Is that a failure?</summary>
+
+Only if the CIO's summary gives no reason. The CIO's recommendation is a `Literal` of the same three values, so code can set the majority vote beside the verdict. A CIO that departs from the majority and says why is fine; one that departs with no reason is the failure to look for.
+
+</details>

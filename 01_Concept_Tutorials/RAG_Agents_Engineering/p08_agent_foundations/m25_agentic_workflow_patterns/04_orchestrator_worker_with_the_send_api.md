@@ -91,3 +91,26 @@ LCEL can express the fan-out with `.map()` (`04b`), with four gaps against `Send
 | Durability | per-worker checkpoints, interrupts, resume | none: the chain is stateless |
 
 This is the shape of query decomposition ([M18](../../p06_retrieval_quality/m18_query_transformation/00_overview.md)) and of the module lab: the orchestrator splits a Larkspur question into sub-questions, each worker retrieves and answers one, and the synthesizer writes the reply. *Can I export my data after I cancel my plan?* splits into "how do I export?" and "what happens to my data after I cancel?", whose evidence is the `export` and `retention` chunks of the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) golden set. *How long does a refund take?* should get a plan of one item. Bound the plan in code as well as in the prompt: a maximum number of `Send`s, a direct path for one-item plans, and a decision about what an empty plan returns.
+
+## Check yourself
+
+<details>
+<summary>1. Both orchestrator-worker and parallelisation run several LLM calls at once and merge them. What separates them?</summary>
+
+Who decides the branches. In parallelisation you wrote them into the graph with a static `add_edge` fan-out. In orchestrator-worker an LLM decides at run time how many subtasks there are and what each covers, and one conditional edge returns a list of `Send`, one per plan item.
+
+</details>
+
+<details>
+<summary>2. How should the orchestrator plan the export-after-cancelling question and the refund-duration question?</summary>
+
+The export question splits into "how do I export?" and "what happens to my data after I cancel?", whose evidence is the `export` and `retention` chunks. The refund question should get a plan of one item. Bound the plan in code too: a maximum number of `Send`s, a direct path for one-item plans and a decision about what an empty plan returns.
+
+</details>
+
+<details>
+<summary>3. The orchestrator's plan changes with every topic, yet the same five workers run every time. What is wrong?</summary>
+
+The plan drives nothing: five fixed workers wired with `add_edge` ignore the orchestrator's output, so the graph is parallelisation with a decorative LLM call in front. Dispatch from the plan with one `Send` per section, and let each worker's prompt use its `section.description`.
+
+</details>

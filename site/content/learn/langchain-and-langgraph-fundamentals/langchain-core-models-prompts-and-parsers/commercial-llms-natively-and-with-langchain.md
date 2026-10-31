@@ -45,3 +45,26 @@ reply = (prompt | llm).invoke({"topic": "AI"})   # an AIMessage
 ```
 
 The swap keeps the code running. It does not keep the replies the same: another model formats, refuses and rambles differently. For Larkspur, a provider change is a release like any other, checked against the golden questions from [M11](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) before it ships.
+
+## Check yourself
+
+<details>
+<summary>1. What does a LangChain chat model give you that calling each provider SDK directly does not?</summary>
+
+The same response object for every provider. Each SDK returns its own object, while every `BaseChatModel` offers `invoke`, `batch` and `stream` and returns an `AIMessage`, with token counts under the same keys in `.usage_metadata`. Changing provider then changes one class.
+
+</details>
+
+<details>
+<summary>2. A Larkspur reply on OpenAI stops mid-JSON, and its response metadata shows a finish reason of length. What happened?</summary>
+
+The reply hit the token limit and stopped mid-sentence, or here mid-JSON. `.response_metadata` reports what the provider said, and `finish_reason` of `length` is OpenAI's signal for it. Lesson 7.6 shows what each output parser makes of such a truncated reply.
+
+</details>
+
+<details>
+<summary>3. You change the init_chat_model string from an OpenAI model to a Groq model and the chain still runs. Can you ship the change?</summary>
+
+Not yet. The swap keeps the code running, but another model formats, refuses and rambles differently, so the replies change. For Larkspur, a provider change is a release like any other, checked against the [M11](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) golden questions before it ships.
+
+</details>

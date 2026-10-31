@@ -49,3 +49,26 @@ The router predicts difficulty; it does not observe it. So it has a confusion ma
 The two errors are not symmetric. Easy sent to reasoning wastes money: bounded, and visible on a bill. Hard sent to cheap returns a confident wrong answer: invisible until someone acts on it. So bias the triage prompt toward `hard` on borderline cases and accept the overspend as insurance. The same asymmetry fixes the fallback direction. "Try cheap, detect a bad answer, retry on reasoning" needs a reliable wrong-answer detector, and if you had one you would not need the router. Escalate on uncertainty before answering.
 
 On Larkspur, *Can I get a refund after 45 days?* is the case to watch: it looks like a lookup and needs proration arithmetic. Put questions like it in the labelled set the router is measured on.
+
+## Check yourself
+
+<details>
+<summary>1. Why does the content router classify with a structured output limited to a fixed set of labels instead of free text?</summary>
+
+With `content_type` typed as `Literal["story", "poem", "joke"]`, the model cannot return a label the graph has no edge for, which a free-text answer like "I think they want a poem" could. The pure function `determine_next_step` then maps the label to a node, with a `.get` default so even an unexpected label lands somewhere.
+
+</details>
+
+<details>
+<summary>2. A Larkspur customer asks whether they can get a refund after 45 days. Why is this a risky question for the model-tier router?</summary>
+
+It looks like a lookup but needs proration arithmetic, so triage may label it `easy` and send it to the cheap tier, which can return a confident wrong answer. Put questions like it in the labelled set the router is measured on.
+
+</details>
+
+<details>
+<summary>3. A teammate proposes trying the cheap model first and retrying on the reasoning model when the answer is bad. Why does this fail?</summary>
+
+It needs a reliable wrong-answer detector, and if you had one you would not need the router. A hard question answered on the cheap tier returns a confident wrong answer that stays invisible until someone acts on it. Escalate on uncertainty before answering, and bias triage toward `hard` on borderline cases.
+
+</details>

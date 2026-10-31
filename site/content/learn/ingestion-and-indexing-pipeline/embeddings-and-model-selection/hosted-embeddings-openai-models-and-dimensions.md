@@ -49,3 +49,26 @@ Shorter vectors are worse; the question is how much worse on your data for what 
 - **margin**, the correct document's similarity minus the best wrong document's. It keeps shrinking as dimensions fall, and a shrinking margin is where recall will break on a large corpus with near-duplicates, such as Larkspur's `refund-window` and `refund-timing` chunks.
 
 The notebook's most useful row is `3-large` truncated to 1536: a stronger model at the same index cost as `3-small`. Run the same comparison on the [M11](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) golden set before you pick a size, and treat the choice as permanent, because changing dimensions means re-embedding every chunk and querying with the new setting.
+
+## Check yourself
+
+<details>
+<summary>1. Embedding the corpus is a small one-off bill. Why do the dimensions keep costing you for as long as the index exists?</summary>
+
+The store keeps every number of every vector, holds them in memory to search fast, and multiplies through them for each similarity. A 3072-dimension index is twice the size of a 1536-dimension one and costs roughly twice as much per search.
+
+</details>
+
+<details>
+<summary>2. How much memory do one million chunks need at 3072 dimensions compared with 1536, stored as 32-bit floats?</summary>
+
+12,288 bytes per vector gives 12.3 GB at 3072 dimensions, against 6,144 bytes and 6.1 GB at 1536, before any index overhead or compression. Truncating `text-embedding-3-large` to 1536 with `dimensions` gives a stronger model at the smaller index's size.
+
+</details>
+
+<details>
+<summary>3. A dimension sweep on six labelled queries shows perfect recall at 1 even at 64 dimensions. Should you ship 64?</summary>
+
+No. Recall@1 saturates on an easy set of well-separated documents and then says nothing more. The margin keeps shrinking as dimensions fall, and a shrinking margin is where recall breaks on a large corpus with near-duplicates such as `refund-window` and `refund-timing`. Run the comparison on the [M11](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview) golden set, and treat the choice as permanent, since changing it means re-embedding every chunk.
+
+</details>

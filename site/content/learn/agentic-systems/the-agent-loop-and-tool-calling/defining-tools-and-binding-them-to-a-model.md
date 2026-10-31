@@ -59,3 +59,26 @@ The description says what the tool returns and which questions it is for, so the
 **Built-in and wrapped tools.** LangChain's built-in tools carry their own schema: `WikipediaQueryRun` is named `wikipedia` and takes one string, `query`. Wrapping one in `Tool(name=…, func=…, description=…)` gives it your name and description, and changes its argument to the generic `tool_input`, which is worth checking before you bind it. Whatever the source, print `tool.name`, `tool.description` and `tool.args` (or the `convert_to_openai_tool` output) before you trust a tool in a loop: that printout is exactly what the model will read.
 
 The from-scratch signatures in lesson 23.1 wrote Python type names (`"type": "int"`) into a prompt. The native schema uses JSON Schema types (`string`, `number`) and travels in the API request, so the provider can return structured calls against it.
+
+## Check yourself
+
+<details>
+<summary>1. The model never sees a tool's function body. Which three parts of the schema does it read, and what does each one decide?</summary>
+
+`name`, `description` and `parameters`. The name is the call it writes and your code dispatches on; the description decides when to call the tool out of all the tools it holds; the parameters decide what to pass, with each argument's type, description and whether it is required. A vague description gives wrong or missing calls however good the code is.
+
+</details>
+
+<details>
+<summary>2. The untyped multiply tool gets 2 and the string abc. What comes back, and what does the Pydantic version do with the same call?</summary>
+
+The untyped tool returns `abcabc`, because its schema has no types and Python multiplies a string by an integer without complaint. The `StructuredTool` with an `args_schema` declares both arguments as `number`, so the same call fails with a `ValidationError` before the function runs.
+
+</details>
+
+<details>
+<summary>3. You wrap the built-in Wikipedia tool in Tool with your own name and description, and the agent starts passing odd arguments. What should you check before binding it?</summary>
+
+The argument name. Wrapping changes the built-in's `query` argument to the generic `tool_input`. Print `tool.name`, `tool.description` and `tool.args`, or the `convert_to_openai_tool` output, before you trust a tool in a loop, because that printout is exactly what the model reads.
+
+</details>

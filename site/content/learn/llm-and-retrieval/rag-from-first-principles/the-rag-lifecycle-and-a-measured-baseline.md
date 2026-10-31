@@ -133,3 +133,26 @@ The lifecycle notebook ends with the map from symptom to module:
 | Evidence retrieved but ranked low | Ranking noise | [M19](/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-overview) reranking |
 | Retrieved chunk holds half the fact | Chunk boundary | [M13](/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview) chunking |
 | Answer contradicts the retrieved chunk | Generation | [M20](/learn/complete-rag-applications/end-to-end-rag-systems/end-to-end-rag-systems-overview) per-claim citations, [M29](/learn/agentic-and-self-correcting-rag/self-correcting-rag-crag-and-self-rag/self-correcting-rag-crag-and-self-rag-overview) Self-RAG |
+
+## Check yourself
+
+<details>
+<summary>1. An answer is wrong. What one check tells you whether to debug retrieval or generation?</summary>
+
+Print the retrieved chunks and look for the correct passage. If it is missing, retrieval failed: fix loading, splitting, embedding, `k` or the query. If it is there, generation failed: fix the prompt, the context order or the model.
+
+</details>
+
+<details>
+<summary>2. A teammate rewrites the prompt and the refund question is still wrong. The refund chunk never appears in the top-k. Why did the rewrite not help?</summary>
+
+The model never saw the evidence, so no prompt can make it use that evidence. This is a retrieval failure. The refund question needs better term matching ([M14](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/embeddings-and-model-selection-overview) embeddings, [M17](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview) hybrid search), measured against the golden set.
+
+</details>
+
+<details>
+<summary>3. A new chunking strategy lifts recall@2 on two questions and breaks a third. Do you keep it?</summary>
+
+Not as it stands. The loop keeps a change only when the row improves on the questions it targets without breaking the others. Revert it, or fix the regression and re-run the golden set before it becomes the new baseline.
+
+</details>

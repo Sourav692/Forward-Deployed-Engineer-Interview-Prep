@@ -35,3 +35,26 @@ The notebook's duplicate check uses `similarity_search("")` to obtain existing t
 Treat memory as derived data with dependencies. When Larkspur changes retention rules, update the source index and regenerate memory entries derived from those passages. Shared memory must not expose restricted documents through its summaries or clues. Test deletions against both stored memory and generated answers.
 
 The optional notebook loads a prebuilt FAISS memory store and uses paid model calls. Reading it establishes the implementation shape; it does not establish a measured advantage on the Larkspur questions. Report any comparison only after running both pipelines on the same question set and budget.
+
+## Check yourself
+
+<details>
+<summary>1. What is a MemoRAG clue for, and why must the answer still rest on retrieved passages rather than on the clue?</summary>
+
+A clue, drafted from corpus memory, helps the retriever locate evidence, such as export, retention and availability for a continuity question. It can contain an incorrect detail, so the generator must check the retrieved material, and every claim in the answer needs a source passage that supports it.
+
+</details>
+
+<details>
+<summary>2. Larkspur changes its retention rules. What has to change besides the source index?</summary>
+
+Every memory entry derived from those passages has to be regenerated, because memory is derived data with dependencies. Test deletions against both the stored memory and the generated answers. Shared memory also must not expose restricted documents through its summaries or clues.
+
+</details>
+
+<details>
+<summary>3. The notebook checks for duplicate topics with similarity_search on an empty string. Why can that not establish that a topic is new?</summary>
+
+A nearest-neighbour search returns a subset, so it does not enumerate the whole store and cannot prove uniqueness. Use an explicit topic registry or stable record identifiers instead. The same path returns `None` when no memory exists, so an empty-memory fallback should retrieve with the original question.
+
+</details>

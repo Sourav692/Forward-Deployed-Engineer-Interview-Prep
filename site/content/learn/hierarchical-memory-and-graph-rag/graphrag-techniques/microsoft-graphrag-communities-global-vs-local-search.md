@@ -41,3 +41,26 @@ Flat RAG pays to split, embed and store passages. A graph pipeline adds extracti
 Record each stage separately. Useful fields include model and prompt version, input and output tokens, call count, retries, elapsed time, stored artifact size and changed source IDs. At query time record report selections, expansion candidates, reranking calls and answer context. The notebook configures a `10000` maximum context token setting for global search; that configured value is neither a measured bill nor proof that every execution uses the whole allowance.
 
 Use the module lab brief's shared global and multi-hop question set to compare GraphRAG, RAPTOR and hybrid retrieval. Hold source versions, answer model and evaluation criteria constant. Report indexing and update work alongside retrieval and answer quality. Derive any amortised cost from measured indexing work, measured query work and the actual expected query volume; no break-even figure follows from the architecture alone.
+
+## Check yourself
+
+<details>
+<summary>1. How does a community differ from its community report, and why does the difference matter when you debug?</summary>
+
+The community is a group derived from graph connectivity; the report is a generated summary of the material in that group. They are separate artifacts: changing the summary prompt changes the report without changing the partition. Review the extracted edges and the group membership before trusting a report as an account of a product area.
+
+</details>
+
+<details>
+<summary>2. Which search mode fits a question about the export mechanism left after cancellation, and which fits one about dependencies that recur across the handbook?</summary>
+
+Local search fits the first: the evidence centres on specific entities and their conditions, so check that the context includes the original policy spans. Global search fits the second, because it is spread across the corpus and answered from community reports; inspect which report regions contributed, since a fluent answer can omit a small community.
+
+</details>
+
+<details>
+<summary>3. A teammate says global search costs at most 10000 tokens per query because that is what the notebook configures. Is that a sound cost figure?</summary>
+
+No. `10000` is a configured maximum context setting, neither a measured bill nor proof that every run uses the whole allowance. Record each stage separately, including tokens, call counts, retries and elapsed time, and derive any cost from measured indexing and query work.
+
+</details>

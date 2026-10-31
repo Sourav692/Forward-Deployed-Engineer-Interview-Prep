@@ -33,3 +33,26 @@ Two design points the server gets wrong for anything beyond one user:
 
 - **Hidden coupling between tools.** `save_job` only works after `search_jobs`, because it reads the single file `fetched_jobs_temp.json`. Two users of a shared server overwrite each other's search, and `save_job` saves a job from someone else's results or reports the id as not found.
 - **Paths relative to the working directory.** `BASE_DIR = Path(".")` puts `jobs/` and `resume/` wherever the server process starts. The Claude Desktop entry passes `uv --directory`, which sets it ([40.2](/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/mcp-servers-with-claude-desktop#lesson-claude-desktop)); anchor paths on `Path(__file__).parent` instead, as the 06 and 07 servers do.
+
+## Check yourself
+
+<details>
+<summary>1. Who triggers each of the Job Market Explorer server's three primitives, and which of them have side effects?</summary>
+
+Tools are model-controlled and have side effects: `search_jobs` calls the JSearch API and `save_job` writes JSON files. Resources are application-controlled and only read. Prompts are user-controlled and return instructions, so they change nothing.
+
+</details>
+
+<details>
+<summary>2. A LangGraph app loads this server with get_tools only. How much of the server does it see, and what happens to the match report?</summary>
+
+2 of its 7 features: in langchain-mcp-adapters 0.3.2, `get_tools()` loads tools only. `create_match_report` starts "Given the attached jobs data and resume", so it has nothing to read unless the app fetches the resources with `client.get_resources(...)` and the prompt with `client.get_prompt(...)` and puts them in the conversation itself.
+
+</details>
+
+<details>
+<summary>3. Two users share one Job Market Explorer server, and one of them saves a job that came from the other's search. Why?</summary>
+
+`save_job` only works after `search_jobs`, because it reads the single file `fetched_jobs_temp.json`. A second user's search overwrites the first user's, so `save_job` saves a job from someone else's results or reports the id as not found. That hidden coupling between tools breaks as soon as there is more than one user.
+
+</details>

@@ -44,3 +44,26 @@ The capstone preloads all four store layers into the system prompt on every mode
 The production path changes the backend, not the agent. `PostgresSaver` and `PostgresStore` replace the two SQLite primitives, and nodes and tools are untouched because they only see `runtime.store` and the compiled checkpointer. The move buys concurrent writers without `database is locked`, a working `omit_expired=True`, and `search(..., query=...)` over a pgvector index for recall by meaning. The notebook prints the snippet but does not run it, because it needs a Postgres server.
 
 The same layers can be two hand-written SQL tables: `PRIMARY KEY (user_id, key)` with `INSERT OR REPLACE` is the semantic upsert, and a fresh id per row is the episodic append. Tables give you joins and constraints; the store gives you namespaces, TTLs, embedding search and the Postgres swap. Read `SqliteStore`'s own `store` table only through `get` and `search`, since its schema may change between versions.
+
+## Check yourself
+
+<details>
+<summary>1. Why does the capstone record episodes in a graph node instead of relying on the model to call a save_episode tool?</summary>
+
+In six test runs with the tool and a system-prompt rule to use it, gpt-4o-mini never saved one episode. So `record_episode` runs in code once per turn, after the final answer: the model writes a structured summary, and code decides it is a task only if `work_request` quotes the user's own message. Each layer then has exactly one writer.
+
+</details>
+
+<details>
+<summary>2. The store holds the checklist procedure as v1 approved and v2 proposed. Which version does the agent follow for Priya, and which for Marco?</summary>
+
+Both get v1, because only the highest approved version counts and v2 is still `proposed`. Marco gets the same procedure as Priya because procedures are scoped to `agent_id`, not to the user, while her facts and episodes stay in her own namespaces.
+
+</details>
+
+<details>
+<summary>3. A customer has 14 saved facts, but the agent never uses the last few and nothing logs an error. What is the likely cause?</summary>
+
+The preload calls `store.search()` without `limit=`, and it returns 10 items by default, so the 11th fact onwards is dropped silently. The capstone passes `limit=100` everywhere. When a layer grows past what the prompt should carry on every call, retrieve from it instead of preloading it all (lesson 34.4).
+
+</details>

@@ -36,3 +36,26 @@ The module objectives sort the architectures into five families. Each family add
 Memory ([M33](../../p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md), [M34](../../p10_memory_and_multi_agent/m34_long_term_agentic_memory/00_overview.md)) cuts across all five. A follow-up such as *How long do I have?* needs rewriting into a standalone question before any of these architectures can retrieve for it.
 
 The families also stack. The [M28](../../p09_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md) agent is a tool-based loop with a self-correcting grader; adaptive RAG in [M30](../../p09_agentic_rag/m30_adaptive_rag_routing/00_overview.md) is a router in front of two graders. When a design names several families, count each component's calls separately, so a later review can remove one without guessing what it cost.
+
+## Check yourself
+
+<details>
+<summary>1. What common unit does the lesson use to compare the architectures, and what does that unit leave out?</summary>
+
+Model calls per question, because every architecture is the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) pipeline with components added: plain RAG is 1 call, routing and tool loops 2 to 7, and self-correcting loops climb to 10 and 20. It leaves out index-time LLM work, which is the main cost of collapsed-tree RAPTOR and GraphRAG, so those have no counted query cost on the axis.
+
+</details>
+
+<details>
+<summary>2. The agentic RAG agent with query rewriting is a tool-based loop with a self-correcting grader. How should a design document count its cost?</summary>
+
+Count each component's calls separately: the loop's calls and the grader's calls. A later review can then remove one component and know what it saves, instead of guessing from a single total.
+
+</details>
+
+<details>
+<summary>3. A customer asks a follow-up, How long do I have?, and every architecture retrieves the wrong chunks. What is missing?</summary>
+
+Memory ([M33](../../p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md), [M34](../../p10_memory_and_multi_agent/m34_long_term_agentic_memory/00_overview.md)), which cuts across all five families. The follow-up has to be rewritten into a standalone question using the conversation before any architecture can retrieve for it.
+
+</details>

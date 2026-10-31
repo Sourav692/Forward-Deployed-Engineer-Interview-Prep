@@ -42,3 +42,26 @@ The lesson 4.1 notebook sends the same prompts to `meta-llama/Llama-2-7b-hf`, a 
 The base model does what pre-training taught it: continue the text with something that looks like more of the same, here a list of similar questions. The chat model treats the text as a request. The `[INST]` row shows the second lesson: the chat model was trained with that wrapper, and with it the answer starts cleanly; without it, the model first completes the sentence (“on command.”). A fine-tuned model expects the format it was trained on, which lesson 4.3 comes back to.
 
 The weights changed and the architecture did not. Everything that separates the two columns came from the training data, which is why the rest of this module is about the data.
+
+## Check yourself
+
+<details>
+<summary>1. Why does the refund-time answer stay in the Larkspur index while opening every answer with Yes or No can go into a fine-tune?</summary>
+
+The refund time is a fact the policy team will change: RAG picks up a change with a re-index, while a fine-tuned model would need a rebuilt dataset and a retrain, and risks stale facts. Leading with Yes or No, and declining off-topic questions, is behaviour, which a fine-tune can carry in the weights on a smaller, cheaper model.
+
+</details>
+
+<details>
+<summary>2. You send Tell me how to train my dog to sit, without any wrapper, to the Llama 2 base and chat models. What does each return, and why?</summary>
+
+The base model continues with similar questions ("Tell me how to train my dog to stay. ..."), because pre-training taught it to continue text. The chat model treats it as a request but first finishes the sentence ("on command."), because it was trained with the `[INST]` wrapper; with the wrapper its answer starts cleanly.
+
+</details>
+
+<details>
+<summary>3. A team wants to fine-tune for a behaviour but cannot write a few hundred examples of it. What should they do?</summary>
+
+Not fine-tune: without the examples they can neither train for the behaviour nor evaluate it. The decision chain says to prompt it if a clear prompt with examples works ([M05](/learn/prompt-and-context-engineering/prompt-engineering-patterns/prompt-engineering-patterns-overview)), retrieve it if the gap is a fact that changes ([M11](/learn/llm-and-retrieval/rag-from-first-principles/rag-from-first-principles-overview)), and otherwise define the task before training.
+
+</details>

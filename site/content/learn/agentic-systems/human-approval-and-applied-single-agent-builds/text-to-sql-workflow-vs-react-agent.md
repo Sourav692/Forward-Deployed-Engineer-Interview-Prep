@@ -130,3 +130,26 @@ A vector retriever returns the `k` chunks most similar to the question, and the 
 | Both in one question | Route each part, then combine |
 
 The module's [lab brief](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m27_human_approval_applied_agents/lab/README.md) measures this split: the same 20 questions over a product catalogue, answered by CSV RAG from [M20](/learn/complete-rag-applications/end-to-end-rag-systems/end-to-end-rag-systems-overview) and by the text-to-SQL agent, with the winner recorded per question type.
+
+## Check yourself
+
+<details>
+<summary>1. The ReAct agent reads schemas and checks each query before it runs. Which errors do those steps fix, and which do they not?</summary>
+
+They fix wrong column names and syntax errors. They do not fix a wrong definition, such as counting sale lines instead of summing `Quantity`. That is why both designs are scored question by question against reference SQL.
+
+</details>
+
+<details>
+<summary>2. For the question of which customer has purchased the most comics, the generated SQL counts sale lines. What answer comes back, and what is correct?</summary>
+
+Counting lines gives Natasha Romanoff (5 lines, for 6 copies). Summing `Quantity` gives Tony Stark (8 copies, on 4 lines), which matches the reference SQL. The query runs and the answer reads well, so only the ground-truth check shows it is wrong.
+
+</details>
+
+<details>
+<summary>3. Why can a vector retriever not answer how many Superhero comics have never been sold, when text-to-SQL can?</summary>
+
+The answer (9) depends on all 50 comics and all 40 sale lines, and a retriever returns only the `k` chunks most similar to the question, so no top-k slice contains it. SQL computes over every row, then the model only phrases the result. Vector RAG fits prose answers such as policies.
+
+</details>

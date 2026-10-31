@@ -45,3 +45,26 @@ Optional notebook 04b adds generated questions to the index as extra documents b
 - The retriever returns the top 1 entry. Whether it is a fragment or a question, the notebook answers from `metadata["text"]`, the document of up to 4,000 words around it.
 
 So 04b is the payload pattern from 16.2 with two kinds of key in one index. It keeps the original fragments searchable, which protects questions the LLM did not anticipate, and it pays for that with a larger index and a 4,000-word document as context for every answer.
+
+## Check yourself
+
+<details>
+<summary>1. What gap does HyPE close, and how does its cost differ from HyDE's?</summary>
+
+A question and the passage that answers it are written differently, so their embeddings sit apart. HyPE has an LLM write the questions each chunk answers at index time and embeds those as the chunk's keys, so retrieval becomes question-to-question matching with no LLM call at query time. HyDE writes a hypothetical answer at query time, one LLM call on every request.
+
+</details>
+
+<details>
+<summary>2. Notebook 04a retrieves the top 3 entries and then removes repeats with a set. Why are there repeats?</summary>
+
+The FAISS store holds one entry per generated question, each carrying the full chunk text, so one chunk sits in the index once per question. Three question vectors from the same chunk return that chunk three times.
+
+</details>
+
+<details>
+<summary>3. Users ask in ways the generated questions never anticipate. Which variant protects you, and what does it cost?</summary>
+
+Document augmentation (04b), which keeps the original fragments searchable beside the generated questions in one index. A question the LLM did not foresee can still match a fragment. It pays with a larger index and a document of up to 4,000 words as context for every answer.
+
+</details>

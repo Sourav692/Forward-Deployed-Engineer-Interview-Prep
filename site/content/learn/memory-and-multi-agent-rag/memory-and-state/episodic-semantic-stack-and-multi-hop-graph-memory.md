@@ -50,3 +50,26 @@ Three design choices make the graph usable:
 The reader asks the model for one start entity, traverses up to `max_hops`, and answers only from the triples it reached. From Project Helios, three hops reach the team, then Priya Chandran, then Marcus Webb, and the answer names him. With `max_hops=1` the traversal stops at the team, and the reader has to say the facts are insufficient. The printed path is the evidence: you can see which edges produced the answer.
 
 The optional Part 5 loads the same triples into Neo4j and lets the model write Cypher against the schema, run read-only. [M43](/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/knowledge-graphs-with-neo4j-overview) builds on that.
+
+## Check yourself
+
+<details>
+<summary>1. Why does the update node extract semantic facts from the user's message only, and never from the assistant's reply?</summary>
+
+So the model's own suggestions cannot come back later as things the user said. Code also writes the subject as `user`, so "Alex", "I" and "the user" stay one person, and keys each fact by its normalised text, so restating a fact overwrites it instead of adding a copy.
+
+</details>
+
+<details>
+<summary>2. Alex asks for a good alternative to that stock, naming neither his goal nor the stock. What must retrieval return, and how is that stock resolved?</summary>
+
+It must return the Apple episode and the conservative-investor fact; the notebook checks both in code. The retrieve node sorts the two recalled episodes oldest first, so the prompt can tell the model to resolve "that stock" from the most recent conversation.
+
+</details>
+
+<details>
+<summary>3. Graph memory says the facts are insufficient to answer the Project Helios question. What setting do you check, and why would similarity search not answer it either?</summary>
+
+Check `max_hops`: at 1 the traversal stops at the Atlas team, and the answer needs three hops (team, Priya Chandran, Marcus Webb). Similarity search returns items that look like the question, and no single sentence mentions both Project Helios and Marcus Webb, so it cannot chase the relations between them.
+
+</details>

@@ -58,3 +58,26 @@ Each question has two evidence chunks, so recall moves in steps of 0.50:
 Embeddings measure how close two texts are in topic, which is not the same as whether a chunk contains the answer. TF-IDF wins when the question and the evidence share a rare exact word (a product name, an error code, "export"); embeddings win on paraphrase and word forms. Hybrid search ([M17](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview)) combines the two scores, and a reranker ([M19](/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-overview)) reorders the candidates with a model that reads the question and each chunk together.
 
 The scores are not probabilities either. The best outage match scores 0.394, while the best export match scores 0.817. A fixed cut-off such as "drop chunks below 0.5" would send the outage question to the model with no context at all. Set any threshold per corpus and model from the golden set, and re-check it whenever the model changes.
+
+## Check yourself
+
+<details>
+<summary>1. Why must the question and the chunks be embedded with the same model?</summary>
+
+Two models produce vectors in different spaces, so the cosine between a vector from one and a vector from the other is meaningless. Notebook 03a uses one function, `get_gpt4_embedding`, for both sides. It follows that changing the embedding model means re-embedding the whole corpus ([M14](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/embeddings-and-model-selection-overview)).
+
+</details>
+
+<details>
+<summary>2. With all-MiniLM-L6-v2, why does the export question fall from recall@2 of 1.00 under TF-IDF to 0.50?</summary>
+
+Embeddings measure closeness in topic, and the question is half about cancelling. After `retention` (0.817), the `cancel` chunk (0.561) outranks the `export` evidence chunk (0.479). TF-IDF matched the literal word "export" and found both evidence chunks; hybrid search ([M17](/learn/retrieval-quality-engineering/retrieval-hybrid-rerank/retrieval-hybrid-rerank-overview)) combines the two scores.
+
+</details>
+
+<details>
+<summary>3. A teammate drops every chunk whose cosine is below 0.5. What happens to the outage question?</summary>
+
+It reaches the model with no context at all, because its best match, `reboot`, scores 0.394. The scores are not probabilities: the best export match scores 0.817 on the same model. Set any threshold per corpus and model from the golden set, and re-check it when the model changes.
+
+</details>

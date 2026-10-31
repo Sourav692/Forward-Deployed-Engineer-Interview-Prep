@@ -61,3 +61,26 @@ On the Larkspur export question at `k = 3`, the retriever returns `retention`, `
 | `cancel`: You can cancel any plan from the Billing page. | no |
 
 Refinement costs one more LLM call per document it rewrites, and an LLM that rewrites evidence can also change it. Keep the original chunk id beside each bullet so the answer can still cite the source.
+
+## Check yourself
+
+<details>
+<summary>1. Why does the LangGraph CRAG notebook fall back to web search more often as k grows, even with a perfect grader?</summary>
+
+Its rule is a fraction: generate only when more than half of the retrieved chunks are graded relevant. Every golden question has two evidence chunks, and 2 of `k` is more than half only when `k` is 3 or less. At `k = 5` the export question keeps both evidence chunks and still falls back, spending 7 calls plus a web search instead of 4.
+
+</details>
+
+<details>
+<summary>2. On the outage question, retrieval returns the reboot, sizing and export chunks, and the grader rightly rejects all three. What does CRAG do next, and what should it have done?</summary>
+
+It searches the web for a private handbook's outage policy, which the web cannot see. The answer was in the corpus all along, under the words "outage" and "availability". A rewrite and retry against the index ([M18](/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-overview), [M28](/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview)) would have found it, so for a private handbook, retry inside the index and then refuse.
+
+</details>
+
+<details>
+<summary>3. You add knowledge refinement that rewrites each retrieved document into bullet points. What does it cost, and how do you keep answers citable?</summary>
+
+It costs one more LLM call per document it rewrites, and an LLM that rewrites evidence can also change it. Keep the original chunk id beside each bullet so the answer can still cite its source.
+
+</details>

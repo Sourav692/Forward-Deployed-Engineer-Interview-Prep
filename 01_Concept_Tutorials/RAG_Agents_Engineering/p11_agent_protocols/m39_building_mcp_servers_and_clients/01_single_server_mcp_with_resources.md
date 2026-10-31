@@ -40,3 +40,26 @@ flowchart TD
 A prompt's text goes to the agent as if the user had typed it. A resource goes in wrapped as `CONTEXT … TASK: <what you asked>`, or with a request to acknowledge it and keep it in memory when you give no task; the `MemorySaver` checkpointer keeps it for the rest of the thread. Both servers read files and are started by relative path (`python weather_server.py`, `Path("delivery_log.txt")`), so the client only works when it is run from the project folder.
 
 For Larkspur, the same rules give one decision per feature. `search_handbook` raises when the index is missing and returns chunk ids and text otherwise; the refund policy can be a resource a support engineer attaches by hand; and a prompt like [M38](../m38_mcp_foundations/00_overview.md)'s `answer_with_citations` is something the engineer starts on purpose.
+
+## Check yourself
+
+<details>
+<summary>1. With no API key set, get_weather returns an error message with isError false. Why, and why is that a problem for the model?</summary>
+
+`get_weather` catches every failure and returns a dict with an `error` key, so the call counts as a success and the model reads the message as weather data. A tool that raises comes back with `isError: true`, and `langchain-mcp-adapters` turns it into a `ToolMessage` with `status="error"`. Raise when the call failed; return data when it worked.
+
+</details>
+
+<details>
+<summary>2. The delivery log resource function returns a list of nine strings. What does the model see after the client reads it?</summary>
+
+One JSON array. FastMCP serialises the `list[str]` as one text block, not one block per line, and the client joins the text blocks and pastes the result into a message, wrapped as `CONTEXT … TASK: <what you asked>`. The `MemorySaver` checkpointer keeps it for the rest of the thread.
+
+</details>
+
+<details>
+<summary>3. You want the client to check get_weather results against a schema. Why does the server give it nothing to check, and what change fixes that?</summary>
+
+`get_weather` is typed `-> dict`, so FastMCP lists it with no `outputSchema` and its results carry no `structuredContent`. The return type decides the schema: a typed return, such as a Pydantic model, gives the client a schema to check results against.
+
+</details>

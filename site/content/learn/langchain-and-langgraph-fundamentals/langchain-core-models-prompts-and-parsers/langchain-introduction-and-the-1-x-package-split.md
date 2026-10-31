@@ -36,3 +36,26 @@ Old code fails on 1.x in two different ways, and the exception class says what m
 The short paths that `langchain` keeps are aliases. `langchain.messages.HumanMessage is langchain_core.messages.HumanMessage` returns `True`; the notebook reads a `False` as two LangChain installs on `sys.path`.
 
 Memory is the one place where the moved class is not the recommended answer. `ConversationBufferMemory` still imports from `langchain_classic.memory`, but the 1.x replacement is a LangGraph checkpointer with a `thread_id` ([M10](/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/langgraph-runtime-persistence-hitl-and-streaming-overview), [M33](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview)).
+
+## Check yourself
+
+<details>
+<summary>1. Why did version 1.0 split the single langchain package into several packages?</summary>
+
+In 0.x, installing `langchain` pulled in every provider integration, and a break in any one of them could break the import. Version 1.0 split the surface by how fast each part changes and who owns it: `langchain-core` changes rarely, each partner package moves at its provider's pace, and `langchain-classic` is frozen.
+
+</details>
+
+<details>
+<summary>2. Old code runs from langchain import hub on 1.x. Which error do you expect, and where should hub come from now?</summary>
+
+`ImportError: cannot import name 'hub' from 'langchain'`. The package still exists but no longer exports the name, so import it from `langchain_classic`. Compare `langchain.chains`, where the module itself is gone and the error is `ModuleNotFoundError`.
+
+</details>
+
+<details>
+<summary>3. A 0.x app keeps chat history in ConversationBufferMemory. Is changing its import path the right migration?</summary>
+
+It runs, but it is not the recommended answer. The class still imports from `langchain_classic.memory`; the 1.x replacement is a LangGraph checkpointer with a `thread_id` ([M10](/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/langgraph-runtime-persistence-hitl-and-streaming-overview), [M33](/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-overview)). Memory is the one place where moving the import is not the fix.
+
+</details>
