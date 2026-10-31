@@ -42,6 +42,7 @@ One diagram carries the design, and each component exists because the one before
  ║   legal · safety          (live before action)    never a decision)     threshold? facts fresh?  │  approval      ║
  ║                                                                         ── the authorization    └─ escalate     ║
  ║                                                                            boundary                    │         ║
+ ║   single lookup (order status) ─> direct read-only tool call, verified identity, no draft or gate      │         ║
  ║  ACTION — async where the side effect allows                                                           v         ║
  ║   tool execution service (scoped credentials, typed args, idempotency key) ─> CRM · billing · orders · tickets  ║
  ║   refunds, warranty, shipping investigations run in the background; "your request has been submitted" now      ║
@@ -75,6 +76,7 @@ flowchart LR
 
     subgraph DEC[Decision — sync, ordered by risk]
         ID --> RTR[Intent and risk router]
+        RTR -- single lookup such as order status --> LOOKUP[Direct read-only lookup, no draft or gate]
         RTR --> RET[Knowledge retrieval: policy, account facts, prior cases]
         RET --> GEN[Response generator: draft + proposed tool call]
         GEN --> TPG{Tool policy gateway: deterministic checks}
@@ -88,6 +90,7 @@ flowchart LR
         AUTO --> TES[Tool execution service: scoped creds, typed args, idempotency key]
         APPR -- approved --> TES
         TES --> SOR[(CRM · billing · orders · tickets)]
+        LOOKUP --> SOR
     end
 
     subgraph OBS[Observability]

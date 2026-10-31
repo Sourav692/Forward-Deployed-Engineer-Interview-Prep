@@ -13,7 +13,7 @@ The order is not optional. Configuring against unconnected data fails, evaluatin
 | 8–9 | Evaluate and iterate | Golden set signed off as representative; baseline clears the bar | "eval_baseline_report.pdf - 0.83 vs 0.75 agreed baseline" (scripted value, no eval harness run) | FDA |
 | 10–11 | Shadow mode | Agent sees real traffic, decides, takes no action; humans compare | 5 shadow approvals, 2 overridden; "rollback_runbook.md - tested in staging, verified <2min" (scripted text, not timed) | FDA |
 | 12–13 | Limited production | Agent acts for real with a human approving, and a tested rollback | 6 approvals, 1 overridden; cumulative override rate 0.27 | — |
-| 14 | Go/no-go and handover | The agreed limited-release acceptance rule was met; runbook, dashboards, owner handed over; the week-4 target is measured later by a named owner | "Week-2 metrics: first-response 4m12s, 63% zero-edit sends" (scripted evidence text in the demo, not measured); `handover_runbook.md`, `dashboards_live.url` | Sponsor |
+| 14 | Go/no-go and handover | The agreed limited-release acceptance rule was met; runbook, dashboards, owner handed over; the week-4 target is measured later by a named owner | "Week-2 metrics: first-response 4m12s, 63% zero-edit sends" (scripted evidence text in the demo, not measured, and an interim reading rather than evidence for the week-4 target); `handover_runbook.md`, `dashboards_live.url` | Sponsor |
 
 The table's last two evidence columns come from `scripts/run_engagement_demo.py`. Shadow mode and limited production are the same two-step trust ladder as Module 05's `SHADOW` and `LIVE`. Never let a system's first real action also be the first time nobody is watching.
 

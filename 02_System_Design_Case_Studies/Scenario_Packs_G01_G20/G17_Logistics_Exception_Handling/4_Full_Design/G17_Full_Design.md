@@ -137,7 +137,7 @@ The same system drawn with its planes and trust boundaries *(own construction)*.
  │                                                                                   │                    │
  │  ════════════════════════ TRUST BOUNDARY 1: nothing acts without the gate ═══════╪══════════════════  │
  │                                                                                   ▼                    │
- │                               [POLICY GATE]  1. customs/regulatory? → HUMAN, stop                      │
+ │                               [POLICY GATE]  1. customs/regulatory or unknown? → HUMAN, stop           │
  │                                              2. value < $500 AND confidence ≥ threshold? → AUTO        │
  │                                              3. otherwise → HUMAN                                      │
  │                                    AUTO │                         │ HUMAN                              │
@@ -167,7 +167,7 @@ flowchart TD
     DET -->|exception| RA[Resolution Agent<br/>action + confidence + reasons]
 
     RA --> G1{Customs or<br/>regulatory?}
-    G1 -->|yes| HQ[Human approval queue]
+    G1 -->|yes or unknown| HQ[Human approval queue]
     G1 -->|no| G2{value < $500 AND<br/>confidence ≥ threshold?}
     G2 -->|yes| EX[Execute<br/>idempotency key + circuit breaker]
     G2 -->|no| HQ

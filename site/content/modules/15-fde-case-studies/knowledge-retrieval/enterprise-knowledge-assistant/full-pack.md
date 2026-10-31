@@ -57,7 +57,7 @@ Each stakeholder notices a different failure first. Optimise only for the employ
 
 **Support persona (same architecture):** agent asks a customer/problem question → cited answer from policy, product docs, past tickets → next step, optional draft ticket note. Reads run automatically. Any write-back is previewed and human-approved. Extra sources: Zendesk, Salesforce Service Cloud, Jira.
 
-**Scope before the first box:** read-only Q&A, five sources, ABAC, multi-tenant, sub-3 s. Writes and streaming ingest are out. If they give no assumptions, state yours: permissions at query time; citations point at the passage, not the title.
+**Scope before the first box:** read-only Q&A, five source systems (Drive, SharePoint, Slack, wikis, tickets), ABAC, multi-tenant, sub-3 s. Writes and streaming ingest are out. If they give no assumptions, state yours: permissions at query time; citations point at the passage, not the title.
 
 ## 2. State Requirements as Testable Constraints
 
@@ -87,7 +87,7 @@ A requirement that cannot fail a test is a preference. "Make it fast" is a prefe
 | Cost         | Embedding, index and tokens estimated separately. Cost per answer. Cache stable docs; prune retrieval; small models for classification; expensive reasoning only where risk justifies it              |
 | Security     | SSO via the IdP; ABAC over source ACLs; filter before the model; revocations fan out to indexes and caches; secrets never in prompts; no training on customer data unless the contract allows it      |
 | Audit        | Immutable: source event IDs, index/ACL versions, request ID, retrieved docs, policy decision, model/prompt version, exact citation set shown                                                          |
-| Reliability  | Fail closed on permissions, stale permission data, deletion sync, citation check. Label stale content. Degrade on retrieval quality. Queue background reindex                                         |
+| Reliability  | Fail closed on permissions, stale permission data and the citation check. Label stale content, including a suspected missed deletion, and suppress it once the deletion is confirmed. Degrade on retrieval quality. Queue background reindex                                         |
 
 Every Must has an owner:
 
