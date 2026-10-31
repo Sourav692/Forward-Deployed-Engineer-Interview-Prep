@@ -4,12 +4,17 @@ import { notFound } from 'next/navigation'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import { EditorialSection } from '@/components/editorial/EditorialSection'
 import { PageHead } from '@/components/editorial/PageHead'
-import { INTERVIEW_ROUNDS, lessonRow, moduleRow, practiseCount, roundHref, type Row } from '../rounds'
+import { JsonLd } from '@/components/JsonLd'
+import { INTERVIEW_ROUNDS } from '@/lib/curriculum'
+import { roundHref } from '@/lib/curriculum-href'
+import { lessonRow, liveRounds, moduleRow, practiseCount, type Row } from '@/lib/interview-rounds'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 /**
- * PROTOTYPE of one interview round page (plan Part 4, step 23): what the round tests,
- * then what to study, practise and run as a mock, all as links to pages that already
- * exist. Live rounds only; a Coming soon round has no page.
+ * One interview round (plan Part 4), e.g. /interview/rounds/ai-system-design: what the
+ * round tests, then what to study, practise and run as a mock, all as links to pages that
+ * already exist, so the page copies no content. Static, live rounds only: a planned
+ * round or any other slug is a 404.
  */
 
 type Params = { roundSlug: string }
@@ -17,14 +22,15 @@ type Params = { roundSlug: string }
 export const dynamicParams = false
 
 export function generateStaticParams(): Params[] {
-  return INTERVIEW_ROUNDS.filter((r) => !r.planned).map((r) => ({ roundSlug: r.slug }))
+  return liveRounds().map((r) => ({ roundSlug: r.slug }))
 }
 
-const getRound = (slug: string) => INTERVIEW_ROUNDS.find((r) => r.slug === slug && !r.planned)
+const getRound = (slug: string) => liveRounds().find((r) => r.slug === slug)
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const round = getRound((await params).roundSlug)
-  return round ? { title: `${round.title} Round (prototype)`, robots: { index: false, follow: false } } : {}
+  if (!round) return {}
+  return pageMetadata({ path: roundHref(round.slug), title: `${round.title} Interview Round`, description: round.summary })
 }
 
 export default async function RoundPage({ params }: { params: Promise<Params> }) {
@@ -32,26 +38,29 @@ export default async function RoundPage({ params }: { params: Promise<Params> })
   if (!round) notFound()
 
   const number = INTERVIEW_ROUNDS.indexOf(round) + 1
-  const live = INTERVIEW_ROUNDS.filter((r) => !r.planned)
+  const live = liveRounds()
   const at = live.indexOf(round)
   const prev = live[at - 1]
   const next = live[at + 1]
 
   const practise = practiseCount(round)
+  const plural = (n: number, word: string) => `${n} ${n === 1 ? word : `${word}s`}`
   const facts = [
     { term: 'Format', value: round.format },
-    ...(round.study.length ? [{ term: 'Study', value: `${round.study.length} modules` }] : []),
-    ...(practise ? [{ term: 'Practise', value: `${practise} lessons` }] : []),
+    ...(round.study.length ? [{ term: 'Study', value: plural(round.study.length, 'module') }] : []),
+    ...(practise ? [{ term: 'Practise', value: plural(practise, 'lesson') }] : []),
     ...(round.mocks.length ? [{ term: 'Mocks', value: `${round.mocks.length}` }] : []),
   ]
 
   return (
     <div className="pb-24">
-      <p className="mt-6 border border-dashed border-[var(--color-rule-2)] bg-[var(--color-paper-2)] px-4 py-3 text-[0.9375rem]">
-        <strong>Prototype.</strong> One round page of the interview area organised by round.
-      </p>
-      <div className="mt-4" />
-      <Breadcrumbs items={[{ label: 'Interview', href: '/interview/rounds-preview' }, { label: round.title }]} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Interview', path: '/interview' },
+          { name: round.title, path: roundHref(round.slug) },
+        ])}
+      />
+      <Breadcrumbs items={[{ label: 'Interview', href: '/interview' }, { label: round.title }]} />
       <PageHead tag={`Round ${number}`} title={round.title} standfirst={round.summary} facts={facts} />
 
       <EditorialSection id="tests" title="What It Tests" description="A strong answer shows all three.">

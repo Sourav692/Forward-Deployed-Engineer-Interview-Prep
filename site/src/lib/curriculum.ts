@@ -15,7 +15,7 @@
  *   erased; runtime imports must be data-only modules imported with an explicit
  *   `.ts` extension (the per-track RENAMED files in ./consolidation/).
  */
-import type { CurriculumLesson, CurriculumModule, CurriculumTrack, InterviewHub } from './curriculum-types'
+import type { CurriculumLesson, CurriculumModule, CurriculumTrack, InterviewRound } from './curriculum-types'
 import { RENAMED_T0 } from './consolidation/t0.ts'
 import { RENAMED_T1 } from './consolidation/t1.ts'
 import { RENAMED_T2 } from './consolidation/t2.ts'
@@ -1770,87 +1770,226 @@ export const RETIRED_MODULES: Record<string, string> = {
   'executive-communication': 'telling-the-build-story',
 }
 
+const DISCOVERY_WORKSHEETS = [
+  'internal-knowledge-assistant',
+  'sales-copilot',
+  'financial-compliance-reviewer',
+  'healthcare-prior-auth-assistant',
+  'legal-contract-copilot',
+  'sre-triage-agent',
+  'multi-tenant-saas-support',
+  'retail-demand-explainer',
+  'service-now-ticket-agent',
+  'executive-dashboard-copilot',
+]
+
+const DESIGN_WORKSHEETS = [
+  'enterprise-knowledge-assistant-rag',
+  'secure-multi-tenant-ai-platform',
+  'natural-language-to-sql-analytics-assistant',
+  'ai-customer-support-automation',
+  'ai-system-for-an-air-gapped-environment',
+  'llm-evaluation-and-release-gating-platform',
+  'high-volume-batch-inference-system',
+  'tool-using-ai-agent-with-safety-controls',
+  'reliable-workflow-orchestration-system',
+  'observability-customer-facing-ai-application',
+  'configurable-platform-customer-specific-workflows',
+  'system-design-worksheets-enterprise-chatbot-platform',
+]
+
 /**
- * Interview topic hubs (DATA-07): five ways into existing practice, grouped by what the
- * interviewer tests. Practice lists point at each module's "Practise … Interview
- * Questions" lesson and at the live worksheets, mocks and final-week guides; modules are
- * where to study a gap. `check:curriculum` fails on an unknown or unpublished slug.
+ * The interview loop, round by round (plan Part 4), in the order most loops run them.
+ * Each round points at existing Learn modules, practice lessons and mock interviews;
+ * `check:curriculum` fails on an unknown or unpublished slug and on an interview page
+ * that belongs to no round. The topic hubs these replaced redirect to a round.
  */
-export const INTERVIEW_HUBS: InterviewHub[] = [
+export const INTERVIEW_ROUNDS: InterviewRound[] = [
   {
-    slug: 'technical-foundations',
-    title: 'Technical Foundations',
-    summary: 'Core engineering questions on code, data, APIs and infrastructure that every applied AI loop still tests.',
-    practice: ['practise-api-and-backend', 'practise-deployment', 'module-12-reliability-and-failure-handling'],
-    modules: ['apis-and-backend', 'cloud-containers-deployment', 'distributed-systems-essentials'],
-  },
-  {
-    slug: 'ai-and-machine-learning',
-    title: 'AI and Machine Learning',
-    summary: 'Depth questions on models, retrieval, prompting, agents, evaluation and safety for LLM-based products.',
-    practice: [
-      'practise-rag-fundamentals',
-      'practise-chunking-and-indexing',
-      'practise-retrieval',
-      'practise-framework-interview-questions',
-      'practise-agent-loop-interview-questions',
-      'practise-tool-design-interview-questions',
-      'practise-context-and-orchestration-interview-questions',
-      'practise-memory-and-state',
-      'practise-robust-agents',
-      'practise-multi-agent-systems',
-      'practise-agentic-workflow-platforms',
-      'practise-evaluation-and-release-gates',
+    slug: 'recruiter-screen',
+    title: 'Recruiter Screen',
+    summary: 'Why this role, why you, and whether your story holds up in two minutes.',
+    format: '20 to 30 minute call',
+    tests: [
+      'You can say what a forward deployed engineer does and why you want to be one.',
+      'Your background comes across as one short story with a clear build at its centre.',
+      'You ask questions that show you know how the team works with customers.',
     ],
-    modules: ['how-llms-behave', 'rag-from-first-principles', 'the-tool-calling-loop', 'evaluation-and-release-gates'],
+    study: ['the-fde-role', 'telling-the-build-story'],
+    practise: [{ title: 'Role questions', lessons: ['practise-fde-role'] }],
+    mocks: [],
   },
   {
-    slug: 'ai-systems-design',
-    title: 'AI Systems Design',
-    summary: 'Whiteboard-style design prompts that test end-to-end architecture, scale, reliability, security and cost.',
-    practice: [
-      'practise-enterprise-rag',
-      'practise-security-and-tenancy',
-      'practise-observability-and-diagnosis',
-      'practise-cost-and-latency',
-      'practise-scaling-and-reliability',
-      'practise-agentops',
+    slug: 'coding',
+    title: 'Coding',
+    summary: 'Working code under time, plus the backend and infrastructure questions asked around it.',
+    format: '45 to 60 minutes, shared editor',
+    tests: [
+      'You clarify the input and edge cases before you type.',
+      'You reach a working version first, then improve it out loud.',
+      'You can explain the API, data and deployment choices behind the code.',
+    ],
+    study: ['apis-and-backend', 'cloud-containers-deployment', 'distributed-systems-essentials'],
+    practise: [
+      {
+        title: 'Technical questions',
+        lessons: ['practise-api-and-backend', 'practise-deployment', 'module-12-reliability-and-failure-handling'],
+      },
+    ],
+    mocks: [],
+  },
+  {
+    slug: 'ai-assisted-coding',
+    title: 'AI-Assisted Coding',
+    summary: 'Building with an AI pair: how you prompt, check and own the code it writes.',
+    format: '60 to 90 minutes, your own tools',
+    tests: [
+      'You split the task so the assistant gets small, checkable steps.',
+      'You read, test and correct generated code rather than accept it.',
+      'You can explain every line you ship, including the ones you did not type.',
+    ],
+    study: [],
+    practise: [],
+    mocks: [],
+    planned: 'a timed build with an AI pair, reviewing and testing generated code, and explaining your checks',
+  },
+  {
+    slug: 'ai-system-design',
+    title: 'AI System Design',
+    summary: 'An end-to-end AI system on a whiteboard: retrieval, agents, evaluation, scale, security and cost.',
+    format: '45 to 60 minutes, whiteboard',
+    tests: [
+      'You pin down users, data and the success measure before drawing boxes.',
+      'You name the trade-offs in retrieval, model choice, latency and cost, with numbers.',
+      'You show how the system is evaluated, secured and operated after launch.',
+    ],
+    study: ['design-framework', 'sixty-minute-whiteboard', 'architecture-patterns', 'classic-ai-designs'],
+    practise: [
+      {
+        title: 'Design questions',
+        lessons: [
+          'practise-enterprise-rag',
+          'practise-security-and-tenancy',
+          'practise-observability-and-diagnosis',
+          'practise-cost-and-latency',
+          'practise-scaling-and-reliability',
+          'practise-agentops',
+        ],
+      },
+      {
+        title: 'Depth questions',
+        lessons: [
+          'practise-rag-fundamentals',
+          'practise-chunking-and-indexing',
+          'practise-retrieval',
+          'practise-framework-interview-questions',
+          'practise-agent-loop-interview-questions',
+          'practise-tool-design-interview-questions',
+          'practise-context-and-orchestration-interview-questions',
+          'practise-memory-and-state',
+          'practise-robust-agents',
+          'practise-multi-agent-systems',
+          'practise-agentic-workflow-platforms',
+          'practise-evaluation-and-release-gates',
+        ],
+      },
+      { title: 'System design worksheets', lessons: DESIGN_WORKSHEETS },
+    ],
+    mocks: [
+      'running-and-scoring-a-mock-interview',
       'internal-knowledge-assistant-mock-interview',
       'agentic-support-workflow-mock-interview',
       'financial-compliance-and-red-team-mock-interview',
       'sre-triage-agent-mock-interview',
       'multi-tenant-saas-assistant-mock-interview',
     ],
-    modules: ['design-framework', 'sixty-minute-whiteboard', 'classic-ai-designs', 'case-study-worksheets'],
   },
   {
-    slug: 'forward-deployed-engineering',
-    title: 'Forward Deployed Engineering',
-    summary: 'Customer-facing scenarios that test discovery, scoping, delivery under constraints and proving business impact.',
-    practice: [
-      'practise-fde-role',
-      'practise-decomposition-interview-cases',
-      'practise-the-two-week-delivery-round',
-      'module-01-fde-problem-decomposition',
-      'module-18-end-to-end-fde-interview-execution',
+    slug: 'decomposition',
+    title: 'Decomposition or Case Study',
+    summary: 'A vague business problem broken into a scoped, buildable first version.',
+    format: '45 to 60 minutes, discussion',
+    tests: [
+      'You find the real problem and the person who has it before proposing a fix.',
+      'You cut the scope to something you could ship in weeks, and say what you left out.',
+      'You make judgement calls under uncertainty and explain them.',
     ],
-    modules: ['customer-discovery', 'scoping-an-fde-project', 'delivery-stages-and-gates', 'judgement-cases', 'adoption-and-impact'],
+    study: ['customer-discovery', 'scoping-an-fde-project', 'judgement-cases'],
+    practise: [
+      {
+        title: 'Cases',
+        lessons: ['practise-decomposition-interview-cases', 'module-01-fde-problem-decomposition', 'scoping-in-practice'],
+      },
+    ],
+    mocks: [],
   },
   {
-    slug: 'behavioural-and-communication',
-    title: 'Behavioural and Communication',
-    summary: 'Story-based and explanation questions that test judgement, ownership and how clearly you communicate.',
-    practice: [
-      'story-bank',
-      'customer-focus-and-discovery',
-      'communication-and-influence',
-      'pushback-and-saying-no',
-      'delivery-under-pressure',
-      'ownership-standards-and-failure',
-      'scale-beyond-yourself',
-      'leading-people',
+    slug: 'customer-scenario',
+    title: 'Customer Scenario',
+    summary: 'A role-play with a client: discovery, pushback, delivery under constraints and proving impact.',
+    format: '45 to 60 minutes, role-play',
+    tests: [
+      'You run discovery like a conversation, not a questionnaire.',
+      'You hold a position under pushback and agree the next step.',
+      'You tie the build to a measure the customer already cares about.',
     ],
-    modules: ['telling-the-build-story', 'building-the-story-bank'],
+    study: ['customer-discovery', 'delivery-stages-and-gates', 'adoption-and-impact'],
+    practise: [
+      {
+        title: 'Delivery rounds',
+        lessons: ['practise-the-two-week-delivery-round', 'module-18-end-to-end-fde-interview-execution'],
+      },
+      { title: 'Customer discovery worksheets', lessons: DISCOVERY_WORKSHEETS },
+    ],
+    mocks: [
+      'bank-policy-assistant-client-simulation',
+      'it-service-desk-agent-client-simulation',
+      'grocery-forecast-explainer-client-simulation',
+      'saas-support-deflection-client-simulation',
+      'prior-authorisation-packets-client-simulation',
+    ],
+  },
+  {
+    slug: 'behavioural',
+    title: 'Behavioural',
+    summary: 'Stories that show judgement, ownership and how you work with customers and teams.',
+    format: '45 minutes, structured questions',
+    tests: [
+      'Each story has a clear situation, your own action and a measured result.',
+      'You can tell a failure without blaming anyone and say what changed.',
+      'You pick the right story for the question within a few seconds.',
+    ],
+    study: ['telling-the-build-story', 'building-the-story-bank'],
+    practise: [
+      {
+        title: 'Story bank',
+        lessons: [
+          'story-bank',
+          'customer-focus-and-discovery',
+          'communication-and-influence',
+          'pushback-and-saying-no',
+          'delivery-under-pressure',
+          'ownership-standards-and-failure',
+          'scale-beyond-yourself',
+          'leading-people',
+        ],
+      },
+    ],
+    mocks: [],
+  },
+  {
+    slug: 'demo-or-take-home',
+    title: 'Demo or Take-Home',
+    summary: 'A build you made on your own time, shown and defended in front of the panel.',
+    format: 'A few days to build, 45 minutes to present',
+    tests: [
+      'You scope the brief so the core works end to end.',
+      'You show how you tested it and where it would break.',
+      'You answer design questions about your own choices without getting defensive.',
+    ],
+    study: ['capstone-build'],
+    practise: [],
+    mocks: ['contract-review-take-home-brief'],
   },
 ]
 

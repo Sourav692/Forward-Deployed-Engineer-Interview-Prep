@@ -295,8 +295,15 @@ export const REDIRECTS: Redirect[] = [
   // /start is the one onboarding page (ENH-11); the two pages it absorbed redirect.
   { source: '/guide', destination: '/start', permanent: true },
   { source: '/learning-map', destination: '/start', permanent: true },
-  // Hubs have no index page of their own: /interview lists them (FE-18).
-  { source: '/interview/hubs', destination: '/interview', permanent: false },
+  // The five topic hubs (FE-18) became interview rounds (plan Part 4): each hub goes to
+  // the round that holds its practice. Rounds have no index of their own: /interview lists them.
+  { source: '/interview/hubs', destination: '/interview', permanent: true },
+  { source: '/interview/hubs/technical-foundations', destination: '/interview/rounds/coding', permanent: true },
+  { source: '/interview/hubs/ai-and-machine-learning', destination: '/interview/rounds/ai-system-design', permanent: true },
+  { source: '/interview/hubs/ai-systems-design', destination: '/interview/rounds/ai-system-design', permanent: true },
+  { source: '/interview/hubs/forward-deployed-engineering', destination: '/interview/rounds/customer-scenario', permanent: true },
+  { source: '/interview/hubs/behavioural-and-communication', destination: '/interview/rounds/behavioural', permanent: true },
+  { source: '/interview/rounds', destination: '/interview', permanent: false },
   // The /demo prototype was retired once production covered it (FE-19). Its
   // fd:demo:v1 progress is not migrated (plan §15 Q12).
   { source: '/demo', destination: '/', permanent: true },

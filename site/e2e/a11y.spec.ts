@@ -22,7 +22,7 @@ const PAGES: [string, string][] = [
   ['client simulation', '/interview/mock-interviews/bank-policy-assistant-client-simulation'],
   ['module with checkpoint', CHECKPOINT_MODULE],
   ['settings', '/settings'],
-  ['interview hub', '/interview/hubs/ai-systems-design'],
+  ['interview round', '/interview/rounds/ai-system-design'],
   ['progress (new learner)', '/progress'],
   ['progress history', '/progress/history'],
   ['library', '/library'],

@@ -4,57 +4,41 @@ import { SuggestTopic } from '@/components/areas/SuggestTopic'
 import { curriculumModules, siteCounts } from '@/components/areas/data'
 import { EditorialSection } from '@/components/editorial/EditorialSection'
 import { ModuleProgress } from '@/components/learn/ProgressIslands'
-import { LAST_DAY } from '@/lib/editorial'
-import { INTERVIEW_HUBS } from '@/lib/curriculum'
-import { curriculumHref, hubHref } from '@/lib/curriculum-href'
-import { INTERVIEW_TRACK, formatMinutes, moduleInput, readingList, type LearnLesson } from '@/lib/learn'
-import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
+import { Tag, cx, focusRing } from '@/components/ui'
+import { INTERVIEW_ROUNDS } from '@/lib/curriculum'
+import type { InterviewRound } from '@/lib/curriculum-types'
+import { curriculumHref, roundHref } from '@/lib/curriculum-href'
+import { LAST_DAY } from '@/lib/editorial'
+import { liveRounds, practiseCount } from '@/lib/interview-rounds'
+import { INTERVIEW_TRACK, moduleInput, readingList } from '@/lib/learn'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 /**
- * /interview: the interview prep area (FE-11). It is the home of the interview
- * practice track (mock interviews, final week), whose module and lesson
- * pages live at /interview/<module>/<lesson> rather than under /learn, and it links
- * to the final week (/interview/final-week, ENH-18) and the five topic hubs
- * (/interview/hubs/<hub>). Company-specific packs have their own area at /company-prep.
+ * /interview: the interview area organised by round (plan Part 4). Eight round cards in
+ * the order most loops run them; a live round opens /interview/rounds/<round>, a round
+ * with no content yet is a Coming soon card with no link. The final week follows,
+ * because it serves every round. Mock interview and final-week lessons live at
+ * /interview/<module>/<lesson>; company packs have their own area at /company-prep.
  */
 
 export const metadata: Metadata = pageMetadata({
   path: '/interview',
   title: 'Interview',
   description:
-    'Interview preparation: mock interviews and scorecards, the final-week review and the interview topic hubs.',
+    'Interview preparation round by round: what each round tests, what to study, what to practise and the mock interview to run, plus the final-week review.',
 })
 
-/**
- * The two ready modules this hub lists. Technical worksheets live under /practice and
- * company loops under Company Prep; the on-hold modules keep their own pages only.
- */
-const MOCKS = 'mock-interviews'
 const FINAL_WEEK = 'final-week'
-
-const moduleOf = (slug: string) => {
-  const mod = curriculumModules(INTERVIEW_TRACK).find((m) => m.slug === slug)
-  if (!mod) throw new Error(`No interview module "${slug}"`)
-  return mod
-}
 
 export default async function InterviewPage() {
   const counts = await siteCounts()
-  const mocks = moduleOf(MOCKS)
-  const finalWeek = moduleOf(FINAL_WEEK)
-  const mockLessons = readingList(mocks).main
+  const finalWeek = curriculumModules(INTERVIEW_TRACK).find((m) => m.slug === FINAL_WEEK)
+  if (!finalWeek) throw new Error(`No interview module "${FINAL_WEEK}"`)
   const finalWeekLessons = readingList(finalWeek).main
 
-  const sections = [
-    { href: '#practice-modules', label: 'Mock interviews', count: `${mockLessons.length} lessons` },
-    { href: '#final-week', label: LAST_DAY.title, count: `${finalWeekLessons.length} lessons` },
-    { href: '#topic-hubs', label: 'Interview Topic Hubs', count: `${INTERVIEW_HUBS.length} hubs` },
-  ]
-
-  // Hallmark, Editorial theme (editorial.css): the name and what the area is for, an
-  // index of its three parts, then each part opened by a heavy rule with its pages as
-  // contents rows.
+  // Hallmark, Editorial theme (editorial.css): the name and what the area is for, then
+  // the rounds as square bordered cards (the Learn group card piece), then the final week.
   return (
     <div className="pb-24">
       <JsonLd data={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Interview', path: '/interview' }])} />
@@ -62,13 +46,13 @@ export default async function InterviewPage() {
         <div>
           <h1>Interview</h1>
           <p className="cb-standfirst">
-            The last stretch before an interview: full rounds under time, scored against a rubric, and condensed revision
-            of what you already know.
+            Prepare one round at a time. Each round says what the interviewer tests, what to study in Learn, what to
+            practise and which mock interview to run under time.
           </p>
         </div>
         <div className="cb-hero-side">
           <p>
-            The technical worksheets are in{' '}
+            {liveRounds().length} of {INTERVIEW_ROUNDS.length} rounds are ready. The technical worksheets are also in{' '}
             <Link href="/practice" className="underline underline-offset-2">
               Practice
             </Link>
@@ -76,41 +60,41 @@ export default async function InterviewPage() {
           </p>
           <nav aria-label="On this page" className="mt-5">
             <ul className="cb-rows">
-              {sections.map((s) => (
-                <li key={s.href} className="cb-row">
-                  <a href={s.href} className="cb-row-link">
-                    <span className="cb-row-title">{s.label}</span>
-                    <span className="cb-row-facts">{s.count}</span>
-                  </a>
-                </li>
-              ))}
+              <li className="cb-row">
+                <a href="#rounds" className="cb-row-link">
+                  <span className="cb-row-title">The rounds</span>
+                  <span className="cb-row-facts">{INTERVIEW_ROUNDS.length} rounds</span>
+                </a>
+              </li>
+              <li className="cb-row">
+                <a href="#final-week" className="cb-row-link">
+                  <span className="cb-row-title">{LAST_DAY.title}</span>
+                  <span className="cb-row-facts">{finalWeekLessons.length} lessons</span>
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
       </header>
 
       <EditorialSection
-        id="practice-modules"
-        title="Mock interviews"
-        description="Start with the method lesson, then run Mocks A to E, five client simulations and a take-home brief. Each round has a timer and a scorecard."
+        id="rounds"
+        title="The Rounds"
+        description="In the order most loops run them. Companies drop or merge rounds, so check your loop and start with the rounds you will face."
       >
-        <div className="cb-group">
-          <div>
-            <div className="max-w-[22rem]">
-              <ModuleProgress input={moduleInput(mocks)} />
-            </div>
-            <Link href={curriculumHref(INTERVIEW_TRACK, MOCKS)} className="cb-group-count">
-              Open the module
-            </Link>
-          </div>
-          <LessonRows lessons={mockLessons} />
-        </div>
+        <ul aria-label="Interview rounds" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {INTERVIEW_ROUNDS.map((round, i) => (
+            <li key={round.slug} className="flex">
+              <RoundCard round={round} number={i + 1} />
+            </li>
+          ))}
+        </ul>
       </EditorialSection>
 
       <EditorialSection
         id="final-week"
         title={LAST_DAY.title}
-        description={`A six-day plan: the roadmap, ${counts.reviews} condensed reviews with one-page recall cards, the case-study practice and a last-day pass. Read it after you have studied the concepts; a new concept needs its lesson first.`}
+        description={`For every round: a six-day plan with ${counts.reviews} condensed reviews, one-page recall cards and a last-day pass. Read it after you have studied the concepts; a new concept needs its lesson first.`}
       >
         <div className="cb-well lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10">
           <div>
@@ -136,23 +120,6 @@ export default async function InterviewPage() {
         </div>
       </EditorialSection>
 
-      <EditorialSection
-        id="topic-hubs"
-        title="Interview Topic Hubs"
-        description="Practice grouped by what the interviewer tests: the question lessons and timed rounds for each kind of round, and the modules behind them."
-      >
-        <ul className="cb-rows">
-          {INTERVIEW_HUBS.map((h) => (
-            <li key={h.slug} className="cb-row">
-              <Link href={hubHref(h.slug)} className="cb-row-link">
-                <span className="cb-row-title">{h.title}</span>
-                <span className="cb-row-note">{h.summary}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </EditorialSection>
-
       <div className="mt-24">
         <SuggestTopic hub="Interview" />
       </div>
@@ -160,18 +127,43 @@ export default async function InterviewPage() {
   )
 }
 
-/** A module's lessons as contents rows: the title, then its reading time at the edge. */
-function LessonRows({ lessons }: { lessons: LearnLesson[] }) {
+/**
+ * One round as a square bordered card (`cb-group-card`, shared with the Learn groups).
+ * A live round's title opens its page, stretched over the card so the card is one tab
+ * stop. A planned round shows its topics and has no link.
+ */
+function RoundCard({ round, number }: { round: InterviewRound; number: number }) {
+  const live = !round.planned
+  const practise = practiseCount(round)
   return (
-    <ul className="cb-rows">
-      {lessons.map((l) => (
-        <li key={l.slug} className="cb-row">
-          <Link href={l.href} className="cb-row-link">
-            <span className="cb-row-title">{l.title}</span>
-            {l.estMinutes ? <span className="cb-row-facts">{formatMinutes(l.estMinutes)}</span> : null}
+    <article className={cx('cb-group-card relative flex w-full flex-col', !live && 'is-soon')}>
+      <div className="flex min-h-6 flex-wrap items-center gap-2">
+        <span className="text-xs font-semibold tabular-nums text-subtle">Round {String(number).padStart(2, '0')}</span>
+        {!live && <Tag>Coming soon</Tag>}
+      </div>
+      <h2 className="cb-entry-title mt-3">
+        {live ? (
+          <Link href={roundHref(round.slug)} className={cx('after:absolute after:inset-0', focusRing)}>
+            {round.title}
           </Link>
-        </li>
-      ))}
-    </ul>
+        ) : (
+          round.title
+        )}
+      </h2>
+      <p className="cb-entry-body">{round.summary}</p>
+      {live ? (
+        <p className="cb-entry-facts mt-auto pt-4">
+          {round.study.length > 0 && <span>{round.study.length} to study</span>}
+          {practise > 0 && <span>{practise} to practise</span>}
+          {round.mocks.length > 0 && (
+            <span>
+              {round.mocks.length} {round.mocks.length === 1 ? 'mock' : 'mocks'}
+            </span>
+          )}
+        </p>
+      ) : (
+        <p className="mt-3 text-[0.9375rem] text-muted">Planned: {round.planned}.</p>
+      )}
+    </article>
   )
 }

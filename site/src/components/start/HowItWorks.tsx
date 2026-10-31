@@ -26,7 +26,7 @@ const AREAS = [
   {
     href: '/interview',
     title: 'Interview',
-    body: 'Timed mock rounds with a scorecard, topic hubs, and the final-week review for the days before the loop.',
+    body: 'Every round of the loop with what it tests and what to practise, timed mocks with a scorecard, and the final-week review for the days before the loop.',
   },
 ]
 

@@ -13,7 +13,7 @@
  * drop a heading or name a heading the source lacks.
  */
 import { CHECKPOINTS } from '../src/lib/checkpoints.ts'
-import { INTERVIEW_HUBS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
+import { INTERVIEW_ROUNDS, LESSONS, MODULES, RENAMED, RETIRED_MODULES, TRACKS } from '../src/lib/curriculum.ts'
 import { MODULE_HOMES, isLearnTrack } from '../src/lib/curriculum-href.ts'
 import { LEARN_STAGES } from '../src/lib/learn-stages.ts'
 import { REVIEWS, TRACKS as LIVE_TRACKS } from '../src/lib/editorial.ts'
@@ -285,21 +285,40 @@ for (const [from, to] of Object.entries(RETIRED_MODULES)) {
   }
 }
 
-// Interview hubs (DATA-07). They live at /interview/hubs/<slug>, so an interview-practice
-// module called "hubs" would be shadowed by that static segment.
-unique('interview hub', INTERVIEW_HUBS.map((h) => h.slug))
-for (const m of MODULES) if (m.track === 'interview-practice' && m.slug === 'hubs') fail('module slug "hubs" is taken by /interview/hubs')
-for (const h of INTERVIEW_HUBS) {
-  if (h.practice.length < 2 || h.modules.length < 1) fail(`hub ${h.slug}: needs at least two practice lessons and one module`)
-  for (const s of h.practice) {
-    const l = lessonBySlug.get(s)
-    if (!l) fail(`hub ${h.slug}: unknown practice lesson "${s}"`)
-    else if (lessonDecision(l) !== 'publish') fail(`hub ${h.slug}: practice lesson "${s}" is not published (${lessonDecision(l)})`)
+// Interview rounds (plan Part 4). They live at /interview/rounds/<slug>, so an
+// interview-practice module called "rounds" (or "hubs", whose old URLs redirect) would be
+// shadowed. A live round needs content; a planned one has none. Every published mock
+// interview must belong to a round; the final week serves every round, so it is exempt.
+unique('interview round', INTERVIEW_ROUNDS.map((r) => r.slug))
+for (const m of MODULES) {
+  if (m.track === 'interview-practice' && (m.slug === 'rounds' || m.slug === 'hubs')) fail(`module slug "${m.slug}" is taken by /interview/${m.slug}`)
+}
+const inRound = new Set<string>()
+for (const r of INTERVIEW_ROUNDS) {
+  const lessons = [...r.practise.flatMap((g) => g.lessons), ...r.mocks]
+  if (r.planned) {
+    if (lessons.length || r.study.length) fail(`round ${r.slug}: a planned round lists no content; drop "planned" once it has some`)
+    continue
   }
-  for (const s of h.modules) {
+  if (!lessons.length) fail(`round ${r.slug}: needs at least one practice lesson or mock`)
+  if (r.tests.length !== 3) fail(`round ${r.slug}: needs exactly three "tests"`)
+  for (const s of lessons) {
+    inRound.add(s)
+    const l = lessonBySlug.get(s)
+    if (!l) fail(`round ${r.slug}: unknown lesson "${s}"`)
+    else if (lessonDecision(l) !== 'publish') fail(`round ${r.slug}: lesson "${s}" is not published (${lessonDecision(l)})`)
+  }
+  for (const s of r.study) {
     const m = moduleBySlug.get(s)
-    if (!m) fail(`hub ${h.slug}: unknown module "${s}"`)
-    else if (m.status === 'on-hold' || m.status === 'coming-soon') fail(`hub ${h.slug}: module "${s}" is ${m.status}`)
+    if (!m) fail(`round ${r.slug}: unknown module "${s}"`)
+    else if (m.status === 'on-hold' || m.status === 'coming-soon') fail(`round ${r.slug}: module "${s}" is ${m.status}`)
+  }
+}
+for (const m of MODULES) {
+  if (m.slug !== 'mock-interviews') continue
+  for (const s of m.lessons) {
+    const l = lessonBySlug.get(s)
+    if (l && lessonDecision(l) === 'publish' && !inRound.has(s)) fail(`mock interview "${s}" belongs to no interview round`)
   }
 }
 

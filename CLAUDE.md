@@ -71,7 +71,11 @@ The site is meant to be the single place for AI Engineering and Forward Deployed
   - A group with no tracks yet is a Coming soon card (dashed border, second paper). It shows its `planned` topics, has no link and no page (its URL is a 404), and stays out of the sitemap. Never promise a date.
   - Breadcrumbs on Learn track, module and lesson pages run Learn, group, track (`groupTrail` and `trackTrail` in `site/src/lib/learn.ts`).
   - No track may use the slug `topics`.
-- **Interview by round.** The interview area follows the rounds of a real loop: recruiter screen, coding, AI-assisted coding, AI system design, decomposition or case study, customer scenario, behavioural, demo or take-home. A new interview page belongs to one round.
+- **Interview by round.** The interview area follows the rounds of a real loop: recruiter screen, coding, AI-assisted coding, AI system design, decomposition or case study, customer scenario, behavioural, demo or take-home.
+  - The rounds are `INTERVIEW_ROUNDS` in `site/src/lib/curriculum.ts`. Each lists, by slug, what it tests, the Learn modules to study, practice lessons in titled groups and its mock interviews; the page copies no content.
+  - `/interview` shows the rounds as `cb-group-card` cards, the same piece as the Learn groups, then the final week. A live round opens `/interview/rounds/<round>` (helpers in `site/src/lib/interview-rounds.ts`). A round with no content sets `planned`: a Coming soon card with no link and no page.
+  - A new interview page belongs to one round: add its slug there. `check:curriculum` fails on an unknown or unpublished slug and on a mock interview that is in no round.
+  - The five old topic hubs became rounds. `/interview/hubs/<hub>` 308s to its round (`site/src/lib/redirects.ts`). No interview module may use the slug `rounds` or `hubs`.
 - **Placing new content.** A new track goes in the group for its discipline. Behavioural, portfolio, resume and negotiation material goes in Career, not Forward Deployed Engineering. AI System Design stays in Learn.
 - **Overlaps.** Before adding a Harness Engineering lesson, check the `agentic-systems` modules "Context and memory" and "Reliable workflows and coordination". Before adding an Inference Engineering lesson, check the `production-ai` module "Operations and performance". Give each topic one canonical home and cross-link from the other, so no topic is taught twice.
 - **Out of scope:** ML research, classical data science, computer vision and diffusion, and classic MLOps.
