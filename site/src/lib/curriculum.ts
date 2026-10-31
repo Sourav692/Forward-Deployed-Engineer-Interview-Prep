@@ -243,7 +243,7 @@ export const TRACKS: CurriculumTrack[] = [
   {
     slug: 'ai-systems-design',
     code: 'T5',
-    title: 'AI Systems Design',
+    title: 'AI System Design',
     objective: 'Produce a structured 45–60 min design answer',
     forWhom: 'All',
     prerequisites: ['llm-and-retrieval', 'agentic-systems', 'production-ai'],

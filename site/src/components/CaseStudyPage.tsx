@@ -1,5 +1,5 @@
 import { familyMeta, getRelated } from '@/lib/content'
-import { MODES } from '@/lib/editorial'
+import { MODES, itemLevel } from '@/lib/editorial'
 import { documentsOf, hasChapters, scenarioHref, type CaseDocument, type CaseStudy } from '@/lib/scenario'
 import { learningResourceJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
@@ -52,7 +52,7 @@ export async function CaseStudyPage({
         title={study.title}
         facts={[
           { term: 'Kind', value: MODES[meta.mode].label },
-          { term: 'Level', value: meta.difficulty },
+          { term: 'Level', value: itemLevel(`${study.ref.trackId}/${study.ref.slug}`, meta.difficulty) },
           { term: 'Reading time', value: documents.length > 1 ? `${documents.length} documents, ${minutes} min in total` : `${minutes} min` },
         ]}
         updated={study.ref.updated}

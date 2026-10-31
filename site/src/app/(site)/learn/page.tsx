@@ -55,11 +55,10 @@ export default async function LearnPage() {
       <StorageNotice />
       <PathBanner />
       <ul aria-label="Topic groups" className="mt-[3.25rem] grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {LEARN_STAGES.map((group, i) => (
+        {LEARN_STAGES.map((group) => (
           <li key={group.slug} className="flex">
             <GroupCard
               group={group}
-              number={i + 1}
               tracks={group.tracks.flatMap((slug) => getTrack(slug) ?? [])}
               minutes={minutes}
             />

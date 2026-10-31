@@ -63,7 +63,8 @@ export async function getTracks(moduleId: string): Promise<TrackMeta[]> {
  *
  * Titles shared by two pages (the same scenario as a worksheet and as a case study)
  * get a content-type qualifier here, from the manifest itself, so a new duplicate is
- * qualified without anyone remembering to list it.
+ * qualified without anyone remembering to list it. A worksheet and case twin get one even
+ * when their titles differ, so every twin pair is labelled the same way (audit IA-05).
  */
 export const getAllScenarios = cache(async (): Promise<ScenarioRef[]> => {
   const manifest = await getManifest()
@@ -85,8 +86,9 @@ export const getAllScenarios = cache(async (): Promise<ScenarioRef[]> => {
   )
   const seen = new Map<string, number>()
   for (const r of refs) seen.set(normaliseTitle(r.title), (seen.get(normaliseTitle(r.title)) ?? 0) + 1)
+  const twinned = (r: ScenarioRef) => !!(RELATED_CASE[`${r.trackId}/${r.slug}`] ?? RELATED_PRACTICE[`${r.trackId}/${r.slug}`])
   return refs.map((r) =>
-    (seen.get(normaliseTitle(r.title)) ?? 0) > 1
+    (seen.get(normaliseTitle(r.title)) ?? 0) > 1 || twinned(r)
       ? { ...r, qualifier: qualifierFor(familyMeta(r.trackId).mode) }
       : r,
   )
