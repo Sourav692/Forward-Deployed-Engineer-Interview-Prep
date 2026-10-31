@@ -25,6 +25,9 @@ export const COPY = {
   seeAlsoLead: 'Lessons taught in another module that this one builds on.',
   liveLessonHint: 'Opens the practice page',
   emptyReadingList: 'No lessons are published for this module yet.',
+  notebookOnlyTitle: 'Notebook-only lessons',
+  notebookOnlyLead: 'These course lessons have no page here yet. Work through their notebooks on GitHub.',
+  notebookOnlyOptional: 'optional',
 
   // Prerequisites
   prereqTitle: 'Finish these first',

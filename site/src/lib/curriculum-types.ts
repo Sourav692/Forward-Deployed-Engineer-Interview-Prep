@@ -58,6 +58,9 @@ export type CurriculumTrack = {
   sections: CurriculumSection[]
 }
 
+/** A course lesson taught only in notebooks: its title and its notebooks on GitHub. */
+export type NotebookOnlyLesson = { title: string; notebooks: { title: string; href: string; optional: boolean }[] }
+
 /** One named group of a module's lessons; `id` is the module page anchor. */
 export type LessonGroup = { id: string; title: string; note: string; lessons: string[] }
 
@@ -92,6 +95,11 @@ export type CurriculumModule = {
   lessons: string[]
   /** Lesson slugs homed in another module that this module also uses. */
   seeAlso: string[]
+  /**
+   * Course lessons with no page on the site, only notebooks on GitHub (FE-16, the RAG &
+   * Agents Engineering modules). Listed on the module page; no route and no progress.
+   */
+  notebookOnly?: NotebookOnlyLesson[]
   /**
    * Optional reading plan: the lessons split into named groups (the final week's Day 1 to
    * Day 6). Together the groups list `lessons` exactly, in order (`check:curriculum`).

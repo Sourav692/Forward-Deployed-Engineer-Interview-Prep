@@ -33,6 +33,7 @@ import { PrerequisiteCard } from '@/components/learn/PrerequisiteCard'
 import { ModuleProgress, ModuleStatusBadge, StorageNotice } from '@/components/learn/ProgressIslands'
 import { ReadingList } from '@/components/learn/ReadingList'
 import { LessonGroups } from '@/components/learn/LessonGroups'
+import { NotebookOnlyList } from '@/components/learn/NotebookOnlyList'
 import { SideNav } from '@/components/learn/SideNav'
 import { EmptyState, LinkButton, Tag } from '@/components/ui'
 import { PrevNext } from '@/components/PrevNext'
@@ -201,6 +202,15 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
                     <GapPanel module={mod} />
                   </div>
                 )}
+                {mod.notebookOnly?.length ? (
+                  <div className="mt-6">
+                    <h3 className="text-base font-semibold">{COPY.notebookOnlyTitle}</h3>
+                    <p className="mt-0.5 text-sm text-muted">{COPY.notebookOnlyLead}</p>
+                    <div className="mt-3">
+                      <NotebookOnlyList lessons={mod.notebookOnly} />
+                    </div>
+                  </div>
+                ) : null}
                 {!list.seeAlsoIsMain && list.seeAlso.length > 0 && (
                   <div className="mt-6">
                     <h3 className="text-base font-semibold">{COPY.seeAlsoTitle}</h3>
