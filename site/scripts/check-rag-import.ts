@@ -4,7 +4,7 @@
  */
 import assert from 'node:assert/strict'
 import { britishSpelling } from '../src/lib/spelling.ts'
-import { britishText, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
+import { britishText, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
 import { parseLabFence, parseReading } from '../src/lib/reading.ts'
 
 assert.equal(britishSpelling('Summarization'), 'Summarisation')
@@ -41,5 +41,13 @@ assert.deepEqual(parseReading(`# T\n\n## A\n\n${fence}\n`, 'lesson').sections[0]
 ])
 assert.equal(parseLabFence('src: https://evil.example/x.html\ntitle: X'), null)
 assert.equal(parseLabFence('src: /labs/../secret.html\ntitle: X'), null)
+
+// Labs lose Google Fonts, gain the site's tokens and glue, and may not make requests (FE-08, SEC-02).
+const lab = siteLab('<head><link rel="preconnect" href="https://fonts.googleapis.com">\n<link href="https://fonts.googleapis.com/css2?family=X" rel="stylesheet">\n<style>a{}</style></head><body></body>', 'x.html')
+assert.ok(!lab.includes('fonts.g') && lab.includes('/labs/_site-tokens.css') && lab.includes('/labs/_site-lab.js'))
+assert.ok(lab.indexOf('<style>') < lab.indexOf('_site-tokens.css'), 'site tokens load after the lab styles')
+for (const bad of ['fetch(u)', 'new WebSocket(u)', 'import("x")', '<img src="https://x.org/a.png">', 'url(https://x.org/a.png)']) {
+  assert.throws(() => siteLab(`<head></head><script>${bad}</script>`, 'x.html'), /makes a request/)
+}
 
 console.log('rag import transforms: all checks pass')

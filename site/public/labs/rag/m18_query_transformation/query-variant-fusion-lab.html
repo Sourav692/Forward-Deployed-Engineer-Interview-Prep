@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Query variants and rank fusion</title>
 <meta name="description" content="M18 lab: five query variants each retrieve from the twelve handbook chunks with real TF-IDF; fuse their rankings with RRF or take a flat union, and read recall at the cut.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* Hallmark · shape: app screen · genre: editorial · theme: Almanac (by request, the course's lab system; seed course-notes-interactive-labs-m18·rrf·2026-10-30·r0) · redesign: none
  * nav: top bar, the wordmark and the lab's name · signature: the fused ledger, each chunk's votes and ranks beside its RRF score, with the firm rule where the chunks sent to the model end · states: full, plus one empty state when no variant is selected; the page computes every value itself, so it has no loading or error state
@@ -161,6 +158,8 @@ html.embedded .sheet.base { order: 3; }
 }
 </style>
 <script>if (window.self !== window.top) document.documentElement.classList.add("embedded");</script>
+<link rel="stylesheet" href="/labs/_site-tokens.css">
+<script src="/labs/_site-lab.js"></script>
 </head>
 <body>
 <noscript><p class="container note">This lab computes its rankings and tables in the page and needs JavaScript.</p></noscript>

@@ -34,13 +34,28 @@ jobs:
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
 
+      # The AI Engineering topic is vendored from the course repository (OPS-01). Re-import it at
+      # the commit source.json records, so the check below catches hand edits and a stale copy.
+      - name: Read the vendored course commit
+        id: course
+        run: echo "commit=$(node -p "require('../01_Concept_Tutorials/RAG_Agents_Engineering/source.json').commit")" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Sourav692/rag-agents-engineering
+          ref: ${{ steps.course.outputs.commit }}
+          path: rag-course
+
+      - name: Re-import the course theory
+        run: npm run import:rag-theory -- --from ../rag-course
+
       - name: Sync content from root sources
         run: npm run sync
 
       - name: Generated content is committed
         run: |
           # sync rewrites generatedAt on every run, so ignore manifest.json
-          drift=$(git status --porcelain -- content public/diagrams ':!content/manifest.json')
+          drift=$(git status --porcelain -- content public/diagrams public/labs public/learn-assets ../01_Concept_Tutorials/RAG_Agents_Engineering ':!content/manifest.json')
           if [ -n "$drift" ]; then
             echo "$drift"
             echo "::error::Generated content is out of date. Run npm run sync in site/ and commit the result."
@@ -52,6 +67,9 @@ jobs:
 
       - name: Check progress rules
         run: npm run check:rules
+
+      - name: Check the course import transforms
+        run: npm run check:rag-import
 
       - name: Check progress store
         run: npm run check:store

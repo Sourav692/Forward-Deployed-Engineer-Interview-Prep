@@ -1,5 +1,5 @@
 import { Diagram } from '@/components/Diagram'
-import { LabCard } from '@/components/learn/LabCard'
+import { LabFrame } from '@/components/learn/LabFrame'
 import { formatMinutes, type LessonPage } from '@/lib/learn'
 import { toPlainText, type ReadingSection } from '@/lib/reading'
 import { LessonTabs } from '@/components/learn/LessonTabs'
@@ -90,7 +90,7 @@ function Sections({ sections }: { sections: ReadingSection[] }) {
               chunk.kind === 'diagram' ? (
                 <Diagram key={i} code={chunk.code} />
               ) : chunk.kind === 'lab' ? (
-                <LabCard key={i} src={chunk.src} title={chunk.title} />
+                <LabFrame key={i} src={chunk.src} title={chunk.title} />
               ) : (
                 <div key={i} className="prose reading" dangerouslySetInnerHTML={{ __html: chunk.html }} />
               ),

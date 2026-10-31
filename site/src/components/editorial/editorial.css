@@ -418,6 +418,10 @@
 .editorial-page .cb-group-card:not(.is-soon):is(:hover, :focus-within) { border-color: var(--color-ink); }
 .editorial-page .cb-group-card:hover .cb-entry-title a { text-decoration-color: var(--color-accent); }
 .editorial-page .cb-group-card.is-soon { background: var(--color-paper-2); border-style: dashed; }
+/* Interactive lab in a lesson (FE-10): a ruled frame the lab sizes, then a caption line. */
+.editorial-page .cb-lab-frame { margin: 0; border: var(--rule-hair) solid var(--color-rule-2); background: var(--color-paper); }
+.editorial-page .cb-lab-frame iframe { display: block; width: 100%; border: 0; }
+.editorial-page .cb-lab-frame figcaption { border-top: var(--rule-hair) solid var(--color-rule); padding: 0.5rem 1rem; font-size: 0.875rem; color: var(--color-muted); }
 /* Interactive lab in a lesson (FE-06): a ruled card with the lab's name and an Open link. */
 .editorial-page .cb-lab-card { border: var(--rule-hair) solid var(--color-rule-2); background: var(--color-paper); padding: 1.25rem 1.5rem; }
 .editorial-page .cb-lab-card__title { margin-top: 0.25rem; font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; line-height: 1.25; color: var(--color-ink); }

@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fusing BM25 and dense rankings</title>
 <meta name="description" content="M17 lab: nineteen handbook chunks ranked by real BM25 and by all-MiniLM-L6-v2 embeddings; fuse them with weighted min-max scores or reciprocal rank fusion and read recall@3 on seven golden questions.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* Hallmark · shape: app screen · genre: editorial · theme: Almanac (by request, the course's lab system, seed course-notes-interactive-labs-bf72·b66d38f5·2026-10-29·r0) · redesign: full
  * nav: top bar, the wordmark and the lab's name · signature: the fused ledger, each chunk's BM25 and dense ranks beside its fused score, with the firm rule where the three chunks sent to the model end · states: full only; the page computes every value itself, so it has no loading, empty or error state
@@ -170,6 +167,8 @@ html.embedded .sheet.golden { order: 2; }
 }
 </style>
 <script>if (window.self !== window.top) document.documentElement.classList.add("embedded");</script>
+<link rel="stylesheet" href="/labs/_site-tokens.css">
+<script src="/labs/_site-lab.js"></script>
 </head>
 <body>
 <noscript><p class="container note">This lab computes its rankings in the page and needs JavaScript.</p></noscript>
