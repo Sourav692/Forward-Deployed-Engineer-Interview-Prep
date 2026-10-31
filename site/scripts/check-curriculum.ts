@@ -122,7 +122,8 @@ const homes = new Map<string, string[]>()
 for (const m of MODULES) for (const l of m.lessons) homes.set(l, [...(homes.get(l) ?? []), m.slug])
 for (const l of LESSONS) {
   const listed = homes.get(l.slug) ?? []
-  if (!moduleBySlug.has(l.home)) fail(`lesson ${l.slug}: unknown home "${l.home}"`)
+  // An excluded lesson of a retired module keeps that module as its home (it keys RENAMED).
+  if (!moduleBySlug.has(l.home) && !(l.publish === 'excluded' && l.home in RETIRED_MODULES)) fail(`lesson ${l.slug}: unknown home "${l.home}"`)
   // An excluded lesson is never published. It may stay out of every module's
   // reading list (a consolidated module replaces it); `home` still names the
   // module it was retired from, which keys its RENAMED entry.
@@ -331,7 +332,8 @@ for (const m of MODULES) {
 }
 
 // Module checkpoints (DATA-10): one per published T2–T6 module, 6 to 10 well-formed items.
-const CHECKPOINT_TRACKS = ['llm-and-retrieval', 'agentic-systems', 'production-ai', 'ai-systems-design', 'forward-deployed']
+// retrieval-quality-engineering holds retrieval-hybrid-rerank, the T2.4 pilot's module, since the AI Engineering integration.
+const CHECKPOINT_TRACKS = ['llm-and-retrieval', 'agentic-systems', 'retrieval-quality-engineering', 'production-ai', 'ai-systems-design', 'forward-deployed']
 unique('checkpoint module', CHECKPOINTS.map((c) => c.module))
 for (const c of CHECKPOINTS) {
   const m = moduleBySlug.get(c.module)

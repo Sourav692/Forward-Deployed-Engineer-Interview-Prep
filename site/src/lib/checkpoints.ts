@@ -33,6 +33,9 @@ export type Checkpoint = {
 export const CHECKPOINTS: Checkpoint[] = [
   // T2.4 pilot, drafted from the module's seven lessons: every answer rests on a quoted
   // lesson sentence, listed in the DATA-10 PR for owner review.
+  // Since the AI Engineering integration this module is course module M17 (hybrid search,
+  // fusion, MMR, filtering). The query-transformation, control-loop and the two measurement
+  // items now rest on M18, M29 and M11: rewrite them against M17 before more checkpoints ship.
   {
     module: 'retrieval-hybrid-rerank',
     items: [
