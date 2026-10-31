@@ -138,13 +138,14 @@ The same system drawn with its planes and lanes *(own construction)*: a control 
  ║        └─ permission mirror ─────────┴─> ACL metadata on every chunk                          ║
  ║                                                                                               ║
  ║  HOT PATH — inline completion, < 300 ms                                                       ║
- ║   keystroke ─> extension ─> authN + licence ─> gateway ─> context funnel ─> PREFIX + SEMANTIC ║
- ║                (persistent connection)        (rate limit)  (nearest files,     CACHE         ║
- ║                                                              cursor, edits)   hit │ miss      ║
+ ║   keystroke ─> extension ─> authN + licence ─> gateway ─> context funnel ─> PREFIX + SCOPED   ║
+ ║                (persistent connection)        (rate limit)  (nearest files,     COMPLETION    ║
+ ║                                                              cursor, edits)   CACHE           ║
+ ║                                                              (exact first)    hit │ miss      ║
  ║                                                                                   v           ║
  ║                                                     permission-filtered retrieve (symbols)    ║
  ║                                                                                   v           ║
- ║                          prompt builder ─> SMALL FAST MODEL ─> VALIDATE ─> stream to editor   ║
+ ║                          prompt builder ─> SMALL/MEDIUM MODEL ─> VALIDATE ─> stream to editor ║
  ║                                             (streamed)         syntax · hallucinated API      ║
  ║                                                                secrets · licence · unsafe     ║
  ║                                                                     │ fail: regenerate/suppress║
@@ -180,7 +181,7 @@ flowchart LR
         FUN --> CACHE{Prefix + scoped completion cache}
         CACHE -- completion hit --> VAL
         CACHE -- miss --> RET[Permission-filtered retrieval] --> PB[Prompt builder]
-        PB --> SM[Small fast model, streamed] --> VAL[Validate: syntax, hallucinated API, secrets, licence]
+        PB --> SM[Small model, or medium for multi-line where the budget permits; streamed] --> VAL[Validate: syntax, hallucinated API, secrets, licence]
         VAL -- pass --> IDE[Stream to editor]
         VAL -- fail --> RG[Regenerate or suppress]
     end

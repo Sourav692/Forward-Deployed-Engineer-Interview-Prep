@@ -2178,7 +2178,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.4_Casebook_Classic_AI_Designs/06_Access_Controlled_Enterprise_RAG.md",
-      "estMinutes": 7,
+      "estMinutes": 8,
       "href": "/learn/ai-systems-design/classic-ai-designs/access-controlled-enterprise-rag",
       "updated": "2026-10-31"
     },
@@ -2325,7 +2325,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/",
-      "estMinutes": 50,
+      "estMinutes": 51,
       "href": "/design/scoping-to-deployed-agent"
     },
     {

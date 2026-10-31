@@ -22,7 +22,7 @@ Ask about scale, latency budget, whether the assistant can act, and what a wrong
 
 ## Anchor on One Question and Five Personas
 
-Anchor the design on a concrete customer. Meridian Cloud is a B2B SaaS observability company. Its sources are a public help centre, internal runbooks and tickets, confidential post-mortems, confidential contracts and pricing, and restricted security advisories. One question drives everything: "Why did Vertex Financial lose data in March, and do they get service credits?"
+Anchor the design on a concrete customer. Meridian Cloud is a B2B SaaS observability company. Its sources are a public help centre, internal runbooks and tickets, confidential post-mortems, confidential contracts and pricing, and restricted security advisories. The linked case counts its five sources as systems instead (Drive, SharePoint, Slack, wikis and tickets); the design is the same, because each source brings its own permission model. One question drives everything: "Why did Vertex Financial lose data in March, and do they get service credits?"
 
 | Who asks | Correct answer |
 |---|---|
