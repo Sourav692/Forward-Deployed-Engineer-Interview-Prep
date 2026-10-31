@@ -18,7 +18,7 @@
  *
  * Imported by `next.config.ts` and the check scripts, so it has no runtime imports.
  */
-import { MODULES, RENAMED, RETIRED_MODULES } from './curriculum.ts'
+import { MODULES, MOVED_MODULES, RENAMED, RETIRED_MODULES } from './curriculum.ts'
 import { AREA_TRACKS, curriculumHref } from './curriculum-href.ts'
 import { CASEBOOK_MODULE, scenarioHref } from './scenario.ts'
 
@@ -32,18 +32,20 @@ const trackOf = new Map(MODULES.map((m) => [m.slug, m.track]))
  * lesson that now teaches it, or to its module page when it was withdrawn (`null`).
  */
 function lessonRedirects(): Redirect[] {
-  const resolveKey = (key: string) => {
+  const resolveKey = (key: string, track = trackOf.get(key.split('/')[0])) => {
     const [mod, lesson] = key.split('/')
-    const track = trackOf.get(mod)
     if (!track) throw new Error(`RENAMED key "${key}" names an unknown module`)
     return { track, mod, lesson }
   }
   const out: Redirect[] = []
   for (const [from, to] of Object.entries(RENAMED)) {
-    // A retired module's lessons go with it; retiredModuleRedirects sends the module on.
-    if (from.split('/')[0] in RETIRED_MODULES) continue
-    const src = resolveKey(from)
-    const dst = resolveKey(to ?? from.split('/')[0])
+    const mod = from.split('/')[0]
+    // A retired module's lessons go with it (retiredModuleRedirects sends the module on),
+    // unless it left its track: then each lesson goes straight to its replacement.
+    if (mod in RETIRED_MODULES && !(mod in MOVED_MODULES)) continue
+    // A lesson of a module that moved track was published under the old track.
+    const src = resolveKey(from, MOVED_MODULES[mod] ?? trackOf.get(mod))
+    const dst = resolveKey(to ?? RETIRED_MODULES[mod] ?? mod)
     const destination = curriculumHref(dst.track, dst.mod, dst.lesson)
     out.push({ source: curriculumHref(src.track, src.mod, src.lesson), destination, permanent: true })
     // A track that moved out of /learn keeps its old /learn URL, sent straight to the
@@ -80,10 +82,27 @@ const companyPrepRedirects: Redirect[] = [
 /** Removed modules (RETIRED_MODULES in curriculum.ts) redirect to the module that took them over. */
 const retiredModuleRedirects = (): Redirect[] =>
   Object.entries(RETIRED_MODULES).map(([from, to]) => ({
-    source: curriculumHref(trackOf.get(to)!, from),
+    source: curriculumHref(MOVED_MODULES[from] ?? trackOf.get(to)!, from),
     destination: curriculumHref(trackOf.get(to)!, to),
     permanent: true,
   }))
+
+/**
+ * A live module that moved track (MOVED_MODULES) keeps its slug and lessons; its old module
+ * and lesson URLs go to the new track. Listed after lessonRedirects, which sends its retired
+ * lessons straight to their replacements first.
+ */
+const movedModuleRedirects = (): Redirect[] =>
+  Object.entries(MOVED_MODULES)
+    .filter(([mod]) => trackOf.has(mod))
+    .flatMap(([mod, oldTrack]) => [
+      { source: curriculumHref(oldTrack, mod), destination: curriculumHref(trackOf.get(mod)!, mod), permanent: true },
+      {
+        source: `${curriculumHref(oldTrack, mod)}/:lesson`,
+        destination: `${curriculumHref(trackOf.get(mod)!, mod)}/:lesson`,
+        permanent: true,
+      },
+    ])
 
 /**
  * The worksheets moved from /modules/<module>/<track>/<slug> to /practice/<slug>, and the
@@ -289,6 +308,7 @@ export const REDIRECTS: Redirect[] = [
   ...areaRedirects(),
   ...companyPrepRedirects,
   ...retiredModuleRedirects(),
+  ...movedModuleRedirects(),
   ...casebookRedirects,
   ...behaviouralRedirects,
   ...finalWeekRedirects,
