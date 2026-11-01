@@ -25,7 +25,7 @@
 - Wall time is the sum, over supersteps, of the slowest task in each, so p95 follows the slowest branch's tail; logs per-node latency from the `updates` stream to find it
 - Caps concurrency (`max_concurrency` in the run config) to stay under the rate limit and measures what it costs: in the lab a cap of 2 takes the answer from 2.7 s to 3.7 s
 - Tracks time to the first streamed sub-answer separately from time to the final answer, since that is what the user sees first
-- Re-runs the golden set from the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) baseline to confirm the faster path did not change answer quality
+- Re-runs the golden set from the [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) baseline to confirm the faster path did not change answer quality
 
 ### 4. One of the four branches times out on a provider call. What happens to the three sub-answers that finished, and how should the assistant reply?
 

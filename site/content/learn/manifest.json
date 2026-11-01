@@ -254,7 +254,7 @@
     },
     {
       "slug": "python-and-data-toolkit-refresher-overview",
-      "title": "Overview",
+      "title": "Python & Data Toolkit Refresher: overview",
       "track": "ai-engineering-foundations",
       "module": "python-and-data-toolkit-refresher",
       "kind": "sync",
@@ -302,7 +302,7 @@
     },
     {
       "slug": "python-and-data-toolkit-refresher-interview-questions",
-      "title": "Interview questions",
+      "title": "Python & Data Toolkit Refresher: interview questions",
       "track": "ai-engineering-foundations",
       "module": "python-and-data-toolkit-refresher",
       "kind": "sync",
@@ -314,7 +314,7 @@
     },
     {
       "slug": "llm-provider-apis-and-model-selection-overview",
-      "title": "Overview",
+      "title": "LLM Provider APIs & Model Selection: overview",
       "track": "ai-engineering-foundations",
       "module": "llm-provider-apis-and-model-selection",
       "kind": "sync",
@@ -344,7 +344,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/02_open_source_llms_via_hugging_face_inference_and_locally.md",
-      "estMinutes": 4,
+      "estMinutes": 5,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/open-source-llms-via-hugging-face-inference-and-locally",
       "updated": "2026-11-01"
     },
@@ -374,7 +374,7 @@
     },
     {
       "slug": "llm-provider-apis-and-model-selection-interview-questions",
-      "title": "Interview questions",
+      "title": "LLM Provider APIs & Model Selection: interview questions",
       "track": "ai-engineering-foundations",
       "module": "llm-provider-apis-and-model-selection",
       "kind": "sync",
@@ -382,11 +382,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/llm-provider-apis-and-model-selection-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "hugging-face-models-and-gradio-demos-overview",
-      "title": "Overview",
+      "title": "Hugging Face Models & Gradio Demos: overview",
       "track": "ai-engineering-foundations",
       "module": "hugging-face-models-and-gradio-demos",
       "kind": "sync",
@@ -434,7 +434,7 @@
     },
     {
       "slug": "hugging-face-models-and-gradio-demos-interview-questions",
-      "title": "Interview questions",
+      "title": "Hugging Face Models & Gradio Demos: interview questions",
       "track": "ai-engineering-foundations",
       "module": "hugging-face-models-and-gradio-demos",
       "kind": "sync",
@@ -442,11 +442,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/hugging-face-models-and-gradio-demos/hugging-face-models-and-gradio-demos-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "fine-tuning-fundamentals-overview",
-      "title": "Overview",
+      "title": "Fine-Tuning Fundamentals: overview",
       "track": "ai-engineering-foundations",
       "module": "fine-tuning-fundamentals",
       "kind": "sync",
@@ -542,7 +542,7 @@
     },
     {
       "slug": "fine-tuning-fundamentals-interview-questions",
-      "title": "Interview questions",
+      "title": "Fine-Tuning Fundamentals: interview questions",
       "track": "ai-engineering-foundations",
       "module": "fine-tuning-fundamentals",
       "kind": "sync",
@@ -550,11 +550,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m04_fine_tuning_fundamentals/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/ai-engineering-foundations/fine-tuning-fundamentals/fine-tuning-fundamentals-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "prompt-engineering-patterns-overview",
-      "title": "Overview",
+      "title": "Prompt Engineering Patterns: overview",
       "track": "prompt-and-context-engineering",
       "module": "prompt-engineering-patterns",
       "kind": "sync",
@@ -614,7 +614,7 @@
     },
     {
       "slug": "prompt-engineering-patterns-interview-questions",
-      "title": "Interview questions",
+      "title": "Prompt Engineering Patterns: interview questions",
       "track": "prompt-and-context-engineering",
       "module": "prompt-engineering-patterns",
       "kind": "sync",
@@ -622,11 +622,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_prompt_engineering_patterns/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/prompt-and-context-engineering/prompt-engineering-patterns/prompt-engineering-patterns-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "multimodal-prompting-overview",
-      "title": "Overview",
+      "title": "Multimodal Prompting: overview",
       "track": "prompt-and-context-engineering",
       "module": "multimodal-prompting",
       "kind": "sync",
@@ -634,7 +634,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m06_multimodal_prompting/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/prompt-and-context-engineering/multimodal-prompting/multimodal-prompting-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "multimodal-prompting-with-gemini",
@@ -674,7 +674,7 @@
     },
     {
       "slug": "multimodal-prompting-interview-questions",
-      "title": "Interview questions",
+      "title": "Multimodal Prompting: interview questions",
       "track": "prompt-and-context-engineering",
       "module": "multimodal-prompting",
       "kind": "sync",
@@ -682,11 +682,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m06_multimodal_prompting/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/prompt-and-context-engineering/multimodal-prompting/multimodal-prompting-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "langchain-core-models-prompts-and-parsers-overview",
-      "title": "Overview",
+      "title": "LangChain Core: Models, Prompts & Parsers: overview",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "langchain-core-models-prompts-and-parsers",
       "kind": "sync",
@@ -770,7 +770,7 @@
     },
     {
       "slug": "langchain-core-models-prompts-and-parsers-interview-questions",
-      "title": "Interview questions",
+      "title": "LangChain Core: Models, Prompts & Parsers: interview questions",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "langchain-core-models-prompts-and-parsers",
       "kind": "sync",
@@ -778,11 +778,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m07_langchain_core/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-core-models-prompts-and-parsers/langchain-core-models-prompts-and-parsers-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "lcel-runnables-and-chains-overview",
-      "title": "Overview",
+      "title": "LCEL, Runnables & Chains: overview",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "lcel-runnables-and-chains",
       "kind": "sync",
@@ -854,7 +854,7 @@
     },
     {
       "slug": "lcel-runnables-and-chains-interview-questions",
-      "title": "Interview questions",
+      "title": "LCEL, Runnables & Chains: interview questions",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "lcel-runnables-and-chains",
       "kind": "sync",
@@ -866,7 +866,7 @@
     },
     {
       "slug": "langchain-and-langgraph-overview",
-      "title": "Overview",
+      "title": "LangGraph Core: Graphs, State & Control Flow: overview",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "langchain-and-langgraph",
       "kind": "sync",
@@ -938,7 +938,7 @@
     },
     {
       "slug": "langchain-and-langgraph-interview-questions",
-      "title": "Interview questions",
+      "title": "LangGraph Core: Graphs, State & Control Flow: interview questions",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "langchain-and-langgraph",
       "kind": "sync",
@@ -946,11 +946,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m09_langgraph_core/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/langchain-and-langgraph/langchain-and-langgraph-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "langgraph-runtime-persistence-hitl-and-streaming-overview",
-      "title": "Overview",
+      "title": "LangGraph Runtime: Persistence, HITL & Streaming: overview",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "langgraph-runtime-persistence-hitl-and-streaming",
       "kind": "sync",
@@ -1034,7 +1034,7 @@
     },
     {
       "slug": "langgraph-runtime-persistence-hitl-and-streaming-interview-questions",
-      "title": "Interview questions",
+      "title": "LangGraph Runtime: Persistence, HITL & Streaming: interview questions",
       "track": "langchain-and-langgraph-fundamentals",
       "module": "langgraph-runtime-persistence-hitl-and-streaming",
       "kind": "sync",
@@ -1046,7 +1046,7 @@
     },
     {
       "slug": "rag-from-first-principles-overview",
-      "title": "Overview",
+      "title": "Why RAG & the RAG Lifecycle: overview",
       "track": "llm-and-retrieval",
       "module": "rag-from-first-principles",
       "kind": "sync",
@@ -1118,7 +1118,7 @@
     },
     {
       "slug": "rag-from-first-principles-interview-questions",
-      "title": "Interview questions",
+      "title": "Why RAG & the RAG Lifecycle: interview questions",
       "track": "llm-and-retrieval",
       "module": "rag-from-first-principles",
       "kind": "sync",
@@ -1130,7 +1130,7 @@
     },
     {
       "slug": "document-ingestion-and-metadata-design-overview",
-      "title": "Overview",
+      "title": "Document Ingestion & Metadata Design: overview",
       "track": "ingestion-and-indexing-pipeline",
       "module": "document-ingestion-and-metadata-design",
       "kind": "sync",
@@ -1202,7 +1202,7 @@
     },
     {
       "slug": "document-ingestion-and-metadata-design-interview-questions",
-      "title": "Interview questions",
+      "title": "Document Ingestion & Metadata Design: interview questions",
       "track": "ingestion-and-indexing-pipeline",
       "module": "document-ingestion-and-metadata-design",
       "kind": "sync",
@@ -1214,7 +1214,7 @@
     },
     {
       "slug": "chunking-and-indexing-overview",
-      "title": "Overview",
+      "title": "Chunking Strategies: overview",
       "track": "ingestion-and-indexing-pipeline",
       "module": "chunking-and-indexing",
       "kind": "sync",
@@ -1222,7 +1222,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m13_chunking/00_overview.md",
       "estMinutes": 3,
       "href": "/learn/ingestion-and-indexing-pipeline/chunking-and-indexing/chunking-and-indexing-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "splitter-fundamentals-character-recursive-token-and-structure-aware",
@@ -1274,7 +1274,7 @@
     },
     {
       "slug": "chunking-and-indexing-interview-questions",
-      "title": "Interview questions",
+      "title": "Chunking Strategies: interview questions",
       "track": "ingestion-and-indexing-pipeline",
       "module": "chunking-and-indexing",
       "kind": "sync",
@@ -1286,7 +1286,7 @@
     },
     {
       "slug": "embeddings-and-model-selection-overview",
-      "title": "Overview",
+      "title": "Embeddings & Model Selection: overview",
       "track": "ingestion-and-indexing-pipeline",
       "module": "embeddings-and-model-selection",
       "kind": "sync",
@@ -1346,7 +1346,7 @@
     },
     {
       "slug": "embeddings-and-model-selection-interview-questions",
-      "title": "Interview questions",
+      "title": "Embeddings & Model Selection: interview questions",
       "track": "ingestion-and-indexing-pipeline",
       "module": "embeddings-and-model-selection",
       "kind": "sync",
@@ -1354,11 +1354,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m14_embeddings/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/embeddings-and-model-selection-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "vector-stores-and-index-operations-overview",
-      "title": "Overview",
+      "title": "Vector Stores & Index Operations: overview",
       "track": "ingestion-and-indexing-pipeline",
       "module": "vector-stores-and-index-operations",
       "kind": "sync",
@@ -1376,7 +1376,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m15_vector_stores/01_index_operations_create_query_update_delete_persist.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/ingestion-and-indexing-pipeline/vector-stores-and-index-operations/index-operations-create-query-update-delete-persist",
       "updated": "2026-11-01"
     },
@@ -1430,7 +1430,7 @@
     },
     {
       "slug": "vector-stores-and-index-operations-interview-questions",
-      "title": "Interview questions",
+      "title": "Vector Stores & Index Operations: interview questions",
       "track": "ingestion-and-indexing-pipeline",
       "module": "vector-stores-and-index-operations",
       "kind": "sync",
@@ -1442,7 +1442,7 @@
     },
     {
       "slug": "advanced-indexing-strategies-overview",
-      "title": "Overview",
+      "title": "Advanced Indexing Strategies: overview",
       "track": "ingestion-and-indexing-pipeline",
       "module": "advanced-indexing-strategies",
       "kind": "sync",
@@ -1514,7 +1514,7 @@
     },
     {
       "slug": "advanced-indexing-strategies-interview-questions",
-      "title": "Interview questions",
+      "title": "Advanced Indexing Strategies: interview questions",
       "track": "ingestion-and-indexing-pipeline",
       "module": "advanced-indexing-strategies",
       "kind": "sync",
@@ -1522,11 +1522,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m16_advanced_indexing/99_interview_questions.md",
       "estMinutes": 5,
       "href": "/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/advanced-indexing-strategies-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "retrieval-hybrid-rerank-overview",
-      "title": "Overview",
+      "title": "Retrievers & Hybrid Search: overview",
       "track": "retrieval-quality-engineering",
       "module": "retrieval-hybrid-rerank",
       "kind": "sync",
@@ -1610,7 +1610,7 @@
     },
     {
       "slug": "retrieval-hybrid-rerank-interview-questions",
-      "title": "Interview questions",
+      "title": "Retrievers & Hybrid Search: interview questions",
       "track": "retrieval-quality-engineering",
       "module": "retrieval-hybrid-rerank",
       "kind": "sync",
@@ -1622,7 +1622,7 @@
     },
     {
       "slug": "query-transformation-and-routing-overview",
-      "title": "Overview",
+      "title": "Query Transformation & Routing: overview",
       "track": "retrieval-quality-engineering",
       "module": "query-transformation-and-routing",
       "kind": "sync",
@@ -1694,7 +1694,7 @@
     },
     {
       "slug": "query-transformation-and-routing-interview-questions",
-      "title": "Interview questions",
+      "title": "Query Transformation & Routing: interview questions",
       "track": "retrieval-quality-engineering",
       "module": "query-transformation-and-routing",
       "kind": "sync",
@@ -1702,11 +1702,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m18_query_transformation/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "post-retrieval-optimisation-and-reranking-overview",
-      "title": "Overview",
+      "title": "Post-Retrieval Optimisation & Reranking: overview",
       "track": "retrieval-quality-engineering",
       "module": "post-retrieval-optimisation-and-reranking",
       "kind": "sync",
@@ -1790,7 +1790,7 @@
     },
     {
       "slug": "post-retrieval-optimisation-and-reranking-interview-questions",
-      "title": "Interview questions",
+      "title": "Post-Retrieval Optimisation & Reranking: interview questions",
       "track": "retrieval-quality-engineering",
       "module": "post-retrieval-optimisation-and-reranking",
       "kind": "sync",
@@ -1798,11 +1798,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m19_reranking_post_retrieval/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/retrieval-quality-engineering/post-retrieval-optimisation-and-reranking/post-retrieval-optimisation-and-reranking-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "end-to-end-rag-systems-overview",
-      "title": "Overview",
+      "title": "End-to-End RAG Systems: overview",
       "track": "complete-rag-applications",
       "module": "end-to-end-rag-systems",
       "kind": "sync",
@@ -1874,7 +1874,7 @@
     },
     {
       "slug": "end-to-end-rag-systems-interview-questions",
-      "title": "Interview questions",
+      "title": "End-to-End RAG Systems: interview questions",
       "track": "complete-rag-applications",
       "module": "end-to-end-rag-systems",
       "kind": "sync",
@@ -1886,13 +1886,13 @@
     },
     {
       "slug": "multimodal-rag-overview",
-      "title": "Overview",
+      "title": "Multimodal RAG: overview",
       "track": "complete-rag-applications",
       "module": "multimodal-rag",
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m21_multimodal_rag/00_overview.md",
-      "estMinutes": 4,
+      "estMinutes": 5,
       "href": "/learn/complete-rag-applications/multimodal-rag/multimodal-rag-overview",
       "updated": "2026-11-01"
     },
@@ -1934,7 +1934,7 @@
     },
     {
       "slug": "multimodal-rag-interview-questions",
-      "title": "Interview questions",
+      "title": "Multimodal RAG: interview questions",
       "track": "complete-rag-applications",
       "module": "multimodal-rag",
       "kind": "sync",
@@ -1942,11 +1942,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m21_multimodal_rag/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/complete-rag-applications/multimodal-rag/multimodal-rag-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "framework-fluency-llamaindex-overview",
-      "title": "Overview",
+      "title": "Framework Fluency: LlamaIndex: overview",
       "track": "complete-rag-applications",
       "module": "framework-fluency-llamaindex",
       "kind": "sync",
@@ -2006,7 +2006,7 @@
     },
     {
       "slug": "framework-fluency-llamaindex-interview-questions",
-      "title": "Interview questions",
+      "title": "Framework Fluency: LlamaIndex: interview questions",
       "track": "complete-rag-applications",
       "module": "framework-fluency-llamaindex",
       "kind": "sync",
@@ -2014,11 +2014,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m22_llamaindex/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/complete-rag-applications/framework-fluency-llamaindex/framework-fluency-llamaindex-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-agent-loop-and-tool-calling-overview",
-      "title": "Overview",
+      "title": "The Agent Loop & Tool Calling: overview",
       "track": "agentic-systems",
       "module": "the-agent-loop-and-tool-calling",
       "kind": "sync",
@@ -2048,7 +2048,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m23_agent_loop_and_tools/03_defining_tools_and_binding_them_to_a_model.md",
-      "estMinutes": 4,
+      "estMinutes": 5,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/defining-tools-and-binding-them-to-a-model",
       "updated": "2026-11-01"
     },
@@ -2084,13 +2084,13 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m23_agent_loop_and_tools/06_hosted_vs_client_side_tools_code_execution_and_image_generation.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/hosted-vs-client-side-tools-code-execution-and-image-generation",
       "updated": "2026-11-01"
     },
     {
       "slug": "the-agent-loop-and-tool-calling-interview-questions",
-      "title": "Interview questions",
+      "title": "The Agent Loop & Tool Calling: interview questions",
       "track": "agentic-systems",
       "module": "the-agent-loop-and-tool-calling",
       "kind": "sync",
@@ -2098,11 +2098,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m23_agent_loop_and_tools/99_interview_questions.md",
       "estMinutes": 5,
       "href": "/learn/agentic-systems/the-agent-loop-and-tool-calling/the-agent-loop-and-tool-calling-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "react-agents-and-langchain-create-agent-overview",
-      "title": "Overview",
+      "title": "ReAct Agents & LangChain create_agent: overview",
       "track": "agentic-systems",
       "module": "react-agents-and-langchain-create-agent",
       "kind": "sync",
@@ -2168,13 +2168,13 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m24_react_agents/05_applied_react_web_research_swe_and_computer_use_agents.md",
-      "estMinutes": 4,
+      "estMinutes": 5,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/applied-react-web-research-swe-and-computer-use-agents",
       "updated": "2026-11-01"
     },
     {
       "slug": "react-agents-and-langchain-create-agent-interview-questions",
-      "title": "Interview questions",
+      "title": "ReAct Agents & LangChain create_agent: interview questions",
       "track": "agentic-systems",
       "module": "react-agents-and-langchain-create-agent",
       "kind": "sync",
@@ -2182,11 +2182,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m24_react_agents/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/react-agents-and-langchain-create-agent-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "agentic-workflow-patterns-overview",
-      "title": "Overview",
+      "title": "Agentic Workflow Patterns: overview",
       "track": "agentic-systems",
       "module": "agentic-workflow-patterns",
       "kind": "sync",
@@ -2194,7 +2194,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m25_agentic_workflow_patterns/00_overview.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/agentic-workflow-patterns-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "prompt-chaining-with-quality-gates",
@@ -2216,7 +2216,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m25_agentic_workflow_patterns/02_routing_by_handler_and_by_model_tier.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/routing-by-handler-and-by-model-tier",
       "updated": "2026-11-01"
     },
@@ -2258,7 +2258,7 @@
     },
     {
       "slug": "agentic-workflow-patterns-interview-questions",
-      "title": "Interview questions",
+      "title": "Agentic Workflow Patterns: interview questions",
       "track": "agentic-systems",
       "module": "agentic-workflow-patterns",
       "kind": "sync",
@@ -2266,11 +2266,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m25_agentic_workflow_patterns/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/agentic-workflow-patterns/agentic-workflow-patterns-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "planning-reflection-and-reasoning-patterns-overview",
-      "title": "Overview",
+      "title": "Planning, Reflection & Reasoning Patterns: overview",
       "track": "agentic-systems",
       "module": "planning-reflection-and-reasoning-patterns",
       "kind": "sync",
@@ -2300,7 +2300,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m26_planning_reflection_reasoning/04_chain_of_verification_and_constitutional_critique.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/agentic-systems/planning-reflection-and-reasoning-patterns/chain-of-verification-and-constitutional-critique",
       "updated": "2026-11-01"
     },
@@ -2318,7 +2318,7 @@
     },
     {
       "slug": "planning-reflection-and-reasoning-patterns-interview-questions",
-      "title": "Interview questions",
+      "title": "Planning, Reflection & Reasoning Patterns: interview questions",
       "track": "agentic-systems",
       "module": "planning-reflection-and-reasoning-patterns",
       "kind": "sync",
@@ -2326,11 +2326,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m26_planning_reflection_reasoning/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/agentic-systems/planning-reflection-and-reasoning-patterns/planning-reflection-and-reasoning-patterns-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "human-approval-and-applied-single-agent-builds-overview",
-      "title": "Overview",
+      "title": "Human Approval & Applied Single-Agent Builds: overview",
       "track": "agentic-systems",
       "module": "human-approval-and-applied-single-agent-builds",
       "kind": "sync",
@@ -2378,7 +2378,7 @@
     },
     {
       "slug": "human-approval-and-applied-single-agent-builds-interview-questions",
-      "title": "Interview questions",
+      "title": "Human Approval & Applied Single-Agent Builds: interview questions",
       "track": "agentic-systems",
       "module": "human-approval-and-applied-single-agent-builds",
       "kind": "sync",
@@ -2390,7 +2390,7 @@
     },
     {
       "slug": "agentic-rag-foundations-grading-and-query-rewriting-overview",
-      "title": "Overview",
+      "title": "Agentic RAG Foundations: Grading & Query Rewriting: overview",
       "track": "agentic-and-self-correcting-rag",
       "module": "agentic-rag-foundations-grading-and-query-rewriting",
       "kind": "sync",
@@ -2426,7 +2426,7 @@
     },
     {
       "slug": "agentic-rag-foundations-grading-and-query-rewriting-interview-questions",
-      "title": "Interview questions",
+      "title": "Agentic RAG Foundations: Grading & Query Rewriting: interview questions",
       "track": "agentic-and-self-correcting-rag",
       "module": "agentic-rag-foundations-grading-and-query-rewriting",
       "kind": "sync",
@@ -2438,7 +2438,7 @@
     },
     {
       "slug": "self-correcting-rag-crag-and-self-rag-overview",
-      "title": "Overview",
+      "title": "Self-Correcting RAG: CRAG & Self-RAG: overview",
       "track": "agentic-and-self-correcting-rag",
       "module": "self-correcting-rag-crag-and-self-rag",
       "kind": "sync",
@@ -2486,7 +2486,7 @@
     },
     {
       "slug": "self-correcting-rag-crag-and-self-rag-interview-questions",
-      "title": "Interview questions",
+      "title": "Self-Correcting RAG: CRAG & Self-RAG: interview questions",
       "track": "agentic-and-self-correcting-rag",
       "module": "self-correcting-rag-crag-and-self-rag",
       "kind": "sync",
@@ -2494,11 +2494,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m29_crag_and_self_rag/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/agentic-and-self-correcting-rag/self-correcting-rag-crag-and-self-rag/self-correcting-rag-crag-and-self-rag-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "adaptive-rag-and-query-routing-overview",
-      "title": "Overview",
+      "title": "Adaptive RAG & Query Routing: overview",
       "track": "agentic-and-self-correcting-rag",
       "module": "adaptive-rag-and-query-routing",
       "kind": "sync",
@@ -2558,7 +2558,7 @@
     },
     {
       "slug": "adaptive-rag-and-query-routing-interview-questions",
-      "title": "Interview questions",
+      "title": "Adaptive RAG & Query Routing: interview questions",
       "track": "agentic-and-self-correcting-rag",
       "module": "adaptive-rag-and-query-routing",
       "kind": "sync",
@@ -2566,11 +2566,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m30_adaptive_rag_routing/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/adaptive-rag-and-query-routing-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "rag-as-an-agent-tool-overview",
-      "title": "Overview",
+      "title": "RAG as an Agent Tool: overview",
       "track": "agentic-and-self-correcting-rag",
       "module": "rag-as-an-agent-tool",
       "kind": "sync",
@@ -2618,7 +2618,7 @@
     },
     {
       "slug": "rag-as-an-agent-tool-interview-questions",
-      "title": "Interview questions",
+      "title": "RAG as an Agent Tool: interview questions",
       "track": "agentic-and-self-correcting-rag",
       "module": "rag-as-an-agent-tool",
       "kind": "sync",
@@ -2626,11 +2626,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m31_rag_as_agent_tool/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/agentic-and-self-correcting-rag/rag-as-an-agent-tool/rag-as-an-agent-tool-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "reliability-feedback-loops-and-diversity-overview",
-      "title": "Overview",
+      "title": "Reliability, Feedback Loops & Diversity: overview",
       "track": "agentic-and-self-correcting-rag",
       "module": "reliability-feedback-loops-and-diversity",
       "kind": "sync",
@@ -2660,7 +2660,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m32_reliability_feedback/02_retrieval_with_a_user_feedback_loop.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/learn/agentic-and-self-correcting-rag/reliability-feedback-loops-and-diversity/retrieval-with-a-user-feedback-loop",
       "updated": "2026-11-01"
     },
@@ -2678,7 +2678,7 @@
     },
     {
       "slug": "reliability-feedback-loops-and-diversity-interview-questions",
-      "title": "Interview questions",
+      "title": "Reliability, Feedback Loops & Diversity: interview questions",
       "track": "agentic-and-self-correcting-rag",
       "module": "reliability-feedback-loops-and-diversity",
       "kind": "sync",
@@ -2686,11 +2686,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m32_reliability_feedback/99_interview_questions.md",
       "estMinutes": 5,
       "href": "/learn/agentic-and-self-correcting-rag/reliability-feedback-loops-and-diversity/reliability-feedback-loops-and-diversity-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "conversation-memory-and-conversational-rag-overview",
-      "title": "Overview",
+      "title": "Conversation Memory & Conversational RAG: overview",
       "track": "memory-and-multi-agent-rag",
       "module": "conversation-memory-and-conversational-rag",
       "kind": "sync",
@@ -2762,7 +2762,7 @@
     },
     {
       "slug": "conversation-memory-and-conversational-rag-interview-questions",
-      "title": "Interview questions",
+      "title": "Conversation Memory & Conversational RAG: interview questions",
       "track": "memory-and-multi-agent-rag",
       "module": "conversation-memory-and-conversational-rag",
       "kind": "sync",
@@ -2770,11 +2770,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m33_conversational_memory_rag/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/memory-and-multi-agent-rag/conversation-memory-and-conversational-rag/conversation-memory-and-conversational-rag-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "memory-and-state-overview",
-      "title": "Overview",
+      "title": "Long-Term & Agentic Memory: overview",
       "track": "memory-and-multi-agent-rag",
       "module": "memory-and-state",
       "kind": "sync",
@@ -2846,7 +2846,7 @@
     },
     {
       "slug": "memory-and-state-interview-questions",
-      "title": "Interview questions",
+      "title": "Long-Term & Agentic Memory: interview questions",
       "track": "memory-and-multi-agent-rag",
       "module": "memory-and-state",
       "kind": "sync",
@@ -2858,7 +2858,7 @@
     },
     {
       "slug": "multi-agent-architectures-overview",
-      "title": "Overview",
+      "title": "Multi-Agent Architectures: overview",
       "track": "memory-and-multi-agent-rag",
       "module": "multi-agent-architectures",
       "kind": "sync",
@@ -2888,7 +2888,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m35_multi_agent_architectures/02_the_five_multi_agent_architectures_and_agent_communication.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/memory-and-multi-agent-rag/multi-agent-architectures/the-five-multi-agent-architectures-and-agent-communication",
       "updated": "2026-11-01"
     },
@@ -2930,7 +2930,7 @@
     },
     {
       "slug": "multi-agent-architectures-interview-questions",
-      "title": "Interview questions",
+      "title": "Multi-Agent Architectures: interview questions",
       "track": "memory-and-multi-agent-rag",
       "module": "multi-agent-architectures",
       "kind": "sync",
@@ -2938,11 +2938,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m35_multi_agent_architectures/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/memory-and-multi-agent-rag/multi-agent-architectures/multi-agent-architectures-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "collaboration-control-and-parallel-agents-overview",
-      "title": "Overview",
+      "title": "Collaboration, Control & Parallel Agents: overview",
       "track": "memory-and-multi-agent-rag",
       "module": "collaboration-control-and-parallel-agents",
       "kind": "sync",
@@ -2950,7 +2950,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m36_collaboration_parallel_agents/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/memory-and-multi-agent-rag/collaboration-control-and-parallel-agents/collaboration-control-and-parallel-agents-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "blackboard-architectures",
@@ -3014,7 +3014,7 @@
     },
     {
       "slug": "collaboration-control-and-parallel-agents-interview-questions",
-      "title": "Interview questions",
+      "title": "Collaboration, Control & Parallel Agents: interview questions",
       "track": "memory-and-multi-agent-rag",
       "module": "collaboration-control-and-parallel-agents",
       "kind": "sync",
@@ -3022,11 +3022,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m36_collaboration_parallel_agents/99_interview_questions.md",
       "estMinutes": 5,
       "href": "/learn/memory-and-multi-agent-rag/collaboration-control-and-parallel-agents/collaboration-control-and-parallel-agents-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "multi-agent-applied-builds-and-deep-agents-overview",
-      "title": "Overview",
+      "title": "Multi-Agent Applied Builds & Deep Agents: overview",
       "track": "memory-and-multi-agent-rag",
       "module": "multi-agent-applied-builds-and-deep-agents",
       "kind": "sync",
@@ -3098,7 +3098,7 @@
     },
     {
       "slug": "multi-agent-applied-builds-and-deep-agents-interview-questions",
-      "title": "Interview questions",
+      "title": "Multi-Agent Applied Builds & Deep Agents: interview questions",
       "track": "memory-and-multi-agent-rag",
       "module": "multi-agent-applied-builds-and-deep-agents",
       "kind": "sync",
@@ -3110,7 +3110,7 @@
     },
     {
       "slug": "mcp-foundations-overview",
-      "title": "Overview",
+      "title": "MCP Foundations: overview",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "mcp-foundations",
       "kind": "sync",
@@ -3194,7 +3194,7 @@
     },
     {
       "slug": "mcp-foundations-interview-questions",
-      "title": "Interview questions",
+      "title": "MCP Foundations: interview questions",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "mcp-foundations",
       "kind": "sync",
@@ -3206,7 +3206,7 @@
     },
     {
       "slug": "building-mcp-servers-and-clients-overview",
-      "title": "Overview",
+      "title": "Building MCP Servers & Clients: overview",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "building-mcp-servers-and-clients",
       "kind": "sync",
@@ -3266,7 +3266,7 @@
     },
     {
       "slug": "building-mcp-servers-and-clients-interview-questions",
-      "title": "Interview questions",
+      "title": "Building MCP Servers & Clients: interview questions",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "building-mcp-servers-and-clients",
       "kind": "sync",
@@ -3278,7 +3278,7 @@
     },
     {
       "slug": "mcp-applications-and-rag-over-mcp-overview",
-      "title": "Overview",
+      "title": "MCP Applications & RAG over MCP: overview",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "mcp-applications-and-rag-over-mcp",
       "kind": "sync",
@@ -3286,7 +3286,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/00_overview.md",
       "estMinutes": 5,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/mcp-applications-and-rag-over-mcp-overview",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "your-first-mcp-server-and-a-local-agent",
@@ -3374,7 +3374,7 @@
     },
     {
       "slug": "mcp-applications-and-rag-over-mcp-interview-questions",
-      "title": "Interview questions",
+      "title": "MCP Applications & RAG over MCP: interview questions",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "mcp-applications-and-rag-over-mcp",
       "kind": "sync",
@@ -3382,11 +3382,11 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/agent-protocols-mcp-and-a2a/mcp-applications-and-rag-over-mcp/mcp-applications-and-rag-over-mcp-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "a2a-agent-to-agent-protocol-overview",
-      "title": "Overview",
+      "title": "A2A: Agent-to-Agent Protocol: overview",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "a2a-agent-to-agent-protocol",
       "kind": "sync",
@@ -3446,7 +3446,7 @@
     },
     {
       "slug": "a2a-agent-to-agent-protocol-interview-questions",
-      "title": "Interview questions",
+      "title": "A2A: Agent-to-Agent Protocol: interview questions",
       "track": "agent-protocols-mcp-and-a2a",
       "module": "a2a-agent-to-agent-protocol",
       "kind": "sync",
@@ -3458,7 +3458,7 @@
     },
     {
       "slug": "hierarchical-and-memory-augmented-retrieval-overview",
-      "title": "Overview",
+      "title": "Hierarchical & Memory-Augmented Retrieval: overview",
       "track": "hierarchical-memory-and-graph-rag",
       "module": "hierarchical-and-memory-augmented-retrieval",
       "kind": "sync",
@@ -3506,7 +3506,7 @@
     },
     {
       "slug": "hierarchical-and-memory-augmented-retrieval-interview-questions",
-      "title": "Interview questions",
+      "title": "Hierarchical & Memory-Augmented Retrieval: interview questions",
       "track": "hierarchical-memory-and-graph-rag",
       "module": "hierarchical-and-memory-augmented-retrieval",
       "kind": "sync",
@@ -3518,13 +3518,13 @@
     },
     {
       "slug": "knowledge-graphs-with-neo4j-overview",
-      "title": "Overview",
+      "title": "Knowledge Graphs with Neo4j: overview",
       "track": "hierarchical-memory-and-graph-rag",
       "module": "knowledge-graphs-with-neo4j",
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m43_knowledge_graphs_neo4j/00_overview.md",
-      "estMinutes": 2,
+      "estMinutes": 3,
       "href": "/learn/hierarchical-memory-and-graph-rag/knowledge-graphs-with-neo4j/knowledge-graphs-with-neo4j-overview",
       "updated": "2026-11-01"
     },
@@ -3602,7 +3602,7 @@
     },
     {
       "slug": "knowledge-graphs-with-neo4j-interview-questions",
-      "title": "Interview questions",
+      "title": "Knowledge Graphs with Neo4j: interview questions",
       "track": "hierarchical-memory-and-graph-rag",
       "module": "knowledge-graphs-with-neo4j",
       "kind": "sync",
@@ -3614,7 +3614,7 @@
     },
     {
       "slug": "graphrag-techniques-overview",
-      "title": "Overview",
+      "title": "GraphRAG Techniques: overview",
       "track": "hierarchical-memory-and-graph-rag",
       "module": "graphrag-techniques",
       "kind": "sync",
@@ -3674,7 +3674,7 @@
     },
     {
       "slug": "graphrag-techniques-interview-questions",
-      "title": "Interview questions",
+      "title": "GraphRAG Techniques: interview questions",
       "track": "hierarchical-memory-and-graph-rag",
       "module": "graphrag-techniques",
       "kind": "sync",
@@ -3686,7 +3686,7 @@
     },
     {
       "slug": "agentic-rag-architectures-choosing-a-design-overview",
-      "title": "Overview",
+      "title": "Agentic RAG Architectures: Choosing a Design: overview",
       "track": "architecture-synthesis-and-capstone",
       "module": "agentic-rag-architectures-choosing-a-design",
       "kind": "sync",
@@ -3734,7 +3734,7 @@
     },
     {
       "slug": "agentic-rag-architectures-choosing-a-design-interview-questions",
-      "title": "Interview questions",
+      "title": "Agentic RAG Architectures: Choosing a Design: interview questions",
       "track": "architecture-synthesis-and-capstone",
       "module": "agentic-rag-architectures-choosing-a-design",
       "kind": "sync",
@@ -3742,7 +3742,7 @@
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_architecture_and_capstone/m45_architecture_synthesis/99_interview_questions.md",
       "estMinutes": 4,
       "href": "/learn/architecture-synthesis-and-capstone/agentic-rag-architectures-choosing-a-design/agentic-rag-architectures-choosing-a-design-interview-questions",
-      "updated": "2026-10-31"
+      "updated": "2026-11-01"
     },
     {
       "slug": "the-agent-computer-interface",

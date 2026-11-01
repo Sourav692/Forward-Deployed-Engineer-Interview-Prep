@@ -19,7 +19,7 @@
 - A cross-encoder over the top 10 also brings the prorated rule into the top 2, at the cost of a model call per candidate
 - Weighs storage too: at `window_size=3` the handbook's window metadata is 6.75 times its text, held on every node
 
-### 3. The M22 lab asks you to port the Part VI hybrid-plus-rerank pipeline to LlamaIndex and confirm the metrics match. They do not. How do you find out why?
+### 3. The T8.3 lab asks you to port the T7 hybrid-plus-rerank pipeline to LlamaIndex and confirm the metrics match. They do not. How do you find out why?
 
 **What a strong answer covers:**
 - Compares retrieved node ids per golden question before comparing answer scores, so retrieval and generation differences separate

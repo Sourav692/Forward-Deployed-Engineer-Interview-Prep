@@ -16,7 +16,7 @@
 **What a strong answer covers:**
 - Billing questions have lookups you can list up front, so a plan is cheaper (2 LLM calls) and inspectable before any search runs
 - Troubleshooting is exploratory: the next check depends on the last result, which is what ReAct's per-step reasoning is for
-- Names ReAct's failure from lesson 26.1: it can announce its next step as text and end, because nothing tracks what is left
+- Names ReAct's failure from lesson 1 of T9.4: it can announce its next step as text and end, because nothing tracks what is left
 - Suggests a middle ground for either: plan, execute, evaluate each step and replan, at N + 2 calls on a clean run
 
 ### 3. After adding replanning, the cost per question went up and the team wants to know whether it is paying for itself. What do you measure?
@@ -35,7 +35,7 @@
 - Sets the cap from the plan: planned lookups plus the retries you will pay for, or a per-step retry limit
 - Keeps the honest fallback: the synthesizer reports the missing fact, and the response says the answer is partial
 
-### 5. You add chain-of-verification to the RAG answer step, as the M26 lab brief asks. Unsupported claims fall on the golden set, but a reviewer finds one correct claim was removed. How do you evaluate and guard this?
+### 5. You add chain-of-verification to the RAG answer step, as the T9.4 lab brief asks. Unsupported claims fall on the golden set, but a reviewer finds one correct claim was removed. How do you evaluate and guard this?
 
 **What a strong answer covers:**
 - Scores before and after in code against labelled claims, counting removed correct claims as well as removed unsupported ones

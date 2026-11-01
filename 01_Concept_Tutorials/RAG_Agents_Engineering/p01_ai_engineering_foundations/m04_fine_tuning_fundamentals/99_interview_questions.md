@@ -14,7 +14,7 @@
 ### 2. The support lead wants to fine-tune the assistant “so it knows the new refund policy and answers in our house style”. What do you build?
 
 **What a strong answer covers:**
-- Splits the request: the policy is a fact that changes, so it goes in the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) index and is cited; the house style is behaviour, which fine-tuning can carry
+- Splits the request: the policy is a fact that changes, so it goes in the [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) index and is cited; the house style is behaviour, which fine-tuning can carry
 - Starts with a prompt that states the style and shows two examples, and fine-tunes only if that fails on a measured set or costs too many tokens per call
 - Builds training examples whose answers follow the style but take their facts from retrieved context, so the model learns to use context rather than memorise the policy
 - Plans for the next policy change: re-index, no retraining, and a golden question that checks the new window is cited
@@ -22,15 +22,15 @@
 ### 3. Your fine-tuned model’s training loss fell for two epochs. How do you decide whether it replaces the prompted model in production?
 
 **What a strong answer covers:**
-- Evaluates on a held-out split the model never trained on (the notebooks hold out 10%) plus the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) golden questions, never on training loss
+- Evaluates on a held-out split the model never trained on (the notebooks hold out 10%) plus the [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) golden questions, never on training loss
 - Scores what was trained: the share of answers that lead with Yes or No, faithfulness to the retrieved policy, refusal rate on off-topic questions such as *What do you think of Mars?*
-- Runs a general benchmark (lesson 4.6 uses ARC Easy) before and after, to catch lost general ability
+- Runs a general benchmark (lesson 6 of T2.4 uses ARC Easy) before and after, to catch lost general ability
 - Compares against the prompted baseline on the same questions, with cost and latency per call, and reviews the regressions question by question
 
 ### 4. Ten percent of Larkspur’s transcripts are longer than the 512-token limit you can afford in training. What do you do with them?
 
 **What a strong answer covers:**
-- Measures the length distribution first; lesson 4.4’s `lamini_docs` rows peak at 479 tokens, well under the 2,048 the notebook allows, so its truncation never fires
+- Measures the length distribution first; lesson 4 of T2.4’s `lamini_docs` rows peak at 479 tokens, well under the 2,048 the notebook allows, so its truncation never fires
 - Knows the trade-off: right truncation cuts the end of the answer and its end token, left truncation cuts the question and the template header
 - Prefers fixing the data (drop long greetings and signatures, split multi-turn threads into single exchanges) over silently cutting
 - Logs how many rows were truncated on every run, so a change in the data shows up as a number

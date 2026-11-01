@@ -25,7 +25,7 @@
 - Freezes the prompt set and the labelled cases, and runs both models at temperature 0 through the same wrapper
 - Scores each task with a metric that fits it: exact match for labels and JSON validity for extraction, an LLM or human judge for free text
 - Compares per task, not on average: a model can match on classification and still fail the JSON format or the five-line limit
-- Pins the model id in one config value, because provider ids are retired (Groq shut down the `llama-3.2-90b-vision-preview` id used in two M05 notebooks on 14 April 2025)
+- Pins the model id in one config value, because provider ids are retired (Groq shut down the `llama-3.2-90b-vision-preview` id used in two T3.1 notebooks on 14 April 2025)
 
 ### 4. The ReAct support agent sometimes loops: it searches the handbook, gets the same chunks, and searches again. How do you find and stop this?
 

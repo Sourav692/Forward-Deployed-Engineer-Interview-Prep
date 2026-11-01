@@ -4,7 +4,7 @@
  */
 import assert from 'node:assert/strict'
 import { britishSpelling } from '../src/lib/spelling.ts'
-import { britishText, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
+import { britishText, fileTitle, makeRenumber, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
 import { parseAnimatedFence, parseLabFence, parseReading } from '../src/lib/reading.ts'
 
 assert.equal(britishSpelling('Summarization'), 'Summarisation')
@@ -31,8 +31,19 @@ const { overview, interview, spotlight } = splitModulePage(page)
 assert.ok(!overview.includes('Lessons') && !overview.includes('Part IV') && !overview.includes('Previous') && overview.includes('## Key Takeaways'))
 assert.equal(interview, '# Interview questions\n\n### 1. Q?\n')
 assert.equal(spotlight, 'Interview Spotlight: 5 Questions')
-assert.equal(trimLessonPage('# T\n\n*[M11 theory](../README.md) · Lesson 11.2 · Notebooks: [`a.ipynb`](b) · [All theory pages](c)*\n\n## A\n'),
-  '# T\n\n*Notebooks: [`a.ipynb`](b)*\n\n## A\n')
+assert.equal(trimLessonPage('# T\n\n*[M11 theory](../README.md) · Lesson 11.2 · Notebooks: [`02a_creating_an_mcp_server.ipynb`](b) · [All theory pages](c)*\n\n## A\n'),
+  '# T\n\n*Notebooks on GitHub: [Creating an MCP server](b)*\n\n## A\n')
+assert.equal(fileTitle('01_open_source_llms_with_langchain.ipynb'), 'Open source LLMs with LangChain')
+
+// The course's numbering becomes the site's (IA-08).
+const renumber = makeRenumber((n: string) => ({ '13': 'T6.2', '11': 'T5.1' })[n] ?? null, (k: number) => (k === 6 ? 'T7' : null))
+assert.equal(renumber('M13 and M99, Lesson 13.2, notebook 11.3, M13.4 and the Part VI pipeline'),
+  'T6.2 and M99, Lesson 2 of T6.2, notebook 3 of T5.1, lesson 4 of T6.2 and the T7 pipeline')
+assert.equal(renumber('13.2', true), 'lesson 2 of T6.2')
+assert.equal(renumber('Part IX', false), 'Part IX')
+const coded = { ...ctx, renumber, moduleLink: (code: string) => (code === 'M11' ? `[${renumber(code)}](m11.md)` : null) }
+assert.equal(transformLine('See M11, M13 and [13.2](x.md).', coded), 'See [T5.1](m11.md), T6.2 and [lesson 2 of T6.2](<x.md>).')
+assert.equal(transformLine('## How M13 connects', coded), '## How T6.2 connects')
 
 // The ```lab fence the import writes becomes a lab chunk in the lesson (FE-05).
 const fence = '```lab\nsrc: /labs/rag/m11_rag_lifecycle/top-k-retrieval-lab.html\ntitle: Top-k and the baseline\n```'

@@ -57,8 +57,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const nextModule = order[order.findIndex((m) => m.slug === mod.slug) + 1]
   const input = moduleInput(mod)
   const trail = trackTrail(track)
-  // Section anchors exist only on Learn track pages.
-  const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
+  // Section anchors exist only on Learn track pages; a one-section track's section is the track itself.
+  const sectionCrumb = section && trail.length > 1 && track.sections.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
   // The scenario mocks (every T8.2 lesson after the method lesson) get a timer and a scorer (FE-15).
   const mockRounds = mod.slug === MOCK_MODULE ? mockRoundsFor(lesson.slug) : []
   const scenarioMock = mockRounds.length > 0

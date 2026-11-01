@@ -31,11 +31,11 @@
 
 **What a strong answer covers:**
 - Sentiment runs first in `determine_route`, so a negative reading sends it to a person; the handoff should carry both topics, the contact details and anything already retrieved
-- A single-label classifier must drop one of the two problems; a schema that allows several labels, or decomposition into sub-questions ([M18](../../p06_retrieval_quality/m18_query_transformation/00_overview.md)), keeps both
+- A single-label classifier must drop one of the two problems; a schema that allows several labels, or decomposition into sub-questions ([T7.2](../../p06_retrieval_quality/m18_query_transformation/00_overview.md)), keeps both
 - An outage in progress may deserve the on-call path, the way the healthcare notebook separates Distress from Negative
 - Measures both error costs: a missed escalation loses a customer, and a needless one costs an agent's time
 
-### 5. The adaptive RAG graph from lesson 30.3 is much slower and costlier than the plain pipeline it replaced. Where do the calls go, and what do you cut?
+### 5. The adaptive RAG graph from lesson 3 of T10.3 is much slower and costlier than the plain pipeline it replaced. Where do the calls go, and what do you cut?
 
 **What a strong answer covers:**
 - Counts LLM calls per path from the graph: on the vector route, one for routing, one rewrite, one grade per retrieved chunk (up to five), one answer and one hallucination check, plus a rewrite and a web search when grading fails

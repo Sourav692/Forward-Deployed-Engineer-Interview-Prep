@@ -11,7 +11,7 @@
 - Sets `recursion_limit` explicitly on every run (25 in the notebooks), because the default of 10,007 steps is what made the failure take a minute
 - Adds a scripted-model test that replays the ping-pong and asserts the run ends with the error, so a prompt change cannot bring the loop back silently
 
-### 2. The M30 router sends each question to one knowledge base. Customers ask "my server went down, do I get credits?" and get an answer about the outage with nothing about credits. Do you replace the router with a supervisor or a swarm?
+### 2. The T10.3 router sends each question to one knowledge base. Customers ask "my server went down, do I get credits?" and get an answer about the outage with nothing about credits. Do you replace the router with a supervisor or a swarm?
 
 **What a strong answer covers:**
 - Names the failure: a one-shot router picks one specialist, so a two-part request loses its second half
@@ -24,7 +24,7 @@
 **What a strong answer covers:**
 - Labels each golden question with the specialists it needs, in order, and scores the route the system took against that label
 - Logs routing outside the transcript (`route_log`, one entry per decision with its reason), so routing accuracy is read from state and not parsed from prose
-- Reports model calls, tokens and latency per request, split into routing calls and specialist calls, next to answer quality from the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) baseline
+- Reports model calls, tokens and latency per request, split into routing calls and specialist calls, next to answer quality from the [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) baseline
 - Looks per question, not only at the mean: single-domain questions get more expensive under a supervisor while multi-part ones get correct
 
 ### 4. A swarm thread has `active_agent = billing`. Three days later the same customer writes "Can I export my data?" What happens, and what should happen?

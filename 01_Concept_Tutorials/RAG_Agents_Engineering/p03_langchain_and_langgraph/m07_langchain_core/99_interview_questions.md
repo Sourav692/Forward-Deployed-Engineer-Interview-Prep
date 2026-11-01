@@ -17,7 +17,7 @@
 - `JsonOutputParser` rarely raises because it repairs text: it strips fences, drops trailing prose and closes truncated JSON, so a cut-off reply arrives as a dict with a half-written citation
 - An exception is the cheaper failure: it can be retried or logged, while a wrong dict reaches the customer
 - Puts the rules in a schema: `citations` as a list of the retrieved passage ids (a `Literal` or a post-parse check), `answer` as a required string
-- Keeps a fallback for the raise, as the lesson 7.7 bot does, and counts how often it fires
+- Keeps a fallback for the raise, as the lesson 7 of T4.1 bot does, and counts how often it fires
 
 ### 3. How do you monitor the structured-answer step in production?
 
@@ -32,13 +32,13 @@
 **What a strong answer covers:**
 - Chat models keep no state; the second call saw only the second question unless the app resent the first turn and the reply
 - Puts history in a `MessagesPlaceholder` and appends the `AIMessage` after each turn
-- Bounds the history: keep the last few turns, or summarise older ones ([M33](../../p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md)), and measures the input-token cost per turn
-- Rewrites the follow-up into a standalone question before retrieval, because the retriever needs "annual plans" and "refund" in one query ([M33](../../p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md))
+- Bounds the history: keep the last few turns, or summarise older ones ([T11.1](../../p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md)), and measures the input-token cost per turn
+- Rewrites the follow-up into a standalone question before retrieval, because the retriever needs "annual plans" and "refund" in one query ([T11.1](../../p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md))
 
 ### 5. You move the refund assistant from `gpt-4o-mini` to a Groq-hosted open model to cut cost. The chain code does not change. What can still break?
 
 **What a strong answer covers:**
 - The call shape survives a swap (`init_chat_model("groq:…")` or `ChatGroq`), the replies do not: format compliance, refusal style and verbosity can all change
 - `with_structured_output` depends on the provider's structured-output or tool-calling support; check it before relying on it, or fall back to a parser
-- Re-runs the golden questions from [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) and the parser test set, and compares usable-answer rate, citation validity, tokens and latency
+- Re-runs the golden questions from [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) and the parser test set, and compares usable-answer rate, citation validity, tokens and latency
 - Keeps the provider in configuration (a `"provider:model"` string) so a rollback is a config change

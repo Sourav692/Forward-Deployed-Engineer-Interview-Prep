@@ -30,7 +30,7 @@
 ### 4. You rebuild query decomposition as orchestrator-worker. For "How long does a refund take?" the planner returns five sub-questions, including "Introduction" and "Conclusion". What went wrong, and what guards do you add?
 
 **What a strong answer covers:**
-- Spots padding: a prompt with numeric anchors ("simple topics need 2, broad topics 5+") produced five sections for every topic in lesson 25.4
+- Spots padding: a prompt with numeric anchors ("simple topics need 2, broad topics 5+") produced five sections for every topic in lesson 4 of T9.3
 - Rewrites the planner prompt to ask for one item per distinct question and forbids padding sections
 - Bounds the plan in code: a maximum number of `Send`s, a direct path for single-part questions, and a defined result for an empty plan
 - Checks that workers consume their item, by confirming the set of workers that ran changes with the plan
