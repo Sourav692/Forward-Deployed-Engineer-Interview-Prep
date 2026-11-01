@@ -894,7 +894,10 @@ export const RAG_MODULES: CurriculumModule[] = [
       "the-rag-lifecycle-and-a-measured-baseline",
       "rag-from-first-principles-interview-questions"
     ],
-    "seeAlso": []
+    "seeAlso": [
+      "why-access-control-shapes-enterprise-rag",
+      "access-controlled-enterprise-rag"
+    ]
   },
   {
     "slug": "document-ingestion-and-metadata-design",
