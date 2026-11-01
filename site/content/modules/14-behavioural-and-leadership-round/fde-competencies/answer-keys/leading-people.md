@@ -110,6 +110,6 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Say them i
 
 *"On an engagement like the one at a large Asian life insurer there's a temptation to keep the interesting work (the orchestration layer, the access-control design) and hand off the rest. I try to invert that. The work I keep is the work only I should be doing: the highest-blast-radius decisions, where being wrong fails silently. Everything else, someone on the team should own, or I become the bottleneck.*
 
-*`[FILL: what you delegated — e.g., a specialist agent, the evaluation dataset, the Genie Space curation — and to whom].` The way I make delegation safe isn't checking the code afterwards; it's a design review before the code exists, so the cost of a wrong turn is an hour, and a ticket that carries the customer's intent, not just the task. `[FILL: outcome — and ideally that the person now owns that area].`*
+*`[FILL: what you delegated — e.g., a specialist agent, the evaluation dataset, curating the text-to-SQL space — and to whom].` The way I make delegation safe isn't checking the code afterwards; it's a design review before the code exists, so the cost of a wrong turn is an hour, and a ticket that carries the customer's intent, not just the task. `[FILL: outcome — and ideally that the person now owns that area].`*
 
 *The line I hold myself to: if I'm the only person who can make a decision, that's a failure of mine, not a sign of my value."*

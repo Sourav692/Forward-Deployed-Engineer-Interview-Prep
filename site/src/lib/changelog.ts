@@ -13,6 +13,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-11-02',
+    title: 'No vendor platform named, and softer interview claims',
+    summary:
+      'The site no longer names Databricks or its products. Course lessons that mentioned them are reworded in vendor-neutral terms, three notebook-only course lessons that only run on that platform are off the site, and the hybrid-and-rerank lesson has a new title and URL (the old one redirects and keeps your progress). The behavioural answer keys tell the same stories in vendor-neutral terms. Course interview-question pages no longer claim to be in the style of named employers\' interviews.',
+  },
+  {
+    date: '2026-11-02',
     title: 'Course module times include the notebook work',
     summary:
       'Module times are reading plus practice. Modules from the RAG & Agents Engineering course counted only a short lab allowance as practice and left their notebook work out, so they looked far smaller than modules that count their worksheets and builds. Their practice time now includes the notebook work, about two to six hours a module, and the AI Engineering group reads about 238 hours instead of 78. No lessons changed.',

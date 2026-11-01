@@ -10,7 +10,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 **Technical-interviewer answer.**
 
-> "Each pattern ships with the test that proves it, so others can adopt it without trusting me. Specialisation came from a measured failure: twenty-plus tool schemas in one prompt degraded tool selection as context grew. At the lender I applied it up front, with a triage layer that narrows the toolset before the agent runs. The access pattern is a metadata pre-filter compiled into the vector query, then a live re-check against source grants before generation. Its reference build has a golden-set harness that fails on a single leak. A second, Databricks-native version documents the vector search and catalogue governance gap. The guardrail engine proves three properties with 21 deterministic tests: approval before destructive actions, no double-apply on retry, no re-run after a crash."
+> "Each pattern ships with the test that proves it, so others can adopt it without trusting me. Specialisation came from a measured failure: twenty-plus tool schemas in one prompt degraded tool selection as context grew. At the lender I applied it up front, with a triage layer that narrows the toolset before the agent runs. The access pattern is a metadata pre-filter compiled into the vector query, then a live re-check against source grants before generation. Its reference build has a golden-set harness that fails on a single leak. A second, platform-native version documents the vector search and catalogue governance gap. The guardrail engine proves three properties with 21 deterministic tests: approval before destructive actions, no double-apply on retry, no re-run after a crash."
 
 **GROUNDED: reusable patterns carried insurer → lender → reference builds**
 
@@ -18,7 +18,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 *The specialisation lesson from the insurer (one agent with twenty-plus tools fails, so specialise early and keep each context small) became a design principle I applied up front at the lender with a triage layer before the agent runs. It's the shape of every agentic system I've built since.*
 
-*The two-layer access-control pattern — fast pre-filter, live re-check before generation — started at the insurer, and I rebuilt it as a standalone reference system with a golden-set harness and a second, Databricks-native version specifically to document the Vector Search / Unity Catalog governance gap, so anyone putting AI on governed data can pick it up without rediscovering it.*
+*The two-layer access-control pattern — fast pre-filter, live re-check before generation — started at the insurer, and I rebuilt it as a standalone reference system with a golden-set harness and a second, platform-native version specifically to document the gap between the vector index and the catalogue's governance, so anyone putting AI on governed data can pick it up without rediscovering it.*
 
 *And the guardrail engine (approval gates, idempotency, crash recovery) is a runnable reference with 21 deterministic tests, built so 'we'd add guardrails' can be a demonstrated property rather than a slide claim. `[FILL: where these have actually been reused — a colleague, an enablement session, an internal doc].`*
 
@@ -82,13 +82,13 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 **Technical-interviewer answer.**
 
-> "My build-versus-buy test has three inputs: control over a constraint, attack surface and timeline independence. For analytics, Genie Spaces won. Its generated SQL is read-only, so a prompt or SQL injection cannot modify data. That is a smaller blast radius than a hand-rolled text-to-SQL chain. It also let the insurer's analysts curate the space without an engineer. Orchestration was the build case. Waiting on the managed multi-agent feature would tie the launch to someone else's roadmap. At the lender, I compared retrieval over historical tickets with a hand-coded decision tree. A rules tree needs manual fixes every time phrasing drifts. Retrieval generalises across phrasing, but it is only as good as its seed examples. I accepted that dependency and named it."
+> "My build-versus-buy test has three inputs: control over a constraint, attack surface and timeline independence. For analytics, a managed text-to-SQL service won. Its generated SQL is read-only, so a prompt or SQL injection cannot modify data. That is a smaller blast radius than a hand-rolled text-to-SQL chain. It also let the insurer's analysts curate the space without an engineer. Orchestration was the build case. Waiting on the managed multi-agent feature would tie the launch to someone else's roadmap. At the lender, I compared retrieval over historical tickets with a hand-coded decision tree. A rules tree needs manual fixes every time phrasing drifts. Retrieval generalises across phrasing, but it is only as good as its seed examples. I accepted that dependency and named it."
 
-**GROUNDED — Genie managed text-to-SQL vs hand-built Supervisor; RAG vs rules engine at a large Indian consumer lender**
+**GROUNDED — managed text-to-SQL vs hand-built Supervisor; RAG vs rules engine at a large Indian consumer lender**
 
 *"I made both calls on the same engagement, and the reasoning was the same each time: build only where the platform has a gap that matters.*
 
-*At the insurer, for the BI specialist I used Genie Spaces — a managed text-to-SQL service — rather than hand-rolling a chain. It's less flexible, but its generated SQL is always read-only, so a prompt or SQL injection can't change the data — a much smaller blast radius — and the insurer's own analysts could curate it without an engineer. For the orchestration layer I built, because the managed multi-agent feature wasn't an option for this customer at the time.*
+*At the insurer, for the BI specialist I used a managed text-to-SQL service rather than hand-rolling a chain. It's less flexible, but its generated SQL is always read-only, so a prompt or SQL injection can't change the data — a much smaller blast radius — and the insurer's own analysts could curate it without an engineer. For the orchestration layer I built, because the managed multi-agent feature wasn't an option for this customer at the time.*
 
 *At the lender, the alternative to RAG over historical tickets was a hand-coded decision tree: 'if the ticket mentions X, do Y.' I chose retrieval because a rules engine needs constant manual maintenance as phrasing drifts; retrieval generalises across phrasing, at the cost of being only as good as the seed examples.*
 

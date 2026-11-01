@@ -53,7 +53,7 @@ It's a method question. Give the process, then one illustration.
 
 > "I treat week one as building ground truth before any design. For the governance rollout, I inventoried every catalog, schema and table, who queried it, and which columns held personal data. Then I compared that against what the teams believed: their documented ownership and classification. The diff was the design input. Mis-tagged sensitive columns and undocumented consumers told me where access policies had to land first. Because I knew every consumer, I could migrate permissions in stages. Old and new grants ran in parallel, then each domain cut over on its own. That is what made it zero downtime. The cost was a slower start, with no architecture document in week one. The inventory became the scoping document and the rollout checklist."
 
-**Anchor:** the insurer's Unity Catalog governance rollout.
+**Anchor:** the insurer's data-governance rollout.
 
 - **Situation.** "We need governance" is one of the vaguest asks in enterprise data.
 - **Action.** Week one was inventory, not design: mapping what data existed, who was touching it, and where PII actually lived versus where they believed it lived. The gap between those two was the real finding.

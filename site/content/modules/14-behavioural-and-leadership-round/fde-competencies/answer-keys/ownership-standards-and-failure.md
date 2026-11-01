@@ -168,7 +168,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 **Technical-interviewer answer.**
 
-> "I learned orchestration by shipping it and watching it fail. The single agent at the insurer taught me the mechanism: tool selection degrades as tool schemas and history fill the context. I moved to a Supervisor, an 8-node LangGraph state machine. Later I moved to a Deep Agent with self-contained subagents and a memory-manager subagent for long-term memory. At the lender, I applied that up front: a triage layer narrows the toolset before the agent runs. On governance, I rebuilt the same retrieval system on a second platform. Its Vector Search index is a derived copy that does not inherit Unity Catalog row filters. That finding produced the live grant re-check before generation. Next on my list is an AST-based code graph for root-cause analysis."
+> "I learned orchestration by shipping it and watching it fail. The single agent at the insurer taught me the mechanism: tool selection degrades as tool schemas and history fill the context. I moved to a Supervisor, an 8-node LangGraph state machine. Later I moved to a Deep Agent with self-contained subagents and a memory-manager subagent for long-term memory. At the lender, I applied that up front: a triage layer narrows the toolset before the agent runs. On governance, I rebuilt the same retrieval system on a second platform. Its vector index is a derived copy that does not inherit the catalogue's row filters. That finding produced the live grant re-check before generation. Next on my list is an AST-based code graph for root-cause analysis."
 
 **GROUNDED: multi-agent orchestration, and rebuilding on a second platform to learn its gaps**
 
@@ -176,7 +176,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 *I learned it the way I learn anything: by building something that could fail. At a large Asian life insurer, that meant learning the hard way that a single agent with 20-plus tools collapses. Then I learned why (context bloat degrades tool selection) well enough to predict the same failure one level up and pre-empt it at a large Indian consumer lender with a triage layer before the agent ever runs.*
 
-*The second piece I deliberately learned was platform-specific governance. I rebuilt the same enterprise RAG system on a second platform specifically to find out where its guarantees didn't travel — and found that a Vector Search index — it's called AI Search now — is a derived copy that doesn't inherit Unity Catalog's row filters. I couldn't have led a customer's security review without having found that myself. Next on the list: AST-based code graphs for root-cause analysis, which is where my code-lookup agent needs to go."*
+*The second piece I deliberately learned was platform-specific governance. I rebuilt the same enterprise RAG system on a second platform specifically to find out where its guarantees didn't travel — and found that its vector index is a derived copy that doesn't inherit the catalogue's row filters. I couldn't have led a customer's security review without having found that myself. Next on the list: AST-based code graphs for root-cause analysis, which is where my code-lookup agent needs to go."*
 
 ## 11. Where you need to grow as a leader
 

@@ -110,7 +110,7 @@ Project 04's client mixes transports behind one agent. `config/servers.json` lis
 - **Streamable HTTP, stateful** for a shared server that keeps something per client or sends messages between requests. With several replicas, route by `mcp-session-id`.
 - **Streamable HTTP, stateless** for tools that keep no per-client state and must scale out: Larkspur's `status` search can run as many replicas as it needs, and any of them can answer any request.
 
-Lesson 3 of T12.2's Databricks server ends with `mcp.run()`. In SDK 1.30.0 `run()` defaults to `transport="stdio"`, so as written the server reads its standard input instead of listening for HTTP. A server that a platform reaches by URL needs `transport="streamable-http"` and must listen on the host and port the platform expects.
+A server written for local use often ends with `mcp.run()`. In SDK 1.30.0 `run()` defaults to `transport="stdio"`, so as written the server reads its standard input instead of listening for HTTP. A server that a platform reaches by URL needs `transport="streamable-http"` and must listen on the host and port the platform expects.
 
 ## Key Takeaways
 

@@ -16,9 +16,10 @@
 
 import { execFileSync } from 'node:child_process'
 import { copyFile, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
-import { dirname, join, resolve } from 'node:path'
+import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
+import { siteText } from './site-text-edits.mjs'
 import { renderDiagrams } from './render-diagrams.mjs'
 import { explorerSources, writeExplorers } from './explorers.mjs'
 import {
@@ -138,8 +139,9 @@ async function syncTrack(moduleId, track, sourceUrls, updatedOf) {
       continue
     }
 
-    const worksheet = await readFile(join(track.worksheetDir, file), 'utf8')
-    const answerKey = await readFile(join(track.answerKeyDir, keyFile), 'utf8')
+    const repoPath = (path) => relative(REPO_ROOT, path).split(sep).join('/')
+    const worksheet = siteText(repoPath(join(track.worksheetDir, file)), await readFile(join(track.worksheetDir, file), 'utf8'))
+    const answerKey = siteText(repoPath(join(track.answerKeyDir, keyFile)), await readFile(join(track.answerKeyDir, keyFile), 'utf8'))
 
     const outBase = join(OUT_DIR, 'modules', moduleId, track.id)
     await mkdir(join(outBase, 'worksheets'), { recursive: true })

@@ -73,7 +73,7 @@ Method question. Three habits:
 
 **Also asked as:** "Tell me about a time you achieved a significant result with limited budget or headcount."
 
-**Anchor:** Genie managed text-to-SQL vs hand-built Supervisor; RAG vs rules engine at a large Indian consumer lender.
+**Anchor:** managed text-to-SQL vs hand-built Supervisor; RAG vs rules engine at a large Indian consumer lender.
 
 - Situation:
 - Task:

@@ -6,6 +6,8 @@
  * parallel consolidation PRs from editing the same lines.
  */
 export const RENAMED_T2: Record<string, string | null> = {
+  // The site dropped vendor names on 2 November 2026 (site-text-edits.mjs).
+  'retrieval-hybrid-rerank/retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search': 'retrieval-hybrid-rerank/retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store',
   // T2.1 How LLMs behave consolidated into three lessons.
   'how-llms-behave/module-01-embeddings': 'embeddings-and-model-selection/embedding-fundamentals-similarity-metrics-and-model-selection',
   // T2.2 RAG from first principles consolidated into six lessons.
@@ -27,7 +29,7 @@ export const RENAMED_T2: Record<string, string | null> = {
   'retrieval-hybrid-rerank/rag-and-retrieval-interview-tutorial': 'retrieval-hybrid-rerank/retrieval-hybrid-rerank-interview-questions',
   'retrieval-hybrid-rerank/advanced-rag-techniques-interview-tutorial':
     'self-correcting-rag-crag-and-self-rag/corrective-rag-in-langgraph-with-web-search-fallback',
-  'retrieval-hybrid-rerank/rag-retrieval-strategies': 'retrieval-hybrid-rerank/retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search',
+  'retrieval-hybrid-rerank/rag-retrieval-strategies': 'retrieval-hybrid-rerank/retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store',
   'retrieval-hybrid-rerank/retrieval-hybrid-rerank': 'retrieval-hybrid-rerank/fusion-retrieval-score-normalisation-vs-rank-fusion',
   // T2.5 Frameworks consolidated into eight lessons.
   'langchain-and-langgraph/langchain-foundations-interview-tutorial':
@@ -58,7 +60,7 @@ export const RENAMED_T2: Record<string, string | null> = {
   'retrieval-hybrid-rerank/query-transformation': 'query-transformation-and-routing/query-rewriting-and-expansion',
   'retrieval-hybrid-rerank/reranking-and-post-retrieval-filtering': 'post-retrieval-optimisation-and-reranking/cross-encoder-reranking-in-a-rag-chain',
   'retrieval-hybrid-rerank/retrieval-control-loops': 'self-correcting-rag-crag-and-self-rag/corrective-rag-in-langgraph-with-web-search-fallback',
-  'retrieval-hybrid-rerank/production-retrieval-pipelines': 'retrieval-hybrid-rerank/retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search',
+  'retrieval-hybrid-rerank/production-retrieval-pipelines': 'retrieval-hybrid-rerank/retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store',
   'retrieval-hybrid-rerank/practise-retrieval': 'retrieval-hybrid-rerank/retrieval-hybrid-rerank-interview-questions',
   'langchain-and-langgraph/what-a-framework-buys-you': 'rag-from-first-principles/your-first-langchain-rag-with-chroma',
   'langchain-and-langgraph/composing-pipelines-with-langchain': 'lcel-runnables-and-chains/lcel-and-the-runnable-interface',

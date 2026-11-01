@@ -999,19 +999,7 @@ export const RAG_MODULES: CurriculumModule[] = [
       "production-concerns-batching-caching-and-similarity-behaviour",
       "embeddings-and-model-selection-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "Benchmarking embedding models with MLflow (Databricks)",
-        "notebooks": [
-          {
-            "title": "Compare embedding models databricks",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p05_ingestion_and_indexing/m14_embeddings/optional/05a_compare_embedding_models_databricks.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "vector-stores-and-index-operations",
@@ -1099,7 +1087,7 @@ export const RAG_MODULES: CurriculumModule[] = [
       "fusion-retrieval-score-normalisation-vs-rank-fusion",
       "maximal-marginal-relevance-for-diversity",
       "multi-faceted-filtering",
-      "retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search",
+      "retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store",
       "retrieval-hybrid-rerank-interview-questions"
     ],
     "seeAlso": []
@@ -1593,19 +1581,7 @@ export const RAG_MODULES: CurriculumModule[] = [
       "guardrails-query-optimisation-and-a-retry-loop",
       "agentic-rag-foundations-grading-and-query-rewriting-interview-questions"
     ],
-    "seeAlso": [],
-    "notebookOnly": [
-      {
-        "title": "The same agent on Databricks Vector Search",
-        "notebooks": [
-          {
-            "title": "Simple agentic RAG databricks",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p09_agentic_rag/m28_retrieval_grading_rewriting/optional/02a_simple_agentic_rag_databricks.ipynb",
-            "optional": true
-          }
-        ]
-      }
-    ]
+    "seeAlso": []
   },
   {
     "slug": "self-correcting-rag-crag-and-self-rag",
@@ -2011,16 +1987,6 @@ export const RAG_MODULES: CurriculumModule[] = [
     ],
     "seeAlso": [],
     "notebookOnly": [
-      {
-        "title": "An MCP server as a Databricks App",
-        "notebooks": [
-          {
-            "title": "Databricks apps MCP server",
-            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p11_agent_protocols/m39_building_mcp_servers_and_clients/projects/04_databricks_apps_mcp_server",
-            "optional": true
-          }
-        ]
-      },
       {
         "title": "Licence and references for the client projects",
         "notebooks": [
@@ -3115,8 +3081,8 @@ export const RAG_LESSONS: CurriculumLesson[] = [
     "publish": "own"
   },
   {
-    "slug": "retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search",
-    "title": "Retriever patterns compared; hybrid + rerank on Databricks Vector Search",
+    "slug": "retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store",
+    "title": "Retriever patterns compared; hybrid + rerank in a managed vector store",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m17_retrievers_hybrid_search/06_retriever_patterns_compared_hybrid_rerank_on_databricks_vector_search.md",
     "home": "retrieval-hybrid-rerank",
     "kind": "sync",

@@ -28,7 +28,7 @@ export function introFor(slug) {
   return existsSync(file) ? file : null
 }
 
-const CUT = /databricks|unity catalog|delta sync|genie|lakebase|lakeview|unity gateway|agent bricks|\bDBUs?\b/i
+export const CUT = /databricks|unity catalog|delta sync|genie|lakebase|lakeview|unity gateway|agent bricks|\bDBUs?\b/i
 // Emoji are forbidden; arrows, box drawing, diagram shapes and ©, ® and ™ are
 // typography and stay.
 const FORBID = /\bG\d{2}\b|§|[✓✗✔✘✕]|(?![\u{A9}\u{AE}\u{2122}\u{2190}-\u{21FF}\u{2500}-\u{25FF}\u{2934}\u{2935}\u{2B05}-\u{2B07}])\p{Extended_Pictographic}/u
