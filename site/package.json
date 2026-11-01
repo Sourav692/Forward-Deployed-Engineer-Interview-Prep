@@ -13,7 +13,7 @@
     "check:store": "node scripts/check-progress-store.ts",
     "predev": "npm run sync",
     "dev": "next dev",
-    "prebuild": "npm run sync",
+    "prebuild": "npm run sync && node scripts/curriculum-index.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

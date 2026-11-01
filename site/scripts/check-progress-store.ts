@@ -105,22 +105,12 @@ check('module progress: equal weights without estimates', store.moduleProgress(m
   lessonsRead: 1,
   lessonsTotal: mod.lessons.length,
 })
-// Give the first lesson an estimate: unknown lessons then weigh the mean of known ones.
-const lesson1 = LESSONS.find((l) => l.slug === l1)!
-lesson1.estMinutes = 30
-check('module progress: one estimate, others weigh the mean', store.moduleProgress(mod.slug).fraction, expected)
-const lesson2 = LESSONS.find((l) => l.slug === l2)!
-lesson2.estMinutes = 90
+// Minutes come from the sync manifest (pages pass them in). With one known estimate, the
+// unknown lessons weigh the mean of the known ones, so the split stays equal.
+check('module progress: one estimate, others weigh the mean', store.moduleProgress(mod.slug, { [l1]: 30 }).fraction, expected)
 const rest = mod.lessons.length - 2
 check(
   'module progress: weighted by minutes',
-  store.moduleProgress(mod.slug).fraction,
-  30 / (30 + 90 + rest * 60),
-)
-delete lesson1.estMinutes
-delete lesson2.estMinutes
-check(
-  'module progress: minutes override from the manifest',
   store.moduleProgress(mod.slug, { [l1]: 30, [l2]: 90 }).fraction,
   30 / (30 + 90 + rest * 60),
 )
@@ -218,6 +208,11 @@ check('migrated old keys go', [storage.getItem('fd:v1:learn:lesson:old/a'), stor
 check('a withdrawn lesson keeps its key', storage.getItem('fd:v1:learn:lesson:old/c'), '{"readAt":"2026-01-03"}')
 store.markLessonUnread('new', 'a')
 check('a second run changes nothing', [store.migrateRenamedProgress(RENAMES), store.isLessonRead('new', 'a')], [0, false])
+
+// The store has no lesson titles: the caller's title labels the activity entry.
+store.markLessonRead('new', 'd', NOW + 1000, 'Lesson D')
+const logged = store.listActivity()[0]
+check('a read mark is logged with the title passed in', [logged.kind, logged.itemId, logged.label], ['lesson-read', 'new/d', 'Lesson D'])
 
 console.log(`${passes} passed, ${failures} failed`)
 if (failures) process.exit(1)

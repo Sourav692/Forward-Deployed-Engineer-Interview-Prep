@@ -91,7 +91,7 @@ export function LessonReadMark({ lessonSlug, title, toggle }: { lessonSlug: stri
     const home = lessonHome(lessonSlug)
     if (read) {
       markLessonUnread(home, lessonSlug)
-    } else if (markLessonRead(home, lessonSlug)) {
+    } else if (markLessonRead(home, lessonSlug, Date.now(), title)) {
       toast(COPY.toastRead)
     }
   }

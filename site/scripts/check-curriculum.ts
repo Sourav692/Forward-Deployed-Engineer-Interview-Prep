@@ -23,6 +23,8 @@ import type { CurriculumLesson, CurriculumModule } from '../src/lib/curriculum-t
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { lessonDecision, publishedHeadings, splitH2, stripFrontMatter, unknownHeadings } from './learn.mjs'
+import { INDEX_FILE, renderCurriculumIndex } from './curriculum-index.ts'
+import { INDEX_MODULES, OTHER_HOMES } from '../src/lib/curriculum-index.ts'
 
 const errors: string[] = []
 const fail = (msg: string) => errors.push(msg)
@@ -364,6 +366,15 @@ if (process.argv.includes('--homes')) {
     if (also) console.log(`| \`${l.slug}\` | ${moduleBySlug.get(l.home)?.code} | ${also.join(', ')} | ${l.kind} |`)
   }
   console.log(`\n${usedBy.size} lessons are used by more than one module.\n`)
+}
+
+// The browser's slice of the curriculum (curriculum-index.ts) must match curriculum.ts, and
+// give every lesson the same home the progress store keys its read state under.
+if (!existsSync(INDEX_FILE) || readFileSync(INDEX_FILE, 'utf8') !== renderCurriculumIndex()) {
+  fail('src/lib/curriculum-index.ts is stale: run `node scripts/curriculum-index.ts`')
+} else {
+  const homes = new Map([...INDEX_MODULES.flatMap((m) => m.lessons.map((l) => [l, m.slug] as const)), ...Object.entries(OTHER_HOMES)])
+  for (const l of LESSONS) if (homes.get(l.slug) !== l.home) fail(`curriculum-index gives ${l.slug} home ${homes.get(l.slug)}, want ${l.home}`)
 }
 
 const by = (k: string) => MODULES.filter((m) => m.status === k).length
