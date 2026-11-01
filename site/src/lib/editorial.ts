@@ -88,6 +88,9 @@ export const SITE_NAME = 'Forward Deployed'
 /** Who wrote the site's own material: the author line on lessons, cases and worksheets (PQ-15). */
 export const AUTHOR = 'Sourav Banerjee'
 
+/** The author's open-source course behind most of the AI Engineering group (MIT licence). */
+export const RAG_COURSE_URL = 'https://github.com/Sourav692/rag-agents-engineering'
+
 /** "2026-09-27" -> "27 Sep 2026". Parsed by hand so the server, the browser and the sync agree. */
 export function formatDate(iso: string): string {
   const [y, m, d] = iso.split('-').map(Number)

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { AUTHOR, FEEDBACK_EMAIL, reportHref } from '@/lib/editorial'
+import { AUTHOR, FEEDBACK_EMAIL, RAG_COURSE_URL, reportHref } from '@/lib/editorial'
 import { getLearnManifest } from '@/lib/learn'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
@@ -19,7 +19,6 @@ export const metadata: Metadata = pageMetadata({
   description: `Who writes Forward Deployed, how its lessons, worked designs and worksheets are made and credited, and how to report a problem.`,
 })
 
-const RAG_COURSE_URL = 'https://github.com/Sourav692/rag-agents-engineering'
 const link = `rounded-sm text-accent underline underline-offset-2 hover:text-accent-hover ${focusRing}`
 
 export default function AboutPage() {
