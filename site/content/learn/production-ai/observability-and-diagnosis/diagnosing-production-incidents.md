@@ -68,12 +68,24 @@ The sequence found the cause without guessing at the model, and every step used 
 
 ## Check Yourself
 
-1. **During an outage, your error-rate dashboard shows a suspicious flat line. Why?**
-   Calls go through an open circuit breaker, which rejects them without touching the dependency. Its errors are never recorded, so the breaker's trip time must be logged separately.
+<details>
+<summary>1. During an outage, your error-rate dashboard shows a suspicious flat line. Why?</summary>
 
-2. **Quality fell overnight and nobody deployed anything. What do you check?**
-   Compare the scheduled evaluation run with the last known-good baseline. A drop with no commits suggests the provider changed what a model version points to.
+Calls go through an open circuit breaker, which rejects them without touching the dependency. Its errors are never recorded, so the breaker's trip time must be logged separately.
 
-3. **What is the one customer-communication sentence the playbook reuses for every incident?**
-   In substance: acknowledge the impact, show the measured cause, give the immediate mitigation, then explain long-term prevention and the success metric.
+</details>
+
+<details>
+<summary>2. Quality fell overnight and nobody deployed anything. What do you check?</summary>
+
+Compare the scheduled evaluation run with the last known-good baseline. A drop with no commits suggests the provider changed what a model version points to.
+
+</details>
+
+<details>
+<summary>3. What is the one customer-communication sentence the playbook reuses for every incident?</summary>
+
+In substance: acknowledge the impact, show the measured cause, give the immediate mitigation, then explain long-term prevention and the success metric.
+
+</details>
 

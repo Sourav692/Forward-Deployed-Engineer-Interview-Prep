@@ -71,12 +71,24 @@ The load balancer timeout is set to about 1.5 times the measured P99, and an LLM
 
 ## Check Yourself
 
-1. **Name three reasons to choose containers over serverless for an AI service.**
-   Any three of: the workload needs a GPU; jobs run longer than Lambda's 15-minute limit; the model must stay warm, since a cold start can add 5 to 30 seconds; or strict P99 targets cannot absorb a 1 to 3 second cold start.
+<details>
+<summary>1. Name three reasons to choose containers over serverless for an AI service.</summary>
 
-2. **Why scale GPU inference on queue depth rather than CPU, and what tool does it?**
-   The queue shows how much inference is waiting. KEDA can scale from a Redis or broker queue, which HPA cannot do alone.
+Any three of: the workload needs a GPU; jobs run longer than Lambda's 15-minute limit; the model must stay warm, since a cold start can add 5 to 30 seconds; or strict P99 targets cannot absorb a 1 to 3 second cold start.
 
-3. **Your LLM calls have a P99 of 20 seconds. Roughly what load balancer timeout do you set?**
-   About 30 seconds, roughly 1.5 times P99, so normal slow responses are not cut off.
+</details>
+
+<details>
+<summary>2. Why scale GPU inference on queue depth rather than CPU, and what tool does it?</summary>
+
+The queue shows how much inference is waiting. KEDA can scale from a Redis or broker queue, which HPA cannot do alone.
+
+</details>
+
+<details>
+<summary>3. Your LLM calls have a P99 of 20 seconds. Roughly what load balancer timeout do you set?</summary>
+
+About 30 seconds, roughly 1.5 times P99, so normal slow responses are not cut off.
+
+</details>
 

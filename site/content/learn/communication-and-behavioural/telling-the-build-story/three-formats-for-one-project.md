@@ -67,12 +67,24 @@ The substance is identical in all three. Only the order and the depth change, an
 
 ## Check Yourself
 
-1. **Why does this module teach honesty and the story kit before any format?**
-   Because the substance does not change between rooms. Prepared once, it can be assembled into any of the three formats.
+<details>
+<summary>1. Why does this module teach honesty and the story kit before any format?</summary>
 
-2. **A one-on-one interviewer says, "Tell me about something you built." Which format, and why?**
-   The open-ended conversation, because the agenda is open and the listener will steer.
+Because the substance does not change between rooms. Prepared once, it can be assembled into any of the three formats.
 
-3. **Where does STAR fit among the three formats?**
-   Inside any of them. The deep-dive's second segment is a STAR narrative.
+</details>
+
+<details>
+<summary>2. A one-on-one interviewer says, "Tell me about something you built." Which format, and why?</summary>
+
+The open-ended conversation, because the agenda is open and the listener will steer.
+
+</details>
+
+<details>
+<summary>3. Where does STAR fit among the three formats?</summary>
+
+Inside any of them. The deep-dive's second segment is a STAR narrative.
+
+</details>
 

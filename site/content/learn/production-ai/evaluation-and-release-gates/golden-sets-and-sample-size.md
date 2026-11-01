@@ -93,12 +93,24 @@ The suite did not need to be huge. It needed to be honest about what its size co
 
 ## Check Yourself
 
-1. **A case retrieves an allowed but irrelevant document. Does the run fail?**
-   No. It is a distractor, counted as a precision miss. Only forbidden documents, retrieved or cited, fail the run.
+<details>
+<summary>1. A case retrieves an allowed but irrelevant document. Does the run fail?</summary>
 
-2. **Why was a high-clearance contractor persona added to the golden set?**
-   Low-clearance contractors were always denied by the clearance rule first, so the external-restriction rule was never tested. The new persona makes it the only deciding rule.
+No. It is a distractor, counted as a precision miss. Only forbidden documents, retrieved or cited, fail the run.
 
-3. **Your 200-case suite shows a 3-point gain. What do you say?**
-   That it is probably noise: at this size only changes of about 11 points are detectable. Use paired evaluation or a production experiment.
+</details>
+
+<details>
+<summary>2. Why was a high-clearance contractor persona added to the golden set?</summary>
+
+Low-clearance contractors were always denied by the clearance rule first, so the external-restriction rule was never tested. The new persona makes it the only deciding rule.
+
+</details>
+
+<details>
+<summary>3. Your 200-case suite shows a 3-point gain. What do you say?</summary>
+
+That it is probably noise: at this size only changes of about 11 points are detectable. Use paired evaluation or a production experiment.
+
+</details>
 

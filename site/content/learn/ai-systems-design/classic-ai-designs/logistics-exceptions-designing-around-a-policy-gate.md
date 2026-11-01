@@ -176,27 +176,59 @@ The source includes a mock session that ran the four clarifying questions and st
 
 ## Check Yourself
 
-1. **Why must the customs check run before the value and confidence rule?**
-   Customs is a hard compliance boundary. Checking confidence first would let a confident model auto-resolve a customs hold, which the customer ruled out.
+<details>
+<summary>1. Why must the customs check run before the value and confidence rule?</summary>
 
-2. **Why not make the batch carriers real-time?**
-   Polling a file drop every few seconds makes the data no fresher, only the infrastructure more complex. Keep two paths, converge after ingestion, and surface the batch latency.
+Customs is a hard compliance boundary. Checking confidence first would let a confident model auto-resolve a customs hold, which the customer ruled out.
 
-3. **What does the shared control plane and regional data plane pattern cost?**
-   Cross-region reporting needs an aggregation layer that respects residency. In return, residency holds by construction and every region shares one UI and policy.
+</details>
 
-4. **What happens at exactly $500 or when value is missing?**
-   The automatic rule is strictly under $500. Route the boundary or missing information to human review.
+<details>
+<summary>2. Why not make the batch carriers real-time?</summary>
 
-5. **Does a local idempotency key guarantee one rebooking?**
-   No. The carrier must support deduplication or authoritative reconciliation; otherwise automatic retries are unsafe.
+Polling a file drop every few seconds makes the data no fresher, only the infrastructure more complex. Keep two paths, converge after ingestion, and surface the batch latency.
 
-6. **Which regional traffic matters besides storage?**
-   Model calls, telemetry, reconciliation, support access, and audit must follow the residency boundary too.
+</details>
 
-7. **Does policy eligibility mean the shipment was rescheduled?**
-   No. The carrier application must authorise the call and return a confirmed result.
+<details>
+<summary>3. What does the shared control plane and regional data plane pattern cost?</summary>
 
-8. **What should the UI show for a batch carrier?**
-   The last authoritative update and detection freshness, so the agent can judge delayed evidence.
+Cross-region reporting needs an aggregation layer that respects residency. In return, residency holds by construction and every region shares one UI and policy.
+
+</details>
+
+<details>
+<summary>4. What happens at exactly $500 or when value is missing?</summary>
+
+The automatic rule is strictly under $500. Route the boundary or missing information to human review.
+
+</details>
+
+<details>
+<summary>5. Does a local idempotency key guarantee one rebooking?</summary>
+
+No. The carrier must support deduplication or authoritative reconciliation; otherwise automatic retries are unsafe.
+
+</details>
+
+<details>
+<summary>6. Which regional traffic matters besides storage?</summary>
+
+Model calls, telemetry, reconciliation, support access, and audit must follow the residency boundary too.
+
+</details>
+
+<details>
+<summary>7. Does policy eligibility mean the shipment was rescheduled?</summary>
+
+No. The carrier application must authorise the call and return a confirmed result.
+
+</details>
+
+<details>
+<summary>8. What should the UI show for a batch carrier?</summary>
+
+The last authoritative update and detection freshness, so the agent can judge delayed evidence.
+
+</details>
 

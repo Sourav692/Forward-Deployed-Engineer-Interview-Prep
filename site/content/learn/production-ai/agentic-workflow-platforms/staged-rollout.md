@@ -70,12 +70,24 @@ Every version of a workflow is kept, and a run pins to the version it started on
 
 ## Check Yourself
 
-1. **Name the question each of the four gates answers.**
-   `DRAFT`: is it wired correctly? `TESTING`: does it behave on realistic data? `SHADOW`: does it decide correctly on live traffic? `LIVE`: will a human still vouch for each action?
+<details>
+<summary>1. Name the question each of the four gates answers.</summary>
 
-2. **Why not merge `SHADOW` into `LIVE`?**
-   Then you could never watch a workflow's decisions on live traffic without exposing customers to its mistakes. You would be debugging in production.
+`DRAFT`: is it wired correctly? `TESTING`: does it behave on realistic data? `SHADOW`: does it decide correctly on live traffic? `LIVE`: will a human still vouch for each action?
 
-3. **What two things does `promote` deny, and why does `u_author_wrong_hat` exist?**
-   `wrong_role`, an author promoting their own work or a non-approver promoting at all, and `cannot_skip_stage`. The principal is a negative control proving an author cannot approve their own work however the request is framed.
+</details>
+
+<details>
+<summary>2. Why not merge <code>SHADOW</code> into <code>LIVE</code>?</summary>
+
+Then you could never watch a workflow's decisions on live traffic without exposing customers to its mistakes. You would be debugging in production.
+
+</details>
+
+<details>
+<summary>3. What two things does <code>promote</code> deny, and why does <code>u_author_wrong_hat</code> exist?</summary>
+
+`wrong_role`, an author promoting their own work or a non-approver promoting at all, and `cannot_skip_stage`. The principal is a negative control proving an author cannot approve their own work however the request is framed.
+
+</details>
 

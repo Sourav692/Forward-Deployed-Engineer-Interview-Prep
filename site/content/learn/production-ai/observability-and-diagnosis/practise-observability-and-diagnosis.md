@@ -83,12 +83,24 @@ The answer names the evidence first, the candidates second and the fix last. Tha
 
 ## Check Yourself
 
-1. **Why is "switch to a bigger model" a weak first answer to a cost or latency incident?**
-   It changes one knob without measuring. The strong answer decomposes the path with traces and cost attribution, then fixes the largest measured driver.
+<details>
+<summary>1. Why is "switch to a bigger model" a weak first answer to a cost or latency incident?</summary>
 
-2. **Name two metrics that should be separate SLOs for a chat assistant.**
-   Time to first token and total latency (and inter-token time). Each fails for different reasons and needs its own target.
+It changes one knob without measuring. The strong answer decomposes the path with traces and cost attribution, then fixes the largest measured driver.
 
-3. **What do you say when a customer's logs may not leave their network?**
-   Propose a self-hostable tracing backend in their network, and state that it is a gap to build rather than something already demonstrated.
+</details>
+
+<details>
+<summary>2. Name two metrics that should be separate SLOs for a chat assistant.</summary>
+
+Time to first token and total latency (and inter-token time). Each fails for different reasons and needs its own target.
+
+</details>
+
+<details>
+<summary>3. What do you say when a customer's logs may not leave their network?</summary>
+
+Propose a self-hostable tracing backend in their network, and state that it is a gap to build rather than something already demonstrated.
+
+</details>
 

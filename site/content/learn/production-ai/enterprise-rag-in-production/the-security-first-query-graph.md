@@ -118,12 +118,24 @@ At no step could a forbidden chunk reach the model, because every step that touc
 
 ## Check Yourself
 
-1. **Why is `merge_filters` safe by construction?**
-   It joins the caller's filter to the access clause with `$and`, which can only narrow results. No caller filter can widen what the access clause allows.
+<details>
+<summary>1. Why is <code>merge_filters</code> safe by construction?</summary>
 
-2. **Which failure fails closed, and why is it different from the others?**
-   An unavailable policy engine refuses the request. Every other failure trades quality for availability, but answering without an access decision would mean answering without access control.
+It joins the caller's filter to the access clause with `$and`, which can only narrow results. No caller filter can widen what the access clause allows.
 
-3. **How does the client treat a 4xx differently from a 5xx?**
-   A 5xx is transient: retry with backoff and jitter, and count it toward the circuit breaker. A 4xx is a request bug: raise immediately and never trip the breaker.
+</details>
+
+<details>
+<summary>2. Which failure fails closed, and why is it different from the others?</summary>
+
+An unavailable policy engine refuses the request. Every other failure trades quality for availability, but answering without an access decision would mean answering without access control.
+
+</details>
+
+<details>
+<summary>3. How does the client treat a 4xx differently from a 5xx?</summary>
+
+A 5xx is transient: retry with backoff and jitter, and count it toward the circuit breaker. A 4xx is a request bug: raise immediately and never trip the breaker.
+
+</details>
 

@@ -76,12 +76,24 @@ One engineer owns booking end to end; another owns payment through reconciliatio
 
 ## Check Yourself
 
-1. **Why does the hardest integration belong in the first milestone?**
-   Risk found early is cheap to absorb. Found in the last week, it moves the date.
+<details>
+<summary>1. Why does the hardest integration belong in the first milestone?</summary>
 
-2. **What should every meeting end with?**
-   A decision, an owner and the next checkpoint. If nothing needs deciding, use a document instead.
+Risk found early is cheap to absorb. Found in the last week, it moves the date.
 
-3. **Name four signs a project is drifting.**
-   Nobody can state the outcome; stakeholders disagree on the MVP; the estimate has no assumptions; scope arrives through chat without changing the plan.
+</details>
+
+<details>
+<summary>2. What should every meeting end with?</summary>
+
+A decision, an owner and the next checkpoint. If nothing needs deciding, use a document instead.
+
+</details>
+
+<details>
+<summary>3. Name four signs a project is drifting.</summary>
+
+Nobody can state the outcome; stakeholders disagree on the MVP; the estimate has no assumptions; scope arrives through chat without changing the plan.
+
+</details>
 

@@ -93,12 +93,24 @@ The metrics show request volume and latency are normal, so this is not an outage
 
 ## Check Yourself
 
-1. **Your dashboards show normal latency and error rates, but customers report wrong answers. Which signal do you open first?**
-   A trace of one affected request. Metrics show the system is up; only the per-step trace shows which stage, such as retrieval, produced the wrong answer.
+<details>
+<summary>1. Your dashboards show normal latency and error rates, but customers report wrong answers. Which signal do you open first?</summary>
 
-2. **Why can't you bill a customer from the tutorial's `InstrumentedLLM` token counts?**
-   They are a word-count estimate (`len(text.split()) * 4 // 3`), not a real tokenizer. They show trends, not exact cost.
+A trace of one affected request. Metrics show the system is up; only the per-step trace shows which stage, such as retrieval, produced the wrong answer.
 
-3. **Your system calls two model providers. Is `get_openai_callback()` enough for cost tracking?**
-   No. It reports cost for OpenAI models only. Keep your own per-provider token-cost table.
+</details>
+
+<details>
+<summary>2. Why can't you bill a customer from the tutorial's <code>InstrumentedLLM</code> token counts?</summary>
+
+They are a word-count estimate (`len(text.split()) * 4 // 3`), not a real tokenizer. They show trends, not exact cost.
+
+</details>
+
+<details>
+<summary>3. Your system calls two model providers. Is <code>get_openai_callback()</code> enough for cost tracking?</summary>
+
+No. It reports cost for OpenAI models only. Keep your own per-provider token-cost table.
+
+</details>
 

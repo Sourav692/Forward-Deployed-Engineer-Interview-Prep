@@ -71,15 +71,31 @@ Cut, do not speed up. Skip technical development and do not offer Pass 2; a list
 
 ## Check Yourself
 
-1. **Which segment is weighted heaviest for a senior or enterprise audience, and why?**
-   Governance and security, three to three and a half minutes. It shows an understanding of what enterprise trust requires, not just a working system.
+<details>
+<summary>1. Which segment is weighted heaviest for a senior or enterprise audience, and why?</summary>
 
-2. **What decides whether to deliver the second pass of the Action beat?**
-   A sign of engagement: a nod, a question, leaning in. If the listener asks for the result, skip it.
+Governance and security, three to three and a half minutes. It shows an understanding of what enterprise trust requires, not just a working system.
 
-3. **What do you add to the timing budget for an FDE interview, and where?**
-   A requirements and scoping segment between the hook and STAR: the discovery conversations before a line of code.
+</details>
 
-4. **Time is running short. What do you compress first, and what must never be rushed?**
-   Compress technical development and Pass 2. Never rush the business framing or the governance segment.
+<details>
+<summary>2. What decides whether to deliver the second pass of the Action beat?</summary>
+
+A sign of engagement: a nod, a question, leaning in. If the listener asks for the result, skip it.
+
+</details>
+
+<details>
+<summary>3. What do you add to the timing budget for an FDE interview, and where?</summary>
+
+A requirements and scoping segment between the hook and STAR: the discovery conversations before a line of code.
+
+</details>
+
+<details>
+<summary>4. Time is running short. What do you compress first, and what must never be rushed?</summary>
+
+Compress technical development and Pass 2. Never rush the business framing or the governance segment.
+
+</details>
 

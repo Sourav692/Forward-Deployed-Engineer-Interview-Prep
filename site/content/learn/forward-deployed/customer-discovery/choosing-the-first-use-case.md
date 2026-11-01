@@ -64,12 +64,24 @@ The account-brief assistant goes first: measurable outcome, available data, mana
 
 ## Check Yourself
 
-1. **What six properties should the first use case have?**
-   A measurable outcome, a realistic adoption path, manageable risk, available data, a practical integration path and a credible evaluation strategy.
+<details>
+<summary>1. What six properties should the first use case have?</summary>
 
-2. **The business wants to skip the governance review for the MVP. What do you propose?**
-   Narrow the scope, use synthetic or masked data, start read-only or assistive, define approval gates, and get security and legal review before production exposure.
+A measurable outcome, a realistic adoption path, manageable risk, available data, a practical integration path and a credible evaluation strategy.
 
-3. **Should an operations agent restart production services on its own?**
-   Not at first. Move from read-only investigation to suggested remediation to human-approved execution. Allow autonomy only for low-risk, reversible operations, and only after evidence.
+</details>
+
+<details>
+<summary>2. The business wants to skip the governance review for the MVP. What do you propose?</summary>
+
+Narrow the scope, use synthetic or masked data, start read-only or assistive, define approval gates, and get security and legal review before production exposure.
+
+</details>
+
+<details>
+<summary>3. Should an operations agent restart production services on its own?</summary>
+
+Not at first. Move from read-only investigation to suggested remediation to human-approved execution. Allow autonomy only for low-risk, reversible operations, and only after evidence.
+
+</details>
 

@@ -69,12 +69,24 @@ Close on outcomes. The platform improved demand forecasting and reduced stockout
 
 ## Check Yourself
 
-1. **What does each letter of RACI mean, and why does "exactly one A" matter?**
-   Responsible, Accountable, Consulted, Informed. One accountable owner per workstream means decisions have a clear owner and nothing stalls in ambiguity.
+<details>
+<summary>1. What does each letter of RACI mean, and why does "exactly one A" matter?</summary>
 
-2. **What question does each tier of the cadence answer?**
-   Daily async keeps peers unblocked; the weekly sync resolves cross-team dependencies; the bi-weekly executive update keeps leadership informed without detail.
+Responsible, Accountable, Consulted, Informed. One accountable owner per workstream means decisions have a clear owner and nothing stalls in ambiguity.
 
-3. **How was the speed-versus-stability conflict resolved without a loser?**
-   Data contracts turned it into an interface agreement, and two-phase delivery shipped a reliable core first, then advanced features.
+</details>
+
+<details>
+<summary>2. What question does each tier of the cadence answer?</summary>
+
+Daily async keeps peers unblocked; the weekly sync resolves cross-team dependencies; the bi-weekly executive update keeps leadership informed without detail.
+
+</details>
+
+<details>
+<summary>3. How was the speed-versus-stability conflict resolved without a loser?</summary>
+
+Data contracts turned it into an interface agreement, and two-phase delivery shipped a reliable core first, then advanced features.
+
+</details>
 

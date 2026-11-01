@@ -165,27 +165,59 @@ Repeated invitations need a supported backend deduplication contract. An applica
 
 ## Check Yourself
 
-1. **Why is structured extraction the most important seam?**
-   Before it, every resume has a different shape. After it, profiles are comparable and rankable. Search and ranking are only reliable on one consistent shape.
+<details>
+<summary>1. Why is structured extraction the most important seam?</summary>
 
-2. **Why is an explicit weighted ranking more defensible than a single model score?**
-   A recruiter or auditor can see which signals put a candidate where they are. One opaque score explains nothing and cannot be challenged.
+Before it, every resume has a different shape. After it, profiles are comparable and rankable. Search and ranking are only reliable on one consistent shape.
 
-3. **What does the AI judge do, and what forces manual review?**
-   It produces standardised scores with a rationale. It never makes the final decision, and confidence below a threshold makes human review mandatory.
+</details>
 
-4. **Do inspectable weights prove the ranking is fair?**
-   No. Review job relevance, evaluate outcomes, and monitor for bias; human review alone is not a fairness guarantee.
+<details>
+<summary>2. Why is an explicit weighted ranking more defensible than a single model score?</summary>
 
-5. **What if a resume lacks a required field?**
-   Keep it missing or uncertain, link to source evidence, and request correction rather than inventing a qualification.
+A recruiter or auditor can see which signals put a candidate where they are. One opaque score explains nothing and cannot be challenged.
 
-6. **Who supplies recruiter and tenant identity?**
-   The application derives scope from the verified session and enforces candidate access before retrieval or action.
+</details>
 
-7. **When may an invitation be sent?**
-   After an authorised human decision and application checks. Reconcile an uncertain send before resending.
+<details>
+<summary>3. What does the AI judge do, and what forces manual review?</summary>
 
-8. **Why be careful when learning from successful hires?**
-   Historical outcomes can reproduce past bias. Validate the signal rather than treating past selection as ground truth.
+It produces standardised scores with a rationale. It never makes the final decision, and confidence below a threshold makes human review mandatory.
+
+</details>
+
+<details>
+<summary>4. Do inspectable weights prove the ranking is fair?</summary>
+
+No. Review job relevance, evaluate outcomes, and monitor for bias; human review alone is not a fairness guarantee.
+
+</details>
+
+<details>
+<summary>5. What if a resume lacks a required field?</summary>
+
+Keep it missing or uncertain, link to source evidence, and request correction rather than inventing a qualification.
+
+</details>
+
+<details>
+<summary>6. Who supplies recruiter and tenant identity?</summary>
+
+The application derives scope from the verified session and enforces candidate access before retrieval or action.
+
+</details>
+
+<details>
+<summary>7. When may an invitation be sent?</summary>
+
+After an authorised human decision and application checks. Reconcile an uncertain send before resending.
+
+</details>
+
+<details>
+<summary>8. Why be careful when learning from successful hires?</summary>
+
+Historical outcomes can reproduce past bias. Validate the signal rather than treating past selection as ground truth.
+
+</details>
 

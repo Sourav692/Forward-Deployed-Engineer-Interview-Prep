@@ -81,12 +81,24 @@ Nobody clicked anything in a console, and every gate that could have stopped the
 
 ## Check Yourself
 
-1. **Why is the Terraform state backend bootstrapped separately?**
-   Terraform cannot create the storage it uses to hold its own state, so the backend must exist first.
+<details>
+<summary>1. Why is the Terraform state backend bootstrapped separately?</summary>
 
-2. **What triggers an automatic rollback in the AWS pipeline?**
-   A new ECS deployment failing health checks. No human decides.
+Terraform cannot create the storage it uses to hold its own state, so the backend must exist first.
 
-3. **Why must the secrets be in the vault before the first deploy?**
-   Containers read them once at startup, so a container started before the secrets exist cannot run.
+</details>
+
+<details>
+<summary>2. What triggers an automatic rollback in the AWS pipeline?</summary>
+
+A new ECS deployment failing health checks. No human decides.
+
+</details>
+
+<details>
+<summary>3. Why must the secrets be in the vault before the first deploy?</summary>
+
+Containers read them once at startup, so a container started before the secrets exist cannot run.
+
+</details>
 

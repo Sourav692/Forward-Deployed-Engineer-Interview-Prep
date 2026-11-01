@@ -64,12 +64,24 @@ Nothing about what was captured changed. Choosing the standard format turned an 
 
 ## Check Yourself
 
-1. **Why does the format of a trace matter more than its contents once a customer is involved?**
-   The customer's existing monitoring stack must read it. A bespoke format needs a custom integration per customer; a standard span format carries the same fields and works with existing tools.
+<details>
+<summary>1. Why does the format of a trace matter more than its contents once a customer is involved?</summary>
 
-2. **Where do domain-specific fields such as prompt version and tokens go in a span-based trace?**
-   On the spans as attributes. The span structure stays standard, so no new schema is needed.
+The customer's existing monitoring stack must read it. A bespoke format needs a custom integration per customer; a standard span format carries the same fields and works with existing tools.
 
-3. **A customer asks for a dashboard of their assistant's accuracy and cost. Is that new data collection?**
-   No. The data is already in the trace store. The dashboard is a tenant-scoped, read-only aggregation, which is real frontend work but not a missing signal.
+</details>
+
+<details>
+<summary>2. Where do domain-specific fields such as prompt version and tokens go in a span-based trace?</summary>
+
+On the spans as attributes. The span structure stays standard, so no new schema is needed.
+
+</details>
+
+<details>
+<summary>3. A customer asks for a dashboard of their assistant's accuracy and cost. Is that new data collection?</summary>
+
+No. The data is already in the trace store. The dashboard is a tenant-scoped, read-only aggregation, which is real frontend work but not a missing signal.
+
+</details>
 

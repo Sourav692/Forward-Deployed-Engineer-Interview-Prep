@@ -68,12 +68,24 @@ In a one-number world the same drop starts a week of guessing across five subsys
 
 ## Check Yourself
 
-1. **A success rate drops from 84% to 76%. Why is that number alone not enough to act on?**
-   It cannot distinguish retrieval, tool schema, planning, context assembly or model changes as the cause. Per-layer measurements are needed to localise it.
+<details>
+<summary>1. A success rate drops from 84% to 76%. Why is that number alone not enough to act on?</summary>
 
-2. **Why do volume and cost move in opposite directions up the pyramid?**
-   Higher layers, such as judged outcomes and human review, cost far more per case, so they can only run on a small sample. The cheap lower layers must catch most defects first.
+It cannot distinguish retrieval, tool schema, planning, context assembly or model changes as the cause. Per-layer measurements are needed to localise it.
 
-3. **Why is leak rate never averaged with groundedness or recall?**
-   Averaging would let a leak hide inside an acceptable overall score. A leak is an incident, so it is scored as a pass-or-fail gate.
+</details>
+
+<details>
+<summary>2. Why do volume and cost move in opposite directions up the pyramid?</summary>
+
+Higher layers, such as judged outcomes and human review, cost far more per case, so they can only run on a small sample. The cheap lower layers must catch most defects first.
+
+</details>
+
+<details>
+<summary>3. Why is leak rate never averaged with groundedness or recall?</summary>
+
+Averaging would let a leak hide inside an acceptable overall score. A leak is an incident, so it is scored as a pass-or-fail gate.
+
+</details>
 

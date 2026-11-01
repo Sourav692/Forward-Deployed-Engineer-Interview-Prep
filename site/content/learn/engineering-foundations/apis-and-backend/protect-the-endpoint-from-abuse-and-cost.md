@@ -63,12 +63,24 @@ A pro user sends the same prompt and passes, because their tier has a larger tok
 
 ## Check Yourself
 
-1. **Why is "100 requests per minute" not enough for an LLM endpoint?**
-   One huge request can cost as much as 50 small ones. Limit tokens per minute and a daily cost budget as well.
+<details>
+<summary>1. Why is "100 requests per minute" not enough for an LLM endpoint?</summary>
 
-2. **What should a 429 response tell the client?**
-   Through headers, the remaining tokens, the reset time and how long to wait; through the body, which limit was hit: request, token or daily budget.
+One huge request can cost as much as 50 small ones. Limit tokens per minute and a daily cost budget as well.
 
-3. **An `asyncio.Semaphore` caps LLM calls at 50. Why can users still exceed their task limit?**
-   The semaphore and any in-memory counts cover one process. Keep per-user counts in distributed state such as Redis so limits hold across all instances.
+</details>
+
+<details>
+<summary>2. What should a 429 response tell the client?</summary>
+
+Through headers, the remaining tokens, the reset time and how long to wait; through the body, which limit was hit: request, token or daily budget.
+
+</details>
+
+<details>
+<summary>3. An <code>asyncio.Semaphore</code> caps LLM calls at 50. Why can users still exceed their task limit?</summary>
+
+The semaphore and any in-memory counts cover one process. Keep per-user counts in distributed state such as Redis so limits hold across all instances.
+
+</details>
 

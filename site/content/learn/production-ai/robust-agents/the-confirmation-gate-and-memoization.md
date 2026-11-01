@@ -112,15 +112,31 @@ The read was cheap the second time, and the write never happened without a yes. 
 
 ## Check Yourself
 
-1. **Why does the confirmation gate run before the cache check, and what would go wrong if the order were reversed?**
-   The gate must see every call. If the cache came first, a repeated destructive request could return a cached result without ever being authorised, so the memo would silently override the gate.
+<details>
+<summary>1. Why does the confirmation gate run before the cache check, and what would go wrong if the order were reversed?</summary>
 
-2. **Name the three properties that make the gate reliable rather than decorative.**
-   The destructive flag is declared at registration rather than judged per call; the default policy denies; and a block raises `ConfirmationRequired` with the exact arguments, so the run pauses visibly instead of skipping or proceeding.
+The gate must see every call. If the cache came first, a repeated destructive request could return a cached result without ever being authorised, so the memo would silently override the gate.
 
-3. **Two calls arrive: `search_tickets` with `{"query": "auth", "limit": 5}` and the same call with the keys in the other order. How many times does the tool run?**
-   Once. The memo key sorts the arguments before serialising them, so both calls map to the same entry, and the second is logged as a `cache_hit`.
+</details>
 
-4. **A run that hit `NodeInterrupt` looks like it crashed. How do you tell, and what must hold before it resumes?**
-   Read the saved state: `next` names the node waiting to run and the tasks carry the interrupt, which a crash does not leave. Before resuming, every side-effecting call must be idempotent, for example a refund keyed by booking ID plus a request ID, so a repeated resume cannot act twice.
+<details>
+<summary>2. Name the three properties that make the gate reliable rather than decorative.</summary>
+
+The destructive flag is declared at registration rather than judged per call; the default policy denies; and a block raises `ConfirmationRequired` with the exact arguments, so the run pauses visibly instead of skipping or proceeding.
+
+</details>
+
+<details>
+<summary>3. Two calls arrive: <code>search_tickets</code> with <code>{"query": "auth", "limit": 5}</code> and the same call with the keys in the other order. How many times does the tool run?</summary>
+
+Once. The memo key sorts the arguments before serialising them, so both calls map to the same entry, and the second is logged as a `cache_hit`.
+
+</details>
+
+<details>
+<summary>4. A run that hit <code>NodeInterrupt</code> looks like it crashed. How do you tell, and what must hold before it resumes?</summary>
+
+Read the saved state: `next` names the node waiting to run and the tasks carry the interrupt, which a crash does not leave. Before resuming, every side-effecting call must be idempotent, for example a refund keyed by booking ID plus a request ID, so a repeated resume cannot act twice.
+
+</details>
 

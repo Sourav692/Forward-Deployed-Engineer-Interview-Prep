@@ -74,12 +74,24 @@ The judge did not become trustworthy when it agreed with six labels. It becomes 
 
 ## Check Yourself
 
-1. **Why is raw agreement a weak way to validate a judge?**
-   When one label dominates, always guessing it scores high agreement while adding no information. Kappa corrects for chance agreement.
+<details>
+<summary>1. Why is raw agreement a weak way to validate a judge?</summary>
 
-2. **What is wrong with one blended quality score from a judge?**
-   It tends to track length and fluency. Separate criteria with anchored levels measure what was intended.
+When one label dominates, always guessing it scores high agreement while adding no information. Kappa corrects for chance agreement.
 
-3. **A judge prefers answer A when shown first and answer B when B is shown first. What do you record?**
-   A tie. An order-dependent verdict carries no preference, and the bias itself should be measured.
+</details>
+
+<details>
+<summary>2. What is wrong with one blended quality score from a judge?</summary>
+
+It tends to track length and fluency. Separate criteria with anchored levels measure what was intended.
+
+</details>
+
+<details>
+<summary>3. A judge prefers answer A when shown first and answer B when B is shown first. What do you record?</summary>
+
+A tie. An order-dependent verdict carries no preference, and the bias itself should be measured.
+
+</details>
 

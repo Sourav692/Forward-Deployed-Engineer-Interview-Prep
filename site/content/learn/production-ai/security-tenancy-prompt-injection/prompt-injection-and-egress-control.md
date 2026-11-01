@@ -84,12 +84,24 @@ No step relied on the model resisting the instruction. Each defence sat in the a
 
 ## Check Yourself
 
-1. **Why is "the spend cap would catch it" not a defence against injection?**
-   It only catches the case by accident. If refunds are allow-listed for autonomous runs, nothing stops the injected request.
+<details>
+<summary>1. Why is "the spend cap would catch it" not a defence against injection?</summary>
 
-2. **Where should a refund amount come from?**
-   From a record the workflow already trusts, such as a CRM line item, resolved by the tool's template. Never from a number in the ticket text.
+It only catches the case by accident. If refunds are allow-listed for autonomous runs, nothing stops the injected request.
 
-3. **How can a call pass every action check and still exfiltrate?**
-   The tool is allowed, but its destination came from untrusted input, such as a "cc" address in a ticket. A per-tenant, per-tool destination allow-list stops it.
+</details>
+
+<details>
+<summary>2. Where should a refund amount come from?</summary>
+
+From a record the workflow already trusts, such as a CRM line item, resolved by the tool's template. Never from a number in the ticket text.
+
+</details>
+
+<details>
+<summary>3. How can a call pass every action check and still exfiltrate?</summary>
+
+The tool is allowed, but its destination came from untrusted input, such as a "cc" address in a ticket. A per-tenant, per-tool destination allow-list stops it.
+
+</details>
 

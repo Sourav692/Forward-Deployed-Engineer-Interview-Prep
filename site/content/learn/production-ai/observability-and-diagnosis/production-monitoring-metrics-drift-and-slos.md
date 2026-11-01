@@ -101,12 +101,24 @@ When P99 rises with a flat P50 a month later, the queue chart shows it is load, 
 
 ## Check Yourself
 
-1. **P99 latency is rising but P50 is flat. What is the most likely cause, and which chart confirms it?**
-   Queueing under load, not a slower model. Charts of queue wait against service time, and of utilisation, confirm it.
+<details>
+<summary>1. P99 latency is rising but P50 is flat. What is the most likely cause, and which chart confirms it?</summary>
 
-2. **What two questions can a single run trace not answer, and what answers them?**
-   Whether behaviour is drifting over time, answered by drift alerts against a rolling baseline; and who pays, answered by cost aggregated by tenant, workflow and model.
+Queueing under load, not a slower model. Charts of queue wait against service time, and of utilisation, confirm it.
 
-3. **Your cache hit rate is 60%, yet cost barely moved. What metric was missing?**
-   A token-weighted hit rate. If the hits are small requests, a high count saves little money.
+</details>
+
+<details>
+<summary>2. What two questions can a single run trace not answer, and what answers them?</summary>
+
+Whether behaviour is drifting over time, answered by drift alerts against a rolling baseline; and who pays, answered by cost aggregated by tenant, workflow and model.
+
+</details>
+
+<details>
+<summary>3. Your cache hit rate is 60%, yet cost barely moved. What metric was missing?</summary>
+
+A token-weighted hit rate. If the hits are small requests, a high count saves little money.
+
+</details>
 

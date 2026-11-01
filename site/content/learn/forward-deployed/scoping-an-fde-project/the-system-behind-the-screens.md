@@ -65,12 +65,24 @@ That is more than a dozen tasks behind a single upload button. The estimate must
 
 ## Check Yourself
 
-1. **Why can a small booking flow be harder than a large content site?**
-   It has many states, real-time constraints, several external integrations and costly failures such as double charges. The content site has few of these.
+<details>
+<summary>1. Why can a small booking flow be harder than a large content site?</summary>
 
-2. **Name three ways to deliberately break a booking workflow while scoping it.**
-   Two users take the last seat at once; payment succeeds but the booking save fails; the instructor cancels shortly before class.
+It has many states, real-time constraints, several external integrations and costly failures such as double charges. The content site has few of these.
 
-3. **Name six items of hidden work to check before committing to a date.**
-   Any six of: login and recovery, permissions, admin tools, data migration, analytics, logging and alerts, safe retries, abuse limits, security review, testing and staging, rollout and rollback, support and incident response.
+</details>
+
+<details>
+<summary>2. Name three ways to deliberately break a booking workflow while scoping it.</summary>
+
+Two users take the last seat at once; payment succeeds but the booking save fails; the instructor cancels shortly before class.
+
+</details>
+
+<details>
+<summary>3. Name six items of hidden work to check before committing to a date.</summary>
+
+Any six of: login and recovery, permissions, admin tools, data migration, analytics, logging and alerts, safe retries, abuse limits, security review, testing and staging, rollout and rollback, support and incident response.
+
+</details>
 

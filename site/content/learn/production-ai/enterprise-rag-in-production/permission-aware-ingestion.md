@@ -107,12 +107,24 @@ Ingestion is batch, not streaming change-data capture, but it is no longer full-
 
 ## Check Yourself
 
-1. **Why is defaulting an unmappable document to `internal` dangerous?**
-   The query-time checks enforce whatever permissions were indexed. A guessed permission becomes a real one, so a sensitive document is served to everyone with internal clearance.
+<details>
+<summary>1. Why is defaulting an unmappable document to <code>internal</code> dangerous?</summary>
 
-2. **Why does the content hash exclude access attributes?**
-   An access-only change never needs re-embedding, and the catalog is refreshed unconditionally, so the hash only needs to detect text changes.
+The query-time checks enforce whatever permissions were indexed. A guessed permission becomes a real one, so a sensitive document is served to everyone with internal clearance.
 
-3. **What makes the catalog a genuine second opinion?**
-   It is a separate store, updated independently of the index and read fresh on every request. Re-reading the index's own cached copy would just repeat the same possibly stale data.
+</details>
+
+<details>
+<summary>2. Why does the content hash exclude access attributes?</summary>
+
+An access-only change never needs re-embedding, and the catalog is refreshed unconditionally, so the hash only needs to detect text changes.
+
+</details>
+
+<details>
+<summary>3. What makes the catalog a genuine second opinion?</summary>
+
+It is a separate store, updated independently of the index and read fresh on every request. Re-reading the index's own cached copy would just repeat the same possibly stale data.
+
+</details>
 

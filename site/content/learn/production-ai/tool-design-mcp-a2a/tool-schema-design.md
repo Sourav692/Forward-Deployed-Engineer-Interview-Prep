@@ -65,12 +65,24 @@ Before the rewrite, the model could send a string amount, a refund reason nobody
 
 ## Check Yourself
 
-1. **Why name a field `timeout_seconds` rather than `timeout`?**
-   Without units, the same model will send different units on different days. The name makes the unit part of the contract.
+<details>
+<summary>1. Why name a field <code>timeout_seconds</code> rather than <code>timeout</code>?</summary>
 
-2. **What does rule 8 prevent?**
-   A retried refund paying the customer twice. With an idempotency key, a repeated call returns the first call's result.
+Without units, the same model will send different units on different days. The name makes the unit part of the contract.
 
-3. **The prompt says "return only valid JSON", yet parsing still fails sometimes. Why, and what is the fix?**
-   Instruction-following through prompt text is probabilistic. Use schema-constrained decoding where available, and keep a retry with a fallback as a backstop.
+</details>
+
+<details>
+<summary>2. What does rule 8 prevent?</summary>
+
+A retried refund paying the customer twice. With an idempotency key, a repeated call returns the first call's result.
+
+</details>
+
+<details>
+<summary>3. The prompt says "return only valid JSON", yet parsing still fails sometimes. Why, and what is the fix?</summary>
+
+Instruction-following through prompt text is probabilistic. Use schema-constrained decoding where available, and keep a retry with a fallback as a backstop.
+
+</details>
 

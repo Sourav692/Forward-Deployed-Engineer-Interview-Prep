@@ -70,12 +70,24 @@ Each rung caught a different failure: a broken template, a quality regression, a
 
 ## Check Yourself
 
-1. **Give the four rungs of the testing ladder from cheapest to most expensive.**
-   Prompt unit tests, golden-set evaluation on change, scheduled evaluation such as nightly, then A/B testing in production.
+<details>
+<summary>1. Give the four rungs of the testing ladder from cheapest to most expensive.</summary>
 
-2. **What can regress with zero commits, and what is the fix?**
-   The model behind a provider's version name can change silently. Run the same evaluation suite on a schedule and compare with the last known-good baseline.
+Prompt unit tests, golden-set evaluation on change, scheduled evaluation such as nightly, then A/B testing in production.
 
-3. **Strategy B scores 1.000 and strategy A scores 0.958 on 22 cases. Is B better?**
-   You cannot tell. Twenty-two cases are too few to separate those scores from noise; decide the meaningful effect size first and test on enough examples.
+</details>
+
+<details>
+<summary>2. What can regress with zero commits, and what is the fix?</summary>
+
+The model behind a provider's version name can change silently. Run the same evaluation suite on a schedule and compare with the last known-good baseline.
+
+</details>
+
+<details>
+<summary>3. Strategy B scores 1.000 and strategy A scores 0.958 on 22 cases. Is B better?</summary>
+
+You cannot tell. Twenty-two cases are too few to separate those scores from noise; decide the meaningful effect size first and test on enough examples.
+
+</details>
 

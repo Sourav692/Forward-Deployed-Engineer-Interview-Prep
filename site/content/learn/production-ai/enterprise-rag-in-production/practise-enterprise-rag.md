@@ -105,12 +105,24 @@ Every element answered a row of the requirement table. That is the test of a goo
 
 ## Check Yourself
 
-1. **What is the one-line pattern choice for enterprise RAG access control?**
-   Partition by tenant and pre-filter within it, with an authoritative post-check, because the filter language is weaker than the policy language.
+<details>
+<summary>1. What is the one-line pattern choice for enterprise RAG access control?</summary>
 
-2. **What is the one line about the filter and the post-check?**
-   The filter makes retrieval cheap; the post-check makes it correct.
+Partition by tenant and pre-filter within it, with an authoritative post-check, because the filter language is weaker than the policy language.
 
-3. **Which failure must fail closed, and what does every other failure do?**
-   An unavailable policy engine refuses. Every other failure degrades to a weaker answer or a clean refusal, never an exception.
+</details>
+
+<details>
+<summary>2. What is the one line about the filter and the post-check?</summary>
+
+The filter makes retrieval cheap; the post-check makes it correct.
+
+</details>
+
+<details>
+<summary>3. Which failure must fail closed, and what does every other failure do?</summary>
+
+An unavailable policy engine refuses. Every other failure degrades to a weaker answer or a clean refusal, never an exception.
+
+</details>
 

@@ -83,12 +83,24 @@ A line worth keeping, in paraphrase of the handbook's interview lens: start with
 
 ## Check Yourself
 
-1. **An interviewer asks how you would protect a public LLM endpoint. What are the first three layers you name?**
-   Authentication by API key or JWT, request validation against prompt bombs, and token-aware rate limiting on requests, tokens and daily cost.
+<details>
+<summary>1. An interviewer asks how you would protect a public LLM endpoint. What are the first three layers you name?</summary>
 
-2. **What is wrong with "streaming makes the system faster"?**
-   Streaming lowers perceived latency only; total generation time is unchanged.
+Authentication by API key or JWT, request validation against prompt bombs, and token-aware rate limiting on requests, tokens and daily cost.
 
-3. **In a full API design, why mention the grade check before streaming?**
-   Because the decision to answer must be settled before the first token; retracting a streamed answer is worse than a clean refusal.
+</details>
+
+<details>
+<summary>2. What is wrong with "streaming makes the system faster"?</summary>
+
+Streaming lowers perceived latency only; total generation time is unchanged.
+
+</details>
+
+<details>
+<summary>3. In a full API design, why mention the grade check before streaming?</summary>
+
+Because the decision to answer must be settled before the first token; retracting a streamed answer is worse than a clean refusal.
+
+</details>
 

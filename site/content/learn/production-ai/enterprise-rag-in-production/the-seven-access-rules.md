@@ -122,12 +122,24 @@ Same document, same query, three outcomes. Each came from a named rule or obliga
 
 ## Check Yourself
 
-1. **Why does the attacker persona read 0 of 22 documents despite holding every group and top clearance?**
-   Tenant isolation is checked first and cannot be overridden. A principal in another tenant is denied before any other rule runs.
+<details>
+<summary>1. Why does the attacker persona read 0 of 22 documents despite holding every group and top clearance?</summary>
 
-2. **Why did the project add `u_dana_ext`?**
-   Without a high-clearance contractor, clearance always denied first, so the external-restriction rule never fired and was untested.
+Tenant isolation is checked first and cannot be overridden. A principal in another tenant is denied before any other rule runs.
 
-3. **What is the difference between clearance, groups and compartments?**
-   Clearance is a ladder that says how sensitive a document may be. Groups are the grant that says which documents. Compartments are orthogonal assignments that top clearance cannot bypass. A reader needs all three.
+</details>
+
+<details>
+<summary>2. Why did the project add <code>u_dana_ext</code>?</summary>
+
+Without a high-clearance contractor, clearance always denied first, so the external-restriction rule never fired and was untested.
+
+</details>
+
+<details>
+<summary>3. What is the difference between clearance, groups and compartments?</summary>
+
+Clearance is a ladder that says how sensitive a document may be. Groups are the grant that says which documents. Compartments are orthogonal assignments that top clearance cannot bypass. A reader needs all three.
+
+</details>
 

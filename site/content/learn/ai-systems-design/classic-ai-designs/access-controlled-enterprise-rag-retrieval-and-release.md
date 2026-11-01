@@ -121,27 +121,59 @@ If the policy service fails, refuse before generation. If permitted evidence is 
 
 ## Check Yourself
 
-1. **Why is post-filtering wrong even if it never shows a forbidden document?**
-   It shrinks the user's top results, crowding them out with material they cannot see, and result counts can leak information if shown. Pre-filtering narrows the candidate set; authoritative checks still run before model context is built.
+<details>
+<summary>1. Why is post-filtering wrong even if it never shows a forbidden document?</summary>
 
-2. **What does the post-check catch that the pre-filter cannot?**
-   Embargo dates evaluated against "now", need-to-know list semantics, live revocation on a stale index, and redaction obligations.
+It shrinks the user's top results, crowding them out with material they cannot see, and result counts can leak information if shown. Pre-filtering narrows the candidate set; authoritative checks still run before model context is built.
 
-3. **Why must the security suite block the release instead of lowering a score?**
-   A retrieval regression is a bug for next sprint, but a leak is an incident. The release suite must observe zero leaks; that is not a universal security proof.
+</details>
 
-4. **Does the assistant issue the service credit it describes?**
-   No. This case is read-only; the account manager owns the commercial decision.
+<details>
+<summary>2. What does the post-check catch that the pre-filter cannot?</summary>
 
-5. **Who establishes the tenant and groups?**
-   Trusted identity and policy services, not a claimed role or tenant ID in the question.
+Embargo dates evaluated against "now", need-to-know list semantics, live revocation on a stale index, and redaction obligations.
 
-6. **Can a keyword fallback bypass the policy engine?**
-   No. Every fallback needs equivalent authorisation. Otherwise refuse.
+</details>
 
-7. **What does zero observed leaks establish?**
-   That the release suite passed its security condition. It does not prove every possible disclosure is prevented.
+<details>
+<summary>3. Why must the security suite block the release instead of lowering a score?</summary>
 
-8. **Why keep hypothetical retrieval text separate from evidence?**
-   HyDE text is a search probe, not a source. Only permitted supporting documents may ground the answer.
+A retrieval regression is a bug for next sprint, but a leak is an incident. The release suite must observe zero leaks; that is not a universal security proof.
+
+</details>
+
+<details>
+<summary>4. Does the assistant issue the service credit it describes?</summary>
+
+No. This case is read-only; the account manager owns the commercial decision.
+
+</details>
+
+<details>
+<summary>5. Who establishes the tenant and groups?</summary>
+
+Trusted identity and policy services, not a claimed role or tenant ID in the question.
+
+</details>
+
+<details>
+<summary>6. Can a keyword fallback bypass the policy engine?</summary>
+
+No. Every fallback needs equivalent authorisation. Otherwise refuse.
+
+</details>
+
+<details>
+<summary>7. What does zero observed leaks establish?</summary>
+
+That the release suite passed its security condition. It does not prove every possible disclosure is prevented.
+
+</details>
+
+<details>
+<summary>8. Why keep hypothetical retrieval text separate from evidence?</summary>
+
+HyDE text is a search probe, not a source. Only permitted supporting documents may ground the answer.
+
+</details>
 

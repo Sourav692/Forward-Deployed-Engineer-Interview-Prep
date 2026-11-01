@@ -54,12 +54,24 @@ Score it against the spine. It names all three lenses, gives one concrete moment
 
 ## Check Yourself
 
-1. **What three parts should every role answer contain?**
-   The three lenses, the statement that they reinforce each other, and one concrete moment from a real engagement.
+<details>
+<summary>1. What three parts should every role answer contain?</summary>
 
-2. **Give the one-sentence answer to "what makes you senior".**
-   Being the person whose judgement the team can borrow on scope, on what "done" means, and on when to go deep, while staying technical, customer-connected and available.
+The three lenses, the statement that they reinforce each other, and one concrete moment from a real engagement.
 
-3. **Name three habits for guiding an internal team.**
-   Any three of: unblock before building; review designs before code; coach engineers to spot ambiguity; review with a customer-intent lens; own hard scope conversations; report failures transparently; scope the first build narrowly.
+</details>
+
+<details>
+<summary>2. Give the one-sentence answer to "what makes you senior".</summary>
+
+Being the person whose judgement the team can borrow on scope, on what "done" means, and on when to go deep, while staying technical, customer-connected and available.
+
+</details>
+
+<details>
+<summary>3. Name three habits for guiding an internal team.</summary>
+
+Any three of: unblock before building; review designs before code; coach engineers to spot ambiguity; review with a customer-intent lens; own hard scope conversations; report failures transparently; scope the first build narrowly.
+
+</details>
 

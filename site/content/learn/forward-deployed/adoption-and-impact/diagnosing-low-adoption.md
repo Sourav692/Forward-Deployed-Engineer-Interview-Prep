@@ -50,12 +50,24 @@ The diagnosis is fit and friction, not quality. The next steps are to surface br
 
 ## Check Yourself
 
-1. **Name three of the nine adoption causes the bank lists.**
-   Any three of: problem importance, workflow fit, user trust, response quality, latency, training and onboarding, incentives, integration friction, and whether it solves the actual pain point.
+<details>
+<summary>1. Name three of the nine adoption causes the bank lists.</summary>
 
-2. **Why investigate fit before quality?**
-   A high-quality tool for an unimportant problem, or one outside the workflow, still goes unused. Quality fixes help only once fit is confirmed.
+Any three of: problem importance, workflow fit, user trust, response quality, latency, training and onboarding, incentives, integration friction, and whether it solves the actual pain point.
 
-3. **What does high accuracy with low adoption suggest?**
-   A fit, friction, trust or incentive problem rather than a model problem.
+</details>
+
+<details>
+<summary>2. Why investigate fit before quality?</summary>
+
+A high-quality tool for an unimportant problem, or one outside the workflow, still goes unused. Quality fixes help only once fit is confirmed.
+
+</details>
+
+<details>
+<summary>3. What does high accuracy with low adoption suggest?</summary>
+
+A fit, friction, trust or incentive problem rather than a model problem.
+
+</details>
 

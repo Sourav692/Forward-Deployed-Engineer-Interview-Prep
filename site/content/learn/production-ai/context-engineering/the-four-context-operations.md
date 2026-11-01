@@ -64,12 +64,24 @@ Each operation answered a different question. What must survive? What does this 
 
 ## Check Yourself
 
-1. **Name the four context operations.**
-   Write, select, compress and isolate.
+<details>
+<summary>1. Name the four context operations.</summary>
 
-2. **Why "select per step" rather than once per run?**
-   A result that mattered early is usually noise later, so a per-run selection carries stale material into every step.
+Write, select, compress and isolate.
 
-3. **An agent's cost spikes on long conversations, and it also forgets early facts. What single cause fits both?**
-   Automatic summarisation firing silently past a threshold. Trace the summarisation event to confirm.
+</details>
+
+<details>
+<summary>2. Why "select per step" rather than once per run?</summary>
+
+A result that mattered early is usually noise later, so a per-run selection carries stale material into every step.
+
+</details>
+
+<details>
+<summary>3. An agent's cost spikes on long conversations, and it also forgets early facts. What single cause fits both?</summary>
+
+Automatic summarisation firing silently past a threshold. Trace the summarisation event to confirm.
+
+</details>
 

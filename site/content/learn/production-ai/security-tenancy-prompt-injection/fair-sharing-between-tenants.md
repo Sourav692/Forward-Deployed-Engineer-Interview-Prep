@@ -72,12 +72,24 @@ Each control answered a different question: whether a request may proceed, in wh
 
 ## Check Yourself
 
-1. **Distinguish a rate limit from a fair queue in one sentence each.**
-   A rate limit decides whether one tenant's request may proceed at all, as a ceiling on its own allotment. A fair queue decides the order requests are served under load, so one tenant's burst cannot monopolise shared capacity.
+<details>
+<summary>1. Distinguish a rate limit from a fair queue in one sentence each.</summary>
 
-2. **How do the two circuit breakers in the sources differ?**
-   The enterprise RAG client's breaker protects against the model provider failing: 3 consecutive outage exhaustions, 30 s open. The quick reference's breaker protects other tenants from one tenant's failures: 50% errors, 60 s block.
+A rate limit decides whether one tenant's request may proceed at all, as a ceiling on its own allotment. A fair queue decides the order requests are served under load, so one tenant's burst cannot monopolise shared capacity.
 
-3. **Why does a spend cap need per-tenant cost attribution?**
-   The cap acts on each tenant's running total. Without tagging every request's cost with its tenant, there is no total to compare against the cap.
+</details>
+
+<details>
+<summary>2. How do the two circuit breakers in the sources differ?</summary>
+
+The enterprise RAG client's breaker protects against the model provider failing: 3 consecutive outage exhaustions, 30 s open. The quick reference's breaker protects other tenants from one tenant's failures: 50% errors, 60 s block.
+
+</details>
+
+<details>
+<summary>3. Why does a spend cap need per-tenant cost attribution?</summary>
+
+The cap acts on each tenant's running total. Without tagging every request's cost with its tenant, there is no total to compare against the cap.
+
+</details>
 

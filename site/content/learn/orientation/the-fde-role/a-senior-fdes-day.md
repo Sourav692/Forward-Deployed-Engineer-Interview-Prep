@@ -60,12 +60,24 @@ At midday the FDE meets compliance and agrees the zero-leak gate. In the afterno
 
 ## Check Yourself
 
-1. **Why does a senior FDE unblock the team before working on their own tickets?**
-   A blocked engineer can lose a whole day to one undecided question, so removing that friction has the highest leverage.
+<details>
+<summary>1. Why does a senior FDE unblock the team before working on their own tickets?</summary>
 
-2. **Why run discovery with users and with compliance as separate conversations?**
-   They surface completely different requirements, and both are needed before writing any access rule.
+A blocked engineer can lose a whole day to one undecided question, so removing that friction has the highest leverage.
 
-3. **The harness flags a leak that turns out to be stale test data. What do you do?**
-   Trace it, then report it openly, false alarm included. Transparency builds more trust than a clean track record.
+</details>
+
+<details>
+<summary>2. Why run discovery with users and with compliance as separate conversations?</summary>
+
+They surface completely different requirements, and both are needed before writing any access rule.
+
+</details>
+
+<details>
+<summary>3. The harness flags a leak that turns out to be stale test data. What do you do?</summary>
+
+Trace it, then report it openly, false alarm included. Transparency builds more trust than a clean track record.
+
+</details>
 

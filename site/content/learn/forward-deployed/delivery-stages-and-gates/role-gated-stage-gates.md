@@ -125,12 +125,24 @@ Each stall had a named rule and a reason. That is the difference between gates t
 
 ## Check Yourself
 
-1. **The FDA is the most senior person on the engagement. Why can they not sign the security gate?**
-   The gate allows only the security reviewer role. Seniority is not an override, because the person closest to the work is not the one authorised to certify it is safe.
+<details>
+<summary>1. The FDA is the most senior person on the engagement. Why can they not sign the security gate?</summary>
 
-2. **Distinguish the golden-set sign-off from the evaluation baseline.**
-   The golden-set sign-off certifies the test represents the customer's needs, signed by the SME. The baseline certifies the agent passed that test, signed by the FDA.
+The gate allows only the security reviewer role. Seniority is not an override, because the person closest to the work is not the one authorised to certify it is safe.
 
-3. **What happens when the success metrics are not met by day 14?**
-   The go/no-go gate does not pass. No-go is a legitimate, first-class outcome, and the log shows exactly why.
+</details>
+
+<details>
+<summary>2. Distinguish the golden-set sign-off from the evaluation baseline.</summary>
+
+The golden-set sign-off certifies the test represents the customer's needs, signed by the SME. The baseline certifies the agent passed that test, signed by the FDA.
+
+</details>
+
+<details>
+<summary>3. What happens when the success metrics are not met by day 14?</summary>
+
+The go/no-go gate does not pass. No-go is a legitimate, first-class outcome, and the log shows exactly why.
+
+</details>
 

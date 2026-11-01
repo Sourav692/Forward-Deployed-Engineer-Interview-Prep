@@ -63,12 +63,24 @@ The pricing questions are a knowledge gap. Pricing changes every quarter, so it 
 
 ## Check Yourself
 
-1. **Fine-tune or RAG for a model that does not know your product's new features?**
-   RAG. Fine-tuning does not fix missing knowledge, and features change faster than retraining cycles.
+<details>
+<summary>1. Fine-tune or RAG for a model that does not know your product's new features?</summary>
 
-2. **Name the three situations where fine-tuning earns its cost.**
-   Strict format or protocol adherence at high volume, domain vocabulary the base model lacks, and a hard cost or latency ceiling after cheaper fixes are exhausted.
+RAG. Fine-tuning does not fix missing knowledge, and features change faster than retraining cycles.
 
-3. **Why keep a prompted fallback after fine-tuning?**
-   The tuned model freezes the task definition. When the business changes it, the prompted path keeps working while the model is retrained.
+</details>
+
+<details>
+<summary>2. Name the three situations where fine-tuning earns its cost.</summary>
+
+Strict format or protocol adherence at high volume, domain vocabulary the base model lacks, and a hard cost or latency ceiling after cheaper fixes are exhausted.
+
+</details>
+
+<details>
+<summary>3. Why keep a prompted fallback after fine-tuning?</summary>
+
+The tuned model freezes the task definition. When the business changes it, the prompted path keeps working while the model is retrained.
+
+</details>
 

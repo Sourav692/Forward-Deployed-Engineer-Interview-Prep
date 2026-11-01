@@ -87,12 +87,24 @@ The harness is offline only. For online signals, the answer the source recommend
 
 ## Check Yourself
 
-1. **Why is the leak check decided by the policy engine rather than an LLM judge?**
-   A deterministic decision can be trusted to block a release. A model's judgement can flicker between runs, as case `S05` showed.
+<details>
+<summary>1. Why is the leak check decided by the policy engine rather than an LLM judge?</summary>
 
-2. **Aggregate accuracy rose from 79% to 81%, yet one tenant escalated. What gate would have caught it?**
-   A per-stratum floor, such as no stratum dropping more than 3 points, plus per-tenant monitoring. That tenant was only about 4% of a traffic-proportional set.
+A deterministic decision can be trusted to block a release. A model's judgement can flicker between runs, as case `S05` showed.
 
-3. **Why is an allowed but irrelevant document not a gate failure?**
-   It is a quality miss. Gating on it would create false alarms and teach people to ignore real ones.
+</details>
+
+<details>
+<summary>2. Aggregate accuracy rose from 79% to 81%, yet one tenant escalated. What gate would have caught it?</summary>
+
+A per-stratum floor, such as no stratum dropping more than 3 points, plus per-tenant monitoring. That tenant was only about 4% of a traffic-proportional set.
+
+</details>
+
+<details>
+<summary>3. Why is an allowed but irrelevant document not a gate failure?</summary>
+
+It is a quality miss. Gating on it would create false alarms and teach people to ignore real ones.
+
+</details>
 

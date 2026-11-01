@@ -81,12 +81,24 @@ Both fixes live in the gateway. Each has a number that would have shown the prob
 
 ## Check Yourself
 
-1. **Why compact history into typed records instead of a prose summary?**
-   Typed records stay stable when compacted again. Prose summaries drift with each pass and lose facts.
+<details>
+<summary>1. Why compact history into typed records instead of a prose summary?</summary>
 
-2. **What are the seven steps of a tool gateway, in order?**
-   Authorise, validate, bound, execute, classify, project and observe.
+Typed records stay stable when compacted again. Prose summaries drift with each pass and lose facts.
 
-3. **Roughly where does tool selection start to degrade, and what fixes it?**
-   Past about 40 tools. Tool retrieval advertises only a short, relevant list.
+</details>
+
+<details>
+<summary>2. What are the seven steps of a tool gateway, in order?</summary>
+
+Authorise, validate, bound, execute, classify, project and observe.
+
+</details>
+
+<details>
+<summary>3. Roughly where does tool selection start to degrade, and what fixes it?</summary>
+
+Past about 40 tools. Tool retrieval advertises only a short, relevant list.
+
+</details>
 

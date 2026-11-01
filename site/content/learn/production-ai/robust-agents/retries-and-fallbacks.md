@@ -132,15 +132,31 @@ If no fallback had been declared, the policy would end at escalation: tell the u
 
 ## Check Yourself
 
-1. **What is the difference between `TransientError` and `NotFoundError` in the retry policy?**
-   A `TransientError` means the call was fine but the moment was not, so it is retried with backoff up to the budget. A `NotFoundError` means the call cannot succeed, so it is raised immediately for the caller to fall back or escalate.
+<details>
+<summary>1. What is the difference between <code>TransientError</code> and <code>NotFoundError</code> in the retry policy?</summary>
 
-2. **Why does `with_fallback` re-raise `ConfirmationRequired` instead of falling back?**
-   A confirmation pause is not an error. Falling back on it would let a blocked destructive call be replaced by a tool that was not blocked, routing around the gate.
+A `TransientError` means the call was fine but the moment was not, so it is retried with backoff up to the budget. A `NotFoundError` means the call cannot succeed, so it is raised immediately for the caller to fall back or escalate.
 
-3. **What are the two rules of the failure policy that never bend?**
-   Never silently swallow a failure inside an agent loop, and never auto-retry a destructive call without re-checking the confirmation.
+</details>
 
-4. **An agent's error rate is the same with node retries on and off. What is the likely cause?**
-   The retry policy is retrying a deterministic failure, such as a logic bug or a malformed tool call. Narrow `retry_on` to transient infrastructure errors, and route bad arguments to a re-plan instead.
+<details>
+<summary>2. Why does <code>with_fallback</code> re-raise <code>ConfirmationRequired</code> instead of falling back?</summary>
+
+A confirmation pause is not an error. Falling back on it would let a blocked destructive call be replaced by a tool that was not blocked, routing around the gate.
+
+</details>
+
+<details>
+<summary>3. What are the two rules of the failure policy that never bend?</summary>
+
+Never silently swallow a failure inside an agent loop, and never auto-retry a destructive call without re-checking the confirmation.
+
+</details>
+
+<details>
+<summary>4. An agent's error rate is the same with node retries on and off. What is the likely cause?</summary>
+
+The retry policy is retrying a deterministic failure, such as a logic bug or a malformed tool call. Narrow `retry_on` to transient infrastructure errors, and route bad arguments to a re-plan instead.
+
+</details>
 

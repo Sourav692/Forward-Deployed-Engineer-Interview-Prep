@@ -71,12 +71,24 @@ Choosing on purpose what enters a fixed-size window at each step, through four o
 
 ## Check Yourself
 
-1. **What is the first move in any "it degrades on long runs" question?**
-   Reconstruct exactly what the model saw at the failing step.
+<details>
+<summary>1. What is the first move in any "it degrades on long runs" question?</summary>
 
-2. **Name the four context operations.**
-   Write, select, compress and isolate.
+Reconstruct exactly what the model saw at the failing step.
 
-3. **What must a fan-out design state before launch?**
-   What a partial failure returns: partial results with a failure count, or a full abort.
+</details>
+
+<details>
+<summary>2. Name the four context operations.</summary>
+
+Write, select, compress and isolate.
+
+</details>
+
+<details>
+<summary>3. What must a fan-out design state before launch?</summary>
+
+What a partial failure returns: partial results with a failure count, or a full abort.
+
+</details>
 

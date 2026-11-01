@@ -67,12 +67,24 @@ Saying that out loud is stronger than presenting 0.83 as a result. An interviewe
 
 ## Check Yourself
 
-1. **Why is the day-3 escalation automatic rather than a task for the delivery lead?**
-   A person remembering to chase access is what fails under load. An automatic check against day and gate state fires whether anyone is watching.
+<details>
+<summary>1. Why is the day-3 escalation automatic rather than a task for the delivery lead?</summary>
 
-2. **What does a flat override rate tell you?**
-   Humans keep overriding the agent at the same rate, so trust is not being earned and the agent is not ready for less supervision.
+A person remembering to chase access is what fails under load. An automatic check against day and gate state fires whether anyone is watching.
 
-3. **Why should week-4 retention show as empty rather than 0.0 before it is recorded?**
-   A zero claims nobody uses the agent. An empty value says the measurement has not happened yet.
+</details>
+
+<details>
+<summary>2. What does a flat override rate tell you?</summary>
+
+Humans keep overriding the agent at the same rate, so trust is not being earned and the agent is not ready for less supervision.
+
+</details>
+
+<details>
+<summary>3. Why should week-4 retention show as empty rather than 0.0 before it is recorded?</summary>
+
+A zero claims nobody uses the agent. An empty value says the measurement has not happened yet.
+
+</details>
 

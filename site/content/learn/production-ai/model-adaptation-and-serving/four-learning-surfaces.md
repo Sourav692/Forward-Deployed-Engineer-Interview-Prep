@@ -66,12 +66,24 @@ No weights changed. The fix lived on the cheapest surface that could hold it, wh
 
 ## Check Yourself
 
-1. **How would you improve an underperforming agent?**
-   Walk down the surfaces: fix context first (instructions, examples, retrieval), then memory, then procedures, and change weights only if those are exhausted.
+<details>
+<summary>1. How would you improve an underperforming agent?</summary>
 
-2. **Why rank candidate examples by outcome and not only by similarity?**
-   A similar example from a mediocre run teaches the model to be mediocre.
+Walk down the surfaces: fix context first (instructions, examples, retrieval), then memory, then procedures, and change weights only if those are exhausted.
 
-3. **What three things must a production Reflexion loop have?**
-   An external failure signal, a lesson specific enough to change behaviour, and a hard cap on attempts before escalation.
+</details>
+
+<details>
+<summary>2. Why rank candidate examples by outcome and not only by similarity?</summary>
+
+A similar example from a mediocre run teaches the model to be mediocre.
+
+</details>
+
+<details>
+<summary>3. What three things must a production Reflexion loop have?</summary>
+
+An external failure signal, a lesson specific enough to change behaviour, and a hard cap on attempts before escalation.
+
+</details>
 

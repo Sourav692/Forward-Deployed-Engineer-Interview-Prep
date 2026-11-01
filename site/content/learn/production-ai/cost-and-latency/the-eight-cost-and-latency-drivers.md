@@ -79,12 +79,24 @@ Finally, state what each fix costs. Less context hurts weak retrieval. Fewer chu
 
 ## Check Yourself
 
-1. **Which drivers appear on both the cost and the latency list, and why does that matter?**
-   Input context, output tokens, retrieval, reranking, agent steps and tools, retries, and logging. One fix to them improves both answers to "why is it expensive?" and "why is it slow?".
+<details>
+<summary>1. Which drivers appear on both the cost and the latency list, and why does that matter?</summary>
 
-2. **Why are retries called invisible?**
-   Product metrics count requests, not attempts. Unless traces record retries, a cost spike during an incident has no visible cause.
+Input context, output tokens, retrieval, reranking, agent steps and tools, retries, and logging. One fix to them improves both answers to "why is it expensive?" and "why is it slow?".
 
-3. **A nightly job's embedding bill tripled after a document refresh. What is the first comparison to make?**
-   Documents changed against documents embedded. Re-embedding unchanged content means the pipeline lacks change detection.
+</details>
+
+<details>
+<summary>2. Why are retries called invisible?</summary>
+
+Product metrics count requests, not attempts. Unless traces record retries, a cost spike during an incident has no visible cause.
+
+</details>
+
+<details>
+<summary>3. A nightly job's embedding bill tripled after a document refresh. What is the first comparison to make?</summary>
+
+Documents changed against documents embedded. Re-embedding unchanged content means the pipeline lacks change detection.
+
+</details>
 

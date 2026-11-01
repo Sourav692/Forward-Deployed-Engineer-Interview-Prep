@@ -110,12 +110,24 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 
 ## Check Yourself
 
-1. **Who decides whether a refund happens in the strong design?**
-   The policy engine. The model only proposes; guarded services execute after permission, threshold and evidence checks pass.
+<details>
+<summary>1. Who decides whether a refund happens in the strong design?</summary>
 
-2. **What latency target does the strong framing set for a draft, and how is refund approval kept off that path?**
-   A draft within 8 seconds, with classification and order lookup in parallel; manager approval for refunds runs asynchronously.
+The policy engine. The model only proposes; guarded services execute after permission, threshold and evidence checks pass.
 
-3. **What is the first rollout step?**
-   Shadow mode on 1,000 historical tickets, before a draft-only pilot.
+</details>
+
+<details>
+<summary>2. What latency target does the strong framing set for a draft, and how is refund approval kept off that path?</summary>
+
+A draft within 8 seconds, with classification and order lookup in parallel; manager approval for refunds runs asynchronously.
+
+</details>
+
+<details>
+<summary>3. What is the first rollout step?</summary>
+
+Shadow mode on 1,000 historical tickets, before a draft-only pilot.
+
+</details>
 

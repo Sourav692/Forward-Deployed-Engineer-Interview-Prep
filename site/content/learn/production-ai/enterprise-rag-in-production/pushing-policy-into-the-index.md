@@ -131,12 +131,24 @@ Read one row aloud. `PM-2026-03-14` is a confidential EU post-mortem for enginee
 
 ## Check Yourself
 
-1. **Which four things cannot be pushed into the index, and why?**
-   Embargo, because it needs today's date. Need-to-know, because the filter cannot express list containment. Obligations, because they transform text rather than filter it. Live revocation, because the index is a snapshot.
+<details>
+<summary>1. Which four things cannot be pushed into the index, and why?</summary>
 
-2. **When does a Layer 2 denial mean something is broken?**
-   When it denies a document for a rule Layer 1 already expresses, such as tenant or clearance. That means the index is stale or the filter is wrong, so it is logged as a security event.
+Embargo, because it needs today's date. Need-to-know, because the filter cannot express list containment. Obligations, because they transform text rather than filter it. Live revocation, because the index is a snapshot.
 
-3. **Explain the `PM-2026-03-14` row in one breath.**
-   Marco reads it with an audit obligation. Lena fails clearance, Sofia has no granting group, Jin and Ravi fail residency, Dana fails residency first, and the attacker fails tenant isolation.
+</details>
+
+<details>
+<summary>2. When does a Layer 2 denial mean something is broken?</summary>
+
+When it denies a document for a rule Layer 1 already expresses, such as tenant or clearance. That means the index is stale or the filter is wrong, so it is logged as a security event.
+
+</details>
+
+<details>
+<summary>3. Explain the <code>PM-2026-03-14</code> row in one breath.</summary>
+
+Marco reads it with an audit obligation. Lena fails clearance, Sofia has no granting group, Jin and Ravi fail residency, Dana fails residency first, and the attacker fails tenant isolation.
+
+</details>
 

@@ -436,6 +436,8 @@ export const WORDS_PER_MINUTE = 180
 export function wordCount(markdown: string): number {
   return markdown
     .replace(/```[\s\S]*?```/g, ' ')
+    // Tags are markup, not words: a reveal block (`<details>`) adds none to the reading.
+    .replace(/<\/?[a-z][^>]*>/gi, ' ')
     .split(/\s+/)
     .filter((w) => /[A-Za-z0-9]/.test(w)).length
 }

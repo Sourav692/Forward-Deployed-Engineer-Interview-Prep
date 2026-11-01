@@ -152,12 +152,24 @@ The single store became three, each justified by one sentence. That is what part
 
 ## Check Yourself
 
-1. **Why does a semantic cache false hit matter more than a normal cache miss?**
-   A miss is only slower. A false hit returns an answer to a different question, which is a wrong answer. Tune the threshold conservatively.
+<details>
+<summary>1. Why does a semantic cache false hit matter more than a normal cache miss?</summary>
 
-2. **Why route chat and REST traffic differently at the gateway?**
-   Chat goes to the orchestrator and REST goes straight to services. A model outage then cannot take down booking.
+A miss is only slower. A false hit returns an answer to a different question, which is a wrong answer. Tune the threshold conservatively.
 
-3. **Where should a sessions table and a payments table live, and why?**
-   Sessions in Redis or NoSQL: independent, high-volume and ephemeral. Payments in SQL: transactional, audited and correct together with bookings.
+</details>
+
+<details>
+<summary>2. Why route chat and REST traffic differently at the gateway?</summary>
+
+Chat goes to the orchestrator and REST goes straight to services. A model outage then cannot take down booking.
+
+</details>
+
+<details>
+<summary>3. Where should a sessions table and a payments table live, and why?</summary>
+
+Sessions in Redis or NoSQL: independent, high-volume and ephemeral. Payments in SQL: transactional, audited and correct together with bookings.
+
+</details>
 

@@ -55,12 +55,24 @@ Three sentences cover the level, the enforcement point and the ladder. Missing a
 
 ## Check Yourself
 
-1. **State the three levels and the default.**
-   A tenant id on every row in shared infrastructure, which is the default; a separate schema or namespace per tenant; a dedicated deployment with its own cluster, region and keys.
+<details>
+<summary>1. State the three levels and the default.</summary>
 
-2. **What is wrong with "every query includes `WHERE tenant_id = …`"?**
-   It relies on every developer remembering the clause. One endpoint that forgets it returns another company's data. The store must refuse unscoped requests itself.
+A tenant id on every row in shared infrastructure, which is the default; a separate schema or namespace per tenant; a dedicated deployment with its own cluster, region and keys.
 
-3. **What is the first rung of the regulated escalation path?**
-   Per-tenant encryption keys, before a separate schema or a dedicated region and deployment.
+</details>
+
+<details>
+<summary>2. What is wrong with "every query includes <code>WHERE tenant_id = …</code>"?</summary>
+
+It relies on every developer remembering the clause. One endpoint that forgets it returns another company's data. The store must refuse unscoped requests itself.
+
+</details>
+
+<details>
+<summary>3. What is the first rung of the regulated escalation path?</summary>
+
+Per-tenant encryption keys, before a separate schema or a dedicated region and deployment.
+
+</details>
 

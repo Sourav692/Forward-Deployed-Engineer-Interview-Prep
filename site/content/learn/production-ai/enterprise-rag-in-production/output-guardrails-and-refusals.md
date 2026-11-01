@@ -98,12 +98,24 @@ A two-verdict grader would have refused the whole question. The `partial` verdic
 
 ## Check Yourself
 
-1. **Why three sufficiency verdicts rather than two?**
-   Two verdicts force a refusal whenever any part is unanswerable. `partial` lets the system answer the part the reader's role can see and state what it could not determine.
+<details>
+<summary>1. Why three sufficiency verdicts rather than two?</summary>
 
-2. **Why re-check citations when `enforce` already ran?**
-   A citation discloses that a document exists and is relevant. It gets its own fresh policy check, and the evaluation harness counts a citation alone as a leak.
+Two verdicts force a refusal whenever any part is unanswerable. `partial` lets the system answer the part the reader's role can see and state what it could not determine.
 
-3. **Why does the prompt-injection test pass without a prompt-injection check?**
-   The attack targets a layer that holds no secrets. The forbidden contract was never retrieved, so no instruction can make the model print it.
+</details>
+
+<details>
+<summary>2. Why re-check citations when <code>enforce</code> already ran?</summary>
+
+A citation discloses that a document exists and is relevant. It gets its own fresh policy check, and the evaluation harness counts a citation alone as a leak.
+
+</details>
+
+<details>
+<summary>3. Why does the prompt-injection test pass without a prompt-injection check?</summary>
+
+The attack targets a layer that holds no secrets. The forbidden contract was never retrieved, so no instruction can make the model print it.
+
+</details>
 

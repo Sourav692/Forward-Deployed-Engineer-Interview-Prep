@@ -86,12 +86,24 @@ Each branch logs, each check has a fixed place, and nothing is swallowed. An int
 
 ## Check Yourself
 
-1. **In one sentence, how do you make tool calls robust?**
-   Gate first, cache second, retry third, and the fallback goes through the same gate; retry only what is transient, bound it, and never let a cache hit or a fallback route around the destructive check.
+<details>
+<summary>1. In one sentence, how do you make tool calls robust?</summary>
 
-2. **What are the two rules of the failure policy that never bend?**
-   Never silently swallow a failure inside an agent loop, and never auto-retry a destructive call without re-checking the confirmation.
+Gate first, cache second, retry third, and the fallback goes through the same gate; retry only what is transient, bound it, and never let a cache hit or a fallback route around the destructive check.
 
-3. **Trace a proposed destructive call with a malformed argument through the pipeline. Where does it stop?**
-   At argument validation. It is rejected as invalid input before it reaches the destructive gate, the cache or the tool.
+</details>
+
+<details>
+<summary>2. What are the two rules of the failure policy that never bend?</summary>
+
+Never silently swallow a failure inside an agent loop, and never auto-retry a destructive call without re-checking the confirmation.
+
+</details>
+
+<details>
+<summary>3. Trace a proposed destructive call with a malformed argument through the pipeline. Where does it stop?</summary>
+
+At argument validation. It is rejected as invalid input before it reaches the destructive gate, the cache or the tool.
+
+</details>
 

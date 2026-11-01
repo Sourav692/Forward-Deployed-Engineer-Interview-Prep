@@ -73,12 +73,24 @@ The outcome said the agent was right. The path said it was right by luck. That g
 
 ## Check Yourself
 
-1. **Argument validity drops while tool selection accuracy holds steady. Where do you look first?**
-   At schema design: missing enums or unstated units. The tool choice is right; the arguments are not.
+<details>
+<summary>1. Argument validity drops while tool selection accuracy holds steady. Where do you look first?</summary>
 
-2. **How can an answer be fully grounded yet wrong?**
-   The supporting evidence was itself outdated or mistaken. Groundedness checks faithfulness to sources, not agreement with reality.
+At schema design: missing enums or unstated units. The tool choice is right; the arguments are not.
 
-3. **Why not compare every run with a single reference trajectory?**
-   Most tasks have several valid paths, so valid alternatives would fail. Assert properties instead, such as "no refund before the status check".
+</details>
+
+<details>
+<summary>2. How can an answer be fully grounded yet wrong?</summary>
+
+The supporting evidence was itself outdated or mistaken. Groundedness checks faithfulness to sources, not agreement with reality.
+
+</details>
+
+<details>
+<summary>3. Why not compare every run with a single reference trajectory?</summary>
+
+Most tasks have several valid paths, so valid alternatives would fail. Assert properties instead, such as "no refund before the status check".
+
+</details>
 

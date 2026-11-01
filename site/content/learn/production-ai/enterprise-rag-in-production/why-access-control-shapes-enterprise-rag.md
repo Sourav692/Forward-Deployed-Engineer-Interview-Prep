@@ -111,12 +111,24 @@ That small table is the whole system in miniature: a rule decided by attributes,
 
 ## Check Yourself
 
-1. **Name the two failures in the "top 6 became top 2" diagram.**
-   Quality: forbidden chunks took rank slots, so the best allowed answers never reached the model. Security: the count or speed of results acts as an existence oracle.
+<details>
+<summary>1. Name the two failures in the "top 6 became top 2" diagram.</summary>
 
-2. **Why partition by tenant but not by group?**
-   Tenants almost never overlap, so a tenant partition is a clean wall. Groups overlap constantly, so a document has no single group index, and every workaround duplicates, mixes or fans out.
+Quality: forbidden chunks took rank slots, so the best allowed answers never reached the model. Security: the count or speed of results acts as an existence oracle.
 
-3. **How does the project's post-check differ from post-filtering as the only access check?**
-   It runs on an already pre-filtered pool, so drops are rare and nothing allowed is crowded out. It re-runs the full policy, including rules the store cannot express, and it is the authoritative gate rather than the only one.
+</details>
+
+<details>
+<summary>2. Why partition by tenant but not by group?</summary>
+
+Tenants almost never overlap, so a tenant partition is a clean wall. Groups overlap constantly, so a document has no single group index, and every workaround duplicates, mixes or fans out.
+
+</details>
+
+<details>
+<summary>3. How does the project's post-check differ from post-filtering as the only access check?</summary>
+
+It runs on an already pre-filtered pool, so drops are rare and nothing allowed is crowded out. It re-runs the full policy, including rules the store cannot express, and it is the authoritative gate rather than the only one.
+
+</details>
 

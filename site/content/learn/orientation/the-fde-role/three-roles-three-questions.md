@@ -72,12 +72,24 @@ None of the three questions replaces the others. Together they describe one syst
 
 ## Check Yourself
 
-1. **What is the unit of work for each role?**
-   AI engineer: a pipeline. Agentic systems designer: a control boundary. FDE: an engagement.
+<details>
+<summary>1. What is the unit of work for each role?</summary>
 
-2. **Why is the material ordered inner to outer rather than teaching FDE skills first?**
-   Each outer role relies on the inner one. A designer must understand the pipeline it guards, and an FDE must defend the control boundaries to a security team.
+AI engineer: a pipeline. Agentic systems designer: a control boundary. FDE: an engagement.
 
-3. **Name two containment mechanisms and the incident each answers.**
-   For example: idempotency keys answer the double refund; step budgets answer the runaway loop; confirmation gates answer the workflow that skipped a human check.
+</details>
+
+<details>
+<summary>2. Why is the material ordered inner to outer rather than teaching FDE skills first?</summary>
+
+Each outer role relies on the inner one. A designer must understand the pipeline it guards, and an FDE must defend the control boundaries to a security team.
+
+</details>
+
+<details>
+<summary>3. Name two containment mechanisms and the incident each answers.</summary>
+
+For example: idempotency keys answer the double refund; step budgets answer the runaway loop; confirmation gates answer the workflow that skipped a human check.
+
+</details>
 

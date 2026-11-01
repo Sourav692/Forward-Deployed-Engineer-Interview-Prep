@@ -108,12 +108,24 @@ The loop shape is real: plan, select a tool, call, observe, and iterate, under a
 
 ## Check Yourself
 
-1. **Why is a `WorkflowSpec` the right thing for a non-technical user to review?**
-   It is a declarative form with a trigger, a condition, and a fixed list of steps. The user can read and confirm it before anything runs, instead of trusting an engine to interpret a sentence.
+<details>
+<summary>1. Why is a <code>WorkflowSpec</code> the right thing for a non-technical user to review?</summary>
 
-2. **What three properties of a tool definition do the safety work, and when does each apply?**
-   The schema and required fields apply at validation, before execution. The destructive flag applies at the guardrail, as a declared property. Scopes describe what the tool may touch, the start of connector permissions.
+It is a declarative form with a trigger, a condition, and a fixed list of steps. The user can read and confirm it before anything runs, instead of trusting an engine to interpret a sentence.
 
-3. **What exactly is the fixed-step-list gap, and how should you describe it?**
-   The planner is a fixed list rather than a model choosing the next tool from observed state. Say that swapping in a real planner is a moderate change that keeps the same guardrails, and that the demo does not prove a model planner is safe.
+</details>
+
+<details>
+<summary>2. What three properties of a tool definition do the safety work, and when does each apply?</summary>
+
+The schema and required fields apply at validation, before execution. The destructive flag applies at the guardrail, as a declared property. Scopes describe what the tool may touch, the start of connector permissions.
+
+</details>
+
+<details>
+<summary>3. What exactly is the fixed-step-list gap, and how should you describe it?</summary>
+
+The planner is a fixed list rather than a model choosing the next tool from observed state. Say that swapping in a real planner is a moderate change that keeps the same guardrails, and that the demo does not prove a model planner is safe.
+
+</details>
 

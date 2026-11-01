@@ -73,12 +73,24 @@ Six months in, document ingestion has grown slow and CPU-heavy, and it competes 
 
 ## Check Yourself
 
-1. **Where does a prompt template live, and what does that buy you?**
-   In the `prompts` layer, with a `PromptBuilder`. Prompts can change without touching service logic or routes.
+<details>
+<summary>1. Where does a prompt template live, and what does that buy you?</summary>
 
-2. **Name three signals that justify splitting a monolith into microservices.**
-   Teams block each other on deploys, one part needs very different scaling, or technology needs differ.
+In the `prompts` layer, with a `PromptBuilder`. Prompts can change without touching service logic or routes.
 
-3. **Apply the build-or-buy question to a vector index and to a permission policy.**
-   A vector index encodes nothing customer-specific, so buy a managed one unless scale or data-residency law forces self-hosting. A permission policy exists only because of this customer, so build it.
+</details>
+
+<details>
+<summary>2. Name three signals that justify splitting a monolith into microservices.</summary>
+
+Teams block each other on deploys, one part needs very different scaling, or technology needs differ.
+
+</details>
+
+<details>
+<summary>3. Apply the build-or-buy question to a vector index and to a permission policy.</summary>
+
+A vector index encodes nothing customer-specific, so buy a managed one unless scale or data-residency law forces self-hosting. A permission policy exists only because of this customer, so build it.
+
+</details>
 

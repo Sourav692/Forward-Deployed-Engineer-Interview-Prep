@@ -69,12 +69,24 @@ The gate's role check was already right. These changes make its signature mean s
 
 ## Check Yourself
 
-1. **The security reviewer signed the gate with "reviewed, looks fine". What is wrong?**
-   The evidence has no required shape. It cannot show that adversarial testing or permission probes ever happened.
+<details>
+<summary>1. The security reviewer signed the gate with "reviewed, looks fine". What is wrong?</summary>
 
-2. **When does the delivery process itself hold live customer credentials?**
-   When data sources are first connected, and when the system starts running against the customer's real environment.
+The evidence has no required shape. It cannot show that adversarial testing or permission probes ever happened.
 
-3. **Why is "show me all engagements" a security question and not only a reporting one?**
-   If separation is only a tag, the query depends on remembering to filter. A competitor's records could appear unless isolation is structural.
+</details>
+
+<details>
+<summary>2. When does the delivery process itself hold live customer credentials?</summary>
+
+When data sources are first connected, and when the system starts running against the customer's real environment.
+
+</details>
+
+<details>
+<summary>3. Why is "show me all engagements" a security question and not only a reporting one?</summary>
+
+If separation is only a tag, the query depends on remembering to filter. A competitor's records could appear unless isolation is structural.
+
+</details>
 

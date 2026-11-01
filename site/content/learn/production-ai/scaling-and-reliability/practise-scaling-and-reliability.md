@@ -94,12 +94,24 @@ A strong answer names the resilience chain. It puts cost control before the call
 
 ## Check Yourself
 
-1. **Why must the circuit breaker wrap the retried call rather than sit beside it?**
-   So a trip stops the retries from wasting time on a known-bad primary and the request reaches the fallback faster.
+<details>
+<summary>1. Why must the circuit breaker wrap the retried call rather than sit beside it?</summary>
 
-2. **In the gateway design, which component most threatens the 3-second budget, and what is the mitigation?**
-   The LLM input guardrail. Make it skippable for low-risk, previously seen query patterns.
+So a trip stops the retries from wasting time on a known-bad primary and the request reaches the fallback faster.
 
-3. **What is the honest gap in the gateway design?**
-   Data residency: if data cannot go to a third-party provider, it needs an in-VPC or self-hosted model.
+</details>
+
+<details>
+<summary>2. In the gateway design, which component most threatens the 3-second budget, and what is the mitigation?</summary>
+
+The LLM input guardrail. Make it skippable for low-risk, previously seen query patterns.
+
+</details>
+
+<details>
+<summary>3. What is the honest gap in the gateway design?</summary>
+
+Data residency: if data cannot go to a third-party provider, it needs an in-VPC or self-hosted model.
+
+</details>
 

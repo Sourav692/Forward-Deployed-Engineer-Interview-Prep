@@ -76,12 +76,24 @@ The playbook frames the conversation with the sponsor the same way. The pilot sh
 
 ## Check Yourself
 
-1. **Why do tokens often grow faster than request count after rollout?**
-   Real users ask longer questions and upload larger files, and one action triggers several calls such as rewriting, retrieval, reranking and safety checks.
+<details>
+<summary>1. Why do tokens often grow faster than request count after rollout?</summary>
 
-2. **A sponsor asks "can we budget this safely?" What do you build?**
-   Per-tenant budgets, token limits, quotas, anomaly alerts and routing rules, so spend is predictable rather than open-ended.
+Real users ask longer questions and upload larger files, and one action triggers several calls such as rewriting, retrieval, reranking and safety checks.
 
-3. **Why is "never optimise the model in isolation" a rule rather than a preference?**
-   Latency and cost are sums over many components. If retrieval or tools dominate, a faster or cheaper model barely moves the total.
+</details>
+
+<details>
+<summary>2. A sponsor asks "can we budget this safely?" What do you build?</summary>
+
+Per-tenant budgets, token limits, quotas, anomaly alerts and routing rules, so spend is predictable rather than open-ended.
+
+</details>
+
+<details>
+<summary>3. Why is "never optimise the model in isolation" a rule rather than a preference?</summary>
+
+Latency and cost are sums over many components. If retrieval or tools dominate, a faster or cheaper model barely moves the total.
+
+</details>
 

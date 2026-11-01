@@ -108,12 +108,24 @@ Rebuild the loop from memory: one step, one checkpoint, one key per action, and 
 
 ## Check Yourself
 
-1. **An interviewer asks, "What if the network retries the refund?" What is your one-sentence answer?**
-   The idempotency key is on the action, run plus step, so the retry is a no-op, and the replay check runs before authorisation and cost so the budget is not charged again.
+<details>
+<summary>1. An interviewer asks, "What if the network retries the refund?" What is your one-sentence answer?</summary>
 
-2. **What one mechanism answers both "how do we test before live" and "how do we stop a bad run"?**
-   Staged rollout with hard step and spend budgets: shadow mode dry-runs on live traffic, and the budgets halt a running workflow instead of letting it loop.
+The idempotency key is on the action, run plus step, so the retry is a no-op, and the replay check runs before authorisation and cost so the budget is not charged again.
 
-3. **Name two gaps you would volunteer when describing the source project.**
-   Any two of: no authoring surface, the planner is a fixed step list, nothing calls resume automatically, the lock and key stores are in-process, and run history is not in plain language.
+</details>
+
+<details>
+<summary>2. What one mechanism answers both "how do we test before live" and "how do we stop a bad run"?</summary>
+
+Staged rollout with hard step and spend budgets: shadow mode dry-runs on live traffic, and the budgets halt a running workflow instead of letting it loop.
+
+</details>
+
+<details>
+<summary>3. Name two gaps you would volunteer when describing the source project.</summary>
+
+Any two of: no authoring surface, the planner is a fixed step list, nothing calls resume automatically, the lock and key stores are in-process, and run history is not in plain language.
+
+</details>
 

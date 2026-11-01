@@ -73,12 +73,24 @@ Same model, same prompt. The typed result decided whether the agent retried, sto
 
 ## Check Yourself
 
-1. **Why is confusing `EMPTY` and `UNAVAILABLE` dangerous during an outage?**
-   The agent reads the outage as "no results" and keeps rewording its query, a retry storm that burns its whole budget.
+<details>
+<summary>1. Why is confusing <code>EMPTY</code> and <code>UNAVAILABLE</code> dangerous during an outage?</summary>
 
-2. **A refund tool returns "refunds over $500 need manager approval." What goes wrong?**
-   The model treats the reason as an instruction and splits a $600 refund into two $300 refunds. Return a bare `DENIED` and keep the reason in the trace.
+The agent reads the outage as "no results" and keeps rewording its query, a retry storm that burns its whole budget.
 
-3. **What is the difference between a `TransientError` and a `NotFoundError`, and why should an agent care?**
-   A transient error is temporary and safe to retry. Not-found is permanent, so retrying wastes budget; fall back instead.
+</details>
+
+<details>
+<summary>2. A refund tool returns "refunds over $500 need manager approval." What goes wrong?</summary>
+
+The model treats the reason as an instruction and splits a $600 refund into two $300 refunds. Return a bare `DENIED` and keep the reason in the trace.
+
+</details>
+
+<details>
+<summary>3. What is the difference between a <code>TransientError</code> and a <code>NotFoundError</code>, and why should an agent care?</summary>
+
+A transient error is temporary and safe to retry. Not-found is permanent, so retrying wastes budget; fall back instead.
+
+</details>
 

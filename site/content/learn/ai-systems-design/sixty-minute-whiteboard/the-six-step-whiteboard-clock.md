@@ -85,12 +85,24 @@ At minute 20 the interviewer has heard the difficulty, the scope, the requiremen
 
 ## Check Yourself
 
-1. **What are the six steps and their minute ranges?**
-   Clarify and scope 0–8; entities and the happy path 8–12; architecture 12–20; deep dive 20–40; cross-cutting, failure and scale 40–55; close 55–60.
+<details>
+<summary>1. What are the six steps and their minute ranges?</summary>
 
-2. **What does the framing sentence do?**
-   It names the real difficulty in the first two minutes and sets up every later decision, such as access control deciding the shape of the retrieval path.
+Clarify and scope 0–8; entities and the happy path 8–12; architecture 12–20; deep dive 20–40; cross-cutting, failure and scale 40–55; close 55–60.
 
-3. **Why narrate the request before drawing it?**
-   It exposes every component to be drawn and lets the interviewer redirect before ten minutes are spent on the wrong box.
+</details>
+
+<details>
+<summary>2. What does the framing sentence do?</summary>
+
+It names the real difficulty in the first two minutes and sets up every later decision, such as access control deciding the shape of the retrieval path.
+
+</details>
+
+<details>
+<summary>3. Why narrate the request before drawing it?</summary>
+
+It exposes every component to be drawn and lets the interviewer redirect before ten minutes are spent on the wrong box.
+
+</details>
 

@@ -71,12 +71,24 @@ Four questions moved the design from a generic chatbot to a multi-tenant, access
 
 ## Check Yourself
 
-1. **Name the five areas and one question for each.**
-   Customer: one enterprise or many tenants? Data reality: static or changing, and how fast? Access and blast radius: read-only or acting? Scale and SLAs: p50 or p95/p99? Definition of done: is quality measured today?
+<details>
+<summary>1. Name the five areas and one question for each.</summary>
 
-2. **Why does the latency percentile change the architecture?**
-   Tail latency is set by the slowest of several sequential model calls, so a p99 target forces different choices from a p50 target.
+Customer: one enterprise or many tenants? Data reality: static or changing, and how fast? Access and blast radius: read-only or acting? Scale and SLAs: p50 or p95/p99? Definition of done: is quality measured today?
 
-3. **Which question is most often forgotten, and what does forgetting it cost?**
-   Who owns data and access quality, and whether you can get it before day one. Without it, the corpus cannot be made access-aware and the engagement stalls.
+</details>
+
+<details>
+<summary>2. Why does the latency percentile change the architecture?</summary>
+
+Tail latency is set by the slowest of several sequential model calls, so a p99 target forces different choices from a p50 target.
+
+</details>
+
+<details>
+<summary>3. Which question is most often forgotten, and what does forgetting it cost?</summary>
+
+Who owns data and access quality, and whether you can get it before day one. Without it, the corpus cannot be made access-aware and the engagement stalls.
+
+</details>
 

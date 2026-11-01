@@ -285,28 +285,82 @@ Adapt this spoken outline to the interviewer's constraints.
 
 ## Check Yourself
 
-1. **Which five answers change the architecture before any boxes are drawn?**
-   Whether the assistant reads or writes, the backend interfaces, whether requests need several steps, the expected scale, and whether employees have different permissions.
-2. **Why is a valid tool call not enough to authorise an action?**
-   It only shows that the request has the expected shape. The application must still check whether the verified employee may perform it.
-3. **What does each integration layer contribute to the meeting-and-proposal request?**
-   The controller coordinates, the registry and MCP expose relevant tools, function calling proposes operations, and application APIs execute authorised operations.
-4. **Can function calling use the same REST endpoint as a normal application page?**
-   Yes. Fixed code chooses the operation on the page; the model proposes it in chat. The backend operation may be identical.
-5. **Does a multi-step request require a multi-agent framework?**
-   No. One controller can coordinate several tools. Add specialised agents only when they improve the workflow enough to justify coordination overhead.
-6. **Why does the tool registry matter at 500+ applications?**
-   It narrows the tools loaded for the current task. MCP standardises discovery and invocation, but does not automatically make every tool relevant or cheap.
-7. **What should the assistant say if the meeting is booked but sharing is denied?**
-   Report both results clearly. Do not claim the full request succeeded or that the booking was automatically undone.
-8. **What remains outside this case's scope?**
-   RAG, conversation memory, a human-approval workflow, comprehensive guardrails, prompt-injection defence, and model-routing policy. The companion support-assistant lesson explores the other half.
-9. **What must be resolved before booking the example meeting?**
-   The intended John, proposal version, date, time, time zone, and duration, plus any required confirmation or approval.
-10. **Who supplies identity in the booking call?**
-    Application code uses the verified session. The model proposes business arguments, not trusted employee or tenant identity.
-11. **Why not retry a timed-out booking immediately?**
-    It may already exist. Check authoritative status or rely on a supported deduplication contract; otherwise reconcile manually.
+<details>
+<summary>1. Which five answers change the architecture before any boxes are drawn?</summary>
+
+Whether the assistant reads or writes, the backend interfaces, whether requests need several steps, the expected scale, and whether employees have different permissions.
+
+</details>
+
+<details>
+<summary>2. Why is a valid tool call not enough to authorise an action?</summary>
+
+It only shows that the request has the expected shape. The application must still check whether the verified employee may perform it.
+
+</details>
+
+<details>
+<summary>3. What does each integration layer contribute to the meeting-and-proposal request?</summary>
+
+The controller coordinates, the registry and MCP expose relevant tools, function calling proposes operations, and application APIs execute authorised operations.
+
+</details>
+
+<details>
+<summary>4. Can function calling use the same REST endpoint as a normal application page?</summary>
+
+Yes. Fixed code chooses the operation on the page; the model proposes it in chat. The backend operation may be identical.
+
+</details>
+
+<details>
+<summary>5. Does a multi-step request require a multi-agent framework?</summary>
+
+No. One controller can coordinate several tools. Add specialised agents only when they improve the workflow enough to justify coordination overhead.
+
+</details>
+
+<details>
+<summary>6. Why does the tool registry matter at 500+ applications?</summary>
+
+It narrows the tools loaded for the current task. MCP standardises discovery and invocation, but does not automatically make every tool relevant or cheap.
+
+</details>
+
+<details>
+<summary>7. What should the assistant say if the meeting is booked but sharing is denied?</summary>
+
+Report both results clearly. Do not claim the full request succeeded or that the booking was automatically undone.
+
+</details>
+
+<details>
+<summary>8. What remains outside this case's scope?</summary>
+
+RAG, conversation memory, a human-approval workflow, comprehensive guardrails, prompt-injection defence, and model-routing policy. The companion support-assistant lesson explores the other half.
+
+</details>
+
+<details>
+<summary>9. What must be resolved before booking the example meeting?</summary>
+
+The intended John, proposal version, date, time, time zone, and duration, plus any required confirmation or approval.
+
+</details>
+
+<details>
+<summary>10. Who supplies identity in the booking call?</summary>
+
+Application code uses the verified session. The model proposes business arguments, not trusted employee or tenant identity.
+
+</details>
+
+<details>
+<summary>11. Why not retry a timed-out booking immediately?</summary>
+
+It may already exist. Check authoritative status or rely on a supported deduplication contract; otherwise reconcile manually.
+
+</details>
 
 ## References
 

@@ -65,12 +65,24 @@ The reasoning model now sees only the requests that need it. The common requests
 
 ## Check Yourself
 
-1. **Name the three places a control decision can live, and the main weakness of each.**
-   Fixed code cannot handle anything unforeseen. A small model only handles the labels it was trained on. The reasoning model costs a full call per decision and resists testing.
+<details>
+<summary>1. Name the three places a control decision can live, and the main weakness of each.</summary>
 
-2. **An interviewer asks, "What did you make deterministic on purpose, and why?" What is a strong answer?**
-   Routing and classification steps, pinned to a workflow rather than left to the model. Determinism there is cheap and keeps behaviour testable.
+Fixed code cannot handle anything unforeseen. A small model only handles the labels it was trained on. The reasoning model costs a full call per decision and resists testing.
 
-3. **When is a full tool-calling agent justified over a workflow?**
-   When the model genuinely has to decide what to do next, because the set of paths cannot be listed in advance.
+</details>
+
+<details>
+<summary>2. An interviewer asks, "What did you make deterministic on purpose, and why?" What is a strong answer?</summary>
+
+Routing and classification steps, pinned to a workflow rather than left to the model. Determinism there is cheap and keeps behaviour testable.
+
+</details>
+
+<details>
+<summary>3. When is a full tool-calling agent justified over a workflow?</summary>
+
+When the model genuinely has to decide what to do next, because the set of paths cannot be listed in advance.
+
+</details>
 

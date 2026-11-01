@@ -100,12 +100,24 @@ Every check ran in the same order it runs for every other tool. That uniformity 
 
 ## Check Yourself
 
-1. **Why must authorisation come before validation in the gateway?**
-   Validation errors describe the tool's arguments. A denied caller who reaches validation learns the schema of a tool it may not use.
+<details>
+<summary>1. Why must authorisation come before validation in the gateway?</summary>
 
-2. **How do you stop an agent's SQL tool being exploited?**
-   At the tool layer: parameterised queries, a read-only role, or a query allowlist. A model-side compliance check is only defence in depth.
+Validation errors describe the tool's arguments. A denied caller who reaches validation learns the schema of a tool it may not use.
 
-3. **Why is a static check for `os.system` not enough for a code interpreter?**
-   Nobody can predict what arbitrary code will do, so validation always has gaps. Isolation, with no network, no credentials, resource caps and a single-use container, is the real control.
+</details>
+
+<details>
+<summary>2. How do you stop an agent's SQL tool being exploited?</summary>
+
+At the tool layer: parameterised queries, a read-only role, or a query allowlist. A model-side compliance check is only defence in depth.
+
+</details>
+
+<details>
+<summary>3. Why is a static check for <code>os.system</code> not enough for a code interpreter?</summary>
+
+Nobody can predict what arbitrary code will do, so validation always has gaps. Isolation, with no network, no credentials, resource caps and a single-use container, is the real control.
+
+</details>
 

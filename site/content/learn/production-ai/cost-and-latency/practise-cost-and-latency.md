@@ -112,12 +112,24 @@ The story lands because each step names a measurement, not an opinion.
 
 ## Check Yourself
 
-1. **What do all the weak answers in the playbook's cases have in common?**
-   They change one knob, such as a bigger or faster model or a global limit, without measuring where cost or latency actually comes from.
+<details>
+<summary>1. What do all the weak answers in the playbook's cases have in common?</summary>
 
-2. **Name the four verbs and one action for each.**
-   Measure: build a trace waterfall. Route: send simple tasks to a smaller model. Bound: cap agent steps. Cache safely: key on tenant and permission.
+They change one knob, such as a bigger or faster model or a global limit, without measuring where cost or latency actually comes from.
 
-3. **Why is "reduce top-k" alone an incomplete answer to slow retrieval?**
-   It risks recall and misses the bigger levers: filtering earlier, index parameters, duplicates and testing at real corpus size.
+</details>
+
+<details>
+<summary>2. Name the four verbs and one action for each.</summary>
+
+Measure: build a trace waterfall. Route: send simple tasks to a smaller model. Bound: cap agent steps. Cache safely: key on tenant and permission.
+
+</details>
+
+<details>
+<summary>3. Why is "reduce top-k" alone an incomplete answer to slow retrieval?</summary>
+
+It risks recall and misses the bigger levers: filtering earlier, index parameters, duplicates and testing at real corpus size.
+
+</details>
 

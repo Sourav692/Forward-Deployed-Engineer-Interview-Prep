@@ -71,12 +71,24 @@ Finally it labels each part. The hash skip is proven at small scale; the distrib
 
 ## Check Yourself
 
-1. **Do the arithmetic: 80 million chunks at 500 chunks per second, then with 50 workers.**
-   About 160,000 seconds, roughly 44 hours on one worker. With 50-way parallelism, under an hour.
+<details>
+<summary>1. Do the arithmetic: 80 million chunks at 500 chunks per second, then with 50 workers.</summary>
 
-2. **Why must the content-hash check run inside the workers?**
-   A serial check in front of the workers becomes the bottleneck the parallelism was meant to remove.
+About 160,000 seconds, roughly 44 hours on one worker. With 50-way parallelism, under an hour.
 
-3. **Why does a 20-million-document run need a per-document ledger?**
-   The run will be interrupted. A ledger of queued, embedded, indexed and failed lets a restart finish only the remaining documents.
+</details>
+
+<details>
+<summary>2. Why must the content-hash check run inside the workers?</summary>
+
+A serial check in front of the workers becomes the bottleneck the parallelism was meant to remove.
+
+</details>
+
+<details>
+<summary>3. Why does a 20-million-document run need a per-document ledger?</summary>
+
+The run will be interrupted. A ledger of queued, embedded, indexed and failed lets a restart finish only the remaining documents.
+
+</details>
 

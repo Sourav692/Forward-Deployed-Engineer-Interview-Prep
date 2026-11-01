@@ -90,12 +90,24 @@ Then state assumptions for anything unanswered: "I'll assume agents stay in the 
 
 ## Check Yourself
 
-1. **Why is "I would use RAG and agents" a weak opening even when RAG is the right answer?**
-   It names a technology before a user or an outcome exists. Nothing later can be judged against a goal, so the answer reads as solution-first.
+<details>
+<summary>1. Why is "I would use RAG and agents" a weak opening even when RAG is the right answer?</summary>
 
-2. **Name one question from each of the five families.**
-   Business: who is the user? Constraint: what may the system do on its own? Evaluation: what is the human baseline? Architecture: what state must persist? Rollout: which users get the pilot?
+It names a technology before a user or an outcome exists. Nothing later can be judged against a goal, so the answer reads as solution-first.
 
-3. **What should happen to a clarifying question the interviewer declines to answer?**
-   Replace it with a stated assumption, such as "I'll assume the system starts read-only", and carry on.
+</details>
+
+<details>
+<summary>2. Name one question from each of the five families.</summary>
+
+Business: who is the user? Constraint: what may the system do on its own? Evaluation: what is the human baseline? Architecture: what state must persist? Rollout: which users get the pilot?
+
+</details>
+
+<details>
+<summary>3. What should happen to a clarifying question the interviewer declines to answer?</summary>
+
+Replace it with a stated assumption, such as "I'll assume the system starts read-only", and carry on.
+
+</details>
 

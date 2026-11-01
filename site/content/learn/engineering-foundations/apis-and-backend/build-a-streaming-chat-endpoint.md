@@ -74,12 +74,24 @@ Midway, the provider times out. The status was 200 when the stream began and can
 
 ## Check Yourself
 
-1. **Does streaming reduce total latency?**
-   No. Generation takes as long; streaming changes when the first token appears. It matters most for interactive chat.
+<details>
+<summary>1. Does streaming reduce total latency?</summary>
 
-2. **Why must a streaming endpoint send errors as events?**
-   The HTTP status code is sent before streaming starts and cannot change afterwards, so a mid-stream failure has to travel inside the stream.
+No. Generation takes as long; streaming changes when the first token appears. It matters most for interactive chat.
 
-3. **What does context budget trimming always keep?**
-   The system prompt and the newest message; the rest is filled with the most recent history that fits the token limit.
+</details>
+
+<details>
+<summary>2. Why must a streaming endpoint send errors as events?</summary>
+
+The HTTP status code is sent before streaming starts and cannot change afterwards, so a mid-stream failure has to travel inside the stream.
+
+</details>
+
+<details>
+<summary>3. What does context budget trimming always keep?</summary>
+
+The system prompt and the newest message; the rest is filled with the most recent history that fits the token limit.
+
+</details>
 

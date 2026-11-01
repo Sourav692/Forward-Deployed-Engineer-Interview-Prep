@@ -63,12 +63,24 @@ Overflow is now a local event with a visible footprint, not a silent change to w
 
 ## Check Yourself
 
-1. **Why do the instructions and tool schema go first?**
-   Prefix caching needs a byte-identical prefix, and those two sections are the stable ones.
+<details>
+<summary>1. Why do the instructions and tool schema go first?</summary>
 
-2. **Which two sections in the layout are never evicted?**
-   The system instructions and policy, and the restated current goal.
+Prefix caching needs a byte-identical prefix, and those two sections are the stable ones.
 
-3. **What does "drop from the front when too long" do to a long-running agent?**
-   It deletes the system instructions first, so the agent loses its policy and safety rules while keeping its credentials.
+</details>
+
+<details>
+<summary>2. Which two sections in the layout are never evicted?</summary>
+
+The system instructions and policy, and the restated current goal.
+
+</details>
+
+<details>
+<summary>3. What does "drop from the front when too long" do to a long-running agent?</summary>
+
+It deletes the system instructions first, so the agent loses its policy and safety rules while keeping its credentials.
+
+</details>
 

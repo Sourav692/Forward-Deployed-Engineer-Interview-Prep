@@ -112,12 +112,24 @@ Then they anchor on Northwind's two metrics and note intake would refuse anythin
 
 ## Check Yourself
 
-1. **Why ask whether two weeks is a hard SLA or a target?**
-   It decides what a failed gate means: slip the date, or abort and re-scope.
+<details>
+<summary>1. Why ask whether two weeks is a hard SLA or a target?</summary>
 
-2. **Which two gates should be made unskippable first in an internal rollout, and why?**
-   The golden-set sign-off and the rollback test, the two most often skipped under pressure in the source's experience. Enforcing them first proves gates as code change behaviour.
+It decides what a failed gate means: slip the date, or abort and re-scope.
 
-3. **What is the scale question for this system?**
-   Not data volume but portfolio: how many engagements one FDA can carry before gates queue behind their calendar. It needs real duration data before design.
+</details>
+
+<details>
+<summary>2. Which two gates should be made unskippable first in an internal rollout, and why?</summary>
+
+The golden-set sign-off and the rollback test, the two most often skipped under pressure in the source's experience. Enforcing them first proves gates as code change behaviour.
+
+</details>
+
+<details>
+<summary>3. What is the scale question for this system?</summary>
+
+Not data volume but portfolio: how many engagements one FDA can carry before gates queue behind their calendar. It needs real duration data before design.
+
+</details>
 

@@ -53,12 +53,24 @@ They check the provenance table: that legacy path maps to tool-calling foundatio
 
 ## Check Yourself
 
-1. **Why build from a pinned revision rather than `main`?**
-   A claim that a function and test exist is only verifiable against code that does not move.
+<details>
+<summary>1. Why build from a pinned revision rather than <code>main</code>?</summary>
 
-2. **A lesson cites `05_Projects/AI_Powered_Customer_Support/`. Where do you build from?**
-   `projects/02_retrieval_agent_projects/05_ai_powered_customer_support/` at the verified revision. The legacy path is for provenance only.
+A claim that a function and test exist is only verifiable against code that does not move.
 
-3. **What changes when the companion code is revalidated, and what stays?**
-   The verified revision and the current links are updated together. The legacy provenance revision stays unchanged.
+</details>
+
+<details>
+<summary>2. A lesson cites <code>05_Projects/AI_Powered_Customer_Support/</code>. Where do you build from?</summary>
+
+`projects/02_retrieval_agent_projects/05_ai_powered_customer_support/` at the verified revision. The legacy path is for provenance only.
+
+</details>
+
+<details>
+<summary>3. What changes when the companion code is revalidated, and what stays?</summary>
+
+The verified revision and the current links are updated together. The legacy provenance revision stays unchanged.
+
+</details>
 

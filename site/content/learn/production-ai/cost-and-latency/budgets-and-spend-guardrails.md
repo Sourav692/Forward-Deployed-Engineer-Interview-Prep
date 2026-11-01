@@ -88,12 +88,24 @@ The strong design puts a tenant-aware gateway in front. Each request is authenti
 
 ## Check Yourself
 
-1. **Why must the token budget check run before the API call?**
-   After the call, it can only report money already spent. Before the call, it can refuse the request.
+<details>
+<summary>1. Why must the token budget check run before the API call?</summary>
 
-2. **A request passed the token budget and still blew the per-request ceiling. Why?**
-   The budget used a word-count estimate, not a real tokenizer. Swap in `tiktoken` or the provider's counting endpoint.
+After the call, it can only report money already spent. Before the call, it can refuse the request.
 
-3. **Spend hit a week's budget in one day after launch. What do you do first?**
-   Trip the spend circuit breaker, find the top spend paths, cap output, pause batch and evaluation jobs, cut premium routing and apply quotas. Keep cheap safe paths online, then run root-cause analysis.
+</details>
+
+<details>
+<summary>2. A request passed the token budget and still blew the per-request ceiling. Why?</summary>
+
+The budget used a word-count estimate, not a real tokenizer. Swap in `tiktoken` or the provider's counting endpoint.
+
+</details>
+
+<details>
+<summary>3. Spend hit a week's budget in one day after launch. What do you do first?</summary>
+
+Trip the spend circuit breaker, find the top spend paths, cap output, pause batch and evaluation jobs, cut premium routing and apply quotas. Keep cheap safe paths online, then run root-cause analysis.
+
+</details>
 

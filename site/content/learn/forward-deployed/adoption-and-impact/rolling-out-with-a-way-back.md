@@ -50,12 +50,24 @@ In the first weeks, the most common failure is an answer built on an outdated po
 
 ## Check Yourself
 
-1. **Name the five questions to answer before a launch.**
-   Who goes first, whether a feature flag can switch it, which numbers are watched, what triggers a rollback, and who is on hand.
+<details>
+<summary>1. Name the five questions to answer before a launch.</summary>
 
-2. **Why classify a failure before fixing it?**
-   The class decides which layer and which team acts. A training or documentation failure is not fixed by changing code or prompts.
+Who goes first, whether a feature flag can switch it, which numbers are watched, what triggers a rollback, and who is on hand.
 
-3. **Answers cite an outdated policy. Is that an AI behaviour problem?**
-   No. It is a search and retrieval problem, stale knowledge, fixed by refreshing the knowledge base and testing lookup quality.
+</details>
+
+<details>
+<summary>2. Why classify a failure before fixing it?</summary>
+
+The class decides which layer and which team acts. A training or documentation failure is not fixed by changing code or prompts.
+
+</details>
+
+<details>
+<summary>3. Answers cite an outdated policy. Is that an AI behaviour problem?</summary>
+
+No. It is a search and retrieval problem, stale knowledge, fixed by refreshing the knowledge base and testing lookup quality.
+
+</details>
 

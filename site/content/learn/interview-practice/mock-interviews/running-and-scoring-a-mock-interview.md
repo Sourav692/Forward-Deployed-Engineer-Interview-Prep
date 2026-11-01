@@ -122,15 +122,31 @@ The source debrief gives two practice targets for every candidate. First, give c
 
 ## Check Yourself
 
-1. **What does the full round add to the short round?**
-   A customer scenario, an ambiguous request, hesitation and recovery, pushback on trade-offs, latency, security, cost, evaluation and rollout, weak, average and strong versions, and a scored debrief.
+<details>
+<summary>1. What does the full round add to the short round?</summary>
 
-2. **The customer says they want to launch to everyone next Monday. What does a strong candidate say?**
-   Push back respectfully: offer a controlled pilot on Monday, not broad production unless launch gates are met, and name rollback conditions such as leakage, high-risk wrong answers, excessive latency or low user trust.
+A customer scenario, an ambiguous request, hesitation and recovery, pushback on trade-offs, latency, security, cost, evaluation and rollout, weak, average and strong versions, and a scored debrief.
 
-3. **What separates a 4 from a 5 on discovery?**
-   A 4 asks clear user, workflow and risk questions. A 5 also quantifies business value, failure cost, owners and the adoption path.
+</details>
 
-4. **Why not remove citation verification to cut latency?**
-   Where citations carry trust and compliance, verification is a safety feature. Optimise it, or make it asynchronous for low-risk answers, but keep it for high-risk outputs.
+<details>
+<summary>2. The customer says they want to launch to everyone next Monday. What does a strong candidate say?</summary>
+
+Push back respectfully: offer a controlled pilot on Monday, not broad production unless launch gates are met, and name rollback conditions such as leakage, high-risk wrong answers, excessive latency or low user trust.
+
+</details>
+
+<details>
+<summary>3. What separates a 4 from a 5 on discovery?</summary>
+
+A 4 asks clear user, workflow and risk questions. A 5 also quantifies business value, failure cost, owners and the adoption path.
+
+</details>
+
+<details>
+<summary>4. Why not remove citation verification to cut latency?</summary>
+
+Where citations carry trust and compliance, verification is a safety feature. Optimise it, or make it asynchronous for low-risk answers, but keep it for high-risk outputs.
+
+</details>
 

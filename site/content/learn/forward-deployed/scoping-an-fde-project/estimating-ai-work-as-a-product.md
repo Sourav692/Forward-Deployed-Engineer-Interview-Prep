@@ -76,12 +76,24 @@ The model call is the same at all three levels. Everything that changes the esti
 
 ## Check Yourself
 
-1. **Why does a working AI demo say little about the size of the project?**
-   It shows the model call, which is cheap. It does not show data access, action limits, evaluation, fallbacks, cost control or the improvement loop.
+<details>
+<summary>1. Why does a working AI demo say little about the size of the project?</summary>
 
-2. **What makes judgement-based logic harder to test than predictable logic?**
-   Several outputs can be reasonable, so there is no single expected value. Quality must be measured across many cases.
+It shows the model call, which is cheap. It does not show data access, action limits, evaluation, fallbacks, cost control or the improvement loop.
 
-3. **What should a pre-pilot test set include?**
-   Clean examples, unclear requests, missing information, unsafe requests and cases that should be handed to a human.
+</details>
+
+<details>
+<summary>2. What makes judgement-based logic harder to test than predictable logic?</summary>
+
+Several outputs can be reasonable, so there is no single expected value. Quality must be measured across many cases.
+
+</details>
+
+<details>
+<summary>3. What should a pre-pilot test set include?</summary>
+
+Clean examples, unclear requests, missing information, unsafe requests and cases that should be handed to a human.
+
+</details>
 

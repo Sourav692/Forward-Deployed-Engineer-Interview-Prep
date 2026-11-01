@@ -110,12 +110,24 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 
 ## Check Yourself
 
-1. **How does the strong candidate frame the system in one phrase?**
-   Regulated decision support, not autonomous compliance judgement.
+<details>
+<summary>1. How does the strong candidate frame the system in one phrase?</summary>
 
-2. **What latency split does the strong framing use?**
-   Batch review overnight for bulk surveillance, and interactive p95 under 10 seconds for analyst drill-down.
+Regulated decision support, not autonomous compliance judgement.
 
-3. **How is cost controlled, and what cost metric is tracked?**
-   Tiered screening, with the LLM only for borderline cases and sampling of low-risk traffic; cost per reviewed communication and cost per true issue found.
+</details>
+
+<details>
+<summary>2. What latency split does the strong framing use?</summary>
+
+Batch review overnight for bulk surveillance, and interactive p95 under 10 seconds for analyst drill-down.
+
+</details>
+
+<details>
+<summary>3. How is cost controlled, and what cost metric is tracked?</summary>
+
+Tiered screening, with the LLM only for borderline cases and sampling of low-risk traffic; cost per reviewed communication and cost per true issue found.
+
+</details>
 

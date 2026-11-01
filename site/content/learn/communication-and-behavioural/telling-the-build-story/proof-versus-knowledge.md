@@ -103,15 +103,31 @@ When the room is ready to close, one sentence carries the whole discipline:
 
 ## Check Yourself
 
-1. **State the distinction and the failure in one sentence each.**
-   "I built this, let me show you" and "I know how this is done" are both legitimate positions. The failure is presenting the second as the first.
+<details>
+<summary>1. State the distinction and the failure in one sentence each.</summary>
 
-2. **Your retrieval benchmark scores near-perfectly on 22 documents. How do you present it?**
-   Say the corpus is tiny, so the differences between strategies are noise and prove nothing about them. Then say what it does prove: the harness exists and gates the release, and the zero-leak column is the number that matters.
+"I built this, let me show you" and "I know how this is done" are both legitimate positions. The failure is presenting the second as the first.
 
-3. **Why does offered honesty strengthen every other claim?**
-   The listener sees the speaker volunteer a caveat they could have hidden, so they trust the claims that were not caveated, such as the zero-leak gate, without checking.
+</details>
 
-4. **A project has no war stories. What does that suggest?**
-   Either it has not been tested hard enough, or it is not being described honestly.
+<details>
+<summary>2. Your retrieval benchmark scores near-perfectly on 22 documents. How do you present it?</summary>
+
+Say the corpus is tiny, so the differences between strategies are noise and prove nothing about them. Then say what it does prove: the harness exists and gates the release, and the zero-leak column is the number that matters.
+
+</details>
+
+<details>
+<summary>3. Why does offered honesty strengthen every other claim?</summary>
+
+The listener sees the speaker volunteer a caveat they could have hidden, so they trust the claims that were not caveated, such as the zero-leak gate, without checking.
+
+</details>
+
+<details>
+<summary>4. A project has no war stories. What does that suggest?</summary>
+
+Either it has not been tested hard enough, or it is not being described honestly.
+
+</details>
 

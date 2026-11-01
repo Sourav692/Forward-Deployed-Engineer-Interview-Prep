@@ -78,17 +78,33 @@ A listener who hears this knows which changes were planned, which were forced, a
 
 ## Check Yourself
 
-1. **Why show stages instead of one final design?**
-   A final diagram hides the decisions that produced it. Stages show the failures and fixes, which is the evidence of judgement a technical listener wants.
+<details>
+<summary>1. Why show stages instead of one final design?</summary>
 
-2. **When does a stage change count as a pivot?**
-   Only when a documented failure forced it. A change planned before anything broke is scope, and should be called that.
+A final diagram hides the decisions that produced it. Stages show the failures and fixes, which is the evidence of judgement a technical listener wants.
 
-3. **In the Enterprise RAG platform, what forced the one structural change in the managed-platform rebuild?**
-   The search index would not build on a table with a row filter or column mask. That forced an ungoverned base table plus a governed view.
+</details>
 
-4. **How do you present the 22-of-22 pass result?**
-   With its limits: 22 documents make strategy differences noise, the full table predates a configuration change, and scale is not demonstrated. The zero-leak result is what matters.
+<details>
+<summary>2. When does a stage change count as a pivot?</summary>
+
+Only when a documented failure forced it. A change planned before anything broke is scope, and should be called that.
+
+</details>
+
+<details>
+<summary>3. In the Enterprise RAG platform, what forced the one structural change in the managed-platform rebuild?</summary>
+
+The search index would not build on a table with a row filter or column mask. That forced an ungoverned base table plus a governed view.
+
+</details>
+
+<details>
+<summary>4. How do you present the 22-of-22 pass result?</summary>
+
+With its limits: 22 documents make strategy differences noise, the full table predates a configuration change, and scale is not demonstrated. The zero-leak result is what matters.
+
+</details>
 
 ## References
 

@@ -93,12 +93,24 @@ The CRM outage cost one tool's capacity, not the whole agent's. Each pattern did
 
 ## Check Yourself
 
-1. **Why must backoff be exponential rather than a fixed interval?**
-   A fixed interval synchronises every failed client's retry into the same instant, the thundering herd. Growing, jittered delays spread them out.
+<details>
+<summary>1. Why must backoff be exponential rather than a fixed interval?</summary>
 
-2. **What happens to the dependency while the breaker is open?**
-   Nothing. Calls are rejected without invoking it, which is why breaker-only metrics undercount the outage.
+A fixed interval synchronises every failed client's retry into the same instant, the thundering herd. Growing, jittered delays spread them out.
 
-3. **A dependency is not failing, just taking 30 seconds per call. Which pattern applies?**
-   A bulkhead. A dedicated small pool keeps the slow calls from exhausting the shared pool.
+</details>
+
+<details>
+<summary>2. What happens to the dependency while the breaker is open?</summary>
+
+Nothing. Calls are rejected without invoking it, which is why breaker-only metrics undercount the outage.
+
+</details>
+
+<details>
+<summary>3. A dependency is not failing, just taking 30 seconds per call. Which pattern applies?</summary>
+
+A bulkhead. A dedicated small pool keeps the slow calls from exhausting the shared pool.
+
+</details>
 

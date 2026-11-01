@@ -133,12 +133,24 @@ The answer names the starting shape, the pressures that would change it and the 
 
 ## Check Yourself
 
-1. **Name four things a monolith gives for free and four it costs at scale.**
-   Free: simple development, easy deployment, easy debugging, function-call speed. Costs: whole-application scaling, a large codebase, a single point of failure, slow releases.
+<details>
+<summary>1. Name four things a monolith gives for free and four it costs at scale.</summary>
 
-2. **What is a modular monolith, and why start there?**
-   One deployable with clean internal boundaries that are not yet network boundaries. It keeps operations simple while leaving a clear path to extract services later.
+Free: simple development, easy deployment, easy debugging, function-call speed. Costs: whole-application scaling, a large codebase, a single point of failure, slow releases.
 
-3. **Give three pressures that justify extracting a specific service.**
-   Payments needs independent compliance controls; Search needs its own scaling curve; the AI team needs to ship without waiting on a shared release train.
+</details>
+
+<details>
+<summary>2. What is a modular monolith, and why start there?</summary>
+
+One deployable with clean internal boundaries that are not yet network boundaries. It keeps operations simple while leaving a clear path to extract services later.
+
+</details>
+
+<details>
+<summary>3. Give three pressures that justify extracting a specific service.</summary>
+
+Payments needs independent compliance controls; Search needs its own scaling curve; the AI team needs to ship without waiting on a shared release train.
+
+</details>
 

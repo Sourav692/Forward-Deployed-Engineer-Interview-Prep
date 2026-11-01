@@ -59,12 +59,24 @@ The incident shows why both lessons matter together. Long runs are exactly where
 
 ## Check Yourself
 
-1. **Why can three observations beat twelve?**
-   Accuracy falls as the window fills, and material in the middle is recalled less reliably, so extra observations dilute the useful ones.
+<details>
+<summary>1. Why can three observations beat twelve?</summary>
 
-2. **When should a subtask share the parent's context instead of being isolated?**
-   Only when steps must reason across each other's intermediate results.
+Accuracy falls as the window fills, and material in the middle is recalled less reliably, so extra observations dilute the useful ones.
 
-3. **An agent behaves well on short runs and breaks policy on long ones, while every component tests clean. What do you check first?**
-   Reconstruct exactly what the model saw at the failing step, then check whether instructions were evicted, then consider context rot.
+</details>
+
+<details>
+<summary>2. When should a subtask share the parent's context instead of being isolated?</summary>
+
+Only when steps must reason across each other's intermediate results.
+
+</details>
+
+<details>
+<summary>3. An agent behaves well on short runs and breaks policy on long ones, while every component tests clean. What do you check first?</summary>
+
+Reconstruct exactly what the model saw at the failing step, then check whether instructions were evicted, then consider context rot.
+
+</details>
 

@@ -111,12 +111,24 @@ The guardrails were not trusted because they existed. They were trusted because 
 
 ## Check Yourself
 
-1. **What makes crescendo different from a single-turn jailbreak?**
-   It escalates gradually across turns, each request only slightly further than the last, so no single message looks alarming.
+<details>
+<summary>1. What makes crescendo different from a single-turn jailbreak?</summary>
 
-2. **Why must the red team attack through the same path as real users?**
-   Only then is a passing run evidence that the production auth, rate limits and guardrails hold, not a test of a differently configured mock.
+It escalates gradually across turns, each request only slightly further than the last, so no single message looks alarming.
 
-3. **A RAG system scores well on every quality evaluation. Is it safe to ship?**
-   Not on that evidence. Quality metrics do not look for policy holes; automated red teaming with custom vulnerabilities does.
+</details>
+
+<details>
+<summary>2. Why must the red team attack through the same path as real users?</summary>
+
+Only then is a passing run evidence that the production auth, rate limits and guardrails hold, not a test of a differently configured mock.
+
+</details>
+
+<details>
+<summary>3. A RAG system scores well on every quality evaluation. Is it safe to ship?</summary>
+
+Not on that evidence. Quality metrics do not look for policy holes; automated red teaming with custom vulnerabilities does.
+
+</details>
 
