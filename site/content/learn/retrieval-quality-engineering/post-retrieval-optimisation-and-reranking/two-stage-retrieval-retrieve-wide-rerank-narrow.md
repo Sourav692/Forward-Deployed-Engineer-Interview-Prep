@@ -35,7 +35,7 @@ When an answer is wrong, the two metrics tell you which stage to fix. Ask the qu
 
 ```mermaid
 flowchart TD
-    A{"Evidence in the<br/>top 50?"} -- no --> F1["Fix stage 1<br/>hybrid search (M17)<br/>query rewriting (M18)"]
+    A{"Evidence in the<br/>top 50?"} -- no --> F1["Fix stage 1<br/>hybrid search (T7.1)<br/>query rewriting (T7.2)"]
     A -- yes --> B{"Evidence in the top 5<br/>after the rerank?"}
     B -- no --> F2["Fix stage 2<br/>reranker model<br/>input truncation"]
     B -- yes --> C{"Answer uses<br/>the evidence?"}

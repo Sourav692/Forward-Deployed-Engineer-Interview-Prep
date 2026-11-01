@@ -25,7 +25,7 @@ One optimiser step, with a batch of 1 and four accumulation steps:
 <figure class="anim sheet" aria-labelledby="anim-trainstep-cap">
   <div class="anim__canvas" tabindex="0" aria-label="One optimiser step with gradient accumulation, scrolls sideways on a narrow screen">
     <svg viewBox="0 0 800 290" role="img" aria-labelledby="anim-trainstep-title anim-trainstep-desc">
-      <title id="anim-trainstep-title">Gradient accumulation in the lesson 4.5 run</title>
+      <title id="anim-trainstep-title">Gradient accumulation in the lesson 5 of T2.4 run</title>
       <desc id="anim-trainstep-desc">One example goes forward through the model, the loss is computed, and its gradients are added to a running sum. After four micro-batches the optimiser updates the weights at the scheduled learning rate and the gradients are zeroed. The run’s three updates use learning rates 0, 1e-5 and 5e-6, and stop after 12 examples, 0.95% of the 1,260 training rows.</desc>
       <defs>
         <marker id="ah-trainstep" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 0 L8 4 L0 8 z"/></marker>

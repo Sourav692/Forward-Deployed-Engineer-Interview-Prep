@@ -5,7 +5,7 @@
 
 ## From a pattern to a production prompt
 
-Notebook 04a sends each of five business tasks to `gpt-4o` and to Llama 3.2 90B on Groq, both at temperature 0. The prompts combine the patterns from lessons 5.1 and 5.2, and each task adds one technique that a production prompt needs:
+Notebook 04a sends each of five business tasks to `gpt-4o` and to Llama 3.2 90B on Groq, both at temperature 0. The prompts combine the patterns from lessons 1 and 2 of T3.1, and each task adds one technique that a production prompt needs:
 
 - **Several instructions, one pass.** The review prompt asks for a summary of at most 3 lines, the positives and negatives, the overall sentiment, 3 to 5 emotions, and a reply email. The email instruction is conditional: thank the customer if the sentiment is positive or neutral, apologise if it is negative. One call returns every field, and they agree with each other because the model wrote them together.
 - **Delimiters around the input.** Every task wraps its input in triple backticks (or triple quotes for the IT tickets), so the model can tell the instruction from the text it works on. Delimiters make an instruction hidden in a review easier to ignore; they do not guarantee it.

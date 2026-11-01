@@ -4,7 +4,7 @@
  */
 import assert from 'node:assert/strict'
 import { britishSpelling } from '../src/lib/spelling.ts'
-import { britishText, fileTitle, makeRenumber, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
+import { britishText, fileNamesAsTitles, fileTitle, makeRenumber, renumberDiagram, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
 import { parseAnimatedFence, parseLabFence, parseReading } from '../src/lib/reading.ts'
 import { siteText } from './site-text-edits.mjs'
 
@@ -42,6 +42,15 @@ assert.equal(renumber('M13 and M99, Lesson 13.2, notebook 11.3, M13.4 and the Pa
   'T6.2 and M99, Lesson 2 of T6.2, notebook 3 of T5.1, lesson 4 of T6.2 and the T7 pipeline')
 assert.equal(renumber('13.2', true), 'lesson 2 of T6.2')
 assert.equal(renumber('Part IX', false), 'Part IX')
+assert.equal(renumber('Lessons 13.2 and 13.4 build it; lessons 11.1 to 13.3 reuse it.'),
+  'Lessons 2 and 4 of T6.2 build it; lesson 1 of T5.1 to lesson 3 of T6.2 reuse it.')
+assert.equal(renumber('the echo agent in 13.1 does, at 11.0 s'), 'the echo agent in lesson 1 of T6.2 does, at 11.0 s')
+assert.equal(renumberDiagram('    P["Prompt it<br/>M13"]', 'mermaid', renumber), '    P["Prompt it<br/>T6.2"]')
+assert.equal(renumberDiagram('<path d="M13 42 v3"/><title>The M13 run</title>', 'animated', renumber), '<path d="M13 42 v3"/><title>The T6.2 run</title>')
+assert.equal(renumberDiagram('x = "M13"', 'python', renumber), 'x = "M13"')
+assert.equal(fileNamesAsTitles('See [`deep_agent_overview.md`](../a/deep_agent_overview.md) and `01a_AGENTIC_RAG_ARCHITECTURES.md`, not `refunds.md`.'),
+  'See [Deep agent overview](../a/deep_agent_overview.md) and *Agentic RAG architectures*, not `refunds.md`.')
+assert.equal(fileTitle('01a_LCEL_Introduction.ipynb'), 'LCEL Introduction')
 const coded = { ...ctx, renumber, moduleLink: (code: string) => (code === 'M11' ? `[${renumber(code)}](m11.md)` : null) }
 assert.equal(transformLine('See M11, M13 and [13.2](x.md).', coded), 'See [T5.1](m11.md), T6.2 and [lesson 2 of T6.2](<x.md>).')
 assert.equal(transformLine('## How M13 connects', coded), '## How T6.2 connects')

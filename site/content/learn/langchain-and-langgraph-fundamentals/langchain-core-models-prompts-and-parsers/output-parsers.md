@@ -62,7 +62,7 @@ The three ids are fixed here because the lab has one question. In a live pipelin
 
 Format instructions only help if they reach the model. The prompt needs a `{format_instructions}` slot, filled with `.partial()` or `partial_variables`, as notebook 06a does. The instructions are long: for the two-field schema, the lab measures 748 characters from `PydanticOutputParser` and 1,301 from `JsonOutputParser(pydantic_object=...)`, sent as input tokens on every call.
 
-The optional notebook [`07f_output_parsers_demo.ipynb`](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/optional/07f_output_parsers_demo.ipynb) shows the silent version of this mistake. Its `PydanticOutputParser` example calls `.partial(format_instructions=...)` on a template with no `{format_instructions}` slot. LangChain ignores the value without an error, so the model never sees the schema, and the chain works only when the model happens to produce matching JSON from the one-line request. Printing the formatted prompt once shows whether the schema is in it.
+The optional notebook [Output parsers demo](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/optional/07f_output_parsers_demo.ipynb) shows the silent version of this mistake. Its `PydanticOutputParser` example calls `.partial(format_instructions=...)` on a template with no `{format_instructions}` slot. LangChain ignores the value without an error, so the model never sees the schema, and the chain works only when the model happens to produce matching JSON from the one-line request. Printing the formatted prompt once shows whether the schema is in it.
 
 ## Key Takeaways
 

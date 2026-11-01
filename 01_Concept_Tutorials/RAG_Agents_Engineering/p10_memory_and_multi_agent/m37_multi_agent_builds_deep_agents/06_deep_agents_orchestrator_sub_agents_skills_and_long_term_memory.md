@@ -51,7 +51,7 @@ Code execution belongs in a real sandbox backend, with a person approving each c
 
 The orchestrator's prompt tells it to recall memories at the start of each conversation and to save preferences, facts, decisions, project context and feedback as they come up. Two limits are visible in the code: `CURRENT_USER_ID` is fixed to `default-user`, so every user shares one namespace until it comes from authentication, and `recall_memories` matches a substring of the stored text, so a paraphrase finds nothing. The script's comment names `PostgresStore` as the production replacement.
 
-The module's deployed design, in [`deep_agent_overview.md`](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/assets/deep_agent_overview.md), runs the same harness behind a FastAPI backend with Server-Sent Events, eight sub-agents and a recursion limit of 100.
+The module's deployed design, in [Deep agent overview](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/assets/deep_agent_overview.md), runs the same harness behind a FastAPI backend with Server-Sent Events, eight sub-agents and a recursion limit of 100.
 
 ## Key Takeaways
 

@@ -9,7 +9,7 @@ The running example is the Larkspur Cloud handbook from [T5.1](../../p04_rag_fou
 
 - Retrieval runs in two stages. A bi-encoder (with BM25 alongside it in the [T7.1](../m17_retrievers_hybrid_search/00_overview.md) hybrid) scores every chunk and returns a wide candidate list; a cross-encoder or an LLM reads each question and candidate together and reorders the list. Stage 1 is judged on recall at depth 50, stage 2 on precision in the top 5.
 - The reranker only reorders what stage 1 returned. Evidence missing from the candidates stays missing, so recall at the first-stage depth caps everything after it.
-- Reranking cost grows with the number of candidates. A cross-encoder runs one forward pass per question and chunk pair; the pointwise LLM reranker in `03a_reranking_methods.ipynb` makes one `gpt-4o` call per candidate, up to 30 per question in its custom retriever.
+- Reranking cost grows with the number of candidates. A cross-encoder runs one forward pass per question and chunk pair; the pointwise LLM reranker in *Reranking methods* makes one `gpt-4o` call per candidate, up to 30 per question in its custom retriever.
 - Models use the start and end of a long prompt more reliably than the middle. Send a few chunks in rank order, best first, rather than a long list in retrieval order.
 - After reranking, the context budget decides the shape of each chunk: compress it to the sentences that answer the question, or expand it to its neighbours when the answer runs across a boundary.
 

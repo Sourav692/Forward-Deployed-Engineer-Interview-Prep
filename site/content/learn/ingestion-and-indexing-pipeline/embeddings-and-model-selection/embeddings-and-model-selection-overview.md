@@ -95,7 +95,7 @@ The running example is the Larkspur Cloud handbook from [T5.1](/learn/llm-and-re
     <button class="anim__btn" type="button" data-act="next">Next</button>
   </div>
   <ol class="anim__steps" id="anim-embpath-cap">
-    <li><button type="button">Chunk</button><span>A chunk from M13 arrives, here <code>refund-timing</code>.</span></li>
+    <li><button type="button">Chunk</button><span>A chunk from T6.2 arrives, here <code>refund-timing</code>.</span></li>
     <li><button type="button">Cache</button><span>The cache looks it up by model, dimensions and text. A hit skips the model entirely.</span></li>
     <li><button type="button">Embed</button><span>On a miss, the embedding model returns the vector: 1536 numbers for <code>text-embedding-3-small</code>.</span></li>
     <li><button type="button">Store</button><span>The vector is stored with the model name and dimensions that made it.</span></li>

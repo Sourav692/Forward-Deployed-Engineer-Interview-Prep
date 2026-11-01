@@ -29,7 +29,7 @@ Changing provider changes one class. In the notebooks the same `prompt | model` 
 | `ChatHuggingFace` over `HuggingFaceEndpoint` | Hugging Face Inference Providers | `moonshotai/kimi-k2-instruct-0905` |
 | `ChatHuggingFace` over `HuggingFacePipeline` | your own machine | `TinyLlama/TinyLlama-1.1B-Chat-v1.0` |
 
-The last three come from lesson 3 of T4.1's [`03a_Open_Source_LLMs_with_LangChain.ipynb`](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/notebooks/03a_Open_Source_LLMs_with_LangChain.ipynb). `ChatHuggingFace` is a wrapper: the two Hugging Face classes underneath are completion-style LLMs, and the wrapper gives them the chat interface ([lesson 4 of T4.1](04_inputs_and_outputs_messages_llm_vs_chat_model.md#lesson-llm-vs-chat-model)).
+The last three come from lesson 3 of T4.1's [Open Source LLMs with LangChain](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/notebooks/03a_Open_Source_LLMs_with_LangChain.ipynb). `ChatHuggingFace` is a wrapper: the two Hugging Face classes underneath are completion-style LLMs, and the wrapper gives them the chat interface ([lesson 4 of T4.1](04_inputs_and_outputs_messages_llm_vs_chat_model.md#lesson-llm-vs-chat-model)).
 
 `init_chat_model` moves the choice out of the import line and into a string, which is how notebook 01b loads its model:
 

@@ -69,27 +69,54 @@ const siteHeading = (text) => (text.trim() === 'TL;DR' ? 'In short' : britishTex
 
 /**
  * Maps every line outside fenced code through `fn`, with inline code spans masked so a
- * link whose text is code (`[`a.ipynb`](…)`) still reaches `fn` whole.
+ * link whose text is code (`[`a.ipynb`](…)`) still reaches `fn` whole. `raw` sees the
+ * unmasked line first; `fenced(line, lang)` maps lines inside a fence (default: unchanged).
  */
-function mapProseLines(md, fn) {
+function mapProseLines(md, fn, { raw = (l) => l, fenced = (l) => l } = {}) {
   let fence = null
+  let lang = ''
   return md
     .split('\n')
     .map((line) => {
-      const marker = line.match(/^\s*(`{3,}|~{3,})/)
+      const marker = line.match(/^\s*(`{3,}|~{3,})(\w*)/)
       if (fence) {
-        if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length) fence = null
-        return line
+        if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length && !marker[2]) {
+          fence = null
+          return line
+        }
+        return fenced(line, lang)
       }
       if (marker) {
         fence = marker[1]
+        lang = marker[2]
         return line
       }
       const code = []
-      const masked = line.replace(/`+[^`\n]*?`+/g, (m) => `\u0001${code.push(m) - 1}\u0001`)
+      const masked = raw(line).replace(/`+[^`\n]*?`+/g, (m) => `\u0001${code.push(m) - 1}\u0001`)
       return fn(masked).replace(/\u0001(\d+)\u0001/g, (_, i) => code[i])
     })
     .join('\n')
+}
+
+/**
+ * Course file names in prose as readable titles (PQ-07): a link whose text is a file name
+ * (`[`deep_agent_overview.md`](…)`) and a numbered course file named in code
+ * (`01a_AGENTIC_RAG_ARCHITECTURES.md`). Data files the lessons work with (`refunds.md`) stay.
+ */
+export function fileNamesAsTitles(line) {
+  return line
+    .replace(/\[`([^`\n]+\.(?:ipynb|md|py))`\]\(/g, (_, file) => `[${fileTitle(basename(file))}](`)
+    .replace(/`(\d{2}[a-z]?_[\w-]+\.(?:ipynb|md))`/g, (_, file) => `*${fileTitle(file)}*`)
+}
+
+/**
+ * Course numbers inside a diagram: every line of a Mermaid fence, and only the text between
+ * tags in an animated SVG fence, so path data such as `M20 42` is never read as a module code.
+ */
+export function renumberDiagram(line, lang, renumber) {
+  if (lang === 'mermaid') return renumber(line)
+  if (lang === 'animated') return line.replace(/(^|>)([^<]+)(?=<|$)/g, (_, open, text) => open + renumber(text))
+  return line
 }
 
 /**
@@ -179,7 +206,11 @@ const CASED = Object.fromEntries([
 /** A readable title for a notebook file: `02a_creating_an_mcp_server.ipynb` is "Creating an MCP server". */
 export function fileTitle(name) {
   const stem = name.replace(/\.[^.]+$/, '').replace(/^\d+[a-z]?_/, '')
-  const title = stem.split(/[_\-\s]+/).filter(Boolean).map((w) => CASED[w.toLowerCase()] ?? w).join(' ')
+  const words = stem.split(/[_\-\s]+/).filter(Boolean)
+  // A name typed all in capitals (`01a_AGENTIC_RAG_ARCHITECTURES.md`) reads as normal words; in a mixed
+  // name a capitalised word is an acronym (`LCEL_Introduction`) and stays.
+  const shouting = words.every((w) => w === w.toUpperCase())
+  const title = words.map((w) => CASED[w.toLowerCase()] ?? (shouting ? w.toLowerCase() : w)).join(' ')
   return britishText(title.charAt(0).toUpperCase() + title.slice(1))
 }
 
@@ -214,6 +245,15 @@ export function makeRenumber(moduleCode, partCode) {
       return lesson('lesson', n.padStart(2, '0'), m) ?? text
     }
     return text
+      .replace(/\b([Ll]essons) (\d{1,2})\.(\d{1,2})( and | to | or |, )(\d{1,2})\.(\d{1,2})\b/g, (all, w, n1, m1, sep, n2, m2) => {
+        const [a, b] = [moduleCode(n1.padStart(2, '0')), moduleCode(n2.padStart(2, '0'))]
+        if (!a || !b) return all
+        return a === b ? `${w} ${Number(m1)}${sep}${Number(m2)} of ${a}` : `${w.slice(0, -1)} ${Number(m1)} of ${a}${sep}lesson ${Number(m2)} of ${b}`
+      })
+      .replace(/\b(in|from) (\d{1,2})\.(\d{1,2})(?= (?:does|do|did|shows|showed|uses|used|builds|built)\b)/g, (all, w, n, m) => {
+        const code = moduleCode(n.padStart(2, '0'))
+        return code ? `${w} lesson ${Number(m)} of ${code}` : all
+      })
       .replace(/\b([Ll]esson|[Nn]otebook) (\d{1,2})\.(\d{1,2})\b/g, (all, w, n, m) => lesson(w, n.padStart(2, '0'), m) ?? all)
       .replace(/(?<![\w/[.])M(\d{2})\.(\d{1,2})\b/g, (all, n, m) => lesson('lesson', n, m) ?? all)
       .replace(/(?<![\w/[.])M(\d{2})(?![\d.]?\d)\b/g, (all, n) => moduleCode(n) ?? all)
@@ -366,7 +406,10 @@ export function importTheory(from) {
         return `\`\`\`lab\nsrc: ${link(lab)}\ntitle: ${title}\n\`\`\``
       })
     for (const [mark] of md.matchAll(/^<!-- animated: \S+ -->$/gm)) errors.push(`${where}: ${mark} does not follow a Mermaid diagram`)
-    md = mapProseLines(md, (line) => transformLine(line, { link, moduleLink, renumber }))
+    md = mapProseLines(md, (line) => transformLine(line, { link, moduleLink, renumber }), {
+      raw: fileNamesAsTitles,
+      fenced: (line, lang) => renumberDiagram(line, lang, renumber),
+    })
     if (PLACEHOLDER.test(md)) errors.push(`${where}: placeholder ${md.match(PLACEHOLDER)[0]}`)
     md = siteText(posix(relative(join(SITE, '..'), p.out)), md)
     p.md = `${HEADER}${md.replace(/\n{3,}/g, '\n\n').trim()}\n`

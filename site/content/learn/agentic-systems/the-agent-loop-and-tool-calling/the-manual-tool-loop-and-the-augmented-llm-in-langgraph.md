@@ -47,7 +47,7 @@ flowchart LR
     C -- tool calls --> T["tools<br/>ToolNode"]
     C -- none --> E([END])
     T --> E
-    T -. "lesson 23.5" .-> L
+    T -. "lesson 5 of T9.1" .-> L
 ```
 
 The solid edges are `04b`'s graph. *Explain AI in 2 bullets* ends at the first `END` with a direct answer. *What is the latest news on OpenAI product releases* calls `search_web`, and the run ends on the raw Tavily JSON in a `ToolMessage`: nobody reads the result, the user gets no sentence, and a second, dependent call is impossible.

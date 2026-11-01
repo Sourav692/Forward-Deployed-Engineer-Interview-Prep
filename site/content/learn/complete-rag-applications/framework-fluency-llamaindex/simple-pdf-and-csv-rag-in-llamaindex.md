@@ -66,7 +66,7 @@ sequenceDiagram
 ```
 
 - **The retriever** embeds the question and returns the `similarity_top_k` nearest nodes as `NodeWithScore` objects. The default is 2.
-- **The postprocessors** are the `node_postprocessors` list, applied in order. `01a` passes none; lessons 22.3 and 22.4 add a reranker and a window replacement here.
+- **The postprocessors** are the `node_postprocessors` list, applied in order. `01a` passes none; lessons 3 and 4 of T8.3 add a reranker and a window replacement here.
 - **The synthesizer** puts the nodes' text into a prompt for `Settings.llm`. The default `response_mode` is `compact`: it packs the nodes' text into as few prompts as the context window allows, then refines the answer across them.
 
 `response.response` is the answer; `response.source_nodes` is the list of nodes the answer was built from, with their scores. `01a`'s `evaluate_rag` reads both: the answer goes to the correctness and faithfulness metrics, the source node texts become the retrieval context for DeepEval's `ContextualRelevancyMetric`. Logging `source_nodes` on every production query gives the same view without an evaluation run.

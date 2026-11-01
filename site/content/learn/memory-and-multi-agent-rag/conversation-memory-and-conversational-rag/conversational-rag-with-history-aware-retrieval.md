@@ -5,7 +5,7 @@
 
 ## History-aware retriever
 
-Lessons 33.1 to 33.3 gave the history to the model. In RAG the retriever reads the question too, and it reads only the literal text. *How long do I have?* contains one useful term, "long", and no Larkspur handbook chunk contains it: every chunk scores zero. The model would receive the history, so it knows the customer means their data after cancelling, but the chunks it receives were chosen for a question with no subject. The notebook shows the same failure on Lilian Weng's agents post: after *What is Self-Reflection?*, the follow-up *How do we achieve it?* retrieves chunks about "it".
+Lessons 1 to 3 of T11.1 gave the history to the model. In RAG the retriever reads the question too, and it reads only the literal text. *How long do I have?* contains one useful term, "long", and no Larkspur handbook chunk contains it: every chunk scores zero. The model would receive the history, so it knows the customer means their data after cancelling, but the chunks it receives were chosen for a question with no subject. The notebook shows the same failure on Lilian Weng's agents post: after *What is Self-Reflection?*, the follow-up *How do we achieve it?* retrieves chunks about "it".
 
 A **history-aware retriever** adds one step before retrieval. An LLM reads the chat history and the latest question and writes a **standalone question**, one that makes sense without the history, and the retriever searches for that. The notebook's prompt tells the LLM to reformulate the question if needed, return it unchanged otherwise, and not answer it.
 

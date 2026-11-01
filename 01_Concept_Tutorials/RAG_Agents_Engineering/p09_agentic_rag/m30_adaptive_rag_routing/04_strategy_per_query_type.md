@@ -5,7 +5,7 @@
 
 ## Per-query strategy
 
-Lessons 30.1 to 30.3 route a question to a place: a knowledge base, a person, the web. The 04a notebook routes it to a method. A classifier labels the question Factual, Analytical, Opinion or Contextual, and each label runs a different retrieval strategy over the same index. The idea is to spend retrieval work where the question needs it: precision for a fact, coverage for an analysis, spread for an opinion, the user's situation for a contextual question.
+Lessons 1 to 3 of T10.3 route a question to a place: a knowledge base, a person, the web. The 04a notebook routes it to a method. A classifier labels the question Factual, Analytical, Opinion or Contextual, and each label runs a different retrieval strategy over the same index. The idea is to spend retrieval work where the question needs it: precision for a fact, coverage for an analysis, spread for an opinion, the user's situation for a contextual question.
 
 | Type | What the question wants | How 04a retrieves | LLM calls per question |
 |---|---|---|---|

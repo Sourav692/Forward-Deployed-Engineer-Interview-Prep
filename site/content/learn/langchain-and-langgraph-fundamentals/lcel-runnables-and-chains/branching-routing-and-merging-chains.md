@@ -5,7 +5,7 @@
 
 ## RunnableParallel / Branch
 
-A straight pipe runs one step after another. Notebook 03a builds the three other shapes a chain needs, each from the pieces of lessons 8.1 and 8.2: a pipeline that keeps every intermediate result, a fan-out that merges, and a router.
+A straight pipe runs one step after another. Notebook 03a builds the three other shapes a chain needs, each from the pieces of lessons 1 and 2 of T4.2: a pipeline that keeps every intermediate result, a fan-out that merges, and a router.
 
 **Linking: `RunnablePassthrough.assign` keeps the trail.** The notebook's IT-support pipeline runs four LLM chains in order: detect the message's language, translate it to English, write a resolution, translate the resolution back. Each step is an `.assign()`, so the output dict holds `orig_msg`, `orig_lang`, `trans_msg`, `trans_response` and `orig_response`, and the last step can still read `orig_lang` from the first. `final_chain.map()` runs the pipeline over all four queued messages at once: 16 model calls, in 4 rounds rather than 16, because the four messages run side by side while each message's four steps stay in order. (Counted by running the notebook's chain shapes with a stub model in place of `ChatOpenAI`.)
 

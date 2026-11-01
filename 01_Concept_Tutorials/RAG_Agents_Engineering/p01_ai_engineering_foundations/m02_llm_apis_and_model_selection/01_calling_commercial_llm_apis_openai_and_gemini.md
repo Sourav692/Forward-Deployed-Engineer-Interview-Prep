@@ -29,7 +29,7 @@ Four parts of the request and response matter on every call:
 - **Sampling parameters.** `temperature` controls randomness; the notebook uses 0.1 for repeatable answers. `max_tokens` caps the reply; lesson 2 of T2.2's notebook sets 1,000. Reasoning models are stricter: [T9.3's routing page](../../p08_agent_foundations/m25_agentic_workflow_patterns/02_routing_by_handler_and_by_model_tier.md#lesson-routing-by-model-tier) records that o-series models reject a custom temperature.
 - **`usage`.** `prompt_tokens` and `completion_tokens` are what the provider bills. In the installed `openai` 2.54.0, `usage.completion_tokens_details.reasoning_tokens` reports how many of the completion tokens were hidden reasoning. Lesson 3 of T2.2 is about that field.
 
-The notebook reads the key with `getpass` and sets `openai.api_key`, the SDK's module-level client. Lessons 2.3 and 2.4 create `OpenAI()` instead, which reads `OPENAI_API_KEY` from the environment loaded from `.env`. Either way the key stays out of the code and out of the notebook's saved state.
+The notebook reads the key with `getpass` and sets `openai.api_key`, the SDK's module-level client. Lessons 3 and 4 of T2.2 create `OpenAI()` instead, which reads `OPENAI_API_KEY` from the environment loaded from `.env`. Either way the key stays out of the code and out of the notebook's saved state.
 
 ## Two SDKs, two shapes
 

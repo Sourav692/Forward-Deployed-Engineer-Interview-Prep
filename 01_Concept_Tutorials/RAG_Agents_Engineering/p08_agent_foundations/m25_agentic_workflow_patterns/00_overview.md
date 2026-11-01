@@ -18,7 +18,7 @@ The running example is the Larkspur Cloud support assistant from [T5.1](../../p0
 ```mermaid
 flowchart TD
     T[/Task/] --> Q1{"Graph known<br/>in advance?"}
-    Q1 -- no --> AG["Agent<br/>M24"]
+    Q1 -- no --> AG["Agent<br/>T9.2"]
     Q1 -- yes --> Q2{"Input picks<br/>the path?"}
     Q2 -- yes --> RT[Routing]
     Q2 -- no --> Q3{"Parts planned<br/>at run time?"}

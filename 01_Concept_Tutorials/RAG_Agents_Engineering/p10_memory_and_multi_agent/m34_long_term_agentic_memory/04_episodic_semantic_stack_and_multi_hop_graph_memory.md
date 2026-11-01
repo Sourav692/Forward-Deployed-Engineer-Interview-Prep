@@ -5,7 +5,7 @@
 
 ## Recall by similarity
 
-Lessons 34.2 and 34.3 read memory by key and by recency. A "newest three episodes" preload cannot surface a conversation from three months ago, however relevant. This notebook recalls both kinds of memory the way a RAG pipeline recalls chunks: embed the question, return the nearest items.
+Lessons 2 and 3 of T11.2 read memory by key and by recency. A "newest three episodes" preload cannot surface a conversation from three months ago, however relevant. This notebook recalls both kinds of memory the way a RAG pipeline recalls chunks: embed the question, return the nearest items.
 
 The store is the same API with an index switched on: `InMemoryStore(index={"embed": embeddings, "dims": 1536, "fields": ["text"]})` with `text-embedding-3-small`. Every `put` embeds the value's `text` field, and `search(namespace, query=..., limit=k)` ranks items by similarity. Each user has two namespaces, `(user_id, "episodic")` and `(user_id, "semantic")`. A durable store with a vector index, such as `PostgresStore` with pgvector, takes the same calls.
 

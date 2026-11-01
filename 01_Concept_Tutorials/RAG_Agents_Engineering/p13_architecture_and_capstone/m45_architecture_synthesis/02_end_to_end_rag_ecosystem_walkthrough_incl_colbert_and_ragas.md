@@ -5,7 +5,7 @@
 
 ## The stack in one notebook
 
-`02a_rag_ecosystem.ipynb` walks the whole RAG stack in one place. Its recap note says what is new: the early parts are a refresher of earlier modules, the parts it owns are RAPTOR, ColBERT and agentic self-correction, and the evaluation sections are pointers. Of those three, only ColBERT runs as code here; RAPTOR and self-correction are described and linked out.
+*RAG ecosystem* walks the whole RAG stack in one place. Its recap note says what is new: the early parts are a refresher of earlier modules, the parts it owns are RAPTOR, ColBERT and agentic self-correction, and the evaluation sections are pointers. Of those three, only ColBERT runs as code here; RAPTOR and self-correction are described and linked out.
 
 | Notebook part | What it builds | Taught in depth |
 |---|---|---|

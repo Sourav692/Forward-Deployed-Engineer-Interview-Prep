@@ -17,7 +17,7 @@ The running example is the "Refunds and cancellations" section of the Larkspur C
 
 ```mermaid
 flowchart TD
-    D[/Document from M12/] --> Q1{"Markup carries the<br/>boundaries?"}
+    D[/Document from T6.1/] --> Q1{"Markup carries the<br/>boundaries?"}
     Q1 -- yes --> SA["Structure-aware splitter<br/>headers become metadata<br/>long sections capped by size"]
     Q1 -- no --> Q2{"Dense facts where<br/>precision matters?"}
     Q2 -- yes --> P["Proposition chunking<br/>LLM + grading"]

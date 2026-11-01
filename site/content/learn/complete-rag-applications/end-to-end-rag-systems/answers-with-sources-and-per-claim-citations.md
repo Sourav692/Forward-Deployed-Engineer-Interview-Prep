@@ -5,7 +5,7 @@
 
 ## Returning the sources
 
-Both notebooks start with `%run` on the [T6.5](/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/advanced-indexing-strategies-overview) contextual retrieval notebook, [`05b_contextual_retrieval_rag_system.ipynb`](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p05_ingestion_and_indexing/m16_advanced_indexing/notebooks/05b_contextual_retrieval_rag_system.ipynb) ([lesson 5 of T6.5](/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/context-aware-chunks-contextual-headers-and-contextual-retrieval#lesson-contextual-retrieval)). That run builds the index the citations depend on, and it writes four metadata fields on every chunk:
+Both notebooks start with `%run` on the [T6.5](/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/advanced-indexing-strategies-overview) contextual retrieval notebook, [Contextual retrieval RAG system](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p05_ingestion_and_indexing/m16_advanced_indexing/notebooks/05b_contextual_retrieval_rag_system.ipynb) ([lesson 5 of T6.5](/learn/ingestion-and-indexing-pipeline/advanced-indexing-strategies/context-aware-chunks-contextual-headers-and-contextual-retrieval#lesson-contextual-retrieval)). That run builds the index the citations depend on, and it writes four metadata fields on every chunk:
 
 | Field | Wikipedia articles | PDF chunks |
 |---|---|---|

@@ -5,7 +5,7 @@
 
 ## LoRA and 4-bit loading
 
-Lessons 4.3 to 4.6 update every weight of a 70-million-parameter model. That does not scale to a 7-billion-parameter one on a single GPU. Llama 2 7B has 6,738,415,616 parameters: 13.5 GB in 16-bit floats before any gradients or optimiser state. The lesson 7 of T2.4 notebook fine-tunes it with two flags that change what is stored and what is trained, `--use_peft` and `--use_int4`.
+Lessons 3 to 6 of T2.4 update every weight of a 70-million-parameter model. That does not scale to a 7-billion-parameter one on a single GPU. Llama 2 7B has 6,738,415,616 parameters: 13.5 GB in 16-bit floats before any gradients or optimiser state. The lesson 7 of T2.4 notebook fine-tunes it with two flags that change what is stored and what is trained, `--use_peft` and `--use_int4`.
 
 **LoRA** (low-rank adaptation, the method behind PEFT here) freezes every original weight matrix `W` and trains two small matrices beside it, `A` and `B`, whose product is added to the layer’s output. With rank `r`, a layer of shape `d_out × d_in` gains `r × (d_in + d_out)` trainable parameters:
 
@@ -50,7 +50,7 @@ It reads a `text` column in which each row holds a whole conversation (the text-
 - **The flag names are from an older AutoTrain.** In `autotrain-advanced` 0.8.36, the arguments are generated from its `LLMTrainingParams`: `--peft`, `--quantization int4` (the default), `--lr`, `--batch-size`, `--epochs`, and `--username` with `--push-to-hub`. The CLI parses arguments strictly, so `--use_peft`, `--use_int4`, `--learning_rate`, `--train_batch_size`, `--num_train_epochs` and `--repo_id` stop it with an error.
 - **The learning rate is far too high.** `0.4` is more than 13,000 times AutoTrain’s default of `3e-5`, and 40,000 times lesson 5 of T2.4’s `1e-5`. Keep the default unless a measured run says otherwise.
 
-Its other defaults are worth reading too: 4 gradient-accumulation steps, warmup over 10% of the run, a 2,048-token `model_max_length`, and an `add_eos_token` setting, on by default, that appends the end token in its default trainer, the step lessons 4.4 and 4.6 show the T2.4 data missing.
+Its other defaults are worth reading too: 4 gradient-accumulation steps, warmup over 10% of the run, a 2,048-token `model_max_length`, and an `add_eos_token` setting, on by default, that appends the end token in its default trainer, the step lessons 4 and 6 of T2.4 show the T2.4 data missing.
 
 The notebook’s other two cells sketch Lamini’s `BasicModelRunner` and `trl`’s `SFTTrainer`, but use names the notebook never defines (`base_model`, `peft_config`, `training_arguments`, among others), so they do not run as written.
 

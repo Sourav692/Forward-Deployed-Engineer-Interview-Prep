@@ -31,7 +31,7 @@ sequenceDiagram
 
 The notebook's hand-rolled loop is the whole idea in four lines: append the `HumanMessage`, `llm.invoke(history)`, append the reply, return it. `InMemoryChatMessageHistory` gives the same list a standard interface (`add_user_message`, `add_ai_message`, `messages`, `clear`) that file, SQLite and Redis backends share, which is what lesson 2 of T11.1 relies on.
 
-The price is that a history which keeps everything resends everything. Turn N sends 2N − 1 messages: 1, 3, 5, 7, 9 and 11 over six turns, 36 messages in total, where six independent calls would send 6. Token cost and latency grow with the length of the conversation, and a long enough chat no longer fits the context window. Lessons 33.3 and 33.6 bound that growth.
+The price is that a history which keeps everything resends everything. Turn N sends 2N − 1 messages: 1, 3, 5, 7, 9 and 11 over six turns, 36 messages in total, where six independent calls would send 6. Token cost and latency grow with the length of the conversation, and a long enough chat no longer fits the context window. Lessons 3 and 6 of T11.1 bound that growth.
 
 ## The classic memory classes
 
@@ -45,7 +45,7 @@ Before `RunnableWithMessageHistory` and LangGraph checkpointers, LangChain packa
 | `ConversationSummaryBufferMemory` | Summary plus recent turns | Yes, compressed | When over `max_token_limit` | Summary memory (33.3) |
 | `VectorStoreRetrieverMemory` | The past exchanges most similar to the question | Only if retrieved | None | Long-term memory ([T11.2](../m34_long_term_agentic_memory/00_overview.md)) |
 
-These classes live in `langchain_classic` now. You will meet them in older code; new code uses the patterns in lessons 33.2 to 33.6.
+These classes live in `langchain_classic` now. You will meet them in older code; new code uses the patterns in lessons 2 to 6 of T11.1.
 
 ## Key Takeaways
 
@@ -65,13 +65,13 @@ A chat model call depends only on the messages sent in that call, so the second 
 <details>
 <summary>2. A history that keeps everything runs a six-turn chat. How many messages does turn 6 send, and how many over all six turns?</summary>
 
-Turn N sends 2N − 1 messages, so turn 6 sends 11, and the six turns send 1 + 3 + 5 + 7 + 9 + 11 = 36 messages. Six independent calls would send 6. Token cost and latency grow with the conversation, which is why lessons 33.3 and 33.6 bound the history.
+Turn N sends 2N − 1 messages, so turn 6 sends 11, and the six turns send 1 + 3 + 5 + 7 + 9 + 11 = 36 messages. Six independent calls would send 6. Token cost and latency grow with the conversation, which is why lessons 3 and 6 of T11.1 bound the history.
 
 </details>
 
 <details>
 <summary>3. A legacy chain using ConversationBufferMemory runs without errors, but every turn behaves as if the conversation just started. What is the likely bug?</summary>
 
-The save step is missing from the load, invoke and save loop. The classic memory classes load the history before each call and save the exchange after it; skip the save and the next turn loads nothing. New code avoids the manual loop with the patterns in lessons 33.2 to 33.6.
+The save step is missing from the load, invoke and save loop. The classic memory classes load the history before each call and save the exchange after it; skip the save and the next turn loads nothing. New code avoids the manual loop with the patterns in lessons 2 to 6 of T11.1.
 
 </details>

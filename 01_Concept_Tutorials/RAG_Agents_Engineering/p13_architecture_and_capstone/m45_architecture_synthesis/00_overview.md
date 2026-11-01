@@ -75,11 +75,11 @@ The running example is the Larkspur Cloud handbook from [T5.1](../../p04_rag_fou
     <button class="anim__btn" type="button" data-act="next">Next</button>
   </div>
   <ol class="anim__steps" id="anim-escalation-cap">
-    <li><button type="button" data-tok="20,40">Plain RAG</button><span>Start with the M11 pipeline: one retrieval and one model call per question.</span></li>
+    <li><button type="button" data-tok="20,40">Plain RAG</button><span>Start with the T5.1 pipeline: one retrieval and one model call per question.</span></li>
     <li><button type="button" data-tok="230,40">Measure</button><span>Run the frozen golden set through it and record the row.</span></li>
     <li><button type="button" data-tok="440,70">Compare</button><span>Hold the row against the requirement: answer quality, latency and cost.</span></li>
     <li><button type="button" data-tok="420,190">Diagnose</button><span>If it falls short, name the stage. “What happens if my server goes down?” fails in retrieval, because the handbook says “outage”.</span></li>
-    <li><button type="button" data-tok="170,190">Add one</button><span>Add the cheapest rung that fixes that stage. Dense retrieval finds both outage chunks in the M17 lab and still makes one call. Then measure again.</span></li>
+    <li><button type="button" data-tok="170,190">Add one</button><span>Add the cheapest rung that fixes that stage. Dense retrieval finds both outage chunks in the T7.1 lab and still makes one call. Then measure again.</span></li>
     <li><button type="button" data-tok="640,44">Ship</button><span>When the row meets the requirement, ship it, and keep the golden set for the next change.</span></li>
   </ol>
 </figure>
