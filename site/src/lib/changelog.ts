@@ -13,6 +13,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-11-02',
+    title: 'Audit fixes: cleaner course pages, honest times, hidden answers',
+    summary:
+      'Fixes from the 2 November site audit. Behavioural answers keep their own wording, so no more "a approved and controlled". Course pages lose the last course lesson numbers, including the ones inside diagrams, and show notebook titles instead of file names. Credits lists the RAG & Agents Engineering course. Worksheets show the time they take to work, and paused pages show no time. Every lesson\'s Check Yourself answers stay hidden until you open them. Diagrams use British spelling, the AI System Design breadcrumb no longer repeats, and the orientation module is now "How the site works".',
+  },
+  {
+    date: '2026-11-02',
     title: 'Story tags written for readers',
     summary:
       'The behavioural worksheets, answer keys and story bank tagged each sample story GROUNDED, PARTLY GROUNDED or NEEDS YOUR INPUT, notes on how much of each story came from the author\'s own material. They now read Example story, Add your own detail and Your story, and the story bank says what you need to add. The stories are unchanged.',
