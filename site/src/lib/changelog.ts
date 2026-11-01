@@ -13,6 +13,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-11-01',
+    title: 'Track and module codes follow the Learn order',
+    summary:
+      'Learn tracks are now numbered T0 to T19 in the order the topic groups list them, so the AI Engineering group reads T2 to T15 and Production AI is T15. Modules inside each track are numbered in reading order. Earlier entries on this page use the old codes. Links and saved progress are unchanged.',
+  },
+  {
+    date: '2026-11-01',
     title: 'AI Engineering: the RAG & Agents Engineering course',
     summary:
       'The AI Engineering group grew from three tracks to fourteen, about 78 hours, with the author\'s open-source RAG & Agents Engineering course. New tracks run from Python and provider APIs through prompt and context engineering, LangChain and LangGraph, ingestion, retrieval quality, agentic and self-correcting RAG, memory and multi-agent systems, MCP and A2A, GraphRAG and a capstone. RAG Foundations and Agent Foundations for RAG were rebuilt from the course\'s opening modules. Lessons carry interactive labs, animated diagrams, Check yourself questions and common mistakes, and link to the runnable notebooks in the course repository. The About page credits the course.',

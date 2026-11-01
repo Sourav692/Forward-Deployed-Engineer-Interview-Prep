@@ -1,6 +1,6 @@
-# T2.5 Frameworks: LangChain and LangGraph: Consolidated Lessons
+# T4.3 Frameworks: LangChain and LangGraph: Consolidated Lessons
 
-These eight lessons are the site's teaching copy of module T2.5 "Frameworks: LangChain and LangGraph". Each concept is taught once, in the house tutorial format, drawing only on four repository sources. The site publishes them at `/learn/llm-and-retrieval/langchain-and-langgraph`.
+These eight lessons are the site's teaching copy of module T4.3 "Frameworks: LangChain and LangGraph". Each concept is taught once, in the house tutorial format, drawing only on four repository sources. The site publishes them at `/learn/llm-and-retrieval/langchain-and-langgraph`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -18,7 +18,7 @@ These eight lessons are the site's teaching copy of module T2.5 "Frameworks: Lan
 - `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/01_langchain_foundations_INTERVIEW_TUTORIAL.md` (own material; its §4 answers cite external interview guides, and the one lesson that uses them summarises the ideas in our own words and carries a credit line).
 - `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/03_langgraph_fundamentals_INTERVIEW_TUTORIAL.md` (own material; the same note applies to its §4).
 - `01_Concept_Tutorials/FDE_Handbook/01_LLM_Systems_Foundations/05_Same_Loop_In_LangGraph.md` (own material).
-- `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_02_RAG_Frameworks_Tools_Implementation.md`, Topics 1 (LangChain), 2 (LlamaIndex) and 5 (LangGraph) (own material). Its Topic 3 on vector databases belongs to T2.3 and its Topic 4 on evaluation is not taught here.
+- `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_02_RAG_Frameworks_Tools_Implementation.md`, Topics 1 (LangChain), 2 (LlamaIndex) and 5 (LangGraph) (own material). Its Topic 3 on vector databases belongs to T6.2 and its Topic 4 on evaluation is not taught here.
 
 The source files stay in the repository unchanged. The site no longer publishes the first three as separate lessons; old URLs redirect to the matching lesson here.
 

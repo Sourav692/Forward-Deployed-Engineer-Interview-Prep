@@ -1,6 +1,6 @@
-# T4.6 Scaling and Reliability: Consolidated Lessons
+# T15.11 Scaling and Reliability: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T4.6 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
+These six lessons are the site's teaching copy of module T15.11 "Scaling and reliability". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/scaling-and-reliability`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -13,7 +13,7 @@ These six lessons are the site's teaching copy of module T4.6 "Scaling and relia
 
 ## Sources
 
-- `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/06_Scaling_To_20M_Documents.md` (own material). Its §7 chunking by document type and §8 parent-child chunking belong to T2.3 Chunking and indexing and are not taught here.
+- `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/06_Scaling_To_20M_Documents.md` (own material). Its §7 chunking by document type and §8 parent-child chunking belong to T6.2 Chunking and indexing and are not taught here.
 - `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/02_Observability_Standards_Failure_Patterns.md` and `01_Concept_Tutorials/Production_and_Platform_Judgment/02-observability-standards-and-failure-patterns.md`: failover, degradation, bulkhead and kill-switch sections (own material).
 - `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md`: retry, fallback, degradation and circuit-breaker sections and the mock gateway design (own material; web-sourced interview answers not reused).
 - `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md` (notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook*, summarised in our own words; lesson 3 carries a credit line) and `ADDITIONS_BEYOND_PLAYBOOK.md` (Little's Law).

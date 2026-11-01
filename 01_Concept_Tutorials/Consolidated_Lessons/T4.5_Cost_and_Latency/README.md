@@ -1,6 +1,6 @@
-# T4.5 Cost and Latency Optimisation: Consolidated Lessons
+# T15.10 Cost and Latency Optimisation: Consolidated Lessons
 
-These eight lessons are the site's teaching copy of module T4.5 "Cost and latency optimisation". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/cost-and-latency`.
+These eight lessons are the site's teaching copy of module T15.10 "Cost and latency optimisation". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/cost-and-latency`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -17,8 +17,8 @@ These eight lessons are the site's teaching copy of module T4.5 "Cost and latenc
 
 - `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, `CRAM_SHEET_FULL_PLAYBOOK.md` and `CRAM_SHEET_S15_S16.md`: notes on the third-party *GenAI FDE Cost and Latency Optimization Playbook* (Tobias Weissmann). Its ideas are summarised in our own words, and every lesson here carries a credit line.
 - `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md` (own companion notes; its price table is dated 2026-06-24 and must be rechecked before quoting).
-- `01_Concept_Tutorials/Production_and_Platform_Judgment/03-cost-latency-cicd-rigor-and-build-vs-buy.md` (own material; its CI/CD and build-versus-buy sections are taught in T4.7).
-- `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`, Topic 4 "Caching in GenAI Systems" (own material; its memory topics are taught in T3.4 and its database topics in T2.3).
+- `01_Concept_Tutorials/Production_and_Platform_Judgment/03-cost-latency-cicd-rigor-and-build-vs-buy.md` (own material; its CI/CD and build-versus-buy sections are taught in T15.8).
+- `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_09_Memory_Databases_Caching_for_GenAI_Systems.md`, Topic 4 "Caching in GenAI Systems" (own material; its memory topics are taught in T11.2 and its database topics in T6.2).
 - `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md`: caching, routing, streaming and token budgets (own material; its web-sourced interview answers are not reused).
 
-The source files stay in the repository unchanged. The site no longer publishes the six old T4.5 lessons separately, including the Module 9 caching slice; old URLs redirect to the matching lesson here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.
+The source files stay in the repository unchanged. The site no longer publishes the six old T15.10 lessons separately, including the Module 9 caching slice; old URLs redirect to the matching lesson here. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

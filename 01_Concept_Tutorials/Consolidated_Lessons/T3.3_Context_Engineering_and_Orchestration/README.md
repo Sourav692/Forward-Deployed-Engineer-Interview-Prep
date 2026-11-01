@@ -1,6 +1,6 @@
-# T3.3 Context Engineering and Orchestration: Consolidated Lessons
+# T15.2 Context Engineering and Orchestration: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T3.3 "Context engineering and orchestration". Each concept is taught once, in the house tutorial format, drawing only on two repository sources. The site publishes them at `/learn/agentic-systems/context-engineering`.
+These seven lessons are the site's teaching copy of module T15.2 "Context engineering and orchestration". Each concept is taught once, in the house tutorial format, drawing only on two repository sources. The site publishes them at `/learn/agentic-systems/context-engineering`.
 
 | # | Lesson | Site slug |
 |---|---|---|

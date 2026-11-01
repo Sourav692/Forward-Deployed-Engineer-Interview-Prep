@@ -42,7 +42,7 @@ Each index type answers a different kind of question. Pick by what users will as
 | Exact terms such as legal terms or product codes | `KeywordTableIndex` | An inverted index on keywords |
 | Questions about relationships | `KnowledgeGraphIndex` | Entities and the links between them |
 
-Modern production usually means a `VectorStoreIndex` plus hybrid retrieval (vector and keyword together), node relationships and reranking. Those techniques are taught framework-free in [T2.4 Retrieval: hybrid, rerank, query transformation](/learn/llm-and-retrieval/retrieval-hybrid-rerank).
+Modern production usually means a `VectorStoreIndex` plus hybrid retrieval (vector and keyword together), node relationships and reranking. Those techniques are taught framework-free in [T7.1 Retrieval: hybrid, rerank, query transformation](/learn/llm-and-retrieval/retrieval-hybrid-rerank).
 
 ## Retrieve the Section, Then the Detail
 

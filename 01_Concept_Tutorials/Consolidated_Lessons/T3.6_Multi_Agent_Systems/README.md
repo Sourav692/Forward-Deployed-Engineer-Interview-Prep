@@ -1,6 +1,6 @@
-# T3.6 Multi-Agent Systems: Consolidated Lessons
+# T11.3 Multi-Agent Systems: Consolidated Lessons
 
-These eight lessons are the site's teaching copy of module T3.6 "Multi-agent systems: when justified". Each concept is taught once, in the house tutorial format, drawing only on seven repository sources. The site publishes them at `/learn/agentic-systems/multi-agent-systems`.
+These eight lessons are the site's teaching copy of module T11.3 "Multi-agent systems: when justified". Each concept is taught once, in the house tutorial format, drawing only on seven repository sources. The site publishes them at `/learn/agentic-systems/multi-agent-systems`.
 
 | # | Lesson | Site slug |
 |---|---|---|

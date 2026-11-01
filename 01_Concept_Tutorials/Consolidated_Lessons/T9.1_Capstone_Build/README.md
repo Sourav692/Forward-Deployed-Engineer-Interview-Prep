@@ -1,6 +1,6 @@
-# T9.1 Capstone Build: Consolidated Lessons
+# T19.1 Capstone Build: Consolidated Lessons
 
-These two lessons are the site's teaching copy of module T9.1 "Capstone build". The site publishes them at `/learn/capstone-and-portfolio/capstone-build`.
+These two lessons are the site's teaching copy of module T19.1 "Capstone build". The site publishes them at `/learn/capstone-and-portfolio/capstone-build`.
 
 | # | Lesson | Site slug |
 |---|---|---|

@@ -1,6 +1,6 @@
-# T2.1 How LLMs Behave: Consolidated Lessons
+# T6.3 How LLMs Behave: Consolidated Lessons
 
-These three lessons are the site's teaching copy of module T2.1 "How LLMs behave, for engineers". Each concept is taught once, in the house tutorial format, drawing only on two repository sources. The site publishes them at `/learn/llm-and-retrieval/how-llms-behave`.
+These three lessons are the site's teaching copy of module T6.3 "How LLMs behave, for engineers". Each concept is taught once, in the house tutorial format, drawing only on two repository sources. The site publishes them at `/learn/llm-and-retrieval/how-llms-behave`.
 
 | # | Lesson | Site slug |
 |---|---|---|

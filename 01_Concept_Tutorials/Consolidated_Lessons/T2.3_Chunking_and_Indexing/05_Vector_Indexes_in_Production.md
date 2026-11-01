@@ -71,7 +71,7 @@ Many index failures produce no error, just worse answers. Each needs its own sig
 | Cold start: the index must load into RAM before serving | Use a readiness probe and connection draining |
 | Embedding rate limits under load | Expect them at ingestion more than at query time; batch calls, back off, and cache embeddings for unchanged content |
 
-Watch online signals too. A user rephrasing the same question right after an answer means retrieval missed. Measuring retrieval quality with a golden set is covered in [T2.4 Retrieval: hybrid, rerank, query transformation](/learn/llm-and-retrieval/retrieval-hybrid-rerank).
+Watch online signals too. A user rephrasing the same question right after an answer means retrieval missed. Measuring retrieval quality with a golden set is covered in [T7.1 Retrieval: hybrid, rerank, query transformation](/learn/llm-and-retrieval/retrieval-hybrid-rerank).
 
 ## Worked Example: A Policy Change Mid-Morning
 

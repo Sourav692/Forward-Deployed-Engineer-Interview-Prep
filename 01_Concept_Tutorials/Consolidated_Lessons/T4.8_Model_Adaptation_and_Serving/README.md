@@ -1,6 +1,6 @@
-# T4.8 Model Adaptation and Inference Serving: Consolidated Lessons
+# T15.12 Model Adaptation and Inference Serving: Consolidated Lessons
 
-These four lessons are the site's teaching copy of module T4.8 "Model adaptation and inference serving". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/model-adaptation-and-serving`. The module stays Partly ready: the sources do not cover fine-tuning methods or serving internals such as GPU sizing.
+These four lessons are the site's teaching copy of module T15.12 "Model adaptation and inference serving". Each concept is taught once, in the house tutorial format, drawing only on repository sources. The site publishes them at `/learn/production-ai/model-adaptation-and-serving`. The module stays Partly ready: the sources do not cover fine-tuning methods or serving internals such as GPU sizing.
 
 | # | Lesson | Site slug |
 |---|---|---|

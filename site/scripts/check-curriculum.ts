@@ -85,6 +85,17 @@ for (const slug of stagedTracks) {
 for (const group of LEARN_STAGES) {
   if (!group.tracks.length && !group.planned) fail(`topic group ${group.slug} has no tracks and no planned topics`)
 }
+// Codes read in Learn order (IA-12): grouped tracks run T0, T1, T2… down the group list,
+// and each track's modules run .1, .2… in the order its sections list them.
+stagedTracks.forEach((slug, i) => {
+  const track = TRACKS.find((t) => t.slug === slug)
+  if (!track) return
+  if (track.code !== `T${i}`) fail(`track ${slug} has code ${track.code}; Learn order makes it T${i}`)
+  track.sections.flatMap((s) => s.modules).forEach((m, j) => {
+    const code = MODULES.find((x) => x.slug === m)?.code
+    if (code && code !== `${track.code}.${j + 1}`) fail(`module ${m} has code ${code}; its place in ${slug} makes it ${track.code}.${j + 1}`)
+  })
+})
 // Group pages live at /learn/topics/<group>; a track with that slug would be shadowed.
 if (TRACKS.some((t) => t.slug === 'topics')) fail('track slug "topics" collides with the /learn/topics route')
 unique('module', MODULES.map((m) => m.slug))
