@@ -2,7 +2,7 @@
 
 Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Say them in your own cadence: adapt the wording, don't recite it.
 
-**The three hiring and retention questions (1 to 3) are NEEDS YOUR INPUT.** Nothing in the repo covers hiring or retention. The key gives the shape of a strong answer and the stance your stories imply. If you have never owned hiring, say so and pivot to how you evaluate engineers you have worked alongside or interviewed.
+**The three hiring and retention questions (1 to 3) have no sample story.** Nothing in the repo covers hiring or retention. The key gives the shape of a strong answer and the stance your stories imply. If you have never owned hiring, say so and pivot to how you evaluate engineers you have worked alongside or interviewed.
 
 ## 1. Raising the hiring bar
 
@@ -56,7 +56,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Say them i
 
 > "The signal was in the design questions themselves. Should a filter apply at retrieval or at generation? Technically, both work. The real fork is a policy choice. At retrieval, the model never sees the document. At generation, it sees it and must withhold it. Which one is acceptable depends on what the customer treats as sensitive. Only the customer could decide that. So I stopped resolving those forks myself. I asked the engineer to name the customer decision behind each question and take it to the claims manager. Their design docs then listed open customer decisions with owners. Within weeks they ran their own clarification calls, and their designs stopped drifting from customer intent."
 
-**PARTLY GROUNDED: the "ambiguity vs. technical" coaching pattern from the day-to-day doc.** You must supply the person and the outcome. If you've never had a formal direct report, say "an engineer on my engagement team."
+**Add your own detail: the "ambiguity vs. technical" coaching pattern from the day-to-day doc.** You must supply the person and the outcome. If you've never had a formal direct report, say "an engineer on my engagement team."
 
 *"`[FILL: engineer, engagement].` They kept bringing me what looked like technical questions ('should this filter apply at the retrieval layer or the generation layer?'), and I'd answer them. After a few of these I noticed the pattern: most weren't technical questions at all. They were ambiguous scope the customer hadn't resolved, showing up as a design fork.*
 
@@ -74,7 +74,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Say them i
 
 > "The drift was measurable. Twice, work passed code review and still missed the customer's intent. That meant my review checked correctness but not intent. So I fixed the process as well as raising it with the engineer. I named the agreed standard: the customer's success bar, written down at scoping. I showed exactly where each piece diverged from it. Then I moved inspection earlier. Their designs came to review before code, with the customer requirement each one served written beside it. They also sat in discovery calls, so they heard intent first-hand. Review now had two checks: is it correct, and does it match the stated requirement? Within a few weeks the drift stopped."
 
-**NEEDS YOUR INPUT.** Suggested spine. If the honest answer is "as a senior IC, my version of this was addressing work that drifted from the customer's intent," say that.
+**Your story.** Suggested spine. If the honest answer is "as a senior IC, my version of this was addressing work that drifted from the customer's intent," say that.
 
 *"`[FILL: who, what the gap was — missed commitments, work that didn't match customer intent, quality below the agreed bar].` I had the conversation early and specific: here is the agreed standard `[e.g., the zero-leak gate / the customer's success bar]`, here is where the work is against it, here is what changes by when. I separated the person from the work: the bar was the one we'd agreed with the customer, not a personal one. `[FILL: what support you gave — pairing, design review before code, clearer tickets].` Outcome: `[FILL — improved / moved to a better-fit role / exited]`."*
 
@@ -88,7 +88,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Say them i
 
 > "I make the standard executable wherever possible. On governed retrieval work, the release gate is an evaluation harness over a golden set. One leak fails the release. It applies to every author, including me. When the gate flagged my own reference build, I stopped and traced the case. A claims manager had been reassigned, and my test labels were stale. I had confused 'not relevant to this question' with 'not allowed to see it.' I added a check that keeps those two labels separate. A second check fails if the security documentation drifts from the running policy code. Design review before code covers what the harness cannot: boundaries, data flow and fit to customer intent."
 
-**GROUNDED: from the day-to-day doc + the eval-gate discipline**
+**Example story: from the day-to-day doc + the eval-gate discipline**
 
 *"I inspect at two points, and neither is 'end of sprint.'*
 
@@ -106,7 +106,7 @@ Spoken answers - 1 grounded, 2 partly grounded, 4 needing your input. Say them i
 
 > "I kept the decisions with the largest blast radius: the access model and the release gate. The evaluation dataset was high-value but recoverable, so it was safe to hand off. The ticket defined the case schema first: question, user role, expected sources, sources that must not appear. The design review agreed coverage per business unit and the pass rule before any case was written. Leak cases were hard pass or fail. Answer quality was scored separately, as a softer check. I reviewed her first batch of cases, not her code. After that, her changes went through normal review like anyone else's. The cost was a slower first week. The result is an evaluation set someone else owns and extends without me."
 
-**PARTLY GROUNDED: day-to-day doc.** `[FILL: the specific piece and who took it]`
+**Add your own detail: day-to-day doc.** `[FILL: the specific piece and who took it]`
 
 *"On an engagement like the one at a large Asian life insurer there's a temptation to keep the interesting work (the orchestration layer, the access-control design) and hand off the rest. I try to invert that. The work I keep is the work only I should be doing: the highest-blast-radius decisions, where being wrong fails silently. Everything else, someone on the team should own, or I become the bottleneck.*
 

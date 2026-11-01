@@ -12,7 +12,7 @@ Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence.
 
 > "The technical objection was the write path, not the autonomy. The investigation is read-only: triage, retrieval over past tickets, code lookup. Writing to config tables that route live loan leads is a different risk class. A wrong write misroutes real customers, silently. So I split the system at that boundary. The agent posts the root cause and the proposed change to the ticket. An engineer confirms before anything is written. Investigation runs in minutes, so most of the manual effort still goes away. I gave up end-to-end resolution time. In return, every production config change has a named reviewer. I also flagged the triage classifier's brittleness to phrasing drift as the next gap. Autonomy can widen once the proposals have a track record."
 
-**GROUNDED: lender autonomy + insurer open-ended search**
+**Example story: lender autonomy + insurer open-ended search**
 
 *"I don't say no; I show them what the request costs in their own terms and offer the version that gets them the outcome.*
 
@@ -24,7 +24,7 @@ Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence.
 
 ## 2. Disagreeing with a customer executive
 
-**PARTLY GROUNDED.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 
@@ -52,7 +52,7 @@ Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence.
 
 > "Scope control needs a measurable definition of done. Ours had four criteria, fixed before the build. Self-serve governed answers replacing a days-long BI queue. Zero leaks on the governed test set. Explainability, meaning every answer traces to a governed source. Acceptable latency. The slice was two business units in one market. Every new request got one test: does it move one of those criteria inside the window? Open-ended enterprise search, more markets and more document types all failed it. Each went on the expansion path with a technical precondition: the zero-leak gate holds on the first slice. The data foundation passed the test. Without governed metric views, explainability and zero leaks were unreachable."
 
-**GROUNDED: insurer**
+**Example story: insurer**
 
 *"By deciding what 'done' means with the sponsor before the build, so scope creep has something to be measured against. At the insurer we agreed the success bar up front: self-serve, governed answers replacing a BI queue that took days, with zero leaks, explainability, and acceptable latency, on two business units in one market.*
 
@@ -70,7 +70,7 @@ Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence.
 
 > "The access rules came from a role by document type by market matrix. Only the insurer's compliance and business teams could sign it off. In my build, that matrix fed the policy layer, the evaluation set and the leak gate. So I tracked it as a dated dependency, with the list of build steps it blocked. When the review ran late, I showed the sponsor that list. We re-sequenced. Work that did not depend on the matrix moved forward: the data foundation, tracing and orchestration. Policy enforcement and leak testing waited for the signed matrix. Hard-coding a draft matrix would have meant rework, and a test set built on unapproved rules."
 
-**PARTLY GROUNDED: insurer access matrix / compliance dependency.** `[FILL: a concrete dependency that slipped]`
+**Add your own detail: insurer access matrix / compliance dependency.** `[FILL: a concrete dependency that slipped]`
 
 *"By making their dependencies explicit and visible from the start, so a slip is a shared fact rather than a surprise. At a large Asian life insurer the policy rules came from a role-by-document-type-by-market access matrix that only the customer's compliance and business teams could sign off. That sign-off was on the plan as a named dependency with a date, not an assumption inside my timeline. `[FILL: what slipped and how you raised it — e.g., 'when the compliance review ran late I showed the sponsor exactly which build steps were blocked on it, and we re-sequenced rather than absorbed it'].`*
 
@@ -78,7 +78,7 @@ Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence.
 
 ## 5. Pushing back on your own company's roadmap
 
-**PARTLY GROUNDED.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 

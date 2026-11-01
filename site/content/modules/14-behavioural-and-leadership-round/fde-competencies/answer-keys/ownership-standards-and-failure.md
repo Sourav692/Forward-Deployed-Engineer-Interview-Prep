@@ -12,7 +12,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "Two failures, two different root causes. At the insurer, version one put twenty-plus tools in one agent's context. Tool selection degraded under that load. The lesson was the mechanism, not the pattern. Undifferentiated responsibility in one context window degrades selection. At the lender I applied it up front. A triage layer narrows the toolset before the agent ever runs. The second failure was measurement. I shipped a working triage-to-root-cause system without resolution-time instrumentation per ticket type. No baseline means no defensible before-and-after comparison. My estimate is that roughly half of ticket volume was a strong automation fit. I don't quote it as a result. Now the success metric and its instrumentation are defined before the first commit."
 
-**GROUNDED: insurer v1 + lender metrics honesty**
+**Example story: insurer v1 + lender metrics honesty**
 
 *"Two, at different scales. The clean failure was version one at the insurer, the single do-everything agent. It worked in demos and failed in real testing. The lesson was a mechanism rather than a pattern like 'use a Supervisor': undifferentiated responsibility in one context window degrades a model's tool selection. That mechanism let me predict the same failure one level up the stack later, and pre-empt it at a large Indian consumer lender with a triage layer before the agent ever runs.*
 
@@ -28,7 +28,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "The tracing answered it. Prompt changes moved individual cases but did not fix the pattern. The errors were wrong tool selections, and they grew with context size. That is a structural signature. Twenty-plus tool schemas in one context degrade selection regardless of prompt wording. So I made the smallest structural change available. Tools and data stayed, and only the orchestration changed, to a Supervisor routing across specialists. A held-out evaluation set confirmed the change. Prompts lived in a governed table with a five-minute cache, so tuning inside the new structure needed no redeploy. Later, as domains grew, the Supervisor's context started to bloat. I recognised the signature and moved to a Deep Agent before accuracy dropped."
 
-**GROUNDED: insurer pivot logic**
+**Example story: insurer pivot logic**
 
 *"At the insurer, when the single agent broke mid-engagement, 'push through' meant prompt-tuning a design with a structural flaw; 'change course' meant re-architecting with a shrinking window. The deciding question was whether the failure was a tuning problem or a mechanism problem. Tracing showed it was mechanism: tool selection degrades with twenty-plus schemas in context, and no amount of prompt work fixes that. So I changed course, but bounded it: same tools, same data, new orchestration on top.*
 
@@ -46,7 +46,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "The harness flagged a leak on my own reference build, Meridian Assist, a 22-document governed retrieval system. I treated it as a real incident before diagnosing it. The trace showed a claims manager receiving a case outside their assignment. The root cause was my test data. The manager had been reassigned that case, so access was correct and the label was stale. Underneath, I had conflated two labels: 'not relevant to this question' and 'not allowed to see it.' I separated them in the test data and added a check so they cannot be conflated again. The write-up covered the alarm, the false alarm and my labelling error. A noisy security gate trains people to ignore it."
 
-**GROUNDED: the false-alarm leak + the failed first architecture**
+**Example story: the false-alarm leak + the failed first architecture**
 
 *"Two, and I'll take the more uncomfortable one. On my own reference build (Meridian Assist, a 22-document governed RAG system), my evaluation harness flagged a leak: a claims manager shown a case outside their assignment. I stopped everything and treated it as real before I'd fully diagnosed it. It turned out the manager had just been reassigned that case. My test data was stale, not the system.*
 
@@ -64,7 +64,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "I separated the properties under test from the storage layer. The guardrail engine has no LLM in it, by design. It proves three properties with 21 deterministic tests. No destructive action without approval, no double-apply on retry, no re-run after a crash. Entity locks and idempotency keys live in in-process Python dictionaries. They don't survive a restart or share across workers. The properties depend on key shape and check order, not on the store. So the production path is the same key shape in Redis or Postgres. That is written in the coverage map. At the lender, the triage classifier is pattern-based. It is cheap and interpretable but brittle to phrasing drift. Both gaps are written down."
 
-**GROUNDED: Agent Platform in-process state + lender triage**
+**Example story: Agent Platform in-process state + lender triage**
 
 *"Deliberately, and in writing. On the agent guardrail engine, the entity locks and idempotency-key store are in-process Python dictionaries. They are correct in shape, but they don't survive a restart or share across workers. I shipped it that way because the build existed to prove three properties (no destructive action without approval, no double-apply on retry, no re-run after a crash), and those properties don't depend on where the keys are stored. I documented it in the coverage map with the production path: same key shape, moved to Redis or Postgres.*
 
@@ -82,7 +82,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "Done means four mechanisms, each with a failure condition. One, the evaluation harness runs the golden set, and one leak fails the build. Two, access decisions are hard rules in the policy engine, never the model. Three, every node is traced in MLflow, so a wrong answer resolves to the exact tool call. Four, a drift check fails if the security reference stops matching the policy code. Then I document the limits. The corpus is 22 documents, so six retrieval strategies all scoring 22 of 22 proves the gate, not retrieval at scale. The guardrail engine's locks are in process and don't survive a restart. Each limit names what would close it."
 
-**GROUNDED: Meridian / insurer / Agent Platform**
+**Example story: Meridian / insurer / Agent Platform**
 
 *"Done is a property you can prove, not a demo that went well. For the governed RAG work, done meant four concrete things. A release gate: the evaluation harness runs the golden set and one leak fails the build. A separation of concerns: hard rules decide leak/no-leak, never the model, because a security decision can't be probabilistic. Diagnosability: every node traced in MLflow, so I can walk a wrong answer back to the exact tool call that produced it. And documentation that can't drift: a standalone check fails if the security reference no longer matches the running policy code, so what compliance was told stays true.*
 
@@ -98,7 +98,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "The root cause was a test set too small to separate the strategies. With 22 documents, recall 1.0 and groundedness 1.0 are easy for everyone. The spread between six strategies sat inside the noise. So I split the result by what it tested. The zero-leak gate does not depend on corpus size. It checks whether a forbidden document reaches the model, and that property holds at any scale. Strategy ranking does depend on scale, because retrieval gets harder as similar documents multiply. I kept the harness as the release gate and marked the ranking as unproven. The write-up names the next experiment: rerun the same method at a representative size, such as 200,000 documents."
 
-**GROUNDED: Meridian 22/22**
+**Example story: Meridian 22/22**
 
 *"The enterprise RAG platform scored 22 of 22 on the golden set: recall 1.0, groundedness 1.0, zero leaks, six retrieval strategies all near-perfect. It looks like a finished result. It isn't, and I said so in the write-up.*
 
@@ -116,7 +116,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "The feedback exposed a sequencing flaw in my discovery. I derived access rules from user interviews and treated compliance as a review pass. Several rules in the role by document type by market matrix had to be reworked. That rework reached the policy layer and the leak-test cases. The change is structural. Governance stakeholders join the first discovery round. The access matrix and the success bar are signed off before the build. They become inputs to the policy code and the evaluation set, not corrections to them. At the consumer lender, that sign-off was settled in the first week. It sits on the plan as a dated dependency, not an assumption inside my timeline."
 
-**PARTLY GROUNDED: "bring compliance into the first round of discovery" is listed in your insurer material as a lesson; frame it as feedback only if a stakeholder said it.** `[FILL: who said it, and how]`
+**Add your own detail: "bring compliance into the first round of discovery" is listed in your insurer material as a lesson; frame it as feedback only if a stakeholder said it.** `[FILL: who said it, and how]`
 
 *"At the insurer I ran discovery as two separate conversations: users first, then compliance, legal, and security as a follow-up pass. `[FILL: who gave the feedback — e.g., the compliance lead]` told me, fairly bluntly, that being brought in second meant they were reacting to a design rather than shaping it, and that some of the access rules I'd derived from user interviews had to be reworked once they weighed in.*
 
@@ -134,7 +134,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "First change: access moved out of the prompt. My retrieval work had a security test that passed or failed almost at random. The model's judgement was inside the security decision. Now access control is attribute-based and enforced before generation. The model only receives documents the user may see. Leak or no leak is a deterministic check, and tone is evaluated separately as a soft check. Second change: tool count. At the insurer, twenty-plus tool schemas in one context made selection worse. Now each agent gets a small, specialised toolset. At the lender, a triage layer narrows the toolset before the agent runs. The model decides tone and phrasing, never access or scope."
 
-**GROUNDED: prompt-based security → hard rules; one big agent → specialists**
+**Example story: prompt-based security → hard rules; one big agent → specialists**
 
 *"Two. I used to think you could make an AI system safe by prompting it well: tell the model what it's allowed to reveal and trust it to refuse. I don't believe that anymore. On the enterprise RAG work I found a test that passed or failed almost at random because the model's judgement was inside a security decision. Now access control is structural: the model never sees a document it isn't allowed to see, and leak/no-leak is a hard rule. The model decides tone, never access.*
 
@@ -152,7 +152,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "I make honesty mechanical where I can. On the RAG platform, a standalone check compares the security documentation with the running policy code. If they diverge, the build fails. On the guardrail engine, entity locks and idempotency keys live in in-process dictionaries. They don't survive a restart or share across workers. I wrote that into the coverage map, with the production path: same key shape, moved to Redis or Postgres. On metrics, I keep the evidence class explicit. The insurer's adoption growth is correlated only, because I didn't instrument the outcome from day one. The lender's resolution-time gain is an estimate, not a client-confirmed number. A reviewer should find every limitation without having to ask me."
 
-**GROUNDED: attribution caveats, doc-code sync, in-process state disclosure**
+**Example story: attribution caveats, doc-code sync, in-process state disclosure**
 
 *"Small things, mostly, which is the point. At the insurer, adoption grew after rollout; nobody would have questioned me calling that a result. I report it every time as a correlated signal, not a controlled experiment. At the lender I could quote an estimated resolution-time improvement and nobody would check; instead I say I don't have a client-confirmed number.*
 
@@ -170,7 +170,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "I learned orchestration by shipping it and watching it fail. The single agent at the insurer taught me the mechanism: tool selection degrades as tool schemas and history fill the context. I moved to a Supervisor, an 8-node LangGraph state machine. Later I moved to a Deep Agent with self-contained subagents and a memory-manager subagent for long-term memory. At the lender, I applied that up front: a triage layer narrows the toolset before the agent runs. On governance, I rebuilt the same retrieval system on a second platform. Its vector index is a derived copy that does not inherit the catalogue's row filters. That finding produced the live grant re-check before generation. Next on my list is an AST-based code graph for root-cause analysis."
 
-**GROUNDED: multi-agent orchestration, and rebuilding on a second platform to learn its gaps**
+**Example story: multi-agent orchestration, and rebuilding on a second platform to learn its gaps**
 
 *"Multi-agent orchestration: Supervisor and Deep Agent patterns, LangGraph state machines, memory management across conversations. My background is data platforms and large-scale pipelines `[FILL: e.g., a global tier-1 bank, hundreds of millions of events a day]`; two years ago none of the agentic patterns I now use daily existed in a form I'd trust in production.*
 
@@ -188,7 +188,7 @@ Spoken answers - 9 grounded, 2 partly grounded. Say them in your own cadence: ad
 
 > "My growth area is scaling my judgement through other engineers' designs, not my own code. I review designs before code exists, with three questions. What fails silently? What's the blast radius if it's wrong? Which test or trace will tell us? I'm learning to assess engineering judgement from those answers, not from code volume. That's the part of line management I can practise now. The harder habit is restraint. On the insurer's data foundation, building it myself was right, because the schema was the ramp. The cost is that I become the reviewer of everything. So I push decisions into written design reviews and test contracts that others own. The signal I watch for is a design passing review without me in the room."
 
-**PARTLY GROUNDED: your material implies the honest answer; validate it.**
+**Add your own detail: your material implies the honest answer; validate it.**
 
 *"Two things I'd say plainly. First, I've led as a senior IC guiding engagement teams, not as a line manager. Hiring, retention, and performance conversations are areas where I have principles but not a track record, and I'd want to learn them deliberately rather than assume engineering judgement transfers. `[FILL: anything you've done toward this].`*
 

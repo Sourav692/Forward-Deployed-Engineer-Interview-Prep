@@ -31,7 +31,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: two conversations in discovery
 
-**Engagement:** A large Asian life insurer, a hands-on build of about two months. **Grounding:** PARTLY GROUNDED. The discovery is real; you supply who, if anyone, told you to bring compliance in sooner, and one concrete cross-region friction.
+**Engagement:** A large Asian life insurer, a hands-on build of about two months. **Grounding:** The discovery is real; you supply who, if anyone, told you to bring compliance in sooner, and one concrete cross-region friction.
 
 **Say it in one line:** "The brief said natural-language answers over data, but talking to the users and to compliance separately showed me that access control was the real job."
 
@@ -46,7 +46,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: starting narrow when the sponsor wanted wide
 
-**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED. You supply who pushed for the wider launch, how the sponsor responded, and who was on your team.
+**Engagement:** A large Asian life insurer. **Grounding:** You supply who pushed for the wider launch, how the sponsor responded, and who was on your team.
 
 **Say it in one line:** "The sponsor wanted every business unit and every market at once; I argued for proving it on two units in one market first, and I framed it as their risk, not my convenience."
 
@@ -61,7 +61,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: one agent to a supervisor
 
-**Engagement:** A large Asian life insurer. **Grounding:** GROUNDED.
+**Engagement:** A large Asian life insurer. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "Weeks into a two-month build my first architecture broke in testing; I told the sponsor the same day with the mechanism and the fix, re-architected live, and we still shipped on time."
 
@@ -76,7 +76,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: seeing the next ceiling coming
 
-**Engagement:** A large Asian life insurer. **Grounding:** GROUNDED.
+**Engagement:** A large Asian life insurer. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "The Supervisor worked, but I could see the same bloat coming back one level up, so I shipped on time, kept the path open, and moved to a Deep Agent before it broke."
 
@@ -91,7 +91,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: hand-building the supervisor
 
-**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED. The build and the result are real; for the product-feedback questions you supply who you shared it with and what came of it.
+**Engagement:** A large Asian life insurer. **Grounding:** The build and the result are real; for the product-feedback questions you supply who you shared it with and what came of it.
 
 **Say it in one line:** "The platform's managed multi-agent feature wasn't an option for this customer at the time, so I hand-built the supervisor rather than hand their launch to a roadmap nobody in the room controlled."
 
@@ -106,7 +106,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: building the data foundation nobody owned
 
-**Engagement:** A large Asian life insurer. **Grounding:** PARTLY GROUNDED. The build is real; you supply who on the data team was wary and the concrete sign that they came round.
+**Engagement:** A large Asian life insurer. **Grounding:** The build is real; you supply who on the data team was wary and the concrete sign that they came round.
 
 **Say it in one line:** "The data layer was on paper someone else's problem, but agents can't be governed if the data isn't, so I built it myself, with the customer's data team rather than around them."
 
@@ -121,7 +121,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The insurer: two checkpoints, in plain words
 
-**Engagement:** A large Asian life insurer, later rebuilt as a reference system. **Grounding:** GROUNDED.
+**Engagement:** A large Asian life insurer, later rebuilt as a reference system. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "The vector index didn't inherit the source's row-level rules, so I built two checkpoints (a fast one at the door and a careful one right before generation) and explained it to compliance without a word of jargon."
 
@@ -136,7 +136,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The lender: a couple of hundred tickets, three problems
 
-**Engagement:** A large Indian consumer lender: an agent for the IT-support desk behind their lead-routing pipeline. **Grounding:** GROUNDED.
+**Engagement:** A large Indian consumer lender: an agent for the IT-support desk behind their lead-routing pipeline. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "The ask was 'automate IT-support tickets'; I read a couple of hundred real tickets before writing any code, found three problems rather than one, and built three routes rather than one bot."
 
@@ -151,7 +151,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The lender: no unreviewed writes to production
 
-**Engagement:** A large Indian consumer lender. **Grounding:** GROUNDED.
+**Engagement:** A large Indian consumer lender. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "The flashy version let the agent fix config tables on its own; I scoped every tool to one narrow operation, made every action a finding for an engineer to confirm, and told them what that cost."
 
@@ -166,7 +166,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The lender: the metric I couldn't prove
 
-**Engagement:** A large Indian consumer lender. **Grounding:** GROUNDED.
+**Engagement:** A large Indian consumer lender. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "I shipped a working system, but I can't give you a client-confirmed before-and-after number, because I didn't instrument it from day one, and that's now the first thing I agree on any engagement."
 
@@ -181,7 +181,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## Meridian: the zero-leak gate
 
-**Engagement:** The Meridian Assist reference build, a 22-document governed RAG system, with the gate first agreed with the insurer's compliance team. **Grounding:** GROUNDED.
+**Engagement:** The Meridian Assist reference build, a 22-document governed RAG system, with the gate first agreed with the insurer's compliance team. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "One leak on the governed test set and the build doesn't ship (zero, not a low leak rate), and a security decision is never left to the model's judgement."
 
@@ -196,7 +196,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## Meridian: the false-alarm leak
 
-**Engagement:** The Meridian Assist reference build. **Grounding:** GROUNDED.
+**Engagement:** The Meridian Assist reference build. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "My own harness flagged a leak; I stopped everything, traced it to stale test data, wrote up the whole thing including my own labelling mistake, and added a check so it can't happen again."
 
@@ -211,7 +211,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## Meridian: 22 out of 22 on 22 documents
 
-**Engagement:** The Meridian Assist reference build. **Grounding:** GROUNDED.
+**Engagement:** The Meridian Assist reference build. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "Every retrieval strategy scored perfectly, including the one I'd bet on, and I wrote down that the table proved the security gate, not which strategy wins at real scale."
 
@@ -226,7 +226,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## The guardrail engine: shipping the gap in writing
 
-**Engagement:** My agent guardrail-engine reference build, with the same habit at the lender. **Grounding:** GROUNDED.
+**Engagement:** My agent guardrail-engine reference build, with the same habit at the lender. **Grounding:** nothing beyond your own facts; the story is complete.
 
 **Say it in one line:** "I shipped with in-process locks I knew wouldn't survive a restart, because the build proved three properties that didn't depend on them, and I wrote the gap into the coverage map where a reviewer would find it."
 
@@ -241,7 +241,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## Financial services: red-teaming before saying no
 
-**Engagement:** A financial-services engagement on multi-agent guardrails. **Grounding:** PARTLY GROUNDED. You supply which client, the exact decisioning path they wanted automated, and where the red-team findings went afterwards.
+**Engagement:** A financial-services engagement on multi-agent guardrails. **Grounding:** You supply which client, the exact decisioning path they wanted automated, and where the red-team findings went afterwards.
 
 **Say it in one line:** "They wanted agents in a decisioning path with no human in the loop; instead of arguing from principle, I red-teamed it, brought the failures to the table, and offered a version that kept the automation."
 
@@ -256,7 +256,7 @@ If your interview loop is organised around leadership principles, this table sho
 
 ## Beyond one engagement: patterns that travel
 
-**Engagement:** Across my engagements at the platform vendor I worked for. **Grounding:** PARTLY GROUNDED. You supply a reuse count or the effort saved, and who picked the patterns up.
+**Engagement:** Across my engagements at the platform vendor I worked for. **Grounding:** You supply a reuse count or the effort saved, and who picked the patterns up.
 
 **Say it in one line:** "The same multi-agent scaffolding kept coming back on other accounts, so I turned it into reusable assets and taught the pattern, not the solution."
 
@@ -313,7 +313,7 @@ Copy this template for each story:
 ```
 ## <Engagement>: <the moment, in a few words>
 
-**Engagement:** <anonymised engagement>. **Grounding:** <GROUNDED, or PARTLY GROUNDED and what you still need to find>
+**Engagement:** <anonymised engagement>. **Grounding:** <nothing, or what you still need to find>
 
 **Say it in one line:** "<the whole story in one spoken sentence>"
 

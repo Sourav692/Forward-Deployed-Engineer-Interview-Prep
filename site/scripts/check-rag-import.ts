@@ -82,4 +82,8 @@ assert.equal(trimLessonPage('*[M14 theory](../README.md) · Lesson 14.5 · Noteb
 assert.equal(siteText('x.md', 'See [lesson 6](06_on_databricks_vector_search.md#a).'), 'See [lesson 6](06_on_databricks_vector_search.md#a).')
 assert.throws(() => siteText('x.md', 'Runs on a Unity Catalog volume.'), /vendor platform/)
 
+// Behavioural pages word the author's story tags for readers.
+assert.equal(siteText('04_Behavioral_and_Leadership/x.md', '**GROUNDED: the insurer**\n**PARTLY GROUNDED.** Fill it.\n**Grounding:** GROUNDED.'),
+  '**Example story: the insurer**\n**Add your own detail.** Fill it.\n**Grounding:** nothing beyond your own facts; the story is complete.')
+
 console.log('rag import transforms: all checks pass')
