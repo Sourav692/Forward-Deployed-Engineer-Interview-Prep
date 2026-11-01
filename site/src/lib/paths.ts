@@ -569,7 +569,7 @@ export const PATHS: LearningPath[] = [
     // the loop map runs a coding round and then a build or take-home, about 5 hours on
     // model APIs with a recorded video walkthrough, or a 3 to 4 hour build against a brief.
     // A Big-Tech Loop variant was removed on 5 October 2026: no repository pack backs it,
-    // and the modules it leaned on (T1.3, T1.6) are Coming soon.
+    // and the modules it leaned on (T1.4, T1.6) are Coming soon.
     id: 'fde-frontier-lab',
     title: 'Forward Deployed Engineer: Frontier Lab Loop',
     persona: 'fde-candidate',
@@ -578,7 +578,7 @@ export const PATHS: LearningPath[] = [
       'The Forward Deployed Engineer path for loops with a coding round and a take-home build of 3 to 5 hours, with customer delivery and evaluation required.',
     moduleFlags: {
       ...FDE_FLAGS,
-      // T6 Forward Deployed Engineering and T4.2 Evaluation and release gates.
+      // T17 Forward Deployed Engineering and T15.7 Evaluation and release gates.
       'customer-discovery': 'required',
       'scoping-an-fde-project': 'required',
       'judgement-cases': 'required',

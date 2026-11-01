@@ -646,7 +646,7 @@ test('path page: modules in code order, gap modules flagged Later', async ({ pag
   expect(t1).toEqual([...t1].sort((a, b) => a.localeCompare(b, 'en', { numeric: true })))
   expect(t1.indexOf('T1.3')).toBeGreaterThan(-1)
   expect(t1.indexOf('T1.3')).toBeLessThan(t1.indexOf('T1.4'))
-  const sql = rows.filter({ has: page.getByText('T1.3', { exact: true }) })
+  const sql = rows.filter({ has: page.getByText('T1.4', { exact: true }) })
   // PathFlag renders "Flag:" for screen readers before the visible label.
   await expect(sql).toContainText(/Flag:\s*Later/)
   await expect(sql).not.toContainText(/Flag:\s*Required/)

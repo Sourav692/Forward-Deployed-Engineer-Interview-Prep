@@ -1,6 +1,6 @@
-# T4.4 Security, Tenancy and Prompt Injection: Consolidated Lessons
+# T15.6 Security, Tenancy and Prompt Injection: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T4.4 "Security, tenancy and prompt injection". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/production-ai/security-tenancy-prompt-injection`.
+These six lessons are the site's teaching copy of module T15.6 "Security, tenancy and prompt injection". Each concept is taught once, in the house tutorial format, drawing only on the repository sources below. The site publishes them at `/learn/production-ai/security-tenancy-prompt-injection`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -17,10 +17,10 @@ These six lessons are the site's teaching copy of module T4.4 "Security, tenancy
 - `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md` (own material).
 - `01_Concept_Tutorials/Production_and_Platform_Judgment/01-identity-secrets-and-tenant-fairness.md` (own material; a near-duplicate of the Handbook document above).
 - `01_Concept_Tutorials/Production_and_Platform_Judgment/Cross_Cutting_System_Design_Quick_Reference_v2.md`, §1 "Real Identity" and §6 "Fair Resource Sharing" (own material).
-- Same-track context from `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/05_The_Query_Graph.md` and `06_Output_Guardrails.md`, which the T4.1 lessons teach; these lessons link to them rather than re-teach them.
+- Same-track context from `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/05_The_Query_Graph.md` and `06_Output_Guardrails.md`, which the T15.5 lessons teach; these lessons link to them rather than re-teach them.
 
 The source files stay in the repository unchanged. The site no longer publishes the first four as separate lessons; old URLs redirect to the matching lesson here.
 
-The quick reference's other sections are taught elsewhere: §2 "Standard Tracing" and §7 "Failure Pattern Detection" belong to T4.3 Observability; §3 "Semantic Caching" and §9 "Build vs. Buy" to T4.5 Cost and latency; §4 "AgentOps on Databricks" and the rollout, A/B and rollback parts of §8 to T4.7 AgentOps; the evaluation parts of §8 are taught in T4.2 Evaluation and release gates; and §5 "Guarding Tool Calls" to T3.5 Robust agents.
+The quick reference's other sections are taught elsewhere: §2 "Standard Tracing" and §7 "Failure Pattern Detection" belong to T15.9 Observability; §3 "Semantic Caching" and §9 "Build vs. Buy" to T15.10 Cost and latency; §4 "AgentOps on Databricks" and the rollout, A/B and rollback parts of §8 to T15.8 AgentOps; the evaluation parts of §8 are taught in T15.7 Evaluation and release gates; and §5 "Guarding Tool Calls" to T15.3 Robust agents.
 
 Every claim, number and code idea in these lessons comes from the sources. Where two sources describe different mechanisms under the same name, the lesson says so: the enterprise RAG client's circuit breaker (3 consecutive outage exhaustions, 30 s) guards the model provider, while the quick reference's per-tenant breaker (50% errors, 60 s) guards other tenants. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

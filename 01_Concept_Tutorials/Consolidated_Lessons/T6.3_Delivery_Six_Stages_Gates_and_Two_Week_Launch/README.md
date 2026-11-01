@@ -1,6 +1,6 @@
-# T6.3 Delivery: Six Stages, Gates, and Two-Week Launch: Consolidated Lessons
+# T17.4 Delivery: Six Stages, Gates, and Two-Week Launch: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T6.3 "Delivery: six stages, gates, two-week launch". Each concept is taught once, in the house tutorial format, drawing only on nine repository sources. The site publishes them at `/learn/forward-deployed/delivery-stages-and-gates`.
+These seven lessons are the site's teaching copy of module T17.4 "Delivery: six stages, gates, two-week launch". Each concept is taught once, in the house tutorial format, drawing only on nine repository sources. The site publishes them at `/learn/forward-deployed/delivery-stages-and-gates`.
 
 | # | Lesson | Site slug |
 |---|---|---|

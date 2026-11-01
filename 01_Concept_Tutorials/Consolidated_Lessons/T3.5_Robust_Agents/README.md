@@ -1,6 +1,6 @@
-# T3.5 Robust Agents: Consolidated Lessons
+# T15.3 Robust Agents: Consolidated Lessons
 
-These six lessons are the site's teaching copy of module T3.5 "Robust agents: retries, fallbacks and guards". Each concept is taught once, in the house tutorial format, drawing only on five repository sources. The site publishes them at `/learn/agentic-systems/robust-agents`.
+These six lessons are the site's teaching copy of module T15.3 "Robust agents: retries, fallbacks and guards". Each concept is taught once, in the house tutorial format, drawing only on five repository sources. The site publishes them at `/learn/agentic-systems/robust-agents`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -19,6 +19,6 @@ These six lessons are the site's teaching copy of module T3.5 "Robust agents: re
 - `01_Concept_Tutorials/FDE_Handbook/03_Robust_Agents/05_The_Eight_Guard_Checks.md` (own material).
 - `01_Concept_Tutorials/Production_and_Platform_Judgment/05-guarding-tool-calls.md` (own material).
 
-The source files stay in the repository unchanged. The site no longer publishes the first, second and fifth as separate lessons; their old URLs redirect to the matching lesson here. Lessons 4 and 5 keep the slugs of the lessons they replace, so their URLs and saved progress are unchanged. `02_State_Memory_Sessions.md` from the same Handbook folder is taught under T3.4 Memory and state.
+The source files stay in the repository unchanged. The site no longer publishes the first, second and fifth as separate lessons; their old URLs redirect to the matching lesson here. Lessons 4 and 5 keep the slugs of the lessons they replace, so their URLs and saved progress are unchanged. `02_State_Memory_Sessions.md` from the same Handbook folder is taught under T11.2 Memory and state.
 
 Every claim, number and code idea in these lessons comes from the five sources. Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

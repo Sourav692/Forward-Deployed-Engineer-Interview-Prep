@@ -1,6 +1,6 @@
-# T6.2 Scoping an FDE Project: Consolidated Lessons
+# T17.2 Scoping an FDE Project: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T6.2 "Scoping an FDE project". Each concept is taught once, in the house tutorial format. The site publishes them at `/learn/forward-deployed/scoping-an-fde-project`.
+These seven lessons are the site's teaching copy of module T17.2 "Scoping an FDE project". Each concept is taught once, in the house tutorial format. The site publishes them at `/learn/forward-deployed/scoping-an-fde-project`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -16,6 +16,6 @@ These seven lessons are the site's teaching copy of module T6.2 "Scoping an FDE 
 
 - `05_FDE_Delivery_and_Scoping/Scoping_An_FDE_Project/Scoping-an-FDE-Project-Complete-Guide.md`, Modules 1 to 4 and 6 to 8. The guide is based on the fdehandbook.com "Scope a Project" course (third-party). Its ideas are summarised here in our own words, and every lesson carries a credit line.
 
-Module 5 of the guide ("Roll Out, Operate, and Prove the Result") is taught in T6.5, in `../T6.5_Adoption_and_Business_Impact/`. The source file stays in the repository unchanged; the site no longer publishes it as a separate lesson, and its old URL redirects to the first lesson here.
+Module 5 of the guide ("Roll Out, Operate, and Prove the Result") is taught in T17.5, in `../T6.5_Adoption_and_Business_Impact/`. The source file stays in the repository unchanged; the site no longer publishes it as a separate lesson, and its old URL redirects to the first lesson here.
 
 Each lesson ends with a Sources line naming the sections it used. Edit these files, not the generated copies under `site/content/learn/`, then run `npm run sync` from `site/`.

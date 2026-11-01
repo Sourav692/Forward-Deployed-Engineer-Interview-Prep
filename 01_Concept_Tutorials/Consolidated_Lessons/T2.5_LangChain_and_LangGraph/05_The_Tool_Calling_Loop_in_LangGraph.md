@@ -4,7 +4,7 @@
 
 ◷ 7 min
 
-The framework version of an agent is not a different algorithm. It is the same think, act and observe loop taught in [T3.1 The tool-calling loop](/learn/agentic-systems/the-tool-calling-loop), mapped onto two nodes and one conditional edge, using the primitives from [Modelling Workflows as State Graphs](04_Modelling_Workflows_as_State_Graphs.md).
+The framework version of an agent is not a different algorithm. It is the same think, act and observe loop taught in [T9.1 The tool-calling loop](/learn/agentic-systems/the-tool-calling-loop), mapped onto two nodes and one conditional edge, using the primitives from [Modelling Workflows as State Graphs](04_Modelling_Workflows_as_State_Graphs.md).
 
 **Objectives:**
 

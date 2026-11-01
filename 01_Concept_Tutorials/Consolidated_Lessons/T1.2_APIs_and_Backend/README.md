@@ -14,10 +14,10 @@ These seven lessons are the site's teaching copy of module T1.2 "APIs and backen
 
 ## Sources
 
-- `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md` (own material): the overview and the FastAPI Architecture and LLM Serving APIs sections. Its Deployment and Infrastructure and Production Operations sections are taught in T1.4 Cloud, containers and deployment.
-- `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/03_Caching_Streaming_CICD_BuildVsBuy.md` (own material): §1 semantic caching, §2 token streaming, §7 build vs buy, and the interview lens. Its CI/CD-rigor sections (§3 to §6: nightly regression runs, A/B testing, statistical rigor and prompt unit tests) are taught in the T1.4 lesson "Gate Releases on Quality".
+- `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md` (own material): the overview and the FastAPI Architecture and LLM Serving APIs sections. Its Deployment and Infrastructure and Production Operations sections are taught in T1.3 Cloud, containers and deployment.
+- `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/03_Caching_Streaming_CICD_BuildVsBuy.md` (own material): §1 semantic caching, §2 token streaming, §7 build vs buy, and the interview lens. Its CI/CD-rigor sections (§3 to §6: nightly regression runs, A/B testing, statistical rigor and prompt unit tests) are taught in the T1.3 lesson "Gate Releases on Quality".
 
-The source files stay in the repository unchanged. The site no longer publishes `module-10-backend-fastapi-deployment` or `caching-streaming-cicd-buildvsbuy` as separate lessons; old URLs redirect to lessons here. Authentication beyond API keys and JWTs, secrets and per-tenant keys are taught in T4.4 (`identity-secrets-tenant-fairness`), which this module lists under "See also".
+The source files stay in the repository unchanged. The site no longer publishes `module-10-backend-fastapi-deployment` or `caching-streaming-cicd-buildvsbuy` as separate lessons; old URLs redirect to lessons here. Authentication beyond API keys and JWTs, secrets and per-tenant keys are taught in T15.6 (`identity-secrets-tenant-fairness`), which this module lists under "See also".
 
 The two sources do not conflict. They overlap only on streaming: Module 10 covers the transport and endpoint mechanics, and the handbook adds that streaming is a perceived-latency, channel-layer decision taken after the "can I answer?" check. Lesson 5 teaches both.
 

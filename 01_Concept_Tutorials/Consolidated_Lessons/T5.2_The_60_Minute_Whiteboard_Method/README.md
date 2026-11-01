@@ -1,6 +1,6 @@
-# T5.2 The 60-Minute Whiteboard Method: Consolidated Lessons
+# T16.2 The 60-Minute Whiteboard Method: Consolidated Lessons
 
-These two lessons are the site's teaching copy of module T5.2 "The 60-minute whiteboard method". The first covers the clock and the first twenty minutes; the second covers the deep dive, the cross-cutting concerns and the close. The site publishes them at `/learn/ai-systems-design/sixty-minute-whiteboard`.
+These two lessons are the site's teaching copy of module T16.2 "The 60-minute whiteboard method". The first covers the clock and the first twenty minutes; the second covers the deep dive, the cross-cutting concerns and the close. The site publishes them at `/learn/ai-systems-design/sixty-minute-whiteboard`.
 
 | # | Lesson | Site slug |
 |---|---|---|

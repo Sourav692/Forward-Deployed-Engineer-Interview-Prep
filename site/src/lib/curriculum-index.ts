@@ -73,7 +73,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "cloud-containers-deployment",
-    "code": "T1.4",
+    "code": "T1.3",
     "title": "Cloud, containers and deployment",
     "track": "engineering-foundations",
     "lessons": [
@@ -89,7 +89,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "sql-and-data-modelling",
-    "code": "T1.3",
+    "code": "T1.4",
     "title": "SQL and data modelling for AI apps",
     "track": "engineering-foundations",
     "lessons": [],
@@ -113,7 +113,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "python-and-data-toolkit-refresher",
-    "code": "T9.1",
+    "code": "T2.1",
     "title": "Python & Data Toolkit Refresher",
     "track": "ai-engineering-foundations",
     "lessons": [
@@ -127,7 +127,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "llm-provider-apis-and-model-selection",
-    "code": "T9.2",
+    "code": "T2.2",
     "title": "LLM Provider APIs & Model Selection",
     "track": "ai-engineering-foundations",
     "lessons": [
@@ -142,7 +142,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "hugging-face-models-and-gradio-demos",
-    "code": "T9.3",
+    "code": "T2.3",
     "title": "Hugging Face Models & Gradio Demos",
     "track": "ai-engineering-foundations",
     "lessons": [
@@ -156,7 +156,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "fine-tuning-fundamentals",
-    "code": "T9.4",
+    "code": "T2.4",
     "title": "Fine-Tuning Fundamentals",
     "track": "ai-engineering-foundations",
     "lessons": [
@@ -174,7 +174,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "prompt-engineering-patterns",
-    "code": "T10.1",
+    "code": "T3.1",
     "title": "Prompt Engineering Patterns",
     "track": "prompt-and-context-engineering",
     "lessons": [
@@ -189,7 +189,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multimodal-prompting",
-    "code": "T10.2",
+    "code": "T3.2",
     "title": "Multimodal Prompting",
     "track": "prompt-and-context-engineering",
     "lessons": [
@@ -203,7 +203,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "langchain-core-models-prompts-and-parsers",
-    "code": "T11.1",
+    "code": "T4.1",
     "title": "LangChain Core: Models, Prompts & Parsers",
     "track": "langchain-and-langgraph-fundamentals",
     "lessons": [
@@ -220,7 +220,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "lcel-runnables-and-chains",
-    "code": "T11.2",
+    "code": "T4.2",
     "title": "LCEL, Runnables & Chains",
     "track": "langchain-and-langgraph-fundamentals",
     "lessons": [
@@ -236,7 +236,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "langchain-and-langgraph",
-    "code": "T11.3",
+    "code": "T4.3",
     "title": "LangGraph Core: Graphs, State & Control Flow",
     "track": "langchain-and-langgraph-fundamentals",
     "lessons": [
@@ -252,7 +252,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "langgraph-runtime-persistence-hitl-and-streaming",
-    "code": "T11.4",
+    "code": "T4.4",
     "title": "LangGraph Runtime: Persistence, HITL & Streaming",
     "track": "langchain-and-langgraph-fundamentals",
     "lessons": [
@@ -269,7 +269,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "rag-from-first-principles",
-    "code": "T2.1",
+    "code": "T5.1",
     "title": "Why RAG & the RAG Lifecycle",
     "track": "llm-and-retrieval",
     "lessons": [
@@ -285,7 +285,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "document-ingestion-and-metadata-design",
-    "code": "T12.1",
+    "code": "T6.1",
     "title": "Document Ingestion & Metadata Design",
     "track": "ingestion-and-indexing-pipeline",
     "lessons": [
@@ -301,7 +301,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "chunking-and-indexing",
-    "code": "T12.2",
+    "code": "T6.2",
     "title": "Chunking Strategies",
     "track": "ingestion-and-indexing-pipeline",
     "lessons": [
@@ -316,7 +316,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "embeddings-and-model-selection",
-    "code": "T12.3",
+    "code": "T6.3",
     "title": "Embeddings & Model Selection",
     "track": "ingestion-and-indexing-pipeline",
     "lessons": [
@@ -331,7 +331,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "vector-stores-and-index-operations",
-    "code": "T12.4",
+    "code": "T6.4",
     "title": "Vector Stores & Index Operations",
     "track": "ingestion-and-indexing-pipeline",
     "lessons": [
@@ -347,7 +347,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "advanced-indexing-strategies",
-    "code": "T12.5",
+    "code": "T6.5",
     "title": "Advanced Indexing Strategies",
     "track": "ingestion-and-indexing-pipeline",
     "lessons": [
@@ -363,7 +363,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "retrieval-hybrid-rerank",
-    "code": "T13.1",
+    "code": "T7.1",
     "title": "Retrievers & Hybrid Search",
     "track": "retrieval-quality-engineering",
     "lessons": [
@@ -380,7 +380,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "query-transformation-and-routing",
-    "code": "T13.2",
+    "code": "T7.2",
     "title": "Query Transformation & Routing",
     "track": "retrieval-quality-engineering",
     "lessons": [
@@ -396,7 +396,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking",
-    "code": "T13.3",
+    "code": "T7.3",
     "title": "Post-Retrieval Optimisation & Reranking",
     "track": "retrieval-quality-engineering",
     "lessons": [
@@ -413,7 +413,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "end-to-end-rag-systems",
-    "code": "T14.1",
+    "code": "T8.1",
     "title": "End-to-End RAG Systems",
     "track": "complete-rag-applications",
     "lessons": [
@@ -429,7 +429,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multimodal-rag",
-    "code": "T14.2",
+    "code": "T8.2",
     "title": "Multimodal RAG",
     "track": "complete-rag-applications",
     "lessons": [
@@ -443,7 +443,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "framework-fluency-llamaindex",
-    "code": "T14.3",
+    "code": "T8.3",
     "title": "Framework Fluency: LlamaIndex",
     "track": "complete-rag-applications",
     "lessons": [
@@ -458,7 +458,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "the-agent-loop-and-tool-calling",
-    "code": "T3.1",
+    "code": "T9.1",
     "title": "The Agent Loop & Tool Calling",
     "track": "agentic-systems",
     "lessons": [
@@ -474,7 +474,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "react-agents-and-langchain-create-agent",
-    "code": "T3.2",
+    "code": "T9.2",
     "title": "ReAct Agents & LangChain create_agent",
     "track": "agentic-systems",
     "lessons": [
@@ -490,7 +490,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-workflow-patterns",
-    "code": "T3.3",
+    "code": "T9.3",
     "title": "Agentic Workflow Patterns",
     "track": "agentic-systems",
     "lessons": [
@@ -506,7 +506,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns",
-    "code": "T3.4",
+    "code": "T9.4",
     "title": "Planning, Reflection & Reasoning Patterns",
     "track": "agentic-systems",
     "lessons": [
@@ -520,7 +520,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "human-approval-and-applied-single-agent-builds",
-    "code": "T3.5",
+    "code": "T9.5",
     "title": "Human Approval & Applied Single-Agent Builds",
     "track": "agentic-systems",
     "lessons": [
@@ -534,7 +534,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting",
-    "code": "T15.1",
+    "code": "T10.1",
     "title": "Agentic RAG Foundations: Grading & Query Rewriting",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -547,7 +547,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "self-correcting-rag-crag-and-self-rag",
-    "code": "T15.2",
+    "code": "T10.2",
     "title": "Self-Correcting RAG: CRAG & Self-RAG",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -561,7 +561,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "adaptive-rag-and-query-routing",
-    "code": "T15.3",
+    "code": "T10.3",
     "title": "Adaptive RAG & Query Routing",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -576,7 +576,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "rag-as-an-agent-tool",
-    "code": "T15.4",
+    "code": "T10.4",
     "title": "RAG as an Agent Tool",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -590,7 +590,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "reliability-feedback-loops-and-diversity",
-    "code": "T15.5",
+    "code": "T10.5",
     "title": "Reliability, Feedback Loops & Diversity",
     "track": "agentic-and-self-correcting-rag",
     "lessons": [
@@ -604,7 +604,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "conversation-memory-and-conversational-rag",
-    "code": "T16.1",
+    "code": "T11.1",
     "title": "Conversation Memory & Conversational RAG",
     "track": "memory-and-multi-agent-rag",
     "lessons": [
@@ -620,7 +620,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "memory-and-state",
-    "code": "T16.2",
+    "code": "T11.2",
     "title": "Long-Term & Agentic Memory",
     "track": "memory-and-multi-agent-rag",
     "lessons": [
@@ -636,7 +636,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multi-agent-architectures",
-    "code": "T16.3",
+    "code": "T11.3",
     "title": "Multi-Agent Architectures",
     "track": "memory-and-multi-agent-rag",
     "lessons": [
@@ -652,7 +652,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "collaboration-control-and-parallel-agents",
-    "code": "T16.4",
+    "code": "T11.4",
     "title": "Collaboration, Control & Parallel Agents",
     "track": "memory-and-multi-agent-rag",
     "lessons": [
@@ -668,7 +668,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "multi-agent-applied-builds-and-deep-agents",
-    "code": "T16.5",
+    "code": "T11.5",
     "title": "Multi-Agent Applied Builds & Deep Agents",
     "track": "memory-and-multi-agent-rag",
     "lessons": [
@@ -684,7 +684,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "mcp-foundations",
-    "code": "T17.1",
+    "code": "T12.1",
     "title": "MCP Foundations",
     "track": "agent-protocols-mcp-and-a2a",
     "lessons": [
@@ -701,7 +701,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "building-mcp-servers-and-clients",
-    "code": "T17.2",
+    "code": "T12.2",
     "title": "Building MCP Servers & Clients",
     "track": "agent-protocols-mcp-and-a2a",
     "lessons": [
@@ -716,7 +716,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "mcp-applications-and-rag-over-mcp",
-    "code": "T17.3",
+    "code": "T12.3",
     "title": "MCP Applications & RAG over MCP",
     "track": "agent-protocols-mcp-and-a2a",
     "lessons": [
@@ -734,7 +734,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "a2a-agent-to-agent-protocol",
-    "code": "T17.4",
+    "code": "T12.4",
     "title": "A2A: Agent-to-Agent Protocol",
     "track": "agent-protocols-mcp-and-a2a",
     "lessons": [
@@ -749,7 +749,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "hierarchical-and-memory-augmented-retrieval",
-    "code": "T18.1",
+    "code": "T13.1",
     "title": "Hierarchical & Memory-Augmented Retrieval",
     "track": "hierarchical-memory-and-graph-rag",
     "lessons": [
@@ -763,7 +763,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "knowledge-graphs-with-neo4j",
-    "code": "T18.2",
+    "code": "T13.2",
     "title": "Knowledge Graphs with Neo4j",
     "track": "hierarchical-memory-and-graph-rag",
     "lessons": [
@@ -780,7 +780,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "graphrag-techniques",
-    "code": "T18.3",
+    "code": "T13.3",
     "title": "GraphRAG Techniques",
     "track": "hierarchical-memory-and-graph-rag",
     "lessons": [
@@ -795,7 +795,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design",
-    "code": "T19.1",
+    "code": "T14.1",
     "title": "Agentic RAG Architectures: Choosing a Design",
     "track": "architecture-synthesis-and-capstone",
     "lessons": [
@@ -809,7 +809,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "tool-design-mcp-a2a",
-    "code": "T4.9",
+    "code": "T15.1",
     "title": "Tool design and the agent-computer interface",
     "track": "production-ai",
     "lessons": [
@@ -824,7 +824,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "context-engineering",
-    "code": "T4.10",
+    "code": "T15.2",
     "title": "Context engineering and orchestration",
     "track": "production-ai",
     "lessons": [
@@ -838,7 +838,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "robust-agents",
-    "code": "T4.11",
+    "code": "T15.3",
     "title": "Robust agents: retries, fallbacks and guards",
     "track": "production-ai",
     "lessons": [
@@ -852,7 +852,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentic-workflow-platforms",
-    "code": "T4.12",
+    "code": "T15.4",
     "title": "Agentic workflow platforms",
     "track": "production-ai",
     "lessons": [
@@ -868,7 +868,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "enterprise-rag-in-production",
-    "code": "T4.1",
+    "code": "T15.5",
     "title": "Enterprise RAG in production",
     "track": "production-ai",
     "lessons": [
@@ -884,7 +884,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "evaluation-and-release-gates",
-    "code": "T4.2",
+    "code": "T15.7",
     "title": "Evaluation and release gates",
     "track": "production-ai",
     "lessons": [
@@ -899,7 +899,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "security-tenancy-prompt-injection",
-    "code": "T4.4",
+    "code": "T15.6",
     "title": "Security, tenancy and prompt injection",
     "track": "production-ai",
     "lessons": [
@@ -914,7 +914,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "observability-and-diagnosis",
-    "code": "T4.3",
+    "code": "T15.9",
     "title": "Observability and production diagnosis",
     "track": "production-ai",
     "lessons": [
@@ -929,7 +929,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "cost-and-latency",
-    "code": "T4.5",
+    "code": "T15.10",
     "title": "Cost and latency optimisation",
     "track": "production-ai",
     "lessons": [
@@ -946,7 +946,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scaling-and-reliability",
-    "code": "T4.6",
+    "code": "T15.11",
     "title": "Scaling and reliability",
     "track": "production-ai",
     "lessons": [
@@ -961,7 +961,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "agentops",
-    "code": "T4.7",
+    "code": "T15.8",
     "title": "AgentOps: versioning, rollout, CI/CD, red teaming",
     "track": "production-ai",
     "lessons": [
@@ -977,7 +977,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "model-adaptation-and-serving",
-    "code": "T4.8",
+    "code": "T15.12",
     "title": "Model adaptation and inference serving",
     "track": "production-ai",
     "lessons": [
@@ -990,7 +990,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "design-framework",
-    "code": "T5.1",
+    "code": "T16.1",
     "title": "The design framework: 12 parts and 15 principles",
     "track": "ai-systems-design",
     "lessons": [
@@ -1004,7 +1004,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "sixty-minute-whiteboard",
-    "code": "T5.2",
+    "code": "T16.2",
     "title": "The 60-minute whiteboard method",
     "track": "ai-systems-design",
     "lessons": [
@@ -1015,7 +1015,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "architecture-patterns",
-    "code": "T5.3",
+    "code": "T16.3",
     "title": "Architecture patterns and trade-offs",
     "track": "ai-systems-design",
     "lessons": [
@@ -1029,7 +1029,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "classic-ai-designs",
-    "code": "T5.4",
+    "code": "T16.4",
     "title": "Classic AI designs",
     "track": "ai-systems-design",
     "lessons": [
@@ -1047,7 +1047,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scenario-library",
-    "code": "T5.5",
+    "code": "T16.5",
     "title": "Scenario library",
     "track": "ai-systems-design",
     "lessons": [
@@ -1088,7 +1088,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "customer-discovery",
-    "code": "T6.1",
+    "code": "T17.1",
     "title": "Customer discovery and problem decomposition",
     "track": "forward-deployed",
     "lessons": [
@@ -1102,7 +1102,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scoping-an-fde-project",
-    "code": "T6.2",
+    "code": "T17.2",
     "title": "Scoping an FDE project",
     "track": "forward-deployed",
     "lessons": [
@@ -1118,7 +1118,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "judgement-cases",
-    "code": "T6.4",
+    "code": "T17.3",
     "title": "Judgement cases",
     "track": "forward-deployed",
     "lessons": [],
@@ -1126,7 +1126,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "delivery-stages-and-gates",
-    "code": "T6.3",
+    "code": "T17.4",
     "title": "Delivery: six stages, gates, two-week launch",
     "track": "forward-deployed",
     "lessons": [
@@ -1142,7 +1142,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "adoption-and-impact",
-    "code": "T6.5",
+    "code": "T17.5",
     "title": "Adoption, change management and business impact",
     "track": "forward-deployed",
     "lessons": [
@@ -1154,7 +1154,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "debugging-customer-environment",
-    "code": "T6.6",
+    "code": "T17.6",
     "title": "Debugging in the customer's environment",
     "track": "forward-deployed",
     "lessons": [],
@@ -1162,7 +1162,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "telling-the-build-story",
-    "code": "T7.1",
+    "code": "T18.1",
     "title": "Telling the build story",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1177,7 +1177,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "building-the-story-bank",
-    "code": "T7.2",
+    "code": "T18.2",
     "title": "The behavioural round",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1305,7 +1305,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "capstone-build",
-    "code": "T8.1",
+    "code": "T19.1",
     "title": "Capstone build",
     "track": "capstone-and-portfolio",
     "lessons": [
@@ -1316,7 +1316,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "portfolio-write-up",
-    "code": "T8.2",
+    "code": "T19.2",
     "title": "Portfolio write-up and presentation",
     "track": "capstone-and-portfolio",
     "lessons": [],
@@ -1520,7 +1520,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "ai-engineering-foundations",
-    "code": "T9",
+    "code": "T2",
     "title": "AI Engineering Foundations",
     "modules": [
       "python-and-data-toolkit-refresher",
@@ -1531,7 +1531,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "prompt-and-context-engineering",
-    "code": "T10",
+    "code": "T3",
     "title": "Prompt & Context Engineering",
     "modules": [
       "prompt-engineering-patterns",
@@ -1540,7 +1540,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "langchain-and-langgraph-fundamentals",
-    "code": "T11",
+    "code": "T4",
     "title": "LangChain & LangGraph Fundamentals",
     "modules": [
       "langchain-core-models-prompts-and-parsers",
@@ -1551,7 +1551,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "llm-and-retrieval",
-    "code": "T2",
+    "code": "T5",
     "title": "RAG Foundations",
     "modules": [
       "rag-from-first-principles"
@@ -1559,7 +1559,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "ingestion-and-indexing-pipeline",
-    "code": "T12",
+    "code": "T6",
     "title": "The Ingestion & Indexing Pipeline",
     "modules": [
       "document-ingestion-and-metadata-design",
@@ -1571,7 +1571,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "retrieval-quality-engineering",
-    "code": "T13",
+    "code": "T7",
     "title": "Retrieval Quality Engineering",
     "modules": [
       "retrieval-hybrid-rerank",
@@ -1581,7 +1581,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "complete-rag-applications",
-    "code": "T14",
+    "code": "T8",
     "title": "Building Complete RAG Applications",
     "modules": [
       "end-to-end-rag-systems",
@@ -1591,7 +1591,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "agentic-systems",
-    "code": "T3",
+    "code": "T9",
     "title": "Agent Foundations for RAG",
     "modules": [
       "the-agent-loop-and-tool-calling",
@@ -1603,7 +1603,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "agentic-and-self-correcting-rag",
-    "code": "T15",
+    "code": "T10",
     "title": "Agentic & Self-Correcting RAG",
     "modules": [
       "agentic-rag-foundations-grading-and-query-rewriting",
@@ -1615,7 +1615,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "memory-and-multi-agent-rag",
-    "code": "T16",
+    "code": "T11",
     "title": "Memory & Multi-Agent RAG",
     "modules": [
       "conversation-memory-and-conversational-rag",
@@ -1627,7 +1627,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "agent-protocols-mcp-and-a2a",
-    "code": "T17",
+    "code": "T12",
     "title": "Agent Protocols: MCP & A2A",
     "modules": [
       "mcp-foundations",
@@ -1638,7 +1638,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "hierarchical-memory-and-graph-rag",
-    "code": "T18",
+    "code": "T13",
     "title": "Hierarchical, Memory & Graph RAG",
     "modules": [
       "hierarchical-and-memory-augmented-retrieval",
@@ -1648,7 +1648,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "architecture-synthesis-and-capstone",
-    "code": "T19",
+    "code": "T14",
     "title": "Architecture Synthesis & Capstone",
     "modules": [
       "agentic-rag-architectures-choosing-a-design"
@@ -1656,7 +1656,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "production-ai",
-    "code": "T4",
+    "code": "T15",
     "title": "Production AI Systems",
     "modules": [
       "tool-design-mcp-a2a",
@@ -1675,7 +1675,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "ai-systems-design",
-    "code": "T5",
+    "code": "T16",
     "title": "AI System Design",
     "modules": [
       "design-framework",
@@ -1686,7 +1686,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "forward-deployed",
-    "code": "T6",
+    "code": "T17",
     "title": "Forward Deployed Engineering",
     "modules": [
       "customer-discovery",
@@ -1699,7 +1699,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "communication-and-behavioural",
-    "code": "T7",
+    "code": "T18",
     "title": "Communication and Behavioural",
     "modules": [
       "telling-the-build-story",
@@ -1720,7 +1720,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "capstone-and-portfolio",
-    "code": "T8",
+    "code": "T19",
     "title": "Capstone and Portfolio",
     "modules": [
       "capstone-build",

@@ -6,7 +6,7 @@ import type { CurriculumLesson, CurriculumModule, CurriculumTrack } from './curr
 export const RAG_TRACKS: CurriculumTrack[] = [
   {
     "slug": "ai-engineering-foundations",
-    "code": "T9",
+    "code": "T2",
     "title": "AI Engineering Foundations",
     "objective": "Python and data tools, LLM provider APIs and model choice, Hugging Face models, and when fine-tuning beats retrieval.",
     "forWhom": "Engineers new to LLM APIs; others skim and take the interview questions",
@@ -39,7 +39,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "prompt-and-context-engineering",
-    "code": "T10",
+    "code": "T3",
     "title": "Prompt & Context Engineering",
     "objective": "The prompt patterns behind every LLM step in a RAG pipeline, across models and modalities.",
     "forWhom": "All technical paths",
@@ -70,7 +70,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "langchain-and-langgraph-fundamentals",
-    "code": "T11",
+    "code": "T4",
     "title": "LangChain & LangGraph Fundamentals",
     "objective": "LangChain models, prompts, parsers and LCEL, then LangGraph state, routing, persistence, interrupts and streaming.",
     "forWhom": "All technical paths",
@@ -103,7 +103,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "llm-and-retrieval",
-    "code": "T2",
+    "code": "T5",
     "title": "RAG Foundations",
     "objective": "Why retrieval exists, the four stages of a pipeline, and a baseline you will measure every later change against.",
     "forWhom": "All technical paths",
@@ -133,7 +133,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "ingestion-and-indexing-pipeline",
-    "code": "T12",
+    "code": "T6",
     "title": "The Ingestion & Indexing Pipeline",
     "objective": "Everything that happens before a query arrives: loading, metadata, chunking, embedding, storing, and deciding what to index.",
     "forWhom": "All technical paths",
@@ -167,7 +167,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "retrieval-quality-engineering",
-    "code": "T13",
+    "code": "T7",
     "title": "Retrieval Quality Engineering",
     "objective": "Getting the right chunks into the top-k: hybrid search, fusion, query transformation, routing and reranking.",
     "forWhom": "All technical paths",
@@ -199,7 +199,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "complete-rag-applications",
-    "code": "T14",
+    "code": "T8",
     "title": "Building Complete RAG Applications",
     "objective": "Assembling full systems with sources, citations, structured data and images, in LangChain and LlamaIndex.",
     "forWhom": "All technical paths",
@@ -231,7 +231,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "agentic-systems",
-    "code": "T3",
+    "code": "T9",
     "title": "Agent Foundations for RAG",
     "objective": "The agent loop, tools, ReAct, the five workflow patterns, planning and reflection. Agentic RAG in Part IX is built from exactly these parts.",
     "forWhom": "All technical paths",
@@ -265,7 +265,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "agentic-and-self-correcting-rag",
-    "code": "T15",
+    "code": "T10",
     "title": "Agentic & Self-Correcting RAG",
     "objective": "Retrieval that makes decisions: grade, rewrite, fall back to the web, reflect, route, and act as an agent tool.",
     "forWhom": "All technical paths",
@@ -299,7 +299,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "memory-and-multi-agent-rag",
-    "code": "T16",
+    "code": "T11",
     "title": "Memory & Multi-Agent RAG",
     "objective": "Conversation and long-term memory as retrieval over the agent's own history, then supervisors, swarms and research teams that retrieve together.",
     "forWhom": "All technical paths",
@@ -333,7 +333,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "agent-protocols-mcp-and-a2a",
-    "code": "T17",
+    "code": "T12",
     "title": "Agent Protocols: MCP & A2A",
     "objective": "Expose retrieval and agents as standard services: MCP servers and clients for tools and resources, A2A for agent-to-agent calls.",
     "forWhom": "All technical paths",
@@ -366,7 +366,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "hierarchical-memory-and-graph-rag",
-    "code": "T18",
+    "code": "T13",
     "title": "Hierarchical, Memory & Graph RAG",
     "objective": "Structural indexes for questions flat chunks cannot answer: summary trees, memory, knowledge graphs and GraphRAG.",
     "forWhom": "Engineers who want depth beyond flat-chunk retrieval",
@@ -397,7 +397,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
   },
   {
     "slug": "architecture-synthesis-and-capstone",
-    "code": "T19",
+    "code": "T14",
     "title": "Architecture Synthesis & Capstone",
     "objective": "Compare every architecture side by side, choose one for a real problem, and ship it as a capstone.",
     "forWhom": "Engineers preparing a portfolio project or a design round",
@@ -429,7 +429,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
 export const RAG_MODULES: CurriculumModule[] = [
   {
     "slug": "python-and-data-toolkit-refresher",
-    "code": "T9.1",
+    "code": "T2.1",
     "title": "Python & Data Toolkit Refresher",
     "track": "ai-engineering-foundations",
     "section": "ai-engineering-foundations",
@@ -514,7 +514,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "llm-provider-apis-and-model-selection",
-    "code": "T9.2",
+    "code": "T2.2",
     "title": "LLM Provider APIs & Model Selection",
     "track": "ai-engineering-foundations",
     "section": "ai-engineering-foundations",
@@ -543,7 +543,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "hugging-face-models-and-gradio-demos",
-    "code": "T9.3",
+    "code": "T2.3",
     "title": "Hugging Face Models & Gradio Demos",
     "track": "ai-engineering-foundations",
     "section": "ai-engineering-foundations",
@@ -628,7 +628,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "fine-tuning-fundamentals",
-    "code": "T9.4",
+    "code": "T2.4",
     "title": "Fine-Tuning Fundamentals",
     "track": "ai-engineering-foundations",
     "section": "ai-engineering-foundations",
@@ -660,7 +660,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "prompt-engineering-patterns",
-    "code": "T10.1",
+    "code": "T3.1",
     "title": "Prompt Engineering Patterns",
     "track": "prompt-and-context-engineering",
     "section": "prompt-and-context-engineering",
@@ -689,7 +689,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "multimodal-prompting",
-    "code": "T10.2",
+    "code": "T3.2",
     "title": "Multimodal Prompting",
     "track": "prompt-and-context-engineering",
     "section": "prompt-and-context-engineering",
@@ -717,7 +717,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "langchain-core-models-prompts-and-parsers",
-    "code": "T11.1",
+    "code": "T4.1",
     "title": "LangChain Core: Models, Prompts & Parsers",
     "track": "langchain-and-langgraph-fundamentals",
     "section": "langchain-and-langgraph-fundamentals",
@@ -775,7 +775,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "lcel-runnables-and-chains",
-    "code": "T11.2",
+    "code": "T4.2",
     "title": "LCEL, Runnables & Chains",
     "track": "langchain-and-langgraph-fundamentals",
     "section": "langchain-and-langgraph-fundamentals",
@@ -805,7 +805,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "langchain-and-langgraph",
-    "code": "T11.3",
+    "code": "T4.3",
     "title": "LangGraph Core: Graphs, State & Control Flow",
     "track": "langchain-and-langgraph-fundamentals",
     "section": "langchain-and-langgraph-fundamentals",
@@ -835,7 +835,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "langgraph-runtime-persistence-hitl-and-streaming",
-    "code": "T11.4",
+    "code": "T4.4",
     "title": "LangGraph Runtime: Persistence, HITL & Streaming",
     "track": "langchain-and-langgraph-fundamentals",
     "section": "langchain-and-langgraph-fundamentals",
@@ -866,7 +866,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "rag-from-first-principles",
-    "code": "T2.1",
+    "code": "T5.1",
     "title": "Why RAG & the RAG Lifecycle",
     "track": "llm-and-retrieval",
     "section": "rag-foundations",
@@ -896,7 +896,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "document-ingestion-and-metadata-design",
-    "code": "T12.1",
+    "code": "T6.1",
     "title": "Document Ingestion & Metadata Design",
     "track": "ingestion-and-indexing-pipeline",
     "section": "the-ingestion-and-indexing-pipeline",
@@ -943,7 +943,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "chunking-and-indexing",
-    "code": "T12.2",
+    "code": "T6.2",
     "title": "Chunking Strategies",
     "track": "ingestion-and-indexing-pipeline",
     "section": "the-ingestion-and-indexing-pipeline",
@@ -972,7 +972,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "embeddings-and-model-selection",
-    "code": "T12.3",
+    "code": "T6.3",
     "title": "Embeddings & Model Selection",
     "track": "ingestion-and-indexing-pipeline",
     "section": "the-ingestion-and-indexing-pipeline",
@@ -1013,7 +1013,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "vector-stores-and-index-operations",
-    "code": "T12.4",
+    "code": "T6.4",
     "title": "Vector Stores & Index Operations",
     "track": "ingestion-and-indexing-pipeline",
     "section": "the-ingestion-and-indexing-pipeline",
@@ -1043,7 +1043,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "advanced-indexing-strategies",
-    "code": "T12.5",
+    "code": "T6.5",
     "title": "Advanced Indexing Strategies",
     "track": "ingestion-and-indexing-pipeline",
     "section": "the-ingestion-and-indexing-pipeline",
@@ -1073,7 +1073,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "retrieval-hybrid-rerank",
-    "code": "T13.1",
+    "code": "T7.1",
     "title": "Retrievers & Hybrid Search",
     "track": "retrieval-quality-engineering",
     "section": "retrieval-quality-engineering",
@@ -1104,7 +1104,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "query-transformation-and-routing",
-    "code": "T13.2",
+    "code": "T7.2",
     "title": "Query Transformation & Routing",
     "track": "retrieval-quality-engineering",
     "section": "retrieval-quality-engineering",
@@ -1176,7 +1176,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking",
-    "code": "T13.3",
+    "code": "T7.3",
     "title": "Post-Retrieval Optimisation & Reranking",
     "track": "retrieval-quality-engineering",
     "section": "retrieval-quality-engineering",
@@ -1207,7 +1207,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "end-to-end-rag-systems",
-    "code": "T14.1",
+    "code": "T8.1",
     "title": "End-to-End RAG Systems",
     "track": "complete-rag-applications",
     "section": "building-complete-rag-applications",
@@ -1237,7 +1237,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "multimodal-rag",
-    "code": "T14.2",
+    "code": "T8.2",
     "title": "Multimodal RAG",
     "track": "complete-rag-applications",
     "section": "building-complete-rag-applications",
@@ -1265,7 +1265,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "framework-fluency-llamaindex",
-    "code": "T14.3",
+    "code": "T8.3",
     "title": "Framework Fluency: LlamaIndex",
     "track": "complete-rag-applications",
     "section": "building-complete-rag-applications",
@@ -1294,7 +1294,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "the-agent-loop-and-tool-calling",
-    "code": "T3.1",
+    "code": "T9.1",
     "title": "The Agent Loop & Tool Calling",
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
@@ -1336,7 +1336,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "react-agents-and-langchain-create-agent",
-    "code": "T3.2",
+    "code": "T9.2",
     "title": "ReAct Agents & LangChain create_agent",
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
@@ -1383,7 +1383,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "agentic-workflow-patterns",
-    "code": "T3.3",
+    "code": "T9.3",
     "title": "Agentic Workflow Patterns",
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
@@ -1413,7 +1413,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns",
-    "code": "T3.4",
+    "code": "T9.4",
     "title": "Planning, Reflection & Reasoning Patterns",
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
@@ -1513,7 +1513,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "human-approval-and-applied-single-agent-builds",
-    "code": "T3.5",
+    "code": "T9.5",
     "title": "Human Approval & Applied Single-Agent Builds",
     "track": "agentic-systems",
     "section": "agent-foundations-for-rag",
@@ -1568,7 +1568,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting",
-    "code": "T15.1",
+    "code": "T10.1",
     "title": "Agentic RAG Foundations: Grading & Query Rewriting",
     "track": "agentic-and-self-correcting-rag",
     "section": "agentic-and-self-correcting-rag",
@@ -1607,7 +1607,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "self-correcting-rag-crag-and-self-rag",
-    "code": "T15.2",
+    "code": "T10.2",
     "title": "Self-Correcting RAG: CRAG & Self-RAG",
     "track": "agentic-and-self-correcting-rag",
     "section": "agentic-and-self-correcting-rag",
@@ -1635,7 +1635,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "adaptive-rag-and-query-routing",
-    "code": "T15.3",
+    "code": "T10.3",
     "title": "Adaptive RAG & Query Routing",
     "track": "agentic-and-self-correcting-rag",
     "section": "agentic-and-self-correcting-rag",
@@ -1664,7 +1664,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "rag-as-an-agent-tool",
-    "code": "T15.4",
+    "code": "T10.4",
     "title": "RAG as an Agent Tool",
     "track": "agentic-and-self-correcting-rag",
     "section": "agentic-and-self-correcting-rag",
@@ -1692,7 +1692,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "reliability-feedback-loops-and-diversity",
-    "code": "T15.5",
+    "code": "T10.5",
     "title": "Reliability, Feedback Loops & Diversity",
     "track": "agentic-and-self-correcting-rag",
     "section": "agentic-and-self-correcting-rag",
@@ -1720,7 +1720,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "conversation-memory-and-conversational-rag",
-    "code": "T16.1",
+    "code": "T11.1",
     "title": "Conversation Memory & Conversational RAG",
     "track": "memory-and-multi-agent-rag",
     "section": "memory-and-multi-agent-rag",
@@ -1767,7 +1767,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "memory-and-state",
-    "code": "T16.2",
+    "code": "T11.2",
     "title": "Long-Term & Agentic Memory",
     "track": "memory-and-multi-agent-rag",
     "section": "memory-and-multi-agent-rag",
@@ -1797,7 +1797,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "multi-agent-architectures",
-    "code": "T16.3",
+    "code": "T11.3",
     "title": "Multi-Agent Architectures",
     "track": "memory-and-multi-agent-rag",
     "section": "memory-and-multi-agent-rag",
@@ -1827,7 +1827,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "collaboration-control-and-parallel-agents",
-    "code": "T16.4",
+    "code": "T11.4",
     "title": "Collaboration, Control & Parallel Agents",
     "track": "memory-and-multi-agent-rag",
     "section": "memory-and-multi-agent-rag",
@@ -1857,7 +1857,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "multi-agent-applied-builds-and-deep-agents",
-    "code": "T16.5",
+    "code": "T11.5",
     "title": "Multi-Agent Applied Builds & Deep Agents",
     "track": "memory-and-multi-agent-rag",
     "section": "memory-and-multi-agent-rag",
@@ -1929,7 +1929,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "mcp-foundations",
-    "code": "T17.1",
+    "code": "T12.1",
     "title": "MCP Foundations",
     "track": "agent-protocols-mcp-and-a2a",
     "section": "agent-protocols-mcp-and-a2a",
@@ -1982,7 +1982,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "building-mcp-servers-and-clients",
-    "code": "T17.2",
+    "code": "T12.2",
     "title": "Building MCP Servers & Clients",
     "track": "agent-protocols-mcp-and-a2a",
     "section": "agent-protocols-mcp-and-a2a",
@@ -2038,7 +2038,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "mcp-applications-and-rag-over-mcp",
-    "code": "T17.3",
+    "code": "T12.3",
     "title": "MCP Applications & RAG over MCP",
     "track": "agent-protocols-mcp-and-a2a",
     "section": "agent-protocols-mcp-and-a2a",
@@ -2070,7 +2070,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "a2a-agent-to-agent-protocol",
-    "code": "T17.4",
+    "code": "T12.4",
     "title": "A2A: Agent-to-Agent Protocol",
     "track": "agent-protocols-mcp-and-a2a",
     "section": "agent-protocols-mcp-and-a2a",
@@ -2099,7 +2099,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "hierarchical-and-memory-augmented-retrieval",
-    "code": "T18.1",
+    "code": "T13.1",
     "title": "Hierarchical & Memory-Augmented Retrieval",
     "track": "hierarchical-memory-and-graph-rag",
     "section": "hierarchical-memory-and-graph-rag",
@@ -2127,7 +2127,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "knowledge-graphs-with-neo4j",
-    "code": "T18.2",
+    "code": "T13.2",
     "title": "Knowledge Graphs with Neo4j",
     "track": "hierarchical-memory-and-graph-rag",
     "section": "hierarchical-memory-and-graph-rag",
@@ -2158,7 +2158,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "graphrag-techniques",
-    "code": "T18.3",
+    "code": "T13.3",
     "title": "GraphRAG Techniques",
     "track": "hierarchical-memory-and-graph-rag",
     "section": "hierarchical-memory-and-graph-rag",
@@ -2187,7 +2187,7 @@ export const RAG_MODULES: CurriculumModule[] = [
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design",
-    "code": "T19.1",
+    "code": "T14.1",
     "title": "Agentic RAG Architectures: Choosing a Design",
     "track": "architecture-synthesis-and-capstone",
     "section": "architecture-synthesis-and-capstone",

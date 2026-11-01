@@ -1,6 +1,6 @@
-# T1.4 Cloud, Containers and Deployment: Consolidated Lessons
+# T1.3 Cloud, Containers and Deployment: Consolidated Lessons
 
-These seven lessons are the site's teaching copy of module T1.4 "Cloud, containers and deployment". Each concept is taught once, in the house tutorial format, drawing only on two repository sources. The site publishes them at `/learn/engineering-foundations/cloud-containers-deployment`.
+These seven lessons are the site's teaching copy of module T1.3 "Cloud, containers and deployment". Each concept is taught once, in the house tutorial format, drawing only on two repository sources. The site publishes them at `/learn/engineering-foundations/cloud-containers-deployment`.
 
 | # | Lesson | Site slug |
 |---|---|---|
@@ -17,7 +17,7 @@ These seven lessons are the site's teaching copy of module T1.4 "Cloud, containe
 - `01_Concept_Tutorials/GenAI_Engineering_Modules/Module_10_Backend_FastAPI_Deployment.md`, Topic 3 "Deployment & Infrastructure" and Topic 4 "Production Operations" (own material).
 - `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/03_Caching_Streaming_CICD_BuildVsBuy.md`, sections 3 to 6 on scheduled regression runs, A/B testing, statistical rigour and prompt unit tests (own material).
 
-The source files stay in the repository unchanged. The site no longer publishes `module-10-deployment-and-operations` as a separate lesson; its old URL redirects here. The overview and Topics 1 and 2 of Module 10, and sections 1, 2 and 7 of the caching document (semantic caching, token streaming, build versus buy), are taught in T1.2 APIs and backend. `infra-and-cicd` (T4.7) stays a see-also lesson for this module.
+The source files stay in the repository unchanged. The site no longer publishes `module-10-deployment-and-operations` as a separate lesson; its old URL redirects here. The overview and Topics 1 and 2 of Module 10, and sections 1, 2 and 7 of the caching document (semantic caching, token streaming, build versus buy), are taught in T1.2 APIs and backend. `infra-and-cicd` (T15.8) stays a see-also lesson for this module.
 
 ## Source notes
 

@@ -61,7 +61,7 @@ export async function checkExplorerSnapshots(repoRoot, siteDir) {
     }
     for (const slug of ref.lessons) {
       if (covered.has(slug) || !lessons.some((lesson) => lesson.slug === slug && lesson.module === 'classic-ai-designs')) {
-        throw new Error(`Explorer ${ref.id}: duplicate or unknown T5.4 lesson ${slug}`)
+        throw new Error(`Explorer ${ref.id}: duplicate or unknown T16.4 lesson ${slug}`)
       }
       covered.add(slug)
     }
@@ -70,6 +70,6 @@ export async function checkExplorerSnapshots(repoRoot, siteDir) {
     stages += system.scenarios.reduce((count, scenario) => count + scenario.stages.length, 0)
   }
   const missing = lessons.filter((lesson) => lesson.module === 'classic-ai-designs' && !covered.has(lesson.slug))
-  if (missing.length) throw new Error(`T5.4 lessons missing explorers: ${missing.map((lesson) => lesson.slug).join(', ')}`)
+  if (missing.length) throw new Error(`T16.4 lessons missing explorers: ${missing.map((lesson) => lesson.slug).join(', ')}`)
   return `${sources.length} explorers, ${covered.size} lesson pages, ${scenarios} scenarios, ${stages} stages; snapshots and standalone downloads match`
 }

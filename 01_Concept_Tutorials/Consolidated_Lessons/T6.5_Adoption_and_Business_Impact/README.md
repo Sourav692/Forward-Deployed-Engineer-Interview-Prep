@@ -1,6 +1,6 @@
-# T6.5 Adoption and Business Impact: Consolidated Lessons
+# T17.5 Adoption and Business Impact: Consolidated Lessons
 
-These three lessons are the site's teaching copy of module T6.5 "Adoption, change management and business impact". The module is Partly ready: the sources cover rollout, impact measurement and a short adoption checklist, but not change management in depth. The site publishes the lessons at `/learn/forward-deployed/adoption-and-impact`.
+These three lessons are the site's teaching copy of module T17.5 "Adoption, change management and business impact". The module is Partly ready: the sources cover rollout, impact measurement and a short adoption checklist, but not change management in depth. The site publishes the lessons at `/learn/forward-deployed/adoption-and-impact`.
 
 | # | Lesson | Site slug |
 |---|---|---|

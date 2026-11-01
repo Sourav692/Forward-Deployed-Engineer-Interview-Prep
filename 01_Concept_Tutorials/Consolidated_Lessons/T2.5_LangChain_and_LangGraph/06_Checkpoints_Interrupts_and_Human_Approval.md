@@ -31,7 +31,7 @@ Any graph becomes stateful at `compile`. `MemorySaver` is fast. It vanishes when
 | `MemorySaver` | Wiped on restart; single process only | Zero setup, fastest iteration | Local development, tests, demos |
 | `SqliteSaver` or `PostgresSaver` | A real datastore to run | Survives restarts; shared across processes | Anything a user will resume tomorrow |
 
-The checkpointer is short-term, within-thread memory: resume this exact run. Remembering a user across conversations is a different store, covered in [T3.4 Memory and state](/learn/agentic-systems/memory-and-state).
+The checkpointer is short-term, within-thread memory: resume this exact run. Remembering a user across conversations is a different store, covered in [T11.2 Memory and state](/learn/agentic-systems/memory-and-state).
 
 ## Read a Checkpoint Like a Linked List
 

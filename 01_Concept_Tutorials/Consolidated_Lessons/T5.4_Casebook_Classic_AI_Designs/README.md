@@ -1,8 +1,8 @@
-# T5.4 Classic AI Designs: Consolidated Lessons
+# T16.4 Classic AI Designs: Consolidated Lessons
 
-These nine lessons are the site's teaching copy of module T5.4 "Classic AI designs". The site publishes them at `/learn/ai-systems-design/classic-ai-designs`.
+These nine lessons are the site's teaching copy of module T16.4 "Classic AI designs". The site publishes them at `/learn/ai-systems-design/classic-ai-designs`.
 
-The module is organised **per design case**, not per design pattern. Interviews arrive as a prompt ("design a coding assistant"), and each case teaches how one prompt's requirements move the boxes. The patterns themselves (circuit breakers, gateways, caches, approval gates) are already taught once in T5.1 and T5.3, so a per-pattern module would repeat those lessons and scatter each design across several pages. Overlap between cases is removed instead: the coverage map is folded into the customer support lesson, and the Databricks lesson teaches only what differs from the platform-agnostic access-controlled RAG design.
+The module is organised **per design case**, not per design pattern. Interviews arrive as a prompt ("design a coding assistant"), and each case teaches how one prompt's requirements move the boxes. The patterns themselves (circuit breakers, gateways, caches, approval gates) are already taught once in T16.1 and T16.3, so a per-pattern module would repeat those lessons and scatter each design across several pages. Overlap between cases is removed instead: the coverage map is folded into the customer support lesson, and the Databricks lesson teaches only what differs from the platform-agnostic access-controlled RAG design.
 
 | # | Lesson | Site slug |
 |---|---|---|
