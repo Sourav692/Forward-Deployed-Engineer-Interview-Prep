@@ -1894,6 +1894,36 @@ export const RAG_MODULES: CurriculumModule[] = [
             "optional": true
           }
         ]
+      },
+      {
+        "title": "Five practical agent patterns, side by side",
+        "notebooks": [
+          {
+            "title": "07a_sequential_and_conditional_workflows.ipynb",
+            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07a_sequential_and_conditional_workflows.ipynb",
+            "optional": true
+          },
+          {
+            "title": "07b_supervisor_agents_as_tools.ipynb",
+            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07b_supervisor_agents_as_tools.ipynb",
+            "optional": true
+          },
+          {
+            "title": "07c_parallel_fan_out_fan_in.ipynb",
+            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07c_parallel_fan_out_fan_in.ipynb",
+            "optional": true
+          },
+          {
+            "title": "07d_generator_critic_loop.ipynb",
+            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07d_generator_critic_loop.ipynb",
+            "optional": true
+          },
+          {
+            "title": "07e_handoffs_with_swarm.ipynb",
+            "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07e_handoffs_with_swarm.ipynb",
+            "optional": true
+          }
+        ]
       }
     ]
   },
