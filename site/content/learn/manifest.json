@@ -1328,7 +1328,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m14_embeddings/03_open_source_embeddings_with_hugging_face.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/open-source-embeddings-with-hugging-face",
       "updated": "2026-11-02"
     },
