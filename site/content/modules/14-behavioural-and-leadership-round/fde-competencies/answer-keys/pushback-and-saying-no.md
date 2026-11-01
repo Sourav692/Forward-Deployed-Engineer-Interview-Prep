@@ -24,7 +24,7 @@ Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence.
 
 ## 2. Disagreeing with a customer executive
 
-**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below has a highlighted gap marked "Your detail". Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 
@@ -78,7 +78,7 @@ Spoken answers: 2 grounded, 3 partly grounded. Deliver them in your own cadence.
 
 ## 5. Pushing back on your own company's roadmap
 
-**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below has a highlighted gap marked "Your detail". Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 
