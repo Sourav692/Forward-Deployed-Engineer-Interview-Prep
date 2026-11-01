@@ -322,7 +322,7 @@ export const MODULES: CurriculumModule[] = [
   {
     slug: 'how-the-platform-works',
     code: 'T0.1',
-    title: 'How the course works',
+    title: 'How the site works',
     track: 'orientation',
     section: 'orientation',
     // Ready since /start became the one onboarding page (ENH-11): it holds the site
@@ -812,7 +812,7 @@ export const MODULES: CurriculumModule[] = [
       'when-fine-tuning-earns-its-cost',
       'the-data-flywheel',
     ],
-    gapNote: 'Fundamentals of fine-tuning methods and serving internals (the packs are design answers only).',
+    gapNote: 'Serving internals (the packs are design answers only).',
     seeAlso: ['g19-model-development-and-post-training', 'g20-llm-inference-serving', 'fine-tuning-fundamentals-overview', 'memory-and-state-overview'],
   },
   {

@@ -506,7 +506,7 @@ Action
 
 ---
 
-## Review 7: Tools, Actions & Enterprise Integration
+## Review 7: Tools, Actions and Enterprise Integration
 
 ### Goal
 
@@ -547,7 +547,7 @@ Enterprise System
 
 ---
 
-## Review 8: Guardrails, Policy & Human Approval
+## Review 8: Guardrails, Policy and Human Approval
 
 ### Goal
 
@@ -698,7 +698,7 @@ Cost / Task
 
 ---
 
-## Review 12: Reliability & Failure Handling
+## Review 12: Reliability and Failure Handling
 
 ### Goal
 
@@ -796,7 +796,7 @@ Successful Task
 
 ---
 
-## Review 14: Release & Change Management
+## Review 14: Release and Change Management
 
 ### Goal
 
@@ -838,7 +838,7 @@ Monitor
 
 ---
 
-## Review 15: Observability & Production Operations
+## Review 15: Observability and Production Operations
 
 ### Goal
 
@@ -883,7 +883,7 @@ Response
 
 ---
 
-## Review 16: Security & Enterprise Multi-Tenancy
+## Review 16: Security and Enterprise Multi-Tenancy
 
 ### Goal
 

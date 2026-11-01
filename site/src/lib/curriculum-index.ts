@@ -16,7 +16,7 @@ export const INDEX_MODULES: IndexModule[] = [
   {
     "slug": "how-the-platform-works",
     "code": "T0.1",
-    "title": "How the course works",
+    "title": "How the site works",
     "track": "orientation",
     "lessons": [
       "how-the-material-is-built"

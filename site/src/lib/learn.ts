@@ -95,7 +95,11 @@ export function groupTrail(track: CurriculumTrack): { label: string; href: strin
 /** The breadcrumb trail above a module: the group trail, then the track for a Learn track. */
 export function trackTrail(track: CurriculumTrack): { label: string; href: string }[] {
   if (track.slug === INTERVIEW_TRACK) return groupTrail(track)
-  return [...groupTrail(track), { label: trackLabel(track), href: learnHref.track(track.slug) }]
+  const trail = groupTrail(track)
+  const label = trackLabel(track)
+  // A group whose one track shares its name (AI System Design) would show the name twice.
+  if (trail.at(-1)?.label === label) trail.pop()
+  return [...trail, { label, href: learnHref.track(track.slug) }]
 }
 
 // ── Lookups ────────────────────────────────────────────────────────────────
