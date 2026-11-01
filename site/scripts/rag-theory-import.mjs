@@ -22,7 +22,12 @@
  *    which shows its finished frame without script, so the Mermaid version is not kept;
  *  - American spellings become British (src/lib/spelling.ts), except the names it allows
  *    and external link titles; "TL;DR" headings become "In short"; a bare "M13" becomes a
- *    link to that module's overview.
+ *    link to that module's overview;
+ *  - the course's own numbering becomes the site's (IA-08): "M13" becomes that module's site
+ *    code (T6.2), "Lesson 13.2", "M13.2", "notebook 13.2" and a link labelled "13.2" become
+ *    "lesson 2 of T6.2", and "Part VI" becomes that track's code (T7). The codes come from
+ *    rag-tracks.ts, so export the curriculum before importing;
+ *  - the lesson header's notebook links show readable titles, not file names (PQ-07).
  * Labs are rewritten for the site (Phase 2, FE-08): their Google Fonts links go (font-src 'self'
  * blocks them) and they load /labs/_site-tokens.css and /labs/_site-lab.js, which give them the
  * site's tokens, embedded mode and theme. A lab that would make a request (fetch, XHR, sockets,
@@ -37,6 +42,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statS
 import { basename, dirname, join, relative, resolve, sep } from 'node:path'
 import { britishSpelling, SPELLING_ALLOWED } from '../src/lib/spelling.ts'
 import { githubSlug, readingSlug } from './learn.mjs'
+import { RAG_LESSONS, RAG_MODULES, RAG_TRACKS } from '../src/lib/rag-tracks.ts'
 
 const REPO = 'Sourav692/rag-agents-engineering'
 const SITE = resolve(import.meta.dirname, '..')
@@ -89,7 +95,7 @@ function mapProseLines(md, fn) {
  * One line of prose: link targets get `link(target)`, internal link text and plain text
  * get British spelling, and a bare module code outside headings and links gets `moduleLink(code)`.
  */
-export function transformLine(line, { link, moduleLink }) {
+export function transformLine(line, { link, moduleLink, renumber = (t) => t }) {
   const heading = line.match(/^#{1,6}\s+/)?.[0] ?? ''
   if (heading && line.slice(heading.length).trim() === 'TL;DR') return `${heading}In short`
   return (
@@ -100,10 +106,14 @@ export function transformLine(line, { link, moduleLink }) {
       .map((part, i) => {
         if (i % 2 === 1) {
           const [, bang, label, target] = part.match(/^(!?)\[([^\]]*)\]\(([^)\s]+)\)$/)
-          return `${bang}[${/^https?:/.test(target) ? label : britishText(label)}](${link(target)})`
+          return `${bang}[${/^https?:/.test(target) ? label : renumber(britishText(label), true)}](${link(target)})`
         }
         const text = britishText(part)
-        return heading ? text : text.replace(/(?<![\w/[.])M(\d{2})(?![\d.]?\d)\b/g, (code) => moduleLink(code) ?? code)
+        if (heading) return renumber(text)
+        return text
+          .split(/(?<![\w/[.])(M\d{2})(?![\d.]?\d)\b/g)
+          .map((bit, j) => (j % 2 === 1 ? (moduleLink(bit) ?? renumber(bit)) : renumber(bit)))
+          .join('')
       })
       .join('')
   )
@@ -157,13 +167,66 @@ export function splitModulePage(md) {
   return { overview, interview: `# Interview questions\n\n${body.join('\n').trim()}\n`, spotlight: heading.slice(3) }
 }
 
-/** A lesson page without its header line (notebooks kept) and footer. */
+// How a word in a notebook file name is spelled on the site, where its case matters. Keep in
+// step with CASED in the course's scripts/export_site_curriculum.py.
+const CASED = Object.fromEntries([
+  ...['a2a', 'ai', 'api', 'aws', 'crag', 'ec2', 'gpt', 'hf', 'json', 'llm', 'mcp', 'pdf', 'rag', 'sql', 'sse', 'ui', 'url'].map((w) => [w, w.toUpperCase()]),
+  ['apis', 'APIs'], ['llms', 'LLMs'], ['python', 'Python'], ['flask', 'Flask'], ['groq', 'Groq'], ['openai', 'OpenAI'],
+  ['langchain', 'LangChain'], ['langgraph', 'LangGraph'], ['llamaindex', 'LlamaIndex'], ['hyde', 'HyDE'],
+])
+
+/** A readable title for a notebook file: `02a_creating_an_mcp_server.ipynb` is "Creating an MCP server". */
+export function fileTitle(name) {
+  const stem = name.replace(/\.[^.]+$/, '').replace(/^\d+[a-z]?_/, '')
+  const title = stem.split(/[_\-\s]+/).filter(Boolean).map((w) => CASED[w.toLowerCase()] ?? w).join(' ')
+  return britishText(title.charAt(0).toUpperCase() + title.slice(1))
+}
+
+/** A lesson page without its header line (notebooks kept, by title) and footer. */
 export function trimLessonPage(md) {
   return md
     .replace(/\n---\n\*Previous:[\s\S]*$/, '\n')
     .replace(/^\*\[M\d+ theory\]\([^)]*\) · Lesson [\d.]+ · (?:Notebooks: (.*?) · )?\[All theory pages\]\([^)]*\)\*$/m, (_, nbs) =>
-      nbs ? `*Notebooks: ${nbs}*` : '',
+      nbs ? `*Notebooks on GitHub: ${nbs.replace(/\[`([^`]+)`\]/g, (_, file) => `[${fileTitle(file)}]`)}*` : '',
     )
+}
+
+const ROMAN = { I: 1, V: 5, X: 10 }
+const roman = (r) => [...r].reduce((n, c, i) => (ROMAN[c] < (ROMAN[r[i + 1]] ?? 0) ? n - ROMAN[c] : n + ROMAN[c]), 0)
+
+/**
+ * Rewrites the course's numbering into the site's: `moduleCode('13')` and `partCode(6)` give the
+ * site codes (or null, leaving the text alone). `label` also maps a link whose whole text is "13.2".
+ */
+export function makeRenumber(moduleCode, partCode) {
+  const lesson = (word, n, m) => {
+    const code = moduleCode(n)
+    return code ? `${word} ${Number(m)} of ${code}` : null
+  }
+  return (text, label = false) => {
+    if (label && /^\d{1,2}\.\d{1,2}$/.test(text)) {
+      const [n, m] = text.split('.')
+      return lesson('lesson', n.padStart(2, '0'), m) ?? text
+    }
+    return text
+      .replace(/\b([Ll]esson|[Nn]otebook) (\d{1,2})\.(\d{1,2})\b/g, (all, w, n, m) => lesson(w, n.padStart(2, '0'), m) ?? all)
+      .replace(/(?<![\w/[.])M(\d{2})\.(\d{1,2})\b/g, (all, n, m) => lesson('lesson', n, m) ?? all)
+      .replace(/(?<![\w/[.])M(\d{2})(?![\d.]?\d)\b/g, (all, n) => moduleCode(n) ?? all)
+      .replace(/\bPart ([IVX]+)\b/g, (all, r) => partCode(roman(r)) ?? all)
+  }
+}
+
+/** Site codes for the course's modules (by two-digit number) and parts (by number), from rag-tracks.ts. */
+function siteCodes() {
+  const modules = new Map()
+  const parts = new Map()
+  for (const lesson of RAG_LESSONS.filter((l) => l.source.endsWith('/00_overview.md'))) {
+    const [part, mod] = lesson.source.split('/').slice(-3, -1)
+    const home = RAG_MODULES.find((m) => m.slug === lesson.home)
+    modules.set(mod.slice(1, 3), home.code)
+    parts.set(Number(part.slice(1, 3)), RAG_TRACKS.find((t) => t.slug === home.track).code)
+  }
+  return makeRenumber((n) => modules.get(n) ?? null, (k) => parts.get(k) ?? null)
 }
 
 /** Headings outside fences, in order. */
@@ -230,6 +293,7 @@ export function importTheory(from) {
     anchors.set(p.src, known)
   }
   const byNum = new Map([...modules].map(([mod, m]) => [mod.slice(1, 3), m]))
+  const renumber = siteCodes()
 
   const errors = []
   const copies = new Map() // source file -> public file
@@ -274,7 +338,7 @@ export function importTheory(from) {
     }
     const moduleLink = (code) => {
       const m = byNum.get(code.slice(1))
-      return m && basename(m.dir) !== p.mod ? `[${code}](${rel(m.overview)})` : null
+      return m && basename(m.dir) !== p.mod ? `[${renumber(code)}](${rel(m.overview)})` : null
     }
     let md = p.md
       .replace(/^```mermaid\n(?:(?!```)[\s\S])*```\n<!-- animated: (\S+) -->$/gm, (_, anim) => {
@@ -297,7 +361,7 @@ export function importTheory(from) {
         return `\`\`\`lab\nsrc: ${link(lab)}\ntitle: ${title}\n\`\`\``
       })
     for (const [mark] of md.matchAll(/^<!-- animated: \S+ -->$/gm)) errors.push(`${where}: ${mark} does not follow a Mermaid diagram`)
-    md = mapProseLines(md, (line) => transformLine(line, { link, moduleLink }))
+    md = mapProseLines(md, (line) => transformLine(line, { link, moduleLink, renumber }))
     if (PLACEHOLDER.test(md)) errors.push(`${where}: placeholder ${md.match(PLACEHOLDER)[0]}`)
     p.md = `${HEADER}${md.replace(/\n{3,}/g, '\n\n').trim()}\n`
   }

@@ -92,8 +92,8 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
   const nextModule = at >= 0 && at < order.length - 1 ? order[at + 1] : null
   // The head is the Editorial PageHead (Learn and /interview alike): a ruled spec line.
   const lessonCount = list.main.length > 0 ? `${list.main.length} ${list.main.length === 1 ? 'lesson' : 'lessons'}${mod.listedOn ? ', listed in the casebook' : ''}` : null
-  // Section anchors exist only on Learn track pages.
-  const sectionCrumb = section && trail.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
+  // Section anchors exist only on Learn track pages; a one-section track's section is the track itself.
+  const sectionCrumb = section && trail.length > 1 && track.sections.length > 1 ? [{ label: section.title, href: `${learnHref.track(track.slug)}#${section.slug}` }] : []
 
   return (
     <>

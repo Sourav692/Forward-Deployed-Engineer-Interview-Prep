@@ -25,7 +25,7 @@
 - Logs per turn: turn number, raw message, rewritten query, retrieved chunk ids and scores, session id
 - Tracks retrieval quality split by turn number, since first turns hide follow-up regressions in an overall average
 - Samples rewrites for an LLM judge or human check: is the rewrite faithful to the history, and does it drop or invent constraints
-- Re-runs a frozen set of multi-turn conversations on every prompt, model or index change, as the M33 lab brief describes
+- Re-runs a frozen set of multi-turn conversations on every prompt, model or index change, as the T11.1 lab brief describes
 
 ### 4. A product manager wants the conversation id in the URL so customers can share a chat with a colleague. What is the risk, and how would you build it?
 

@@ -6,7 +6,7 @@
 ### 1. You add a cross-encoder reranker over the top 50 for Larkspur's support assistant. Latency per question jumps, and answers to “How long does a refund take?” are no better. Where do you look?
 
 **What a strong answer covers:**
-- Checks recall@50 first: if `refund-timing` is not among the 50 candidates, no reranker can promote it, and the fix belongs in stage 1 (hybrid search in [M17](../m17_retrievers_hybrid_search/00_overview.md), query rewriting in [M18](../m18_query_transformation/00_overview.md))
+- Checks recall@50 first: if `refund-timing` is not among the 50 candidates, no reranker can promote it, and the fix belongs in stage 1 (hybrid search in [T7.1](../m17_retrievers_hybrid_search/00_overview.md), query rewriting in [T7.2](../m18_query_transformation/00_overview.md))
 - Profiles the rerank step: model loaded once at start-up rather than per request (the walkthrough notebook builds its `CrossEncoder` inside the rerank function), pairs scored in one batch, long chunks truncated to the model's input limit
 - Compares precision@5 with and without the reranker on the golden set, per question, so one regression is not hidden in the mean
 - Lowers the depth to where recall@k stops rising, which cuts the pair count and the latency with it

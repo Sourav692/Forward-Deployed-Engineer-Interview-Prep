@@ -8,7 +8,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "ai-engineering-foundations",
     "code": "T2",
     "title": "AI Engineering Foundations",
-    "objective": "Python and data tools, LLM provider APIs and model choice, Hugging Face models, and when fine-tuning beats retrieval.",
+    "objective": "Python and data tools, LLM provider APIs and model choice, Hugging Face models, and when fine-tuning beats retrieval",
     "forWhom": "Engineers new to LLM APIs; others skim and take the interview questions",
     "prerequisites": [
       "orientation"
@@ -41,7 +41,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "prompt-and-context-engineering",
     "code": "T3",
     "title": "Prompt & Context Engineering",
-    "objective": "The prompt patterns behind every LLM step in a RAG pipeline, across models and modalities.",
+    "objective": "The prompt patterns behind every LLM step in a RAG pipeline, across models and modalities",
     "forWhom": "All technical paths",
     "prerequisites": [
       "ai-engineering-foundations"
@@ -72,7 +72,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "langchain-and-langgraph-fundamentals",
     "code": "T4",
     "title": "LangChain & LangGraph Fundamentals",
-    "objective": "LangChain models, prompts, parsers and LCEL, then LangGraph state, routing, persistence, interrupts and streaming.",
+    "objective": "LangChain models, prompts, parsers and LCEL, then LangGraph state, routing, persistence, interrupts and streaming",
     "forWhom": "All technical paths",
     "prerequisites": [
       "prompt-and-context-engineering"
@@ -105,7 +105,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "llm-and-retrieval",
     "code": "T5",
     "title": "RAG Foundations",
-    "objective": "Why retrieval exists, the four stages of a pipeline, and a baseline you will measure every later change against.",
+    "objective": "Why retrieval exists, the four stages of a pipeline, and a baseline you will measure every later change against",
     "forWhom": "All technical paths",
     "prerequisites": [
       "langchain-and-langgraph-fundamentals"
@@ -135,7 +135,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "ingestion-and-indexing-pipeline",
     "code": "T6",
     "title": "The Ingestion & Indexing Pipeline",
-    "objective": "Everything that happens before a query arrives: loading, metadata, chunking, embedding, storing, and deciding what to index.",
+    "objective": "Everything that happens before a query arrives: loading, metadata, chunking, embedding, storing, and deciding what to index",
     "forWhom": "All technical paths",
     "prerequisites": [
       "llm-and-retrieval"
@@ -169,7 +169,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "retrieval-quality-engineering",
     "code": "T7",
     "title": "Retrieval Quality Engineering",
-    "objective": "Getting the right chunks into the top-k: hybrid search, fusion, query transformation, routing and reranking.",
+    "objective": "Getting the right chunks into the top-k: hybrid search, fusion, query transformation, routing and reranking",
     "forWhom": "All technical paths",
     "prerequisites": [
       "ingestion-and-indexing-pipeline"
@@ -201,7 +201,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "complete-rag-applications",
     "code": "T8",
     "title": "Building Complete RAG Applications",
-    "objective": "Assembling full systems with sources, citations, structured data and images, in LangChain and LlamaIndex.",
+    "objective": "Assembling full systems with sources, citations, structured data and images, in LangChain and LlamaIndex",
     "forWhom": "All technical paths",
     "prerequisites": [
       "retrieval-quality-engineering"
@@ -233,7 +233,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "agentic-systems",
     "code": "T9",
     "title": "Agent Foundations for RAG",
-    "objective": "The agent loop, tools, ReAct, the five workflow patterns, planning and reflection. Agentic RAG in Part IX is built from exactly these parts.",
+    "objective": "The agent loop, tools, ReAct, the five workflow patterns, planning and reflection. Agentic RAG in Part IX is built from exactly these parts",
     "forWhom": "All technical paths",
     "prerequisites": [
       "complete-rag-applications"
@@ -267,7 +267,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "agentic-and-self-correcting-rag",
     "code": "T10",
     "title": "Agentic & Self-Correcting RAG",
-    "objective": "Retrieval that makes decisions: grade, rewrite, fall back to the web, reflect, route, and act as an agent tool.",
+    "objective": "Retrieval that makes decisions: grade, rewrite, fall back to the web, reflect, route, and act as an agent tool",
     "forWhom": "All technical paths",
     "prerequisites": [
       "agentic-systems"
@@ -301,7 +301,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "memory-and-multi-agent-rag",
     "code": "T11",
     "title": "Memory & Multi-Agent RAG",
-    "objective": "Conversation and long-term memory as retrieval over the agent's own history, then supervisors, swarms and research teams that retrieve together.",
+    "objective": "Conversation and long-term memory as retrieval over the agent's own history, then supervisors, swarms and research teams that retrieve together",
     "forWhom": "All technical paths",
     "prerequisites": [
       "agentic-and-self-correcting-rag"
@@ -335,7 +335,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "agent-protocols-mcp-and-a2a",
     "code": "T12",
     "title": "Agent Protocols: MCP & A2A",
-    "objective": "Expose retrieval and agents as standard services: MCP servers and clients for tools and resources, A2A for agent-to-agent calls.",
+    "objective": "Expose retrieval and agents as standard services: MCP servers and clients for tools and resources, A2A for agent-to-agent calls",
     "forWhom": "All technical paths",
     "prerequisites": [
       "memory-and-multi-agent-rag"
@@ -368,7 +368,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "hierarchical-memory-and-graph-rag",
     "code": "T13",
     "title": "Hierarchical, Memory & Graph RAG",
-    "objective": "Structural indexes for questions flat chunks cannot answer: summary trees, memory, knowledge graphs and GraphRAG.",
+    "objective": "Structural indexes for questions flat chunks cannot answer: summary trees, memory, knowledge graphs and GraphRAG",
     "forWhom": "Engineers who want depth beyond flat-chunk retrieval",
     "prerequisites": [
       "agent-protocols-mcp-and-a2a"
@@ -399,7 +399,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "architecture-synthesis-and-capstone",
     "code": "T14",
     "title": "Architecture Synthesis & Capstone",
-    "objective": "Compare every architecture side by side, choose one for a real problem, and ship it as a capstone.",
+    "objective": "Compare every architecture side by side, choose one for a real problem, and ship it as a capstone",
     "forWhom": "Engineers preparing a portfolio project or a design round",
     "prerequisites": [
       "hierarchical-memory-and-graph-rag"
@@ -436,7 +436,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Write idiomatic Python: data types, control flow, functions and PEP 8",
-    "scope": "Course module M01. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Data warm-up: load a CSV into pandas and into SQLite, answer five questions both ways, and expose one of them through a small Flask endpoint.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -459,27 +459,27 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Python essentials: variables, operators, control flow, functions",
         "notebooks": [
           {
-            "title": "01a_implementing_variables_in_python.ipynb",
+            "title": "Implementing variables in Python",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/01a_implementing_variables_in_python.ipynb",
             "optional": true
           },
           {
-            "title": "01b_implementation_of_operators_in_python.ipynb",
+            "title": "Implementation of operators in Python",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/01b_implementation_of_operators_in_python.ipynb",
             "optional": true
           },
           {
-            "title": "01c_implementing_conditional_statements.ipynb",
+            "title": "Implementing conditional statements",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/01c_implementing_conditional_statements.ipynb",
             "optional": true
           },
           {
-            "title": "01d_looping_constructs.ipynb",
+            "title": "Looping constructs",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/01d_looping_constructs.ipynb",
             "optional": true
           },
           {
-            "title": "01e_implementing_functions_in_python.ipynb",
+            "title": "Implementing functions in Python",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/01e_implementing_functions_in_python.ipynb",
             "optional": true
           }
@@ -489,7 +489,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Python best practices",
         "notebooks": [
           {
-            "title": "02a_python_best_practices.ipynb",
+            "title": "Python best practices",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/02a_python_best_practices.ipynb",
             "optional": true
           }
@@ -499,12 +499,12 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Serving data with Flask APIs",
         "notebooks": [
           {
-            "title": "05a_creating_and_accessing_apis_with_flask.ipynb",
+            "title": "Creating and accessing APIs with Flask",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/05a_creating_and_accessing_apis_with_flask.ipynb",
             "optional": true
           },
           {
-            "title": "05b_stock_market_api_endpoints.ipynb",
+            "title": "Stock market API endpoints",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m01_python_data_refresher/optional/05b_stock_market_api_endpoints.ipynb",
             "optional": true
           }
@@ -521,7 +521,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Call the OpenAI and Gemini chat APIs directly from Python",
-    "scope": "Course module M02. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Generator choice: answer 20 questions with a fast model, a reasoning model at two effort levels and an open model, and record accuracy, latency and cost per answer.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -550,7 +550,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Log in to the Hub and load datasets and models",
-    "scope": "Course module M03. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "About 3.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Model demo: wrap an open embedding or text model from the Hub in a Gradio app that shows its output for a user-entered query.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -573,27 +573,27 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Images, diffusion and video generation",
         "notebooks": [
           {
-            "title": "03a_understanding_image_data.ipynb",
+            "title": "Understanding image data",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/03a_understanding_image_data.ipynb",
             "optional": true
           },
           {
-            "title": "03b_understanding_diffusion_models.ipynb",
+            "title": "Understanding diffusion models",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/03b_understanding_diffusion_models.ipynb",
             "optional": true
           },
           {
-            "title": "03c_autopipelines_diffusers.ipynb",
+            "title": "Autopipelines diffusers",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/03c_autopipelines_diffusers.ipynb",
             "optional": true
           },
           {
-            "title": "03d_stable_video_diffusion.ipynb",
+            "title": "Stable video diffusion",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/03d_stable_video_diffusion.ipynb",
             "optional": true
           },
           {
-            "title": "03e_image2videogen_xl.ipynb",
+            "title": "Image2videogen xl",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/03e_image2videogen_xl.ipynb",
             "optional": true
           }
@@ -603,22 +603,22 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Audio: data, classification, transcription, generation",
         "notebooks": [
           {
-            "title": "04a_audio_data.ipynb",
+            "title": "Audio data",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/04a_audio_data.ipynb",
             "optional": true
           },
           {
-            "title": "04b_audio_classification.ipynb",
+            "title": "Audio classification",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/04b_audio_classification.ipynb",
             "optional": true
           },
           {
-            "title": "04c_audio_transcription.ipynb",
+            "title": "Audio transcription",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/04c_audio_transcription.ipynb",
             "optional": true
           },
           {
-            "title": "04d_audio_generation.ipynb",
+            "title": "Audio generation",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p01_ai_engineering_foundations/m03_hugging_face_models/optional/04d_audio_generation.ipynb",
             "optional": true
           }
@@ -635,7 +635,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Explain when fine-tuning beats prompting or RAG, and where it fits after pre-training",
-    "scope": "Course module M04. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "RAG or fine-tune: for one narrow task, compare the M11 RAG baseline with a small fine-tuned model on the same questions and write down which wins and why.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -667,7 +667,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Apply persona, flipped-interaction, N-shot, directional-stimulus, template and meta-language patterns",
-    "scope": "Course module M05. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Prompt bake-off: write three prompts for grading whether a retrieved passage answers a question, and measure their agreement with your own labels on 30 pairs.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -685,7 +685,9 @@ export const RAG_MODULES: CurriculumModule[] = [
       "applied-prompting-on-business-tasks",
       "prompt-engineering-patterns-interview-questions"
     ],
-    "seeAlso": []
+    "seeAlso": [
+      "the-four-context-operations"
+    ]
   },
   {
     "slug": "multimodal-prompting",
@@ -696,7 +698,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Prompt Gemini with images, PDFs, audio and video",
-    "scope": "Course module M06. Plus about 1.5 h of notebook work on GitHub.",
+    "scope": "About 1.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Report reader: answer five questions about a chart-heavy PDF page by prompting a multimodal model with the page image.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -724,7 +726,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Call commercial and open-source models natively and through LangChain",
-    "scope": "Course module M07. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Structured answers: build a prompt template and parser that turn a question plus three passages into a JSON answer with a citations list.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -750,22 +752,22 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Open-source LLMs: Transformers, Inference Client, Groq, LangChain",
         "notebooks": [
           {
-            "title": "03a_Open_Source_LLMs_with_LangChain.ipynb",
+            "title": "Open Source LLMs with LangChain",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/notebooks/03a_Open_Source_LLMs_with_LangChain.ipynb",
             "optional": false
           },
           {
-            "title": "03b_Open_Source_LLMs_HF_Transformers.ipynb",
+            "title": "Open Source LLMs HF Transformers",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/optional/03b_Open_Source_LLMs_HF_Transformers.ipynb",
             "optional": true
           },
           {
-            "title": "03c_Open_Source_LLMs_HF_Inference_Client.ipynb",
+            "title": "Open Source LLMs HF Inference Client",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/optional/03c_Open_Source_LLMs_HF_Inference_Client.ipynb",
             "optional": true
           },
           {
-            "title": "03d_Open_Source_LLMs_Groq_Cloud.ipynb",
+            "title": "Open Source LLMs Groq Cloud",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/optional/03d_Open_Source_LLMs_Groq_Cloud.ipynb",
             "optional": true
           }
@@ -782,7 +784,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Compose Runnables with the pipe operator and run them with invoke, batch and stream",
-    "scope": "Course module M08. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Chain rewrite: rebuild one legacy chain as LCEL, add a branch that routes short and long inputs differently, and compare outputs.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -812,7 +814,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build a StateGraph with nodes, edges and reducers, including MessagesState",
-    "scope": "Course module M09. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "First graph: build a graph that classifies a question, routes it to one of two nodes, and returns a structured answer.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -842,7 +844,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Persist graph state with checkpointers, threads and branching",
-    "scope": "Course module M10. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Approval loop: add a checkpointer and an interrupt before the answer node of your M09 graph, resume it after approval, and stream the steps.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -873,7 +875,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Explain the knowledge problem RAG solves: stale training data, private data, hallucination, and context-window limits",
-    "scope": "Course module M11. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Baseline pipeline: build the canonical lifecycle notebook end to end on the course corpus and save its retrieval and answer metrics. Every later module reports its improvement against this baseline.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -903,7 +905,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Load text, Markdown, CSV, JSON, PDF, Word, web pages, transcripts and papers into `Document` objects",
-    "scope": "Course module M12. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Multi-source ingestor: load a mixed folder (PDF, DOCX, Markdown, CSV, one web page) into Documents that share one metadata schema (source, type, section, page, date).",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -928,12 +930,12 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Plain text and Markdown (single vs element mode)",
         "notebooks": [
           {
-            "title": "02a_text_loader.ipynb",
+            "title": "Text loader",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p05_ingestion_and_indexing/m12_document_ingestion/optional/02a_text_loader.ipynb",
             "optional": true
           },
           {
-            "title": "02b_markdown_loader.ipynb",
+            "title": "Markdown loader",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p05_ingestion_and_indexing/m12_document_ingestion/optional/02b_markdown_loader.ipynb",
             "optional": true
           }
@@ -950,7 +952,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Apply character, recursive, token and structure-aware (Markdown, HTML, code) splitters",
-    "scope": "Course module M13. Plus about 5.5 h of notebook work on GitHub.",
+    "scope": "About 5.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Chunking bake-off: index the same corpus with recursive, semantic and proposition chunking at three sizes each, and compare hit rate and answer faithfulness against the M11 baseline.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -979,7 +981,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Explain dense embeddings, dimensions and cosine / dot-product / Euclidean similarity",
-    "scope": "Course module M14. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Embedding shoot-out: compare one hosted and two open-source models on a 30-question golden set and pick one, writing down the cost and latency per 1,000 chunks.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1003,7 +1005,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Benchmarking embedding models with MLflow (Databricks)",
         "notebooks": [
           {
-            "title": "05a_compare_embedding_models_databricks.ipynb",
+            "title": "Compare embedding models databricks",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p05_ingestion_and_indexing/m14_embeddings/optional/05a_compare_embedding_models_databricks.ipynb",
             "optional": true
           }
@@ -1020,7 +1022,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Run CRUD and persistence operations through LangChain's common vector store interface",
-    "scope": "Course module M15. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Living index: stand up pgvector with Docker, ingest the M12 corpus, then change, add and delete source files and show that the record manager re-indexes only what changed.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1050,7 +1052,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Embed summaries but return full documents (multi-representation / multi-vector indexing)",
-    "scope": "Course module M16. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Index redesign: apply parent-document retrieval and contextual chunk headers to the baseline and report the change in hit rate and answer quality.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1080,7 +1082,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Use the retriever interface: similarity, score threshold, MMR, multi-query, compression, ensemble",
-    "scope": "Course module M17. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Hybrid upgrade: add BM25 to the vector retriever, tune the fusion weights on the golden set, and find three queries that only hybrid search answers.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1111,7 +1113,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Rewrite and expand queries with an LLM",
-    "scope": "Course module M18. Plus about 6 h of notebook work on GitHub.",
+    "scope": "About 6 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Query-transformation matrix: run multi-query, RAG-Fusion, HyDE and decomposition on the same 30 questions and record which question types each one helps, which it hurts, and the added latency and cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1136,17 +1138,17 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Multi-query retrieval",
         "notebooks": [
           {
-            "title": "02a_multi_query_retrieval.ipynb",
+            "title": "Multi query retrieval",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p06_retrieval_quality/m18_query_transformation/notebooks/02a_multi_query_retrieval.ipynb",
             "optional": false
           },
           {
-            "title": "02b_multiquery_retrieval_walkthrough.ipynb",
+            "title": "Multiquery retrieval walkthrough",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p06_retrieval_quality/m18_query_transformation/optional/02b_multiquery_retrieval_walkthrough.ipynb",
             "optional": true
           },
           {
-            "title": "02c_better_queries.ipynb",
+            "title": "Better queries",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p06_retrieval_quality/m18_query_transformation/optional/02c_better_queries.ipynb",
             "optional": true
           }
@@ -1156,7 +1158,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Step-back prompting",
         "notebooks": [
           {
-            "title": "04a_step_back_prompting.ipynb",
+            "title": "Step back prompting",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p06_retrieval_quality/m18_query_transformation/notebooks/04a_step_back_prompting.ipynb",
             "optional": false
           }
@@ -1166,7 +1168,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Self-querying: natural language to metadata filter",
         "notebooks": [
           {
-            "title": "08a_self_querying_retrieval.ipynb",
+            "title": "Self querying retrieval",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p06_retrieval_quality/m18_query_transformation/notebooks/08a_self_querying_retrieval.ipynb",
             "optional": false
           }
@@ -1183,7 +1185,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Design two-stage retrieval: high-recall first stage, precise second stage",
-    "scope": "Course module M19. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Precision stack: add a cross-encoder reranker over a top-50 hybrid retrieval and measure the gain at top-5, plus the latency budget it consumes.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1214,7 +1216,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build an end-to-end RAG system over JSONL and PDF sources",
-    "scope": "Course module M20. Plus about 6 h of notebook work on GitHub.",
+    "scope": "About 6 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Module lab, AI research assistant: package ingestion, retrieval, structured answers with citations and session history into one class (05/10/11).",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1244,7 +1246,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Embed text and images in one space with CLIP and answer with a multimodal LLM",
-    "scope": "Course module M21. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Chart-aware RAG: index a report that holds key numbers only in figures and show which of the three approaches answers questions about them.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1272,7 +1274,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Map LangChain concepts to LlamaIndex (Document/Node, Retriever, QueryEngine, NodePostprocessor)",
-    "scope": "Course module M22. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Port one of your Part VI pipelines (hybrid + rerank) to LlamaIndex and confirm the metrics match.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1301,7 +1303,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Implement reflection, tool use and ReAct-style planning with raw API calls and no framework",
-    "scope": "Course module M23. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Retriever as a tool, by hand: wrap your Part VII retriever as a tool, run it through your own tool loop with no framework, and log every tool call and error.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1326,7 +1328,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "A real-world agent on raw API calls (Hacker News chatbot)",
         "notebooks": [
           {
-            "title": "02a_real_world_agent_hacker_news_chatbot.ipynb",
+            "title": "Real world agent hacker news chatbot",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m23_agent_loop_and_tools/optional/02a_real_world_agent_hacker_news_chatbot.ipynb",
             "optional": true
           }
@@ -1343,7 +1345,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build a ReAct agent in LangGraph and explain how it differs from single-shot tool calling",
-    "scope": "Course module M24. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "ReAct research agent: give a `create_agent` agent your RAG retriever and a web-search tool, add a middleware that blocks off-topic questions, and compare its answers with your Part VII system.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1368,12 +1370,12 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Exercise: intelligent travel assistant agent (with solution)",
         "notebooks": [
           {
-            "title": "06a_intelligent_travel_assistant_agent.ipynb",
+            "title": "Intelligent travel assistant agent",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m24_react_agents/exercises/06a_intelligent_travel_assistant_agent.ipynb",
             "optional": true
           },
           {
-            "title": "06b_intelligent_travel_assistant_solution.ipynb",
+            "title": "Intelligent travel assistant solution",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m24_react_agents/exercises/06b_intelligent_travel_assistant_solution.ipynb",
             "optional": true
           }
@@ -1390,7 +1392,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Chain prompts with quality gates between steps",
-    "scope": "Course module M25. Plus about 6 h of notebook work on GitHub.",
+    "scope": "About 6 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Pattern mapping: rebuild query decomposition (M18) as orchestrator–worker and an answer-quality check as evaluator–optimizer, then compare latency and cost with the chain versions.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1420,7 +1422,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Compare ReAct with plan-and-execute and add replanning",
-    "scope": "Course module M26. Plus about 5 h of notebook work on GitHub.",
+    "scope": "About 5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Verified answers: add chain-of-verification to your RAG answer step and measure how many unsupported claims it removes on the golden set.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1443,12 +1445,12 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Deep-research and reflective dynamic planners",
         "notebooks": [
           {
-            "title": "02a_planning_agent_deep_research.ipynb",
+            "title": "Planning agent deep research",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/notebooks/02a_planning_agent_deep_research.ipynb",
             "optional": false
           },
           {
-            "title": "02b_reflective_dynamic_planning_agent.ipynb",
+            "title": "Reflective dynamic planning agent",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/optional/02b_reflective_dynamic_planning_agent.ipynb",
             "optional": true
           }
@@ -1458,17 +1460,17 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Reflection and Reflexion agents",
         "notebooks": [
           {
-            "title": "03a_reflection_agents.ipynb",
+            "title": "Reflection agents",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/notebooks/03a_reflection_agents.ipynb",
             "optional": false
           },
           {
-            "title": "03b_reflexion_agents.ipynb",
+            "title": "Reflexion agents",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/notebooks/03b_reflexion_agents.ipynb",
             "optional": false
           },
           {
-            "title": "03c_reflection_architecture.ipynb",
+            "title": "Reflection architecture",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/optional/03c_reflection_architecture.ipynb",
             "optional": true
           }
@@ -1478,12 +1480,12 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Self-Discover and reflective code generation",
         "notebooks": [
           {
-            "title": "05a_self_discover.ipynb",
+            "title": "Self discover",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/optional/05a_self_discover.ipynb",
             "optional": true
           },
           {
-            "title": "05b_reflective_code_generation_agent.ipynb",
+            "title": "Reflective code generation agent",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/optional/05b_reflective_code_generation_agent.ipynb",
             "optional": true
           }
@@ -1493,17 +1495,17 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Simulator-in-the-loop, metacognition and exemplar memory",
         "notebooks": [
           {
-            "title": "07a_mental_loop_simulator.ipynb",
+            "title": "Mental loop simulator",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/optional/07a_mental_loop_simulator.ipynb",
             "optional": true
           },
           {
-            "title": "07b_reflexive_metacognitive.ipynb",
+            "title": "Reflexive metacognitive",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/optional/07b_reflexive_metacognitive.ipynb",
             "optional": true
           },
           {
-            "title": "07c_self_improving_exemplar_memory.ipynb",
+            "title": "Self improving exemplar memory",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m26_planning_reflection_reasoning/optional/07c_self_improving_exemplar_memory.ipynb",
             "optional": true
           }
@@ -1520,7 +1522,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Put a dry-run and approval gate in front of consequential actions",
-    "scope": "Course module M27. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "SQL or vectors: answer the same 20 questions over a product catalogue with CSV RAG (M20) and with the text-to-SQL agent, and record which wins for each question type.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1543,12 +1545,12 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Research and competitive-intelligence agents",
         "notebooks": [
           {
-            "title": "02a_research_assistant_agent.ipynb",
+            "title": "Research assistant agent",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m27_human_approval_applied_agents/notebooks/02a_research_assistant_agent.ipynb",
             "optional": false
           },
           {
-            "title": "02b_competitive_intelligence_agent.ipynb",
+            "title": "Competitive intelligence agent",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m27_human_approval_applied_agents/optional/02b_competitive_intelligence_agent.ipynb",
             "optional": true
           }
@@ -1558,7 +1560,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Financial analyst agent",
         "notebooks": [
           {
-            "title": "03a_financial_analyst_agent.ipynb",
+            "title": "Financial analyst agent",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p08_agent_foundations/m27_human_approval_applied_agents/optional/03a_financial_analyst_agent.ipynb",
             "optional": true
           }
@@ -1575,7 +1577,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Wrap a retriever as a LangGraph tool",
-    "scope": "Course module M28. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "About 3.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Grader loop: add a relevance grader and a two-retry rewrite loop to your Part VII system and log how often each path fires on the golden set.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1597,7 +1599,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "The same agent on Databricks Vector Search",
         "notebooks": [
           {
-            "title": "02a_simple_agentic_rag_databricks.ipynb",
+            "title": "Simple agentic RAG databricks",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p09_agentic_rag/m28_retrieval_grading_rewriting/optional/02a_simple_agentic_rag_databricks.ipynb",
             "optional": true
           }
@@ -1614,7 +1616,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build CRAG: grade documents, rewrite the query, fall back to web search (Tavily)",
-    "scope": "Course module M29. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Out-of-corpus stress test: send questions the corpus cannot answer and compare the baseline, CRAG and Self-RAG on refusals, web fallbacks and hallucinated answers.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1642,7 +1644,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Route queries to department knowledge bases with a LangGraph router agent",
-    "scope": "Course module M30. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Support desk router: route billing, technical and general questions to separate knowledge bases, escalate negative-sentiment tickets, and report routing accuracy.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1671,7 +1673,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Expose a RAG pipeline as a tool the agent chooses to call in LangGraph",
-    "scope": "Course module M31. Plus about 2.5 h of notebook work on GitHub.",
+    "scope": "About 2.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Two-tool agent: give an agent a private-docs RAG tool and a web-search tool, and tune the tool descriptions until it picks the right one on 20 mixed questions.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1699,7 +1701,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Add relevance checks, hallucination checks and source highlighting",
-    "scope": "Course module M32. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Feedback flywheel: simulate 100 thumbs-up / thumbs-down events and show the effect on ranking for the affected queries.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1727,7 +1729,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Explain why LLMs forget and add message histories, windows and summaries",
-    "scope": "Course module M33. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Follow-up test: write 15 three-turn conversations and compare retrieval hit rate on turns two and three with and without history-aware query rewriting.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1752,12 +1754,12 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Memory apps: product recommender and research agent with SQL memory",
         "notebooks": [
           {
-            "title": "05a_multi_user_product_recommender.ipynb",
+            "title": "Multi user product recommender",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m33_conversational_memory_rag/optional/05a_multi_user_product_recommender.ipynb",
             "optional": true
           },
           {
-            "title": "05b_multi_user_research_agent_sql_memory.ipynb",
+            "title": "Multi user research agent SQL memory",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m33_conversational_memory_rag/optional/05b_multi_user_research_agent_sql_memory.ipynb",
             "optional": true
           }
@@ -1774,7 +1776,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Share memory across threads with a LangGraph `Store` (in-memory and Postgres)",
-    "scope": "Course module M34. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Personal RAG: give your assistant semantic memory of user preferences and show that answers in a new thread use them.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1804,7 +1806,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Decide when a task needs several agents instead of one",
-    "scope": "Course module M35. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Specialist retrievers: replace the single router from M30 with a supervisor over three specialist RAG agents and compare routing accuracy and cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1834,7 +1836,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Share intermediate results through a blackboard",
-    "scope": "Course module M36. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Parallel retrieval: run the sub-questions of a decomposed query as parallel agents and stream partial answers, then report the latency saved.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1864,7 +1866,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build a multi-agent hotel reservation system step by step, including compliance, testing and error handling",
-    "scope": "Course module M37. Plus about 5 h of notebook work on GitHub.",
+    "scope": "About 5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Research team: build a supervisor with a RAG researcher, a web researcher and a writer that cites sources, then test it on edge cases (no results, conflicting sources, tool failure).",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1889,7 +1891,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Developer vs tester agents",
         "notebooks": [
           {
-            "title": "04a_developer_vs_tester_agents.ipynb",
+            "title": "Developer vs tester agents",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/04a_developer_vs_tester_agents.ipynb",
             "optional": true
           }
@@ -1899,27 +1901,27 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Five practical agent patterns, side by side",
         "notebooks": [
           {
-            "title": "07a_sequential_and_conditional_workflows.ipynb",
+            "title": "Sequential and conditional workflows",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07a_sequential_and_conditional_workflows.ipynb",
             "optional": true
           },
           {
-            "title": "07b_supervisor_agents_as_tools.ipynb",
+            "title": "Supervisor agents as tools",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07b_supervisor_agents_as_tools.ipynb",
             "optional": true
           },
           {
-            "title": "07c_parallel_fan_out_fan_in.ipynb",
+            "title": "Parallel fan out fan in",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07c_parallel_fan_out_fan_in.ipynb",
             "optional": true
           },
           {
-            "title": "07d_generator_critic_loop.ipynb",
+            "title": "Generator critic loop",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07d_generator_critic_loop.ipynb",
             "optional": true
           },
           {
-            "title": "07e_handoffs_with_swarm.ipynb",
+            "title": "Handoffs with swarm",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/optional/07e_handoffs_with_swarm.ipynb",
             "optional": true
           }
@@ -1936,7 +1938,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Go from a tool-calling chatbot to an MCP server and client",
-    "scope": "Course module M38. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Retriever over MCP: expose your Part VII retriever as an MCP tool and call it from an MCP client chatbot.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -1962,17 +1964,17 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "Labs: Wikipedia assistant with tools, resources and prompts",
         "notebooks": [
           {
-            "title": "wikipedia_assistant_1_tools",
+            "title": "Wikipedia assistant 1 tools",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p11_agent_protocols/m38_mcp_foundations/projects/wikipedia_assistant_1_tools",
             "optional": true
           },
           {
-            "title": "wikipedia_assistant_2_resources",
+            "title": "Wikipedia assistant 2 resources",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p11_agent_protocols/m38_mcp_foundations/projects/wikipedia_assistant_2_resources",
             "optional": true
           },
           {
-            "title": "wikipedia_assistant_3_prompts",
+            "title": "Wikipedia assistant 3 prompts",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p11_agent_protocols/m38_mcp_foundations/projects/wikipedia_assistant_3_prompts",
             "optional": true
           }
@@ -1989,7 +1991,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build single-server MCP projects with tools and resources",
-    "scope": "Course module M39. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Two servers, one client: put your retriever and a web-search tool in separate MCP servers and route between them from one client.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2013,7 +2015,7 @@ export const RAG_MODULES: CurriculumModule[] = [
         "title": "An MCP server as a Databricks App",
         "notebooks": [
           {
-            "title": "04_databricks_apps_mcp_server",
+            "title": "Databricks apps MCP server",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p11_agent_protocols/m39_building_mcp_servers_and_clients/projects/04_databricks_apps_mcp_server",
             "optional": true
           }
@@ -2028,7 +2030,7 @@ export const RAG_MODULES: CurriculumModule[] = [
             "optional": true
           },
           {
-            "title": "Reference_link.md",
+            "title": "Reference link",
             "href": "https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p11_agent_protocols/m39_building_mcp_servers_and_clients/projects/Reference_link.md",
             "optional": true
           }
@@ -2045,7 +2047,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Run MCP servers behind a local agent and in Claude Desktop",
-    "scope": "Course module M40. Plus about 4 h of notebook work on GitHub.",
+    "scope": "About 4 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Shared retrieval: connect the RAG-over-MCP server to two different clients (a LangGraph agent and Claude Desktop or a local agent) and compare answers.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2077,7 +2079,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Describe agents with Agent Cards and exchange tasks and messages",
-    "scope": "Course module M41. Plus about 3 h of notebook work on GitHub.",
+    "scope": "About 3 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Agent as a service: put your agentic RAG graph behind A2A and call it from an agent built in a different framework.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2106,7 +2108,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build a recursive tree of abstractive summaries (RAPTOR) and retrieve across its levels",
-    "scope": "Course module M42. Plus about 3.5 h of notebook work on GitHub.",
+    "scope": "About 3.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Global-question test: ask ten 'summarise / compare across the whole corpus' questions and compare flat RAG, RAPTOR and LightRAG.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2134,7 +2136,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Model a domain as nodes and relationships and query it with Cypher",
-    "scope": "Course module M43. Plus about 5.5 h of notebook work on GitHub.",
+    "scope": "About 5.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Domain KG: extract a graph from 20 documents in your domain, load it into Neo4j, and answer five multi-hop questions that vector RAG gets wrong.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2165,7 +2167,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Build a concept graph over chunks and traverse it to answer questions",
-    "scope": "Course module M44. Plus about 4.5 h of notebook work on GitHub.",
+    "scope": "About 4.5 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "GraphRAG vs RAPTOR vs hybrid: run the same global and multi-hop question set through each and write a one-page recommendation including indexing cost.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2194,7 +2196,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "status": "ready",
     "practiceMinutes": 20,
     "objective": "Place every architecture from the course on one map: entry-level, self-correcting, routing, tool-based, structural",
-    "scope": "Course module M45. Plus about 2 h of notebook work on GitHub.",
+    "scope": "About 2 h of notebook work on GitHub, beyond these pages",
     "prerequisites": [],
     "deliverable": "Architecture review: write a two-page design document for your capstone that justifies each component against a simpler alternative.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
@@ -2218,7 +2220,7 @@ export const RAG_MODULES: CurriculumModule[] = [
 export const RAG_LESSONS: CurriculumLesson[] = [
   {
     "slug": "python-and-data-toolkit-refresher-overview",
-    "title": "Overview",
+    "title": "Python & Data Toolkit Refresher: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m01_python_data_refresher/00_overview.md",
     "home": "python-and-data-toolkit-refresher",
     "kind": "sync",
@@ -2250,7 +2252,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "python-and-data-toolkit-refresher-interview-questions",
-    "title": "Interview questions",
+    "title": "Python & Data Toolkit Refresher: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m01_python_data_refresher/99_interview_questions.md",
     "home": "python-and-data-toolkit-refresher",
     "kind": "sync",
@@ -2258,7 +2260,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "llm-provider-apis-and-model-selection-overview",
-    "title": "Overview",
+    "title": "LLM Provider APIs & Model Selection: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/00_overview.md",
     "home": "llm-provider-apis-and-model-selection",
     "kind": "sync",
@@ -2298,7 +2300,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "llm-provider-apis-and-model-selection-interview-questions",
-    "title": "Interview questions",
+    "title": "LLM Provider APIs & Model Selection: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/99_interview_questions.md",
     "home": "llm-provider-apis-and-model-selection",
     "kind": "sync",
@@ -2306,7 +2308,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "hugging-face-models-and-gradio-demos-overview",
-    "title": "Overview",
+    "title": "Hugging Face Models & Gradio Demos: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/00_overview.md",
     "home": "hugging-face-models-and-gradio-demos",
     "kind": "sync",
@@ -2338,7 +2340,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "hugging-face-models-and-gradio-demos-interview-questions",
-    "title": "Interview questions",
+    "title": "Hugging Face Models & Gradio Demos: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m03_hugging_face_models/99_interview_questions.md",
     "home": "hugging-face-models-and-gradio-demos",
     "kind": "sync",
@@ -2346,7 +2348,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "fine-tuning-fundamentals-overview",
-    "title": "Overview",
+    "title": "Fine-Tuning Fundamentals: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m04_fine_tuning_fundamentals/00_overview.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
@@ -2410,7 +2412,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "fine-tuning-fundamentals-interview-questions",
-    "title": "Interview questions",
+    "title": "Fine-Tuning Fundamentals: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m04_fine_tuning_fundamentals/99_interview_questions.md",
     "home": "fine-tuning-fundamentals",
     "kind": "sync",
@@ -2418,7 +2420,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "prompt-engineering-patterns-overview",
-    "title": "Overview",
+    "title": "Prompt Engineering Patterns: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_prompt_engineering_patterns/00_overview.md",
     "home": "prompt-engineering-patterns",
     "kind": "sync",
@@ -2458,7 +2460,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "prompt-engineering-patterns-interview-questions",
-    "title": "Interview questions",
+    "title": "Prompt Engineering Patterns: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m05_prompt_engineering_patterns/99_interview_questions.md",
     "home": "prompt-engineering-patterns",
     "kind": "sync",
@@ -2466,7 +2468,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multimodal-prompting-overview",
-    "title": "Overview",
+    "title": "Multimodal Prompting: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m06_multimodal_prompting/00_overview.md",
     "home": "multimodal-prompting",
     "kind": "sync",
@@ -2498,7 +2500,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multimodal-prompting-interview-questions",
-    "title": "Interview questions",
+    "title": "Multimodal Prompting: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p02_prompt_engineering/m06_multimodal_prompting/99_interview_questions.md",
     "home": "multimodal-prompting",
     "kind": "sync",
@@ -2506,7 +2508,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "langchain-core-models-prompts-and-parsers-overview",
-    "title": "Overview",
+    "title": "LangChain Core: Models, Prompts & Parsers: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m07_langchain_core/00_overview.md",
     "home": "langchain-core-models-prompts-and-parsers",
     "kind": "sync",
@@ -2562,7 +2564,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "langchain-core-models-prompts-and-parsers-interview-questions",
-    "title": "Interview questions",
+    "title": "LangChain Core: Models, Prompts & Parsers: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m07_langchain_core/99_interview_questions.md",
     "home": "langchain-core-models-prompts-and-parsers",
     "kind": "sync",
@@ -2570,7 +2572,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "lcel-runnables-and-chains-overview",
-    "title": "Overview",
+    "title": "LCEL, Runnables & Chains: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m08_lcel_runnables_and_chains/00_overview.md",
     "home": "lcel-runnables-and-chains",
     "kind": "sync",
@@ -2618,7 +2620,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "lcel-runnables-and-chains-interview-questions",
-    "title": "Interview questions",
+    "title": "LCEL, Runnables & Chains: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m08_lcel_runnables_and_chains/99_interview_questions.md",
     "home": "lcel-runnables-and-chains",
     "kind": "sync",
@@ -2626,7 +2628,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "langchain-and-langgraph-overview",
-    "title": "Overview",
+    "title": "LangGraph Core: Graphs, State & Control Flow: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m09_langgraph_core/00_overview.md",
     "home": "langchain-and-langgraph",
     "kind": "sync",
@@ -2674,7 +2676,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "langchain-and-langgraph-interview-questions",
-    "title": "Interview questions",
+    "title": "LangGraph Core: Graphs, State & Control Flow: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m09_langgraph_core/99_interview_questions.md",
     "home": "langchain-and-langgraph",
     "kind": "sync",
@@ -2682,7 +2684,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "langgraph-runtime-persistence-hitl-and-streaming-overview",
-    "title": "Overview",
+    "title": "LangGraph Runtime: Persistence, HITL & Streaming: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m10_langgraph_runtime/00_overview.md",
     "home": "langgraph-runtime-persistence-hitl-and-streaming",
     "kind": "sync",
@@ -2738,7 +2740,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "langgraph-runtime-persistence-hitl-and-streaming-interview-questions",
-    "title": "Interview questions",
+    "title": "LangGraph Runtime: Persistence, HITL & Streaming: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m10_langgraph_runtime/99_interview_questions.md",
     "home": "langgraph-runtime-persistence-hitl-and-streaming",
     "kind": "sync",
@@ -2746,7 +2748,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "rag-from-first-principles-overview",
-    "title": "Overview",
+    "title": "Why RAG & the RAG Lifecycle: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_rag_lifecycle/00_overview.md",
     "home": "rag-from-first-principles",
     "kind": "sync",
@@ -2794,7 +2796,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "rag-from-first-principles-interview-questions",
-    "title": "Interview questions",
+    "title": "Why RAG & the RAG Lifecycle: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p04_rag_foundations/m11_rag_lifecycle/99_interview_questions.md",
     "home": "rag-from-first-principles",
     "kind": "sync",
@@ -2802,7 +2804,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "document-ingestion-and-metadata-design-overview",
-    "title": "Overview",
+    "title": "Document Ingestion & Metadata Design: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m12_document_ingestion/00_overview.md",
     "home": "document-ingestion-and-metadata-design",
     "kind": "sync",
@@ -2850,7 +2852,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "document-ingestion-and-metadata-design-interview-questions",
-    "title": "Interview questions",
+    "title": "Document Ingestion & Metadata Design: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m12_document_ingestion/99_interview_questions.md",
     "home": "document-ingestion-and-metadata-design",
     "kind": "sync",
@@ -2858,7 +2860,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "chunking-and-indexing-overview",
-    "title": "Overview",
+    "title": "Chunking Strategies: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m13_chunking/00_overview.md",
     "home": "chunking-and-indexing",
     "kind": "sync",
@@ -2898,7 +2900,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "chunking-and-indexing-interview-questions",
-    "title": "Interview questions",
+    "title": "Chunking Strategies: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m13_chunking/99_interview_questions.md",
     "home": "chunking-and-indexing",
     "kind": "sync",
@@ -2906,7 +2908,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "embeddings-and-model-selection-overview",
-    "title": "Overview",
+    "title": "Embeddings & Model Selection: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m14_embeddings/00_overview.md",
     "home": "embeddings-and-model-selection",
     "kind": "sync",
@@ -2946,7 +2948,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "embeddings-and-model-selection-interview-questions",
-    "title": "Interview questions",
+    "title": "Embeddings & Model Selection: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m14_embeddings/99_interview_questions.md",
     "home": "embeddings-and-model-selection",
     "kind": "sync",
@@ -2954,7 +2956,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "vector-stores-and-index-operations-overview",
-    "title": "Overview",
+    "title": "Vector Stores & Index Operations: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m15_vector_stores/00_overview.md",
     "home": "vector-stores-and-index-operations",
     "kind": "sync",
@@ -3002,7 +3004,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "vector-stores-and-index-operations-interview-questions",
-    "title": "Interview questions",
+    "title": "Vector Stores & Index Operations: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m15_vector_stores/99_interview_questions.md",
     "home": "vector-stores-and-index-operations",
     "kind": "sync",
@@ -3010,7 +3012,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "advanced-indexing-strategies-overview",
-    "title": "Overview",
+    "title": "Advanced Indexing Strategies: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m16_advanced_indexing/00_overview.md",
     "home": "advanced-indexing-strategies",
     "kind": "sync",
@@ -3058,7 +3060,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "advanced-indexing-strategies-interview-questions",
-    "title": "Interview questions",
+    "title": "Advanced Indexing Strategies: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m16_advanced_indexing/99_interview_questions.md",
     "home": "advanced-indexing-strategies",
     "kind": "sync",
@@ -3066,7 +3068,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "retrieval-hybrid-rerank-overview",
-    "title": "Overview",
+    "title": "Retrievers & Hybrid Search: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m17_retrievers_hybrid_search/00_overview.md",
     "home": "retrieval-hybrid-rerank",
     "kind": "sync",
@@ -3122,7 +3124,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "retrieval-hybrid-rerank-interview-questions",
-    "title": "Interview questions",
+    "title": "Retrievers & Hybrid Search: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m17_retrievers_hybrid_search/99_interview_questions.md",
     "home": "retrieval-hybrid-rerank",
     "kind": "sync",
@@ -3130,7 +3132,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "query-transformation-and-routing-overview",
-    "title": "Overview",
+    "title": "Query Transformation & Routing: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m18_query_transformation/00_overview.md",
     "home": "query-transformation-and-routing",
     "kind": "sync",
@@ -3178,7 +3180,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "query-transformation-and-routing-interview-questions",
-    "title": "Interview questions",
+    "title": "Query Transformation & Routing: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m18_query_transformation/99_interview_questions.md",
     "home": "query-transformation-and-routing",
     "kind": "sync",
@@ -3186,7 +3188,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking-overview",
-    "title": "Overview",
+    "title": "Post-Retrieval Optimisation & Reranking: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m19_reranking_post_retrieval/00_overview.md",
     "home": "post-retrieval-optimisation-and-reranking",
     "kind": "sync",
@@ -3242,7 +3244,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking-interview-questions",
-    "title": "Interview questions",
+    "title": "Post-Retrieval Optimisation & Reranking: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p06_retrieval_quality/m19_reranking_post_retrieval/99_interview_questions.md",
     "home": "post-retrieval-optimisation-and-reranking",
     "kind": "sync",
@@ -3250,7 +3252,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "end-to-end-rag-systems-overview",
-    "title": "Overview",
+    "title": "End-to-End RAG Systems: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m20_end_to_end_rag_systems/00_overview.md",
     "home": "end-to-end-rag-systems",
     "kind": "sync",
@@ -3298,7 +3300,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "end-to-end-rag-systems-interview-questions",
-    "title": "Interview questions",
+    "title": "End-to-End RAG Systems: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m20_end_to_end_rag_systems/99_interview_questions.md",
     "home": "end-to-end-rag-systems",
     "kind": "sync",
@@ -3306,7 +3308,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multimodal-rag-overview",
-    "title": "Overview",
+    "title": "Multimodal RAG: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m21_multimodal_rag/00_overview.md",
     "home": "multimodal-rag",
     "kind": "sync",
@@ -3338,7 +3340,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multimodal-rag-interview-questions",
-    "title": "Interview questions",
+    "title": "Multimodal RAG: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m21_multimodal_rag/99_interview_questions.md",
     "home": "multimodal-rag",
     "kind": "sync",
@@ -3346,7 +3348,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "framework-fluency-llamaindex-overview",
-    "title": "Overview",
+    "title": "Framework Fluency: LlamaIndex: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m22_llamaindex/00_overview.md",
     "home": "framework-fluency-llamaindex",
     "kind": "sync",
@@ -3386,7 +3388,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "framework-fluency-llamaindex-interview-questions",
-    "title": "Interview questions",
+    "title": "Framework Fluency: LlamaIndex: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p07_rag_applications/m22_llamaindex/99_interview_questions.md",
     "home": "framework-fluency-llamaindex",
     "kind": "sync",
@@ -3394,7 +3396,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "the-agent-loop-and-tool-calling-overview",
-    "title": "Overview",
+    "title": "The Agent Loop & Tool Calling: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m23_agent_loop_and_tools/00_overview.md",
     "home": "the-agent-loop-and-tool-calling",
     "kind": "sync",
@@ -3442,7 +3444,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "the-agent-loop-and-tool-calling-interview-questions",
-    "title": "Interview questions",
+    "title": "The Agent Loop & Tool Calling: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m23_agent_loop_and_tools/99_interview_questions.md",
     "home": "the-agent-loop-and-tool-calling",
     "kind": "sync",
@@ -3450,7 +3452,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "react-agents-and-langchain-create-agent-overview",
-    "title": "Overview",
+    "title": "ReAct Agents & LangChain create_agent: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m24_react_agents/00_overview.md",
     "home": "react-agents-and-langchain-create-agent",
     "kind": "sync",
@@ -3498,7 +3500,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "react-agents-and-langchain-create-agent-interview-questions",
-    "title": "Interview questions",
+    "title": "ReAct Agents & LangChain create_agent: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m24_react_agents/99_interview_questions.md",
     "home": "react-agents-and-langchain-create-agent",
     "kind": "sync",
@@ -3506,7 +3508,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "agentic-workflow-patterns-overview",
-    "title": "Overview",
+    "title": "Agentic Workflow Patterns: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m25_agentic_workflow_patterns/00_overview.md",
     "home": "agentic-workflow-patterns",
     "kind": "sync",
@@ -3554,7 +3556,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "agentic-workflow-patterns-interview-questions",
-    "title": "Interview questions",
+    "title": "Agentic Workflow Patterns: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m25_agentic_workflow_patterns/99_interview_questions.md",
     "home": "agentic-workflow-patterns",
     "kind": "sync",
@@ -3562,7 +3564,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns-overview",
-    "title": "Overview",
+    "title": "Planning, Reflection & Reasoning Patterns: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m26_planning_reflection_reasoning/00_overview.md",
     "home": "planning-reflection-and-reasoning-patterns",
     "kind": "sync",
@@ -3594,7 +3596,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns-interview-questions",
-    "title": "Interview questions",
+    "title": "Planning, Reflection & Reasoning Patterns: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m26_planning_reflection_reasoning/99_interview_questions.md",
     "home": "planning-reflection-and-reasoning-patterns",
     "kind": "sync",
@@ -3602,7 +3604,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "human-approval-and-applied-single-agent-builds-overview",
-    "title": "Overview",
+    "title": "Human Approval & Applied Single-Agent Builds: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m27_human_approval_applied_agents/00_overview.md",
     "home": "human-approval-and-applied-single-agent-builds",
     "kind": "sync",
@@ -3634,7 +3636,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "human-approval-and-applied-single-agent-builds-interview-questions",
-    "title": "Interview questions",
+    "title": "Human Approval & Applied Single-Agent Builds: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m27_human_approval_applied_agents/99_interview_questions.md",
     "home": "human-approval-and-applied-single-agent-builds",
     "kind": "sync",
@@ -3642,7 +3644,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting-overview",
-    "title": "Overview",
+    "title": "Agentic RAG Foundations: Grading & Query Rewriting: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m28_retrieval_grading_rewriting/00_overview.md",
     "home": "agentic-rag-foundations-grading-and-query-rewriting",
     "kind": "sync",
@@ -3666,7 +3668,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting-interview-questions",
-    "title": "Interview questions",
+    "title": "Agentic RAG Foundations: Grading & Query Rewriting: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m28_retrieval_grading_rewriting/99_interview_questions.md",
     "home": "agentic-rag-foundations-grading-and-query-rewriting",
     "kind": "sync",
@@ -3674,7 +3676,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "self-correcting-rag-crag-and-self-rag-overview",
-    "title": "Overview",
+    "title": "Self-Correcting RAG: CRAG & Self-RAG: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m29_crag_and_self_rag/00_overview.md",
     "home": "self-correcting-rag-crag-and-self-rag",
     "kind": "sync",
@@ -3706,7 +3708,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "self-correcting-rag-crag-and-self-rag-interview-questions",
-    "title": "Interview questions",
+    "title": "Self-Correcting RAG: CRAG & Self-RAG: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m29_crag_and_self_rag/99_interview_questions.md",
     "home": "self-correcting-rag-crag-and-self-rag",
     "kind": "sync",
@@ -3714,7 +3716,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "adaptive-rag-and-query-routing-overview",
-    "title": "Overview",
+    "title": "Adaptive RAG & Query Routing: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m30_adaptive_rag_routing/00_overview.md",
     "home": "adaptive-rag-and-query-routing",
     "kind": "sync",
@@ -3754,7 +3756,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "adaptive-rag-and-query-routing-interview-questions",
-    "title": "Interview questions",
+    "title": "Adaptive RAG & Query Routing: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m30_adaptive_rag_routing/99_interview_questions.md",
     "home": "adaptive-rag-and-query-routing",
     "kind": "sync",
@@ -3762,7 +3764,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "rag-as-an-agent-tool-overview",
-    "title": "Overview",
+    "title": "RAG as an Agent Tool: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m31_rag_as_agent_tool/00_overview.md",
     "home": "rag-as-an-agent-tool",
     "kind": "sync",
@@ -3794,7 +3796,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "rag-as-an-agent-tool-interview-questions",
-    "title": "Interview questions",
+    "title": "RAG as an Agent Tool: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m31_rag_as_agent_tool/99_interview_questions.md",
     "home": "rag-as-an-agent-tool",
     "kind": "sync",
@@ -3802,7 +3804,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "reliability-feedback-loops-and-diversity-overview",
-    "title": "Overview",
+    "title": "Reliability, Feedback Loops & Diversity: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m32_reliability_feedback/00_overview.md",
     "home": "reliability-feedback-loops-and-diversity",
     "kind": "sync",
@@ -3834,7 +3836,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "reliability-feedback-loops-and-diversity-interview-questions",
-    "title": "Interview questions",
+    "title": "Reliability, Feedback Loops & Diversity: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p09_agentic_rag/m32_reliability_feedback/99_interview_questions.md",
     "home": "reliability-feedback-loops-and-diversity",
     "kind": "sync",
@@ -3842,7 +3844,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "conversation-memory-and-conversational-rag-overview",
-    "title": "Overview",
+    "title": "Conversation Memory & Conversational RAG: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m33_conversational_memory_rag/00_overview.md",
     "home": "conversation-memory-and-conversational-rag",
     "kind": "sync",
@@ -3890,7 +3892,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "conversation-memory-and-conversational-rag-interview-questions",
-    "title": "Interview questions",
+    "title": "Conversation Memory & Conversational RAG: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m33_conversational_memory_rag/99_interview_questions.md",
     "home": "conversation-memory-and-conversational-rag",
     "kind": "sync",
@@ -3898,7 +3900,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "memory-and-state-overview",
-    "title": "Overview",
+    "title": "Long-Term & Agentic Memory: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m34_long_term_agentic_memory/00_overview.md",
     "home": "memory-and-state",
     "kind": "sync",
@@ -3946,7 +3948,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "memory-and-state-interview-questions",
-    "title": "Interview questions",
+    "title": "Long-Term & Agentic Memory: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m34_long_term_agentic_memory/99_interview_questions.md",
     "home": "memory-and-state",
     "kind": "sync",
@@ -3954,7 +3956,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multi-agent-architectures-overview",
-    "title": "Overview",
+    "title": "Multi-Agent Architectures: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m35_multi_agent_architectures/00_overview.md",
     "home": "multi-agent-architectures",
     "kind": "sync",
@@ -4002,7 +4004,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multi-agent-architectures-interview-questions",
-    "title": "Interview questions",
+    "title": "Multi-Agent Architectures: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m35_multi_agent_architectures/99_interview_questions.md",
     "home": "multi-agent-architectures",
     "kind": "sync",
@@ -4010,7 +4012,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "collaboration-control-and-parallel-agents-overview",
-    "title": "Overview",
+    "title": "Collaboration, Control & Parallel Agents: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m36_collaboration_parallel_agents/00_overview.md",
     "home": "collaboration-control-and-parallel-agents",
     "kind": "sync",
@@ -4058,7 +4060,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "collaboration-control-and-parallel-agents-interview-questions",
-    "title": "Interview questions",
+    "title": "Collaboration, Control & Parallel Agents: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m36_collaboration_parallel_agents/99_interview_questions.md",
     "home": "collaboration-control-and-parallel-agents",
     "kind": "sync",
@@ -4066,7 +4068,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multi-agent-applied-builds-and-deep-agents-overview",
-    "title": "Overview",
+    "title": "Multi-Agent Applied Builds & Deep Agents: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/00_overview.md",
     "home": "multi-agent-applied-builds-and-deep-agents",
     "kind": "sync",
@@ -4114,7 +4116,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "multi-agent-applied-builds-and-deep-agents-interview-questions",
-    "title": "Interview questions",
+    "title": "Multi-Agent Applied Builds & Deep Agents: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p10_memory_and_multi_agent/m37_multi_agent_builds_deep_agents/99_interview_questions.md",
     "home": "multi-agent-applied-builds-and-deep-agents",
     "kind": "sync",
@@ -4122,7 +4124,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "mcp-foundations-overview",
-    "title": "Overview",
+    "title": "MCP Foundations: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/00_overview.md",
     "home": "mcp-foundations",
     "kind": "sync",
@@ -4178,7 +4180,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "mcp-foundations-interview-questions",
-    "title": "Interview questions",
+    "title": "MCP Foundations: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m38_mcp_foundations/99_interview_questions.md",
     "home": "mcp-foundations",
     "kind": "sync",
@@ -4186,7 +4188,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "building-mcp-servers-and-clients-overview",
-    "title": "Overview",
+    "title": "Building MCP Servers & Clients: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/00_overview.md",
     "home": "building-mcp-servers-and-clients",
     "kind": "sync",
@@ -4226,7 +4228,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "building-mcp-servers-and-clients-interview-questions",
-    "title": "Interview questions",
+    "title": "Building MCP Servers & Clients: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m39_building_mcp_servers_and_clients/99_interview_questions.md",
     "home": "building-mcp-servers-and-clients",
     "kind": "sync",
@@ -4234,7 +4236,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "mcp-applications-and-rag-over-mcp-overview",
-    "title": "Overview",
+    "title": "MCP Applications & RAG over MCP: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/00_overview.md",
     "home": "mcp-applications-and-rag-over-mcp",
     "kind": "sync",
@@ -4298,7 +4300,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "mcp-applications-and-rag-over-mcp-interview-questions",
-    "title": "Interview questions",
+    "title": "MCP Applications & RAG over MCP: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m40_mcp_applications/99_interview_questions.md",
     "home": "mcp-applications-and-rag-over-mcp",
     "kind": "sync",
@@ -4306,7 +4308,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "a2a-agent-to-agent-protocol-overview",
-    "title": "Overview",
+    "title": "A2A: Agent-to-Agent Protocol: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m41_a2a_protocol/00_overview.md",
     "home": "a2a-agent-to-agent-protocol",
     "kind": "sync",
@@ -4346,7 +4348,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "a2a-agent-to-agent-protocol-interview-questions",
-    "title": "Interview questions",
+    "title": "A2A: Agent-to-Agent Protocol: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p11_agent_protocols/m41_a2a_protocol/99_interview_questions.md",
     "home": "a2a-agent-to-agent-protocol",
     "kind": "sync",
@@ -4354,7 +4356,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "hierarchical-and-memory-augmented-retrieval-overview",
-    "title": "Overview",
+    "title": "Hierarchical & Memory-Augmented Retrieval: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m42_hierarchical_memory_rag/00_overview.md",
     "home": "hierarchical-and-memory-augmented-retrieval",
     "kind": "sync",
@@ -4386,7 +4388,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "hierarchical-and-memory-augmented-retrieval-interview-questions",
-    "title": "Interview questions",
+    "title": "Hierarchical & Memory-Augmented Retrieval: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m42_hierarchical_memory_rag/99_interview_questions.md",
     "home": "hierarchical-and-memory-augmented-retrieval",
     "kind": "sync",
@@ -4394,7 +4396,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "knowledge-graphs-with-neo4j-overview",
-    "title": "Overview",
+    "title": "Knowledge Graphs with Neo4j: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m43_knowledge_graphs_neo4j/00_overview.md",
     "home": "knowledge-graphs-with-neo4j",
     "kind": "sync",
@@ -4450,7 +4452,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "knowledge-graphs-with-neo4j-interview-questions",
-    "title": "Interview questions",
+    "title": "Knowledge Graphs with Neo4j: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m43_knowledge_graphs_neo4j/99_interview_questions.md",
     "home": "knowledge-graphs-with-neo4j",
     "kind": "sync",
@@ -4458,7 +4460,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "graphrag-techniques-overview",
-    "title": "Overview",
+    "title": "GraphRAG Techniques: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m44_graphrag/00_overview.md",
     "home": "graphrag-techniques",
     "kind": "sync",
@@ -4498,7 +4500,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "graphrag-techniques-interview-questions",
-    "title": "Interview questions",
+    "title": "GraphRAG Techniques: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m44_graphrag/99_interview_questions.md",
     "home": "graphrag-techniques",
     "kind": "sync",
@@ -4506,7 +4508,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design-overview",
-    "title": "Overview",
+    "title": "Agentic RAG Architectures: Choosing a Design: overview",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_architecture_and_capstone/m45_architecture_synthesis/00_overview.md",
     "home": "agentic-rag-architectures-choosing-a-design",
     "kind": "sync",
@@ -4538,7 +4540,7 @@ export const RAG_LESSONS: CurriculumLesson[] = [
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design-interview-questions",
-    "title": "Interview questions",
+    "title": "Agentic RAG Architectures: Choosing a Design: interview questions",
     "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p13_architecture_and_capstone/m45_architecture_synthesis/99_interview_questions.md",
     "home": "agentic-rag-architectures-choosing-a-design",
     "kind": "sync",

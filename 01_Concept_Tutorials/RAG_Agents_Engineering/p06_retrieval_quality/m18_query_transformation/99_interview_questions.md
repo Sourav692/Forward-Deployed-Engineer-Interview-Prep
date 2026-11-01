@@ -9,7 +9,7 @@
 - Prints the fused list with each chunk's votes and ranks: the reboot chunk can win because four of five variants matched "server" or "does", which is agreement on a distractor
 - Checks the variants themselves; a variant that drifts ("How do I restart a server…") adds a vote for the wrong chunk
 - Looks at the cut: at three chunks both evidence chunks are in, at two only `sla` is, so the number of chunks sent matters as much as the fusion
-- Fixes with a reranker over the fused pool ([M19](../m19_reranking_post_retrieval/00_overview.md)), a lower `k` or fewer drifting variants, and adds the question to the golden set at the production cut
+- Fixes with a reranker over the fused pool ([T7.3](../m19_reranking_post_retrieval/00_overview.md)), a lower `k` or fewer drifting variants, and adds the question to the golden set at the production cut
 
 ### 2. Your latency budget is 1.5 s and a plain retrieval takes 300 ms. Product wants multi-query, HyDE and decomposition "on every question". What do you propose?
 
@@ -17,7 +17,7 @@
 - Counts the calls: multi-query adds one LLM call and N retrievals, HyDE one LLM call, decomposition five LLM calls and three retrievals where plain RAG has one and one
 - Routes first: send compound questions to decomposition, short or vague ones to variants or HyDE, and direct lookups straight to retrieval
 - Runs the per-variant retrievals and sub-questions in parallel (`retriever.map()`, `.batch()`), and uses a small model for rewriting
-- Measures each technique per question type against the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) baseline and keeps only the ones that win where they are applied
+- Measures each technique per question type against the [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) baseline and keeps only the ones that win where they are applied
 
 ### 3. How do you show that RAG-Fusion helped, rather than only cost more?
 

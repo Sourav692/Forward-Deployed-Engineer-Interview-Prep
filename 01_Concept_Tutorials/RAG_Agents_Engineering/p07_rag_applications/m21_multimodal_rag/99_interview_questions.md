@@ -23,7 +23,7 @@
 
 **What a strong answer covers:**
 - A golden set split by evidence type (paragraph, figure, table, scan), with the rank of the evidence and answer correctness per split
-- Compares against the text-only baseline on the same questions, as in the [M11](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) lab
+- Compares against the text-only baseline on the same questions, as in the [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) lab
 - Logs which retrieved items were captions and whether the answer quoted a number from one
 - Re-captions and re-scores when the vision model or the caption prompt changes, since every caption is model output
 
