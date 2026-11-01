@@ -72,6 +72,12 @@ The gate enforces whatever the reviewer decides. Approve the uptime post in the 
 
 `HumanInTheLoopMiddleware` ([T9.2](/learn/agentic-systems/react-agents-and-langchain-create-agent/react-agents-and-langchain-create-agent-overview)) gives a `create_agent` agent the same pause before a tool call, built on the same `interrupt()` and checkpointer ([T4.4](/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/langgraph-runtime-persistence-hitl-and-streaming-overview)). Building the gate by hand adds the two parts this lesson needs: a preview of the effect and a fingerprint that ties the approval to it.
 
+## Key Takeaways
+
+- A dry run renders the effect through the same code path as the live call and changes nothing. Check that by reading state back, and put the dry run in its own node before the pause.
+- The gate pauses with `interrupt()`, saves state under the `thread_id` and waits for `Command(resume=...)`. Accept only the exact word `approve` and log every decision with reviewer, reason, fingerprint and time.
+- Tie the approval to a fingerprint of the previewed text and recompute it before publishing. Any edit after review, even one phrase, needs a new preview and a new decision.
+
 ## Check yourself
 
 <details>

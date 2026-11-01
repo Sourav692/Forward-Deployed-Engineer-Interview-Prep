@@ -71,6 +71,12 @@ flowchart LR
 
 The notebook builds the graph with `langgraph.prebuilt.create_react_agent`. The installed langgraph 1.2.18 marks it deprecated in favour of `langchain.agents.create_agent` ([T9.2](/learn/agentic-systems/react-agents-and-langchain-create-agent/react-agents-and-langchain-create-agent-overview)); it still runs, and the executor would wrap either one the same way.
 
+## Key Takeaways
+
+- Reply with a Message for a one-shot answer and a Task for work that takes time, can fail or needs another turn. Only a Task can be polled.
+- Terminal states accept no further updates or messages. Continue a task only from `input-required` or `auth-required`; otherwise start a new task in the same `contextId`.
+- The server only calls `AgentExecutor.execute()`. Keep blocking graph calls off the event loop, and on failure set `failed` and return instead of re-raising raw exception text.
+
 ## Check yourself
 
 <details>

@@ -35,6 +35,12 @@ The runtime features from this module reach inside subgraphs:
 
 Choose a subgraph when a piece has its own loop or its own state that the parent should not carry, when a team owns it separately, or when several parents reuse it. [T11.3](/learn/memory-and-multi-agent-rag/multi-agent-architectures/multi-agent-architectures-overview) to [T11.5](/learn/memory-and-multi-agent-rag/multi-agent-applied-builds-and-deep-agents/multi-agent-applied-builds-and-deep-agents-overview) build multi-agent systems out of exactly these pieces. For a straight sequence of steps on the same state, plain nodes are simpler.
 
+## Key Takeaways
+
+- Add a compiled subgraph directly when it shares keys with the parent, and wrap it in a node that maps keys when it does not. Only keys the parent declares come back out.
+- Checkpoints, interrupts and streaming reach inside subgraphs. A resume re-runs only the interrupted child node, but a wrapper also runs again from its first line.
+- Use a subgraph for a piece with its own loop or state, a separate owner, or several parents. For a straight sequence on one state, plain nodes are simpler.
+
 ## Check yourself
 
 <details>

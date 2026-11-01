@@ -56,6 +56,12 @@ For Larkspur's support agent the split follows the data:
 
 Hosted tools exist only on OpenAI's Responses API; Chat Completions offers function tools only. `06a` calls `client.responses.create` on the raw OpenAI client, because LangChain does not surface hosted-tool configuration. A third placement, a tool on a server you run that the model reaches over a protocol, is MCP ([T12.1](../../p11_agent_protocols/m38_mcp_foundations/00_overview.md) to [T12.3](../../p11_agent_protocols/m40_mcp_applications/00_overview.md)), and it gives back much of the seam that hosted tools remove.
 
+## Key Takeaways
+
+- A hosted tool runs on the provider's side and returns the result folded into the reply. You lose the seam where your code can log, refuse, redact or cache a call.
+- Hosted tools vary in visibility: web search shows roughly the query, code interpreter shows the code and output, image generation shows its revised prompt. None can be stubbed in a test.
+- Keep tools that touch customer data or need tenant scoping client-side. Use hosted tools for public lookups and arithmetic on data the user supplied.
+
 ## Check yourself
 
 <details>

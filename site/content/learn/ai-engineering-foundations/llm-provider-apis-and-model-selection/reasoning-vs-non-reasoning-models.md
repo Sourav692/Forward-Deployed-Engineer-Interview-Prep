@@ -67,6 +67,12 @@ For the Larkspur generator:
 
 Sending each question to the right model at run time is routing by model tier, built in [T9.3 lesson 2 of T9.3](/learn/agentic-systems/agentic-workflow-patterns/routing-by-handler-and-by-model-tier#lesson-routing-by-model-tier).
 
+## Key Takeaways
+
+- A reasoning model decides how much to think and bills hidden reasoning tokens at the output rate. At the notebook's prices `o4-mini` also costs 7.3 times as much per token as `gpt-4o-mini`.
+- Log `usage` per request and never estimate spend from the reply text. On a short answer the hidden reasoning can be almost the whole bill.
+- Use a reasoning model only where a step is hard and a wrong answer is expensive. Benchmark your own easy and hard cases, since hard cases alone recommend it for every lookup.
+
 ## Check yourself
 
 <details>

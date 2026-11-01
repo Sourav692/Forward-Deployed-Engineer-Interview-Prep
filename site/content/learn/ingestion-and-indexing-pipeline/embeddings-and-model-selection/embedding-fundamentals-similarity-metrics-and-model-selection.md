@@ -66,6 +66,12 @@ The defence is cheap: write the model name and dimensions into the index metadat
 
 The other notebook topics, `embed_query` against `embed_documents` and caching, are on the [lesson 4 of T6.3 page](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/production-concerns-batching-caching-and-similarity-behaviour); dimensions and the `dimensions` parameter are on the [lesson 2 of T6.3 page](/learn/ingestion-and-indexing-pipeline/embeddings-and-model-selection/hosted-embeddings-openai-models-and-dimensions).
 
+## Key Takeaways
+
+- Print the norm of one vector from any new model. With unit-length vectors, cosine, dot product and Euclidean distance rank chunks identically; otherwise use cosine or normalise first.
+- Cosine scores are not probabilities, and embeddings capture topic more than truth. Negation, numeric comparison and exact identifiers are weak spots.
+- Embed chunks and questions with the same model and `dimensions`. A mismatch raises no error; record both in the index metadata and check them before serving.
+
 ## Check yourself
 
 <details>
