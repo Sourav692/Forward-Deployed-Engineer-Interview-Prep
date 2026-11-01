@@ -519,7 +519,7 @@ export const MODULES: CurriculumModule[] = [
     title: 'Tool design and the agent-computer interface',
     track: 'production-ai',
     section: 'agent-engineering-in-production',
-    status: 'partly',
+    status: 'ready',
     practiceMinutes: 135,
     objective: 'Design tool schemas and choose integration protocols',
     scope: 'Tools and protocols',
@@ -536,8 +536,7 @@ export const MODULES: CurriculumModule[] = [
       'tool-selection-at-scale',
       'practise-tool-design-interview-questions',
     ],
-    gapNote: 'The A2A protocol.',
-    seeAlso: ['the-agent-loop-and-tool-calling-overview', 'rag-as-an-agent-tool-overview', 'mcp-foundations-overview'],
+    seeAlso: ['the-agent-loop-and-tool-calling-overview', 'rag-as-an-agent-tool-overview', 'mcp-foundations-overview', 'a2a-agent-to-agent-protocol-overview'],
   },
   {
     slug: 'context-engineering',
@@ -561,7 +560,7 @@ export const MODULES: CurriculumModule[] = [
       'context-rot-and-sub-agent-isolation',
       'practise-context-and-orchestration-interview-questions',
     ],
-    seeAlso: ['conversation-memory-and-conversational-rag-overview', 'multi-agent-applied-builds-and-deep-agents-overview'],
+    seeAlso: ['prompt-engineering-patterns-overview', 'conversation-memory-and-conversational-rag-overview', 'multi-agent-applied-builds-and-deep-agents-overview'],
   },
   {
     slug: 'robust-agents',

@@ -410,7 +410,7 @@ Which requirement triggered it?
 
 ---
 
-# Review 5: RAG & Enterprise Data
+# Review 5: RAG and Enterprise Data
 
 ## Goal
 

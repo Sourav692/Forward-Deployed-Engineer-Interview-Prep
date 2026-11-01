@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T22:10:02.740Z",
+  "generatedAt": "2026-11-01T15:06:28.063Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1130,7 +1130,7 @@
                 }
               ],
               "minutes": 24,
-              "updated": "2026-10-31"
+              "updated": "2026-11-01"
             },
             {
               "slug": "travel-agent-worked-example",
@@ -1147,7 +1147,7 @@
                 }
               ],
               "minutes": 22,
-              "updated": "2026-10-31"
+              "updated": "2026-11-01"
             },
             {
               "slug": "air-gapped-ai-system",
@@ -1493,7 +1493,7 @@
                 }
               ],
               "minutes": 36,
-              "updated": "2026-10-31"
+              "updated": "2026-11-01"
             }
           ]
         }

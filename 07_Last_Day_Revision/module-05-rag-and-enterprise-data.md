@@ -1,4 +1,4 @@
-# Review 5: RAG & Enterprise Data
+# Review 5: RAG and Enterprise Data
 
 ## Concise Interview Module
 
@@ -238,7 +238,7 @@ RAG supplies evidence; it does not authorise or execute the refund.
 
 ---
 
-## One-Page Memory Card: RAG & Enterprise Data
+## One-Page Memory Card: RAG and Enterprise Data
 
 **Core question:** How do we get the right authorised evidence into the answer and verify that it was used correctly?
 
