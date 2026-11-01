@@ -81,9 +81,15 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
     setRead(live)
     setHydrated(true)
 
-    const apply = () => {
-      const target = tabForHash(window.location.hash, tabKey.split('|'))
+    // On a hash change, the event's own URL is the reader's target. The location can be
+    // stale by the time the event runs: a tab switch just before (replaceState) leaves a
+    // router update queued, which writes that tab's URL back over the new hash. So take the
+    // hash from the event, and put it back in the address bar if it was overwritten.
+    const apply = (e?: HashChangeEvent) => {
+      const hash = e ? new URL(e.newURL).hash : window.location.hash
+      const target = tabForHash(hash, tabKey.split('|'))
       if (!target) return
+      if (e && window.location.hash !== hash) window.history.replaceState(null, '', hash)
       show(target.tab)
       setMenuOpen(false)
       if (target.anchor) {
