@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-01',
+    title: 'AI Engineering: the RAG & Agents Engineering course',
+    summary:
+      'The AI Engineering group grew from three tracks to fourteen, about 78 hours, with the author\'s open-source RAG & Agents Engineering course. New tracks run from Python and provider APIs through prompt and context engineering, LangChain and LangGraph, ingestion, retrieval quality, agentic and self-correcting RAG, memory and multi-agent systems, MCP and A2A, GraphRAG and a capstone. RAG Foundations and Agent Foundations for RAG were rebuilt from the course\'s opening modules. Lessons carry interactive labs, animated diagrams, Check yourself questions and common mistakes, and link to the runnable notebooks in the course repository. The About page credits the course.',
+  },
+  {
     date: '2026-10-31',
     title: 'Classic designs agree with their cases, and audit fixes',
     summary:

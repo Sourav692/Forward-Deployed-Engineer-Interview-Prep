@@ -19,6 +19,7 @@ export const metadata: Metadata = pageMetadata({
   description: `Who writes Forward Deployed, how its lessons, worked designs and worksheets are made and credited, and how to report a problem.`,
 })
 
+const RAG_COURSE_URL = 'https://github.com/Sourav692/rag-agents-engineering'
 const link = `rounded-sm text-accent underline underline-offset-2 hover:text-accent-hover ${focusRing}`
 
 export default function AboutPage() {
@@ -68,6 +69,14 @@ export default function AboutPage() {
               Credits
             </Link>{' '}
             lists every source and the lessons that use it.
+          </p>
+          <p className="mt-3">
+            Most of the AI Engineering group comes from my own open-source course,{' '}
+            <a href={RAG_COURSE_URL} className={link}>
+              RAG &amp; Agents Engineering
+            </a>
+            , published under the MIT licence. Its lessons, labs and diagrams appear here as written, and each lesson
+            links to the course&apos;s runnable notebooks.
           </p>
           <p className="mt-3">
             The worked designs and practice worksheets are written for the site. Most designs end with the sources
