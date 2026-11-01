@@ -75,6 +75,7 @@ const STORY_TAGS = [
   ['| PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you.', '| Add your own detail | A sample answer with a gap marked `[FILL: ...]` that only you can fill.'],
   ['| NEEDS YOUR INPUT | The repo has nothing here.', '| Your story | No sample story here.'],
   ['### How the grounding tags work', '### How the story tags work'],
+  ['The story or result below still carries a bracketed placeholder.', 'The story or result below has a highlighted gap marked "Your detail".'],
   ['are NEEDS YOUR INPUT.**', 'have no sample story.**'],
   ['**Grounding:** GROUNDED.', '**Grounding:** nothing beyond your own facts; the story is complete.'],
   ['**Grounding:** PARTLY GROUNDED. ', '**Grounding:** '],

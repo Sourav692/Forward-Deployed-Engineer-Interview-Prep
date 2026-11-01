@@ -4,7 +4,7 @@ Spoken answers: 5 grounded, 1 partly grounded, 1 needing your input. Deliver the
 
 ## 1. A production issue at a customer site
 
-**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below has a highlighted gap marked "Your detail". Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 

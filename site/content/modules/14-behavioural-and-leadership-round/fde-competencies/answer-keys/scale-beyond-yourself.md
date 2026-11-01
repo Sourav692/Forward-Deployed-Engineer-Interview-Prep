@@ -44,7 +44,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 ## 3. Enabling a partner or customer team to run without you
 
-**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below has a highlighted gap marked "Your detail". Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 
@@ -60,7 +60,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 ## 4. Field feedback pushed into product
 
-**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below has a highlighted gap marked "Your detail". Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 

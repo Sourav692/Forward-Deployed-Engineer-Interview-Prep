@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { getAllScenarios, getStoryBank, getTracks } from '@/lib/content'
 import { PrevNext } from '@/components/PrevNext'
 import { qualifiedTitle, scenarioHref } from '@/lib/scenario'
-import { MODES, STORY_BANK, STORY_BANK_META, STORY_GROUPS, storyGroupOf } from '@/lib/editorial'
+import { LEVEL_LABEL, MODES, STORY_BANK, STORY_BANK_META, STORY_GROUPS, storyGroupOf } from '@/lib/editorial'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
 import type { ReadingDocument, ReadingSection } from '@/lib/reading'
 import { BeforeYouStart } from '@/components/PageIntro'
@@ -44,7 +44,8 @@ export default async function StoryBankPage() {
         standfirst={STORY_BANK.blurb}
         facts={[
           { term: 'Kind', value: MODES[STORY_BANK_META.mode].label },
-          { term: 'Level', value: STORY_BANK_META.difficulty },
+          // The worksheets' level vocabulary (Foundation, Core, Advanced), not the meta's "Intermediate".
+          { term: 'Level', value: LEVEL_LABEL.core },
           { term: 'Reading time', value: `${bank.minutes} min` },
         ]}
         updated={bank.updated}

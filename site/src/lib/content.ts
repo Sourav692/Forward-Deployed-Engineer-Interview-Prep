@@ -127,13 +127,15 @@ export async function pageRef(key: string): Promise<ScenarioRef | null> {
  * `[FILL: …]`. They are rendered as highlighted slots so they read as gaps to fill,
  * never as a finished answer to recite.
  */
-const FILL = /(?:<code>)?\[FILL(?:[:\s]\s*([^\]]*?))?\s*\](?:<\/code>)?/g
+// Punctuation typed inside the backticks (`[FILL: …].`) stays after the slot, so the
+// closing </code> is consumed with its opening tag.
+const FILL = /(?:<code>)?\[FILL(?:[:\s]\s*([^\]]*?))?\s*\]([.,;:!?]?)(?:<\/code>)?/g
 
 function markFill(html: string): string {
   return html.replace(
     FILL,
-    (_, detail: string | undefined) =>
-      `<mark class="fill-slot"><span class="fill-slot-label">Your detail</span>${detail && detail !== '...' ? ` ${detail}` : ''}</mark>`,
+    (_, detail: string | undefined, punct: string) =>
+      `<mark class="fill-slot"><span class="fill-slot-label">Your detail</span>${detail && detail !== '...' ? ` ${detail}` : ''}</mark>${punct}`,
   )
 }
 
