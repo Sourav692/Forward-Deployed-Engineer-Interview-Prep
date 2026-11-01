@@ -70,12 +70,24 @@ Note a disagreement inside the source. The guide's later booking case study, in 
 
 ## Check Yourself
 
-1. **How should a known unknown be handled differently from an unknown unknown?**
-   A known unknown gets research or a short spike. An unknown unknown gets a buffer and early connection to the risky systems.
+<details>
+<summary>1. How should a known unknown be handled differently from an unknown unknown?</summary>
 
-2. **Why is "21 working days" a weak early estimate?**
-   It claims precision the team does not have. A range with stated assumptions is more honest and easier to challenge.
+A known unknown gets research or a short spike. An unknown unknown gets a buffer and early connection to the risky systems.
 
-3. **The scope grows mid-project. What should the lead say?**
-   That it can be added, but it costs time, people or another item. Then re-estimate and explain the change as added work.
+</details>
+
+<details>
+<summary>2. Why is "21 working days" a weak early estimate?</summary>
+
+It claims precision the team does not have. A range with stated assumptions is more honest and easier to challenge.
+
+</details>
+
+<details>
+<summary>3. The scope grows mid-project. What should the lead say?</summary>
+
+That it can be added, but it costs time, people or another item. Then re-estimate and explain the change as added work.
+
+</details>
 

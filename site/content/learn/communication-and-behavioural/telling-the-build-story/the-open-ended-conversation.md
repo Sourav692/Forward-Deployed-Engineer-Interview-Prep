@@ -60,12 +60,24 @@ Four beats were never used, and that is fine. The listener chose the path, and e
 
 ## Check Yourself
 
-1. **What do you do immediately after the cold-open sentence?**
-   Stop talking and wait. The listener's next question tells you which beat to deploy.
+<details>
+<summary>1. What do you do immediately after the cold-open sentence?</summary>
 
-2. **The conversation ends with three of the five beats unused. Is that a problem?**
-   No. The listener chose the path. Forcing the other beats in would spend their time on the speaker's agenda.
+Stop talking and wait. The listener's next question tells you which beat to deploy.
 
-3. **The listener goes silent after a technical sentence. What does it mean and what do you do?**
-   It went too deep too fast. Re-anchor at once with "the short version is…".
+</details>
+
+<details>
+<summary>2. The conversation ends with three of the five beats unused. Is that a problem?</summary>
+
+No. The listener chose the path. Forcing the other beats in would spend their time on the speaker's agenda.
+
+</details>
+
+<details>
+<summary>3. The listener goes silent after a technical sentence. What does it mean and what do you do?</summary>
+
+It went too deep too fast. Re-anchor at once with "the short version is…".
+
+</details>
 

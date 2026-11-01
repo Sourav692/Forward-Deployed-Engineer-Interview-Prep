@@ -52,12 +52,24 @@ Now imagine one who drops technical depth. The team stops trusting their scoping
 
 ## Check Yourself
 
-1. **What is each lens for?**
-   Technical build keeps you credible and catches problems early. Customer-facing keeps the build tied to what the business needs now. Guiding the team makes the team's output better than one person's throughput.
+<details>
+<summary>1. What is each lens for?</summary>
 
-2. **Why are the lenses described as weighted rather than sequential?**
-   Most days touch all three; only the weighting changes. They are not phases done one after another.
+Technical build keeps you credible and catches problems early. Customer-facing keeps the build tied to what the business needs now. Guiding the team makes the team's output better than one person's throughput.
 
-3. **State the senior-versus-mid-level line in one sentence.**
-   The three lenses are interdependent: pull any one out and the other two get slower.
+</details>
+
+<details>
+<summary>2. Why are the lenses described as weighted rather than sequential?</summary>
+
+Most days touch all three; only the weighting changes. They are not phases done one after another.
+
+</details>
+
+<details>
+<summary>3. State the senior-versus-mid-level line in one sentence.</summary>
+
+The three lenses are interdependent: pull any one out and the other two get slower.
+
+</details>
 

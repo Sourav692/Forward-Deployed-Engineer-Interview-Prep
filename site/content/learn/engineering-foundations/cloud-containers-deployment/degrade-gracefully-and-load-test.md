@@ -68,12 +68,24 @@ The team now knows three numbers it did not have before: the breaking load, the 
 
 ## Check Yourself
 
-1. **Name the three tiers of graceful degradation, best first.**
-   A full RAG answer; an LLM answer without retrieval plus a disclaimer; a static fallback message.
+<details>
+<summary>1. Name the three tiers of graceful degradation, best first.</summary>
 
-2. **Why treat HTTP 429 as expected in a load test?**
-   The bottleneck is often the provider's rate limit. A 429 is the provider throttling, so the test should check how fallback and queuing respond rather than count it as a crash.
+A full RAG answer; an LLM answer without retrieval plus a disclaimer; a static fallback message.
 
-3. **Which scenario finds memory leaks, and how long does it run?**
-   The soak test, run for 2 to 4 hours, which also finds connection-pool exhaustion.
+</details>
+
+<details>
+<summary>2. Why treat HTTP 429 as expected in a load test?</summary>
+
+The bottleneck is often the provider's rate limit. A 429 is the provider throttling, so the test should check how fallback and queuing respond rather than count it as a crash.
+
+</details>
+
+<details>
+<summary>3. Which scenario finds memory leaks, and how long does it run?</summary>
+
+The soak test, run for 2 to 4 hours, which also finds connection-pool exhaustion.
+
+</details>
 

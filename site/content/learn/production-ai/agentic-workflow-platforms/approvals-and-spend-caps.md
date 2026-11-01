@@ -102,12 +102,24 @@ A demo that shows things working proves less than a demo that shows things being
 
 ## Check Yourself
 
-1. **Give one example that trips the step budget alone and one that trips the spend cap alone.**
-   A 30-step chain of cheap steps halts at a 5-step cap without approaching the spend cap. A single $500 refund trips a $50 spend cap on its first destructive step with almost no step budget used.
+<details>
+<summary>1. Give one example that trips the step budget alone and one that trips the spend cap alone.</summary>
 
-2. **Why did the $500 refund not fire on an autonomous workflow? Give two reasons.**
-   `issue_refund` was not on the tenant's autonomous allow-list, so it still needed a human. And $500 exceeded the $50 spend cap, which is refused rather than clamped.
+A 30-step chain of cheap steps halts at a 5-step cap without approaching the spend cap. A single $500 refund trips a $50 spend cap on its first destructive step with almost no step budget used.
 
-3. **A workflow sets its own spend cap to $200 and the tenant policy says $50. Which applies?**
-   $50. The guardrail takes the tighter of the workflow's and the tenant's budgets, so a workflow can be stricter than its tenant but never looser.
+</details>
+
+<details>
+<summary>2. Why did the $500 refund not fire on an autonomous workflow? Give two reasons.</summary>
+
+`issue_refund` was not on the tenant's autonomous allow-list, so it still needed a human. And $500 exceeded the $50 spend cap, which is refused rather than clamped.
+
+</details>
+
+<details>
+<summary>3. A workflow sets its own spend cap to $200 and the tenant policy says $50. Which applies?</summary>
+
+$50. The guardrail takes the tighter of the workflow's and the tenant's budgets, so a workflow can be stricter than its tenant but never looser.
+
+</details>
 

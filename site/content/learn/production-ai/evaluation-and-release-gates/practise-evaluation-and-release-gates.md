@@ -97,12 +97,24 @@ Each element answers one of the skeleton's questions: where it broke, what block
 
 ## Check Yourself
 
-1. **In one sentence, what makes the security check a gate rather than a metric?**
-   One leak, decided deterministically by the policy engine, fails the run and blocks release instead of lowering a score.
+<details>
+<summary>1. In one sentence, what makes the security check a gate rather than a metric?</summary>
 
-2. **What is the smallest change a 200-case suite can reliably detect near an 80% success rate?**
-   About 11 points.
+One leak, decided deterministically by the policy engine, fails the run and blocks release instead of lowering a score.
 
-3. **Name two checks that are recorded but deliberately not gated.**
-   Distractor retrieval, which is a precision miss, and model-judged refusal wording on security cases, which is an advisory.
+</details>
+
+<details>
+<summary>2. What is the smallest change a 200-case suite can reliably detect near an 80% success rate?</summary>
+
+About 11 points.
+
+</details>
+
+<details>
+<summary>3. Name two checks that are recorded but deliberately not gated.</summary>
+
+Distractor retrieval, which is a precision miss, and model-judged refusal wording on security cases, which is an advisory.
+
+</details>
 

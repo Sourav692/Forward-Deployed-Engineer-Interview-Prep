@@ -63,12 +63,24 @@ The library stayed trustworthy because entry and exit were both measured.
 
 ## Check Yourself
 
-1. **Why must a candidate skill be evaluated on held-out cases?**
-   Its own source traces measure memorisation, so it always looks good on them. Held-out cases show whether it generalises.
+<details>
+<summary>1. Why must a candidate skill be evaluated on held-out cases?</summary>
 
-2. **Why is automatic demotion as important as promotion?**
-   Environments drift. Without demotion, skills that encode outdated behaviour stay in production until someone notices, and the library becomes a liability.
+Its own source traces measure memorisation, so it always looks good on them. Held-out cases show whether it generalises.
 
-3. **Give the book's reference gate numbers.**
-   Beat the baseline by 5 points, at least 200 shadow attempts before promotion, and automatic removal at 4 points below baseline.
+</details>
+
+<details>
+<summary>2. Why is automatic demotion as important as promotion?</summary>
+
+Environments drift. Without demotion, skills that encode outdated behaviour stay in production until someone notices, and the library becomes a liability.
+
+</details>
+
+<details>
+<summary>3. Give the book's reference gate numbers.</summary>
+
+Beat the baseline by 5 points, at least 200 shadow attempts before promotion, and automatic removal at 4 points below baseline.
+
+</details>
 

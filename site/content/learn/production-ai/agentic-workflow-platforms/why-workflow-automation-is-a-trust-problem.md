@@ -105,12 +105,24 @@ Interviewers rarely probe the happy path. Expect two questions: how does a user 
 
 ## Check Yourself
 
-1. **Restate the agent-platform prompt in one breath.**
-   We are building the safety and orchestration layer between a non-technical user's plain-English intent and a real, destructive action. Whichever channel triggered it, the action runs only when it should, runs exactly once, and survives crashes and retries without surprising anyone.
+<details>
+<summary>1. Restate the agent-platform prompt in one breath.</summary>
 
-2. **Name the three layers and the incident each prevents.**
-   Layer 1, canonical events and adapters, stops channel-specific logic leaking downstream. Layer 2, idempotency and checkpointing, stops double refunds and re-run steps. Layer 3, approvals, spend caps, and staged rollout, stops an action running without the authority it needed.
+We are building the safety and orchestration layer between a non-technical user's plain-English intent and a real, destructive action. Whichever channel triggered it, the action runs only when it should, runs exactly once, and survives crashes and retries without surprising anyone.
 
-3. **Why did Cascade Robotics' $500 refund not fire automatically, and why could it never fire twice?**
-   `issue_refund` was not on the tenant's autonomous allow-list, and $500 exceeded the $50 spend cap, which refuses rather than clamps. A retry is a no-op because the idempotency key for that action already exists.
+</details>
+
+<details>
+<summary>2. Name the three layers and the incident each prevents.</summary>
+
+Layer 1, canonical events and adapters, stops channel-specific logic leaking downstream. Layer 2, idempotency and checkpointing, stops double refunds and re-run steps. Layer 3, approvals, spend caps, and staged rollout, stops an action running without the authority it needed.
+
+</details>
+
+<details>
+<summary>3. Why did Cascade Robotics' $500 refund not fire automatically, and why could it never fire twice?</summary>
+
+`issue_refund` was not on the tenant's autonomous allow-list, and $500 exceeded the $50 spend cap, which refuses rather than clamps. A retry is a no-op because the idempotency key for that action already exists.
+
+</details>
 

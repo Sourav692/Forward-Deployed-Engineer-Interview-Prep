@@ -110,12 +110,24 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 
 ## Check Yourself
 
-1. **The customer wants one chat box for everything in four weeks. What first release do you propose?**
-   Read-only answers for support agents on setup, SLA, integration and troubleshooting questions, from 2 support queues and 300 approved docs, with an SME-reviewed golden set.
+<details>
+<summary>1. The customer wants one chat box for everything in four weeks. What first release do you propose?</summary>
 
-2. **The prototype takes 18 seconds per answer. What target and fixes does the strong framing give?**
-   p95 under 5 seconds for normal lookup, using hybrid search, cached embeddings, a top-k budget, the reranker only after coarse retrieval, streaming, and a search-only fallback when the LLM is slow.
+Read-only answers for support agents on setup, SLA, integration and troubleshooting questions, from 2 support queues and 300 approved docs, with an SME-reviewed golden set.
 
-3. **What leakage target does the strong answer set, and where is it enforced?**
-   Zero for restricted documents, enforced by ACL-aware ingestion and retrieval rather than by prompt instructions.
+</details>
+
+<details>
+<summary>2. The prototype takes 18 seconds per answer. What target and fixes does the strong framing give?</summary>
+
+p95 under 5 seconds for normal lookup, using hybrid search, cached embeddings, a top-k budget, the reranker only after coarse retrieval, streaming, and a search-only fallback when the LLM is slow.
+
+</details>
+
+<details>
+<summary>3. What leakage target does the strong answer set, and where is it enforced?</summary>
+
+Zero for restricted documents, enforced by ACL-aware ingestion and retrieval rather than by prompt instructions.
+
+</details>
 

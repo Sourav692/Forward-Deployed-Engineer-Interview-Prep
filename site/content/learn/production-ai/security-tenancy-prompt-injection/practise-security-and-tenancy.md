@@ -89,12 +89,24 @@ Every threat met a control outside the model. That is the shape of a strong answ
 
 ## Check Yourself
 
-1. **Name the three architectural fixes for injection in an acting agent.**
-   Separate data and system channels; make the tool schema the firewall by taking arguments from trusted fields; and check that each call traces back to the workflow's trigger.
+<details>
+<summary>1. Name the three architectural fixes for injection in an acting agent.</summary>
 
-2. **What two follow-ups make the "tenant id on every row" default honest?**
-   The data store itself must refuse unscoped requests, and there must be an escalation path for regulated customers.
+Separate data and system channels; make the tool schema the firewall by taking arguments from trusted fields; and check that each call traces back to the workflow's trigger.
 
-3. **Why must token validation run before any permission logic?**
-   Every permission rule assumes the principal is genuine. Validating afterwards would mean making access decisions on an unverified claim.
+</details>
+
+<details>
+<summary>2. What two follow-ups make the "tenant id on every row" default honest?</summary>
+
+The data store itself must refuse unscoped requests, and there must be an escalation path for regulated customers.
+
+</details>
+
+<details>
+<summary>3. Why must token validation run before any permission logic?</summary>
+
+Every permission rule assumes the principal is genuine. Validating afterwards would mean making access decisions on an unverified claim.
+
+</details>
 

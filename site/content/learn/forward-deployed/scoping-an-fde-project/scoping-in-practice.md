@@ -121,12 +121,24 @@ The customer usually knows the outcome they want. The FDE's job is to turn it in
 
 ## Check Yourself
 
-1. **Why are order-status questions a good first pilot for a support copilot?**
-   They are high-volume, repetitive, measurable and read-only. Refunds and fraud carry far more risk.
+<details>
+<summary>1. Why are order-status questions a good first pilot for a support copilot?</summary>
 
-2. **Why keep the order system and the support policy as separate sources?**
-   One is live state needing exact lookup, the other is reference text needing search. They fail differently: a wrong or stale order versus an outdated passage.
+They are high-volume, repetitive, measurable and read-only. Refunds and fraud carry far more risk.
 
-3. **In the class-booking case, what should be re-estimated after short spikes?**
-   Mobile apps, AI coaching and automatic door access, once a single-location web MVP is scoped at six to ten weeks.
+</details>
+
+<details>
+<summary>2. Why keep the order system and the support policy as separate sources?</summary>
+
+One is live state needing exact lookup, the other is reference text needing search. They fail differently: a wrong or stale order versus an outdated passage.
+
+</details>
+
+<details>
+<summary>3. In the class-booking case, what should be re-estimated after short spikes?</summary>
+
+Mobile apps, AI coaching and automatic door access, once a single-location web MVP is scoped at six to ten weeks.
+
+</details>
 

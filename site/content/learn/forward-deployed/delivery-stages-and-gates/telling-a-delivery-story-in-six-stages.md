@@ -71,12 +71,24 @@ Note a small inconsistency in the source: the modelling stage gives the recall g
 
 ## Check Yourself
 
-1. **What five things does "walk me through an end-to-end project" probe?**
-   End-to-end ownership, systems thinking, production experience, trade-off awareness, and the ability to simplify for a stakeholder.
+<details>
+<summary>1. What five things does "walk me through an end-to-end project" probe?</summary>
 
-2. **Why is listing tools a weak answer?**
-   It names technologies without the decisions behind them. Interviewers want why a choice was made, not a resume of tools.
+End-to-end ownership, systems thinking, production experience, trade-off awareness, and the ability to simplify for a stakeholder.
 
-3. **Restate the senior bar in one sentence.**
-   At senior level the question moves from what was built to what changed: influence, accountability and reuse by others.
+</details>
+
+<details>
+<summary>2. Why is listing tools a weak answer?</summary>
+
+It names technologies without the decisions behind them. Interviewers want why a choice was made, not a resume of tools.
+
+</details>
+
+<details>
+<summary>3. Restate the senior bar in one sentence.</summary>
+
+At senior level the question moves from what was built to what changed: influence, accountability and reuse by others.
+
+</details>
 

@@ -80,12 +80,24 @@ The employee's answer is grounded and cited. Later, the ticket is resolved as a 
 
 ## Check Yourself
 
-1. **What are the only two things a channel adapter may change, and what must it never change?**
-   The latency budget and the answer's format. It must never change the permission and security layer.
+<details>
+<summary>1. What are the only two things a channel adapter may change, and what must it never change?</summary>
 
-2. **Why do permission-denied and no-information cases need different queues?**
-   They are different problems with different owners. Mixing them floods the security queue with content gaps or hides real access cases.
+The latency budget and the answer's format. It must never change the permission and security layer.
 
-3. **How does an escalation record become a leak, and what prevents it?**
-   A note explaining why access was denied can reveal the restricted material to a wider audience. Giving the record the same permission scope as the original request prevents it.
+</details>
+
+<details>
+<summary>2. Why do permission-denied and no-information cases need different queues?</summary>
+
+They are different problems with different owners. Mixing them floods the security queue with content gaps or hides real access cases.
+
+</details>
+
+<details>
+<summary>3. How does an escalation record become a leak, and what prevents it?</summary>
+
+A note explaining why access was denied can reveal the restricted material to a wider audience. Giving the record the same permission scope as the original request prevents it.
+
+</details>
 

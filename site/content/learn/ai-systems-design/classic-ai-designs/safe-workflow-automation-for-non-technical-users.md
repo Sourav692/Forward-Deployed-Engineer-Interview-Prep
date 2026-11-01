@@ -188,27 +188,59 @@ The application derives scope and checks policy. The guardrail rejection is the 
 
 ## Check Yourself
 
-1. **Why are priority and the entity lock separate checks?**
-   Priority answers which workflow should run, a configuration question. The lock answers whether two can mutate one ticket at once, a safety question that holds even when priority is misconfigured.
+<details>
+<summary>1. Why are priority and the entity lock separate checks?</summary>
 
-2. **How did a $500 refund pass a $5 spend cap?**
-   Every tool shared a flat nominal cost function, so the refund counted as a few cents. A financial tool's cost must be the real amount in its arguments.
+Priority answers which workflow should run, a configuration question. The lock answers whether two can mutate one ticket at once, a safety question that holds even when priority is misconfigured.
 
-3. **Why must the idempotency check run before authorisation?**
-   Otherwise a replayed action is skipped but its cost is still counted, and a safe retry can push a run over budget. After caller access checks, a confirmed replay returns the existing receipt without another financial debit. Unknown outcomes need reconciliation.
+</details>
 
-4. **Can manager approval override a hard spend cap?**
-   No. An authorised policy change is separate from approving an eligible action.
+<details>
+<summary>2. How did a $500 refund pass a $5 spend cap?</summary>
 
-5. **Do checkpoints alone prevent duplicate remote payments?**
-   No. Reconcile the gap between remote execution and local receipt persistence, with a supported backend contract.
+Every tool shared a flat nominal cost function, so the refund counted as a few cents. A financial tool's cost must be the real amount in its arguments.
 
-6. **What needs to identify a repeated action?**
-   Tenant, run, stable step identity, and the same arguments, keyed as `{tenant_id}:{run_id}:{step_name}:{args_hash}`. A tool name alone may identify several legitimate steps.
+</details>
 
-7. **Can a replay skip caller access checks?**
-   No. Verify caller and tenant before returning an existing protected receipt; do not apply its financial debit again.
+<details>
+<summary>3. Why must the idempotency check run before authorisation?</summary>
 
-8. **Are the reference in-memory dictionaries production durability?**
-   No. Multiple workers and crash recovery need shared durable state and tested concurrency behaviour.
+Otherwise a replayed action is skipped but its cost is still counted, and a safe retry can push a run over budget. After caller access checks, a confirmed replay returns the existing receipt without another financial debit. Unknown outcomes need reconciliation.
+
+</details>
+
+<details>
+<summary>4. Can manager approval override a hard spend cap?</summary>
+
+No. An authorised policy change is separate from approving an eligible action.
+
+</details>
+
+<details>
+<summary>5. Do checkpoints alone prevent duplicate remote payments?</summary>
+
+No. Reconcile the gap between remote execution and local receipt persistence, with a supported backend contract.
+
+</details>
+
+<details>
+<summary>6. What needs to identify a repeated action?</summary>
+
+Tenant, run, stable step identity, and the same arguments, keyed as `{tenant_id}:{run_id}:{step_name}:{args_hash}`. A tool name alone may identify several legitimate steps.
+
+</details>
+
+<details>
+<summary>7. Can a replay skip caller access checks?</summary>
+
+No. Verify caller and tenant before returning an existing protected receipt; do not apply its financial debit again.
+
+</details>
+
+<details>
+<summary>8. Are the reference in-memory dictionaries production durability?</summary>
+
+No. Multiple workers and crash recovery need shared durable state and tested concurrency behaviour.
+
+</details>
 

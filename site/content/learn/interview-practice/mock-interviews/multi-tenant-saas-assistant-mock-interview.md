@@ -110,12 +110,24 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 
 ## Check Yourself
 
-1. **What is the cache rule in the strong framing?**
-   No shared cache without a tenant key: partition by tenant and permission, and cache safe public docs separately from account-specific answers.
+<details>
+<summary>1. What is the cache rule in the strong framing?</summary>
 
-2. **An answer is excellent but came from another tenant's data. Is that a launch blocker?**
-   Yes. A single cross-tenant answer blocks launch, whatever the answer quality.
+No shared cache without a tenant key: partition by tenant and permission, and cache safe public docs separately from account-specific answers.
 
-3. **The account API is slow. What does the assistant do?**
-   Degrade to documentation-only answers instead of waiting.
+</details>
+
+<details>
+<summary>2. An answer is excellent but came from another tenant's data. Is that a launch blocker?</summary>
+
+Yes. A single cross-tenant answer blocks launch, whatever the answer quality.
+
+</details>
+
+<details>
+<summary>3. The account API is slow. What does the assistant do?</summary>
+
+Degrade to documentation-only answers instead of waiting.
+
+</details>
 

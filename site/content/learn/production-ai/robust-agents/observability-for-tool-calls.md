@@ -106,12 +106,24 @@ Nothing was broken. The close was waiting for a human who never approved it. The
 
 ## Check Yourself
 
-1. **List the five statuses and the executor branch that emits each.**
-   `blocked` from the confirmation gate, `cache_hit` from the memo, `retry` from a transient failure with attempts left, `ok` from a successful execution, and `error` from a permanent failure, exhausted retries, or a fallback switch.
+<details>
+<summary>1. List the five statuses and the executor branch that emits each.</summary>
 
-2. **How do per-call telemetry and the run-level trace differ, and why keep both?**
-   The run trace records what happened overall: prompt version, retrieved chunks, policy decisions and cost. Per-call telemetry shows which step absorbed latency, hit the cache or needed a fallback. Each answers questions the other cannot.
+`blocked` from the confirmation gate, `cache_hit` from the memo, `retry` from a transient failure with attempts left, `ok` from a successful execution, and `error` from a permanent failure, exhausted retries, or a fallback switch.
 
-3. **Sketch the trace and span hierarchy for a conversation with three turns.**
-   One trace keyed by `conversation_id`, holding three turn spans. Each turn span holds one child span per tool call, tagged with tool, status, tokens, cache hit, retries and latency.
+</details>
+
+<details>
+<summary>2. How do per-call telemetry and the run-level trace differ, and why keep both?</summary>
+
+The run trace records what happened overall: prompt version, retrieved chunks, policy decisions and cost. Per-call telemetry shows which step absorbed latency, hit the cache or needed a fallback. Each answers questions the other cannot.
+
+</details>
+
+<details>
+<summary>3. Sketch the trace and span hierarchy for a conversation with three turns.</summary>
+
+One trace keyed by `conversation_id`, holding three turn spans. Each turn span holds one child span per tool call, tagged with tool, status, tokens, cache hit, retries and latency.
+
+</details>
 

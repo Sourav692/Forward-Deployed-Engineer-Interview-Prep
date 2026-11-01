@@ -54,12 +54,24 @@ A wrap-up built on this lesson reports each metric against its target, not again
 
 ## Check Yourself
 
-1. **Servers are healthy and error rates are low. Why is that not proof the product works?**
-   Technical signals say nothing about whether users complete the workflow or whether the business metric improved.
+<details>
+<summary>1. Servers are healthy and error rates are low. Why is that not proof the product works?</summary>
 
-2. **What four elements make the 25-agent pilot report convincing?**
-   The pilot size, the before-and-after figure for the goal, the side-effect check on escalations, and the largest failure type with the next step.
+Technical signals say nothing about whether users complete the workflow or whether the business metric improved.
 
-3. **What does a falling override rate tell you?**
-   Humans are correcting the agent less often, so trust is being earned and supervision can begin to relax.
+</details>
+
+<details>
+<summary>2. What four elements make the 25-agent pilot report convincing?</summary>
+
+The pilot size, the before-and-after figure for the goal, the side-effect check on escalations, and the largest failure type with the next step.
+
+</details>
+
+<details>
+<summary>3. What does a falling override rate tell you?</summary>
+
+Humans are correcting the agent less often, so trust is being earned and supervision can begin to relax.
+
+</details>
 

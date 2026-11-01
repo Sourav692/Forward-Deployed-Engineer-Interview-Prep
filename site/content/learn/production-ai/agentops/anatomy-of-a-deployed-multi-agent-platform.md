@@ -142,12 +142,24 @@ The two paths show the platform's priorities. Smart lookup spends nothing when t
 
 ## Check Yourself
 
-1. **Why is the input guardrail run on raw user input rather than on an agent's reading of it?**
-   It must screen the text before any model sees it. An agent's interpretation could already be shaped by an injected instruction, so the check belongs at the front door.
+<details>
+<summary>1. Why is the input guardrail run on raw user input rather than on an agent's reading of it?</summary>
 
-2. **What happens to a match in the 0.50 to 0.88 band?**
-   It is not close enough to reuse, so the pipeline still runs. But the related prior report is passed to the Writer agent as context, so the new report builds on earlier research.
+It must screen the text before any model sees it. An agent's interpretation could already be shaped by an injected instruction, so the check belongs at the front door.
 
-3. **Why does PyRIT attack through the same endpoint as a real user?**
-   So a passing run proves the real authentication, rate-limit, and guardrail path holds. A separate test endpoint would only prove that a copy is safe.
+</details>
+
+<details>
+<summary>2. What happens to a match in the 0.50 to 0.88 band?</summary>
+
+It is not close enough to reuse, so the pipeline still runs. But the related prior report is passed to the Writer agent as context, so the new report builds on earlier research.
+
+</details>
+
+<details>
+<summary>3. Why does PyRIT attack through the same endpoint as a real user?</summary>
+
+So a passing run proves the real authentication, rate-limit, and guardrail path holds. A separate test endpoint would only prove that a copy is safe.
+
+</details>
 

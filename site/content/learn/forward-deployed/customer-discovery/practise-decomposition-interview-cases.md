@@ -73,12 +73,24 @@ All six outputs are present. The run passes. If the metrics had been missing, th
 
 ## Check Yourself
 
-1. **What six outputs should every practice case produce?**
-   Five clarifying questions, three to five workstreams, three measurable success metrics, two major trade-offs, three failure modes, and a phased MVP-to-production plan.
+<details>
+<summary>1. What six outputs should every practice case produce?</summary>
 
-2. **What makes unified search across many sources harder than search over one wiki?**
-   Identity resolution, permission propagation, revoked documents, deduplication, freshness and ranking across different source types.
+Five clarifying questions, three to five workstreams, three measurable success metrics, two major trade-offs, three failure modes, and a phased MVP-to-production plan.
 
-3. **What is the goal of a decomposition round, in one sentence?**
-   To show that an ambiguous customer problem can be turned into a measurable, safe, deployable and adoptable production solution, not to design the most sophisticated system.
+</details>
+
+<details>
+<summary>2. What makes unified search across many sources harder than search over one wiki?</summary>
+
+Identity resolution, permission propagation, revoked documents, deduplication, freshness and ranking across different source types.
+
+</details>
+
+<details>
+<summary>3. What is the goal of a decomposition round, in one sentence?</summary>
+
+To show that an ambiguous customer problem can be turned into a measurable, safe, deployable and adoptable production solution, not to design the most sophisticated system.
+
+</details>
 

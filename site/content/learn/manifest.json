@@ -812,7 +812,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p03_langchain_and_langgraph/m08_lcel_runnables_and_chains/02_lcel_deep_dive.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/langchain-and-langgraph-fundamentals/lcel-runnables-and-chains/lcel-deep-dive",
       "updated": "2026-11-01"
     },
@@ -1424,7 +1424,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p05_ingestion_and_indexing/m15_vector_stores/05_incremental_indexing_indexing_api_and_record_manager.md",
-      "estMinutes": 8,
+      "estMinutes": 7,
       "href": "/learn/ingestion-and-indexing-pipeline/vector-stores-and-index-operations/incremental-indexing-indexing-api-and-record-manager",
       "updated": "2026-11-01"
     },
@@ -2156,7 +2156,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p08_agent_foundations/m24_react_agents/04_middleware_including_human_in_the_loop.md",
-      "estMinutes": 6,
+      "estMinutes": 5,
       "href": "/learn/agentic-systems/react-agents-and-langchain-create-agent/middleware-including-human-in-the-loop",
       "updated": "2026-11-01"
     },
@@ -3488,7 +3488,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p12_hierarchical_and_graph_rag/m42_hierarchical_memory_rag/02_memorag_global_memory_and_clue_guided_retrieval.md",
-      "estMinutes": 5,
+      "estMinutes": 4,
       "href": "/learn/hierarchical-memory-and-graph-rag/hierarchical-and-memory-augmented-retrieval/memorag-global-memory-and-clue-guided-retrieval",
       "updated": "2026-11-01"
     },

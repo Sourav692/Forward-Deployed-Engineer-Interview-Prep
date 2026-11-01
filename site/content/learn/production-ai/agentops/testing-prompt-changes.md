@@ -76,12 +76,24 @@ Two weeks later, the nightly run shows groundedness slipping with no commits. Th
 
 ## Check Yourself
 
-1. **What does a prompt parse test catch, and what does it not replace?**
-   It catches broken templates, missing variables and malformed output quickly. It does not replace the full evaluation of quality, grounding and safety.
+<details>
+<summary>1. What does a prompt parse test catch, and what does it not replace?</summary>
 
-2. **Why is statistical rigour more important for LLM A/B tests than for button tests?**
-   LLM outputs vary even for identical inputs, so small samples confuse noise with improvement more easily.
+It catches broken templates, missing variables and malformed output quickly. It does not replace the full evaluation of quality, grounding and safety.
 
-3. **Why does an evaluation suite need a nightly trigger as well as a code-change hook?**
-   The provider can change what a model version points to with no commit on the team's side, so quality can drift without any change to trigger the gate.
+</details>
+
+<details>
+<summary>2. Why is statistical rigour more important for LLM A/B tests than for button tests?</summary>
+
+LLM outputs vary even for identical inputs, so small samples confuse noise with improvement more easily.
+
+</details>
+
+<details>
+<summary>3. Why does an evaluation suite need a nightly trigger as well as a code-change hook?</summary>
+
+The provider can change what a model version points to with no commit on the team's side, so quality can drift without any change to trigger the gate.
+
+</details>
 

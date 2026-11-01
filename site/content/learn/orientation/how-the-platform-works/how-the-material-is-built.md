@@ -71,12 +71,24 @@ They fail one question. That is the signal to reread one section, not the whole 
 
 ## Check Yourself
 
-1. **What are the three principles, and what breaks if "problem before solution" is dropped?**
-   Grounded in implementations, problem before solution, and honest about what is proven. Without the problem first, you memorise a solution you cannot rebuild when a follow-up changes the problem.
+<details>
+<summary>1. What are the three principles, and what breaks if "problem before solution" is dropped?</summary>
 
-2. **You want to learn how to evaluate a retrieval pipeline, then rehearse explaining the design. Where do you go?**
-   The AI Engineering group in Learn for the lessons, then the AI system design round in Interview, or a case in the Casebook, to rehearse.
+Grounded in implementations, problem before solution, and honest about what is proven. Without the problem first, you memorise a solution you cannot rebuild when a follow-up changes the problem.
 
-3. **Why is the interview framing kept rather than stripped out?**
-   An interview is a compressed version of the job. The sentences that carry an interview also carry a design review with a customer's security team.
+</details>
+
+<details>
+<summary>2. You want to learn how to evaluate a retrieval pipeline, then rehearse explaining the design. Where do you go?</summary>
+
+The AI Engineering group in Learn for the lessons, then the AI system design round in Interview, or a case in the Casebook, to rehearse.
+
+</details>
+
+<details>
+<summary>3. Why is the interview framing kept rather than stripped out?</summary>
+
+An interview is a compressed version of the job. The sentences that carry an interview also carry a design review with a customer's security team.
+
+</details>
 

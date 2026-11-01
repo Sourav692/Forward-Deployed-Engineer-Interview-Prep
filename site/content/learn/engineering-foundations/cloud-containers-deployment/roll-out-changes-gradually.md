@@ -60,12 +60,24 @@ The rollout did its job. A quarter of users met the weaker version for a short t
 
 ## Check Yourself
 
-1. **Why pin a dated model version instead of a floating name?**
-   A floating name lets the provider change behaviour silently. A pinned version makes every model change a deliberate release.
+<details>
+<summary>1. Why pin a dated model version instead of a floating name?</summary>
 
-2. **What makes a rollback fast enough for a live quality problem?**
-   The old version stays available, and rollback is a configuration or flag change that takes under 2 minutes with no code deploy.
+A floating name lets the provider change behaviour silently. A pinned version makes every model change a deliberate release.
 
-3. **Why is a canary usually better than blue-green for a GenAI API?**
-   A bad release gives worse answers rather than crashes. A canary compares real traffic on both versions while only a small share of users is exposed.
+</details>
+
+<details>
+<summary>2. What makes a rollback fast enough for a live quality problem?</summary>
+
+The old version stays available, and rollback is a configuration or flag change that takes under 2 minutes with no code deploy.
+
+</details>
+
+<details>
+<summary>3. Why is a canary usually better than blue-green for a GenAI API?</summary>
+
+A bad release gives worse answers rather than crashes. A canary compares real traffic on both versions while only a small share of users is exposed.
+
+</details>
 

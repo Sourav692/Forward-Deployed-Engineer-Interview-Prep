@@ -62,12 +62,24 @@ The reply comes back in the unified schema. Its `full_text` answers the question
 
 ## Check Yourself
 
-1. **What should a Pydantic prompt model check?**
-   Minimum and maximum length, the allowed `max_tokens` and `temperature` ranges, and, through a `field_validator`, that the prompt is not whitespace only.
+<details>
+<summary>1. What should a Pydantic prompt model check?</summary>
 
-2. **Which status codes reject an oversized body and an over-long prompt?**
-   413 from the request-size middleware for the body; 400 with the counted tokens and the limit for the prompt.
+Minimum and maximum length, the allowed `max_tokens` and `temperature` ranges, and, through a `field_validator`, that the prompt is not whitespace only.
 
-3. **Why include both `full_text` and `content_blocks` in the response?**
-   Simple clients read `full_text`; rich clients use the ordered `content_blocks` to render inline citations and tool results. One schema serves both.
+</details>
+
+<details>
+<summary>2. Which status codes reject an oversized body and an over-long prompt?</summary>
+
+413 from the request-size middleware for the body; 400 with the counted tokens and the limit for the prompt.
+
+</details>
+
+<details>
+<summary>3. Why include both <code>full_text</code> and <code>content_blocks</code> in the response?</summary>
+
+Simple clients read `full_text`; rich clients use the ordered `content_blocks` to render inline citations and tool results. One schema serves both.
+
+</details>
 

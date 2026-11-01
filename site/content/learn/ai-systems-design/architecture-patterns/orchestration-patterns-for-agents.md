@@ -74,12 +74,24 @@ The two requests justify two patterns, each with a number to watch. Saying "rout
 
 ## Check Yourself
 
-1. **What turns naming a pattern from a mid-level into a senior signal?**
-   Pairing it with the measurement that justifies it, which treats the architecture as a claim that data could refute.
+<details>
+<summary>1. What turns naming a pattern from a mid-level into a senior signal?</summary>
 
-2. **When does plan-then-execute go wrong?**
-   It commits to the plan before seeing evidence. If early results change the picture, the replan rate rises.
+Pairing it with the measurement that justifies it, which treats the architecture as a claim that data could refute.
 
-3. **What does reflection cost, and what shows it is worth it?**
-   About twice the tokens. The revision acceptance rate and critic agreement show whether the critic adds value.
+</details>
+
+<details>
+<summary>2. When does plan-then-execute go wrong?</summary>
+
+It commits to the plan before seeing evidence. If early results change the picture, the replan rate rises.
+
+</details>
+
+<details>
+<summary>3. What does reflection cost, and what shows it is worth it?</summary>
+
+About twice the tokens. The revision acceptance rate and critic agreement show whether the critic adds value.
+
+</details>
 

@@ -85,12 +85,24 @@ The security behaviour is identical to the 22-document build. Only the storage u
 
 ## Check Yourself
 
-1. **Why is the post-retrieval access check "free at scale"?**
-   It re-checks only the candidates, which top-K bounds. Its cost is O(candidates), not O(corpus).
+<details>
+<summary>1. Why is the post-retrieval access check "free at scale"?</summary>
 
-2. **Why not put every tenant in one big index with a `tenant_id` filter?**
-   One tenant's rebuild slows everyone, and a filter mistake exposes every tenant. Per-tenant shards limit the blast radius.
+It re-checks only the candidates, which top-K bounds. Its cost is O(candidates), not O(corpus).
 
-3. **How do you move 20 million documents to a new embedding model?**
-   Build a new index beside the old one, backfill it, then switch traffic. Never migrate in place all at once.
+</details>
+
+<details>
+<summary>2. Why not put every tenant in one big index with a <code>tenant_id</code> filter?</summary>
+
+One tenant's rebuild slows everyone, and a filter mistake exposes every tenant. Per-tenant shards limit the blast radius.
+
+</details>
+
+<details>
+<summary>3. How do you move 20 million documents to a new embedding model?</summary>
+
+Build a new index beside the old one, backfill it, then switch traffic. Never migrate in place all at once.
+
+</details>
 

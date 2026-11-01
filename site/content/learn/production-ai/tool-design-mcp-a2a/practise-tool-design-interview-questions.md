@@ -84,12 +84,24 @@ Then the failures it prevents: an unauthorised refund, a bad amount, a double re
 
 ## Check Yourself
 
-1. **What should come first in an answer to "how do you stop the agent doing harm?"**
-   The gateway mechanism in order, starting with authorisation before validation, not a general promise of guardrails.
+<details>
+<summary>1. What should come first in an answer to "how do you stop the agent doing harm?"</summary>
 
-2. **Why is "use embeddings" a weak first answer to the 200-tools question?**
-   It patches a large surface instead of shrinking it. Façades and caller filtering come first.
+The gateway mechanism in order, starting with authorisation before validation, not a general promise of guardrails.
 
-3. **Which result-state confusion causes retry storms?**
-   Treating `UNAVAILABLE` as `EMPTY`, so the agent keeps rewording its query during an outage.
+</details>
+
+<details>
+<summary>2. Why is "use embeddings" a weak first answer to the 200-tools question?</summary>
+
+It patches a large surface instead of shrinking it. Façades and caller filtering come first.
+
+</details>
+
+<details>
+<summary>3. Which result-state confusion causes retry storms?</summary>
+
+Treating `UNAVAILABLE` as `EMPTY`, so the agent keeps rewording its query during an outage.
+
+</details>
 

@@ -128,12 +128,24 @@ Validation stopped the bad argument, and the gate stopped the unapproved write. 
 
 ## Check Yourself
 
-1. **Which three checks operate on the whole run rather than one call?**
-   The destructive-action gate, the step or loop guard, and the spend or cost guard. In the Handbook's workflow platform they live in `guardrails.py::authorize_step()`.
+<details>
+<summary>1. Which three checks operate on the whole run rather than one call?</summary>
 
-2. **Why must disambiguation prefer non-destructive tools on a tie?**
-   A tie means the system cannot tell which tool the user meant. Picking the destructive one would run an irreversible action on a guess, so safe tools win ties and a destructive tool never runs silently on one.
+The destructive-action gate, the step or loop guard, and the spend or cost guard. In the Handbook's workflow platform they live in `guardrails.py::authorize_step()`.
 
-3. **Argue, in one sentence, why no check can be dropped on the grounds that another covers it.**
-   Each check sits at a different point and catches a different failure, so removing any one leaves that specific gap open and no other check sees it.
+</details>
+
+<details>
+<summary>2. Why must disambiguation prefer non-destructive tools on a tie?</summary>
+
+A tie means the system cannot tell which tool the user meant. Picking the destructive one would run an irreversible action on a guess, so safe tools win ties and a destructive tool never runs silently on one.
+
+</details>
+
+<details>
+<summary>3. Argue, in one sentence, why no check can be dropped on the grounds that another covers it.</summary>
+
+Each check sits at a different point and catches a different failure, so removing any one leaves that specific gap open and no other check sees it.
+
+</details>
 

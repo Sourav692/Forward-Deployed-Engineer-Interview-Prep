@@ -102,12 +102,24 @@ When the breaker's probe succeeds, traffic returns to the primary. The trace sho
 
 ## Check Yourself
 
-1. **Why is a circuit breaker not enough for a 20-minute provider outage?**
-   It only stops and probes the same provider. Without a backup provider it has nowhere to send traffic, so requests keep failing.
+<details>
+<summary>1. Why is a circuit breaker not enough for a 20-minute provider outage?</summary>
 
-2. **Why tag a fallback response with its source?**
-   So cost and quality accounting knows the primary did not answer. Otherwise drift during the outage is invisible and misattributed.
+It only stops and probes the same provider. Without a backup provider it has nowhere to send traffic, so requests keep failing.
 
-3. **Name two properties a kill switch needs that a rollout demotion lacks.**
-   It stops work already in flight, not only new runs; and it is a single fast flip, not a role-gated multi-step approval.
+</details>
+
+<details>
+<summary>2. Why tag a fallback response with its source?</summary>
+
+So cost and quality accounting knows the primary did not answer. Otherwise drift during the outage is invisible and misattributed.
+
+</details>
+
+<details>
+<summary>3. Name two properties a kill switch needs that a rollout demotion lacks.</summary>
+
+It stops work already in flight, not only new runs; and it is a single fast flip, not a role-gated multi-step approval.
+
+</details>
 

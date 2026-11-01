@@ -81,12 +81,24 @@ Minutes 55 to 60: the three-sentence thesis, three trade-offs with what would re
 
 ## Check Yourself
 
-1. **What are the four moves inside a primary deep dive?**
-   Name the alternatives and choose; deliver and mark the strongest insight; prove it with one specific bridge; state how the two deep dives interact.
+<details>
+<summary>1. What are the four moves inside a primary deep dive?</summary>
 
-2. **Why must step 5 be raised unprompted?**
-   The interviewer is checking whether these concerns come up on their own. Being asked costs the signal.
+Name the alternatives and choose; deliver and mark the strongest insight; prove it with one specific bridge; state how the two deep dives interact.
 
-3. **Where is a design round won and where is it lost?**
-   Won in step 1, with the framing sentence and scope, and step 4, with the marked insight and unfakeable detail. Lost in step 5 by waiting to be asked, and step 6 by summarising the diagram instead of the thesis.
+</details>
+
+<details>
+<summary>2. Why must step 5 be raised unprompted?</summary>
+
+The interviewer is checking whether these concerns come up on their own. Being asked costs the signal.
+
+</details>
+
+<details>
+<summary>3. Where is a design round won and where is it lost?</summary>
+
+Won in step 1, with the framing sentence and scope, and step 4, with the marked insight and unfakeable detail. Lost in step 5 by waiting to be asked, and step 6 by summarising the diagram instead of the thesis.
+
+</details>
 

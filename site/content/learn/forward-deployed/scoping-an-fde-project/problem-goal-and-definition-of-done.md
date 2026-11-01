@@ -63,12 +63,24 @@ Now ask about done. The customer means a pilot for about 20 agents, not a full r
 
 ## Check Yourself
 
-1. **What four things should a scoping map show?**
-   What is included now, the assumptions behind the estimate, the open questions, and the signals that would change direction.
+<details>
+<summary>1. What four things should a scoping map show?</summary>
 
-2. **Rewrite "build an AI assistant for support" as a measurable goal.**
-   For example: cut average ticket handling time from 12 minutes to under 5, with no increase in escalations or complaints.
+What is included now, the assumptions behind the estimate, the open questions, and the signals that would change direction.
 
-3. **Why ask about the definition of done before giving a date?**
-   A prototype, an MVP and a production service differ hugely in effort. A date given before the level is agreed may be a date for a different project.
+</details>
+
+<details>
+<summary>2. Rewrite "build an AI assistant for support" as a measurable goal.</summary>
+
+For example: cut average ticket handling time from 12 minutes to under 5, with no increase in escalations or complaints.
+
+</details>
+
+<details>
+<summary>3. Why ask about the definition of done before giving a date?</summary>
+
+A prototype, an MVP and a production service differ hugely in effort. A date given before the level is agreed may be a date for a different project.
+
+</details>
 

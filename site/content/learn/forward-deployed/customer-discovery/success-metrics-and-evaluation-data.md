@@ -66,12 +66,24 @@ Start by narrowing what is being proved. The bank advises against promising full
 
 ## Check Yourself
 
-1. **A team reports high answer accuracy on a benchmark. Why is that not yet a success metric?**
-   It measures the model's output only. It says nothing about retrieval, tools, business rules, speed, adoption or whether the business outcome moved.
+<details>
+<summary>1. A team reports high answer accuracy on a benchmark. Why is that not yet a success metric?</summary>
 
-2. **The customer has no labelled data. Name three ways to build an evaluation set.**
-   Sample production traffic and have experts label it; use weak supervision; add synthetic examples carefully. Measure grader agreement and send hard cases to human review.
+It measures the model's output only. It says nothing about retrieval, tools, business rules, speed, adoption or whether the business outcome moved.
 
-3. **The offline benchmark improved after a model upgrade, yet users say it got worse. Give two explanations.**
-   The benchmark does not represent production traffic, or one segment regressed while the average rose. Slower responses or less reliable structured output are other candidates.
+</details>
+
+<details>
+<summary>2. The customer has no labelled data. Name three ways to build an evaluation set.</summary>
+
+Sample production traffic and have experts label it; use weak supervision; add synthetic examples carefully. Measure grader agreement and send hard cases to human review.
+
+</details>
+
+<details>
+<summary>3. The offline benchmark improved after a model upgrade, yet users say it got worse. Give two explanations.</summary>
+
+The benchmark does not represent production traffic, or one segment regressed while the average rose. Slower responses or less reliable structured output are other candidates.
+
+</details>
 

@@ -111,12 +111,24 @@ The FDE Handbook introduced framework checkpointers earlier. Having built one by
 
 ## Check Yourself
 
-1. **A workflow has run for two hours when the orchestrator restarts. What happens?**
-   The run's `next_step_index` is the checkpoint, and resume continues from it, never from step 0. It is the same loop as a fresh run, so there is no separate recovery path with its own bugs.
+<details>
+<summary>1. A workflow has run for two hours when the orchestrator restarts. What happens?</summary>
 
-2. **Why is the idempotency key on the action rather than on the run?**
-   A run legitimately retries, and a run-level flag would still let two attempts at one step fire. Keying by run and step lets the loop re-run while each side effect applies only once.
+The run's `next_step_index` is the checkpoint, and resume continues from it, never from step 0. It is the same loop as a fresh run, so there is no separate recovery path with its own bugs.
 
-3. **Explain bug 2 and state its lesson.**
-   An idempotent replay skipped the refund but still passed through the guardrail and added its cost again, so a retry could trip the spend cap with no money moving. Idempotency must cover every side effect of a step, including cost accounting.
+</details>
+
+<details>
+<summary>2. Why is the idempotency key on the action rather than on the run?</summary>
+
+A run legitimately retries, and a run-level flag would still let two attempts at one step fire. Keying by run and step lets the loop re-run while each side effect applies only once.
+
+</details>
+
+<details>
+<summary>3. Explain bug 2 and state its lesson.</summary>
+
+An idempotent replay skipped the refund but still passed through the guardrail and added its cost again, so a retry could trip the spend cap with no money moving. Idempotency must cover every side effect of a step, including cost accounting.
+
+</details>
 

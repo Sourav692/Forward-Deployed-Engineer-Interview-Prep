@@ -95,12 +95,24 @@ The model choice became a routing policy with a measured error rate, not a downg
 
 ## Check Yourself
 
-1. **Why might a three-model cascade cost more than expected?**
-   Each model has its own prompt cache, so the shared context is uncached three times over.
+<details>
+<summary>1. Why might a three-model cascade cost more than expected?</summary>
 
-2. **On a chatty workload, should you trim the prompt or cap the output first?**
-   Usually cap the output, because output tokens cost about five times as much as input tokens.
+Each model has its own prompt cache, so the shared context is uncached three times over.
 
-3. **How do you pick the threshold between "simple" and "complex" for a router?**
-   From a labelled sample of real traffic, weighing the cost saved against the error rate of misrouting.
+</details>
+
+<details>
+<summary>2. On a chatty workload, should you trim the prompt or cap the output first?</summary>
+
+Usually cap the output, because output tokens cost about five times as much as input tokens.
+
+</details>
+
+<details>
+<summary>3. How do you pick the threshold between "simple" and "complex" for a router?</summary>
+
+From a labelled sample of real traffic, weighing the cost saved against the error rate of misrouting.
+
+</details>
 

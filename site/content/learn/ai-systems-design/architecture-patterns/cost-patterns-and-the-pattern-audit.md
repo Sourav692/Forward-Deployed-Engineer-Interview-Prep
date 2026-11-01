@@ -72,12 +72,24 @@ In an interview, this is the closing move when asked to justify complexity. Rest
 
 ## Check Yourself
 
-1. **Which cost pattern is usually the single largest lever, and why?**
-   The prefix cache boundary. Input tokens usually dominate spend, and a byte-stable prefix lets them be cached.
+<details>
+<summary>1. Which cost pattern is usually the single largest lever, and why?</summary>
 
-2. **Why assert properties of a trajectory rather than one exact path?**
-   Several paths can be valid. Asserting properties fails the unsafe paths and passes all the valid ones.
+The prefix cache boundary. Input tokens usually dominate spend, and a byte-stable prefix lets them be cached.
 
-3. **What two questions audit a pattern?**
-   What metric motivated it, and what incident has it prevented? A pattern with neither answer should probably go.
+</details>
+
+<details>
+<summary>2. Why assert properties of a trajectory rather than one exact path?</summary>
+
+Several paths can be valid. Asserting properties fails the unsafe paths and passes all the valid ones.
+
+</details>
+
+<details>
+<summary>3. What two questions audit a pattern?</summary>
+
+What metric motivated it, and what incident has it prevented? A pattern with neither answer should probably go.
+
+</details>
 

@@ -88,12 +88,24 @@ The cost discussion centres on generation per query, not the one-time embedding 
 
 ## Check Yourself
 
-1. **Does caching fix tail latency?**
-   No. It moves the median. Timeouts, circuit breakers and fallback to a smaller model move the tail.
+<details>
+<summary>1. Does caching fix tail latency?</summary>
 
-2. **A service handles 10 requests per second at 4 seconds average latency. How many requests are in flight?**
-   About 40, by Little's Law: concurrency equals throughput times latency.
+No. It moves the median. Timeouts, circuit breakers and fallback to a smaller model move the tail.
 
-3. **Why does the ingest bill not dominate the cost conversation at 20 million documents?**
-   It is a one-time cost in the low-to-mid four figures. Query-time generation recurs with every query, so routing, filtering and caching matter more.
+</details>
+
+<details>
+<summary>2. A service handles 10 requests per second at 4 seconds average latency. How many requests are in flight?</summary>
+
+About 40, by Little's Law: concurrency equals throughput times latency.
+
+</details>
+
+<details>
+<summary>3. Why does the ingest bill not dominate the cost conversation at 20 million documents?</summary>
+
+It is a one-time cost in the low-to-mid four figures. Query-time generation recurs with every query, so routing, filtering and caching matter more.
+
+</details>
 

@@ -76,12 +76,24 @@ Only now does the access engine see a principal. Every attribute it reads came f
 
 ## Check Yourself
 
-1. **What does token validation check, and why must it run first?**
-   The signature against the identity provider's published keys, then expiry, audience and issuer. It runs first because every later rule assumes the principal is genuine.
+<details>
+<summary>1. What does token validation check, and why must it run first?</summary>
 
-2. **What does group-mapping drift look like?**
-   A customer renames a group in their identity provider. The platform's mapping still points at the old name, so those users silently lose or keep access until someone notices.
+The signature against the identity provider's published keys, then expiry, audience and issuer. It runs first because every later rule assumes the principal is genuine.
 
-3. **Why is "we'll create a roles table in our UI" a red flag?**
-   It invents roles locally instead of mapping the customer's own groups. Each customer already manages identity in its own provider, and a second role system drifts from it.
+</details>
+
+<details>
+<summary>2. What does group-mapping drift look like?</summary>
+
+A customer renames a group in their identity provider. The platform's mapping still points at the old name, so those users silently lose or keep access until someone notices.
+
+</details>
+
+<details>
+<summary>3. Why is "we'll create a roles table in our UI" a red flag?</summary>
+
+It invents roles locally instead of mapping the customer's own groups. Each customer already manages identity in its own provider, and a second role system drifts from it.
+
+</details>
 

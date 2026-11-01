@@ -90,12 +90,24 @@ The long-term design goes further. Account lookup, ticket summary and next-best-
 
 ## Check Yourself
 
-1. **Retrieval got slow after the corpus grew. Is lowering top-k the main knob?**
-   Usually not. The index parameter, such as `ef_search` or `nprobe`, sets the recall-latency curve more directly. Also check metadata filters and duplicates.
+<details>
+<summary>1. Retrieval got slow after the corpus grew. Is lowering top-k the main knob?</summary>
 
-2. **The reranker doubled latency. Name two ways to cut its cost without dropping it entirely.**
-   Rerank only ambiguous or high-value queries, and score fewer candidates with truncated passages, since cost scales with candidates times length.
+Usually not. The index parameter, such as `ef_search` or `nprobe`, sets the recall-latency curve more directly. Also check metadata filters and duplicates.
 
-3. **An agent keeps calling the same CRM lookup until it times out. What kind of bug is it, and what fixes it?**
-   A control-loop bug. Add a step budget, cache the tool result, improve the tool routing or schema, and set explicit stopping criteria.
+</details>
+
+<details>
+<summary>2. The reranker doubled latency. Name two ways to cut its cost without dropping it entirely.</summary>
+
+Rerank only ambiguous or high-value queries, and score fewer candidates with truncated passages, since cost scales with candidates times length.
+
+</details>
+
+<details>
+<summary>3. An agent keeps calling the same CRM lookup until it times out. What kind of bug is it, and what fixes it?</summary>
+
+A control-loop bug. Add a step budget, cache the tool result, improve the tool routing or schema, and set explicit stopping criteria.
+
+</details>
 

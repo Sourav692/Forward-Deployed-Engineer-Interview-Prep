@@ -62,12 +62,24 @@ The same envelope pattern that made rotation cheap is what makes per-tenant keys
 
 ## Check Yourself
 
-1. **Explain envelope encryption and the problem it solves.**
-   Each secret has its own key, and a central master key encrypts those keys. Rotating the master only re-wraps the small keys, so it does not require re-encrypting every secret.
+<details>
+<summary>1. Explain envelope encryption and the problem it solves.</summary>
 
-2. **Why scope a credential per connection rather than per connector type?**
-   Two customers can use the same kind of connector. A per-type credential would let one customer's leak open another customer's system.
+Each secret has its own key, and a central master key encrypts those keys. Rotating the master only re-wraps the small keys, so it does not require re-encrypting every secret.
 
-3. **What changes with per-tenant keys when storage is breached?**
-   The attacker gets only ciphertext, and each tenant's data decrypts with that tenant's key alone, so the blast radius is one tenant instead of every customer.
+</details>
+
+<details>
+<summary>2. Why scope a credential per connection rather than per connector type?</summary>
+
+Two customers can use the same kind of connector. A per-type credential would let one customer's leak open another customer's system.
+
+</details>
+
+<details>
+<summary>3. What changes with per-tenant keys when storage is breached?</summary>
+
+The attacker gets only ciphertext, and each tenant's data decrypts with that tenant's key alone, so the blast radius is one tenant instead of every customer.
+
+</details>
 

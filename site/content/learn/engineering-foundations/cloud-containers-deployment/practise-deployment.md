@@ -96,12 +96,24 @@ An answer that fills every row shows a deployment designed around failure, which
 
 ## Check Yourself
 
-1. **What four parts should every deployment answer cover before naming tools?**
-   How it is packaged and configured, how a change is tested, how a bad change is detected in production, and how fast it is reversed.
+<details>
+<summary>1. What four parts should every deployment answer cover before naming tools?</summary>
 
-2. **An interviewer asks how you'd catch a regression that no code change caused. What do you say?**
-   Pin dated model versions and run the evaluation suite on a schedule, comparing against the last known-good baseline.
+How it is packaged and configured, how a change is tested, how a bad change is detected in production, and how fast it is reversed.
 
-3. **Give a one-sentence answer to "Where do the API keys live?"**
-   Never in the code or image: they are injected at runtime from Kubernetes Secrets or a secrets manager, read through a typed settings class, with separate secrets per environment.
+</details>
+
+<details>
+<summary>2. An interviewer asks how you'd catch a regression that no code change caused. What do you say?</summary>
+
+Pin dated model versions and run the evaluation suite on a schedule, comparing against the last known-good baseline.
+
+</details>
+
+<details>
+<summary>3. Give a one-sentence answer to "Where do the API keys live?"</summary>
+
+Never in the code or image: they are injected at runtime from Kubernetes Secrets or a secrets manager, read through a typed settings class, with separate secrets per environment.
+
+</details>
 

@@ -130,12 +130,24 @@ Each original mistake has an airport absurdity. A second security line that lead
 
 ## Check Yourself
 
-1. **Why does cache placement decide whether a semantic cache saves anything?**
-   A cache after the agents runs only once all the expensive work is done, so a hit saves nothing. Before them, a hit skips the entire fan-out.
+<details>
+<summary>1. Why does cache placement decide whether a semantic cache saves anything?</summary>
 
-2. **What is the actual mistake in the shared-versus-per-agent retrieval debate?**
-   Both are defensible. The mistake is drawing RAG as a peer stage of the agents instead of infrastructure or a tool they call.
+A cache after the agents runs only once all the expensive work is done, so a hit saves nothing. Before them, a hit skips the entire fan-out.
 
-3. **What does the synthesiser do that a single continuing line hides?**
-   It merges the outputs of every agent that ran and resolves conflicts between them, such as Policy overriding Booking.
+</details>
+
+<details>
+<summary>2. What is the actual mistake in the shared-versus-per-agent retrieval debate?</summary>
+
+Both are defensible. The mistake is drawing RAG as a peer stage of the agents instead of infrastructure or a tool they call.
+
+</details>
+
+<details>
+<summary>3. What does the synthesiser do that a single continuing line hides?</summary>
+
+It merges the outputs of every agent that ran and resolves conflicts between them, such as Policy overriding Booking.
+
+</details>
 

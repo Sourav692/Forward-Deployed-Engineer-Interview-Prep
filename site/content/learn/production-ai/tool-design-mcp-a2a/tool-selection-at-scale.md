@@ -54,12 +54,24 @@ The order matters. Retrieval is a patch for a large surface; façades and filter
 
 ## Check Yourself
 
-1. **Why does adding tools eventually make an agent worse?**
-   It must tell apart more similar options within a fixed attention budget, so selection accuracy drops.
+<details>
+<summary>1. Why does adding tools eventually make an agent worse?</summary>
 
-2. **Why keep `clarify` and `escalate` pinned whatever the filter returns?**
-   So the agent always has a useful move, even when no domain tool fits the request.
+It must tell apart more similar options within a fixed attention budget, so selection accuracy drops.
 
-3. **When does retrieval over tool descriptions earn its 20 to 60 ms?**
-   Only once the surface is still above about 40 tools after façades and principal filtering.
+</details>
+
+<details>
+<summary>2. Why keep <code>clarify</code> and <code>escalate</code> pinned whatever the filter returns?</summary>
+
+So the agent always has a useful move, even when no domain tool fits the request.
+
+</details>
+
+<details>
+<summary>3. When does retrieval over tool descriptions earn its 20 to 60 ms?</summary>
+
+Only once the surface is still above about 40 tools after façades and principal filtering.
+
+</details>
 

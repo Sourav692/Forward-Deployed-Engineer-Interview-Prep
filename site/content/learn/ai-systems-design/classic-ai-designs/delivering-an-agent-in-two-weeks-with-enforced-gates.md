@@ -166,27 +166,59 @@ The authenticated role comes from application identity, not the submitted sign-o
 
 ## Check Yourself
 
-1. **Why can the FDA not sign the security gate?**
-   The person closest to the work is not automatically authorised to certify it is safe. Each gate allows only named roles, with deny overrides.
+<details>
+<summary>1. Why can the FDA not sign the security gate?</summary>
 
-2. **What does the 83% reuse rate measure on Northwind?**
-   5 of 6 assets came from the accelerator library and one escalation (guardrail) policy was custom. Tracked across engagements, it shows whether delivery stays productised.
+The person closest to the work is not automatically authorised to certify it is safe. Each gate allows only named roles, with deny overrides.
 
-3. **Is a day-14 no-go a failure of the framework?**
-   No. It is a legitimate outcome; the framework's job is to show exactly which gate stopped the engagement and why.
+</details>
 
-4. **Can day 14 prove the week-4 zero-edit target?**
-   No. Agree a separate limited-release rule or wait until the required evidence exists.
+<details>
+<summary>2. What does the 83% reuse rate measure on Northwind?</summary>
 
-5. **Is a non-empty evidence string sufficient for sign-off?**
-   No. Evidence must match the criterion, observation window, engagement, and accepted version.
+5 of 6 assets came from the accelerator library and one escalation (guardrail) policy was custom. Tracked across engagements, it shows whether delivery stays productised.
 
-6. **Who supplies the signer role?**
-   The application derives it from authenticated identity. Submitted role text cannot grant sign-off authority.
+</details>
 
-7. **How should concurrent sign-offs behave?**
-   They must create one valid state transition, with idempotent recording and no skipped gate.
+<details>
+<summary>3. Is a day-14 no-go a failure of the framework?</summary>
 
-8. **Does 83% asset reuse prove readiness?**
-   No. It records five of six reused assets; each still needs verification for this customer.
+No. It is a legitimate outcome; the framework's job is to show exactly which gate stopped the engagement and why.
+
+</details>
+
+<details>
+<summary>4. Can day 14 prove the week-4 zero-edit target?</summary>
+
+No. Agree a separate limited-release rule or wait until the required evidence exists.
+
+</details>
+
+<details>
+<summary>5. Is a non-empty evidence string sufficient for sign-off?</summary>
+
+No. Evidence must match the criterion, observation window, engagement, and accepted version.
+
+</details>
+
+<details>
+<summary>6. Who supplies the signer role?</summary>
+
+The application derives it from authenticated identity. Submitted role text cannot grant sign-off authority.
+
+</details>
+
+<details>
+<summary>7. How should concurrent sign-offs behave?</summary>
+
+They must create one valid state transition, with idempotent recording and no skipped gate.
+
+</details>
+
+<details>
+<summary>8. Does 83% asset reuse prove readiness?</summary>
+
+No. It records five of six reused assets; each still needs verification for this customer.
+
+</details>
 

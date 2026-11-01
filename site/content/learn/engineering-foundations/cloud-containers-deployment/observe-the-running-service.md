@@ -71,12 +71,24 @@ The diagnosis is the provider, reached in minutes, because every signal pointed 
 
 ## Check Yourself
 
-1. **What do you log for each LLM request if you cannot log the prompt text?**
-   Trace id, user id, SHA-256 hashes of prompt and response, token counts, model, latency and cost.
+<details>
+<summary>1. What do you log for each LLM request if you cannot log the prompt text?</summary>
 
-2. **The LLM API key expired. Which probe should fail, and with what status?**
-   The readiness probe, returning HTTP 503, so the instance leaves rotation. Liveness stays green because the process is still alive.
+Trace id, user id, SHA-256 hashes of prompt and response, token counts, model, latency and cost.
 
-3. **Why alert on P99 rather than average latency?**
-   The average can look fine while a slice of users waits far longer. P95 and P99 show what the slowest requests experience.
+</details>
+
+<details>
+<summary>2. The LLM API key expired. Which probe should fail, and with what status?</summary>
+
+The readiness probe, returning HTTP 503, so the instance leaves rotation. Liveness stays green because the process is still alive.
+
+</details>
+
+<details>
+<summary>3. Why alert on P99 rather than average latency?</summary>
+
+The average can look fine while a slice of users waits far longer. P95 and P99 show what the slowest requests experience.
+
+</details>
 

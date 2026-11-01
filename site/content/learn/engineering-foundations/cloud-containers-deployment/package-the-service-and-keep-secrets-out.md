@@ -59,12 +59,24 @@ The image never changes between environments. Only the injected values do, which
 
 ## Check Yourself
 
-1. **What does a multi-stage build buy you?**
-   The build tools and intermediate files stay in the first stage. The runtime image holds only what the service needs, so it is smaller and has less to attack.
+<details>
+<summary>1. What does a multi-stage build buy you?</summary>
 
-2. **A teammate stores the LLM API key in a Kubernetes ConfigMap. What do you say?**
-   ConfigMaps are not encrypted by default. Move the key to Kubernetes Secrets or a secrets manager such as AWS Secrets Manager or GCP Secret Manager.
+The build tools and intermediate files stay in the first stage. The runtime image holds only what the service needs, so it is smaller and has less to attack.
 
-3. **How do dev, staging and production differ in this setup?**
-   Only in the injected values. The code and the image are identical; each environment has its own secrets.
+</details>
+
+<details>
+<summary>2. A teammate stores the LLM API key in a Kubernetes ConfigMap. What do you say?</summary>
+
+ConfigMaps are not encrypted by default. Move the key to Kubernetes Secrets or a secrets manager such as AWS Secrets Manager or GCP Secret Manager.
+
+</details>
+
+<details>
+<summary>3. How do dev, staging and production differ in this setup?</summary>
+
+Only in the injected values. The code and the image are identical; each environment has its own secrets.
+
+</details>
 

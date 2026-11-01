@@ -55,12 +55,24 @@ They also check placement. The cache sits before retrieval and generation, not a
 
 ## Check Yourself
 
-1. **What correctness risk does semantic caching add that exact-match does not?**
-   Two questions close in wording but needing different answers, such as EU and US refund policy, can share a hit. The cache then serves a confidently wrong answer.
+<details>
+<summary>1. What correctness risk does semantic caching add that exact-match does not?</summary>
 
-2. **What is the safest constraint on a semantic cache?**
-   A conservative threshold, and never matching across different permission scopes or tenants, however close the wording.
+Two questions close in wording but needing different answers, such as EU and US refund policy, can share a hit. The cache then serves a confidently wrong answer.
 
-3. **Why is invalidation harder for a semantic cache?**
-   It must decide when a stored answer's whole neighbourhood of similar questions is no longer trustworthy, after any relevant document change, not only the one that produced the answer.
+</details>
+
+<details>
+<summary>2. What is the safest constraint on a semantic cache?</summary>
+
+A conservative threshold, and never matching across different permission scopes or tenants, however close the wording.
+
+</details>
+
+<details>
+<summary>3. Why is invalidation harder for a semantic cache?</summary>
+
+It must decide when a stored answer's whole neighbourhood of similar questions is no longer trustworthy, after any relevant document change, not only the one that produced the answer.
+
+</details>
 

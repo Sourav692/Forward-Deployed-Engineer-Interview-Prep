@@ -68,12 +68,24 @@ Then answer the bank's follow-up, "Should the agent issue a refund automatically
 
 ## Check Yourself
 
-1. **Why does a missing component on the decomposition diagram cause a delivery problem, not just a design problem?**
-   A part that is not drawn gets no owner and no estimate. The decomposition is the first draft of the work plan.
+<details>
+<summary>1. Why does a missing component on the decomposition diagram cause a delivery problem, not just a design problem?</summary>
 
-2. **A customer says their RAG assistant gives unreliable answers. What is the first thing to separate?**
-   Whether the failure is in retrieval, context assembly, synthesis, the prompt, the output format, the evaluation or the user experience. Measure retrieval with recall@k and precision@k before touching the model.
+A part that is not drawn gets no owner and no estimate. The decomposition is the first draft of the work plan.
 
-3. **When is fine-tuning the right fix?**
-   When the problem is behaviour: the model has the knowledge but responds in the wrong way or format. Knowledge, freshness and permission problems are fixed in retrieval, the data pipeline or access control.
+</details>
+
+<details>
+<summary>2. A customer says their RAG assistant gives unreliable answers. What is the first thing to separate?</summary>
+
+Whether the failure is in retrieval, context assembly, synthesis, the prompt, the output format, the evaluation or the user experience. Measure retrieval with recall@k and precision@k before touching the model.
+
+</details>
+
+<details>
+<summary>3. When is fine-tuning the right fix?</summary>
+
+When the problem is behaviour: the model has the knowledge but responds in the wrong way or format. Knowledge, freshness and permission problems are fixed in retrieval, the data pipeline or access control.
+
+</details>
 

@@ -67,12 +67,24 @@ The candidate stops. "Then filtering after retrieval is both a quality and a sec
 
 ## Check Yourself
 
-1. **Why is visibly adapting a stronger signal than asking more questions?**
-   Questions followed by an unchanged drawing look like ritual. An answer that moves a box shows you listened.
+<details>
+<summary>1. Why is visibly adapting a stronger signal than asking more questions?</summary>
 
-2. **Which area decides the evaluation plan, the golden set and the escalation path?**
-   Definition of done.
+Questions followed by an unchanged drawing look like ritual. An answer that moves a box shows you listened.
 
-3. **How long does the opening routine get in a 60-minute round, and what follows it?**
-   The first eight minutes. Then entities and the happy path, architecture, a deep dive, cross-cutting concerns and failure, and a deliberate close.
+</details>
+
+<details>
+<summary>2. Which area decides the evaluation plan, the golden set and the escalation path?</summary>
+
+Definition of done.
+
+</details>
+
+<details>
+<summary>3. How long does the opening routine get in a 60-minute round, and what follows it?</summary>
+
+The first eight minutes. Then entities and the happy path, architecture, a deep dive, cross-cutting concerns and failure, and a deliberate close.
+
+</details>
 

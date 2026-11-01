@@ -62,12 +62,24 @@ Later the team swaps in a self-hosted model. The question endpoint barely change
 
 ## Check Yourself
 
-1. **An endpoint calls OpenAI and then writes to a database using a synchronous driver. It is declared `async def`. What goes wrong?**
-   The sync driver blocks the event loop, so every other request on the process waits. Use an async driver, or make the endpoint a plain `def` so FastAPI runs it in a thread pool.
+<details>
+<summary>1. An endpoint calls OpenAI and then writes to a database using a synchronous driver. It is declared <code>async def</code>. What goes wrong?</summary>
 
-2. **Why should a self-hosted model not run inside the FastAPI process?**
-   Its CPU or GPU compute would block the event loop. Run it in a model server such as vLLM, TGI or Triton, an inference service, or queue workers, and call it over HTTP.
+The sync driver blocks the event loop, so every other request on the process waits. Use an async driver, or make the endpoint a plain `def` so FastAPI runs it in a thread pool.
 
-3. **A request triggers ten minutes of indexing. What does the API return?**
-   A `job_id` and a status URL, immediately. A second endpoint reports PENDING, PROGRESS or SUCCESS with progress steps, and the queue worker retries on failure.
+</details>
+
+<details>
+<summary>2. Why should a self-hosted model not run inside the FastAPI process?</summary>
+
+Its CPU or GPU compute would block the event loop. Run it in a model server such as vLLM, TGI or Triton, an inference service, or queue workers, and call it over HTTP.
+
+</details>
+
+<details>
+<summary>3. A request triggers ten minutes of indexing. What does the API return?</summary>
+
+A `job_id` and a status URL, immediately. A second endpoint reports PENDING, PROGRESS or SUCCESS with progress steps, and the queue worker retries on failure.
+
+</details>
 

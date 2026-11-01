@@ -117,12 +117,24 @@ Cost per resolved ticket falls on the repeated intents, while personal answers s
 
 ## Check Yourself
 
-1. **"What is Python?" hits the cache but "Tell me about Python" misses. What do you check first?**
-   Whether the cache compares embeddings at all. A hash of the normalised text is exact match, even if the class is called semantic.
+<details>
+<summary>1. "What is Python?" hits the cache but "Tell me about Python" misses. What do you check first?</summary>
 
-2. **Why must a semantic cache never match across tenants, even with near-identical wording?**
-   Close wording can need a different answer, and tenants have different permissions. A cross-tenant hit leaks data and serves a confidently wrong answer.
+Whether the cache compares embeddings at all. A hash of the normalised text is exact match, even if the class is called semantic.
 
-3. **Why include the embedding model name in the embedding-cache key?**
-   So a model upgrade invalidates every old embedding automatically, instead of mixing vectors from two models.
+</details>
+
+<details>
+<summary>2. Why must a semantic cache never match across tenants, even with near-identical wording?</summary>
+
+Close wording can need a different answer, and tenants have different permissions. A cross-tenant hit leaks data and serves a confidently wrong answer.
+
+</details>
+
+<details>
+<summary>3. Why include the embedding model name in the embedding-cache key?</summary>
+
+So a model upgrade invalidates every old embedding automatically, instead of mixing vectors from two models.
+
+</details>
 

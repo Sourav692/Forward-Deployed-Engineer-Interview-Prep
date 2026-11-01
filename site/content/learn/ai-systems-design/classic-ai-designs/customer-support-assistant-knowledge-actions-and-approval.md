@@ -200,30 +200,66 @@ A stable operation ID helps only when the backend supports deduplication. Bound 
 
 ## Check Yourself
 
-1. **Why are RAG, tool calling and memory peers rather than a pipeline?**
-   Each request needs a different subset. "Track my order" needs one tool call and no retrieval. Forcing every request through all three adds latency and cost for nothing.
+<details>
+<summary>1. Why are RAG, tool calling and memory peers rather than a pipeline?</summary>
 
-2. **Enterprise knowledge is listed as a memory layer. Why is it stored separately?**
-   It lives in RAG, not conversation memory. A stale preference and an outdated policy fail differently, so keeping them apart makes each easier to find and fix.
+Each request needs a different subset. "Track my order" needs one tool call and no retrieval. Forcing every request through all three adds latency and cost for nothing.
 
-3. **Name the four gaps both assistant designs leave, and when to raise them.**
-   Guardrails and prompt-injection defence, prompt versioning, disaster recovery and chaos testing, and explicit capacity estimation. Raise them unprompted in the cross-cutting part of the round.
+</details>
 
-4. **Which three discovery questions make the action path concrete?**
-   Who owns approval thresholds, which sources are current and visible to this customer, and how asynchronous systems confirm completion.
+<details>
+<summary>2. Enterprise knowledge is listed as a memory layer. Why is it stored separately?</summary>
 
-5. **Does a structured refund proposal prove a refund happened?**
-   No. Policy may require approval, and only an authoritative payment result confirms execution.
+It lives in RAG, not conversation memory. A stale preference and an outdated policy fail differently, so keeping them apart makes each easier to find and fix.
 
-6. **Can a semantic cache answer every repeated order-status question?**
-   No. Personal order state needs customer scope and freshness; eligible policy answers have different cache rules.
+</details>
 
-7. **Does a cross-system request require several agents?**
-   No. One controller can coordinate dependencies. Add specialists only when their benefit justifies overhead.
+<details>
+<summary>3. Name the four gaps both assistant designs leave, and when to raise them.</summary>
 
-8. **What should happen after a payment timeout?**
-   Mark the result unconfirmed, reconcile backend status, and retry only under a safe deduplication contract.
+Guardrails and prompt-injection defence, prompt versioning, disaster recovery and chaos testing, and explicit capacity estimation. Raise them unprompted in the cross-cutting part of the round.
 
-9. **Why keep policies out of conversation memory?**
-   Policies need an authoritative, versioned source. Customer history cannot establish the current refund rule.
+</details>
+
+<details>
+<summary>4. Which three discovery questions make the action path concrete?</summary>
+
+Who owns approval thresholds, which sources are current and visible to this customer, and how asynchronous systems confirm completion.
+
+</details>
+
+<details>
+<summary>5. Does a structured refund proposal prove a refund happened?</summary>
+
+No. Policy may require approval, and only an authoritative payment result confirms execution.
+
+</details>
+
+<details>
+<summary>6. Can a semantic cache answer every repeated order-status question?</summary>
+
+No. Personal order state needs customer scope and freshness; eligible policy answers have different cache rules.
+
+</details>
+
+<details>
+<summary>7. Does a cross-system request require several agents?</summary>
+
+No. One controller can coordinate dependencies. Add specialists only when their benefit justifies overhead.
+
+</details>
+
+<details>
+<summary>8. What should happen after a payment timeout?</summary>
+
+Mark the result unconfirmed, reconcile backend status, and retry only under a safe deduplication contract.
+
+</details>
+
+<details>
+<summary>9. Why keep policies out of conversation memory?</summary>
+
+Policies need an authoritative, versioned source. Customer history cannot establish the current refund rule.
+
+</details>
 

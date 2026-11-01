@@ -100,12 +100,24 @@ Everything above is real and tested, including the routing-conflict and `entity_
 
 ## Check Yourself
 
-1. **Why does a `DRAFT` workflow never match a real event?**
-   Matching filters on status, and drafts are excluded. That rule is what makes it safe to author and edit a workflow without it acting on live traffic.
+<details>
+<summary>1. Why does a <code>DRAFT</code> workflow never match a real event?</summary>
 
-2. **Distinguish priority ordering from the entity lock in one sentence each.**
-   Priority is a design-time choice about which matching workflow should run. The entity lock is a run-time guarantee that no two runs mutate the same target at once.
+Matching filters on status, and drafts are excluded. That rule is what makes it safe to author and edit a workflow without it acting on live traffic.
 
-3. **What does routing return when nothing runs, and why does it matter?**
-   A named reason, `no_trigger_match` or `entity_locked`. A silent no-op would leave operators unable to explain why a message did nothing.
+</details>
+
+<details>
+<summary>2. Distinguish priority ordering from the entity lock in one sentence each.</summary>
+
+Priority is a design-time choice about which matching workflow should run. The entity lock is a run-time guarantee that no two runs mutate the same target at once.
+
+</details>
+
+<details>
+<summary>3. What does routing return when nothing runs, and why does it matter?</summary>
+
+A named reason, `no_trigger_match` or `entity_locked`. A silent no-op would leave operators unable to explain why a message did nothing.
+
+</details>
 

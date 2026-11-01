@@ -168,27 +168,59 @@ A suggestion is not an applied change. Recheck permissions and freshness even on
 
 ## Check Yourself
 
-1. **Why is the scoped exact-match cache placed before embedding and retrieval?**
-   A valid, scoped hit can skip retrieval and generation. Start with exact matching; semantic matching raises the hit rate but can serve a wrong answer for a similar request. Measure hit rates and validate against the current code context.
+<details>
+<summary>1. Why is the scoped exact-match cache placed before embedding and retrieval?</summary>
 
-2. **Decompose the 300 ms budget.**
-   About 10 ms cache, 40 ms context, 200 ms inference, and 50 ms validation: 300 ms before extra overhead, not a measured end-to-end guarantee.
+A valid, scoped hit can skip retrieval and generation. Start with exact matching; semantic matching raises the hit rate but can serve a wrong answer for a similar request. Measure hit rates and validate against the current code context.
 
-3. **Why does output validation check for hallucinated APIs?**
-   The model produces plausible code, not verified code. A call to a function that does not exist would compile in the developer's head and fail in their build.
+</details>
 
-4. **What must be in the completion-cache scope?**
-   Tenant, repository, permissions, revision, prompt and model version, and relevant code context; revalidate the result before display.
+<details>
+<summary>2. Decompose the 300 ms budget.</summary>
 
-5. **Who decides whether a suggested edit is applied?**
-   The developer. A validated suggestion is still only a proposal.
+About 10 ms cache, 40 ms context, 200 ms inference, and 50 ms validation: 300 ms before extra overhead, not a measured end-to-end guarantee.
 
-6. **What if the file changes during generation?**
-   Discard the stale result instead of attaching it to a different code snapshot.
+</details>
 
-7. **Does streaming prove the full request met the latency target?**
-   No. Measure the defined output boundary from the IDE, including network, queues, retrieval, and validation.
+<details>
+<summary>3. Why does output validation check for hallucinated APIs?</summary>
 
-8. **What should an inline suggestion do with an unclear tax rule?**
-   Avoid inventing it. An explicit edit request can ask for clarification before proposing the implementation.
+The model produces plausible code, not verified code. A call to a function that does not exist would compile in the developer's head and fail in their build.
+
+</details>
+
+<details>
+<summary>4. What must be in the completion-cache scope?</summary>
+
+Tenant, repository, permissions, revision, prompt and model version, and relevant code context; revalidate the result before display.
+
+</details>
+
+<details>
+<summary>5. Who decides whether a suggested edit is applied?</summary>
+
+The developer. A validated suggestion is still only a proposal.
+
+</details>
+
+<details>
+<summary>6. What if the file changes during generation?</summary>
+
+Discard the stale result instead of attaching it to a different code snapshot.
+
+</details>
+
+<details>
+<summary>7. Does streaming prove the full request met the latency target?</summary>
+
+No. Measure the defined output boundary from the IDE, including network, queues, retrieval, and validation.
+
+</details>
+
+<details>
+<summary>8. What should an inline suggestion do with an unclear tax rule?</summary>
+
+Avoid inventing it. An explicit edit request can ask for clarification before proposing the implementation.
+
+</details>
 

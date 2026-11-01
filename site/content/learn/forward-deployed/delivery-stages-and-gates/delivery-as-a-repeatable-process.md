@@ -106,12 +106,24 @@ The schedule held because almost everything was assembled. Every stage boundary 
 
 ## Check Yourself
 
-1. **Why is "work faster" the trap in the two-week prompt?**
-   Two weeks is repeatable only if most of each stage already exists in a reusable library. Working faster depends on heroics and fails on the next customer.
+<details>
+<summary>1. Why is "work faster" the trap in the two-week prompt?</summary>
 
-2. **What is the difference between shadow mode and limited production?**
-   Shadow mode sees real traffic and decides without acting, while humans compare. Limited production acts for real, with a human approving and a tested rollback.
+Two weeks is repeatable only if most of each stage already exists in a reusable library. Working faster depends on heroics and fails on the next customer.
 
-3. **Why does intake refuse rather than warn?**
-   A clock started against an unmeasurable goal cannot reach a meaningful go/no-go. Refusing on day 0 is cheaper than discovering it on day 14.
+</details>
+
+<details>
+<summary>2. What is the difference between shadow mode and limited production?</summary>
+
+Shadow mode sees real traffic and decides without acting, while humans compare. Limited production acts for real, with a human approving and a tested rollback.
+
+</details>
+
+<details>
+<summary>3. Why does intake refuse rather than warn?</summary>
+
+A clock started against an unmeasurable goal cannot reach a meaningful go/no-go. Refusing on day 0 is cheaper than discovering it on day 14.
+
+</details>
 

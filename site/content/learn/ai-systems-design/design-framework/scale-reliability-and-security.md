@@ -137,12 +137,24 @@ The availability story is separate. The search service stayed up through redunda
 
 ## Check Yourself
 
-1. **Why does a timeout alone not stop a cascading failure?**
-   Every caller still waits the full deadline and holds a thread per request. Under load that exhausts the caller's pool and takes down a healthy service. A circuit breaker fails fast instead.
+<details>
+<summary>1. Why does a timeout alone not stop a cascading failure?</summary>
 
-2. **Assign two techniques each to reliability and availability.**
-   Availability: multi-region failover and health checks, which route around what is down. Reliability: circuit breakers and dead-letter queues, which stop a failure from corrupting or cascading.
+Every caller still waits the full deadline and holds a thread per request. Under load that exhausts the caller's pool and takes down a healthy service. A circuit breaker fails fast instead.
 
-3. **Whose entitlements should an agent's tool call be checked against?**
-   The calling user's, never the agent's own. An agent must never act beyond the person it serves.
+</details>
+
+<details>
+<summary>2. Assign two techniques each to reliability and availability.</summary>
+
+Availability: multi-region failover and health checks, which route around what is down. Reliability: circuit breakers and dead-letter queues, which stop a failure from corrupting or cascading.
+
+</details>
+
+<details>
+<summary>3. Whose entitlements should an agent's tool call be checked against?</summary>
+
+The calling user's, never the agent's own. An agent must never act beyond the person it serves.
+
+</details>
 

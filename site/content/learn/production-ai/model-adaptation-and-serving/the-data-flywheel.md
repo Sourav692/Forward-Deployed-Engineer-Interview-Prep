@@ -56,12 +56,24 @@ The fix applied all three gates. The team deduplicated to distinct problems and 
 
 ## Check Yourself
 
-1. **Why does a random split inflate offline metrics on production traces?**
-   Near-identical requests from the same user, or the same popular problem, land on both sides, so the test set contains twins of training examples.
+<details>
+<summary>1. Why does a random split inflate offline metrics on production traces?</summary>
 
-2. **What went wrong with labels in the 94% case?**
-   They came from the previous system's own routing decisions, so the model learned that system's errors and evaluation scored them as correct.
+Near-identical requests from the same user, or the same popular problem, land on both sides, so the test set contains twins of training examples.
 
-3. **What should a datasheet record?**
-   The collection window, filters, deduplication method and its effect on volume, split strategy, label source and known biases.
+</details>
+
+<details>
+<summary>2. What went wrong with labels in the 94% case?</summary>
+
+They came from the previous system's own routing decisions, so the model learned that system's errors and evaluation scored them as correct.
+
+</details>
+
+<details>
+<summary>3. What should a datasheet record?</summary>
+
+The collection window, filters, deduplication method and its effect on volume, split strategy, label source and known biases.
+
+</details>
 

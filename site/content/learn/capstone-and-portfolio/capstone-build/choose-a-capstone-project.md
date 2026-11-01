@@ -58,12 +58,24 @@ They fork the project at the pinned revision. Before adding features they write 
 
 ## Check Yourself
 
-1. **Where do the runnable implementations live?**
-   In the split projects repository, `Sourav692/ai-engineering-demystified-14-projects`, not in this repository.
+<details>
+<summary>1. Where do the runnable implementations live?</summary>
 
-2. **Which companion project matches customer-support agents?**
-   `projects/02_retrieval_agent_projects/05_ai_powered_customer_support/`.
+In the split projects repository, `Sourav692/ai-engineering-demystified-14-projects`, not in this repository.
 
-3. **What separates a capstone from a demo?**
-   An evaluation: evidence of how often the system works and how it fails, with each claim marked as demonstrated or asserted.
+</details>
+
+<details>
+<summary>2. Which companion project matches customer-support agents?</summary>
+
+`projects/02_retrieval_agent_projects/05_ai_powered_customer_support/`.
+
+</details>
+
+<details>
+<summary>3. What separates a capstone from a demo?</summary>
+
+An evaluation: evidence of how often the system works and how it fails, with each claim marked as demonstrated or asserted.
+
+</details>
 

@@ -114,12 +114,24 @@ Walked mechanically, this is a checklist. Walked well, it guarantees no silent q
 
 ## Check Yourself
 
-1. **Why is "highly available" not a usable requirement?**
-   It has no number, so no design can be judged against it. "99.99% with a 5-minute RTO" is a constraint that rules designs in or out.
+<details>
+<summary>1. Why is "highly available" not a usable requirement?</summary>
 
-2. **How do you derive peak requests per second from daily active users?**
-   Multiply DAU by actions per user per day, divide by 86,400, then multiply by a 2–5× peak factor. Then split reads from writes.
+It has no number, so no design can be judged against it. "99.99% with a 5-minute RTO" is a constraint that rules designs in or out.
 
-3. **Why does the business problem matter in part 1?**
-   It is what later justifies consistency choices. Revenue at stake on bookings argues for strong consistency; a recommendation feed can tolerate eventual consistency.
+</details>
+
+<details>
+<summary>2. How do you derive peak requests per second from daily active users?</summary>
+
+Multiply DAU by actions per user per day, divide by 86,400, then multiply by a 2–5× peak factor. Then split reads from writes.
+
+</details>
+
+<details>
+<summary>3. Why does the business problem matter in part 1?</summary>
+
+It is what later justifies consistency choices. Revenue at stake on bookings argues for strong consistency; a recommendation feed can tolerate eventual consistency.
+
+</details>
 

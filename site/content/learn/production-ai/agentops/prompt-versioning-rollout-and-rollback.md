@@ -97,12 +97,24 @@ The bad change reached 5% of users for a short time and cost nothing to undo. Th
 
 ## Check Yourself
 
-1. **Why is a prompt change a deployment rather than a config tweak?**
-   It changes the behaviour of a system that may move money or answer contractual questions, so it needs versioning, gates, staging and rollback.
+<details>
+<summary>1. Why is a prompt change a deployment rather than a config tweak?</summary>
 
-2. **Distinguish shadow from canary by the risk each exposes a real user to.**
-   Shadow exposes nobody, because its outputs are only logged. Canary exposes a bounded slice of real users to the new version.
+It changes the behaviour of a system that may move money or answer contractual questions, so it needs versioning, gates, staging and rollback.
 
-3. **Why split an A/B test per user rather than per request?**
-   So one person's experience does not flicker between versions mid-conversation, which would confuse users and muddy the outcome metrics.
+</details>
+
+<details>
+<summary>2. Distinguish shadow from canary by the risk each exposes a real user to.</summary>
+
+Shadow exposes nobody, because its outputs are only logged. Canary exposes a bounded slice of real users to the new version.
+
+</details>
+
+<details>
+<summary>3. Why split an A/B test per user rather than per request?</summary>
+
+So one person's experience does not flicker between versions mid-conversation, which would confuse users and muddy the outcome metrics.
+
+</details>
 

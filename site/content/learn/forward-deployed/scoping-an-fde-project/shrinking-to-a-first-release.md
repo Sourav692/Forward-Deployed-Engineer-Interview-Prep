@@ -61,12 +61,24 @@ The six-week MVP is permission-aware chat over the documents, with enough analyt
 
 ## Check Yourself
 
-1. **What makes a release an MVP rather than a rushed product?**
-   It serves a defined group, is safe to run, and answers a real question. It is narrow in scope, not careless in quality.
+<details>
+<summary>1. What makes a release an MVP rather than a rushed product?</summary>
 
-2. **When should a manual step be automated?**
-   When volume or error rates justify it. Until then it needs an owner, a safe process and a measure of its workload.
+It serves a defined group, is safe to run, and answers a real question. It is narrow in scope, not careless in quality.
 
-3. **Why build community features after testing whether people want interview feedback?**
-   Feedback is the riskiest assumption. If it fails, the community features have no reason to exist.
+</details>
+
+<details>
+<summary>2. When should a manual step be automated?</summary>
+
+When volume or error rates justify it. Until then it needs an owner, a safe process and a measure of its workload.
+
+</details>
+
+<details>
+<summary>3. Why build community features after testing whether people want interview feedback?</summary>
+
+Feedback is the riskiest assumption. If it fails, the community features have no reason to exist.
+
+</details>
 

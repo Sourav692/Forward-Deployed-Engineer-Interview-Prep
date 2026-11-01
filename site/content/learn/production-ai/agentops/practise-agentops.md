@@ -77,12 +77,24 @@ The answer never says "we are careful". It names a gate at each step, which is w
 
 ## Check Yourself
 
-1. **Name the gate at each step of the release pipeline, in order.**
-   Unit and prompt tests; golden-set evaluation with safety at zero and no quality regression; shadow; canary with auto-rollback; pointer-flip promotion; nightly evaluation, monitoring and weekly red team.
+<details>
+<summary>1. Name the gate at each step of the release pipeline, in order.</summary>
 
-2. **Why does the high-clearance contractor persona matter for red teaming?**
-   It exercises rules that an anonymous or low-privilege attacker would never reach, such as the external-user block.
+Unit and prompt tests; golden-set evaluation with safety at zero and no quality regression; shadow; canary with auto-rollback; pointer-flip promotion; nightly evaluation, monitoring and weekly red team.
 
-3. **Why answer a release question generically before naming any vendor's tools?**
-   Leading with vendor names reads as name-dropping; leading with the architecture and then grounding it reads as someone who shipped it.
+</details>
+
+<details>
+<summary>2. Why does the high-clearance contractor persona matter for red teaming?</summary>
+
+It exercises rules that an anonymous or low-privilege attacker would never reach, such as the external-user block.
+
+</details>
+
+<details>
+<summary>3. Why answer a release question generically before naming any vendor's tools?</summary>
+
+Leading with vendor names reads as name-dropping; leading with the architecture and then grounding it reads as someone who shipped it.
+
+</details>
 

@@ -93,18 +93,38 @@ The kit is now complete, and no format has been chosen yet. [The Timed Deep-Dive
 
 ## Check Yourself
 
-1. **State the meta-rule and give an example of a term translated in the same breath.**
-   Every technical term is translated as it is introduced. Example: "a two-layer access control system — think a fast ID check at the door, then a more careful check right before anything sensitive is handed over."
+<details>
+<summary>1. State the meta-rule and give an example of a term translated in the same breath.</summary>
 
-2. **You cannot write the cold-open sentence for a project. What does that tell you?**
-   That the hard part of the project has not been found yet.
+Every technical term is translated as it is introduced. Example: "a two-layer access control system — think a fast ID check at the door, then a more careful check right before anything sensitive is handed over."
 
-3. **Why are the beats the reusable unit, rather than a script?**
-   Each beat stands alone, so the same beats can be laid out against a clock for a deep-dive or deployed in any order in a conversation.
+</details>
 
-4. **Why is the follow-up map organised by topic rather than by time?**
-   Because the listener steers the order. A timeline assumes a sequence the conversation will not follow.
+<details>
+<summary>2. You cannot write the cold-open sentence for a project. What does that tell you?</summary>
 
-5. **What closing lines should the kit carry?**
-   One per likely final thread, such as security and trust, platform and deployment, and limitations and what comes next, plus a generic fallback.
+That the hard part of the project has not been found yet.
+
+</details>
+
+<details>
+<summary>3. Why are the beats the reusable unit, rather than a script?</summary>
+
+Each beat stands alone, so the same beats can be laid out against a clock for a deep-dive or deployed in any order in a conversation.
+
+</details>
+
+<details>
+<summary>4. Why is the follow-up map organised by topic rather than by time?</summary>
+
+Because the listener steers the order. A timeline assumes a sequence the conversation will not follow.
+
+</details>
+
+<details>
+<summary>5. What closing lines should the kit carry?</summary>
+
+One per likely final thread, such as security and trust, platform and deployment, and limitations and what comes next, plus a generic fallback.
+
+</details>
 

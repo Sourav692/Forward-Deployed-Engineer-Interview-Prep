@@ -82,12 +82,24 @@ Each fix is an interface fix: a clearer description that says when not to use th
 
 ## Check Yourself
 
-1. **Name the five reasons a tool call can fail. Which one is a model problem?**
-   Wrong tool, right tool with bad arguments, a call that looked valid but was not, a result too large or messy to use, and a plain model mistake. Only the last is the model's fault.
+<details>
+<summary>1. Name the five reasons a tool call can fail. Which one is a model problem?</summary>
 
-2. **Why is `destructive` a field on `Tool` rather than a check the brain performs?**
-   The decision is made once, at registration. A brain that is wrong cannot be relied on to notice it is about to do something irreversible, so the loop enforces the flag instead.
+Wrong tool, right tool with bad arguments, a call that looked valid but was not, a result too large or messy to use, and a plain model mistake. Only the last is the model's fault.
 
-3. **What does "the model chose a tool" mean mechanically?**
-   The model was shown the registry's `specs()` list of names, descriptions and flags, and emitted one tool's name plus arguments.
+</details>
+
+<details>
+<summary>2. Why is <code>destructive</code> a field on <code>Tool</code> rather than a check the brain performs?</summary>
+
+The decision is made once, at registration. A brain that is wrong cannot be relied on to notice it is about to do something irreversible, so the loop enforces the flag instead.
+
+</details>
+
+<details>
+<summary>3. What does "the model chose a tool" mean mechanically?</summary>
+
+The model was shown the registry's `specs()` list of names, descriptions and flags, and emitted one tool's name plus arguments.
+
+</details>
 

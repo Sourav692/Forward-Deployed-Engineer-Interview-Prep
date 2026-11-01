@@ -110,12 +110,24 @@ To reach 5 / 5, add concrete numbers from the customer's baseline and propose a 
 
 ## Check Yourself
 
-1. **What must the copilot never do, according to the strong answer?**
-   Claim a root cause without supporting telemetry.
+<details>
+<summary>1. What must the copilot never do, according to the strong answer?</summary>
 
-2. **What is the latency target for the first summary, and how is it met?**
-   Under 30 seconds, with incremental updates, parallel log and metric queries, bounded lookback windows and preindexed runbooks.
+Claim a root cause without supporting telemetry.
 
-3. **In what order does the strong rollout proceed?**
-   Shadow summaries on historical incidents, live read-only summaries, then approved low-risk actions such as a Jira ticket or a rollback recommendation. Auto-remediation does not come first.
+</details>
+
+<details>
+<summary>2. What is the latency target for the first summary, and how is it met?</summary>
+
+Under 30 seconds, with incremental updates, parallel log and metric queries, bounded lookback windows and preindexed runbooks.
+
+</details>
+
+<details>
+<summary>3. In what order does the strong rollout proceed?</summary>
+
+Shadow summaries on historical incidents, live read-only summaries, then approved low-risk actions such as a Jira ticket or a rollback recommendation. Auto-remediation does not come first.
+
+</details>
 

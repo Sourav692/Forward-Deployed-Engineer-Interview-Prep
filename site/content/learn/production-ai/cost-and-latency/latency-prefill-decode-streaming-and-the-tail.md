@@ -83,12 +83,24 @@ Prefill stays short because the prompt is small. Decode stays short because the 
 
 ## Check Yourself
 
-1. **Users say the screen freezes before any text appears. Where do you look first?**
-   At prefill: prompt size, retrieval time before generation, and queueing. Output length does not affect first-token time.
+<details>
+<summary>1. Users say the screen freezes before any text appears. Where do you look first?</summary>
 
-2. **Why must the "can I answer?" decision come before streaming starts?**
-   Retracting a partly streamed answer is a worse experience than a clean up-front refusal.
+At prefill: prompt size, retrieval time before generation, and queueing. Output length does not affect first-token time.
 
-3. **A cheaper model halves the cost per request but doubles retries and human corrections. Is it cheaper?**
-   Not necessarily. Compare cost per successful task, which includes the extra turns, retries and corrections.
+</details>
+
+<details>
+<summary>2. Why must the "can I answer?" decision come before streaming starts?</summary>
+
+Retracting a partly streamed answer is a worse experience than a clean up-front refusal.
+
+</details>
+
+<details>
+<summary>3. A cheaper model halves the cost per request but doubles retries and human corrections. Is it cheaper?</summary>
+
+Not necessarily. Compare cost per successful task, which includes the extra turns, retries and corrections.
+
+</details>
 

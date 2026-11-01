@@ -76,12 +76,24 @@ The user got a smaller, honest answer instead of an exception or a confident gue
 
 ## Check Yourself
 
-1. **Why must an agent's circuit breaker not trip on consecutive failures?**
-   Agent traffic is bursty, so a consecutive-failure trigger either trips constantly or never trips. A windowed rate with a minimum sample is stable.
+<details>
+<summary>1. Why must an agent's circuit breaker not trip on consecutive failures?</summary>
 
-2. **What makes the trifecta guard enforceable?**
-   Provenance tagging. Policy can only refuse a dangerous combination if it knows where each piece of content came from.
+Agent traffic is bursty, so a consecutive-failure trigger either trips constantly or never trips. A windowed rate with a minimum sample is stable.
 
-3. **What does a degradation ladder disclose, and why?**
-   The rung selected, to the user and as a span attribute. That makes degraded traffic visible instead of silent.
+</details>
+
+<details>
+<summary>2. What makes the trifecta guard enforceable?</summary>
+
+Provenance tagging. Policy can only refuse a dangerous combination if it knows where each piece of content came from.
+
+</details>
+
+<details>
+<summary>3. What does a degradation ladder disclose, and why?</summary>
+
+The rung selected, to the user and as a span attribute. That makes degraded traffic visible instead of silent.
+
+</details>
 

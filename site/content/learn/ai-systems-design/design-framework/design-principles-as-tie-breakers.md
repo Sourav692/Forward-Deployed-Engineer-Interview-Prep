@@ -110,12 +110,24 @@ That is the job of a principle in a design round. It is a tie-breaker that can b
 
 ## Check Yourself
 
-1. **Which principle argues against a multi-agent architecture as a starting point, and why?**
-   Simplicity. Complexity must be earned by a requirement, and a single agent is easier to test and debug and gives a clean baseline.
+<details>
+<summary>1. Which principle argues against a multi-agent architecture as a starting point, and why?</summary>
 
-2. **Why are security, observability, reliability, cost and maintainability not a seventh SCALED spoke?**
-   They apply to every one of the six goals. They form an outer ring, a lens applied to each spoke.
+Simplicity. Complexity must be earned by a requirement, and a single agent is easier to test and debug and gives a clean baseline.
 
-3. **Give the fault-tolerance application for a RAG pipeline.**
-   If reranking fails, return the retrieved documents in their original order instead of failing the whole request.
+</details>
+
+<details>
+<summary>2. Why are security, observability, reliability, cost and maintainability not a seventh SCALED spoke?</summary>
+
+They apply to every one of the six goals. They form an outer ring, a lens applied to each spoke.
+
+</details>
+
+<details>
+<summary>3. Give the fault-tolerance application for a RAG pipeline.</summary>
+
+If reranking fails, return the retrieved documents in their original order instead of failing the whole request.
+
+</details>
 

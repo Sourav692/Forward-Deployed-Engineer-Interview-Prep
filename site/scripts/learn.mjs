@@ -530,6 +530,26 @@ function rewriteLinks(markdown, sourceFile, ctx) {
 /** A source's own "◷ 5 min" line, which the computed reading time replaces. */
 export const stripClockLine = (markdown) => markdown.replace(/^◷ \d+ min[ \t]*\n(?:[ \t]*\n)?/gm, '')
 
+const escapeHtml = (text) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
+/**
+ * A lesson's "## Check Yourself" list (`1. **Question?**` with the answer indented under it)
+ * as reveal blocks, so each answer stays hidden until opened, as on the course lessons (CT-13).
+ * The question becomes the summary; code spans in it stay code.
+ */
+export function hideCheckAnswers(markdown) {
+  return markdown.replace(/^(## Check Yourself\n)([\s\S]*?)(?=^## |(?![\s\S]))/m, (_, heading, body) => {
+    const items = [...body.matchAll(/^(\d+)\. \*\*(.+?)\*\*[ \t]*\n((?:[ \t]+.*\n?|[ \t]*\n)*)/gm)]
+    if (!items.length) return heading + body
+    const blocks = items.map(([, n, question, answer]) => {
+      const summary = escapeHtml(question).replace(/`([^`]+)`/g, '<code>$1</code>')
+      const text = answer.replace(/^[ \t]+/gm, '').trim()
+      return `<details>\n<summary>${n}. ${summary}</summary>\n\n${text}\n\n</details>`
+    })
+    return `${heading}\n${blocks.join('\n\n')}\n\n`
+  })
+}
+
 /** Fails if a lesson key present in the previous manifest has gone without a RENAMED entry. */
 export function slugGuard(previous, current) {
   const now = new Set(current.map((l) => `${l.module}/${l.slug}`))
@@ -637,7 +657,7 @@ export async function syncLearn({ repoRoot, outDir, snapshotDir, liveUrls, liveM
       manifest.push(entry)
       continue
     }
-    let body = stripRepoReferences(normaliseHeadings(stripClockLine(source), entry.title))
+    let body = hideCheckAnswers(stripRepoReferences(normaliseHeadings(stripClockLine(source), entry.title)))
     body = unlinkRepoLinks(rewriteLinks(body, md, { ...ctx, self: lesson.sections ? slice : null }))
     body = sanitise(body)
     const out = join(learnDir, mod.track, mod.slug, `${lesson.slug}.md`)

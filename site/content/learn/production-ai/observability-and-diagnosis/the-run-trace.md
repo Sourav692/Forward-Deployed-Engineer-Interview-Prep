@@ -81,12 +81,24 @@ One record gave three teams their answer. The cost-by-purpose field told the eng
 
 ## Check Yourself
 
-1. **Name the three audiences of a run trace and one question each asks.**
-   The engineer: which step produced this bad answer? The auditor: did this user ever see that document? Finance: which tenant is burning the budget?
+<details>
+<summary>1. Name the three audiences of a run trace and one question each asks.</summary>
 
-2. **What does a non-empty `filter_disagreements` field mean, and what should happen?**
-   The second enforcement layer denied something the index filter should have caught, so the index is stale or the filter is broken. It should raise an alert, not sit in a log.
+The engineer: which step produced this bad answer? The auditor: did this user ever see that document? Finance: which tenant is burning the budget?
 
-3. **Why is cost tallied by purpose and not only in total?**
-   A total cannot tell you what to change. A per-purpose split shows, for example, that the reranker is 60% of the cost, which justifies replacing it.
+</details>
+
+<details>
+<summary>2. What does a non-empty <code>filter_disagreements</code> field mean, and what should happen?</summary>
+
+The second enforcement layer denied something the index filter should have caught, so the index is stale or the filter is broken. It should raise an alert, not sit in a log.
+
+</details>
+
+<details>
+<summary>3. Why is cost tallied by purpose and not only in total?</summary>
+
+A total cannot tell you what to change. A per-purpose split shows, for example, that the reranker is 60% of the cost, which justifies replacing it.
+
+</details>
 
