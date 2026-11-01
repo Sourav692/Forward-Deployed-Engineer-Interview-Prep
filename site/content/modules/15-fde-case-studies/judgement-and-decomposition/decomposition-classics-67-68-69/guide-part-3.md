@@ -77,7 +77,7 @@ In all three cases the levels split on reach: the data and the lever at Senior, 
 |---|---|---|
 | Senior | Ships a single investigator queue on entity resolution, then a shadow model on one fraud type, and treats unlabelled cases as unknown, not legitimate. | The label is three teams' definitions, so reconciliation needs owners and a sign-off as well as a script. |
 | Staff | Makes label reconciliation a workstream signed by senior investigators, gates each phase of the 90 days, and lets nothing change a decision until model risk signs. | What happens to the three legacy systems and their teams after day 90. |
-| Principal | Frames the reconciled label as a bank-wide asset: one fraud definition, a reusable holdout, and a path to retire legacy rules as validated models earn trust. | Which system retires first depends on [losses by system] and vendor terms the design cannot see. |
+| Principal | Frames the reconciled label as a bank-wide asset: one fraud definition, a reusable holdout, and a path to retire legacy rules as validated models earn trust. | Which system retires first depends on each system's fraud losses and vendor terms the design cannot see. |
 
 ### Fewer Medication Errors
 
@@ -85,7 +85,7 @@ In all three cases the levels split on reach: the data and the lever at Senior, 
 |---|---|---|
 | Senior | Reconciles ordered, dispensed and administered doses retrospectively, with weight-based and time-window rules that pharmacists review for precision. | Alert fatigue and governance: who approves thresholds, and how many alerts a nurse can take per shift. |
 | Staff | Brings in the pharmacy and therapeutics committee, caps alerts per nurse per shift, pilots one ward against a matched ward, and keeps schedules aggregated by ward and shift. | Whether software is the right fix at all when administration records are missing. |
-| Principal | Says plainly that bedside scanning may beat any model, protects honest incident reporting, and plans how flags spread across the network's wards. | The rollout order needs each ward's [baseline error rate], which only the first slice produces. |
+| Principal | Says plainly that bedside scanning may beat any model, protects honest incident reporting, and plans how flags spread across the network's wards. | The rollout order needs each ward's baseline error rate, which only the first slice produces. |
 
 ## Key Takeaways
 
