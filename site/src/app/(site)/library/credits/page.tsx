@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getLearnManifest, getModuleBySlug, inlineHtml, learnHref, type LearnLesson } from '@/lib/learn'
 import type { Rights } from '@/lib/curriculum-types'
+import { RAG_COURSE_URL } from '@/lib/editorial'
+import { RAG_TRACKS } from '@/lib/rag-tracks'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { Breadcrumbs } from '@/components/learn/Breadcrumbs'
@@ -68,6 +70,22 @@ export default function CreditsPage() {
       </header>
 
       <div className="flex max-w-3xl flex-col gap-6">
+        <section className="rounded-lg border border-border bg-surface p-4 sm:p-5">
+          <h2 className="text-base font-semibold leading-snug">
+            <a href={RAG_COURSE_URL} className={link}>
+              RAG &amp; Agents Engineering
+            </a>
+            , the author&apos;s own open-source course
+          </h2>
+          <p className="mt-1 text-[0.8125rem] text-subtle">
+            {RAG_TRACKS.length} tracks of the <Link href="/learn/topics/ai-engineering" className={link}>AI Engineering group</Link> ·{' '}
+            <span className="font-semibold text-text">Status: Licensed (MIT)</span>
+          </p>
+          <p className="mt-3 text-[0.9375rem] leading-snug text-muted">
+            Its lessons, labs and diagrams appear here as written, and each lesson links to the course&apos;s runnable
+            notebooks.
+          </p>
+        </section>
         {groups.map((group) => (
           <section key={group.credit} className="rounded-lg border border-border bg-surface p-4 sm:p-5">
             <h2
