@@ -472,9 +472,9 @@ function cleanFillText(value: string): string {
 }
 
 /**
- * Behavioral answer keys were written by experienced FDEs and contain useful detail,
- * but their original vocabulary assumes customer-facing delivery experience. This keeps
- * the evidence while translating the terms a newer candidate is least likely to know.
+ * Renames the STAR labels in behavioural answer keys to plain questions. The answer's own
+ * words stay as written: swapping a word can break the article before it ("a governed
+ * set" became "a approved and controlled set").
  */
 function plainLanguageText(value: string): string {
   return value
@@ -485,29 +485,6 @@ function plainLanguageText(value: string): string {
     .replace(/\bWhy it lands\./g, 'Why an interviewer likes this answer.')
     .replace(/\bThe trap\./g, 'Watch out.')
     .replace(/\bAnchor\b/g, 'Real example')
-    .replace(/\bengagements\b/gi, 'customer projects')
-    .replace(/\bengagement\b/gi, 'customer project')
-    .replace(/\bstakeholders\b/gi, 'people involved')
-    .replace(/\bstakeholder\b/gi, 'person involved')
-    .replace(/\bscope creep\b/gi, 'extra work being added')
-    .replace(/\bscoping\b/gi, 'agreeing the work')
-    .replace(/\bgovernance\b/gi, 'safety')
-    .replace(/\bgoverned\b/gi, 'approved and controlled')
-    .replace(/\brollout\b/gi, 'launch')
-    .replace(/\barchitecture\b/gi, 'system plan')
-    .replace(/\btradeoff\b/gi, 'choice and its downside')
-    .replace(/\bsupervised autonomy\b/gi, 'a person checks important decisions')
-    .replace(/\bfull autonomy\b/gi, 'fully automated decisions')
-    .replace(/\bobservability\b/gi, 'tracking')
-    .replace(/\btraceability\b/gi, 'a clear record of what happened')
-    .replace(/\bescalation surface\b/gi, 'impact if it fails')
-    .replace(/\beconomic buyer\b/gi, 'person who owns the budget')
-    .replace(/\btechnical buyer\b/gi, 'person who will use or run the system')
-    .replace(/\bMVP\b/g, 'first useful version')
-    .replace(/\bRCA\b/g, 'root-cause analysis')
-    .replace(/\bPII\b/g, 'personal data')
-    .replace(/\bdemonstrable consumption and ROI\b/gi, 'whether the investment was being used and delivering value')
-    .replace(/\bconstrained rollout\b/gi, 'safe first launch')
 }
 
 /**
