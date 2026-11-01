@@ -56,7 +56,7 @@ flowchart TD
     Q2 -- yes --> F2["Fast model<br/>or plain code"]
     Q2 -- no --> Q3{"Is a wrong answer<br/>cheap to absorb?"}
     Q3 -- yes --> F3["Fast model,<br/>sample and check"]
-    Q3 -- no --> RM["Reasoning model<br/>set effort, lesson 2.4"]
+    Q3 -- no --> RM["Reasoning model<br/>set effort, lesson 4 of T2.2"]
 ```
 
 For the Larkspur generator:

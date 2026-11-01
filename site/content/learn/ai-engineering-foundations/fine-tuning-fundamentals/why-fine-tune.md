@@ -19,9 +19,9 @@ For the Larkspur support assistant the split is clear. *How long does a refund t
 
 ```mermaid
 flowchart TD
-    A{"Does a clear prompt<br/>with examples work?"} -- yes --> P["Prompt it<br/>M05"]
+    A{"Does a clear prompt<br/>with examples work?"} -- yes --> P["Prompt it<br/>T3.1"]
     A -- no --> B{"Is the gap a fact<br/>that changes?"}
-    B -- yes --> R["Retrieve it<br/>M11"]
+    B -- yes --> R["Retrieve it<br/>T5.1"]
     B -- no --> C{"Is it behaviour you<br/>can show in examples?"}
     C -- yes --> F["Fine-tune<br/>this module"]
     C -- no --> D["Define the task<br/>before training"]

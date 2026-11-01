@@ -79,7 +79,7 @@ The running example is the Larkspur Cloud handbook from [T5.1](../../p04_rag_fou
     <li><button type="button">Fuse</button><span>Fusion merges the two lists into one, by rank (RRF) or by normalised score. Both first places can now sit near the top.</span></li>
     <li><button type="button">Filter</button><span>Metadata and score filters drop chunks that cannot be right, such as a superseded policy.</span></li>
     <li><button type="button">Diversify</button><span>MMR replaces near-copies of a chunk already chosen with chunks that add something new.</span></li>
-    <li><button type="button">Top-k</button><span>The top k chunks go to the model, or to a reranker first (M19).</span></li>
+    <li><button type="button">Top-k</button><span>The top k chunks go to the model, or to a reranker first (T7.3).</span></li>
   </ol>
 </figure>
 ```

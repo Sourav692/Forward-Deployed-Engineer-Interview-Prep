@@ -9,7 +9,7 @@ A2A has two reply shapes, and the executor decides which one a caller gets:
 
 | Reply | When the executor produces it | Where the answer is | Can the client poll it? |
 |---|---|---|---|
-| Message (`"kind": "message"`) | It enqueues one agent message and nothing else, as the echo agent in 41.1 does | `result.parts` | No: `tasks/get` answers -32001, Task not found |
+| Message (`"kind": "message"`) | It enqueues one agent message and nothing else, as the echo agent in lesson 1 of T12.4 does | `result.parts` | No: `tasks/get` answers -32001, Task not found |
 | Task (`"kind": "task"`) | It enqueues a Task, then status updates through a `TaskUpdater`, as notebook 2 of T12.4 does | `result.status.message`, plus `artifacts` if the agent publishes any | Yes, by its `id`, for as long as the task store keeps it |
 
 A Message suits a one-shot answer. A Task suits anything that takes time, can fail halfway, or needs another turn from the caller.

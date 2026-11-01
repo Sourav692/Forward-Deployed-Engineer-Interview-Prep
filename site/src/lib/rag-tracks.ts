@@ -105,7 +105,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "llm-and-retrieval",
     "code": "T5",
     "title": "RAG Foundations",
-    "objective": "Why retrieval exists, the four stages of a pipeline, and a baseline you will measure every later change against",
+    "objective": "Why retrieval exists, the RAG lifecycle from indexing to generation, and a baseline you will measure every later change against",
     "forWhom": "All technical paths",
     "prerequisites": [
       "langchain-and-langgraph-fundamentals"
@@ -233,7 +233,7 @@ export const RAG_TRACKS: CurriculumTrack[] = [
     "slug": "agentic-systems",
     "code": "T9",
     "title": "Agent Foundations for RAG",
-    "objective": "The agent loop, tools, ReAct, the five workflow patterns, planning and reflection. Agentic RAG in Part IX is built from exactly these parts",
+    "objective": "The agent loop, tools, ReAct, the five workflow patterns, planning and reflection. Agentic RAG in T10 is built from exactly these parts",
     "forWhom": "All technical paths",
     "prerequisites": [
       "complete-rag-applications"
@@ -1267,7 +1267,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "objective": "Map LangChain concepts to LlamaIndex (Document/Node, Retriever, QueryEngine, NodePostprocessor)",
     "scope": "Practice time includes about 2 h of notebook work on GitHub",
     "prerequisites": [],
-    "deliverable": "Port one of your Part VI pipelines (hybrid + rerank) to LlamaIndex and confirm the metrics match.",
+    "deliverable": "Port one of your T7 pipelines (hybrid + rerank) to LlamaIndex and confirm the metrics match.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "You port Larkspur's hybrid retriever to LlamaIndex: a FAISS `IndexFlatL2` vector store and BM25, fused with `QueryFusionRetriever(mode=\"relative_score\")`. The fused top result is now the least relevant handbook passage. What happened?",
     "commonMistakes": [
@@ -1296,7 +1296,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "objective": "Implement reflection, tool use and ReAct-style planning with raw API calls and no framework",
     "scope": "Practice time includes about 4 h of notebook work on GitHub",
     "prerequisites": [],
-    "deliverable": "Retriever as a tool, by hand: wrap your Part VII retriever as a tool, run it through your own tool loop with no framework, and log every tool call and error.",
+    "deliverable": "Retriever as a tool, by hand: wrap your T8 retriever as a tool, run it through your own tool loop with no framework, and log every tool call and error.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support agent returns a 500 whenever a customer mistypes a server name (\"Is web-9 up?\"). The logs show `ValueError: Unknown server 'web-9'`. The tool works for valid names. What is wrong, and what do you change?",
     "commonMistakes": [
@@ -1338,7 +1338,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "objective": "Build a ReAct agent in LangGraph and explain how it differs from single-shot tool calling",
     "scope": "Practice time includes about 4 h of notebook work on GitHub",
     "prerequisites": [],
-    "deliverable": "ReAct research agent: give a `create_agent` agent your RAG retriever and a web-search tool, add a middleware that blocks off-topic questions, and compare its answers with your Part VII system.",
+    "deliverable": "ReAct research agent: give a `create_agent` agent your RAG retriever and a web-search tool, add a middleware that blocks off-topic questions, and compare its answers with your T8 system.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support agent cost three times as much yesterday as the day before. Traces show some runs making a dozen `search_handbook` calls with reworded queries before giving up. What do you check, and what do you change?",
     "commonMistakes": [
@@ -1570,7 +1570,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "objective": "Wrap a retriever as a LangGraph tool",
     "scope": "Practice time includes about 3.5 h of notebook work on GitHub",
     "prerequisites": [],
-    "deliverable": "Grader loop: add a relevance grader and a two-retry rewrite loop to your Part VII system and log how often each path fires on the golden set.",
+    "deliverable": "Grader loop: add a relevance grader and a two-retry rewrite loop to your T8 system and log how often each path fires on the golden set.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "A week after the Larkspur handbook moved to a new document system, the support assistant's LLM bill doubled while traffic stayed flat. Traces show most questions now making three retrievals. What happened, and what do you check first?",
     "commonMistakes": [
@@ -1919,7 +1919,7 @@ export const RAG_MODULES: CurriculumModule[] = [
     "objective": "Go from a tool-calling chatbot to an MCP server and client",
     "scope": "Practice time includes about 4 h of notebook work on GitHub",
     "prerequisites": [],
-    "deliverable": "Retriever over MCP: expose your Part VII retriever as an MCP tool and call it from an MCP client chatbot.",
+    "deliverable": "Retriever over MCP: expose your T8 retriever as an MCP tool and call it from an MCP client chatbot.",
     "assessment": "Answer the five Interview questions without notes, then run the lab.",
     "interviewProbe": "Larkspur's support bot connects to a filesystem server rooted at the project folder. Someone adds a second filesystem server rooted at `./handbook`. Now the bot says files it read yesterday “do not exist”. How do you find the cause?",
     "commonMistakes": [

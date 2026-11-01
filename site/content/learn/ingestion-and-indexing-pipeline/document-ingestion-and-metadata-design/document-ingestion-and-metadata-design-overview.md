@@ -20,7 +20,7 @@ The running example is page 7 of the Larkspur Cloud customer handbook: two colum
   <div class="anim__canvas" tabindex="0" aria-label="The ingestion pipeline, scrolls sideways on a narrow screen">
     <svg viewBox="0 0 800 352" role="img" aria-labelledby="anim-ingest-title anim-ingest-desc">
       <title id="anim-ingest-title">The ingestion pipeline</title>
-      <desc id="anim-ingest-desc">A blob loader fetches the handbook PDF as bytes with a mimetype and source, and a parser turns the bytes into Documents with text and metadata. Page 7 becomes 1 Document with PyPDF or 10 with Unstructured in element mode. The Documents are validated for counts, lengths and empty text, then go to the splitter in M13.</desc>
+      <desc id="anim-ingest-desc">A blob loader fetches the handbook PDF as bytes with a mimetype and source, and a parser turns the bytes into Documents with text and metadata. Page 7 becomes 1 Document with PyPDF or 10 with Unstructured in element mode. The Documents are validated for counts, lengths and empty text, then go to the splitter in T6.2.</desc>
       <defs>
         <marker id="ah-ingest" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 0 L8 4 L0 8 z"/></marker>
       </defs>
@@ -66,7 +66,7 @@ The running example is page 7 of the Larkspur Cloud customer handbook: two colum
       <path class="edge e-6" d="M210 256 H287" marker-end="url(#ah-ingest)"/>
       <path class="edge e-7" d="M440 256 H517" marker-end="url(#ah-ingest)"/>
       <path class="edge dashed e-7" d="M650 256 H737" marker-end="url(#ah-ingest)"/>
-      <text class="small" x="762" y="256">M13</text>
+      <text class="small" x="762" y="256">T6.2</text>
 
       <g class="in-5">
         <text class="small" x="125" y="298">page 7 becomes</text>
@@ -97,7 +97,7 @@ The running example is page 7 of the Larkspur Cloud customer handbook: two colum
     <li><button type="button">Parse</button><span>The parser turns bytes into text and structure. Layout, tables and headers are kept or lost here.</span></li>
     <li><button type="button">Documents</button><span>Out come Documents: page 7 gives 1 with PyPDF and 10 with Unstructured in element mode.</span></li>
     <li><button type="button">Validate</button><span>Count Documents per source and look for empty or tiny text before anything is embedded.</span></li>
-    <li><button type="button">Split</button><span>The checked Documents go to the splitter in M13.</span></li>
+    <li><button type="button">Split</button><span>The checked Documents go to the splitter in T6.2.</span></li>
   </ol>
 </figure>
 ```

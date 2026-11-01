@@ -19,7 +19,7 @@ The running example is the Larkspur Cloud handbook that [T5.1](/learn/llm-and-re
 <figure class="anim sheet" aria-labelledby="anim-toolkit-cap">
   <div class="anim__canvas" tabindex="0" aria-label="The toolkit in one pipeline, scrolls sideways on a narrow screen">
     <svg viewBox="0 0 800 352" role="img" aria-labelledby="anim-toolkit-title anim-toolkit-desc">
-      <title id="anim-toolkit-title">The M01 toolkit in one small RAG run</title>
+      <title id="anim-toolkit-title">The T2.1 toolkit in one small RAG run</title>
       <desc id="anim-toolkit-desc">Tables in: pandas reads twelve handbook chunks from a CSV file into a DataFrame and cleans it, then asyncio sends the twelve embedding calls together. Vectors out: the vectors become one NumPy array of shape 12 by 384, one matrix product scores every chunk against a question and the top two are kept, and the run’s results go into a SQLite table.</desc>
       <defs>
         <marker id="ah-tk" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 0 L8 4 L0 8 z"/></marker>

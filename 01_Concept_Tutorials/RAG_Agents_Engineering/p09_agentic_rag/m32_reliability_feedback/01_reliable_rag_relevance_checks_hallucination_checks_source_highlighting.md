@@ -25,7 +25,7 @@ flowchart TD
     G -- no --> X[Dropped]
     G -- yes --> K[Kept chunks]
     K --> E{"Any kept?"}
-    E -- no --> RW["Rewrite or abstain<br/>(M28, M29)"]
+    E -- no --> RW["Rewrite or abstain<br/>(T10.1, T10.2)"]
     E -- yes --> A[Generate]
     A --> H{"Grounded in<br/>kept chunks?"}
     H -- no --> RG["Regenerate<br/>or abstain"]

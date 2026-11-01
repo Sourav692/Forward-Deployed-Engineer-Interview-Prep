@@ -89,7 +89,7 @@ The running example is the generator of the Larkspur Cloud support assistant fro
 </figure>
 ```
 
-The answer is the only part you read, and it is the smallest part you pay for. A fast model goes straight from messages to answer; a reasoning model spends tokens in the middle box first, and `usage` is the only place they show up. Lessons 2.3 and 2.4 are about deciding when that middle box is worth paying for.
+The answer is the only part you read, and it is the smallest part you pay for. A fast model goes straight from messages to answer; a reasoning model spends tokens in the middle box first, and `usage` is the only place they show up. Lessons 3 and 4 of T2.2 are about deciding when that middle box is worth paying for.
 
 ## Interactive lab
 
@@ -98,7 +98,7 @@ The answer is the only part you read, and it is the smallest part you pay for. A
 ## How it connects
 
 - **Before:** [T2.1](../m01_python_data_refresher/00_overview.md) sets up the Python and data tools these notebooks run on.
-- **Next:** [T2.3](../m03_hugging_face_models/00_overview.md) takes lesson 2 of T2.2's local pipeline further with Hugging Face models and Gradio demos. [T3.1](../../p02_prompt_engineering/m05_prompt_engineering_patterns/00_overview.md) turns these calls into prompt patterns; its chain-of-thought lesson is the prompt-side version of what a reasoning model does in training. [T4.1](../../p03_langchain_and_langgraph/m07_langchain_core/00_overview.md) wraps the same provider SDKs behind one LangChain chat-model interface. [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) records cost per question in its baseline row, and [T9.3](../../p08_agent_foundations/m25_agentic_workflow_patterns/00_overview.md) routes each request to a cheap or a reasoning tier at run time, which is lessons 2.3 and 2.4 applied per request.
+- **Next:** [T2.3](../m03_hugging_face_models/00_overview.md) takes lesson 2 of T2.2's local pipeline further with Hugging Face models and Gradio demos. [T3.1](../../p02_prompt_engineering/m05_prompt_engineering_patterns/00_overview.md) turns these calls into prompt patterns; its chain-of-thought lesson is the prompt-side version of what a reasoning model does in training. [T4.1](../../p03_langchain_and_langgraph/m07_langchain_core/00_overview.md) wraps the same provider SDKs behind one LangChain chat-model interface. [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) records cost per question in its baseline row, and [T9.3](../../p08_agent_foundations/m25_agentic_workflow_patterns/00_overview.md) routes each request to a cheap or a reasoning tier at run time, which is lessons 3 and 4 of T2.2 applied per request.
 
 ## Key Takeaways
 

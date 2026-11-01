@@ -86,7 +86,7 @@ The running example is a Larkspur Cloud customer who wants to cancel an annual p
     <li><button type="button" data-tok="430,150">Replan</button><span>The replanner rewrites that lookup from the reason it failed and keeps the other three.</span></li>
     <li><button type="button" data-tok="330,40">Retry</button><span>The rewritten search returns refund-window, and the remaining lookups pass their checks.</span></li>
     <li><button type="button" data-tok="650,40">Draft</button><span>The synthesizer writes from accepted results only. The lab counts 8 LLM calls and 5 searches for this run.</span></li>
-    <li><button type="button" data-tok="650,150">Verify</button><span>Each claim in the draft is checked in a fresh call that cannot see the draft (lesson 26.4), then the answer goes out.</span></li>
+    <li><button type="button" data-tok="650,150">Verify</button><span>Each claim in the draft is checked in a fresh call that cannot see the draft (lesson 4 of T9.4), then the answer goes out.</span></li>
   </ol>
 </figure>
 ```

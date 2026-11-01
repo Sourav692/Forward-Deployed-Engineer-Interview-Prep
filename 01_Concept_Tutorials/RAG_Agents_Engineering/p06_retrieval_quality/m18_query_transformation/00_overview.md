@@ -92,9 +92,9 @@ The running example is the Larkspur Cloud handbook from [T5.1](../../p04_rag_fou
     <button class="anim__btn" type="button" data-act="next">Next</button>
   </div>
   <ol class="anim__steps" id="anim-querypath-cap">
-    <li><button type="button">Question</button><span>A customer asks “What happens if my server goes down?” It shares no term with either evidence chunk in the M11 index.</span></li>
-    <li><button type="button">Route</button><span>A router picks where the question goes before any search runs. Here it is the reliability destination (lesson 18.7).</span></li>
-    <li><button type="button">Transform</button><span>An LLM writes five phrasings of the question with different vocabulary (lesson 18.3).</span></li>
+    <li><button type="button">Question</button><span>A customer asks “What happens if my server goes down?” It shares no term with either evidence chunk in the T5.1 index.</span></li>
+    <li><button type="button">Route</button><span>A router picks where the question goes before any search runs. Here it is the reliability destination (lesson 7 of T7.2).</span></li>
+    <li><button type="button">Transform</button><span>An LLM writes five phrasings of the question with different vocabulary (lesson 3 of T7.2).</span></li>
     <li><button type="button">Retrieve</button><span>Each variant retrieves its own top 4. Three reach <code>sla</code> and two reach <code>incidents</code>.</span></li>
     <li><button type="button">Merge</button><span>Reciprocal rank fusion with k = 60 merges the five lists into one: <code>reboot</code>, <code>sla</code>, <code>incidents</code>.</span></li>
     <li><button type="button">Generate</button><span>The top 3 reach the model with both evidence chunks among them, recall@3 1.00.</span></li>

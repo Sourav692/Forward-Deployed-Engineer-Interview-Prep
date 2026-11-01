@@ -5,7 +5,7 @@
 
 ## What LangChain replaces
 
-Lessons 11.2 and 11.3 built the index by hand: embed each chunk, keep the vectors in a NumPy array, fit `NearestNeighbors`, embed the question, look up its neighbours. Notebook 04a does the same work through two LangChain interfaces, `Embeddings` and `VectorStore`:
+Lessons 2 and 3 of T5.1 built the index by hand: embed each chunk, keep the vectors in a NumPy array, fit `NearestNeighbors`, embed the question, look up its neighbours. Notebook 04a does the same work through two LangChain interfaces, `Embeddings` and `VectorStore`:
 
 | Step | By hand (notebook 03a) | LangChain with Chroma (notebook 04a) |
 |---|---|---|

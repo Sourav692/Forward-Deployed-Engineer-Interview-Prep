@@ -50,7 +50,7 @@ Printing `input_variables` and the formatted messages once, before the first mod
 Examples in the prompt steer both the answer and its format. Notebook 05b puts nine labelled reviews into one template string; the classes keep examples as data instead:
 
 - `FewShotPromptTemplate` formats a list of example dicts with an `example_prompt` and adds a `suffix` holding the real input. Adding an example is appending a dict.
-- `FewShotChatMessagePromptTemplate` (optional notebook [`07e_prompt_templates_all.ipynb`](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/optional/07e_prompt_templates_all.ipynb)) turns each example into a human message and an AI reply, and slots the block into a `ChatPromptTemplate` between the system prompt and the question.
+- `FewShotChatMessagePromptTemplate` (optional notebook [Prompt templates all](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p03_langchain_and_langgraph/m07_langchain_core/optional/07e_prompt_templates_all.ipynb)) turns each example into a human message and an AI reply, and slots the block into a `ChatPromptTemplate` between the system prompt and the question.
 
 For Larkspur, one or two examples of a question, its passages and the exact JSON answer show the model the citation format better than a description of it. Examples written inside a template string need their braces doubled, as in notebook 05b.
 

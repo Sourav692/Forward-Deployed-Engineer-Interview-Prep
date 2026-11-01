@@ -9,15 +9,15 @@ Choosing an architecture is a chain of questions asked of the golden set. Each q
 flowchart TD
     Q1{"Plain RAG passes<br/>the golden set?"} -- yes --> A1["Ship it"]
     Q1 -- no --> Q2{"Evidence missing<br/>from the top k?"}
-    Q2 -- yes --> A2["Fix retrieval<br/>M14 to M19"]
+    Q2 -- yes --> A2["Fix retrieval<br/>T6.3 to T7.3"]
     Q2 -- no --> Q3{"Question spans<br/>several sources?"}
-    Q3 -- yes --> A3["Split or route<br/>M18, M30, M35"]
+    Q3 -- yes --> A3["Split or route<br/>T7.2, T10.3, T11.3"]
     Q3 -- no --> Q4{"Needs a theme or<br/>a relationship?"}
-    Q4 -- yes --> A4["Change the index<br/>M42 to M44"]
+    Q4 -- yes --> A4["Change the index<br/>T13.1 to T13.3"]
     Q4 -- no --> Q5{"Next search depends<br/>on the last result?"}
-    Q5 -- yes --> A5["Agent loop<br/>M24, M26, M31"]
+    Q5 -- yes --> A5["Agent loop<br/>T9.2, T9.4, T10.4"]
     Q5 -- no --> Q6{"Wrong answer<br/>costs a ticket?"}
-    Q6 -- yes --> A6["Add a check<br/>M28, M29"]
+    Q6 -- yes --> A6["Add a check<br/>T10.1, T10.2"]
     Q6 -- no --> A7["Ship, and log<br/>the misses"]
 ```
 

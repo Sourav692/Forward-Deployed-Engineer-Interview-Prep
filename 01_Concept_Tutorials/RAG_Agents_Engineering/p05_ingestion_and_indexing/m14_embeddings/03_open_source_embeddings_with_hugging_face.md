@@ -19,7 +19,7 @@ A model fits a domain when texts that mean the same thing in *your* documents la
 | `BAAI/bge-large-en` | 1024 | High-accuracy applications; the slowest in 03b's table |
 | `mixedbread-ai/mxbai-embed-large-v1` | not printed in the notebook | Loaded in 03c as a second open model to compare with OpenAI |
 
-Two settings decide whether a local model behaves like the hosted ones in lessons 14.1 and 14.2:
+Two settings decide whether a local model behaves like the hosted ones in lessons 1 and 2 of T6.3:
 
 - **Normalisation is off by default.** Pass `encode_kwargs={"normalize_embeddings": True}`, or score with cosine. Otherwise dot product rewards longer vectors, as the [lesson 1 of T6.3 lab](/labs/rag/m14_embeddings/similarity-metrics-lab.html) shows.
 - **Some models are asymmetric.** They are trained so that short questions and long passages meet, and they treat the two sides differently, so `embed_query` and `embed_documents` can return different vectors for the same text. Keep the two calls separate in your code even when today's model is symmetric.

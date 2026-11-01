@@ -43,7 +43,7 @@ export const SITE_TEXT_EDITS = {
   ],
   [`${COURSE}/p05_ingestion_and_indexing/m14_embeddings/03_open_source_embeddings_with_hugging_face.md`]: [
     [
-      /The optional lesson \d+ of T[\d.]+ notebook, \[`05a_compare_embedding_models_databricks\.ipynb`\]\([^)]*\), (indexes eight short documents with three open models) in Databricks Vector Search/,
+      /The optional lesson \d+ of T[\d.]+ notebook, \[[^\]]*\]\([^)]*05a_compare_embedding_models_databricks\.ipynb\), (indexes eight short documents with three open models) in Databricks Vector Search/,
       'An optional notebook in the course $1 in a managed vector index',
     ],
   ],
