@@ -79,6 +79,8 @@ export type EditorialMeta = {
   sourceStatus: SourceStatus
   /** Behavioural pages: the model answers contain `[FILL: …]` slots. */
   personalisation?: boolean
+  /** Worksheets: minutes to work the page, as `howToUse` states; cards and the page head show it. */
+  practiceMinutes?: number
 }
 
 // ---------------------------------------------------------------- site and nav
@@ -565,6 +567,7 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
       'Turn a vague customer request into users, workflows and measurable requirements',
       'Propose a first architecture and say how you would evaluate and roll it out',
     ],
+    practiceMinutes: 45,
     howToUse:
       'Time-box it to about 45 minutes. Draft each section before opening its model answer: ' +
       'a rough attempt teaches more than a blank one, and you do not need to fill every cell.',
@@ -583,6 +586,7 @@ export const FAMILY_META: Record<string, EditorialMeta> = {
       'Find the one constraint that makes the scenario dangerous before designing',
       'Defend an architecture, evaluation plan and rollout under follow-up questions',
     ],
+    practiceMinutes: 60,
     howToUse:
       'Allow about an hour. Work the discovery sections properly, because they decide the design, ' +
       'then compare each section with the model answer and score yourself honestly.',
