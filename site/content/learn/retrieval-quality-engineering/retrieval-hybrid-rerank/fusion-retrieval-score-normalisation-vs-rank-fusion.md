@@ -79,6 +79,12 @@ title: Fusing BM25 and dense rankings
 
 RAG-Fusion in [T7.2](/learn/retrieval-quality-engineering/query-transformation-and-routing/query-transformation-and-routing-overview) uses the same formula to merge the result lists of several rewritten queries instead of several retrievers.
 
+## Key Takeaways
+
+- Weighted score fusion min-max normalises each list per query, so the best chunk always scores 1.0 and one outlier shifts what `alpha` means. Pair scores by chunk, never by list position.
+- Reciprocal Rank Fusion uses only ranks, with `c = 60` in `EnsembleRetriever`. Chunks that both retrievers return beat a chunk only one retriever ranks first.
+- Uneven weights can bury a keyword-only hit. Check how deep each retriever hands over before tuning `c`, because fusion cannot rescue a chunk that made neither list.
+
 ## Check yourself
 
 <details>

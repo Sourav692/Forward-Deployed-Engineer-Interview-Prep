@@ -69,6 +69,12 @@ title: Reducers and the message list
 
 Reducers matter again when nodes run in parallel. If two nodes in the same step write a key that has no reducer, LangGraph 1.2.18 raises `InvalidUpdateError: At key 'out': Can receive only one value per step`. The fan-out patterns in [T9.3](../../p08_agent_foundations/m25_agentic_workflow_patterns/00_overview.md) give such keys a reducer, usually `operator.add`.
 
+## Key Takeaways
+
+- A graph is state, nodes and edges. Have each node return only the keys it changes, and keep settings and dependencies out of the state.
+- A key with no reducer is replaced on every write. Attach one with `Annotated[type, function]` when a key should accumulate, as `messages` does with `add_messages`.
+- Match the reducer to what nodes return. `operator.add` with whole-list returns grows 1, 3, 7 messages, while `add_messages` stays at 3 because ids replace duplicates.
+
 ## Check yourself
 
 <details>

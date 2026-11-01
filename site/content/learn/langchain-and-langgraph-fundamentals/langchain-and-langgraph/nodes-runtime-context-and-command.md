@@ -51,6 +51,12 @@ The return annotation looks like a check, and notebook 04c calls it compile-time
 
 Choose a conditional edge when routing is a pure read of state: the router is testable alone, and the graph lists every destination at build time. Choose `Command` when the node that decides must also write, such as the route with the reason for it, or when the target lies outside the current graph. The same object carries `resume` for a paused run in [T4.4](/learn/langchain-and-langgraph-fundamentals/langgraph-runtime-persistence-hitl-and-streaming/langgraph-runtime-persistence-hitl-and-streaming-overview) and `graph=Command.PARENT` for handoffs between agents in [T11.3](/learn/memory-and-multi-agent-rag/multi-agent-architectures/multi-agent-architectures-overview).
 
+## Key Takeaways
+
+- A node gets extra inputs by declaring them: `config` for per-call settings, `runtime` for typed context. Missing context fails only when the node reads it.
+- `Command(update=..., goto=...)` lets a node write and route in one return. Its `Literal` annotation only draws the graph, and a `goto` to an unknown node is silently ignored.
+- Use a conditional edge when routing is a pure read of state, and `Command` when the deciding node must also write. Never combine `goto` with a static edge that writes the same key.
+
 ## Check yourself
 
 <details>

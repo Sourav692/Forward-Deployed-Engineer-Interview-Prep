@@ -60,6 +60,12 @@ For MySQL and PostgreSQL, notebook 04b passes `pd.read_sql` a SQLAlchemy engine 
 
 SQL returns as a retriever in [T9.5](../../p08_agent_foundations/m27_human_approval_applied_agents/00_overview.md), where an agent writes the query itself from the customer's question (text-to-SQL), and as a memory store on SQLite in [T11.2](../../p10_memory_and_multi_agent/m34_long_term_agentic_memory/00_overview.md).
 
+## Key Takeaways
+
+- Use a table lookup when the answer is one exact value. SQLite, MySQL and PostgreSQL share the DB-API steps; only the driver, connection arguments and placeholder change.
+- Pass values as the second argument to `execute`, never through an f-string or the `%` operator, so the driver sends them as data and they cannot rewrite the query.
+- Writes count only after `commit()`, and `with con:` rolls back the whole block on an error without closing the connection. Keep credentials in the environment and grant only the statements the application needs.
+
 ## Check yourself
 
 <details>

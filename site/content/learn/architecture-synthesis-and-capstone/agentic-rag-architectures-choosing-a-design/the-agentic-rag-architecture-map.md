@@ -37,6 +37,12 @@ Memory ([T11.1](/learn/memory-and-multi-agent-rag/conversation-memory-and-conver
 
 The families also stack. The [T10.1](/learn/agentic-and-self-correcting-rag/agentic-rag-foundations-grading-and-query-rewriting/agentic-rag-foundations-grading-and-query-rewriting-overview) agent is a tool-based loop with a self-correcting grader; adaptive RAG in [T10.3](/learn/agentic-and-self-correcting-rag/adaptive-rag-and-query-routing/adaptive-rag-and-query-routing-overview) is a router in front of two graders. When a design names several families, count each component's calls separately, so a later review can remove one without guessing what it cost.
 
+## Key Takeaways
+
+- Every architecture is retrieve-then-generate with components added. Compare them in model calls per question: plain RAG is 1, routing and tool loops 2 to 7, self-correcting loops up to 20.
+- Each family adds one kind of component: better context, a judgement step, routing, a model that calls retrieval, or a new index shape whose cost moves to index time.
+- Families stack. Count each component's calls separately so a review can remove one and know what it saves.
+
 ## Check yourself
 
 <details>
