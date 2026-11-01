@@ -12,6 +12,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-02',
+    title: 'Course module times include the notebook work',
+    summary:
+      'Module times are reading plus practice. Modules from the RAG & Agents Engineering course counted only a short lab allowance as practice and left their notebook work out, so they looked far smaller than modules that count their worksheets and builds. Their practice time now includes the notebook work, about two to six hours a module, and the AI Engineering group reads about 238 hours instead of 78. No lessons changed.',
+  },
+  {
     date: '2026-11-01',
     title: 'Track and module codes follow the Learn order',
     summary:
