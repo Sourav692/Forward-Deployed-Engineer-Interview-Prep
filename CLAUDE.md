@@ -36,7 +36,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run sync`: regenerate `site/content/` from root sources. Runs automatically before `dev` and `build`.
 - `npm run check:content`: the de facto test suite (no test runner exists). Validates worksheet structure, editorial metadata, internal links, glossary acronyms, placeholders. Run after any content, `editorial.ts`, `glossary.ts` or sync-script change.
 - `npm run lint`, `npx tsc --noEmit` (no typecheck script; `tsconfig.json` excludes `scripts/`).
-- `check-parse.ts` runs as plain `node` via native TS type-stripping: needs a recent Node.
+- Other checks: `check:curriculum` (curriculum model, groups, rounds, redirects, track and module codes, a stale curriculum index), `check:paths` (learning-path hours), `check:bundle` (per-route client JS budgets, after `npm run build`), `check:routes` (`BASE_URL=http://localhost:3307` against `next start -p 3307`), `check:rules`, `check:store` (progress) and `check:rag-import`.
+- The `.ts` scripts run as plain `node` via native TS type-stripping: they need Node 24 (`engines` in `package.json`).
+- GitHub Actions is off (billing), so the CI steps run locally before a merge. A local, untracked `.git/hooks/pre-push` re-runs sync on each pushed commit in a temporary worktree and blocks the push when the committed snapshot is stale or `check:content` fails. "generated content is out of date" means: run `npm run sync`, commit the snapshot, push again.
 
 ## Content pipeline
 
@@ -49,6 +51,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Worksheets have no frontmatter. Fillable regions are inferred from emptiness (empty table cell, bare `-` bullet, `Label:` with nothing after). Metadata lives in `site/src/lib/editorial.ts`.
 - `site/src/lib/editorial.ts` and `glossary.ts` are imported by the `.mjs` sync scripts: keep them free of runtime imports.
 - Track, tab and slug ids must never change (URLs and localStorage progress `fd:v1:*` key on them); labels may change. Track ids must be unique site-wide.
+- Track and module codes are labels, not ids: grouped tracks run `T0`, `T1`… in `LEARN_STAGES` order and each track's modules run `.1`, `.2`… in section order. Adding or moving a track renumbers the codes after it; `check:curriculum` fails on a code out of order. Course codes come from the course's slugs file via `rag-tracks.ts`, and the import rewrites the course's own numbering ("M13", "Lesson 13.2") into site codes.
+- Browser code imports `site/src/lib/curriculum-index.ts`, never `curriculum.ts`: a client module that imports the full curriculum ships all of it on every page and breaks the bundle budgets. The index is generated: after editing `curriculum.ts`, run `node scripts/curriculum-index.ts` and commit the result (`prebuild` regenerates it; `check:curriculum` fails when it is stale).
+- Mermaid diagrams are drawn to static SVG at sync (`site/public/diagrams/<key>-light|dark.svg` plus `index.json`, cached by content, rendered with Playwright Chromium). A new or changed ```mermaid fence needs a local `npm run sync` and the new SVGs committed, or `check:content` fails. Course diagrams the course marks as animated arrive as ```animated fences (inline SVG, `AnimatedDiagram`) and have no static SVG.
 - An all-caps token on 3+ pages must be added to `GLOSSARY` or `NOT_ACRONYMS` in `glossary.ts`, or `check:content` fails.
 - Adding a module/track/scenario touches many files: follow "Adding a module, track or scenario" below.
 
