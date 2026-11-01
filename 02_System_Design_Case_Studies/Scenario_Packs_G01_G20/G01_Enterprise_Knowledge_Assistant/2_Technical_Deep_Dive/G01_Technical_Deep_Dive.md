@@ -85,8 +85,8 @@ Recommended flow:
 source event
 → queue
 → fetch authoritative record
-→ normalize
-→ ACL normalization
+→ normalise
+→ ACL normalisation
 → chunk
 → embed
 → index

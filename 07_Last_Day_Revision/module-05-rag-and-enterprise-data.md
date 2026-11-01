@@ -21,7 +21,7 @@ Sources → Parse → Chunk → Embed / index
 QUERY
 Identity + question
         ↓
-Authorized search → Retrieve → Rerank if useful
+Authorised search → Retrieve → Rerank if useful
         ↓
 Select context → Generate supported answer → Cite evidence
 ```
@@ -101,7 +101,7 @@ Use trusted identity, tenant, and access scope to constrain retrieval. Metadata 
 ```text
 Trusted identity → Allowed scope → Search eligible content
                                          ↓
-                                Authorized context
+                                Authorised context
 ```
 
 Enforce access before content reaches the model. Handle permission changes and tenant-scoped caches; retrieved document instructions do not become authority to bypass controls.
@@ -184,7 +184,7 @@ Model used it correctly?
 ```text
 “Can I get a refund for order #123?”
                    ↓
-       Identify user + authorized order
+       Identify user + authorised order
           ┌────────┴────────┐
     Retrieve policy     Read live order
           └────────┬────────┘
@@ -248,7 +248,7 @@ RAG supplies evidence; it does not authorise or execute the refund.
 INGEST: Source → Parse → Chunk → Embed / index
           + metadata + permissions + versions
 
-QUERY: Identity + question → Authorized search
+QUERY: Identity + question → Authorised search
           → Retrieve → Optional rerank
           → Select context → Answer + supporting citations
 ```

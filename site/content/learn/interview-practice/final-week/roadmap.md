@@ -907,7 +907,7 @@ Make the system enterprise-ready.
 ```text
 Identity
  ↓
-Authorization
+Authorisation
  ↓
 Data Permission
  ↓

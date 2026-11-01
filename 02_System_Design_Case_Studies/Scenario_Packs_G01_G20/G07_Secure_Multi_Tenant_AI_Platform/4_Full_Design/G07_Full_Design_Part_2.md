@@ -14,7 +14,7 @@ One diagram carries the design. The organising split is control plane against da
  ╔═══════════════════ DATA PLANE — enforces, per region, shared by default ═══════════════════════════════════╗
  ║                                                                                                            ║
  ║  REQUEST PATH — synchronous, strict dependency order                                                       ║
- ║   user ─> API GATEWAY ─> AUTHORIZE ─> ROUTE ─> ADMIT ─> TENANT-AWARE SERVICE ─> STORES ─> AUDIT ─> answer  ║
+ ║   user ─> API GATEWAY ─> AUTHORISE ─> ROUTE ─> ADMIT ─> TENANT-AWARE SERVICE ─> STORES ─> AUDIT ─> answer  ║
  ║           admit,       PDP: role,   region +  quota:    executes only on      row · object ·   tenant-   ║
  ║           shape,       tenant,      tier      concur-   immutable context     cache · queue ·  scoped    ║
  ║           reject early action,                rency,                          vector · key     event     ║
@@ -48,7 +48,7 @@ flowchart LR
 
     subgraph DP[Data plane — enforces]
         U[User] --> GW[API gateway: admit, shape, route]
-        GW --> AUTH[Authorize: principal + tenant + action + region]
+        GW --> AUTH[Authorise: principal + tenant + action + region]
         AUTH --> RT[Route to allowed region and tier]
         RT --> Q[Quota service: concurrency, tokens, budget]
         Q --> SVC[Tenant-aware service on immutable context]
@@ -145,7 +145,7 @@ sequenceDiagram
     GW->>IF: Validate identity
     IF->>TD: Resolve membership and deployment posture
     TD->>GW: Immutable tenant context
-    GW->>PDP: Authorize principal + tenant + action + region
+    GW->>PDP: Authorise principal + tenant + action + region
     PDP->>GW: Allow
     GW->>RS: Choose allowed region and tier
     RS->>GW: Placement decision

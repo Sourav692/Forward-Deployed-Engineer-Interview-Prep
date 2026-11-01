@@ -53,7 +53,7 @@ The production pipeline has two flows, and they run at completely different time
 Ingestion runs on a schedule. It can be slow, batched and re-run. Its job is to turn documents into searchable chunks tagged with their permissions, and it refuses any document whose permissions cannot be determined. Once a document is in the index, it will be found.
 
 ```
-  question ──> authorize ──> plan ──> retrieve ──> enforce ──> rerank ──> grade ──> generate ──> verify ──> answer
+  question ──> authorise ──> plan ──> retrieve ──> enforce ──> rerank ──> grade ──> generate ──> verify ──> answer
 ```
 
 The query flow runs per request. It has a latency budget and a user waiting. That difference is the point of the split. Expensive, careful work belongs offline, where nobody waits for it.

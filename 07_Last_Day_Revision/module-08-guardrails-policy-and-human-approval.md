@@ -14,7 +14,7 @@
 ```text
 Agent recommends
        ↓
-Authorization + deterministic policy
+Authorisation + deterministic policy
        ↓
  ┌─────┼─────────────┐
 Allow  Review       Deny
@@ -197,7 +197,7 @@ Input → Data/tool scopes → Policy → Approval → Executor
 ### Recall Flow
 
 ```text
-Agent proposes → Authorization + policy
+Agent proposes → Authorisation + policy
                         ↓
                Allow / review / deny
                         ↓

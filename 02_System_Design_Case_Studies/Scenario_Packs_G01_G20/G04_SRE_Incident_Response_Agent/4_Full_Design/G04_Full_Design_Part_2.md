@@ -32,7 +32,7 @@ One diagram carries the design, and the sections after it zoom in. The organisin
  ║   proposal: exact command + blast radius + evidence + runbook + freeze check + simulation             ║
  ║        │                                                                                              ║
  ║        v                                                                                              ║
- ║   ══ APPROVAL GATE (owner + commander, ~10 s) ══ ─> TOOL GATEWAY (authorize → validate → idempotent   ║
+ ║   ══ APPROVAL GATE (owner + commander, ~10 s) ══ ─> TOOL GATEWAY (authorise → validate → idempotent   ║
  ║                                                     call with timeout → classify → trim → log)        ║
  ║        │                                                                                              ║
  ║        v                                                                                              ║
@@ -74,7 +74,7 @@ flowchart LR
         SUM --> PROP[Proposal: exact command + blast radius + evidence + simulation]
         PROP --> APR{Human approves? ~10 s}
         APR -- no --> TL[Timeline entry: declined]
-        APR -- yes --> GW[Tool gateway: authorize → validate → idempotent call → classify → trim → log]
+        APR -- yes --> GW[Tool gateway: authorise → validate → idempotent call → classify → trim → log]
         GW --> EX[Execute] --> VFY[Verify effect] --> TL2[Incident timeline + postmortem draft]
     end
 

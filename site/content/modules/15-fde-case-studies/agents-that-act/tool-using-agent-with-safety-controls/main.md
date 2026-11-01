@@ -96,7 +96,7 @@ This is a whiteboard version of the [Full Design architecture, section 4](/desig
 
 ```mermaid
 flowchart TB
-    USER[Delegating user] --> EDGE[Authenticate and authorize]
+    USER[Delegating user] --> EDGE[Authenticate and authorise]
     EDGE --> PLAN[LLM agent planner proposes one bounded action]
     PLAN <--> STATE[(Task state)]
     PLAN --> REG[Tool registry and typed schema]

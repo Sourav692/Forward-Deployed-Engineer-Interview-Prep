@@ -14,7 +14,7 @@
 ```text
 Authenticate identity → Resolve trusted tenant/scope
                                   ↓
-               Authorize data and tool operations
+               Authorise data and tool operations
                                   ↓
                  Policy → Approval if required
                                   ↓
@@ -54,7 +54,7 @@ Retrieval-augmented generation (RAG) must enforce current access before restrict
 ```text
 Employee identity → Allowed document scope
                           ↓
-                Authorized retrieval → Context
+                Authorised retrieval → Context
 ```
 
 > “Employee B's prompt should never receive HR evidence that only Employee A may access.”
@@ -68,7 +68,7 @@ Expose only necessary operations and use scoped credentials outside model contex
 > “A refund task needs permitted order/payment operations, not unrestricted CRM or database administration.”
 
 ```text
-Model proposes → Validate inputs → Authorize resource/action
+Model proposes → Validate inputs → Authorise resource/action
                                      ↓
                               Controlled executor
 ```
@@ -128,7 +128,7 @@ Treat user text, retrieved documents, and tool outputs as untrusted input. Use v
 > “A document telling the agent to expose secrets cannot change the user's authorisation.”
 
 ```text
-Input checks + scoped retrieval + tool authorization
+Input checks + scoped retrieval + tool authorisation
              + policy + audit + execution controls
 ```
 
@@ -202,7 +202,7 @@ Application-entry checks establish identity and tenant context. Model-call contr
 ### Recall Flow
 
 ```text
-IDENTITY → TRUSTED TENANT → AUTHORIZATION
+IDENTITY → TRUSTED TENANT → AUTHORISATION
                                ↓
            DATA / TOOL PERMISSIONS → POLICY
                                ↓

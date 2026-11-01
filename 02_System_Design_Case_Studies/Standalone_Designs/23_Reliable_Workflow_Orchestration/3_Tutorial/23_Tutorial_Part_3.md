@@ -116,10 +116,10 @@
 ```mermaid
 flowchart TD
   A{Which estimate dominates the stress point?}
-  A -->|History volume| B[Optimize storage tiering & retention policies]
-  A -->|Dispatch rate| C[Optimize queue partitioning & worker elasticity]
-  A -->|External APIs| D[Optimize retries, circuit breaking, per-integration throttles]
-  A -->|Manual recovery load| E[Optimize observability, operator UI, audit trails]
+  A -->|History volume| B[Optimise storage tiering & retention policies]
+  A -->|Dispatch rate| C[Optimise queue partitioning & worker elasticity]
+  A -->|External APIs| D[Optimise retries, circuit breaking, per-integration throttles]
+  A -->|Manual recovery load| E[Optimise observability, operator UI, audit trails]
 ```
 
 ### Communicating Uncertainty Like an Operator

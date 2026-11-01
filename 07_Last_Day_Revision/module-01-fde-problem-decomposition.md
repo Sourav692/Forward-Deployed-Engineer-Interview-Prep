@@ -142,8 +142,8 @@ Clarify access control, tenant isolation, personally identifiable information (P
 > “Who can access which data and actions, and are there restrictions on where data and models can run?”
 
 ```text
-Identity → Permission scope → Authorized retrieval
-                           → Authorized tools
+Identity → Permission scope → Authorised retrieval
+                           → Authorised tools
 ```
 
 Enforce access before restricted information enters the model's context. A prompt is not an access-control boundary.
@@ -224,7 +224,7 @@ Users / current pain: _______________________
 Must do: answer ___, read ___, act ___
 Data / integrations: ________________________
 Allowed actions / approval: _________________
-Failure behavior: ___________________________
+Failure behaviour: ___________________________
 Scale / latency / availability / cost: _______
 Security boundaries: ________________________
 Success baseline / target: __________________

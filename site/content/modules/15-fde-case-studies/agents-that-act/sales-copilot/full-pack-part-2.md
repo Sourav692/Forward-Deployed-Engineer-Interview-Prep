@@ -41,7 +41,7 @@ One diagram carries the whole design. The organising split is control plane agai
  ║                       (built as the rep, permission-checked, cached on account + rep signature)    ║
  ║                                                                                                   ║
  ║  ASK — synchronous, ordered by risk                                                               ║
- ║   rep ─> gateway ─> AUTHORIZE ─> ROUTE ─> FETCH ─> ENFORCE ─> REASON ─> GENERATE ─> VERIFY ─> answer
+ ║   rep ─> gateway ─> AUTHORISE ─> ROUTE ─> FETCH ─> ENFORCE ─> REASON ─> GENERATE ─> VERIFY ─> answer
  ║           SSO      resolve      intent:   snapshot   ABAC     risks from  cited      claim +      ║
  ║           via      role,        summary   cache;     post-    CRM fields; brief,     citation     ║
  ║           IdP      territory,   risk      structured check,   playbook    questions, check,       ║
@@ -86,7 +86,7 @@ flowchart LR
     end
 
     subgraph ASK[Ask — sync, ordered by risk]
-        REP[Rep] --> GW[Gateway: SSO] --> AUTH[Authorize: role, territory, stage]
+        REP[Rep] --> GW[Gateway: SSO] --> AUTH[Authorise: role, territory, stage]
         AUTH --> RT{Route}
         RT -- summary / risks --> SC
         RT -- question needs a count or a record --> STR

@@ -196,7 +196,7 @@ flowchart TD
   B --> C["3. Run tenant contract tests"]
   C --> D["4. Publish immutable version"]
   D --> E["5. Roll out behind tenant flag"]
-  E --> F["6. Observe behavior"]
+  E --> F["6. Observe behaviour"]
   F --> G{"7. Meets acceptance gate?"}
   G -->|Yes| H["Promote: becomes active version"]
   G -->|No| I["Rollback: flag moves back to<br/>prior immutable version"]

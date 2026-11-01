@@ -184,7 +184,7 @@ flowchart TD
     A -->|No| A2["Still define retention and<br/>audit expectations"]
     B["Does the enclave<br/>have GPUs?"] -->|Yes| B1["Consider a larger model,<br/>batching, or separate embedding/<br/>inference services"]
     B -->|No| B2["Prefer smaller models,<br/>retrieval-first workflows,<br/>or asynchronous processing"]
-    C["Does the customer require<br/>interactive responses?"] -->|Yes| C1["Prioritize low-latency model<br/>serving and document pre-processing"]
+    C["Does the customer require<br/>interactive responses?"] -->|Yes| C1["Prioritise low-latency model<br/>serving and document pre-processing"]
     C -->|No| C2["Batch analysis may be<br/>acceptable and easier to govern"]
     D["Can artifacts be<br/>imported automatically?"] -->|Yes| D1["Enforce signatures,<br/>scanning, and approval gates"]
     D -->|No| D2["Design a manual ceremony<br/>with clear provenance records"]

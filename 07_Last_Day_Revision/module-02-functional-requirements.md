@@ -80,7 +80,7 @@ Retrieve relevant information from approved enterprise sources, within the curre
 ```text
 User identity + permission scope
                 ↓
-      Search authorized knowledge
+      Search authorised knowledge
                 ↓
          Relevant evidence
                 ↓
@@ -126,7 +126,7 @@ Read current state through approved APIs or tools. Validate inputs and enforce a
 ```text
 “Where is order #123?”
            ↓
-Authorized get_order_status(123)
+Authorised get_order_status(123)
            ↓
 Current result → Response
 ```

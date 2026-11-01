@@ -104,7 +104,7 @@ flowchart LR
     SUMMARY --> PROP[Agent proposal: command, blast radius, runbook, simulation]
     PROP --> APPROVE{Owner and commander approve?}
     APPROVE -->|No| TIMELINE[Record decision]
-    APPROVE -->|Yes| GATE[Authorize and validate in tool gateway]
+    APPROVE -->|Yes| GATE[Authorise and validate in tool gateway]
     GATE --> EXEC[Idempotent action and effect check]
     EXEC --> TIMELINE
     POLICY[Read/propose/execute policy and freeze rules] -.-> READ

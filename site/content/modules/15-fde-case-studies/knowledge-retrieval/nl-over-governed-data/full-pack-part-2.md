@@ -23,7 +23,7 @@ The architecture is a chain of trust boundaries; explain it in dependency order 
  ║           intent      ments     definition       joins, freshness   ASK, not      specific,          ║
  ║                                 first            needed; freshness  guess         narrowed context   ║
  ║                                                  gate                                                 ║
- ║        ─> AST PARSE ─> POLICY + COST VALIDATOR ─> READ-ONLY GATEWAY ─> WAREHOUSE ─> SUMMARIZER ─> answer
+ ║        ─> AST PARSE ─> POLICY + COST VALIDATOR ─> READ-ONLY GATEWAY ─> WAREHOUSE ─> SUMMARISER ─> answer
  ║           tree, not    tables, columns, joins,    narrowest creds,    RLS/CLS      table + SQL +     ║
  ║           text         writes, cross joins,       timeout, row        enforced     lineage + caveats;║
  ║                        scan budget; re-check      limit, cost         natively     summary cross-    ║
@@ -57,8 +57,8 @@ flowchart TB
     Reject --> User
     PolicyValidator -->|Approved| Gateway[Read-Only Execution Gateway]
     Gateway --> Warehouse[(Warehouse)]
-    Warehouse --> Summarizer[Result Summarizer]
-    Summarizer --> User
+    Warehouse --> Summariser[Result Summariser]
+    Summariser --> User
     subgraph SoR["Systems of Record"]
         IdP[Identity Provider]
         SemReg

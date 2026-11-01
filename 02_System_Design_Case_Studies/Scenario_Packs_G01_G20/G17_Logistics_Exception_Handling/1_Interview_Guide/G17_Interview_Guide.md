@@ -77,7 +77,7 @@ The resolution agent/model drafts an action and confidence; a separate determini
 
 ```mermaid
 flowchart TB
-  W[Carrier webhooks: validate / dedupe] --> N[Normalize event]
+  W[Carrier webhooks: validate / dedupe] --> N[Normalise event]
   B[Carrier CSV / EDI: parse / diff] --> N
   N --> Q[(Regional durable queue)]
   Q --> D[Disruption detection: rules / classifier]

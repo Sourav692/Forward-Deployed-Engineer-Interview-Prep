@@ -100,7 +100,7 @@ Define user and tenant isolation, least-privilege tools, sensitive-data handling
 > “Which users can access which documents and actions, and what data may reach approved model providers?”
 
 ```text
-Identity → Authorized data → Authorized tools
+Identity → Authorised data → Authorised tools
                         + tenant boundary
 ```
 
@@ -285,7 +285,7 @@ Repeated work  → Cache if freshness and permissions allow
 Provider outage→ Model fallback, if compatible
 Long workflow  → Durable state + checkpoints
 Business writes→ Idempotency + status reconciliation
-Sensitive acts → Authorization + policy + approval
+Sensitive acts → Authorisation + policy + approval
 ```
 
 API Gateway = User → Application control.

@@ -103,7 +103,7 @@ flowchart LR
     subgraph ASK[Interactive ask]
         REP[Rep] --> ID[SSO, role, territory, stage]
         ID --> ROUTE[Route: snapshot, structured lookup, prose, or bounded agent]
-        ROUTE --> FETCH[Fetch authorized evidence]
+        ROUTE --> FETCH[Fetch authorised evidence]
         CACHE --> FETCH
         DATA --> FETCH
         FETCH --> CHECK[Fresh permission post-check and redaction]

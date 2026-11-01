@@ -170,7 +170,7 @@ flowchart TD
     E -->|Yes| G["For each artifact:<br/>hash file, compare to<br/>manifest sha256"]
     G --> H{"All hashes<br/>match?"}
     H -->|No| F3["raise IntegrityError(path)"]
-    H -->|Yes| I["Normalize dependencies list"]
+    H -->|Yes| I["Normalise dependencies list"]
     I --> J["Return VerifiedManifest<br/>(trusted by promote step)"]
 
     style F1 fill:#a63d40,stroke:#5c1f22,color:#fff

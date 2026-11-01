@@ -20,7 +20,7 @@ Responsibility we need
         ↓
 Component / pattern
         ↓
-Trade-off + failure behavior
+Trade-off + failure behaviour
 ```
 
 Recall seven responsibilities:
