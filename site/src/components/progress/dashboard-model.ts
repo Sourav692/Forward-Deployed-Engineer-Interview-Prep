@@ -4,8 +4,7 @@
  * Plain functions over store getters: only client islands call them, inside
  * `useProgress`, so they re-run whenever progress changes.
  */
-import { LESSONS, MODULES, TRACKS } from '@/lib/curriculum'
-import type { CurriculumModule } from '@/lib/curriculum-types'
+import { INDEX_MODULES, INDEX_TRACKS, MOCK_LESSON_TITLES, type IndexModule } from '@/lib/curriculum-index'
 import { curriculumHref, isLearnTrack } from '@/lib/curriculum-href'
 import { getPathById, type LearningPath } from '@/lib/paths'
 import {
@@ -27,12 +26,11 @@ import { isRead, learnerStatus, moduleRevision, type ModuleInput } from '@/compo
 import { MOCK_MODULE, MOCK_ROUNDS, mockAssessmentId, mockRoundsFor } from './mock-rubric'
 
 const DAY_MS = 24 * 60 * 60 * 1000
-const moduleBySlug = new Map(MODULES.map((m) => [m.slug, m]))
-const lessonBySlug = new Map(LESSONS.map((l) => [l.slug, l]))
+const moduleBySlug = new Map(INDEX_MODULES.map((m) => [m.slug, m]))
 /** Curriculum order: tracks, then sections, then modules, as the Learn pages list them. */
-const CURRICULUM_ORDER = TRACKS.flatMap((t) => t.sections.flatMap((s) => s.modules))
+const CURRICULUM_ORDER = INDEX_TRACKS.flatMap((t) => t.modules)
 
-export const moduleHref = (m: Pick<CurriculumModule, 'track' | 'slug'>) => curriculumHref(m.track, m.slug)
+export const moduleHref = (m: Pick<IndexModule, 'track' | 'slug'>) => curriculumHref(m.track, m.slug)
 
 /** The scored mocks: every lesson in the mock module that mounts a scorer (scenario and client-sim). */
 export const SCENARIO_MOCKS = (moduleBySlug.get(MOCK_MODULE)?.lessons ?? []).filter((s) => mockRoundsFor(s).length > 0)
@@ -81,7 +79,7 @@ export function remedyFor(id: InterviewInput, sheets: CompetencySheet[], modules
   if (id === 'mocks') {
     const means = SCENARIO_MOCKS.map((slug) => ({ slug, mean: latestMockMean(slug) }))
     const pick = means.find((m) => m.mean === null) ?? means.reduce((lo, m) => ((m.mean ?? 0) < (lo.mean ?? 0) ? m : lo), means[0])
-    return pick ? { label: lessonBySlug.get(pick.slug)?.title ?? 'Mock interviews', href: mockHref(pick.slug) } : null
+    return pick ? { label: MOCK_LESSON_TITLES[pick.slug] ?? 'Mock interviews', href: mockHref(pick.slug) } : null
   }
   if (id === 'checkpoints') {
     const taken = new Map(latestCheckpoints(modules).map((c) => [c.module, c.passed]))
@@ -102,7 +100,7 @@ export function remedyFor(id: InterviewInput, sheets: CompetencySheet[], modules
 // ── Revision queue ─────────────────────────────────────────────────────────
 
 export type RevisionRow = {
-  module: CurriculumModule
+  module: IndexModule
   reason: 'failed-checkpoint' | 'low' | 'faded' | 'checkpoint-due'
   /** When the triggering rating or checkpoint attempt happened. */
   since: string
@@ -147,7 +145,7 @@ export const revisionHref = (r: RevisionRow) =>
 
 // ── Next up ────────────────────────────────────────────────────────────────
 
-export type NextUp = { module: CurriculumModule; reason: string; action: string; href: string }
+export type NextUp = { module: IndexModule; reason: string; action: string; href: string }
 
 const remainingMinutes = (input: ModuleInput) => {
   const known = Object.values(input.minutes)
@@ -232,7 +230,7 @@ export type TrackRow = { code: string; title: string; href: string; read: number
 /** Learn tracks with at least one lesson read. */
 export function trackRows(modules: ModuleInput[]): TrackRow[] {
   const minutes = Object.assign({}, ...modules.map((m) => m.minutes)) as Record<string, number>
-  return TRACKS.filter((t) => isLearnTrack(t.slug))
+  return INDEX_TRACKS.filter((t) => isLearnTrack(t.slug))
     .map((t) => {
       const p = trackProgress(t.slug, minutes)
       return { code: t.code, title: t.title, href: curriculumHref(t.slug), read: p.lessonsRead, total: p.lessonsTotal, fraction: p.fraction }
