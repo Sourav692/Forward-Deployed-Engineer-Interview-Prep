@@ -1,0 +1,113 @@
+{
+  "stage": 7,
+  "title": "Reliability and Consistency",
+  "status": "tested",
+  "architecture_before": "v0.6-stage-06",
+  "architecture_after": "# Stage 7 Architecture Snapshot\n\nVersion: `v0.7-stage-07`. Previous: `v0.6-stage-06`. Decision: [ADR-007](../../architecture/decisions/ADR-007-consistency-and-recovery.md). Acceptance: tested local fault models and educational recovery contracts, not production failover.\n\nRetain verified identity/current membership/resource policy, audit-before-disclosure, approved egress, shared history/stable keys, versioned retrieval/cache safety, durable worker epochs, bounded fair queues and provider budget reservations. Add per-data-class consistency choices, transactional result/outbox intent, duplicate-safe projection delivery, contiguous applied watermark/minimum-version history reads, bounded breaker/probe and remaining-deadline policy, and explicit recovery/diagnostic contracts.\n\nCurrent access, quota and ownership authority never use stale projection fallback. Eligible history data reads may use a projection covering a trusted minimum, otherwise primary. All protected disclosure still requires current Stage 6 gates. Unknown provider state remains unknown; transaction/outbox replay does not prove exactly-once generation.\n\nThe executable uses two SQLite files and controlled delivery, plus a local logical breaker. No replicated database, consensus/leader election, network partition, actual failover/restore, collector, pager or production SLO is implemented. Stage 8 inherits these evidence boundaries for quality/release decisions and rollback.\n",
+  "architecture_version": "v0.7-stage-07",
+  "first_taught_modules": [
+    {
+      "id": "3.1",
+      "module": "Distributed system fundamentals",
+      "target_depth": "D3"
+    },
+    {
+      "id": "3.2",
+      "module": "Distributed state and transactions",
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.2",
+      "module": "Resilience and fault tolerance",
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.3",
+      "module": "Latency and performance",
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.2",
+      "module": "SRE and production operations",
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.3",
+      "module": "Performance and incident diagnosis",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "2.2",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.3",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "6.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D2"
+    },
+    {
+      "id": "6.2",
+      "first_teaching_stage": 4,
+      "target_depth": "D2"
+    },
+    {
+      "id": "8.1",
+      "first_teaching_stage": 3,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.3",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.1",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/reliability.py",
+    "labs/simulator.js",
+    "labs/test_reliability.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-007-consistency-and-recovery.md"
+  ]
+}

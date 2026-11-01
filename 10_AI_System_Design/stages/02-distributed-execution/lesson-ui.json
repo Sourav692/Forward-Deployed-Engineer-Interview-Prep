@@ -1,0 +1,305 @@
+{
+  "stage": 2,
+  "title": "Distributed Execution",
+  "outcome": "Keep document preparation alive beyond a browser request.",
+  "step_labels": [
+    "Accept",
+    "Claim",
+    "Execute",
+    "Recover",
+    "Complete",
+    "Inspect"
+  ],
+  "branches": [
+    {
+      "label": "Success",
+      "steps": [
+        {
+          "owner": "AI App Service: job facade",
+          "input": "Trusted Tenant A/Alice scope, key, document payload.",
+          "output": "Queued job commits before proposed 202 plus job ID.",
+          "failure": "Invalid input or failed commit must not acknowledge accepted work."
+        },
+        {
+          "owner": "Worker and durable Queue",
+          "input": "Eligible queued job and logical clock.",
+          "output": "Lease and a new epoch commit atomically.",
+          "failure": "A racing worker cannot hold the same active claim."
+        },
+        {
+          "owner": "Worker: bounded tool adapter",
+          "input": "Immutable payload, approved tools, and remaining budgets.",
+          "output": "Safe checkpoint is stored; no irreversible email action is allowed.",
+          "failure": "An external-start marker preserves intent but cannot prove remote outcome."
+        },
+        {
+          "owner": "Queue recovery policy",
+          "input": "Lease expiry, epoch, and external-start state.",
+          "output": "Healthy worker retains its unexpired authority.",
+          "failure": "Expiry alone does not prove the previous process stopped."
+        },
+        {
+          "owner": "Worker and Metadata DB",
+          "input": "Result, current epoch, valid lease, and job deadline.",
+          "output": "Completed result commits; this is the durable acknowledgement.",
+          "failure": "Stale or expired completion is rejected, not overwritten."
+        },
+        {
+          "owner": "AI App Service: scoped status read",
+          "input": "Job ID and trusted owner identity.",
+          "output": "Completed saved result is visible to Alice.",
+          "failure": "Other tenants receive not found; lost responses require inspection."
+        }
+      ]
+    },
+    {
+      "label": "Safe worker crash",
+      "steps": [
+        {
+          "owner": "AI App Service: job facade",
+          "input": "Trusted Tenant A/Alice scope, key, document payload.",
+          "output": "Queued job commits before proposed 202 plus job ID.",
+          "failure": "Invalid input or failed commit must not acknowledge accepted work."
+        },
+        {
+          "owner": "Worker and durable Queue",
+          "input": "Eligible queued job and logical clock.",
+          "output": "Lease and a new epoch commit atomically.",
+          "failure": "A racing worker cannot hold the same active claim."
+        },
+        {
+          "owner": "Worker: bounded tool adapter",
+          "input": "Immutable payload, approved tools, and remaining budgets.",
+          "output": "Safe checkpoint is stored; no irreversible email action is allowed.",
+          "failure": "An external-start marker preserves intent but cannot prove remote outcome."
+        },
+        {
+          "owner": "Queue recovery policy",
+          "input": "Lease expiry, epoch, and external-start state.",
+          "output": "Pure work redelivers after lease expiry with a newer epoch.",
+          "failure": "Expiry alone does not prove the previous process stopped."
+        },
+        {
+          "owner": "Worker and Metadata DB",
+          "input": "Result, current epoch, valid lease, and job deadline.",
+          "output": "New owner can commit; old owner completion is rejected.",
+          "failure": "Stale or expired completion is rejected, not overwritten."
+        },
+        {
+          "owner": "AI App Service: scoped status read",
+          "input": "Job ID and trusted owner identity.",
+          "output": "Completed saved result is visible to Alice.",
+          "failure": "Other tenants receive not found; lost responses require inspection."
+        }
+      ]
+    },
+    {
+      "label": "External outcome unknown",
+      "steps": [
+        {
+          "owner": "AI App Service: job facade",
+          "input": "Trusted Tenant A/Alice scope, key, document payload.",
+          "output": "Queued job commits before proposed 202 plus job ID.",
+          "failure": "Invalid input or failed commit must not acknowledge accepted work."
+        },
+        {
+          "owner": "Worker and durable Queue",
+          "input": "Eligible queued job and logical clock.",
+          "output": "Lease and a new epoch commit atomically.",
+          "failure": "A racing worker cannot hold the same active claim."
+        },
+        {
+          "owner": "Worker: bounded tool adapter",
+          "input": "Immutable payload, approved tools, and remaining budgets.",
+          "output": "External call was marked started; its response is lost.",
+          "failure": "An external-start marker preserves intent but cannot prove remote outcome."
+        },
+        {
+          "owner": "Queue recovery policy",
+          "input": "Lease expiry, epoch, and external-start state.",
+          "output": "Job becomes unknown; automatic redelivery is blocked.",
+          "failure": "Expiry alone does not prove the previous process stopped."
+        },
+        {
+          "owner": "Worker and Metadata DB",
+          "input": "Result, current epoch, valid lease, and job deadline.",
+          "output": "No result is fabricated and no replacement call is authorised.",
+          "failure": "Stale or expired completion is rejected, not overwritten."
+        },
+        {
+          "owner": "AI App Service: scoped status read",
+          "input": "Job ID and trusted owner identity.",
+          "output": "Alice sees unknown; reconciliation is required before another attempt.",
+          "failure": "Other tenants receive not found; lost responses require inspection."
+        }
+      ]
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: short synchronous drafting",
+      "description": "Client asks the single application to generate and commit a short supplier draft. No durable worker queue exists.",
+      "nodes": [
+        [
+          "Client",
+          "Tenant A: Alice"
+        ],
+        [
+          "AI App Service",
+          "Trusted identity and short request"
+        ],
+        [
+          "Metadata DB + model adapter",
+          "Saved draft; external model stubbed"
+        ]
+      ]
+    },
+    {
+      "title": "After: durable execution path",
+      "description": "Trusted API commits job to host-local durable Queue. A separate worker claims an epoch, runs bounded tools, and commits a scoped result. Identity and provider remain fixture boundaries.",
+      "nodes": [
+        [
+          "Client",
+          "Submit document-preparation job"
+        ],
+        [
+          "AI App Service",
+          "Commit before durable acceptance"
+        ],
+        [
+          "Metadata DB + Queue",
+          "Atomic job record and lease"
+        ],
+        [
+          "Workers",
+          "Bounded tools; epoch authority"
+        ],
+        [
+          "Model/tool adapter",
+          "External effects remain uncertain"
+        ],
+        [
+          "Metadata DB",
+          "Commit result before completion"
+        ]
+      ]
+    },
+    {
+      "title": "Execution sequence and crash boundary",
+      "description": "Accept, claim, execute, recover, commit, and inspect. Safe work may redeliver; external ambiguity is quarantined; stale completion is rejected.",
+      "nodes": [
+        [
+          "Accept",
+          "Committed acceptance"
+        ],
+        [
+          "Claim",
+          "Epoch and lease committed"
+        ],
+        [
+          "Execute",
+          "Checkpoint approved tools"
+        ],
+        [
+          "Recover",
+          "Safe redelivery or unknown"
+        ],
+        [
+          "Complete",
+          "Guarded completion"
+        ],
+        [
+          "Inspect",
+          "Scoped result read"
+        ]
+      ]
+    }
+  ],
+  "lab_title": "Crash position and lease recovery",
+  "lab_assumptions": "Logical clock; worker stops at time zero. Safe pure work may redeliver. A started external effect requires reconciliation. Zero recovery seconds for unknown means no automatic recovery, not immediate success.",
+  "controls": [
+    {
+      "id": "lease",
+      "label": "Lease interval (s)",
+      "type": "range",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "default": 10
+    },
+    {
+      "id": "fault",
+      "label": "Failure position",
+      "type": "select",
+      "options": [
+        [
+          "none",
+          "No crash"
+        ],
+        [
+          "crash",
+          "Crash before external effect"
+        ],
+        [
+          "external",
+          "Crash after external start"
+        ]
+      ],
+      "default": "none"
+    }
+  ],
+  "cases": [
+    {
+      "name": "Healthy",
+      "params": {
+        "lease": 10,
+        "fault": "none"
+      },
+      "expected": {
+        "Earliest safe recovery (s)": 0,
+        "Durable outcome": "completed",
+        "New worker attempts": 0,
+        "Stale completion accepted": "no"
+      }
+    },
+    {
+      "name": "Recoverable crash",
+      "params": {
+        "lease": 10,
+        "fault": "crash"
+      },
+      "expected": {
+        "Earliest safe recovery (s)": 10,
+        "Durable outcome": "redelivered pure task",
+        "New worker attempts": 1,
+        "Stale completion accepted": "no"
+      }
+    },
+    {
+      "name": "Longer lease",
+      "params": {
+        "lease": 30,
+        "fault": "crash"
+      },
+      "expected": {
+        "Earliest safe recovery (s)": 30,
+        "Durable outcome": "redelivered pure task",
+        "New worker attempts": 1,
+        "Stale completion accepted": "no"
+      }
+    },
+    {
+      "name": "Ambiguous call",
+      "params": {
+        "lease": 10,
+        "fault": "external"
+      },
+      "expected": {
+        "Earliest safe recovery (s)": 0,
+        "Durable outcome": "unknown: reconcile, no retry",
+        "New worker attempts": 0,
+        "Stale completion accepted": "no"
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "stage": 2,
+  "title": "Distributed Execution",
+  "status": "tested",
+  "architecture_before": "v0.1-stage-01",
+  "architecture_after": "# Stage 2 Architecture Snapshot\n\nVersion: `v0.2-stage-02`. Previous: `v0.1-stage-01`. Acceptance: teaching architecture, not deployed production. Decision: [ADR-002](../../architecture/decisions/ADR-002-durable-execution.md).\n\nRetain Client, AI App Service ingress/identity/policy, original short `/requests` endpoint and scoped history, Model Gateway adapter, Metadata DB, and proposed metadata-only Telemetry. Add a separate job path with a durable Queue represented by the job table and separate worker objects/process roles on the same host.\n\nThe job transaction establishes accepted queued state. A worker claim establishes a lease and epoch. The worker executes bounded approved steps outside a DB write transaction. Result commit requires current unexpired authority and deadline. Safe work can redeliver; started external ambiguity becomes unknown without automatic retry. The proposed job HTTP facade is not implemented by the executable.\n\nReal code verifies SQLite persistence/concurrency, retry states, and policy budgets using logical clocks. Identity, external models/tools, broker delivery, deployment, renewal, cancellation, and reconciliation remain unverified or unimplemented. Stage 3 can reuse durable jobs for ingestion while preserving these invariants.\n",
+  "architecture_version": "v0.2-stage-02",
+  "first_taught_modules": [
+    {
+      "id": "4.1",
+      "module": "Concurrency fundamentals",
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.2",
+      "module": "Messaging and event streams",
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.3",
+      "module": "Background execution systems",
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.3",
+      "module": "Agentic application system architecture",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "6.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D2"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/jobs.py",
+    "labs/simulator.js",
+    "labs/test_jobs.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "stage": 5,
+  "title": "Handle Overload and Fair Scheduling",
+  "status": "tested",
+  "architecture_before": "v0.4-stage-04",
+  "architecture_after": "# Stage 5 Architecture Snapshot\n\nVersion: `v0.5-stage-05`. Previous: `v0.4-stage-04`. Decision: [ADR-005](../../architecture/decisions/ADR-005-bounded-fair-dispatch.md). Acceptance: educational policy and tested local slices, not a deployed dispatcher.\n\nRetain ready app replicas and shared durable authority; trusted identity/current-source policy; immutable-body caches; original draft/history/key semantics; durable Queue/Workers/epoch fencing; source ingestion, Search Index and citations; model adapter and proposed metadata-only Telemetry. Add admission-controller role, bounded tenant queues, weighted service turns, request/token/concurrency budgets, deadline expiry, and explicit rejection/retry/settlement policy.\n\nDesign flow: validate and deduplicate, admit only within bounds, schedule eligible work, reserve provider budgets atomically, execute with current policy/worker authority, commit result, and settle only known termination. Unknown external state retains evidence/slot until reconciliation. More app replicas or different scheduling cannot increase a fixed provider budget.\n\nThe SQLite reservation guard and equal-cost finite-burst scheduler are separate local exercises; one test integrates a grant with Stage 2 Jobs. Real HTTP admission, distributed quotas, broker/network dispatch, tokenisation/usage reconciliation, cancellation/reconciliation, production providers, load/SLOs, and variable-cost fairness are not demonstrated. Source/policy revocation freshness retains Stage 3 limitations; the cache never becomes authority.\n\nLatest authored stage is 5. Stage 6 has not been created. It may expand enterprise identity, isolation, audit, connectivity and retrieval governance while preserving all inherited execution and overload contracts.\n",
+  "architecture_version": "v0.5-stage-05",
+  "first_taught_modules": [
+    {
+      "id": "5.1",
+      "module": "Rate limiting and admission control",
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.2",
+      "module": "Queuing and queueing theory",
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.3",
+      "module": "Backpressure and overload management",
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.4",
+      "module": "Fair scheduling and workload prioritization",
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.5",
+      "module": "AI workload management",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "4.1",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.2",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "6.2",
+      "first_teaching_stage": 4,
+      "target_depth": "D2"
+    },
+    {
+      "id": "12.1",
+      "first_teaching_stage": 4,
+      "target_depth": "D3"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/admission.py",
+    "labs/scheduler.py",
+    "labs/simulator.js",
+    "labs/test_overload.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-005-bounded-fair-dispatch.md"
+  ]
+}

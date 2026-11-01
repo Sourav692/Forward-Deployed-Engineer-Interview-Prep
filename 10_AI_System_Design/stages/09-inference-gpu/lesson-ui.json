@@ -1,0 +1,351 @@
+{
+  "stage": 9,
+  "title": "Inference and GPU Infrastructure",
+  "outcome": "Compare approved serving choices without confusing memory fit with performance.",
+  "step_labels": [
+    "Authorise",
+    "Select",
+    "Bound",
+    "Reserve",
+    "Execute",
+    "Persist"
+  ],
+  "branches": [
+    {
+      "label": "Approved fixture dispatch",
+      "steps": [
+        {
+          "owner": "Gateway and current Security",
+          "input": "Verified principal and original/current source references.",
+          "output": "Current permitted context and mandatory audit are established.",
+          "failure": "Saved replay cannot substitute unrelated allowed evidence for a revoked original source."
+        },
+        {
+          "owner": "Approved release pointer and trusted registry",
+          "input": "Bundle hash, tenant network policy and profile readiness.",
+          "output": "An approved ready private profile is selected before dispatch.",
+          "failure": "Unregistered, unapproved, public or unready profiles reject without transport."
+        },
+        {
+          "owner": "Serving adapter envelope",
+          "input": "Estimated input plus requested output and model capability bounds.",
+          "output": "Context/output requests fit the registered model interface.",
+          "failure": "Memory arithmetic and advertised context are not actual latency guarantees."
+        },
+        {
+          "owner": "Durable operation and shared Gate",
+          "input": "Stable scoped key and request/token/concurrency budgets.",
+          "output": "New operation and fresh provider grant permit one fixture call.",
+          "failure": "Duplicate, blocked or conflicting operations do not gain a new attempt."
+        },
+        {
+          "owner": "Injected hosted/self-host transport",
+          "input": "Only approved permitted context and bounded request parameters.",
+          "output": "Fixture answer returns; no real model or GPU is invoked.",
+          "failure": "Lost response may mean remote work happened; automatic fallback is unsafe."
+        },
+        {
+          "owner": "Result store and settlement",
+          "input": "Known answer plus original operation/bundle identity.",
+          "output": "Answer commits before completed success and known slot settlement.",
+          "failure": "A failed final write retains incomplete evidence; do not acknowledge or regenerate."
+        }
+      ]
+    },
+    {
+      "label": "Route violates policy or readiness",
+      "steps": [
+        {
+          "owner": "Gateway and current Security",
+          "input": "Verified principal and original/current source references.",
+          "output": "Current permitted context and mandatory audit are established.",
+          "failure": "Saved replay cannot substitute unrelated allowed evidence for a revoked original source."
+        },
+        {
+          "owner": "Approved release pointer and trusted registry",
+          "input": "Bundle hash, tenant network policy and profile readiness.",
+          "output": "Route is not private/ready/approved: reject before budgeted transport.",
+          "failure": "Unregistered, unapproved, public or unready profiles reject without transport."
+        },
+        {
+          "owner": "Serving adapter envelope",
+          "input": "Estimated input plus requested output and model capability bounds.",
+          "output": "No serving request is authorised for this rejected route.",
+          "failure": "Memory arithmetic and advertised context are not actual latency guarantees."
+        },
+        {
+          "owner": "Durable operation and shared Gate",
+          "input": "Stable scoped key and request/token/concurrency budgets.",
+          "output": "No fresh provider grant or call is made.",
+          "failure": "Duplicate, blocked or conflicting operations do not gain a new attempt."
+        },
+        {
+          "owner": "Injected hosted/self-host transport",
+          "input": "Only approved permitted context and bounded request parameters.",
+          "output": "Transport is not reached.",
+          "failure": "Lost response may mean remote work happened; automatic fallback is unsafe."
+        },
+        {
+          "owner": "Result store and settlement",
+          "input": "Known answer plus original operation/bundle identity.",
+          "output": "Explicit route denial, no fabricated saved answer.",
+          "failure": "A failed final write retains incomplete evidence; do not acknowledge or regenerate."
+        }
+      ]
+    },
+    {
+      "label": "Unknown transport result",
+      "steps": [
+        {
+          "owner": "Gateway and current Security",
+          "input": "Verified principal and original/current source references.",
+          "output": "Current permitted context and mandatory audit are established.",
+          "failure": "Saved replay cannot substitute unrelated allowed evidence for a revoked original source."
+        },
+        {
+          "owner": "Approved release pointer and trusted registry",
+          "input": "Bundle hash, tenant network policy and profile readiness.",
+          "output": "An approved ready private profile is selected before dispatch.",
+          "failure": "Unregistered, unapproved, public or unready profiles reject without transport."
+        },
+        {
+          "owner": "Serving adapter envelope",
+          "input": "Estimated input plus requested output and model capability bounds.",
+          "output": "Context/output requests fit the registered model interface.",
+          "failure": "Memory arithmetic and advertised context are not actual latency guarantees."
+        },
+        {
+          "owner": "Durable operation and shared Gate",
+          "input": "Stable scoped key and request/token/concurrency budgets.",
+          "output": "New operation and fresh provider grant permit one fixture call.",
+          "failure": "Duplicate, blocked or conflicting operations do not gain a new attempt."
+        },
+        {
+          "owner": "Injected hosted/self-host transport",
+          "input": "Only approved permitted context and bounded request parameters.",
+          "output": "Provider response is lost; remote termination remains unknown.",
+          "failure": "Lost response may mean remote work happened; automatic fallback is unsafe."
+        },
+        {
+          "owner": "Result store and settlement",
+          "input": "Known answer plus original operation/bundle identity.",
+          "output": "Persist unknown and conservative reservation. Same-key replay does not dispatch again.",
+          "failure": "A failed final write retains incomplete evidence; do not acknowledge or regenerate."
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "context",
+      "label": "Total cached tokens per active sequence",
+      "type": "range",
+      "min": 1024,
+      "max": 16384,
+      "step": 1024,
+      "default": 4096
+    },
+    {
+      "id": "active",
+      "label": "Active sequences",
+      "type": "range",
+      "min": 1,
+      "max": 16,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "id": "bits",
+      "label": "Raw weight precision",
+      "type": "select",
+      "options": [
+        [
+          "16",
+          "16-bit weights"
+        ],
+        [
+          "4",
+          "4-bit weights"
+        ]
+      ],
+      "default": "16"
+    },
+    {
+      "id": "vram",
+      "label": "Assumed device VRAM (GiB)",
+      "type": "range",
+      "min": 16,
+      "max": 80,
+      "step": 8,
+      "default": 24
+    }
+  ],
+  "cases": [
+    {
+      "name": "Baseline",
+      "params": {
+        "context": 4096,
+        "active": 8,
+        "bits": 16,
+        "vram": 24
+      },
+      "expected": {
+        "Raw weights (GiB)": 14.9,
+        "FP16 KV cache (GiB)": 4,
+        "Assumed total (GiB)": 22.9,
+        "Memory decision": "within assumed VRAM",
+        "Throughput claim": "none: profile real hardware and workload"
+      }
+    },
+    {
+      "name": "Long contexts",
+      "params": {
+        "context": 8192,
+        "active": 8,
+        "bits": 16,
+        "vram": 24
+      },
+      "expected": {
+        "Raw weights (GiB)": 14.9,
+        "FP16 KV cache (GiB)": 8,
+        "Assumed total (GiB)": 26.9,
+        "Memory decision": "exceeds assumed VRAM",
+        "Throughput claim": "none: profile real hardware and workload"
+      }
+    },
+    {
+      "name": "Four-bit weights",
+      "params": {
+        "context": 4096,
+        "active": 8,
+        "bits": 4,
+        "vram": 24
+      },
+      "expected": {
+        "Raw weights (GiB)": 3.73,
+        "FP16 KV cache (GiB)": 4,
+        "Assumed total (GiB)": 11.73,
+        "Memory decision": "within assumed VRAM",
+        "Throughput claim": "none: profile real hardware and workload"
+      }
+    },
+    {
+      "name": "Smaller memory",
+      "params": {
+        "context": 4096,
+        "active": 8,
+        "bits": 16,
+        "vram": 16
+      },
+      "expected": {
+        "Raw weights (GiB)": 14.9,
+        "FP16 KV cache (GiB)": 4,
+        "Assumed total (GiB)": 22.9,
+        "Memory decision": "exceeds assumed VRAM",
+        "Throughput claim": "none: profile real hardware and workload"
+      }
+    },
+    {
+      "name": "One sequence",
+      "params": {
+        "context": 4096,
+        "active": 1,
+        "bits": 16,
+        "vram": 24
+      },
+      "expected": {
+        "Raw weights (GiB)": 14.9,
+        "FP16 KV cache (GiB)": 0.5,
+        "Assumed total (GiB)": 19.4,
+        "Memory decision": "within assumed VRAM",
+        "Throughput claim": "none: profile real hardware and workload"
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: approved hosted runtime",
+      "description": "Approved release behaviour, current policy and fixed provider budgets already exist; no actual hosted performance has been established.",
+      "nodes": [
+        [
+          "Protected client operation",
+          "Stable scoped key and source refs"
+        ],
+        [
+          "Approved version bundle",
+          "Current security and release gates"
+        ],
+        [
+          "Model adapter",
+          "Hosted dependency boundary"
+        ],
+        [
+          "Saved result and telemetry",
+          "Original identity and evidence"
+        ]
+      ]
+    },
+    {
+      "title": "After: approved inference choices",
+      "description": "Gateway selects a trusted profile and bounded request before dispatch. Hosted or self-host engine roles remain behind current security/budget/result contracts; GPU deployment is proposed only.",
+      "nodes": [
+        [
+          "Model Gateway",
+          "Approved bundle and private-ready profile"
+        ],
+        [
+          "Current source/audit gate",
+          "Only permitted stored context"
+        ],
+        [
+          "Shared budget and operation",
+          "Fresh grant; stable replay"
+        ],
+        [
+          "Hosted or self-host engine",
+          "Pinned model and capability envelope"
+        ],
+        [
+          "Ready replica or shard group",
+          "Peak memory and placement constraints"
+        ],
+        [
+          "Result and settlement",
+          "Commit known answer or preserve uncertainty"
+        ]
+      ]
+    },
+    {
+      "title": "Inference operation sequence",
+      "description": "Authorise, select, bound, reserve, execute and persist. Route changes and spare memory do not authorise another uncertain call.",
+      "nodes": [
+        [
+          "Authorise",
+          "Current original-source access"
+        ],
+        [
+          "Select",
+          "Approved private-ready profile"
+        ],
+        [
+          "Bound",
+          "Context/output limits"
+        ],
+        [
+          "Reserve",
+          "One stable operation and fresh grant"
+        ],
+        [
+          "Execute",
+          "Injected transport only"
+        ],
+        [
+          "Persist",
+          "Commit before success; no blind fallback"
+        ]
+      ]
+    }
+  ],
+  "lab_title": "What fits in the assumed single device?",
+  "lab_assumptions": "Hypothetical dense 8B model: 32 layers, 8 KV heads, head dimension 128; KV stays FP16. Fixed four-GiB runtime reserve. Raw estimates omit real allocator/quantisation overhead; no model, GPU or throughput measurement."
+}

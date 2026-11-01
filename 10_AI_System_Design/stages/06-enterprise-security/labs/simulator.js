@@ -1,0 +1,2 @@
+function simulate(p){const identity=p.identity==='valid',fresh=p.age<30,allow=identity&&fresh;return {'Context disclosed':allow?'one permitted passage':'none','Decision':!identity?'reject invalid identity':!fresh?'deny stale policy':'verified scope and current policy','Authorisation source':'trusted code, never model text','Audit requirement':identity?'durable decision before disclosure':'metadata-only authentication rejection'};}
+if(typeof module!=='undefined')module.exports=simulate;

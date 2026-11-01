@@ -1,0 +1,335 @@
+{
+  "stage": 7,
+  "title": "Reliability and Consistency",
+  "outcome": "Recover useful service without weakening saved success or current authority.",
+  "step_labels": [
+    "Verify authority",
+    "Commit",
+    "Acknowledge",
+    "Deliver",
+    "Read",
+    "Recover"
+  ],
+  "branches": [
+    {
+      "label": "Caught-up saved history",
+      "steps": [
+        {
+          "owner": "AI App Service and current authority",
+          "input": "Verified identity, resource policy and protected audit prerequisites.",
+          "output": "Current protected operation is authorised, never by a lagging history replica.",
+          "failure": "Unavailable authority denies disclosure rather than using a stale allow."
+        },
+        {
+          "owner": "Primary transaction",
+          "input": "Stable scoped key and already computed fixture answer.",
+          "output": "Result plus outbox intent commit atomically.",
+          "failure": "Failure before commit rolls back both; external model execution is outside this transaction."
+        },
+        {
+          "owner": "AI App Service response",
+          "input": "Durable result ID and trusted minimum sequence.",
+          "output": "Saved response carries evidence for a read-your-write request.",
+          "failure": "Transport loss does not undo the commit or authorise a new-key attempt."
+        },
+        {
+          "owner": "Delivery consumer and projection",
+          "input": "Events may repeat or arrive out of order.",
+          "output": "Projection/applied identity commit; contiguous watermark covers all preceding events.",
+          "failure": "Maximum seen sequence cannot conceal a missing predecessor."
+        },
+        {
+          "owner": "Consistency read gate",
+          "input": "Required minimum version, observed projection watermark and remaining budget.",
+          "output": "Eligible projection returns the saved result; otherwise use primary.",
+          "failure": "A behind replica is not proof of missing durable work."
+        },
+        {
+          "owner": "Recovery/operator contract",
+          "input": "Primary/outbox/projection evidence and dependency state.",
+          "output": "Reconcile safely and verify restored authority, history and telemetry.",
+          "failure": "Do not delete unknown effects or widen permissions to improve apparent availability."
+        }
+      ]
+    },
+    {
+      "label": "Replica lag and lost response",
+      "steps": [
+        {
+          "owner": "AI App Service and current authority",
+          "input": "Verified identity, resource policy and protected audit prerequisites.",
+          "output": "Current protected operation is authorised, never by a lagging history replica.",
+          "failure": "Unavailable authority denies disclosure rather than using a stale allow."
+        },
+        {
+          "owner": "Primary transaction",
+          "input": "Stable scoped key and already computed fixture answer.",
+          "output": "Result plus outbox intent commit atomically.",
+          "failure": "Failure before commit rolls back both; external model execution is outside this transaction."
+        },
+        {
+          "owner": "AI App Service response",
+          "input": "Durable result ID and trusted minimum sequence.",
+          "output": "Response is lost after commit; inspect/replay under the same scoped key.",
+          "failure": "Transport loss does not undo the commit or authorise a new-key attempt."
+        },
+        {
+          "owner": "Delivery consumer and projection",
+          "input": "Events may repeat or arrive out of order.",
+          "output": "Projection has not covered the required minimum version yet.",
+          "failure": "Maximum seen sequence cannot conceal a missing predecessor."
+        },
+        {
+          "owner": "Consistency read gate",
+          "input": "Required minimum version, observed projection watermark and remaining budget.",
+          "output": "Read the committed result from primary within the remaining budget.",
+          "failure": "A behind replica is not proof of missing durable work."
+        },
+        {
+          "owner": "Recovery/operator contract",
+          "input": "Primary/outbox/projection evidence and dependency state.",
+          "output": "Reconcile safely and verify restored authority, history and telemetry.",
+          "failure": "Do not delete unknown effects or widen permissions to improve apparent availability."
+        }
+      ]
+    },
+    {
+      "label": "Current authority unavailable",
+      "steps": [
+        {
+          "owner": "AI App Service and current authority",
+          "input": "Verified identity, resource policy and protected audit prerequisites.",
+          "output": "Current authority unavailable: protected request is denied.",
+          "failure": "Unavailable authority denies disclosure rather than using a stale allow."
+        },
+        {
+          "owner": "Primary transaction",
+          "input": "Stable scoped key and already computed fixture answer.",
+          "output": "No new protected operation is initiated under stale permission.",
+          "failure": "Failure before commit rolls back both; external model execution is outside this transaction."
+        },
+        {
+          "owner": "AI App Service response",
+          "input": "Durable result ID and trusted minimum sequence.",
+          "output": "Explicit authority error; no false saved success.",
+          "failure": "Transport loss does not undo the commit or authorise a new-key attempt."
+        },
+        {
+          "owner": "Delivery consumer and projection",
+          "input": "Events may repeat or arrive out of order.",
+          "output": "Existing projections may remain readable but do not establish access.",
+          "failure": "Maximum seen sequence cannot conceal a missing predecessor."
+        },
+        {
+          "owner": "Consistency read gate",
+          "input": "Required minimum version, observed projection watermark and remaining budget.",
+          "output": "No protected disclosure is allowed from stale authorisation.",
+          "failure": "A behind replica is not proof of missing durable work."
+        },
+        {
+          "owner": "Recovery/operator contract",
+          "input": "Primary/outbox/projection evidence and dependency state.",
+          "output": "Reconcile safely and verify restored authority, history and telemetry.",
+          "failure": "Do not delete unknown effects or widen permissions to improve apparent availability."
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "kind",
+      "label": "Data read contract",
+      "type": "select",
+      "options": [
+        [
+          "history",
+          "Saved history"
+        ],
+        [
+          "authority",
+          "Current policy authority"
+        ]
+      ],
+      "default": "history"
+    },
+    {
+      "id": "lag",
+      "label": "Logical replica lag (s)",
+      "type": "range",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "id": "remaining",
+      "label": "Overall time remaining (ms)",
+      "type": "range",
+      "min": 0,
+      "max": 5000,
+      "step": 200,
+      "default": 1000
+    }
+  ],
+  "cases": [
+    {
+      "name": "Caught up",
+      "params": {
+        "kind": "history",
+        "lag": 0,
+        "remaining": 1000
+      },
+      "expected": {
+        "Read target": "replica: minimum version met",
+        "Dependency allowance (ms)": 800,
+        "Generation permitted": "only after all inherited gates",
+        "Consistency contract": "read-your-write minimum version"
+      }
+    },
+    {
+      "name": "Behind",
+      "params": {
+        "kind": "history",
+        "lag": 5,
+        "remaining": 1000
+      },
+      "expected": {
+        "Read target": "primary fallback: replica behind",
+        "Dependency allowance (ms)": 800,
+        "Generation permitted": "only after all inherited gates",
+        "Consistency contract": "read-your-write minimum version"
+      }
+    },
+    {
+      "name": "Authority",
+      "params": {
+        "kind": "authority",
+        "lag": 0,
+        "remaining": 1000
+      },
+      "expected": {
+        "Read target": "primary: never lagging authority",
+        "Dependency allowance (ms)": 800,
+        "Generation permitted": "only after all inherited gates",
+        "Consistency contract": "current authoritative policy"
+      }
+    },
+    {
+      "name": "Lagged authority",
+      "params": {
+        "kind": "authority",
+        "lag": 10,
+        "remaining": 1000
+      },
+      "expected": {
+        "Read target": "primary: never lagging authority",
+        "Dependency allowance (ms)": 800,
+        "Generation permitted": "only after all inherited gates",
+        "Consistency contract": "current authoritative policy"
+      }
+    },
+    {
+      "name": "No allowance",
+      "params": {
+        "kind": "history",
+        "lag": 5,
+        "remaining": 200
+      },
+      "expected": {
+        "Read target": "none: deadline exhausted",
+        "Dependency allowance (ms)": 0,
+        "Generation permitted": "no",
+        "Consistency contract": "read-your-write minimum version"
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: one authority, uncertain failures",
+      "description": "Security and durable execution exist; replication/failover and freshness-aware recovery are not yet specified.",
+      "nodes": [
+        [
+          "Client",
+          "Stable operation key"
+        ],
+        [
+          "Verified app and current policy",
+          "Audit and protected context"
+        ],
+        [
+          "Shared authority and workers",
+          "Durable request and quota state"
+        ],
+        [
+          "External model",
+          "Unknown outcomes remain possible"
+        ]
+      ]
+    },
+    {
+      "title": "After: consistent writes and eligible reads",
+      "description": "Result and outbox intent commit locally. Duplicate-safe projection records a contiguous watermark. Current policy never uses stale fallback.",
+      "nodes": [
+        [
+          "Verified app",
+          "Current identity/policy/audit"
+        ],
+        [
+          "Primary writer",
+          "Result plus outbox intent"
+        ],
+        [
+          "Delivery consumer",
+          "Repeated and out-of-order events"
+        ],
+        [
+          "Projection replica",
+          "Contiguous applied watermark"
+        ],
+        [
+          "Read gate",
+          "Minimum met or primary fallback"
+        ],
+        [
+          "Recovery and telemetry",
+          "Deadline, probes and evidence"
+        ]
+      ]
+    },
+    {
+      "title": "Commit-to-recovery sequence",
+      "description": "Verify authority, commit, acknowledge, deliver, read and recover. A lost acknowledgement or lag does not authorise a new provider operation.",
+      "nodes": [
+        [
+          "Verify authority",
+          "Current policy, not stale cache"
+        ],
+        [
+          "Commit",
+          "Local atomic result and intent"
+        ],
+        [
+          "Acknowledge",
+          "Saved ID and minimum sequence"
+        ],
+        [
+          "Deliver",
+          "Duplicate-safe contiguous prefix"
+        ],
+        [
+          "Read",
+          "Eligible projection or primary"
+        ],
+        [
+          "Recover",
+          "Reconcile without erasing ambiguity"
+        ]
+      ]
+    }
+  ],
+  "lab_title": "Which read is safe within the budget?",
+  "lab_assumptions": "Three controls isolate a read leg. Lag zero represents proven minimum-version coverage, not actual clock-based freshness. Primary is assumed reachable; protected disclosure still needs current security/audit gates.",
+  "style_notes": [
+    "/* Hallmark \u00b7 dismissed 46a \u00b7 99.9 percent is explicitly an illustrative objective in a worked error-budget calculation; it is not a measured uptime claim or customer metric */"
+  ]
+}

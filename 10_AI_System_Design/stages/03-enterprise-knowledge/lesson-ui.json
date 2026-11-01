@@ -1,0 +1,316 @@
+{
+  "stage": 3,
+  "title": "Enterprise Knowledge",
+  "outcome": "Use current readable evidence before drafting a policy answer.",
+  "step_labels": [
+    "Observe",
+    "Preserve",
+    "Publish",
+    "Retrieve",
+    "Recheck",
+    "Cite"
+  ],
+  "branches": [
+    {
+      "label": "Current authorised policy",
+      "steps": [
+        {
+          "owner": "Trusted source connector",
+          "input": "Tenant/document identity, ordered revision, operation and source cursor.",
+          "output": "Versioned event enters the durable ingestion path.",
+          "failure": "Missed upstream updates require cursor/source reconciliation."
+        },
+        {
+          "owner": "Ingestion worker and immutable store",
+          "input": "Source bytes for a specific tenant/document/version.",
+          "output": "Immutable object version is preserved before publication.",
+          "failure": "Conflicting bytes under the same version are rejected."
+        },
+        {
+          "owner": "Worker, Metadata DB and Search Index",
+          "input": "Prepared passages, current version pointer, and reader metadata.",
+          "output": "One coherent visible version commits in the local store.",
+          "failure": "Orphan preparation is invisible if publication fails."
+        },
+        {
+          "owner": "AI App Service retrieval role",
+          "input": "Trusted Tenant A/Alice scope and bounded lexical query.",
+          "output": "Current permitted passages are ranked before final top-k.",
+          "failure": "Relevant but unreadable text cannot enter model context."
+        },
+        {
+          "owner": "Trusted context builder",
+          "input": "Candidate identities and current policy/version/tombstone.",
+          "output": "Stored current text remains readable and permitted.",
+          "failure": "Revocation, deletion or version mismatch removes the passage."
+        },
+        {
+          "owner": "Model adapter boundary",
+          "input": "Only permitted passages with exact source/version/chunk references.",
+          "output": "Authorised context includes supplier-policy:v2:c0.",
+          "failure": "No evidence means refusal, not a fabricated grounded policy answer."
+        }
+      ]
+    },
+    {
+      "label": "Source deleted",
+      "steps": [
+        {
+          "owner": "Trusted source connector",
+          "input": "Tenant/document identity, ordered revision, operation and source cursor.",
+          "output": "Versioned event enters the durable ingestion path.",
+          "failure": "Missed upstream updates require cursor/source reconciliation."
+        },
+        {
+          "owner": "Ingestion worker and immutable store",
+          "input": "Source bytes for a specific tenant/document/version.",
+          "output": "Immutable object version is preserved before publication.",
+          "failure": "Conflicting bytes under the same version are rejected."
+        },
+        {
+          "owner": "Worker, Metadata DB and Search Index",
+          "input": "Prepared passages, current version pointer, and reader metadata.",
+          "output": "Newer tombstone commits and removes visible passages.",
+          "failure": "Orphan preparation is invisible if publication fails."
+        },
+        {
+          "owner": "AI App Service retrieval role",
+          "input": "Trusted Tenant A/Alice scope and bounded lexical query.",
+          "output": "Deleted policy is not an eligible current search result.",
+          "failure": "Relevant but unreadable text cannot enter model context."
+        },
+        {
+          "owner": "Trusted context builder",
+          "input": "Candidate identities and current policy/version/tombstone.",
+          "output": "Tombstone blocks any stale previously obtained hit.",
+          "failure": "Revocation, deletion or version mismatch removes the passage."
+        },
+        {
+          "owner": "Model adapter boundary",
+          "input": "Only permitted passages with exact source/version/chunk references.",
+          "output": "Zero context; no grounded-answer model call is authorised.",
+          "failure": "No evidence means refusal, not a fabricated grounded policy answer."
+        }
+      ]
+    },
+    {
+      "label": "Permission revoked",
+      "steps": [
+        {
+          "owner": "Trusted source connector",
+          "input": "Tenant/document identity, ordered revision, operation and source cursor.",
+          "output": "Versioned event enters the durable ingestion path.",
+          "failure": "Missed upstream updates require cursor/source reconciliation."
+        },
+        {
+          "owner": "Ingestion worker and immutable store",
+          "input": "Source bytes for a specific tenant/document/version.",
+          "output": "Immutable object version is preserved before publication.",
+          "failure": "Conflicting bytes under the same version are rejected."
+        },
+        {
+          "owner": "Worker, Metadata DB and Search Index",
+          "input": "Prepared passages, current version pointer, and reader metadata.",
+          "output": "One coherent visible version commits in the local store.",
+          "failure": "Orphan preparation is invisible if publication fails."
+        },
+        {
+          "owner": "AI App Service retrieval role",
+          "input": "Trusted Tenant A/Alice scope and bounded lexical query.",
+          "output": "Candidate was allowed before the permission changed.",
+          "failure": "Relevant but unreadable text cannot enter model context."
+        },
+        {
+          "owner": "Trusted context builder",
+          "input": "Candidate identities and current policy/version/tombstone.",
+          "output": "Current reader policy revokes Alice; hit is removed.",
+          "failure": "Revocation, deletion or version mismatch removes the passage."
+        },
+        {
+          "owner": "Model adapter boundary",
+          "input": "Only permitted passages with exact source/version/chunk references.",
+          "output": "Zero context; no restricted text reaches the model.",
+          "failure": "No evidence means refusal, not a fabricated grounded policy answer."
+        }
+      ]
+    }
+  ],
+  "lab_title": "Who may see this source version?",
+  "lab_assumptions": "One candidate, local current metadata, no generation call or latency model. Unobserved upstream revocations are outside the fixture guarantee.",
+  "controls": [
+    {
+      "id": "identity",
+      "label": "Reader identity",
+      "type": "select",
+      "options": [
+        [
+          "alice",
+          "Alice: permitted"
+        ],
+        [
+          "revoked",
+          "Reader: access revoked"
+        ],
+        [
+          "bob",
+          "Bob: different tenant"
+        ]
+      ],
+      "default": "alice"
+    },
+    {
+      "id": "event",
+      "label": "Candidate condition",
+      "type": "select",
+      "options": [
+        [
+          "current",
+          "Current document"
+        ],
+        [
+          "delete",
+          "Deleted source"
+        ],
+        [
+          "stale",
+          "Old indexed version"
+        ]
+      ],
+      "default": "current"
+    }
+  ],
+  "cases": [
+    {
+      "name": "Allowed",
+      "params": {
+        "identity": "alice",
+        "event": "current"
+      },
+      "expected": {
+        "Context chunks": 1,
+        "Citation": "supplier-policy:v2:c0",
+        "Decision": "authorised current context",
+        "Model call authorised": "yes: context allowed"
+      }
+    },
+    {
+      "name": "Revoked",
+      "params": {
+        "identity": "revoked",
+        "event": "current"
+      },
+      "expected": {
+        "Context chunks": 0,
+        "Citation": "none",
+        "Decision": "blocked by trusted policy",
+        "Model call authorised": "no: refuse unavailable context"
+      }
+    },
+    {
+      "name": "Deleted",
+      "params": {
+        "identity": "alice",
+        "event": "delete"
+      },
+      "expected": {
+        "Context chunks": 0,
+        "Citation": "none",
+        "Decision": "blocked by tombstone",
+        "Model call authorised": "no: refuse unavailable context"
+      }
+    },
+    {
+      "name": "Stale",
+      "params": {
+        "identity": "alice",
+        "event": "stale"
+      },
+      "expected": {
+        "Context chunks": 0,
+        "Citation": "none",
+        "Decision": "blocked by version check",
+        "Model call authorised": "no: refuse unavailable context"
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: durable preparation",
+      "description": "The existing platform can enqueue and complete work, but cannot retrieve current authorised internal policy.",
+      "nodes": [
+        [
+          "Client and AI App Service",
+          "Existing trusted request scope"
+        ],
+        [
+          "Queue and Workers",
+          "Durable bounded preparation"
+        ],
+        [
+          "Metadata DB",
+          "Saved preparation result"
+        ]
+      ]
+    },
+    {
+      "title": "After: ingestion to authorised context",
+      "description": "Source content is untrusted. Connector/worker roles publish versioned passages. Trusted policy/version checks gate text before the external model boundary. Objects and index are local fixtures here.",
+      "nodes": [
+        [
+          "Source connector",
+          "Version, cursor and permissions"
+        ],
+        [
+          "Queue and Workers",
+          "Document Ingestion"
+        ],
+        [
+          "Immutable objects",
+          "Exact source version"
+        ],
+        [
+          "Metadata and Search Index",
+          "Coherent current passages"
+        ],
+        [
+          "Trusted policy/version gate",
+          "Recheck stored context"
+        ],
+        [
+          "Model adapter",
+          "Authorised cited evidence only"
+        ]
+      ]
+    },
+    {
+      "title": "Document and question lifecycle",
+      "description": "Observe, preserve, publish, retrieve, recheck, cite. Deletion or revocation blocks context; no evidence is not a fabricated answer.",
+      "nodes": [
+        [
+          "Observe",
+          "Durable source event"
+        ],
+        [
+          "Preserve",
+          "Immutable bytes"
+        ],
+        [
+          "Publish",
+          "Current generation commits"
+        ],
+        [
+          "Retrieve",
+          "Rank within trusted scope"
+        ],
+        [
+          "Recheck",
+          "Read current authority"
+        ],
+        [
+          "Cite",
+          "Exact source identifiers"
+        ]
+      ]
+    }
+  ]
+}

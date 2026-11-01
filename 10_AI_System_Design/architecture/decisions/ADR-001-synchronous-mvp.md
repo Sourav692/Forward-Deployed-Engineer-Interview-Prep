@@ -1,0 +1,43 @@
+# ADR-001: Synchronous MVP With Durable History
+
+**Status:** accepted for the educational baseline  
+**Stage:** 1  
+**Date:** 2026-11-02  
+**Superseded by:** none
+
+## Situation
+
+No system exists. Alice in hypothetical Tenant A needs a supplier-email draft from supplied text and must reopen its saved answer. The assumed workload is 200 requests per eight-hour workday with a brief 0.5 requests/second peak. The healthy-path p95 target is below five seconds, but no deployment measurements exist. Only approved non-sensitive text may be sent to a hosted provider.
+
+## Options Considered
+
+| Option | Benefit | Cost or risk | Decision |
+| --- | --- | --- | --- |
+| Single application, synchronous JSON, SQLite | Few operating parts; actual HTTP/database slice runs locally | One host; serial writes; no automatic recovery/failover | Choose for learning baseline |
+| Single application and managed relational database | Separate durable storage operations and multi-host path | Database network dependency and operating cost | Revisit before a pilot if hosting/backup needs justify it |
+| Direct browser-to-model request | Simple disposable experiment | Credential/policy exposure and split saved-answer contract | Reject for this requirement |
+| Job API with queue and workers | Durable execution and long task recovery | Delivery semantics, recovery states, extra operations | Defer until a long-running task requirement |
+
+## Decision
+
+Use one AI App Service. API Gateway ingress, Identity/Policy Service, Model Gateway adapter, and Telemetry remain logical roles inside the process. Keep trusted tenant/user scope outside model text. Store requests in SQLite Metadata DB using a unique tenant/user/request-key constraint and scoped history queries.
+
+Commit a `processing` row, call the model without an open database write transaction, then commit `completed` with answer or `failed` with error. Return new-request `201` only after completed commit. Do not stream partial answers in this stage. Do not automatically retry the model. Reuse completed results for duplicate keys with identical prompts; reject processing, failed, or conflicting reuse with `409`.
+
+The runnable slice substitutes public fixture identities and deterministic generation. It is bound to loopback and performs no hosted-model calls. Production identity, TLS termination, provider deadline enforcement, exporters, backups, deletion, and recovery are not implemented by that fixture.
+
+## Guarantees and Non-Guarantees
+
+For the tested local slice, a completed API success follows a committed saved answer. Tenant/user predicates protect list and item history. A duplicate key does not call the model again while its durable row exists. Persistence across application-object recreation is tested.
+
+No atomic transaction spans database and provider. A final write failure or crash may leave `processing` after the provider generated an answer. A timed-out provider may still charge. There is no exactly-once external effect, scheduled reconciliation, high availability, power-loss durability test, real identity assurance, hosted-provider integration test, or measured five-second p95 claim. The 30-day retention policy remains a requirement, not implemented deletion.
+
+## Consequences and Operational Checks
+
+Short local transactions reduce lock duration; SQLite still serialises writes. A durable file/volume and tested restore are necessary for any real pilot. Track request outcomes, model attempts, completed commits, dependency/database durations, and age of processing rows, without logging raw prompts or credentials. These are proposed production telemetry signals; the lab inspects HTTP outcomes, rows, and provider call count instead.
+
+The representative healthy budget is 2,620 ms; the provider-timeout example is 4,120 ms. Neither is measured or establishes p95. Inject provider timeout and final state-write failure to verify the acknowledgement contract. During rollback, preserve the database and stop new generation if the outcome is uncertain.
+
+## Revisit Triggers
+
+Revisit persistence for multi-host deployment, restore requirements, measured write contention, or stronger isolation. Revisit execution when processing blocks interactive requests or must survive worker loss. Revisit streaming when time-to-first-text measurably improves the user experience and provisional versus saved completion is specified. Preserve this ADR; supersede it with a new decision when assumptions change.

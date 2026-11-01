@@ -1,0 +1,90 @@
+{
+  "stage": 8,
+  "title": "Production AI Quality and Releases",
+  "status": "tested",
+  "architecture_before": "v0.7-stage-07",
+  "architecture_after": "# Stage 8 Architecture Snapshot\n\nVersion: `v0.8-stage-08`. Previous: `v0.7-stage-07`. Decision: [ADR-008](../../architecture/decisions/ADR-008-versioned-quality-releases.md). Acceptance: locally executed fixture evaluation/release control, not model quality or deployment approval.\n\nRetain verified current identity/resource policy, audit/egress, versioned retrieval/cache safety, stable result/job/reservation identities, fair bounded dispatch and Stage 7 consistency/outbox/recovery. Add immutable release-bundle/dataset/evaluator/gate identities, per-case/slice evaluation, hard known-safety gates, synthetic latency/cost checks, scoped sticky canary assignment, constrained shadow policy, generation-checked release pointer and redacted bundle/cohort telemetry.\n\nOnly approved report-bound bundles can become candidate routes in the trusted local controller. Withdrawing a candidate keeps current stable; rolling back a completed promotion selects prior approved stable. Saved operations remain immutable and cannot be regenerated or reauthorised by a release flag. Current membership/source tombstones never roll back with model routing.\n\nThe dataset has eight authored cases and fixture outputs. Timing/cost are labels, not measured inference; safety rubrics are deliberately narrow. No real model/judge, shadow/canary traffic, artifact signature, production approval pipeline or monitoring backend is deployed. Stage 9 inherits these approved-routing, evidence and runtime safety boundaries.\n",
+  "architecture_version": "v0.8-stage-08",
+  "first_taught_modules": [
+    {
+      "id": "14.1",
+      "module": "Evaluation architecture",
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.2",
+      "module": "Release management and experimentation",
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.1",
+      "module": "Observability systems",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "3.2",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.3",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.2",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.3",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/dataset-v1.json",
+    "labs/evaluation.py",
+    "labs/releases.py",
+    "labs/simulator.js",
+    "labs/test_releases.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-008-versioned-quality-releases.md"
+  ]
+}

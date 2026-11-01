@@ -1,0 +1,2 @@
+function simulate(p){const limits={application:p.replicas*.7/.025,database:500/(2+4*(1-p.hit/100)),provider:p.provider};const key=Object.keys(limits).reduce((a,b)=>limits[a]<=limits[b]?a:b),cap=limits[key];const round=x=>Math.round(x*100)/100;return {'Planned capacity (RPS)':round(cap),'Limiting budget':key,'Database demand (queries/s)':round(p.load*(2+4*(1-p.hit/100))),'Unserved offered rate (RPS)':round(Math.max(0,p.load-cap))};}
+if(typeof module!=='undefined')module.exports=simulate;

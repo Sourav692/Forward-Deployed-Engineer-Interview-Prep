@@ -1,0 +1,23 @@
+# ADR-004: Stateless App Replicas and Immutable Passage Reuse
+
+Status: accepted educational architecture. Stage: 4. Date: 2026-11-02. Supersedes: none; extends ADR-001–003 with an explicit production-persistence migration plan.
+
+## Situation and Options
+
+Hypothetical traffic rises to 100 requests/second. A one-core 25 ms CPU path has insufficient headroom. Copying local database files would fork history, operation keys, job claims, and source authority. Query-only answer caching could leak or stale policy. Compare vertical scaling, stateless replicas, local immutable caches, and a shared distributed cache.
+
+## Decision and Migration
+
+Choose ready stateless app replicas behind a load-balancing role, with one shared relational authority for requests/jobs/source metadata. Propose a separately operated relational service such as PostgreSQL rather than independent host-local SQLite files. Preserve schema/key scope and commit semantics; port/test claim transactions, copy/reconcile data, choose one writer at cutover, and test rollback. No managed migration or real load balancer is deployed by this artifact.
+
+Use bounded per-replica immutable passage caches keyed by tenant/document/version/chunk. Always read current policy/version/tombstone before use. Content changes create different keys; revocation/deletion blocks reuse. TTL and LRU bound reuse, not authorisation. Cache outage may bypass to trusted storage; authority outage may not bypass to stale cached permission. Final answers, permissions, and candidate ranking are not cached here.
+
+## Evidence and Limits
+
+Local tests reuse Stage 1 App and Stage 3 Knowledge against one SQLite file to verify cross-object shared history, duplicate replay, and negative access. They verify warm cache policy reads, tenant keys, version/deletion/revocation, TTL/eviction/outage, and capacity arithmetic. This is not a multi-host SQLite recommendation, a production DB migration, a benchmark, or a real autoscaler.
+
+Capacity is modelled as the minimum app CPU, query-count DB budget, and provider budget. Four 70%-planned replicas can supply 112 RPS only under the illustrative CPU assumption. Cold caches, connection pools, provider tokens, and startup/drain time must be measured. Advanced cache stampede controls and distributed cache operations remain unimplemented.
+
+## Operational Checks and Revisit
+
+Observe offered/admitted/completed rate, pool wait, query time, cache misses/forbidden hits, provider wait, and readiness/drain time. Stage 5 adds explicit admission/fairness under fixed dependency budgets. Revisit cache scope only with a documented policy/version/model dependency contract; never remove current trusted checks for a faster graph.

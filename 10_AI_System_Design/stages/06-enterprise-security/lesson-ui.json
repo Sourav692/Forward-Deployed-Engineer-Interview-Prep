@@ -1,0 +1,305 @@
+{
+  "stage": 6,
+  "title": "Enterprise Security",
+  "outcome": "Keep identity, source access and provider disclosure under trusted control.",
+  "step_labels": [
+    "Verify",
+    "Bind",
+    "Govern",
+    "Resolve",
+    "Audit",
+    "Egress"
+  ],
+  "branches": [
+    {
+      "label": "Current permitted access",
+      "steps": [
+        {
+          "owner": "Gateway identity verifier",
+          "input": "Signed fixture claims for the expected audience; caller headers untrusted.",
+          "output": "Verified principal or authentication rejection.",
+          "failure": "Decodable payloads and arbitrary key URLs do not establish identity."
+        },
+        {
+          "owner": "Identity/Policy role",
+          "input": "Verified subject and authoritative membership record.",
+          "output": "Trusted Tenant A/Alice scope and matching policy epoch.",
+          "failure": "A caller tenant header cannot override verified membership."
+        },
+        {
+          "owner": "Current policy authority",
+          "input": "Active member, allowed action and policy freshness.",
+          "output": "Current protected retrieval action is allowed.",
+          "failure": "Missing, expired or mismatched policy fails closed."
+        },
+        {
+          "owner": "Stage 3 trusted context builder",
+          "input": "Candidate identities plus current document version/readers.",
+          "output": "Only stored permitted source text with exact citations is resolved.",
+          "failure": "Revoked, deleted, foreign-tenant and forged-body hits cannot disclose text."
+        },
+        {
+          "owner": "Protected audit store",
+          "input": "Decision, principal and permitted source identifiers.",
+          "output": "Durable decision acknowledgement precedes disclosure.",
+          "failure": "Audit insert failure blocks the protected response."
+        },
+        {
+          "owner": "Trusted provider adapter",
+          "input": "Allowed action, approved destination and tenant secret reference.",
+          "output": "Approved context can leave through the configured provider boundary.",
+          "failure": "Private routes or model text cannot widen authorisation."
+        }
+      ]
+    },
+    {
+      "label": "Spoofed tenant header",
+      "steps": [
+        {
+          "owner": "Gateway identity verifier",
+          "input": "Signed fixture claims for the expected audience; caller headers untrusted.",
+          "output": "Valid Tenant B/Bob principal; header claiming Tenant A is untrusted.",
+          "failure": "Decodable payloads and arbitrary key URLs do not establish identity."
+        },
+        {
+          "owner": "Identity/Policy role",
+          "input": "Verified subject and authoritative membership record.",
+          "output": "Scope remains Tenant B/Bob, never Tenant A.",
+          "failure": "A caller tenant header cannot override verified membership."
+        },
+        {
+          "owner": "Current policy authority",
+          "input": "Active member, allowed action and policy freshness.",
+          "output": "Current protected retrieval action is allowed.",
+          "failure": "Missing, expired or mismatched policy fails closed."
+        },
+        {
+          "owner": "Stage 3 trusted context builder",
+          "input": "Candidate identities plus current document version/readers.",
+          "output": "Alice\u2019s Tenant A citation resolves to no permitted text for Bob.",
+          "failure": "Revoked, deleted, foreign-tenant and forged-body hits cannot disclose text."
+        },
+        {
+          "owner": "Protected audit store",
+          "input": "Decision, principal and permitted source identifiers.",
+          "output": "Empty-context decision is recorded without raw source text.",
+          "failure": "Audit insert failure blocks the protected response."
+        },
+        {
+          "owner": "Trusted provider adapter",
+          "input": "Allowed action, approved destination and tenant secret reference.",
+          "output": "No grounded-answer context is disclosed for the foreign citation.",
+          "failure": "Private routes or model text cannot widen authorisation."
+        }
+      ]
+    },
+    {
+      "label": "Stale membership policy",
+      "steps": [
+        {
+          "owner": "Gateway identity verifier",
+          "input": "Signed fixture claims for the expected audience; caller headers untrusted.",
+          "output": "Verified principal or authentication rejection.",
+          "failure": "Decodable payloads and arbitrary key URLs do not establish identity."
+        },
+        {
+          "owner": "Identity/Policy role",
+          "input": "Verified subject and authoritative membership record.",
+          "output": "Trusted Tenant A/Alice scope and matching policy epoch.",
+          "failure": "A caller tenant header cannot override verified membership."
+        },
+        {
+          "owner": "Current policy authority",
+          "input": "Active member, allowed action and policy freshness.",
+          "output": "Membership policy is stale: deny protected retrieval.",
+          "failure": "Missing, expired or mismatched policy fails closed."
+        },
+        {
+          "owner": "Stage 3 trusted context builder",
+          "input": "Candidate identities plus current document version/readers.",
+          "output": "No context is returned under the denied scope.",
+          "failure": "Revoked, deleted, foreign-tenant and forged-body hits cannot disclose text."
+        },
+        {
+          "owner": "Protected audit store",
+          "input": "Decision, principal and permitted source identifiers.",
+          "output": "Durable deny_scope metadata records the decision.",
+          "failure": "Audit insert failure blocks the protected response."
+        },
+        {
+          "owner": "Trusted provider adapter",
+          "input": "Allowed action, approved destination and tenant secret reference.",
+          "output": "No provider disclosure is authorised.",
+          "failure": "Private routes or model text cannot widen authorisation."
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "identity",
+      "label": "Identity assertion",
+      "type": "select",
+      "options": [
+        [
+          "valid",
+          "Valid for this service"
+        ],
+        [
+          "invalid",
+          "Invalid or wrong audience"
+        ]
+      ],
+      "default": "valid"
+    },
+    {
+      "id": "age",
+      "label": "Membership policy age (s)",
+      "type": "range",
+      "min": 0,
+      "max": 60,
+      "step": 10,
+      "default": 0
+    }
+  ],
+  "cases": [
+    {
+      "name": "Current",
+      "params": {
+        "identity": "valid",
+        "age": 0
+      },
+      "expected": {
+        "Context disclosed": "one permitted passage",
+        "Decision": "verified scope and current policy",
+        "Authorisation source": "trusted code, never model text",
+        "Audit requirement": "durable decision before disclosure"
+      }
+    },
+    {
+      "name": "Invalid identity",
+      "params": {
+        "identity": "invalid",
+        "age": 0
+      },
+      "expected": {
+        "Context disclosed": "none",
+        "Decision": "reject invalid identity",
+        "Authorisation source": "trusted code, never model text",
+        "Audit requirement": "metadata-only authentication rejection"
+      }
+    },
+    {
+      "name": "Policy boundary",
+      "params": {
+        "identity": "valid",
+        "age": 30
+      },
+      "expected": {
+        "Context disclosed": "none",
+        "Decision": "deny stale policy",
+        "Authorisation source": "trusted code, never model text",
+        "Audit requirement": "durable decision before disclosure"
+      }
+    },
+    {
+      "name": "Old policy",
+      "params": {
+        "identity": "valid",
+        "age": 60
+      },
+      "expected": {
+        "Context disclosed": "none",
+        "Decision": "deny stale policy",
+        "Authorisation source": "trusted code, never model text",
+        "Audit requirement": "durable decision before disclosure"
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: baseline tenant gates",
+      "description": "Trusted predicates and quotas exist, but do not implement enterprise identity/audit/network deployment.",
+      "nodes": [
+        [
+          "Client",
+          "Tenant A, B, C"
+        ],
+        [
+          "AI App Service",
+          "Baseline identity fixtures"
+        ],
+        [
+          "Policy and fair dispatch",
+          "Current source and finite budgets"
+        ],
+        [
+          "Model adapter",
+          "External provider boundary"
+        ]
+      ]
+    },
+    {
+      "title": "After: verified audited disclosure",
+      "description": "Untrusted headers/documents remain data. Verified service/user scope, current authority, audit and constrained egress gate model context.",
+      "nodes": [
+        [
+          "Gateway",
+          "Expected issuer, audience and time"
+        ],
+        [
+          "Identity/Policy",
+          "Current membership and epoch"
+        ],
+        [
+          "Trusted retrieval",
+          "Tenant/version/readers"
+        ],
+        [
+          "Protected audit",
+          "Durable decision before output"
+        ],
+        [
+          "Secret and egress policy",
+          "Approved tenant/provider path"
+        ],
+        [
+          "External model",
+          "Permitted context only"
+        ]
+      ]
+    },
+    {
+      "title": "Security request sequence",
+      "description": "Verify, bind, govern, resolve, audit and egress. Spoofed scope and stale authority cannot disclose text.",
+      "nodes": [
+        [
+          "Verify",
+          "Verify, do not merely decode"
+        ],
+        [
+          "Bind",
+          "Derive scope from trusted identity"
+        ],
+        [
+          "Govern",
+          "Read current policy"
+        ],
+        [
+          "Resolve",
+          "Resolve trusted resource text"
+        ],
+        [
+          "Audit",
+          "Commit protected metadata"
+        ],
+        [
+          "Egress",
+          "Constrain provider boundary"
+        ]
+      ]
+    }
+  ],
+  "lab_title": "Which gate blocks disclosure?",
+  "lab_assumptions": "Toy policy freshness expires at 30 seconds. Document is assumed current/readable and audit succeeds; no real identity/network integration."
+}

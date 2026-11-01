@@ -1,0 +1,78 @@
+{
+  "stage": 6,
+  "title": "Enterprise Security",
+  "status": "tested",
+  "architecture_before": "v0.5-stage-05",
+  "architecture_after": "# Stage 6 Architecture Snapshot\n\nVersion: `v0.6-stage-06`. Previous: `v0.5-stage-05`. Decision: [ADR-006](../../architecture/decisions/ADR-006-trusted-enterprise-boundaries.md). Acceptance: educational security boundaries with tested local fixtures, not production assurance.\n\nRetain ready replicas/shared history, operation keys, current versioned retrieval and immutable-cache safety, durable jobs/epochs, bounded fair scheduling and provider budget guards. Strengthen Gateway and Identity/Policy roles with verified-principal propagation, scoped service audience/actions, current membership/epoch/freshness, and explicit resource governance. Add durable protected audit-before-disclosure and approved provider/tenant-secret-reference gates.\n\nThe local slice integrates actual Stage 3 context checks with signed public fixture envelopes, authoritative membership rows and durable audit insertion. It ignores tenant headers, rejects stale/incorrect identity and resource scope, and blocks output if mandatory audit fails. This is not a JWT/OIDC provider or a deployed mTLS/RLS/KMS/private-network system. Policy observations cannot guarantee upstream revocations not yet received.\n\nOnly permitted text may cross the external provider boundary. Network reachability, model instructions, scheduler shares and a warm cache never confer resource permission. Unknown remote outcomes and slot reconciliation remain explicit. Stage 7 may add consistency choices and fault recovery while preserving these gates; no such deployment is implied by this snapshot.\n",
+  "architecture_version": "v0.6-stage-06",
+  "first_taught_modules": [
+    {
+      "id": "2.3",
+      "module": "Gateway and service communication",
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.3",
+      "module": "Enterprise retrieval governance",
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.1",
+      "module": "Identity and access control",
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.2",
+      "module": "Enterprise AI security",
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.3",
+      "module": "Multi-tenant platform design",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "2.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D2"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/security.py",
+    "labs/simulator.js",
+    "labs/test_security.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-006-trusted-enterprise-boundaries.md"
+  ]
+}

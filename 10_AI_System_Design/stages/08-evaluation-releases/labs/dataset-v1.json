@@ -1,0 +1,58 @@
+[
+  {
+    "id": "delivery",
+    "slice": "answer",
+    "decision": "answer",
+    "citation": "policy:v2:c0",
+    "required": "portal"
+  },
+  {
+    "id": "contact",
+    "slice": "answer",
+    "decision": "answer",
+    "citation": "policy:v2:c1",
+    "required": "procurement"
+  },
+  {
+    "id": "confirmation",
+    "slice": "answer",
+    "decision": "answer",
+    "citation": "policy:v2:c0",
+    "required": "confirm"
+  },
+  {
+    "id": "late",
+    "slice": "answer",
+    "decision": "answer",
+    "citation": "policy:v2:c1",
+    "required": "escalate"
+  },
+  {
+    "id": "paraphrase",
+    "slice": "answer",
+    "decision": "answer",
+    "citation": "policy:v2:c0",
+    "required": "portal"
+  },
+  {
+    "id": "unsupported",
+    "slice": "refusal",
+    "decision": "refuse",
+    "citation": null,
+    "required": ""
+  },
+  {
+    "id": "foreign",
+    "slice": "security",
+    "decision": "refuse",
+    "citation": null,
+    "required": ""
+  },
+  {
+    "id": "revoked",
+    "slice": "security",
+    "decision": "refuse",
+    "citation": null,
+    "required": ""
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "stage": 3,
+  "title": "Enterprise Knowledge",
+  "status": "tested",
+  "architecture_before": "v0.2-stage-02",
+  "architecture_after": "# Stage 3 Architecture Snapshot\n\nVersion: `v0.3-stage-03`. Previous: `v0.2-stage-02`. Decision: [ADR-003](../../architecture/decisions/ADR-003-versioned-retrieval.md). Acceptance: educational baseline, not a deployed retrieval product.\n\nRetain Client, trusted AI App Service/Identity/Policy roles, synchronous draft/history, Metadata DB, Queue, Workers, bounded tool/model adapters, and proposed metadata-only Telemetry. Add source connector envelopes, immutable version storage, Document Ingestion/chunk publication, Search Index, current-version/tombstone/policy metadata, and a retrieval-context gate.\n\nIngestion uses Stage 2 durable jobs and guarded completion. Content publication atomically changes local metadata and FTS passages; immutable objects may remain orphaned after partial preparation. Retrieval ranks within tenant/current-version/reader scope and rechecks stored policy/text before provider context. No relevant or authorised current evidence means refusal for the grounded-answer path.\n\nThe executable is SQLite FTS5 plus local version/policy fixtures, including an actual durable-job-to-ingestion test. No external connector, parser, embedding/model, production object store, or distributed search cluster exists. Upstream permission changes not yet observed remain a freshness risk. Old objects/backups are not physically erased by tombstoning search visibility.\n\nStage 4 may add app replicas/caches and a separately operated relational store when traffic requires it. It must preserve live policy/version checks, durable worker contracts, scoped history, and exact citations.\n",
+  "architecture_version": "v0.3-stage-03",
+  "first_taught_modules": [
+    {
+      "id": "6.3",
+      "module": "Object storage and data lifecycle",
+      "target_depth": "D1"
+    },
+    {
+      "id": "8.1",
+      "module": "Document ingestion and indexing",
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.2",
+      "module": "Search architecture",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "4.2",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/knowledge.py",
+    "labs/simulator.js",
+    "labs/test_knowledge.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-003-versioned-retrieval.md"
+  ]
+}

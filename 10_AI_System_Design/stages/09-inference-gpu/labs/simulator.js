@@ -1,0 +1,2 @@
+function simulate(p){const weights=8000000000*p.bits/8/(2**30),kv=2*32*8*128*2*p.context*p.active/(2**30),total=weights+kv+4,round=x=>Math.round(x*100)/100;return {'Raw weights (GiB)':round(weights),'FP16 KV cache (GiB)':round(kv),'Assumed total (GiB)':round(total),'Memory decision':total<=p.vram?'within assumed VRAM':'exceeds assumed VRAM','Throughput claim':'none: profile real hardware and workload'};}
+if(typeof module!=='undefined')module.exports=simulate;

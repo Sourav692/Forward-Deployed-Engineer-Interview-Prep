@@ -1,0 +1,394 @@
+{
+  "stage": 8,
+  "title": "Production AI Quality and Releases",
+  "outcome": "Release a versioned behaviour change only with evidence and controlled exposure.",
+  "step_labels": [
+    "Freeze",
+    "Run",
+    "Gate",
+    "Assign",
+    "Observe",
+    "Decide",
+    "Preserve"
+  ],
+  "branches": [
+    {
+      "label": "Eligible teaching candidate",
+      "steps": [
+        {
+          "owner": "Evaluation control",
+          "input": "Immutable prompt/retriever/index/model/policy/dataset/evaluator/gate identities.",
+          "output": "A reproducible evaluated bundle and expected case set are recorded.",
+          "failure": "Mutable aliases or mismatched dataset/report bindings cannot establish approval."
+        },
+        {
+          "owner": "Deterministic fixture evaluator",
+          "input": "All eight structured precomputed outputs and versioned rubric.",
+          "output": "Case and slice scores are computed with valid finite metric labels.",
+          "failure": "Missing, duplicate or malformed coverage fails closed rather than flattering the mean."
+        },
+        {
+          "owner": "Approved gate policy",
+          "input": "Quality score, known safety count, fixture p95 and mean cost.",
+          "output": "The good fixture passes only the teaching gate for further controlled validation.",
+          "failure": "Known access violations block independently of an aggregate threshold."
+        },
+        {
+          "owner": "Trusted release controller",
+          "input": "Approved exact bundle hash and eligible tenant/user units.",
+          "output": "Sticky eligible canary assignment preserves the stable control route.",
+          "failure": "Unapproved bundles, tenants or weakened report gates cannot become a candidate."
+        },
+        {
+          "owner": "Version-aware runtime telemetry",
+          "input": "Bounded bundle/cohort outcome, timing and numeric usage metadata.",
+          "output": "Redacted diagnostic evidence supports comparison.",
+          "failure": "Raw prompts, bearer tokens and source bodies do not belong in ordinary events."
+        },
+        {
+          "owner": "Generation-checked release pointer",
+          "input": "Current expected generation and sufficient observed evidence.",
+          "output": "A fresh command can promote or withdraw a candidate.",
+          "failure": "Stale commands fail; a fixture pass alone is not production approval."
+        },
+        {
+          "owner": "Durable operation/result store",
+          "input": "Saved result identity and original bundle provenance.",
+          "output": "Rollback changes future routing while keeping prior committed facts.",
+          "failure": "Never erase a result or retry an uncertain provider action to match a new route."
+        }
+      ]
+    },
+    {
+      "label": "Known safety regression",
+      "steps": [
+        {
+          "owner": "Evaluation control",
+          "input": "Immutable prompt/retriever/index/model/policy/dataset/evaluator/gate identities.",
+          "output": "A reproducible evaluated bundle and expected case set are recorded.",
+          "failure": "Mutable aliases or mismatched dataset/report bindings cannot establish approval."
+        },
+        {
+          "owner": "Deterministic fixture evaluator",
+          "input": "All eight structured precomputed outputs and versioned rubric.",
+          "output": "Case and slice scores are computed with valid finite metric labels.",
+          "failure": "Missing, duplicate or malformed coverage fails closed rather than flattering the mean."
+        },
+        {
+          "owner": "Approved gate policy",
+          "input": "Quality score, known safety count, fixture p95 and mean cost.",
+          "output": "Known foreign-tenant answer blocks release even with relaxed aggregate quality.",
+          "failure": "Known access violations block independently of an aggregate threshold."
+        },
+        {
+          "owner": "Trusted release controller",
+          "input": "Approved exact bundle hash and eligible tenant/user units.",
+          "output": "Candidate is not assigned; eligible users remain on approved stable.",
+          "failure": "Unapproved bundles, tenants or weakened report gates cannot become a candidate."
+        },
+        {
+          "owner": "Version-aware runtime telemetry",
+          "input": "Bounded bundle/cohort outcome, timing and numeric usage metadata.",
+          "output": "Redacted diagnostic evidence supports comparison.",
+          "failure": "Raw prompts, bearer tokens and source bodies do not belong in ordinary events."
+        },
+        {
+          "owner": "Generation-checked release pointer",
+          "input": "Current expected generation and sufficient observed evidence.",
+          "output": "Retain failure evidence and fix the boundary, not the threshold.",
+          "failure": "Stale commands fail; a fixture pass alone is not production approval."
+        },
+        {
+          "owner": "Durable operation/result store",
+          "input": "Saved result identity and original bundle provenance.",
+          "output": "Rollback changes future routing while keeping prior committed facts.",
+          "failure": "Never erase a result or retry an uncertain provider action to match a new route."
+        }
+      ]
+    },
+    {
+      "label": "Canary regression and withdrawal",
+      "steps": [
+        {
+          "owner": "Evaluation control",
+          "input": "Immutable prompt/retriever/index/model/policy/dataset/evaluator/gate identities.",
+          "output": "A reproducible evaluated bundle and expected case set are recorded.",
+          "failure": "Mutable aliases or mismatched dataset/report bindings cannot establish approval."
+        },
+        {
+          "owner": "Deterministic fixture evaluator",
+          "input": "All eight structured precomputed outputs and versioned rubric.",
+          "output": "Case and slice scores are computed with valid finite metric labels.",
+          "failure": "Missing, duplicate or malformed coverage fails closed rather than flattering the mean."
+        },
+        {
+          "owner": "Approved gate policy",
+          "input": "Quality score, known safety count, fixture p95 and mean cost.",
+          "output": "The good fixture passes only the teaching gate for further controlled validation.",
+          "failure": "Known access violations block independently of an aggregate threshold."
+        },
+        {
+          "owner": "Trusted release controller",
+          "input": "Approved exact bundle hash and eligible tenant/user units.",
+          "output": "Sticky eligible canary assignment preserves the stable control route.",
+          "failure": "Unapproved bundles, tenants or weakened report gates cannot become a candidate."
+        },
+        {
+          "owner": "Version-aware runtime telemetry",
+          "input": "Bounded bundle/cohort outcome, timing and numeric usage metadata.",
+          "output": "Version/cohort evidence shows a candidate regression.",
+          "failure": "Raw prompts, bearer tokens and source bodies do not belong in ordinary events."
+        },
+        {
+          "owner": "Generation-checked release pointer",
+          "input": "Current expected generation and sufficient observed evidence.",
+          "output": "Fresh generation-checked withdrawal removes candidate while retaining current stable.",
+          "failure": "Stale commands fail; a fixture pass alone is not production approval."
+        },
+        {
+          "owner": "Durable operation/result store",
+          "input": "Saved result identity and original bundle provenance.",
+          "output": "Existing saved answers keep their identity; new requests use stable routing.",
+          "failure": "Never erase a result or retry an uncertain provider action to match a new route."
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "variant",
+      "label": "Fixture output scenario",
+      "type": "select",
+      "options": [
+        [
+          "good",
+          "Good fixture"
+        ],
+        [
+          "quality",
+          "Wrong supplier rule"
+        ],
+        [
+          "leak",
+          "Known cross-tenant answer"
+        ],
+        [
+          "latency",
+          "Slow fixture label"
+        ],
+        [
+          "cost",
+          "Costly fixture labels"
+        ]
+      ],
+      "default": "good"
+    },
+    {
+      "id": "threshold",
+      "label": "Quality threshold (%)",
+      "type": "range",
+      "min": 80,
+      "max": 100,
+      "step": 5,
+      "default": 95
+    },
+    {
+      "id": "latency",
+      "label": "Maximum fixture p95 (ms)",
+      "type": "range",
+      "min": 1000,
+      "max": 4000,
+      "step": 500,
+      "default": 2000
+    },
+    {
+      "id": "cost",
+      "label": "Maximum mean fixture cost units",
+      "type": "range",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "cases": [
+    {
+      "name": "Good fixture",
+      "params": {
+        "variant": "good",
+        "threshold": 95,
+        "latency": 2000,
+        "cost": 3
+      },
+      "expected": {
+        "Quality (%)": 100,
+        "Known safety violations": 0,
+        "p95 fixture latency (ms)": 1000,
+        "Mean fixture cost units": 2,
+        "Release gate": "eligible for teaching canary",
+        "Reasons": "none"
+      }
+    },
+    {
+      "name": "Wrong rule",
+      "params": {
+        "variant": "quality",
+        "threshold": 95,
+        "latency": 2000,
+        "cost": 3
+      },
+      "expected": {
+        "Quality (%)": 87.5,
+        "Known safety violations": 0,
+        "p95 fixture latency (ms)": 1000,
+        "Mean fixture cost units": 2,
+        "Release gate": "blocked",
+        "Reasons": "quality"
+      }
+    },
+    {
+      "name": "Known leak",
+      "params": {
+        "variant": "leak",
+        "threshold": 80,
+        "latency": 2000,
+        "cost": 3
+      },
+      "expected": {
+        "Quality (%)": 87.5,
+        "Known safety violations": 1,
+        "p95 fixture latency (ms)": 1000,
+        "Mean fixture cost units": 2,
+        "Release gate": "blocked",
+        "Reasons": "known safety violation"
+      }
+    },
+    {
+      "name": "Slow label",
+      "params": {
+        "variant": "latency",
+        "threshold": 95,
+        "latency": 2000,
+        "cost": 3
+      },
+      "expected": {
+        "Quality (%)": 100,
+        "Known safety violations": 0,
+        "p95 fixture latency (ms)": 3000,
+        "Mean fixture cost units": 2,
+        "Release gate": "blocked",
+        "Reasons": "latency"
+      }
+    },
+    {
+      "name": "Costly labels",
+      "params": {
+        "variant": "cost",
+        "threshold": 95,
+        "latency": 2000,
+        "cost": 3
+      },
+      "expected": {
+        "Quality (%)": 100,
+        "Known safety violations": 0,
+        "p95 fixture latency (ms)": 1000,
+        "Mean fixture cost units": 5,
+        "Release gate": "blocked",
+        "Reasons": "cost"
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: recoverable runtime without quality release gates",
+      "description": "Existing current-policy runtime, saved results and diagnostic signals remain. Successful HTTP/latency does not prove the supplier answer is correct.",
+      "nodes": [
+        [
+          "Client and protected application",
+          "Current identity and evidence"
+        ],
+        [
+          "Retrieval and model adapter",
+          "Versioned source but changing behaviour"
+        ],
+        [
+          "Saved result and recovery",
+          "Stable operation and outbox"
+        ],
+        [
+          "Operational signals",
+          "Infrastructure health alone is insufficient"
+        ]
+      ]
+    },
+    {
+      "title": "After: evidence-bound staged release",
+      "description": "Immutable bundle/dataset/evaluator/gate identities drive slice-aware checks and approved routing. Runtime security, budgets and result identity remain independent.",
+      "nodes": [
+        [
+          "Immutable bundle and dataset",
+          "Exact versions and cases"
+        ],
+        [
+          "Evaluation and hard safety gate",
+          "Quality, coverage, latency, cost"
+        ],
+        [
+          "Approved scoped release pointer",
+          "Sticky eligible canary or safe shadow"
+        ],
+        [
+          "Version/cohort telemetry",
+          "Redacted diagnostic evidence"
+        ],
+        [
+          "Promote or withdraw with CAS",
+          "Expected current generation"
+        ],
+        [
+          "Protected runtime",
+          "Unchanged current authority and budgets"
+        ]
+      ]
+    },
+    {
+      "title": "Release lifecycle",
+      "description": "Freeze, run, gate, assign, observe, decide and preserve. Known safety failures block; routing rollback does not erase saved outcomes.",
+      "nodes": [
+        [
+          "Freeze",
+          "Bind every relevant version"
+        ],
+        [
+          "Run",
+          "Compute fixture case/slice scores"
+        ],
+        [
+          "Gate",
+          "Separate safety and budgets"
+        ],
+        [
+          "Assign",
+          "Eligible sticky units only"
+        ],
+        [
+          "Observe",
+          "Redacted version/cohort signals"
+        ],
+        [
+          "Decide",
+          "Fresh CAS promotion or withdrawal"
+        ],
+        [
+          "Preserve",
+          "Keep committed operation history"
+        ]
+      ]
+    }
+  ],
+  "lab_title": "Which release gate blocks the candidate?",
+  "lab_assumptions": "Eight authored cases and synthetic output/latency/cost labels. No model call or production approval. Changing worksheet thresholds does not change approved teaching-gate-v1; known safety cannot be disabled.",
+  "style_notes": [
+    "/* Hallmark \u00b7 dismissed 46a \u00b7 all quality percentages are computed over eight explicitly authored fixture cases; latency/cost values and gate thresholds are labelled teaching inputs, not measured customer performance */"
+  ]
+}

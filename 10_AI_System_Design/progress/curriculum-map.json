@@ -1,0 +1,735 @@
+{
+  "program": "Architecture-Driven Staff AI System Design",
+  "version": "3.0",
+  "target": "Staff FDE / Applied AI Engineer",
+  "stage_count": 12,
+  "domain_count": 18,
+  "module_count": 56,
+  "stages": [
+    {
+      "stage": 1,
+      "name": "Build the MVP",
+      "trigger": "A single enterprise user can authenticate, ask a question, receive a hosted-model response, and view a saved request.",
+      "architecture_after": "An API application, database, minimal hosted-model adapter, and a documented baseline request path.",
+      "architecture_before": "No system exists; only requirements.",
+      "output_dir": "stages/01-mvp"
+    },
+    {
+      "stage": 2,
+      "name": "Distributed Execution",
+      "trigger": "Document processing and long-running tasks block interactive requests or are lost on worker failure.",
+      "architecture_after": "Durable job API, queue, workers, retry boundaries, idempotency, and stored job state.",
+      "architecture_before": "The verified architecture after Stage 1.",
+      "output_dir": "stages/02-distributed-execution"
+    },
+    {
+      "stage": 3,
+      "name": "Enterprise Knowledge",
+      "trigger": "Users need trustworthy answers from changing internal documents without exposing restricted files.",
+      "architecture_after": "Connector ingestion, search index, metadata, source synchronization, and permission-filtered retrieval.",
+      "architecture_before": "The verified architecture after Stage 2.",
+      "output_dir": "stages/03-enterprise-knowledge"
+    },
+    {
+      "stage": 4,
+      "name": "Scale the Application",
+      "trigger": "Traffic rises from a pilot to broad enterprise usage; latency and database load rise.",
+      "architecture_after": "Stateless replicas, caching, capacity math, autoscaling policies, and measured bottlenecks.",
+      "architecture_before": "The verified architecture after Stage 3.",
+      "output_dir": "stages/04-application-scaling"
+    },
+    {
+      "stage": 5,
+      "name": "Handle Overload and Fair Scheduling",
+      "trigger": "One tenant floods a shared model provider; others miss latency targets and queues grow.",
+      "architecture_after": "Admission limits, bounded per-tenant queues, weighted scheduling, concurrency limits, rejection policies, and metrics.",
+      "architecture_before": "The verified architecture after Stage 4.",
+      "output_dir": "stages/05-overload-fairness"
+    },
+    {
+      "stage": 6,
+      "name": "Enterprise Security",
+      "trigger": "Multiple customer organizations demand strict isolation, identity, audit, and private connectivity.",
+      "architecture_after": "Tenant-aware auth/authz, trust boundaries, auditing, secrets, private connectivity, and isolated data policies.",
+      "architecture_before": "The verified architecture after Stage 5.",
+      "output_dir": "stages/06-enterprise-security"
+    },
+    {
+      "stage": 7,
+      "name": "Reliability and Consistency",
+      "trigger": "Replica lag, crashes, dependency outages, and retries yield stale states or duplicate effects.",
+      "architecture_after": "Consistency choices by data class, circuit breakers, retries, failover, runbooks, and end-to-end traces.",
+      "architecture_before": "The verified architecture after Stage 6.",
+      "output_dir": "stages/07-reliability-consistency"
+    },
+    {
+      "stage": 8,
+      "name": "Production AI Quality and Releases",
+      "trigger": "A model or retrieval change silently reduces accuracy or increases cost and latency.",
+      "architecture_after": "Versioned eval datasets, release gates, canary/shadow tests, observability, and rollback.",
+      "architecture_before": "The verified architecture after Stage 7.",
+      "output_dir": "stages/08-evaluation-releases"
+    },
+    {
+      "stage": 9,
+      "name": "Inference and GPU Infrastructure",
+      "trigger": "Hosted provider spend and latency force evaluation of routing and self-hosted serving.",
+      "architecture_after": "Model-serving gateway, inference performance budget, self-hosted deployment option, and GPU placement boundaries.",
+      "architecture_before": "The verified architecture after Stage 8.",
+      "output_dir": "stages/09-inference-gpu"
+    },
+    {
+      "stage": 10,
+      "name": "Fine-Tuning and Model Customization",
+      "trigger": "Selected customers require specialized model behavior; ad-hoc training cannot be governed.",
+      "architecture_after": "Dataset/version pipeline, training job control, tracking, checkpoints, evaluation, registry, and approval.",
+      "architecture_before": "The verified architecture after Stage 9.",
+      "output_dir": "stages/10-fine-tuning"
+    },
+    {
+      "stage": 11,
+      "name": "Global Multi-Region Platform",
+      "trigger": "Data residency, regional traffic, outages, and enterprise SLAs change deployment constraints.",
+      "architecture_after": "Regional control/data boundaries, routing, DR, capacity planning, and governance.",
+      "architecture_before": "The verified architecture after Stage 10.",
+      "output_dir": "stages/11-multi-region"
+    },
+    {
+      "stage": 12,
+      "name": "Staff-Level Platform Architecture",
+      "trigger": "The platform must serve many internal teams and customers without becoming a fragile custom project.",
+      "architecture_after": "Reference architecture, ADR portfolio, phased migration, platform abstractions, TCO, operating model, and final defense.",
+      "architecture_before": "The verified architecture after Stage 11.",
+      "output_dir": "stages/12-staff-platform"
+    }
+  ],
+  "modules": [
+    {
+      "id": "1.1",
+      "domain_id": 1,
+      "domain": "System Design Foundations",
+      "module": "Requirements and architecture methodology",
+      "primary_stage": 1,
+      "revisit_stages": [
+        4,
+        12
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "1.2",
+      "domain_id": 1,
+      "domain": "System Design Foundations",
+      "module": "Estimation and capacity planning",
+      "primary_stage": 1,
+      "revisit_stages": [
+        4,
+        9,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "1.3",
+      "domain_id": 1,
+      "domain": "System Design Foundations",
+      "module": "Design documentation and communication",
+      "primary_stage": 12,
+      "revisit_stages": [],
+      "target_depth": "D3"
+    },
+    {
+      "id": "2.1",
+      "domain_id": 2,
+      "domain": "Networking and API Architecture",
+      "module": "Networking fundamentals",
+      "primary_stage": 1,
+      "revisit_stages": [
+        6,
+        11
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "2.2",
+      "domain_id": 2,
+      "domain": "Networking and API Architecture",
+      "module": "APIs and streaming protocols",
+      "primary_stage": 1,
+      "revisit_stages": [
+        4,
+        7
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "2.3",
+      "domain_id": 2,
+      "domain": "Networking and API Architecture",
+      "module": "Gateway and service communication",
+      "primary_stage": 6,
+      "revisit_stages": [
+        9
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "3.1",
+      "domain_id": 3,
+      "domain": "Distributed Systems",
+      "module": "Distributed system fundamentals",
+      "primary_stage": 7,
+      "revisit_stages": [
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "3.2",
+      "domain_id": 3,
+      "domain": "Distributed Systems",
+      "module": "Distributed state and transactions",
+      "primary_stage": 7,
+      "revisit_stages": [
+        8
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "3.3",
+      "domain_id": 3,
+      "domain": "Distributed Systems",
+      "module": "Distributed architecture patterns",
+      "primary_stage": 12,
+      "revisit_stages": [],
+      "target_depth": "D2"
+    },
+    {
+      "id": "4.1",
+      "domain_id": 4,
+      "domain": "Concurrency, Asynchronous Execution, and Messaging",
+      "module": "Concurrency fundamentals",
+      "primary_stage": 2,
+      "revisit_stages": [
+        5,
+        9
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.2",
+      "domain_id": 4,
+      "domain": "Concurrency, Asynchronous Execution, and Messaging",
+      "module": "Messaging and event streams",
+      "primary_stage": 2,
+      "revisit_stages": [
+        3,
+        5
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.3",
+      "domain_id": 4,
+      "domain": "Concurrency, Asynchronous Execution, and Messaging",
+      "module": "Background execution systems",
+      "primary_stage": 2,
+      "revisit_stages": [
+        10
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.1",
+      "domain_id": 5,
+      "domain": "Traffic Management, Queuing, Backpressure, and Fair Scheduling",
+      "module": "Rate limiting and admission control",
+      "primary_stage": 5,
+      "revisit_stages": [
+        9,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.2",
+      "domain_id": 5,
+      "domain": "Traffic Management, Queuing, Backpressure, and Fair Scheduling",
+      "module": "Queuing and queueing theory",
+      "primary_stage": 5,
+      "revisit_stages": [
+        9
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.3",
+      "domain_id": 5,
+      "domain": "Traffic Management, Queuing, Backpressure, and Fair Scheduling",
+      "module": "Backpressure and overload management",
+      "primary_stage": 5,
+      "revisit_stages": [
+        7,
+        9
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.4",
+      "domain_id": 5,
+      "domain": "Traffic Management, Queuing, Backpressure, and Fair Scheduling",
+      "module": "Fair scheduling and workload prioritization",
+      "primary_stage": 5,
+      "revisit_stages": [
+        9,
+        11
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.5",
+      "domain_id": 5,
+      "domain": "Traffic Management, Queuing, Backpressure, and Fair Scheduling",
+      "module": "AI workload management",
+      "primary_stage": 5,
+      "revisit_stages": [
+        9,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "6.1",
+      "domain_id": 6,
+      "domain": "Data Storage and Caching",
+      "module": "Database architecture",
+      "primary_stage": 1,
+      "revisit_stages": [
+        2,
+        7
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "6.2",
+      "domain_id": 6,
+      "domain": "Data Storage and Caching",
+      "module": "Caching systems",
+      "primary_stage": 4,
+      "revisit_stages": [
+        5,
+        7
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "6.3",
+      "domain_id": 6,
+      "domain": "Data Storage and Caching",
+      "module": "Object storage and data lifecycle",
+      "primary_stage": 3,
+      "revisit_stages": [
+        10
+      ],
+      "target_depth": "D1"
+    },
+    {
+      "id": "7.1",
+      "domain_id": 7,
+      "domain": "AI Application and Platform Architecture",
+      "module": "End-to-end AI application design",
+      "primary_stage": 1,
+      "revisit_stages": [
+        4,
+        8
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.2",
+      "domain_id": 7,
+      "domain": "AI Application and Platform Architecture",
+      "module": "AI gateway and provider management",
+      "primary_stage": 9,
+      "revisit_stages": [
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.3",
+      "domain_id": 7,
+      "domain": "AI Application and Platform Architecture",
+      "module": "Agentic application system architecture",
+      "primary_stage": 2,
+      "revisit_stages": [
+        8
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.1",
+      "domain_id": 8,
+      "domain": "Enterprise Retrieval and Search Systems",
+      "module": "Document ingestion and indexing",
+      "primary_stage": 3,
+      "revisit_stages": [
+        7,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.2",
+      "domain_id": 8,
+      "domain": "Enterprise Retrieval and Search Systems",
+      "module": "Search architecture",
+      "primary_stage": 3,
+      "revisit_stages": [
+        4,
+        9
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.3",
+      "domain_id": 8,
+      "domain": "Enterprise Retrieval and Search Systems",
+      "module": "Enterprise retrieval governance",
+      "primary_stage": 6,
+      "revisit_stages": [
+        7,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "9.1",
+      "domain_id": 9,
+      "domain": "LLM Inference Engineering",
+      "module": "LLM execution and inference fundamentals",
+      "primary_stage": 9,
+      "revisit_stages": [
+        11
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.2",
+      "domain_id": 9,
+      "domain": "LLM Inference Engineering",
+      "module": "Model serving architecture",
+      "primary_stage": 9,
+      "revisit_stages": [
+        11
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.3",
+      "domain_id": 9,
+      "domain": "LLM Inference Engineering",
+      "module": "Inference performance optimization",
+      "primary_stage": 9,
+      "revisit_stages": [
+        11
+      ],
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.1",
+      "domain_id": 10,
+      "domain": "GPU and AI Compute Infrastructure",
+      "module": "GPU architecture fundamentals",
+      "primary_stage": 9,
+      "revisit_stages": [
+        10
+      ],
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.2",
+      "domain_id": 10,
+      "domain": "GPU and AI Compute Infrastructure",
+      "module": "Distributed GPU execution",
+      "primary_stage": 9,
+      "revisit_stages": [
+        10
+      ],
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.3",
+      "domain_id": 10,
+      "domain": "GPU and AI Compute Infrastructure",
+      "module": "GPU infrastructure and scheduling",
+      "primary_stage": 9,
+      "revisit_stages": [
+        10,
+        11
+      ],
+      "target_depth": "D1"
+    },
+    {
+      "id": "11.1",
+      "domain_id": 11,
+      "domain": "Fine-Tuning and Training System Architecture",
+      "module": "Fine-tuning fundamentals",
+      "primary_stage": 10,
+      "revisit_stages": [
+        12
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "11.2",
+      "domain_id": 11,
+      "domain": "Fine-Tuning and Training System Architecture",
+      "module": "Fine-tuning platform architecture",
+      "primary_stage": 10,
+      "revisit_stages": [
+        12
+      ],
+      "target_depth": "D1"
+    },
+    {
+      "id": "11.3",
+      "domain_id": 11,
+      "domain": "Fine-Tuning and Training System Architecture",
+      "module": "Distributed training infrastructure",
+      "primary_stage": 10,
+      "revisit_stages": [
+        12
+      ],
+      "target_depth": "D0"
+    },
+    {
+      "id": "12.1",
+      "domain_id": 12,
+      "domain": "Scalability, Reliability, and Performance",
+      "module": "Scaling and traffic engineering",
+      "primary_stage": 4,
+      "revisit_stages": [
+        5,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.2",
+      "domain_id": 12,
+      "domain": "Scalability, Reliability, and Performance",
+      "module": "Resilience and fault tolerance",
+      "primary_stage": 7,
+      "revisit_stages": [
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.3",
+      "domain_id": 12,
+      "domain": "Scalability, Reliability, and Performance",
+      "module": "Latency and performance",
+      "primary_stage": 7,
+      "revisit_stages": [
+        9
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.1",
+      "domain_id": 13,
+      "domain": "Security, Privacy, and Multi-Tenancy",
+      "module": "Identity and access control",
+      "primary_stage": 6,
+      "revisit_stages": [
+        7
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.2",
+      "domain_id": 13,
+      "domain": "Security, Privacy, and Multi-Tenancy",
+      "module": "Enterprise AI security",
+      "primary_stage": 6,
+      "revisit_stages": [
+        8,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.3",
+      "domain_id": 13,
+      "domain": "Security, Privacy, and Multi-Tenancy",
+      "module": "Multi-tenant platform design",
+      "primary_stage": 6,
+      "revisit_stages": [
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.1",
+      "domain_id": 14,
+      "domain": "AI Evaluation, Experimentation, and LLMOps",
+      "module": "Evaluation architecture",
+      "primary_stage": 8,
+      "revisit_stages": [
+        10,
+        12
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.2",
+      "domain_id": 14,
+      "domain": "AI Evaluation, Experimentation, and LLMOps",
+      "module": "Release management and experimentation",
+      "primary_stage": 8,
+      "revisit_stages": [
+        9,
+        10
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.3",
+      "domain_id": 14,
+      "domain": "AI Evaluation, Experimentation, and LLMOps",
+      "module": "Model and data lifecycle infrastructure",
+      "primary_stage": 10,
+      "revisit_stages": [
+        12
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "15.1",
+      "domain_id": 15,
+      "domain": "Observability, SRE, and Incident Engineering",
+      "module": "Observability systems",
+      "primary_stage": 8,
+      "revisit_stages": [
+        9
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.2",
+      "domain_id": 15,
+      "domain": "Observability, SRE, and Incident Engineering",
+      "module": "SRE and production operations",
+      "primary_stage": 7,
+      "revisit_stages": [
+        11,
+        12
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.3",
+      "domain_id": 15,
+      "domain": "Observability, SRE, and Incident Engineering",
+      "module": "Performance and incident diagnosis",
+      "primary_stage": 7,
+      "revisit_stages": [
+        8,
+        11
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "16.1",
+      "domain_id": 16,
+      "domain": "Cloud-Native and Platform Engineering",
+      "module": "Container and orchestration architecture",
+      "primary_stage": 9,
+      "revisit_stages": [
+        10,
+        11
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "16.2",
+      "domain_id": 16,
+      "domain": "Cloud-Native and Platform Engineering",
+      "module": "Cloud networking and deployment",
+      "primary_stage": 11,
+      "revisit_stages": [
+        12
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "16.3",
+      "domain_id": 16,
+      "domain": "Cloud-Native and Platform Engineering",
+      "module": "Internal AI developer platforms",
+      "primary_stage": 12,
+      "revisit_stages": [],
+      "target_depth": "D3"
+    },
+    {
+      "id": "17.1",
+      "domain_id": 17,
+      "domain": "AI Cost and Capacity Engineering",
+      "module": "AI unit economics",
+      "primary_stage": 11,
+      "revisit_stages": [
+        12
+      ],
+      "target_depth": "D3"
+    },
+    {
+      "id": "17.2",
+      "domain_id": 17,
+      "domain": "AI Cost and Capacity Engineering",
+      "module": "Infrastructure capacity planning",
+      "primary_stage": 11,
+      "revisit_stages": [
+        12
+      ],
+      "target_depth": "D2"
+    },
+    {
+      "id": "17.3",
+      "domain_id": 17,
+      "domain": "AI Cost and Capacity Engineering",
+      "module": "Architecture economics",
+      "primary_stage": 12,
+      "revisit_stages": [],
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.1",
+      "domain_id": 18,
+      "domain": "Staff-Level Architecture and Technical Leadership",
+      "module": "Architecture decision-making",
+      "primary_stage": 12,
+      "revisit_stages": [],
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.2",
+      "domain_id": 18,
+      "domain": "Staff-Level Architecture and Technical Leadership",
+      "module": "Platform evolution and migration",
+      "primary_stage": 12,
+      "revisit_stages": [],
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.3",
+      "domain_id": 18,
+      "domain": "Staff-Level Architecture and Technical Leadership",
+      "module": "Technical leadership through system design",
+      "primary_stage": 12,
+      "revisit_stages": [],
+      "target_depth": "D3"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+function simulate(p){const allowance=Math.max(0,p.remaining-200),expired=allowance===0;return {'Read target':expired?'none: deadline exhausted':p.kind==='authority'?'primary: never lagging authority':p.lag===0?'replica: minimum version met':'primary fallback: replica behind','Dependency allowance (ms)':allowance,'Generation permitted':expired?'no':'only after all inherited gates','Consistency contract':p.kind==='authority'?'current authoritative policy':'read-your-write minimum version'};}
+if(typeof module!=='undefined')module.exports=simulate;

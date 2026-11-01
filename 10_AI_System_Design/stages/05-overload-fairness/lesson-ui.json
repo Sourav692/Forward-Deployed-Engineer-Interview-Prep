@@ -1,0 +1,421 @@
+{
+  "stage": 5,
+  "title": "Handle Overload and Fair Scheduling",
+  "outcome": "Bound tenant demand and share a finite model budget honestly.",
+  "step_labels": [
+    "Validate",
+    "Admit",
+    "Select",
+    "Reserve",
+    "Execute",
+    "Settle"
+  ],
+  "branches": [
+    {
+      "label": "Accepted dispatch",
+      "steps": [
+        {
+          "owner": "AI App Service Identity/Policy",
+          "input": "Trusted tenant/user, stable key, size/token envelope, and deadline.",
+          "output": "Valid scoped work remains eligible for budget checks.",
+          "failure": "Invalid, expired or unauthorised work stops before generation."
+        },
+        {
+          "owner": "Admission Controller",
+          "input": "Tenant/global queue bounds and request envelope.",
+          "output": "Work enters a bounded tenant queue only after durable acceptance.",
+          "failure": "Over-limit work is rejected explicitly, never fake accepted."
+        },
+        {
+          "owner": "Fair scheduler",
+          "input": "Eligible non-expired tenant queues and configured weights.",
+          "output": "A ready tenant gets its current service turn without creating capacity.",
+          "failure": "Strict priority may starve other classes; expired work must not dispatch."
+        },
+        {
+          "owner": "Atomic provider budget guard",
+          "input": "Request credits, token estimate, current slots and operation identity.",
+          "output": "Fresh grant reserves all budgets transactionally before a new call.",
+          "failure": "Limited or duplicate outcomes authorise no new provider call."
+        },
+        {
+          "owner": "Worker and model adapter",
+          "input": "Current lease/epoch, live source policy, grant, and remaining deadline.",
+          "output": "Known fixture generation result is ready to persist.",
+          "failure": "A lost provider response does not prove remote termination."
+        },
+        {
+          "owner": "Shared result/reservation authority",
+          "input": "Committed job result and known termination evidence.",
+          "output": "Saved completion releases its slot and preserves stable replay identity.",
+          "failure": "A crash between result commit and settlement may strand a slot for reconciliation."
+        }
+      ]
+    },
+    {
+      "label": "Admission rejected",
+      "steps": [
+        {
+          "owner": "AI App Service Identity/Policy",
+          "input": "Trusted tenant/user, stable key, size/token envelope, and deadline.",
+          "output": "Valid scoped work remains eligible for budget checks.",
+          "failure": "Invalid, expired or unauthorised work stops before generation."
+        },
+        {
+          "owner": "Admission Controller",
+          "input": "Tenant/global queue bounds and request envelope.",
+          "output": "Queue or tenant budget is full: explicit rejection, no durable acceptance.",
+          "failure": "Over-limit work is rejected explicitly, never fake accepted."
+        },
+        {
+          "owner": "Fair scheduler",
+          "input": "Eligible non-expired tenant queues and configured weights.",
+          "output": "Not reached for this rejected operation; no provider call is made.",
+          "failure": "Strict priority may starve other classes; expired work must not dispatch."
+        },
+        {
+          "owner": "Atomic provider budget guard",
+          "input": "Request credits, token estimate, current slots and operation identity.",
+          "output": "Not reached for this rejected operation; no provider call is made.",
+          "failure": "Limited or duplicate outcomes authorise no new provider call."
+        },
+        {
+          "owner": "Worker and model adapter",
+          "input": "Current lease/epoch, live source policy, grant, and remaining deadline.",
+          "output": "Not reached for this rejected operation; no provider call is made.",
+          "failure": "A lost provider response does not prove remote termination."
+        },
+        {
+          "owner": "Shared result/reservation authority",
+          "input": "Committed job result and known termination evidence.",
+          "output": "Not reached for this rejected operation; no provider call is made.",
+          "failure": "A crash between result commit and settlement may strand a slot for reconciliation."
+        }
+      ]
+    },
+    {
+      "label": "External termination unknown",
+      "steps": [
+        {
+          "owner": "AI App Service Identity/Policy",
+          "input": "Trusted tenant/user, stable key, size/token envelope, and deadline.",
+          "output": "Valid scoped work remains eligible for budget checks.",
+          "failure": "Invalid, expired or unauthorised work stops before generation."
+        },
+        {
+          "owner": "Admission Controller",
+          "input": "Tenant/global queue bounds and request envelope.",
+          "output": "Work enters a bounded tenant queue only after durable acceptance.",
+          "failure": "Over-limit work is rejected explicitly, never fake accepted."
+        },
+        {
+          "owner": "Fair scheduler",
+          "input": "Eligible non-expired tenant queues and configured weights.",
+          "output": "A ready tenant gets its current service turn without creating capacity.",
+          "failure": "Strict priority may starve other classes; expired work must not dispatch."
+        },
+        {
+          "owner": "Atomic provider budget guard",
+          "input": "Request credits, token estimate, current slots and operation identity.",
+          "output": "Fresh grant reserves all budgets transactionally before a new call.",
+          "failure": "Limited or duplicate outcomes authorise no new provider call."
+        },
+        {
+          "owner": "Worker and model adapter",
+          "input": "Current lease/epoch, live source policy, grant, and remaining deadline.",
+          "output": "External call started; its final response/termination is unknown.",
+          "failure": "A lost provider response does not prove remote termination."
+        },
+        {
+          "owner": "Shared result/reservation authority",
+          "input": "Committed job result and known termination evidence.",
+          "output": "Unknown reservation retains its slot; do not release or auto-retry blindly.",
+          "failure": "A crash between result commit and settlement may strand a slot for reconciliation."
+        }
+      ]
+    }
+  ],
+  "lab_title": "Which tenant gets the fixed service?",
+  "lab_assumptions": "Finite time-zero burst; equal one-second jobs; 12 queued jobs per tenant; A/B/C insertion order; B/C offer six each; WRR weights 2:1:1. Retry copies use unsafe fresh keys. No distributed or variable-token fairness claim.",
+  "controls": [
+    {
+      "id": "policy",
+      "label": "Scheduling policy",
+      "type": "select",
+      "options": [
+        [
+          "fifo",
+          "FIFO"
+        ],
+        [
+          "priority",
+          "Strict priority B, C, A"
+        ],
+        [
+          "rr",
+          "Round-robin"
+        ],
+        [
+          "wrr",
+          "Weighted RR 2:1:1"
+        ]
+      ],
+      "default": "wrr"
+    },
+    {
+      "id": "burst",
+      "label": "Tenant A offered burst (jobs)",
+      "type": "range",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "id": "capacity",
+      "label": "Fixed provider slots (one-second jobs)",
+      "type": "range",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "id": "retries",
+      "label": "Unsafe new-key retry copies",
+      "type": "range",
+      "min": 0,
+      "max": 2,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "id": "deadline",
+      "label": "Absolute job deadline (s)",
+      "type": "range",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "cases": [
+    {
+      "name": "FIFO",
+      "params": {
+        "policy": "fifo",
+        "burst": 30,
+        "capacity": 3,
+        "retries": 0,
+        "deadline": 4
+      },
+      "expected": {
+        "Served A/B/C": "12/0/0",
+        "Rejected at admission": 18,
+        "Expired queued jobs": 12,
+        "Peak queued jobs": 24,
+        "Queue after each second": "21,18,15,0,0,0,0,0,0,0",
+        "Total completions": 12,
+        "Fixed provider jobs/s": 3
+      }
+    },
+    {
+      "name": "Priority",
+      "params": {
+        "policy": "priority",
+        "burst": 30,
+        "capacity": 3,
+        "retries": 0,
+        "deadline": 4
+      },
+      "expected": {
+        "Served A/B/C": "0/6/6",
+        "Rejected at admission": 18,
+        "Expired queued jobs": 12,
+        "Peak queued jobs": 24,
+        "Queue after each second": "21,18,15,0,0,0,0,0,0,0",
+        "Total completions": 12,
+        "Fixed provider jobs/s": 3
+      }
+    },
+    {
+      "name": "Round-robin",
+      "params": {
+        "policy": "rr",
+        "burst": 30,
+        "capacity": 3,
+        "retries": 0,
+        "deadline": 4
+      },
+      "expected": {
+        "Served A/B/C": "4/4/4",
+        "Rejected at admission": 18,
+        "Expired queued jobs": 12,
+        "Peak queued jobs": 24,
+        "Queue after each second": "21,18,15,0,0,0,0,0,0,0",
+        "Total completions": 12,
+        "Fixed provider jobs/s": 3
+      }
+    },
+    {
+      "name": "Weighted turns",
+      "params": {
+        "policy": "wrr",
+        "burst": 30,
+        "capacity": 3,
+        "retries": 0,
+        "deadline": 4
+      },
+      "expected": {
+        "Served A/B/C": "6/3/3",
+        "Rejected at admission": 18,
+        "Expired queued jobs": 12,
+        "Peak queued jobs": 24,
+        "Queue after each second": "21,18,15,0,0,0,0,0,0,0",
+        "Total completions": 12,
+        "Fixed provider jobs/s": 3
+      }
+    },
+    {
+      "name": "Unsafe retries",
+      "params": {
+        "policy": "wrr",
+        "burst": 30,
+        "capacity": 3,
+        "retries": 2,
+        "deadline": 4
+      },
+      "expected": {
+        "Served A/B/C": "6/3/3",
+        "Rejected at admission": 78,
+        "Expired queued jobs": 12,
+        "Peak queued jobs": 24,
+        "Queue after each second": "21,18,15,0,0,0,0,0,0,0",
+        "Total completions": 12,
+        "Fixed provider jobs/s": 3
+      }
+    },
+    {
+      "name": "Short deadline",
+      "params": {
+        "policy": "wrr",
+        "burst": 30,
+        "capacity": 3,
+        "retries": 0,
+        "deadline": 1
+      },
+      "expected": {
+        "Served A/B/C": "2/1/0",
+        "Rejected at admission": 18,
+        "Expired queued jobs": 21,
+        "Peak queued jobs": 24,
+        "Queue after each second": "0,0,0,0,0,0,0,0,0,0",
+        "Total completions": 3,
+        "Fixed provider jobs/s": 3
+      }
+    },
+    {
+      "name": "More real slots",
+      "params": {
+        "policy": "wrr",
+        "burst": 30,
+        "capacity": 6,
+        "retries": 0,
+        "deadline": 4
+      },
+      "expected": {
+        "Served A/B/C": "12/6/6",
+        "Rejected at admission": 18,
+        "Expired queued jobs": 0,
+        "Peak queued jobs": 24,
+        "Queue after each second": "18,12,6,0,0,0,0,0,0,0",
+        "Total completions": 24,
+        "Fixed provider jobs/s": 6
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: scaled app, fixed provider",
+      "description": "App replicas and immutable cache preserve trusted history/retrieval. The shared model provider remains capacity limited across tenants.",
+      "nodes": [
+        [
+          "Tenant A, B, C requests",
+          "Trusted scope and stable keys"
+        ],
+        [
+          "Ready app replicas",
+          "Shared authority and live policy"
+        ],
+        [
+          "Immutable body cache",
+          "Reuse bytes without granting access"
+        ],
+        [
+          "Model adapter",
+          "Fixed provider request/token/slot limits"
+        ]
+      ]
+    },
+    {
+      "title": "After: bounded fair provider dispatch",
+      "description": "Trusted admission and tenant queues bound waiting work. Fair turns allocate existing service. A shared atomic guard grants provider budgets before execution, preserving unknown outcomes.",
+      "nodes": [
+        [
+          "Identity and validation",
+          "Scope, key, budget, deadline"
+        ],
+        [
+          "Admission Controller",
+          "Bounded acceptance or rejection"
+        ],
+        [
+          "Per-tenant queues and scheduler",
+          "Work-conserving WRR 2:1:1"
+        ],
+        [
+          "Provider budget guard",
+          "Requests, tokens, concurrency"
+        ],
+        [
+          "Worker/model adapter",
+          "Current authority and deadline"
+        ],
+        [
+          "Result commit and settlement",
+          "Known completion or unknown evidence"
+        ]
+      ]
+    },
+    {
+      "title": "Admission through settlement",
+      "description": "Validate, admit, select, reserve, execute, settle. Rejection reaches no provider; uncertain termination retains a slot rather than inventing cancellation.",
+      "nodes": [
+        [
+          "Validate",
+          "Trusted request envelope"
+        ],
+        [
+          "Admit",
+          "Bounded durable queue"
+        ],
+        [
+          "Select",
+          "Eligible weighted turn"
+        ],
+        [
+          "Reserve",
+          "Fresh atomic grant only"
+        ],
+        [
+          "Execute",
+          "Budgeted provider call"
+        ],
+        [
+          "Settle",
+          "Commit and known termination"
+        ]
+      ]
+    }
+  ]
+}

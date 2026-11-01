@@ -1,0 +1,324 @@
+{
+  "stage": 4,
+  "title": "Scale the Application",
+  "outcome": "Scale app capacity without losing shared state or current access checks.",
+  "step_labels": [
+    "Route",
+    "Establish scope",
+    "Read authority",
+    "Reuse bytes",
+    "Persist",
+    "Respond"
+  ],
+  "branches": [
+    {
+      "label": "Healthy shared-state request",
+      "steps": [
+        {
+          "owner": "Load-balancing/readiness role",
+          "input": "Authenticated request and current ready-instance set.",
+          "output": "Any ready app replica is selected without depending on sticky history.",
+          "failure": "Cold or draining replicas must not accept new work before ready."
+        },
+        {
+          "owner": "AI App Service identity role",
+          "input": "Caller identity, operation key, and request validation.",
+          "output": "Trusted tenant/user scope and a stable operation identity.",
+          "failure": "A replica must not invent independent local operation history."
+        },
+        {
+          "owner": "Shared current authority",
+          "input": "Trusted scope and source/version/candidate identity.",
+          "output": "Current reader, version, deletion and durable operation checks pass.",
+          "failure": "Forbidden or stale evidence is rejected even on a cache hit."
+        },
+        {
+          "owner": "Bounded immutable-content cache",
+          "input": "Tenant/document/version/chunk key after the live gate.",
+          "output": "Warm passage bytes are reused; the live authority check was not skipped.",
+          "failure": "Cache outage uses trusted storage; authority outage cannot be bypassed."
+        },
+        {
+          "owner": "AI App Service and shared durable DB",
+          "input": "Saved result and original scoped operation identity.",
+          "output": "Result commits to the same authority all app replicas use.",
+          "failure": "No successful saved answer is acknowledged before commit."
+        },
+        {
+          "owner": "Selected app replica returning to Client",
+          "input": "Committed saved result or original contract error.",
+          "output": "Alice can reopen the result through another healthy replica.",
+          "failure": "A lost response reuses the same key, not a blind new generation."
+        }
+      ]
+    },
+    {
+      "label": "Warm cache but access revoked",
+      "steps": [
+        {
+          "owner": "Load-balancing/readiness role",
+          "input": "Authenticated request and current ready-instance set.",
+          "output": "Any ready app replica is selected without depending on sticky history.",
+          "failure": "Cold or draining replicas must not accept new work before ready."
+        },
+        {
+          "owner": "AI App Service identity role",
+          "input": "Caller identity, operation key, and request validation.",
+          "output": "Trusted tenant/user scope and a stable operation identity.",
+          "failure": "A replica must not invent independent local operation history."
+        },
+        {
+          "owner": "Shared current authority",
+          "input": "Trusted scope and source/version/candidate identity.",
+          "output": "Live authority rejects Alice after observed revocation.",
+          "failure": "Forbidden or stale evidence is rejected even on a cache hit."
+        },
+        {
+          "owner": "Bounded immutable-content cache",
+          "input": "Tenant/document/version/chunk key after the live gate.",
+          "output": "Warm cached bytes remain unusable; no restricted content is returned.",
+          "failure": "Cache outage uses trusted storage; authority outage cannot be bypassed."
+        },
+        {
+          "owner": "AI App Service and shared durable DB",
+          "input": "Saved result and original scoped operation identity.",
+          "output": "No new successful generated answer is committed from forbidden evidence.",
+          "failure": "No successful saved answer is acknowledged before commit."
+        },
+        {
+          "owner": "Selected app replica returning to Client",
+          "input": "Committed saved result or original contract error.",
+          "output": "Original refusal/not-found contract; no permission leak.",
+          "failure": "A lost response reuses the same key, not a blind new generation."
+        }
+      ]
+    },
+    {
+      "label": "Cold replacement replica",
+      "steps": [
+        {
+          "owner": "Load-balancing/readiness role",
+          "input": "Authenticated request and current ready-instance set.",
+          "output": "Replacement is routed only after readiness; history is in shared state.",
+          "failure": "Cold or draining replicas must not accept new work before ready."
+        },
+        {
+          "owner": "AI App Service identity role",
+          "input": "Caller identity, operation key, and request validation.",
+          "output": "Trusted tenant/user scope and a stable operation identity.",
+          "failure": "A replica must not invent independent local operation history."
+        },
+        {
+          "owner": "Shared current authority",
+          "input": "Trusted scope and source/version/candidate identity.",
+          "output": "Current reader, version, deletion and durable operation checks pass.",
+          "failure": "Forbidden or stale evidence is rejected even on a cache hit."
+        },
+        {
+          "owner": "Bounded immutable-content cache",
+          "input": "Tenant/document/version/chunk key after the live gate.",
+          "output": "Cold cache misses fetch allowed immutable bytes from trusted storage.",
+          "failure": "Cache outage uses trusted storage; authority outage cannot be bypassed."
+        },
+        {
+          "owner": "AI App Service and shared durable DB",
+          "input": "Saved result and original scoped operation identity.",
+          "output": "Result commits to the same authority all app replicas use.",
+          "failure": "No successful saved answer is acknowledged before commit."
+        },
+        {
+          "owner": "Selected app replica returning to Client",
+          "input": "Committed saved result or original contract error.",
+          "output": "Alice can reopen the result through another healthy replica.",
+          "failure": "A lost response reuses the same key, not a blind new generation."
+        }
+      ]
+    }
+  ],
+  "lab_title": "Find the limiting budget",
+  "lab_assumptions": "Fixed 25 ms CPU/request, 70% app target, two trusted reads plus four cacheable reads, 500 DB queries/s. These are assumed compatible budgets, not measured throughput or p95.",
+  "controls": [
+    {
+      "id": "replicas",
+      "label": "App replicas",
+      "type": "range",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "id": "hit",
+      "label": "Passage hit rate (%)",
+      "type": "range",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 0
+    },
+    {
+      "id": "load",
+      "label": "Offered load (RPS)",
+      "type": "range",
+      "min": 20,
+      "max": 200,
+      "step": 20,
+      "default": 100
+    },
+    {
+      "id": "provider",
+      "label": "Provider budget (RPS)",
+      "type": "range",
+      "min": 30,
+      "max": 120,
+      "step": 10,
+      "default": 120
+    }
+  ],
+  "cases": [
+    {
+      "name": "Single app",
+      "params": {
+        "replicas": 1,
+        "hit": 0,
+        "load": 100,
+        "provider": 120
+      },
+      "expected": {
+        "Planned capacity (RPS)": 28,
+        "Limiting budget": "application",
+        "Database demand (queries/s)": 600,
+        "Unserved offered rate (RPS)": 72
+      }
+    },
+    {
+      "name": "Replicas only",
+      "params": {
+        "replicas": 4,
+        "hit": 0,
+        "load": 100,
+        "provider": 120
+      },
+      "expected": {
+        "Planned capacity (RPS)": 83.33,
+        "Limiting budget": "database",
+        "Database demand (queries/s)": 600,
+        "Unserved offered rate (RPS)": 16.67
+      }
+    },
+    {
+      "name": "Immutable reuse",
+      "params": {
+        "replicas": 4,
+        "hit": 80,
+        "load": 100,
+        "provider": 120
+      },
+      "expected": {
+        "Planned capacity (RPS)": 112,
+        "Limiting budget": "application",
+        "Database demand (queries/s)": 280,
+        "Unserved offered rate (RPS)": 0
+      }
+    },
+    {
+      "name": "Provider ceiling",
+      "params": {
+        "replicas": 8,
+        "hit": 80,
+        "load": 100,
+        "provider": 60
+      },
+      "expected": {
+        "Planned capacity (RPS)": 60,
+        "Limiting budget": "provider",
+        "Database demand (queries/s)": 280,
+        "Unserved offered rate (RPS)": 40
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: one app and local state",
+      "description": "One app serves the current retrieval/draft path; durable jobs and ingestion are retained. Copying its local database to independent hosts would fork authority.",
+      "nodes": [
+        [
+          "Client",
+          "Alice and enterprise readers"
+        ],
+        [
+          "One AI App Service",
+          "Trusted policy and versioned retrieval"
+        ],
+        [
+          "Local DB and Search Index",
+          "One prototype authority"
+        ],
+        [
+          "Model adapter",
+          "External dependency boundary"
+        ]
+      ]
+    },
+    {
+      "title": "After: replicas with one durable authority",
+      "description": "Load routing selects ready stateless replicas. Shared DB/current policy remains authoritative; bounded immutable caches reduce byte fetches only. Model dependency capacity remains finite.",
+      "nodes": [
+        [
+          "Client",
+          "Stable identity and operation key"
+        ],
+        [
+          "Load-balancing role",
+          "Ready and draining instances"
+        ],
+        [
+          "Stateless app replicas",
+          "Preserve ingress and tenant policy"
+        ],
+        [
+          "Shared Metadata DB",
+          "Proposed managed relational service"
+        ],
+        [
+          "Version/policy gate and caches",
+          "Cache never grants access"
+        ],
+        [
+          "Model adapter",
+          "Fixed dependency capacity"
+        ]
+      ]
+    },
+    {
+      "title": "Scaled request sequence",
+      "description": "Route, establish scope, read authority, reuse bytes, persist, respond. A revoked cache hit is blocked; a cold replacement reconstructs state from shared authority.",
+      "nodes": [
+        [
+          "Route",
+          "Any ready replica"
+        ],
+        [
+          "Establish scope",
+          "Trusted tenant/user"
+        ],
+        [
+          "Read authority",
+          "Current authoritative checks"
+        ],
+        [
+          "Reuse bytes",
+          "Scoped immutable body key"
+        ],
+        [
+          "Persist",
+          "Commit to shared store"
+        ],
+        [
+          "Respond",
+          "Saved result or refusal"
+        ]
+      ]
+    }
+  ]
+}

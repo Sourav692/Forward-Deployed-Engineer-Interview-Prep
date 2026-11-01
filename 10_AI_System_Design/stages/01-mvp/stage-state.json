@@ -1,0 +1,427 @@
+{
+  "stage": 1,
+  "title": "Build the MVP",
+  "status": "tested",
+  "architecture_before": "No system or prior stage exists in this workspace.",
+  "architecture_after": "One AI App Service with trusted identity/policy role, SQLite request history, model adapter, and proposed metadata-only telemetry; identity/model are fixtures in the executable.",
+  "architecture_version": "v0.1-stage-01",
+  "acceptance_scope": "Educational baseline only; not deployed or approved for production.",
+  "first_taught_modules": [
+    {
+      "id": "1.1",
+      "module": "Requirements and architecture methodology",
+      "target_depth": "D3",
+      "evidence": "guide.md sections 2\u20136, 11\u201313; stage-plan.md; ADR-001; HTTP failure tests"
+    },
+    {
+      "id": "1.2",
+      "module": "Estimation and capacity planning",
+      "target_depth": "D3",
+      "evidence": "guide.md section 9; deadline lab cases and keyboard/reset browser checks"
+    },
+    {
+      "id": "2.1",
+      "module": "Networking fundamentals",
+      "target_depth": "D2",
+      "evidence": "guide.md section 6 networking; section 11 diagnosis; real DNS/TLS integration untested"
+    },
+    {
+      "id": "2.2",
+      "module": "APIs and streaming protocols",
+      "target_depth": "D3",
+      "evidence": "guide.md sections 7\u20138; labs/mvp.py; HTTP integration tests; SSE/WebSocket design comparison only"
+    },
+    {
+      "id": "6.1",
+      "module": "Database architecture",
+      "target_depth": "D2",
+      "evidence": "guide.md section 7 schema/transactions; SQLite persistence and final-write-failure tests"
+    },
+    {
+      "id": "7.1",
+      "module": "End-to-end AI application design",
+      "target_depth": "D3",
+      "evidence": "guide.md sections 6\u201311; integrated auth/model/history fixture slice; external integrations untested"
+    }
+  ],
+  "revisited_modules": [],
+  "decisions": [
+    "../../architecture/decisions/ADR-001-synchronous-mvp.md"
+  ],
+  "artifacts": [
+    "stage-plan.md",
+    "guide.md",
+    "guide.html",
+    "font-licenses.txt",
+    "stage-state.json",
+    "validation.md",
+    "labs/mvp.py",
+    "labs/test_mvp.py",
+    "../../architecture/current-system.md",
+    "../../architecture/decisions/ADR-001-synchronous-mvp.md",
+    "../../progress/coverage-status.csv",
+    "labs/verify_package.py",
+    "../../progress/curriculum-map.json",
+    "../../README.md"
+  ],
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "http_integration_tests": {
+      "passed": 10,
+      "failed": 0
+    },
+    "browser_checks": [
+      "offline file load with network disabled",
+      "embedded Inter and condensed display fonts",
+      "four deterministic timing scenarios",
+      "reset and keyboard range control",
+      "375px layout without document overflow",
+      "all internal anchors and unique IDs",
+      "print navigation hidden",
+      "full lesson and static cases with JavaScript disabled",
+      "no HTTP(S) dependency requests or JavaScript errors",
+      "five phase section landmarks",
+      "three native answer-before-reveal checkpoints",
+      "all six lifecycle steps with input/output/owner/failure",
+      "success, timeout and final-write-failure lifecycle branches",
+      "Previous/Next/direct selection/Reset and keyboard step activation",
+      "no-JavaScript static lifecycle table"
+    ],
+    "design_lint": {
+      "floor_failures": 0,
+      "unresolved_reflex": 0,
+      "warnings": 0,
+      "waived": [
+        "44c: compact chapter header; teaching starts in first screen",
+        "77: long-form reading measure in final phase",
+        "79: compact document header followed by lesson prose"
+      ],
+      "dismissed": []
+    },
+    "report": "validation.md",
+    "markdown_html_teaching_blocks_checked": 407,
+    "curriculum_validator": {
+      "drafted_modules": 6,
+      "validated_modules": 6,
+      "total_modules": 56,
+      "mapping_passed": true
+    },
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "coverage_classifications_checked": true,
+    "clean_package_checked": true
+  },
+  "assumptions": [
+    "Hypothetical procurement drafting scenario for Alice in Tenant A; Tenant B is a negative-test fixture.",
+    "200 requests per eight-hour workday; brief peak 0.5 requests/second.",
+    "Expected 1200 input and 300 output tokens/request; 8 KiB expected logical row payload.",
+    "Illustrative quotas 60 RPM and 50000 combined TPM, not vendor limits.",
+    "Healthy timing example 2620 ms, timeout example 4120 ms, target p95 below five seconds unmeasured.",
+    "Four-second provider deadline is a design requirement and simulation input; stub raises timeout immediately.",
+    "Thirty-day retention is proposed policy; no deletion job is implemented."
+  ],
+  "open_questions": [
+    "Real identity/provider/secret-management and data-handling contracts.",
+    "Durable hosting, backup/restore, retention deletion including backups.",
+    "Recovery policy for processing rows after crashes or failed final commits.",
+    "Actual workload distribution, quotas, token counts, prices, and end-to-end latency."
+  ],
+  "not_tested": [
+    "Hosted-model API or provider billing/cancellation",
+    "Real identity, DNS, TLS or ingress timeouts",
+    "Production load, latency percentiles, deployment, metrics/alerts backend",
+    "Abrupt process or power loss, storage restore or retention deletion",
+    "Screen-reader usability or exhaustive accessibility audit",
+    "Learner mastery; all exit gates remain unassessed"
+  ],
+  "learner_completion": "unassessed",
+  "next_stage": {
+    "stage": 2,
+    "created": false,
+    "trigger": "Long-running processing blocks interactive requests or must survive worker loss.",
+    "inherits": [
+      "scoped history",
+      "model adapter boundary",
+      "saved-answer acknowledgement contract",
+      "documented external-call/commit ambiguity"
+    ]
+  },
+  "teaching_revision": 2,
+  "learning_phases": [
+    "Understand the problem",
+    "Learn and design",
+    "Observe and experiment",
+    "Think like a Staff engineer",
+    "Validate and carry forward"
+  ],
+  "context_only_modules": [
+    {
+      "id": "1.3",
+      "module": "Design documentation and communication",
+      "first_teaching_stage": 12,
+      "target_depth": "D3",
+      "treatment": "context_only"
+    },
+    {
+      "id": "2.3",
+      "module": "Gateway and service communication",
+      "first_teaching_stage": 6,
+      "target_depth": "D3",
+      "treatment": "context_only"
+    },
+    {
+      "id": "13.1",
+      "module": "Identity and access control",
+      "first_teaching_stage": 6,
+      "target_depth": "D3",
+      "treatment": "context_only"
+    }
+  ],
+  "deferred_modules": [
+    {
+      "id": "3.1",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "3.2",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "3.3",
+      "first_teaching_stage": 12,
+      "target_depth": "D2"
+    },
+    {
+      "id": "4.1",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.2",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.3",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.1",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.2",
+      "first_teaching_stage": 5,
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.3",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.4",
+      "first_teaching_stage": 5,
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.5",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "6.2",
+      "first_teaching_stage": 4,
+      "target_depth": "D2"
+    },
+    {
+      "id": "6.3",
+      "first_teaching_stage": 3,
+      "target_depth": "D1"
+    },
+    {
+      "id": "7.2",
+      "first_teaching_stage": 9,
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.3",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.1",
+      "first_teaching_stage": 3,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.2",
+      "first_teaching_stage": 3,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.3",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "9.1",
+      "first_teaching_stage": 9,
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.2",
+      "first_teaching_stage": 9,
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.3",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.1",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.2",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.3",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "11.1",
+      "first_teaching_stage": 10,
+      "target_depth": "D2"
+    },
+    {
+      "id": "11.2",
+      "first_teaching_stage": 10,
+      "target_depth": "D1"
+    },
+    {
+      "id": "11.3",
+      "first_teaching_stage": 10,
+      "target_depth": "D0"
+    },
+    {
+      "id": "12.1",
+      "first_teaching_stage": 4,
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.2",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.3",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.2",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.3",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.1",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.2",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.3",
+      "first_teaching_stage": 10,
+      "target_depth": "D2"
+    },
+    {
+      "id": "15.1",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.2",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.3",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "16.1",
+      "first_teaching_stage": 9,
+      "target_depth": "D2"
+    },
+    {
+      "id": "16.2",
+      "first_teaching_stage": 11,
+      "target_depth": "D2"
+    },
+    {
+      "id": "16.3",
+      "first_teaching_stage": 12,
+      "target_depth": "D3"
+    },
+    {
+      "id": "17.1",
+      "first_teaching_stage": 11,
+      "target_depth": "D3"
+    },
+    {
+      "id": "17.2",
+      "first_teaching_stage": 11,
+      "target_depth": "D2"
+    },
+    {
+      "id": "17.3",
+      "first_teaching_stage": 12,
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.1",
+      "first_teaching_stage": 12,
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.2",
+      "first_teaching_stage": 12,
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.3",
+      "first_teaching_stage": 12,
+      "target_depth": "D3"
+    }
+  ],
+  "distribution": {
+    "archive": "../../dist/stage-01-mvp.zip",
+    "format": "ZIP with 10_AI_System_Design root; supporting labs/state/architecture/coverage included",
+    "clean_extraction_checked": true,
+    "verification": "All declared artifacts and HTML/Markdown links resolve after extraction; all 10 HTTP tests pass with Python and SQLite only."
+  }
+}

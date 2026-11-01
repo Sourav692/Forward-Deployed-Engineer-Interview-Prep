@@ -1,0 +1,9 @@
+# Stage 7 Plan: Reliability and Consistency
+
+Begin with tested Stage 6 `v0.6-stage-06`, its snapshot/state and ADR-006. Preserve verified identity/current policy, audit-before-disclosure, source versions/cache safety, shared history, worker epochs and fair provider budgets. The new incident is an acknowledged answer hidden by replica lag, followed by a lost acknowledgement/dependency outage that risks duplicate generation or unsafe stale-policy fallback.
+
+Teach 3.1 distributed fundamentals, 3.2 distributed state/transactions, 12.2 resilience, 12.3 latency/performance, 15.2 production operations and 15.3 diagnosis, all D3. Revisit 2.2, 5.3, 6.1, 6.2, 8.1, 8.3 and 13.1 through actual failure constraints, linked to their original stages. Keep global multi-region recovery contextual for Stage 11 and architecture-pattern catalogues (3.3, Stage 12 D2) deferred.
+
+Choose per-data-class consistency: current access/quota authority cannot use lagging replicas; saved history uses a minimum-version read with primary fallback; derived search/projections may lag behind a version gate. Add transactional result/outbox publication, duplicate-safe contiguous-watermark projection, bounded circuit/probe policy, remaining deadline budgets, runbooks and telemetry contracts. Distinguish fixtures from real replicated DB/consensus/failover.
+
+The executable uses primary/replica SQLite files with explicit delivery to model lag, rollback and lost acknowledgement, plus a logical-clock circuit breaker. Test atomic rollback, committed replay, duplicate/out-of-order delivery, read-your-write fallback, unavailable authority, tenant scope and circuit probes. A three-control simulator selects data class, lag and remaining budget. Five phases, two checkpoints, six-step walkthrough, four interview drills, complete package and unassessed gates. Estimate eight to ten integrated study hours; finish checks before Stage 8.

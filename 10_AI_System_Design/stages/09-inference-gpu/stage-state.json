@@ -1,0 +1,149 @@
+{
+  "stage": 9,
+  "title": "Inference and GPU Infrastructure",
+  "status": "tested",
+  "architecture_before": "v0.8-stage-08",
+  "architecture_after": "# Stage 9 Architecture Snapshot\n\nVersion: `v0.9-stage-09`. Previous: `v0.8-stage-08`. Decision: [ADR-009](../../architecture/decisions/ADR-009-approved-inference-boundaries.md). Acceptance: tested local Gateway composition and memory arithmetic, not a GPU/provider deployment.\n\nRetain verified current identity/resource policy, mandatory audit, approved egress, versioned retrieval/cache safety, scoped durable history and stable operation keys, worker/recovery/unknown rules, fair admission/provider budgets and version-bound release gates. Extend Model Gateway with trusted profile/approved route/readiness/private-path checks, model context/output envelope, original-bundle replay and explicit transport/result uncertainty. Introduce self-host engine/GPU replica/shard/placement roles only as a proposed serving alternative.\n\nThe actual local slice composes Stage 5 Gate, Stage 6 Security and Stage 8 Releases plus a durable inference-operation table and injected transport. Fresh grants dispatch once in the fixture; duplicate/incomplete/unknown operations do not automatically invoke another model. Current checks apply to every original source used in a saved replay. Final write failure never acknowledges completed success, and can strand a reservation for reconciliation.\n\nA single-device worksheet estimates raw weights, FP16 KV and an assumed runtime reserve. It is not hardware profiling, tokenisation, a quality test, actual private routing, multi-GPU execution, GPU isolation, a container/device-plugin deployment, load/SLO measurement or current pricing evidence. Depth stays D3 Gateway, D2 execution/serving/orchestration and D1 GPU/optimisation boundaries.\n\nStage 9 is the latest authored stage. Stage 10 has not been created; future customisation must preserve approved data, release, serving and external-outcome contracts.\n",
+  "architecture_version": "v0.9-stage-09",
+  "first_taught_modules": [
+    {
+      "id": "7.2",
+      "module": "AI gateway and provider management",
+      "target_depth": "D3"
+    },
+    {
+      "id": "9.1",
+      "module": "LLM execution and inference fundamentals",
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.2",
+      "module": "Model serving architecture",
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.3",
+      "module": "Inference performance optimization",
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.1",
+      "module": "GPU architecture fundamentals",
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.2",
+      "module": "Distributed GPU execution",
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.3",
+      "module": "GPU infrastructure and scheduling",
+      "target_depth": "D1"
+    },
+    {
+      "id": "16.1",
+      "module": "Container and orchestration architecture",
+      "target_depth": "D2"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "1.2",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "2.3",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "4.1",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.1",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.2",
+      "first_teaching_stage": 5,
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.3",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.4",
+      "first_teaching_stage": 5,
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.5",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.2",
+      "first_teaching_stage": 3,
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.3",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.2",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.1",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/gateway.py",
+    "labs/inference.py",
+    "labs/simulator.js",
+    "labs/test_inference.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-009-approved-inference-boundaries.md"
+  ]
+}

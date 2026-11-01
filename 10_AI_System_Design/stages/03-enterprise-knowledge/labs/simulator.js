@@ -1,0 +1,2 @@
+function simulate(p){const current=p.event!=='stale',permitted=p.identity==='alice',present=p.event!=='delete';const visible=current&&permitted&&present;return {'Context chunks':visible?1:0,'Citation':visible?'supplier-policy:v2:c0':'none','Decision':!permitted?'blocked by trusted policy':!present?'blocked by tombstone':!current?'blocked by version check':'authorised current context','Model call authorised':visible?'yes: context allowed':'no: refuse unavailable context'};}
+if(typeof module!=='undefined')module.exports=simulate;

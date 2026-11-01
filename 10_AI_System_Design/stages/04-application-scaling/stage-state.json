@@ -1,0 +1,83 @@
+{
+  "stage": 4,
+  "title": "Scale the Application",
+  "status": "tested",
+  "architecture_before": "v0.3-stage-03",
+  "architecture_after": "# Stage 4 Architecture Snapshot\n\nVersion: `v0.4-stage-04`. Previous: `v0.3-stage-03`. Decision: [ADR-004](../../architecture/decisions/ADR-004-stateless-scale-and-cache.md). Acceptance: educational design and local invariant tests, not a deployed scale-out.\n\nRetain all Stage 3 roles: Client, trusted identity/policy, short drafting/scoped history, durable Queue/Workers, Document Ingestion, immutable versions, Search Index/current metadata, model adapter, exact citations, and proposed metadata-only Telemetry. Add load-balancing/readiness and stateless app replica roles, bounded per-replica immutable-body caches, and a proposed separately operated shared relational authority.\n\nProduction migration must preserve request/job key uniqueness, lease/epoch predicates, source versions, scoped reads, and commit-before-success; port transaction semantics and perform a controlled one-writer cutover. The executable still uses multiple local objects and one SQLite file solely to test the shared-state contract, not to emulate a managed DB or network deployment.\n\nCurrent trusted policy/version/tombstone reads precede every cached body use. Cache keys include tenant/document/version/chunk; TTL/LRU do not grant access. Cache failure can fall back to authority; authority failure cannot be overridden by cached permission. Final answers and ranking are not cached.\n\nCapacity, query counts, provider quotas, and hit rates are explicit assumptions. No actual autoscaler, load balancer, production migration, stampede solution, or p95/load benchmark is delivered. Stage 5 may introduce fair admission/scheduling under fixed provider capacity while preserving these contracts.\n",
+  "architecture_version": "v0.4-stage-04",
+  "first_taught_modules": [
+    {
+      "id": "6.2",
+      "module": "Caching systems",
+      "target_depth": "D2"
+    },
+    {
+      "id": "12.1",
+      "module": "Scaling and traffic engineering",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "1.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "1.2",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "2.2",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.2",
+      "first_teaching_stage": 3,
+      "target_depth": "D3"
+    }
+  ],
+  "learner_completion": "unassessed",
+  "validation": {
+    "module_coverage_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "artifacts": [
+    "guide.md",
+    "guide.html",
+    "stage-plan.md",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/scaling.py",
+    "labs/simulator.js",
+    "labs/test_scaling.py"
+  ],
+  "assumptions": [
+    "Workload and timing figures are illustrative; fixture services and logical clocks are not production measurements."
+  ],
+  "unchecked": [
+    "Production deployment, identity, TLS, hosted APIs, real broker/network failures, load/SLO measurements, and learner mastery."
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-004-stateless-scale-and-cache.md"
+  ]
+}

@@ -1,0 +1,9 @@
+# Stage 8 Plan: Production AI Quality and Releases
+
+Read tested Stage 7 `v0.7-stage-07`, snapshot/state and ADR-007. Preserve security/current authority, audit, read-your-write/outbox recovery, operation identity, fair budgets, versioned source/citations and cache safety. A prompt/retrieval/model bundle change now introduces a plausible wrong supplier rule or cross-tenant answer while infrastructure metrics remain healthy.
+
+First-teach 14.1 Evaluation architecture, 14.2 Release management/experimentation and 15.1 Observability systems, all D3. Revisit 3.2, 7.1, 7.3, 13.2 and 15.3 through versioned evaluation, safe shadows, release transactions and diagnosis. Keep model/data lifecycle infrastructure (14.3, Stage 10 D2) contextual and architecture economics (17.3, Stage 12 D3) deferred.
+
+Add an immutable version bundle/dataset/evaluator identity, deterministic case/slice evaluation and non-negotiable known-safety gate, scoped stable canary assignment, bounded shadow contract, CAS release pointer/rollback and redacted version/cohort telemetry. Use precomputed fixture predictions; latency/cost are authored labels, not measured model performance. A passing fixture report is eligible only for the teaching canary, never production approval.
+
+Eight cases include normal answers, unsupported evidence and revoked/foreign access. Tests cover quality/safety slices, latency/cost, dataset/report binding, malformed/missing coverage, approved release pointers, stale CAS, cohort eligibility, rollback retaining an actual Stage 7 saved result, shadow side-effect constraints and telemetry redaction. Four-control simulator varies output scenario and release thresholds. Five phases, two checkpoints, seven-step walkthrough, four interview drills and unassessed gates. Estimate six to eight integrated hours; validate and package before Stage 9.
