@@ -48,7 +48,7 @@ flowchart TD
 
 Every shortlist then goes through the same scoring on the golden set: recall@k, margin, cost and latency. A useful golden set for Larkspur holds the [T5.1](../../p04_rag_foundations/m11_rag_lifecycle/00_overview.md) questions plus **hard negatives**: chunks on the same topic that do not answer the question, such as `cancel` for *Can I export my data after I cancel my plan?* Notebook 1 of T6.3's exercise asks for exactly this, because a six-document toy set separates no models.
 
-Score more than one thing. The optional lesson 5 of T6.3 notebook, [`05a_compare_embedding_models_databricks.ipynb`](https://github.com/Sourav692/rag-agents-engineering/blob/main/course/p05_ingestion_and_indexing/m14_embeddings/optional/05a_compare_embedding_models_databricks.ipynb), indexes eight short documents with three open models in Databricks Vector Search and grades the top-5 results for 15 queries with MLflow's `RetrievalRelevance` and `RetrievalGroundedness` scorers. Its recorded result:
+Score more than one thing. An optional notebook in the course indexes eight short documents with three open models in a managed vector index and grades the top-5 results for 15 queries with MLflow's `RetrievalRelevance` and `RetrievalGroundedness` scorers. Its recorded result:
 
 | Model | Retrieval relevance | Retrieval groundedness |
 |---|---|---|

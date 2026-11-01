@@ -43,6 +43,7 @@ import { basename, dirname, join, relative, resolve, sep } from 'node:path'
 import { britishSpelling, SPELLING_ALLOWED } from '../src/lib/spelling.ts'
 import { githubSlug, readingSlug } from './learn.mjs'
 import { RAG_LESSONS, RAG_MODULES, RAG_TRACKS } from '../src/lib/rag-tracks.ts'
+import { namesVendor, siteText } from './site-text-edits.mjs'
 
 const REPO = 'Sourav692/rag-agents-engineering'
 const SITE = resolve(import.meta.dirname, '..')
@@ -182,13 +183,17 @@ export function fileTitle(name) {
   return britishText(title.charAt(0).toUpperCase() + title.slice(1))
 }
 
-/** A lesson page without its header line (notebooks kept, by title) and footer. */
+/**
+ * A lesson page without its header line (notebooks kept, by title) and footer. A notebook that
+ * names a vendor platform stays in the course and off the site (site-text-edits.mjs).
+ */
 export function trimLessonPage(md) {
   return md
     .replace(/\n---\n\*Previous:[\s\S]*$/, '\n')
-    .replace(/^\*\[M\d+ theory\]\([^)]*\) · Lesson [\d.]+ · (?:Notebooks: (.*?) · )?\[All theory pages\]\([^)]*\)\*$/m, (_, nbs) =>
-      nbs ? `*Notebooks on GitHub: ${nbs.replace(/\[`([^`]+)`\]/g, (_, file) => `[${fileTitle(file)}]`)}*` : '',
-    )
+    .replace(/^\*\[M\d+ theory\]\([^)]*\) · Lesson [\d.]+ · (?:Notebooks: (.*?) · )?\[All theory pages\]\([^)]*\)\*$/m, (_, nbs) => {
+      const kept = (nbs ?? '').split(/, (?=\[`)/).filter((nb) => nb && !namesVendor(nb))
+      return kept.length ? `*Notebooks on GitHub: ${kept.join(', ').replace(/\[`([^`]+)`\]/g, (_, file) => `[${fileTitle(file)}]`)}*` : ''
+    })
 }
 
 const ROMAN = { I: 1, V: 5, X: 10 }
@@ -363,6 +368,7 @@ export function importTheory(from) {
     for (const [mark] of md.matchAll(/^<!-- animated: \S+ -->$/gm)) errors.push(`${where}: ${mark} does not follow a Mermaid diagram`)
     md = mapProseLines(md, (line) => transformLine(line, { link, moduleLink, renumber }))
     if (PLACEHOLDER.test(md)) errors.push(`${where}: placeholder ${md.match(PLACEHOLDER)[0]}`)
+    md = siteText(posix(relative(join(SITE, '..'), p.out)), md)
     p.md = `${HEADER}${md.replace(/\n{3,}/g, '\n\n').trim()}\n`
   }
   if (errors.length) throw new Error(`${errors.length} problem(s):\n  ${errors.join('\n  ')}`)

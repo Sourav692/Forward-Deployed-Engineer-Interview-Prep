@@ -6,6 +6,7 @@ import assert from 'node:assert/strict'
 import { britishSpelling } from '../src/lib/spelling.ts'
 import { britishText, fileTitle, makeRenumber, siteAnimation, siteLab, splitModulePage, transformLine, trimLessonPage } from './rag-theory-import.mjs'
 import { parseAnimatedFence, parseLabFence, parseReading } from '../src/lib/reading.ts'
+import { siteText } from './site-text-edits.mjs'
 
 assert.equal(britishSpelling('Summarization'), 'Summarisation')
 assert.equal(britishSpelling('analyzing'), 'analysing')
@@ -72,5 +73,13 @@ for (const bad of ['<script>x()</script>', '<g onclick="x()">', '<image href="ht
   assert.equal(parseAnimatedFence(html), null)
 }
 assert.equal(parseAnimatedFence('<div class="anim"></div>'), null)
+
+// The site names no vendor platform: such a notebook leaves the header, and a page still
+// naming one fails unless the mention is only a link target to another lesson file.
+assert.equal(trimLessonPage('*[M17 theory](../README.md) · Lesson 17.6 · Notebooks: [`06a_patterns.ipynb`](a), [`06b_hybrid_databricks.ipynb`](b) (optional) · [All theory pages](c)*\n'),
+  '*Notebooks on GitHub: [Patterns](a)*\n')
+assert.equal(trimLessonPage('*[M14 theory](../README.md) · Lesson 14.5 · Notebooks: [`05a_compare_databricks.ipynb`](a) · [All theory pages](c)*\n'), '\n')
+assert.equal(siteText('x.md', 'See [lesson 6](06_on_databricks_vector_search.md#a).'), 'See [lesson 6](06_on_databricks_vector_search.md#a).')
+assert.throws(() => siteText('x.md', 'Runs on a Unity Catalog volume.'), /vendor platform/)
 
 console.log('rag import transforms: all checks pass')

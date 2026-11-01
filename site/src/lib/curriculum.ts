@@ -636,7 +636,7 @@ export const MODULES: CurriculumModule[] = [
       'output-guardrails-and-refusals',
       'practise-enterprise-rag',
     ],
-    seeAlso: ['retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search', 'the-evaluation-pyramid', 'the-run-trace'],
+    seeAlso: ['retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store', 'the-evaluation-pyramid', 'the-run-trace'],
   },
   {
     slug: 'evaluation-and-release-gates',

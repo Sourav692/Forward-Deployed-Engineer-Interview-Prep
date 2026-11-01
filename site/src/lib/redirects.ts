@@ -48,6 +48,9 @@ function lessonRedirects(): Redirect[] {
     const dst = resolveKey(to ?? RETIRED_MODULES[mod] ?? mod)
     const destination = curriculumHref(dst.track, dst.mod, dst.lesson)
     out.push({ source: curriculumHref(src.track, src.mod, src.lesson), destination, permanent: true })
+    // A lesson retired after its module moved was published under the current track too.
+    const here = trackOf.get(mod)
+    if (here && here !== src.track) out.push({ source: curriculumHref(here, src.mod, src.lesson), destination, permanent: true })
     // A track that moved out of /learn keeps its old /learn URL, sent straight to the
     // final page so the redirect never chains through the area rule below.
     if (src.track in AREA_TRACKS) {

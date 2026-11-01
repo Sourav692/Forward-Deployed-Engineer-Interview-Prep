@@ -45,6 +45,7 @@ import { mermaidFences } from './render-diagrams.mjs'
 import { CASEBOOK_MODULE, MODULE_AREAS, scenarioHref } from '../src/lib/scenario.ts'
 import { findUnsafeHtml, headingAnchors, isAllowedSource, lessonDecision, lessonKey, slugGuard, splitH2 } from './learn.mjs'
 import { checkExplorerSnapshots } from './explorers.mjs'
+import { CUT } from './case-site-edits.mjs'
 
 const CONTENT = resolve(import.meta.dirname, '..', 'content')
 
@@ -426,6 +427,8 @@ async function checkDocument(label: string, raw: string, allowPlaceholders: bool
   if (!allowPlaceholders && PLACEHOLDER.test(raw)) {
     failures.push(`${label}: unresolved placeholder (${raw.match(PLACEHOLDER)![0]}) on a public page`)
   }
+  // The site names no vendor platform; site-text-edits.mjs and case-site-edits.mjs reword it.
+  if (CUT.test(raw)) failures.push(`${label}: names a vendor platform (${raw.match(CUT)![0]}) on a public page`)
   for (const [, href] of raw.matchAll(/\]\((\/[^)\s]*)\)/g)) {
     linksChecked++
     if (!resolvesInternally(href)) failures.push(`${label}: broken internal link ${href}`)

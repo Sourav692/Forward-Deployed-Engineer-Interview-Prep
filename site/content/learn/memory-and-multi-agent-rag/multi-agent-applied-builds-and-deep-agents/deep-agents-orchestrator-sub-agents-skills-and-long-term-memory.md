@@ -23,12 +23,12 @@ The parts, as the scripts configure them:
 | Part | What it gives the orchestrator | In 06a and 06b |
 |---|---|---|
 | Built-in tools | File operations (`ls`, `read_file`, `write_file`, `edit_file`, `glob`, `grep`), `execute` for shell commands, and `task` to call a sub-agent | Added by `create_deep_agent`; `execute` returns an error unless the backend can run commands |
-| Custom tools | Domain actions | 06a: `name_project`, `internet_search` (Tavily) and four Databricks Genie tools for an insurer's customer, distribution, policy and claims data. 06b adds `save_memory`, `recall_memories`, `forget_memory` |
+| Custom tools | Domain actions | 06a: `name_project`, `internet_search` (Tavily) and four tools over a managed text-to-SQL service for an insurer's customer, distribution, policy and claims data. 06b adds `save_memory`, `recall_memories`, `forget_memory` |
 | Sub-agents | Specialists, each a dict of `name`, `description`, `system_prompt`, `skills` and `tools` | 06a: 7 (`senior-developer`, `code-reviewer`, `research-agent` and four insurer analytics agents). 06b adds `memory-manager` |
 | Skills | Instructions in `SKILL.md` files, loaded from `/skills/` | 8 skills in `06c_skills`, one per sub-agent; each sub-agent's prompt is "Follow the … skill instructions" |
 | Backend | Where files live and whether commands run | `FilesystemBackend(root_dir=..., virtual_mode=True)` by default; `LocalShellBackend` when `USE_SANDBOX=true` |
 | Checkpointer | Memory within one thread | `MemorySaver`, one `thread_id` per task |
-| Model | The orchestrator's model | `databricks-claude-opus-4-6`, temperature 0.1 |
+| Model | The orchestrator's model | Claude Opus 4.6 on a model-serving endpoint, temperature 0.1 |
 
 **Sub-agents keep the orchestrator's context small.** A call to `task` runs the sub-agent with its own messages and tools, and only its final message returns to the orchestrator. The research agent's search calls (up to 5 results each by default) and its notes stay in its own context; the orchestrator reads its report.
 
@@ -47,7 +47,7 @@ Code execution belongs in a real sandbox backend, with a person approving each c
 |---|---|---|---|
 | Conversation | One thread | `MemorySaver` checkpointer, lost on restart | The same |
 | Long-term | Every thread, every session | A JSON file, `long_term_memories.json`, under the key `memories:<user id>` | A Delta table, `agent_memories`, with `user_id`, `content`, `category` and `saved_at` |
-| Artifacts | Project files the developer agent writes | `projects/` beside the script | A Unity Catalog volume |
+| Artifacts | Project files the developer agent writes | `projects/` beside the script | A governed storage volume |
 
 The orchestrator's prompt tells it to recall memories at the start of each conversation and to save preferences, facts, decisions, project context and feedback as they come up. Two limits are visible in the code: `CURRENT_USER_ID` is fixed to `default-user`, so every user shares one namespace until it comes from authentication, and `recall_memories` matches a substring of the stored text, so a paraphrase finds nothing. The script's comment names `PostgresStore` as the production replacement.
 

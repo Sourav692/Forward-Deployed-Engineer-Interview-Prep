@@ -10,11 +10,11 @@ Spoken answers: 4 grounded, 3 partly grounded, 2 needing your input. Deliver the
 
 **Technical-interviewer answer.**
 
-> "Same design, explained at the mechanism level. Layer one is a metadata pre-filter compiled into the vector search query. Each chunk carries role, document type and market tags. The query returns only chunks the user's attributes allow. That is fast, but it reflects permissions as they were at index time. Layer two is a live re-check against Unity Catalog grants immediately before generation. It catches reassigned cases, revoked grants and closed consent windows. A denial at layer two is logged as a security event, never silently dropped. The trade-off is added latency on every request. Compliance accepted that against the zero-leak bar. The design assumes layer one goes stale. Layer two exists because of that assumption."
+> "Same design, explained at the mechanism level. Layer one is a metadata pre-filter compiled into the vector search query. Each chunk carries role, document type and market tags. The query returns only chunks the user's attributes allow. That is fast, but it reflects permissions as they were at index time. Layer two is a live re-check against the data catalogue's grants immediately before generation. It catches reassigned cases, revoked grants and closed consent windows. A denial at layer two is logged as a security event, never silently dropped. The trade-off is added latency on every request. Compliance accepted that against the zero-leak bar. The design assumes layer one goes stale. Layer two exists because of that assumption."
 
 **GROUNDED: a large Asian life insurer / Meridian two-layer access control**
 
-*"At the insurer I needed compliance, legal, security, and a business sponsor — none of them engineers — to sign off on how the retrieval agent enforced access over policy and claims documents with health disclosures. The real mechanism is a metadata pre-filter compiled into the Vector Search query plus a live re-check against Unity Catalog grants right before generation.*
+*"At the insurer I needed compliance, legal, security, and a business sponsor — none of them engineers — to sign off on how the retrieval agent enforced access over policy and claims documents with health disclosures. The real mechanism is a metadata pre-filter compiled into the vector search query plus a live re-check against the data catalogue's grants right before generation.*
 
 *I didn't say any of that first. I said: there are two checkpoints. A fast one at the door that gets you into the right neighbourhood of documents for your role and market. And a slower, careful one right before you're handed anything, because your permissions might have changed in between: a case reassignment, a revoked grant, a consent window closing. Most systems only build the first one and hope. I assumed it would go stale and built for that.*
 
@@ -86,13 +86,13 @@ Method question.
 
 **Technical-interviewer answer.**
 
-> "The mechanism was making their decisions executable. With the data team, I built the bronze, silver and gold layers inside their Unity Catalog, not in a side store. Assets they had reviewed and endorsed got priority in context index routing. So their governance choices directly shaped what the agents queried. With compliance, I asked them to define zero leaks for their regulators. That definition became the release gate in the evaluation harness. A separate check fails the build if the security documentation drifts from the policy code. Their definition was enforced in the pipeline, not on a slide. Both teams could see their own rules running in production. That is why they defended the system."
+> "The mechanism was making their decisions executable. With the data team, I built the bronze, silver and gold layers inside their governed catalogue, not in a side store. Assets they had reviewed and endorsed got priority in context index routing. So their governance choices directly shaped what the agents queried. With compliance, I asked them to define zero leaks for their regulators. That definition became the release gate in the evaluation harness. A separate check fails the build if the security documentation drifts from the policy code. Their definition was enforced in the pipeline, not on a slide. Both teams could see their own rules running in production. That is why they defended the system."
 
 **PARTLY GROUNDED: insurer data / BI team and compliance.** `[FILL: names/roles]`
 
 *"At the insurer I had no authority over the customer's data team or their compliance function, and I needed both. The data team owned the tables my agents would query; compliance owned whether the system could touch documents with health disclosures at all.*
 
-*With the data team, influence came from doing the work with them rather than around them: I built the bronze, silver, and gold metric views inside their Unity Catalog, and endorsed assets — the ones they'd reviewed — were prioritised in the Context Index routing. Their governance decisions were literally what the agents obeyed, so they had a stake in the system working.*
+*With the data team, influence came from doing the work with them rather than around them: I built the bronze, silver, and gold metric views inside their governed catalogue, and endorsed assets — the ones they'd reviewed — were prioritised in the Context Index routing. Their governance decisions were literally what the agents obeyed, so they had a stake in the system working.*
 
 *With compliance, influence came from giving them the decision instead of asking for permission: 'Here's the two-checkpoint model in plain terms; you tell me what zero leaks means for your regulators; that's our release gate.' They set the bar, so they defended it. `[FILL: outcome / a moment where this paid off].`*
 

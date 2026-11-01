@@ -59,7 +59,7 @@ Write your four moves, in the order you would run them:
 
 **Also asked as:** "Tell me about a time you had to ramp up quickly on an unfamiliar domain."
 
-**Anchor to reach for:** the insurer's Unity Catalog governance rollout.
+**Anchor to reach for:** the insurer's data-governance rollout.
 
 - Situation:
 - Action:
