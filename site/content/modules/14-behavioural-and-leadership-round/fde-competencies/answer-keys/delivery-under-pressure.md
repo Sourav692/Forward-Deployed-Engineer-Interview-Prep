@@ -4,7 +4,7 @@ Spoken answers: 5 grounded, 1 partly grounded, 1 needing your input. Deliver the
 
 ## 1. A production issue at a customer site
 
-**PARTLY GROUNDED.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 
@@ -25,7 +25,7 @@ Spoken answers: 5 grounded, 1 partly grounded, 1 needing your input. Deliver the
 
 ## 2. Go-live in three days and it won't be ready
 
-**GROUNDED.**
+**Example story.**
 
 **CEO-ready answer.**
 
@@ -55,7 +55,7 @@ This hypothetical tests judgement and instinct, not memory. Answer in order:
 
 > "The root cause was context load on tool selection. Version one was a single agent with twenty-plus tools. Twenty tool schemas plus conversation history in one prompt degraded selection. Tracing showed it was structural, not a prompt-tuning problem. So I moved to a supervisor with four specialist agents, each with a narrow toolset. A confidence gate asks a clarifying question below 60%. I kept every existing tool and data asset, so the change was to routing, not a rewrite. Per-node tracing and a held-out evaluation set told me within days whether the pivot worked. It did, and we shipped inside the window. The sponsor got the mechanism and the fix on the same day."
 
-**GROUNDED: insurer v1 failure**
+**Example story: insurer v1 failure**
 
 *"Mid-engagement at the insurer, my first architecture, one agent with twenty-plus tools, broke down in real testing. I was weeks into a window of about two months and the sponsor was expecting a working MVP.*
 
@@ -96,7 +96,7 @@ To draft this, supply:
 
 > "The root cause was context bloat. Twenty-plus tool schemas plus history in one context degraded tool selection. That told me specialisation addressed the cause, not a symptom. I re-architected into a Supervisor with specialist agents. The change touched orchestration only. Every tool and data asset stayed, so rolling back meant restoring the previous graph. Routing errors were the new risk. I contained them with a confidence gate: below 60%, the Supervisor asks a clarifying question rather than guessing. For verification, I added per-node MLflow tracing and a held-out evaluation set. Tracing showed which node made each routing decision. The evaluation set told me within days whether accuracy improved. It did, and the MVP shipped inside the original window."
 
-**GROUNDED: insurer live pivot from single agent to Supervisor**
+**Example story: insurer live pivot from single agent to Supervisor**
 
 *"Mid-engagement at a large Asian life insurer, in real testing, my first architecture (one agent, one prompt, twenty-plus tools) was picking the wrong tool and degrading under context bloat. I was weeks into a window of about two months. I didn't have time to run a controlled study of alternative architectures.*
 
@@ -114,7 +114,7 @@ To draft this, supply:
 
 > "The decision was the agent's write path into production config tables. I designed the permission model from the ticket data, not from the agent's convenience. A couple of hundred historical tickets showed which operations the work needed. Each became one narrow, named tool. There was no general write access. Every action landed in the ticket as a finding for an engineer to confirm. Logic bugs went to a separate code-lookup agent. It does a deterministic one-file lookup and gives the model only that file. The ops agent never reasons over code it wasn't shown. The retrieval-strategy choice was the opposite case. It was reversible in an afternoon, so I benchmarked, shipped and documented when to revisit."
 
-**GROUNDED: lender production writes vs. Meridian retrieval-strategy choice**
+**Example story: lender production writes vs. Meridian retrieval-strategy choice**
 
 *"I treat these two very differently, and I have a clean example of each.*
 
@@ -134,7 +134,7 @@ To draft this, supply:
 
 > "I shipped a known ceiling and kept the exit open. The supervisor worked: four specialists, confidence-gated routing. But its own tool list grew with each domain. That would recreate the context bloat that broke version one, one level up the stack. I didn't re-architect before the deadline. I made two cheap design choices instead. Prompts lived in a governed Delta table with a five-minute cache, so behaviour was tunable without a redeploy. The context index was resolved centrally, so specialists were already loosely coupled. When domain growth made the ceiling concrete, I moved to a deep agent pattern. Self-contained subagents, plus a memory-manager subagent. Loose coupling made that a refactor, not a rewrite."
 
-**GROUNDED: insurer (Supervisor now, Deep Agent later)**
+**Example story: insurer (Supervisor now, Deep Agent later)**
 
 *"At the insurer I had about two months to deliver a working MVP, and partway through, the Supervisor architecture was working: four specialist agents, confidence-gated routing, all fine. But I could see the long-term problem: as domains grew, the Supervisor's own tool list was going to re-approach the exact context-bloat failure that killed my first single-agent design, one level up the stack.*
 

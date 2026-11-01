@@ -15,7 +15,7 @@
  */
 
 import { execFileSync } from 'node:child_process'
-import { copyFile, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { syncCaseStudies } from './case-studies.mjs'
@@ -283,11 +283,13 @@ async function main() {
   }
 
   // Story Bank: one markdown page beside the behavioural tracks, rendered by the
-  // reading pipeline. Copied as-is; content.ts derives the question map from it.
+  // reading pipeline. Copied with the site's story-tag wording (site-text-edits.mjs);
+  // content.ts derives the question map from it.
   await mkdir(join(OUT_DIR, 'behavioural'), { recursive: true })
-  await copyFile(
-    join(BEHAVIOURAL_ROOT, STORY_BANK.source),
+  const storyBank = join(BEHAVIOURAL_ROOT, STORY_BANK.source)
+  await writeFile(
     join(OUT_DIR, 'behavioural', `${STORY_BANK.slug}.md`),
+    siteText(relative(REPO_ROOT, storyBank).split(sep).join('/'), await readFile(storyBank, 'utf8')),
   )
   sourceUrls.set(join(BEHAVIOURAL_ROOT, STORY_BANK.source), STORY_BANK.href)
 

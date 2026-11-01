@@ -13,6 +13,12 @@ export type ChangelogEntry = {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     date: '2026-11-02',
+    title: 'Story tags written for readers',
+    summary:
+      'The behavioural worksheets, answer keys and story bank tagged each sample story GROUNDED, PARTLY GROUNDED or NEEDS YOUR INPUT, notes on how much of each story came from the author\'s own material. They now read Example story, Add your own detail and Your story, and the story bank says what you need to add. The stories are unchanged.',
+  },
+  {
+    date: '2026-11-02',
     title: 'No vendor platform named, and softer interview claims',
     summary:
       'The site no longer names Databricks or its products. Course lessons that mentioned them are reworded in vendor-neutral terms, three notebook-only course lessons that only run on that platform are off the site, and the hybrid-and-rerank lesson has a new title and URL (the old one redirects and keeps your progress). The behavioural answer keys tell the same stories in vendor-neutral terms. Course interview-question pages no longer claim to be in the style of named employers\' interviews.',

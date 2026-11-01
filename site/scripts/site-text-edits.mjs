@@ -63,6 +63,29 @@ export const SITE_TEXT_EDITS = {
   ],
 }
 
+/**
+ * The behavioural pages tag each sample story by how much of it comes from the author's own
+ * STAR material (GROUNDED, PARTLY GROUNDED, NEEDS YOUR INPUT). Readers are not the author, so
+ * the site words the tags for them (owner decision, 2 November 2026). Applied in order to
+ * every page under BEHAVIOURAL_ROOT; the story bank's "Grounding:" field keeps its name,
+ * because its page shows it as "What you need to make your own:".
+ */
+const STORY_TAGS = [
+  ['| GROUNDED | Every fact comes from your existing STAR material. Say it as written. |', '| Example story | A complete sample answer built from real engagements. Use its shape and tell it with your own facts. |'],
+  ['| PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you.', '| Add your own detail | A sample answer with a gap marked `[FILL: ...]` that only you can fill.'],
+  ['| NEEDS YOUR INPUT | The repo has nothing here.', '| Your story | No sample story here.'],
+  ['### How the grounding tags work', '### How the story tags work'],
+  ['are NEEDS YOUR INPUT.**', 'have no sample story.**'],
+  ['**Grounding:** GROUNDED.', '**Grounding:** nothing beyond your own facts; the story is complete.'],
+  ['**Grounding:** PARTLY GROUNDED. ', '**Grounding:** '],
+  ['<GROUNDED, or PARTLY GROUNDED and what you still need to find>', '<nothing, or what you still need to find>'],
+  [/\bPARTLY GROUNDED\b/g, 'Add your own detail'],
+  [/\bNEEDS YOUR INPUT\b/g, 'Your story'],
+  [/\*\*GROUNDED — /g, '**Example story: '],
+  [/\bGROUNDED\b/g, 'Example story'],
+]
+const STORY_TAG = /\b(?:GROUNDED|NEEDS YOUR INPUT)\b/
+
 /** True when a notebook or link names a vendor platform; such links stay off the site. */
 export const namesVendor = (text) => CUT.test(text)
 
@@ -73,6 +96,11 @@ export const namesVendor = (text) => CUT.test(text)
  */
 export function siteText(path, markdown) {
   let md = markdown
+  if (path.startsWith('04_Behavioral_and_Leadership/')) {
+    for (const [from, to] of STORY_TAGS) md = typeof from === 'string' ? md.split(from).join(to) : md.replace(from, to)
+    const tag = md.split('\n').find((l) => STORY_TAG.test(l))
+    if (tag) throw new Error(`${path}: an author's story tag is left; add a STORY_TAGS rule in site-text-edits.mjs:\n  ${tag.trim()}`)
+  }
   for (const [from, to] of SITE_TEXT_EDITS[path] ?? []) {
     const next = typeof from === 'string' ? md.split(from).join(to) : md.replace(from, to)
     if (next === md) throw new Error(`${path}: site text rule matches nothing: ${from}`)

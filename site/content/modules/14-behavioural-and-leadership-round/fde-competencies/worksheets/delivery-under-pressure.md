@@ -4,13 +4,13 @@
 
 7 questions. Draft each one cold before revealing the key. "Also asked as" lines are other phrasings of the same question; one answer serves them all.
 
-### How the grounding tags work
+### How the story tags work
 
 | Tag | What it means for you |
 |---|---|
-| GROUNDED | Every fact comes from your existing STAR material. Say it as written. |
-| PARTLY GROUNDED | The spine is real, but a detail is marked `[FILL: ...]` and must come from you. Never say the placeholder out loud. |
-| NEEDS YOUR INPUT | The repo has nothing here. You get the shape of a strong answer; the story has to be yours. |
+| Example story | A complete sample answer built from real engagements. Use its shape and tell it with your own facts. |
+| Add your own detail | A sample answer with a gap marked `[FILL: ...]` that only you can fill. Never say the placeholder out loud. |
+| Your story | No sample story here. You get the shape of a strong answer; the story has to be yours. |
 
 **Honesty rule.** Your strongest recurring signal is stating limits plainly: the 22-document caveat, and never claiming a metric you can't prove. Keep that voice. If you are asked a people-management question and you have never formally managed, say "I've led as a senior IC guiding the engagement team, not as a line manager - here's the closest real example," then give it.
 

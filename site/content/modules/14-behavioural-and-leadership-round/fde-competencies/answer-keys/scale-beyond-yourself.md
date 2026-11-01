@@ -12,7 +12,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 > "Each pattern ships with the test that proves it, so others can adopt it without trusting me. Specialisation came from a measured failure: twenty-plus tool schemas in one prompt degraded tool selection as context grew. At the lender I applied it up front, with a triage layer that narrows the toolset before the agent runs. The access pattern is a metadata pre-filter compiled into the vector query, then a live re-check against source grants before generation. Its reference build has a golden-set harness that fails on a single leak. A second, platform-native version documents the vector search and catalogue governance gap. The guardrail engine proves three properties with 21 deterministic tests: approval before destructive actions, no double-apply on retry, no re-run after a crash."
 
-**GROUNDED: reusable patterns carried insurer → lender → reference builds**
+**Example story: reusable patterns carried insurer → lender → reference builds**
 
 *"What I try to leave behind is a pattern other people can reuse without me, more than any one system. Three examples.*
 
@@ -26,7 +26,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 ## 2. Making yourself unnecessary on an account
 
-**GROUNDED.**
+**Example story.**
 
 **CEO-ready answer.**
 
@@ -44,7 +44,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 ## 3. Enabling a partner or customer team to run without you
 
-**PARTLY GROUNDED.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 
@@ -60,7 +60,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 ## 4. Field feedback pushed into product
 
-**PARTLY GROUNDED.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
+**Add your own detail.** The story or result below still carries a bracketed placeholder. Fill it from your own material before you use this answer.
 
 **CEO-ready answer.**
 
@@ -84,7 +84,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 > "My build-versus-buy test has three inputs: control over a constraint, attack surface and timeline independence. For analytics, a managed text-to-SQL service won. Its generated SQL is read-only, so a prompt or SQL injection cannot modify data. That is a smaller blast radius than a hand-rolled text-to-SQL chain. It also let the insurer's analysts curate the space without an engineer. Orchestration was the build case. Waiting on the managed multi-agent feature would tie the launch to someone else's roadmap. At the lender, I compared retrieval over historical tickets with a hand-coded decision tree. A rules tree needs manual fixes every time phrasing drifts. Retrieval generalises across phrasing, but it is only as good as its seed examples. I accepted that dependency and named it."
 
-**GROUNDED — managed text-to-SQL vs hand-built Supervisor; RAG vs rules engine at a large Indian consumer lender**
+**Example story: managed text-to-SQL vs hand-built Supervisor; RAG vs rules engine at a large Indian consumer lender**
 
 *"I made both calls on the same engagement, and the reasoning was the same each time: build only where the platform has a gap that matters.*
 
@@ -104,7 +104,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 > "The direction rested on a diagnosed mechanism, which made it testable. Version one put twenty-plus tool schemas and conversation history in one prompt. Tracing showed tool selection degrading as context grew. That was structural, not a tuning problem. So the rule became: small specialist contexts, and governance enforced in code, not prompts. I made it concrete. A Supervisor with four specialists. A central Context Index that resolves governed assets once. Prompts in a governed table, tunable without a redeploy. Per-node tracing and a held-out evaluation set showed whether each change helped. When the Supervisor's own tool list started growing, the same rule drove the move to a Deep Agent. Engineers adopted it because every claim had a trace behind it."
 
-**PARTLY GROUNDED: same evidence as question 1.** `[FILL: who followed it]`
+**Add your own detail: same evidence as question 1.** `[FILL: who followed it]`
 
 *"At the insurer the direction was 'specialists over a monolith, and governance as structure, not prompt.' I didn't set it by decree. The first design failed in front of everyone, I diagnosed the mechanism publicly, and every later piece (the Supervisor, the Deep Agent evolution, the lender triage layer) followed the same rule. `[FILL: who picked it up — engineers on the team, a later engagement, an internal pattern].` People follow direction they watched get proven."*
 
@@ -118,7 +118,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 > "Both builds replace model judgement with deterministic structure where structure is cheaper. The Deep Agent gives each subagent its own prompt, tools and context window. The orchestrator sees only delegations and results, so its context stays bounded as domains grow. A memory-manager subagent keeps categorised long-term memory across conversations. The cost is more components to trace and an extra orchestration hop. The code-lookup agent resolves the one relevant file deterministically, before any model call. The model gets that file and four fixed questions. No repository-wide retrieval, so no confident answer built on the wrong file. Its limit is single-file bugs. The designed next step is an AST-parsed code graph the agent walks, then verifies against a real failing log record. Designed, not shipped."
 
-**GROUNDED: Deep Agent, code-lookup agent, graph-based RCA**
+**Example story: Deep Agent, code-lookup agent, graph-based RCA**
 
 *"Three, in increasing ambition. At the insurer the obvious fix for a bloated Supervisor was trimming its tool list. Instead I moved to a Deep Agent pattern: a central orchestrator delegates to fully self-contained subagents, each with its own prompt, tools, and context window, and a dedicated memory-manager subagent keeps categorised long-term memory across conversations. That removed the ceiling rather than postponing it.*
 
@@ -138,7 +138,7 @@ Spoken answers - 5 grounded, 3 partly grounded. Say them in your own cadence: ad
 
 > "Technically, I'm proudest of two architecture pivots made on evidence, inside about two months. Version one was a single agent with twenty-plus tools. Tracing showed tool selection degrading as context grew. I moved to a Supervisor with four specialists and a 60 percent confidence gate. I kept every existing tool and data asset, so the change was bounded. Then I evolved it to a Deep Agent before the Supervisor hit the same ceiling. Governance stayed structural throughout: a metadata pre-filter, then a live permission re-check before generation. What I'd change is measurement. Instrument the outcome metric from day one. Re-run the retrieval benchmark at a representative document count before trusting the MVP result beyond its boundary. Both were measurement gaps, not design gaps."
 
-**GROUNDED: the insurer engagement**
+**Example story: the insurer engagement**
 
 *"Proudest: the insurer engagement. Not for the metrics (much faster time-to-insight, dashboards from a weeks-long queue to self-serve), but because it was hand-built in about two months at a regulated insurer, survived its own first design failing mid-engagement, and shipped as something compliance could sign off on rather than a demo. I'm proudest of the two pivots, because each one came from diagnosing a mechanism rather than patching a symptom.*
 

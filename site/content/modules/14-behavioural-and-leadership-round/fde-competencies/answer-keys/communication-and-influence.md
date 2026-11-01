@@ -12,7 +12,7 @@ Spoken answers: 4 grounded, 3 partly grounded, 2 needing your input. Deliver the
 
 > "Same design, explained at the mechanism level. Layer one is a metadata pre-filter compiled into the vector search query. Each chunk carries role, document type and market tags. The query returns only chunks the user's attributes allow. That is fast, but it reflects permissions as they were at index time. Layer two is a live re-check against the data catalogue's grants immediately before generation. It catches reassigned cases, revoked grants and closed consent windows. A denial at layer two is logged as a security event, never silently dropped. The trade-off is added latency on every request. Compliance accepted that against the zero-leak bar. The design assumes layer one goes stale. Layer two exists because of that assumption."
 
-**GROUNDED: a large Asian life insurer / Meridian two-layer access control**
+**Example story: a large Asian life insurer / Meridian two-layer access control**
 
 *"At the insurer I needed compliance, legal, security, and a business sponsor — none of them engineers — to sign off on how the retrieval agent enforced access over policy and claims documents with health disclosures. The real mechanism is a metadata pre-filter compiled into the vector search query plus a live re-check against the data catalogue's grants right before generation.*
 
@@ -22,7 +22,7 @@ Spoken answers: 4 grounded, 3 partly grounded, 2 needing your input. Deliver the
 
 ## 2. Explaining a technical tradeoff to a non-technical executive
 
-**GROUNDED.**
+**Example story.**
 
 **CEO-ready answer.**
 
@@ -43,7 +43,7 @@ Spoken answers: 4 grounded, 3 partly grounded, 2 needing your input. Deliver the
 
 ## 3. Technical buyer versus economic buyer
 
-**GROUNDED.**
+**Example story.**
 
 **CEO-ready answer.**
 
@@ -61,7 +61,7 @@ Spoken answers: 4 grounded, 3 partly grounded, 2 needing your input. Deliver the
 
 ## 4. Building trust with a skeptical chief architect in 30 days
 
-**GROUNDED.**
+**Example story.**
 
 **CEO-ready answer.**
 
@@ -88,7 +88,7 @@ Method question.
 
 > "The mechanism was making their decisions executable. With the data team, I built the bronze, silver and gold layers inside their governed catalogue, not in a side store. Assets they had reviewed and endorsed got priority in context index routing. So their governance choices directly shaped what the agents queried. With compliance, I asked them to define zero leaks for their regulators. That definition became the release gate in the evaluation harness. A separate check fails the build if the security documentation drifts from the policy code. Their definition was enforced in the pipeline, not on a slide. Both teams could see their own rules running in production. That is why they defended the system."
 
-**PARTLY GROUNDED: insurer data / BI team and compliance.** `[FILL: names/roles]`
+**Add your own detail: insurer data / BI team and compliance.** `[FILL: names/roles]`
 
 *"At the insurer I had no authority over the customer's data team or their compliance function, and I needed both. The data team owned the tables my agents would query; compliance owned whether the system could touch documents with health disclosures at all.*
 
@@ -108,7 +108,7 @@ Method question.
 
 > "The disagreement was about an access-control gap, so I treated it as a test failure, not a debate. The feature retrieved documents through the vector index. Its pre-filter covered role, but not every scope rule. I pulled one trace where a query returned a chunk outside the user's entitlement. Reproducible, not hypothetical. I proposed a scoped demo: only the sources where the live permission re-check was already wired in. The rest stayed behind a feature flag until the check covered them. We gave up a broader demo for one sprint. I added that trace to the evaluation set as a leak case, so the gap could not reopen unnoticed. Scope discussions now start from which permission checks exist."
 
-**NEEDS YOUR INPUT.** Suggested spine, using your evidence-first stance:
+**Your story.** Suggested spine, using your evidence-first stance:
 
 *"`[FILL: who — a solutions architect, a delivery lead, a product engineer — and what the disagreement was: architecture, scope, timeline, which feature to demo].` I separated the disagreement about facts from the disagreement about priorities. For the facts, I brought `[FILL: the trace, the benchmark, the ticket data]` rather than an opinion. For the priorities, I put it in the customer's terms (whose risk, whose timeline) and proposed a specific alternative instead of only objecting. `[FILL: outcome, and what the relationship looked like afterwards].`"*
 
@@ -124,7 +124,7 @@ Method question.
 
 > "Regional difference was a data-model problem before it was a communication problem. Each market had its own regulator, so access could not be one global policy. I modelled the access matrix per market: role, business unit, market, permitted data. Each market's rows were reviewed and signed off separately. The permission checks read the matrix, so a new market meant new rows, not new code. The evaluation set carried test users per market, so a change in one market could not silently break another. Across time zones, every design decision lived in a shared document with the decision, the reason and the owner. The trade-off was slower sign-off per market. No market went live on another market's rules."
 
-**PARTLY GROUNDED: the insurer (headquartered in Asia, multi-market APAC), a large Indian consumer lender, a global tier-1 bank (APAC/EMEA/AMER).** `[FILL: a concrete friction and how you handled it]`
+**Add your own detail: the insurer (headquartered in Asia, multi-market APAC), a large Indian consumer lender, a global tier-1 bank (APAC/EMEA/AMER).** `[FILL: a concrete friction and how you handled it]`
 
 *"Most of my engagements have been cross-regional by nature. The insurer is headquartered in Asia with business units across several Asian markets, each with its own regulator, so 'the customer' was never one voice, and the access matrix had to be built market by market. The lender was a regulated Indian lender with a very different operating rhythm. And `[FILL: the tier-1 bank migration — hundreds of millions of events a day, spanning APAC, EMEA, and AMER teams]`.*
 
@@ -140,7 +140,7 @@ Method question.
 
 > "The defect was in the handoff, not the code. The ticket specified the task: a search over claims documents. It omitted the access constraint that claims managers see only cases assigned to them. The engineer built a correct generic search. It would have failed our access requirements. I made two process fixes. Design review now happens before implementation, so data model and query scope are checked against intent early. And every ticket carries intent plus acceptance criteria. For example: results filtered to the requesting manager's assigned cases. A test case proves an unassigned case never appears. That acceptance test catches the drift. We corrected this one before the customer saw it."
 
-**PARTLY GROUNDED: from the day-to-day doc's "ticket says X, customer meant Y" pattern.** You must supply the specific instance.
+**Add your own detail: from the day-to-day doc's "ticket says X, customer meant Y" pattern.** You must supply the specific instance.
 
 *"`[FILL: engagement / engineer].` I handed off work through a ticket that described what to build, and the engineer built exactly what the ticket said, correctly, but not what the customer had asked for in the discovery session. The customer's intent never made it into my handoff. `[FILL: the concrete drift — e.g., built a generic search when the claims manager needed case-scoped results].`*
 
@@ -148,7 +148,7 @@ Method question.
 
 ## 9. Explain one project to a CFO in three minutes
 
-**NEEDS YOUR INPUT.** No grounded story exists for this drill. The repo gives you the two rules that make it work; the project, the numbers and the result have to be yours.
+**Your story.** No grounded story exists for this drill. The repo gives you the two rules that make it work; the project, the numbers and the result have to be yours.
 
 **Rule 1: translate each term in the same breath.** Every technical term gets its plain-English meaning in the same sentence that introduces it, not three sentences later. A listener who loses the thread on one term does not recover it later. The weak version names "a two-layer access control system" and explains it afterwards. The strong version says: "a two-layer access control system — think a fast ID check at the door, then a second, more careful check right before you're handed anything sensitive." Apply the rule everywhere: in the opening, in the Action, and in the answers to follow-up questions.
 

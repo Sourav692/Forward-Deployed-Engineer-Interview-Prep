@@ -12,7 +12,7 @@ Spoken answers: 4 grounded, 1 needing your input. Deliver them in your own caden
 
 > "I treat the brief as a hypothesis and the customer's data as the test. At the lender, I went through a couple of hundred historical tickets before designing anything. More than half were config-table refresh and sync requests. A real slice were log-exclusion investigations. A small share were bugs in the rules-engine code. That distribution set the architecture. A triage layer narrows the toolset before the agent runs. Three investigation routes use retrieval over past tickets instead of a hand-coded rules tree. A separate code-lookup agent does a deterministic one-file lookup and hands the model only that file. The same review showed about a third of tickets were clarification round-trips. My design didn't handle those, and I logged it as the next gap."
 
-**GROUNDED: insurer two-track discovery + lender ticket review**
+**Example story: insurer two-track discovery + lender ticket review**
 
 *"Two habits. First, I don't start from the brief; I start from the people who'll use the thing and the people who'll have to sign off on it, and I talk to them separately, because they surface different requirements. At the insurer the brief said 'natural-language answers over data.' The actuaries, claims managers, and analysts told me the same question needed different correct answers per role and market. Compliance told me which documents carried health disclosures. Neither was in the brief, and together they became the core of the design.*
 
@@ -22,7 +22,7 @@ Spoken answers: 4 grounded, 1 needing your input. Deliver them in your own caden
 
 ## 2. Running discovery with a client who can't articulate the ask
 
-**GROUNDED.**
+**Example story.**
 
 **CEO-ready answer.**
 
@@ -43,7 +43,7 @@ It's a method question. Give the process, then one illustration.
 
 ## 3. Week one with unclear requirements
 
-**GROUNDED.**
+**Example story.**
 
 **CEO-ready answer.**
 
@@ -71,7 +71,7 @@ It's a method question. Give the process, then one illustration.
 
 > "The core decision was the write path, not the model. At the lender, the agent investigates across logs, control flags and config. I gave it read access where it needed it and write access nowhere. Each tool did one named operation with a typed input schema. There was no generic query or update tool for the model to misuse. Every proposed fix was emitted as a structured finding into their ticketing system. An engineer reviewed it and applied it. The trade-off was time to resolution, because a human sits on every write. What I gained was a bounded blast radius. A bad model call produces a wrong ticket comment, never a misrouted loan lead. That permission model is the guardrail, and it does not depend on prompt quality."
 
-**GROUNDED: a large Indian consumer lender**
+**Example story: a large Indian consumer lender**
 
 *"At a large Indian consumer lender, their lead-routing pipeline is the existing system that routes loan leads into their CRM and their dialer. I didn't touch that. I built an agent for the IT-support desk behind it. When that pipeline misbehaves, an engineer raises a ticket: a lead silently excluded, a feed that stopped, a config table out of sync. The agent runs the investigation the engineer would otherwise do by hand across logs, control flags, and config, and writes up the root cause. The easy version, and honestly the more impressive demo, was to let the agent close the loop itself: ticket comes in, agent diagnoses it, agent applies the fix to the config table, ticket closes. Fast time-to-resolution, great headline number.*
 
