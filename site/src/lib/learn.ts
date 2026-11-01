@@ -310,6 +310,7 @@ const SOURCE_NOTES: [prefix: string, note: string][] = [
   ['01_Concept_Tutorials/GenAI_Engineering_Modules/', 'From the GenAI Engineering Modules'],
   ['01_Concept_Tutorials/Cost_and_Latency_Optimization/', 'From the Cost and Latency Optimisation Playbook'],
   ['01_Concept_Tutorials/Consolidated_Lessons/', ''],
+  ['01_Concept_Tutorials/RAG_Agents_Engineering/', 'From the RAG & Agents Engineering course'],
   ['01_Concept_Tutorials/', 'From the Concept Tutorials'],
   ['02_System_Design_Case_Studies/Classic_Design_Walkthroughs/', 'From the Classic Design Walkthroughs'],
   ['02_System_Design_Case_Studies/', 'From the System Design Case Studies'],
