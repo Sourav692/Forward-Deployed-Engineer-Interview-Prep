@@ -123,7 +123,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "concurrency-threads-processes-the-gil-and-asyncio-22-runnable-scripts",
       "python-and-data-toolkit-refresher-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "llm-provider-apis-and-model-selection",
@@ -138,7 +138,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "reasoning-effort-levers-and-cost",
       "llm-provider-apis-and-model-selection-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "hugging-face-models-and-gradio-demos",
@@ -152,7 +152,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "building-demos-with-gradio",
       "hugging-face-models-and-gradio-demos-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "fine-tuning-fundamentals",
@@ -170,7 +170,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "fine-tuning-llama-2-with-autotrain",
       "fine-tuning-fundamentals-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "prompt-engineering-patterns",
@@ -185,7 +185,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "applied-prompting-on-business-tasks",
       "prompt-engineering-patterns-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "multimodal-prompting",
@@ -199,7 +199,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "exercise-financial-report-analysis",
       "multimodal-prompting-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 110
   },
   {
     "slug": "langchain-core-models-prompts-and-parsers",
@@ -216,7 +216,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "langchain-1-x-recap-course-ending-in-a-structured-output-q-and-a-bot",
       "langchain-core-models-prompts-and-parsers-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "lcel-runnables-and-chains",
@@ -232,7 +232,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "summarization-stuff-map-reduce-refine",
       "lcel-runnables-and-chains-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "langchain-and-langgraph",
@@ -248,7 +248,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "input-output-schemas-and-configuration",
       "langchain-and-langgraph-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "langgraph-runtime-persistence-hitl-and-streaming",
@@ -265,7 +265,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "state-management-in-practice",
       "langgraph-runtime-persistence-hitl-and-streaming-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "rag-from-first-principles",
@@ -281,7 +281,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "the-rag-lifecycle-and-a-measured-baseline",
       "rag-from-first-principles-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "document-ingestion-and-metadata-design",
@@ -297,7 +297,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "custom-loaders-with-lazy-loading",
       "document-ingestion-and-metadata-design-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "chunking-and-indexing",
@@ -312,7 +312,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "choosing-chunk-size-empirically-retrieval-quality-faithfulness-latency",
       "chunking-and-indexing-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 320
   },
   {
     "slug": "embeddings-and-model-selection",
@@ -327,7 +327,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "production-concerns-batching-caching-and-similarity-behaviour",
       "embeddings-and-model-selection-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "vector-stores-and-index-operations",
@@ -343,7 +343,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "incremental-indexing-indexing-api-and-record-manager",
       "vector-stores-and-index-operations-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "advanced-indexing-strategies",
@@ -359,7 +359,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "context-aware-chunks-contextual-headers-and-contextual-retrieval",
       "advanced-indexing-strategies-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "retrieval-hybrid-rerank",
@@ -376,7 +376,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "retriever-patterns-compared-hybrid-rerank-on-databricks-vector-search",
       "retrieval-hybrid-rerank-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "query-transformation-and-routing",
@@ -392,7 +392,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "routing-llm-classifier-and-semantic-routing",
       "query-transformation-and-routing-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 380
   },
   {
     "slug": "post-retrieval-optimisation-and-reranking",
@@ -409,7 +409,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "relevant-segment-extraction",
       "post-retrieval-optimisation-and-reranking-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "end-to-end-rag-systems",
@@ -425,7 +425,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "fully-local-rag-with-hugging-face-and-faiss",
       "end-to-end-rag-systems-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 380
   },
   {
     "slug": "multimodal-rag",
@@ -439,7 +439,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "page-image-retrieval-with-colpali",
       "multimodal-rag-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "framework-fluency-llamaindex",
@@ -454,7 +454,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "sentence-window-retrieval",
       "framework-fluency-llamaindex-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "the-agent-loop-and-tool-calling",
@@ -470,7 +470,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "hosted-vs-client-side-tools-code-execution-and-image-generation",
       "the-agent-loop-and-tool-calling-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "react-agents-and-langchain-create-agent",
@@ -486,7 +486,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "applied-react-web-research-swe-and-computer-use-agents",
       "react-agents-and-langchain-create-agent-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "agentic-workflow-patterns",
@@ -502,7 +502,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "evaluator-optimizer-loops-always-bounded-langgraph-vs-lcel",
       "agentic-workflow-patterns-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 380
   },
   {
     "slug": "planning-reflection-and-reasoning-patterns",
@@ -516,7 +516,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "self-consistency-tree-of-thoughts-and-lats",
       "planning-reflection-and-reasoning-patterns-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 320
   },
   {
     "slug": "human-approval-and-applied-single-agent-builds",
@@ -530,7 +530,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "llm-workflow-apps-review-analyst-it-support-desk-tailored-writer-quiz-generator",
       "human-approval-and-applied-single-agent-builds-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "agentic-rag-foundations-grading-and-query-rewriting",
@@ -543,7 +543,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "guardrails-query-optimisation-and-a-retry-loop",
       "agentic-rag-foundations-grading-and-query-rewriting-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 230
   },
   {
     "slug": "self-correcting-rag-crag-and-self-rag",
@@ -557,7 +557,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "trade-offs-when-correction-is-worth-the-extra-calls",
       "self-correcting-rag-crag-and-self-rag-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "adaptive-rag-and-query-routing",
@@ -572,7 +572,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "strategy-per-query-type",
       "adaptive-rag-and-query-routing-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "rag-as-an-agent-tool",
@@ -586,7 +586,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "exercise-llamaindex-wikipedia-agent-with-chainlit",
       "rag-as-an-agent-tool-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "reliability-feedback-loops-and-diversity",
@@ -600,7 +600,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "dartboard-rag-relevance-and-diversity-together",
       "reliability-feedback-loops-and-diversity-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "conversation-memory-and-conversational-rag",
@@ -616,7 +616,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "langgraph-threads-checkpoints-and-memory-optimisations",
       "conversation-memory-and-conversational-rag-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "memory-and-state",
@@ -632,7 +632,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "memgpt-tiers-voyager-skill-library-agent-workflow-memory",
       "memory-and-state-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "multi-agent-architectures",
@@ -648,7 +648,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "handoffs-and-swarms",
       "multi-agent-architectures-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "collaboration-control-and-parallel-agents",
@@ -664,7 +664,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "parallel-agents-async-nodes-and-streaming",
       "collaboration-control-and-parallel-agents-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "multi-agent-applied-builds-and-deep-agents",
@@ -680,7 +680,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "deep-agents-orchestrator-sub-agents-skills-and-long-term-memory",
       "multi-agent-applied-builds-and-deep-agents-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 320
   },
   {
     "slug": "mcp-foundations",
@@ -697,7 +697,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "remote-servers-and-deployment",
       "mcp-foundations-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "building-mcp-servers-and-clients",
@@ -712,7 +712,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "transports-sse-and-streamable-http",
       "building-mcp-servers-and-clients-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "mcp-applications-and-rag-over-mcp",
@@ -730,7 +730,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "deploying-an-mcp-server-on-ec2",
       "mcp-applications-and-rag-over-mcp-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 260
   },
   {
     "slug": "a2a-agent-to-agent-protocol",
@@ -745,7 +745,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "capstone-agentic-rag-with-mcp-and-a2a",
       "a2a-agent-to-agent-protocol-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 200
   },
   {
     "slug": "hierarchical-and-memory-augmented-retrieval",
@@ -759,7 +759,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "lightrag-low-level-and-high-level-graph-retrieval",
       "hierarchical-and-memory-augmented-retrieval-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 230
   },
   {
     "slug": "knowledge-graphs-with-neo4j",
@@ -776,7 +776,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "end-to-end-knowledge-graph-rag",
       "knowledge-graphs-with-neo4j-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 320
   },
   {
     "slug": "graphrag-techniques",
@@ -791,7 +791,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "graph-expansion-inside-a-vector-database-milvus",
       "graphrag-techniques-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 290
   },
   {
     "slug": "agentic-rag-architectures-choosing-a-design",
@@ -805,7 +805,7 @@ export const INDEX_MODULES: IndexModule[] = [
       "decision-framework-picking-the-simplest-architecture-that-works",
       "agentic-rag-architectures-choosing-a-design-interview-questions"
     ],
-    "practiceMinutes": 20
+    "practiceMinutes": 140
   },
   {
     "slug": "tool-design-mcp-a2a",
