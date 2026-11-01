@@ -83,6 +83,7 @@ export default async function WorksheetPage({ params }: { params: Promise<Params
         facts={[
           { term: 'Kind', value: MODES[meta.mode].label },
           { term: 'Level', value: itemLevel(`${ref.trackId}/${ref.slug}`, meta.difficulty) },
+          ...(meta.practiceMinutes ? [{ term: 'Practice time', value: `About ${meta.practiceMinutes} min` }] : []),
           ...(ref.minutes ? [{ term: 'Reading time', value: `${ref.minutes} min` }] : []),
           ...(meta.personalisation ? [{ term: 'Progress', value: 'Track each answer as you practise' }] : []),
         ]}

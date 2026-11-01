@@ -4,7 +4,7 @@ import { cache } from 'react'
 import { getAllScenarios, getTracks } from '@/lib/content'
 import { MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
 import type { CurriculumModule, ModuleStatus } from '@/lib/curriculum-types'
-import { LEVELS, RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL, type Level } from '@/lib/editorial'
+import { FAMILY_META, LEVELS, RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL, type Level } from '@/lib/editorial'
 import { learnTracks, trackHours } from '@/lib/learn'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import type { LinkItem } from './Area'
@@ -59,7 +59,8 @@ export async function moduleGroups(moduleId: string): Promise<{ groups: TrackGro
         title: qualifiedTitle(s),
         twin: twinOf(s),
         level: LEVELS[`${s.trackId}/${s.slug}`] ?? 'core',
-        minutes: s.minutes,
+        // A worksheet's card shows the time to work it, not to read it.
+        minutes: FAMILY_META[s.trackId]?.practiceMinutes ?? s.minutes,
       })),
   }))
   return { groups, scenarios }

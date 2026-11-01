@@ -114,7 +114,10 @@ export default async function ModulePage({ params }: { params: Promise<Params> }
             title={mod.title}
             standfirst={`${capitalise(mod.objective)}.`}
             facts={[
-              { term: 'Time', value: `About ${formatMinutes(time.total)}${time.practice > 0 ? `: ${formatMinutes(time.reading)} reading, ${formatMinutes(time.practice)} practice` : ''}` },
+              // A paused or planned module has nothing to spend time on yet.
+              ...(mod.status === 'on-hold' || mod.status === 'coming-soon'
+                ? []
+                : [{ term: 'Time', value: `About ${formatMinutes(time.total)}${time.practice > 0 ? `: ${formatMinutes(time.reading)} reading, ${formatMinutes(time.practice)} practice` : ''}` }]),
               ...(lessonCount ? [{ term: 'Lessons', value: lessonCount }] : []),
             ]}
           >
