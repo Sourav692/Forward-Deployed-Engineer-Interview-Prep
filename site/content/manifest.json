@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T21:53:40.805Z",
+  "generatedAt": "2026-11-01T22:20:51.202Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -291,7 +291,7 @@
                 }
               ],
               "minutes": 72,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "nl-over-governed-data",
@@ -336,7 +336,7 @@
                 }
               ],
               "minutes": 71,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "document-review-copilot",
@@ -470,7 +470,7 @@
                 }
               ],
               "minutes": 87,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "tool-using-agent-with-safety-controls",
@@ -511,7 +511,7 @@
                 }
               ],
               "minutes": 74,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "sre-incident-response-agent",
@@ -552,7 +552,7 @@
                 }
               ],
               "minutes": 62,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "sales-copilot",
@@ -593,7 +593,7 @@
                 }
               ],
               "minutes": 64,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "enterprise-coding-assistant",
@@ -634,7 +634,7 @@
                 }
               ],
               "minutes": 55,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "real-time-call-assistant",
@@ -712,7 +712,7 @@
                 }
               ],
               "minutes": 46,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             }
           ]
         },
@@ -764,7 +764,7 @@
                 }
               ],
               "minutes": 74,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "high-volume-batch-pipeline",
@@ -850,7 +850,7 @@
                 }
               ],
               "minutes": 52,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "consumer-scale-chat-service",
@@ -1196,7 +1196,7 @@
                 }
               ],
               "minutes": 97,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "reliable-workflow-orchestration",
@@ -1249,7 +1249,7 @@
                 }
               ],
               "minutes": 105,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "configurable-platform-customer-workflows",
@@ -1294,7 +1294,7 @@
                 }
               ],
               "minutes": 91,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "enterprise-chatbot-platform",
@@ -1331,7 +1331,7 @@
                 }
               ],
               "minutes": 75,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "self-adapting-agent",
@@ -1356,7 +1356,7 @@
                 }
               ],
               "minutes": 47,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "personal-assistant-with-memory",

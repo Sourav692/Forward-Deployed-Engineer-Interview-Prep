@@ -150,7 +150,7 @@ These figures scale up my working assumptions. None is measured.
 ```mermaid
 flowchart TB
     U["Employee — web / desktop client"] --> GW["API Gateway + SSO session"]
-    GW --> CONV["Conversation Service<br/>per-turn authorization"]
+    GW --> CONV["Conversation Service<br/>per-turn authorisation"]
     CONV --> POL["Policy & DLP — input scan"]
     POL --> ASM["Context Assembler<br/>history + retrieval + assistant"]
     ASM --> RET["Retrieval Service"]
@@ -167,7 +167,7 @@ flowchart TB
 
     POL -. "restricted class: block or reroute" .-> DENY["Blocked — explain, audit the block"]
     RET -. "ACL resolve fails: fail closed, drop chunk" .-> DENY
-    ADP -. "provider error or quota: degrade or failover" .-> DEG["Smaller model, labeled — never an error page"]
+    ADP -. "provider error or quota: degrade or failover" .-> DEG["Smaller model, labelled — never an error page"]
 
     style DENY fill:#a63d40,stroke:#5c1f22,color:#fff
     style DEG fill:#c77b30,stroke:#7a4a18,color:#fff
@@ -193,7 +193,7 @@ sequenceDiagram
 
     U->>GW: POST /messages (SSO token, conversation id)
     GW->>CS: Validated principal + request
-    CS->>CS: Authorize principal for THIS conversation (per turn)
+    CS->>CS: Authorise principal for THIS conversation (per turn)
     CS->>P: Scan user message + attachments
     P->>CS: Allow (classification: internal-confidential)
     CS->>ST: Check quota — admit
@@ -219,7 +219,7 @@ sequenceDiagram
     Note over PA,MR: Failure B — provider degraded
     PA-->>MR: 429 / 5xx / timeout
     MR->>PA: Failover to secondary or smaller model
-    PA-->>U: Stream resumes, labeled as fallback
+    PA-->>U: Stream resumes, labelled as fallback
     GW->>ST: Audit: route changed, reason, message preserved
 ```
 

@@ -68,7 +68,7 @@ Start with the minimum components that satisfy confirmed needs. Explain each box
 
 ```text
 User → API Gateway → Router / workflow
-                        ├→ Authorized policy retrieval
+                        ├→ Authorised policy retrieval
                         ├→ Live order tool
                         └→ Refund recommendation
                                   ↓
@@ -86,7 +86,7 @@ Follow inputs, trusted identity, evidence, live reads, model calls, policy, acti
 > “For a refund request, I’d retrieve the applicable policy and read live order facts before recommending an action.”
 
 ```text
-Facts + policy → Recommend → Authorize/policy check
+Facts + policy → Recommend → Authorise/policy check
                                   ↓
                        Approval if required → Execute
                                   ↓
@@ -272,7 +272,7 @@ FR = functional requirement. NFR = non-functional requirement. RAG = retrieval-a
 ```text
 API Gateway   = User → Application control
 Model Gateway = Application → Model control
-Policy knowledge → Authorized RAG
+Policy knowledge → Authorised RAG
 Current state    → Controlled live tool
 Business write   → Policy / approval → Executor
 ```

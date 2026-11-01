@@ -34,7 +34,7 @@ Then rerank the authorised candidate pool.
 Correct order:
 
 ~~~text
-Authorize
+Authorise
  → Retrieve
  → Fuse
  → Enforce policy

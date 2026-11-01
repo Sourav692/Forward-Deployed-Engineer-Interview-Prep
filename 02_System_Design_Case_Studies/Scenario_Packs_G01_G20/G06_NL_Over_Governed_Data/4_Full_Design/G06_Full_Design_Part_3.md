@@ -79,7 +79,7 @@ Backpressure belongs to the background lane. Crawler and registry refresh jobs s
 ```
 request received
   -> authenticate user
-  -> authorize against tenant + role + metric policy
+  -> authorise against tenant + role + metric policy
   -> parse SQL AST
   -> validate tables, columns, joins, limits, and query shape
   -> if policy or semantic check fails: reject + log redacted evidence

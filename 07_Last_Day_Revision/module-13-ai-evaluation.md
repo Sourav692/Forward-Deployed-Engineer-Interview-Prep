@@ -81,7 +81,7 @@ Evaluate recorded operations and decision summaries, not private model chain-of-
 Use code or trusted assertions for schemas, required fields, known tool permissions, policy boundaries, duplicate effects, latency limits, and confirmed final state.
 
 ```text
-Valid tool arguments? Authorized action?
+Valid tool arguments? Authorised action?
 Correct order updated? No duplicate refund?
 ```
 

@@ -24,7 +24,7 @@ The fix is OpenTelemetry-style spans. Every unit of work is a span with an ID, a
 
 ```
  trace: one request (run_id, tenant, principal, prompt_version)
-   └─ span: authorize      attrs: filter_explanation
+   └─ span: authorise      attrs: filter_explanation
    └─ span: retrieve       attrs: strategy, candidate_ids, retrieved_by
    └─ span: enforce        attrs: allowed, denied, filter_disagreements
    └─ span: rerank         attrs: model, tokens, cost_usd

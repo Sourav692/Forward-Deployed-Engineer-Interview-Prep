@@ -59,7 +59,7 @@ Ingest    Ingest (EDI/CSV,
    │         │
    └────┬────┘
         │
-Event Normalization & Stream
+Event Normalisation & Stream
         │
 Disruption Detection Service
    (customs hold · missed scan · weather delay)

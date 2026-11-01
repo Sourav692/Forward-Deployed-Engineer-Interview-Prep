@@ -42,7 +42,7 @@ Use this guide as the master case study for enterprise RAG and knowledge-assista
                   |                             
        Sub-100ms Search, Meridian Assist, Security / Incident cases
                   |
-     Same core: identity → authorization → retrieval → grounded answer
+     Same core: identity → authorisation → retrieval → grounded answer
        Adapt the data, workflow and dominant quality constraint
 ~~~
 
@@ -53,7 +53,7 @@ User
   ↓
 Identity
   ↓
-Authorization
+Authorisation
   ↓
 Query understanding
   ↓
@@ -159,18 +159,18 @@ This is the interview-size version of the [source architecture, §5](../4_Full_D
 flowchart LR
     subgraph ING[Asynchronous ingestion]
         SRC[Enterprise sources] --> QUEUE[Events and backfill]
-        QUEUE --> NORM[Normalize content and ACLs]
+        QUEUE --> NORM[Normalise content and ACLs]
         NORM -->|No usable ACL| REFUSE[Refuse to index]
         NORM -->|Usable ACL| INDEX[(Keyword and vector indexes)]
     end
 
-    subgraph QRY[Authorized query path]
+    subgraph QRY[Authorised query path]
         USER[User] --> ID[Identity and groups]
         ID --> FILTER[Compile permission filter]
         FILTER --> PLAN[Query planner: split multi-hop if needed]
         PLAN --> RET[Hybrid retrieval with prefilter]
         RET --> CHECK[Live policy post-check]
-        CHECK --> RERANK[Rerank authorized evidence]
+        CHECK --> RERANK[Rerank authorised evidence]
         RERANK --> GRADE{Enough evidence?}
         GRADE -->|No| ABSTAIN[Abstain or escalate]
         GRADE -->|Yes| LLM[LLM gateway: generate cited answer]
@@ -250,7 +250,7 @@ Use:
 Source event
  → Queue
  → Fetch authoritative record
- → Normalize content + ACL
+ → Normalise content + ACL
  → Index / tombstone
  → Reconciliation
 ~~~

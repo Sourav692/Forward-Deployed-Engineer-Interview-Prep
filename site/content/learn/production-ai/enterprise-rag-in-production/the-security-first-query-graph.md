@@ -19,7 +19,7 @@ Everything from the earlier lessons assembles into one per-request pipeline: a L
 ```mermaid
 flowchart TB
     START(["START"]) --> N1
-    N1["① authorize\nWork out what this person is\nallowed to see, before searching anything"]
+    N1["① authorise\nWork out what this person is\nallowed to see, before searching anything"]
     N2["② plan\nIs this a multi-part question?\nSplit it into sub-questions if so"]
     N3["③ retrieve\nSearch the index\n(one of 6 strategies)"]
     N4["④ enforce\nRe-check every result against the real\naccess rules, mask/log as needed,\nthen rank only what survived"]

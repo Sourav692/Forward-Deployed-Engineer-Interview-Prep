@@ -88,7 +88,7 @@ flowchart TB
   I -->|already applied| K[Checkpoint next step]
   I --> G[Deterministic guardrail: budget, cap, stage, allow-list / approval]
   G -->|deny| X
-  G -->|approval needed| P[Pause for authorized human]
+  G -->|approval needed| P[Pause for authorised human]
   P --> O
   G -->|allow| T[Scoped tool action]
   T --> K

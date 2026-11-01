@@ -139,7 +139,7 @@ Draw two flows. **Label every arrow.**
 
 ```
   ┌─────────┐  ┌──────┐  ┌──────────┐  ┌─────────┐  ┌────────┐  ┌───────┐  ┌────────┐  ┌────────┐
-─>│AUTHORIZE│─>│ PLAN │─>│ RETRIEVE │─>│ ENFORCE │─>│ RERANK │─>│ GRADE │─>│GENERATE│─>│ VERIFY │─>
+─>│AUTHORISE│─>│ PLAN │─>│ RETRIEVE │─>│ ENFORCE │─>│ RERANK │─>│ GRADE │─>│GENERATE│─>│ VERIFY │─>
   └─────────┘  └──────┘  └──────────┘  └─────────┘  └────────┘  └───┬───┘  └────────┘  └────────┘
    resolve      multi-    filtered      AUTHORITATIVE  20 -> 6    insufficient
    identity,    hop?      search        re-check +                    │

@@ -47,7 +47,7 @@ INGEST  (async)
 QUERY  (sync, ordered by risk)
   user
    --> gateway     authN via IdP
-   --> AUTHORIZE   resolve groups, compile the filter
+   --> AUTHORISE   resolve groups, compile the filter
    --> PLAN        split a multi-hop question
    --> RETRIEVE    hybrid search inside the filter, RRF
    --> ENFORCE     ABAC post-check, live, redact          <-- trust boundary
@@ -89,7 +89,7 @@ flowchart TB
     end
 
     subgraph QRY[Query — sync, ordered by risk]
-        U[User] --> GW[Gateway: authN via IdP] --> AUTH[Authorize: resolve groups, compile filter]
+        U[User] --> GW[Gateway: authN via IdP] --> AUTH[Authorise: resolve groups, compile filter]
         AUTH --> PLAN[Plan: split multi-hop] --> RET[Retrieve: hybrid pre-filtered, RRF]
         RET --> ENF[Enforce: ABAC post-check, live, redact] --> RR[Rerank 20 to 6] --> GR{Enough evidence?}
         GR -- no --> ESC[Refuse + escalate]
@@ -151,7 +151,7 @@ Authorise first and enforce before generation, and encode that order in the grap
 
 ```
   ┌─────────┐  ┌──────┐  ┌──────────┐  ┌─────────┐  ┌────────┐  ┌───────┐  ┌────────┐  ┌────────┐
-─>│AUTHORIZE│─>│ PLAN │─>│ RETRIEVE │─>│ ENFORCE │─>│ RERANK │─>│ GRADE │─>│GENERATE│─>│ VERIFY │─>
+─>│AUTHORISE│─>│ PLAN │─>│ RETRIEVE │─>│ ENFORCE │─>│ RERANK │─>│ GRADE │─>│GENERATE│─>│ VERIFY │─>
   └─────────┘  └──────┘  └──────────┘  └─────────┘  └────────┘  └───┬───┘  └────────┘  └────────┘
    resolve      multi-    filtered      AUTHORITATIVE  20 -> 6    insufficient
    identity,    hop?      search        re-check +                    │

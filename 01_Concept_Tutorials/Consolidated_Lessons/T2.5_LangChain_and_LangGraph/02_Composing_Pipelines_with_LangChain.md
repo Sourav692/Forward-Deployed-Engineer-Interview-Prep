@@ -88,7 +88,7 @@ Real pipelines branch. `RunnableParallel` runs several chains on the same input 
 flowchart TD
     A["Input"] --> B["Classifier chain"]
     B --> C{"routing_decision"}
-    C -->|"summarize"| D["summary_chain"]
+    C -->|"summarise"| D["summary_chain"]
     C -->|"sentiment"| E["sentiment_chain"]
     C -->|"email"| F["email_chain"]
     C -->|"no match"| G["default arm"]

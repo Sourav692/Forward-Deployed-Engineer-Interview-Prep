@@ -120,7 +120,7 @@ Rate limit: May this tenant send this much work?
 Admission:  Can the system accept it now?
 Queue:      Where can accepted work wait within limits?
 
-Latency: Trace → Critical path → Optimize → Recheck quality
+Latency: Trace → Critical path → Optimise → Recheck quality
 Cost: Total cost across attempts ÷ successful tasks
 ```
 
@@ -209,7 +209,7 @@ Observe tool operations, state transitions, decision summaries, and evidence, no
 Need AI?       → WHY + TODAY
 What must do?  → FRs
 How well?     → NFRs
-Documents?    → Authorized RAG
+Documents?    → Authorised RAG
 Live state?   → API/tool
 Dynamic steps?→ Bounded agent; otherwise workflow
 Business write?→ Policy + approval if required + executor

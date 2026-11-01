@@ -89,7 +89,7 @@ Expose approved tools with clear inputs and outputs. Validate arguments, authori
 ```text
 Model requests tool
        ↓
-Validate + authorize
+Validate + authorise
        ↓
 Execute → Observe result → Decide next step
 ```
@@ -104,7 +104,7 @@ Bound steps, tool calls, tokens, retries, elapsed time, and cost. Define complet
 
 ```text
 Before next step:
-Within budget? → Authorized? → Making progress?
+Within budget? → Authorised? → Making progress?
        No             No               No
        └──────────── Stop / escalate ───┘
 ```
@@ -160,7 +160,7 @@ Check routing, tool selection, arguments, policy compliance, recovery, task succ
 ```text
 Correct outcome + permitted path + bounded cost/time
                          ↓
-                  Useful agent behavior
+                  Useful agent behaviour
 ```
 
 Different valid paths can exist. Evaluate required constraints and outcomes rather than demanding one exact tool sequence for every task.
@@ -303,7 +303,7 @@ Select step → Controlled tool → Observe
 ### Control Rules
 
 ```text
-Before tool: Validate + authorize + budget check
+Before tool: Validate + authorise + budget check
 After tool:  Observe + save relevant progress
 Before write:Policy + approval + safe execution
 At limit:    Stop safely + report status / escalate

@@ -27,7 +27,7 @@ Cheap + easy to rollback
         ↓
 3. Skill / Procedure
         ↓
-4. Prompt Optimization
+4. Prompt Optimisation
         ↓
 5. Model Weights
         ↓
@@ -694,7 +694,7 @@ Repeated workflow
 Instruction-following issue
     → Prompt
 
-Stable high-volume behavior
+Stable high-volume behaviour
     → Maybe fine-tuning
 ```
 
@@ -1447,7 +1447,7 @@ Use both.
 Fine-tuning:
 
 ```text
-Good for stable repeated behavior
+Good for stable repeated behaviour
 Harder rollback
 Slower iteration
 ```
@@ -1489,7 +1489,7 @@ Then add:
 ```text
 Skill Learning
       ↓
-Prompt Optimization
+Prompt Optimisation
       ↓
 Fine-Tuning
 ```
@@ -1525,7 +1525,7 @@ Promotion / Rollback
 ### Phase 3
 
 ```text
-Prompt Optimization
+Prompt Optimisation
 Advanced Automated Learning
 Selective Fine-Tuning
 ```

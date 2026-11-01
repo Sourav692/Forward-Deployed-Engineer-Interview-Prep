@@ -50,7 +50,7 @@ Because `parent_config` links each snapshot to the previous one, time travel is 
 
 ```mermaid
 flowchart LR
-    C1["checkpoint 1 (after analyze)"] --> C2["checkpoint 2 (after summarize)"]
+    C1["checkpoint 1 (after analyse)"] --> C2["checkpoint 2 (after summarise)"]
     C2 -.->|"parent_config"| C1
     C1 -->|"time travel: resume from here"| BR["branch-beach thread"]
     C1 -->|"time travel: resume from here"| BM["branch-mountain thread"]

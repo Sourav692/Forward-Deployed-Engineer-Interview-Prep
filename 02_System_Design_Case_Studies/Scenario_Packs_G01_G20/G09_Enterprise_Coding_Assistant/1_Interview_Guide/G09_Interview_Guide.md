@@ -87,7 +87,7 @@ flowchart LR
         VALID -->|Fail or timeout| SILENT[Suppress suggestion]
     end
     subgraph SLOW[Explicit explain, tests, bug fix, refactor]
-        ASK[Developer request] --> ROUTE[Task router and authorized context]
+        ASK[Developer request] --> ROUTE[Task router and authorised context]
         INDEX --> ROUTE
         ROUTE --> LARGE[Large reasoning LLM]
         LARGE --> V2[Validation and optional tests]

@@ -62,7 +62,7 @@ flowchart LR
   B --> C["12-22 min: Architecture as control system"]
   C --> D["22-30 min: Defend trade-offs"]
   D --> E["30-38 min: Follow-up drill"]
-  E --> F["38-44 min: Summarize under pressure"]
+  E --> F["38-44 min: Summarise under pressure"]
   F --> G["44-50 min: Executive close"]
 ```
 

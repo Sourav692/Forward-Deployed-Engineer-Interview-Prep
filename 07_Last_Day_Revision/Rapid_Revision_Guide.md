@@ -201,7 +201,7 @@ Handles:
 
 ```text
 Authentication
-Authorization
+Authorisation
 Tenant Context
 User Rate Limits
 Quota
@@ -596,9 +596,9 @@ PARALLELIZE
    ↓
 REDUCE MODEL HOPS
    ↓
-OPTIMIZE RETRIEVAL
+OPTIMISE RETRIEVAL
    ↓
-OPTIMIZE TOOLS
+OPTIMISE TOOLS
    ↓
 CONTROL QUEUE
    ↓
@@ -926,7 +926,7 @@ Then:
 ```text
 Identity
  ↓
-Authorization
+Authorisation
  ↓
 Data Permissions
  ↓

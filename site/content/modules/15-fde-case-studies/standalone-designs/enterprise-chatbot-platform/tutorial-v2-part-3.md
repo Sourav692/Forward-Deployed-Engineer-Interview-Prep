@@ -257,7 +257,7 @@ flowchart TD
 flowchart TD
     A["Provider returns 429 / 5xx / timeouts\nat elevated rate"] --> B["Detect:\nadapter error-rate alert; TTFT breach"]
     B --> C["Contain:\ncircuit break on elevated error rate;\nshed background work; bound retries\nwith jitter — don't amplify the outage"]
-    C --> D["Recover:\nshift to secondary or smaller model;\nsmall labeled banner, never an error page"]
+    C --> D["Recover:\nshift to secondary or smaller model;\nsmall labelled banner, never an error page"]
     D --> E["Prevent:\ntested failover path via game day;\naudit every route change with a reason"]
     F["Bad path (avoid):\nspinners → error pages → users retry →\nload multiplies → users flee to the\nconsumer tool within 10 minutes"] -.->|"contrast"| A
     style F fill:#a63d40,stroke:#5c1f22,color:#fff

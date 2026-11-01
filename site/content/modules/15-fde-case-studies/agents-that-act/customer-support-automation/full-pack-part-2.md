@@ -40,7 +40,7 @@ One diagram carries the design, and each component exists because the one before
  ║   account-sensitive ·     account facts ·        proposed tool call    assurance ok? action     ┌─ auto-resolve  ║
  ║   money-moving ·          prior cases            (a recommendation,    allowed? refund over     ├─ request       ║
  ║   legal · safety          (live before action)    never a decision)     threshold? facts fresh?  │  approval      ║
- ║                                                                         ── the authorization    └─ escalate     ║
+ ║                                                                         ── the authorisation    └─ escalate     ║
  ║                                                                            boundary                    │         ║
  ║   single lookup (order status) ─> direct read-only tool call, verified identity, no draft or gate      │         ║
  ║  ACTION — async where the side effect allows                                                           v         ║

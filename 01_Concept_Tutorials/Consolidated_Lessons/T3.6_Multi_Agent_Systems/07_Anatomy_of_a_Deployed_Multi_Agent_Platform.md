@@ -76,7 +76,7 @@ The pipeline is a LangGraph state machine of four agents. The Search agent takes
 flowchart LR
     Start(["search node"])
     A1["Search Agent\nfinds 5 key facts\nuses session history"]
-    A2["Summarize Agent\ncondenses findings\ninto bullet points"]
+    A2["Summarise Agent\ncondenses findings\ninto bullet points"]
     A3["Writer Agent\nfull structured report\nuses LTM context if present"]
     A4{"Critic Agent\nfact-check pass?"}
     Done(["END — verified report"])

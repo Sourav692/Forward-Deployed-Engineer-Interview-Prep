@@ -14,7 +14,7 @@
 ```text
 Agent recommends
        ↓
-Validate request + authorize + check policy
+Validate request + authorise + check policy
        ↓
 Executor → Enterprise API → Confirm result
                               ↓
@@ -40,7 +40,7 @@ Give the model approved operations with clear input and output schemas. Validate
 > “I’d expose specific operations like get_order_status and request_refund, rather than unrestricted production access.”
 
 ```text
-Model tool request → Validate → Authorize → Execute
+Model tool request → Validate → Authorise → Execute
 ```
 
 Tool results are data, not permission to bypass policy. The model must not be able to supply its own trusted tenant identity or credentials.
@@ -66,8 +66,8 @@ Reads need access checks and freshness rules. Writes also need policy, explicit 
 > “Reading an order and issuing a refund have different risk and recovery requirements.”
 
 ```text
-Read:  Authorized lookup → Data
-Write: Authorized proposal → Policy → Execute → Confirm
+Read:  Authorised lookup → Data
+Write: Authorised proposal → Policy → Execute → Confirm
 ```
 
 Read calls still incur cost and may expose sensitive data; do not treat them as unrestricted.
@@ -207,7 +207,7 @@ Tool layer    = Controlled enterprise operations
 ### Recall Flow
 
 ```text
-Propose → Validate + authorize → Policy
+Propose → Validate + authorise → Policy
               ↓
      Executor → Enterprise API → Confirm
                                    ↓

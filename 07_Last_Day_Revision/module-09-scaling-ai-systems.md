@@ -16,7 +16,7 @@ Workload → Bottleneck → Capacity controls
                               ↓
               Fair scheduling + scalable workers
                               ↓
-              Durable state + overload behavior
+              Durable state + overload behaviour
 ```
 
 Recall:

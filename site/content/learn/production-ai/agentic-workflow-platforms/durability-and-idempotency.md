@@ -21,7 +21,7 @@ flowchart TB
     START(["Run starts\nnext_step_index = 0"])
     STEP["Take the step at next_step_index\nresolve its args from the event"]
     VALID{"Args valid\nagainst the tool's schema?"}
-    AUTH{"Guardrail authorizes\nthis step?"}
+    AUTH{"Guardrail authorises\nthis step?"}
     APPLY["Apply the tool's effect\nvia its idempotency key —\na repeat key is a no-op"]
     CKPT["next_step_index += 1\nTHE CHECKPOINT"]
     MORE{"More steps?"}
