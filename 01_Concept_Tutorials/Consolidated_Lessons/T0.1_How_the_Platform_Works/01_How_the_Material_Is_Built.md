@@ -4,7 +4,7 @@
 
 ◷ 5 min
 
-Read this before anything else. It covers the three principles behind the material, the eight topic groups that hold the Learn tracks, and the fixed shape every lesson follows. Then [choose your path](/start): it marks which modules are required, recommended or optional for your background and interview date.
+If you have not picked a path yet, start at [Choose your path](/start); this lesson explains what you will find once you do. It covers the three principles behind the material, the eight topic groups that hold the Learn tracks, and the fixed shape every lesson follows. The path marks which modules are required, recommended or optional for your background and interview date.
 
 **Objectives:**
 
@@ -45,7 +45,7 @@ Learn teaches. Three other areas are for practice:
 
 - **Interview** follows the rounds of a real loop, from the recruiter screen to the demo or take-home. Each round lists what it tests, the Learn modules to study first and its mock interviews.
 - **Practice** holds write-first worksheets: you draft your own answer before you open the key.
-- **Design** is the casebook of full system designs, each with an interview guide, a technical deep dive and a quick review.
+- **Casebook** holds the full system designs, each with an interview guide, a technical deep dive and a quick review.
 
 ## Read Every Lesson the Same Way
 
@@ -68,7 +68,7 @@ They fail one question. That is the signal to reread one section, not the whole 
 ## Key Takeaways
 
 - Three principles shape the material: grounded in code, problem before solution, and honest about what is proven.
-- Learn sorts its tracks into eight topic groups; Interview, Practice and Design are where you rehearse what Learn teaches.
+- Learn sorts its tracks into eight topic groups; Interview, Practice and the Casebook are where you rehearse what Learn teaches.
 - Every lesson has the same shape; Key Takeaways and Check Yourself are the parts to use under time pressure.
 
 ## Check Yourself
@@ -77,11 +77,11 @@ They fail one question. That is the signal to reread one section, not the whole 
    Grounded in implementations, problem before solution, and honest about what is proven. Without the problem first, you memorise a solution you cannot rebuild when a follow-up changes the problem.
 
 2. **You want to learn how to evaluate a retrieval pipeline, then rehearse explaining the design. Where do you go?**
-   The AI Engineering group in Learn for the lessons, then the AI system design round in Interview, or a case in Design, to rehearse.
+   The AI Engineering group in Learn for the lessons, then the AI system design round in Interview, or a case in the Casebook, to rehearse.
 
 3. **Why is the interview framing kept rather than stripped out?**
    An interview is a compressed version of the job. The sentences that carry an interview also carry a design review with a customer's security team.
 
 ## References
 
-**Sources:** `01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md`: "What this is", "Anatomy of a document" and "Checkpoint". `01_Concept_Tutorials/FDE_Handbook/00_Orientation/README.md`: the module checkpoint. The topic groups and areas follow the site's Learn, Interview, Practice and Design pages.
+**Sources:** `01_Concept_Tutorials/FDE_Handbook/00_Orientation/01_How_To_Use_This_Handbook.md`: "What this is", "Anatomy of a document" and "Checkpoint". `01_Concept_Tutorials/FDE_Handbook/00_Orientation/README.md`: the module checkpoint. The topic groups and areas follow the site's Learn, Interview, Practice and Casebook pages.
