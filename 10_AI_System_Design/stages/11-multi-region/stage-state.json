@@ -1,0 +1,175 @@
+{
+  "stage": 11,
+  "title": "Global Multi-Region Platform",
+  "status": "tested",
+  "architecture_before": "v0.10-stage-10",
+  "architecture_after": "# Stage 11 Architecture Snapshot\n\nVersion: `v0.11-stage-11`. Previous: `v0.10-stage-10`. Decision: [ADR-011](../../architecture/decisions/ADR-011-residency-aware-regional-cells.md).\n\nRetain all runtime and Stage 10 lineage controls. Add trusted tenant placement, EU-primary and EU-secondary for A/B, US-home for C, data-class replication, regional private/provider profiles, recovery eligibility and usage reconciliation. Fence the previous writer before promotion; current policy, audit, ready approved artifacts and capacity remain mandatory. Async result copies may lose acknowledged operation evidence within the stated RPO; hold the uncertain interval rather than blindly redispatch.\n\nThe executed slices are a pure recovery eligibility/capacity worksheet and in-memory final-operation usage ledger. No cloud region, network, replication, actual authority promotion, provider billing integration, or load measurement is claimed. Stage 12 inherits regional cell and lineage architecture with these explicit production gaps.\n",
+  "architecture_version": "v0.11-stage-11",
+  "first_taught_modules": [
+    {
+      "id": "16.2",
+      "module": "Cloud networking and deployment",
+      "target_depth": "D2"
+    },
+    {
+      "id": "17.1",
+      "module": "AI unit economics",
+      "target_depth": "D3"
+    },
+    {
+      "id": "17.2",
+      "module": "Infrastructure capacity planning",
+      "target_depth": "D2"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "1.2",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "2.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D2"
+    },
+    {
+      "id": "3.1",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.1",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "5.4",
+      "first_teaching_stage": 5,
+      "target_depth": "D2"
+    },
+    {
+      "id": "5.5",
+      "first_teaching_stage": 5,
+      "target_depth": "D3"
+    },
+    {
+      "id": "7.2",
+      "first_teaching_stage": 9,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.1",
+      "first_teaching_stage": 3,
+      "target_depth": "D3"
+    },
+    {
+      "id": "8.3",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "9.1",
+      "first_teaching_stage": 9,
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.2",
+      "first_teaching_stage": 9,
+      "target_depth": "D2"
+    },
+    {
+      "id": "9.3",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.3",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "12.1",
+      "first_teaching_stage": 4,
+      "target_depth": "D3"
+    },
+    {
+      "id": "12.2",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.2",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "13.3",
+      "first_teaching_stage": 6,
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.2",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "15.3",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "16.1",
+      "first_teaching_stage": 9,
+      "target_depth": "D2"
+    }
+  ],
+  "context_only_modules": [],
+  "deferred_modules": [
+    "Distributed optimiser implementation, GPU kernels, pretraining and machine-unlearning research"
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-011-residency-aware-regional-cells.md"
+  ],
+  "artifacts": [
+    "stage-plan.md",
+    "guide.md",
+    "guide.html",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/regions.py",
+    "labs/simulator.js",
+    "labs/test_regions.py"
+  ],
+  "validation": {
+    "module_coverage_checked": true,
+    "coverage_classifications_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "learning_phases": [
+    "Understand the problem",
+    "Learn and design",
+    "Observe and experiment",
+    "Think like a Staff engineer",
+    "Validate and carry forward"
+  ],
+  "learner_completion": "unassessed",
+  "assumptions": [
+    "All workload, quality counts, costs, capacity, dates/timeboxes and recovery figures are illustrative scenario inputs. Metadata/eligibility reports are trusted fixture inputs; they are not actual model or infrastructure measurements."
+  ],
+  "unchecked": [
+    "Production identity, networks, real provider/model/training execution, durable distributed control, actual regional failover, artifact attestation, load/SLO evidence, invoices, screen-reader assessment and learner mastery."
+  ]
+}

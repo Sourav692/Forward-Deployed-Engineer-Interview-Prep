@@ -1,0 +1,32 @@
+# ADR-011: Residency-Aware Regional Cells
+
+Status: accepted educational architecture, not production approval. Stage: 11. Date: 2026-11-02. Supersedes: none; prior runtime invariants remain in force.
+
+## Situation
+
+Read [Stage 11](../../stages/11-multi-region/guide.md) and its labelled workload assumptions. The prior accepted architecture is v0.10-stage-10. The existing supplier workflow must carry its access, operation, budget, and release guarantees into this change.
+
+## Options Considered
+
+| Option | Benefit | Cost/risk | Decision |
+| --- | --- | --- | --- |
+| Backup only | Lower live cost | Restore and capacity acquisition delay | Insufficient assumed recovery target |
+| Home cell and warm eligible secondary | Simple writer ownership, regional locality | Idle reserve and async loss window | Choose |
+| Global multi-writer | Local writes in many locations | Conflicts, global quotas, policy freshness and residency | Reject without requirement |
+| Synchronous cross-region authority | Stronger acknowledged-state durability | Latency and partition availability cost | Separate future decision |
+
+## Decision
+
+Choose tenant home cells and a warm same-geography recovery target, with one writer per tenant. Retain all runtime and Stage 10 lineage controls. Add trusted tenant placement, EU-primary and EU-secondary for A/B, US-home for C, data-class replication, regional private/provider profiles, recovery eligibility and usage reconciliation. Fence the previous writer before promotion; current policy, audit, ready approved artifacts and capacity remain mandatory. Async result copies may lose acknowledged operation evidence within the stated RPO; hold the uncertain interval rather than blindly redispatch.
+
+## Guarantees and Non-Guarantees
+
+A deterministic plan checks allowed geography, fencing evidence, current policy, audit, artifact readiness and copy lag. A separate ledger deduplicates final aggregate usage evidence, rejects conflicts, and includes failed spend. These checks do not fence a real writer, enforce residency on a provider, replicate data, run DNS/private networking, or establish measured RPO/RTO. The planning assumptions are 60-second RPO and 600-second RTO, with a 360-second illustrative recovery budget.
+
+## Consequences and Operational Checks
+
+See [failure experiments and metrics](../../stages/11-multi-region/guide.md) and [executed evidence](../../stages/11-multi-region/validation.md). Preserve previous approved serving until every new eligibility gate passes. Retain protected lineage/operation evidence during rollback; never roll back current permissions, tombstones, or unknown external effects.
+
+## Revisit Trigger
+
+A zero-loss requirement, measured recovery target failure, different allowed geography, unavailable reserved provider/GPU capacity, or justified global concurrent writes requires a new decision.

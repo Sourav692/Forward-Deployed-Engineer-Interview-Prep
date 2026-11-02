@@ -1,0 +1,318 @@
+{
+  "stage": 10,
+  "title": "Fine-Tuning and Model Customization",
+  "outcome": "Trace approved examples into a candidate without bypassing serving policy.",
+  "step_labels": [
+    "Submit",
+    "Verify",
+    "Checkpoint",
+    "Register",
+    "Evaluate",
+    "Approve"
+  ],
+  "branches": [
+    {
+      "label": "Healthy planned path",
+      "steps": [
+        {
+          "owner": "Submit / Fine-Tuning Jobs",
+          "input": "Trusted tenant, stable key, approved dataset/base/recipe.",
+          "output": "Existing or new queued metadata identity.",
+          "failure": "Unknown data or conflicting request rejects before execution."
+        },
+        {
+          "owner": "Verify / Training worker",
+          "input": "Approved immutable manifest and bounded recipe.",
+          "output": "Disjoint supplier splits and pinned input identities.",
+          "failure": "Missing consent or incompatible inputs block the run."
+        },
+        {
+          "owner": "Checkpoint / Training worker",
+          "input": "Monotonic step and compatible state checksum.",
+          "output": "Verified progress record; actual resume remains proposed.",
+          "failure": "Corrupt or uncommitted progress cannot establish recovery."
+        },
+        {
+          "owner": "Register / Model Registry",
+          "input": "Completed artifact digest with base and dataset lineage.",
+          "output": "Candidate record only; live route is unchanged.",
+          "failure": "Incomplete training evidence cannot register a deployable model."
+        },
+        {
+          "owner": "Evaluate / Evaluation Service",
+          "input": "Frozen test set, candidate and evaluator identity.",
+          "output": "Bound behaviour and safety report for review.",
+          "failure": "Identity mismatch or known safety failure blocks approval."
+        },
+        {
+          "owner": "Approve / Release approver",
+          "input": "Trusted approver role and current release generation.",
+          "output": "Approved future candidate; runtime gates still apply.",
+          "failure": "Stale generation or trainer role cannot promote a model."
+        }
+      ]
+    },
+    {
+      "label": "Safety failure",
+      "steps": [
+        {
+          "owner": "Submit / Fine-Tuning Jobs",
+          "input": "Trusted tenant, stable key, approved dataset/base/recipe.",
+          "output": "Existing or new queued metadata identity.",
+          "failure": "Unknown data or conflicting request rejects before execution."
+        },
+        {
+          "owner": "Verify / Training worker",
+          "input": "Approved immutable manifest and bounded recipe.",
+          "output": "Disjoint supplier splits and pinned input identities.",
+          "failure": "Missing consent or incompatible inputs block the run."
+        },
+        {
+          "owner": "Checkpoint / Training worker",
+          "input": "Monotonic step and compatible state checksum.",
+          "output": "Verified progress record; actual resume remains proposed.",
+          "failure": "Corrupt or uncommitted progress cannot establish recovery."
+        },
+        {
+          "owner": "Register / Model Registry",
+          "input": "Completed artifact digest with base and dataset lineage.",
+          "output": "Candidate record only; live route is unchanged.",
+          "failure": "Incomplete training evidence cannot register a deployable model."
+        },
+        {
+          "owner": "Evaluate / Evaluation Service",
+          "input": "Frozen test set, candidate and evaluator identity.",
+          "output": "Blocked: a known safety failure prevents approval; previous live release is retained.",
+          "failure": "Identity mismatch or known safety failure blocks approval."
+        },
+        {
+          "owner": "Approve / Release approver",
+          "input": "Trusted approver role and current release generation.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Stale generation or trainer role cannot promote a model."
+        }
+      ]
+    },
+    {
+      "label": "Wrong artifact report",
+      "steps": [
+        {
+          "owner": "Submit / Fine-Tuning Jobs",
+          "input": "Trusted tenant, stable key, approved dataset/base/recipe.",
+          "output": "Existing or new queued metadata identity.",
+          "failure": "Unknown data or conflicting request rejects before execution."
+        },
+        {
+          "owner": "Verify / Training worker",
+          "input": "Approved immutable manifest and bounded recipe.",
+          "output": "Disjoint supplier splits and pinned input identities.",
+          "failure": "Missing consent or incompatible inputs block the run."
+        },
+        {
+          "owner": "Checkpoint / Training worker",
+          "input": "Monotonic step and compatible state checksum.",
+          "output": "Verified progress record; actual resume remains proposed.",
+          "failure": "Corrupt or uncommitted progress cannot establish recovery."
+        },
+        {
+          "owner": "Register / Model Registry",
+          "input": "Completed artifact digest with base and dataset lineage.",
+          "output": "Candidate record only; live route is unchanged.",
+          "failure": "Incomplete training evidence cannot register a deployable model."
+        },
+        {
+          "owner": "Evaluate / Evaluation Service",
+          "input": "Frozen test set, candidate and evaluator identity.",
+          "output": "Rejected: report identity differs from the candidate; no approval is permitted.",
+          "failure": "Identity mismatch or known safety failure blocks approval."
+        },
+        {
+          "owner": "Approve / Release approver",
+          "input": "Trusted approver role and current release generation.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Stale generation or trainer role cannot promote a model."
+        }
+      ]
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: approved runtime",
+      "description": "The existing gateway uses approved bundles and current policy, with no governed training path.",
+      "nodes": [
+        [
+          "AI App Service",
+          "Prompt and authorised retrieval"
+        ],
+        [
+          "Model Gateway",
+          "Current policy, release and quotas"
+        ],
+        [
+          "Serving route",
+          "Approved provider or proposed GPU engine"
+        ],
+        [
+          "Saved result",
+          "Original operation and bundle"
+        ]
+      ]
+    },
+    {
+      "title": "After: governed customisation",
+      "description": "Approved tenant data flows through jobs/checkpoints, registry, evaluation and approval before the existing runtime.",
+      "nodes": [
+        [
+          "Approved dataset snapshot",
+          "Tenant purpose, splits and checksum"
+        ],
+        [
+          "Fine-Tuning Jobs",
+          "Pinned base and recipe"
+        ],
+        [
+          "Experiment and checkpoint",
+          "Verified progress; no real training"
+        ],
+        [
+          "Model Registry",
+          "Immutable candidate identity"
+        ],
+        [
+          "Evaluation and approval",
+          "Safety, behaviour and generation gate"
+        ],
+        [
+          "Existing Model Gateway",
+          "Current policy, route and budgets retained"
+        ]
+      ]
+    },
+    {
+      "title": "Candidate sequence",
+      "description": "Submit, verify, checkpoint, register, evaluate and approve; a failed report keeps the previous release.",
+      "nodes": [
+        [
+          "Submit",
+          "Existing or new queued metadata identity."
+        ],
+        [
+          "Verify",
+          "Disjoint supplier splits and pinned input identities."
+        ],
+        [
+          "Checkpoint",
+          "Verified progress record; actual resume remains proposed."
+        ],
+        [
+          "Register",
+          "Candidate record only; live route is unchanged."
+        ],
+        [
+          "Evaluate",
+          "Bound behaviour and safety report for review."
+        ],
+        [
+          "Approve",
+          "Approved future candidate; runtime gates still apply."
+        ]
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "passes",
+      "label": "Schema-valid cases out of 200",
+      "type": "range",
+      "min": 0,
+      "max": 200,
+      "step": 1,
+      "default": 198
+    },
+    {
+      "id": "safety",
+      "label": "Known safety failures",
+      "type": "range",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "id": "match",
+      "label": "Report matches candidate",
+      "type": "select",
+      "options": [
+        [
+          "yes",
+          "Matching identity"
+        ],
+        [
+          "no",
+          "Different artifact"
+        ]
+      ],
+      "default": "yes"
+    }
+  ],
+  "cases": [
+    {
+      "name": "Baseline",
+      "params": {
+        "passes": 198,
+        "safety": 0,
+        "match": "yes"
+      },
+      "expected": {
+        "Schema pass rate (%)": 99,
+        "Known safety failures": 0,
+        "Identity matches": "yes",
+        "Decision": "eligible for trusted approval"
+      }
+    },
+    {
+      "name": "Safety regression",
+      "params": {
+        "passes": 198,
+        "safety": 1,
+        "match": "yes"
+      },
+      "expected": {
+        "Schema pass rate (%)": 99,
+        "Known safety failures": 1,
+        "Identity matches": "yes",
+        "Decision": "blocked"
+      }
+    },
+    {
+      "name": "Wrong artifact",
+      "params": {
+        "passes": 198,
+        "safety": 0,
+        "match": "no"
+      },
+      "expected": {
+        "Schema pass rate (%)": 99,
+        "Known safety failures": 0,
+        "Identity matches": "no",
+        "Decision": "blocked"
+      }
+    },
+    {
+      "name": "Weak behaviour",
+      "params": {
+        "passes": 195,
+        "safety": 0,
+        "match": "yes"
+      },
+      "expected": {
+        "Schema pass rate (%)": 97.5,
+        "Known safety failures": 0,
+        "Identity matches": "yes",
+        "Decision": "blocked"
+      }
+    }
+  ],
+  "lab_title": "Does the candidate pass the frozen gate?",
+  "lab_assumptions": "Toy gate: 200 fixed cases, at least 196 schema passes, zero known safety failures, matching identity. Counts are supplied fixture inputs, not a model evaluation."
+}

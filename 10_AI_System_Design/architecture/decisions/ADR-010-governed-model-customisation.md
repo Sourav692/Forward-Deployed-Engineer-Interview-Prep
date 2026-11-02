@@ -1,0 +1,32 @@
+# ADR-010: Governed Model Customisation
+
+Status: accepted educational architecture, not production approval. Stage: 10. Date: 2026-11-02. Supersedes: none; prior runtime invariants remain in force.
+
+## Situation
+
+Read [Stage 10](../../stages/10-fine-tuning/guide.md) and its labelled workload assumptions. The prior accepted architecture is v0.9-stage-09. The existing supplier workflow must carry its access, operation, budget, and release guarantees into this change.
+
+## Options Considered
+
+| Option | Benefit | Cost/risk | Decision |
+| --- | --- | --- | --- |
+| Prompt and output validation | Fast iteration without changing weights | Context cost; semantic failures remain | Baseline first |
+| Authorised retrieval | Current facts and provenance | Index/policy freshness and token budget | Retain |
+| Tenant adapter trial | Learn stable behaviour | Dataset governance, evaluation, serving compatibility and retirement | Bounded challenger |
+| Full tuning | Broader parameter changes | More training state and operating cost | Defer without evidence |
+
+## Decision
+
+Accept immutable data-to-model lineage and an independently approved adapter trial. Add approved dataset snapshots, Fine-Tuning Jobs, experiment/checkpoint records, Evaluation Service and Model Registry. Training completion creates a candidate, never a live route. Preserve current identity/resource policy, audit, egress, versioned retrieval/cache, durable operation identity, unknown-outcome handling, fair budgets, and Stage 8/9 release/serving contracts.
+
+## Guarantees and Non-Guarantees
+
+Immutable dataset identities, disjoint supplier-group splits, scoped job keys, checkpoint ordering, report binding, independent safety gates, trusted approval roles and generation checks are exercised locally. The model lifecycle fixture is in memory and receives trusted metadata/counts. It does not train, restore checkpoints, attest artifacts, enforce production identity, deploy a model, or compose the prior release/gateway fixtures. The proposed HTTP contract requires durable acceptance; the local library does not implement that durability.
+
+## Consequences and Operational Checks
+
+See [failure experiments and metrics](../../stages/10-fine-tuning/guide.md) and [executed evidence](../../stages/10-fine-tuning/validation.md). Preserve previous approved serving until every new eligibility gate passes. Retain protected lineage/operation evidence during rollback; never roll back current permissions, tombstones, or unknown external effects.
+
+## Revisit Trigger
+
+Changed behaviour requirements, inadequate adapter quality, revoked data purpose, changed base/tokeniser, or measured training/serving cost invalidates the trial assumptions. Distributed training remains D0.

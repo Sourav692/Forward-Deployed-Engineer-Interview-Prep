@@ -1,15 +1,14 @@
 # Current System: Enterprise AI Platform
 
 
-Version: `v0.9-stage-09`. Previous: `v0.8-stage-08`. Decision: [ADR-009](decisions/ADR-009-approved-inference-boundaries.md). Acceptance: tested local Gateway composition and memory arithmetic, not a GPU/provider deployment.
+Version: `v0.12-stage-12`. Previous: `v0.11-stage-11`. Decision: [ADR-012](decisions/ADR-012-versioned-regional-platform-contracts.md).
 
-Retain verified current identity/resource policy, mandatory audit, approved egress, versioned retrieval/cache safety, scoped durable history and stable operation keys, worker/recovery/unknown rules, fair admission/provider budgets and version-bound release gates. Extend Model Gateway with trusted profile/approved route/readiness/private-path checks, model context/output envelope, original-bundle replay and explicit transport/result uncertainty. Introduce self-host engine/GPU replica/shard/placement roles only as a proposed serving alternative.
+Retain the enterprise supplier workflow and all earlier roles: API Gateway, Identity/Policy Service, AI App Service, Metadata DB/history, Queue/Workers, Document Ingestion, Search Index, immutable passage caches, bounded fair admission, audit/Telemetry, Evaluation Service, Model Gateway, proposed GPU Pool, Fine-Tuning Jobs and Model Registry. Retain trusted current resource policy, approved egress, tombstones/source versions, stable scoped operation keys, worker epochs and unknown-outcome reconciliation, version-bound releases and model lineage.
 
-The actual local slice composes Stage 5 Gate, Stage 6 Security and Stage 8 Releases plus a durable inference-operation table and injected transport. Fresh grants dispatch once in the fixture; duplicate/incomplete/unknown operations do not automatically invoke another model. Current checks apply to every original source used in a saved replay. Final write failure never acknowledges completed success, and can strand a reservation for reconciliation.
+Keep A/B inside EU-primary or eligible EU-secondary and C inside US-home. Maintain one authoritative writer per tenant, verified fencing before regional promotion, current policy/audit/readiness, copy-watermark/RPO checks and regional request/token/slot capacity. Async operation evidence loss still requires recovery holds, not blind redispatch.
 
-A single-device worksheet estimates raw weights, FP16 KV and an assumed runtime reserve. It is not hardware profiling, tokenisation, a quality test, actual private routing, multi-GPU execution, GPU isolation, a container/device-plugin deployment, load/SLO measurement or current pricing evidence. Depth stays D3 Gateway, D2 execution/serving/orchestration and D1 GPU/optimisation boundaries.
+Add versioned app manifests, desired-state validation, a migration metadata controller, supported developer onboarding, an ownership/exception operating model and decision portfolio. Keep global control out of customer prompt execution. Reuse existing logical roles; no blanket microservice rewrite. Migrate through inventory, manifest validation, eligible read-only shadow, one-app/cell pilot, generation-checked cutover, outcome/cost review and retirement. Reversal requires current previous-route eligibility and does not undo data/external effects.
 
-Stage 9 is the latest authored stage. Stage 10 has not been created; future customisation must preserve approved data, release, serving and external-outcome contracts.
+The executed new slice is a SQLite metadata controller plus deterministic TCO worksheet. It does not deploy regional services, execute requests, attest shadow reports, integrate real identity/policy, migrate data/schema, or fence distributed writers. Earlier fixture limits remain. Coverage records describe authored/checked lessons; learner mastery and production readiness remain unassessed. Stage 12 ends the requested sequence; remaining work is capstone assessment and real pilot evidence.
 
-
-Latest guide: [Stage 9](../stages/09-inference-gpu/guide.md). Full verification: [report](../stages/09-inference-gpu/validation.md). Learner mastery remains unassessed.
+Latest guide: [Stage 12](../stages/12-staff-platform/guide.md). Evidence: [validation](../stages/12-staff-platform/validation.md). Learner mastery remains unassessed.

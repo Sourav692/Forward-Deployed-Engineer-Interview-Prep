@@ -1,0 +1,127 @@
+{
+  "stage": 10,
+  "title": "Fine-Tuning and Model Customization",
+  "status": "tested",
+  "architecture_before": "v0.9-stage-09",
+  "architecture_after": "# Stage 10 Architecture Snapshot\n\nVersion: `v0.10-stage-10`. Previous: `v0.9-stage-09`. Decision: [ADR-010](../../architecture/decisions/ADR-010-governed-model-customisation.md).\n\nAdd approved dataset snapshots, Fine-Tuning Jobs, experiment/checkpoint records, Evaluation Service and Model Registry. Training completion creates a candidate, never a live route. Preserve current identity/resource policy, audit, egress, versioned retrieval/cache, durable operation identity, unknown-outcome handling, fair budgets, and Stage 8/9 release/serving contracts.\n\nThe executed slice validates in-memory dataset/job/checkpoint/report/approval metadata and a deterministic gate worksheet. No training, model inference, optimiser recovery, deployed registry, identity service, or prior-runtime integration is claimed. Stage 11 inherits these lifecycle roles and all earlier runtime boundaries.\n",
+  "architecture_version": "v0.10-stage-10",
+  "first_taught_modules": [
+    {
+      "id": "11.1",
+      "module": "Fine-tuning fundamentals",
+      "target_depth": "D2"
+    },
+    {
+      "id": "11.2",
+      "module": "Fine-tuning platform architecture",
+      "target_depth": "D1"
+    },
+    {
+      "id": "11.3",
+      "module": "Distributed training infrastructure",
+      "target_depth": "D0"
+    },
+    {
+      "id": "14.3",
+      "module": "Model and data lifecycle infrastructure",
+      "target_depth": "D2"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "4.3",
+      "first_teaching_stage": 2,
+      "target_depth": "D3"
+    },
+    {
+      "id": "6.3",
+      "first_teaching_stage": 3,
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.1",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.2",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "10.3",
+      "first_teaching_stage": 9,
+      "target_depth": "D1"
+    },
+    {
+      "id": "14.1",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.2",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    },
+    {
+      "id": "16.1",
+      "first_teaching_stage": 9,
+      "target_depth": "D2"
+    }
+  ],
+  "context_only_modules": [
+    {
+      "id": "11.3",
+      "first_teaching_stage": 10,
+      "target_depth": "D0",
+      "treatment": "context_only; specialisation deferred"
+    }
+  ],
+  "deferred_modules": [
+    "Distributed optimiser implementation, GPU kernels, pretraining and machine-unlearning research"
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-010-governed-model-customisation.md"
+  ],
+  "artifacts": [
+    "stage-plan.md",
+    "guide.md",
+    "guide.html",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/lifecycle.py",
+    "labs/simulator.js",
+    "labs/test_lifecycle.py"
+  ],
+  "validation": {
+    "module_coverage_checked": true,
+    "coverage_classifications_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "learning_phases": [
+    "Understand the problem",
+    "Learn and design",
+    "Observe and experiment",
+    "Think like a Staff engineer",
+    "Validate and carry forward"
+  ],
+  "learner_completion": "unassessed",
+  "assumptions": [
+    "All workload, quality counts, costs, capacity, dates/timeboxes and recovery figures are illustrative scenario inputs. Metadata/eligibility reports are trusted fixture inputs; they are not actual model or infrastructure measurements."
+  ],
+  "unchecked": [
+    "Production identity, networks, real provider/model/training execution, durable distributed control, actual regional failover, artifact attestation, load/SLO evidence, invoices, screen-reader assessment and learner mastery."
+  ]
+}

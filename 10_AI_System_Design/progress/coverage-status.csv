@@ -1,13 +1,13 @@
 module_id,module,primary_stage,depth_target,authored_stage,status,artifact,evidence,learner_status,stage_01_treatment
 1.1,Requirements and architecture methodology,1,D3,1,authored_and_checked,stages/01-mvp/guide.md,"guide.md sections 2–6, 11–13; stage-plan.md; ADR-001; HTTP failure tests",unassessed,taught_at_mapped_depth
 1.2,Estimation and capacity planning,1,D3,1,authored_and_checked,stages/01-mvp/guide.md,guide.md section 9; deadline lab cases and keyboard/reset browser checks,unassessed,taught_at_mapped_depth
-1.3,Design documentation and communication,12,D3,,not_started,,,unassessed,context_only
+1.3,Design documentation and communication,12,D3,12,authored_and_checked,stages/12-staff-platform/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,context_only
 2.1,Networking fundamentals,1,D2,1,authored_and_checked,stages/01-mvp/guide.md,guide.md section 6 networking; section 11 diagnosis; real DNS/TLS integration untested,unassessed,taught_at_mapped_depth
 2.2,APIs and streaming protocols,1,D3,1,authored_and_checked,stages/01-mvp/guide.md,guide.md sections 7–8; labs/mvp.py; HTTP integration tests; SSE/WebSocket design comparison only,unassessed,taught_at_mapped_depth
 2.3,Gateway and service communication,6,D3,6,authored_and_checked,stages/06-enterprise-security/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,context_only
 3.1,Distributed system fundamentals,7,D3,7,authored_and_checked,stages/07-reliability-consistency/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 3.2,Distributed state and transactions,7,D3,7,authored_and_checked,stages/07-reliability-consistency/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
-3.3,Distributed architecture patterns,12,D2,,not_started,,,unassessed,deferred
+3.3,Distributed architecture patterns,12,D2,12,authored_and_checked,stages/12-staff-platform/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
 4.1,Concurrency fundamentals,2,D3,2,authored_and_checked,stages/02-distributed-execution/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 4.2,Messaging and event streams,2,D3,2,authored_and_checked,stages/02-distributed-execution/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 4.3,Background execution systems,2,D3,2,authored_and_checked,stages/02-distributed-execution/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
@@ -31,9 +31,9 @@ module_id,module,primary_stage,depth_target,authored_stage,status,artifact,evide
 10.1,GPU architecture fundamentals,9,D1,9,authored_and_checked,stages/09-inference-gpu/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 10.2,Distributed GPU execution,9,D1,9,authored_and_checked,stages/09-inference-gpu/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 10.3,GPU infrastructure and scheduling,9,D1,9,authored_and_checked,stages/09-inference-gpu/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
-11.1,Fine-tuning fundamentals,10,D2,,not_started,,,unassessed,deferred
-11.2,Fine-tuning platform architecture,10,D1,,not_started,,,unassessed,deferred
-11.3,Distributed training infrastructure,10,D0,,not_started,,,unassessed,deferred
+11.1,Fine-tuning fundamentals,10,D2,10,authored_and_checked,stages/10-fine-tuning/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+11.2,Fine-tuning platform architecture,10,D1,10,authored_and_checked,stages/10-fine-tuning/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+11.3,Distributed training infrastructure,10,D0,10,authored_and_checked,stages/10-fine-tuning/guide.md,D0 context orientation; distributed training specialisation deferred; learner unassessed.,unassessed,deferred
 12.1,Scaling and traffic engineering,4,D3,4,authored_and_checked,stages/04-application-scaling/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 12.2,Resilience and fault tolerance,7,D3,7,authored_and_checked,stages/07-reliability-consistency/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 12.3,Latency and performance,7,D3,7,authored_and_checked,stages/07-reliability-consistency/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
@@ -42,16 +42,16 @@ module_id,module,primary_stage,depth_target,authored_stage,status,artifact,evide
 13.3,Multi-tenant platform design,6,D3,6,authored_and_checked,stages/06-enterprise-security/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 14.1,Evaluation architecture,8,D3,8,authored_and_checked,stages/08-evaluation-releases/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 14.2,Release management and experimentation,8,D3,8,authored_and_checked,stages/08-evaluation-releases/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
-14.3,Model and data lifecycle infrastructure,10,D2,,not_started,,,unassessed,deferred
+14.3,Model and data lifecycle infrastructure,10,D2,10,authored_and_checked,stages/10-fine-tuning/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
 15.1,Observability systems,8,D3,8,authored_and_checked,stages/08-evaluation-releases/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 15.2,SRE and production operations,7,D3,7,authored_and_checked,stages/07-reliability-consistency/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 15.3,Performance and incident diagnosis,7,D3,7,authored_and_checked,stages/07-reliability-consistency/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
 16.1,Container and orchestration architecture,9,D2,9,authored_and_checked,stages/09-inference-gpu/guide.md,"Mapped-depth guide, runnable lab/tests, browser walkthrough, deterministic cases, clean package; see stage validation.",unassessed,deferred
-16.2,Cloud networking and deployment,11,D2,,not_started,,,unassessed,deferred
-16.3,Internal AI developer platforms,12,D3,,not_started,,,unassessed,deferred
-17.1,AI unit economics,11,D3,,not_started,,,unassessed,deferred
-17.2,Infrastructure capacity planning,11,D2,,not_started,,,unassessed,deferred
-17.3,Architecture economics,12,D3,,not_started,,,unassessed,deferred
-18.1,Architecture decision-making,12,D3,,not_started,,,unassessed,deferred
-18.2,Platform evolution and migration,12,D3,,not_started,,,unassessed,deferred
-18.3,Technical leadership through system design,12,D3,,not_started,,,unassessed,deferred
+16.2,Cloud networking and deployment,11,D2,11,authored_and_checked,stages/11-multi-region/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+16.3,Internal AI developer platforms,12,D3,12,authored_and_checked,stages/12-staff-platform/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+17.1,AI unit economics,11,D3,11,authored_and_checked,stages/11-multi-region/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+17.2,Infrastructure capacity planning,11,D2,11,authored_and_checked,stages/11-multi-region/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+17.3,Architecture economics,12,D3,12,authored_and_checked,stages/12-staff-platform/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+18.1,Architecture decision-making,12,D3,12,authored_and_checked,stages/12-staff-platform/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+18.2,Platform evolution and migration,12,D3,12,authored_and_checked,stages/12-staff-platform/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred
+18.3,Technical leadership through system design,12,D3,12,authored_and_checked,stages/12-staff-platform/guide.md,Mapped-depth guide; local representative slice and limitations; offline walkthrough/simulator; see stage validation.,unassessed,deferred

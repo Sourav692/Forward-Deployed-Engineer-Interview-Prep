@@ -1,0 +1,145 @@
+{
+  "stage": 12,
+  "title": "Staff-Level Platform Architecture",
+  "status": "tested",
+  "architecture_before": "v0.11-stage-11",
+  "architecture_after": "# Stage 12 Architecture Snapshot\n\nVersion: `v0.12-stage-12`. Previous: `v0.11-stage-11`. Decision: [ADR-012](../../architecture/decisions/ADR-012-versioned-regional-platform-contracts.md).\n\nRetain the enterprise supplier workflow and all earlier roles: API Gateway, Identity/Policy Service, AI App Service, Metadata DB/history, Queue/Workers, Document Ingestion, Search Index, immutable passage caches, bounded fair admission, audit/Telemetry, Evaluation Service, Model Gateway, proposed GPU Pool, Fine-Tuning Jobs and Model Registry. Retain trusted current resource policy, approved egress, tombstones/source versions, stable scoped operation keys, worker epochs and unknown-outcome reconciliation, version-bound releases and model lineage.\n\nKeep A/B inside EU-primary or eligible EU-secondary and C inside US-home. Maintain one authoritative writer per tenant, verified fencing before regional promotion, current policy/audit/readiness, copy-watermark/RPO checks and regional request/token/slot capacity. Async operation evidence loss still requires recovery holds, not blind redispatch.\n\nAdd versioned app manifests, desired-state validation, a migration metadata controller, supported developer onboarding, an ownership/exception operating model and decision portfolio. Keep global control out of customer prompt execution. Reuse existing logical roles; no blanket microservice rewrite. Migrate through inventory, manifest validation, eligible read-only shadow, one-app/cell pilot, generation-checked cutover, outcome/cost review and retirement. Reversal requires current previous-route eligibility and does not undo data/external effects.\n\nThe executed new slice is a SQLite metadata controller plus deterministic TCO worksheet. It does not deploy regional services, execute requests, attest shadow reports, integrate real identity/policy, migrate data/schema, or fence distributed writers. Earlier fixture limits remain. Coverage records describe authored/checked lessons; learner mastery and production readiness remain unassessed. Stage 12 ends the requested sequence; remaining work is capstone assessment and real pilot evidence.\n",
+  "architecture_version": "v0.12-stage-12",
+  "first_taught_modules": [
+    {
+      "id": "1.3",
+      "module": "Design documentation and communication",
+      "target_depth": "D3"
+    },
+    {
+      "id": "3.3",
+      "module": "Distributed architecture patterns",
+      "target_depth": "D2"
+    },
+    {
+      "id": "16.3",
+      "module": "Internal AI developer platforms",
+      "target_depth": "D3"
+    },
+    {
+      "id": "17.3",
+      "module": "Architecture economics",
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.1",
+      "module": "Architecture decision-making",
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.2",
+      "module": "Platform evolution and migration",
+      "target_depth": "D3"
+    },
+    {
+      "id": "18.3",
+      "module": "Technical leadership through system design",
+      "target_depth": "D3"
+    }
+  ],
+  "revisited_modules": [
+    {
+      "id": "1.1",
+      "first_teaching_stage": 1,
+      "target_depth": "D3"
+    },
+    {
+      "id": "11.1",
+      "first_teaching_stage": 10,
+      "target_depth": "D2"
+    },
+    {
+      "id": "11.2",
+      "first_teaching_stage": 10,
+      "target_depth": "D1"
+    },
+    {
+      "id": "11.3",
+      "first_teaching_stage": 10,
+      "target_depth": "D0"
+    },
+    {
+      "id": "14.1",
+      "first_teaching_stage": 8,
+      "target_depth": "D3"
+    },
+    {
+      "id": "14.3",
+      "first_teaching_stage": 10,
+      "target_depth": "D2"
+    },
+    {
+      "id": "15.2",
+      "first_teaching_stage": 7,
+      "target_depth": "D3"
+    },
+    {
+      "id": "16.2",
+      "first_teaching_stage": 11,
+      "target_depth": "D2"
+    },
+    {
+      "id": "17.1",
+      "first_teaching_stage": 11,
+      "target_depth": "D3"
+    },
+    {
+      "id": "17.2",
+      "first_teaching_stage": 11,
+      "target_depth": "D2"
+    }
+  ],
+  "context_only_modules": [],
+  "deferred_modules": [
+    "Distributed optimiser implementation, GPU kernels, pretraining and machine-unlearning research"
+  ],
+  "decisions": [
+    "../../architecture/decisions/ADR-012-versioned-regional-platform-contracts.md"
+  ],
+  "artifacts": [
+    "stage-plan.md",
+    "guide.md",
+    "guide.html",
+    "stage-state.json",
+    "validation.md",
+    "architecture-after.md",
+    "lesson-ui.json",
+    "font-licenses.txt",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv",
+    "labs/migration.py",
+    "labs/simulator.js",
+    "labs/test_platform.py"
+  ],
+  "validation": {
+    "module_coverage_checked": true,
+    "coverage_classifications_checked": true,
+    "markdown_checked": true,
+    "html_offline_checked": true,
+    "diagram_consistency_checked": true,
+    "lab_cases_checked": true,
+    "request_walkthrough_checked": true,
+    "intermediate_checkpoints_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "learning_phases": [
+    "Understand the problem",
+    "Learn and design",
+    "Observe and experiment",
+    "Think like a Staff engineer",
+    "Validate and carry forward"
+  ],
+  "learner_completion": "unassessed",
+  "assumptions": [
+    "All workload, quality counts, costs, capacity, dates/timeboxes and recovery figures are illustrative scenario inputs. Metadata/eligibility reports are trusted fixture inputs; they are not actual model or infrastructure measurements."
+  ],
+  "unchecked": [
+    "Production identity, networks, real provider/model/training execution, durable distributed control, actual regional failover, artifact attestation, load/SLO evidence, invoices, screen-reader assessment and learner mastery."
+  ]
+}

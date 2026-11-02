@@ -1,0 +1,318 @@
+{
+  "stage": 12,
+  "title": "Staff-Level Platform Architecture",
+  "outcome": "Defend regional platform contracts, migration gates, ownership, and total cost.",
+  "step_labels": [
+    "Propose",
+    "Compare",
+    "Review",
+    "Cut over",
+    "Observe",
+    "Roll back"
+  ],
+  "branches": [
+    {
+      "label": "Healthy planned path",
+      "steps": [
+        {
+          "owner": "Propose / App owner and controller",
+          "input": "Trusted tenant/app manifest and stable change key.",
+          "output": "Durable proposed identity, without a deployment claim.",
+          "failure": "Invalid scope, budget, region or bundle rejects the proposal."
+        },
+        {
+          "owner": "Compare / Shadow runner",
+          "input": "Authorised read-only samples and pinned candidate.",
+          "output": "Recorded comparison counts with business effects disabled.",
+          "failure": "A side-effectful shadow or invalid counts must reject."
+        },
+        {
+          "owner": "Review / Platform and app owners",
+          "input": "Bound sample evidence plus current target eligibility.",
+          "output": "A pilot is permitted only after the fixed gate passes.",
+          "failure": "Too few comparisons, mismatch or revoked eligibility blocks."
+        },
+        {
+          "owner": "Cut over / Durable route authority",
+          "input": "Expected generation and eligible pilot target.",
+          "output": "Atomic previous/new route update with increased generation.",
+          "failure": "Stale generation or pre-commit failure leaves old route intact."
+        },
+        {
+          "owner": "Observe / Regional runtime",
+          "input": "Existing operation IDs, source policy, budgets and release.",
+          "output": "Customer outcomes are inspected under inherited runtime rules.",
+          "failure": "Routing changes cannot replay uncertain old external calls."
+        },
+        {
+          "owner": "Roll back / Authorised operator",
+          "input": "Current previous-route eligibility and expected generation.",
+          "output": "Eligible reversal increments generation and preserves history.",
+          "failure": "A revoked previous route blocks rollback rather than bypassing policy."
+        }
+      ]
+    },
+    {
+      "label": "Shadow mismatch",
+      "steps": [
+        {
+          "owner": "Propose / App owner and controller",
+          "input": "Trusted tenant/app manifest and stable change key.",
+          "output": "Durable proposed identity, without a deployment claim.",
+          "failure": "Invalid scope, budget, region or bundle rejects the proposal."
+        },
+        {
+          "owner": "Compare / Shadow runner",
+          "input": "Authorised read-only samples and pinned candidate.",
+          "output": "Recorded comparison counts with business effects disabled.",
+          "failure": "A side-effectful shadow or invalid counts must reject."
+        },
+        {
+          "owner": "Review / Platform and app owners",
+          "input": "Bound sample evidence plus current target eligibility.",
+          "output": "Blocked: comparison evidence fails; retain the existing route and investigate.",
+          "failure": "Too few comparisons, mismatch or revoked eligibility blocks."
+        },
+        {
+          "owner": "Cut over / Durable route authority",
+          "input": "Expected generation and eligible pilot target.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Stale generation or pre-commit failure leaves old route intact."
+        },
+        {
+          "owner": "Observe / Regional runtime",
+          "input": "Existing operation IDs, source policy, budgets and release.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Routing changes cannot replay uncertain old external calls."
+        },
+        {
+          "owner": "Roll back / Authorised operator",
+          "input": "Current previous-route eligibility and expected generation.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "A revoked previous route blocks rollback rather than bypassing policy."
+        }
+      ]
+    },
+    {
+      "label": "Previous route revoked",
+      "steps": [
+        {
+          "owner": "Propose / App owner and controller",
+          "input": "Trusted tenant/app manifest and stable change key.",
+          "output": "Durable proposed identity, without a deployment claim.",
+          "failure": "Invalid scope, budget, region or bundle rejects the proposal."
+        },
+        {
+          "owner": "Compare / Shadow runner",
+          "input": "Authorised read-only samples and pinned candidate.",
+          "output": "Recorded comparison counts with business effects disabled.",
+          "failure": "A side-effectful shadow or invalid counts must reject."
+        },
+        {
+          "owner": "Review / Platform and app owners",
+          "input": "Bound sample evidence plus current target eligibility.",
+          "output": "A pilot is permitted only after the fixed gate passes.",
+          "failure": "Too few comparisons, mismatch or revoked eligibility blocks."
+        },
+        {
+          "owner": "Cut over / Durable route authority",
+          "input": "Expected generation and eligible pilot target.",
+          "output": "Atomic previous/new route update with increased generation.",
+          "failure": "Stale generation or pre-commit failure leaves old route intact."
+        },
+        {
+          "owner": "Observe / Regional runtime",
+          "input": "Existing operation IDs, source policy, budgets and release.",
+          "output": "Customer outcomes are inspected under inherited runtime rules.",
+          "failure": "Routing changes cannot replay uncertain old external calls."
+        },
+        {
+          "owner": "Roll back / Authorised operator",
+          "input": "Current previous-route eligibility and expected generation.",
+          "output": "Blocked: historical approval is insufficient; choose a currently eligible recovery path.",
+          "failure": "A revoked previous route blocks rollback rather than bypassing policy."
+        }
+      ]
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: copied integration logic",
+      "description": "Four teams copy configuration around existing regional capabilities; the defect is inconsistent contracts and ownership.",
+      "nodes": [
+        [
+          "Four app teams",
+          "Copied route/release logic"
+        ],
+        [
+          "Approved regional cells",
+          "A/B EU; C US-home"
+        ],
+        [
+          "Existing runtime roles",
+          "Identity, retrieval, jobs and serving"
+        ],
+        [
+          "Durable evidence",
+          "History, audit, usage and model lineage"
+        ]
+      ]
+    },
+    {
+      "title": "After: versioned platform contracts",
+      "description": "A control plane validates desired state while existing regional services enforce runtime safety. The new controller does not process prompts.",
+      "nodes": [
+        [
+          "App team contract",
+          "Manifest, tests and accountable owner"
+        ],
+        [
+          "Platform control plane",
+          "Validate desired configuration"
+        ],
+        [
+          "Migration controller",
+          "Proposal, shadow and generation gate"
+        ],
+        [
+          "Approved regional data plane",
+          "EU or US according to tenant policy"
+        ],
+        [
+          "Existing runtime authority",
+          "Policy, audit, quotas and stable operations"
+        ],
+        [
+          "Durable evidence",
+          "History, usage, registry and decision records"
+        ]
+      ]
+    },
+    {
+      "title": "Migration sequence",
+      "description": "Propose, compare, review, cut over, observe and roll back if currently eligible; prior route metadata is never authorisation.",
+      "nodes": [
+        [
+          "Propose",
+          "Durable proposed identity, without a deployment claim."
+        ],
+        [
+          "Compare",
+          "Recorded comparison counts with business effects disabled."
+        ],
+        [
+          "Review",
+          "A pilot is permitted only after the fixed gate passes."
+        ],
+        [
+          "Cut over",
+          "Atomic previous/new route update with increased generation."
+        ],
+        [
+          "Observe",
+          "Customer outcomes are inspected under inherited runtime rules."
+        ],
+        [
+          "Roll back",
+          "Eligible reversal increments generation and preserves history."
+        ]
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "migration",
+      "label": "One-time migration effort (hours)",
+      "type": "range",
+      "min": 0,
+      "max": 1200,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "id": "monthly",
+      "label": "Shared operations and support (hours/month)",
+      "type": "range",
+      "min": 30,
+      "max": 150,
+      "step": 10,
+      "default": 70
+    },
+    {
+      "id": "horizon",
+      "label": "Planning horizon (months)",
+      "type": "range",
+      "min": 12,
+      "max": 60,
+      "step": 12,
+      "default": 36
+    }
+  ],
+  "cases": [
+    {
+      "name": "Baseline",
+      "params": {
+        "migration": 600,
+        "monthly": 70,
+        "horizon": 36
+      },
+      "expected": {
+        "Net monthly savings (USD)": 4000,
+        "Break-even (months)": 15,
+        "Independent horizon TCO (USD)": 1152000,
+        "Shared horizon TCO (USD)": 1068000,
+        "Horizon savings (USD)": 84000
+      }
+    },
+    {
+      "name": "Costly migration",
+      "params": {
+        "migration": 1200,
+        "monthly": 70,
+        "horizon": 36
+      },
+      "expected": {
+        "Net monthly savings (USD)": 4000,
+        "Break-even (months)": 30,
+        "Independent horizon TCO (USD)": 1152000,
+        "Shared horizon TCO (USD)": 1128000,
+        "Horizon savings (USD)": 24000
+      }
+    },
+    {
+      "name": "Support burden",
+      "params": {
+        "migration": 600,
+        "monthly": 110,
+        "horizon": 36
+      },
+      "expected": {
+        "Net monthly savings (USD)": 0,
+        "Break-even (months)": "none",
+        "Independent horizon TCO (USD)": 1152000,
+        "Shared horizon TCO (USD)": 1212000,
+        "Horizon savings (USD)": -60000
+      }
+    },
+    {
+      "name": "Negative savings",
+      "params": {
+        "migration": 600,
+        "monthly": 150,
+        "horizon": 12
+      },
+      "expected": {
+        "Net monthly savings (USD)": -4000,
+        "Break-even (months)": "none",
+        "Independent horizon TCO (USD)": 384000,
+        "Shared horizon TCO (USD)": 492000,
+        "Horizon savings (USD)": -108000
+      }
+    }
+  ],
+  "lab_title": "Does the platform repay its migration cost?",
+  "lab_assumptions": "Illustrative $100/hour labour, 120 baseline hours/month, $1,000/month incremental control infrastructure and $20,000/month common serving. No discounting, tax or revenue estimate.",
+  "style_notes": [
+    "a[href*=\"architecture/decisions/\"]{white-space:nowrap}"
+  ]
+}

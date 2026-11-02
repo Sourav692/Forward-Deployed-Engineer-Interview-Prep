@@ -1,0 +1,321 @@
+{
+  "stage": 11,
+  "title": "Global Multi-Region Platform",
+  "outcome": "Recover inside approved geography with explicit ownership and capacity gates.",
+  "step_labels": [
+    "Detect",
+    "Fence",
+    "Place",
+    "Restore",
+    "Admit",
+    "Reconcile"
+  ],
+  "branches": [
+    {
+      "label": "Healthy planned path",
+      "steps": [
+        {
+          "owner": "Detect / Incident controller",
+          "input": "Regional errors, health and original operation identity.",
+          "output": "Recovery incident and start time are recorded.",
+          "failure": "A false positive must not create two writers."
+        },
+        {
+          "owner": "Fence / Writer authority",
+          "input": "Old writer epoch and independently verified ownership evidence.",
+          "output": "Exclusive new writer is confirmed before promotion.",
+          "failure": "Absent fencing evidence blocks every downstream step."
+        },
+        {
+          "owner": "Place / Trusted placement policy",
+          "input": "Tenant A or B with proposed recovery geography.",
+          "output": "EU-secondary is eligible; Tenant C remains US-home.",
+          "failure": "US-home cannot receive A/B content under this policy."
+        },
+        {
+          "owner": "Restore / EU-secondary recovery",
+          "input": "Copy watermark, current policy, audit and exact model artifacts.",
+          "output": "Ready cell with verified lag and current authority.",
+          "failure": "Stale policy, missing artifact/audit or lag over RPO blocks."
+        },
+        {
+          "owner": "Admit / Regional scheduler",
+          "input": "App, provider request/token/slot budgets and tenant shares.",
+          "output": "Bounded service fits reserved regional capacity.",
+          "failure": "Insufficient budgets reject/expire excess work without unbounded queue."
+        },
+        {
+          "owner": "Reconcile / Operation store and usage ledger",
+          "input": "Original operation IDs and surviving result/usage evidence.",
+          "output": "Saved permitted replay or explicit uncertain-interval hold.",
+          "failure": "Missing async rows cannot prove a remote call never occurred."
+        }
+      ]
+    },
+    {
+      "label": "Old writer not fenced",
+      "steps": [
+        {
+          "owner": "Detect / Incident controller",
+          "input": "Regional errors, health and original operation identity.",
+          "output": "Recovery incident and start time are recorded.",
+          "failure": "A false positive must not create two writers."
+        },
+        {
+          "owner": "Fence / Writer authority",
+          "input": "Old writer epoch and independently verified ownership evidence.",
+          "output": "Blocked: ownership is unproven; do not promote or switch the route.",
+          "failure": "Absent fencing evidence blocks every downstream step."
+        },
+        {
+          "owner": "Place / Trusted placement policy",
+          "input": "Tenant A or B with proposed recovery geography.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "US-home cannot receive A/B content under this policy."
+        },
+        {
+          "owner": "Restore / EU-secondary recovery",
+          "input": "Copy watermark, current policy, audit and exact model artifacts.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Stale policy, missing artifact/audit or lag over RPO blocks."
+        },
+        {
+          "owner": "Admit / Regional scheduler",
+          "input": "App, provider request/token/slot budgets and tenant shares.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Insufficient budgets reject/expire excess work without unbounded queue."
+        },
+        {
+          "owner": "Reconcile / Operation store and usage ledger",
+          "input": "Original operation IDs and surviving result/usage evidence.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Missing async rows cannot prove a remote call never occurred."
+        }
+      ]
+    },
+    {
+      "label": "Wrong recovery geography",
+      "steps": [
+        {
+          "owner": "Detect / Incident controller",
+          "input": "Regional errors, health and original operation identity.",
+          "output": "Recovery incident and start time are recorded.",
+          "failure": "A false positive must not create two writers."
+        },
+        {
+          "owner": "Fence / Writer authority",
+          "input": "Old writer epoch and independently verified ownership evidence.",
+          "output": "Exclusive new writer is confirmed before promotion.",
+          "failure": "Absent fencing evidence blocks every downstream step."
+        },
+        {
+          "owner": "Place / Trusted placement policy",
+          "input": "Tenant A or B with proposed recovery geography.",
+          "output": "Blocked: A/B content cannot move to US-home; report unavailable.",
+          "failure": "US-home cannot receive A/B content under this policy."
+        },
+        {
+          "owner": "Restore / EU-secondary recovery",
+          "input": "Copy watermark, current policy, audit and exact model artifacts.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Stale policy, missing artifact/audit or lag over RPO blocks."
+        },
+        {
+          "owner": "Admit / Regional scheduler",
+          "input": "App, provider request/token/slot budgets and tenant shares.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Insufficient budgets reject/expire excess work without unbounded queue."
+        },
+        {
+          "owner": "Reconcile / Operation store and usage ledger",
+          "input": "Original operation IDs and surviving result/usage evidence.",
+          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "failure": "Missing async rows cannot prove a remote call never occurred."
+        }
+      ]
+    }
+  ],
+  "diagrams": [
+    {
+      "title": "Before: one regional runtime",
+      "description": "Existing runtime, governed model lineage and trusted policy live in one logical regional deployment.",
+      "nodes": [
+        [
+          "Tenant A, B and C",
+          "One logical region"
+        ],
+        [
+          "Identity and AI App Service",
+          "Current policy and authorised retrieval"
+        ],
+        [
+          "Model Gateway and jobs",
+          "Approved routes and bounded execution"
+        ],
+        [
+          "Metadata and registry",
+          "Saved operations and model lineage"
+        ]
+      ]
+    },
+    {
+      "title": "After: regional cells",
+      "description": "An opaque directory assigns EU-primary/secondary to A/B and US-home to C. Only the EU recovery branch passes the promotion gate.",
+      "nodes": [
+        [
+          "Opaque placement directory",
+          "No customer content in global control"
+        ],
+        [
+          "Tenant regional boundary",
+          "A/B: EU only; C: US-home only"
+        ],
+        [
+          "EU-primary and EU-secondary",
+          "EU-only copies and reserved recovery"
+        ],
+        [
+          "Promotion gate",
+          "Fence, policy, audit, bundle and lag"
+        ],
+        [
+          "Regional Model Gateway",
+          "Eligible profile, budgets and original key"
+        ]
+      ]
+    },
+    {
+      "title": "Recovery sequence",
+      "description": "Detect, fence, place, restore, admit and reconcile. Failed prerequisites stop promotion, and uncertain operations remain held.",
+      "nodes": [
+        [
+          "Detect",
+          "Recovery incident and start time are recorded."
+        ],
+        [
+          "Fence",
+          "Exclusive new writer is confirmed before promotion."
+        ],
+        [
+          "Place",
+          "EU-secondary is eligible; Tenant C remains US-home."
+        ],
+        [
+          "Restore",
+          "Ready cell with verified lag and current authority."
+        ],
+        [
+          "Admit",
+          "Bounded service fits reserved regional capacity."
+        ],
+        [
+          "Reconcile",
+          "Saved permitted replay or explicit uncertain-interval hold."
+        ]
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "lag",
+      "label": "Verified copy lag (seconds)",
+      "type": "range",
+      "min": 0,
+      "max": 120,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "id": "destination",
+      "label": "Proposed recovery region",
+      "type": "select",
+      "options": [
+        [
+          "eu",
+          "EU-secondary"
+        ],
+        [
+          "us",
+          "US-home"
+        ]
+      ],
+      "default": "eu"
+    },
+    {
+      "id": "fenced",
+      "label": "Old writer fencing evidence",
+      "type": "select",
+      "options": [
+        [
+          "yes",
+          "Confirmed fenced"
+        ],
+        [
+          "no",
+          "Not confirmed"
+        ]
+      ],
+      "default": "yes"
+    }
+  ],
+  "cases": [
+    {
+      "name": "Baseline",
+      "params": {
+        "lag": 20,
+        "destination": "eu",
+        "fenced": "yes"
+      },
+      "expected": {
+        "Decision": "eligible under assumptions",
+        "Blocking reasons": "none",
+        "Planned recovery (seconds)": 360,
+        "Possible loss (seconds)": 20
+      }
+    },
+    {
+      "name": "Replica behind",
+      "params": {
+        "lag": 61,
+        "destination": "eu",
+        "fenced": "yes"
+      },
+      "expected": {
+        "Decision": "blocked",
+        "Blocking reasons": "RPO exceeded",
+        "Planned recovery (seconds)": 360,
+        "Possible loss (seconds)": 61
+      }
+    },
+    {
+      "name": "Wrong geography",
+      "params": {
+        "lag": 20,
+        "destination": "us",
+        "fenced": "yes"
+      },
+      "expected": {
+        "Decision": "blocked",
+        "Blocking reasons": "residency",
+        "Planned recovery (seconds)": 360,
+        "Possible loss (seconds)": 20
+      }
+    },
+    {
+      "name": "Split writer risk",
+      "params": {
+        "lag": 20,
+        "destination": "eu",
+        "fenced": "no"
+      },
+      "expected": {
+        "Decision": "blocked",
+        "Blocking reasons": "writer not fenced",
+        "Planned recovery (seconds)": 360,
+        "Possible loss (seconds)": 20
+      }
+    }
+  ],
+  "lab_title": "Is this recovery plan eligible?",
+  "lab_assumptions": "Toy policy: A/B allowed in EU only, verified fencing, RPO 60 seconds. Other readiness gates are assumed true here; Python tests exercise them separately. Recovery timing is a fixed 360-second plan, not a measurement."
+}

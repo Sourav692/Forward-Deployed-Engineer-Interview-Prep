@@ -1,0 +1,1 @@
+function simulate(p){const eligible=p.passes>=196&&p.safety===0&&p.match==='yes';return {'Schema pass rate (%)':p.passes/2,'Known safety failures':p.safety,'Identity matches':p.match==='yes'?'yes':'no','Decision':eligible?'eligible for trusted approval':'blocked'};}if(typeof module!=='undefined')module.exports=simulate;
