@@ -27,7 +27,7 @@ Have two gap answers ready *(V2 gap note, supplementary)*. On build versus buy: 
 
 Ten members of this group are the same system asked a cost or latency question. Each gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse, and the line to say. The "Do not" field for the §15 scenarios is *(own construction)*; the playbook gives no weak answer for them. Every card shares the playbook's customer-communication sentence: *"Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric."*
 
-### 15.1 LLM costs exploded after launch (#44)
+### 15.1 LLM costs exploded after launch
 
 | | |
 |---|---|
@@ -37,7 +37,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Kill the whole feature without diagnosis |
 | 60-second line | Contain, attribute, then diagnose. Keep low-cost safe paths online while disabling runaway paths. Budget guardrails must exist before launch. |
 
-### 15.2 LLM cost increased 5× after rollout (#104)
+### 15.2 LLM cost increased 5× after rollout
 
 | | |
 |---|---|
@@ -47,7 +47,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Swap the model before breaking spend down by tenant, feature, model and prompt version |
 | 60-second line | The increase likely comes from request shape rather than user count alone. I would isolate token growth, retries, agent steps, and batch jobs before changing the model. |
 
-### 15.3 Latency jumped from 2 seconds to 20 seconds (#105)
+### 15.3 Latency jumped from 2 seconds to 20 seconds
 
 | | |
 |---|---|
@@ -57,7 +57,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Guess, or raise the timeout |
 | 60-second line | I would not guess. I would use traces to see whether the 18-second increase is retrieval, model, tool calls, or infrastructure. |
 
-### 15.4 Executive demo is too slow (#109)
+### 15.4 Executive demo is too slow
 
 | | |
 |---|---|
@@ -67,7 +67,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Present demo numbers as production claims |
 | 60-second line | For an executive demo, I would reduce live uncertainty while staying honest about production architecture and limitations. |
 
-### 15.5 Customer complains the AI is too expensive (#110)
+### 15.5 Customer complains the AI is too expensive
 
 | | |
 |---|---|
@@ -77,7 +77,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Defend the bill generically |
 | 60-second line | I would not defend the bill generically. I would show cost by workflow and propose concrete reductions that preserve value. |
 
-### 15.6 Prompt update increased token usage (#113)
+### 15.6 Prompt update increased token usage
 
 | | |
 |---|---|
@@ -87,7 +87,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Ship a prompt change without a cost-impact report |
 | 60-second line | Prompt changes are production changes. I would version them and compare token usage and latency before rollout. |
 
-### 15.7 Model provider latency became unstable (#114)
+### 15.7 Model provider latency became unstable
 
 | | |
 |---|---|
@@ -97,7 +97,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Wait blindly for the provider to recover |
 | 60-second line | I would isolate provider latency from our own pipeline and use routing/fallback rules rather than waiting blindly. |
 
-### 15.8 Cache hit rate dropped suddenly (#115)
+### 15.8 Cache hit rate dropped suddenly
 
 | | |
 |---|---|
@@ -107,9 +107,9 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Scale capacity before inspecting the key |
 | 60-second line | A cache hit drop is usually a keying, versioning, traffic, or invalidation issue; I would inspect those before scaling. |
 
-Two facts sharpen this card *(additions file, section A1)*. Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. Incident #88 adds the other half: cache changes need a security review too, because a key missing `role_scope` serves one role's answer to another.
+Two facts sharpen this card *(additions file, section A1)*. Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. The cost incident adds the other half: cache changes need a security review too, because a key missing `role_scope` serves one role's answer to another.
 
-### 15.9 Rate limits are throttling us at peak (#119)
+### 15.9 Rate limits are throttling us at peak
 
 | | |
 |---|---|
@@ -119,7 +119,7 @@ Two facts sharpen this card *(additions file, section A1)*. Prompt caching is a 
 | Do not | Retry into the same wall |
 | 60-second line | Separate provider 429s from our own limits first. Short term, jitter, fall back and shed batch traffic. Long term, capacity commitments, tenant-aware quotas, and queue non-urgent work. |
 
-### 15.10 Streaming works but users abandon mid-answer (#121)
+### 15.10 Streaming works but users abandon mid-answer
 
 | | |
 |---|---|

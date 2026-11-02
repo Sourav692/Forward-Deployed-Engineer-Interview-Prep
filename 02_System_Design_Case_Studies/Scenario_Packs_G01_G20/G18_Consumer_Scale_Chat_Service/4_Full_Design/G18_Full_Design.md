@@ -8,9 +8,9 @@
 
 | Case in the group | What it contributes here |
 |---|---|
-| #71 OpenAI reported prompt: "Design ChatGPT." (anchor) | Sections 1 to 12, 14 and 15: the full design |
-| #78 Anthropic reported prompt: "Design the Claude chat service." | Section 13: the same design, with the emphasis an Anthropic panel is reported to probe |
-| Self-drill on #71 *(own construction)* | Section 15 |
+| OpenAI reported prompt: "Design ChatGPT." (anchor) | Sections 1 to 12, 14 and 15: the full design |
+| Anthropic reported prompt: "Design the Claude chat service." | Section 13: the same design, with the emphasis an Anthropic panel is reported to probe |
+| Self-drill *(own construction)* | Section 15 |
 | The [Enterprise Knowledge Assistant](../../G01_Enterprise_Knowledge_Assistant/), [Secure Multi-Tenant AI Platform](../../G07_Secure_Multi_Tenant_AI_Platform/) and [Observability and Production Diagnosis](../../G14_Observability_And_Production_Diagnosis/) designs, plus the cost, latency, memory and production material | Sections 5 to 12, cited per section |
 
 **No worked design exists for this prompt.** Both sources are one-line prompts that candidates report. Everything below the prompt is *own construction*, assembled from the designs above and this site's material on memory, caching, tenancy, observability and cost. Sizing numbers are stated assumptions, not measurements. Treat each figure as a placeholder to be replaced by measured throughput.

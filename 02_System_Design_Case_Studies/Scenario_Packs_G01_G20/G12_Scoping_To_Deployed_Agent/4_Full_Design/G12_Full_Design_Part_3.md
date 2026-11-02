@@ -31,9 +31,9 @@ Read these as one engagement, run once. The eval score and time-to-value are dem
 
 ## 13. Read the Same Case in Prose
 
-#65 is not a second design. It is the anchor's Northwind running case, written three ways, and each adds something to rehearse.
+The Northwind triage case is not a second design. It is the anchor's Northwind running case, written three ways, and each adds something to rehearse.
 
-| Source in #65 | What it adds beyond the anchor script |
+| Source in the Northwind case | What it adds beyond the anchor script |
 |---|---|
 | Module 10 doc 3, Scoping to Production in Two Weeks | The fourteen-day table with exit conditions, the trust-ladder link to Module 05, the one-breath restatement |
 | FDE delivery framework reference implementation, case-study data | The two success metrics verbatim, the three connectors, the SME id |
@@ -126,7 +126,7 @@ In this round the level shows in whether each gate is a decision with a named au
 - A real gate still needs an evidence bar with a required shape, and the delivery process meets the same security bar as the product.
 - A stalled engagement names its gate, and scale means FDA capacity, not data volume.
 - The Northwind numbers are one engagement run once; the proof is that the gates enforce themselves.
-- #65 is the anchor's running case in prose, code and verified output.
+- The Northwind triage case is the anchor's running case in prose, code and verified output.
 - The hour goes to gates and reuse, and the close makes two gates unskippable first.
 - Pilot cost is a success metric agreed at intake, capped, sampled and reported beside quality.
 
@@ -154,7 +154,7 @@ All paths are relative to the repository root.
 | 3 | `projects/03_enterprise_realtime_capstones/04_fde_delivery_framework/data/case_study.json` |
 | 3, 5, 8, 12, 13 | `05_FDE_Delivery_and_Scoping/Delivery_Framework/`: `INTERVIEW_SCRIPT.md`, `README.md`, `scripts/run_engagement_demo.py`, `src/delivery_framework/accelerators.py` |
 | 6, 9, 10, 12 | Concept tutorial on gates, risks and metrics (this repo); `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/05-security-gate-depth-and-tenant-scale.md` |
-| 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #9 |
+| 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for the anchor |
 | 3 (MoSCoW split, agent requirements, non-functional table), 4 (triage agent diagrams, component failure column), 15 (fit to the framework), and every item marked own construction | Built for this page from the sources' arguments; not source material |
 
 ### Fact-check sources (checked 27 Sep 2026)

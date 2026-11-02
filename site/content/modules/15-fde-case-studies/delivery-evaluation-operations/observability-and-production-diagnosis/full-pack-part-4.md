@@ -107,7 +107,7 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Scale capacity before inspecting the key |
 | 60-second line | A cache hit drop is usually a keying, versioning, traffic, or invalidation issue; I would inspect those before scaling. |
 
-Two facts sharpen this card *(additions file, section A1)*. Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. Incident #88 adds the other half: cache changes need a security review too, because a key missing `role_scope` serves one role's answer to another.
+Two facts sharpen this card *(additions file, section A1)*. Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. The cost incident adds the other half: cache changes need a security review too, because a key missing `role_scope` serves one role's answer to another.
 
 ### 15.9 Rate limits are throttling us at peak
 

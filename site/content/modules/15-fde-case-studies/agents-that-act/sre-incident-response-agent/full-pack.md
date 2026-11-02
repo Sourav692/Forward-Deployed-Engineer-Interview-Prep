@@ -7,9 +7,9 @@ Correlating logs with deploys is the easy part. The hard part is that the agent 
 | Case in the group                                                           | What it contributes here                                                                                                       |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | Incident Response Agent for an SRE team (anchor)        | Sections 1, 4 to 9 and 11: the four decisions, the arithmetic, the falsifying metric, the script, follow-ups, rubric, recovery |
-| #32 SRE Incident Triage Agent, practice worksheet + answer key + two mocks | Sections 2, 3, 9, 10 and the spoken answer; the mock's probes and objections in section 11                                     |
-| #58 OpenAI-style practice Q14, Operations / Incident-Response Assistant     | The discussion checklist and the "restart production automatically?" progression in sections 1 and 10                          |
-| Self-drill for #11, Drill Add-ons tab                                       | Section 12                                                                                                                     |
+| SRE Incident Triage Agent, practice worksheet + answer key + two mocks | Sections 2, 3, 9, 10 and the spoken answer; the mock's probes and objections in section 11                                     |
+| OpenAI-style practice prompt, Operations / Incident-Response Assistant     | The discussion checklist and the "restart production automatically?" progression in sections 1 and 10                          |
+| Self-drill, Drill Add-ons tab                                       | Section 12                                                                                                                     |
 | Reliability pattern vocabulary                                 | Typed results, tool gateway, degradation ladder, circuit breaker in sections 6 and 8                                           |
 
 ---

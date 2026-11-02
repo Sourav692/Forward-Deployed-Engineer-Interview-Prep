@@ -6,12 +6,12 @@ An evaluation platform makes a controlled decision about whether one change is s
 
 | Case in the group | What it contributes here |
 |---|---|
-| #20 LLM Evaluation and Release-Gating Platform (anchor, book ch 9) | Sections 1 to 8 and 11 to 13: framing, requirements, sizing, architecture, decision logic, graders, failure handling, rollout, delivery |
-| #91 Incident: model regression missed by a weak evaluation suite (sales copilot) | Section 9: the incident walked through end to end |
-| #52 OpenAI-style practice prompt Q8, The Model Got Worse After an Upgrade | Section 10: the gate applied retroactively |
-| #55 OpenAI-style practice prompt Q11, Build an Evaluation Strategy for an AI Application | Section 10: the gate built from nothing |
-| #120 Costs are fine but the eval bill tripled | Section 14 |
-| Self-drill on #20, Drill Add-ons tab | Section 14 |
+| LLM Evaluation and Release-Gating Platform (anchor) | Sections 1 to 8 and 11 to 13: framing, requirements, sizing, architecture, decision logic, graders, failure handling, rollout, delivery |
+| Incident: model regression missed by a weak evaluation suite (sales copilot) | Section 9: the incident walked through end to end |
+| OpenAI-style practice prompt: The Model Got Worse After an Upgrade | Section 10: the gate applied retroactively |
+| OpenAI-style practice prompt: Build an Evaluation Strategy for an AI Application | Section 10: the gate built from nothing |
+| Costs are fine but the eval bill tripled | Section 14 |
+| Self-drill, Drill Add-ons tab | Section 14 |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments. They are not in the sources verbatim.
 

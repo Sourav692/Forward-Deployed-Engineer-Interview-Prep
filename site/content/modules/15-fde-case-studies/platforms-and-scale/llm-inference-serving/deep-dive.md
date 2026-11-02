@@ -24,11 +24,11 @@ Admission uses estimated tokens per tenant, a bounded queue and 429/Retry-After 
 
 ## 4. One GPU, 100K rps and design review
 
-One-GPU #75: assign a request ID and future, flush a batch when 100 inputs arrive or oldest wait reaches a timeout, run GPU, then resolve each future by ID. The source assumes a full batch of 100 in 200ms, giving a theoretical 500 rps; 400 rps is 80% and may queue badly in bursts. Bound the queue, e.g. two batches, and time out synchronous callers. Variable-length output still favours continuous batching.
+One-GPU variant: assign a request ID and future, flush a batch when 100 inputs arrive or oldest wait reaches a timeout, run GPU, then resolve each future by ID. The source assumes a full batch of 100 in 200ms, giving a theoretical 500 rps; 400 rps is 80% and may queue badly in bursts. Bound the queue, e.g. two batches, and time out synchronous callers. Variable-length output still favours continuous batching.
 
-For #77 at 100K rps with the source's assumed rates, 1,000/250-token chat needs ~21,400 replicas, 200/20 short completion ~2,570, and 500/1 scoring ~3,630 at 70%. The spread shows why you price request shape first. Partition the fleet into independent cells with local routers/registries, a global balancer and per-cell backpressure; reserved headroom absorbs bursts and failures.
+For the 100K-rps variant with the source's assumed rates, 1,000/250-token chat needs ~21,400 replicas, 200/20 short completion ~2,570, and 500/1 scoring ~3,630 at 70%. The spread shows why you price request shape first. Partition the fleet into independent cells with local routers/registries, a global balancer and per-cell backpressure; reserved headroom absorbs bursts and failures.
 
-For #79, review a junior design by ranking the top risks: static batches for variable output, unbounded global FIFO and round-robin placement. Then inspect size-only flush, weak health checks, unlimited retries, missing request IDs, no cancel and GPU-side tokenization. Explain each failure and its concrete correction rather than reading a long checklist.
+Review a junior design by ranking the top risks: static batches for variable output, unbounded global FIFO and round-robin placement. Then inspect size-only flush, weak health checks, unlimited retries, missing request IDs, no cancel and GPU-side tokenization. Explain each failure and its concrete correction rather than reading a long checklist.
 
 ## 5. Latency and economics
 

@@ -68,12 +68,12 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 3, 4, 6, 7, 9, 10, 13 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch28_system_design_interview.md`, "The Forty-Five Minute Script", "Worked Design One", the follow-up bank, the rubric and recovery moves (the anchor, #10) |
+| 1, 2, 3, 4, 6, 7, 9, 10, 13 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch28_system_design_interview.md`, "The Forty-Five Minute Script", "Worked Design One", the follow-up bank, the rubric and recovery moves (the anchor) |
 | 5 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch06_orchestration_context_engineering.md`, "Context Rot and Sub-Agent Isolation" |
 | 7 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md` (Trifecta Guard, Provenance Tagging) and `ch05_tool_use_agent_computer_interface.md` (cross-server data flow) |
 | 8, 11, 14 | Research-platform case study tutorial (this repo); deployed code under `05_Projects/Enterprise_Multi_Agent_AI_Research_Platform/CODE/` |
 | 3, 8, 9, 10, 12, 14 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/07_multi_agent_systems_INTERVIEW_TUTORIAL.md`, sections 1.6, 2, 3 and question 7 |
-| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #10 |
+| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for the anchor |
 | 2 (MoSCoW split), 4 (trust-zone diagrams, component table), 9 (ladder), 10 (metric table), 13 (spoken answer, lines), and every item marked own construction | Built for this page from the sources' arguments; not source material |
 | Not included | Chapter 28's "Worked Design Two", the incident response agent, belongs to group G04 and is covered in `G04_SRE_Incident_Response_Agent/4_Full_Design/G04_Full_Design.md` |
 

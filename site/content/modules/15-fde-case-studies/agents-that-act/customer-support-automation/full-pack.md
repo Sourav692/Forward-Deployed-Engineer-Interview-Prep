@@ -6,14 +6,14 @@ The product is a routed service that must decide when to act, when to ask for ap
 
 | Case in the group                                              | What it contributes here                                                               |
 | -------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| #18 AI Customer-Support Automation, chapter 4 (anchor)         | Sections 1 to 10 and 12: the design, requirements, evaluation and rollout              |
-| #2 Casebook Customer Support Assistant, 1M conversations a day | Section 6: planner justification, three memory layers, model routing; section 8: scale |
-| #33 Multi-Tenant SaaS Support Assistant                        | Section 11: the tenant predicate                                                       |
-| #35 ServiceNow Ticket Automation Agent                         | Section 11: classify, prioritise, assign                                               |
-| #37 Agentic Support Workflow, short and full mock              | Section 12: the interviewer's probes and the marketplace scenario                      |
-| #46 OpenAI-style practice Q2, Customer-Support Agent           | Section 12: the decomposition list and the 80 percent follow-up                        |
+| AI Customer-Support Automation (anchor)         | Sections 1 to 10 and 12: the design, requirements, evaluation and rollout              |
+| Casebook Customer Support Assistant, 1M conversations a day | Section 6: planner justification, three memory layers, model routing; section 8: scale |
+| Multi-Tenant SaaS Support Assistant                        | Section 11: the tenant predicate                                                       |
+| ServiceNow Ticket Automation Agent                         | Section 11: classify, prioritise, assign                                               |
+| Agentic Support Workflow, short and full mock              | Section 12: the interviewer's probes and the marketplace scenario                      |
+| OpenAI-style practice prompt, Customer-Support Agent           | Section 12: the decomposition list and the 80 percent follow-up                        |
 | Six framework mock designs        | Section 13: one implementation delta each                                              |
-| #39 Support chatbot with 10,000 daily users                    | Section 14: the cost drill                                                             |
+| Support chatbot with 10,000 daily users                    | Section 14: the cost drill                                                             |
 
 ---
 

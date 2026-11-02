@@ -89,7 +89,7 @@ Every level can name SFT and RL; the level shows in which stage gets the budget 
 6. **Why keep a drift penalty in post-training?** Without it the policy exploits the scorer's blind spots, such as formatting tricks or padding.
 7. **The fine-tune scored 94% offline and 78% in production. What went wrong?** A random split over duplicated traces, labels from the old system, and a narrow time window; the honest number was near 83%.
 8. **How do you size a 7B pretraining run?** About 20 tokens per parameter gives 140B tokens; 6 N D gives 5.88e21 FLOPs; at the assumed throughput that is about 5,444 GPU-hours.
-9. **Which two numbers does #81 plot, and which way must each move?** Harmful-compliance rate must fall; over-refusal rate on benign-but-scary prompts must not rise.
+9. **Which two numbers does the harm-versus-helpfulness prompt plot, and which way must each move?** Harmful-compliance rate must fall; over-refusal rate on benign-but-scary prompts must not rise.
 10. **How much memory do 3B parameters need at 4-bit, and what else must fit?** About 1.5 GB for weights, plus runtime overhead, the KV cache and buffers.
 11. **When does a parameter update not earn its cost?** When the gap is missing knowledge; that is a retrieval problem.
 12. **What is the sixty-second compute answer?** Prove the recipe small, iterate with adapters, spend rollouts on hard problems, checkpoint, and track eval gained per GPU-hour.

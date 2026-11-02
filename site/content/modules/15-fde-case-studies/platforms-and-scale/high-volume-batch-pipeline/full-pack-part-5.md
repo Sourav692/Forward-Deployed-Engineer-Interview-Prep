@@ -4,7 +4,7 @@
 
 The interviewer's pivot after a good design is "the nightly bill is too high." Two members of the group are that pivot, and both have the same root: reprocessing what did not change.
 
-**#42, nightly PDF summarisation is too expensive.** Thousands of PDFs are processed nightly and cost is too high. Ask first. Are documents new or changed? Is full summarisation required every time? What is the SLA? Can work be batched off-peak? What quality checks are needed?
+**Nightly PDF summarisation is too expensive.** Thousands of PDFs are processed nightly and cost is too high. Ask first. Are documents new or changed? Is full summarisation required every time? What is the SLA? Can work be batched off-peak? What quality checks are needed?
 
 | | |
 |---|---|
@@ -22,7 +22,7 @@ flowchart LR
     H -.unchanged.-> SKIP[Reuse last summary]
 ```
 
-**#116, scenario 13, the batch embedding job became too expensive.** The nightly embedding bill spikes after a document refresh. Ask whether all documents are re-embedded or only changed content. The causes are full re-indexing, duplicate documents, no content hash, or a larger embedding model.
+**The batch embedding job became too expensive (scenario 13).** The nightly embedding bill spikes after a document refresh. Ask whether all documents are re-embedded or only changed content. The causes are full re-indexing, duplicate documents, no content hash, or a larger embedding model.
 
 | | |
 |---|---|

@@ -23,8 +23,8 @@ The anchor asks for a multi-tenant platform where non-technical users configure 
 
 | Case | Shared foundation | What changes |
 |---|---|---|
-| #8 Agent platform whiteboard anchor | Canonical events, declarative specs, deterministic guardrails and durable runs | Explain the platform design and negative cases in 60 minutes. |
-| #64 Cascade Robotics handbook/project | Same workflow engine and safety controls | Shows the $500 refund against a $50 cap, conflicting workflows, a runnable demo and implementation gaps. |
+| Agent platform whiteboard anchor | Canonical events, declarative specs, deterministic guardrails and durable runs | Explain the platform design and negative cases in 60 minutes. |
+| Cascade Robotics handbook/project | Same workflow engine and safety controls | Shows the $500 refund against a $50 cap, conflicting workflows, a runnable demo and implementation gaps. |
 
 ## Questions to ask the interviewer
 

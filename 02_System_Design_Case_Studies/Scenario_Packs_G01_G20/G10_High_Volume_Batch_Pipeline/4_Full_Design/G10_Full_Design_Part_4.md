@@ -2,13 +2,13 @@
 
 ## 13. Extend the Anchor to the Bank Document Platform
 
-Member #49 is an OpenAI-style practice prompt, Q5: *"A bank processes millions of financial documents and wants to extract structured data using AI."* It is the same spine with a different payload. Records become documents, and a label becomes a schema.
+The document-processing member is an OpenAI-style practice prompt: *"A bank processes millions of financial documents and wants to extract structured data using AI."* It is the same spine with a different payload. Records become documents, and a label becomes a schema.
 
 The source lists the decomposition. It runs ingestion, file validation, document classification, OCR or multimodal extraction, schema-constrained output, and confidence scoring. It continues with validation against business rules, human review, correction feedback, audit storage, and reprocessing with model versioning. It asks for discussion of batch versus online processing, idempotency, retry behaviour, data lineage, model versioning and document-format drift.
 
 Map each stage onto the anchor rather than drawing a new system *(own construction)*.
 
-| Q5 stage | Where it lives on the anchor | What is new |
+| Document-processing stage | Where it lives on the anchor | What is new |
 |---|---|---|
 | Ingestion, file validation | Job planner and snapshot | A document hash and file-type check before a document enters the manifest; corrupt files quarantined, never retried |
 | Document classification | First worker pass | Routes each document to its extraction schema; low confidence goes to review, not to a guess |

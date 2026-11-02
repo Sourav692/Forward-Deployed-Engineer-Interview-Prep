@@ -31,9 +31,9 @@ Read these as one engagement, run once. The eval score and time-to-value are dem
 
 ## 13. Read the Same Case in Prose
 
-#65 is not a second design. It is the anchor's Northwind running case, written three ways, and each adds something to rehearse.
+The Northwind triage case is not a second design. It is the anchor's Northwind running case, written three ways, and each adds something to rehearse.
 
-| Source in #65 | What it adds beyond the anchor script |
+| Source in the Northwind case | What it adds beyond the anchor script |
 |---|---|
 | Module 10 doc 3, Scoping to Production in Two Weeks | The fourteen-day table with exit conditions, the trust-ladder link to Module 05, the one-breath restatement |
 | FDE delivery framework reference implementation, case-study data | The two success metrics verbatim, the three connectors, the SME id |
@@ -126,7 +126,7 @@ In this round the level shows in whether each gate is a decision with a named au
 - A real gate still needs an evidence bar with a required shape, and the delivery process meets the same security bar as the product.
 - A stalled engagement names its gate, and scale means FDA capacity, not data volume.
 - The Northwind numbers are one engagement run once; the proof is that the gates enforce themselves.
-- #65 is the anchor's running case in prose, code and verified output.
+- The Northwind triage case is the anchor's running case in prose, code and verified output.
 - The hour goes to gates and reuse, and the close makes two gates unskippable first.
 - Pilot cost is a success metric agreed at intake, capped, sampled and reported beside quality.
 

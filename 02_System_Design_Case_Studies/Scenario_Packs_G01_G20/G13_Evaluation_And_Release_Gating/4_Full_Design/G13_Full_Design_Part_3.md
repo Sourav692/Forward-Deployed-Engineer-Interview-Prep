@@ -14,7 +14,7 @@ The suite itself goes stale. The benchmark stops distinguishing candidates, or i
 
 ## 9. Walk Through the Regression the Suite Missed
 
-Scenario incident #91 is section 8 failing in production. It proves an aggregate pass rate can hide a critical slice.
+The sales-copilot incident is section 8 failing in production. It proves an aggregate pass rate can hide a critical slice.
 
 A sales copilot drafts account-specific outreach emails from CRM notes, product documentation and approved messaging. The model route was upgraded to improve fluency and personalisation. After the upgrade, emails sounded polished but included unsupported claims. Reps saw drafts claiming "SOC 2 Type II renewal completed in June 2026" and "average 34% support cost reduction." The SOC 2 claim was not yet approved for external use. The ROI claim came only from an internal pilot.
 
@@ -52,9 +52,9 @@ Map it back onto the anchor *(own construction)*. The anchor's gate would have c
 
 ## 10. Answer the Two Neighbouring Prompts With the Same Gate
 
-Both OpenAI-style practice prompts are the anchor seen from a different moment. #52 is the gate applied after the fact. #55 is the gate built from nothing.
+Both OpenAI-style practice prompts are the anchor seen from a different moment. The upgrade-regression prompt is the gate applied after the fact. The evaluation-strategy prompt is the gate built from nothing.
 
-**#52, the model got worse after an upgrade.** A customer says quality declined after switching to a newer model. Treat it as the release decision that never happened, and run it retroactively. The source's diagnostic plan has eleven steps. Collect before-and-after production examples. Replay a fixed evaluation set. Segment by task, language, customer and input size. Compare structured-output compliance. Check prompt compatibility and retrieval changes. Compare latency and token usage. Run human evaluation, and calibrate any LLM-as-judge first. Roll back or pin the model version. A/B test future upgrades.
+**The model got worse after an upgrade.** A customer says quality declined after switching to a newer model. Treat it as the release decision that never happened, and run it retroactively. The source's diagnostic plan has eleven steps. Collect before-and-after production examples. Replay a fixed evaluation set. Segment by task, language, customer and input size. Compare structured-output compliance. Check prompt compatibility and retrieval changes. Compare latency and token usage. Run human evaluation, and calibrate any LLM-as-judge first. Roll back or pin the model version. A/B test future upgrades.
 
 Map those steps onto the anchor *(own construction)*. Pinning the version is the artifact registry. Replaying a fixed set against the old model is Δ against a pinned baseline. Segmenting is slice-based gating. Calibrating the judge is section 7. A/B testing future upgrades is the online sampling pipeline. The answer ends with the permanent fix: model upgrades become candidates that pass through the gate.
 
@@ -70,7 +70,7 @@ The follow-up is "the offline benchmark improved, but the customer still says qu
 | The model improved average quality but worsened important edge cases | Mean-based decision on a tail-risk product |
 | Users are judging task completion rather than answer quality | Model quality measured instead of application quality |
 
-**#55, build an evaluation strategy.** A customer wants to deploy an assistant but has no reliable way to measure quality. The source lists fourteen items to cover: a representative production dataset, golden examples, task-specific rubrics, ground-truth labels, automated graders, human evaluation, and LLM-as-judge calibration. Then safety and refusal tests, regression tests, online metrics, user feedback, slice-based analysis, statistical confidence, and continuous evaluation in CI/CD.
+**Build an evaluation strategy.** A customer wants to deploy an assistant but has no reliable way to measure quality. The source lists fourteen items to cover: a representative production dataset, golden examples, task-specific rubrics, ground-truth labels, automated graders, human evaluation, and LLM-as-judge calibration. Then safety and refusal tests, regression tests, online metrics, user feedback, slice-based analysis, statistical confidence, and continuous evaluation in CI/CD.
 
 The source's key distinction fits in one sentence: "Model quality is not the same as application quality." Evaluate the complete workflow: retrieval, tools, business rules, user interaction, operational performance and business outcomes. That sentence is also the anchor's four-dimension gate in miniature.
 

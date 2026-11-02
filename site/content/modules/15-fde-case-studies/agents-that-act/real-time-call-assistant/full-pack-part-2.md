@@ -116,7 +116,7 @@ flowchart LR
     ALW -.-> LL
 ```
 
-Read the components in dependency order *(own construction; the capabilities are #59's list)*.
+Read the components in dependency order *(own construction; the capabilities are the anchor prompt's list)*.
 
 | # | Component | Responsibility | Fails how |
 |---|---|---|---|
@@ -162,11 +162,11 @@ On timeout, show nothing. A suggestion that arrives after the rep has already an
 
 ## 7. Diarize and Redact Before Anything Is Stored
 
-A summary that swaps speakers is wrong in a way no rubric forgives. "The customer agreed to renew" and "the rep offered a renewal" are different facts. Diarization, telling one speaker from another, is on #59's list for that reason. Take per-speaker channels from the telephony platform when it offers them. A stereo recording with the rep on one channel makes diarization trivial. Fall back to model-based diarization only for single-channel audio *(own construction)*.
+A summary that swaps speakers is wrong in a way no rubric forgives. "The customer agreed to renew" and "the rep offered a renewal" are different facts. Diarization, telling one speaker from another, is on the anchor prompt's list for that reason. Take per-speaker channels from the telephony platform when it offers them. A stereo recording with the rep on one channel makes diarization trivial. Fall back to model-based diarization only for single-channel audio *(own construction)*.
 
-PII redaction runs on the transcript stream, before storage and before any model call *(own construction on placement; redaction itself is #59's)*. Spoken card numbers, account numbers, dates of birth and addresses are masked with typed placeholders. The summary can still say "customer gave a card number" without holding it. Keep card details out of the audio in the first place: pause or mask recording while the card is read out, because PCI DSS bans storing the security code after authorisation, even encrypted. Other raw audio goes in a separate, short-retention store with tighter access, because redacting audio is harder than redacting text.
+PII redaction runs on the transcript stream, before storage and before any model call *(own construction on placement; redaction itself is the anchor prompt's)*. Spoken card numbers, account numbers, dates of birth and addresses are masked with typed placeholders. The summary can still say "customer gave a card number" without holding it. Keep card details out of the audio in the first place: pause or mask recording while the card is read out, because PCI DSS bans storing the security code after authorisation, even encrypted. Other raw audio goes in a separate, short-retention store with tighter access, because redacting audio is harder than redacting text.
 
-Retention is a policy the platform enforces, not a promise *(own construction; retention is #59's item)*. Set a retention period per region and per data type: audio shortest, redacted transcript longer, summary and CRM fields as long as the CRM keeps them. A scheduler deletes on time and writes an audit record. A failed deletion raises an alert. Consent is checked before recording starts. With no recorded consent, the assistant does not record, transcribe or suggest.
+Retention is a policy the platform enforces, not a promise *(own construction; retention is the anchor prompt's item)*. Set a retention period per region and per data type: audio shortest, redacted transcript longer, summary and CRM fields as long as the CRM keeps them. A scheduler deletes on time and writes an audit record. A failed deletion raises an alert. Consent is checked before recording starts. With no recorded consent, the assistant does not record, transcribe or suggest.
 
 ## 8. Summarise and Extract Actions After the Call, Asynchronously
 

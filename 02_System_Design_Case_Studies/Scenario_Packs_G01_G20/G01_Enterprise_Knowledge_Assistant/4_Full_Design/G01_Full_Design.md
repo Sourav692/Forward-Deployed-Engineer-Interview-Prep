@@ -8,14 +8,14 @@ The hard part of this system is that a Tier-1 agent, a Tier-3 engineer and an ac
 
 | Case in the group                                                | What it contributes here                                                   |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| #15 Enterprise Knowledge Assistant with RAG (anchor)             | Sections 1 to 11: the design, requirements, sizing, evaluation and rollout |
-| #6 Whiteboard script, Enterprise RAG with Access Control         | Sections 5 to 9 and 12: the sixty-minute delivery                          |
-| #7 Whiteboard script, the same on Databricks                     | Section 13                                                                 |
-| #27 Internal Knowledge Assistant for Enterprise Support          | The support-agent persona in sections 1 and 11                             |
-| #45 and #57 OpenAI-style practice prompts                        | The two follow-ups in section 12                                           |
-| #63 Meridian Assist running case                                 | Section 14                                                                 |
-| #38 Legal RAG under strict cost limits and #70 sub-100 ms search | Section 15                                                                 |
-| #72 reported prompt, LLM-powered enterprise search               | Section 12, follow-up table                                                |
+| Enterprise Knowledge Assistant with RAG (anchor)             | Sections 1 to 11: the design, requirements, sizing, evaluation and rollout |
+| Whiteboard script, Enterprise RAG with Access Control         | Sections 5 to 9 and 12: the sixty-minute delivery                          |
+| Whiteboard script, the same on Databricks                     | Section 13                                                                 |
+| Internal Knowledge Assistant for Enterprise Support          | The support-agent persona in sections 1 and 11                             |
+| Two OpenAI-style practice prompts                        | The two follow-ups in section 12                                           |
+| Meridian Assist running case                                 | Section 14                                                                 |
+| Legal RAG under strict cost limits and sub-100 ms search | Section 15                                                                 |
+| Reported prompt, LLM-powered enterprise search               | Section 12, follow-up table                                                |
 | Incident write-ups and four §15 scenarios                  | Section 16                                                                 |
 
 ---

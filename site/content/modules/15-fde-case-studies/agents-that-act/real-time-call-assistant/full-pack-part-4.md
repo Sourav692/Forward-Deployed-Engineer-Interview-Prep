@@ -2,7 +2,7 @@
 
 ## 14. Answer the Sub-3-Second Pivot in Ten Minutes
 
-This group's pivot is #43, the playbook's Case 6. The prompt: "sales team wants real-time answer suggestions during calls, sub-3s target." It is the live lane of this design, asked on its own.
+This group's pivot is the sub-3-second sales drill. The prompt: "sales team wants real-time answer suggestions during calls, sub-3s target." It is the live lane of this design, asked on its own.
 
 | | |
 |---|---|
@@ -16,7 +16,7 @@ This group's pivot is #43, the playbook's Case 6. The prompt: "sales team wants 
 The source's architecture line: "before call → precompute context. During call → small prompt → fast model → streamed suggestion. After call → async summary + CRM update." Its recommendation: "separate real-time suggestions from slower enrichment."
 
 <!-- spelling: source -->
-Two latency drivers have no cost analogue, and the cram sheet names this case as their home. Both are "the actual cause behind #6 'executive demo is too slow' and Case 6 'sub-3-second sales assistant'." Cold starts make the first request after idle slow. The fix is minimum replicas, warmers and keep-alive, and the price is idle capacity. Sequential workflow design makes each step wait for the previous one for no reason. The fix is to parallelise independent calls, prefetch and push non-critical work async. The source sets one limit: "Do **not** parallelize unsafe side effects". In this design, the live lookup runs beside the model call, and the CRM write never runs in the live lane.
+Two latency drivers have no cost analogue, and the cram sheet names this case as their home. Both are the actual cause behind the "executive demo is too slow" scenario and the "sub-3-second sales assistant" case. Cold starts make the first request after idle slow. The fix is minimum replicas, warmers and keep-alive, and the price is idle capacity. Sequential workflow design makes each step wait for the previous one for no reason. The fix is to parallelise independent calls, prefetch and push non-critical work async. The source sets one limit: "Do **not** parallelize unsafe side effects". In this design, the live lookup runs beside the model call, and the CRM write never runs in the live lane.
 
 One addition from beyond the playbook fits here. "Streaming works but users abandon mid-answer" is answered by measuring abandonment against first-token time and by cancelling the stream on abandon. In a call, the rep "abandons" by answering. So cancel the suggestion stream when the rep starts speaking; with providers that stop generating on cancel, that stops paying for tokens nobody will read *(own construction, applying the additions file's rule)*.
 

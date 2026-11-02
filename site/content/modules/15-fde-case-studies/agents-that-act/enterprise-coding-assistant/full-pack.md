@@ -6,9 +6,9 @@ A coding assistant is a context-engineering problem before it is a model problem
 
 | Case in the group | What it contributes here |
 |---|---|
-| #3 AI-Powered Coding Assistant, Copilot-class, with a sub-300 ms target set by the case (anchor) | Sections 1 to 14: the design, the funnel, the cache, routing, validation, the latency arithmetic, security, follow-ups |
-| #51 OpenAI-style practice prompt Q7, Enterprise AI Coding Assistant | The discuss list folded into sections 3, 8 and 12; its productivity follow-up in section 14 |
-| Self-drill on #3, Drill Add-ons tab | Section 15 |
+| AI-Powered Coding Assistant, Copilot-class, with a sub-300 ms target set by the case (anchor) | Sections 1 to 14: the design, the funnel, the cache, routing, validation, the latency arithmetic, security, follow-ups |
+| OpenAI-style practice prompt, Enterprise AI Coding Assistant | The discuss list folded into sections 3, 8 and 12; its productivity follow-up in section 14 |
+| Self-drill, Drill Add-ons tab | Section 15 |
 | Cross-cutting tutorials on caching, CI/CD, prompt injection and egress; cost drivers 1 and 2 | Sections 6, 8, 10 and 15 |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.

@@ -34,8 +34,8 @@ The follow-ups arrive in a predictable order.
 
 | Follow-up | Answer |
 |---|---|
-| How would you prove the system is safe enough for production? (OpenAI-style Q3) | Evaluation against human decisions on historical cases; the four-dimension gate in section 10 with a red-team suite that blocks on any violation; shadow mode before any user sees a draft; rollout by claim type starting with extraction and triage |
-| The business wants to skip the governance review for the MVP. What do you do? (OpenAI-style Q12) | Narrow the scope, use synthetic or masked data, start read-only or assistive, define explicit approval gates, and get security and legal review before production exposure. Speed comes from a smaller slice, not a skipped gate |
+| How would you prove the system is safe enough for production? (OpenAI-style claims practice prompt) | Evaluation against human decisions on historical cases; the four-dimension gate in section 10 with a red-team suite that blocks on any violation; shadow mode before any user sees a draft; rollout by claim type starting with extraction and triage |
+| The business wants to skip the governance review for the MVP. What do you do? (OpenAI-style regulated-industry practice prompt) | Narrow the scope, use synthetic or masked data, start read-only or assistive, define explicit approval gates, and get security and legal review before production exposure. Speed comes from a smaller slice, not a skipped gate |
 | What if the retrieved document contains malicious instructions? | Treat it as untrusted data: the system prompt keeps task apart from content, which lowers the risk but does not stop it, so retrieved text can never trigger an action or widen access; suspicious chunks are flagged; the red-team suite plants instructions in documents, emails and logs |
 | What if the answer is correct but cites the wrong source? | Section 14: span-level verification fails closed, citation accuracy is its own eval, the citation is the span used |
 | What if one customer sees another customer's data? | Tenant predicate on every retrieval and cache key, G07's design; patient-level and matter-level scope in retrieval, never in the prompt |
@@ -100,7 +100,7 @@ All paths are relative to the repository root. Purchased material lives under `F
 | 3, 10, 11, 15 (claims prompt) and 8, 15 (regulated-industry prompt) | Problem decomposition question bank (this repo): the claims-processing and regulated-industry prompts |
 | 14 | `FDE/Complete…/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/05_bad_citations.md` and `08_ingestion_parser_failure.md` |
 | 6 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/chunking/chunking-reference-by-doc-type.md`, sections 3.4, 3.6 and 7 |
-| 13 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill for #30 |
+| 13 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill for the anchor |
 | This page's own construction | The end-to-end diagrams and component table in section 4, the persona table in section 3, the constraints and traceability tables in section 2, the failure table in section 9, the extraction-schema argument in section 5, the three-sentence close and the follow-up answers not attributed above |
 | Not included | The docx answer keys and the canonical combined docx, which repeat the markdown keys; the site mirror under `site/content/` |
 

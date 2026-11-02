@@ -4,7 +4,7 @@
 
 A CRM record outlives the call. A wrong stage or an invented commitment misleads forecasting for weeks. So the assistant proposes and a person approves. It is the same preview-then-approve rule as section 8 of the Sales Copilot case.
 
-#59 lists confidence scoring and human correction as components for this reason. Score each proposed field on evidence: an explicit statement in a customer turn scores high, an inference from tone scores low *(own construction)*. High-confidence fields are pre-filled in the review form. Low-confidence fields are shown as suggestions the rep must confirm. Nothing is auto-applied on day one. Auto-apply may later earn a narrow scope, such as logging the call date, once measured accuracy there holds.
+The anchor prompt lists confidence scoring and human correction as components for this reason. Score each proposed field on evidence: an explicit statement in a customer turn scores high, an inference from tone scores low *(own construction)*. High-confidence fields are pre-filled in the review form. Low-confidence fields are shown as suggestions the rep must confirm. Nothing is auto-applied on day one. Auto-apply may later earn a narrow scope, such as logging the call date, once measured accuracy there holds.
 
 Approval routes the write through the tool gateway with an idempotency key, so a double-clicked approval writes once. Every correction the rep makes is logged against the proposal. That log is the best evaluation data this system will ever have, and section 11 depends on it.
 
@@ -27,7 +27,7 @@ Design the failure path with the happy path *(own construction)*. Three things f
 
 ## 11. Evaluate Summaries Without a Single Correct Answer
 
-#59's follow-up is the hardest question in this group: "How do you evaluate summaries when there is no single correct summary?" Two good summaries of one call can share few words. So word-overlap scores against one reference answer punish good summaries. The fix is to stop scoring the summary as text and score what it is for.
+The anchor prompt's follow-up is the hardest question in this group: "How do you evaluate summaries when there is no single correct summary?" Two good summaries of one call can share few words. So word-overlap scores against one reference answer punish good summaries. The fix is to stop scoring the summary as text and score what it is for.
 
 The source's seven methods, verbatim: rubric-based human assessment, action-item precision and recall, factual consistency, coverage of required fields, CRM update accuracy, user-edit distance, and downstream task completion. Each answers a different worry *(the pairing is own construction)*.
 
@@ -43,7 +43,7 @@ The source's seven methods, verbatim: rubric-based human assessment, action-item
 
 Precision and recall on action items is the sharpest of these. It turns an open-ended summary into a checklist with a right answer. Label a golden set of calls with their true action items. Measure how many the system found and how many it invented. An invented action item is the worse error, because it becomes a promise nobody made.
 
-Slice every metric by call type and by language, as #59 lists. A system that scores well on English sales calls can fail on accented support calls. The average hides it. The rep's corrections from section 9 grow the golden set every week, which is why they are logged.
+Slice every metric by call type and by language, as the anchor prompt lists. A system that scores well on English sales calls can fail on accented support calls. The average hides it. The rep's corrections from section 9 grow the golden set every week, which is why they are logged.
 
 For the live lane, measure differently *(own construction; the metrics are the drill's)*. Use first-token latency, total latency, precompute hit rate, user accept rate and timeout rate. Accept rate is the product metric. A suggestion the rep ignored cost money and taught nothing.
 
