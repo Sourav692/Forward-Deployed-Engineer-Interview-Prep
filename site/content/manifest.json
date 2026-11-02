@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T06:20:00.585Z",
+  "generatedAt": "2026-11-02T06:31:03.324Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1159,12 +1159,8 @@
               "title": "AI System for an Air-Gapped Environment",
               "tabs": [
                 {
-                  "id": "worksheet",
-                  "label": "Practice Worksheet"
-                },
-                {
-                  "id": "answer-key",
-                  "label": "Model Answer"
+                  "id": "intro",
+                  "label": "Introduction"
                 },
                 {
                   "id": "tutorial-v2",
@@ -1197,6 +1193,14 @@
                 {
                   "id": "tutorial-v2-part-8",
                   "label": "Tutorial 8"
+                },
+                {
+                  "id": "worksheet",
+                  "label": "Practice Worksheet"
+                },
+                {
+                  "id": "answer-key",
+                  "label": "Model Answer"
                 }
               ],
               "minutes": 97,
@@ -1208,12 +1212,8 @@
               "title": "Reliable Workflow Orchestration System",
               "tabs": [
                 {
-                  "id": "worksheet",
-                  "label": "Practice Worksheet"
-                },
-                {
-                  "id": "answer-key",
-                  "label": "Model Answer"
+                  "id": "intro",
+                  "label": "Introduction"
                 },
                 {
                   "id": "tutorial-v2",
@@ -1250,6 +1250,14 @@
                 {
                   "id": "tutorial-v2-part-9",
                   "label": "Tutorial 9"
+                },
+                {
+                  "id": "worksheet",
+                  "label": "Practice Worksheet"
+                },
+                {
+                  "id": "answer-key",
+                  "label": "Model Answer"
                 }
               ],
               "minutes": 105,
@@ -1261,12 +1269,8 @@
               "title": "Configurable Platform for Customer-Specific Workflows",
               "tabs": [
                 {
-                  "id": "worksheet",
-                  "label": "Practice Worksheet"
-                },
-                {
-                  "id": "answer-key",
-                  "label": "Model Answer"
+                  "id": "intro",
+                  "label": "Introduction"
                 },
                 {
                   "id": "tutorial-v2",
@@ -1295,6 +1299,14 @@
                 {
                   "id": "tutorial-v2-part-7",
                   "label": "Tutorial 7"
+                },
+                {
+                  "id": "worksheet",
+                  "label": "Practice Worksheet"
+                },
+                {
+                  "id": "answer-key",
+                  "label": "Model Answer"
                 }
               ],
               "minutes": 91,
@@ -1306,12 +1318,8 @@
               "title": "Enterprise Chatbot Platform",
               "tabs": [
                 {
-                  "id": "worksheet",
-                  "label": "Practice Worksheet"
-                },
-                {
-                  "id": "answer-key",
-                  "label": "Model Answer"
+                  "id": "intro",
+                  "label": "Introduction"
                 },
                 {
                   "id": "tutorial-v2",
@@ -1332,6 +1340,14 @@
                 {
                   "id": "tutorial-v2-part-5",
                   "label": "Tutorial 5"
+                },
+                {
+                  "id": "worksheet",
+                  "label": "Practice Worksheet"
+                },
+                {
+                  "id": "answer-key",
+                  "label": "Model Answer"
                 }
               ],
               "minutes": 75,
