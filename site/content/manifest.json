@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T06:31:03.324Z",
+  "generatedAt": "2026-11-02T07:16:24.873Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1359,6 +1359,10 @@
               "title": "Agent That Adapts to New Tasks",
               "tabs": [
                 {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
+                {
                   "id": "guide",
                   "label": "Interview Guide 1"
                 },
@@ -1384,6 +1388,10 @@
               "title": "Personal Assistant That Remembers You",
               "tabs": [
                 {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
+                {
                   "id": "guide",
                   "label": "Interview Guide 1"
                 },
@@ -1397,13 +1405,17 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "production-llm-gateway",
               "order": 100,
               "title": "Production LLM Gateway",
               "tabs": [
+                {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
                 {
                   "id": "guide",
                   "label": "Interview Guide 1"
@@ -1422,7 +1434,7 @@
                 }
               ],
               "minutes": 37,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             }
           ]
         },
@@ -1437,6 +1449,10 @@
               "title": "Prioritise AI Use Cases for a Large Enterprise",
               "tabs": [
                 {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
+                {
                   "id": "guide",
                   "label": "Interview Guide 1"
                 },
@@ -1450,7 +1466,7 @@
                 }
               ],
               "minutes": 34,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "scale-prototype-to-production",
@@ -1458,6 +1474,10 @@
               "title": "Scale a Prototype from 100 to 100,000 Users",
               "tabs": [
                 {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
+                {
                   "id": "guide",
                   "label": "Interview Guide 1"
                 },
@@ -1471,7 +1491,7 @@
                 }
               ],
               "minutes": 35,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "build-when-customer-data-is-poor",
@@ -1479,6 +1499,10 @@
               "title": "Build When the Customer’s Data Is Poor",
               "tabs": [
                 {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
+                {
                   "id": "guide",
                   "label": "Interview Guide 1"
                 },
@@ -1492,13 +1516,17 @@
                 }
               ],
               "minutes": 35,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "decomposition-classics-67-68-69",
               "order": 67,
               "title": "Decomposition Classics: 911, Bank Fraud, Medication Errors",
               "tabs": [
+                {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
                 {
                   "id": "guide",
                   "label": "Interview Guide 1"
@@ -1513,7 +1541,7 @@
                 }
               ],
               "minutes": 36,
-              "updated": "2026-11-01"
+              "updated": "2026-11-02"
             }
           ]
         }
