@@ -121,7 +121,7 @@ Regional application → Approved regional data/model paths
 
 Do not infer a universal legal requirement from geography; translate the stated customer constraint into architecture.
 
-#### 9. Defense in Depth: Do Not Let Text Grant Authority
+#### 9. Defence in Depth: Do Not Let Text Grant Authority
 
 Treat user text, retrieved documents, and tool outputs as untrusted input. Use validation, permissions, policy, and execution controls outside model discretion.
 
@@ -224,7 +224,7 @@ Agent recommends → Policy decides → Executor acts.
 | Secrets | Trusted runtime storage/use; never unrestricted prompt or telemetry content |
 | Sensitive data | Necessary collection, approved providers, retention/access for every copy |
 | Residency | Application, models, retrieval, tools, logs, backups, failover |
-| Defense in depth | Validation + authorisation + policy + execution controls + audit |
+| Defence in depth | Validation + authorisation + policy + execution controls + audit |
 
 ### Trigger → Concept
 
@@ -234,7 +234,7 @@ Agent recommends → Policy decides → Executor acts.
 | “Filter secrets after answer” | Unauthorised context already exposed |
 | “Agent needs production access” | Specific tools and least privilege |
 | “Shared tenants” | Scope every data/execution surface |
-| “Noisy neighbor” | Resource fairness, separate from data isolation |
+| “Noisy neighbour” | Resource fairness, separate from data isolation |
 | “Stay in-region” | End-to-end dependency and fallback boundary |
 | “Document says ignore policy” | External text is data, not authority |
 

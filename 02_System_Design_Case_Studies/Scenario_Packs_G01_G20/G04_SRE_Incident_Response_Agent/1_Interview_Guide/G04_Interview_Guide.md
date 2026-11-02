@@ -74,7 +74,7 @@ Frame requirements in an interview like this:
 | **Availability** | Run outside the affected blast radius; report missing or degraded sources. |
 | **Security** | SSO, service ownership, scoped read credentials, redacted logs, human approval for writes. |
 | **Reliability** | Uncertain permission, missing destructive-action simulation, or missing approval fail closed. Telemetry gaps degrade visibly. |
-| **Cost** | Rules/small models cluster alerts; strong model synthesizes; bound lookback and tokens. |
+| **Cost** | Rules/small models cluster alerts; strong model synthesises; bound lookback and tokens. |
 
 These are the source’s interview assumptions, not observed load.
 
@@ -117,12 +117,12 @@ flowchart LR
 - **Step 1.** **Collapse alerts first.** Rules or a small model correlate and deduplicate alerts; cap concurrent investigations per service before any strong-LLM call.
 - **Step 2.** **Assemble incident context.** Add service ownership, recent deploys, and flag changes to the investigation.
 - **Step 3.** **Read telemetry within bounds.** Query relevant sources in parallel with limits; record whether each result is available, empty, stale, or denied.
-- **Step 4.** **Form an evidence-backed view.** The strong LLM synthesizes ranked hypotheses from bounded telemetry; the agent presents a cited first summary with source coverage.
+- **Step 4.** **Form an evidence-backed view.** The strong LLM synthesises ranked hypotheses from bounded telemetry; the agent presents a cited first summary with source coverage.
 - **Step 5.** **Prepare a mitigation.** If action is warranted, propose the exact command, blast radius, runbook, and simulation result.
 - **Step 6.** **Get the right approval.** Apply read/propose/execute and freeze policies, then ask the owner and commander; a declined proposal is recorded without a write.
 - **Step 7.** **Execute and check.** Route an approved command through the authorised tool gateway, execute idempotently, verify its effect, and add the decision to the incident timeline.
 
-**Model and agent role:** The incident agent uses read-only tools to gather evidence. Rules or a small model handle alert clustering, while a strong LLM synthesizes hypotheses and proposes mitigation. The agent cannot execute a production change without the human approval and tool gateway shown above.
+**Model and agent role:** The incident agent uses read-only tools to gather evidence. Rules or a small model handle alert clustering, while a strong LLM synthesises hypotheses and proposes mitigation. The agent cannot execute a production change without the human approval and tool gateway shown above.
 
 **Three boundaries:** dedupe before model calls; read-only investigation before approval; all approved writes through one gateway. Keep the agent outside the affected service’s blast radius. The summary states which sources were reached, stale, empty, or unavailable, so a confident hypothesis cannot conceal missing evidence.
 

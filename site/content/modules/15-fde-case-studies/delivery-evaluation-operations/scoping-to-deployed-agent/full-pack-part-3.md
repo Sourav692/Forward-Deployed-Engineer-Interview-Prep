@@ -86,7 +86,7 @@ Questions to ask them: what the accelerator library looks like today, whether co
 
 ## 15. Answer the Pilot-Spend Pivot in Ten Minutes
 
-The pivot after a good answer is "who pays for the pilot, and what stops it running away?" There is no playbook drill for this group, so the answer is the self-drill card.
+The pivot after a good answer is "who pays for the pilot, and what stops it running away?" No ready-made drill covers this group, so the answer is the self-drill card.
 
 | | |
 |---|---|

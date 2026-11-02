@@ -74,4 +74,4 @@ The follow-ups arrive in a predictable order.
 | Why is the result keyed by model version too? | So a rerun under a new model does not silently overwrite yesterday's answer, and replay stays meaningful across model changes |
 | Where does the cost ceiling live? | In the rate-limit coordinator's backoff and the degraded-mode rules, not in a separate finance report |
 | What if the provider's batch API behaves differently from synchronous calls? | Retries can duplicate output; the idempotent sink absorbs it, and the submission scheduler replaces the naive worker pool |
-| How does a new document format get handled? (#49) | Detect by confidence and rejection rates per cohort; route to review; add to classifier and schema; replay only that cohort |
+| How does a new document format get handled? | Detect by confidence and rejection rates per cohort; route to review; add to classifier and schema; replay only that cohort |

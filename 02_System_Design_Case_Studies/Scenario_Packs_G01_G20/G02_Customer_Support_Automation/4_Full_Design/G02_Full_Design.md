@@ -14,7 +14,7 @@ The product is a routed service that must decide when to act, when to ask for ap
 | #35 ServiceNow Ticket Automation Agent                         | Section 11: classify, prioritise, assign                                               |
 | #37 Agentic Support Workflow, short and full mock              | Section 12: the interviewer's probes and the marketplace scenario                      |
 | #46 OpenAI-style practice Q2, Customer-Support Agent           | Section 12: the decomposition list and the 80 percent follow-up                        |
-| #95, #96, #97, #99, #101, #102 study-guide mock designs        | Section 13: one implementation delta each                                              |
+| Six framework mock designs        | Section 13: one implementation delta each                                              |
 | #39 Support chatbot with 10,000 daily users                    | Section 14: the cost drill                                                             |
 
 ---

@@ -75,7 +75,7 @@ flowchart TB
   A4 -.-> LLM & VDB & MCP
   A5 -.-> LLM & MCP
 
-  A1 & A2 & A3 & A4 & A5 --> SYN["Synthesizer Agent<br/>merges every agent that ran · resolves conflicts (e.g. Policy overrides Booking)"]
+  A1 & A2 & A3 & A4 & A5 --> SYN["Synthesiser Agent<br/>merges every agent that ran · resolves conflicts (e.g. Policy overrides Booking)"]
   SYN --> RESP
   RESP -. "write-back" .-> SC
   RESP --> MON[Monitoring & Logging<br/>latency · token usage · per-agent execution traces · cache hit rate · alerts — spans every stage above]

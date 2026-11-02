@@ -10,7 +10,7 @@ The hardest part of this system is the decision at 4 a.m., when the job is behin
 |---|---|
 | #21 High-Volume Batch Inference System, 100M records before 6 a.m. (anchor) | Sections 1 to 12 and 14: the design, requirements, sizing, failure policy, evaluation, rollout and delivery |
 | #49 OpenAI-style practice prompt Q5, Enterprise Document-Processing Platform (bank, millions of documents) | Section 13: extraction schema, confidence, human review and format drift on the same spine |
-| #42 Nightly PDF summarisation is too expensive (playbook drill) | Section 15, first card |
+| Nightly PDF summarisation is too expensive (cost drill) | Section 15, first card |
 | #116 §15 scenario 13, batch embedding job became too expensive | Section 15, second card |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.

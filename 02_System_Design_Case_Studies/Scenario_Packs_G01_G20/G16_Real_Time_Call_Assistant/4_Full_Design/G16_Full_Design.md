@@ -9,7 +9,7 @@ A call assistant is a workflow-timing problem before it is a model problem. The 
 | Case in the group | What it contributes here |
 |---|---|
 | #59 OpenAI Q15 AI Assistant for Sales or Customer-Service Calls (anchor) | The eleven-part decomposition and the evaluation follow-up, used in sections 1 to 3, 7 to 9 and 11 |
-| #43 Real-time sales assistant, sub-3-second response (playbook drill, Case 6) | The before, during and after split in sections 1, 4 and 5; the whole of section 14 |
+| Real-time sales assistant, sub-3-second response (cost drill, Case 6) | The before, during and after split in sections 1, 4 and 5; the whole of section 14 |
 | Realtime Voice AI Agent with RAG (reference implementation) | The streaming voice pipeline and its under-2-second figure, in sections 4 and 6 |
 | G05 Sales Copilot pack | The account snapshot, the CRM permission mirror and the preview-then-approve write, in sections 5 and 9 |
 

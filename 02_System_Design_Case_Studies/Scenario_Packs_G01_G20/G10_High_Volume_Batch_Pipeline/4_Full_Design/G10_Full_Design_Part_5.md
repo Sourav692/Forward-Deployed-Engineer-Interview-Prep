@@ -79,9 +79,9 @@ On this design the levels separate on who owns the 4 a.m. decision and how far r
 7. **When does the checkpoint advance?** Only after the sink write succeeds, which prevents false progress.
 8. **Name one trigger for each failure policy.** Fail closed: broken snapshot hash. Degrade: transient sink throttling. Queue: quota reduction. Human intervention: 45% at 4 a.m. with no path to the deadline.
 9. **What three questions should the console answer at 4 a.m.?** Can we still finish? Which lever first? What is the blast radius if we keep going?
-10. **What changes when the payload is a bank's financial documents (#49)?** A schema at the typed boundary, confidence and business-rule checks, a human-review lane, and lineage down to document hash and page.
-11. **What is the sixty-second line for the nightly PDF bill (#42)?** Never reprocess an unchanged document without a reason. Batch buys throughput not latency, so quality is proven by sampling.
-12. **What single comparison diagnoses the embedding bill spike (#116)?** Changed document count against embedded document count.
+10. **What changes when the payload is a bank's financial documents?** A schema at the typed boundary, confidence and business-rule checks, a human-review lane, and lineage down to document hash and page.
+11. **What is the sixty-second line for the nightly PDF bill?** Never reprocess an unchanged document without a reason. Batch buys throughput not latency, so quality is proven by sampling.
+12. **What single comparison diagnoses the embedding bill spike?** Changed document count against embedded document count.
 
 ## References
 
@@ -93,9 +93,9 @@ All paths are relative to the repository root.
 | 1 to 12, 14 (ninety-second summary, pacing, trade-offs, probes) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-10-high-volume-batch-inference-system-tutorial_v2.md` |
 | Same material in long prose | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-10-high-volume-batch-inference-system-tutorial.md` |
 | 4 (dollar formula), 7 (named frameworks) | V2 tutorial, "My Perspective on the Gaps", which its author marks as supplementary and not chapter content |
-| 13 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 5 (#49) |
-| 15 (#42) | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, Case 5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #42 |
-| 15 (#116) | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, scenario 13 and its §2 one-liner |
+| 13 | Problem decomposition question bank (this repo): the document-processing platform prompt |
+| 15 (nightly PDF card) | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, Case 5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, nightly PDF row |
+| 15 (embedding bill card) | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, scenario 13 and its §2 one-liner |
 | Every item marked own construction | Built for this page from the sources' arguments; not source material |
 
 ### Fact-check sources (checked 27 Sep 2026)

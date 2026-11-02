@@ -124,7 +124,7 @@ Disable refund writes → Block new execution
 
 A switch cannot undo a completed action. Define what happens to already submitted work and pending approvals.
 
-#### 8. Defense in Depth: Enforce at Multiple Relevant Boundaries
+#### 8. Defence in Depth: Enforce at Multiple Relevant Boundaries
 
 Combine input validation, scoped retrieval/tools, policy, approval, execution checks, and audit. Retrieved text or tool output cannot grant new authority.
 

@@ -48,7 +48,7 @@ Repair the common weak answers on the spot. "The model decides whether to auto-r
 
 ## 14. Answer the Cost Pivot in Ten Minutes
 
-This group has no playbook drill, so the card below is own construction. It draws on the throughput arithmetic of section 3 and in the agent-steps and retries drivers of the cost playbook. The pivot to expect is "the bill is climbing, and drafts are taking too long during a storm."
+No ready-made drill covers this group, so the card below is own construction. It draws on the throughput arithmetic of section 3 and on the agent-steps and retries cost drivers. The pivot to expect is "the bill is climbing, and drafts are taking too long during a storm."
 
 | | |
 |---|---|

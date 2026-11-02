@@ -10,7 +10,7 @@ A research agent fails when an unbounded fan-out quietly spends the budget, or w
 |---|---|
 | #10 Deep Research Agent at consumer scale (anchor) | Sections 1 to 10 and 13: requirements, state, architecture, the arithmetic, the trifecta, measurement, the 45-minute script, the follow-up bank |
 | #12 The Research Platform (multi-agent, deployed on AWS) | Section 11: the same product as nine running layers, with gateway, guardrails, pgvector and PyRIT |
-| #103 Research system with a supervisor and workers (study-guide mock) | Sections 3, 8 and 12: the reducer, the three termination defences, the supervisor–worker build |
+| Research system with a supervisor and workers (mock design) | Sections 3, 8 and 12: the reducer, the three termination defences, the supervisor–worker build |
 | Self-drill on #10, Drill Add-ons tab | Section 14 |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.
@@ -79,7 +79,7 @@ The anchor's state carries seven things: run and user identity, the goal, a depe
 | Step, replan and hop counters | The termination defences read them |
 | Budget dict, summed across branches | The $0.20 ceiling is enforced per run, not per branch |
 
-The mock (#103) names the fix in one line: any key more than one node writes needs a reducer that accumulates. The same mock warns against the scalar version of the bug. Several agents writing one `summary` key through a hand-rolled last-write-wins merge means the final answer reflects only the last one to run. Accumulate findings into a list, then synthesise once at the end.
+The supervisor-and-workers mock names the fix in one line: any key more than one node writes needs a reducer that accumulates. The same mock warns against the scalar version of the bug. Several agents writing one `summary` key through a hand-rolled last-write-wins merge means the final answer reflects only the last one to run. Accumulate findings into a list, then synthesise once at the end.
 
 ## 4. Draw the Architecture End to End
 
@@ -239,7 +239,7 @@ Prompt defences are rate-reducers, not boundaries. Keep them, and never present 
 
 A research run can fail by stopping too early or by never stopping. Stopping early abandons solvable work. Never stopping burns budget on unsolvable work.
 
-The mock (#103) combines three defences, all read by one routing function: an explicit done flag from the supervisor, a hard hop cap, and a no-progress check that compares this delegation with the last one.
+The supervisor-and-workers mock combines three defences, all read by one routing function: an explicit done flag from the supervisor, a hard hop cap, and a no-progress check that compares this delegation with the last one.
 
 ```python
 MAX_HOPS = 8
@@ -260,4 +260,4 @@ Do not skip the no-progress signature. A hop cap alone still lets a supervisor a
 
 This is the canonical multi-agent failure. The supervisor rejects, the worker retries the same way, and the supervisor rejects again. The third defence is feedback specific enough for the worker to change its approach.
 
-Every ceiling returns partial results with a reason rather than raising. Add the per-run budget as a fourth ceiling: the anchor's budget dict, summed across branches, stops the run at $0.20. The deployed platform (#12) uses the same shape. Its Critic loops back to Search while under `agent_max_iterations`, and a YES or an exhausted budget ends the graph.
+Every ceiling returns partial results with a reason rather than raising. Add the per-run budget as a fourth ceiling: the anchor's budget dict, summed across branches, stops the run at $0.20. The deployed platform uses the same shape. Its Critic loops back to Search while under `agent_max_iterations`, and a YES or an exhausted budget ends the graph.

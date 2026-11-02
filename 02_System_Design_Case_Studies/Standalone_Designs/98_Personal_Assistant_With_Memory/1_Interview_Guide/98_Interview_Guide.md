@@ -8,12 +8,12 @@ A memory system is four scopes of state, not one database with a bigger context 
 
 | Case | What it contributes here |
 |---|---|
-| #98 Study-guide mock design: "Real-time personal assistant that remembers you across weeks" | The prompt, the 8-point scoring rubric and the 7-point strong answer (sections 5 to 11 and 14) |
-| Memory study guide, sections 1 to 5 | Scopes, the memory taxonomy, gotchas and trade-offs (sections 5 to 13) |
-| Handbook Module 03 doc 2 and Module 07 doc 5 | Three scopes of state, per-user isolation, a real 30-day retention decision (sections 2, 5 and 11) |
-| Cost and latency study guides | The cost pivot (section 16) |
+| Mock design: "Real-time personal assistant that remembers you across weeks" | The prompt, the 8-point scoring rubric and the 7-point strong answer (sections 5 to 11 and 14) |
+| Memory and state interview tutorial, sections 1 to 5 | Scopes, the memory taxonomy, gotchas and trade-offs (sections 5 to 13) |
+| Notes on agent state and memory, and a supervisor-to-deep-agent case study | Three scopes of state, per-user isolation, a real 30-day retention decision (sections 2, 5 and 11) |
+| Cost and latency notes | The cost pivot (section 16) |
 
-**The source is short.** Section 6 of the memory study guide gives a prompt, a rubric and seven bullets, about 25 lines in all. It has no diagram, no sizing and no cost. Everything beyond those 25 lines is built from this site's other memory material, and anything those sources do not say is marked *(own construction)*. Sizing figures are stated assumptions, not measurements.
+**The source is short.** Section 6 of the memory tutorial gives a prompt, a rubric and seven bullets, about 25 lines in all. It has no diagram, no sizing and no cost. Everything beyond those 25 lines is built from this site's other memory material, and anything those sources do not say is marked *(own construction)*. Sizing figures are stated assumptions, not measurements.
 
 The prompt, verbatim from the source:
 
@@ -59,7 +59,7 @@ The non-functional requirements, stated so each can fail a test:
 |---|---|
 | Latency | Memory adds under 300ms at p95 to each turn *(source)* |
 | Isolation | Zero cross-user reads; `user_id` comes from auth, never from the model *(source)* |
-| Recall | A fact planted early is recalled 20 turns later, measured on an eval set *(study guide take-home)* |
+| Recall | A fact planted early is recalled 20 turns later, measured on an eval set *(source take-home)* |
 | Bounded growth | Prompt tokens per turn flat after the summary threshold; episodes capped per user *(source)* |
 | Durability | A completed turn and a saved fact survive a process restart |
 | Freshness | A fact written in one conversation is readable from a new conversation within seconds *(own construction)* |
@@ -213,7 +213,7 @@ Point at three boundaries while the diagram is up *(own construction)*. The isol
 
 Give each kind of memory its own scope, because each answers a different question. A `thread_id` answers "which conversation". A `user_id` namespace answers "which person". A system that has only the first forgets everyone between conversations. A system that confuses them leaks memory across users.
 
-The study guide's taxonomy maps onto the prompt's four promises.
+The memory taxonomy maps onto the prompt's four promises.
 
 | Scope | Holds | Key | Write rule | Read rule | Lifetime |
 |---|---|---|---|---|---|
@@ -222,17 +222,17 @@ The study guide's taxonomy maps onto the prompt's four promises.
 | Semantic (long-term) | Stable facts: time zone, preferred name | `(semantic, user_id)` + stable key | Overwrite in place | Get all keys for the user | Until changed or erased |
 | Episodic (long-term) | Completed tasks: "booked flight to Lisbon" | `(episodic, user_id)` + fresh key | Append one per task | Vector search, top-k | Newest 100, older folded into a digest |
 
-Procedural memory, meaning instructions that change the assistant's behaviour, is the fifth kind in the taxonomy. Keep it out of scope for a personal assistant unless asked. If it appears, gate every change behind human approval. The study guide's gotcha is that an approval passed as a tool argument lets the model approve itself.
+Procedural memory, meaning instructions that change the assistant's behaviour, is the fifth kind in the taxonomy. Keep it out of scope for a personal assistant unless asked. If it appears, gate every change behind human approval. One gotcha is that an approval passed as a tool argument lets the model approve itself.
 
-"Short-term" describes scope, not lifetime. A durable checkpointer keeps thread history on disk across restarts, which is the point here. Handbook Module 07 doc 5 records a real deployment with thread checkpoints in a table, 30-day retention, chosen so conversations survived an endpoint restart and stayed auditable.
+"Short-term" describes scope, not lifetime. A durable checkpointer keeps thread history on disk across restarts, which is the point here. One case study records a real deployment with thread checkpoints in a table, 30-day retention, chosen so conversations survived an endpoint restart and stayed auditable.
 
-Keep enterprise knowledge out of memory entirely. Handbook Module 03 doc 2 makes the distinction: a stale preference fails as mildly wrong personalisation, while an outdated policy fails as a wrong answer. They refresh on different cadences, so they live in different stores.
+Keep enterprise knowledge out of memory entirely. A stale preference fails as mildly wrong personalisation, while an outdated policy fails as a wrong answer. They refresh on different cadences, so they live in different stores.
 
 ## 6. Bound What the Model Sees on Every Turn
 
 Store every turn, and send the model only what this turn needs. Replaying the full history makes tokens and latency grow linearly with turns. The source answer summarises once the buffer crosses ~15 turns, so cost stays flat on long chats.
 
-The study guide compares three options.
+Compare three options.
 
 | Option | Costs | Buys | Choose when |
 |---|---|---|---|

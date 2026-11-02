@@ -203,7 +203,7 @@ Discuss:
 - Non-termination
 - Observability
 - Replay and recovery
-- Prompt-injection defense
+- Prompt-injection defence
 
 A key principle:
 
@@ -720,7 +720,7 @@ Given your cloud-data-platform and Databricks experience, prioritize these five 
 
 ## E. AI Migration from Prototype to Production
 
-> A team has a successful notebook-based AI prototype. How do you productionize it?
+> A team has a successful notebook-based AI prototype. How do you productionise it?
 
 ### Discuss
 

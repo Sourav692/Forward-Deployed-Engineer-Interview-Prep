@@ -101,8 +101,8 @@ All paths are relative to the repository root.
 |---|---|
 | 1, 2, 4, 9, 10, 11, 12 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/02_secure_multi_tenant_ai_platform.md` and its `answer_keys/02_secure_multi_tenant_ai_platform_answer_key.md` |
 | 1 to 5, 8 to 12 (tutorial material, diagrams, isolation test, drills, rollout, trade-offs, follow-ups) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-2-secure-multi-tenant-ai-platform-tutorial_v2.md` |
-| 5, 6, 7 (SSO/OIDC, envelope encryption, per-tenant keys, fair queuing) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md` |
-| 6 (tenancy levels, the store enforces the tenant, escalation path) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/04_Prompt_Injection_Egress_Tenancy.md` |
+| 5, 6, 7 (SSO/OIDC, envelope encryption, per-tenant keys, fair queuing) | Concept tutorial on identity, secrets and tenant fairness (this repo) |
+| 6 (tenancy levels, the store enforces the tenant, escalation path) | Concept tutorial on prompt injection, egress and tenancy (this repo) |
 | 6 (two-layer enforcement, referenced not repeated) | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/4_Full_Design/G01_Full_Design.md`, section 6 |
 | 13 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 4 and §15 scenario 5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons row 41 |
 | 14 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/01_cross_tenant_retrieval.md` |

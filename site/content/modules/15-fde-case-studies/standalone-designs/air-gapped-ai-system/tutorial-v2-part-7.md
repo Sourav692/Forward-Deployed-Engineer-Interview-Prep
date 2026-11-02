@@ -22,7 +22,7 @@ flowchart LR
     C --> D["18-28 min<br/>Trade-offs &<br/>design decisions"]
     D --> E["28-35 min<br/>Security,<br/>provenance, failure"]
     E --> F["35-42 min<br/>Rollout &<br/>operations"]
-    F --> G["42-50 min<br/>Recap &<br/>follow-up defense"]
+    F --> G["42-50 min<br/>Recap &<br/>follow-up defence"]
 ```
 
 - **0–5 minutes: discovery and constraints**

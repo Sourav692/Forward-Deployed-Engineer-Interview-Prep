@@ -18,7 +18,7 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 
 > *"I wouldn't pick from the list directly. The most impressive demo is usually the one with the most hidden production cost. First, I'd turn each of the thirty ideas into the same card: user, workflow step, outcome metric with a baseline, volume, data and owner, how we'd evaluate it, risk, and kill criteria. Anything that can't fill the card isn't ready. Second, gates before scores: no measurable outcome, no owner, an unreviewed adverse decision on a customer, or a problem that rules or a purchase solve better. Those leave the list. Third, score what's left on value adjusted for adoption, feasibility, data readiness, evaluability, risk, time to value and platform reuse, with weights I'd state and let you argue with. I'd estimate value from volume times saving times unit cost times adoption, not from the slide. Fourth, I'd distrust the sum: floor any dimension below three, fund shared enablers separately because they usually lose on value alone, and rerun the ranking under different weights to see what's actually decided. For an insurer, that gives a first wave like call wrap-up summaries and claims intake summaries: high volume, low risk, clean eval, and they build the gateway, eval harness and ingestion that make the next ten items cheap. Every item gets kill criteria before the pilot, and the register is re-scored quarterly with real data."*
 
-**Likely follow-ups** *(own construction, except the first, which is Question 16's)*:
+**Likely follow-ups** *(own construction, except the first, which comes from the prompt)*:
 
 | FOLLOW-UP | ANSWER IN ONE BREATH |
 |---|---|
@@ -28,7 +28,7 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 | "Two items tie. How do you break it?" | Platform reuse, then evaluability. The one that makes later items cheaper, or can be proven faster, goes first |
 | "What if a business unit builds its own anyway?" | Offer the gateway and eval harness as the cheaper path. Shadow AI is a symptom of a slow front door, not a policy problem |
 | "What if leadership changes the priorities mid-programme?" | The register absorbs it. Re-score with new weights in public, and show what moves and what it costs to switch |
-| "How do you prioritise with no data at all?" | Score data readiness honestly, fund discovery for the top value items, and let wave 0 produce the data. [#62](/design/build-when-customer-data-is-poor) covers the playbook |
+| "How do you prioritise with no data at all?" | Score data readiness honestly, fund discovery for the top value items, and let wave 0 produce the data. [The Build When Customer Data Is Poor case](/design/build-when-customer-data-is-poor) covers the playbook |
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
@@ -105,7 +105,7 @@ On the use-case portfolio, the levels split on whether the candidate ranks thirt
 
 ## References
 
-Related packs, for cross-reference rather than repetition: [Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) for gate mechanics; [Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) for the eval harness; [#61 Scale a Prototype to Production](/design/scale-prototype-to-production) for what happens after a Now item's pilot succeeds; [#62 Build When Customer Data Is Poor](/design/build-when-customer-data-is-poor) for items blocked on data readiness; [Decomposition Classics #67–#69](/design/decomposition-classics-67-68-69) for decomposing a single chosen use case; [#100 Production LLM Gateway](/design/production-llm-gateway) for the gateway enabler.
+Related packs, for cross-reference rather than repetition: [Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) for gate mechanics; [Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) for the eval harness; [Scale a Prototype to Production](/design/scale-prototype-to-production) for what happens after a Now item's pilot succeeds; [Build When Customer Data Is Poor](/design/build-when-customer-data-is-poor) for items blocked on data readiness; [Decomposition Classics](/design/decomposition-classics-67-68-69) for decomposing a single chosen use case; [Production LLM Gateway](/design/production-llm-gateway) for the gateway enabler.
 
 ### Fact-check sources (checked 27 Sep 2026)
 

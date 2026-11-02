@@ -94,7 +94,7 @@ One request costs 1,000 ÷ 20,000 + 250 ÷ 2,500 = 0.05 + 0.10 = 0.15 replica-se
 
 **Step three: take the larger number.** Compute says 214 and slots say 110, so compute binds. Provision about 214, then add N+1 per zone for failover. Say both checks aloud. A reviewer trusts the number that survived two independent methods.
 
-**Step four: check memory.** The KV cache stores each sequence's attention keys and values. It grows with every token *(section 7 does the arithmetic)*. The air-gapped chapter's replica budget, kept verbatim, shows the shape. Quantized weights 12 GB, runtime overhead 2 GB, KV cache and activations 6 GB, batch buffers and fragmentation slack 2 GB. That totals roughly 22 GB, too tight for a 24 GB card. The same chapter's rule applies here: if the replica count exceeds the pool, challenge the request profile rather than ask for more hardware.
+**Step four: check memory.** The KV cache stores each sequence's attention keys and values. It grows with every token *(section 7 does the arithmetic)*. The air-gapped chapter's replica budget, kept verbatim, shows the shape. Quantised weights 12 GB, runtime overhead 2 GB, KV cache and activations 6 GB, batch buffers and fragmentation slack 2 GB. That totals roughly 22 GB, too tight for a 24 GB card. The same chapter's rule applies here: if the replica count exceeds the pool, challenge the request profile rather than ask for more hardware.
 
 ## 4. Draw the Architecture End to End
 

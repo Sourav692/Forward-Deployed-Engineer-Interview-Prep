@@ -43,7 +43,7 @@ The follow-ups come from the question bank's Tier 2 probes and the neighbouring 
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot is "the bill is growing faster than users." This group has no playbook drill, so the card below is a self-drill *(own construction)*, grounded in the cost study guide's drivers.
+The interviewer's pivot is "the bill is growing faster than users." No ready-made drill covers this group, so the card below is a self-drill *(own construction)*, grounded in the main cost drivers.
 
 | | |
 |---|---|
@@ -53,7 +53,7 @@ The interviewer's pivot is "the bill is growing faster than users." This group h
 | Do not | Re-send the full history every turn, or build a three-model cascade that forfeits the prompt cache |
 | 60-second line | Chat cost is history times turns plus answers nobody finished. Keep the prefix stable so history is a cache read, summarise in steps, keep answers short by default, route easy turns down, and cancel the moment the user leaves. |
 
-Two drivers from the cost study guide explain almost every surprise here. Input tokens grow with the conversation: teams count the user's question and ignore the system prompt and hidden history, so the bill rises with flat traffic. Output tokens grow with verbosity: teams measure requests, not generated tokens. Streaming improves perceived latency but does not reduce total compute cost. Quote cost per successful conversation rather than per request, as the additions insist: a cheaper model that needs a regenerate is not cheaper.
+Two cost drivers explain almost every surprise here. Input tokens grow with the conversation: teams count the user's question and ignore the system prompt and hidden history, so the bill rises with flat traffic. Output tokens grow with verbosity: teams measure requests, not generated tokens. Streaming improves perceived latency but does not reduce total compute cost. Quote cost per successful conversation rather than per request, as the additions insist: a cheaper model that needs a regenerate is not cheaper.
 
 Every strong cost answer follows four verbs in order. Measure tokens and stage timings first. Route model to tier and task. Bound history, answer length and tool steps. Cache safely, with a stable prefix and the user's scope in every key.
 

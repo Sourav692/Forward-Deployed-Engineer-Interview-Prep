@@ -103,7 +103,7 @@ flowchart TD
     A["Topic"] --> B["Orchestrator: plans N sections"]
     B --> C["plan_to_tasks: N task dicts"]
     C --> D["worker.map(): one call per task"]
-    D --> E["synthesize: join sections"]
+    D --> E["synthesise: join sections"]
     E --> F["Final report"]
 ```
 

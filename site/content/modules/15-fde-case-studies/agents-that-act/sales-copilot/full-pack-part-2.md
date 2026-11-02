@@ -148,7 +148,7 @@ Precomputation is an optimisation, never a permission model. A snapshot is a mat
 
 ## 6. Propagate CRM Permissions and Territory Rules Into Retrieval
 
-*This section is added for this pack. The answer key says "apply user, role, tenant, region and sensitivity permissions before retrieval" and stops there. The material below draws on Handbook Module 06 docs 1 and 5.*
+*This section is added for this pack. The answer key says "apply user, role, tenant, region and sensitivity permissions before retrieval" and stops there.*
 
 Identity is established before any permission logic runs. Authenticate through the customer's own identity provider, validate the token's signature, issuer, expiry and audience, and map the customer's own groups into the platform's role vocabulary rather than inventing roles locally. Group mapping is configuration that can drift, so a renamed group on the customer's side must surface as an alert, not silently orphan a rep. A user from a newly connected customer is provisioned just in time from the token's claims, scoped to their company, never with more access than intended by default.
 

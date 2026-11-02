@@ -4731,7 +4731,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/61_Scale_Prototype_To_Production/",
-      "estMinutes": 35,
+      "estMinutes": 34,
       "href": "/design/scale-prototype-to-production"
     },
     {
@@ -4836,7 +4836,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T5.1_The_Design_Framework/05_Reviewing_an_Agent_Architecture.md",
       "estMinutes": 8,
       "href": "/learn/ai-systems-design/design-framework/reviewing-an-agent-architecture",
-      "updated": "2026-10-05"
+      "updated": "2026-11-02"
     },
     {
       "slug": "the-six-step-whiteboard-clock",
@@ -5299,7 +5299,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/98_Personal_Assistant_With_Memory/",
-      "estMinutes": 34,
+      "estMinutes": 33,
       "href": "/design/personal-assistant-with-memory"
     },
     {

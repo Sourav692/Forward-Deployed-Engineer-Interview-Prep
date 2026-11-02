@@ -55,4 +55,4 @@ Comfort with observability (metrics, logs and traces), LLM agents and tool calli
 
 ## Practise it
 
-When you have read the mandatory sections, try the [SRE triage agent worksheet](/practice/sre-triage-agent). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.
+When you have read the mandatory sections, try the [SRE Incident Triage Agent worksheet](/practice/sre-triage-agent). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.

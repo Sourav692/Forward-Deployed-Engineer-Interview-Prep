@@ -41,7 +41,7 @@ Scale changes the problem from search speed to memory and rebuild time. The vect
 
 | What breaks at 100 million or more | Fix the sources give |
 |---|---|
-| Memory: the index no longer fits one machine | Shard across machines; compress with INT8 quantization |
+| Memory: the index no longer fits one machine | Shard across machines; compress with INT8 quantisation |
 | Index build takes many hours; a new embedding model means a full re-index | Incremental indexing: new vectors go into a small flat index that merges into the main one later |
 | HNSW cannot update in place | Logical deletes plus regular compaction, with offline rebuilds in quiet hours |
 | Backups are huge to copy | Stream changes to object storage and rebuild from the last checkpoint |
@@ -87,7 +87,7 @@ At the end of the week, compaction reclaims the space the deleted vectors left b
 
 - ANN indexes update by delete plus insert, and need periodic compaction.
 - Re-ingest changed documents in a fixed order and filter every query on active status.
-- At 100 million vectors, memory, build time, deletes, backups, and schema change dominate; shard, quantize, index incrementally, and version indexes.
+- At 100 million vectors, memory, build time, deletes, backups, and schema change dominate; shard, quantise, index incrementally, and version indexes.
 - Measure each latency stage first; query embedding often costs more than the search.
 - Most index failures are silent, so give each one a monitor and a fallback.
 

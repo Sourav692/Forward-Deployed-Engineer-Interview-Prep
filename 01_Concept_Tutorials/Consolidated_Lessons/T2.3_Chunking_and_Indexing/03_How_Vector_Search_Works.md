@@ -10,7 +10,7 @@ Vector search is not keyword matching; it ranks stored chunks by how close their
 
 - describe dense search from query embedding to ranked result;
 - explain why exact search does not scale and what approximate search gives up;
-- compare HNSW, IVF, product quantization, and DiskANN, and name their tuning knobs;
+- compare HNSW, IVF, product quantisation, and DiskANN, and name their tuning knobs;
 - choose between pre-filtering, post-filtering, and filter-aware search;
 - name what dense search is bad at, and where hybrid search comes in.
 
@@ -40,7 +40,7 @@ Each index family trades speed, recall, and memory differently. The sources desc
 
 **IVF** (inverted file index) groups vectors into clusters with k-means and searches only the clusters nearest the query. It is faster to build and uses less memory, and it can live on disk. It needs a training step and usually gives lower recall.
 
-**Product quantization** (PQ) compresses each vector into small codes, trading a little accuracy for a large memory saving. One source gives 8 to 32 times less memory. Another gives a worked figure: a 1,536-dimension float32 vector of about 6 KB shrinks to about 192 bytes, roughly 30 times smaller. Scalar and INT8 quantization are simpler variants. IVF and PQ are often combined as IVF-PQ for billion-scale data.
+**Product quantisation** (PQ) compresses each vector into small codes, trading a little accuracy for a large memory saving. One source gives 8 to 32 times less memory. Another gives a worked figure: a 1,536-dimension float32 vector of about 6 KB shrinks to about 192 bytes, roughly 30 times smaller. Scalar and INT8 quantisation are simpler variants. IVF and PQ are often combined as IVF-PQ for billion-scale data.
 
 **DiskANN** keeps the index on SSD rather than in RAM. Billion-scale search then runs on ordinary hardware, with slightly higher latency.
 
@@ -49,7 +49,7 @@ Each index family trades speed, recall, and memory differently. The sources desc
 | How good is the HNSW graph, and how long does it take to build? | `ef_construction` |
 | How much recall do I trade for query speed? | `ef_search` in HNSW, `nprobe` in IVF |
 | How many links per node, against memory? | `M` in HNSW |
-| The index no longer fits in RAM | Quantization, IVF-PQ, or DiskANN |
+| The index no longer fits in RAM | Quantisation, IVF-PQ, or DiskANN |
 
 The sources offer rules of thumb, not laws. One says tuned HNSW up to about 10 million vectors, and IVF or IVF-PQ beyond about 100 million.
 

@@ -54,4 +54,4 @@ Comfort with SQL and data warehouses, row and column access control, and LLM pro
 
 ## Practise it
 
-When you have read the mandatory sections, try the [Natural Language to SQL Analytics Assistant worksheet](/practice/natural-language-to-sql-analytics-assistant). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.
+When you have read the mandatory sections, try the [Natural-Language-to-SQL Analytics Assistant worksheet](/practice/natural-language-to-sql-analytics-assistant). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.

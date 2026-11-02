@@ -55,4 +55,4 @@ Comfort with retrieval (keyword search, embeddings and hybrid search), CRM permi
 
 ## Practise it
 
-When you have read the mandatory sections, try the [Sales Copilot worksheet](/practice/sales-copilot). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.
+When you have read the mandatory sections, try the [Sales Copilot for Account Executives worksheet](/practice/sales-copilot). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.

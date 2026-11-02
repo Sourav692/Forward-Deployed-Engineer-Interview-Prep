@@ -114,7 +114,7 @@ Incoming work → Bounded queue → Workers
 
 If arrivals remain above service capacity, backlog keeps growing. A queue does not solve sustained overload.
 
-#### 7. Fair Scheduling and Multi-Tenancy: Prevent Noisy Neighbors
+#### 7. Fair Scheduling and Multi-Tenancy: Prevent Noisy Neighbours
 
 Use tenant-aware quotas, concurrency limits, or weighted scheduling so one tenant does not monopolize shared model and worker resources.
 
@@ -126,7 +126,7 @@ Tenant B jobs ─┼→ Fair scheduler → Shared capacity
 Tenant C jobs ─┘
 ```
 
-A noisy neighbor consumes shared resources and degrades others. Equal request counts may still be unfair if tasks have different token/time costs.
+A noisy neighbour consumes shared resources and degrades others. Equal request counts may still be unfair if tasks have different token/time costs.
 
 #### 8. Autoscaling and Load Shedding: Add Capacity or Refuse Work
 
@@ -176,7 +176,7 @@ User/tenant entry limits belong at the application boundary; model-call limits b
 | Hear… | Think… | Ask / inspect… |
 |---|---|---|
 | “100K users” | Workload | Peak activity, duration, requests, tokens |
-| “One tenant hurts everyone” | Noisy neighbor | Tenant concurrency and scheduling |
+| “One tenant hurts everyone” | Noisy neighbour | Tenant concurrency and scheduling |
 | “Workers idle, model calls wait” | External bottleneck | Provider capacity and limits |
 | “Queue keeps growing” | Sustained overload | Arrival/service rates and shedding |
 | “Within quota but system full” | Admission control | Current capacity |
@@ -191,7 +191,7 @@ User/tenant entry limits belong at the application boundary; model-call limits b
 
 > “A bounded queue can absorb bursts, but sustained overload needs capacity or reduced intake.”
 
-> “I’d scale the actual bottleneck and protect tenants from noisy neighbors.”
+> “I’d scale the actual bottleneck and protect tenants from noisy neighbours.”
 
 ### 8. Practice Questions
 
@@ -237,7 +237,7 @@ MEASURE → FIND BOTTLENECK → LIMIT → ADMIT
 | Hear… | Think… |
 |---|---|
 | “100K users” | Peak workload, not account count |
-| “Tenant A consumes capacity” | Noisy neighbor / fair scheduling |
+| “Tenant A consumes capacity” | Noisy neighbour / fair scheduling |
 | “Within allowance, no capacity” | Admission control |
 | “Backlog keeps increasing” | Sustained overload |
 | “More workers did not help” | External or shared bottleneck |

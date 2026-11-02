@@ -15,7 +15,7 @@
 | #54 OpenAI Q10 RAG System with Poor Answer Quality | Sections 9 and 12 |
 | #74 Reported OpenAI prompt: diagnose high latency in an LLM inference pipeline | Section 12 |
 | #44 Playbook drill: LLM costs exploded after launch | Card 15.1 |
-| #104, #105, #109, #110, #113, #114, #115 §15 scenarios 1, 2, 6, 7, 10, 11, 12 | Cards 15.2 to 15.8 |
+| §15 scenarios 1, 2, 6, 7, 10, 11, 12 | Cards 15.2 to 15.8 |
 | #119 Rate limits throttling at peak, #121 Users abandon mid-stream | Cards 15.9 and 15.10 |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim. The sizing numbers in section 4 come from the V2 tutorial's "My Perspective on the Gaps" note, which is supplementary and not chapter content.
@@ -191,6 +191,6 @@ The source's component table, with a column added for how each part fails *(the 
 | Global dashboard | Platform-wide health, release regressions | Cross-tenant, aggregate only | A tenant label on a global chart explodes cardinality |
 | Tenant-scoped views | Customer-specific debugging, support triage | Access scoped by role and tenant | One misconfigured view spans every tenant |
 | Support and access gateway | Role-based, tenant-scoped access to evidence | Enforces least privilege | "Can read all traces" becomes the default |
-| Audit and redaction pipeline | Enforces retention and redaction on export | Defense in depth: code, collector, review | Combined with debug traces, it inherits their sampling and short retention |
+| Audit and redaction pipeline | Enforces retention and redaction on export | Defence in depth: code, collector, review | Combined with debug traces, it inherits their sampling and short retention |
 
 Four questions organise the walk-through. How does each request get a correlation ID? How does trace context flow across services and customer integrations? How does a support operator jump from an alert to the request family without seeing raw content? How are global and tenant visibility separated? Answer each one against the diagram.

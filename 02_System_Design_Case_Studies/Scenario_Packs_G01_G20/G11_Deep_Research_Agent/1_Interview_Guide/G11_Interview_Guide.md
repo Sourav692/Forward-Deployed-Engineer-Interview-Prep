@@ -10,7 +10,7 @@ End to end, as “Who is Acme’s CEO, with sources?”
 2. **A planner splits work:** public web vs your Drive. Web never inherits Drive tokens.
 3. **Subagents search.** Wikipedia timeout is “couldn’t check,” not “not found.”
 4. **Findings go to a ledger.** A grader asks: enough coverage, or one more hop?
-5. **A synthesizer writes only from that ledger.** Every fact needs a citation.
+5. **A synthesiser writes only from that ledger.** Every fact needs a citation.
 6. **A verifier and sanitizer** strip bad links/HTML. Gaps stay visible.
 
 The whole flow is plan → search in isolation → cite or show the hole → stop. External actions stay out.
@@ -45,7 +45,7 @@ Frame requirements in an interview like this:
 3. **Search web and user documents with separate privileges.**
 4. **Merge typed evidence.**
 5. **Check coverage and replan** if useful and budget remains.
-6. **Synthesize with citations.**
+6. **Synthesise with citations.**
 7. **Verify claims and sanitize** rendered output.
 8. **Stream status and return explicit gaps.**
 
@@ -69,7 +69,7 @@ If asked **“What are the requirements?”**, say:
 
 ## Architecture
 
-The planner and synthesizer use a reasoning-tier LLM; narrower web/document agents can use smaller models. Deterministic hop, budget and no-progress rules bound the supervisor. Web agents never inherit private-document access.
+The planner and synthesiser use a reasoning-tier LLM; narrower web/document agents can use smaller models. Deterministic hop, budget and no-progress rules bound the supervisor. Web agents never inherit private-document access.
 
 ```mermaid
 flowchart LR
@@ -81,7 +81,7 @@ flowchart LR
   T --> L[User-scoped evidence ledger: append / dedupe]
   L --> G[Coverage + agreement grader]
   G -->|thin, budget remains| P
-  G --> Y[Reasoning LLM synthesizer with citations]
+  G --> Y[Reasoning LLM synthesiser with citations]
   Y --> V[Claim and citation verifier]
   V --> E[Egress sanitizer: links / images / markup]
   E --> O[Streamed answer + explicit coverage gaps]
@@ -94,7 +94,7 @@ flowchart LR
 3. Independent web subagents search public sources in parallel while a separate document subagent retrieves only documents that this user may read.
 4. Each branch returns typed findings and citations, not instructions. A reducer appends and deduplicates evidence in a user-scoped ledger.
 5. A coverage grader compares findings with the plan. It may request a capped replan; repeated delegation without new evidence stops.
-6. A synthesizer writes claims grounded in the ledger; a verifier checks claim-citation support and marks unavailable or uncovered areas.
+6. A synthesiser writes claims grounded in the ledger; a verifier checks claim-citation support and marks unavailable or uncovered areas.
 7. An egress sanitizer removes image/markup fetches and disallowed links before streaming a cited answer or clearly labelled partial result.
 
 ## Key choices and failure modes
@@ -147,4 +147,4 @@ If the decomposition is predictable, a deterministic workflow is simpler.
 
 ## Two-minute interview answer
 
-“I would clarify citation quality, private-document permissions and the partial-answer contract first. The planner builds a bounded research plan, then public-web workers and a separate user-scoped document worker gather typed findings in parallel. They append evidence to a user-scoped ledger, and a coverage check can trigger a limited replan. A stronger LLM synthesizes the answer, A claim verifier checks that citations support the claims, and an egress sanitizer stops rendered output leaking private content through images or links. I enforce hop, time and spend caps, return explicit gaps on failure, and measure both answer quality and the path the agents took.”
+“I would clarify citation quality, private-document permissions and the partial-answer contract first. The planner builds a bounded research plan, then public-web workers and a separate user-scoped document worker gather typed findings in parallel. They append evidence to a user-scoped ledger, and a coverage check can trigger a limited replan. A stronger LLM synthesises the answer, A claim verifier checks that citations support the claims, and an egress sanitizer stops rendered output leaking private content through images or links. I enforce hop, time and spend caps, return explicit gaps on failure, and measure both answer quality and the path the agents took.”

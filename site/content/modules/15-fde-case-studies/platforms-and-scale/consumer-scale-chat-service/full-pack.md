@@ -81,7 +81,7 @@ Say the arithmetic aloud, because it shows that multi-region and caching are req
 | Streams per model replica | 100 concurrent, batched | ≈ 2,800 replicas at peak |
 | Storage | ~2 KB text per message | ≈ 2 TB of conversation text a day |
 
-Little's Law is `concurrency = throughput × latency`, from the cost study guide. It turns latency work into capacity work: halving the answer length halves the concurrent streams to provision. The input line is why prefix caching matters more here than anywhere: seventy million input tokens a second are mostly history the model already processed last turn.
+Little's Law is `concurrency = throughput × latency`. It turns latency work into capacity work: halving the answer length halves the concurrent streams to provision. The input line is why prefix caching matters more here than anywhere: seventy million input tokens a second are mostly history the model already processed last turn.
 
 Split the two latency phases before going further. Prefill processes the whole prompt in parallel and sets time to first token, so it scales with input tokens. Decode generates one token at a time and sets total time, so it scales with output tokens. A bloated history is a first-token problem. A verbose answer is a completion-time problem.
 
@@ -203,7 +203,7 @@ Point at three boundaries while the diagram is up *(own construction)*. The admi
 
 ## 5. Store the Conversation, Send Only What the Turn Needs
 
-Store everything and send little. The memory study guide draws the line: trimming bounds what reaches the model, not what is stored. A model cannot be billed for history the context builder never sent.
+Store everything and send little. Trimming bounds what reaches the model, not what is stored. A model cannot be billed for history the context builder never sent.
 
 The conversation service writes every message durably, keyed by `(user_id, conversation_id)`. It also persists the partial answer as tokens stream. A disconnected user then reconnects to the text generated so far rather than to nothing. The store is sharded by `user_id`, so one user's history lives on one shard and a list-conversations call touches one partition.
 

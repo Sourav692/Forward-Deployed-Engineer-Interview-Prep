@@ -193,7 +193,7 @@ Train yourself to hear a customer/interviewer statement and automatically recogn
 | ---------------------------------------------- | ---------------------------------------------------------- |
 | **"100K users"**                         | Horizontal scaling, stateless workers, rate limits, queues |
 | **"Traffic suddenly spikes"**            | Queue, admission control, backpressure                     |
-| **"One tenant generates huge traffic"**  | Noisy neighbor, quota, fair queue                          |
+| **"One tenant generates huge traffic"**  | Noisy neighbour, quota, fair queue                          |
 | **"Traffic exceeds capacity"**           | Admission control, load shedding                           |
 | **"Multiple enterprise customers"**      | Multi-tenancy, isolation, quotas, cost attribution         |
 | **"Request sometimes takes 20 seconds"** | Stage tracing, P95/P99                                     |
@@ -249,7 +249,7 @@ Train yourself to hear a customer/interviewer statement and automatically recogn
 | **"Worker dies"**                        | Stateless compute + durable state                          |
 | **"Failure shouldn't affect everyone"**  | Blast-radius reduction                                     |
 | **"Sensitive enterprise data"**          | AuthN, AuthZ, least privilege, audit                       |
-| **"Safe enterprise agent"**              | Defense in depth                                           |
+| **"Safe enterprise agent"**              | Defence in depth                                           |
 
 ---
 

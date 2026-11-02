@@ -2,7 +2,7 @@
 
 ## 13. Cover All Seventeen Items the Bank Lists
 
-Question 17 lists seventeen things to cover. Check the answer against them, in the bank's order *(mapping is own construction)*.
+The prompt lists seventeen things to cover. Check the answer against them, in the order given *(mapping is own construction)*.
 
 | Item (verbatim) | Where this page covers it |
 |---|---|
@@ -62,8 +62,8 @@ The lines that carry the round *(own construction unless quoted)*:
 2. *"The bill scales with request shape, not with users."*
 3. *"Each tenfold step breaks something different."*
 4. *"A rate limit decides whether; a fair queue decides in what order."*
-5. *"You can't promise more than your dependency provides."* (production guide)
-6. *"If rollback requires a build, it is not a rollback."* (Handbook Module 08 doc 1)
+5. *"You can't promise more than your dependency provides."*
+6. *"If rollback requires a build, it is not a rollback."*
 7. *"Adoption is a deliverable."*
 
 Follow-ups beyond the bank's adoption question *(own construction)*:
@@ -143,15 +143,15 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 12, 13 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: Question 17 (#61, prompt, "Cover" list, follow-up), prompt E (notebook variant), "Biggest Mistakes to Avoid" |
+| 1, 2, 12, 13 | Problem-decomposition interview prompts: this case's prompt, "Cover" list and follow-up, the notebook-variant prompt, "Biggest Mistakes to Avoid" |
 | 2, 7, 11, 12, 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md`: §1 (why demos die, prototype vs production, executive table), §9, §11, §13, §14, §15–§16 |
 | 11, 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`: incidents 1, 2, 5 and 12 |
 | 4, 7, 9, 12 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`: A1 (prefix caching, cascades), A2 (prices), A3 (batch discount), B3 (Little's Law), B4 (cost per successful task), E (rate limits, eval bill) |
-| 7, 8 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md`: §1.7–§1.13, §3 trade-offs, §5.1–§5.3 role tracks |
-| 7 | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md`: identity, queue fairness |
-| 9, 10 | `01_Concept_Tutorials/FDE_Handbook/08_AgentOps_And_Platform/01_Prompt_Versioning_Rollout_Rollback.md`: gates, shadow, canary, pointer-flip rollback, per-user A/B |
-| 10 | `01_Concept_Tutorials/FDE_Handbook/08_AgentOps_And_Platform/06_Infra_And_CICD.md`: the assembled pipeline |
-| 10, 11, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/04_Gates_Risks_Metrics.md`: six gates, evidence bar, override rate, week-4 retention |
+| 7, 8 | Production and operations tutorial: §1.7–§1.13, §3 trade-offs, §5.1–§5.3 role tracks |
+| 7 | Notes on identity, secrets and tenant fairness: identity, queue fairness |
+| 9, 10 | Notes on prompt versioning, rollout and rollback: gates, shadow, canary, pointer-flip rollback, per-user A/B |
+| 10 | Notes on infrastructure and CI/CD: the assembled pipeline |
+| 10, 11, 12 | Delivery operating model notes on gates, risks and metrics: six gates, evidence bar, override rate, week-4 retention |
 | 7 | `02_System_Design_Case_Studies/Standalone_Designs/100_Production_LLM_Gateway/1_Interview_Guide/100_Interview_Guide.md`, sections 5–10 (gateway internals) |
 | 7 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G07_Secure_Multi_Tenant_AI_Platform/4_Full_Design/G07_Full_Design.md`, sections 7 and 8 |
 | 9 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md`, sections 5–8 and 14 |

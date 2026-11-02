@@ -6,15 +6,15 @@ Scaling a prototype a thousandfold produces a different system that happens to s
 
 | Source | What it contributes here |
 |---|---|
-| #61 Question 17 in the OpenAI Applied decomposition question bank | The prompt, the seventeen items to cover, the adoption follow-up and its nine answers, reproduced verbatim in sections 1, 13 and 12 |
-| Neighbour prompt E in the same bank, "AI Migration from Prototype to Production" | Section 2: the notebook variant of the same question |
+| A problem-decomposition interview prompt | The prompt, the seventeen items to cover, the adoption follow-up and its nine answers, reproduced verbatim in sections 1, 13 and 12 |
+| A neighbouring prompt, "AI Migration from Prototype to Production" | Section 2: the notebook variant of the same question |
 | Cost & Latency cram sheets and additions | Sections 2, 4, 7 and 15: why demos die in production, Little's Law, prices, rate limits, batch discount |
-| Production study guide (`12_production_and_operations`) | Sections 7 and 8: retries, breakers, fallback, degradation, budgets, the 99.9% answer |
-| Handbook Module 08 doc 1 and Module 10 doc 4 | Sections 10 and 12: shadow, canary, pointer-flip rollback, override rate, week-4 retention |
-| Handbook Module 06 doc 1 | Section 7: identity, fair queuing |
-| The Secure Multi-Tenant AI Platform case, the Evaluation and Release Gating case, the Observability and Production Diagnosis case, the Consumer-Scale Chat Service case, the LLM Inference Serving case and Standalone #100 | Cross-linked by section instead of re-explained |
+| Production and operations tutorial | Sections 7 and 8: retries, breakers, fallback, degradation, budgets, the 99.9% answer |
+| Notes on prompt versioning and rollback, and on delivery gates and metrics | Sections 10 and 12: shadow, canary, pointer-flip rollback, override rate, week-4 retention |
+| Notes on identity, secrets and tenant fairness | Section 7: identity, fair queuing |
+| The Secure Multi-Tenant AI Platform case, the Evaluation and Release Gating case, the Observability and Production Diagnosis case, the Consumer-Scale Chat Service case, the LLM Inference Serving case and the Production LLM Gateway case | Cross-linked by section instead of re-explained |
 
-**The source has talking points for this prompt, not a worked design.** Question 17 lists what to cover and one follow-up. Everything that turns that list into an architecture, a sizing walk and a rollout is *own construction*, built from the sources above. Every number is a stated assumption for the whiteboard, not a measurement.
+**The source has talking points for this prompt, not a worked design.** The prompt lists what to cover and one follow-up. Everything that turns that list into an architecture, a sizing walk and a rollout is *own construction*, built from the sources above. Every number is a stated assumption for the whiteboard, not a measurement.
 
 ---
 
@@ -48,7 +48,7 @@ A prototype hides problems by construction, not by accident. The cost cram sheet
 
 The same sheet contrasts prototype and production on six axes, verbatim in the table's middle column.
 
-| Axis | Prototype → production (cram sheet) | What that means for #61 *(own construction)* |
+| Axis | Prototype → production (cram sheet) | What that means for this case *(own construction)* |
 |---|---|---|
 | Dataset | curated/static → large, messy, multi-tenant, churning | The eval set built from demo questions is biased toward what already worked |
 | Security | mocked → OAuth/OIDC/SAML, RBAC/ABAC, permission filtering, audit | A shared API key and an unfiltered index become a data-exposure incident |

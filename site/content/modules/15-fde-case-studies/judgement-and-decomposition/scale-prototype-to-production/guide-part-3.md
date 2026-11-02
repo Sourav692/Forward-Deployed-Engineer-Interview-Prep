@@ -2,7 +2,7 @@
 
 ## 13. Cover All Seventeen Items the Bank Lists
 
-Question 17 lists seventeen things to cover. Check the answer against them, in the bank's order *(mapping is own construction)*.
+The prompt lists seventeen things to cover. Check the answer against them, in the order given *(mapping is own construction)*.
 
 | Item (verbatim) | Where this page covers it |
 |---|---|
@@ -62,8 +62,8 @@ The lines that carry the round *(own construction unless quoted)*:
 2. *"The bill scales with request shape, not with users."*
 3. *"Each tenfold step breaks something different."*
 4. *"A rate limit decides whether; a fair queue decides in what order."*
-5. *"You can't promise more than your dependency provides."* (production guide)
-6. *"If rollback requires a build, it is not a rollback."* (Handbook Module 08 doc 1)
+5. *"You can't promise more than your dependency provides."*
+6. *"If rollback requires a build, it is not a rollback."*
 7. *"Adoption is a deliverable."*
 
 Follow-ups beyond the bank's adoption question *(own construction)*:

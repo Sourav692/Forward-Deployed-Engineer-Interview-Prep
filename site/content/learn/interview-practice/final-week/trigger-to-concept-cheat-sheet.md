@@ -99,7 +99,7 @@ HITL = human-in-the-loop. High model confidence is not permission to act. Approv
 
 | Hear… | Think… | Ask / say next | Module |
 |---|---|---|---|
-| “One tenant hurts everyone” | Noisy neighbor / fairness | Tenant concurrency, quotas, weighted scheduling | 9 |
+| “One tenant hurts everyone” | Noisy neighbour / fairness | Tenant concurrency, quotas, weighted scheduling | 9 |
 | “Within quota, but system full” | Admission control | Can this task be accepted within capacity now? | 9 |
 | “Queue grows continuously” | Sustained overload | Arrival vs completion rate; capacity or reduced intake | 9 |
 | “More workers did not help” | Shared/external bottleneck | Model quota, tool API, retrieval, state-store saturation | 9 |

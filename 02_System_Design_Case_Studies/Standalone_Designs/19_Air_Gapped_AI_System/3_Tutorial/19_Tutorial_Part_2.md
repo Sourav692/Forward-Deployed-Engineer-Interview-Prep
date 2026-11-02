@@ -53,7 +53,7 @@ flowchart TD
     Q -->|Yes| OK["Proceed with current<br/>request/model profile"]
     Q -->|No| Options["Challenge the request profile"]
     Options --> O1["Reduce token work<br/>per request"]
-    Options --> O2["Shrink the model /<br/>quantize more aggressively"]
+    Options --> O2["Shrink the model /<br/>quantise more aggressively"]
     Options --> O3["Batch more aggressively"]
     Options --> O4["Lower the SLO"]
     Options --> O5["Move work to offline<br/>batch preprocessing"]

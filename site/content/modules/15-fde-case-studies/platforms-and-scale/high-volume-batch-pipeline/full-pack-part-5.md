@@ -79,9 +79,9 @@ On this design the levels separate on who owns the 4 a.m. decision and how far r
 7. **When does the checkpoint advance?** Only after the sink write succeeds, which prevents false progress.
 8. **Name one trigger for each failure policy.** Fail closed: broken snapshot hash. Degrade: transient sink throttling. Queue: quota reduction. Human intervention: 45% at 4 a.m. with no path to the deadline.
 9. **What three questions should the console answer at 4 a.m.?** Can we still finish? Which lever first? What is the blast radius if we keep going?
-10. **What changes when the payload is a bank's financial documents (#49)?** A schema at the typed boundary, confidence and business-rule checks, a human-review lane, and lineage down to document hash and page.
-11. **What is the sixty-second line for the nightly PDF bill (#42)?** Never reprocess an unchanged document without a reason. Batch buys throughput not latency, so quality is proven by sampling.
-12. **What single comparison diagnoses the embedding bill spike (#116)?** Changed document count against embedded document count.
+10. **What changes when the payload is a bank's financial documents?** A schema at the typed boundary, confidence and business-rule checks, a human-review lane, and lineage down to document hash and page.
+11. **What is the sixty-second line for the nightly PDF bill?** Never reprocess an unchanged document without a reason. Batch buys throughput not latency, so quality is proven by sampling.
+12. **What single comparison diagnoses the embedding bill spike?** Changed document count against embedded document count.
 
 ## References
 

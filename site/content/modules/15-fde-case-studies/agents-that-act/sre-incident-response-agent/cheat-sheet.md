@@ -10,7 +10,7 @@ Use the [Main guide](/design/sre-incident-response-agent#main) to practise speak
 
 **Alerts → dedupe/correlate → cap per-service investigations → parallel read-only telemetry → typed coverage → ranked hypothesis + evidence → proposal → owner/commander approval → gateway → verify effect/timeline.**
 
-**LLM/agent role:** Rules or a small model dedupe alerts; the strong LLM synthesizes hypotheses. The incident agent proposes mitigation, and humans approve production writes.
+**LLM/agent role:** Rules or a small model dedupe alerts; the strong LLM synthesises hypotheses. The incident agent proposes mitigation, and humans approve production writes.
 
 ## Ask first
 

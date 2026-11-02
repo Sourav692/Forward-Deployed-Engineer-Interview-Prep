@@ -38,15 +38,15 @@ The two-minute summary to rehearse:
 
 ## 17. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the GPU bill is too high." There is no playbook drill for this group, so the card is *own construction*, built from the output-token and cold-start drivers and the additions file.
+The pivot after a good design is "the GPU bill is too high." No ready-made drill covers this group, so the card is *own construction*, built from the output-token and cold-start drivers and the additions file.
 
 | | |
 |---|---|
 | Dominant driver | GPU time wasted in half-empty batches, long outputs, and KV memory that caps concurrency |
-| Cheapest lever first | Continuous batching to raise occupancy; cap `max_tokens`; prefix caching for shared prompts; quantize to fit more sequences per GPU; move non-interactive traffic to an off-peak batch tier |
+| Cheapest lever first | Continuous batching to raise occupancy; cap `max_tokens`; prefix caching for shared prompts; quantise to fit more sequences per GPU; move non-interactive traffic to an off-peak batch tier |
 | Metric that proves it | Goodput per GPU-hour; cost per million output tokens; batch occupancy; KV utilisation; queue wait p95 |
 | Do not | Buy more GPUs before measuring batch occupancy and KV use |
-| 60-second line | A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantize to fit more sequences, and push anything non-interactive to a cheaper tier. Prove it with goodput per GPU-hour. |
+| 60-second line | A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise to fit more sequences, and push anything non-interactive to a cheaper tier. Prove it with goodput per GPU-hour. |
 
 Decode was two-thirds of the anchor's replica-seconds in section 3, so output length is the first number to cut. Cancellation on disconnect is the second, because it recovers tokens nobody reads. Every strong cost answer follows four verbs in order. Measure, with occupancy and goodput. Route, sending offline work to the batch tier. Bound, with output caps and admission. Cache safely, sharing prefix blocks only for identical prefixes.
 
@@ -95,7 +95,7 @@ Every level can draw a queue in front of GPUs; the level shows in whether each G
 9. **What is the first question for #77?** What each request is. A chat answer and a one-token score differ by almost an order of magnitude in fleet size.
 10. **Name three findings to lead a #79 review with.** Static batching for generative output, an unbounded global FIFO, and round-robin routing that ignores memory.
 11. **Latency is fine at p50 and bad at p99 only at peak. Where to look?** Queueing: separate queue wait from service time, then tighten admission and shed non-interactive work.
-12. **What is the cost card's 60-second line?** A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantize, push non-interactive work to a cheaper tier, and prove it with goodput per GPU-hour.
+12. **What is the cost card's 60-second line?** A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise, push non-interactive work to a cheaper tier, and prove it with goodput per GPU-hour.
 
 ## References
 

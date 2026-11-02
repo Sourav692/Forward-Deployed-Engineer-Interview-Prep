@@ -8,7 +8,7 @@ Treat this as a portfolio question. Nothing gets drawn until the list has been c
 
 | Case | Where it comes from | What the source gives |
 |---|---|---|
-| #60 Prioritise AI Use Cases for a Large Enterprise | [FDE Problem Decomposition Question Bank](../../../../03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md), Question 16 | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
+| Prioritise AI Use Cases for a Large Enterprise | A problem-decomposition interview prompt | The prompt, ten prioritisation criteria, six selection properties, one follow-up and its answer, all quoted in section 1 |
 
 The source is a set of talking points with no worked answer. Everything marked *(own construction)* was built for this page from the arguments in this site's delivery, cost and decomposition material. The insurer, its thirty use cases and every number attached to them are assumptions, not data.
 
@@ -16,7 +16,7 @@ The source is a set of talking points with no worked answer. Everything marked *
 
 ## 1. Refuse to Pick the Most Impressive Demo
 
-The prompt, verbatim from Question 16:
+The prompt, verbatim:
 
 > "An executive gives you a list of 30 potential AI use cases. How do you decide what to build first?"
 
@@ -81,7 +81,7 @@ A weighted sum lets a high score on one dimension buy back a fatal score on anot
 | Permissible decision | The model would take an adverse action on a customer with no human review | Reshaped into decision support, or rejected |
 | Right tool | A deterministic rule, an existing statistical model or a purchase would do it better | Routed to rules, the existing model team, or procurement |
 
-The gates and their wording are *(own construction)*, built from Handbook Module 10's intake refusal and its "no SME is a contractual prerequisite" rule. In my experience, the fourth gate is the one candidates forget. The cost cram sheet lists "low-value workflows" as a cause of runaway bills. Not every item on an AI list needs a language model.
+The gates and their wording are *(own construction)*, built from the delivery operating model's intake refusal and its "no SME is a contractual prerequisite" rule. In my experience, the fourth gate is the one candidates forget. The cost cram sheet lists "low-value workflows" as a cause of runaway bills. Not every item on an AI list needs a language model.
 
 ## 5. Score Seven Dimensions With Stated Weights
 

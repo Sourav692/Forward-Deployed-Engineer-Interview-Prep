@@ -52,7 +52,7 @@ Learn the shared decision pipeline here, then change the boundary that dominates
 | Multi-Tenant SaaS Support Assistant                         | Add a tenant predicate to every retrieval and tool call; test for cross-tenant leakage.                              |
 | ServiceNow Ticket Automation Agent                          | Classify, prioritise, assign, and request missing details; obey the existing ITIL change process.                    |
 | Agentic Support Workflow / customer-support interview mocks | Probe handoff quality, wrong refunds, stale facts, confidence, rollout, and the requested automation target.         |
-| Study-guide implementations                                 | Show how branches, interrupts, retrieval, durable state, and specialist tools implement the same control boundaries. |
+| Framework implementations                                 | Show how branches, interrupts, retrieval, durable state, and specialist tools implement the same control boundaries. |
 
 ## 2. Requirements: Functional + Non-Functional
 

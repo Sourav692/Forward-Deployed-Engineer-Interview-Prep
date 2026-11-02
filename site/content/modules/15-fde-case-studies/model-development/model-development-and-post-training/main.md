@@ -11,7 +11,7 @@ The anchor prompt is “design a model that solves math problems.” The answer 
 | #84 Math model (anchor) | Verified data → SFT → scored rollouts → eval gate | Correct answers and, if required, valid working. |
 | #73 Compute-constrained LLM training | Same data/run/checkpoint discipline | Model size, parallelism and GPU-hour allocation. |
 | #81 Harmless but useful model | Same post-training and gate | Balance harmful compliance against over-refusal. |
-| #83 Polite phone model | Same trained candidate and eval loop | Distill/quantize to device memory and test on the phone. |
+| #83 Polite phone model | Same trained candidate and eval loop | Distill/quantise to device memory and test on the phone. |
 
 ## Questions to ask the interviewer
 
@@ -77,7 +77,7 @@ flowchart LR
   E -->|pass| P[Release candidate]
   E -->|fail| A[Error analysis / revised data mix]
   A --> M
-  P --> Q[Optional distill / quantize for device]
+  P --> Q[Optional distill / quantise for device]
   Q --> T[Serving + reviewed feedback]
   T -. gated data feedback .-> F
 ```
@@ -90,7 +90,7 @@ flowchart LR
 - Sample several answers from that checkpoint and score with a final-answer verifier, step grader or preference labels according to the target; audit high-reward examples for reward hacking.
 - Update the policy with a drift control or use DPO on preference pairs; log data hash, code, config, seed and optimizer/checkpoint state.
 - Compare every candidate with a decontaminated held-out set plus general-skill and safety/over-refusal suites. A failed gate sends evidence back to error analysis and the data mix.
-- Deploy only a passing candidate. If a device ceiling applies, distill and quantize, then rerun quality, latency, memory and battery evaluation on the actual device. Reviewed production feedback enters a gated data flywheel.
+- Deploy only a passing candidate. If a device ceiling applies, distill and quantise, then rerun quality, latency, memory and battery evaluation on the actual device. Reviewed production feedback enters a gated data flywheel.
 
 ## Choices to defend
 
@@ -100,7 +100,7 @@ flowchart LR
 
 **Compute budget:** size by `~6ND` training FLOPs, memory and effective throughput. Use LoRA/QLoRA for quick iteration; move to full fine-tuning only after adapters hit a demonstrated ceiling. Larger runs need sharded state, parallelism matched to layer size, streamed data with recorded order, and checkpoints that include optimiser and loader position. Track evaluation gain per GPU-hour and kill stagnant runs.
 
-**Phone variant:** illustrative 3B weights need about 1.5GB at 4-bit before KV cache and runtime overhead; a 1–2GB budget may require a smaller model, shorter context or both. Distill for task behaviour, quantize, train politeness preferences and measure the quantized student on the slowest supported phone.
+**Phone variant:** illustrative 3B weights need about 1.5GB at 4-bit before KV cache and runtime overhead; a 1–2GB budget may require a smaller model, shorter context or both. Distill for task behaviour, quantise, train politeness preferences and measure the quantised student on the slowest supported phone.
 
 ## Two-minute interview answer
 

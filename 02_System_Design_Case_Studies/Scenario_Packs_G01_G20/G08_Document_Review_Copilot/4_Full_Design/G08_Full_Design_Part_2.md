@@ -4,7 +4,7 @@
 
 The spine is the same in every persona. The interviewer will pick one. Learn the spine once and swap the nouns.
 
-| | Prior authorisation (#30) | Financial compliance (#29) | Legal contract (#31) |
+| | Prior authorisation | Financial compliance | Legal contract |
 |---|---|---|---|
 | Document in | Patient encounter, clinical notes, labs, imaging, prior therapies | Advisor email, chat, marketing draft, client or regulatory document | Uploaded contract |
 | Governing rule | Payer policy, versioned by payer, plan, procedure, diagnosis, date of service | Regulatory rule library and internal policy, by jurisdiction and product | Negotiation playbook and clause library, by clause type |

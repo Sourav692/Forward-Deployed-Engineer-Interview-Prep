@@ -10,7 +10,7 @@ Use the [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) to practise sp
 
 **Alerts → dedupe/correlate → cap per-service investigations → parallel read-only telemetry → typed coverage → ranked hypothesis + evidence → proposal → owner/commander approval → gateway → verify effect/timeline.**
 
-**LLM/agent role:** Rules or a small model dedupe alerts; the strong LLM synthesizes hypotheses. The incident agent proposes mitigation, and humans approve production writes.
+**LLM/agent role:** Rules or a small model dedupe alerts; the strong LLM synthesises hypotheses. The incident agent proposes mitigation, and humans approve production writes.
 
 ## Ask first
 

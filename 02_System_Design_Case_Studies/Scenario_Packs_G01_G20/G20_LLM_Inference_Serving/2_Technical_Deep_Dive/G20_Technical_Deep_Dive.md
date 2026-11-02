@@ -34,4 +34,4 @@ For #79, review a junior design by ranking the top risks: static batches for var
 
 TTFT regression: inspect client/network, CPU tokenization, queue, long-prompt prefill and KV preemption. TPOT regression: inspect batch size, decode saturation and prefill interference. Slow after last token: detokenization, safety/schema post-process or a buffering proxy. Peak-only high p99 with flat p50 points toward queueing. Goodput is requests finished within SLO; raw throughput can rise while useful throughput falls.
 
-For a high GPU bill, measure goodput/GPU-hour, occupancy, KV utilisation and tokens generated after disconnect. The levers are continuous batching, output caps, identical-prefix reuse, appropriate quantization and off-peak batch work. Changing the model or buying GPUs before measuring occupancy may leave the bottleneck untouched.
+For a high GPU bill, measure goodput/GPU-hour, occupancy, KV utilisation and tokens generated after disconnect. The levers are continuous batching, output caps, identical-prefix reuse, appropriate quantisation and off-peak batch work. Changing the model or buying GPUs before measuring occupancy may leave the bottleneck untouched.

@@ -510,7 +510,7 @@ Other terms:
 Least Privilege
 Fail-Closed
 Kill Switch
-Defense in Depth
+Defence in Depth
 ```
 
 ---
@@ -560,7 +560,7 @@ Tenant B █
 Tenant C █
 ```
 
-### Noisy Neighbor
+### Noisy Neighbour
 
 One tenant consumes shared resources and hurts others.
 
@@ -948,7 +948,7 @@ Permission-Aware RAG
 Secrets Management
 PII
 Data Residency
-Defense in Depth
+Defence in Depth
 ```
 
 ---
@@ -1021,7 +1021,7 @@ Revise this section immediately before the interview.
 | ------------------------------------- | --------------------------------------------- |
 | **100K users**                  | Horizontal scaling, stateless workers, queues |
 | **Traffic spike**               | Queue, admission control, backpressure        |
-| **One tenant dominates**        | Noisy neighbor, quota, fair queue             |
+| **One tenant dominates**        | Noisy neighbour, quota, fair queue             |
 | **Overloaded system**           | Admission control, load shedding              |
 | **Multiple customers**          | Multi-tenancy, isolation                      |
 | **Slow requests**               | P95/P99 + trace stages                        |
@@ -1075,7 +1075,7 @@ Revise this section immediately before the interview.
 | **Worker dies**                 | Stateless + durable state                     |
 | **Limit failure impact**        | Blast radius                                  |
 | **Sensitive data**              | AuthN/AuthZ + least privilege                 |
-| **Safe action-taking AI**       | Defense in depth                              |
+| **Safe action-taking AI**       | Defence in depth                              |
 
 ---
 

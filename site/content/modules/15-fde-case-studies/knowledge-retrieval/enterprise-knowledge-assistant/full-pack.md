@@ -13,7 +13,7 @@ The hard part of this system is that a Tier-1 agent, a Tier-3 engineer and an ac
 | #63 Meridian Assist running case                                 | Section 13                                                                 |
 | #38 Legal RAG under strict cost limits and #70 sub-100 ms search | Section 14                                                                 |
 | #72 reported prompt, LLM-powered enterprise search               | Section 12, follow-up table                                                |
-| #86, #93, #94 incidents and four latency and scale scenarios                  | Section 15                                                                 |
+| Incident write-ups and four latency and scale scenarios                  | Section 15                                                                 |
 
 ---
 
@@ -39,7 +39,7 @@ Ask the questions that change a component. Write the answers where they stay vis
 | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Which source is authoritative for each content type, and what happens when Drive, SharePoint, Slack, the wiki and tickets disagree? | Conflict policy: prefer approved current sources, surface the conflict, never silently pick one         |
 | Must permissions be inherited live, or is periodic sync acceptable?                                                                 | Where ACL checks live. Live means query-time enforcement; periodic means a bounded, stated stale window |
-| Synthesize across sources, or answer only from retrieved passages? Citations to the passage or the document?                        | Context-budget design and the citation builder's granularity                                            |
+| Synthesise across sources, or answer only from retrieved passages? Citations to the passage or the document?                        | Context-budget design and the citation builder's granularity                                            |
 | How fresh must policies, tickets and project updates be, and how fast must a deletion or revoked permission leave retrieval?        | Freshness SLO per content class; event-plus-backfill ingestion; reconciliation cadence                  |
 | Who is the primary user, who diagnoses a wrong answer, who owns the risk if it over-shares?                                         | The trace store's audience and the escalation path                                                      |
 | p95 latency target, residency, retention, cost limits?                                                                              | Stage-by-stage latency budget; region pinning; what the trace may store                                 |

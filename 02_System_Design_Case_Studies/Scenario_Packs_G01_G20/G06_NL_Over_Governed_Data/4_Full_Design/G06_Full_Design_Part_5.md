@@ -67,9 +67,9 @@ All paths are relative to the repository root.
 | 1 to 4, 7, 9, 10, 11, 12 (tutorial material, diagrams and drills verbatim) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-3-natural-language-to-sql-analytics-assistant-tutorial_v2.md`, sections 1 to 4 and 6 to 8 |
 | 1, 3, 8, 10 (executive persona) | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION/04_CASE_STUDY_WORKSHEET/answer_keys/answer-keys-in-md/10_executive_dashboard_copilot_answer_key.md` |
 | 1, 3, 8, 10 (retail persona) | same folder, `08_retail_demand_explainer_answer_key.md` |
-| 5, 6, 8, 13 | `01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/05_Case_Study_Supervisor_To_Deep_Agent.md` |
+| 5, 6, 8, 13 | Case study tutorial on moving from a supervisor to a deep agent (this repo) |
 | 13 (story beats) | The owner's own story notes, kept privately outside the repo |
-| 5 (router, fixed operations) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/05_Structured_Data_Routers_Connectors.md` |
+| 5 (router, fixed operations) | Concept tutorial on structured-data routers and connectors (this repo) |
 | 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #17 |
 | Not included | The V2 tutorial's section 5 working code, API contracts and contract tests beyond the hidden-column sketch; the V1 long tutorial; the practice worksheets' blank templates; the insurer 15–20 minute deep-dive script, which repeats section 13 in fixed order |
 

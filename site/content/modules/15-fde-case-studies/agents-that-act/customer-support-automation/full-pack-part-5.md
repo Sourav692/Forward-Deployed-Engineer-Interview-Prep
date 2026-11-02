@@ -2,7 +2,7 @@
 
 ## 13. Add the Implementation Detail From the Study-Guide Mocks
 
-Six study-guide tutorials end with a mock design of this same system in a framework's vocabulary. None changes the design; each adds one implementation detail worth having ready when the interviewer asks "how exactly".
+Six tutorials end with a mock design of this same system in a framework's vocabulary. None changes the design; each adds one implementation detail worth having ready when the interviewer asks "how exactly".
 
 **Multilingual ticket triage (LangChain foundations, #95).** The pipeline is detect language, classify intent, route, draft and translate back, composed so batching, streaming and retries come free. Routing uses a branch with named intents and a required default arm, so an unrecognised classification never falls through silently. The p95 under 3 s budget splits into an example allocation of about 200 ms language detection, 300 ms classification, 1.5 s draft generation streamed, and 500 ms back-translation, 2.5 s in total. Retries are bounded on every LLM-calling step and the classifier has a fallback provider, because the classifier is the step that must never hard-fail a ticket into limbo.
 
@@ -59,7 +59,7 @@ On this design the levels separate on how the right to act is earned and widened
 - Rollout is agent-assist, then reversible intents, then one tool class at a time, with a kill switch and rollback per intent.
 - The tenant variant adds a tenant predicate on every retrieval; the ITSM variant adds classification, assignment and change control.
 - The hour is spent on escalation, safety and rollout, with the 90-second summary, the concise close and nine prepared follow-ups.
-- Six study-guide mocks supply the implementation detail: branches with default arms, interrupts inside the tool, two indices with a cheap router, CRAG grading, a supervisor with one writing specialist, parent-document sizing.
+- Six framework mocks supply the implementation detail: branches with default arms, interrupts inside the tool, two indices with a cheap router, CRAG grading, a supervisor with one writing specialist, parent-document sizing.
 - The cost pivot is answered by workflow: cache the FAQ path, route by intent, protect account data.
 
 ## Check Yourself

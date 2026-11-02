@@ -205,7 +205,7 @@ Draw the pipeline. **Label every gate with who signs it.**
 | Fails | Behaviour |
 |---|---|
 | A hard gate genuinely fails (not late — actually denied) | Engagement stays at its current stage; the failure is a first-class event in the log, not a silent stall |
-| Wrong person attempts a sign-off | Denied, logged, engagement state unchanged — no partial progress from an unauthorized attempt |
+| Wrong person attempts a sign-off | Denied, logged, engagement state unchanged — no partial progress from an unauthorised attempt |
 | Golden set never gets customer sign-off | Evaluate stage is permanently blocked; this is a customer-side failure, and the framework's job is to surface it clearly, not route around it |
 | Success metrics genuinely aren't met by day 14 | The go/no-go gate simply doesn't pass — "no-go" is a legitimate, first-class outcome, not a failure of the framework |
 

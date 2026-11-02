@@ -12,7 +12,7 @@ The final answer can itself leak data if it renders attacker-controlled Markdown
 
 A run records user/run ID, goal, dependency plan, typed evidence, tool errors, draft, coverage score, hop/replan counters and budget. Parallel branches should append to an evidence list with provenance and dedupe; a scalar summary with last-write-wins semantics loses a branch. Budget counters aggregate across branches. An evidence record should identify source URL or document ID, access scope, retrieved timestamp, quoted span/locator and claim relevance.
 
-The planner may request 3–12 steps, but the supervisor enforces a hard cap and no-progress rule. If a branch repeats the same delegation without new evidence, stop. `EMPTY` means a successful search found nothing; `UNAVAILABLE` means a tool failed. The synthesizer must not treat either as proof that a claim is false.
+The planner may request 3–12 steps, but the supervisor enforces a hard cap and no-progress rule. If a branch repeats the same delegation without new evidence, stop. `EMPTY` means a successful search found nothing; `UNAVAILABLE` means a tool failed. The synthesiser must not treat either as proof that a claim is false.
 
 ## 3. Latency and cost budget
 

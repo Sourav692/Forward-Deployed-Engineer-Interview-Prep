@@ -97,7 +97,7 @@ All paths are relative to the repository root. Purchased material lives under `F
 | 3, 7 (compliance variant) | `…/04_CASE_STUDY_WORKSHEET/03_financial_compliance_reviewer.md` and its answer key |
 | 3, 7 (contract variant) | `…/04_CASE_STUDY_WORKSHEET/05_legal_contract_copilot.md` and its answer key |
 | 12, 15 (objections, follow-ups, rubric) | `FDE/Complete…/07_MOCK_INTERVIEWS_AND_SCORECARDS/02_SHORT_PRACTICE_MOCK/03_financial_red_team_mock.md` and `03_FULL_MOCK_INTERVIEWS/03_financial_red_team_full_mock.md` |
-| 3, 10, 11, 15 (OpenAI-style Q3) and 8, 15 (OpenAI-style Q12) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, questions 3 and 12 |
+| 3, 10, 11, 15 (claims prompt) and 8, 15 (regulated-industry prompt) | Problem decomposition question bank (this repo): the claims-processing and regulated-industry prompts |
 | 14 | `FDE/Complete…/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/05_bad_citations.md` and `08_ingestion_parser_failure.md` |
 | 6 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/chunking/chunking-reference-by-doc-type.md`, sections 3.4, 3.6 and 7 |
 | 13 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill for #30 |
