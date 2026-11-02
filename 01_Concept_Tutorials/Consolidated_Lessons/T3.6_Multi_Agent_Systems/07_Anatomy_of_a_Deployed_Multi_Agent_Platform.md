@@ -91,7 +91,7 @@ A "no" while under `agent_max_iterations` routes back to Search. A "yes", or an 
 
 Why split the work at all? A single "write a good research report" prompt produces shallow, unverified output. Narrow agents produce better output. They also give the system a natural place for a quality gate, the Critic, and for a bounded retry loop.
 
-Is this multi-agent? The sources disagree. By the FDE Handbook's definition, it is a pipeline with a loop and a gate. Its agents share one context and one tool set, so it sits closer to a single agent with several steps. What earns the split is the Critic's independent judgement and the bounded retry. The coordination-patterns guide, by contrast, treats a generator and a separate evaluator as their own multi-agent pattern, evaluator-optimizer. Both readings are defensible. In an interview, name the definition in use and describe the shape exactly.
+Is this multi-agent? The sources disagree. By the strict definition, where each agent has its own responsibility, tools and failure mode, it is a pipeline with a loop and a gate. Its agents share one context and one tool set, so it sits closer to a single agent with several steps. What earns the split is the Critic's independent judgement and the bounded retry. The coordination-patterns guide, by contrast, treats a generator and a separate evaluator as their own multi-agent pattern, evaluator-optimizer. Both readings are defensible. In an interview, name the definition in use and describe the shape exactly.
 
 ## Put One Gateway in Front of Every Model Call
 

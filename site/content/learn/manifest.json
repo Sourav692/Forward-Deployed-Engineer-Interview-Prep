@@ -3756,7 +3756,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/01_The_Agent_Computer_Interface.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/tool-design-mcp-a2a/the-agent-computer-interface",
-      "updated": "2026-10-05"
+      "updated": "2026-11-02"
     },
     {
       "slug": "tool-schema-design",
@@ -3784,7 +3784,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.2_Tool_Design_MCP_and_A2A/03_Typed_Tool_Results_and_Teachable_Errors.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/tool-design-mcp-a2a/typed-tool-results-and-teachable-errors",
-      "updated": "2026-10-05"
+      "updated": "2026-11-02"
     },
     {
       "slug": "the-tool-gateway-and-code-sandboxing",
@@ -3908,7 +3908,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/01_The_Confirmation_Gate_and_Memoization.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/robust-agents/the-confirmation-gate-and-memoization",
-      "updated": "2026-10-12"
+      "updated": "2026-11-02"
     },
     {
       "slug": "retries-and-fallbacks",
@@ -3920,7 +3920,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/02_Retries_and_Fallbacks.md",
       "estMinutes": 7,
       "href": "/learn/production-ai/robust-agents/retries-and-fallbacks",
-      "updated": "2026-10-12"
+      "updated": "2026-11-02"
     },
     {
       "slug": "observability-for-tool-calls",
@@ -3932,7 +3932,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/04_Observability_for_Tool_Calls.md",
       "estMinutes": 6,
       "href": "/learn/production-ai/robust-agents/observability-for-tool-calls",
-      "updated": "2026-10-12"
+      "updated": "2026-11-02"
     },
     {
       "slug": "the-eight-guard-checks",
@@ -3944,7 +3944,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.5_Robust_Agents/05_The_Eight_Guard_Checks.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/robust-agents/the-eight-guard-checks",
-      "updated": "2026-10-12"
+      "updated": "2026-11-02"
     },
     {
       "slug": "practise-robust-agents",
@@ -3980,7 +3980,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T3.7_Agentic_Workflow_Platforms/01_Why_Workflow_Automation_Is_a_Trust_Problem.md",
       "estMinutes": 9,
       "href": "/learn/production-ai/agentic-workflow-platforms/why-workflow-automation-is-a-trust-problem",
-      "updated": "2026-10-05"
+      "updated": "2026-11-02"
     },
     {
       "slug": "canonical-events-and-routing",
@@ -4100,7 +4100,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/04_Permission_Aware_Ingestion.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/permission-aware-ingestion",
-      "updated": "2026-10-05"
+      "updated": "2026-11-02"
     },
     {
       "slug": "the-security-first-query-graph",
@@ -4124,7 +4124,7 @@
       "source": "01_Concept_Tutorials/Consolidated_Lessons/T4.1_Enterprise_RAG_in_Production/06_Output_Guardrails_and_Refusals.md",
       "estMinutes": 8,
       "href": "/learn/production-ai/enterprise-rag-in-production/output-guardrails-and-refusals",
-      "updated": "2026-10-05"
+      "updated": "2026-11-02"
     },
     {
       "slug": "practise-enterprise-rag",

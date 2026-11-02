@@ -62,7 +62,7 @@ With two stores, an ACL change is a manifest edit and one SQLite write. `scripts
 
 ## Give the Catalog a Schema That Outlives One Demo
 
-The Handbook's catalog is one SQLite row per document. The GenAI engineering notes show the shape the same idea takes in a production relational database. Three tables cover a document's whole life.
+The reference pipeline's catalog is one SQLite row per document. The GenAI engineering notes show the shape the same idea takes in a production relational database. Three tables cover a document's whole life.
 
 The **documents** table holds the tenant, source, type, a file hash to catch duplicate uploads, a status (ingesting, indexed, failed, superseded), a version, timestamps, and flexible metadata. The **document_chunks** table holds each chunk's text, token count, the embedding model and version that produced its vector, and the id of that vector in the vector store. The **document_permissions** table records which users, roles, or teams may read, write, or administer each document.
 

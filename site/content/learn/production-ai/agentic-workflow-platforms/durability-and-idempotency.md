@@ -95,7 +95,7 @@ The mechanism does not change, only where it is persisted. That is why the logic
 
 The coverage map names one more gap: nothing calls resume automatically. A retry wrapper with backoff is low effort, because the hard part, idempotent resumption, is done.
 
-The FDE Handbook introduced framework checkpointers earlier. Having built one by hand, you can say exactly what a checkpointer persists, and why a checkpoint after every step is the right granularity.
+LangGraph and similar frameworks ship checkpointers. Having built one by hand, you can say exactly what a checkpointer persists, and why a checkpoint after every step is the right granularity.
 
 ---
 
