@@ -41,7 +41,7 @@ Evaluate at two levels. Outcome evaluation asks whether the final answer was rig
 
 Debug a bad run from the trace keyed by run ID. Record per hop which agent ran, why it was chosen, what it saw and what it returned. The routing reasoning is the highest-value thing to log, because many bad multi-agent outputs come from how work was split and routed, not from one weak agent. Find the first hop where the trajectory diverged.
 
-## 11. Read the Deployed Research Platform as Proof (#12)
+## 11. Read the Deployed Research Platform as Proof
 
 The Research Platform is my own build of the same product, running on AWS. Given a topic, it researches, writes a full report, safety-checks it, caches it and remembers it. Read it once as evidence that each whiteboard box is a real component.
 
@@ -67,7 +67,7 @@ Layer 3 is a pipeline with a loop and a gate, closer to single-agent multi-step 
 
 Name what it lacks, because that is the coverage-map habit. It has no per-user access control: one API key, no tenant model, so every user sees every cached report. That is fine for a research tool and wrong for an enterprise one, and it is exactly the anchor's per-user isolation requirement. It also has no deterministic release gate, since the judge scores are observability, not a gate.
 
-## 12. Build the Supervisor-and-Workers Version (#103)
+## 12. Build the Supervisor-and-Workers Version
 
 The mock prompt is "design a research system with a supervisor and workers". It is the anchor's implementation view. The supervisor plans N queries, workers execute them independently in parallel, and a synthesiser merges.
 
@@ -77,7 +77,7 @@ Parallel is right here because the queries are independent. Parallel costs N cal
 
 Justify multi-agent by naming what it buys. The three valid reasons are real parallelism, distinct tool permissions per role, and context one agent cannot hold. This design has all three. It fans out searches, web agents hold different permissions from the document agent, and isolation keeps the parent's window small. If you cannot name any of the three, use one agent with more tools.
 
-Four costs belong in the answer *(from #103)*. A supervisor adds one model call per hop. Passing full history to every agent makes hop N pay for hops 1 to N-1, so pass a summary instead. Constrain routing with a `Literal` over the real agent names so the supervisor cannot route to one that does not exist. Parallel agents over one corpus duplicate retrieval, so share one retrieval step upstream.
+Four costs belong in the answer *(from the mock design)*. A supervisor adds one model call per hop. Passing full history to every agent makes hop N pay for hops 1 to N-1, so pass a summary instead. Constrain routing with a `Literal` over the real agent names so the supervisor cannot route to one that does not exist. Parallel agents over one corpus duplicate retrieval, so share one retrieval step upstream.
 
 ## 13. Deliver It in Forty-Five Minutes
 

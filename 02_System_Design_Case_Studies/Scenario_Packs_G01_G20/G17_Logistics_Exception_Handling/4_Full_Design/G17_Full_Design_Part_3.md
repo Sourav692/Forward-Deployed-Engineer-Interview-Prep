@@ -111,7 +111,7 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 4, 5, 6, 7, 8, 9, 12 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md` (the anchor, #5) |
+| 1, 2, 4, 5, 6, 7, 8, 9, 12 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md` (the anchor) |
 | 1, 2, 4 to 9, 12 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/AI Logistics Exception-Handling Assistant Design.md` (older source of the anchor, with the same figures and fuller reliability and governance text) |
 | 1 (the open architecture prompt) | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/Mock - AI Exception-Handling Assistant.md` (the captured mock, stage 1 only) |
 | 10, 11, 13 (Tier 2 follow-ups) | Problem decomposition question bank (this repo): the logistics prompt, its failure modes, follow-up probes and six-step framework |

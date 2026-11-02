@@ -66,10 +66,10 @@ The question bank's second failure mode is hand-waving evaluation. Tie every des
 
 Ship model and prompt changes through a release gate with a canary slice, as G13 designs it. A system prompt change is a release, because it also changes the cache prefix and the cost line.
 
-## 13. Answer the Anthropic Wording the Same Way (#78)
+## 13. Answer the Anthropic Wording the Same Way
 
 "Design the Claude chat service" is the same prompt as "Design ChatGPT", and the design above answers it unchanged. The sheet records no content delta. The emphasis differs, and saying so shows the candidate read the room *(own construction)*.
 
-The question bank frames the Anthropic questions directly: *"AI/ML framing, but they fundamentally test distributed-systems fundamentals: batching, queuing, load balancing."* The neighbouring Anthropic prompts are inference batching, GPU routing and a 100,000-requests-per-second token service. Those are group G20 in the sheet. For #78, then, spend more of the hour on sections 3, 8, 10 and 11: the Little's Law sizing, the fair queue, continuous batching with session affinity, and failover. Expect the follow-ups "how do you determine which GPU has capacity?" and "how do you handle failover?" from the batching prompt in the same bank.
+The question bank frames the Anthropic questions directly: *"AI/ML framing, but they fundamentally test distributed-systems fundamentals: batching, queuing, load balancing."* The neighbouring Anthropic prompts are inference batching, GPU routing and a 100,000-requests-per-second token service. Those are group G20 in the sheet. For the Anthropic wording, then, spend more of the hour on sections 3, 8, 10 and 11: the Little's Law sizing, the fair queue, continuous batching with session affinity, and failover. Expect the follow-ups "how do you determine which GPU has capacity?" and "how do you handle failover?" from the batching prompt in the same bank.
 
 The Tier 2 safety probe applies with extra weight here: circuit breakers, rate limiting and graceful degradation when the model is unavailable. Have section 11's degradation ladder ready as a spoken list.

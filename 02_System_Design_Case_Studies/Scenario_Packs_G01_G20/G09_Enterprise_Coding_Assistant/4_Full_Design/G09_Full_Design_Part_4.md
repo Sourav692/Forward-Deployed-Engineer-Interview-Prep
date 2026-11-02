@@ -69,7 +69,7 @@ All paths are relative to the repository root.
 | 3, 8, 10, 12, 14 | Problem decomposition question bank (this repo): the enterprise coding assistant prompt |
 | 6, 9, 12 | Concept tutorial on caching, streaming, CI/CD and build versus buy (this repo) |
 | 8, 10 | Concept tutorial on prompt injection, egress and tenancy (this repo) |
-| 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #3; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 1 and 2 |
+| 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for the anchor; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 1 and 2 |
 | 3 (permission mirror), 11, 13, and every item marked own construction | Built for this page from the sources' arguments; not source material |
 | Not included | `04_AI_Coding_Tools/` is a planned phase about using coding tools, not designing one, and contributes nothing here |
 

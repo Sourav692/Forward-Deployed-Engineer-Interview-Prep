@@ -8,13 +8,13 @@ Getting a model to call a tool is easy. The hard part is an agent that reads ema
 
 | Case in the group | What it contributes here |
 |---|---|
-| #22 Tool-Using AI Agent with Safety Controls (anchor) | Sections 1 to 10: the design, requirements, evaluation and rollout |
-| #1 Enterprise AI Assistant over 100+ internal applications | Section 6: REST, function calling, MCP and agent frameworks as layers; the tool registry at scale; identity propagation |
-| #50 OpenAI-style practice Q6, AI Agent for Enterprise Workflow Automation | Section 11: the focus list and the refund follow-up |
-| #82 Reported Salesforce prompt: agent loop, tool interfaces, memory, orchestration, safety | Section 6 and 11: the loop shape and the Tier 2 probes |
-| #90 Incident: refund tool called above the approval threshold | Section 13 |
-| #107 and #118 §15 scenarios: agent loops on tools, tool workflow times out | Section 12 |
-| #22 self-drill: the agent gets slow and expensive | Section 12 |
+| Tool-Using AI Agent with Safety Controls (anchor) | Sections 1 to 10: the design, requirements, evaluation and rollout |
+| Enterprise AI Assistant over 100+ internal applications | Section 6: REST, function calling, MCP and agent frameworks as layers; the tool registry at scale; identity propagation |
+| OpenAI-style practice prompt, AI Agent for Enterprise Workflow Automation | Section 11: the focus list and the refund follow-up |
+| Reported Salesforce prompt: agent loop, tool interfaces, memory, orchestration, safety | Section 6 and 11: the loop shape and the Tier 2 probes |
+| Incident: refund tool called above the approval threshold | Section 13 |
+| Two §15 scenarios: agent loops on tools, tool workflow times out | Section 12 |
+| Self-drill: the agent gets slow and expensive | Section 12 |
 
 ---
 

@@ -5167,7 +5167,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G16_Real_Time_Call_Assistant/",
-      "estMinutes": 51,
+      "estMinutes": 52,
       "href": "/design/real-time-call-assistant"
     },
     {
@@ -5310,7 +5310,7 @@
       "kind": "live",
       "publish": "own",
       "source": "02_System_Design_Case_Studies/Standalone_Designs/Decomposition_Classics_67_68_69/",
-      "estMinutes": 36,
+      "estMinutes": 37,
       "href": "/design/decomposition-classics-67-68-69"
     },
     {

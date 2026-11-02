@@ -8,11 +8,11 @@ These prompts look like AI questions and are graded as distributed-systems quest
 
 | Case in the group | What it contributes here |
 |---|---|
-| #76 Anthropic: end-to-end batching system for LLM queries, with "which GPU has capacity?" and "how do you handle failover?" (anchor) | Sections 1 to 11, 16 and 17: the whole design |
-| #75 Anthropic: one GPU, up to 100 inputs per batch, synchronous callers | Section 12: the anchor shrunk to one box |
-| #77 Anthropic: token-generation service at 100,000 requests per second | Section 13: the anchor scaled out, with admission control |
-| #79 Anthropic: review a junior developer's batching design | Section 14: the anchor used as a critique rubric |
-| #74 OpenAI favourite: diagnose high latency in an LLM inference pipeline | Section 15: the stack walk, shared with G14 |
+| Anthropic: end-to-end batching system for LLM queries, with "which GPU has capacity?" and "how do you handle failover?" (anchor) | Sections 1 to 11, 16 and 17: the whole design |
+| Anthropic: one GPU, up to 100 inputs per batch, synchronous callers | Section 12: the anchor shrunk to one box |
+| Anthropic: token-generation service at 100,000 requests per second | Section 13: the anchor scaled out, with admission control |
+| Anthropic: review a junior developer's batching design | Section 14: the anchor used as a critique rubric |
+| OpenAI favourite: diagnose high latency in an LLM inference pipeline | Section 15: the stack walk, shared with G14 |
 | Self-drill for G20 *(own construction)* | Section 17 |
 
 **Read this first.** No worked design exists for this group, and the sources have no notes on continuous batching, paged attention or any serving engine. The design on this page is therefore *own construction*, built from general serving practice. It is grounded where the sources do speak: the air-gapped chapter's replica memory and sizing formula, and the cost playbook additions on prefill, decode, Little's Law and goodput. Every number below is a stated assumption, never a benchmark. In the room, say "I would replace these with a load test of the actual model."
@@ -41,7 +41,7 @@ The weak answer draws a load balancer, a queue and a pool of GPUs, then stops. I
 
 A requirement that cannot fail a test is a preference. "Fast" is a preference. "First token under 500 ms at p95 at 1,000 rps" is a constraint. The split and the numbers are *own construction*; the nouns come from the prompts.
 
-The must-haves come straight from #76's wording. Accept generation requests with a prompt, a token limit, sampling parameters and a stream flag. Batch them onto GPUs. Route each batch or sequence to a GPU with capacity. Deliver the response to the right caller, streamed or whole. Detect a failed GPU and move its work elsewhere. Reject or queue excess load rather than collapse under it.
+The must-haves come straight from the anchor prompt's wording. Accept generation requests with a prompt, a token limit, sampling parameters and a stream flag. Batch them onto GPUs. Route each batch or sequence to a GPU with capacity. Deliver the response to the right caller, streamed or whole. Detect a failed GPU and move its work elsewhere. Reject or queue excess load rather than collapse under it.
 
 The should-haves make it operable: per-tenant quotas and priorities, cancellation when a caller disconnects, prefix reuse for repeated system prompts, rolling model upgrades without dropping traffic, and metrics that separate queue wait from service time.
 

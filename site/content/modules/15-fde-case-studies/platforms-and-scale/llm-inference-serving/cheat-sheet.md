@@ -25,6 +25,6 @@ Health evicts sick GPUs; disconnect cancels and frees KV.
 
 ## Variants
 
-#75: one GPU, 100-or-timeout batch, request-ID futures. #77: 100K rps needs request-shape pricing and independent cells. #79: critique static batches, unbounded FIFO and round-robin first. #74: split queue/prefill from decode/post-process latency.
+One-GPU variant: 100-or-timeout batch, request-ID futures. 100K-rps variant: needs request-shape pricing and independent cells. Junior-design review: critique static batches, unbounded FIFO and round-robin first. Latency diagnosis: split queue/prefill from decode/post-process latency.
 
 **60-second close:** “Tokenize and admit before GPU work, route by free KV, schedule continuously, stream by request ID, cancel abandoned work and handle GPU failure with a bounded, honest retry policy.”

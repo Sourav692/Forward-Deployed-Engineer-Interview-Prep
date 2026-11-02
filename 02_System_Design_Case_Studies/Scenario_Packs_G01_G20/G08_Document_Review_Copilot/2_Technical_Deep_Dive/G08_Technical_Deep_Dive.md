@@ -34,7 +34,7 @@ Contain by rolling back the citation generator, requiring span match for legal w
 
 ## 5. Incident drill: critical PDF table never indexed
 
-The other [source §14 incident](../4_Full_Design/G08_Full_Design.md#pdf-parser-drops-critical-tables-92) asks about a restricted-list trade exception above €5M. The answer missed the Head of Compliance plus Legal sign-off row. Parser `pdf_extract_v3.2` detected 17 tables but extracted 9, or 52.9%; pages 31–33 contained no text and the threshold matrix was absent. Ingestion still reported success because the policy was classified as plain text. The regression affected rotated landscape tables.
+The other [source §14 incident](../4_Full_Design/G08_Full_Design.md#pdf-parser-drops-critical-tables) asks about a restricted-list trade exception above €5M. The answer missed the Head of Compliance plus Legal sign-off row. Parser `pdf_extract_v3.2` detected 17 tables but extracted 9, or 52.9%; pages 31–33 contained no text and the threshold matrix was absent. Ingestion still reported success because the policy was classified as plain text. The regression affected rotated landscape tables.
 
 Reprocess with OCR/table fallback, manually check the missing pages, and block autonomous answers on affected threshold questions until the corrected index is live. Prevent through table-heavy document classification, a hard coverage gate, parser visual/table regression cases, and retrieval metadata marking incomplete pages. Raising top-k cannot retrieve content that never entered the index.
 

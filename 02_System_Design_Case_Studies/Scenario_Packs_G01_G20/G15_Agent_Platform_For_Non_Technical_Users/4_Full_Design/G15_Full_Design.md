@@ -8,9 +8,9 @@ An agent platform is a safety and orchestration problem wearing an AI costume. T
 
 | Case in the group | What it contributes here |
 |---|---|
-| #8 Agent Platform for Non-Technical Users, 60-min whiteboard script (anchor) | Sections 1 to 12 and 14: the framing, the pipeline, determinism, durability, the guardrail, the two bugs, the close |
-| #64 Cascade Robotics, Module 05 running case and code project | Section 13 for what the module adds; its figures run through sections 2, 5, 6, 10 and 11 |
-| Self-drill on #8, Drill Add-ons tab | Section 15 |
+| Agent Platform for Non-Technical Users, 60-min whiteboard script (anchor) | Sections 1 to 12 and 14: the framing, the pipeline, determinism, durability, the guardrail, the two bugs, the close |
+| Cascade Robotics, Module 05 running case and code project | Section 13 for what the module adds; its figures run through sections 2, 5, 6, 10 and 11 |
+| Self-drill, Drill Add-ons tab | Section 15 |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.
 

@@ -4,7 +4,7 @@
 
 The interviewer's pivot after a good design is "the nightly bill is too high." Two members of the group are that pivot, and both have the same root: reprocessing what did not change.
 
-**#42, nightly PDF summarisation is too expensive.** Thousands of PDFs are processed nightly and cost is too high. Ask first. Are documents new or changed? Is full summarisation required every time? What is the SLA? Can work be batched off-peak? What quality checks are needed?
+**Nightly PDF summarisation is too expensive.** Thousands of PDFs are processed nightly and cost is too high. Ask first. Are documents new or changed? Is full summarisation required every time? What is the SLA? Can work be batched off-peak? What quality checks are needed?
 
 | | |
 |---|---|
@@ -22,7 +22,7 @@ flowchart LR
     H -.unchanged.-> SKIP[Reuse last summary]
 ```
 
-**#116, §15 scenario 13, the batch embedding job became too expensive.** The nightly embedding bill spikes after a document refresh. Ask whether all documents are re-embedded or only changed content. The causes are full re-indexing, duplicate documents, no content hash, or a larger embedding model.
+**The batch embedding job became too expensive (§15 scenario 13).** The nightly embedding bill spikes after a document refresh. Ask whether all documents are re-embedded or only changed content. The causes are full re-indexing, duplicate documents, no content hash, or a larger embedding model.
 
 | | |
 |---|---|
@@ -89,7 +89,7 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 3, 5, 6, 11, 12, 14 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md` and `answer_keys/10_high_volume_batch_inference_system_answer_key.md` (the anchor, #21) |
+| 1, 2, 3, 5, 6, 11, 12, 14 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/10_high_volume_batch_inference_system.md` and `answer_keys/10_high_volume_batch_inference_system_answer_key.md` (the anchor) |
 | 1 to 12, 14 (ninety-second summary, pacing, trade-offs, probes) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-10-high-volume-batch-inference-system-tutorial_v2.md` |
 | Same material in long prose | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-10-high-volume-batch-inference-system-tutorial.md` |
 | 4 (dollar formula), 7 (named frameworks) | V2 tutorial, "My Perspective on the Gaps", which its author marks as supplementary and not chapter content |

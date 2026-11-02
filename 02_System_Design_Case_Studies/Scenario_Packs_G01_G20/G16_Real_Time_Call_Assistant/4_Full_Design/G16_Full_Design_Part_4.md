@@ -2,7 +2,7 @@
 
 ## 14. Answer the Sub-3-Second Pivot in Ten Minutes
 
-This group's pivot is #43, the playbook's Case 6. The prompt: "sales team wants real-time answer suggestions during calls, sub-3s target." It is the live lane of this design, asked on its own.
+This group's pivot is the sub-3-second sales drill. The prompt: "sales team wants real-time answer suggestions during calls, sub-3s target." It is the live lane of this design, asked on its own.
 
 | | |
 |---|---|
@@ -16,7 +16,7 @@ This group's pivot is #43, the playbook's Case 6. The prompt: "sales team wants 
 The source's architecture line: "before call → precompute context. During call → small prompt → fast model → streamed suggestion. After call → async summary + CRM update." Its recommendation: "separate real-time suggestions from slower enrichment."
 
 <!-- spelling: source -->
-Two latency drivers have no cost analogue, and the cram sheet names this case as their home. Both are "the actual cause behind §15 #6 'executive demo is too slow' and §16 Case 6 'sub-3-second sales assistant'." Cold starts make the first request after idle slow. The fix is minimum replicas, warmers and keep-alive, and the price is idle capacity. Sequential workflow design makes each step wait for the previous one for no reason. The fix is to parallelise independent calls, prefetch and push non-critical work async. The source sets one limit: "Do **not** parallelize unsafe side effects". In this design, the live lookup runs beside the model call, and the CRM write never runs in the live lane.
+Two latency drivers have no cost analogue, and the cram sheet names this case as their home. Both are the actual cause behind the "executive demo is too slow" scenario and the "sub-3-second sales assistant" case. Cold starts make the first request after idle slow. The fix is minimum replicas, warmers and keep-alive, and the price is idle capacity. Sequential workflow design makes each step wait for the previous one for no reason. The fix is to parallelise independent calls, prefetch and push non-critical work async. The source sets one limit: "Do **not** parallelize unsafe side effects". In this design, the live lookup runs beside the model call, and the CRM write never runs in the live lane.
 
 One addition from beyond the playbook fits here. "Streaming works but users abandon mid-answer" is answered by measuring abandonment against first-token time and by cancelling the stream on abandon. In a call, the rep "abandons" by answering. So cancel the suggestion stream when the rep starts speaking; with providers that stop generating on cancel, that stops paying for tokens nobody will read *(own construction, applying the additions file's rule)*.
 
@@ -71,7 +71,7 @@ All paths are relative to the repository root unless they start with `05_Project
 |---|---|
 | 1, 2, 3, 7, 8, 9, 11 | Problem decomposition question bank (this repo), the sales or customer-service calls prompt: the decomposition list and the evaluation follow-up |
 | 1, 4, 5, 11, 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 Case 6 and the §4 pattern table |
-| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #43 |
+| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, the sub-3-second drill |
 | 6, 13, 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md`, §10 Streaming and UX, and the decision table |
 | 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, the two latency-only add-ons |
 | 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, "Streaming works but users abandon mid-answer" |

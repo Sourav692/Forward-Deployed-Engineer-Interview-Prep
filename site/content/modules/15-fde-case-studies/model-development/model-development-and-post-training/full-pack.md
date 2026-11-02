@@ -6,10 +6,10 @@ These four prompts ask about one pipeline in four ways. Each question fixes a di
 
 | Case in the group | What it contributes here |
 |---|---|
-| #84 Cohere: design a model that solves math problems, walking through data collection, SFT, post-training and eval (anchor) | Sections 1 to 8 and 13: the full pipeline on one running example |
-| #73 OpenAI: design a scalable, efficient system for training an LLM given compute and data constraints | Section 9: the training stage under a compute budget |
-| #81 Anthropic: design a language model that minimises harmful outputs while staying useful | Section 10: the post-training and eval stages under a harm constraint |
-| #83 Google: design a small LLM that runs on a phone while staying polite | Section 11: the deploy stage under a device constraint |
+| Cohere: design a model that solves math problems, walking through data collection, SFT, post-training and eval (anchor) | Sections 1 to 8 and 13: the full pipeline on one running example |
+| OpenAI: design a scalable, efficient system for training an LLM given compute and data constraints | Section 9: the training stage under a compute budget |
+| Anthropic: design a language model that minimises harmful outputs while staying useful | Section 10: the post-training and eval stages under a harm constraint |
+| Google: design a small LLM that runs on a phone while staying polite | Section 11: the deploy stage under a device constraint |
 | Compute-cost self-drill | Section 14 |
 
 **Most of this page is own construction.** No worked design exists for any of these four prompts. The grounding comes from hands-on fine-tuning labs, material on learning surfaces, and the quantisation arithmetic in the air-gapped chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is an illustration for the whiteboard, not a sourced figure.

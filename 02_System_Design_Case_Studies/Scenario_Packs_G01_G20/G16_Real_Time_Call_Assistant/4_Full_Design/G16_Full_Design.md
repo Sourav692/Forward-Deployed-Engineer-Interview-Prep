@@ -8,7 +8,7 @@ A call assistant is a workflow-timing problem before it is a model problem. The 
 
 | Case in the group | What it contributes here |
 |---|---|
-| #59 OpenAI Q15 AI Assistant for Sales or Customer-Service Calls (anchor) | The eleven-part decomposition and the evaluation follow-up, used in sections 1 to 3, 7 to 9 and 11 |
+| OpenAI practice prompt: AI Assistant for Sales or Customer-Service Calls (anchor) | The eleven-part decomposition and the evaluation follow-up, used in sections 1 to 3, 7 to 9 and 11 |
 | Real-time sales assistant, sub-3-second response (cost drill, Case 6) | The before, during and after split in sections 1, 4 and 5; the whole of section 14 |
 | Realtime Voice AI Agent with RAG (reference implementation) | The streaming voice pipeline and its under-2-second figure, in sections 4 and 6 |
 | G05 Sales Copilot pack | The account snapshot, the CRM permission mirror and the preview-then-approve write, in sections 5 and 9 |
@@ -41,11 +41,11 @@ The weak answer is the drill's own: "large model with a live CRM lookup on each 
 
 ## 2. State Requirements as Testable Constraints
 
-"Real-time" is a preference. "First suggestion bullet visible within 3 seconds of the customer finishing a question, at p95" is a constraint. Only the constraint decides the architecture. Split the functional list by priority so the launch gate is the smallest set that still keeps the promise *(the split is own construction; the items are #59's)*.
+"Real-time" is a preference. "First suggestion bullet visible within 3 seconds of the customer finishing a question, at p95" is a constraint. Only the constraint decides the architecture. Split the functional list by priority so the launch gate is the smallest set that still keeps the promise *(the split is own construction; the items are the anchor prompt's)*.
 
 **Must-haves.** Audio ingestion from the telephony or meeting platform. Speaker diarization, so the transcript knows rep from customer. Streaming transcription. PII redaction before anything is stored or sent to a model. Post-call summary and action-item extraction. CRM update proposals with confidence scoring. Human correction before the write.
 
-**Should-haves.** Live suggestions during the call, the #43 capability. Evaluation by call type and language. Retention policy enforced by the platform, not by habit.
+**Should-haves.** Live suggestions during the call, the sub-3-second drill's capability. Evaluation by call type and language. Retention policy enforced by the platform, not by habit.
 
 **Later.** Coaching analytics across calls. Automatic follow-up email drafts, which reuse G05's approved-claims rule.
 

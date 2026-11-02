@@ -8,10 +8,10 @@ The anchor prompt is “design a model that solves math problems.” The answer 
 
 | Case | Shared foundation | What changes |
 |---|---|---|
-| #84 Math model (anchor) | Verified data → SFT → scored rollouts → eval gate | Correct answers and, if required, valid working. |
-| #73 Compute-constrained LLM training | Same data/run/checkpoint discipline | Model size, parallelism and GPU-hour allocation. |
-| #81 Harmless but useful model | Same post-training and gate | Balance harmful compliance against over-refusal. |
-| #83 Polite phone model | Same trained candidate and eval loop | Distill/quantise to device memory and test on the phone. |
+| Math model (anchor) | Verified data → SFT → scored rollouts → eval gate | Correct answers and, if required, valid working. |
+| Compute-constrained LLM training | Same data/run/checkpoint discipline | Model size, parallelism and GPU-hour allocation. |
+| Harmless but useful model | Same post-training and gate | Balance harmful compliance against over-refusal. |
+| Polite phone model | Same trained candidate and eval loop | Distill/quantise to device memory and test on the phone. |
 
 ## Questions to ask the interviewer
 

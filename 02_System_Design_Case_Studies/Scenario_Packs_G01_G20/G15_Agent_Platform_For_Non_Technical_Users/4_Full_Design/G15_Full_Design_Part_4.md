@@ -119,7 +119,7 @@ All paths are relative to the repository root.
 | 4 (component names) | Agentic workflow platforms tutorial: module reference (this repo) |
 | 12, 13 | Agentic workflow platforms tutorial: coverage map (this repo) |
 | 2, 6, 13 | `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/data/case_study.json`; `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/README.md` (verified results, 21 tests) |
-| 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #8 |
+| 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row |
 | 3 (split and owner table), 4 (full-platform ASCII, Mermaid, failure column), 15 (mapping levers onto the design), and every item marked own construction | Built for this page from the sources' arguments; not source material |
 
 ### Fact-check sources (checked 27 Sep 2026)

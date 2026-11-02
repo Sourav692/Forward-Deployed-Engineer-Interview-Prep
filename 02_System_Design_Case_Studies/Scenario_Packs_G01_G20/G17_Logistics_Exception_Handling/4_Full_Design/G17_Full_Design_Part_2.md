@@ -71,7 +71,7 @@ Require explainability at the point of approval. The draft shown to an ops agent
 
 ## 10. Evaluate It Before Anyone Asks
 
-The #66 prompt ends "how do you build it, and **how do you evaluate it**?" The source bank names hand-waved evaluation as the second failure mode of the round, and says most candidates fumble "how do you know your AI system is actually working well?" Tie every design choice back to how it would be evaluated, and raise the plan unprompted.
+The rerouting prompt ends "how do you build it, and **how do you evaluate it**?" The source bank names hand-waved evaluation as the second failure mode of the round, and says most candidates fumble "how do you know your AI system is actually working well?" Tie every design choice back to how it would be evaluated, and raise the plan unprompted.
 
 The plan below is own construction, built on the anchor's components. Each layer of the design gets one question and one instrument.
 
@@ -99,11 +99,11 @@ Gate every release on the same suite. Detection recall must not drop, the custom
 
 ## 11. Map the Stakeholder Surface for the Rerouting Variant
 
-The #66 prompt is the same system with three different nouns. It says: *"A logistics firm wants an AI agent to handle automated shipment rerouting. They have SAP data, real-time weather APIs, and 500 warehouse managers on different regional systems."* The source bank says it tests three things: multi-system data unification, stakeholder surface area, and whether evaluation is first-class. Section 10 covers the last. This section covers the first two.
+The rerouting prompt is the same system with three different nouns. It says: *"A logistics firm wants an AI agent to handle automated shipment rerouting. They have SAP data, real-time weather APIs, and 500 warehouse managers on different regional systems."* The source bank says it tests three things: multi-system data unification, stakeholder surface area, and whether evaluation is first-class. Section 10 covers the last. This section covers the first two.
 
 Map the anchor onto the prompt before drawing anything new *(own construction)*.
 
-| #66 noun | Where it lands in the anchor | What changes |
+| Rerouting-prompt noun | Where it lands in the anchor | What changes |
 |---|---|---|
 | SAP data | The system of record behind "carrier / ops systems" and the event store | SAP becomes an ingestion source *and* an execution target; changes arrive by change feed or batch extract, so the batch-diff path applies |
 | Real-time weather APIs | A detection signal for "weather delay", on the streaming path | Weather is predictive, so detection can flag a shipment *before* a scan is missed; forecasts need a freshness stamp |

@@ -70,7 +70,7 @@ All paths are relative to the repository root.
 | 5, 6, 8, 13 | Case study tutorial on moving from a supervisor to a deep agent (this repo) |
 | 13 (story beats) | The owner's own story notes, kept privately outside the repo |
 | 5 (router, fixed operations) | Concept tutorial on structured-data routers and connectors (this repo) |
-| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #17 |
+| 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for the anchor |
 | Not included | The V2 tutorial's section 5 working code, API contracts and contract tests beyond the hidden-column sketch; the V1 long tutorial; the practice worksheets' blank templates; the insurer 15–20 minute deep-dive script, which repeats section 13 in fixed order |
 
 ### Fact-check sources (checked 27 Sep 2026)

@@ -6,10 +6,10 @@ A research agent fails when an unbounded fan-out quietly spends the budget, or w
 
 | Case in the group | What it contributes here |
 |---|---|
-| #10 Deep Research Agent at consumer scale (anchor) | Sections 1 to 10 and 13: requirements, state, architecture, the arithmetic, the trifecta, measurement, the 45-minute script, the follow-up bank |
-| #12 The Research Platform (multi-agent, deployed on AWS) | Section 11: the same product as nine running layers, with gateway, guardrails, pgvector and PyRIT |
+| Deep Research Agent at consumer scale (anchor) | Sections 1 to 10 and 13: requirements, state, architecture, the arithmetic, the trifecta, measurement, the 45-minute script, the follow-up bank |
+| The Research Platform (multi-agent, deployed on AWS) | Section 11: the same product as nine running layers, with gateway, guardrails, pgvector and PyRIT |
 | Research system with a supervisor and workers (mock design) | Sections 3, 8 and 12: the reducer, the three termination defences, the supervisor–worker build |
-| Self-drill on #10, Drill Add-ons tab | Section 14 |
+| Self-drill, Drill Add-ons tab | Section 14 |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim.
 
@@ -46,7 +46,7 @@ Read-only is a deliberate requirement. There are no writes, so you need no appro
 | Cost | $0.20/run ceiling |
 | Autonomy | Read-only: no writes, so no approval subsystem |
 | Data class | Public web plus user documents; per-user isolation required |
-| Recovery | A failed branch returns partial results with an explicit gap note, never a silent drop *(from #103)* |
+| Recovery | A failed branch returns partial results with an explicit gap note, never a silent drop *(from the supervisor-and-workers mock design)* |
 
 Every must-have then needs an owner in the architecture *(own construction)*.
 

@@ -38,7 +38,7 @@ The Foundations evaluation lab shows the simplest version: run the model over a 
 
 ## 9. Scale Training Under a Fixed Compute Budget
 
-Case #73 changes the training stage. "Design a scalable, efficient system for training an LLM given compute and data constraints" is the same pipeline with pretraining back in scope and the budget fixed *(own construction throughout)*.
+The compute-budget prompt changes the training stage. "Design a scalable, efficient system for training an LLM given compute and data constraints" is the same pipeline with pretraining back in scope and the budget fixed *(own construction throughout)*.
 
 Start from the budget, not the model. A widely used rule of thumb from compute-optimal scaling work is roughly 20 training tokens per parameter. For a 7B model that is 140B tokens. The compute is then 6 × 7e9 × 1.4e11 = 5.88e21 FLOPs. At an assumed 3e14 effective FLOP/s per GPU, that is about 5,444 GPU-hours, or about 21 hours on 256 GPUs *(assumptions; arithmetic exact)*. If the budget is smaller, shrink the model before shrinking the data.
 
@@ -60,7 +60,7 @@ Checkpointing is how the run survives failure. At hundreds of GPUs over days, so
 
 ## 10. Trade Harm Against Helpfulness on One Chart
 
-Case #81 changes the post-training and eval stages. "Design a language model that minimises harmful outputs while staying useful" is a two-sided objective. A model that refuses everything is perfectly harmless and useless. Measure both sides, or the optimisation will quietly collapse to one of them *(own construction throughout)*.
+The harm-versus-helpfulness prompt changes the post-training and eval stages. "Design a language model that minimises harmful outputs while staying useful" is a two-sided objective. A model that refuses everything is perfectly harmless and useless. Measure both sides, or the optimisation will quietly collapse to one of them *(own construction throughout)*.
 
 Plot two numbers against each other for every checkpoint. The first is the harmful-compliance rate: on a set of genuinely harmful requests, how often does the model help? The second is the over-refusal rate: on a set of benign requests that merely look risky, how often does it refuse? "How do I kill a stuck Python process?" belongs in the second set. A release moves down on the first number without moving up on the second.
 
@@ -72,7 +72,7 @@ Red-team continuously. Attack prompts change faster than training runs, so keep 
 
 ## 11. Shrink the Model Without Shrinking Its Manners
 
-Case #83 changes the deploy stage. "Design a small LLM that runs on a phone while staying polite" fixes a memory and latency ceiling, and it names politeness as an alignment target *(own construction throughout)*.
+The on-device prompt changes the deploy stage. "Design a small LLM that runs on a phone while staying polite" fixes a memory and latency ceiling, and it names politeness as an alignment target *(own construction throughout)*.
 
 Size the weights first. Memory for weights is parameters × bytes per parameter.
 

@@ -8,14 +8,14 @@ The three personas in this group look like three products: a prior-authorisation
 
 | Case in the group | What it contributes here |
 |---|---|
-| #30 Healthcare Prior Authorisation Assistant (anchor) | Sections 1 to 10: the design, the PHI boundary, the payer-rule versioning, the spoken answer; the vendor PDF's personas, workflow, red-team list and rollout phases |
-| #29 Financial Compliance Review Copilot | The rule-citation and risk-classification variant in sections 3 and 7; the red-team mock in section 12 |
-| #31 Legal Contract Review Copilot | The clause-versus-playbook variant and fallback language in sections 3 and 7 |
-| #47 OpenAI-style Q3 Claims-Processing Assistant (practice case) | The lower-risk-first ordering in section 10 and its follow-up in section 11 |
-| #56 OpenAI-style Q12 Deploying AI in a Highly Regulated Industry (practice case) | The governance checklist in section 8 and its follow-up in section 11 |
-| #89 Incident: correct answer, misleading citation | Section 14 |
-| #92 Incident: PDF parser drops critical tables | Sections 6 and 14 |
-| Self-drill for #30, cost per document | Section 13 |
+| Healthcare Prior Authorisation Assistant (anchor) | Sections 1 to 10: the design, the PHI boundary, the payer-rule versioning, the spoken answer; the vendor PDF's personas, workflow, red-team list and rollout phases |
+| Financial Compliance Review Copilot | The rule-citation and risk-classification variant in sections 3 and 7; the red-team mock in section 12 |
+| Legal Contract Review Copilot | The clause-versus-playbook variant and fallback language in sections 3 and 7 |
+| OpenAI-style Claims-Processing Assistant (practice case) | The lower-risk-first ordering in section 10 and its follow-up in section 11 |
+| OpenAI-style Deploying AI in a Highly Regulated Industry (practice case) | The governance checklist in section 8 and its follow-up in section 11 |
+| Incident: correct answer, misleading citation | Section 14 |
+| Incident: PDF parser drops critical tables | Sections 6 and 14 |
+| Self-drill, cost per document | Section 13 |
 
 ---
 

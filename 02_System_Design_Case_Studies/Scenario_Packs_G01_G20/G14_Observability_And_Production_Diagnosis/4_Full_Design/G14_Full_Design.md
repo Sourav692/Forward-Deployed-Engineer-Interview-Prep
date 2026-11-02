@@ -8,15 +8,15 @@
 
 | Case in the group | What it contributes here |
 |---|---|
-| #24 Observability for a Customer-Facing AI Application (anchor) | Sections 1 to 9, 13 and 14: discovery, the no-capture list, requirements, sizing, architecture, redaction, sampling, failure policy, triage, rollout, delivery |
-| #87 Incident: latency spike after a reranker and model-routing change | Section 10 |
-| #88 Incident: cost spike from a prompt-template and cache-key regression | Section 11 |
-| #53 OpenAI Q9 Latency Regression in an LLM Application | Section 12, and card 15.3 |
-| #54 OpenAI Q10 RAG System with Poor Answer Quality | Sections 9 and 12 |
-| #74 Reported OpenAI prompt: diagnose high latency in an LLM inference pipeline | Section 12 |
-| #44 Playbook drill: LLM costs exploded after launch | Card 15.1 |
+| Observability for a Customer-Facing AI Application (anchor) | Sections 1 to 9, 13 and 14: discovery, the no-capture list, requirements, sizing, architecture, redaction, sampling, failure policy, triage, rollout, delivery |
+| Incident: latency spike after a reranker and model-routing change | Section 10 |
+| Incident: cost spike from a prompt-template and cache-key regression | Section 11 |
+| OpenAI practice prompt: Latency Regression in an LLM Application | Section 12, and card 15.3 |
+| OpenAI practice prompt: RAG System with Poor Answer Quality | Sections 9 and 12 |
+| Reported OpenAI prompt: diagnose high latency in an LLM inference pipeline | Section 12 |
+| Playbook drill: LLM costs exploded after launch | Card 15.1 |
 | §15 scenarios 1, 2, 6, 7, 10, 11, 12 | Cards 15.2 to 15.8 |
-| #119 Rate limits throttling at peak, #121 Users abandon mid-stream | Cards 15.9 and 15.10 |
+| Rate limits throttling at peak, users abandon mid-stream | Cards 15.9 and 15.10 |
 
 Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim. The sizing numbers in section 4 come from the V2 tutorial's "My Perspective on the Gaps" note, which is supplementary and not chapter content.
 

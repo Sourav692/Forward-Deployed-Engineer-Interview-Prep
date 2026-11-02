@@ -77,7 +77,7 @@ Cancellation is a cost control as well as a courtesy. When a caller disconnects,
 
 ## 12. Shrink It to One GPU for the Synchronous Variant
 
-#75 is the anchor with the distribution removed: one GPU, up to 100 inputs per batch, callers who block and wait. The whole design becomes intake, a batcher, the GPU and a way back to the right caller.
+The one-GPU variant is the anchor with the distribution removed: one GPU, up to 100 inputs per batch, callers who block and wait. The whole design becomes intake, a batcher, the GPU and a way back to the right caller.
 
 The mechanism *(own construction)*. The HTTP handler assigns a `request_id`, parks a future for it, and enqueues the request. A batcher thread flushes when it holds 100 requests or when the oldest has waited, say, 20 ms. The GPU worker runs the batch. The demultiplexer resolves each future by `request_id`, and the handler returns. A timeout on the future turns a stuck batch into an error rather than a hung connection.
 
@@ -87,7 +87,7 @@ One follow-up changes the answer. If the model generates variable-length output,
 
 ## 13. Scale It to 100,000 Requests per Second
 
-#77 is the anchor at a scale where the request shape decides everything. Price it before drawing anything, using section 3's replica-seconds *(own construction; same assumed rates)*.
+The 100,000-requests-per-second variant is the anchor at a scale where the request shape decides everything. Price it before drawing anything, using section 3's replica-seconds *(own construction; same assumed rates)*.
 
 | Request shape | Input / output tokens | Replica-seconds each | Replicas at 100,000 rps and 70% |
 |---|---|---|---|
@@ -109,7 +109,7 @@ The architecture adds four things at this scale.
 
 ## 14. Review the Junior Design Against the Anchor
 
-#79 is not a design question. It hands over a design and asks what to change, so the anchor becomes the rubric. Open with what works. Clarify the requirements the design assumed. Then name the top three risks by severity, not every flaw found.
+The junior-design review is not a design question. It hands over a design and asks what to change, so the anchor becomes the rubric. Open with what works. Clarify the requirements the design assumed. Then name the top three risks by severity, not every flaw found.
 
 The checklist *(own construction)*:
 

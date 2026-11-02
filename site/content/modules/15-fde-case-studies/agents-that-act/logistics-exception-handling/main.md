@@ -23,8 +23,8 @@ This is a modest-user, high-stakes exception system. It watches carrier feeds, d
 
 | Case | Shared foundation | What changes |
 |---|---|---|
-| #5 Logistics exception assistant (anchor) | Two feed types, one detection path, resolution draft, independent policy gate | 150 ops agents; value/confidence boundary; EU residency. |
-| #66 Shipment rerouting over SAP and weather | Same event normalisation, gate, action and audit pattern | SAP becomes source and target, weather adds a predictive signal, 500 regional managers expand the approval surface. |
+| Logistics exception assistant (anchor) | Two feed types, one detection path, resolution draft, independent policy gate | 150 ops agents; value/confidence boundary; EU residency. |
+| Shipment rerouting over SAP and weather | Same event normalisation, gate, action and audit pattern | SAP becomes source and target, weather adds a predictive signal, 500 regional managers expand the approval surface. |
 
 ## Questions to ask the interviewer
 

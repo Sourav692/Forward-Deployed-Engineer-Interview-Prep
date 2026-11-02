@@ -23,8 +23,8 @@ Before the call, hours are available to prepare permission-scoped account contex
 
 | Related case | Shared foundation | What changes |
 |---|---|---|
-| #59 Call assistant question-bank prompt | Transcribe, diarize, summarise, extract actions and propose CRM updates | Drives end-to-end components and summary-evaluation follow-up. |
-| #43 Sub-3-second sales drill | Same call context | Focuses on precompute, small prompt/model, streaming and timeout. |
+| Call assistant question-bank prompt | Transcribe, diarize, summarise, extract actions and propose CRM updates | Drives end-to-end components and summary-evaluation follow-up. |
+| Sub-3-second sales drill | Same call context | Focuses on precompute, small prompt/model, streaming and timeout. |
 | Realtime voice project / Sales Copilot | Streaming ASR/RAG; CRM snapshot and approval pattern | Voice output is replaced by a rep-facing panel; CRM writes remain reviewed. |
 
 ## Questions to ask the interviewer

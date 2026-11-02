@@ -21,7 +21,7 @@ Access audit is separate. Telemetry export never blocks the user.
 
 ## Numbers and incidents
 
-Illustrative: 500 requests/s × six spans ≈ 3,000 raw spans/s; retain errors/slow traces plus about 5% of normal traffic. #87: p95 22.18s from stacked retrieval, reranker, queue and provider delays. #88: traffic +7%, input tokens +351%, cache 67% → 4%; missing `role_scope` also risks leakage.
+Illustrative: 500 requests/s × six spans ≈ 3,000 raw spans/s; retain errors/slow traces plus about 5% of normal traffic. Latency incident: p95 22.18s from stacked retrieval, reranker, queue and provider delays. Cost incident: traffic +7%, input tokens +351%, cache 67% → 4%; missing `role_scope` also risks leakage.
 
 ## Diagnosis
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T12:39:46.604Z",
+  "generatedAt": "2026-11-02T12:59:09.091Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -674,7 +674,7 @@
                   "label": "Full Design 4"
                 }
               ],
-              "minutes": 51,
+              "minutes": 52,
               "updated": "2026-11-02"
             },
             {
@@ -1540,7 +1540,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 36,
+              "minutes": 37,
               "updated": "2026-11-02"
             }
           ]

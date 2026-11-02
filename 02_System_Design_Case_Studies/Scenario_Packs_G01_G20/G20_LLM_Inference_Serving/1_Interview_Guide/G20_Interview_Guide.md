@@ -8,11 +8,11 @@ The anchor asks for end-to-end batching of LLM requests, including which GPU has
 
 | Case | Shared foundation | What changes |
 |---|---|---|
-| #76 Batching system (anchor) | Admission → capacity-aware routing → local scheduler → streamed result | Balanced interactive service with failover. |
-| #75 One GPU, up to 100 synchronous inputs | Same request IDs and batching | Size-or-time flush, futures and one bounded queue. |
-| #77 100,000 requests/s | Same token-work method | Independent cells, global backpressure and large reserved headroom. |
-| #79 Review a junior design | Same invariants | Rank flaws such as static generative batches, unbounded FIFO and round-robin routing. |
-| #74 High inference latency | Same spans | Diagnose tokenization, network, queue, prefill, KV, decode and post-processing. |
+| Batching system (anchor) | Admission → capacity-aware routing → local scheduler → streamed result | Balanced interactive service with failover. |
+| One GPU, up to 100 synchronous inputs | Same request IDs and batching | Size-or-time flush, futures and one bounded queue. |
+| 100,000 requests/s | Same token-work method | Independent cells, global backpressure and large reserved headroom. |
+| Review a junior design | Same invariants | Rank flaws such as static generative batches, unbounded FIFO and round-robin routing. |
+| High inference latency | Same spans | Diagnose tokenization, network, queue, prefill, KV, decode and post-processing. |
 
 ## Questions to ask the interviewer
 
@@ -100,7 +100,7 @@ flowchart TB
 
 ## Variants and evaluation
 
-For #75, a single GPU batcher flushes at 100 requests or after a short wait; each synchronous caller has a request-ID future and timeout, and the queue is bounded. For #77, price the workload before saying 100K rps: the source's assumed chat shape implies ~21,400 replicas at 70%, while short completions imply ~2,570. Use independent cells and global backpressure so one hot tenant or deploy does not damage the fleet. For #79, lead a review with the three highest risks and their fixes.
+For the one-GPU variant, a single GPU batcher flushes at 100 requests or after a short wait; each synchronous caller has a request-ID future and timeout, and the queue is bounded. For the 100K-rps variant, price the workload before saying 100K rps: the source's assumed chat shape implies ~21,400 replicas at 70%, while short completions imply ~2,570. Use independent cells and global backpressure so one hot tenant or deploy does not damage the fleet. For the junior-design review, lead with the three highest risks and their fixes.
 
 Track p50/p95 TTFT, TPOT, queue wait, service time, prefill/decode throughput, prefix hit rate, KV occupancy/preemptions, cancellation delay, explicit failures and goodput (requests finished within SLO). Load-test actual prompt/output distributions, zone failure, stale capacity heartbeats, long-prefill interference and overload before claiming the illustrative replica count works.
 

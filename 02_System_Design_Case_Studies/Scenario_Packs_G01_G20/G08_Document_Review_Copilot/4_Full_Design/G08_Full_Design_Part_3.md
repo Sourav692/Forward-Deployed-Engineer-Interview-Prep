@@ -102,7 +102,7 @@ The sixty-second line: extraction is cheap, judgement is expensive. Route pages 
 
 Both scenario incidents are questions about where the design would have caught the failure. Answer each as detect, contain, root cause, prevent. Read the telemetry aloud. The numbers are the argument.
 
-### Correct answer, misleading citation (#89)
+### Correct answer, misleading citation
 
 An account executive asked whether a customer could terminate for convenience with 30 days' notice. The assistant answered correctly. It cited Section 12.4, the Data Processing Addendum, instead of Section 8.2, Termination for Convenience.
 
@@ -130,7 +130,7 @@ Detect: `answer_supported=true` with `citation_span_match=false`, and the true c
 
 > *"I would treat this as a high-severity citation faithfulness issue. The telemetry shows `answer_supported=true` but `citation_span_match=false`, with the real clause ranked 7th. I would roll back the citation generator, require span-level verification, and add separate citation accuracy evals. In legal workflows, a correct answer with a wrong citation can be more dangerous than an answer that clearly refuses."*
 
-### PDF parser drops critical tables (#92)
+### PDF parser drops critical tables
 
 A compliance reviewer asked what approval is needed for a restricted-list trade exception above €5M. The assistant gave the general escalation process. It missed the table row requiring Head of Compliance plus Legal sign-off.
 

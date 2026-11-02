@@ -2,7 +2,7 @@
 
 ## 15. Walk the Latency Stack When It Gets Slow
 
-#74 asks for the full stack: tokenization, network, batch size, KV cache, post-processing. Section 12 of the Observability and Production Diagnosis case answers it from the application's traces. This section answers it from inside the serving layer. First ask which latency is slow: first token, per token, or total *(from question 9 of the decomposition questions file)*.
+The latency-diagnosis prompt asks for the full stack: tokenization, network, batch size, KV cache, post-processing. Section 12 of the Observability and Production Diagnosis case answers it from the application's traces. This section answers it from inside the serving layer. First ask which latency is slow: first token, per token, or total *(from question 9 of the decomposition questions file)*.
 
 | Layer | Symptom | Likely cause | Check |
 |---|---|---|---|
@@ -91,9 +91,9 @@ Every level can draw a queue in front of GPUs; the level shows in whether each G
 5. **How is "which GPU has capacity?" answered?** Replicas heartbeat free KV, running and waiting counts to a registry. The router samples two, picks the better one, and the replica rejects quickly if the request does not fit.
 6. **A GPU dies mid-generation. What happens to its requests?** Un-streamed ones retry from scratch elsewhere. Streamed ones re-prefill prompt plus emitted tokens, likely but not guaranteed to match under greedy decoding, or fail explicitly with the partial output.
 7. **Why charge admission by tokens rather than requests?** One tenant's long prompts cost many times another's short ones, so request counts let a heavy tenant starve light ones.
-8. **In #75, why bound the queue at two batches?** A deeper queue only serves requests that have already missed the SLO, and synchronous callers hold a connection each while they wait.
-9. **What is the first question for #77?** What each request is. A chat answer and a one-token score differ by almost an order of magnitude in fleet size.
-10. **Name three findings to lead a #79 review with.** Static batching for generative output, an unbounded global FIFO, and round-robin routing that ignores memory.
+8. **In the one-GPU variant, why bound the queue at two batches?** A deeper queue only serves requests that have already missed the SLO, and synchronous callers hold a connection each while they wait.
+9. **What is the first question for the 100,000-requests-per-second variant?** What each request is. A chat answer and a one-token score differ by almost an order of magnitude in fleet size.
+10. **Name three findings to lead a junior-design review with.** Static batching for generative output, an unbounded global FIFO, and round-robin routing that ignores memory.
 11. **Latency is fine at p50 and bad at p99 only at peak. Where to look?** Queueing: separate queue wait from service time, then tighten admission and shed non-interactive work.
 12. **What is the cost card's 60-second line?** A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise, push non-interactive work to a cheaper tier, and prove it with goodput per GPU-hour.
 

@@ -88,9 +88,9 @@ This works because of the signals section 2 kept: request and tenant correlation
 
 Alert on customer harm or likely impending harm, not on telemetry volume. Good triggers are sustained latency above the SLO, elevated error rates, repeated empty retrievals, a spike in fallback responses and critical tool failures. So is a sudden rise in "wrong answer" feedback for one tenant or cohort.
 
-## 10. Walk Through the Latency Spike (#87)
+## 10. Walk Through the Latency Spike
 
-A slow pipeline is rarely one slow component. Incident #87 is the proof: no single span explains it, and every small change looked safe alone.
+A slow pipeline is rarely one slow component. The latency incident is the proof: no single span explains it, and every small change looked safe alone.
 
 **Setting.** A B2B SaaS support copilot runs inside a live support console. Agents expect answers in under 5 seconds because the customer is waiting in chat. The path is Support Console → RAG API → query rewrite → hybrid retriever → cross-encoder reranker → context compressor → LLM gateway → model provider → response evaluator → UI stream. The target is a 7-second p95 with a 12-second hard timeout.
 

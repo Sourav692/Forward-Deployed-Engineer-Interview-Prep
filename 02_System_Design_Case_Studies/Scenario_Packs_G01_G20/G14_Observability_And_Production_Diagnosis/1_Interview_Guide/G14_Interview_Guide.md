@@ -23,10 +23,10 @@ The anchor is a customer-facing AI application that is “slow and sometimes wro
 
 | Related case | Shared foundation | What changes |
 |---|---|---|
-| #87 Latency spike | Correlated stage spans | Diagnose stacked retrieval, reranker, queue and provider delays. |
-| #88 Cost spike | Versioned request and token metadata | Find prompt expansion, model-route change and unsafe cache-key regression. |
-| #53 / #74 Latency questions | Per-hop timing | Separate application queueing from inference prefill and decode. |
-| #54 Poor RAG quality | Retrieval and answer evidence | Separate retrieval, synthesis, prompt, output and user-experience faults. |
+| Latency spike | Correlated stage spans | Diagnose stacked retrieval, reranker, queue and provider delays. |
+| Cost spike | Versioned request and token metadata | Find prompt expansion, model-route change and unsafe cache-key regression. |
+| Latency questions | Per-hop timing | Separate application queueing from inference prefill and decode. |
+| Poor RAG quality | Retrieval and answer evidence | Separate retrieval, synthesis, prompt, output and user-experience faults. |
 | Cost/latency pivots | Tenant/workflow attribution | Apply measure → route → bound → cache safely. |
 
 ## Questions to ask the interviewer
@@ -104,9 +104,9 @@ Start with the user outcome: p95/p99, first-token time, failure/partial rate and
 
 **If sampling dropped the only bad trace:** compare complaints with trace coverage, temporarily raise fidelity for the affected slice, reconstruct from gateway/dependency evidence, mark the trace gap, then add error-class overrides and always-on exemplars. A missing trace does not mean no failure.
 
-**Latency incident #87:** p95 reached 22.18s against a 7s target. Retrieval 4.2s, reranker 3.1s, gateway queue 2.8s and provider 9.36s stacked after a larger reranker and model-route change. Roll back the route, cap candidates, enable a light-reranker fallback and keep EU traffic near an EU endpoint; load-test peak queue depth before repeating the experiment.
+**Latency incident:** p95 reached 22.18s against a 7s target. Retrieval 4.2s, reranker 3.1s, gateway queue 2.8s and provider 9.36s stacked after a larger reranker and model-route change. Roll back the route, cap candidates, enable a light-reranker fallback and keep EU traffic near an EU endpoint; load-test peak queue depth before repeating the experiment.
 
-**Cost incident #88:** requests rose only 7%, while input tokens rose 351%, cache hit rate fell from 67% to 4%, and a larger prompt crossed an expensive model-routing threshold. Roll back the template, restore compression and context caps, invalidate the flawed cache entries, and version cost gates. The cache key also lost `role_scope`, so this is a permission incident as well as a budget incident.
+**Cost incident:** requests rose only 7%, while input tokens rose 351%, cache hit rate fell from 67% to 4%, and a larger prompt crossed an expensive model-routing threshold. Roll back the template, restore compression and context caps, invalidate the flawed cache entries, and version cost gates. The cache key also lost `role_scope`, so this is a permission incident as well as a budget incident.
 
 ## Failure policy, cost and rollout
 

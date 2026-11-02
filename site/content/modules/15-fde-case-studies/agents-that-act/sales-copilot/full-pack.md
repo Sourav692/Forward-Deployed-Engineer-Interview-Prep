@@ -6,9 +6,9 @@ Summarising an account is the easy part of a sales copilot. Every useful answer 
 
 | Case in the group | What it contributes here |
 |---|---|
-| #28 Sales Copilot for Account Executives (anchor) | Sections 1 to 12: the worksheet, answer key, requirements, evaluation, rollout and spoken answer |
-| #48 OpenAI Q4 AI-Powered Sales or Account-Research Assistant | The explore list and success metrics in sections 1 and 10, the fabricated-fact follow-up in section 12 |
-| #40 Reduce latency for an agentic CRM assistant | Section 13 |
+| Sales Copilot for Account Executives (anchor) | Sections 1 to 12: the worksheet, answer key, requirements, evaluation, rollout and spoken answer |
+| OpenAI-style practice prompt, AI-Powered Sales or Account-Research Assistant | The explore list and success metrics in sections 1 and 10, the fabricated-fact follow-up in section 12 |
+| Reduce latency for an agentic CRM assistant | Section 13 |
 | Incident 7, model regression missed by a weak eval suite (mapped to the Evaluation and Release Gating case in the sheet, walked here because it is a sales copilot) | Sections 10 and 14 |
 | Concept tutorials on identity, connectors and the structured-data router | The permission and CRM-connector detail in sections 3, 6 and 7 |
 

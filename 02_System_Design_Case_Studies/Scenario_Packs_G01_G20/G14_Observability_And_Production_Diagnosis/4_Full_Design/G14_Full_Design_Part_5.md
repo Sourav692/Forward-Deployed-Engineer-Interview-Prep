@@ -6,8 +6,8 @@ Every level traces the request; the level shows in what the answer refuses to co
 
 | Level | Sounds like | Missing |
 |---|---|---|
-| Senior | One correlation ID through auth, retrieval, model and tools, spans exported asynchronously so telemetry never blocks the user, and a classifier that redacts before storage. Diagnoses from the complaint down, splitting incident #87 into retrieval, reranker, queue and provider time. | Who may see which tenant's traces, and what happens when sampling drops the only bad trace. |
-| Staff | Adds access and ownership: tenant-scoped support views, a separate durable audit log, error-class overrides and exemplars, and a four-phase rollout with named owners and a go/no-go on trace coverage and overhead. Reads the missing `role_scope` in incident #88 as a permission incident, not only a cost one. | What is shared service versus per-customer configuration, and how retention and deletion requests follow each customer's agreement. |
+| Senior | One correlation ID through auth, retrieval, model and tools, spans exported asynchronously so telemetry never blocks the user, and a classifier that redacts before storage. Diagnoses from the complaint down, splitting the latency incident into retrieval, reranker, queue and provider time. | Who may see which tenant's traces, and what happens when sampling drops the only bad trace. |
+| Staff | Adds access and ownership: tenant-scoped support views, a separate durable audit log, error-class overrides and exemplars, and a four-phase rollout with named owners and a go/no-go on trace coverage and overhead. Reads the missing `role_scope` in the cost incident as a permission incident, not only a cost one. | What is shared service versus per-customer configuration, and how retention and deletion requests follow each customer's agreement. |
 | Principal | Splits the system into core product, shared service, adapters and configuration, so per-customer sampling, retention and thresholds stay out of the core. Buys the span plumbing but builds the redaction boundary, because what counts as sensitive is business logic, and makes cost and latency gates on prompt and route changes a rule for every team. | The real failure distribution, overhead budget and retention window, which need the customer's traffic and data-processing agreement to set. |
 
 ## Key Takeaways
@@ -21,8 +21,8 @@ Every level traces the request; the level shows in what the answer refuses to co
 - Sampling is tail-biased with error overrides and exemplars, because uniform sampling drops the only bad trace.
 - Every layer has a named failure policy, and audit evidence fails closed where user answers can degrade.
 - The dashboard is built top down from the complaint, and wrong answers are triaged by comparing evidence with output.
-- Incident #87 was compounded latency from several small changes, found only by comparing each span with its baseline.
-- Incident #88 was prompt growth, a routing threshold and a broken cache key multiplying, and it hid a permission leak.
+- The latency incident was compounded latency from several small changes, found only by comparing each span with its baseline.
+- The cost incident was prompt growth, a routing threshold and a broken cache key multiplying, and it hid a permission leak.
 - Three practice prompts are the same traces read at different depths: the stage decomposition, the seven RAG failure classes, and the inference stack.
 - Rollout runs in four phases with named owners, an eight-metric scorecard, explicit go/no-go gates and a risk register.
 - The fifty minutes go to the no-capture list, the dropped-trace drill and the support test.
@@ -37,11 +37,11 @@ Every level traces the request; the level shows in what the answer refuses to co
 5. **Walk the "sampling drops the only bad trace" drill.** Detect by comparing complaints with sampled trace volume; contain by raising fidelity for the affected slice; recover from neighbouring evidence and mark the gap; prevent with error-class overrides, exemplars and escalation hooks.
 6. **When does a failure fail closed rather than degrade?** When integrity, privacy or authorisation would be compromised: a missing auth token, an unavailable audit sink, a lookup outside tenant scope.
 7. **How do you tell a retrieval fault from a model fault?** Compare retrieved evidence with the answer. Empty, stale or off-topic evidence points upstream; good evidence contradicted by the answer points at the model or prompt; a one-tenant failure points at configuration, access or integration state.
-8. **In #87, which spans stacked up, and what was the process failure?** Retrieval 4200 ms, reranker 3100 ms, gateway queue 2800 ms and provider 9360 ms; the canary never tested peak GPU queue depth.
-9. **In #88, why was the cost spike also a security incident?** The v5 cache key dropped `role_scope`, so one role's summary could be served to another.
-10. **For #74, why do input and output tokens hurt in different places?** Prefill processes the prompt in parallel and sets time to first token; decode generates one token at a time and sets total time.
+8. **In the latency incident, which spans stacked up, and what was the process failure?** Retrieval 4200 ms, reranker 3100 ms, gateway queue 2800 ms and provider 9360 ms; the canary never tested peak GPU queue depth.
+9. **In the cost incident, why was the cost spike also a security incident?** The v5 cache key dropped `role_scope`, so one role's summary could be served to another.
+10. **For the inference-latency prompt, why do input and output tokens hurt in different places?** Prefill processes the prompt in parallel and sets time to first token; decode generates one token at a time and sets total time.
 11. **What does the go/no-go gate check?** Trace coverage above the minimum for the top failure path, and telemetry overhead not moving latency.
-12. **Give the four verbs and the line for #44.** Measure, route, bound, cache safely. Contain, attribute, then diagnose, keeping low-cost safe paths online; budget guardrails must exist before launch.
+12. **Give the four verbs and the line for the costs-exploded drill.** Measure, route, bound, cache safely. Contain, attribute, then diagnose, keeping low-cost safe paths online; budget guardrails must exist before launch.
 
 ## References
 
@@ -49,17 +49,17 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1–9, 13, 14 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md` and `answer_keys/15_observability_customer_facing_ai_application_answer_key.md` (the anchor, #24) |
+| 1–9, 13, 14 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md` and `answer_keys/15_observability_customer_facing_ai_application_answer_key.md` (the anchor) |
 | 1–9, 13, 14 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-15-observability-customer-facing-ai-application-tutorial.md` |
 | 4 (sampling diagram, sizing), 9 (triage diagram), 14 (gap answers) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-15-observability-customer-facing-ai-application-tutorial_v2.md`; sizing and gap answers from its supplementary "My Perspective on the Gaps" |
 | 10 | Production incident log, latency spike write-up |
 | 11 | Production incident log, cost spike write-up |
 | 12 | Problem decomposition question bank (this repo): the latency regression, poor RAG answer quality and inference-stack prompts |
 | 12 (prefill, decode, utilisation), 15.8 (prefix match), 15.9, 15.10 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections A1, B1, D and E |
-| 15.1 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #44; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 7 |
+| 15.1 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, the costs-exploded drill; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 7 |
 | 15.2–15.8 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §15 scenarios 1, 2, 6, 7, 10, 11, 12 and §4's four verbs |
 | 5 (ASCII diagram, "Fails how" column), 3 (owner table), 15 ("Do not" on §15 cards), and every item marked own construction | Built for this page from the sources' arguments; not source material |
-| Related | G20 (LLM inference serving) shares #74's stack walk |
+| Related | G20 (LLM inference serving) shares the inference-latency stack walk |
 
 ### Fact-check sources (checked 27 Sep 2026)
 
