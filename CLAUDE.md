@@ -38,7 +38,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run lint`, `npx tsc --noEmit` (no typecheck script; `tsconfig.json` excludes `scripts/`).
 - Other checks: `check:curriculum` (curriculum model, groups, rounds, redirects, track and module codes, a stale curriculum index), `check:paths` (learning-path hours), `check:bundle` (per-route client JS budgets, after `npm run build`), `check:routes` (`BASE_URL=http://localhost:3307` against `next start -p 3307`), `check:rules`, `check:store` (progress) and `check:rag-import`.
 - The `.ts` scripts run as plain `node` via native TS type-stripping: they need Node 24 (`engines` in `package.json`).
-- GitHub Actions is off (billing), so the CI steps run locally before a merge. A local, untracked `.git/hooks/pre-push` re-runs sync on each pushed commit in a temporary worktree and blocks the push when the committed snapshot is stale or `check:content` fails. "generated content is out of date" means: run `npm run sync`, commit the snapshot, push again.
+- CI (`.github/workflows/ci.yml`) runs on every pull request to `main` and by hand (`gh workflow run ci.yml`), not on pushes; the repo is public, so Actions has no billing limit. The uptime check (`uptime.yml`) runs hourly. A local, untracked `.git/hooks/pre-push` re-runs sync on each pushed commit in a temporary worktree and blocks the push when the committed snapshot is stale or `check:content` fails. "generated content is out of date" means: run `npm run sync`, commit the snapshot, push again.
 
 ## Content pipeline
 
