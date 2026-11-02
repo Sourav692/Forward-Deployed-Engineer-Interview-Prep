@@ -15,9 +15,9 @@
       "label": "Healthy planned path",
       "steps": [
         {
-          "owner": "App owner and platform control plane",
+          "owner": "App owner and regional migration controller",
           "input": "Trusted tenant and app manifest with a stable change key.",
-          "output": "Durable proposed change: recorded intent, not a deployment.",
+          "output": "Durable proposed change in the tenant region: recorded intent, not a deployment.",
           "failure": "Invalid scope, budget, region or bundle rejects the proposal."
         },
         {
@@ -34,9 +34,9 @@
         },
         {
           "owner": "Cell route authority in the regional authority store",
-          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
-          "output": "CAS moves N to N+1, keeps the previous route and appends a history row.",
-          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
+          "input": "Signed generation N+1 pulled from the control plane; current eligibility in the authority store; expected generation N.",
+          "output": "Signature and current eligibility pass; CAS moves N to N+1, keeps the previous route and appends a history row.",
+          "failure": "An unsigned, older or ineligible generation, a stale CAS or a pre-commit failure leaves N intact."
         },
         {
           "owner": "Regional runtime",
@@ -47,7 +47,7 @@
         {
           "owner": "Authorised operator at the cell",
           "input": "Current eligibility of the previous route, actor and reason.",
-          "output": "Local CAS to the previous generation; history keeps both rows.",
+          "output": "New local generation N+2 carrying the previous route; history keeps both rows.",
           "failure": "A revoked previous route blocks rollback; going forward again needs a fresh change."
         }
       ]
@@ -56,9 +56,9 @@
       "label": "Shadow mismatch",
       "steps": [
         {
-          "owner": "App owner and platform control plane",
+          "owner": "App owner and regional migration controller",
           "input": "Trusted tenant and app manifest with a stable change key.",
-          "output": "Durable proposed change: recorded intent, not a deployment.",
+          "output": "Durable proposed change in the tenant region: recorded intent, not a deployment.",
           "failure": "Invalid scope, budget, region or bundle rejects the proposal."
         },
         {
@@ -75,21 +75,21 @@
         },
         {
           "owner": "Cell route authority in the regional authority store",
-          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
+          "input": "No signed generation: the change was blocked at review.",
           "output": "No forward progress: inspect the blocked change; the current route stays.",
-          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
+          "failure": "A cutover attempt for the blocked change rejects; a fix needs a new change key."
         },
         {
           "owner": "Regional runtime",
-          "input": "Existing operation IDs, source policy, budgets and release.",
+          "input": "Current route at generation N, unchanged, with existing operation IDs.",
           "output": "No forward progress: inspect the blocked change; the current route stays.",
-          "failure": "Routing changes cannot replay uncertain old external calls."
+          "failure": "Nothing new to observe; the mismatch is investigated offline."
         },
         {
           "owner": "Authorised operator at the cell",
-          "input": "Current eligibility of the previous route, actor and reason.",
+          "input": "No cutover happened, so there is no rollback to request.",
           "output": "No forward progress: inspect the blocked change; the current route stays.",
-          "failure": "A revoked previous route blocks rollback; going forward again needs a fresh change."
+          "failure": "A rollback request finds no previous route and rejects."
         }
       ]
     },
@@ -97,9 +97,9 @@
       "label": "Previous route revoked",
       "steps": [
         {
-          "owner": "App owner and platform control plane",
+          "owner": "App owner and regional migration controller",
           "input": "Trusted tenant and app manifest with a stable change key.",
-          "output": "Durable proposed change: recorded intent, not a deployment.",
+          "output": "Durable proposed change in the tenant region: recorded intent, not a deployment.",
           "failure": "Invalid scope, budget, region or bundle rejects the proposal."
         },
         {
@@ -116,9 +116,9 @@
         },
         {
           "owner": "Cell route authority in the regional authority store",
-          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
-          "output": "CAS moves N to N+1, keeps the previous route and appends a history row.",
-          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
+          "input": "Signed generation N+1 pulled from the control plane; current eligibility in the authority store; expected generation N.",
+          "output": "Signature and current eligibility pass; CAS moves N to N+1, keeps the previous route and appends a history row.",
+          "failure": "An unsigned, older or ineligible generation, a stale CAS or a pre-commit failure leaves N intact."
         },
         {
           "owner": "Regional runtime",
@@ -138,9 +138,9 @@
       "label": "Control plane down after cutover",
       "steps": [
         {
-          "owner": "App owner and platform control plane",
+          "owner": "App owner and regional migration controller",
           "input": "Trusted tenant and app manifest with a stable change key.",
-          "output": "Durable proposed change: recorded intent, not a deployment.",
+          "output": "Durable proposed change in the tenant region: recorded intent, not a deployment.",
           "failure": "Invalid scope, budget, region or bundle rejects the proposal."
         },
         {
@@ -157,9 +157,9 @@
         },
         {
           "owner": "Cell route authority in the regional authority store",
-          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
-          "output": "CAS moves N to N+1, keeps the previous route and appends a history row.",
-          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
+          "input": "Signed generation N+1 pulled from the control plane; current eligibility in the authority store; expected generation N.",
+          "output": "Signature and current eligibility pass; CAS moves N to N+1, keeps the previous route and appends a history row.",
+          "failure": "An unsigned, older or ineligible generation, a stale CAS or a pre-commit failure leaves N intact."
         },
         {
           "owner": "Regional runtime",
@@ -170,8 +170,8 @@
         {
           "owner": "Authorised operator at the cell",
           "input": "Current eligibility of the previous route, actor and reason.",
-          "output": "Local CAS to the recorded previous generation in the cell's authority store, with actor, reason and audit.",
-          "failure": "A revoked previous route blocks rollback; going forward again needs a fresh change."
+          "output": "Local generation N+2 carrying N's route, with actor, reason and audit; on reconnect the cell reports N+2 and refuses N+1.",
+          "failure": "A revoked previous route blocks rollback; the control plane must publish above N+2."
         }
       ]
     }
@@ -201,23 +201,23 @@
     },
     {
       "title": "After: versioned platform contracts",
-      "description": "A control plane validates manifests and signs route generations; each cell keeps its own route authority and existing regional services enforce runtime safety. The control plane does not process prompts.",
+      "description": "A regional migration controller holds manifests and evidence; a global control plane signs route generations on opaque IDs; each cell checks current eligibility and keeps its own route authority. The control plane holds no prompts or policy.",
       "nodes": [
         [
           "App team contract",
           "Versioned manifest, tests and accountable owner"
         ],
         [
-          "Platform control plane",
-          "Validate manifests and sign route generations"
+          "Regional migration controller",
+          "Manifests, change records and bound shadow evidence"
         ],
         [
-          "Migration controller",
-          "Proposal, bound shadow evidence and generation gate"
+          "Global control plane",
+          "Contract checks and signed generations on opaque IDs"
         ],
         [
           "Cell route authority",
-          "Route records in the regional authority store"
+          "Current eligibility and route records in the regional authority store"
         ],
         [
           "Approved regional data plane",
@@ -231,19 +231,19 @@
     },
     {
       "title": "Migration sequence",
-      "description": "Propose, compare, review, cut over at the cell, observe, and roll back only if the previous route is currently eligible. Failed evidence or a revoked target blocks at review and keeps the current route.",
+      "description": "Each box names its actor. Failed evidence or a revoked target blocks at review and keeps the current route. Rollback happens only if the canary fails and the previous route is currently eligible: the cell writes a newer generation carrying the old route and reports it on reconnect.",
       "nodes": [
         [
           "Propose",
-          "Control plane records the change; intent only"
+          "App owner to regional migration controller; intent only"
         ],
         [
           "Compare",
-          "Shadow evidence bound to baseline route and generation"
+          "Shadow runner: evidence bound to baseline route and generation"
         ],
         [
           "Review",
-          "Gate: 100 samples, zero mismatches, current eligibility",
+          "App and platform owners: 100 samples, zero mismatches, current eligibility",
           {
             "side": [
               "Failed evidence or revoked target",
@@ -253,15 +253,17 @@
         ],
         [
           "Cut over",
-          "Cell pulls signed generation; CAS N to N+1"
+          "Cell route authority: verify signature and current eligibility; CAS N to N+1"
         ],
         [
           "Observe",
-          "Serve under one generation; enforce access and operation identity"
-        ],
-        [
-          "Roll back",
-          "Local CAS to the previous generation with actor and reason, if eligible"
+          "Regional runtime: serve under one generation",
+          {
+            "side": [
+              "Only if the canary fails",
+              "Operator: CAS generation N+2 carrying N's route, if N is still eligible"
+            ]
+          }
         ]
       ]
     }

@@ -70,7 +70,7 @@ Outcomes: write and defend a decision record, defend platform boundaries, test a
 
 A shared application contract describes what a team supplies and what the platform promises. An internal developer platform provides that contract through supported templates, APIs, documentation, validation, deployment and operational support. The first useful version can be a command and a manifest; a portal does not make deployment safe.
 
-Separate a control plane, which validates desired configuration and records decisions, from data planes, which serve regional customer requests. Do not send prompts through a new global platform controller merely to centralise ownership. What happens when the control plane fails is set out in [Place Route Authority in Each Cell](#place-route-authority-in-each-cell).
+Separate a control plane, which checks contracts and publishes desired configuration, from data planes, which serve regional customer requests. Do not send prompts through a new global platform controller merely to centralise ownership. What happens when the control plane fails is set out in [Place Route Authority in Each Cell](#place-route-authority-in-each-cell).
 
 | Architecture option | Benefit | Cost and failure | Decision |
 | --- | --- | --- | --- |
@@ -79,13 +79,29 @@ Separate a control plane, which validates desired configuration and records deci
 | One global request service | Fewer centrally managed endpoints | Global blast radius, residency coupling, control-plane dependency | Reject for A and B placement and cell isolation |
 | Rewrite every role as a microservice | Independent scaling and team releases where needed | New network and transaction boundaries, more operations and migration risk | Extract only when measured ownership or scale requires it |
 
-A modular monolith keeps logical roles in one deployable unit and reduces network contracts; service extraction can separate operational ownership and bottlenecks later. A cell limits a failure domain; it does not demand one microservice per box. Events suit async ingestion and usage aggregation with idempotent consumers. A command that needs an authoritative policy or generation check cannot take its decision from an eventual event consumer. An outbox connects a committed state change to eventual event delivery; it does not make external model calls exactly once.
+Each distributed pattern earns its place on one Stage 12 interaction, and each has a failure it must handle.
 
-Score options against weighted criteria, but apply hard constraints first. Score template-only, regional contracts and global rewrite on delivery speed, isolation, operability and evolvability, weighted 0.2, 0.3, 0.3 and 0.2. With assumed scores of 5, 2, 2, 2; 3, 5, 4, 4; and 1, 1, 2, 3, the weighted totals are 2.6, 4.1 and 1.7. Residency and current access are hard constraints: an option that violates one is removed before ranking, and no score rescues it. Here the vetoed global rewrite also ranks last, so the veto changes nothing. The [decision exercise](#decision-exercise-veto-the-top-score-and-write-the-adr) changes a constraint so that it removes the winner.
+| Pattern | Stage 12 interaction | When it wins | Failure to handle |
+| --- | --- | --- | --- |
+| Modular monolith, extract later | Manifest validation inside the existing regional API | One owner and no new network contract | An early split adds a network failure between validating and recording; extract only for measured ownership or scale |
+| Cell | Each region's runtime and route authority | A bad release or outage stays inside one cell | A cell cannot borrow another cell's capacity or authority |
+| Event with an idempotent consumer, fed by an outbox | Usage events for showback | Aggregation may lag; a duplicate is dropped by its event ID | The outbox delivers a committed change at least once; it never makes a model call exactly once |
+| Command against the authority | Route apply by CAS, after a current policy check | The decision needs the current value | An eventual consumer would act on stale policy or a stale generation |
+
+Try it before revealing: classify each interaction as a command or an event, and give the reason. (1) Apply generation N+1 in a cell. (2) Add a token count to a team's showback. (3) Check that a model approval is current before cutover. (4) Tell dashboards that a cohort moved. (5) Withdraw a dataset so its descendant routes stop.
+
+<details>
+<summary>Reveal after answering</summary>
+
+Commands: 1, 3 and 5. Each reads or changes the current authority value, and each can be refused. Events: 2 and 4. They report something that already happened, so a consumer may lag or see a duplicate without changing any decision. Item 5 may emit an event afterwards to notify app owners, but the withdrawal itself is a command.
+
+</details>
+
+Score options against weighted criteria, but apply hard constraints first. Score three rows of the table: shared library plus templates, regional platform services plus versioned contracts, and one global request service. Rewriting every role as a microservice is an extraction policy that can sit under any of them, so it is not scored. Use delivery speed, isolation, operability and evolvability, weighted 0.2, 0.3, 0.3 and 0.2. With assumed scores of 5, 2, 2, 2; 3, 5, 4, 4; and 1, 1, 2, 3, the weighted totals are 2.6, 4.1 and 1.7. Residency and current access are hard constraints: an option that violates one is removed before ranking, and no score rescues it. Here the vetoed global request service also ranks last, so the veto changes nothing. The [decision exercise](#decision-exercise-veto-the-top-score-and-write-the-adr) changes a constraint so that it removes the winner.
 
 ### Make the Developer Workflow Concrete
 
-A production manifest holds schema version, trusted application ID, tenant mapping, owner and on-call, allowed cell, evaluated release bundle, source connector references, purpose and retention, quota and deadline envelopes, secret references and outcome instrumentation. Separate desired application configuration from centrally enforced tenant policy. A manifest may request a region or model; server policy decides eligibility. Never accept provider credentials, raw datasets or an arbitrary destination URL in that interface.
+A production manifest holds schema version, trusted application ID, tenant mapping, owner and on-call, allowed cell, evaluated release bundle, source connector references, purpose and retention, quota and deadline envelopes, secret references and outcome instrumentation. The full manifest stays in the tenant's region; the global control plane sees only its contract part: schema and contract version, and opaque tenant, app and profile IDs. Separate desired application configuration from tenant policy, which the region enforces. A manifest may request a region or model; server policy decides eligibility. Never accept provider credentials, raw datasets or an arbitrary destination URL in that interface.
 
 Developer steps:
 
@@ -100,16 +116,16 @@ Tenant-specific behaviour lives in prompts, tools, retrieval configuration and a
 
 ```mermaid
 flowchart TD
- A[App team contract: versioned manifest, tests and accountable owner] --> P[Platform control plane: validate manifests and sign route generations]
- P --> M[Migration controller: proposal, bound shadow evidence and generation gate]
- M --> C[Cell route authority: route records in the regional authority store]
+ A[App team contract: versioned manifest, tests and accountable owner] --> M[Regional migration controller: manifests, change records and bound shadow evidence]
+ M --> P[Global control plane: contract checks and signed generations on opaque IDs]
+ P --> C[Cell route authority: current eligibility and route records in the regional authority store]
  C --> R[Approved regional data plane: identity, jobs, retrieval, serving and budgets]
  R --> E[Durable evidence: history, audit, usage and model lineage]
 ```
 
 After diagram. New platform abstractions wrap existing regional contracts. They do not replace resource authority, result persistence, model release approval or regional promotion fencing.
 
-Propose `POST /v1/apps/{app}/changes` with a 16 KiB manifest limit and an operation key of up to 128 characters. Bind the verified app owner or delegated operator to a trusted tenant and app scope. Validate schema, ownership, approved region and bundle, secret references and bounded budget against current server policy. Key uniqueness is scoped to tenant, app, subject, endpoint and key. A same-key retry returns the persisted change rather than submitting another migration, even if approval was revoked after it was recorded.
+The regional migration controller serves `POST /v1/apps/{app}/changes` at the tenant's residency hostname, with a 16 KiB manifest limit and an operation key of up to 128 characters. Bind the verified app owner or delegated operator to a trusted tenant and app scope. Validate schema, ownership, approved region and bundle, secret references and bounded budget against current server policy. Key uniqueness is scoped to tenant, app, subject, endpoint and key. A same-key retry returns the persisted change rather than submitting another migration, even if approval was revoked after it was recorded.
 
 | Status | Meaning |
 | --- | --- |
@@ -127,7 +143,15 @@ Status reads return the current generation and named blockers. The runnable SQLi
 
 Each cell's route records live in its region's authority store, never in one global table. [Stage 11](../11-multi-region/guide.md) gave each tenant region a consensus-replicated authority store for policy, membership and writer ownership: an EU store for Tenants A and B, and Tenant C's equivalent in its US-home cell. Stage 12 adds one record type to it: each app's current route generation and the previous one.
 
-The global control plane validates manifests and publishes signed, versioned route generations under opaque tenant and app IDs. It holds no prompts, documents or answers. Each cell pulls new generations, verifies the signature, and rejects any generation that is unsigned or older than its current one. It applies a generation with a compare-and-set (CAS) on its current generation number, so a request is served under generation N or N+1, never a mix. The cell keeps the last verified generation as last-known-good, with an illustrative staleness bound of 15 minutes before it alerts.
+The global control plane holds opaque placement, contract versions and signed, versioned route generations that refer to opaque tenant, app and profile IDs. It holds no customer content, policy or membership, and it is never authority. Each cell pulls new generations, verifies the signature, and rejects any generation that is unsigned or older than its current one. It then checks current eligibility (approval, residency and policy) in its own authority store, because a signature proves origin, not present permission. Only then does it apply the generation with a compare-and-set (CAS) on its current generation number, so a request is served under generation N or N+1, never a mix. The cell keeps the last verified generation as last-known-good, with an illustrative staleness bound of 15 minutes before it alerts.
+
+| Record | Where it lives | Authority? |
+| --- | --- | --- |
+| Full manifest: owners, tenant mapping, connectors, purpose, retention, secret references | Tenant region, in the migration controller | No; current policy decides eligibility |
+| Change records and shadow evidence | Tenant region, in the migration controller | No; evidence for review |
+| Policy, approvals, and each app's current and previous route generation | Tenant region's authority store | Yes |
+| Opaque placement, contract versions and signed generations on opaque IDs | Global control plane | No |
+| Generation signing keys | Global control plane | No; a stolen key can propose a route but never authorise one |
 
 Changes to the platform itself (validators, templates, contract versions) are releases too. They roll out one cell at a time, starting with a canary cell, behind the same evaluation and rollback gates as an app change.
 
@@ -135,8 +159,10 @@ Changes to the platform itself (validators, templates, contract versions) are re
 | --- | --- | --- |
 | Control plane unreachable | Keep serving last-known-good; freeze new cutovers | Config age past the staleness bound; failed pulls |
 | Unsigned or older generation arrives | Reject it; keep the current generation | Signature and ordering rejections |
+| Signed generation fails current eligibility (approval revoked after signing, or a stolen key) | Reject it; keep the current generation | Eligibility rejections of signed generations |
 | Cell lags the published generation | Serve its current generation; the control plane waits before the next cohort | Applied versus published generation per cell |
-| Emergency rollback during an outage | Local CAS to the recorded previous generation in the cell's authority store, with actor, reason and audit; current eligibility still required | Rollback audit row and post-incident review |
+| Emergency rollback during an outage | CAS a new local generation, N+2, carrying N's route, with actor, reason and audit; N must be currently eligible | Rollback audit row and post-incident review |
+| Control plane returns after that rollback | Report N+2; refuse N+1, which is now older; apply only a generation above N+2 | N+1 marked rolled back for that cell, not lagging; the next publication exceeds every reported generation |
 | Platform release breaks the canary cell | Stop the rollout; other cells keep the old release | Canary contract tests and error budget |
 
 ### Checkpoint 1: A Portal That Bypasses Runtime Policy
@@ -159,38 +185,41 @@ The [offline walkthrough](guide.html#request-walkthrough) traces migration inten
 ```mermaid
 sequenceDiagram
  participant A as App owner
- participant P as Platform control plane
+ participant M as Regional migration controller
  participant S as Shadow comparison
+ participant P as Global control plane
  participant D as Cell route authority in the regional authority store
  participant R as Regional runtime
- A->>P: Scoped manifest and stable change key
- P->>P: Validate and record the proposed change
- P->>S: Authorised read-only comparison, no business effects
- S-->>P: Evidence bound to baseline route and generation
+ A->>M: Scoped manifest and stable change key
+ M->>M: Validate against current regional policy; record the change
+ M->>S: Authorised read-only comparison, no business effects
+ S-->>M: Evidence bound to baseline route and generation
  alt Current eligibility and pilot evidence pass
+ M->>P: Contract part only: opaque tenant, app and profile IDs
  P->>P: Sign and publish route generation N+1
  D->>P: Pull, verify signature, reject older generations
- D->>D: CAS current generation N to N+1; append history
+ D->>D: Check current eligibility; CAS N to N+1; append history
  D-->>A: Inspectable committed generation
  R->>D: Serve under one generation; enforce access and operation identity
  opt Canary fails and the previous route is still eligible
- D->>D: Local CAS to the previous generation with actor and reason
+ D->>D: CAS new local generation N+2 carrying N's route, with actor and reason
+ D->>P: On reconnect, report N+2; N+1 is marked rolled back
  end
  else Failed evidence or revoked target
- P-->>A: Block; retain current route
+ M-->>A: Block; retain current route
  end
 ```
 
-Sequence diagram. CAS changes a pointer only if its expected generation still matches. It prevents stale metadata updates; it does not stop an unfenced old region from writing.
+Migration sequence. CAS changes a pointer only if its expected generation still matches. It prevents stale metadata updates; it does not stop an unfenced old region from writing.
 
 | Step | Responsible component and input | Output and possible failure |
 | --- | --- | --- |
-| Propose | Control plane receives manifest and key | Durable proposed record; invalid scope, region or bundle rejects |
+| Propose | Regional migration controller receives manifest and key | Durable proposed record in the tenant region; invalid scope, region or bundle rejects |
 | Compare | Shadow runner receives eligible read-only examples | Evidence appended with its baseline route and generation; side-effectful work is forbidden |
 | Review | App and platform owners inspect evidence and current eligibility | Pilot decision; low sample, any mismatch or stale evidence blocks |
-| Cut over | Cell route authority receives the signed generation and expected generation | CAS to the new generation with a history row; stale generation rejects |
+| Cut over | Cell route authority receives the signed generation, checks current eligibility in its authority store, and holds the expected generation | CAS to the new generation with a history row; an unsigned, older or ineligible generation, or a stale CAS, rejects |
 | Observe | Regional runtime serves existing stable operations | Customer outcome evidence; old uncertain calls are not replayed |
-| Roll back | Operator verifies the previous route is still eligible | Local CAS with actor and reason, or an explicit block |
+| Roll back | Operator verifies the previous route is still eligible | New local generation N+2 carrying the previous route, with actor and reason, or an explicit block |
 
 ### Migrate in Phases With Reversal Evidence
 
@@ -199,13 +228,13 @@ Sequence diagram. CAS changes a pointer only if its expected generation still ma
 | Week 1: inventory contracts and copied behaviour | Staff engineer plus app leads | Every operation, data class, owner and caller identified | Stop if current guarantees are unknown |
 | Week 2: validate manifests and generate plans | Platform team | Invalid scope, region, model and quota requests reject | Keep existing runtime authoritative |
 | Week 3: shadow eligible read-only supplier flows | App owner plus security | Bounded test population, no business effects, critical slices match | Stop shadow and keep the evidence |
-| Week 4: one app pilot in one approved cell | Release owner and SRE | Current eligibility, capacity and rollback rehearsal | CAS the route back if eligible |
+| Week 4: one app pilot in one approved cell | Release owner and SRE | Current eligibility, capacity and rollback rehearsal | Roll back by a new generation if the old route is eligible |
 | Months 2 to 6: expand cohorts while old paths stay live | App leads and platform owner | Outcome and cost agreement, no unresolved unknown effects | Pause adoption; keep original IDs and data |
-| After the last cohort: retire duplicated paths | Platform owner | No traffic on old scripts for one reversal window | Keep retired scripts restorable until the window ends |
+| After the last cohort: retire duplicated paths | Platform owner | No traffic on old scripts for one reversal window | Retirement clears the rollback pointer; going back needs a fresh, gated change |
 
 Use a strangler migration: route selected new work through the new contract while the old path serves unconverted work. Keep one authoritative writer and stable operation IDs. Avoid dual writes to independent result stores; an outbox plus a replayable projection is safer where eventual views suffice. Schema changes add compatible fields first, migrate readers and writers, verify backfill, then remove old fields after the reversal window. A route rollback cannot undo a destructive schema migration, erase a tombstone or revoke a remote side effect.
 
-Production shadow evidence binds manifest, release bundle, population, evaluator, source policy, time window, and the baseline route and generation it was compared against. It must not send protected content to an unapproved route, consume unbounded quota or invoke business tools twice. Evidence is append-only: a later clean report cannot erase a recorded mismatch. If the route changes after the comparison, the evidence is stale and the change needs fresh comparison. The local gate needs 100 matched examples. Zero mismatches in 100 independent, representative samples bounds the true mismatch rate below about 3% at 95% confidence (the rule of three, 3/100). It is a demonstration gate, not proof of safety.
+Production shadow evidence binds manifest, release bundle, population, evaluator, source policy, time window, and the baseline route and generation it was compared against. It must not send protected content to an unapproved route, consume unbounded quota or invoke business tools twice. Evidence is append-only: a later clean report cannot erase a recorded mismatch. If the route changes after the comparison, the evidence is stale and the change needs a fresh comparison under a new change key. The local gate needs 100 matched examples. Zero mismatches in 100 independent, representative samples bounds the true mismatch rate below about 3% at 95% confidence (the rule of three, 3/100). It is a demonstration gate, not proof of safety.
 
 ### Calculate Total Cost of Ownership
 
@@ -236,13 +265,15 @@ At these inputs, break-even month = 15 + 3 × overlap months, and each overlap m
 
 Open the [offline lab](guide.html#lab). Change migration effort (0–1,200 hours), shared operations and support (30–150 hours a month), dual-run overlap (0–12 months) and planning horizon (12–60 months). Fixed assumptions: 120 baseline hours a month, $100 an hour, $1,000 a month of control infrastructure and $20,000 a month of common serving. Outputs: monthly saving after the overlap, up-front cost, break-even month, both horizon TCOs and their difference. Zero or negative savings report no break-even rather than dividing by zero.
 
-| Preset | Inputs | Expected |
-| --- | --- | --- |
-| Baseline | 600 migration hours, 70 shared hours a month, 6 overlap months, 36 months | $4,000 monthly saving; $108,000 up front; break-even month 33; $12,000 saved |
-| No overlap | 600 hours, 70 hours a month, 0 overlap months, 36 months | $60,000 up front; break-even month 15; $84,000 saved |
-| Costly migration | 1,200 hours, 70 hours a month, 6 overlap months, 36 months | $168,000 up front; break-even month 48; $48,000 extra cost |
-| Support burden | 600 hours, 110 hours a month, 6 overlap months, 36 months | Zero monthly saving; no break-even; $132,000 extra cost |
-| Negative savings | 600 hours, 150 hours a month, 6 overlap months, 12 months | −$4,000 monthly saving; no break-even; $180,000 extra cost |
+Inputs read: migration hours, shared hours a month, overlap months, horizon months. Output columns use the lab's labels, shortened; all values are USD except break-even.
+
+| Preset | Inputs | Net monthly saving | Up-front cost | Break-even month | Independent TCO | Shared TCO | Horizon savings |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Baseline | 600, 70, 6, 36 | 4,000 | 108,000 | 33 | 1,152,000 | 1,140,000 | 12,000 |
+| No overlap | 600, 70, 0, 36 | 4,000 | 60,000 | 15 | 1,152,000 | 1,068,000 | 84,000 |
+| Costly migration | 1,200, 70, 6, 36 | 4,000 | 168,000 | 48 | 1,152,000 | 1,200,000 | −48,000 |
+| Support burden | 600, 110, 6, 36 | 0 | 132,000 | none | 1,152,000 | 1,284,000 | −132,000 |
+| Negative savings | 600, 150, 6, 12 | −4,000 | 156,000 | none | 384,000 | 564,000 | −180,000 |
 
 Run from repository root with Python 3.10+ and Node:
 
@@ -251,7 +282,7 @@ python3 10_AI_System_Design/stages/12-staff-platform/labs/test_platform.py
 node 10_AI_System_Design/tools/test_simulator.cjs 10_AI_System_Design/stages/12-staff-platform
 ```
 
-The SQLite controller stands in for the control plane's change records and one cell's route record. It has no signatures, pull loop or staleness timer. It persists proposal identity and appends shadow reports bound to the route and generation they were compared against. It rejects side-effectful comparison, applies a fixed sample and mismatch floor, and changes route plus generation atomically with a history row. Rollback records actor and reason, clears the previous pointer, and so cannot be rolled back itself; going forward again needs a fresh, gated change. Thirteen tests cover durable restart, lost acknowledgement, stale generation, stale evidence, mismatch retention, history, inspection after revocation, policy blockers, cross-tenant lookup, rollback eligibility and injected pre-commit failure. Eligibility booleans stand in for trusted evaluation. The controller never migrates a result row or executes a customer request.
+The SQLite controller stands in for the regional migration controller's change records and one cell's route record. It has no signatures, pull loop or staleness timer. It persists proposal identity and appends shadow reports bound to the route and generation they were compared against. It rejects side-effectful comparison, applies a fixed sample and mismatch floor, and changes route plus generation atomically with a history row. `apply()` stands in for a pulled, signed generation: it needs current eligibility and refuses any generation not above the current one. Rollback needs actor and reason and writes generation N+2 carrying the previous route, so a later attempt to apply N+1 is refused. It also clears the previous pointer, so a rollback cannot itself be rolled back; going forward again needs a fresh, gated change. `inspect()` reports the change's state and the cell's route separately: after a rollback the change still reads `cutover`, while route and generation show what the cell serves. Fourteen tests cover durable restart, lost acknowledgement, stale generation, stale evidence, mismatch retention, history, inspection after revocation, policy blockers, cross-tenant lookup, rollback eligibility, refusal of a rolled-back generation and injected pre-commit failure. Eligibility booleans stand in for trusted evaluation. The controller never migrates a result row or executes a customer request.
 
 Inject `fail_before_commit=True` at cutover. Expect `injected pre-commit failure`, with route, generation and history unchanged after reopening the database, and a later valid cutover to succeed. After a committed cutover with a lost acknowledgement, call `inspect()` or repeat the same-key proposal; both return the persisted state, even after the bundle is revoked. Do not run another cutover with the old generation. Observe stale-update and stale-evidence counts, blocked proposals, shadow mismatch by bounded slice, time in each phase, pilot outcomes, incident burden and cost reconciliation.
 
@@ -273,6 +304,10 @@ No. A historical approved pointer is not present permission. Block that rollback
 **1.1 Requirements** ([Stage 1](../01-mvp/guide.md)). Stage 1 turned Alice's need into measurable acceptance criteria before choosing components. Here the customers are four app teams and three tenants, so the criteria name onboarding, rejected violations and rollback evidence, not only latency.
 
 **11.1 Fine-tuning fundamentals** ([Stage 10](../10-fine-tuning/guide.md)). Stage 10 ran an adapter challenger only after prompting, retrieval and schema fixes failed on measured behaviour. The platform keeps that order: a manifest may reference an approved adapter, but the template does not offer tuning as a default step.
+
+**11.2 Fine-tuning platform architecture** ([Stage 10](../10-fine-tuning/guide.md#design-the-artifact-chain)). Stage 10 created an adapter only through Fine-Tuning Jobs, a versioned dataset and a registry approval gate, and [Stage 11](../11-multi-region/guide.md) kept each approval in the tenant region's authority store. The platform stays on the consuming side of that workflow. A manifest may reference only a registry-approved adapter digest, and the cell rechecks that approval before it applies a route. Creating or retraining an adapter never runs from the app template.
+
+**11.3 Distributed training infrastructure** ([Stage 10](../10-fine-tuning/guide.md#distributed-training-at-d0)). Stage 10 kept distributed training at orientation depth, and [Stage 11](../11-multi-region/guide.md) copied finished adapters by digest rather than training in each region. It stays deferred here: the platform routes approved artifacts and has no measured training workload that would justify multi-accelerator jobs.
 
 **14.1 Evaluation architecture** ([Stage 8](../08-evaluation-releases/guide.md)). Stage 8 froze the bundle and dataset that a release gate judged. Shadow evidence applies the same rule to routes: it binds to a baseline generation, and a changed bundle needs fresh evidence.
 
@@ -305,7 +340,7 @@ An ownership failure, illustrated. In the week-4 pilot the canary cell's error r
 
 ### Decision Exercise: Veto the Top Score and Write the ADR
 
-Changed constraint: Tenant B's regulator now requires that no record controlling B's processing (manifests, route generations, approvals or signing keys) is stored or operated outside the EU. The global control plane runs in the US. Use the same weights as before: delivery 0.2, isolation 0.3, operability 0.3, evolvability 0.2.
+Changed constraint: Tenant B's regulator now requires that no record controlling B's processing, even an opaque route generation or the key that signs it, is stored or operated outside the EU. The global control plane runs in the US and holds both. Use the same weights as before: delivery 0.2, isolation 0.3, operability 0.3, evolvability 0.2.
 
 | Option | Delivery | Isolation | Operability | Evolvability |
 | --- | --- | --- | --- | --- |
@@ -320,7 +355,7 @@ Changed constraint: Tenant B's regulator now requires that no record controlling
 
 Rubric. Pass only when every line is observably true:
 
-- The new residency rule is named as the veto and removes the global-control-plane option before ranking.
+- Every option gets a pass or veto verdict before any total, and the new residency rule removes the global-control-plane option.
 - The weighted arithmetic is shown and the scores are labelled as assumptions.
 - The decision names one accountable owner.
 - Consequences include one new cost and one new failure mode.
@@ -334,9 +369,9 @@ Rubric. Pass only when every line is observably true:
 
 <p><strong>Model exercise ADR (unnumbered, not an accepted decision): EU control plane for EU tenants.</strong> Status: proposed. Change record: supersedes ADR-012 in part, for control-plane placement of Tenants A and B only.</p>
 
-<p><strong>Context.</strong> Tenant B's regulator forbids storing or operating B's control records outside the EU. ADR-012 placed one global control plane in the US.</p>
+<p><strong>Context.</strong> Tenant B's regulator forbids storing or operating B's control records outside the EU, even opaque ones. Under ADR-012 and ADR-013 the global control plane in the US stores and signs B's route generations, which name B's apps only by opaque IDs, and holds the signing keys.</p>
 
-<p><strong>Options.</strong> Templates only: 0.2×5 + 0.3×2 + 0.3×2 + 0.2×2 = 2.6. One global control plane: 4.1, but vetoed by the new rule before ranking. Separate EU control plane: 0.2×2 + 0.3×5 + 0.3×3 + 0.2×3 = 3.4. The veto changes the winner from 4.1 to 3.4.</p>
+<p><strong>Options.</strong> Hard constraints first. Templates only: pass; templates add no record outside the EU, and Stage 11's regional runtime still checks current access. One global control plane: veto, because B's route generations and signing keys sit in the US. Separate EU control plane: pass; B's control records and keys stay in the EU, and runtime checks are unchanged. Totals for the survivors: templates 0.2×5 + 0.3×2 + 0.3×2 + 0.2×2 = 2.6; EU control plane 0.2×2 + 0.3×5 + 0.3×3 + 0.2×3 = 3.4. The vetoed option would have won at 4.1.</p>
 
 <p><strong>Decision.</strong> Run a second control-plane instance in the EU, with EU-held signing keys, for Tenants A and B. Tenant C stays on the US instance. Cells, runtime checks and migration gates do not change. Owner: the platform owner, with approval from the security and data owner.</p>
 
@@ -346,7 +381,7 @@ Rubric. Pass only when every line is observably true:
 
 <p><strong>Evidence ledger.</strong> Measured: none yet. Assumed: scores, weights and the current control plane's US location. Proposed: the EU instance, EU keys and two-canary rollout. Needed before approval: the regulator's written confirmation and a pilot of contract-version sync.</p>
 
-<p><strong>Memo section for Tenant B's data protection officer.</strong> Your processing records will stay in the EU. Today the configuration that decides where your requests run is approved in a US system. From the pilot onward, an EU-only system will hold it, with signing keys kept in the EU. Customer content was never in that system, and that does not change. We need your written confirmation that this meets the regulator's rule before the pilot starts.</p>
+<p><strong>Memo section for Tenant B's data protection officer.</strong> Your processing records will stay in the EU. Your app settings, approvals and policy are already held only in the EU. Today a US system signs the route records that tell EU servers which approved setup to use; those records name your apps by reference numbers only, and the US system holds the signing keys. From the pilot onward, an EU-only system will sign them, with keys kept in the EU. Customer content was never in either system, and that does not change. We need your written confirmation that this meets the regulator's rule before the pilot starts.</p>
 
 </details>
 
@@ -359,7 +394,7 @@ A full design memo uses the same structure at greater length: incident and requi
 | [ADR-005](../../architecture/decisions/ADR-005-bounded-fair-dispatch.md), [ADR-006](../../architecture/decisions/ADR-006-trusted-enterprise-boundaries.md) | Finite fair budgets and trusted audited disclosure | New isolation or workload policy |
 | [ADR-007](../../architecture/decisions/ADR-007-consistency-and-recovery.md), [ADR-008](../../architecture/decisions/ADR-008-versioned-quality-releases.md) | Data-class consistency and version-bound quality releases | Stronger recovery or changed gate evidence |
 | [ADR-009](../../architecture/decisions/ADR-009-approved-inference-boundaries.md), [ADR-010](../../architecture/decisions/ADR-010-governed-model-customisation.md) | Approved inference route and governed model lineage | Measured serving or training requirement change |
-| [ADR-011](../../architecture/decisions/ADR-011-residency-aware-regional-cells.md), [ADR-012](../../architecture/decisions/ADR-012-versioned-regional-platform-contracts.md) | Eligible regional cells and controlled platform adoption | Zero-loss or global-write requirement, control-record residency rule, or failed adoption economics |
+| [ADR-011](../../architecture/decisions/ADR-011-residency-aware-regional-cells.md), [ADR-012](../../architecture/decisions/ADR-012-versioned-regional-platform-contracts.md), [ADR-013](../../architecture/decisions/ADR-013-regional-authority-and-route-generations.md) | Eligible regional cells and controlled platform adoption | Zero-loss or global-write requirement, control-record residency rule, or failed adoption economics |
 
 Accepted ADRs stay immutable apart from supersession metadata. A new decision records changed assumptions and references the old one. Do not rewrite history to make the current design look inevitable.
 
@@ -367,11 +402,11 @@ Accepted ADRs stay immutable apart from supersession metadata. A new decision re
 
 Prompt: Why centralise configuration but keep request handling regional?
 
-Spoken answer: “The recurring incident is inconsistent enforcement across copied app integrations. I would centralise validation and supported contracts while customer data and execution stay inside approved regional cells. Route records live in each cell's authority store; the control plane only signs and publishes generations. Current policy, audit, budgets and saved operation identity remain runtime checks. A control-plane outage freezes new cutovers. It does not stop authorised regional work, because cells keep their last-known-good generation.”
+Spoken answer: “The recurring incident is inconsistent enforcement across copied app integrations. I would centralise validation and supported contracts while customer data and execution stay inside approved regional cells. Route records live in each cell's authority store; the control plane only signs and publishes generations on opaque IDs. Current policy, audit, budgets and saved operation identity remain runtime checks. A control-plane outage freezes new cutovers. It does not stop authorised regional work, because cells keep their last-known-good generation.”
 
 Trade-off: contract compatibility and platform on-call replace some duplicated app work.
 
-Follow-up: the control plane is down for two hours during an incident. Can you still roll back? Yes, if the previous route is currently eligible. The cell does a local CAS to its recorded previous generation and writes actor and reason to its audit. New cutovers wait for the control plane.
+Follow-up: the control plane is down for two hours during an incident. Can you still roll back? Yes, if the previous route is currently eligible. The cell writes a new local generation, N+2, carrying N's route, with actor and reason in its audit. On reconnect it reports N+2, and because a cell never applies an older generation, the failed N+1 cannot return. New cutovers wait for the control plane.
 
 ### Interview 2: Defend the Migration Against Dual Writes
 
@@ -405,13 +440,13 @@ Follow-up: the pilot misses its gate by one mismatch, and the microservice advoc
 
 ### Interview 5: Walk Me Through the Whole Platform
 
-Prompt: Defend the complete design, Stages 1 to 12, in about 90 seconds.
+Prompt: Defend the complete design, Stages 1 to 12, in about a minute.
 
-Spoken answer: “Alice in Tenant A submits a supplier request. An authenticated API calls the model and commits the answer before reporting success. Long work runs as durable jobs with idempotent operation keys, and retrieval returns only current, authorised source versions. Stateless replicas and immutable caches scale reads; bounded fair admission protects each tenant, because a scheduler does not create capacity. Identity, isolation, audit and approved egress live in trusted services, never in the prompt. Consistency is chosen per data class, and unknown outcomes are reconciled, not blindly retried. Releases pass frozen evaluation and canaries; inference routes, GPU capacity and any adapter are approved with lineage. Stage 11 placed A and B in EU cells and C in a US cell, with one fenced writer per tenant. Stage 12 adds versioned manifests and a control plane that signs route generations, while each cell keeps its own route authority. The migration is a strangler with bound shadow evidence, one named owner per decision, and a 33-month break-even under illustrative inputs.”
+Spoken answer: “Alice in Tenant A submits a supplier request. An authenticated API commits the answer before reporting success, and long work runs as durable jobs with idempotent operation keys. Retrieval returns only current, authorised source versions. Stateless replicas and immutable caches scale reads; fair admission protects each tenant. Identity, audit and approved egress live in trusted services, never in the prompt. Unknown outcomes are reconciled, not blindly retried. Releases pass frozen evaluation; model routes, GPU capacity and any adapter are approved with lineage. Stage 11 placed A and B in EU cells and C in a US cell, each with one fenced writer. Stage 12 adds versioned manifests and a control plane that signs route generations on opaque IDs, while each cell keeps route authority. Migration is a strangler with bound shadow evidence, one owner per decision, and a 33-month break-even under illustrative inputs.”
 
 Trade-off: every layer keeps its own guarantee, so the design has more owners and contracts than a single service, and each one must be staffed.
 
-Follow-up: Tenant B's regulator now forbids any B control record outside the EU. What changes? Only control-plane placement for EU tenants: run an EU instance with EU-held signing keys, as in the decision exercise. Cells, runtime checks and migration gates stay, at the cost of a second control plane to operate.
+Follow-up: a new Tenant D must keep its data in a country the platform does not serve yet. What changes? Add a cell there with its own residency hostname, authority store and three-location quorum, and give D opaque placement in the control plane. Manifests, contracts and migration gates stay the same. The cost is a new cell's capacity reserve, on-call and witness site, and D is not onboarded until its fencing and recovery tests pass.
 
 ### Capstone Defence and Verified Coverage
 
@@ -453,19 +488,20 @@ Remaining gaps are concrete: real identity and private routing, a deployed autho
 3. What must a one-page ADR contain, and what changes for a non-technical reader? Context, options, decision, consequences, reversal criteria, and evidence marked measured, assumed or proposed. For a data protection officer, lead with what stays where and what they must approve; keep the same facts.
 4. A pilot canary degrades and nobody rolls back for 40 minutes. What shows the ownership gap, and what fixes it? An incident with no commander and a rollback request with no approver. Name the release owner as the pilot's single rollback decider in the runbook.
 5. At the baseline inputs, what does each overlap month do to break-even? It adds three months: one month of delay, plus $8,000 of extra cost that takes two months of $4,000 savings to repay.
+6. An approval is revoked after the control plane signs generation N+1 but before a cell pulls it. What happens? The cell's current eligibility check in its own authority store rejects N+1 and keeps N. A signature proves origin, not present permission.
 
-60-second card: start from the incident; preserve runtime guarantees; choose versioned contracts and cells; keep route authority in each cell and sign generations centrally; freeze changes, not service, on control-plane loss; veto on hard constraints before scoring; bind shadow evidence to its baseline; pilot with one writer; recheck rollback eligibility; count migration, overlap and support; name owners and revisit triggers.
+60-second card: start from the incident; preserve runtime guarantees; choose versioned contracts and cells; keep route authority and the eligibility check in each cell, and sign opaque generations centrally; freeze changes, not service, on control-plane loss; roll back with a newer generation; veto on hard constraints before scoring; bind shadow evidence to its baseline; pilot with one writer; recheck rollback eligibility; count migration, overlap and support; name owners and revisit triggers.
 
 Exit gates for this stage:
 
-1. **Explain.** Give the Interview 5 whole-platform defence in two minutes without notes.
+1. **Explain.** Give the Interview 5 whole-platform defence in about a minute without notes.
 2. **Draw.** From memory, draw the after architecture with the cell route authority, the signed-generation flow and the control-plane outage path.
 3. **Defend.** Write the decision-exercise ADR and memo section and pass its rubric. Then compute by hand the break-even for 900 migration hours, 80 shared hours a month and a four-month overlap, and check it in the lab (month 46; $30,000 more than staying independent over 36 months).
 4. **Diagnose.** For "cutover rejected: stale evidence" and for "a cell's applied generation trails the published one past the staleness bound", name the cause, the safe action and the owner.
-5. **Build (D3).** Add `retire(tenant, app, actor, reason)` to `labs/migration.py`. It succeeds only when the latest history row is a cutover at the current generation, and appends its own history row. Write one passing and one failing test. Then run the fault-injection and lost-acknowledgement tests and explain the persisted state in each.
+5. **Build (D3).** Add `retire(tenant, app, generation, window_ended, actor, reason)` to `labs/migration.py`. It succeeds only when `generation` is current, the latest history row is the cutover that created it, and `window_ended` is true (the caller's evidence that one reversal window passed with no old-path traffic). In one transaction it raises the generation by one, keeps the route, clears `previous` so no route rollback remains, and appends a `retire` history row. Expected: after a cutover to generation 1 and an ended window, the route is unchanged at generation 2 with no previous route; with the window still open it raises and changes nothing; after a rollback it raises, because the latest row is a rollback. Write those three tests. Then run the fault-injection and lost-acknowledgement tests and explain the persisted state in each.
 
 Review schedule: on day 1, redo Checkpoints 2 and 3 and the recall list without notes. On day 7, rewrite the ADR for a different changed constraint, such as double support demand, and rescore it. On day 21, run the full capstone, solo path if needed, and give Interview 5 aloud. These learner gates remain unassessed.
 
 ### Evidence and Carry Forward
 
-Read the [stage plan](stage-plan.md), [architecture snapshot](architecture-after.md), [decision](../../architecture/decisions/ADR-012-versioned-regional-platform-contracts.md), [state](stage-state.json), [validation](validation.md) and [actual coverage](../../progress/coverage-status.csv). The [curriculum map](../../progress/curriculum-map.json) records targets. Local content verification and learner completion are separate. This is the final stage. The next action is the capstone defence and an evidence-led pilot, not a Stage 13. Production integrations and deployment controls described here are proposals unless the validation report records an executed check.
+Read the [stage plan](stage-plan.md), [architecture snapshot](architecture-after.md), decisions [ADR-012](../../architecture/decisions/ADR-012-versioned-regional-platform-contracts.md) and [ADR-013](../../architecture/decisions/ADR-013-regional-authority-and-route-generations.md), [state](stage-state.json), [validation](validation.md) and [actual coverage](../../progress/coverage-status.csv). The [curriculum map](../../progress/curriculum-map.json) records targets. Local content verification and learner completion are separate. This is the final stage. The next action is the capstone defence and an evidence-led pilot, not a Stage 13. Production integrations and deployment controls described here are proposals unless the validation report records an executed check.

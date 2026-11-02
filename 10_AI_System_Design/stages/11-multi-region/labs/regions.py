@@ -9,15 +9,21 @@ class Recovery:
     failed_region: str
     allowed_regions: tuple
     authority_quorum: bool      # 2 of 3 EU voters reachable, so a new lease can be granted
-    old_epoch_rejected: bool    # probe writes carrying the old epoch were refused by every store
+    # After installing the new epoch as the minimum in every store the new writer will use,
+    # each refused an old-epoch probe. The isolated region's stores are quarantined, not probed.
+    old_epoch_rejected: bool
     approval_current: bool      # bundle matches the current approved generation in the authority store
     audit_ready: bool
     bundle_ready: bool
-    lag_at_isolation_seconds: int  # bound frozen at isolation, not "now minus last applied"
+    # Last renewal minus the secondary's watermark, frozen at isolation (not "now minus last applied").
+    gap_at_isolation_seconds: int
+    # A partitioned live writer may acknowledge until its lease expires, so the loss bound adds
+    # the whole lease, not one renewal interval: last renewal + lease - watermark.
+    lease_seconds: int = 20
     rpo_seconds: int = 60
     rto_seconds: int = 600
     detection_seconds: int = 60
-    fence_seconds: int = 30
+    fence_seconds: int = 30     # conservative: lease expiry mostly overlaps detection
     restore_seconds: int = 180
     route_seconds: int = 30
     validate_seconds: int = 60
@@ -26,9 +32,10 @@ class Recovery:
 def recover(plan):
     steps = [plan.detection_seconds, plan.fence_seconds, plan.restore_seconds,
              plan.route_seconds, plan.validate_seconds]
-    if any(type(t) is not int or t < 0 for t in steps + [plan.lag_at_isolation_seconds, plan.rpo_seconds, plan.rto_seconds]):
+    if any(type(t) is not int or t < 0 for t in steps + [plan.gap_at_isolation_seconds, plan.lease_seconds, plan.rpo_seconds, plan.rto_seconds]):
         raise ValueError('nonnegative integer seconds required')
     planned = sum(steps)
+    loss_bound = plan.gap_at_isolation_seconds + plan.lease_seconds
     reasons = []
     if plan.destination not in plan.allowed_regions: reasons.append('residency')
     if plan.destination == plan.failed_region: reasons.append('failed region is not a recovery target')
@@ -38,11 +45,11 @@ def recover(plan):
     if not plan.approval_current: reasons.append('approval generation not current')
     if not plan.audit_ready: reasons.append('audit unavailable')
     if not plan.bundle_ready: reasons.append('bundle unavailable')
-    if plan.lag_at_isolation_seconds > plan.rpo_seconds: reasons.append('RPO exceeded')
-    # The plan is checked against the objective; the objective is never relabelled to fit the plan.
-    if planned > plan.rto_seconds: reasons.append('plan exceeds RTO')
-    return {'eligible': not reasons, 'reasons': reasons,
-            'planned_recovery_seconds': planned, 'possible_loss_seconds': plan.lag_at_isolation_seconds}
+    if loss_bound > plan.rpo_seconds: reasons.append('RPO exceeded')
+    # Safety gates decide promotion. A missed RTO is a planning result, reported separately and
+    # never relabelled to fit: a safe but late recovery still proceeds.
+    return {'eligible': not reasons, 'reasons': reasons, 'meets_rto': planned <= plan.rto_seconds,
+            'planned_recovery_seconds': planned, 'loss_bound_seconds': loss_bound}
 
 
 def capacity(rps, tokens_per_request, slot_seconds, unit_rps=20, target_utilisation=.7):

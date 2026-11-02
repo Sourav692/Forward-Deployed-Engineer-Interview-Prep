@@ -81,6 +81,15 @@ class Tests(unittest.TestCase):
             dict(generation=2,action='rollback',**{'from':'eu/new','to':'eu/old'},actor='sre-1',reason='canary failed')])
         with self.assertRaisesRegex(ValueError,'no previous route'):self.p.rollback('A','supplier',2,True,'sre-1','undo rollback')
 
+    def test_rolled_back_generation_never_returns(self):
+        self.ready();self.p.cutover('A','supplier','move',0,True);self.p.rollback('A','supplier',1,True,'sre-1','canary failed')
+        # The control plane reconnects and offers N+1 again; the cell is at N+2 and refuses it.
+        with self.assertRaisesRegex(ValueError,'older generation'):self.p.apply('A','supplier',1,'eu/new',True)
+        self.assertEqual(self.p.status('A','supplier'),dict(generation=2,route='eu/old',previous=None))
+        # A newer signed generation still needs current eligibility before its compare-and-set.
+        with self.assertRaises(PermissionError):self.p.apply('A','supplier',3,'eu/b2',False)
+        self.assertEqual(self.p.apply('A','supplier',3,'eu/b2',True),dict(generation=3,route='eu/b2',previous='eu/old'))
+
     def test_inspection_after_revocation(self):
         self.ready();self.p.cutover('A','supplier','move',0,True)
         # Bundle 'new' is revoked: a new proposal is forbidden, but the recorded change stays inspectable.

@@ -2,8 +2,9 @@
 
 Trusted callers perform policy evaluation outside this slice. Every cutover and
 rollback still requires CURRENT eligibility. A stored old route is not permission.
-One SQLite file stands in for the control plane's change records and one cell's
-route record. It has no signatures, pull loop or staleness timer.
+One SQLite file stands in for the regional migration controller's change records
+and one cell's route record. It has no signatures, pull loop or staleness timer.
+Generations only rise: rollback writes a new one, so a rolled-back one never returns.
 """
 import json
 import sqlite3
@@ -92,6 +93,20 @@ class Platform:
             self.db.rollback();raise
         return self.status(tenant,app)
 
+    def apply(self,tenant,app,generation,route,current_eligible):
+        """Cell applies a pulled generation whose signature is assumed verified.
+
+        A signature proves origin, not present permission, so current eligibility is
+        checked here. A generation not above the current one is refused, so N+1 cannot
+        return after a local rollback wrote N+2."""
+        if not current_eligible:raise PermissionError('current policy or readiness blocks')
+        with self.db:
+            # One conditional UPDATE is the compare-and-set: it applies only if still newer.
+            cur=self.db.execute('UPDATE apps SET previous=route,route=?,generation=? WHERE tenant=? AND app=? AND generation<?',(route,generation,tenant,app,generation))
+            if cur.rowcount!=1:raise ValueError('older generation or unknown app')
+            self.db.execute('INSERT INTO history VALUES (?,?,?,?,?,?,?,?)',(tenant,app,generation,'apply',None,route,'control plane','published generation'))
+        return self.status(tenant,app)
+
     def rollback(self,tenant,app,generation,current_previous_eligible,actor,reason):
         if not current_previous_eligible:raise PermissionError('previous route is no longer eligible')
         if not actor or not reason:raise ValueError('rollback needs actor and reason')
@@ -99,7 +114,8 @@ class Platform:
             self.db.execute('BEGIN IMMEDIATE')
             row=self.db.execute('SELECT route,previous FROM apps WHERE tenant=? AND app=? AND generation=? AND previous IS NOT NULL',(tenant,app,generation)).fetchone()
             if row is None:raise ValueError('stale generation or no previous route')
-            # Clearing previous blocks a rollback of the rollback: going forward again needs a fresh, gated change.
+            # Writes generation N+2 carrying N's route. Clearing previous blocks a rollback of the
+            # rollback: going forward again needs a fresh, gated change.
             self.db.execute('UPDATE apps SET route=previous,previous=NULL,generation=generation+1 WHERE tenant=? AND app=?',(tenant,app))
             self.db.execute('INSERT INTO history VALUES (?,?,?,?,?,?,?,?)',(tenant,app,generation+1,'rollback',row[0],row[1],actor,reason))
             self.db.commit()
