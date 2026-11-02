@@ -332,7 +332,7 @@
       "kind": "sync",
       "publish": "own",
       "source": "01_Concept_Tutorials/RAG_Agents_Engineering/p01_ai_engineering_foundations/m02_llm_apis_and_model_selection/01_calling_commercial_llm_apis_openai_and_gemini.md",
-      "estMinutes": 5,
+      "estMinutes": 7,
       "href": "/learn/ai-engineering-foundations/llm-provider-apis-and-model-selection/calling-commercial-llm-apis-openai-and-gemini",
       "updated": "2026-11-02"
     },
