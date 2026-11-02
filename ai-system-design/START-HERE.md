@@ -2,6 +2,12 @@
 
 This skill authors a course through one evolving multi-tenant Enterprise AI Platform. Its curriculum covers 12 stages, 18 domains, and 56 modules. The curriculum map describes planned coverage; generated lessons and validation records show what has actually been created and checked.
 
+## Read Stage 0 Before Running the Stage Prompts
+
+Start with [Stage 0: Enterprise Use Case and Target Architecture](../10_AI_System_Design/stages/00-enterprise-overview/guide.html), or its [Markdown version](../10_AI_System_Design/stages/00-enterprise-overview/guide.md). It explains Alice’s complete supplier-assistance journey, customer requirements, target architecture, supporting flows, and how the twelve stages reach that destination.
+
+Stage 0 is orientation. It does not add a thirteenth instructional stage, reassign any of the 56 modules, or imply that the target platform is already deployed. Stage 1 still begins with requirements and no implemented system.
+
 ## Installed Skill and Output Folder
 
 Use the installed `architecture-driven-staff-ai-system-design` skill:

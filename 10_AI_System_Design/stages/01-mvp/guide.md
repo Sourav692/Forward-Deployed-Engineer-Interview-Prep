@@ -6,6 +6,8 @@ This is an educational design for a hypothetical customer. All workload, latency
 
 Follow five learning phases: understand the problem, learn and design, observe and experiment, think like a Staff engineer, then validate and carry forward. The detailed material stays within the original MVP scope.
 
+Before this lesson, read the [Stage 0 overview](../00-enterprise-overview/guide.html) for the complete customer journey and target architecture. Then return here to build the first saved-draft path.
+
 ## 1. Understand the Problem
 
 ### 1. Before This Stage
