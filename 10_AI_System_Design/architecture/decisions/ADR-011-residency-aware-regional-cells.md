@@ -1,6 +1,6 @@
 # ADR-011: Residency-Aware Regional Cells
 
-Status: accepted educational architecture, not production approval. Stage: 11. Date: 2026-11-02. Supersedes: none; prior runtime invariants remain in force.
+Status: accepted educational architecture, not production approval. Stage: 11. Date: 2026-11-02. Supersedes: none; prior runtime invariants remain in force. Amended by: [ADR-013](ADR-013-regional-authority-and-route-generations.md) for authority placement and writer fencing.
 
 ## Situation
 

@@ -8,6 +8,7 @@ import html
 import json
 import re
 import sys
+import textwrap
 import markdown
 
 stage=Path(sys.argv[1]);root=stage.parents[1]
@@ -22,13 +23,30 @@ for note in ui.get('style_notes',[]):style=style.replace('\n','\n'+note+'\n',1)
 body=markdown.markdown(source,extensions=['fenced_code','tables','toc'])
 body=re.sub(r'<h1.*?</h1>','',body,count=1,flags=re.S)
 
+def wrap(value,width):return textwrap.wrap(value,width) or ['']
+
+def box(x,y,node):
+    # Wrap instead of shrinking: a line never exceeds the 330-unit node at 15px text.
+    title,sub=wrap(node[0],34),wrap(node[1],40);height=20+20*(len(title)+len(sub))
+    texts=''.join(f'<text class="node-title" x="{x+165}" y="{y+24+20*i}">{html.escape(line)}</text>' for i,line in enumerate(title))
+    texts+=''.join(f'<text x="{x+165}" y="{y+24+20*(len(title)+i)}">{html.escape(line)}</text>' for i,line in enumerate(sub))
+    return height,f'<g class="diagram-node"><rect class="node" x="{x}" y="{y}" width="330" height="{height}"/>{texts}</g>'
+
 def svg(diagram,index):
-    nodes=diagram['nodes'];height=90*len(nodes)+35;items=[]
+    # A node is [title, subtitle] or [title, subtitle, {"side": [title, subtitle]}]; a side node
+    # draws a branch (alternative cell, replication target, failure outcome) beside its row.
+    nodes=diagram['nodes'];wide=any(len(n)>2 for n in nodes);width=730 if wide else 360;items=[];y=15
     for n,node in enumerate(nodes):
-        y=n*90+15
-        items.append(f'<rect class="node" x="15" y="{y}" width="330" height="60"/><text x="180" y="{y+25}">{html.escape(node[0])}</text><text x="180" y="{y+46}">{html.escape(node[1])}</text>')
-        if n<len(nodes)-1:items.append(f'<path class="flow" style="marker-end:url(#diagram-arrow-{index})" d="M180 {y+60}V{y+87}"/>')
-    return f'''<figure><svg viewBox="0 0 360 {height}" style="max-width:30rem" role="img" aria-labelledby="diagram-title-{index} diagram-desc-{index}"><title id="diagram-title-{index}">{html.escape(diagram['title'])}</title><desc id="diagram-desc-{index}">{html.escape(diagram['description'])}</desc><defs><marker id="diagram-arrow-{index}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z"/></marker></defs>{''.join(items)}</svg><figcaption>{html.escape(diagram['description'])}</figcaption></figure>'''
+        height,main=box(15,y,node);items.append(main);row=height
+        if len(node)>2:
+            side_height,side=box(385,y,node[2]['side']);items.append(side);row=max(row,side_height)
+            items.append(f'<path class="flow" style="marker-end:url(#diagram-arrow-{index})" d="M345 {y+height/2:g}H382"/>')
+        if n<len(nodes)-1:items.append(f'<path class="flow" style="marker-end:url(#diagram-arrow-{index})" d="M180 {y+height}V{y+row+27}"/>')
+        y+=row+30
+    # A branched diagram keeps readable text on phones by scrolling inside its figure, not by shrinking.
+    size=f'min-width:44rem;max-width:{width/12:g}rem' if wide else f'max-width:{width/12:g}rem'
+    scroll=f'<div class="table-scroll" tabindex="0" role="region" aria-label="{html.escape(diagram["title"],quote=True)} (scroll sideways on narrow screens)">' if wide else '<div>'
+    return f'''<figure>{scroll}<svg viewBox="0 0 {width} {y-10}" style="{size}" role="img" aria-labelledby="diagram-title-{index} diagram-desc-{index}"><title id="diagram-title-{index}">{html.escape(diagram['title'])}</title><desc id="diagram-desc-{index}">{html.escape(diagram['description'])}</desc><defs><marker id="diagram-arrow-{index}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z"/></marker></defs>{''.join(items)}</svg></div><figcaption>{html.escape(diagram['description'])}</figcaption></figure>'''
 for i,d in enumerate(ui['diagrams']):
     body=re.sub(r'<pre><code class="language-mermaid">.*?</code></pre>',lambda _:svg(d,i),body,count=1,flags=re.S)
 

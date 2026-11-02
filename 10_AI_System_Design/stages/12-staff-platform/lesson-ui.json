@@ -1,7 +1,7 @@
 {
   "stage": 12,
   "title": "Staff-Level Platform Architecture",
-  "outcome": "Defend regional platform contracts, migration gates, ownership, and total cost.",
+  "outcome": "Defend regional platform contracts, per-cell route authority, migration gates, ownership and total cost.",
   "step_labels": [
     "Propose",
     "Compare",
@@ -15,40 +15,40 @@
       "label": "Healthy planned path",
       "steps": [
         {
-          "owner": "Propose / App owner and controller",
-          "input": "Trusted tenant/app manifest and stable change key.",
-          "output": "Durable proposed identity, without a deployment claim.",
+          "owner": "App owner and platform control plane",
+          "input": "Trusted tenant and app manifest with a stable change key.",
+          "output": "Durable proposed change: recorded intent, not a deployment.",
           "failure": "Invalid scope, budget, region or bundle rejects the proposal."
         },
         {
-          "owner": "Compare / Shadow runner",
-          "input": "Authorised read-only samples and pinned candidate.",
-          "output": "Recorded comparison counts with business effects disabled.",
-          "failure": "A side-effectful shadow or invalid counts must reject."
+          "owner": "Shadow runner in the approved cell",
+          "input": "Authorised read-only samples and the pinned candidate route.",
+          "output": "Evidence appended and bound to the baseline route and generation.",
+          "failure": "A side-effectful shadow or invalid counts reject; a mismatch is never erased."
         },
         {
-          "owner": "Review / Platform and app owners",
-          "input": "Bound sample evidence plus current target eligibility.",
-          "output": "A pilot is permitted only after the fixed gate passes.",
-          "failure": "Too few comparisons, mismatch or revoked eligibility blocks."
+          "owner": "App and platform owners",
+          "input": "All evidence for the change plus current target eligibility.",
+          "output": "Pilot allowed: 100 or more samples, zero mismatches, same baseline.",
+          "failure": "Too few samples, any mismatch, stale evidence or revoked eligibility blocks."
         },
         {
-          "owner": "Cut over / Durable route authority",
-          "input": "Expected generation and eligible pilot target.",
-          "output": "Atomic previous/new route update with increased generation.",
-          "failure": "Stale generation or pre-commit failure leaves old route intact."
+          "owner": "Cell route authority in the regional authority store",
+          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
+          "output": "CAS moves N to N+1, keeps the previous route and appends a history row.",
+          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
         },
         {
-          "owner": "Observe / Regional runtime",
+          "owner": "Regional runtime",
           "input": "Existing operation IDs, source policy, budgets and release.",
           "output": "Customer outcomes are inspected under inherited runtime rules.",
           "failure": "Routing changes cannot replay uncertain old external calls."
         },
         {
-          "owner": "Roll back / Authorised operator",
-          "input": "Current previous-route eligibility and expected generation.",
-          "output": "Eligible reversal increments generation and preserves history.",
-          "failure": "A revoked previous route blocks rollback rather than bypassing policy."
+          "owner": "Authorised operator at the cell",
+          "input": "Current eligibility of the previous route, actor and reason.",
+          "output": "Local CAS to the previous generation; history keeps both rows.",
+          "failure": "A revoked previous route blocks rollback; going forward again needs a fresh change."
         }
       ]
     },
@@ -56,40 +56,40 @@
       "label": "Shadow mismatch",
       "steps": [
         {
-          "owner": "Propose / App owner and controller",
-          "input": "Trusted tenant/app manifest and stable change key.",
-          "output": "Durable proposed identity, without a deployment claim.",
+          "owner": "App owner and platform control plane",
+          "input": "Trusted tenant and app manifest with a stable change key.",
+          "output": "Durable proposed change: recorded intent, not a deployment.",
           "failure": "Invalid scope, budget, region or bundle rejects the proposal."
         },
         {
-          "owner": "Compare / Shadow runner",
-          "input": "Authorised read-only samples and pinned candidate.",
-          "output": "Recorded comparison counts with business effects disabled.",
-          "failure": "A side-effectful shadow or invalid counts must reject."
+          "owner": "Shadow runner in the approved cell",
+          "input": "Authorised read-only samples and the pinned candidate route.",
+          "output": "Evidence appended and bound to the baseline route and generation.",
+          "failure": "A side-effectful shadow or invalid counts reject; a mismatch is never erased."
         },
         {
-          "owner": "Review / Platform and app owners",
-          "input": "Bound sample evidence plus current target eligibility.",
-          "output": "Blocked: comparison evidence fails; retain the existing route and investigate.",
-          "failure": "Too few comparisons, mismatch or revoked eligibility blocks."
+          "owner": "App and platform owners",
+          "input": "All evidence for the change plus current target eligibility.",
+          "output": "Blocked: the recorded mismatch stays in the evidence; keep the current route and investigate.",
+          "failure": "Too few samples, any mismatch, stale evidence or revoked eligibility blocks."
         },
         {
-          "owner": "Cut over / Durable route authority",
-          "input": "Expected generation and eligible pilot target.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "Stale generation or pre-commit failure leaves old route intact."
+          "owner": "Cell route authority in the regional authority store",
+          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
+          "output": "No forward progress: inspect the blocked change; the current route stays.",
+          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
         },
         {
-          "owner": "Observe / Regional runtime",
+          "owner": "Regional runtime",
           "input": "Existing operation IDs, source policy, budgets and release.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
+          "output": "No forward progress: inspect the blocked change; the current route stays.",
           "failure": "Routing changes cannot replay uncertain old external calls."
         },
         {
-          "owner": "Roll back / Authorised operator",
-          "input": "Current previous-route eligibility and expected generation.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "A revoked previous route blocks rollback rather than bypassing policy."
+          "owner": "Authorised operator at the cell",
+          "input": "Current eligibility of the previous route, actor and reason.",
+          "output": "No forward progress: inspect the blocked change; the current route stays.",
+          "failure": "A revoked previous route blocks rollback; going forward again needs a fresh change."
         }
       ]
     },
@@ -97,40 +97,81 @@
       "label": "Previous route revoked",
       "steps": [
         {
-          "owner": "Propose / App owner and controller",
-          "input": "Trusted tenant/app manifest and stable change key.",
-          "output": "Durable proposed identity, without a deployment claim.",
+          "owner": "App owner and platform control plane",
+          "input": "Trusted tenant and app manifest with a stable change key.",
+          "output": "Durable proposed change: recorded intent, not a deployment.",
           "failure": "Invalid scope, budget, region or bundle rejects the proposal."
         },
         {
-          "owner": "Compare / Shadow runner",
-          "input": "Authorised read-only samples and pinned candidate.",
-          "output": "Recorded comparison counts with business effects disabled.",
-          "failure": "A side-effectful shadow or invalid counts must reject."
+          "owner": "Shadow runner in the approved cell",
+          "input": "Authorised read-only samples and the pinned candidate route.",
+          "output": "Evidence appended and bound to the baseline route and generation.",
+          "failure": "A side-effectful shadow or invalid counts reject; a mismatch is never erased."
         },
         {
-          "owner": "Review / Platform and app owners",
-          "input": "Bound sample evidence plus current target eligibility.",
-          "output": "A pilot is permitted only after the fixed gate passes.",
-          "failure": "Too few comparisons, mismatch or revoked eligibility blocks."
+          "owner": "App and platform owners",
+          "input": "All evidence for the change plus current target eligibility.",
+          "output": "Pilot allowed: 100 or more samples, zero mismatches, same baseline.",
+          "failure": "Too few samples, any mismatch, stale evidence or revoked eligibility blocks."
         },
         {
-          "owner": "Cut over / Durable route authority",
-          "input": "Expected generation and eligible pilot target.",
-          "output": "Atomic previous/new route update with increased generation.",
-          "failure": "Stale generation or pre-commit failure leaves old route intact."
+          "owner": "Cell route authority in the regional authority store",
+          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
+          "output": "CAS moves N to N+1, keeps the previous route and appends a history row.",
+          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
         },
         {
-          "owner": "Observe / Regional runtime",
+          "owner": "Regional runtime",
           "input": "Existing operation IDs, source policy, budgets and release.",
           "output": "Customer outcomes are inspected under inherited runtime rules.",
           "failure": "Routing changes cannot replay uncertain old external calls."
         },
         {
-          "owner": "Roll back / Authorised operator",
-          "input": "Current previous-route eligibility and expected generation.",
-          "output": "Blocked: historical approval is insufficient; choose a currently eligible recovery path.",
-          "failure": "A revoked previous route blocks rollback rather than bypassing policy."
+          "owner": "Authorised operator at the cell",
+          "input": "Current eligibility of the previous route, actor and reason.",
+          "output": "Blocked: historical approval is not current permission; choose a currently eligible route or repair forward.",
+          "failure": "A revoked previous route blocks rollback; going forward again needs a fresh change."
+        }
+      ]
+    },
+    {
+      "label": "Control plane down after cutover",
+      "steps": [
+        {
+          "owner": "App owner and platform control plane",
+          "input": "Trusted tenant and app manifest with a stable change key.",
+          "output": "Durable proposed change: recorded intent, not a deployment.",
+          "failure": "Invalid scope, budget, region or bundle rejects the proposal."
+        },
+        {
+          "owner": "Shadow runner in the approved cell",
+          "input": "Authorised read-only samples and the pinned candidate route.",
+          "output": "Evidence appended and bound to the baseline route and generation.",
+          "failure": "A side-effectful shadow or invalid counts reject; a mismatch is never erased."
+        },
+        {
+          "owner": "App and platform owners",
+          "input": "All evidence for the change plus current target eligibility.",
+          "output": "Pilot allowed: 100 or more samples, zero mismatches, same baseline.",
+          "failure": "Too few samples, any mismatch, stale evidence or revoked eligibility blocks."
+        },
+        {
+          "owner": "Cell route authority in the regional authority store",
+          "input": "Signed generation N+1 pulled from the control plane; expected generation N.",
+          "output": "CAS moves N to N+1, keeps the previous route and appends a history row.",
+          "failure": "An unsigned, older or stale generation, or a pre-commit failure, leaves N intact."
+        },
+        {
+          "owner": "Regional runtime",
+          "input": "Existing operation IDs, source policy, budgets and release.",
+          "output": "Cell keeps serving last-known-good generation N+1; new cutovers freeze; config-age alert past the staleness bound.",
+          "failure": "Routing changes cannot replay uncertain old external calls."
+        },
+        {
+          "owner": "Authorised operator at the cell",
+          "input": "Current eligibility of the previous route, actor and reason.",
+          "output": "Local CAS to the recorded previous generation in the cell's authority store, with actor, reason and audit.",
+          "failure": "A revoked previous route blocks rollback; going forward again needs a fresh change."
         }
       ]
     }
@@ -142,15 +183,45 @@
       "nodes": [
         [
           "Four app teams",
-          "Copied route/release logic"
+          "Copied route and release scripts"
         ],
         [
           "Approved regional cells",
-          "A/B EU; C US-home"
+          "A and B in EU, C in US-home"
         ],
         [
           "Existing runtime roles",
-          "Identity, retrieval, jobs and serving"
+          "Request, retrieval, job and serving contracts"
+        ],
+        [
+          "Durable evidence",
+          "Metadata, sources, audit, evaluation and registry"
+        ]
+      ]
+    },
+    {
+      "title": "After: versioned platform contracts",
+      "description": "A control plane validates manifests and signs route generations; each cell keeps its own route authority and existing regional services enforce runtime safety. The control plane does not process prompts.",
+      "nodes": [
+        [
+          "App team contract",
+          "Versioned manifest, tests and accountable owner"
+        ],
+        [
+          "Platform control plane",
+          "Validate manifests and sign route generations"
+        ],
+        [
+          "Migration controller",
+          "Proposal, bound shadow evidence and generation gate"
+        ],
+        [
+          "Cell route authority",
+          "Route records in the regional authority store"
+        ],
+        [
+          "Approved regional data plane",
+          "Identity, jobs, retrieval, serving and budgets"
         ],
         [
           "Durable evidence",
@@ -159,62 +230,38 @@
       ]
     },
     {
-      "title": "After: versioned platform contracts",
-      "description": "A control plane validates desired state while existing regional services enforce runtime safety. The new controller does not process prompts.",
-      "nodes": [
-        [
-          "App team contract",
-          "Manifest, tests and accountable owner"
-        ],
-        [
-          "Platform control plane",
-          "Validate desired configuration"
-        ],
-        [
-          "Migration controller",
-          "Proposal, shadow and generation gate"
-        ],
-        [
-          "Approved regional data plane",
-          "EU or US according to tenant policy"
-        ],
-        [
-          "Existing runtime authority",
-          "Policy, audit, quotas and stable operations"
-        ],
-        [
-          "Durable evidence",
-          "History, usage, registry and decision records"
-        ]
-      ]
-    },
-    {
       "title": "Migration sequence",
-      "description": "Propose, compare, review, cut over, observe and roll back if currently eligible; prior route metadata is never authorisation.",
+      "description": "Propose, compare, review, cut over at the cell, observe, and roll back only if the previous route is currently eligible. Failed evidence or a revoked target blocks at review and keeps the current route.",
       "nodes": [
         [
           "Propose",
-          "Durable proposed identity, without a deployment claim."
+          "Control plane records the change; intent only"
         ],
         [
           "Compare",
-          "Recorded comparison counts with business effects disabled."
+          "Shadow evidence bound to baseline route and generation"
         ],
         [
           "Review",
-          "A pilot is permitted only after the fixed gate passes."
+          "Gate: 100 samples, zero mismatches, current eligibility",
+          {
+            "side": [
+              "Failed evidence or revoked target",
+              "Block; retain current route"
+            ]
+          }
         ],
         [
           "Cut over",
-          "Atomic previous/new route update with increased generation."
+          "Cell pulls signed generation; CAS N to N+1"
         ],
         [
           "Observe",
-          "Customer outcomes are inspected under inherited runtime rules."
+          "Serve under one generation; enforce access and operation identity"
         ],
         [
           "Roll back",
-          "Eligible reversal increments generation and preserves history."
+          "Local CAS to the previous generation with actor and reason, if eligible"
         ]
       ]
     }
@@ -231,12 +278,21 @@
     },
     {
       "id": "monthly",
-      "label": "Shared operations and support (hours/month)",
+      "label": "Shared operations and support (hours a month)",
       "type": "range",
       "min": 30,
       "max": 150,
       "step": 10,
       "default": 70
+    },
+    {
+      "id": "dualrun",
+      "label": "Dual-run overlap (months)",
+      "type": "range",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 6
     },
     {
       "id": "horizon",
@@ -254,10 +310,29 @@
       "params": {
         "migration": 600,
         "monthly": 70,
+        "dualrun": 6,
         "horizon": 36
       },
       "expected": {
-        "Net monthly savings (USD)": 4000,
+        "Net monthly savings after overlap (USD)": 4000,
+        "Up-front cost: migration plus overlap (USD)": 108000,
+        "Break-even (months)": 33,
+        "Independent horizon TCO (USD)": 1152000,
+        "Shared horizon TCO (USD)": 1140000,
+        "Horizon savings (USD)": 12000
+      }
+    },
+    {
+      "name": "No overlap",
+      "params": {
+        "migration": 600,
+        "monthly": 70,
+        "dualrun": 0,
+        "horizon": 36
+      },
+      "expected": {
+        "Net monthly savings after overlap (USD)": 4000,
+        "Up-front cost: migration plus overlap (USD)": 60000,
         "Break-even (months)": 15,
         "Independent horizon TCO (USD)": 1152000,
         "Shared horizon TCO (USD)": 1068000,
@@ -269,14 +344,16 @@
       "params": {
         "migration": 1200,
         "monthly": 70,
+        "dualrun": 6,
         "horizon": 36
       },
       "expected": {
-        "Net monthly savings (USD)": 4000,
-        "Break-even (months)": 30,
+        "Net monthly savings after overlap (USD)": 4000,
+        "Up-front cost: migration plus overlap (USD)": 168000,
+        "Break-even (months)": 48,
         "Independent horizon TCO (USD)": 1152000,
-        "Shared horizon TCO (USD)": 1128000,
-        "Horizon savings (USD)": 24000
+        "Shared horizon TCO (USD)": 1200000,
+        "Horizon savings (USD)": -48000
       }
     },
     {
@@ -284,14 +361,16 @@
       "params": {
         "migration": 600,
         "monthly": 110,
+        "dualrun": 6,
         "horizon": 36
       },
       "expected": {
-        "Net monthly savings (USD)": 0,
+        "Net monthly savings after overlap (USD)": 0,
+        "Up-front cost: migration plus overlap (USD)": 132000,
         "Break-even (months)": "none",
         "Independent horizon TCO (USD)": 1152000,
-        "Shared horizon TCO (USD)": 1212000,
-        "Horizon savings (USD)": -60000
+        "Shared horizon TCO (USD)": 1284000,
+        "Horizon savings (USD)": -132000
       }
     },
     {
@@ -299,19 +378,21 @@
       "params": {
         "migration": 600,
         "monthly": 150,
+        "dualrun": 6,
         "horizon": 12
       },
       "expected": {
-        "Net monthly savings (USD)": -4000,
+        "Net monthly savings after overlap (USD)": -4000,
+        "Up-front cost: migration plus overlap (USD)": 156000,
         "Break-even (months)": "none",
         "Independent horizon TCO (USD)": 384000,
-        "Shared horizon TCO (USD)": 492000,
-        "Horizon savings (USD)": -108000
+        "Shared horizon TCO (USD)": 564000,
+        "Horizon savings (USD)": -180000
       }
     }
   ],
   "lab_title": "Does the platform repay its migration cost?",
-  "lab_assumptions": "Illustrative $100/hour labour, 120 baseline hours/month, $1,000/month incremental control infrastructure and $20,000/month common serving. No discounting, tax or revenue estimate.",
+  "lab_assumptions": "Illustrative $100 an hour labour, 120 baseline hours a month, $1,000 a month incremental control infrastructure and $20,000 a month common serving. During overlap months both the duplicated work and the platform are paid. No discounting, tax or revenue estimate.",
   "style_notes": [
     "a[href*=\"architecture/decisions/\"]{white-space:nowrap}"
   ]
