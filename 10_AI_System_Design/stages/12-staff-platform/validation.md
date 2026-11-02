@@ -1,22 +1,35 @@
 # Stage 12 Validation
 
-Executed on 2026-11-02. Content verification is separate from learner mastery. All numerical workloads, scores, rates, costs, timeboxes, and recovery targets are illustrative inputs.
+Executed on 2026-11-02 after the second review-driven revision (review run `20261102T132536384130Z-rereview`, actions A01–A05 and the stage-local deferred items). Content verification is separate from learner mastery. All workloads, scores, rates, costs, timeboxes and recovery targets are illustrative inputs.
+
+## Changes Checked
+
+- A01: emergency rollback writes a new local generation N+2 carrying N's route; a cell never applies a lower generation, so N+1 cannot return; on reconnect the cell reports N+2 and the control plane marks N+1 rolled back. Guide, outage table, sequence, walkthrough, snapshot and lab match [ADR-013](../../architecture/decisions/ADR-013-regional-authority-and-route-generations.md).
+- A02: the cell checks current eligibility in its own authority store before every CAS, on the forward path too; a recall question covers revocation after signing.
+- A03: the global control plane holds only opaque placement, contract versions, signing keys and signed generations on opaque IDs. Full manifests, change records and shadow evidence stay in the tenant region; a record inventory table states where each class lives and whether it is authority. The decision exercise now bans even opaque generations and their keys outside the EU.
+- A04: no "supersession note" text remains; decision references list ADR-012 and ADR-013.
+- A05: 11.2 and 11.3 have applied reminders linked to Stages 10 and 11.
+- Deferred items applied: `retire()` state change and reversal-window check with three expected outcomes; a 3.3 pattern table and command-or-event task; scored option names match the option table; Interview 5 trimmed to about 140 words with a new follow-up; the model ADR gives a hard-constraint verdict for every option; the HTML migration figure names each actor and shows rollback as a conditional branch; the preset table shows all six lab outputs; mismatch-branch steps 4–6 use failure-path inputs; lab state wording ("a fresh comparison under a new change key"; `inspect()` reports change state and route separately).
 
 ## Executed Checks
 
-- Python 3 standard-library suite: 9 tests passed. Manifest scope/region/bundle/budget checks; durable scoped proposal identity and conflict; unsafe shadow rejection and sample/mismatch gates; current eligibility and stale generation; atomic injected pre-commit failure with reopen; lost acknowledgement inspection; eligible rollback and tenant isolation.
-- JavaScript worksheet: four explicit expected cases passed using `node 10_AI_System_Design/tools/test_simulator.cjs 10_AI_System_Design/stages/12-staff-platform`. No model, cloud, or business work executes.
-- `uv run --with markdown python 10_AI_System_Design/tools/check_stage.py 10_AI_System_Design/stages/12-staff-platform`: 256 teaching blocks match HTML, five phases, mapped first/revisit IDs, three offline SVG diagrams, local links, anchors, answer reveals and complete walkthrough fields passed.
-- Browser automation: every branch/step field and worksheet case, direct selection, Previous/Next, Reset, keyboard Enter, answer reveals, 375-pixel layout, print layout, no-JavaScript static teaching and offline reading passed. No HTTP(S) dependency or browser exception occurred.
-- Hallmark render review uses the existing Grid document layout and embedded fonts. The first sweep found six wrapping ADR links in Stage 12; those links now stay together. Stages 10 and 11 had zero failures, reflex findings, or warnings. Final Stage 12 render confirmation passed with zero failures, reflex findings, and warnings. Three inherited reading-document layout exceptions apply per guide. In-thread visual review checked the header, reading hierarchy, walkthrough and responsive tables; no independent usability or screen-reader assessment is claimed.
-- Repository validation ran from `site/` in the required order: sync, content checks, ESLint, TypeScript, and production build all passed. These stages are standalone learning-workspace artifacts and are not newly published site routes.
+Commands run from `10_AI_System_Design/`:
 
-## Distribution Check
+- `uv run -q --with markdown python tools/render_stage.py stages/12-staff-platform`, then `uv run -q --with markdown python tools/check_stage.py stages/12-staff-platform`: passed. 483 teaching blocks match the HTML; five phases; mapped first-taught and revisit IDs; three offline SVG diagrams; local links and anchors; answer reveals; complete walkthrough fields for four branches; four lab controls.
+- `python3 stages/12-staff-platform/labs/test_platform.py`: 14 tests passed. The new test applies N+1 after a rollback wrote N+2 and expects `older generation` with route and generation unchanged; a newer signed generation is refused without current eligibility and applied with it.
+- `node tools/test_simulator.cjs stages/12-staff-platform`: five deterministic cases passed (Baseline, No overlap, Costly migration, Support burden, Negative savings); each expected value equals `simulate()`.
+- `PLAYWRIGHT_MODULE=<repo>/site/node_modules/playwright node tools/check_svg_fit.cjs stages/12-staff-platform`: passed at 1440 and 375 pixels, including both side nodes of the migration figure.
+- `PLAYWRIGHT_MODULE=<repo>/site/node_modules/playwright node tools/check_browser.cjs <stage path>`, run from a scratch directory: passed. The course browser check runs on Playwright Chromium. It covered every branch and step field, simulator presets, Reset, keyboard selection, reveals, 375 px page width, print, no-JavaScript reading and zero network requests.
 
-The stage ZIP preserves workspace-relative paths with this lesson, required predecessor guides/labs, stage state/plan/snapshot, applicable ADRs, curriculum/coverage, embedded-font licences, and existing validation tools. Later stages, caches, databases, credentials, render captures, and archives are excluded. Clean extraction checks every declared artifact, local Markdown/HTML link and HTML anchor, then runs all included Python suites sequentially. The acceptance record sets `clean_package_checked` only after that extraction succeeds; the final archive is rebuilt and verified again with the recorded result. SHA-256 accompanies each ZIP.
+## Packaging
 
-Authoring-only HTML generation uses Python's `markdown` package; browser checks use Puppeteer Core and Chrome. Neither is required to read the offline HTML or run its standard-library Python exercises. The JavaScript source is embedded in HTML and its Node worksheet tests are runnable from the package root.
+The stage ZIP and its checksum are rebuilt by the coordinator after this edit. The Hallmark render review and the repository site validation from `site/` were executed for an earlier version only. `stage-state.json` validation flags were left unchanged; only its mirrored `architecture_after` text was updated.
+
+## Known Limits Found
+
+- Diagrams with a side branch render 730 units wide. On narrow screens they keep a 44 rem minimum width and scroll sideways inside their figure, so text stays at about 14.5 px at 375 px and the page itself does not scroll horizontally. Captions and text alternatives carry the same content.
+- `apply()` assumes a verified signature; the lab signs nothing. The control plane's "rolled back" marking on reconnect is described, not executed.
 
 ## Unchecked Boundaries
 
-Actual identity/ownership delegation, attested and version-bound shadow reports, regional policy/gateway integration, schema/data migration, remote writer fencing, real deployment/rollout, observed adoption/support savings, measured TCO or customer/SLO outcomes. Prior stage integration/deployment limits remain. Trusted fixture metadata and eligibility booleans stand in for production services; successful local checks do not establish their truth in deployment. Load testing, real identity, security review, screen-reader usability and learner mastery remain unassessed. See the guide and ADR for stopping boundaries and deferred specialisations.
+Actual identity and ownership delegation, attested and version-bound shadow reports from a real comparison service, signed route distribution with real keys and a real pull loop, the staleness timer, a deployed regional authority store, regional policy and gateway integration, schema and data migration, remote writer fencing, real deployment and rollout, observed adoption and support savings, measured TCO, and customer or SLO outcomes. Prior stage integration and deployment limits remain. Trusted fixture metadata and eligibility booleans stand in for production services; successful local checks do not establish their truth in deployment. Load testing, security review, screen-reader usability with real assistive technology, Firefox and Safari rendering, Python below 3.12, and learner mastery remain unassessed.

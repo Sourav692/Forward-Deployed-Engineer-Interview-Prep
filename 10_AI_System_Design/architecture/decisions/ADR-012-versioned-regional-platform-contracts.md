@@ -1,6 +1,6 @@
 # ADR-012: Versioned Regional Platform Contracts and Controlled Adoption
 
-Status: accepted educational architecture, not production approval. Stage: 12. Date: 2026-11-02. Supersedes: none; prior runtime decisions remain in force.
+Status: accepted educational architecture, not production approval. Stage: 12. Date: 2026-11-02. Supersedes: none; prior runtime decisions remain in force. Amended by: [ADR-013](ADR-013-regional-authority-and-route-generations.md) for route authority placement and dual-run economics; the figures under Economics assume no overlap.
 
 ## Situation
 

@@ -4,9 +4,10 @@
   "outcome": "Recover inside approved geography with explicit ownership and capacity gates.",
   "step_labels": [
     "Detect",
-    "Fence",
     "Place",
+    "Fence",
     "Restore",
+    "Route",
     "Admit",
     "Reconcile"
   ],
@@ -15,81 +16,46 @@
       "label": "Healthy planned path",
       "steps": [
         {
-          "owner": "Detect / Incident controller",
-          "input": "Regional errors, health and original operation identity.",
-          "output": "Recovery incident and start time are recorded.",
-          "failure": "A false positive must not create two writers."
+          "owner": "Detect / Incident controller (control plane)",
+          "input": "EU-primary errors, failed health checks and corroborating probes.",
+          "output": "Incident opened; recovery clock starts; placement changes freeze.",
+          "failure": "A false positive must not start a second writer."
         },
         {
-          "owner": "Fence / Writer authority",
-          "input": "Old writer epoch and independently verified ownership evidence.",
-          "output": "Exclusive new writer is confirmed before promotion.",
-          "failure": "Absent fencing evidence blocks every downstream step."
+          "owner": "Place / Trusted placement policy (control plane)",
+          "input": "Tenant A or B, failed region EU-primary, proposed EU-secondary.",
+          "output": "EU-secondary is allowed and is not the failed region.",
+          "failure": "US-home, or the failed EU-primary itself, is not a valid target."
         },
         {
-          "owner": "Place / Trusted placement policy",
-          "input": "Tenant A or B with proposed recovery geography.",
-          "output": "EU-secondary is eligible; Tenant C remains US-home.",
-          "failure": "US-home cannot receive A/B content under this policy."
+          "owner": "Fence / EU authority quorum (control plane)",
+          "input": "Lease request for EU-secondary once epoch 7's lease plus a drift margin has expired.",
+          "output": "2 of 3 voters grant epoch 8; EU-secondary stores install it, then refuse an epoch 7 probe; EU-primary stores are quarantined.",
+          "failure": "No quorum, or an accepted epoch 7 probe, blocks promotion."
         },
         {
-          "owner": "Restore / EU-secondary recovery",
-          "input": "Copy watermark, current policy, audit and exact model artifacts.",
-          "output": "Ready cell with verified lag and current authority.",
-          "failure": "Stale policy, missing artifact/audit or lag over RPO blocks."
+          "owner": "Restore / EU-secondary recovery (control plane)",
+          "input": "Loss bound at isolation, current approval generation, audit and artifact digests.",
+          "output": "Ready cell: loss bound within RPO, approved bundle loaded, audit writable.",
+          "failure": "Loss bound over RPO, withdrawn approval, or missing audit or artifact blocks."
         },
         {
-          "owner": "Admit / Regional scheduler",
+          "owner": "Route / EU regional ingress (data plane)",
+          "input": "Alice's request to the EU hostname, with her token and original operation key.",
+          "output": "EU ingress (TLS ends in the EU) authenticates, scopes Tenant A, checks policy and forwards to the epoch 8 writer.",
+          "failure": "A tenant not placed at this ingress, or stale policy, is rejected before the body is read."
+        },
+        {
+          "owner": "Admit / Regional scheduler (data plane)",
           "input": "App, provider request/token/slot budgets and tenant shares.",
-          "output": "Bounded service fits reserved regional capacity.",
-          "failure": "Insufficient budgets reject/expire excess work without unbounded queue."
+          "output": "Bounded service fits the reserved regional capacity.",
+          "failure": "Excess work is rejected or expires; no unbounded recovery queue."
         },
         {
-          "owner": "Reconcile / Operation store and usage ledger",
-          "input": "Original operation IDs and surviving result/usage evidence.",
-          "output": "Saved permitted replay or explicit uncertain-interval hold.",
-          "failure": "Missing async rows cannot prove a remote call never occurred."
-        }
-      ]
-    },
-    {
-      "label": "Old writer not fenced",
-      "steps": [
-        {
-          "owner": "Detect / Incident controller",
-          "input": "Regional errors, health and original operation identity.",
-          "output": "Recovery incident and start time are recorded.",
-          "failure": "A false positive must not create two writers."
-        },
-        {
-          "owner": "Fence / Writer authority",
-          "input": "Old writer epoch and independently verified ownership evidence.",
-          "output": "Blocked: ownership is unproven; do not promote or switch the route.",
-          "failure": "Absent fencing evidence blocks every downstream step."
-        },
-        {
-          "owner": "Place / Trusted placement policy",
-          "input": "Tenant A or B with proposed recovery geography.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "US-home cannot receive A/B content under this policy."
-        },
-        {
-          "owner": "Restore / EU-secondary recovery",
-          "input": "Copy watermark, current policy, audit and exact model artifacts.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "Stale policy, missing artifact/audit or lag over RPO blocks."
-        },
-        {
-          "owner": "Admit / Regional scheduler",
-          "input": "App, provider request/token/slot budgets and tenant shares.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "Insufficient budgets reject/expire excess work without unbounded queue."
-        },
-        {
-          "owner": "Reconcile / Operation store and usage ledger",
-          "input": "Original operation IDs and surviving result/usage evidence.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "Missing async rows cannot prove a remote call never occurred."
+          "owner": "Reconcile / Operation store and usage ledger (data plane)",
+          "input": "Original operation ID, attempt IDs and surviving result and usage evidence.",
+          "output": "Saved replay, or a hold for the uncertain interval.",
+          "failure": "A missing async row does not prove a remote call never happened."
         }
       ]
     },
@@ -97,40 +63,140 @@
       "label": "Wrong recovery geography",
       "steps": [
         {
-          "owner": "Detect / Incident controller",
-          "input": "Regional errors, health and original operation identity.",
-          "output": "Recovery incident and start time are recorded.",
-          "failure": "A false positive must not create two writers."
+          "owner": "Detect / Incident controller (control plane)",
+          "input": "EU-primary errors, failed health checks and corroborating probes.",
+          "output": "Incident opened; recovery clock starts; placement changes freeze.",
+          "failure": "A false positive must not start a second writer."
         },
         {
-          "owner": "Fence / Writer authority",
-          "input": "Old writer epoch and independently verified ownership evidence.",
-          "output": "Exclusive new writer is confirmed before promotion.",
-          "failure": "Absent fencing evidence blocks every downstream step."
-        },
-        {
-          "owner": "Place / Trusted placement policy",
-          "input": "Tenant A or B with proposed recovery geography.",
+          "owner": "Place / Trusted placement policy (control plane)",
+          "input": "Tenant A or B, failed region EU-primary, proposed US-home.",
           "output": "Blocked: A/B content cannot move to US-home; report unavailable.",
-          "failure": "US-home cannot receive A/B content under this policy."
+          "failure": "US-home, or the failed EU-primary itself, is not a valid target."
         },
         {
-          "owner": "Restore / EU-secondary recovery",
-          "input": "Copy watermark, current policy, audit and exact model artifacts.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "Stale policy, missing artifact/audit or lag over RPO blocks."
+          "owner": "Fence / EU authority quorum (control plane)",
+          "input": "Lease request for EU-secondary once epoch 7's lease plus a drift margin has expired.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "No quorum, or an accepted epoch 7 probe, blocks promotion."
         },
         {
-          "owner": "Admit / Regional scheduler",
+          "owner": "Restore / EU-secondary recovery (control plane)",
+          "input": "Loss bound at isolation, current approval generation, audit and artifact digests.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "Loss bound over RPO, withdrawn approval, or missing audit or artifact blocks."
+        },
+        {
+          "owner": "Route / EU regional ingress (data plane)",
+          "input": "Alice's request to the EU hostname, with her token and original operation key.",
+          "output": "Unavailable returned with the key kept; no protected disclosure or US redirect.",
+          "failure": "A tenant not placed at this ingress, or stale policy, is rejected before the body is read."
+        },
+        {
+          "owner": "Admit / Regional scheduler (data plane)",
           "input": "App, provider request/token/slot budgets and tenant shares.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "Insufficient budgets reject/expire excess work without unbounded queue."
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "Excess work is rejected or expires; no unbounded recovery queue."
         },
         {
-          "owner": "Reconcile / Operation store and usage ledger",
-          "input": "Original operation IDs and surviving result/usage evidence.",
-          "output": "No forward progress: inspect the blocked operation and preserve existing state.",
-          "failure": "Missing async rows cannot prove a remote call never occurred."
+          "owner": "Reconcile / Operation store and usage ledger (data plane)",
+          "input": "Original operation ID, attempt IDs and surviving result and usage evidence.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "A missing async row does not prove a remote call never happened."
+        }
+      ]
+    },
+    {
+      "label": "Old epoch not proven rejected",
+      "steps": [
+        {
+          "owner": "Detect / Incident controller (control plane)",
+          "input": "EU-primary errors, failed health checks and corroborating probes.",
+          "output": "Incident opened; recovery clock starts; placement changes freeze.",
+          "failure": "A false positive must not start a second writer."
+        },
+        {
+          "owner": "Place / Trusted placement policy (control plane)",
+          "input": "Tenant A or B, failed region EU-primary, proposed EU-secondary.",
+          "output": "EU-secondary is allowed and is not the failed region.",
+          "failure": "US-home, or the failed EU-primary itself, is not a valid target."
+        },
+        {
+          "owner": "Fence / EU authority quorum (control plane)",
+          "input": "Lease request for EU-secondary once epoch 7's lease plus a drift margin has expired.",
+          "output": "Blocked: a store the new writer will use accepted an epoch 7 probe; do not promote.",
+          "failure": "No quorum, or an accepted epoch 7 probe, blocks promotion."
+        },
+        {
+          "owner": "Restore / EU-secondary recovery (control plane)",
+          "input": "Loss bound at isolation, current approval generation, audit and artifact digests.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "Loss bound over RPO, withdrawn approval, or missing audit or artifact blocks."
+        },
+        {
+          "owner": "Route / EU regional ingress (data plane)",
+          "input": "Alice's request to the EU hostname, with her token and original operation key.",
+          "output": "Unavailable returned with the key kept; no protected disclosure or US redirect.",
+          "failure": "A tenant not placed at this ingress, or stale policy, is rejected before the body is read."
+        },
+        {
+          "owner": "Admit / Regional scheduler (data plane)",
+          "input": "App, provider request/token/slot budgets and tenant shares.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "Excess work is rejected or expires; no unbounded recovery queue."
+        },
+        {
+          "owner": "Reconcile / Operation store and usage ledger (data plane)",
+          "input": "Original operation ID, attempt IDs and surviving result and usage evidence.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "A missing async row does not prove a remote call never happened."
+        }
+      ]
+    },
+    {
+      "label": "Authority quorum lost",
+      "steps": [
+        {
+          "owner": "Detect / Incident controller (control plane)",
+          "input": "EU-primary errors, failed health checks and corroborating probes.",
+          "output": "Incident opened; recovery clock starts; placement changes freeze.",
+          "failure": "A false positive must not start a second writer."
+        },
+        {
+          "owner": "Place / Trusted placement policy (control plane)",
+          "input": "Tenant A or B, failed region EU-primary, proposed EU-secondary.",
+          "output": "EU-secondary is allowed and is not the failed region.",
+          "failure": "US-home, or the failed EU-primary itself, is not a valid target."
+        },
+        {
+          "owner": "Fence / EU authority quorum (control plane)",
+          "input": "Lease request for EU-secondary once epoch 7's lease plus a drift margin has expired.",
+          "output": "Blocked: 1 of 3 voters, so no lease; report authority unavailable.",
+          "failure": "No quorum, or an accepted epoch 7 probe, blocks promotion."
+        },
+        {
+          "owner": "Restore / EU-secondary recovery (control plane)",
+          "input": "Loss bound at isolation, current approval generation, audit and artifact digests.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "Loss bound over RPO, withdrawn approval, or missing audit or artifact blocks."
+        },
+        {
+          "owner": "Route / EU regional ingress (data plane)",
+          "input": "Alice's request to the EU hostname, with her token and original operation key.",
+          "output": "Unavailable returned with the key kept; no protected disclosure or US redirect.",
+          "failure": "A tenant not placed at this ingress, or stale policy, is rejected before the body is read."
+        },
+        {
+          "owner": "Admit / Regional scheduler (data plane)",
+          "input": "App, provider request/token/slot budgets and tenant shares.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "Excess work is rejected or expires; no unbounded recovery queue."
+        },
+        {
+          "owner": "Reconcile / Operation store and usage ledger (data plane)",
+          "input": "Original operation ID, attempt IDs and surviving result and usage evidence.",
+          "output": "No forward progress: inspect the blocked step and preserve existing state.",
+          "failure": "A missing async row does not prove a remote call never happened."
         }
       ]
     }
@@ -138,79 +204,127 @@
   "diagrams": [
     {
       "title": "Before: one regional runtime",
-      "description": "Existing runtime, governed model lineage and trusted policy live in one logical regional deployment.",
+      "description": "Existing runtime, current policy, governed model lineage and saved operations live in one logical regional deployment.",
       "nodes": [
         [
           "Tenant A, B and C",
-          "One logical region"
+          "One logical regional runtime"
         ],
         [
-          "Identity and AI App Service",
-          "Current policy and authorised retrieval"
+          "Identity and current policy",
+          "Trusted tenant scope"
         ],
         [
-          "Model Gateway and jobs",
-          "Approved routes and bounded execution"
+          "AI App Service",
+          "Retrieval and durable jobs"
         ],
         [
-          "Metadata and registry",
+          "Model Gateway",
+          "Approved model and budget"
+        ],
+        [
+          "Metadata, sources, audit and registry",
           "Saved operations and model lineage"
         ]
       ]
     },
     {
-      "title": "After: regional cells",
-      "description": "An opaque directory assigns EU-primary/secondary to A/B and US-home to C. Only the EU recovery branch passes the promotion gate.",
+      "title": "After: regional cells with an EU authority quorum",
+      "description": "Placement binds Tenant C to the US hostname and A/B to the EU hostname, whose TLS ends only in EU ingress. An EU-only 2-of-3 authority quorum holds policy, approvals, tombstones and the writer lease. EU-primary replicates asynchronously to EU-secondary. On primary loss the promotion gate either passes every check or fails closed.",
       "nodes": [
         [
-          "Opaque placement directory",
-          "No customer content in global control"
+          "Global control plane",
+          "Binds each tenant to its residency hostname; never authority",
+          {
+            "side": [
+              "Tenant C: US hostname",
+              "US-home cell with its own authority"
+            ]
+          }
         ],
         [
-          "Tenant regional boundary",
-          "A/B: EU only; C: US-home only"
+          "Tenant A or B: EU hostname",
+          "EU ingress only; TLS ends in the EU; other tenants rejected before the body"
         ],
         [
-          "EU-primary and EU-secondary",
-          "EU-only copies and reserved recovery"
+          "EU authority store",
+          "Policy, approvals, tombstones and lease on a 2-of-3 EU quorum"
         ],
         [
-          "Promotion gate",
-          "Fence, policy, audit, bundle and lag"
+          "EU-primary cell",
+          "A/B writer holding the current epoch",
+          {
+            "side": [
+              "EU-secondary",
+              "Async EU-only copies; reserved capacity"
+            ]
+          }
         ],
         [
-          "Regional Model Gateway",
-          "Eligible profile, budgets and original key"
+          "Promotion gate (on primary loss)",
+          "Lease expired, epoch 8 installed, epoch 7 refused, policy, bundle, capacity",
+          {
+            "side": [
+              "Fail closed",
+              "Quorum lost or a check failed"
+            ]
+          }
+        ],
+        [
+          "EU-secondary Model Gateway",
+          "After every check passes: eligible profile, budgets, original key"
         ]
       ]
     },
     {
-      "title": "Recovery sequence",
-      "description": "Detect, fence, place, restore, admit and reconcile. Failed prerequisites stop promotion, and uncertain operations remain held.",
+      "title": "Recovery sequence: control plane, then data plane",
+      "description": "The incident controller detects, places, fences and restores without talking to the client. Fencing waits for lease expiry, installs epoch 8 in the stores EU-secondary will use, probes epoch 7 and quarantines EU-primary's stores. Alice's request then reaches EU ingress through the EU hostname before admission and reconciliation. Failed prerequisites stop promotion.",
       "nodes": [
         [
-          "Detect",
-          "Recovery incident and start time are recorded."
+          "Detect (control plane)",
+          "Incident opened; recovery clock starts"
         ],
         [
-          "Fence",
-          "Exclusive new writer is confirmed before promotion."
+          "Place (control plane)",
+          "EU-secondary allowed, not the failed region",
+          {
+            "side": [
+              "US-home or EU-primary",
+              "Rejected as a recovery target"
+            ]
+          }
         ],
         [
-          "Place",
-          "EU-secondary is eligible; Tenant C remains US-home."
+          "Fence (control plane)",
+          "Lease expiry; epoch 8 installed; epoch 7 refused",
+          {
+            "side": [
+              "Quorum lost or epoch 7 accepted",
+              "No promotion: fail closed"
+            ]
+          }
         ],
         [
-          "Restore",
-          "Ready cell with verified lag and current authority."
+          "Restore (control plane)",
+          "Loss bound, approval, audit and bundle verified"
         ],
         [
-          "Admit",
-          "Bounded service fits reserved regional capacity."
+          "Route (data plane)",
+          "EU ingress authenticates, scopes, checks policy",
+          {
+            "side": [
+              "Tenant not placed here",
+              "Rejected before the body is read"
+            ]
+          }
         ],
         [
-          "Reconcile",
-          "Saved permitted replay or explicit uncertain-interval hold."
+          "Admit (data plane)",
+          "Within reserved app, token and slot budgets"
+        ],
+        [
+          "Reconcile (data plane)",
+          "Saved replay or uncertain-interval hold"
         ]
       ]
     }
@@ -218,12 +332,12 @@
   "controls": [
     {
       "id": "lag",
-      "label": "Verified copy lag (seconds)",
+      "label": "Gap at isolation: last renewal minus watermark (seconds)",
       "type": "range",
       "min": 0,
       "max": 120,
       "step": 1,
-      "default": 20
+      "default": 15
     },
     {
       "id": "destination",
@@ -237,85 +351,158 @@
         [
           "us",
           "US-home"
+        ],
+        [
+          "failed",
+          "EU-primary (the failed region)"
         ]
       ],
       "default": "eu"
     },
     {
-      "id": "fenced",
-      "label": "Old writer fencing evidence",
+      "id": "authority",
+      "label": "Writer authority evidence",
       "type": "select",
       "options": [
         [
-          "yes",
-          "Confirmed fenced"
+          "fenced",
+          "Epoch 8 installed; each store it will use refused an epoch 7 probe"
         ],
         [
-          "no",
-          "Not confirmed"
+          "unproven",
+          "Epoch 8 granted; an epoch 7 probe was accepted or not run"
+        ],
+        [
+          "lost",
+          "EU authority quorum lost"
         ]
       ],
-      "default": "yes"
+      "default": "fenced"
+    },
+    {
+      "id": "restore",
+      "label": "Restore and model load (seconds)",
+      "type": "range",
+      "min": 60,
+      "max": 720,
+      "step": 30,
+      "default": 180
     }
   ],
   "cases": [
     {
       "name": "Baseline",
       "params": {
-        "lag": 20,
+        "lag": 15,
         "destination": "eu",
-        "fenced": "yes"
+        "authority": "fenced",
+        "restore": 180
       },
       "expected": {
-        "Decision": "eligible under assumptions",
+        "Safe to promote": "yes under assumptions",
         "Blocking reasons": "none",
         "Planned recovery (seconds)": 360,
-        "Possible loss (seconds)": 20
+        "Meets 600-second RTO": "yes",
+        "Loss bound (seconds)": 35
       }
     },
     {
       "name": "Replica behind",
       "params": {
-        "lag": 61,
+        "lag": 41,
         "destination": "eu",
-        "fenced": "yes"
+        "authority": "fenced",
+        "restore": 180
       },
       "expected": {
-        "Decision": "blocked",
+        "Safe to promote": "no",
         "Blocking reasons": "RPO exceeded",
         "Planned recovery (seconds)": 360,
-        "Possible loss (seconds)": 61
+        "Meets 600-second RTO": "yes",
+        "Loss bound (seconds)": 61
       }
     },
     {
       "name": "Wrong geography",
       "params": {
-        "lag": 20,
+        "lag": 15,
         "destination": "us",
-        "fenced": "yes"
+        "authority": "fenced",
+        "restore": 180
       },
       "expected": {
-        "Decision": "blocked",
+        "Safe to promote": "no",
         "Blocking reasons": "residency",
         "Planned recovery (seconds)": 360,
-        "Possible loss (seconds)": 20
+        "Meets 600-second RTO": "yes",
+        "Loss bound (seconds)": 35
+      }
+    },
+    {
+      "name": "Failed region as target",
+      "params": {
+        "lag": 15,
+        "destination": "failed",
+        "authority": "fenced",
+        "restore": 180
+      },
+      "expected": {
+        "Safe to promote": "no",
+        "Blocking reasons": "failed region is not a recovery target",
+        "Planned recovery (seconds)": 360,
+        "Meets 600-second RTO": "yes",
+        "Loss bound (seconds)": 35
       }
     },
     {
       "name": "Split writer risk",
       "params": {
-        "lag": 20,
+        "lag": 15,
         "destination": "eu",
-        "fenced": "no"
+        "authority": "unproven",
+        "restore": 180
       },
       "expected": {
-        "Decision": "blocked",
+        "Safe to promote": "no",
         "Blocking reasons": "writer not fenced",
         "Planned recovery (seconds)": 360,
-        "Possible loss (seconds)": 20
+        "Meets 600-second RTO": "yes",
+        "Loss bound (seconds)": 35
+      }
+    },
+    {
+      "name": "Quorum lost",
+      "params": {
+        "lag": 15,
+        "destination": "eu",
+        "authority": "lost",
+        "restore": 180
+      },
+      "expected": {
+        "Safe to promote": "no",
+        "Blocking reasons": "authority unavailable",
+        "Planned recovery (seconds)": 360,
+        "Meets 600-second RTO": "yes",
+        "Loss bound (seconds)": 35
+      }
+    },
+    {
+      "name": "Slow model load",
+      "params": {
+        "lag": 15,
+        "destination": "eu",
+        "authority": "fenced",
+        "restore": 600
+      },
+      "expected": {
+        "Safe to promote": "yes under assumptions",
+        "Blocking reasons": "none",
+        "Planned recovery (seconds)": 780,
+        "Meets 600-second RTO": "no: rehearse or redesign",
+        "Loss bound (seconds)": 35
       }
     }
   ],
   "lab_title": "Is this recovery plan eligible?",
-  "lab_assumptions": "Toy policy: A/B allowed in EU only, verified fencing, RPO 60 seconds. Other readiness gates are assumed true here; Python tests exercise them separately. Recovery timing is a fixed 360-second plan, not a measurement."
+  "lab_assumptions": "Toy policy: A/B allowed in EU only, RPO 60 seconds, RTO 600 seconds, 20-second lease. Loss bound = gap at isolation + lease. The plan is detection 60 + fencing 30 + restore + route 30 + validation 60 seconds. Safety gates decide promotion; a plan over the RTO is a separate planning miss to rehearse or redesign, not a block. Policy, approval, audit and bundle gates are assumed true here; Python tests exercise them. Results are computed from assumptions, not measured."
 }
