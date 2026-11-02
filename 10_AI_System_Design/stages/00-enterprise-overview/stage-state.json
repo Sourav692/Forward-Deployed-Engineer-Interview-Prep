@@ -1,0 +1,46 @@
+{
+  "stage": 0,
+  "kind": "orientation",
+  "title": "Enterprise Use Case and Target Architecture",
+  "status": "tested",
+  "architecture_before": "No implementation assumed for the learner; actual workspace contains authored Stages 1\u201312.",
+  "architecture_after": "Orientation preview only; accepted v0.12-stage-12 architecture is unchanged.",
+  "architecture_version": "v0.12-stage-12",
+  "first_taught_modules": [],
+  "revisited_modules": [],
+  "coverage_policy": "Context-only preview; all 56 existing primary module assignments and depth targets remain unchanged.",
+  "learner_completion": "unassessed",
+  "artifacts": [
+    "stage-plan.md",
+    "guide.md",
+    "guide.html",
+    "overview.json",
+    "stage-state.json",
+    "validation.md",
+    "font-licenses.txt",
+    "../../tools/render_overview.py",
+    "../../architecture/current-system.md",
+    "../../progress/curriculum-map.json",
+    "../../progress/coverage-status.csv"
+  ],
+  "decisions": [],
+  "validation": {
+    "markdown_html_parity_checked": true,
+    "links_anchors_checked": true,
+    "architecture_consistency_checked": true,
+    "stage_map_checked": true,
+    "html_offline_checked": true,
+    "request_walkthrough_checked": true,
+    "stage_focus_checked": true,
+    "clean_package_checked": true,
+    "evidence": "validation.md"
+  },
+  "assumptions": [
+    "Hypothetical supplier workflow and labelled stage-specific planning inputs.",
+    "Target diagrams include proposed integrations and conditional GPU/fine-tuning paths; they do not represent a deployed system."
+  ],
+  "unchecked": [
+    "Production identity, provider/model execution, cloud deployment or failover, load/SLO evidence, screen-reader assessment and learner mastery."
+  ],
+  "changes_accepted_architecture": false
+}

@@ -1,0 +1,479 @@
+{
+  "kind": "orientation",
+  "stage": 0,
+  "title": "Enterprise Use Case and Target Architecture",
+  "lanes": [
+    {
+      "id": "request",
+      "title": "Customer request",
+      "connection": "Retrieval reads the source/index state below. Model Gateway uses the approved release below. Result commit precedes saved success.",
+      "nodes": [
+        {
+          "id": "ingress",
+          "title": "Client and regional API Gateway",
+          "description": "Enter through a tenant-approved regional boundary; caller scope is verified.",
+          "stages": [
+            1,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "identity",
+          "title": "Identity/Policy Service",
+          "description": "Current tenant, user and resource policy; mandatory disclosure audit.",
+          "stages": [
+            1,
+            6,
+            7,
+            11
+          ]
+        },
+        {
+          "id": "admission",
+          "title": "Admission and fair budgets",
+          "description": "Bound waiting work, deadlines, request/token quotas and active slots.",
+          "stages": [
+            4,
+            5,
+            11
+          ]
+        },
+        {
+          "id": "app",
+          "title": "AI App Service",
+          "description": "Run the supplier task and preserve its scoped operation identity.",
+          "stages": [
+            1,
+            2,
+            4,
+            12
+          ]
+        },
+        {
+          "id": "retrieval",
+          "title": "Authorised retrieval",
+          "description": "Resolve current permitted source passages before model disclosure.",
+          "stages": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "id": "gateway",
+          "title": "Model Gateway and approved serving",
+          "description": "Pin the approved bundle/profile; hosted route or justified self-hosted/GPU option.",
+          "stages": [
+            1,
+            8,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "history",
+          "title": "Durable operations and result/history",
+          "description": "Save known completion and original evidence; inspect incomplete/unknown outcomes.",
+          "stages": [
+            1,
+            2,
+            7,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "knowledge",
+      "title": "Enterprise document ingestion",
+      "connection": "Publishes the current source, version and search state used by authorised retrieval; old events cannot undo a newer deletion.",
+      "nodes": [
+        {
+          "id": "sources",
+          "title": "Approved enterprise sources",
+          "description": "Tenant-approved source scope and versioned change/delete events.",
+          "stages": [
+            3,
+            6,
+            11
+          ]
+        },
+        {
+          "id": "workers",
+          "title": "Document Ingestion, Queue and Workers",
+          "description": "Durable jobs prepare bounded parsing/chunking and publish progress.",
+          "stages": [
+            2,
+            3,
+            5
+          ]
+        },
+        {
+          "id": "objects",
+          "title": "Immutable source objects and bounded cache",
+          "description": "Keep versioned passages and provenance; cache reuse still needs current access.",
+          "stages": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "id": "metadata",
+          "title": "Metadata DB and Search Index",
+          "description": "Current versions, tombstones, access metadata and published searchable passages.",
+          "stages": [
+            3,
+            4,
+            6,
+            7,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "Quality and model lifecycle",
+      "connection": "Optional training and registry feed evaluation; an existing approved model needs no new training job. Evaluation and approval supply the immutable release identity used by Model Gateway.",
+      "nodes": [
+        {
+          "id": "training",
+          "title": "Optional datasets and Fine-Tuning Jobs",
+          "description": "Separately approved data, pinned recipe/base, experiments and verified checkpoints.",
+          "stages": [
+            10
+          ]
+        },
+        {
+          "id": "registry",
+          "title": "Model Registry",
+          "description": "Immutable candidate lineage; route-friendly aliases do not replace version evidence.",
+          "stages": [
+            10,
+            12
+          ]
+        },
+        {
+          "id": "evaluation",
+          "title": "Evaluation Service and trusted approval",
+          "description": "Frozen task/safety cases and candidate-bound evidence before promotion.",
+          "stages": [
+            8,
+            10,
+            12
+          ]
+        },
+        {
+          "id": "release",
+          "title": "Versioned release bundle",
+          "description": "Bind prompt, retrieval, model and policy configuration; eligible canary and rollback.",
+          "stages": [
+            8,
+            9,
+            10,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "control",
+      "title": "Platform, region and operations",
+      "connection": "Configures eligible regional execution and records evidence. Global control does not process customer prompts.",
+      "nodes": [
+        {
+          "id": "platform",
+          "title": "Versioned app manifests and migration controller",
+          "description": "Named app owner, validated desired state, read-only shadow and controlled cutover.",
+          "stages": [
+            12
+          ]
+        },
+        {
+          "id": "placement",
+          "title": "Placement and regional recovery",
+          "description": "A/B EU cells; C US-home; one writer and verified recovery eligibility.",
+          "stages": [
+            7,
+            11,
+            12
+          ]
+        },
+        {
+          "id": "capacity",
+          "title": "Serving and capacity operations",
+          "description": "Measure ready replicas/GPU options and reserve actual regional dependency headroom.",
+          "stages": [
+            4,
+            5,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "telemetry",
+          "title": "Audit, Telemetry and usage evidence",
+          "description": "Trace decisions, protect logs, inspect unknown effects and count all workflow spend.",
+          "stages": [
+            1,
+            6,
+            7,
+            8,
+            11,
+            12
+          ]
+        }
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "number": 1,
+      "title": "Build the MVP",
+      "pressure": "A single enterprise user can authenticate, ask a question, receive a hosted-model response, and view a saved request.",
+      "path": "../01-mvp/guide.html"
+    },
+    {
+      "number": 2,
+      "title": "Distributed Execution",
+      "pressure": "Document processing and long-running tasks block interactive requests or are lost on worker failure.",
+      "path": "../02-distributed-execution/guide.html"
+    },
+    {
+      "number": 3,
+      "title": "Enterprise Knowledge",
+      "pressure": "Users need trustworthy answers from changing internal documents without exposing restricted files.",
+      "path": "../03-enterprise-knowledge/guide.html"
+    },
+    {
+      "number": 4,
+      "title": "Scale the Application",
+      "pressure": "Traffic rises from a pilot to broad enterprise usage; latency and database load rise.",
+      "path": "../04-application-scaling/guide.html"
+    },
+    {
+      "number": 5,
+      "title": "Handle Overload and Fair Scheduling",
+      "pressure": "One tenant floods a shared model provider; others miss latency targets and queues grow.",
+      "path": "../05-overload-fairness/guide.html"
+    },
+    {
+      "number": 6,
+      "title": "Enterprise Security",
+      "pressure": "Multiple customer organizations demand strict isolation, identity, audit, and private connectivity.",
+      "path": "../06-enterprise-security/guide.html"
+    },
+    {
+      "number": 7,
+      "title": "Reliability and Consistency",
+      "pressure": "Replica lag, crashes, dependency outages, and retries yield stale states or duplicate effects.",
+      "path": "../07-reliability-consistency/guide.html"
+    },
+    {
+      "number": 8,
+      "title": "Production AI Quality and Releases",
+      "pressure": "A model or retrieval change silently reduces accuracy or increases cost and latency.",
+      "path": "../08-evaluation-releases/guide.html"
+    },
+    {
+      "number": 9,
+      "title": "Inference and GPU Infrastructure",
+      "pressure": "Hosted provider spend and latency force evaluation of routing and self-hosted serving.",
+      "path": "../09-inference-gpu/guide.html"
+    },
+    {
+      "number": 10,
+      "title": "Fine-Tuning and Model Customization",
+      "pressure": "Selected customers require specialized model behavior; ad-hoc training cannot be governed.",
+      "path": "../10-fine-tuning/guide.html"
+    },
+    {
+      "number": 11,
+      "title": "Global Multi-Region Platform",
+      "pressure": "Data residency, regional traffic, outages, and enterprise SLAs change deployment constraints.",
+      "path": "../11-multi-region/guide.html"
+    },
+    {
+      "number": 12,
+      "title": "Staff-Level Platform Architecture",
+      "pressure": "The platform must serve many internal teams and customers without becoming a fragile custom project.",
+      "path": "../12-staff-platform/guide.html"
+    }
+  ],
+  "step_labels": [
+    "Identify and place",
+    "Inspect and admit",
+    "Gather evidence",
+    "Select and reserve",
+    "Generate",
+    "Commit",
+    "Reopen and observe"
+  ],
+  "branches": [
+    {
+      "label": "Saved grounded answer",
+      "steps": [
+        {
+          "label": "Identify and place",
+          "owner": "API Gateway and Identity/Policy Service",
+          "input": "Alice’s verified principal, tenant policy and proposed regional ingress.",
+          "output": "Trusted Tenant A scope and an allowed processing region are established.",
+          "failure": "Spoofed scope or wrong-region processing must reject before protected disclosure."
+        },
+        {
+          "label": "Inspect and admit",
+          "owner": "AI App Service, operation store and admission",
+          "input": "Stable scoped operation key, request shape, deadline and queue limits.",
+          "output": "A new bounded operation or inspection of the original existing operation.",
+          "failure": "Changed payload conflicts; duplicate identity does not grant another model attempt."
+        },
+        {
+          "label": "Gather evidence",
+          "owner": "Authorised retrieval, current policy and Metadata DB",
+          "input": "Supplier question and current source/version/access authority.",
+          "output": "Permitted supplier-policy:v1:c0 context and exact provenance.",
+          "failure": "Deleted, stale, forbidden or absent evidence blocks the grounded answer."
+        },
+        {
+          "label": "Select and reserve",
+          "owner": "Model Gateway, approved release and shared budgets",
+          "input": "Bounded permitted context, approved route/profile and candidate bundle.",
+          "output": "Eligible route is pinned and fresh request/token/slot capacity reserved.",
+          "failure": "An unapproved, unready or over-budget route cannot dispatch."
+        },
+        {
+          "label": "Generate",
+          "owner": "Approved serving adapter",
+          "input": "Permitted bounded request sent to the approved hosted or self-hosted route.",
+          "output": "Known model result is available for validation and final persistence.",
+          "failure": "A lost response can mean execution and charging occurred; no blind alternate call."
+        },
+        {
+          "label": "Commit",
+          "owner": "Durable operation and result store",
+          "input": "Known answer, original bundle and original source references.",
+          "output": "Committed answer/history state exists before a saved-success response.",
+          "failure": "Failed final commit cannot acknowledge a completed saved answer."
+        },
+        {
+          "label": "Reopen and observe",
+          "owner": "Scoped history, current policy, audit and Telemetry",
+          "input": "Alice’s result identity with original evidence and current read permissions.",
+          "output": "Permitted saved result is reopened and outcome/usage evidence inspected.",
+          "failure": "Another tenant cannot read it; revoked original evidence may block protected replay."
+        }
+      ]
+    },
+    {
+      "label": "No permitted policy evidence",
+      "steps": [
+        {
+          "label": "Identify and place",
+          "owner": "API Gateway and Identity/Policy Service",
+          "input": "Alice’s verified principal, tenant policy and proposed regional ingress.",
+          "output": "Trusted Tenant A scope and an allowed processing region are established.",
+          "failure": "Spoofed scope or wrong-region processing must reject before protected disclosure."
+        },
+        {
+          "label": "Inspect and admit",
+          "owner": "AI App Service, operation store and admission",
+          "input": "Stable scoped operation key, request shape, deadline and queue limits.",
+          "output": "A new bounded operation or inspection of the original existing operation.",
+          "failure": "Changed payload conflicts; duplicate identity does not grant another model attempt."
+        },
+        {
+          "label": "Gather evidence",
+          "owner": "Authorised retrieval, current policy and Metadata DB",
+          "input": "Supplier question and current source/version/access authority.",
+          "output": "Blocked: no permitted current policy evidence exists. Return no grounded policy answer and send no restricted context to a model.",
+          "failure": "Deleted, stale, forbidden or absent evidence blocks the grounded answer."
+        },
+        {
+          "label": "Select and reserve",
+          "owner": "Model Gateway, approved release and shared budgets",
+          "input": "Bounded permitted context, approved route/profile and candidate bundle.",
+          "output": "No generated answer or completed grounded result follows this branch. Retain only appropriate scoped failure/decision evidence.",
+          "failure": "An unapproved, unready or over-budget route cannot dispatch."
+        },
+        {
+          "label": "Generate",
+          "owner": "Approved serving adapter",
+          "input": "Permitted bounded request sent to the approved hosted or self-hosted route.",
+          "output": "No generated answer or completed grounded result follows this branch. Retain only appropriate scoped failure/decision evidence.",
+          "failure": "A lost response can mean execution and charging occurred; no blind alternate call."
+        },
+        {
+          "label": "Commit",
+          "owner": "Durable operation and result store",
+          "input": "Known answer, original bundle and original source references.",
+          "output": "No generated answer or completed grounded result follows this branch. Retain only appropriate scoped failure/decision evidence.",
+          "failure": "Failed final commit cannot acknowledge a completed saved answer."
+        },
+        {
+          "label": "Reopen and observe",
+          "owner": "Scoped history, current policy, audit and Telemetry",
+          "input": "Alice’s result identity with original evidence and current read permissions.",
+          "output": "No generated answer or completed grounded result follows this branch. Retain only appropriate scoped failure/decision evidence.",
+          "failure": "Another tenant cannot read it; revoked original evidence may block protected replay."
+        }
+      ]
+    },
+    {
+      "label": "Provider outcome is unknown",
+      "steps": [
+        {
+          "label": "Identify and place",
+          "owner": "API Gateway and Identity/Policy Service",
+          "input": "Alice’s verified principal, tenant policy and proposed regional ingress.",
+          "output": "Trusted Tenant A scope and an allowed processing region are established.",
+          "failure": "Spoofed scope or wrong-region processing must reject before protected disclosure."
+        },
+        {
+          "label": "Inspect and admit",
+          "owner": "AI App Service, operation store and admission",
+          "input": "Stable scoped operation key, request shape, deadline and queue limits.",
+          "output": "A new bounded operation or inspection of the original existing operation.",
+          "failure": "Changed payload conflicts; duplicate identity does not grant another model attempt."
+        },
+        {
+          "label": "Gather evidence",
+          "owner": "Authorised retrieval, current policy and Metadata DB",
+          "input": "Supplier question and current source/version/access authority.",
+          "output": "Permitted supplier-policy:v1:c0 context and exact provenance.",
+          "failure": "Deleted, stale, forbidden or absent evidence blocks the grounded answer."
+        },
+        {
+          "label": "Select and reserve",
+          "owner": "Model Gateway, approved release and shared budgets",
+          "input": "Bounded permitted context, approved route/profile and candidate bundle.",
+          "output": "Eligible route is pinned and fresh request/token/slot capacity reserved.",
+          "failure": "An unapproved, unready or over-budget route cannot dispatch."
+        },
+        {
+          "label": "Generate",
+          "owner": "Approved serving adapter",
+          "input": "Permitted bounded request sent to the approved hosted or self-hosted route.",
+          "output": "Unknown: the response was lost and remote execution may have occurred. Preserve the original operation and reservation for inspection; do not call another route.",
+          "failure": "A lost response can mean execution and charging occurred; no blind alternate call."
+        },
+        {
+          "label": "Commit",
+          "owner": "Durable operation and result store",
+          "input": "Known answer, original bundle and original source references.",
+          "output": "No completed saved answer is acknowledged. Inspect the original incomplete/unknown operation; automatic regeneration is not permitted.",
+          "failure": "Failed final commit cannot acknowledge a completed saved answer."
+        },
+        {
+          "label": "Reopen and observe",
+          "owner": "Scoped history, current policy, audit and Telemetry",
+          "input": "Alice’s result identity with original evidence and current read permissions.",
+          "output": "No completed saved answer is acknowledged. Inspect the original incomplete/unknown operation; automatic regeneration is not permitted.",
+          "failure": "Another tenant cannot read it; revoked original evidence may block protected replay."
+        }
+      ]
+    }
+  ]
+}
