@@ -2,7 +2,7 @@
 
 Stages 1 through 12 are authored and locally checked at their mapped depths. D0 distributed training is context only. All workload, quality counts, costs, and timing figures are illustrative. Learner mastery and production readiness remain unassessed.
 
-Start with [Stage 0: Enterprise Use Case and Target Architecture](stages/00-enterprise-overview/guide.html), or read its [Markdown](stages/00-enterprise-overview/guide.md). It joins Alice’s customer journey, target requirements, complete architecture, and the twelve-stage route in one orientation.
+Start with [Stage 0: Enterprise Use Case and Target Architecture](stages/00-enterprise-overview/guide.html), or read its [Markdown](stages/00-enterprise-overview/guide.md). It joins Alice’s customer journey, target requirements, complete architecture, and the twelve-stage route in one orientation. The [course index](index.html) lists every stage with its guide, Markdown, validation and ZIP.
 
 - Stage 1: [Build the MVP](stages/01-mvp/guide.html), [Markdown](stages/01-mvp/guide.md), [validation](stages/01-mvp/validation.md).
 - Stage 2: [Distributed Execution](stages/02-distributed-execution/guide.html), [Markdown](stages/02-distributed-execution/guide.md), [validation](stages/02-distributed-execution/validation.md).
