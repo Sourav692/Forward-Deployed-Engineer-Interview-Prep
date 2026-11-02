@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T22:20:51.202Z",
+  "generatedAt": "2026-11-02T06:20:00.585Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -1138,6 +1138,10 @@
               "title": "Travel Agent: the 12-Part Framework Worked Through",
               "tabs": [
                 {
+                  "id": "intro",
+                  "label": "Introduction"
+                },
+                {
                   "id": "worked-example",
                   "label": "Worked Example"
                 },
@@ -1147,7 +1151,7 @@
                 }
               ],
               "minutes": 22,
-              "updated": "2026-11-01"
+              "updated": "2026-11-02"
             },
             {
               "slug": "air-gapped-ai-system",

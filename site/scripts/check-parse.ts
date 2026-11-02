@@ -435,6 +435,23 @@ async function checkDocument(label: string, raw: string, allowPlaceholders: bool
   }
 }
 
+// Learn routes go in before any page is checked, so case pages may link to lessons too.
+const LEARN = join(CONTENT, 'learn')
+const learnFiles: string[] = []
+let learnManifest: LearnEntry[] = []
+{
+  const raw = await readFile(join(LEARN, 'manifest.json'), 'utf8').catch(() => null)
+  if (raw === null) failures.push('content/learn/manifest.json: missing — run npm run sync')
+  else learnManifest = JSON.parse(raw).lessons
+}
+for (const l of learnManifest) if (l.kind === 'sync') routes.add(l.href)
+// Every track and module page is prerendered (generateStaticParams), so lessons may link to them.
+for (const m of CURRICULUM_MODULES) {
+  routes.add(curriculumHref(m.track))
+  routes.add(curriculumHref(m.track, m.slug))
+}
+
+
 for (const mod of manifest.modules) {
   for (const track of mod.tracks) {
     const personal = Boolean(FAMILY_META[track.id]?.personalisation)
@@ -505,25 +522,11 @@ type LearnEntry = {
   href: string
 }
 
-const LEARN = join(CONTENT, 'learn')
-const learnFiles: string[] = []
-let learnManifest: LearnEntry[] = []
-{
-  const raw = await readFile(join(LEARN, 'manifest.json'), 'utf8').catch(() => null)
-  if (raw === null) failures.push('content/learn/manifest.json: missing — run npm run sync')
-  else learnManifest = JSON.parse(raw).lessons
-}
 const learnByKey = new Map(learnManifest.map((l) => [`${l.module}/${l.slug}`, l]))
 // ENH-21: each classic design in Learn links to its casebook case and back.
 for (const [lesson, study] of Object.entries(CLASSIC_DESIGN_CASE)) {
   if (!learnManifest.some((l) => l.slug === lesson && l.kind === 'sync')) failures.push(`CLASSIC_DESIGN_CASE: lesson "${lesson}" is not published`)
   if (!pages.has(study)) failures.push(`CLASSIC_DESIGN_CASE: "${study}" is not a published page`)
-}
-for (const l of learnManifest) if (l.kind === 'sync') routes.add(l.href)
-// Every track and module page is prerendered (generateStaticParams), so lessons may link to them.
-for (const m of CURRICULUM_MODULES) {
-  routes.add(curriculumHref(m.track))
-  routes.add(curriculumHref(m.track, m.slug))
 }
 
 const listMarkdown = async (dir: string): Promise<string[]> => {
