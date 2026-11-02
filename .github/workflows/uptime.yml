@@ -1,13 +1,15 @@
 name: Uptime
 
-# Hourly check that production answers (audit check PR-19, owner decision 5). A failed
-# run makes GitHub email the repository owner. About 720 Actions minutes a month.
+# Check every 15 minutes that production answers (audit check PR-19, owner decision 5).
+# It stands in for a Vercel 5xx alert, which needs Pro with Observability Plus. A failed
+# run makes GitHub email the repository owner. About 2,900 Actions minutes a month, free
+# because the repository is public.
 # GitHub disables scheduled workflows after 60 days without repository activity;
 # re-enable it on the Actions tab if that happens.
 
 on:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '2,17,32,47 * * * *'
   workflow_dispatch:
 
 permissions: {}
@@ -22,12 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Fetch the home page, a lesson and a case
+      - name: Fetch the home page, Learn, Interview, Practice, a lesson, a case and a worksheet
         run: |
           status=0
-          for path in / \
+          for path in / /learn /interview /practice \
             /learn/orientation/the-fde-role/three-roles-three-questions \
-            /design/enterprise-knowledge-assistant; do
+            /design/enterprise-knowledge-assistant \
+            /practice/sales-copilot; do
             code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 10 "$SITE$path" || echo 000)
             echo "$code $SITE$path"
             if [ "$code" != "200" ]; then
