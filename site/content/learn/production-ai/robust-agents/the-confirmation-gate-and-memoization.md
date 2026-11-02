@@ -23,7 +23,7 @@ A simple agent loop calls `execute_tool(...)` and moves on. In production that o
 | **Retry** | One network blip turning into a failed run |
 | **Fallback** | One permanently dead dependency turning into a full outage instead of a degraded answer |
 
-The Handbook's companion executor is under 130 lines. Every line is a decision. This lesson covers the first two mechanisms; the next lesson covers the other two.
+The reference executor is under 130 lines. Every line is a decision. This lesson covers the first two mechanisms; the next lesson covers the other two.
 
 ## Ask the Questions in a Fixed Order
 
@@ -75,7 +75,7 @@ A cache cannot be trusted to authorise anything it was never asked to check. Cac
 
 The ordering makes that impossible: the gate runs first, unconditionally, on every call. A destructive call either raises at the gate or arrives approved.
 
-**The sources disagree on one detail.** In the Handbook's executor, an *approved* destructive call does continue to the memo check. Its key includes its arguments, so a second `close_ticket("TKT-3")` returns the cached "closed" result. The Handbook argues that is correct for an idempotent close. The cross-cutting guard material states the stricter rule: destructive calls skip the cache entirely and take the full authorisation path every time. The eight-check pipeline also caches only non-destructive results. Both agree on the rule that matters: a cache hit must never let a destructive call skip the gate. In an interview, give the stricter rule.
+**The sources disagree on one detail.** In the reference executor, an *approved* destructive call does continue to the memo check. Its key includes its arguments, so a second `close_ticket("TKT-3")` returns the cached "closed" result. Its design treats that as correct for an idempotent close. The cross-cutting guard material states the stricter rule: destructive calls skip the cache entirely and take the full authorisation path every time. The eight-check pipeline also caches only non-destructive results. Both agree on the rule that matters: a cache hit must never let a destructive call skip the gate. In an interview, give the stricter rule.
 
 > **Warning: the cache is not a second authorisation path.** If memoization ever runs before the destructive check, a repeated request inherits an approval that was given for a different moment and a different intent. Keep the gate first, and keep destructive results out of the cache unless the action is idempotent by design.
 

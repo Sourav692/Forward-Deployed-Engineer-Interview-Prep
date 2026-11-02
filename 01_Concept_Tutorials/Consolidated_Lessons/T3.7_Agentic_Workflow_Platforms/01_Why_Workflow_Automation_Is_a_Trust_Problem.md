@@ -78,7 +78,7 @@ Each answer is a test in the project. [Approvals and Spend Caps](05_Approvals_an
 
 ## Reuse One Decision Shape Across Policy Problems
 
-The FDE Handbook's RAG platform, this agent platform, and its delivery framework share one shape on purpose. A named policy returns a `Decision(allowed, rule, reason)`, and deny overrides allow.
+This agent platform, the reference RAG platform from Enterprise RAG in production, and the delivery framework share one shape on purpose. A named policy returns a `Decision(allowed, rule, reason)`, and deny overrides allow.
 
 | Here | In the delivery framework | In enterprise RAG |
 |---|---|---|

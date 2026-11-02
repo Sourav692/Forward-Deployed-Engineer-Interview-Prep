@@ -55,7 +55,7 @@ while True:
 
 Two controls work together. The budget, `retries=3`, stops a long outage from becoming a tight loop. The growing delay, `0.01 * attempt` in the demo plus jitter in production, spreads the attempts out. Together they absorb a short outage without amplifying a long one.
 
-The Handbook's test `test_retry_on_flaky_tool` proves the behaviour. It wraps search to fail twice, then asserts two `retry` records and one `ok`.
+The reference executor's test `test_retry_on_flaky_tool` proves the behaviour. It wraps search to fail twice, then asserts two `retry` records and one `ok`.
 
 ## Scope Framework Retries to the Failures That Pass
 
@@ -81,7 +81,7 @@ def with_fallback(primary, fallback, args, *, adapt=None, logger, **kwargs):
         return execute_tool(fallback, fb_args, logger=logger, **kwargs)
 ```
 
-`adapt` remaps the arguments when the fallback has a different signature. In the Handbook's test, `get_ticket("NOPE")` raises `NotFoundError`, so the fallback searches for "login" and returns TKT-3.
+`adapt` remaps the arguments when the fallback has a different signature. In its fallback test, `get_ticket("NOPE")` raises `NotFoundError`, so the fallback searches for "login" and returns TKT-3.
 
 The cross-cutting guard material describes the same idea at a larger scale. A fallback is the tool-level version of multi-provider failover: a degraded but useful answer from a cheaper, smaller or cached backend.
 

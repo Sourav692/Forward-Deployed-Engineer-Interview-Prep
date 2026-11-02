@@ -30,7 +30,7 @@ class ToolCall:
 
 ## Map One Status to Each Executor Branch
 
-A trace cannot be complete if some branch of the executor never logs. In the Handbook's executor every branch logs, and each branch has its own status.
+A trace cannot be complete if some branch of the executor never logs. In the reference executor every branch logs, and each branch has its own status.
 
 | Status | Emitted when |
 |---|---|

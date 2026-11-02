@@ -34,7 +34,7 @@ Mixing `EMPTY` with `UNAVAILABLE` causes retry storms during a real outage. An a
 
 Mixing `DENIED` with `INVALID` is subtler. An agent told its input was wrong tries a different input. That is right for a typo and wrong for a policy. It teaches the agent to work around the policy instead of respecting it.
 
-The FDE Handbook's ticket store makes the same split at the exception level. A `TransientError` is a temporary failure, such as a network blip or a 503, and is safe to retry. A `NotFoundError` is permanent: do not retry, and consider a fallback. A tool's failures are part of its contract, and a retry policy is only as good as this distinction.
+The reference agent's ticket store makes the same split at the exception level. A `TransientError` is a temporary failure, such as a network blip or a 503, and is safe to retry. A `NotFoundError` is permanent: do not retry, and consider a fallback. A tool's failures are part of its contract, and a retry policy is only as good as this distinction.
 
 ## Never Explain a Denial to the Model
 

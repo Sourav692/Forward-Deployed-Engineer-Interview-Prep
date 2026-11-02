@@ -45,7 +45,7 @@ This is the "constrained schema, not free text" instinct applied to the model's 
 
 Sometimes two registered tools could satisfy the same intent. A primary search and an archival fallback both "search for X". A user who says "find and close" could match `search_tickets` or `close_ticket`. Leaving the choice to the model makes tool selection silent and unrepeatable.
 
-The Handbook's demo resolves it with a priority tuple: safety first, then word overlap with the description.
+The reference demo resolves it with a priority tuple: safety first, then word overlap with the description.
 
 ```python
 def disambiguate(candidates: List[Tool], query: str) -> Tool:
@@ -92,7 +92,7 @@ Read it top to bottom. It is the executor from the first lesson, with disambigua
 
 ## Know Where Each Check Lives
 
-The Handbook builds the checks twice: in a small tool-calling demo and in a full workflow platform.
+The reference code builds the checks twice: in a small tool-calling demo and in a full workflow platform.
 
 | Check | Tool-calling demo | Workflow platform |
 |---|---|---|
@@ -131,7 +131,7 @@ Validation stopped the bad argument, and the gate stopped the unapproved write. 
 ## Check Yourself
 
 1. **Which three checks operate on the whole run rather than one call?**
-   The destructive-action gate, the step or loop guard, and the spend or cost guard. In the Handbook's workflow platform they live in `guardrails.py::authorize_step()`.
+   The destructive-action gate, the step or loop guard, and the spend or cost guard. In the reference workflow platform they live in `guardrails.py::authorize_step()`.
 
 2. **Why must disambiguation prefer non-destructive tools on a tie?**
    A tie means the system cannot tell which tool the user meant. Picking the destructive one would run an irreversible action on a guess, so safe tools win ties and a destructive tool never runs silently on one.

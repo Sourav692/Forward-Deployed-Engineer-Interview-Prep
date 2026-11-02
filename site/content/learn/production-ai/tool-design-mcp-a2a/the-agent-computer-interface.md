@@ -38,7 +38,7 @@ Only the last row is a model problem, and it becomes rare once the first four ar
 
 ## Declare What Each Tool Is at Registration
 
-The FDE Handbook's companion agent defines a tool as four fields:
+A reference tool-calling agent defines a tool as four fields:
 
 ```python
 @dataclass
@@ -59,7 +59,7 @@ Tools sit in a **registry**, a name-to-tool lookup. Its `specs()` method returns
 
 The description is therefore prompt engineering. It is the only thing the model has to go on when it picks. The interview tutorial says the same thing from the other side: a description is the only thing standing between the model calling the tool correctly and the model guessing.
 
-Errors belong to the contract too. The Handbook's ticket store raises two exception types, one for temporary failures and one for permanent ones. [Typed Tool Results and Teachable Errors](/learn/production-ai/tool-design-mcp-a2a/typed-tool-results-and-teachable-errors) shows why that split matters so much.
+Errors belong to the contract too. The reference agent's ticket store raises two exception types, one for temporary failures and one for permanent ones. [Typed Tool Results and Teachable Errors](/learn/production-ai/tool-design-mcp-a2a/typed-tool-results-and-teachable-errors) shows why that split matters so much.
 
 > **Warning: a bigger model does not fix a vague interface.** Swapping in a stronger model hides interface bugs for a while and raises the cost of every call. The four interface failures stay exactly where they were.
 
