@@ -27,7 +27,7 @@ jobs:
           status=0
           for path in / \
             /learn/orientation/the-fde-role/three-roles-three-questions \
-            /modules/15-fde-case-studies/knowledge-retrieval/enterprise-knowledge-assistant; do
+            /design/enterprise-knowledge-assistant; do
             code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 --retry 2 --retry-delay 10 "$SITE$path" || echo 000)
             echo "$code $SITE$path"
             if [ "$code" != "200" ]; then
