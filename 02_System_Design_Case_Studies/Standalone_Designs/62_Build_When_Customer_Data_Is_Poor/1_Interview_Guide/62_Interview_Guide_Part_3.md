@@ -111,18 +111,18 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2 (last question), 5, 14 (opening) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: Question 18 (#62), the reusable answer template, the mistakes to avoid |
-| 10 | Same file, Question 11 and its "What if there is no labelled data?" follow-up |
-| 3, 9, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md`: dataset hygiene gates and the 94% → ~78% routing case |
-| 4, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md`: Cohen's kappa and the 0.60 floor, sample-size arithmetic, stratification, datasheets |
-| 3, 4, 5, 12 | `01_Concept_Tutorials/FDE_Handbook/10_FDE_Delivery_Operating_Model/03_Scoping_To_Production_In_Two_Weeks.md` and `04_Gates_Risks_Metrics.md`: data-readiness days, `data_access_granted`, "start day 1, escalate day 3", refuse at intake, shadow mode |
-| 8 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/03_Ingestion_Pipeline.md`: quarantine not default, content hash, freshness and dead-letter records |
-| 10 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/07_Evaluation_Golden_Sets_Judges.md`: the false-alarm label war story |
-| 5, 10 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/04_rag_and_retrieval_INTERVIEW_TUTORIAL.md`: eval set without labelled data |
+| 1, 2 (last question), 5, 14 (opening) | Problem-decomposition interview prompts: this case's prompt, the reusable answer template, the mistakes to avoid |
+| 10 | Same source, the evaluation-strategy prompt and its "What if there is no labelled data?" follow-up |
+| 3, 9, 10 | Agentic system design notes on learning in agentic systems: dataset hygiene gates and the 94% → ~78% routing case |
+| 4, 10 | Agentic system design notes on validation and measurement: Cohen's kappa and the 0.60 floor, sample-size arithmetic, stratification, datasheets |
+| 3, 4, 5, 12 | Delivery operating model notes on scoping to production in two weeks, and on gates, risks and metrics: data-readiness days, `data_access_granted`, "start day 1, escalate day 3", refuse at intake, shadow mode |
+| 8 | Enterprise RAG notes on the ingestion pipeline: quarantine not default, content hash, freshness and dead-letter records |
+| 10 | Enterprise RAG notes on evaluation, golden sets and judges: the false-alarm label war story |
+| 5, 10 | RAG and retrieval tutorial: eval set without labelled data |
 | 8 | `05_FDE_Delivery_and_Scoping/Delivery_and_Collaboration/10. Cross Team Collaboration.md`: data contracts and two-phase delivery |
 | 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/`: the measure, route, bound, cache-safely sequence |
 
-Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](../../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md) for gates and intake refusal; [G13 Evaluation and Release Gating](../../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) for the release gate; [G01 Enterprise Knowledge Assistant](../../../Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/4_Full_Design/G01_Full_Design.md) for messy enterprise documents and permission normalisation; [G06 NL Over Governed Data](../../../Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/4_Full_Design/G06_Full_Design.md) for governed metric definitions; [Decomposition Classics](../../Decomposition_Classics_67_68_69/) for #68, the bank-fraud case built on inconsistent labels.
+Related packs, for cross-reference rather than repetition: [G12 Scoping to Deployed Agent](../../../Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md) for gates and intake refusal; [G13 Evaluation and Release Gating](../../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) for the release gate; [G01 Enterprise Knowledge Assistant](../../../Scenario_Packs_G01_G20/G01_Enterprise_Knowledge_Assistant/4_Full_Design/G01_Full_Design.md) for messy enterprise documents and permission normalisation; [G06 NL Over Governed Data](../../../Scenario_Packs_G01_G20/G06_NL_Over_Governed_Data/4_Full_Design/G06_Full_Design.md) for governed metric definitions; [Decomposition Classics](../../Decomposition_Classics_67_68_69/) for the bank-fraud case built on inconsistent labels.
 
 Sections 2 (all questions but the last), 3 (the table), 4 (procedure, scorecard, thresholds), 5 (design table, weak-supervision and not-yet rule), 6 to 9 (the warranty scenario, its numbers and architecture), 11 to 13, 14 (script, spoken answer, follow-ups) and 15 (the card) are own construction, built for this page from the sources' arguments. They are not source material.
 

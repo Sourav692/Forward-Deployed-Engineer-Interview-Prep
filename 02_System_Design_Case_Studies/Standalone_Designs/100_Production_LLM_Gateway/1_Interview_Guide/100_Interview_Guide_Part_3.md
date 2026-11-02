@@ -53,7 +53,7 @@ Residency is a routing rule, not a network setting. The gateway already sees eve
 | Data class | Allowed destination | What the gateway does |
 |---|---|---|
 | No PII, public content | Any approved provider | Normal routing and fallback |
-| PII that can be masked | Any approved provider, after masking | Mask before the request leaves the network, not only on output, as the study guide's FDE track puts it |
+| PII that can be masked | Any approved provider, after masking | Mask before the request leaves the network, not only on output, as the source's FDE track puts it |
 | PII bound to a region | A provider endpoint in that region with contractual no-retention, or a model in the customer's VPC | Route only to that region's pool |
 | Data that cannot leave the network | A self-hosted model inside the customer's VPC | Route only to the in-network pool |
 
@@ -61,6 +61,6 @@ The sharpest consequence falls on failover. A fallback that crosses the boundary
 
 A self-hosted model changes the cost model from tokens to GPU-hours. Size it with the air-gapped chapter's formula, `Replicas = ⌈(QPS × Tokens_request) / (TokensPerSecond_replica × UtilizationTarget)⌉`. When the answer exceeds the available hardware, change the workload, not the hardware request. [G20 LLM Inference Serving](../../../Scenario_Packs_G01_G20/G20_LLM_Inference_Serving/4_Full_Design/G20_Full_Design.md) covers batching and failover inside that pool, and [the air-gapped AI system](../../19_Air_Gapped_AI_System/) covers the fully disconnected case.
 
-Telemetry follows the data. Traces and logs obey the same residency as the requests they describe. A hosted tracing product may be off limits, and the study guide flags the gap: only hosted tracing is shown in the worked examples, so a self-hostable tracing backend has to be built.
+Telemetry follows the data. Traces and logs obey the same residency as the requests they describe. A hosted tracing product may be off limits, and the source flags the gap: only hosted tracing is shown in the worked examples, so a self-hostable tracing backend has to be built.
 
 Say the trade-off aloud. The in-network model is usually weaker and slower than the frontier providers. The complex-turn share may need a human handoff sooner, and the $500 budget becomes a GPU-hour budget.

@@ -10,7 +10,7 @@ This is a low-scale, high-stakes design, not a traffic problem. Only 150 people 
 | #66 OpenAI FDE prompt: shipment rerouting over SAP, weather APIs and 500 warehouse managers | Section 10, the evaluation plan the prompt demands; section 11, the stakeholder and data-unification delta; follow-ups in section 13 |
 | Self-drill on #5 (written for this page) | Section 14 |
 
-Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim. The group has no playbook cost drill, so the whole of section 14 is own construction.
+Sections and tables marked *(own construction)* were built for this page from the sources' arguments and are not in the sources verbatim. No ready-made cost drill covers the group, so the whole of section 14 is own construction.
 
 ---
 

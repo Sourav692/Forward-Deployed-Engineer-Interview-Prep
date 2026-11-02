@@ -55,4 +55,4 @@ Comfort with LLM evaluation (golden sets, rubrics and LLM-as-judge), basic stati
 
 ## Practise it
 
-When you have read the mandatory sections, try the [LLM Evaluation and Release-Gating Platform worksheet](/practice/llm-evaluation-and-release-gating-platform). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.
+When you have read the mandatory sections, try the [Evaluation and Release Gating worksheet](/practice/llm-evaluation-and-release-gating-platform). It asks you to produce the same design from a blank page, which shows what you can explain without the guide open.

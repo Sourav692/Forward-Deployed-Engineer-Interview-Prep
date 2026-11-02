@@ -50,7 +50,7 @@ A different default distance metric is the usual cause, such as Euclidean instea
 Whether the vector column has an HNSW or IVFFlat index, rather than being scanned sequentially. See [Choosing a Database and Vector Store](04_Choosing_a_Database_and_Vector_Store.md).
 
 **What breaks when a vector store grows past 100 million embeddings?**
-Memory, at about 600 GB raw and nearly 1 TB with the HNSW graph. Then build time, in-place updates, backups, and full re-indexes on schema change. Fixes include sharding, INT8 quantization, incremental indexing, compaction, and versioned indexes with gradual traffic shifts. See [Vector Indexes in Production](05_Vector_Indexes_in_Production.md).
+Memory, at about 600 GB raw and nearly 1 TB with the HNSW graph. Then build time, in-place updates, backups, and full re-indexes on schema change. Fixes include sharding, INT8 quantisation, incremental indexing, compaction, and versioned indexes with gradual traffic shifts. See [Vector Indexes in Production](05_Vector_Indexes_in_Production.md).
 
 ## Answer Parent Retrieval Questions
 

@@ -23,7 +23,7 @@ Every level traces the request; the level shows in what the answer refuses to co
 - The dashboard is built top down from the complaint, and wrong answers are triaged by comparing evidence with output.
 - Incident #87 was compounded latency from several small changes, found only by comparing each span with its baseline.
 - Incident #88 was prompt growth, a routing threshold and a broken cache key multiplying, and it hid a permission leak.
-- Prompts #53, #54 and #74 are the same traces read at different depths: the stage decomposition, the seven RAG failure classes, and the inference stack.
+- Three practice prompts are the same traces read at different depths: the stage decomposition, the seven RAG failure classes, and the inference stack.
 - Rollout runs in four phases with named owners, an eight-metric scorecard, explicit go/no-go gates and a risk register.
 - The fifty minutes go to the no-capture list, the dropped-trace drill and the support test.
 - Every cost and latency pivot is answered with a card built from measure, route, bound and cache safely.
@@ -52,12 +52,12 @@ All paths are relative to the repository root.
 | 1–9, 13, 14 | `03_Practice_Worksheets_and_Keys/System_Design_Worksheets/15_observability_customer_facing_ai_application.md` and `answer_keys/15_observability_customer_facing_ai_application_answer_key.md` (the anchor, #24) |
 | 1–9, 13, 14 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1/chapter-15-observability-customer-facing-ai-application-tutorial.md` |
 | 4 (sampling diagram, sizing), 9 (triage diagram), 14 (gap answers) | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-15-observability-customer-facing-ai-application-tutorial_v2.md`; sizing and gap answers from its supplementary "My Perspective on the Gaps" |
-| 10 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/03_latency_spike.md` (#87) |
-| 11 | Same folder, `04_cost_spike.md` (#88) |
-| 12 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, questions 9 (#53) and 10 (#54); `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompt 9 (#74) |
-| 12 (prefill, decode, utilisation), 15.8 (prefix match), 15.9, 15.10 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections A1, B1, D and E (#119, #121) |
+| 10 | Production incident log, latency spike write-up |
+| 11 | Production incident log, cost spike write-up |
+| 12 | Problem decomposition question bank (this repo): the latency regression, poor RAG answer quality and inference-stack prompts |
+| 12 (prefill, decode, utilisation), 15.8 (prefix match), 15.9, 15.10 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections A1, B1, D and E |
 | 15.1 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #44; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 7 |
-| 15.2–15.8 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §15 scenarios 1, 2, 6, 7, 10, 11, 12 (#104, #105, #109, #110, #113, #114, #115) and §4's four verbs |
+| 15.2–15.8 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §15 scenarios 1, 2, 6, 7, 10, 11, 12 and §4's four verbs |
 | 5 (ASCII diagram, "Fails how" column), 3 (owner table), 15 ("Do not" on §15 cards), and every item marked own construction | Built for this page from the sources' arguments; not source material |
 | Related | G20 (LLM inference serving) shares #74's stack walk |
 

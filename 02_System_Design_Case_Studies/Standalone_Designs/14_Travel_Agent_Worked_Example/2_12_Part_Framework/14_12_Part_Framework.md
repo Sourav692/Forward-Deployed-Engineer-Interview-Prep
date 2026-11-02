@@ -4,7 +4,7 @@
 
 System design is the plan for how software parts work together to solve a business problem quickly, reliably and at scale. This page applies that plan to one sample system: an agentic AI travel assistant for customers in AMER, EMEA and APJ. It starts from a first-draft reference architecture and folds in five structural fixes that came out of two later reviews.
 
-> **What this is:** A first-draft architecture for a travel-agent system laid it out as a rigid pipeline. Five agents fanned out, then all passed, in order, through one shared cache, one retrieval stage, one LLM step and one tool-calling stage. An architecture review found four points where that order does not match how a multi-agent system runs. A separate blueprint, written independently, reached the same four fixes and added a fifth: a named Synthesizer Agent to fill the missing aggregation step. This page combines all five into one final architecture.
+> **What this is:** A first-draft architecture for a travel-agent system laid it out as a rigid pipeline. Five agents fanned out, then all passed, in order, through one shared cache, one retrieval stage, one LLM step and one tool-calling stage. An architecture review found four points where that order does not match how a multi-agent system runs. A separate blueprint, written independently, reached the same four fixes and added a fifth: a named Synthesiser Agent to fill the missing aggregation step. This page combines all five into one final architecture.
 
 ---
 
@@ -28,9 +28,9 @@ A single required retrieval box after all five agents made every agent hit the v
 
 The draft pushed every agent through one shared LLM step, then a single Tool Calling step, then a single MCP Registry, as though the request had only one turn in total. The Booking Agent needs the Payment and Flight MCP servers while *it* is running, not after four unrelated agents have wrapped up.
 
-### 5 · A Synthesizer Agent replaces the missing aggregation step (*added by the prior blueprint*)
+### 5 · A Synthesiser Agent replaces the missing aggregation step (*added by the prior blueprint*)
 
-The draft never said how five parallel outputs turn into one reply. It kept going as a single line, as if merging happened by itself. Now a named Synthesizer Agent combines the output of every agent that ran and settles conflicts between them before the user sees anything. A Policy decision that overrides a Booking choice is a typical case.
+The draft never said how five parallel outputs turn into one reply. It kept going as a single line, as if merging happened by itself. Now a named Synthesiser Agent combines the output of every agent that ran and settles conflicts between them before the user sees anything. A Policy decision that overrides a Booking choice is a typical case.
 
 ---
 
@@ -38,10 +38,9 @@ The draft never said how five parallel outputs turn into one reply. It kept goin
 
 The components and the regional footprint match the first draft. The structure is what changes: a cache hit is now cheap, each agent uses its tools within its own loop, and all results pass through one accountable step before the reply leaves.
 
-- 🟢 the request path
-- 🟢 agents, each running its own loop in parallel
-- 🟣 shared backend, called only when needed (dashed lines)
-- 🟠 added: Synthesizer Agent
+- Solid lines: the request path, and the agents, each running its own loop in parallel
+- Dashed lines: the shared backend, called only when needed
+- New in this version: the Synthesiser Agent
 
 ```mermaid
 flowchart TB
@@ -70,19 +69,19 @@ flowchart TB
   A4 -.-> LLM & VDB & MCP
   A5 -.-> LLM & MCP
 
-  A1 & A2 & A3 & A4 & A5 --> SYN["Synthesizer Agent<br/>merges every agent that ran · resolves conflicts (e.g. Policy overrides Booking)"]
+  A1 & A2 & A3 & A4 & A5 --> SYN["Synthesiser Agent<br/>merges every agent that ran · resolves conflicts (e.g. Policy overrides Booking)"]
   SYN --> RESP
   RESP -. "write-back" .-> SC
   RESP --> MON[Monitoring & Logging<br/>latency · token usage · per-agent execution traces · cache hit rate · alerts — spans every stage above]
 ```
 
-A cache hit (teal) returns before the Supervisor spawns any agent. On a miss, the Supervisor spawns only the agents this query needs. Each of them calls the shared backend on its own (the Foundation LLM, the regional vector DBs, the MCP registry and the external APIs) for only what its task requires. The Synthesizer Agent then combines whatever ran into a single reply, and that reply is written back to the cache so the next similar query can reuse it.
+A cache hit returns before the Supervisor spawns any agent. On a miss, the Supervisor spawns only the agents this query needs. Each of them calls the shared backend on its own (the Foundation LLM, the regional vector DBs, the MCP registry and the external APIs) for only what its task requires. The Synthesiser Agent then combines whatever ran into a single reply, and that reply is written back to the cache so the next similar query can reuse it.
 
 ---
 
 ## Key components
 
-The list of components matches the first draft. The Gateway, the Cache and the agent-owned services have a new scope, and the Synthesizer is new.
+The list of components matches the first draft. The Gateway, the Cache and the agent-owned services have a new scope, and the Synthesiser is new.
 
 | Component | Purpose |
 | --- | --- |
@@ -96,7 +95,7 @@ The list of components matches the first draft. The Gateway, the Cache and the a
 | **Regional Vector DBs** (AMER / EMEA / APJ) | Still the shared retrieval layer, but now something agents call into, not a stage that every request must pass through in turn. |
 | **MCP Tool Registry** | Finds tools at run time. Any agent can reach it on its own, whenever it needs to. |
 | **External APIs** | Flight, hotel, map and payment providers, called through MCP servers. |
-| **Synthesizer Agent** `added` | Combines the output of every agent that ran, settles conflicts between them (for example, Policy overriding a Booking choice) and returns one coherent reply. |
+| **Synthesiser Agent** `added` | Combines the output of every agent that ran, settles conflicts between them (for example, Policy overriding a Booking choice) and returns one coherent reply. |
 | **Monitoring & Logging** | Records latency, token usage, failures and per-agent traces for the whole request. |
 
 ---
@@ -112,7 +111,7 @@ The ten steps from the first draft, put in a new order so that the cache check c
 5. If it misses, the Supervisor spawns the specialised agents this query calls for (Search, Booking, Pricing, Recommendation, Policy).
 6. Each agent pulls the context it needs from the right regional Vector DB, using a tool call within its own loop.
 7. Each agent calls the external APIs it needs (flights, hotels, maps, payment) through the MCP Tool Registry, again within its own loop.
-8. The Synthesizer Agent gathers every agent's output, settles conflicts and writes one grounded reply.
+8. The Synthesiser Agent gathers every agent's output, settles conflicts and writes one grounded reply.
 9. The user gets the final reply, and the answer is stored in the Semantic Cache so later queries can reuse it.
 10. Monitoring and logging record latency, token usage and per-agent traces for the whole request.
 
@@ -151,7 +150,7 @@ The contrasts an interviewer wants to hear you draw.
 
 ## Mental model: an international airport
 
-The airport comparison from the first draft, stretched to cover the cache gate and the Synthesizer.
+The airport comparison from the first draft, stretched to cover the cache gate and the Synthesiser.
 
 | Airport | System |
 | --- | --- |
@@ -163,5 +162,5 @@ The airport comparison from the first draft, stretched to cover the cache gate a
 | Airline crews, each with its own manuals and radios | Specialised agents, each with its own retrieval and tool access |
 | Reference binders kept at each desk | Vector databases, used by whichever desk needs them |
 | Ground handlers, caterers and fuel trucks | External APIs (flights, hotels, maps, payments) |
-| Dispatcher who writes one departure report from every crew `added` | Synthesizer Agent |
+| Dispatcher who writes one departure report from every crew `added` | Synthesiser Agent |
 | CCTV and the operations room | Monitoring, logging and observability |

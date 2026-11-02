@@ -2,11 +2,11 @@
 
 ## 12. Decide When Parameter Updates Earn Their Cost
 
-Training is the most expensive way to change a model's behaviour, so defend it before proposing it. The Cracking book's learning chapter orders four places improvement can live: context, memory, procedure and parameters. Each is slower and costlier to change than the one before; the book puts it at roughly ten times per step, an order of magnitude rather than a measurement. Work down that list, not up.
+Training is the most expensive way to change a model's behaviour, so defend it before proposing it. Improvement can live in four places, in this order: context, memory, procedure and parameters. Each is slower and costlier to change than the one before; the rule of thumb is roughly ten times per step, an order of magnitude rather than a measurement. Work down that list, not up.
 
 The book names three situations where parameter updates win. Strict format or protocol adherence at high volume, where a small tuned model can often match a larger prompted one at a fraction of serving cost. Domain vocabulary the base model lacks. A hard cost or latency ceiling after cheaper surfaces are exhausted, where distillation buys the ceiling back. It is as blunt about where they lose: knowledge gaps are mainly a retrieval problem, and fine-tuning is a weak, unreliable way to teach a model new facts.
 
-Map the four prompts onto that rule *(own construction)*. The math model (#84) wins on reasoning behaviour that prompting cannot install. The training system (#73) is parameter updates by definition. The harm-versus-help model (#81) wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer. The phone model (#83) is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
+Map the four prompts onto that rule *(own construction)*. The math model wins on reasoning behaviour that prompting cannot install. The training system is parameter updates by definition. The harm-versus-help model wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer. The phone model is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
 
 A tuned model freezes its task definition, which is the cost the book asks to name. When the business definition changes, a tuned model needs retraining where a prompt needs an edit. Keep a prompted fallback path for that reason.
 
@@ -38,7 +38,7 @@ The interviewer will change a constraint mid-round; the question bank says so. M
 
 ## 14. Answer the Compute Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the training bill is out of control." This group has no playbook drill, so the card below is *(own construction)*.
+The interviewer's pivot after a good design is "the training bill is out of control." No ready-made drill covers this group, so the card below is *(own construction)*.
 
 | | |
 |---|---|
@@ -48,7 +48,7 @@ The interviewer's pivot after a good design is "the training bill is out of cont
 | Do not | Launch the full-scale run to find out whether the recipe works, or tune hyperparameters against the test set |
 | 60-second line | Treat training spend as a series of experiments. Prove the recipe small, iterate with adapters, spend rollouts where problems are hard, and checkpoint so a failure costs minutes. The metric is eval gained per GPU-hour. |
 
-The four verbs from the cost playbook still generate the answer. Measure, by attributing GPU-hours to stage and experiment. Route, by matching method to need: adapters for iteration, full fine-tune for the final run, distillation for serving. Bound, with a budget per stage and a kill rule. Cache safely, by reusing verified synthetic data and scored rollouts across experiments when the policy has not moved far.
+The four cost verbs still generate the answer. Measure, by attributing GPU-hours to stage and experiment. Route, by matching method to need: adapters for iteration, full fine-tune for the final run, distillation for serving. Bound, with a budget per stage and a kill rule. Cache safely, by reusing verified synthetic data and scored rollouts across experiments when the policy has not moved far.
 
 ---
 
@@ -100,11 +100,11 @@ All paths are relative to the repository root unless stated.
 
 | Section | Source |
 |---|---|
-| Member prompts (#73, #81, #83, #84), 1, 13 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompts 8, 16, 18 and 19; section 4 "The Framework That Wins the Round" |
+| Member prompts, 1, 13 | Problem decomposition question bank (this repo): the four member prompts; section 4 "The Framework That Wins the Round" |
 | 5, 6, 8 | `01_Foundations/00_Theory_and_Foundations/Fine_Tuning_and_RL/01_Foundations/` labs: where fine-tuning fits, instruction tuning, data preparation, training (`pythia-70m`, `pythia-410m`), evaluation (ARC) |
 | 6 | `01_Foundations/00_Theory_and_Foundations/Fine_Tuning_and_RL/03_Applications/3_ways_Fine_Tuning_LLAMA_2_with_autotrain.ipynb` (`use_peft`, `use_int4`, QLoRA) |
 | 5, 8, 11, 12 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md` (four learning surfaces, when parameter updates earn their cost, data flywheel, the 94% case) |
-| 10 | `01_Concept_Tutorials/FDE_Handbook/04_Enterprise_RAG/06_Output_Guardrails.md` (three-verdict sufficiency, over-refusal) |
+| 10 | Output guardrails tutorial in this repo (three-verdict sufficiency, over-refusal) |
 | 11 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md` (memory per replica, quantisation) |
 | 11 | `01_Concept_Tutorials/System_Design_Fundamentals/2. System Design Components.md` (model distillation) |
 | 8 | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating.md` (release gate) |
@@ -124,7 +124,7 @@ All paths are relative to the repository root unless stated.
 - [Xu et al. 2024, Is DPO Superior to PPO for LLM Alignment?](https://arxiv.org/abs/2404.10719): well-tuned PPO can match or beat DPO
 - [Lambert et al. 2024, Tulu 3 (RLVR)](https://arxiv.org/abs/2411.15124): RL with a programmatic verifier works well where correctness is checkable
 - [DeepSeek-AI 2025, DeepSeek-R1](https://arxiv.org/abs/2501.12948): rule-based rewards for math and code
-- [PyTorch blog: Quantization-Aware Training for LLMs](https://pytorch.org/blog/quantization-aware-training/): QAT loses less quality than post-training quantisation
+- [PyTorch blog: Quantisation-Aware Training for LLMs](https://pytorch.org/blog/quantisation-aware-training/): QAT loses less quality than post-training quantisation
 - [Ovadia et al. 2023, Fine-Tuning or Retrieval?](https://arxiv.org/abs/2312.05934): RAG beats fine-tuning for injecting new facts; fine-tuning does so weakly
 - [Zhao et al. 2024, LoRA Land](https://arxiv.org/abs/2405.00732): small LoRA-tuned models often match larger prompted ones on narrow tasks, varying by task
 - `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md`: the book's worked example (140,000 → 9,000 traces; 94% / 78% / 83%) and the four learning surfaces

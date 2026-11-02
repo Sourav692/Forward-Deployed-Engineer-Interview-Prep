@@ -27,7 +27,7 @@ The anchor is a customer-facing AI application that is “slow and sometimes wro
 | #88 Cost spike | Versioned request and token metadata | Find prompt expansion, model-route change and unsafe cache-key regression. |
 | #53 / #74 Latency questions | Per-hop timing | Separate application queueing from inference prefill and decode. |
 | #54 Poor RAG quality | Retrieval and answer evidence | Separate retrieval, synthesis, prompt, output and user-experience faults. |
-| Cost/latency pivots #44, #104–#121 | Tenant/workflow attribution | Apply measure → route → bound → cache safely. |
+| Cost/latency pivots | Tenant/workflow attribution | Apply measure → route → bound → cache safely. |
 
 ## Questions to ask the interviewer
 

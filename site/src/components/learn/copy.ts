@@ -23,7 +23,7 @@ export const COPY = {
     'This module has no lessons of its own. Everything it teaches lives in other modules, so read these in order.',
   seeAlsoTitle: 'Also used in this module',
   seeAlsoLead: 'Lessons taught in another module that this one builds on.',
-  liveLessonHint: 'Opens the practice page',
+  liveLessonHint: (href: string) => (href.startsWith('/design/') ? 'Opens the case study' : 'Opens the practice page'),
   emptyReadingList: 'No lessons are published for this module yet.',
   notebookOnlyTitle: 'Notebook-only lessons',
   notebookOnlyLead: 'These course lessons have no page here yet. Work through their notebooks on GitHub.',

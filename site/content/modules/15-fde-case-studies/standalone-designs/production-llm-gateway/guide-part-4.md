@@ -14,7 +14,7 @@ The rubric's last line rewards a candidate who "volunteers the failure mode of t
 
 ## 13. Score Yourself Against the Source Rubric
 
-The study guide gives the rubric; each line maps to a section of this page.
+The source gives the rubric; each line maps to a section of this page.
 
 | Rubric line (verbatim) | Answered in |
 |---|---|
@@ -49,7 +49,7 @@ The two-minute summary to rehearse:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the bill is over budget." No playbook drill covers this case, so the card is *own construction*, built from the playbook's drivers and section 3's arithmetic.
+The pivot after a good design is "the bill is over budget." No worked drill covers this case, so the card is *own construction*, built from the playbook's drivers and section 3's arithmetic.
 
 | | |
 |---|---|

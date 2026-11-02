@@ -6,9 +6,9 @@ This prompt sounds like one box on a diagram, but it is graded as four constrain
 
 | Case | What it contributes here |
 |---|---|
-| #100 Production LLM gateway under real constraints (study-guide mock design) | The whole page. The prompt, the rubric and the strong answer come from the study guide; sections 3, 9 and 11 extend them |
+| Production LLM gateway under real constraints (mock design) | The whole page. The prompt, the rubric and the strong answer come from the source tutorial; sections 3, 9 and 11 extend them |
 
-**Read this first.** The source is short: a prompt, a seven-point rubric and a seven-bullet strong answer, in section 6 of the production and operations interview tutorial. Every figure it gives is kept verbatim below. The patterns behind it (retry, breaker, fallback, degradation, guardrails, caching, routing, budgets) come from the same study guide. The traffic, prices and dollar arithmetic are *own construction*, and every number marked *(assumption)* is a whiteboard illustration, not a sourced figure. The source names data residency as its own open gap; section 11 closes it.
+**Read this first.** The source is short: a prompt, a seven-point rubric and a seven-bullet strong answer, in section 6 of the production and operations interview tutorial. Every figure it gives is kept verbatim below. The patterns behind it (retry, breaker, fallback, degradation, guardrails, caching, routing, budgets) come from the same tutorial. The traffic, prices and dollar arithmetic are *own construction*, and every number marked *(assumption)* is a whiteboard illustration, not a sourced figure. The source names data residency as its own open gap; section 11 closes it.
 
 The prompt, verbatim:
 
@@ -20,7 +20,7 @@ The prompt, verbatim:
 
 "In front of an agent" has two readings, and the design needs both. The **edge face** sits between the customer and the agent. It screens what comes in and what goes out. The **model face** sits between the agent and the providers. An agent turn is rarely one call; the cost playbook's rule of thumb is that "one user request becomes 5–20 sub-requests." A gateway that only sees the customer's message cannot meter, retry or fail over the other calls.
 
-So route every model call the agent makes through the gateway's model face *(own construction)*. The deployed research platform in the Handbook does this. Every agent and the evaluator call one shared gateway sidecar, naming a *function* rather than a model, and the gateway maps function to provider. Its reason carries straight over: "hard-coding a provider into every agent makes every outage, rate limit and pricing change a code change in five places."
+So route every model call the agent makes through the gateway's model face *(own construction)*. One deployed research platform does this. Every agent and the evaluator call one shared gateway sidecar, naming a *function* rather than a model, and the gateway maps function to provider. Its reason carries straight over: "hard-coding a provider into every agent makes every outage, rate limit and pricing change a code change in five places."
 
 Ask five questions before drawing, and state an assumption for each one the interviewer declines *(own construction)*.
 

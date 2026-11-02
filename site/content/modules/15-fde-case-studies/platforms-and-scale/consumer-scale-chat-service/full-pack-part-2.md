@@ -2,7 +2,7 @@
 
 ## 6. Stream Every Answer and Cancel the Ones Nobody Reads
 
-Stream every answer, and treat the closed connection as a cost signal. Streaming buys perceived latency, not real latency. Per the production study guide, total generation time is unchanged, but the first token arrives in well under a second instead of after the whole answer.
+Stream every answer, and treat the closed connection as a cost signal. Streaming buys perceived latency, not real latency. Total generation time is unchanged, but the first token arrives in well under a second instead of after the whole answer.
 
 Use Server-Sent Events for the chat stream. After the request, traffic is one-way from server to client. SSE runs over plain HTTP, so it passes most proxies that don't buffer, and the browser's EventSource reconnects on its own. Keep WebSockets for paths that need both directions at once, such as voice. Each stream carries a message ID, so a reconnect resumes from the persisted partial answer instead of regenerating it *(own construction)*.
 

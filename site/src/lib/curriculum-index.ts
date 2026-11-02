@@ -1122,7 +1122,7 @@ export const INDEX_MODULES: IndexModule[] = [
     "title": "Judgement cases",
     "track": "forward-deployed",
     "lessons": [],
-    "estMinutes": 180
+    "estMinutes": 150
   },
   {
     "slug": "delivery-stages-and-gates",
@@ -1709,7 +1709,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   {
     "slug": "interview-practice",
     "code": "I",
-    "title": "Interview Practice and Revision",
+    "title": "Interview",
     "modules": [
       "case-study-worksheets",
       "mock-interviews",

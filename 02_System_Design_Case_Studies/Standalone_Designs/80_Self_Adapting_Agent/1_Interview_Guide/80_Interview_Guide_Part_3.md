@@ -19,7 +19,7 @@ The walking skeleton is rungs 1 and 2 plus the trace store. Ship the router, the
 
 Expect a constraint change mid-round. "There is no reliable success signal" removes Reflexion and skill promotion, so adaptation falls back to human-reviewed memories and examples. "Tasks change daily" pushes everything down to rung 1 and rules out training. "Regulators require every behaviour change to be approved" keeps the whole design but makes owner review mandatory at every promotion.
 
-The relevant Tier 2 probes from the question bank, answered for this design:
+The relevant follow-up probes from the question bank, answered for this design:
 
 | Probe | Strong answer |
 |---|---|
@@ -36,7 +36,7 @@ The relevant Tier 2 probes from the question bank, answered for this design:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the learning loop costs more than serving". There is no playbook drill for this prompt, so the card below is *(own construction)*.
+The interviewer's pivot after a good design is "the learning loop costs more than serving". No worked drill exists for this prompt, so the card below is *(own construction)*.
 
 | | |
 |---|---|
@@ -102,12 +102,12 @@ All paths are relative to the repository root unless stated.
 
 | Section | Source |
 |---|---|
-| Case prompt (#80), 14 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompt 15; section 3 Tier 2 probes; section 4 "The Framework That Wins the Round" |
+| Case prompt, 14 | Problem decomposition question bank (this repo): the prompt; section 3 follow-up probes; section 4 "The Framework That Wins the Round" |
 | 1, 6, 8, 10 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch08_learning_in_agentic_systems.md` (four learning surfaces, dynamic few-shot formula, Reflexion's three conditions, skill promotion gate and its numbers, when parameter updates earn their cost, data flywheel, the 94% case) |
 | 7 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch07_knowledge_memory_retrieval.md` (write policy, typed facts, supersession, the retracted-vendor case, decay and consolidation) |
 | 3, 11 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch12_validation_and_measurement.md` (sample-size formula, CI release gate, the 79%-to-81% segment collapse, trajectory assertions) |
 | 12, 13 | `01_Concept_Tutorials/Agentic_System_Design_Book/ch23_system_design_patterns.md` (tool gateway, approval gate, provenance tagging, cost governor, pattern audit) |
-| 5 | `99_Reference_Library/FDE_Interview_Book/3. GenAI_Architecture_Pattern.md` (skills and dynamic capability loading, trigger counterexamples, triggering evaluated separately) |
+| 5 | GenAI architecture pattern notes (this repo) (skills and dynamic capability loading, trigger counterexamples, triggering evaluated separately) |
 | 6 | `02_Core/05_AI_Agent_Fundamentals/5. Agent Pattern/03_Reflection/02_Reflexion_Agents.ipynb` and `README_Reflexion_Agents.md` |
 | 8 | `03_Advanced/07_Advanced_Agentic_Systems/Memory_and_State/Agentic_Memory_Architectures/03_Voyager_Skill_Library.ipynb`, `04_Agent_Workflow_Memory.ipynb`; `.../LangGraph/01_Memory/memory/07_Long_Term_Procedural_Memory_SQLite.ipynb` (human-approved procedures, versioning and rollback) |
 | 9 | `03_Advanced/10_Alternative_Agent_Frameworks/DSPy/context-engineering-dspy/` (declared prompts, evaluation, pairwise Elo); it has no optimiser module, so section 9 is general knowledge |

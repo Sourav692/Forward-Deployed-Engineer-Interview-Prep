@@ -53,7 +53,7 @@ The decision turns on constraints. Team, timeline, compliance, and scale decide 
 | Roughly under 50 million vectors | Managed |
 | Data residency rules keep data in-house | Self-hosted |
 | 100 million or more vectors with heavy traffic | Self-hosted |
-| Need custom HNSW settings, quantization, or index types | Self-hosted |
+| Need custom HNSW settings, quantisation, or index types | Self-hosted |
 | Already running Kubernetes with a team for it | Self-hosted |
 
 A common mix is managed for development and staging, self-hosted for production. Scale thresholds differ across sources: one note suggests managed under roughly 50 million vectors, another calls managed the practical choice at 10 million or more. Treat both as rules of thumb. Neither is a hard limit.

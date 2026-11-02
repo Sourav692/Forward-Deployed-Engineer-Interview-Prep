@@ -120,8 +120,8 @@ All paths are relative to the repository root.
 | Section | Source |
 |---|---|
 | 1, 2, 3, 9, 10, 11, 12 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/01_CUSTOMER_DISCOVERY_AND_DECOMPOSITION/04_CASE_STUDY_WORKSHEET/02_sales_copilot.md` and `answer_keys/answer-keys-in-md/02_sales_copilot_answer_key.md` |
-| 1, 10, 12 (explore list, success metrics, follow-up) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 4 |
-| 6, 7 (identity, secrets, structured-data router, connector registry) | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/01_Identity_Secrets_Tenant_Fairness.md` and `05_Structured_Data_Routers_Connectors.md` |
+| 1, 10, 12 (explore list, success metrics, follow-up) | Problem decomposition question bank (this repo): the sales or account-research assistant prompt |
+| 6, 7 (identity, secrets, structured-data router, connector registry) | Concept tutorials on identity, secrets and tenant fairness, and on structured-data routers and connectors (this repo) |
 | 13 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 case 3 (and case 6 for the G16 sibling), §4 and §5; `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, row 40 |
 | 10, 14 | `FDE/Complete GEN AI FDE Interview System — Core + GenAI/05_PRODUCTION_DEBUGGING_OBSERVABILITY_AND_OPTIMIZATION/04_PRODUCTION_INCIDENT_LOGS/07_eval_regression.md` |
 | Added for this pack | The permission model column in section 3, all of section 6, the router table and fixed-operations argument in section 7, the unsupported-claim row in section 10, and the trade-offs table in section 11. None of these are in the answer key |

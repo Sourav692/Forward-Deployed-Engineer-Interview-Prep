@@ -110,14 +110,14 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 2, 4, 6–12, 14 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md` (the anchor, #8) |
-| 1, 2, 13 | `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/01_The_Problem_In_Plain_English.md` (#64) |
-| 4, 5, 6 | `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/02_Canonical_Events_And_Channels.md` |
-| 7 | `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/03_Determinism_Over_Free_Text.md` |
-| 8, 9 | `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/04_Durability_And_Idempotency.md` |
-| 3, 10, 11 | `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/05_Approvals_Spend_Caps_Staged_Rollout.md` |
-| 4 (component names) | `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/06_Module_Reference.md` |
-| 12, 13 | `01_Concept_Tutorials/FDE_Handbook/05_Agentic_Workflow_Platforms/07_Coverage_Map.md` |
+| 1, 2, 4, 6–12, 14 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/whiteboard_scripts/03_Agent_Platform_For_Non_Technical_Users.md` (the anchor) |
+| 1, 2, 13 | Agentic workflow platforms tutorial: the problem in plain English (this repo) |
+| 4, 5, 6 | Agentic workflow platforms tutorial: canonical events and channels (this repo) |
+| 7 | Agentic workflow platforms tutorial: determinism over free text (this repo) |
+| 8, 9 | Agentic workflow platforms tutorial: durability and idempotency (this repo) |
+| 3, 10, 11 | Agentic workflow platforms tutorial: approvals, spend caps and staged rollout (this repo) |
+| 4 (component names) | Agentic workflow platforms tutorial: module reference (this repo) |
+| 12, 13 | Agentic workflow platforms tutorial: coverage map (this repo) |
 | 2, 6, 13 | `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/data/case_study.json`; `05_Projects/Enterprise_Agentic_Workflow_Automation_Platform/README.md` (verified results, 21 tests) |
 | 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #8 |
 | 3 (split and owner table), 4 (full-platform ASCII, Mermaid, failure column), 15 (mapping levers onto the design), and every item marked own construction | Built for this page from the sources' arguments; not source material |

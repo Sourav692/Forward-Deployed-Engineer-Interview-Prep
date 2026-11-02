@@ -23,7 +23,7 @@ Every level traces the request; the level shows in what the answer refuses to co
 - The dashboard is built top down from the complaint, and wrong answers are triaged by comparing evidence with output.
 - Incident #87 was compounded latency from several small changes, found only by comparing each span with its baseline.
 - Incident #88 was prompt growth, a routing threshold and a broken cache key multiplying, and it hid a permission leak.
-- Prompts #53, #54 and #74 are the same traces read at different depths: the stage decomposition, the seven RAG failure classes, and the inference stack.
+- Three practice prompts are the same traces read at different depths: the stage decomposition, the seven RAG failure classes, and the inference stack.
 - Rollout runs in four phases with named owners, an eight-metric scorecard, explicit go/no-go gates and a risk register.
 - The fifty minutes go to the no-capture list, the dropped-trace drill and the support test.
 - Every cost and latency pivot is answered with a card built from measure, route, bound and cache safely.

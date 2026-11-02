@@ -129,7 +129,7 @@ Poor labels are a starting condition, not a permanent one. The review queue turn
 
 Three rules make corrections usable as labels. First, the correction happens in the tool, on the field, with the original value kept. A reviewer who fixes a claim in the ERP directly leaves no trace the system can learn from. Second, each correction records who made it and when. Labels from a reviewer with low agreement can then be weighted down. Third, disagreements go to adjudication, not to whoever clicked last.
 
-The Cracking book's dataset hygiene applies unchanged. Deduplicate first, because "100,000 raw traces might be a few thousand distinct problems". Split held-out cases by time and user, never at random. Route low-agreement, high-impact cases to human adjudication. It also names the trap in automatic labels. An automatic outcome label such as "user didn't complain" is not the same as "correct." For claims, "approved and not disputed" is a weak label, not a gold one.
+Dataset hygiene applies unchanged. Deduplicate first, because "100,000 raw traces might be a few thousand distinct problems". Split held-out cases by time and user, never at random. Route low-agreement, high-impact cases to human adjudication. Watch for the trap in automatic labels. An automatic outcome label such as "user didn't complain" is not the same as "correct." For claims, "approved and not disputed" is a weak label, not a gold one.
 
 Weak supervision earns its place on the failure-code field, where κ was 0.52. Three cheap rules vote: a keyword map from description to code, the part's historical most-common failure, and the extraction model's own guess. Each vote is scored against the adjudicated sample. Where the rules agree with high confidence, the label is used for training. Where they disagree, the claim goes to the review queue. The disagreement tells the system where people are needed.
 
@@ -139,9 +139,9 @@ Synthetic claims fill one gap only: rare failure modes the history lacks, such a
 
 An evaluation set cannot wait for clean labels, because clean labels are what the project produces. Build a small, trusted set first and grow it from the label store.
 
-The source material gives three ways to seed it. The RAG study guide suggests mining support tickets or an existing FAQ for real questions with known answers. Its alternative is to "ask 3-4 of their power users for 10 questions each". The question bank's evaluation case lists sampling production traffic, expert labelling, weak supervision and synthetic examples used carefully. It adds measuring grader agreement and human review of difficult cases. For claims, the seed is the 100 claims already relabelled in week 1, adjudicated where the two adjusters disagreed.
+The source material gives three ways to seed it. One is mining support tickets or an existing FAQ for real questions with known answers. Another is to "ask 3-4 of their power users for 10 questions each". The third combines sampling production traffic, expert labelling, weak supervision and synthetic examples used carefully, and adds measuring grader agreement and human review of difficult cases. For claims, the seed is the 100 claims already relabelled in week 1, adjudicated where the two adjusters disagreed.
 
-Size the set honestly. The Cracking book's arithmetic is `n ≈ 15.7 × p(1−p) / δ²` per arm, to detect a difference δ near a success rate p. At p = 0.8, a 5-point gain needs ~1,000 cases per arm. A 200-case suite cannot reliably detect anything smaller than ~11 points. A 100-claim seed set therefore gates only large changes. Say so, and detect smaller changes through paired evaluation on the same cases, or through production metrics.
+Size the set honestly. The arithmetic is `n ≈ 15.7 × p(1−p) / δ²` per arm, to detect a difference δ near a success rate p. At p = 0.8, a 5-point gain needs ~1,000 cases per arm. A 200-case suite cannot reliably detect anything smaller than ~11 points. A 100-claim seed set therefore gates only large changes. Say so, and detect smaller changes through paired evaluation on the same cases, or through production metrics.
 
 Stratify the set and report per stratum. The book's list is intent, tenant size, data recency and difficulty. For claims it becomes ERP source, product line, attachment type and period. Aggregate accuracy hides a collapse on scanned claims from the acquired ERP, which is where the data is worst.
 
@@ -149,7 +149,7 @@ Include the "insufficient data" case at a realistic rate. A system never shown a
 
 Watch the labels in the eval set as closely as the system under test. The enterprise RAG golden set's first war story is a label defect, not a system defect. A document was reported as leaked to an account manager who was permitted to read it. It was irrelevant. The fix split the label into two fields, one that gates and one that is only tracked, plus a test that stops the labels drifting again. The lesson carries over to claims: *a false alarm from a bad label costs as much trust as a real failure.*
 
-Ship the set with a datasheet: collection window, filters, dedup method, split strategy, label source and known biases. The Cracking book's estimate is that an hour of documentation saves weeks of debugging six months later.
+Ship the set with a datasheet: collection window, filters, dedup method, split strategy, label source and known biases. By one estimate, an hour of documentation saves weeks of debugging six months later.
 
 ## 11. Tell the Customer Their Data Is Poor
 

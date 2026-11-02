@@ -14,7 +14,7 @@ The rubric's last line rewards a candidate who "volunteers the failure mode of t
 
 ## 13. Score Yourself Against the Source Rubric
 
-The study guide gives the rubric; each line maps to a section of this page.
+The source gives the rubric; each line maps to a section of this page.
 
 | Rubric line (verbatim) | Answered in |
 |---|---|
@@ -49,7 +49,7 @@ The two-minute summary to rehearse:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the bill is over budget." No playbook drill covers this case, so the card is *own construction*, built from the playbook's drivers and section 3's arithmetic.
+The pivot after a good design is "the bill is over budget." No worked drill covers this case, so the card is *own construction*, built from the playbook's drivers and section 3's arithmetic.
 
 | | |
 |---|---|
@@ -114,7 +114,7 @@ All paths are relative to the repository root.
 | Section | Source |
 |---|---|
 | Prompt, rubric, strong answer; 5, 8, 9, 11, 12, 13 | `01_Concept_Tutorials/RAG_and_Agent_Topic_Guides/12_production_and_operations_INTERVIEW_TUTORIAL.md`, section 6 (mock system design), with sections 1.7–1.19 (patterns), 2 (gotchas), 3 (trade-off one-liners), 4 questions 2, 5, 8 and 9, and 5.2–5.3 (agent and FDE tracks: typed degradation, residency masking, self-hosted tracing) |
-| 1, 4 (gateway sidecar, function-to-model mapping, same-path red teaming) | `01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/04_Case_Study_Research_Platform.md`, layers 4 and 8; `01_Concept_Tutorials/FDE_Handbook/07_Multi_Agent_Systems/diagrams/04-llm-gateway.mmd` |
+| 1, 4 (gateway sidecar, function-to-model mapping, same-path red teaming) | Research platform case study (this repo), layers 4 and 8, and its LLM gateway diagram |
 | 1, 3, 5, 6, 7, 9, 10, 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md` (drivers 5, 6 and 7; "5–20 sub-requests") and `CRAM_SHEET_FULL_PLAYBOOK.md` (§9 caching, §12 trace-event fields, §13 budgets, cascades "keep prompts and schemas portable") |
 | 1, 15 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 Case 2 (support chatbot with 10,000 daily users; "reduce cost by workflow"), §15 #12 (cache hit rate dropped) |
 | 8 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, section E (provider 429s versus gateway limits) |

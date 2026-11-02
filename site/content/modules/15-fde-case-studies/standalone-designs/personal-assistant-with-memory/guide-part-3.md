@@ -19,15 +19,15 @@ The two-minute spoken answer *(own construction, built on the source answer)*:
 
 The lines that carry the round:
 
-1. *"Thread ID answers which conversation; the user namespace answers which person."* (study guide)
-2. *"If a fact can change, its key must be stable; if it is an event, a fresh key is correct."* (study guide)
+1. *"Thread ID answers which conversation; the user namespace answers which person."* (source)
+2. *"If a fact can change, its key must be stable; if it is an event, a fresh key is correct."* (source)
 3. *"Store everything in the thread, send the model a summary and the recent turns."* *(own construction)*
-4. *"A scan is fine at five memories and wrong at five hundred."* (study guide)
+4. *"A scan is fine at five memories and wrong at five hundred."* (source)
 5. *"Reads on the critical path, writes after the reply."* *(own construction)*
 6. *"User ID comes from auth. Never from the model."* (source)
-7. *"Enterprise knowledge is not memory; it is retrieval."* (Handbook Module 03)
+7. *"Enterprise knowledge is not memory; it is retrieval."* (source)
 
-The follow-ups, including the study guide's "skeptical staff engineer" prompts:
+The follow-ups, including the source's "skeptical staff engineer" prompts:
 
 | Follow-up | Answer |
 |---|---|
@@ -42,7 +42,7 @@ The follow-ups, including the study guide's "skeptical staff engineer" prompts:
 
 ## 16. Answer the Cost Pivot in Ten Minutes
 
-The pivot is usually "memory made the bill go up; what do you cut?" Answer with the cost-drill card *(own construction, built on the cost study guides)*.
+The pivot is usually "memory made the bill go up; what do you cut?" Answer with the cost-drill card *(own construction, built on the cost notes)*.
 
 | Card field | Answer |
 |---|---|
@@ -52,7 +52,7 @@ The pivot is usually "memory made the bill go up; what do you cut?" Answer with 
 | Do not | Stuff every memory into every prompt, or extract on every turn with the premium model |
 | 60-second line | Storage is cheap; the cost is the model calls to write memory and the tokens to read it back. Retrieve a few relevant memories, summarise in steps, extract with a small model after the reply, and prove recall held with the harness. |
 
-The cost study guide's first driver explains most surprises here. Input tokens grow with context: teams count the user's question and ignore the system prompt and hidden history, so the bill rises while traffic stays flat. Its fix list reads like this design: trim prompts, compress context, summarise history and cache static prompt parts. The study guide's FDE answer is the non-engineer version: cost scales with how often memory is written and searched, not with how much is stored.
+The first cost driver explains most surprises here. Input tokens grow with context: teams count the user's question and ignore the system prompt and hidden history, so the bill rises while traffic stays flat. Its fix list reads like this design: trim prompts, compress context, summarise history and cache static prompt parts. The FDE answer is the non-engineer version: cost scales with how often memory is written and searched, not with how much is stored.
 
 Every strong cost answer follows four verbs in order. Measure tokens per prompt section first. Route extraction and summarising to a small model. Bound episodes, summary length and top-k. Cache safely, with the stable prefix first and the user's scope in every key.
 

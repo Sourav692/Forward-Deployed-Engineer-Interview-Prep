@@ -4,7 +4,7 @@
 
 Derive a fact's key from what the fact is, and an event's key from nothing at all. Re-stating "call me Sam" should update one row, not add a second. A fresh random key per write guarantees nothing ever overwrites.
 
-The study guide states the rule as a pair. If a fact can change, its key must be stable. If a fact is a fresh event, a fresh key is correct. Mix them up and semantic memory quietly turns into a pile of duplicate facts.
+The rule comes as a pair. If a fact can change, its key must be stable. If a fact is a fresh event, a fresh key is correct. Mix them up and semantic memory quietly turns into a pile of duplicate facts.
 
 **Handle a conflict explicitly.** The source answer overwrites the existing key and keeps the previous value one version back. That makes "you told me X last month, now Y" answerable instead of silently lost. Add a timestamp and the source turn to each value, so the assistant can say when it learned something *(own construction)*.
 
@@ -62,7 +62,7 @@ Put timeouts on each read. When episode search misses its timeout, answer withou
 
 Read the isolation key from the server-side session on every request, because anything the model can set, a prompt can set. The source answer says `user_id` comes from server-side session or auth config, never from a tool-call argument the model could set. Every namespace tuple includes it.
 
-The study guide's debugging advice follows. When two users see each other's memories, audit namespace derivation first. The usual cause is a `user_id` sourced from the wrong place. A `thread_id` used by mistake as the long-term namespace causes the opposite bug: memory collapses back to per-conversation.
+The debugging advice follows from this. When two users see each other's memories, audit namespace derivation first. The usual cause is a `user_id` sourced from the wrong place. A `thread_id` used by mistake as the long-term namespace causes the opposite bug: memory collapses back to per-conversation.
 
 Channels have to agree on identity before memory can be shared. A web app and a chat bot both need to resolve to the same `user_id` at the identity layer. The memory system does not care which channel wrote a fact.
 
@@ -80,7 +80,7 @@ Governance follows from the same design *(own construction, building on the FDE 
 
 Measure whether the assistant remembers, not whether it sounds as if it does. A fluent answer that invents a preference is worse than one that asks again. Few worked examples cover memory-quality evaluation, so building it is the strong move.
 
-The harness comes from the study guide's take-home. Plant a fact early in a long synthetic conversation. Ask for it 20 turns later. Score full history, sliding window and summarisation against each other on recall and cost. Extend it across conversations for this design: plant in thread A, ask in thread B a simulated week later *(own construction)*.
+The harness comes from the source's take-home. Plant a fact early in a long synthetic conversation. Ask for it 20 turns later. Score full history, sliding window and summarisation against each other on recall and cost. Extend it across conversations for this design: plant in thread A, ask in thread B a simulated week later *(own construction)*.
 
 | Worry | Metric that answers it |
 |---|---|
@@ -93,11 +93,11 @@ The harness comes from the study guide's take-home. Plant a fact early in a long
 | Is it isolated? | Cross-user read tests at zero, run before every release |
 | Is growth bounded? | Episodes per user at the cap; prompt tokens per turn flat past the threshold |
 
-Every metric except the last two is *own construction* built on the study guide's recall harness. Gate changes to the extraction prompt, summary threshold or cap on this suite, because each one changes what the assistant remembers.
+Every metric except the last two is *own construction*, built on a standard recall harness. Gate changes to the extraction prompt, summary threshold or cap on this suite, because each one changes what the assistant remembers.
 
 ## 13. Name the Failure Modes Before They Do
 
-Volunteer how the design breaks, because a design with no failure modes has not been examined. Most of these come from the study guide's gotchas and FDE questions; the rest are *(own construction)*.
+Volunteer how the design breaks, because a design with no failure modes has not been examined. Most of these come from the source's gotchas and FDE questions; the rest are *(own construction)*.
 
 | Failure | Symptom | Fix |
 |---|---|---|

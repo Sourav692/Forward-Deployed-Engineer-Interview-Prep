@@ -69,8 +69,8 @@ All paths are relative to the repository root unless they start with `05_Project
 
 | Section | Source |
 |---|---|
-| 1, 2, 3, 7, 8, 9, 11 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 15 (#59): the decomposition list and the evaluation follow-up |
-| 1, 4, 5, 11, 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 Case 6 and the §4 pattern table (#43) |
+| 1, 2, 3, 7, 8, 9, 11 | Problem decomposition question bank (this repo), the sales or customer-service calls prompt: the decomposition list and the evaluation follow-up |
+| 1, 4, 5, 11, 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_S15_S16.md`, §16 Case 6 and the §4 pattern table |
 | 14 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, playbook row for #43 |
 | 6, 13, 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CRAM_SHEET_FULL_PLAYBOOK.md`, §10 Streaming and UX, and the decision table |
 | 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, the two latency-only add-ons |

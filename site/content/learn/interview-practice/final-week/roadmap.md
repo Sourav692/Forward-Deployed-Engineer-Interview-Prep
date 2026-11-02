@@ -601,7 +601,7 @@ Handle:
 - Backpressure
 - Queueing
 - Fair queueing
-- Noisy neighbor
+- Noisy neighbour
 - Load shedding
 - Multi-tenancy
 
@@ -900,7 +900,7 @@ Make the system enterprise-ready.
 - Secrets
 - Sensitive data
 - Data residency
-- Defense in depth
+- Defence in depth
 
 ### Core Mental Model
 

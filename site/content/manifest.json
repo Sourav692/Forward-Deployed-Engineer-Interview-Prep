@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T07:16:24.873Z",
+  "generatedAt": "2026-11-02T12:39:46.604Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -377,7 +377,7 @@
                 }
               ],
               "minutes": 62,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "deep-research-agent",
@@ -414,7 +414,7 @@
                 }
               ],
               "minutes": 46,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             }
           ]
         },
@@ -675,7 +675,7 @@
                 }
               ],
               "minutes": 51,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "logistics-exception-handling",
@@ -809,7 +809,7 @@
                 }
               ],
               "minutes": 61,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "agent-platform-for-non-technical-users",
@@ -887,7 +887,7 @@
                 }
               ],
               "minutes": 43,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "llm-inference-serving",
@@ -924,7 +924,7 @@
                 }
               ],
               "minutes": 48,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             }
           ]
         },
@@ -968,7 +968,7 @@
                 }
               ],
               "minutes": 48,
-              "updated": "2026-10-31"
+              "updated": "2026-11-02"
             },
             {
               "slug": "evaluation-and-release-gating",
@@ -1013,7 +1013,7 @@
                 }
               ],
               "minutes": 59,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             },
             {
               "slug": "observability-and-production-diagnosis",
@@ -1058,7 +1058,7 @@
                 }
               ],
               "minutes": 64,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             }
           ]
         },
@@ -1102,7 +1102,7 @@
                 }
               ],
               "minutes": 44,
-              "updated": "2026-10-28"
+              "updated": "2026-11-02"
             }
           ]
         },
@@ -1404,7 +1404,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 34,
+              "minutes": 33,
               "updated": "2026-11-02"
             },
             {
@@ -1490,7 +1490,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 35,
+              "minutes": 34,
               "updated": "2026-11-02"
             },
             {

@@ -64,11 +64,11 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| 1, 4, 5, 7, 8, 9, 10, 14 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/03_Coding_Assistant.md` (the anchor, #3) |
+| 1, 4, 5, 7, 8, 9, 10, 14 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/03_Coding_Assistant.md` (the anchor) |
 | 2, 4 (fourteen components), 14 (follow-up bullets) | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/7. AI Powered Coding Assistant Design.md` (older source of the anchor) |
-| 3, 8, 10, 12, 14 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 7 (#51) |
-| 6, 9, 12 | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/03_Caching_Streaming_CICD_BuildVsBuy.md` |
-| 8, 10 | `01_Concept_Tutorials/FDE_Handbook/06_Cross_Cutting_Concerns/04_Prompt_Injection_Egress_Tenancy.md` |
+| 3, 8, 10, 12, 14 | Problem decomposition question bank (this repo): the enterprise coding assistant prompt |
+| 6, 9, 12 | Concept tutorial on caching, streaming, CI/CD and build versus buy (this repo) |
+| 8, 10 | Concept tutorial on prompt injection, egress and tenancy (this repo) |
 | 15 | `CASE_STUDY_INDEX.xlsx`, Drill Add-ons tab, self-drill row for #3; `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 1 and 2 |
 | 3 (permission mirror), 11, 13, and every item marked own construction | Built for this page from the sources' arguments; not source material |
 | Not included | `04_AI_Coding_Tools/` is a planned phase about using coding tools, not designing one, and contributes nothing here |

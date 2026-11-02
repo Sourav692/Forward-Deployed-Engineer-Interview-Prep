@@ -280,7 +280,7 @@ User → API Gateway → Router
 
 Use the Model Gateway for centralised model-call control when justified. Add cache or queue only when requirements warrant them. Capture audit evidence and action results across the flow.
 
-### Component Defense
+### Component Defence
 
 > “It does ___. We need it because ___. The customer requirement is ___. Its main trade-off is ___.”
 

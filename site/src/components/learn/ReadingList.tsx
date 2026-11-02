@@ -26,7 +26,7 @@ export function ReadingList({ lessons, numbered = true }: { lessons: LearnLesson
                 <p className="mt-0.5 text-xs text-muted">
                   {l.estMinutes ? `${formatMinutes(l.estMinutes)}` : null}
                   {l.estMinutes && live ? ' · ' : null}
-                  {live && <span>{COPY.liveLessonHint}</span>}
+                  {live && <span>{COPY.liveLessonHint(l.href)}</span>}
                   {l.publish === 'credited' && ' · Credited source'}
                 </p>
               </div>

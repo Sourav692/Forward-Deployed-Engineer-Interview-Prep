@@ -19,7 +19,7 @@ The walking skeleton is rungs 1 and 2 plus the trace store. Ship the router, the
 
 Expect a constraint change mid-round. "There is no reliable success signal" removes Reflexion and skill promotion, so adaptation falls back to human-reviewed memories and examples. "Tasks change daily" pushes everything down to rung 1 and rules out training. "Regulators require every behaviour change to be approved" keeps the whole design but makes owner review mandatory at every promotion.
 
-The relevant Tier 2 probes from the question bank, answered for this design:
+The relevant follow-up probes from the question bank, answered for this design:
 
 | Probe | Strong answer |
 |---|---|
@@ -36,7 +36,7 @@ The relevant Tier 2 probes from the question bank, answered for this design:
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the learning loop costs more than serving". There is no playbook drill for this prompt, so the card below is *(own construction)*.
+The interviewer's pivot after a good design is "the learning loop costs more than serving". No worked drill exists for this prompt, so the card below is *(own construction)*.
 
 | | |
 |---|---|

@@ -6,12 +6,12 @@
 
 | Case | What it contributes here |
 |---|---|
-| #80 Anthropic MLE: design an agentic AI system that can autonomously adapt to new tasks | Sections 1 to 14: the whole design on one running example |
+| Design an agentic AI system that can autonomously adapt to new tasks | Sections 1 to 14: the whole design on one running example |
 | Cost self-drill | Section 15 |
 
-**Much of this page is own construction, but its backbone is sourced.** No worked answer exists for this prompt. The prompt comes from the decomposition question bank, Tier 1 prompt 15. The spine comes from the Cracking book's learning chapter, whose four learning surfaces, skill promotion gate and data flywheel answer most of this prompt. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
+**Much of this page is own construction, but its backbone is sourced.** No worked answer exists for this prompt. The prompt comes from a problem decomposition question bank. The spine comes from the learning chapter of a book on agentic system design, whose four learning surfaces, skill promotion gate and data flywheel answer most of this prompt. The memory write policy comes from its memory chapter, and the release gate from its validation chapter. Sections and tables marked *(own construction)* were built for this page. Every number marked *(assumption)* is a whiteboard illustration, not a sourced figure.
 
-The running example is the Cracking book's own: an internal operations agent. It handles requests such as "restart service X" and "roll back flag Y", and new request types appear every week as teams ship new systems.
+The running example is the book's own: an internal operations agent. It handles requests such as "restart service X" and "roll back flag Y", and new request types appear every week as teams ship new systems.
 
 ---
 
@@ -19,7 +19,7 @@ The running example is the Cracking book's own: an internal operations agent. It
 
 You cannot design toward a verb nobody defined. "Adapt to new tasks" hides at least five mechanisms, which differ by an order of magnitude in cost and in how easily you can undo a change.
 
-The Cracking book names four places an agent's improvement can live: context, memory, procedure and parameters. Each is roughly ten times slower and costlier to iterate on than the one before. This page adds prompt optimisation as a separate rung between procedure and parameters *(own construction)*. It changes behaviour broadly, like training, but stays reversible, like a prompt.
+The book names four places an agent's improvement can live: context, memory, procedure and parameters. Each is roughly ten times slower and costlier to iterate on than the one before. This page adds prompt optimisation as a separate rung between procedure and parameters *(own construction)*. It changes behaviour broadly, like training, but stays reversible, like a prompt.
 
 | Rung | What changes | Example in the ops agent | Iteration time | Undo |
 |---|---|---|---|---|
@@ -203,7 +203,7 @@ Score novelty on three signals. First, the router's retrieval score against the 
 
 Treat the fallback as a different operating mode. Cut the step budget. Allow read-only tools freely and require approval for writes. Escalate earlier. The first dozen runs of a new task type are the riskiest and the most valuable, because they carry the evidence every later rung learns from.
 
-The skill-loading pattern from the FDE handbook supports this. The agent starts with a lightweight catalogue of skill names and triggers. It loads one skill's full instructions only when selected, then releases that context. Trigger descriptions need counterexamples as well as examples, or the wrong skill activates. Evaluate triggering separately from execution: a skill that runs perfectly after the wrong trigger is still a wrong answer.
+A standard skill-loading pattern supports this. The agent starts with a lightweight catalogue of skill names and triggers. It loads one skill's full instructions only when selected, then releases that context. Trigger descriptions need counterexamples as well as examples, or the wrong skill activates. Evaluate triggering separately from execution: a skill that runs perfectly after the wrong trigger is still a wrong answer.
 
 ## 6. Adapt Within One Request Before Changing Anything Permanent
 
@@ -215,4 +215,4 @@ One cost follows. Examples sit above the user's turn, so swapping them per reque
 
 **Reflexion.** A failed attempt becomes a written lesson placed in context for the next attempt; the model does not change. The book says it works reliably only with three conditions: an external failure signal, a lesson specific enough to change behaviour, and a hard cap on attempts. "Expected ISO 8601 UTC, I sent local time" is a lesson. "Be more careful" is not. A model grading its own attempt without an external signal tends to write confidently wrong lessons, which then contaminate every later retry.
 
-A Reflexion implementation splits the pattern into actor, evaluator and self-reflection roles. For #80, one design rule sits on top: the evaluator must be external. A validator, a test or an API response counts. The same model's opinion does not.
+A Reflexion implementation splits the pattern into actor, evaluator and self-reflection roles. For this case, one design rule sits on top: the evaluator must be external. A validator, a test or an API response counts. The same model's opinion does not.

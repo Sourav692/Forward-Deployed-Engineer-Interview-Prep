@@ -45,7 +45,7 @@ Read the table for what the sum hides, not only for its order.
 
 **The gates did the rest.** Auto-sent denial letters (#4) fail the permissible-decision gate: an unreviewed adverse decision on a customer. The reshaped version is "draft the letter for the adjuster to approve", which folds into #1. LLM-set premiums (#14) fail the right-tool gate, because pricing belongs to the actuarial models, and in most US states property and casualty rates must be filed with the insurance regulator.
 
-**The highest-value items are all Later.** Fraud triage (#3), autonomous settlement (#29) and the voice bot (#30) score 4 or 5 on value. Each fails on data, risk or evaluability. That is Question 16's follow-up in table form, and section 12 answers it.
+**The highest-value items are all Later.** Fraud triage (#3), autonomous settlement (#29) and the voice bot (#30) score 4 or 5 on value. Each fails on data, risk or evaluability. That is the prompt's follow-up in table form, and section 12 answers it.
 
 **The ranking survives reweighting where it matters.** When I rerun it under a value-heavy, a risk-heavy and a speed-heavy weighting, #7, #1 and #6 stay in the top five every time. #12 drops out only when speed dominates, because extraction from submission packs takes a quarter to prove. #13 swaps with #2 under the value-heavy weighting. So say it as "#7, #1 and #6 are decided; #12 and #13 depend on whether the sponsor values speed or value more."
 
@@ -119,7 +119,7 @@ flowchart TB
 | Observability | Cost per successful outcome and adoption are the portfolio's scoreboard | #7 | All of them |
 | Portfolio office | Holds the card register, re-scores quarterly, records kill decisions | Wave 0 | The next thirty ideas |
 
-The platform view is *(own construction)*. Its gateway pieces come from this site's gateway material. [#100 Production LLM Gateway](/design/production-llm-gateway) designs that component in full. [Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) covers the harness.
+The platform view is *(own construction)*. Its gateway pieces come from this site's gateway material. [The Production LLM Gateway case](/design/production-llm-gateway) designs that component in full. [Evaluation and Release Gating](/design/evaluation-and-release-gating#full-pack) covers the harness.
 
 ## 10. Sequence the Portfolio in Waves
 
@@ -133,7 +133,7 @@ A ranked list is not a plan until it has dates and dependencies. Sequence by wha
 | 3 | Months 8–14 | #12 submission extraction; Next-bucket items that ride existing components (#9, #15, #2, #20) | The platform carries the portfolio, not individual heroics |
 | 4 | Months 14–24 | One strategic Later item, most likely #29 as decision support built on #1 and #2 evidence | The organisation can take on a high-risk item with gates it already trusts |
 
-Wave 1 is deliberately a low-risk, high-volume use case, not the biggest one. It has to earn credibility and build the gateway, and it must not create a headline if it fails. Handbook Module 10 describes the same move: narrow the first build to prove the approach, then expand.
+Wave 1 is deliberately a low-risk, high-volume use case, not the biggest one. It has to earn credibility and build the gateway, and it must not create a headline if it fails. Two-phase delivery makes the same move: narrow the first build to prove the approach, then expand.
 
 ## 11. Set Kill Criteria Before the Pilot Starts
 
@@ -149,13 +149,13 @@ The stage gates reuse the delivery framework's shape: a named, checkable conditi
 | Limited production | Adoption and outcome metric moving; rollback tested | Delivery lead | Adoption under the card's floor at week 4 |
 | Scale | Outcome metric met; cost per successful outcome within plan | Executive sponsor | Value under run cost at the next quarterly re-score |
 
-The gate names and roles adapt Handbook Module 10's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio *(own construction)*. The delivery framework's week-4 retention metric is the adoption kill signal. It is recorded as "none" until measured, never as a fake zero. Its accelerator reuse rate becomes the portfolio's platform health metric.
+The gate names and roles adapt the delivery operating model's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio *(own construction)*. The delivery framework's week-4 retention metric is the adoption kill signal. It is recorded as "none" until measured, never as a fake zero. Its accelerator reuse rate becomes the portfolio's platform health metric.
 
 Re-score the whole register every quarter. Pilot data replaces estimates, so the portfolio corrects itself. A Later item whose data problem was solved by an enabler moves up without anyone lobbying for it. [Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) covers the gate mechanics in depth.
 
 ## 12. Say No to the Executive's Pet Project Without Losing the Executive
 
-The executive who handed over the list usually has a favourite. Here it is autonomous settlement of small auto claims (#29). It is also the answer to Question 16's follow-up, quoted verbatim:
+The executive who handed over the list usually has a favourite. Here it is autonomous settlement of small auto claims (#29). It is also the answer to the prompt's follow-up, quoted verbatim:
 
 > "The highest-value use case is also the riskiest. What do you recommend?"
 
@@ -196,5 +196,5 @@ Each row is a way prioritisation programmes fail in practice, with the signal th
 | Score theatre | Scores tuned until the favourite wins | Weights changed after scoring | Weights agreed before cards are scored; sensitivity rerun |
 | Zombie pilots | Pilots never killed, never scaled | Kill criteria missing from cards | Kill criteria mandatory at card stage; quarterly re-score |
 | Value never measured | Launch declared a success with no baseline | Card baseline field empty | Measurable-outcome gate |
-| Data surprise | Top item's data turns out to be unusable | Discovery overruns | Data readiness scored before ranking; [#62](/design/build-when-customer-data-is-poor) for the playbook |
+| Data surprise | Top item's data turns out to be unusable | Discovery overruns | Data readiness scored before ranking; [the Build When Customer Data Is Poor case](/design/build-when-customer-data-is-poor) for the playbook |
 | Portfolio monoculture | All wave-1 items are summarisation | No item exercises retrieval or extraction | One slot reserved per pattern |

@@ -2,7 +2,7 @@
 
 The [Main guide](../1_Interview_Guide/G04_Interview_Guide.md) is the spoken answer. This is its technical backup; the unchanged [source case](../4_Full_Design/G04_Full_Design.md) has the complete reference and interview scripts.
 
-**Model and agent roles:** Rules or a small model collapse alerts before the strong LLM synthesizes ranked hypotheses from bounded, read-only telemetry. The incident agent may propose a mitigation, but only human approval plus the gateway permits a write.
+**Model and agent roles:** Rules or a small model collapse alerts before the strong LLM synthesises ranked hypotheses from bounded, read-only telemetry. The incident agent may propose a mitigation, but only human approval plus the gateway permits a write.
 
 ## 1. Telemetry map and dependency inversion
 
@@ -26,7 +26,7 @@ Core records: `Alert`, `Signal`, `Deployment`, `Runbook`, `ActionProposal`, `Inc
 
 Design for the burst of 400 in 90 s, not the source’s 1,200 alerts/day average. Group by service and time window; attach new alerts to an active cluster; cap concurrent investigations per service. Rules or a small model do this before any strong-model call. One good investigation per correlated incident beats hundreds of shallow ones and protects the telemetry backend.
 
-Pre-aggregate before prompting: bucket metrics, count log signatures, sample traces, diff deployments, cap lookback. Keep raw slices available through read tools when a hypothesis needs them. The strong model synthesizes ranked causes from a bounded evidence set, with citations and missing-source disclosure. Treat a citation-free cause as a refusal or a low-confidence hypothesis, never as a finding.
+Pre-aggregate before prompting: bucket metrics, count log signatures, sample traces, diff deployments, cap lookback. Keep raw slices available through read tools when a hypothesis needs them. The strong model synthesises ranked causes from a bounded evidence set, with citations and missing-source disclosure. Treat a citation-free cause as a refusal or a low-confidence hypothesis, never as a finding.
 
 ## 3. Tool result contract and gateway
 

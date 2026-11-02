@@ -20,7 +20,7 @@ The drift penalty is not optional. A policy optimised against any scorer without
 
 ## 8. Evaluate on Problems the Model Has Never Seen
 
-An eval score is only as honest as the wall between training and test data. The Cracking book's worked example shows why. A fine-tune reported 94% on a held-out set against an 81% baseline, then hit only about 78% in production. The held-out set was split at random from traces with heavy duplication. After dedup, a time-based split and human relabelling, the retrained model's honest score was near 83%, and its later production result landed within two points of that. When an offline gain looks surprisingly large, suspect leakage first.
+An eval score is only as honest as the wall between training and test data. A worked example shows why. A fine-tune reported 94% on a held-out set against an 81% baseline, then hit only about 78% in production. The held-out set was split at random from traces with heavy duplication. After dedup, a time-based split and human relabelling, the retrained model's honest score was near 83%, and its later production result landed within two points of that. When an offline gain looks surprisingly large, suspect leakage first.
 
 Build the eval suite in five slices *(own construction)*.
 
@@ -83,7 +83,7 @@ Size the weights first. Memory for weights is parameters × bytes per parameter.
 
 A phone shares its memory with the operating system and other apps. Assume a budget of 1 to 2 GB for the model *(assumption)*. That points at about a 1B model at 4-bit; a 3B model needs ~1.5 GB for weights alone, so it only fits at the top of that budget. The air-gapped chapter's sizing adds that weights are not the whole bill: runtime overhead, the KV cache at the target context length and buffers come on top. Cap the context length, because the KV cache grows with it.
 
-Two techniques make the small model good enough. Distillation trains the small student on a large teacher's outputs. Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload. The Cracking book names a hard cost or latency ceiling as one of the three situations where parameter updates earn their cost, and distillation is how you meet it. Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, loses less quality than quantising after the fact.
+Two techniques make the small model good enough. Distillation trains the small student on a large teacher's outputs. Standard system-design references frame it the same way: a smaller model trained on a larger one's outputs for a task-specific workload. A hard cost or latency ceiling is one of the three situations where parameter updates earn their cost, and distillation is how you meet it. Quantisation then compresses the trained student. Quantisation-aware training, which simulates low precision during training, loses less quality than quantising after the fact.
 
 Politeness is a preference target, trained like harmlessness. Write a short tone policy. Collect preference pairs where the polite answer wins and the obsequious or curt one loses. Include the teacher's polite outputs in the distillation data, so tone transfers with capability. Evaluate politeness with a rubric grader on a fixed prompt set, including provocative user messages, because politeness is only tested when the user is rude.
 

@@ -2,11 +2,11 @@
 
 ## 12. Decide When Parameter Updates Earn Their Cost
 
-Training is the most expensive way to change a model's behaviour, so defend it before proposing it. The Cracking book's learning chapter orders four places improvement can live: context, memory, procedure and parameters. Each is slower and costlier to change than the one before; the book puts it at roughly ten times per step, an order of magnitude rather than a measurement. Work down that list, not up.
+Training is the most expensive way to change a model's behaviour, so defend it before proposing it. Improvement can live in four places, in this order: context, memory, procedure and parameters. Each is slower and costlier to change than the one before; the rule of thumb is roughly ten times per step, an order of magnitude rather than a measurement. Work down that list, not up.
 
 The book names three situations where parameter updates win. Strict format or protocol adherence at high volume, where a small tuned model can often match a larger prompted one at a fraction of serving cost. Domain vocabulary the base model lacks. A hard cost or latency ceiling after cheaper surfaces are exhausted, where distillation buys the ceiling back. It is as blunt about where they lose: knowledge gaps are mainly a retrieval problem, and fine-tuning is a weak, unreliable way to teach a model new facts.
 
-Map the four prompts onto that rule *(own construction)*. The math model (#84) wins on reasoning behaviour that prompting cannot install. The training system (#73) is parameter updates by definition. The harm-versus-help model (#81) wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer. The phone model (#83) is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
+Map the four prompts onto that rule *(own construction)*. The math model wins on reasoning behaviour that prompting cannot install. The training system is parameter updates by definition. The harm-versus-help model wins because refusal behaviour lives in the weights, with classifiers as a faster outer layer. The phone model is the latency-ceiling case. Say the rule aloud before the pipeline, so the interviewer hears that you justified training instead of assuming it.
 
 A tuned model freezes its task definition, which is the cost the book asks to name. When the business definition changes, a tuned model needs retraining where a prompt needs an edit. Keep a prompted fallback path for that reason.
 
@@ -38,7 +38,7 @@ The interviewer will change a constraint mid-round; the question bank says so. M
 
 ## 14. Answer the Compute Pivot in Ten Minutes
 
-The interviewer's pivot after a good design is "the training bill is out of control." This group has no playbook drill, so the card below is *(own construction)*.
+The interviewer's pivot after a good design is "the training bill is out of control." No ready-made drill covers this group, so the card below is *(own construction)*.
 
 | | |
 |---|---|
@@ -48,7 +48,7 @@ The interviewer's pivot after a good design is "the training bill is out of cont
 | Do not | Launch the full-scale run to find out whether the recipe works, or tune hyperparameters against the test set |
 | 60-second line | Treat training spend as a series of experiments. Prove the recipe small, iterate with adapters, spend rollouts where problems are hard, and checkpoint so a failure costs minutes. The metric is eval gained per GPU-hour. |
 
-The four verbs from the cost playbook still generate the answer. Measure, by attributing GPU-hours to stage and experiment. Route, by matching method to need: adapters for iteration, full fine-tune for the final run, distillation for serving. Bound, with a budget per stage and a kill rule. Cache safely, by reusing verified synthetic data and scored rollouts across experiments when the policy has not moved far.
+The four cost verbs still generate the answer. Measure, by attributing GPU-hours to stage and experiment. Route, by matching method to need: adapters for iteration, full fine-tune for the final run, distillation for serving. Bound, with a budget per stage and a kill rule. Cache safely, by reusing verified synthetic data and scored rollouts across experiments when the policy has not moved far.
 
 ---
 
@@ -108,7 +108,7 @@ Every level can name SFT and RL; the level shows in which stage gets the budget 
 - [Xu et al. 2024, Is DPO Superior to PPO for LLM Alignment?](https://arxiv.org/abs/2404.10719): well-tuned PPO can match or beat DPO
 - [Lambert et al. 2024, Tulu 3 (RLVR)](https://arxiv.org/abs/2411.15124): RL with a programmatic verifier works well where correctness is checkable
 - [DeepSeek-AI 2025, DeepSeek-R1](https://arxiv.org/abs/2501.12948): rule-based rewards for math and code
-- [PyTorch blog: Quantization-Aware Training for LLMs](https://pytorch.org/blog/quantization-aware-training/): QAT loses less quality than post-training quantisation
+- [PyTorch blog: Quantisation-Aware Training for LLMs](https://pytorch.org/blog/quantisation-aware-training/): QAT loses less quality than post-training quantisation
 - [Ovadia et al. 2023, Fine-Tuning or Retrieval?](https://arxiv.org/abs/2312.05934): RAG beats fine-tuning for injecting new facts; fine-tuning does so weakly
 - [Zhao et al. 2024, LoRA Land](https://arxiv.org/abs/2405.00732): small LoRA-tuned models often match larger prompted ones on narrow tasks, varying by task
 

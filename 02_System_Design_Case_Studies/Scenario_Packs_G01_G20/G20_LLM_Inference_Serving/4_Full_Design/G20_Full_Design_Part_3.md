@@ -38,15 +38,15 @@ The two-minute summary to rehearse:
 
 ## 17. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the GPU bill is too high." There is no playbook drill for this group, so the card is *own construction*, built from the output-token and cold-start drivers and the additions file.
+The pivot after a good design is "the GPU bill is too high." No ready-made drill covers this group, so the card is *own construction*, built from the output-token and cold-start drivers and the additions file.
 
 | | |
 |---|---|
 | Dominant driver | GPU time wasted in half-empty batches, long outputs, and KV memory that caps concurrency |
-| Cheapest lever first | Continuous batching to raise occupancy; cap `max_tokens`; prefix caching for shared prompts; quantize to fit more sequences per GPU; move non-interactive traffic to an off-peak batch tier |
+| Cheapest lever first | Continuous batching to raise occupancy; cap `max_tokens`; prefix caching for shared prompts; quantise to fit more sequences per GPU; move non-interactive traffic to an off-peak batch tier |
 | Metric that proves it | Goodput per GPU-hour; cost per million output tokens; batch occupancy; KV utilisation; queue wait p95 |
 | Do not | Buy more GPUs before measuring batch occupancy and KV use |
-| 60-second line | A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantize to fit more sequences, and push anything non-interactive to a cheaper tier. Prove it with goodput per GPU-hour. |
+| 60-second line | A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise to fit more sequences, and push anything non-interactive to a cheaper tier. Prove it with goodput per GPU-hour. |
 
 Decode was two-thirds of the anchor's replica-seconds in section 3, so output length is the first number to cut. Cancellation on disconnect is the second, because it recovers tokens nobody reads. Every strong cost answer follows four verbs in order. Measure, with occupancy and goodput. Route, sending offline work to the batch tier. Bound, with output caps and admission. Cache safely, sharing prefix blocks only for identical prefixes.
 
@@ -95,7 +95,7 @@ Every level can draw a queue in front of GPUs; the level shows in whether each G
 9. **What is the first question for #77?** What each request is. A chat answer and a one-token score differ by almost an order of magnitude in fleet size.
 10. **Name three findings to lead a #79 review with.** Static batching for generative output, an unbounded global FIFO, and round-robin routing that ignores memory.
 11. **Latency is fine at p50 and bad at p99 only at peak. Where to look?** Queueing: separate queue wait from service time, then tighten admission and shed non-interactive work.
-12. **What is the cost card's 60-second line?** A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantize, push non-interactive work to a cheaper tier, and prove it with goodput per GPU-hour.
+12. **What is the cost card's 60-second line?** A GPU is paid for by the hour, so idle slots are the bill. Fill batches continuously, cap output, reuse prefixes, quantise, push non-interactive work to a cheaper tier, and prove it with goodput per GPU-hour.
 
 ## References
 
@@ -103,11 +103,11 @@ All paths are relative to the repository root.
 
 | Section | Source |
 |---|---|
-| Member prompts | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, Tier 1 prompts 9 (#74), 10 (#75), 11 (#76), 12 (#77) and 14 (#79); the section C note that these test "batching, queuing, load balancing" |
+| Member prompts | Problem decomposition question bank (this repo): the five member prompts, and its note that these test "batching, queuing, load balancing" |
 | 3 (formula, memory budget, "challenge the request profile"), 13 | `02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_2/chapter-7-ai-system-for-an-air-gapped-environment-tutorial_v2.md`, "Memory and Throughput per Replica" and "The Replica Sizing Formula" |
 | 1, 3, 10, 11, 15, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/ADDITIONS_BEYOND_PLAYBOOK.md`, sections B1 (prefill vs decode), B3 (Little's Law), D (goodput, TTFT vs TPOT, utilisation knee) and E (rate limits, cancellation) |
 | 9, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, driver 2 and the latency-only add-ons (cold starts) |
-| 15 | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`, question 9 (latency decomposition and "which latency" split) |
+| 15 | Problem decomposition question bank (this repo), the latency regression prompt (latency decomposition and "which latency" split) |
 | Cross-references | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis.md` section 12 (#74 from the application's traces); `4_Full_Design/G10_Full_Design.md` (admission before the quota breach); `4_Full_Design/G11_Full_Design.md` (Little's Law used for provisioning); `4_Full_Design/G07_Full_Design.md` (quotas and noisy neighbours) |
 | 2 to 17 wherever marked *(own construction)*: every throughput, memory and latency figure; continuous batching, chunked prefill, paged KV, power-of-two routing, health layers, cells | Built for this page from general serving practice. The repo has no worked design and no serving-engine notes for these topics, so treat them as the candidate's own reasoning, not a sourced claim |
 

@@ -48,7 +48,7 @@ Repair the common weak answers on the spot. "The model decides whether to auto-r
 
 ## 14. Answer the Cost Pivot in Ten Minutes
 
-This group has no playbook drill, so the card below is own construction. It draws on the throughput arithmetic of section 3 and in the agent-steps and retries drivers of the cost playbook. The pivot to expect is "the bill is climbing, and drafts are taking too long during a storm."
+No ready-made drill covers this group, so the card below is own construction. It draws on the throughput arithmetic of section 3 and on the agent-steps and retries cost drivers. The pivot to expect is "the bill is climbing, and drafts are taking too long during a storm."
 
 | | |
 |---|---|
@@ -114,7 +114,7 @@ All paths are relative to the repository root.
 | 1, 2, 4, 5, 6, 7, 8, 9, 12 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/Handbook_Casebook/05_Logistics_Exception_Handling.md` (the anchor, #5) |
 | 1, 2, 4 to 9, 12 | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/AI Logistics Exception-Handling Assistant Design.md` (older source of the anchor, with the same figures and fuller reliability and governance text) |
 | 1 (the open architecture prompt) | `02_System_Design_Case_Studies/Classic_Design_Walkthroughs/System_Design_Course/Mock - AI Exception-Handling Assistant.md` (the captured mock, stage 1 only) |
-| 10, 11, 13 (Tier 2 follow-ups) | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: prompt 1 (#66), section 1 failure modes, section 3 Tier 2 probes, section 4 six-step framework |
+| 10, 11, 13 (Tier 2 follow-ups) | Problem decomposition question bank (this repo): the logistics prompt, its failure modes, follow-up probes and six-step framework |
 | 14 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 5 (agent steps and tool calls) and 6 (retries) |
 | 3, 10, 11 (the mapping), 14, and every item marked own construction | Built for this page from the sources' arguments; not source material |
 | Cross-references | G03 (deny-first gate), G07 (tenancy ladder), G15 (channel adapters) in this folder |
