@@ -119,11 +119,14 @@ const THEMES = THEME_GROUPS.map(([id, groups]) => {
  */
 const SYSTEM_DESIGN_WORKSHEETS = '03_Practice_Worksheets_and_Keys/System_Design_Worksheets'
 const LONG_FORM_V1 = '02_System_Design_Case_Studies/Scenario_Tutorials_Long_Form/Version_1'
-/** Worksheet and key come from the System Design worksheets; only the V2 tutorial is local. */
+/**
+ * Worksheet and key come from the System Design worksheets; only the V2 tutorial is local.
+ * Reading order (owner decision, 1 Nov 2026): tutorial, then worksheet, then answer key.
+ */
 const worksheetSet = (slug, num) => [
+  [`3_Tutorial/${num}_Tutorial.md`, 'tutorial-v2'],
   [`${SYSTEM_DESIGN_WORKSHEETS}/${slug}.md`, 'worksheet'],
   [`${SYSTEM_DESIGN_WORKSHEETS}/answer_keys/${slug}_answer_key.md`, 'answer-key'],
-  [`3_Tutorial/${num}_Tutorial.md`, 'tutorial-v2'],
 ]
 const v1Archive = (chapter) => [[`${LONG_FORM_V1}/${chapter}.md`, 'Tutorial V1 (superseded)']]
 /** Repo roots are `00_` to `99_`; a case's own tab folders start with one digit (`1_…`). */
