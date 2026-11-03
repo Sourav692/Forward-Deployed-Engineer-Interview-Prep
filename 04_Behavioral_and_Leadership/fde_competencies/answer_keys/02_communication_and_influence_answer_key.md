@@ -51,7 +51,7 @@ Spoken answers: 4 grounded, 3 partly grounded, 2 needing your input. Deliver the
 
 **Technical-interviewer answer.**
 
-> "The platform team's real objection was blast radius. Expanding access without central controls meant ungoverned copies and unclear lineage. So I made governance the precondition for expansion, not a brake on it. Access policies, lineage and audit lived in one catalog. Each new team onboarded through the same controlled path. That gave the platform team a repeatable yes. Every onboarded team also showed up as measurable usage on the shared platform, which was the budget holder's metric. The trade-off was onboarding speed. No team got access outside the governed path, even when they asked for a shortcut. Adoption grew after rollout. It is a correlated signal, not a controlled experiment, and I say so."
+> "The platform team's real objection was blast radius. Expanding access without central controls meant ungoverned copies and unclear lineage. So I made governance the precondition for expansion, not a brake on it. Access policies, lineage and audit lived in one catalogue. Each new team onboarded through the same controlled path. That gave the platform team a repeatable yes. Every onboarded team also showed up as measurable usage on the shared platform, which was the budget holder's metric. The trade-off was onboarding speed. No team got access outside the governed path, even when they asked for a shortcut. Adoption grew after rollout. It is a correlated signal, not a controlled experiment, and I say so."
 
 **Anchor:** the insurer. It's the strongest story in this section because it ties the work to a commercial result, which most engineers can't do.
 
@@ -59,7 +59,7 @@ Spoken answers: 4 grounded, 3 partly grounded, 2 needing your input. Deliver the
 - **Action.** Found the overlap instead of picking a side. Governance was what the platform team needed to feel safe expanding, and expansion was what the economic buyer was measuring.
 - **Result.** Adoption grew after rollout, which showed both sides got what they wanted. I can't attribute the growth cleanly, and I say so.
 
-## 4. Building trust with a skeptical chief architect in 30 days
+## 4. Building trust with a sceptical chief architect in 30 days
 
 **GROUNDED.**
 
@@ -75,14 +75,14 @@ Method question.
 
 - Concede their expertise on their own estate before proposing anything. They know things about their systems you won't learn in a month.
 - Ship something small and real in the first two weeks. The 40+ scripts you contributed to global codebases are the right kind of evidence: you gave before you asked.
-- Be the person who names the risk they were privately worried about. Architects are usually skeptical because they've watched a vendor gloss over something.
+- Be the person who names the risk they were privately worried about. Architects are usually sceptical because they've watched a vendor gloss over something.
 - Don't oversell the platform. Naming what the platform isn't good for buys more credibility than anything you claim it is good for.
 
 ## 5. Influencing people without authority
 
 **CEO-ready answer.**
 
-> "People back what they helped decide, so I gave them the decision. At a large insurer, I had no authority over the data team or compliance. I needed both. With the data team, I built the governed metric views inside their catalog, with them. The agents gave priority to the assets they had reviewed. Their governance decisions became what the system obeyed. With compliance, I explained the access model in plain terms. I asked them to define zero leaks for their regulators. That became our release gate. They set the bar, so they defended it. When launch scope was challenged, compliance argued for the narrow start, not me."
+> "People back what they helped decide, so I gave them the decision. At a large insurer, I had no authority over the data team or compliance. I needed both. With the data team, I built the governed metric views inside their catalogue, with them. The agents gave priority to the assets they had reviewed. Their governance decisions became what the system obeyed. With compliance, I explained the access model in plain terms. I asked them to define zero leaks for their regulators. That became our release gate. They set the bar, so they defended it. When launch scope was challenged, compliance argued for the narrow start, not me."
 
 **Technical-interviewer answer.**
 
@@ -148,7 +148,7 @@ Method question.
 
 ## 9. Explain one project to a CFO in three minutes
 
-**NEEDS YOUR INPUT.** No grounded story exists for this drill. The repo gives you the two rules that make it work; the project, the numbers and the result have to be yours.
+**NEEDS YOUR INPUT.** No sample story exists for this drill. Here are the two rules that make it work; the project, the numbers and the result have to be yours.
 
 **Rule 1: translate each term in the same breath.** Every technical term gets its plain-English meaning in the same sentence that introduces it, not three sentences later. A listener who loses the thread on one term does not recover it later. The weak version names "a two-layer access control system" and explains it afterwards. The strong version says: "a two-layer access control system — think a fast ID check at the door, then a second, more careful check right before you're handed anything sensitive." Apply the rule everywhere: in the opening, in the Action, and in the answers to follow-up questions.
 

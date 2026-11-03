@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T21:03:49.290Z",
+  "generatedAt": "2026-11-03T21:38:10.360Z",
   "modules": [
     {
       "id": "01-customer-discovery-and-decomposition",
@@ -194,7 +194,7 @@
               "order": 2,
               "title": "Communication and Influence",
               "minutes": 5,
-              "updated": "2026-10-28"
+              "updated": "2026-11-04"
             },
             {
               "slug": "pushback-and-saying-no",
@@ -1150,7 +1150,7 @@
                   "label": "12-Part Framework"
                 }
               ],
-              "minutes": 22,
+              "minutes": 21,
               "updated": "2026-11-04"
             },
             {
@@ -1540,7 +1540,7 @@
                   "label": "Interview Guide 3"
                 }
               ],
-              "minutes": 37,
+              "minutes": 35,
               "updated": "2026-11-04"
             }
           ]

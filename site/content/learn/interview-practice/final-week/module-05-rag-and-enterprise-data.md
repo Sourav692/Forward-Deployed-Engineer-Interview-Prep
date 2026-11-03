@@ -11,7 +11,7 @@
 
 ### 2. Core Mental Model
 
-- Retrieval-augmented generation (rag) supplies relevant evidence for the model’s answer.
+- Retrieval-augmented generation (RAG) supplies relevant evidence for the model’s answer.
 
 ```mermaid
 flowchart TD

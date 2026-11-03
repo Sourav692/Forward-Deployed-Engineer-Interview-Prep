@@ -6,36 +6,35 @@
 
 These three prompts have no hidden right architecture. They test whether you pin down the mission before drawing anything. This page teaches the method once, then runs it three times. The scoping mechanics come from G12 and the evaluation-first habit from G17; this page names them and does not repeat them.
 
-| Case | Prompt (verbatim from the source) | What it tests, per the source |
+| Case | Prompt | What it tests |
 |---|---|---|
 | 911 response | "A major city wants to reduce 911 emergency response times. They have call data, traffic sensor data, and ambulance GPS data. You have 60 minutes. Go." | Mission clarification (response time vs. cost vs. equity of coverage), input mapping, sequencing by risk |
 | Bank fraud | "A regional bank wants to unify fraud detection across three legacy systems acquired through M&A. None of the data is labelled consistently. How do you scope the first 90 days?" | Data quality realism, phased scoping, regulatory constraints |
 | Medication errors | "A hospital network wants to reduce medication errors in post-surgery care. They have patient records, pharmacy dispensing logs, and nurse assignment schedules. Where do you start?" | High-stakes HITL design, safety-first decomposition |
 
-- The source gives the three prompts, the six-step framework and the Tier 2 probes.
-- It gives no worked answer for any of the three.
-- So every case section is *(own construction)*, built from the framework's arguments, and every number in those sections is an assumption to state aloud, not a sourced fact.
+- The three prompts come with a six-step framework and a set of follow-up probes, but no worked answer.
+- Each case section below works one answer through that framework, and every number in it is an assumption to state aloud, not a sourced fact.
 - Domain facts are general knowledge and are marked where they appear.
 
 ---
 
 ## 1. Recognise What the Round Is Scoring
 
-The decomposition round is 45 to 60 minutes on a vague enterprise problem. The source describes the task as breaking it "into users, data, workflows, constraints, and a prioritised V1 — out loud, collaboratively." There is no correct answer. The interviewer watches how the path gets chosen when none is given.
+The decomposition round is 45 to 60 minutes on a vague enterprise problem. The task is to break it into users, data, workflows, constraints and a prioritised V1, out loud and collaboratively. There is no correct answer. The interviewer watches how the path gets chosen when none is given.
 
-- The source names two failure modes that eliminate many candidates. The first is jumping to architecture before clarifying scope.
+- Two failure modes eliminate many candidates. The first is jumping to architecture before clarifying scope.
 - One OpenAI FDE candidate reported being stopped mid-design and asked, "What questions would you ask the customer before designing anything?" The second is hand-waving evaluation.
 - "How do you know your AI system is actually working well?" is asked on purpose to separate candidates.
 
-The scoring rewards narration. A polished answer delivered in silence scores worse than messy, well-narrated thinking. The source's pattern note: every prompt is business goal first, data second, model last. None of these three prompts asks which model to use.
+The scoring rewards narration. A polished answer delivered in silence scores worse than messy, well-narrated thinking. Every prompt puts the business goal first, data second and the model last. None of these three prompts asks which model to use.
 
 A reasoning step the interviewer cannot hear cannot be scored. So think aloud continuously, and tie every choice to how it would be evaluated.
 
 ## 2. Run the Six Steps on a Sixty-Minute Clock
 
-The source's framework has six steps. The timings below are *(own construction)*, fitted to a 60-minute round, and the first one is the source's own.
+The framework has six steps. The timings below fit them to a 60-minute round.
 
-| Minutes | Step (source) | Output to leave on the board |
+| Minutes | Step | Output to leave on the board |
 |---|---|---|
 | 0–5 | **Clarify the mission.** "Are we optimising for response time, cost, accuracy, or equity of coverage? Who's the primary user?" | One sentence naming the objective, and the objectives it trades against |
 | 5–10 | **Stakeholders and success metrics.** "Who calls this a success, and which number moves?" | A named owner per metric, and one north-star number |
@@ -44,17 +43,17 @@ The source's framework has six steps. The timings below are *(own construction)*
 | 30–45 | **Walking-skeleton MVP, then iterate.** Ship the thinnest end-to-end version, even with mocked agent logic | A first slice, its architecture, and its evaluation |
 | 45–60 | **Adapt live.** The interviewer changes a constraint mid-round | A re-derived plan, with no defence of the old one |
 
-The source gives the canonical curveball: "you lost access to the GPS feed." Re-derive the plan; don't defend the old one. That moment scores adaptability.
+The canonical curveball is "you lost access to the GPS feed." Re-derive the plan; don't defend the old one. That moment scores adaptability.
 
-When the customer will not confirm an assumption, state it and move on. The companion question bank's opener works for all three cases. "Before proposing a solution, I'd like to clarify the business outcome, primary user, current workflow, constraints, and how success will be measured."
+When the customer will not confirm an assumption, state it and move on. One opener works for all three cases. "Before proposing a solution, I'd like to clarify the business outcome, primary user, current workflow, constraints, and how success will be measured."
 
-The bank also sets a floor for each case: five clarifying questions, three to five workstreams, three measurable success metrics, two major trade-offs, three failure modes and a phased plan. Each case section below meets that floor.
+Set yourself a floor for each case: five clarifying questions, three to five workstreams, three measurable success metrics, two major trade-offs, three failure modes and a phased plan. Each case section below meets that floor.
 
 ## 3. Map Every Input Before Naming a Model
 
-You cannot choose a model before you know the data that feeds it. The input map forces this, and the source names its columns: shape, owner, freshness. The source recommends data-oriented thinking as your edge.
+You cannot choose a model before you know the data that feeds it. The input map forces this, and its first columns are shape, owner and freshness. Data-oriented thinking is your edge.
 
-The template below adds two columns *(own construction)*. One asks what the source can answer. The other asks what could make it lie.
+The template below adds two columns. One asks what the source can answer. The other asks what could make it lie.
 
 | Source | Shape | Owner | Freshness | What it can answer | Quality risk |
 |---|---|---|---|---|---|
@@ -64,11 +63,11 @@ A quality problem without an owner stays a quality problem. The interviewer's fi
 
 ## 4. Sequence Workstreams by Risk, Not by Interest
 
-The source asks for workstreams "sequenced by risk" with the ordering justified. The usual three are data ingestion and quality, the model layer, and the operator-facing surface. In my experience, the interesting one is rarely the riskiest.
+Sequence the workstreams by risk, and justify the ordering. The usual three are data ingestion and quality, the model layer, and the operator-facing surface. In my experience, the interesting one is rarely the riskiest.
 
-Sequence by asking which unknown, if it turns out badly, kills the project *(own construction)*. That unknown goes first, because every later workstream inherits its answer. In all three cases the answer is the data, not the model.
+Sequence by asking which unknown, if it turns out badly, kills the project. That unknown goes first, because every later workstream inherits its answer. In all three cases the answer is the data, not the model.
 
-Then build the walking skeleton. The source defines it as the thinnest end-to-end version, even with mocked agent logic, "to prove the integration story." A mocked model with real data flowing end to end teaches more than a clever model on a spreadsheet.
+Then build the walking skeleton. It is the thinnest end-to-end version, even with mocked agent logic, built to prove the integration story. A mocked model with real data flowing end to end teaches more than a clever model on a spreadsheet.
 
 The G12 pack carries the matching delivery mechanics: stage gates, named sign-off authorities, and refusing to start without measurable success criteria. Use its gate vocabulary when the interviewer asks how a phase ends.
 
@@ -76,11 +75,11 @@ The G12 pack carries the matching delivery mechanics: stage gates, named sign-of
 
 ## 5. Decompose the 911 Problem: Define "Faster" Before Touching the Data
 
-*Everything in this section is (own construction). Numbers are assumptions.*
+*Numbers in this section are assumptions.*
 
 ### 5.1 Clarify the mission
 
-"Reduce response time" hides three objectives that pull apart. The source names them: response time, cost, and equity of coverage. A citywide average can fall while the slowest neighbourhoods get slower. Name that trap first.
+"Reduce response time" hides three objectives that pull apart. They are response time, cost and equity of coverage. A citywide average can fall while the slowest neighbourhoods get slower. Name that trap first.
 
 | Ask | Assumed answer | Implication |
 |---|---|---|
@@ -211,7 +210,7 @@ Two checks gate expansion. The target district's 90th percentile must improve. N
 
 ### 5.9 Adapt when the GPS feed disappears
 
-This is the source's own curveball. Without GPS, actual travel times and live availability are gone. Re-derive: fall back to traffic-sensor travel estimates, and take availability from the dispatch log's status codes.
+This is the canonical curveball. Without GPS, actual travel times and live availability are gone. Re-derive: fall back to traffic-sensor travel estimates, and take availability from the dispatch log's status codes.
 
 Then say what degraded. Outer-district estimates get worse, because sensors are thinnest there. So the equity guardrail needs wider error bars, and the pilot should stay in a sensor-rich district until GPS returns.
 

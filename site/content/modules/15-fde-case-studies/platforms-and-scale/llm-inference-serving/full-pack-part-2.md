@@ -2,7 +2,7 @@
 
 ## 6. Batch Continuously, Not Statically
 
-A GPU is efficient only when it multiplies many rows at once, so batching is the whole point. The question is when a batch forms and when it ends. Three answers exist *(own construction; general serving practice)*.
+A GPU is efficient only when it multiplies many rows at once, so batching is the whole point. The question is when a batch forms and when it ends. Three answers exist.
 
 | Strategy | How a batch forms | How it ends | Right for |
 |---|---|---|---|
@@ -25,7 +25,7 @@ Batch size is a knob, not a constant. Larger batches raise throughput and raise 
 
 The KV cache, not compute, usually caps how many sequences fit on a GPU. Every generated token adds keys and values for every layer, and they stay resident until the sequence ends.
 
-The arithmetic, for the illustrative model *(own construction; the architecture numbers are assumptions)*:
+The arithmetic, for the illustrative model (the architecture numbers are assumptions):
 
 | Input | Assumed value |
 |---|---|
@@ -48,7 +48,7 @@ When the pool fills anyway, the scheduler must choose a victim. Preempt the lowe
 
 ## 8. Route by Free Capacity, Not by Turn
 
-Round-robin assumes every request costs the same, and here none do. The answer to the follow-up "how do you determine which GPU has capacity?" is a capacity registry *(own construction)*.
+Round-robin assumes every request costs the same, and here none do. The answer to the follow-up "how do you determine which GPU has capacity?" is a capacity registry.
 
 Each replica publishes its state on a heartbeat of about one second, and piggybacks it on every response. The state is free KV blocks, sequences running, sequences waiting, and health. The router scores a replica by the free KV left after reserving the new request's estimated tokens. Queue length breaks ties.
 
@@ -61,7 +61,7 @@ Prefix affinity layers on top. Hash the prompt's shared prefix, such as the syst
 
 ## 9. Fail Over Without Losing the Request Twice
 
-A GPU fails in ways a process check cannot see. The process stays alive while the device throws memory errors or hangs mid-kernel. Health checks therefore need three layers *(own construction)*.
+A GPU fails in ways a process check cannot see. The process stays alive while the device throws memory errors or hangs mid-kernel. Health checks therefore need three layers.
 
 | Check | Question it answers | Action on failure |
 |---|---|---|
@@ -104,7 +104,7 @@ Cancellation is a cost control as well as a courtesy. When a caller disconnects,
 
 The one-GPU variant is the anchor with the distribution removed: one GPU, up to 100 inputs per batch, callers who block and wait. The whole design becomes intake, a batcher, the GPU and a way back to the right caller.
 
-- The mechanism *(own construction)*. The HTTP handler assigns a `request_id`, parks a future for it, and enqueues the request.
+- The mechanism. The HTTP handler assigns a `request_id`, parks a future for it, and enqueues the request.
 - A batcher thread flushes when it holds 100 requests or when the oldest has waited, say, 20 ms. The GPU worker runs the batch.
 - The demultiplexer resolves each future by `request_id`, and the handler returns. A timeout on the future turns a stuck batch into an error rather than a hung connection.
 
@@ -117,7 +117,7 @@ One follow-up changes the answer. If the model generates variable-length output,
 
 ## 13. Scale It to 100,000 Requests per Second
 
-The 100,000-requests-per-second variant is the anchor at a scale where the request shape decides everything. Price it before drawing anything, using section 3's replica-seconds *(own construction; same assumed rates)*.
+The 100,000-requests-per-second variant is the anchor at a scale where the request shape decides everything. Price it before drawing anything, using section 3's replica-seconds and the same assumed rates.
 
 | Request shape | Input / output tokens | Replica-seconds each | Replicas at 100,000 rps and 70% |
 |---|---|---|---|
@@ -141,7 +141,7 @@ The architecture adds four things at this scale.
 
 The junior-design review is not a design question. It hands over a design and asks what to change, so the anchor becomes the rubric. Open with what works. Clarify the requirements the design assumed. Then name the top three risks by severity, not every flaw found.
 
-The checklist *(own construction)*:
+The checklist:
 
 | Look for | Why it breaks | Change it to |
 |---|---|---|

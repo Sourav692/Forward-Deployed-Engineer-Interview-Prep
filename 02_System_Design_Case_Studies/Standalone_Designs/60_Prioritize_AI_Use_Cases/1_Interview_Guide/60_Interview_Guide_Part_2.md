@@ -2,7 +2,7 @@
 
 ## 8. Score the Worked Portfolio
 
-The running example is a mid-size property and casualty insurer. All thirty use cases, every score and every bucket are *(own construction)* and assumptions. Scores use the section 5 weights, computed rather than estimated by eye.
+The running example is a mid-size property and casualty insurer. All thirty use cases, every score and every bucket are assumptions. Scores use the section 5 weights, computed rather than estimated by eye.
 
 | # | Use case | V | F | D | E | R | T | P | Score | Bucket |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -141,11 +141,11 @@ flowchart TB
 | Observability | Cost per successful outcome and adoption are the portfolio's scoreboard | #7 | All of them |
 | Portfolio office | Holds the card register, re-scores quarterly, records kill decisions | Wave 0 | The next thirty ideas |
 
-The platform view is *(own construction)*. Its gateway pieces come from this site's gateway material. [The Production LLM Gateway case](../../100_Production_LLM_Gateway/) designs that component in full. [G13 Evaluation and Release Gating](../../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) covers the harness.
+The platform view's gateway pieces come from this site's gateway material. [The Production LLM Gateway case](../../100_Production_LLM_Gateway/) designs that component in full. [G13 Evaluation and Release Gating](../../../Scenario_Packs_G01_G20/G13_Evaluation_And_Release_Gating/4_Full_Design/G13_Full_Design.md) covers the harness.
 
 ## 10. Sequence the Portfolio in Waves
 
-A ranked list is not a plan until it has dates and dependencies. Sequence by what each wave proves, and let each wave pay for the platform the next one needs *(own construction; durations are assumptions)*.
+A ranked list is not a plan until it has dates and dependencies. Sequence by what each wave proves, and let each wave pay for the platform the next one needs. Durations are assumptions.
 
 | WAVE | WHEN | WHAT SHIPS | WHAT IT PROVES |
 |---|---|---|---|
@@ -171,7 +171,7 @@ The stage gates reuse the delivery framework's shape: a named, checkable conditi
 | Limited production | Adoption and outcome metric moving; rollback tested | Delivery lead | Adoption under the card's floor at week 4 |
 | Scale | Outcome metric met; cost per successful outcome within plan | Executive sponsor | Value under run cost at the next quarterly re-score |
 
-- The gate names and roles adapt the delivery operating model's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio *(own construction)*.
+- The gate names and roles adapt the delivery operating model's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio.
 - The delivery framework's week-4 retention metric is the adoption kill signal. It is recorded as "none" until measured, never as a fake zero.
 - Its accelerator reuse rate becomes the portfolio's platform health metric.
 
@@ -183,7 +183,7 @@ The executive who handed over the list usually has a favourite. Here it is auton
 
 > "The highest-value use case is also the riskiest. What do you recommend?"
 
-The source's answer, verbatim:
+The expected answer:
 
 - Narrow the initial scope
 - Introduce human approval
@@ -193,7 +193,7 @@ The source's answer, verbatim:
 - Define explicit go/no-go gates
 - Expand only after measured evidence
 
-Turn that list into a path, not a refusal. "No" loses the sponsor; "not yet, and here is the route" keeps them. The route for #29 runs through items already in waves 1 and 2 *(own construction)*.
+Turn that list into a path, not a refusal. "No" loses the sponsor; "not yet, and here is the route" keeps them. The route for #29 runs through items already in waves 1 and 2.
 
 | STEP | WHAT RUNS | EVIDENCE THAT UNLOCKS THE NEXT STEP |
 |---|---|---|
@@ -202,7 +202,7 @@ Turn that list into a path, not a refusal. "No" loses the sponsor; "not yet, and
 | 3 | Recommendation with one-click approval, claims under a low cap, one region | Override rate falling; no rise in complaints or leakage |
 | 4 | Straight-through settlement for the narrowest segment, with sampled audit | The segment's error rate below the human baseline, signed off by claims leadership and compliance |
 
-Say it to the executive in outcome language. The cost cram sheet's rule applies: acknowledge the business concern, show trade-offs as options, and commit to a measured follow-up.
+Say it to the executive in outcome language. The rule for any cost conversation applies: acknowledge the business concern, show trade-offs as options, and commit to a measured follow-up.
 
 > *"Autonomous settlement is where this ends up, and it's the most valuable thing on the list. The fastest safe route there starts with the two items that build its data and its evidence. In four months you'll see settlement recommendations running beside your adjusters. At that point the case for automation will be made by your own numbers."*
 
@@ -210,7 +210,7 @@ Make the pet project the roadmap's destination rather than its first stop. The e
 
 ## 13. Anticipate the Failure Modes
 
-Each row is a way prioritisation programmes fail in practice, with the signal that catches it *(own construction)*.
+Each row is a way prioritisation programmes fail in practice, with the signal that catches it.
 
 | FAILURE | WHAT IT LOOKS LIKE | EARLY SIGNAL | MITIGATION |
 |---|---|---|---|

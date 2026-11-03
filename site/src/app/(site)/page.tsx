@@ -142,7 +142,7 @@ export default async function HomePage() {
           })}
         </ul>
         <p className={cx(styles.caption, styles.insideNote)}>
-          {counts.byStatus.ready} of {counts.modules} modules are ready. Each module page says what is still missing. Your reading and practice progress stays in this browser.
+          {counts.learnReady} of {counts.learnModules} Learn modules are ready. Each module page says what is still missing. Your reading and practice progress stays in this browser.
         </p>
       </section>
 

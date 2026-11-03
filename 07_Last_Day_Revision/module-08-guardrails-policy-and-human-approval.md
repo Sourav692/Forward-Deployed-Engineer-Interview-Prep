@@ -138,7 +138,7 @@ flowchart TD
 
 #### 4. Human-in-the-Loop: Give the Reviewer a Real Decision
 
-- Human-in-the-loop (hitl) should include the requested action, evidence, recommendation, policy reason, and approve/reject choices.
+- Human-in-the-loop (HITL) should include the requested action, evidence, recommendation, policy reason, and approve/reject choices.
 
 > “The reviewer should see what will change and why approval is required.”
 

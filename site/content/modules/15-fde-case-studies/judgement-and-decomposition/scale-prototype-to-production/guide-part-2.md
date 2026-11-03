@@ -73,7 +73,7 @@ flowchart TD
 - Version prompt registry/live pointer, routing, department quotas, CI evaluation gate, budgets, anomaly alerts, and cohort flags.
 - Trace each request’s tokens, cost, stage timings, and outcome.
 
-The same flow for viewers that render Mermaid *(own construction)*:
+The same flow, drawn a second way:
 
 ```mermaid
 flowchart LR

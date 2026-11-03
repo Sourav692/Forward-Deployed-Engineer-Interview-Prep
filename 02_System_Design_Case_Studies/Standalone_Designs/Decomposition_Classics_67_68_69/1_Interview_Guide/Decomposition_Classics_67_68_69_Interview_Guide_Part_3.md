@@ -15,11 +15,11 @@ The method repeats. The mission, the riskiest input and the human boundary chang
 | Guardrail metric | Worst district's 90th percentile | False-positive rate on legitimate customers | Alerts per nurse per shift |
 | Source curveball or likely one | GPS feed lost | A legacy system withheld | No bedside scanning |
 
-In none of the three is a language model the core; each gets a bounded assisting role behind a human. That is the source's pattern in practice: goal first, data second, model last.
+In none of the three is a language model the core; each gets a bounded assisting role behind a human. That is the pattern in practice: goal first, data second, model last.
 
 ## 9. Answer the Tier 2 Probes These Cases Invite
 
-The source lists 27 Tier 2 probes. These three cases draw six of them. Answers are *(own construction)*.
+Six standard follow-up probes come up in these three cases.
 
 **"When do you route to human-in-the-loop?"** Route whenever the action is irreversible, regulated, or clinical. For version one of all three cases, that means always. The system recommends and the human decides. The design question is where the human sits: the dispatcher at the console, model risk at the gate, the pharmacist before the nurse.
 
@@ -35,7 +35,7 @@ The source lists 27 Tier 2 probes. These three cases draw six of them. Answers a
 
 ## 10. Open Each Case in Two Minutes
 
-Each opener is *(own construction)*. Say it before drawing anything.
+Say each opener before drawing anything.
 
 **911 dispatch.** "Before designing anything, I want to pin down what faster means. Response time can be improved on average while the outer districts get slower, so I'd ask whether the target is a citywide average or a percentile every district must meet. I'd also ask which interval counts. Time to scene has four parts: answering, triage, dispatch and travel. I'd assume the goal is the 90th percentile for priority-one calls, by district, with no new budget. The first thing I'd build isn't a model. It's a join of call records and GPS tracks that shows where the minutes go. If travel dominates, the lever is where idle ambulances wait. If triage dominates, it's a completely different project. Dispatchers keep authority throughout."
 
@@ -45,7 +45,7 @@ Each opener is *(own construction)*. Say it before drawing anything.
 
 ## 11. Answer the Cost Pivot in Ten Minutes
 
-The source has no cost drill for these cases, so the card is *(own construction)*. It is grounded in two drivers from the cost playbook: agent steps and tool calls, and batch jobs and evaluation pipelines. The pivot to expect is "this is getting expensive, where does the money go?"
+The card is grounded in two cost drivers: agent steps and tool calls, and batch jobs and evaluation pipelines. The pivot to expect is "this is getting expensive, where does the money go?"
 
 | | |
 |---|---|
@@ -97,13 +97,13 @@ In all three cases the levels split on reach: the data and the lever at Senior, 
 - The bank fraud case delivers a single queue and one reconciled label in 90 days, with a shadow model that changes nothing until model risk signs.
 - The medication errors case lets the system only flag, measures the error rate before reducing it, and treats alert fatigue as a safety risk.
 - Side by side, the mission, the riskiest input and the human boundary change, and the language model is never the core.
-- The Tier 2 probes are answered with human boundaries, guardrail metrics, staged evaluation and existing processes as fallback.
+- The follow-up probes are answered with human boundaries, guardrail metrics, staged evaluation and existing processes as fallback.
 - Each opener names the hidden conflict and the first slice within two minutes.
 - The cost pivot lands on people, not tokens: sample human review and keep language models off the event streams.
 
 ## Check Yourself
 
-1. **What are the two failure modes the source says eliminate candidates?** Jumping to architecture before clarifying scope, and hand-waving evaluation.
+1. **What are the two failure modes that eliminate candidates?** Jumping to architecture before clarifying scope, and hand-waving evaluation.
 2. **What are the six steps, in order?** Clarify the mission; stakeholders and success metrics; map the inputs; decompose into workstreams sequenced by risk; walking-skeleton MVP; adapt live.
 3. **Which two columns does this page add to the input map, and why?** "What it can answer," which ties data to the decision, and "quality risk," where curveballs land.
 4. **In the 911 dispatch case, why segment the interval before building anything?** The slow segment chooses the lever. If triage dominates, routing work is the wrong project.
@@ -126,7 +126,7 @@ All paths are relative to the repository root.
 | 2 (opener and practice floor), 7.9 ("is AI the right solution") | `03_Practice_Worksheets_and_Keys/Problem_Decomposition_Bank/FDE_Problem_Decomposition_Question_Bank.md`: reusable answer template, preparation plan, Questions 12 and 18 |
 | 4 (gate vocabulary), 6.4 (gated phases) | `05_FDE_Delivery_and_Scoping/Delivery_Framework/docs/01-theory.md` (stages, gates, named sign-off authorities); `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G12_Scoping_To_Deployed_Agent/4_Full_Design/G12_Full_Design.md` |
 | 11 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, drivers 5 (agent steps and tool calls) and 8 (batch jobs and evaluation pipelines) |
-| 3 (added columns), 5, 6, 7, 8, 9 (answers), 10, 11 (card), and every item marked own construction | Built for this page from the sources' arguments; not source material. The repo has no worked treatment of emergency dispatch, bank fraud or medication safety. |
+| 3 (added columns), 5, 6, 7, 8, 9 (answers), 10, 11 (card) | Built for this page from the sources' arguments; not source material. The repo has no worked treatment of emergency dispatch, bank fraud or medication safety. |
 | Cross-references | G12 (scoping gates), G17 (evaluation raised unprompted, the #66 sibling prompt) in `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/`; #62 (building when the customer's data is poor) overlaps the bank fraud case |
 
 ### Fact-check sources (checked 27 Sep 2026)

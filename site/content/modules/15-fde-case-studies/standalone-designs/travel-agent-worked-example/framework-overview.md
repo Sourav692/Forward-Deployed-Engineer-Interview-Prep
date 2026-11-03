@@ -30,7 +30,7 @@ A single required retrieval box after all five agents made every agent hit the v
 
 The draft pushed every agent through one shared LLM step, then a single Tool Calling step, then a single MCP Registry, as though the request had only one turn in total. The Booking Agent needs the Payment and Flight MCP servers while *it* is running, not after four unrelated agents have wrapped up.
 
-### 5 · A Synthesiser Agent replaces the missing aggregation step (*added by the prior blueprint*)
+### 5 · A Synthesiser Agent replaces the missing aggregation step
 
 - The draft never said how five parallel outputs turn into one reply.
 - It kept going as a single line, as if merging happened by itself.

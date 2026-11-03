@@ -183,7 +183,7 @@ flowchart TD
 - Version category-specific memory policy, scope retention/caps, the ~15-turn summary threshold, 100/user episode cap, session TTL, extraction prompts, residency, and evaluation gates.
 - Monitor read latency, hits, and writes by category without memory text.
 
-The same flow for viewers that render Mermaid *(own construction)*:
+The same flow, drawn a second way:
 
 ```mermaid
 flowchart LR

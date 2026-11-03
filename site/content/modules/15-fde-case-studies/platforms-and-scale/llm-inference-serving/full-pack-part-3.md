@@ -19,7 +19,7 @@ The rule from the additions file carries the diagnosis. A frozen screen points a
 
 ## 16. Deliver It in Forty-Five Minutes
 
-The hour belongs to batching, routing and failover, because those are the words in the prompt. Spend it in this order *(own construction)*.
+The hour belongs to batching, routing and failover, because those are the words in the prompt. Spend it in this order.
 
 | Minutes | What to say |
 |---|---|
@@ -46,7 +46,7 @@ The two-minute summary to rehearse:
 
 ## 17. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the GPU bill is too high." No ready-made drill covers this group, so the card is *own construction*, built from the output-token and cold-start drivers and the additions file.
+The pivot after a good design is "the GPU bill is too high." The card builds on two cost drivers, output tokens and cold starts, and on the prefill, decode and goodput arithmetic.
 
 | | |
 |---|---|

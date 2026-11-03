@@ -12,6 +12,18 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    date: '2026-11-04',
+    title: 'Staff AI System Design: a new course in Learn',
+    summary:
+      'The AI System Design group has a second track, T17 Staff AI System Design: Building an Enterprise AI Platform. It walks through building one enterprise AI platform in 13 stage modules, then a module of 13 architecture decision records, one per stage. Lessons carry browser labs you run on the page and Python labs you run locally from the course code on GitHub. The AI System Design round lists the course\'s staff-level questions, and the architect learning path recommends the course. Later tracks moved up one: Forward Deployed Engineering is now T18, Communication and Behavioural T19, Capstone and Portfolio T20. Links and saved progress are unchanged.',
+  },
+  {
+    date: '2026-11-03',
+    title: 'What\'s Inside on the homepage',
+    summary:
+      'The homepage\'s readiness list and its list of areas became one What\'s Inside block. It shows Learn, the casebook, practice and the interview area, each with its headline count, what it is for and how it is organised, then the eight Learn topic groups, with the groups still to come marked Coming soon.',
+  },
+  {
     date: '2026-11-02',
     title: 'Audit fixes: cleaner course pages, honest times, hidden answers',
     summary:

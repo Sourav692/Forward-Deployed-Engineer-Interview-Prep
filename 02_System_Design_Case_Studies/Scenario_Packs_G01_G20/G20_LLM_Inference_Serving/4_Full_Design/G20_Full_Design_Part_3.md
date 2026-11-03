@@ -19,7 +19,7 @@ The rule from the additions file carries the diagnosis. A frozen screen points a
 
 ## 16. Deliver It in Forty-Five Minutes
 
-The hour belongs to batching, routing and failover, because those are the words in the prompt. Spend it in this order *(own construction)*.
+The hour belongs to batching, routing and failover, because those are the words in the prompt. Spend it in this order.
 
 | Minutes | What to say |
 |---|---|
@@ -46,7 +46,7 @@ The two-minute summary to rehearse:
 
 ## 17. Answer the Cost Pivot in Ten Minutes
 
-The pivot after a good design is "the GPU bill is too high." No ready-made drill covers this group, so the card is *own construction*, built from the output-token and cold-start drivers and the additions file.
+The pivot after a good design is "the GPU bill is too high." The card builds on two cost drivers, output tokens and cold starts, and on the prefill, decode and goodput arithmetic.
 
 | | |
 |---|---|
@@ -121,7 +121,7 @@ All paths are relative to the repository root.
 | 9, 17 | `01_Concept_Tutorials/Cost_and_Latency_Optimization/CORE_8_DRIVERS_MEMORIZE.md`, driver 2 and the latency-only add-ons (cold starts) |
 | 15 | Problem decomposition question bank (this repo), the latency regression prompt (latency decomposition and "which latency" split) |
 | Cross-references | `02_System_Design_Case_Studies/Scenario_Packs_G01_G20/G14_Observability_And_Production_Diagnosis.md` section 12 (the latency-diagnosis prompt from the application's traces); `4_Full_Design/G10_Full_Design.md` (admission before the quota breach); `4_Full_Design/G11_Full_Design.md` (Little's Law used for provisioning); `4_Full_Design/G07_Full_Design.md` (quotas and noisy neighbours) |
-| 2 to 17 wherever marked *(own construction)*: every throughput, memory and latency figure; continuous batching, chunked prefill, paged KV, power-of-two routing, health layers, cells | Built for this page from general serving practice. The repo has no worked design and no serving-engine notes for these topics, so treat them as the candidate's own reasoning, not a sourced claim |
+| 2 to 17, every throughput, memory and latency figure; continuous batching, chunked prefill, paged KV, power-of-two routing, health layers, cells | Built for this page from general serving practice. The repo has no worked design and no serving-engine notes for these topics, so treat them as the candidate's own reasoning, not a sourced claim |
 
 ### Fact-check sources (checked 27 Sep 2026)
 

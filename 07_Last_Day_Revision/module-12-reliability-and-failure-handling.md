@@ -207,7 +207,7 @@ flowchart TD
 
 #### 8. Dead-Letter Queue: Isolate Work That Cannot Complete
 
-- After bounded unsuccessful processing, route eligible background messages to a dead-letter queue (dlq) or equivalent failure store.
+- After bounded unsuccessful processing, route eligible background messages to a dead-letter queue (DLQ) or equivalent failure store.
 - Preserve context for diagnosis and controlled replay.
 
 ```mermaid
