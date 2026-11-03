@@ -19,9 +19,9 @@ The 60-second card: consistency per class; one authoritative writer; minimum-ver
 
 ## Decisions and Next Dependency
 
-[ADR-007](../architecture_decisions/adr_007_consistency_and_recovery.md), the [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/architecture-after.md), [state](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/stage-state.json), [validation](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/validation.md) and [coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) preserve the evidence.
+[ADR-007](../architecture_decisions/adr_007_consistency_and_recovery.md) and the [stage snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/architecture-after.md) preserve the evidence.
 
-A future Stage 8 adds versioned quality evaluation and release controls. It inherits these telemetry, transaction and recovery boundaries, and must roll back a model/retrieval change without reviving stale permissions or overwriting durable operation identity.
+A future T17.9 adds versioned quality evaluation and release controls. It inherits these telemetry, transaction and recovery boundaries, and must roll back a model/retrieval change without reviving stale permissions or overwriting durable operation identity.
 
 ## Primary References
 
@@ -31,3 +31,10 @@ A future Stage 8 adds versioned quality evaluation and release controls. It inhe
 - [Google SRE SLO guidance](https://sre.google/workbook/implementing-slos/): objectives and error-budget reasoning, not a claim of measured attainment.
 
 Sources checked 2 November 2026. Timings, populations and fault clocks are authored examples. Validation records actual local checks and remaining deployment gaps.
+
+## Key Takeaways
+
+- A saved answer can be missing on a replica because its commit is not yet applied there. Use the trusted minimum version or read the primary.
+- The outbox makes the result and local notification intent atomic. It does not make external delivery or model execution atomic.
+- A contiguous watermark excludes missing earlier events even when later ones have arrived. A lost response is not proof that no external work happened, so unknown provider state is kept.
+- Real consensus, replication, database promotion, restore and production error or latency objectives remain untested.

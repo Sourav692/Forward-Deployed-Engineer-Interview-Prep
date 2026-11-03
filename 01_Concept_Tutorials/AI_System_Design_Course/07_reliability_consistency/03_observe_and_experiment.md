@@ -66,7 +66,7 @@ Open the [consistency/deadline experiment](/labs/system-design/07_reliability_co
 | Authority | Authority, lag 0 or 10, remaining 1,000 ms | Primary current authority only |
 | Exhausted | Either class, remaining 200 ms | No new read/generation; zero dependency allowance |
 
-Lag zero stands for a proven minimum version in this toy model, not a real method of measuring replication freshness from wall time alone. The read decision is a data leg; protected disclosure still requires Stage 6's current access and audit gates. A primary authority outage denies protected access even when historical bytes exist elsewhere.
+Lag zero stands for a proven minimum version in this toy model, not a real method of measuring replication freshness from wall time alone. The read decision is a data leg; protected disclosure still requires T17.7's current access and audit gates. A primary authority outage denies protected access even when historical bytes exist elsewhere.
 
 ## Run the code lab
 
@@ -87,10 +87,17 @@ python3 10_AI_System_Design/stages/07-reliability-consistency/labs/test_reliabil
 
 [reliability.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/labs/reliability.py) creates separate primary/projection files, explicit event delivery and a logical breaker. Twelve tests cover rollback/outbox atomicity, lost acknowledgement/replay, payload conflict/tenant scope, lag fallback, duplicate and out-of-order projection, unavailable authority/fallback, durable object recreation, breaker opening/recovery, failed probe and concurrent probe limits. No hosted model runs. The saved result is a provided fixture, so no test should be described as exactly-once provider generation.
 
-For D3 practice, fail before commit, after commit and between delivery/apply acknowledgement. Preserve the same operation key and inspect result/outbox/projection separately. Introduce a missing sequence and show why manual watermark advancement is unsafe. Then write a deployment experiment for actual database promotion, backup restore and provider reconciliation; those are still missing evidence.
+For build depth practice, fail before commit, after commit and between delivery/apply acknowledgement. Preserve the same operation key and inspect result/outbox/projection separately. Introduce a missing sequence and show why manual watermark advancement is unsafe. Then write a deployment experiment for actual database promotion, backup restore and provider reconciliation; those are still missing evidence.
 
 ## Checkpoint 2: Availability Without Authority
 
 The membership primary is unavailable, but the replica says Alice was allowed five minutes ago. May the app use that value to keep its success rate high?
 
 <details><summary>Answer before revealing</summary><p>No. This protected path requires current authority within its declared freshness contract. A stale allow cannot replace it. Report the authority failure without restricted disclosure; fix the availability architecture without quietly changing the security guarantee.</p></details>
+
+## Key Takeaways
+
+- In the illustrative 1,220 ms serial path, a 500 ms queue wait is more than six times the 80 ms retrieval, so tuning an index may miss the dominant delay. Component p95 values cannot be summed into an end-to-end p95.
+- A 99.9% success objective allows 1,000 failures per million eligible requests, while a 99.9% time-based objective over 30 days allows 43.2 minutes. A 1% error rate against a 0.1% allowance burns budget ten times too fast.
+- Recovery time objective is how long recovery may take, and recovery point objective is how much committed data may be lost. An asynchronous replica can lose unreplicated acknowledged writes on promotion.
+- A replica serves saved history only when it covers the acknowledged minimum, and authority reads always use the primary. With 200 ms reserved for required work, 1,000 ms remaining gives an 800 ms allowance and 200 ms gives none.

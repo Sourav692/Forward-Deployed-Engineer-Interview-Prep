@@ -92,7 +92,7 @@ python3 10_AI_System_Design/stages/09-inference-gpu/labs/test_inference.py -v
 
 [inference.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/labs/inference.py) independently computes memory. [gateway.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/labs/gateway.py) composes actual prior Security, Gate and Releases fixtures plus a durable operation table. Twelve tests check approved dispatch, readiness/private constraints, registry/provider denial, context/output bounds, quota before transport, unknown replay without retry, original bundle preservation across release changes, current revocation on saved replay, input conflicts, memory arithmetic, final-write failure without completed acknowledgement or a second call, and partial revocation of original multi-source evidence.
 
-For D3 gateway practice, fail transport after a fresh grant, change the release pointer, and retry the same key. The result must remain unknown/original rather than silently invoke a new model. Fail the final result update after fixture generation: replay must expose incomplete `dispatching` evidence, not a completed answer. For D2 serving/orchestration practice, write a deployment/readiness/drain checklist and a representative load-test plan. D1 GPU topics stop at explaining memory, placement and the relevant trade-off.
+For build depth gateway practice, fail transport after a fresh grant, change the release pointer, and retry the same key. The result must remain unknown/original rather than silently invoke a new model. Fail the final result update after fixture generation: replay must expose incomplete `dispatching` evidence, not a completed answer. For design depth serving/orchestration practice, write a deployment/readiness/drain checklist and a representative load-test plan. Explain depth GPU topics stop at explaining memory, placement and the relevant trade-off.
 
 ## Compare Economics With Explicit Variables
 
@@ -105,3 +105,10 @@ As a deliberately dimensionless example, an all-in serving replica costing `C=10
 A permitted hosted request times out after dispatch. An available self-hosted route has spare memory. May the gateway automatically retry there with a new operation identity?
 
 <details><summary>Answer before revealing</summary><p>No. Memory fit does not establish that the first provider stopped or that a new route is policy/quality approved for this tenant. Preserve the stable operation and unknown outcome, then use a documented reconciliation/safe retry contract. Another endpoint is not evidence the original call had no effect.</p></details>
+
+## Key Takeaways
+
+- In the worked example, 8 billion FP16 parameters need about 14.90 GiB and each cached token costs 128 KiB of KV per sequence. Eight sequences at 4,096 tokens add 4 GiB, and a 4 GiB reserve brings the total to about 22.90 GiB against 24.
+- At 8,192 cached tokens KV reaches 8 GiB and the total about 26.90 GiB, over budget. Four-bit weights shrink weights to about 3.73 GiB but leave KV in FP16, and a "within" result proves no speed or quality.
+- With 300 ms of queue and retrieval, 200 ms of prefill and 300 tokens at 30 ms each, the answer takes about 9.5 seconds before persistence. A first token near 500 ms does not establish a five-second saved-answer SLO.
+- After a dispatched request times out, the gateway never retries on a spare self-hosted route under a new operation identity. It preserves the unknown outcome and uses a documented reconciliation contract.

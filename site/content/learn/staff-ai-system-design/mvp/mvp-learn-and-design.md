@@ -65,7 +65,7 @@ Use this proposed deadline hierarchy: provider total four seconds, app budget 4.
 
 ## 7. API and Data Contracts
 
-Choose a complete JSON response for Stage 1. The Client needs a saved draft, and the illustrative healthy path fits the five-second target. The application can return `201` only once it has persisted the answer.
+Choose a complete JSON response for T17.2. The Client needs a saved draft, and the illustrative healthy path fits the five-second target. The application can return `201` only once it has persisted the answer.
 
 | Protocol | When to choose it | What changes in the failure contract |
 | --- | --- | --- |
@@ -147,3 +147,10 @@ What goes wrong if the API returns HTTP 201 before the answer commit? What shoul
 <p>An early 201 tells Alice the draft is saved when the final write could still fail. A completed duplicate with the same key and prompt should return 200 with the stored answer and no new model call. A processing or failed duplicate returns 409 for inspection.</p>
 
 </details>
+
+## Key Takeaways
+
+- The baseline is one API process with synchronous JSON and SQLite. Gateway, identity and model adapter stay as code boundaries inside one application, because separate services would add network failure paths without helping this workload.
+- Derive `(tenant_id, user_id)` from trusted identity, never from the request body or model output, and apply both to every history query. Another tenant's request returns the same `404` as a missing one.
+- The unique key `(tenant_id, user_id, request_key)` arbitrates duplicates. The same key and prompt after completion returns `200` with no new model call, a changed prompt returns `409 key_conflict`, and a processing or failed duplicate returns `409` for inspection.
+- The deadline hierarchy is provider four seconds, app 4.5, ingress 5.5 and client six. Cancelling a local wait does not prove the provider stopped computing or billing.

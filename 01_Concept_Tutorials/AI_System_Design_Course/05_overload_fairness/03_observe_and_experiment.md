@@ -61,7 +61,7 @@ Retries at multiple layers multiply rather than merely add. If three nested laye
 
 Open the [fair-scheduling experiment](/labs/system-design/05_overload_fairness/lab.html#lab). It varies policy, Tenant A burst (0–60 jobs), provider slots (1–6 one-second jobs), unsafe retry copies (0–2), and a common deadline (1–10 seconds). B and C each offer six jobs. All arrive at time zero in A-then-B-then-C insertion order. FIFO preserves that fixed arrival order. Priority serves B before C before A.
 
-This is a simplified provider-call class, not a replacement for Stage 2’s illustrative 20-second document preparation and 90-second durable-job deadline. Mixed production classes need separate cost/deadline analysis before mapping them to service shares.
+This is a simplified provider-call class, not a replacement for T17.3’s illustrative 20-second document preparation and 90-second durable-job deadline. Mixed production classes need separate cost/deadline analysis before mapping them to service shares.
 
 Each tenant may queue at most 12 jobs. Excess is rejected before queueing. Every admitted job has the same one-second cost and common absolute deadline; a dispatch at second `t` completes at `t+1`. No work starts after expiry. Queues are sampled after each second’s service and deadline sweep over a ten-second horizon. The weights are fixed at 2:1:1, and empty tenant turns are skipped.
 
@@ -97,14 +97,21 @@ python3 10_AI_System_Design/stages/05-overload-fairness/labs/test_overload.py -v
 
 `-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
-[admission.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/admission.py) uses real SQLite transactions for shared fixture reservations, request/token buckets, per-tenant request buckets, and concurrency. [scheduler.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/scheduler.py) independently computes finite-burst queues and service shares. Tests race concurrent reservation callers, separate request and token limits, refill logical buckets, reject conflicting/replayed keys, retain unknown slots, reject expired work, isolate a noisy tenant, compare four policies, exercise deadlines/empty queues/retry amplification, and integrate a grant with Stage 2’s actual durable worker store.
+[admission.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/admission.py) uses real SQLite transactions for shared fixture reservations, request/token buckets, per-tenant request buckets, and concurrency. [scheduler.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/scheduler.py) independently computes finite-burst queues and service shares. Tests race concurrent reservation callers, separate request and token limits, refill logical buckets, reject conflicting/replayed keys, retain unknown slots, reject expired work, isolate a noisy tenant, compare four policies, exercise deadlines/empty queues/retry amplification, and integrate a grant with T17.3’s actual durable worker store.
 
 Fixture defaults allow a two-request burst with one request credit/second refill, a 2,000-token burst with 1,000 token credits/second refill, and two simultaneous calls. These are local demonstration configurations, not vendor quotas. All gate instances sharing the store must use the same authoritative configuration and a consistent monotonic clock. Completed reservations release slots but do not refund consumed rate/token credits; unknown states deliberately have no automatic expiry/reconciliation method.
 
-For D3 practice, make a call expire after reservation but before provider start. Explain which durable evidence would safely release its slot. Then inject loss after external start and show why that same release rule is unsafe. Do not “fix” saturation by deleting reservations. For D2 fairness, compare normalised shares with weights and explain why equal request counts do not prove equal compute allocation for mixed lengths.
+For build depth practice, make a call expire after reservation but before provider start. Explain which durable evidence would safely release its slot. Then inject loss after external start and show why that same release rule is unsafe. Do not “fix” saturation by deleting reservations. For design depth fairness, compare normalised shares with weights and explain why equal request counts do not prove equal compute allocation for mixed lengths.
 
 ## Checkpoint 2: Retry Amplification Is Not Recovery
 
 A rejected client creates a new operation key and immediately retries twice. Is it helping recover service for the original request?
 
 <details><summary>Answer before revealing</summary><p>It creates three separately admissible operations rather than one inspected/replayed operation. Under overload this increases offered work and can repeat generation. Preserve the original key, use a bounded retry/deadline policy only where safe, and treat rejection as a demand signal rather than free capacity.</p></details>
+
+## Key Takeaways
+
+- At 10 arrivals and 6 completions a second, a 12-job buffer fills in about three seconds. Little's law, `L=λW`, relates average count, throughput and time in a stable system but proves nothing about tail latency, fairness or sustained overload.
+- Rate, tokens and concurrency each cap throughput on their own. A 10,000-token/s quota at 2,000 tokens a job allows only about five jobs a second, and 12 slots of two-second calls give six.
+- Three nested layers each making three attempts can turn one request into `3³=27` downstream attempts. Bound the total attempt budget and keep stable operation keys.
+- In the noisy-tenant lab, three slots and a four-second deadline allow at most 12 completions under any policy. FIFO gives A all 12, WRR gives 6/3/3, and only adding slots raises the total.

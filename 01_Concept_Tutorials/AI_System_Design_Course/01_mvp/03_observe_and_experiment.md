@@ -152,7 +152,7 @@ Expect `504 provider_timeout`. A history read shows `failed`; repeating that key
 
 The integration suite also creates a SQLite trigger that rejects the final completed update after generation. Expect `503 storage_unavailable`, a remaining `processing` row, and `409` for the same key. This reproduces the external-call/commit gap. Inspect the row and model call counter; deleting the row and repeating generation would conceal the ambiguity. Restarting the app against the same file preserves completed answers; the suite recreates the App object to verify persistence, without claiming an abrupt power-loss test.
 
-For the D2 database exercise, inspect the scoped history query using `EXPLAIN QUERY PLAN`, explain why the compound index helps, and describe when a managed relational database would replace the file. For the D3 extension exercise, implement a real adapter only in an approved test environment; cap tokens, enforce total deadlines, validate its error mapping, and retain all ownership/idempotency tests.
+For the design depth database exercise, inspect the scoped history query using `EXPLAIN QUERY PLAN`, explain why the compound index helps, and describe when a managed relational database would replace the file. For the build depth extension exercise, implement a real adapter only in an approved test environment; cap tokens, enforce total deadlines, validate its error mapping, and retain all ownership/idempotency tests.
 
 ### Checkpoint 3: Answer Before Revealing
 
@@ -161,6 +161,13 @@ Generation succeeded, the final update failed, and the row still says processing
 <details>
 <summary>Reveal the explanation after answering</summary>
 
-<p>No. The provider may already have generated and charged for the answer. A new key can repeat the work and hide the evidence. Keep the row, inspect storage and the request ID, and use an explicit reconciliation policy. Durable recovery is deferred to Stage 2.</p>
+<p>No. The provider may already have generated and charged for the answer. A new key can repeat the work and hide the evidence. Keep the row, inspect storage and the request ID, and use an explicit reconciliation policy. Durable recovery is deferred to T17.3.</p>
 
 </details>
+
+## Key Takeaways
+
+- Request rate, concurrency and tokens are different limits. At a 0.5 requests/second peak and 1,500 tokens per request, demand is 45,000 tokens a minute, which uses 90% of an illustrative 50,000 token quota but only 50% of a 60 requests/minute quota.
+- Little's law gives about 1.31 requests in flight at 0.5 requests/second and 2.62 seconds each. That is a stable-regime mean, not a safe hard concurrency limit.
+- A healthy request sums to 2,620 ms, and a late provider at a 4,000 ms deadline returns `504` at 4,120 ms. A shorter deadline can cut waiting while raising failures, and summing component p95 values does not give end-to-end p95.
+- If generation succeeds but the final update fails, the row stays `processing` and the API returns `503`. Keep the row and inspect it, because deleting it and retrying with a new key can repeat charged work and hide the evidence.

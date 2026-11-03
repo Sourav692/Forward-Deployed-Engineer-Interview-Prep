@@ -7,7 +7,7 @@ This continues the same hypothetical platform. The executable uses two SQLite fi
 
 ## Inherit Security and Execution Before Adding Recovery
 
-[Stage 6](../06_enterprise_security/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) and [ADR-006](../architecture_decisions/adr_006_trusted_enterprise_boundaries.md) establish verified scope, current membership/resource policy and mandatory audit-before-disclosure. Keep fair admission/provider budgets, shared history and keys, source versions, safe immutable caches, worker epochs, and explicit unknown remote outcomes.
+[T17.7](../06_enterprise_security/01_understand_the_problem.md), [its snapshot](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/architecture-after.md) and [ADR-006](../architecture_decisions/adr_006_trusted_enterprise_boundaries.md) establish verified scope, current membership/resource policy and mandatory audit-before-disclosure. Keep fair admission/provider budgets, shared history and keys, source versions, safe immutable caches, worker epochs, and explicit unknown remote outcomes.
 
 ```mermaid
 flowchart TD
@@ -33,25 +33,32 @@ Now imagine the failed dependency is policy authority. A stale replica may still
 | Stop calling an unhealthy dependency repeatedly | Circuit breaker | Limits attempts; does not repair the dependency or prove remote cancellation |
 | Follow one request across services and waits | Distributed trace | Correlated timings explain a path, not every unsampled failure |
 
-## Learning Contract and Coverage
+## What This Module Covers
 
 | Module | Treatment | Depth and evidence |
 | --- | --- | --- |
-| 3.1 Distributed system fundamentals | Taught at mapped depth | D3: lag, partition, leader authority, quorum/availability trade-offs and fault exercise |
-| 3.2 Distributed state and transactions | Taught at mapped depth | D3: local atomicity, conditional writes, outbox, duplicate/order handling and external gap |
-| 12.2 Resilience and fault tolerance | Taught at mapped depth | D3: deadlines, bounded retries, circuit/probe, bulkheads, failover and recovery boundaries |
-| 12.3 Latency and performance | Taught at mapped depth | D3: critical-path budgets, pool/queue/dependency waits and diagnosis |
-| 15.2 SRE and production operations | Taught at mapped depth | D3: service indicators, error budget, incident roles, runbook, restore/failover evidence |
-| 15.3 Performance and incident diagnosis | Taught at mapped depth | D3: symptom-to-boundary reasoning, traces, hypothesis and recovery checks |
-| 2.2 APIs and streaming protocols | Revisited from Stage 1 | D3: lost response and minimum-version read; same operation identity |
-| 5.3 Backpressure and overload management | Revisited from Stage 5 | D3: retry/probe limits preserve finite downstream capacity |
-| 6.1 Database architecture | Revisited from Stage 1 | D2: transaction/constraint boundaries under injected failure |
-| 6.2 Caching systems | Revisited from Stage 4 | D2: immutable body reuse does not become stale authority |
-| 8.1 Document ingestion and indexing | Revisited from Stage 3 | D3: derived publication may lag but versions/tombstones remain authoritative |
-| 8.3 Enterprise retrieval governance | Revisited from Stage 6 | D3: failover cannot silently widen policy freshness |
-| 13.1 Identity and access control | Revisited from Stage 6 | D3: authority outage denies protected access, even when history can be read |
-| 15.1 Observability systems | Context only | Stage 8, D3: use diagnostic signals now; version-aware telemetry architecture follows |
-| 3.3 Distributed architecture patterns | Deferred | Stage 12, D2: no catalogue of unrelated architectures |
-| 16.2 Cloud networking and deployment | Context only | Stage 11, D2: regional recovery needs a later deployment contract |
+| Distributed system fundamentals | Taught here | Build depth: lag, partition, leader authority, quorum/availability trade-offs and fault exercise |
+| Distributed state and transactions | Taught here | Build depth: local atomicity, conditional writes, outbox, duplicate/order handling and external gap |
+| Resilience and fault tolerance | Taught here | Build depth: deadlines, bounded retries, circuit/probe, bulkheads, failover and recovery boundaries |
+| Latency and performance | Taught here | Build depth: critical-path budgets, pool/queue/dependency waits and diagnosis |
+| SRE and production operations | Taught here | Build depth: service indicators, error budget, incident roles, runbook, restore/failover evidence |
+| Performance and incident diagnosis | Taught here | Build depth: symptom-to-boundary reasoning, traces, hypothesis and recovery checks |
+| APIs and streaming protocols | Revisited from T17.2 | Build depth: lost response and minimum-version read; same operation identity |
+| Backpressure and overload management | Revisited from T17.6 | Build depth: retry/probe limits preserve finite downstream capacity |
+| Database architecture | Revisited from T17.2 | Design depth: transaction/constraint boundaries under injected failure |
+| Caching systems | Revisited from T17.5 | Design depth: immutable body reuse does not become stale authority |
+| Document ingestion and indexing | Revisited from T17.4 | Build depth: derived publication may lag but versions/tombstones remain authoritative |
+| Enterprise retrieval governance | Revisited from T17.7 | Build depth: failover cannot silently widen policy freshness |
+| Identity and access control | Revisited from T17.7 | Build depth: authority outage denies protected access, even when history can be read |
+| Observability systems | Context only | T17.9, Build depth: use diagnostic signals now; version-aware telemetry architecture follows |
+| Distributed architecture patterns | Deferred | T17.13, Design depth: no catalogue of unrelated architectures |
+| Cloud networking and deployment | Context only | T17.12, Design depth: regional recovery needs a later deployment contract |
 
-Outcomes: choose consistency per class; reproduce rollback/lost acknowledgement; reject false projection catch-up; bound recovery attempts; diagnose the latency path and write a verifiable recovery procedure. Prerequisites are the first six stages. [Curriculum](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/curriculum-map.json) governs scope; neither fixture availability nor a labelled SLO proves production reliability.
+Outcomes: choose consistency per class; reproduce rollback/lost acknowledgement; reject false projection catch-up; bound recovery attempts; diagnose the latency path and write a verifiable recovery procedure. Prerequisites are the first six stages.
+
+## Key Takeaways
+
+- A primary can acknowledge a write that a lagging replica does not yet hold. Reading that copy without a freshness requirement returns "not found" for an answer that is already durable.
+- Reissuing generation with a new operation key can charge twice. After a lost response, the client cannot tell from the timeout alone whether the commit happened.
+- Recovery rules depend on the data class, not on whether another server can respond. Serving protected context from a stale membership replica turns an availability fallback into an access regression.
+- A circuit breaker limits attempts but does not repair the dependency or prove remote cancellation. A transactional outbox commits intent with local state, and its delivery can still repeat.

@@ -54,3 +54,10 @@ Use readiness to keep new replicas out of routing until dependencies/configurati
 An illustrative trigger is sustained app utilisation above 70% with rising admitted-request latency, while DB and provider budgets have headroom. Scale out gradually, cap replica/connection totals, observe warmup, and use a slower scale-in stabilisation window. On scale-in, remove readiness for new requests, drain bounded in-flight requests, and leave durable jobs recoverable through their lease protocol. Never assume killing a pod cancels a charged provider call.
 
 A controller cannot react before observation, decision, scheduling, and warmup complete. Keep baseline headroom for bursts shorter than that delay. CPU-only autoscaling misses provider-wait saturation; queue age alone can ask for more workers even when the provider is already limiting throughput. [Kubernetes HPA documentation](https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/) is a primary example of metric-driven scaling, not a requirement to install Kubernetes here. No actual autoscaler is shipped.
+
+## Key Takeaways
+
+- Stateless replicas keep durable requests, jobs and source metadata in a shared relational service such as PostgreSQL. Sticky routing can help locality but cannot be the only way Alice finds her history. Avoid casual dual writes during the migration.
+- Cache exact passage bytes under `(tenant, document, source version, chunk)` and run the current policy, version and tombstone check before returning cached text. Never cache authentication, permission decisions, ranking or final answers.
+- TTL bounds reuse and memory freshness, not authorisation. A one-second-old entry can already be forbidden. If the cache fails, bypass it to the authoritative store, but never use the cache as an access fallback when authority is down.
+- Scale-out is a control loop with delay. Readiness keeps cold replicas out of routing, scale-in drains bounded in-flight requests, and baseline headroom covers bursts shorter than the controller's reaction time.

@@ -10,11 +10,11 @@
 | Every region writes every tenant | Local writes in more locations | Conflict resolution, global identity/budgets, residency and split-writer risk | Reject without a demonstrated requirement |
 | Synchronous cross-region replication of tenant data | Less acknowledged-state loss when a quorum survives | Write latency on every request, partition availability and permitted-region constraints | Reject for bulk data; apply only to the small authority class below |
 
-A cell is a regional failure boundary containing enough application and data services to serve its assigned tenants. Tenant home placement chooses one writer region for that tenant. Different tenants can be active in different cells; that is not concurrent global writing of Alice's operation. Add EU-secondary as a warm recovery target with verified artifact and quota reservations. Tenant C continues in US-home. There is no permitted US failover for A/B under this scenario.
+A cell is a regional failure boundary containing enough application and data services to serve its assigned tenants. Tenant home placement chooses one writer region for that tenant. Different tenants can be active in different cells; that is not concurrent global writing of Alice's operation. Add EU-secondary as a warm recovery target with verified artefact and quota reservations. Tenant C continues in US-home. There is no permitted US failover for A/B under this scenario.
 
 ## Place Writer Authority Where It Survives
 
-Suppose EU-primary is cut off but still running. If EU-secondary also starts accepting Alice's writes, two regions change the same tenant's records and charge for the same operation. Recovery must prove that the old writer can no longer change anything before the new one starts. That proof is called fencing. Three tools from [Stage 2](../02_distributed_execution/02_learn_and_design.md#lesson-claim-lease-and-completion) and [Stage 7](../07_reliability_consistency/02_learn_and_design.md#lesson-choose-consistency-by-consequence) make it concrete:
+Suppose EU-primary is cut off but still running. If EU-secondary also starts accepting Alice's writes, two regions change the same tenant's records and charge for the same operation. Recovery must prove that the old writer can no longer change anything before the new one starts. That proof is called fencing. Three tools from [T17.3](../02_distributed_execution/02_learn_and_design.md#lesson-claim-lease-and-completion) and [T17.8](../07_reliability_consistency/02_learn_and_design.md#lesson-choose-consistency-by-consequence) make it concrete:
 
 - A lease is time-limited writer ownership. The writer renews it every 5 seconds here and loses it 20 seconds after the last renewal.
 - An epoch is a number that increases with every new lease. It is the fencing token: each write carries it, and a store rejects any write whose epoch is older than the newest it has seen.
@@ -49,7 +49,7 @@ After diagram. Placement binds Tenant C to the US hostname and A/B to the EU hos
 
 ## Specify the Network and Control Boundaries
 
-Alice's request crosses several network edges before a model sees it. Each edge can leak content or deliver it to the wrong region. Five terms name those edges; TLS and mutual TLS return from [Stage 1](../01_mvp/02_learn_and_design.md#lesson-6-architecture-after-the-change) and [Stage 6](../06_enterprise_security/02_learn_and_design.md#lesson-protect-the-model-and-network-boundary):
+Alice's request crosses several network edges before a model sees it. Each edge can leak content or deliver it to the wrong region. Five terms name those edges; TLS and mutual TLS return from [T17.2](../01_mvp/02_learn_and_design.md#lesson-6-architecture-after-the-change) and [T17.7](../06_enterprise_security/02_learn_and_design.md#lesson-protect-the-model-and-network-boundary):
 
 - Ingress is the regional entry point that accepts client traffic. Egress is any outbound path, such as a call to a model provider.
 - Transport Layer Security (TLS) encrypts a connection and proves the server's identity with a certificate. Mutual TLS also proves the client's identity.
@@ -98,11 +98,11 @@ For the TTL, 5 seconds of update plus a 20-second TTL leaves 5 seconds of margin
 | --- | --- | --- |
 | Policy, membership, writer lease and epoch, budget grants, model approval/withdrawal, release-bundle generation, alias-to-digest bindings, deletion tombstones and current source versions | EU authority store on the 2-of-3 EU quorum; promotion needs a new lease and a refused old epoch | Trusting a lagging copy for revocation, deletion, quota or a withdrawn adapter |
 | Committed result/history and operation keys | Async ordered log; loss bounded at isolation by last renewal + lease − watermark; inspect ambiguous operations | Treating missing post-failover row as proof no remote work happened |
-| Immutable source bodies, datasets, adapters and checkpoints | Copy by digest within geography; verify complete manifest before readiness | Loading a registry alias whose artifact is absent |
+| Immutable source bodies, datasets, adapters and checkpoints | Copy by digest within geography; verify complete manifest before readiness | Loading a registry alias whose artefact is absent |
 | Index and immutable caches | Rebuild from source copies checked against the quorum's current versions and tombstones; keep live gates | Serving old search hits to bypass unavailable authority |
 | Usage and audit | Protected regional evidence keyed by tenant, operation and attempt; classification-aware aggregates | Counting a redelivered attempt twice or dropping failed-attempt spend |
 
-Stage 10's approval and alias records are mutable trusted state, so they sit in the authority row. An adapter copied by digest may have been withdrawn after the copy. Restore therefore verifies the current approved generation from the authority store, not only the artifact digest. Tombstones and current versions sit there too, as [Stage 7](../07_reliability_consistency/02_learn_and_design.md#lesson-choose-consistency-by-consequence) required, so a deletion acknowledged inside the lag window survives promotion. Every delete pays quorum latency.
+T17.11's approval and alias records are mutable trusted state, so they sit in the authority row. An adapter copied by digest may have been withdrawn after the copy. Restore therefore verifies the current approved generation from the authority store, not only the artefact digest. Tombstones and current versions sit there too, as [T17.8](../07_reliability_consistency/02_learn_and_design.md#lesson-choose-consistency-by-consequence) required, so a deletion acknowledged inside the lag window survives promotion. Every delete pays quorum latency.
 
 Because async replication can lose acknowledged operation records within RPO, automatic redispatch after failover is unsafe for the uncertain interval. Keep a recovery hold on affected operations and reconcile provider/external status using original identities. A stronger zero-loss operation journal would need its own synchronous durability design and latency cost. This stage does not claim to implement that journal or the consensus protocol behind the authority store.
 
@@ -116,3 +116,10 @@ EU-primary is down, and EU-secondary cannot reach the EU witness either, so it s
 No. With 1 of 3 votes it cannot obtain a lease or read current policy. From EU-secondary, a dead primary and a live primary that still holds a majority with the witness look the same. Do not promote, make no protected disclosure, and report that authority is unavailable. A copied result, search index, or dataset cannot establish current access. Restore a quorum first, even if the RTO is missed.
 
 </details>
+
+## Key Takeaways
+
+- Each tenant has one home writer cell with a warm same-geography secondary. Every-region writes and synchronous replication of bulk tenant data are rejected, and Tenants A and B have no permitted US failover.
+- Writer authority, policy, approvals and deletion tombstones sit in an EU-only authority store on a 2-of-3 quorum. A lease lapses 20 seconds after its last renewal, and each new lease raises the epoch, the fencing token stores use to reject older writes.
+- Promotion waits out epoch 7's lease plus a drift margin, takes epoch 8, installs it in every store and confirms each refuses an epoch 7 probe. An unreachable writer is not a fenced writer, and a lost quorum fails closed even past the RTO.
+- The EU residency hostname resolves only to EU ingress, where its TLS key lives. Geo-routing on a shared hostname is rejected because user location would decide where A/B content is decrypted, and a 20-second TTL plus a 5-second update fits the 30-second convergence budget.

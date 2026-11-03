@@ -5,7 +5,7 @@
 
 Track accepted jobs, queue age, claim latency, lease expiries, attempts, unknown/dead counts, tool rejection, and completion age. Separate acceptance latency from job turnaround. Metadata-only traces join request ID, job ID, and attempt epoch; avoid storing source text or tokens in ordinary logs. Exporters and alerts are proposed controls, not installed by the fixture.
 
-When oldest-job age rises, first compare arrival and completion rates. Check available workers and provider quotas, then inspect DB lock time and slow tools. A growing queue with idle workers suggests claim/configuration failure; busy workers at a dependency limit need demand control rather than more claimers. Stage 5 will teach those admission/fairness controls in depth.
+When oldest-job age rises, first compare arrival and completion rates. Check available workers and provider quotas, then inspect DB lock time and slow tools. A growing queue with idle workers suggests claim/configuration failure; busy workers at a dependency limit need demand control rather than more claimers. T17.6 will teach those admission/fairness controls in depth.
 
 For a dead job, fix the poison input/tool bug before replay. For unknown work, preserve its operation identity and provider evidence; do not delete the row to make dashboards green. Cancellation should prevent unstarted actions and report whether a started action remains uncertain. This slice does not implement cancellation, heartbeat renewal, an outbox, or provider reconciliation. Deployment also needs durable storage, backup/restore, real identity, process supervision, and bounded tool networking.
 
@@ -40,3 +40,10 @@ For a dead job, fix the poison input/tool bug before replay. For unknown work, p
 **Spoken answer:** “The current customer requirement keeps sending with Alice. Trusted code rejects that tool regardless of model instructions. The workflow has a three-step budget, scoped inputs, and durable progress. A new product requirement for sending would need a separate approval and external-effect contract. A checkpoint alone cannot prove whether an irreversible call happened.”
 
 **Trade-off:** Bounded workflows sacrifice open-ended autonomy. **Changed constraint:** If approval arrives after the job deadline, what must be revalidated before resuming?
+
+## Key Takeaways
+
+- When the oldest job's age rises, compare arrival and completion rates first. A growing queue with idle workers suggests a claim or configuration failure, while busy workers at a dependency limit need demand control rather than more claimers.
+- Fix the poison input or tool bug before replaying a dead job. Keep an unknown job's operation identity and provider evidence instead of deleting the row to make dashboards green.
+- `async` overlaps waiting work but does not make a task survive its process. Committing the job before acknowledging acceptance and claiming it with bounded authority addresses lost work, at the cost of more queue state to operate.
+- Saved job state and the scoped key stop a repeated delivery from redoing completed work. They cannot prove a separate provider ran once, because a crash after its call but before the commit leaves uncertainty.

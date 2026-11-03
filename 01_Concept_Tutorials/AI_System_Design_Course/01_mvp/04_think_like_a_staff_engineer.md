@@ -57,3 +57,10 @@ Use a proposed pilot alert when timeout/error proportion breaches its agreed win
 **Spoken answer:** “The trusted identity adapter determines tenant and user. The body cannot override them. Every read uses both scope fields, and an out-of-scope ID returns the same not-found response as a missing row. The model has no authorisation role. I test list and item reads with two identities. This is the baseline application control; enterprise identity lifecycle and stronger isolation options need later work and real integration tests.”
 
 **Trade-off:** Application predicates are simple but demand consistent enforcement. **Follow-up:** If database row-level policy is introduced later, explain how it complements trusted application scope.
+
+## Key Takeaways
+
+- Each signal points at a boundary. A `401` with no row means identity, a `503` after a provider call with a `processing` row means final storage, and fast server timing with a slow client points at DNS, connection or TLS.
+- Record request ID, outcome, elapsed time, provider and database durations and usage, but never bearer tokens or raw prompts and answers. Compare provider attempts with completed commits to find gaps.
+- Split a role into its own service only when its workload, team ownership or isolation requirement justifies the operational cost. One application keeps the acknowledgement contract easy to inspect, at the price of a shared failure domain.
+- Streaming improves time to first visible text but not total generation and persistence. Tokens sent before the answer commit must be labelled provisional, with a distinct saved-completion event and a history lookup after a disconnect.

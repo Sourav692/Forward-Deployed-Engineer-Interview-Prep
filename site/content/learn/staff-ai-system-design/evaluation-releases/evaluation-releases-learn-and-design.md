@@ -3,7 +3,7 @@
 
 ## Freeze the Bundle and the Dataset
 
-A release bundle identifies prompt template, retrieval configuration, index/corpus generation, model revision, security policy, dataset digest, evaluator version and gate-policy version. Store immutable configuration content behind those identities; a mutable alias such as “latest” is not sufficient evidence. The fixture computes a canonical JSON digest; it does not implement signed artifact attestation or a production registry.
+A release bundle identifies prompt template, retrieval configuration, index/corpus generation, model revision, security policy, dataset digest, evaluator version and gate-policy version. Store immutable configuration content behind those identities; a mutable alias such as “latest” is not sufficient evidence. The fixture computes a canonical JSON digest; it does not implement signed artefact attestation or a production registry.
 
 The [eight-case dataset](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/dataset-v1.json) contains five answer cases, one unsupported-evidence refusal and two security refusals for foreign/revoked access. A structured answer must have the expected decision/citation and a required token. A refusal has no citation and an empty answer field. This deliberately mechanical rubric can catch fixture regressions; it cannot judge arbitrary paraphrases, completeness, answer entailment or real prompt-injection resilience.
 
@@ -31,7 +31,7 @@ Known access/refusal violations are a separate hard stop even if a relaxed aggre
 
 Canary assignment should be stable for an explicit experiment unit such as tenant/user, not randomly flip every request. The fixture hashes `(tenant, user)` into a bucket, applies the configured percentage only to eligible Tenant A, and keeps Tenant B on the approved stable bundle. With small cohorts the realised fraction need not equal the requested percentage exactly. Record cohort and bundle with each result so comparisons are attributable.
 
-A shadow call still crosses a provider data boundary and consumes request/token/concurrency budget. It must obey Stage 6 approved egress and current source access, Stage 5 limits and Stage 2 tool restrictions. It cannot send an email, mutate customer state, or return its answer as the live result. A flag saying “shadow” is insufficient unless the execution path enforces no business side effects; this fixture records that policy but does not launch shadow inference.
+A shadow call still crosses a provider data boundary and consumes request/token/concurrency budget. It must obey T17.7 approved egress and current source access, T17.6 limits and T17.3 tool restrictions. It cannot send an email, mutate customer state, or return its answer as the live result. A flag saying “shadow” is insufficient unless the execution path enforces no business side effects; this fixture records that policy but does not launch shadow inference.
 
 Promotion changes a durable pointer with an expected generation, using compare-and-swap (CAS). If another operator already changed the pointer, a stale action fails rather than overwriting it. Candidate approval is bound to the evaluated bundle. Withdrawing an active canary keeps the current stable release; rolling back a completed promotion points to the prior approved stable release. These are different states and both are tested.
 
@@ -59,6 +59,13 @@ Metrics summarise rates/distributions; logs record bounded events; traces connec
 
 Include trusted bundle/evaluator/index/policy identities, cohort, bounded outcome/reason, latency and numeric token usage where available. Keep request/job IDs in protected trace/log context, not as unbounded metric-label dimensions. Tenant-specific dashboards need access controls and a privacy/cardinality plan; a metric label per document/prompt or arbitrary user text can leak data and overwhelm storage.
 
-Use allowlisted attributes. Do not emit raw source context, bearer tokens, secrets or full prompt/answer bodies by default. Sampling should preserve enough failure/tail evidence without turning sampled traces into the only error counter. Keep security audit separate from diagnostic event retention, with the Stage 6 durable disclosure contract intact.
+Use allowlisted attributes. Do not emit raw source context, bearer tokens, secrets or full prompt/answer bodies by default. Sampling should preserve enough failure/tail evidence without turning sampled traces into the only error counter. Keep security audit separate from diagnostic event retention, with the T17.7 durable disclosure contract intact.
 
 A production quality metric often arrives later than infrastructure telemetry: user correction, human review or a scheduled judged sample. Refusal rate, citation count or token usage are useful signals but not ground truth for correctness. Compare candidate/control within relevant slices and correlate source freshness, policy outcomes and retrieval hits before deciding the model regressed.
+
+## Key Takeaways
+
+- A release bundle names the prompt template, retrieval configuration, index generation, model revision, security policy, dataset digest, evaluator and gate-policy version. A mutable alias such as "latest" is not evidence.
+- The teaching gate needs at least 95% case correctness, zero known safety violations, fixture p95 at most 2,000 ms and mean cost at most three units. Missing or duplicate cases and mismatched versions fail closed, and the controller accepts only `teaching-gate-v1`.
+- Known access or refusal violations block release even when a relaxed aggregate passes. Zero failures across eight authored cases does not prove zero production risk.
+- Canary assignment hashes `(tenant, user)` so it stays sticky. Promotion is a compare-and-swap on a durable pointer with an expected generation, so a stale command fails instead of overwriting a newer decision.

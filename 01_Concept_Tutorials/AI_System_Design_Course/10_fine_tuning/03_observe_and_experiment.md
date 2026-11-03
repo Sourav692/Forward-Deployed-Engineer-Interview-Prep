@@ -30,14 +30,14 @@ sequenceDiagram
  end
 ```
 
-Sequence diagram. No training completion implicitly changes the live Model Gateway route. A production release still passes Stage 8 and Stage 9 gates.
+Sequence diagram. No training completion implicitly changes the live Model Gateway route. A production release still passes T17.9 and T17.10 gates.
 
 | Step | Responsible component and input | Output and possible failure |
 | --- | --- | --- |
 | Submit | Jobs receives trusted scope and immutable references | Queued identity; unknown dataset or key conflict rejects |
 | Verify | Worker resolves manifest, base and recipe | Pinned inputs; missing consent or mixed supplier split blocks |
 | Checkpoint | Worker records step and checksum | Monotonic recovery record; corrupt/incompatible state cannot resume |
-| Register | Model Registry receives finished artifact digest | Candidate only; no deployment side effect |
+| Register | Model Registry receives finished artefact digest | Candidate only; no deployment side effect |
 | Evaluate | Evaluation Service receives bound candidate/test/evaluator identities | Passing report or explicit block; training loss is insufficient |
 | Approve | Trusted approver compares release generation | Future release candidate or stale-update rejection; existing results stay unchanged |
 
@@ -47,7 +47,7 @@ Assume each training example contains 700 input and 100 target tokens. Then 10,0
 
 Serving an adapter adds model/base compatibility, load time, memory, and tenant routing work. A smaller adapter file does not show end-to-end savings. If custom behaviour saves 100 input tokens per request across 50,000 requests/day, it saves 5 million input tokens/day under that assumption; compare actual token pricing, quality, serving overhead, and staff time before approving a cost case.
 
-Training memory includes activations, gradients, and optimiser state as well as weights. Stage 9's inference KV worksheet cannot size a trainer. Reserve training separately from latency-sensitive GPU Pool capacity, enforce tenant budgets, and checkpoint before planned eviction where supported. Pin image/device requirements and verify readiness and artifact integrity before scheduling. Full GPU scheduling and hardware isolation remain proposed.
+Training memory includes activations, gradients, and optimiser state as well as weights. T17.10's inference KV worksheet cannot size a trainer. Reserve training separately from latency-sensitive GPU Pool capacity, enforce tenant budgets, and checkpoint before planned eviction where supported. Pin image/device requirements and verify readiness and artefact integrity before scheduling. Full GPU scheduling and hardware isolation remain proposed.
 
 ## Lab: Does the Candidate Pass the Frozen Gate?
 
@@ -57,7 +57,7 @@ Open the [offline lab](/labs/system-design/10_fine_tuning/lab.html#lab). Change 
 | --- | --- | --- |
 | Baseline | 198 passes, zero safety failures, matching report | Eligible for trusted approval |
 | Safety regression | 198 passes, one safety failure, matching report | Blocked |
-| Wrong artifact | 198 passes, zero safety failures, mismatched report | Blocked |
+| Wrong artefact | 198 passes, zero safety failures, mismatched report | Blocked |
 | Weak behaviour | 195 passes, zero safety failures, matching report | Blocked |
 
 ## Run the code lab
@@ -77,9 +77,9 @@ python3 10_AI_System_Design/stages/10-fine-tuning/labs/test_lifecycle.py -v
 
 `-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
-The executable slice freezes example metadata, rejects supplier-group split leakage, scopes job keys, records monotonically increasing checkpoints, binds trusted reports, and checks role and release generation. It uses in-memory records and supplied counts. It does not call the Stage 8 release controller or Stage 9 gateway; those contracts are retained as production integration requirements, not tested composition.
+The executable slice freezes example metadata, rejects supplier-group split leakage, scopes job keys, records monotonically increasing checkpoints, binds trusted reports, and checks role and release generation. It uses in-memory records and supplied counts. It does not call the T17.9 release controller or T17.10 gateway; those contracts are retained as production integration requirements, not tested composition.
 
-Inject a safety failure, then attempt approval. Expect a false gate result, a `quality gate blocked` error, and an unchanged live pointer. Inject a report for another artifact and expect `report identity mismatch` before approval. A trainer role cannot approve. A stale generation cannot overwrite a newer pointer. In production, alert on blocked promotion count, orphan checkpoint age, spend against budget, invalid lineage, and job queue age; separate configuration errors from genuine model regressions.
+Inject a safety failure, then attempt approval. Expect a false gate result, a `quality gate blocked` error, and an unchanged live pointer. Inject a report for another artefact and expect `report identity mismatch` before approval. A trainer role cannot approve. A stale generation cannot overwrite a newer pointer. In production, alert on blocked promotion count, orphan checkpoint age, spend against budget, invalid lineage, and job queue age; separate configuration errors from genuine model regressions.
 
 ## Checkpoint 2: Resume After Worker Loss
 
@@ -91,3 +91,10 @@ A worker reports step 200 locally but only step 100 has a verified checkpoint. W
 Recovery may start from compatible verified step 100 and may repeat work after that point. Local logs do not prove durable step 200. A remote run with unknown status requires inspection before another billed job. The local metadata fixture records checkpoints; it does not restore optimiser or random state.
 
 </details>
+
+## Key Takeaways
+
+- At 800 tokens per example, 10,000 examples are 8 million tokens per epoch and 24 million over three epochs. At an assumed 2,000 tokens per second that is about 3.33 hours, or $13.33 at an invented $4 per device-hour, before setup and retries.
+- Training memory includes activations, gradients and optimiser state as well as weights, so the inference KV worksheet cannot size a trainer. Reserve training capacity separately from latency-sensitive serving.
+- The gate accepts at least 196 schema passes, exactly zero known safety failures and a report bound to the candidate's identity. A safety failure gives `quality gate blocked`, a report for another artefact gives `report identity mismatch`, and the live pointer stays unchanged.
+- If a lost worker logged step 200 but only step 100 has a verified checkpoint, recovery restarts from step 100 and may repeat work. Inspect a remote run of unknown status before submitting another billed job.

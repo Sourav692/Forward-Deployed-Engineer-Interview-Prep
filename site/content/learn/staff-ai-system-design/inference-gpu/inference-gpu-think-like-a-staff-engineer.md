@@ -7,7 +7,7 @@ Record approved bundle/model/engine identity, route type, queue wait, input/outp
 
 When TTFT rises, distinguish admission wait, cold loading, prefill and network setup. When token streaming stalls, inspect decode scheduling, active sequences, memory pressure and communication rather than only app CPU. When memory errors occur after weights load, compare peak retained tokens/concurrency and actual overhead. A paging/eviction policy can protect memory while harming latency; measure both.
 
-Quality and safety evaluation remain required for dtype, quantisation, engine, prompt or model changes. Continuous batching, prefix reuse and sharding can alter timing/reproducibility and operational isolation. Roll them out as versioned changes through Stage 8 rather than untracked “performance-only” flags. Reject or degrade within approved policy when the supported envelope cannot fit.
+Quality and safety evaluation remain required for dtype, quantisation, engine, prompt or model changes. Continuous batching, prefix reuse and sharding can alter timing/reproducibility and operational isolation. Roll them out as versioned changes through T17.9 rather than untracked “performance-only” flags. Reject or degrade within approved policy when the supported envelope cannot fit.
 
 A production test matrix needs the actual approved model/engine/hardware, context/output distributions, concurrent tenants/classes, startup/drain, failure/cancellation, token budgets, privacy/egress and recovery. No local memory calculator or fixture transport validates that matrix. The serving option is concrete enough to evaluate, but not secretly deployed by this lesson.
 
@@ -42,3 +42,10 @@ A production test matrix needs the actual approved model/engine/hardware, contex
 **Spoken answer:** “The original committed result and bundle, after the required current access checks on its original evidence. A release pointer changes future operations, not prior facts or duplicate identity. If the original source access is revoked under this grounded-history policy, deny replay rather than substitute unrelated allowed evidence. An incomplete operation remains inspectable; it is not permission to call the new route again.”
 
 **Trade-off:** Conservative replay/access policy can withhold previously visible text. **Changed constraint:** If product requirements allow immutable historical access, define that separate auditable policy rather than weakening current source checks accidentally.
+
+## Key Takeaways
+
+- Record bundle, model and engine identity, queue wait, input and output tokens, TTFT, ITL, total completion and memory occupancy. GPU utilisation without queue, token and phase context is not a serving SLO.
+- When TTFT rises, separate admission wait, cold loading, prefill and network setup. When streaming stalls, inspect decode scheduling, active sequences, memory pressure and communication rather than app CPU.
+- If a full model and its peak request state fit one device, independent replicas may serve separate work better than tensor parallelism. Sharding adds communication and coordinated readiness, so never divide all memory and latency by the device count.
+- Same-key replay after a release change returns the original committed result and bundle, after current access checks on its original evidence. If that access is revoked, deny replay rather than substitute other evidence.

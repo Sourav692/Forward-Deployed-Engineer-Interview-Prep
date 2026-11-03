@@ -80,12 +80,19 @@ python3 10_AI_System_Design/stages/06-enterprise-security/labs/test_security.py 
 
 `-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
-[security.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/labs/security.py) reuses the actual Stage 3 Knowledge store. Ten tests verify header spoof resistance, signature tampering, issuer/audience/expiry/not-before, rotation/retirement, cross-tenant citation resolution, document revocation, membership age/epoch, worker capability bounds, audit failure/redaction and scoped egress references. The audit contains protected source IDs and decision metadata, never bearer tokens or passage bodies.
+[security.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/labs/security.py) reuses the actual T17.4 Knowledge store. Ten tests verify header spoof resistance, signature tampering, issuer/audience/expiry/not-before, rotation/retirement, cross-tenant citation resolution, document revocation, membership age/epoch, worker capability bounds, audit failure/redaction and scoped egress references. The audit contains protected source IDs and decision metadata, never bearer tokens or passage bodies.
 
-For D3 practice, change one boundary at a time: retire a fixture key, change the audience, revoke a document, advance membership age, and fail the audit insert. Predict whether denial occurs before any context leaves trusted code. Then design a real deployment test plan for key discovery, mTLS service identities, restricted egress and privileged tenant operations. Those integrations are not silently considered complete because local tests pass.
+For build depth practice, change one boundary at a time: retire a fixture key, change the audience, revoke a document, advance membership age, and fail the audit insert. Predict whether denial occurs before any context leaves trusted code. Then design a real deployment test plan for key discovery, mTLS service identities, restricted egress and privileged tenant operations. Those integrations are not silently considered complete because local tests pass.
 
 ## Checkpoint 2: Audit Availability Is a Policy Choice
 
 The context is authorised, but the mandatory audit write fails. May the handler return the text and log later from memory?
 
 <details><summary>Answer before revealing</summary><p>Not under this stage’s audit-before-disclosure contract. An in-memory later write can disappear. Fail the protected operation or adopt a separately designed durable buffering/outbox contract with explicit acknowledgement semantics; do not silently weaken the requirement during an outage.</p></details>
+
+## Key Takeaways
+
+- Audit must commit before disclosure. That commitment records the decision and protected source references, but it does not prove the model call ran and is not atomic with it.
+- Revocation delay adds up across steps. With 20 seconds of source polling lag, five seconds of publication and 30 seconds of snapshot reuse, the worst case can approach 55 seconds, not 30.
+- At 100 protected retrievals a second and 400-byte events, raw audit payload is about 3.22 GiB a day and 96.6 GiB over 30 days. Logging full prompts would enlarge both storage and sensitive-data exposure.
+- Identity and policy are independent gates. At a policy age of 30 seconds the toy policy expires and a valid signature still gets no context, and audit-before-disclosure makes audit availability part of the route's availability.

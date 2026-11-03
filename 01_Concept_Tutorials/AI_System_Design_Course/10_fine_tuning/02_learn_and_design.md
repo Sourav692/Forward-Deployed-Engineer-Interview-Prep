@@ -14,15 +14,15 @@ An adapter stores a smaller learned update associated with a pinned base model. 
 | Prompt plus structured output validation | Behaviour can be expressed with instructions and a few examples | More input tokens; unsupported constraints or semantic mistakes still need checking | Baseline and first experiment |
 | Retrieval plus prompt | Facts change or answers need document-level permission and citation | Index freshness, authorised ranking and context budget | Retain for supplier policy |
 | Base model plus tenant adapter | Repeated stable behaviour misses remain with sufficient licensed approved examples | Training, evaluation, adapter/base compatibility and extra model lifecycle | Bounded challenger experiment only |
-| Full parameter fine-tuning | Measured adapter limits justify broader changes and available compute | More trainable state, longer iteration and larger artifact lifecycle | Defer pending evidence |
+| Full parameter fine-tuning | Measured adapter limits justify broader changes and available compute | More trainable state, longer iteration and larger artefact lifecycle | Defer pending evidence |
 
 Choose a bounded adapter trial, conditional on documented baseline failures. ADR-010 accepts the governance path, not an unsupported quality gain. Do not place confidential current supplier facts into the training corpus merely because the original user could retrieve them. Training approval is a separate purpose and scope. Model weights cannot implement per-document revocation.
 
-## Design the Artifact Chain
+## Design the Artefact Chain
 
 A dataset version is an immutable manifest of example IDs, supplier groups, split, content checksums, consent/purpose, provenance, and retention class. Group all examples from the same supplier/thread into one split before freezing it. Otherwise near-duplicates can inflate held-out scores. Deduplicate before splitting, inspect representative labels, scrub secrets and personal data, and document who can approve reuse. The three-row local fixture only demonstrates split checks; it is not the assumed training corpus.
 
-A training job pins dataset digest, base model digest, training image, recipe, seed, hyperparameters, tokeniser, and budget. Experiment tracking records those inputs plus metrics, duration, resource use, and output identities. A checkpoint saves recoverable progress; production resume also needs compatible optimiser/scheduler/random state and a verified input position. A finished model artifact becomes a candidate in the Model Registry, where versions and lineage are durable records. A mutable friendly alias is a pointer, not immutable evidence; [MLflow documents this distinction](https://mlflow.org/docs/latest/ml/model-registry/workflow).
+A training job pins dataset digest, base model digest, training image, recipe, seed, hyperparameters, tokeniser, and budget. Experiment tracking records those inputs plus metrics, duration, resource use, and output identities. A checkpoint saves recoverable progress; production resume also needs compatible optimiser/scheduler/random state and a verified input position. A finished model artefact becomes a candidate in the Model Registry, where versions and lineage are durable records. A mutable friendly alias is a pointer, not immutable evidence; [MLflow documents this distinction](https://mlflow.org/docs/latest/ml/model-registry/workflow).
 
 ```mermaid
 flowchart TD
@@ -51,6 +51,13 @@ No. The known safety violation blocks the gate independently of aggregate qualit
 
 </details>
 
-## Distributed Training at D0
+## Distributed Training at awareness depth
 
-A larger training job may need more than one accelerator. Data parallel training processes different examples on replicas and synchronises updates. Sharded training distributes selected parameter, gradient, or optimiser state, depending on the framework. Communication and checkpoint coordination can erase the expected gain. These choices require measured memory, throughput, topology, and recovery evidence. At D0, identify that specialist boundary and request a training-infrastructure review; do not implement distributed optimisers in this course.
+A larger training job may need more than one accelerator. Data parallel training processes different examples on replicas and synchronises updates. Sharded training distributes selected parameter, gradient, or optimiser state, depending on the framework. Communication and checkpoint coordination can erase the expected gain. These choices require measured memory, throughput, topology, and recovery evidence. At awareness depth, identify that specialist boundary and request a training-infrastructure review; do not implement distributed optimisers in this course.
+
+## Key Takeaways
+
+- Prompting changes behaviour without touching the model, retrieval supplies authorised current text, and fine-tuning adjusts parameters. A LoRA adapter learns low-rank updates on a pinned base model but still needs base weights, data handling and serving compatibility checks.
+- Model weights cannot implement per-document revocation. Never put confidential supplier facts into a training corpus because the user could retrieve them, since training approval is a separate purpose and scope.
+- A dataset version is an immutable manifest, and all examples from one supplier or thread go into one split before freezing. A mutable registry alias is a pointer, not evidence, and approval and deployment are separate states.
+- A 199/200 schema score cannot promote a candidate that exposes one restricted supplier name. The known safety violation blocks the gate on its own, and a `202` for a job promises persisted intent, never training or approval.

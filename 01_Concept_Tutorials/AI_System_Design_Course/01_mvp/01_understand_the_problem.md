@@ -7,7 +7,7 @@ This is an educational design for a hypothetical customer. All workload, latency
 
 Follow five learning phases: understand the problem, learn and design, observe and experiment, think like a Staff engineer, then validate and carry forward. The detailed material stays within the original MVP scope.
 
-Before this lesson, read the [Stage 0 overview](../00_enterprise_overview/01_understand_the_problem.md) for the complete customer journey and target architecture. Then return here to build the first saved-draft path.
+Before this lesson, read the [T17.1 overview](../00_enterprise_overview/01_understand_the_problem.md) for the complete customer journey and target architecture. Then return here to build the first saved-draft path.
 
 ## 1. Before This Stage
 
@@ -53,32 +53,30 @@ The five-second value is a proposed service-level objective (SLO), a target meas
 
 The scope is one active pilot user, 200 requests during an eight-hour workday, and a brief 0.5 requests per second peak. Tenant B is a negative-test fixture, not a second launched customer. Confirm real demand, provider text handling, deployment region, and identity requirements before a pilot.
 
-## 3. Learning Contract
+## 3. What This Module Covers
 
-| Taught at mapped depth | Depth | What you should be able to do |
+| Topic | Depth | What you should be able to do |
 | --- | --- | --- |
-| 1.1 Requirements and architecture methodology | D3 | Turn user outcomes into boundaries, alternatives, and failure tests |
-| 1.2 Estimation and capacity planning | D3 | Compute demand and identify which limit the units describe |
-| 2.1 Networking fundamentals | D2 | Locate DNS, connection, TLS, and HTTP failures on the path |
-| 2.2 APIs and streaming protocols | D3 | Build/debug a request contract and defend JSON versus streaming |
-| 6.1 Database architecture | D2 | Explain keys, indexes, transactions, and the external-call gap |
-| 7.1 End-to-end AI application design | D3 | Implement the representative auth-to-model-to-history slice |
+| Requirements and architecture methodology | Build depth | Turn user outcomes into boundaries, alternatives, and failure tests |
+| Estimation and capacity planning | Build depth | Compute demand and identify which limit the units describe |
+| Networking fundamentals | Design depth | Locate DNS, connection, TLS, and HTTP failures on the path |
+| APIs and streaming protocols | Build depth | Build/debug a request contract and defend JSON versus streaming |
+| Database architecture | Design depth | Explain keys, indexes, transactions, and the external-call gap |
+| End-to-end AI application design | Build depth | Implement the representative auth-to-model-to-history slice |
 
-Those six rows are the entire first-teaching assignment for Stage 1, not a sample of it. “Taught at mapped depth” describes the authored lesson and exercise coverage; learner mastery still requires the exit gates. No modules are revisited here.
+No modules are revisited here.
 
 Nearby concepts have narrower treatment:
 
-| Module | Treatment here | First-teaching stage and target depth |
+| Module | Treatment here | Where it is taught |
 | --- | --- | --- |
-| 1.3 Design documentation and communication | Context only: use an ADR, without teaching a documentation portfolio | Stage 12, D3 |
-| 2.3 Gateway and service communication | Context only: name an ingress role; do not teach service-to-service architecture | Stage 6, D3 |
-| 13.1 Identity and access control | Context only: trusted caller scope and fixture checks | Stage 6, D3 |
-| 4.3 Background execution systems | Deferred: no durable jobs or worker recovery | Stage 2, D3 |
-| 8.1 Document ingestion and indexing | Deferred: supplied text only, no internal knowledge pipeline | Stage 3, D3 |
+| Design documentation and communication | Context only: use an ADR, without teaching a documentation portfolio | T17.13, build depth |
+| Gateway and service communication | Context only: name an ingress role; do not teach service-to-service architecture | T17.7, build depth |
+| Identity and access control | Context only: trusted caller scope and fixture checks | T17.7, build depth |
+| Background execution systems | Deferred: no durable jobs or worker recovery | T17.3, build depth |
+| Document ingestion and indexing | Deferred: supplied text only, no internal knowledge pipeline | T17.4, build depth |
 
-The other 50 modules keep their own first-teaching stages in the [curriculum map](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/curriculum-map.json). Context-only mentions do not increment completed coverage. [Coverage status](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) separately records authored checks and unassessed learner status.
-
-D3 means explaining, choosing, building a representative slice, observing failure, and mitigating it. D2 requires architectural explanation and a small design exercise. This integrated lesson is estimated at seven to nine study hours; it does not replace learner practice. There are no revisit modules in Stage 1.
+Build depth means explaining, choosing, building a representative slice, observing failure, and mitigating it. Design depth requires architectural explanation and a small design exercise. There are no revisit modules in T17.2.
 
 Before starting, be able to read basic Python, JSON, SQL, and HTTP. Stop at the MVP boundary. Defer retrieval, durable workers, caches, Kubernetes, GPU hosting, and advanced tenant scheduling until a requirement motivates them.
 
@@ -88,4 +86,11 @@ Suppose the server calls the model and immediately sends Alice the text, then tr
 
 Reverse the acknowledgement boundary. First insert a `processing` row and commit it. Then call the provider without an open database write transaction. After generation, update the row to `completed` with its answer and commit. Only then return a successful answer. If the final write fails, return a storage error; the earlier row may remain `processing` and need investigation.
 
-This ordering creates a visible ambiguity: the provider might have generated and charged for an answer that the database never recorded. A database transaction cannot atomically include an independent hosted-model API. Preserve the request ID, avoid automatic retries, and make this gap explicit. Stage 2 can later strengthen job recovery; this lesson does not claim exactly-once model execution.
+This ordering creates a visible ambiguity: the provider might have generated and charged for an answer that the database never recorded. A database transaction cannot atomically include an independent hosted-model API. Preserve the request ID, avoid automatic retries, and make this gap explicit. T17.3 can later strengthen job recovery; this lesson does not claim exactly-once model execution.
+
+## Key Takeaways
+
+- The smallest useful outcome has four properties. A trusted identity identifies Alice, a server submits approved text to a model, the answer is saved before success is reported, and a later read returns only her own request.
+- Commit a `processing` row, call the provider with no database write transaction open, then commit `completed` with the answer. Only then return success, and return a storage error if the final write fails.
+- A database transaction cannot include an independent hosted model. A failed final write can leave an answer the provider generated and charged for but the database never recorded, so keep the request ID and do not retry automatically.
+- The five-second p95 is a proposed SLO for valid authorised requests from server receipt to final response, with timeouts counted as failures. Track rejection rate separately so fast rejections cannot make latency look healthy.

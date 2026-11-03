@@ -42,3 +42,10 @@ A production dispatcher must coordinate fair selection, durable claims, budget g
 **Spoken answer:** “Lease expiry fences our local completion authority but does not establish that the remote model stopped. Releasing every slot immediately can oversubscribe the provider and duplicate work. I preserve the operation and unknown reservation, then reconcile using provider evidence or an explicit policy with a documented uncertainty bound. The conservative local fixture requires that reconciliation; it does not invent an automatic cancellation guarantee.”
 
 **Trade-off:** Safety can temporarily reduce availability. **Changed constraint:** If the provider exposes a reliable terminal-status API, define how job and reservation states converge after a lost response.
+
+## Key Takeaways
+
+- Track offered, admitted, rejected, expired and completed counts per tenant and workload class. A healthy global throughput graph can hide B or C receiving zero timely service.
+- Request counts hide token cost and slot time, so bound request rate, reserved tokens, simultaneous calls, queued work and the deadline separately. Limits need shared authority, or per-replica counters multiply them.
+- Lease expiry fences local completion authority but does not prove the remote model stopped. Keep the unknown reservation and reconcile with provider evidence, because releasing slots early can oversubscribe the provider and duplicate work.
+- Inspect the binding resource before changing weights. More replicas cannot alter a fixed provider quota, and stale permission authority is never a degradation strategy.
