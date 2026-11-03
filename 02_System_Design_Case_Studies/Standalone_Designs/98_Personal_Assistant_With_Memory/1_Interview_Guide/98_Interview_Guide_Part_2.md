@@ -10,7 +10,10 @@ The rule comes as a pair. If a fact can change, its key must be stable. If a fac
 
 **Name what is not persisted.** The source answer keeps raw intermediate tool outputs and one-off task details in short-term or episodic memory only. They are promoted to semantic memory only when the user restates them as a standing preference. "Book me a window seat this time" is an episode. "I always want a window seat" is a fact.
 
-Decide who chooses what to write *(own construction)*. A hard-coded rule is predictable but misses facts it did not anticipate. A model-driven writer, in the style of MemGPT's self-editing memory tools, catches more but can misjudge what is durable. Use a model extractor behind a policy filter. The model proposes; the policy decides which categories may be stored at all. Run the extractor on the write queue, never on the reply path.
+- Decide who chooses what to write *(own construction)*. A hard-coded rule is predictable but misses facts it did not anticipate.
+- A model-driven writer, in the style of MemGPT's self-editing memory tools, catches more but can misjudge what is durable.
+- Use a model extractor behind a policy filter. The model proposes; the policy decides which categories may be stored at all.
+- Run the extractor on the write queue, never on the reply path.
 
 ## 8. Prune Episodes Into a Digest, Not Into Nothing
 
@@ -18,11 +21,18 @@ Cap episodic memory per user, because nothing else will. Every completed task is
 
 The digest keeps the gist of older activity at a fixed size. "Booked four trips to Lisbon this year" survives even after the four booking episodes are pruned *(own construction)*. The pruner runs as a background job on the write path, so pruning never costs a reply any latency.
 
-Session memory needs the same discipline in a different form. A TTL marks entries for expiry, and sliding expiry extends the session on activity. The gotcha is that, in the LangGraph store, expiry is enforced by a sweep, not checked on every read. An expired entry can still be returned until the sweeper runs. That is true of `SqliteStore` and of `PostgresStore` by default; Postgres can set `omit_expired` to hide expired rows on read, and `InMemoryStore` has no TTL at all (checked Sep 2026). Schedule the sweeper, or check the entry's age if a few seconds of staleness matter.
+- Session memory needs the same discipline in a different form. A TTL marks entries for expiry, and sliding expiry extends the session on activity.
+- The gotcha is that, in the LangGraph store, expiry is enforced by a sweep, not checked on every read.
+- An expired entry can still be returned until the sweeper runs.
+- That is true of `SqliteStore` and of `PostgresStore` by default; Postgres can set `omit_expired` to hide expired rows on read, and `InMemoryStore` has no TTL at all (checked Sep 2026).
+- Schedule the sweeper, or check the entry's age if a few seconds of staleness matter.
 
 ## 9. Search With an Index, Not a Scan
 
-Search long-term memory by relevance, because a scan's cost grows with how much has been stored. An unfiltered scan over a namespace is invisible at 5 facts and slow and noisy at 500. The source answer puts an embedding index on the semantic and episodic namespaces. Recall at 1,000+ saved items then becomes a vector query instead of a full scan, which keeps p95 under 300ms as history grows.
+- Search long-term memory by relevance, because a scan's cost grows with how much has been stored.
+- An unfiltered scan over a namespace is invisible at 5 facts and slow and noisy at 500.
+- The source answer puts an embedding index on the semantic and episodic namespaces.
+- Recall at 1,000+ saved items then becomes a vector query instead of a full scan, which keeps p95 under 300ms as history grows.
 
 Many simple memory demos skip this. Their long-term search is an unfiltered scan or a similarity check by the model, with no real embedding index. That is the difference between working with 10 memories and working with 10,000.
 

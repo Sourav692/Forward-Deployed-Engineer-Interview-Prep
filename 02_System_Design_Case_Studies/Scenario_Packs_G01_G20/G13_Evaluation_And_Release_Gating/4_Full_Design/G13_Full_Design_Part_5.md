@@ -18,7 +18,9 @@ The self-drill card turns the same idea into the full answer shape.
 
 The source names the risk alongside the fix: weak eval coverage misses quality regressions, as the sales-copilot incident shows. So cut cost by sampling the easy majority, never by thinning the critical slices. The regulated-claim slice runs in full on every release; the smoke tier samples the rest *(own construction)*.
 
-Two levers connect the cost answer back to the design. The anchor's gap note calls human review almost certainly the most expensive unit cost. Better grader agreement therefore lowers cost per run by shrinking the human-review tail. And the judge cache is safe only on unchanged pairs. It is keyed on prompt version, model version and case, and never replaces a judgement the gate is meant to re-measure.
+- Two levers connect the cost answer back to the design. The anchor's gap note calls human review almost certainly the most expensive unit cost.
+- Better grader agreement therefore lowers cost per run by shrinking the human-review tail.
+- And the judge cache is safe only on unchanged pairs. It is keyed on prompt version, model version and case, and never replaces a judgement the gate is meant to re-measure.
 
 Every strong cost answer runs through four verbs in order. Measure eval spend per release and per tier first. Route cases to a cheap judge and escalate only disagreements. Bound the full suite to the release gate. Cache safely, keyed on every version that could change the verdict.
 

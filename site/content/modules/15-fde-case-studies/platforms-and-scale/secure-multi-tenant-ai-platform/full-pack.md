@@ -2,7 +2,10 @@
 
 *One application serving 500 tenants: shared enough to be affordable, isolated enough that a missing predicate is impossible rather than unlikely.*
 
-The dangerous failure is a query, cache lookup, queue message or export that runs without a tenant predicate and reads whatever matches, which is far worse than a bad answer. This page consolidates the group's prompts into one read for the day before. It holds the chapter 2 worksheet and answer key, the tutorial's high-yield sections, the two cost scenarios and the cross-tenant leak incident. Section 6 of the Enterprise Knowledge Assistant case owns the two-layer enforcement mechanics; this page references them instead of repeating them.
+- The dangerous failure is a query, cache lookup, queue message or export that runs without a tenant predicate and reads whatever matches, which is far worse than a bad answer.
+- This page consolidates the group's prompts into one read for the day before.
+- It holds the chapter 2 worksheet and answer key, the tutorial's high-yield sections, the two cost scenarios and the cross-tenant leak incident.
+- section 6 of the Enterprise Knowledge Assistant case owns the two-layer enforcement mechanics; this page references them instead of repeating them.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -41,7 +44,14 @@ Only about six questions fit a forty-five-minute interview, so ask the ones that
 | Do customers bring their own identity provider and their own keys, and is deletion hard or best-effort? | Federation, key management and the deletion workflow |
 | What is the workload shape, steady, bursty, skewed or mixed, and what noisy-neighbour tolerance is acceptable? | Quotas, admission control, queue isolation, reserved capacity |
 
-Compare three answer tiers. The weak answer uses microservices and Kubernetes, puts a tenant_id column on every row and adds row-level security. It is solution-first, names no customer outcome, and treats one row label as the whole enforcement stack. The average answer builds a shared platform with per-tenant authorisation, quotas, regional routing, audit logging and per-tenant latency monitoring. It never says where tenant context originates, never makes every isolation layer agree, and never defines when a customer graduates to dedicated infrastructure. The strong answer defaults to shared because pooled economics are the point across 500 tenants. It derives tenant context once from verified identity, never from the request body, and makes it immutable. The control plane decides policy, region, quota and key; the data plane enforces at the gateway, the services and every store. Seven layers enforce independently, a missing predicate fails closed, and an adversarial isolation suite gates every external tenant.
+- Compare three answer tiers. The weak answer uses microservices and Kubernetes, puts a tenant_id column on every row and adds row-level security.
+- It is solution-first, names no customer outcome, and treats one row label as the whole enforcement stack.
+- The average answer builds a shared platform with per-tenant authorisation, quotas, regional routing, audit logging and per-tenant latency monitoring.
+- It never says where tenant context originates, never makes every isolation layer agree, and never defines when a customer graduates to dedicated infrastructure.
+- The strong answer defaults to shared because pooled economics are the point across 500 tenants.
+- It derives tenant context once from verified identity, never from the request body, and makes it immutable.
+- The control plane decides policy, region, quota and key; the data plane enforces at the gateway, the services and every store.
+- Seven layers enforce independently, a missing predicate fails closed, and an adversarial isolation suite gates every external tenant.
 
 State assumptions if the interviewer withholds answers, and choose the ones that protect the most dangerous failure. Assume tenants bring their own identity provider. Assume regional restrictions apply to stored data and inference logs. Assume premium customers may pay for dedicated capacity. Assume model selection is already approved. Have the line for interviewer silence ready:
 
@@ -102,9 +112,16 @@ Every requirement then needs the component that enforces it. If a requirement ha
 
 A design that is plausible at average traffic fails exactly when customers feel pain. Size for average, peak, growth and skew, with round numbers whose only job is to force decisions: 500 tenants, 50,000 active users, 200 QPS peak, 20x workload skew.
 
-At 200 QPS across 500 tenants the average tenant looks trivial at 0.4 QPS. With 20x skew a few large tenants drive a material share of peak. So no uniform-tenant assumption is safe for queue sizing, cache partitioning, rate limiting, retry policy or noisy-neighbour protection. The estimate that matters most is usually peak concurrency after retries, fan-out and long-tail latency, rather than raw QPS. A design sized exactly to the naive peak is already broken. Reserve headroom for tenant concentration, retried requests, failover overhead, deploy-time capacity loss and growth before the next tuning cycle.
+- At 200 QPS across 500 tenants the average tenant looks trivial at 0.4 QPS.
+- With 20x skew a few large tenants drive a material share of peak.
+- So no uniform-tenant assumption is safe for queue sizing, cache partitioning, rate limiting, retry policy or noisy-neighbour protection.
+- The estimate that matters most is usually peak concurrency after retries, fan-out and long-tail latency, rather than raw QPS.
+- A design sized exactly to the naive peak is already broken. Reserve headroom for tenant concentration, retried requests, failover overhead, deploy-time capacity loss and growth before the next tuning cycle.
 
-Pair pooled capacity with four per-tenant controls. A token quota caps monthly or hourly usage to protect spend and fairness. A concurrency quota stops one tenant saturating worker pools or model backends. A burst quota allows short spikes without immediate throttling. Reserved capacity protects contractual performance for premium tenants. Name the trade-off: quotas too tight produce artificial customer-visible failures, quotas too loose let one tenant consume the shared budget.
+- Pair pooled capacity with four per-tenant controls. A token quota caps monthly or hourly usage to protect spend and fairness.
+- A concurrency quota stops one tenant saturating worker pools or model backends.
+- A burst quota allows short spikes without immediate throttling. Reserved capacity protects contractual performance for premium tenants.
+- Name the trade-off: quotas too tight produce artificial customer-visible failures, quotas too loose let one tenant consume the shared budget.
 
 Anchor SLOs in the customer workflow rather than in what the platform team prefers to measure:
 
@@ -123,7 +140,9 @@ The unit economics settle the shared-versus-dedicated argument.
 C_tenant = C_fixed / N + C_usage + C_isolation
 ```
 
-The first term is shared platform cost spread across N tenants. The second is the variable cost a tenant directly drives in tokens, storage, retrieval, egress and compute. The third is the premium for stronger separation: dedicated pools, stricter network boundaries, regional duplication, customer-specific encryption, extra compliance controls. Pooled economics win when most tenants can share safely; pay the isolation premium only where the requirement demands it.
+- The first term is shared platform cost spread across N tenants. The second is the variable cost a tenant directly drives in tokens, storage, retrieval, egress and compute.
+- The third is the premium for stronger separation: dedicated pools, stricter network boundaries, regional duplication, customer-specific encryption, extra compliance controls.
+- Pooled economics win when most tenants can share safely; pay the isolation premium only where the requirement demands it.
 
 | Assumption | Current illustrative case | 10x growth case |
 |---|---|---|
@@ -134,6 +153,9 @@ The first term is shared platform cost spread across N tenants. The second is th
 | Shared capacity strategy | pooled plus quotas | pooled plus stricter partitioning |
 | Isolation posture | shared by default, dedicated for exceptions | more dedicated pools, more explicit regional controls |
 
-At 10x the dominant risk changes as well as the numbers. Noisy neighbours, cache churn and operational complexity shift the architecture from one shared tier with guardrails to tiered tenancy with explicit partitioning. Define the per-region recovery objective before the happy path too, since RPO and RTO decide replication, failover routing and queue durability. Define the missing-tenant-predicate drill up front as well: can a request, query, export, cache lookup or admin action cross a tenant boundary if a filter is omitted? A design without that test is incomplete.
+- At 10x the dominant risk changes as well as the numbers. Noisy neighbours, cache churn and operational complexity shift the architecture from one shared tier with guardrails to tiered tenancy with explicit partitioning.
+- Define the per-region recovery objective before the happy path too, since RPO and RTO decide replication, failover routing and queue durability.
+- Define the missing-tenant-predicate drill up front as well: can a request, query, export, cache lookup or admin action cross a tenant boundary if a filter is omitted?
+- A design without that test is incomplete.
 
 > *"I will size for average, peak, and growth; reserve headroom for skew and failover; give each tenant token and concurrency quotas; and tie latency and availability targets to the customer's workflow. I prefer pooled economics for the common case, but I will pay for stronger isolation when the risk, performance, or regional requirement justifies it."*

@@ -4,7 +4,10 @@
 
 ## Why this matters
 
-Principles stay abstract until you watch them repair a real diagram, so that is what this document does. We take a sample design for a travel assistant built from AI agents, list five structural faults a careful review found, and redraw it. Keep the habit of *spotting* those faults; the fixed diagram matters less. Most first-pass multi-agent sketches repeat the same five, including the ones you will draw under time pressure.
+- Principles stay abstract until you watch them repair a real diagram, so that is what this document does.
+- We take a sample design for a travel assistant built from AI agents, list five structural faults a careful review found, and redraw it.
+- Keep the habit of *spotting* those faults; the fixed diagram matters less.
+- Most first-pass multi-agent sketches repeat the same five, including the ones you will draw under time pressure.
 
 The brief: an AI travel assistant serving customers in three regions (AMER, EMEA, APJ), where one specialist agent each handles policy, pricing, search, booking and recommendation.
 
@@ -18,7 +21,10 @@ In the draft, Rate Limiter hung off the load balancer as its own box, side by si
 
 ### 2 · The semantic cache is checked before any agent spawns
 
-The draft put the cache *behind* the five agents, so it was only consulted after they had all run. If a cache exists to cut LLM latency and cost, it must come before the costly work. Now the supervisor looks in the cache before doing anything else. On a hit, the answer goes back and no agent is spawned at all. In 12-part framework terms this is short-circuiting, and the placement decides whether the cache saves money or nothing.
+- The draft put the cache *behind* the five agents, so it was only consulted after they had all run.
+- If a cache exists to cut LLM latency and cost, it must come before the costly work.
+- Now the supervisor looks in the cache before doing anything else. On a hit, the answer goes back and no agent is spawned at all.
+- In 12-part framework terms this is short-circuiting, and the placement decides whether the cache saves money or nothing.
 
 ### 3 · Retrieval is owned by each agent, not a shared stage
 
@@ -26,11 +32,17 @@ A single compulsory retrieval box after all five agents made every agent query t
 
 ### 4 · Tool calling, MCP and external APIs sit alongside the agents
 
-In the draft, all five agents passed in sequence through a shared LLM box, a shared tool-calling box and a shared MCP registry. That reads as though the request gets a single turn in total. Booking calls the Flight and Payment MCP servers *during its own work*; it cannot wait until four other agents finish. The redraw makes the LLM, the MCP registry, the external APIs and the vector DBs a shared backend that each agent calls on demand.
+- In the draft, all five agents passed in sequence through a shared LLM box, a shared tool-calling box and a shared MCP registry.
+- That reads as though the request gets a single turn in total.
+- Booking calls the Flight and Payment MCP servers *during its own work*; it cannot wait until four other agents finish.
+- The redraw makes the LLM, the MCP registry, the external APIs and the vector DBs a shared backend that each agent calls on demand.
 
 ### 5 · A synthesiser agent replaces the missing aggregation step
 
-Nothing in the draft explained how five parallel results became a single reply. The flow carried on as one line, as though merging took care of itself. In the fix, a named Synthesiser Agent gathers the output of each agent that ran and settles any clash between them before the user sees anything. A Policy ruling that overrides a Booking choice is the classic example.
+- Nothing in the draft explained how five parallel results became a single reply.
+- The flow carried on as one line, as though merging took care of itself.
+- In the fix, a named Synthesiser Agent gathers the output of each agent that ran and settles any clash between them before the user sees anything.
+- A Policy ruling that overrides a Booking choice is the classic example.
 
 ## The corrected architecture
 
@@ -65,6 +77,16 @@ flowchart TB
   SYN --> RESP
   RESP -. "write-back" .-> SC
   RESP --> MON[Monitoring & Logging<br/>latency · token usage · per-agent execution traces · cache hit rate · alerts — spans every stage above]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class GW,SC,A4,A5,MCP,SYN cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class RESP,A3,VDB cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class SUP,A2,LLM,MON cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A1,API cbInput
 ```
 
 On a cache hit, the user gets a reply and no agent starts. If it misses, the supervisor spawns only the agents this query calls for, and each one pulls from the shared backend only what its own task needs. The synthesiser merges their results into one answer, which is also saved to the cache.

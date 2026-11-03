@@ -2,7 +2,9 @@
 
 ## Overview
 
-A company runs about 30 AI applications and keeps changing their prompts and models. It needs one shared platform that decides whether each change may pass, block or hold. The hard part is trusting that decision. An aggregate score can hide a failing slice: in the source's incident, a sales copilot passed 96.7% of 120 cases while its six regulated-claim cases passed at 83.3%.
+- A company runs about 30 AI applications and keeps changing their prompts and models.
+- It needs one shared platform that decides whether each change may pass, block or hold.
+- The hard part is trusting that decision. An aggregate score can hide a failing slice: in the source's incident, a sales copilot passed 96.7% of 120 cases while its six regulated-claim cases passed at 83.3%.
 
 The design pins the candidate and the production baseline, runs versioned suites in sandboxed workers, and scores them with deterministic checks and a calibrated LLM grader. A policy engine compares quality, safety, latency and cost separately, and each critical slice must pass on its own. Missing evidence blocks, thin evidence holds, and only an authorised owner can override.
 
@@ -20,6 +22,16 @@ flowchart LR
   D -->|Yes| E[Pass]
   D -->|No| C
   D -->|Unsure| F[Hold for risk owner]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class B,C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class F cbReason
 ```
 
 ## Who it is for

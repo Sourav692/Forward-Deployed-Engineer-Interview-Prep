@@ -124,6 +124,18 @@ flowchart LR
     POLICY -.-> CHECK
     POLICY -.-> VERIFY
     POLICY -.-> GATE
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class SRC,CAL,ID,GEN,PROP,CRM cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class CON,SNAP,ROUTE,PREVIEW cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class REFUSE,DATA,ANSWER cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class CACHE,REP,FETCH,CHECK,VERIFY,APPROVE,GATE,POLICY cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class ESC,DROP cbStop
 ```
 
 ### Step-by-step architecture
@@ -142,13 +154,21 @@ flowchart LR
 
 ## 4. Source authority and permission fidelity
 
-CRM has account and opportunity truth. Record access starts from org-wide defaults and is widened by owner, role hierarchy, territory, and sharing rules; field-level security decides which fields show. Calls/transcripts need participant and consent rules. Mailbox data belongs to the mailbox owner unless delegated. Pricing comes from a versioned deal-desk policy; approved outbound claims from a playbook. Support and warehouse facts can be account- or role-scoped. A structured count over another rep’s territory is a leak just as much as a forbidden document.
+- CRM has account and opportunity truth. Record access starts from org-wide defaults and is widened by owner, role hierarchy, territory, and sharing rules; field-level security decides which fields show.
+- Calls/transcripts need participant and consent rules. Mailbox data belongs to the mailbox owner unless delegated.
+- Pricing comes from a versioned deal-desk policy; approved outbound claims from a playbook.
+- Support and warehouse facts can be account- or role-scoped. A structured count over another rep’s territory is a leak just as much as a forbidden document.
 
-Mirror source ACLs at ingest and compile tenant/territory/role filters into retrieval. Recheck fresh source attributes, sharing, and field masks before serving or generating. A rep moved off a territory at noon must not see a 9 a.m. cached snapshot. Invalidate on role/territory change and key the snapshot by account plus permission signature. Source credentials stay in a vault by reference and never appear in model context or traces.
+- Mirror source ACLs at ingest and compile tenant/territory/role filters into retrieval. Recheck fresh source attributes, sharing, and field masks before serving or generating.
+- A rep moved off a territory at noon must not see a 9 a.m. cached snapshot.
+- Invalidate on role/territory change and key the snapshot by account plus permission signature.
+- Source credentials stay in a vault by reference and never appear in model context or traces.
 
 ## 5. Route questions to the right evidence
 
-Use semantic/hybrid search for “summarise the last three calls,” a fixed structured CRM operation for “how many open opportunities missed the close date?”, and direct ID lookup for a named opportunity. Mixed questions filter CRM records first, then summarise related prose. A vector search cannot compute an authoritative count; a generated database query may invent fields or scan outside the rep’s scope. Use reviewed operations behind the same allowlist as tool calls.
+- Use semantic/hybrid search for “summarise the last three calls,” a fixed structured CRM operation for “how many open opportunities missed the close date?”, and direct ID lookup for a named opportunity.
+- Mixed questions filter CRM records first, then summarise related prose. A vector search cannot compute an authoritative count; a generated database query may invent fields or scan outside the rep’s scope.
+- Use reviewed operations behind the same allowlist as tool calls.
 
 Opportunity risks come from fetched fields: old stage, slipped close date, competitor mention, unanswered follow-up, open escalation, and relevant playbook objection. Cite each. If fields are absent or transcripts stale, say what could not be checked; do not infer what a typical deal “probably” looks like.
 
@@ -169,7 +189,10 @@ A CRM update is a proposal: exact fields previewed → policy check → human ap
 | Prompt injection in transcript/email     | Untrusted data; tools and claim policy are gated outside the model. |
 | Model or vector path down                | Narrow labelled fallback or queue with progress.                      |
 
-At 10× accounts, shard snapshot jobs by territory and isolate connectors by source. If account prep takes 30–45 s, trace steps and tool latency first. Precompute on the calendar event; use deterministic routes, cache the permission-scoped snapshot, parallelise remaining read-only calls, cap steps/top-k, and reserve an agent for ambiguous work. Measure cache hit rate, p95, steps, tool time, and cost per workflow.
+- At 10× accounts, shard snapshot jobs by territory and isolate connectors by source.
+- If account prep takes 30–45 s, trace steps and tool latency first.
+- Precompute on the calendar event; use deterministic routes, cache the permission-scoped snapshot, parallelise remaining read-only calls, cap steps/top-k, and reserve an agent for ambiguous work.
+- Measure cache hit rate, p95, steps, tool time, and cost per workflow.
 
 ## 8. Evaluation, rollout, and regression drill
 
@@ -177,13 +200,20 @@ Gate on zero permission violations and zero critical unsupported external claims
 
 Start with one CRM connector, three reps in distinct territories, historical briefs and SME-approved answers. Add permission red-team and claim-level negative cases, shadow mode, live read-only pilot, then drafts and approved write-back. Keep model versions pinned and canary each route change.
 
-The [source regression, §14](../4_Full_Design/G05_Full_Design.md#14-debug-the-model-regression-incident) shows the risk. A model upgrade had a 96.7% aggregate pass rate over 120 cases, but its six regulated-claim cases passed at only 83.3%; online unsupported claims rose from 1.2% to 8.7%, and the verifier had been changed to warn-only. Contain by rolling back the model route and restoring block mode. Add independent gates for pending certifications, internal-only ROI, and unapproved customer references.
+- The [source regression, §14](../4_Full_Design/G05_Full_Design.md#14-debug-the-model-regression-incident) shows the risk.
+- A model upgrade had a 96.7% aggregate pass rate over 120 cases, but its six regulated-claim cases passed at only 83.3%; online unsupported claims rose from 1.2% to 8.7%, and the verifier had been changed to warn-only.
+- Contain by rolling back the model route and restoring block mode. Add independent gates for pending certifications, internal-only ROI, and unapproved customer references.
 
 ## 9. Interview delivery
 
 Spend the hour on workflow and risk (8 min), sources/permissions (7), architecture (10), CRM and evidence/claim boundaries (15), failure/evaluation/rollout (10), close and follow-ups (10).
 
-> “I’d design around the rep’s pre-meeting workflow. I’d build an account snapshot ahead of time as that rep, keyed by their permission signature, but recheck current territory and field access before serving it. A router chooses the snapshot, reviewed CRM operations, or hybrid search. Every fact and opportunity risk comes from fetched, authorised evidence. External drafts pass a blocking approved-claims check; CRM changes are previewed and approved before an idempotent tool call. I’d start read-only, test cross-territory access and claim-level failures, then expand only when critical slices, adoption, latency, and cost hold.”
+> - I’d design around the rep’s pre-meeting workflow.
+> - I’d build an account snapshot ahead of time as that rep, keyed by their permission signature, but recheck current territory and field access before serving it.
+> - A router chooses the snapshot, reviewed CRM operations, or hybrid search.
+> - Every fact and opportunity risk comes from fetched, authorised evidence.
+> - External drafts pass a blocking approved-claims check; CRM changes are previewed and approved before an idempotent tool call.
+> - I’d start read-only, test cross-territory access and claim-level failures, then expand only when critical slices, adoption, latency, and cost hold.
 
 | Follow-up                            | Short answer                                                                              |
 | ------------------------------------ | ----------------------------------------------------------------------------------------- |

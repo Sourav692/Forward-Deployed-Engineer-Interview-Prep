@@ -2,13 +2,25 @@
 
 ## 8. Route by Region and Keep Policy Central
 
-Regional controls reshape routing, storage, backup and logging, so settle early whether they are hard requirements or customer exceptions. The balanced answer is central policy definition with regional enforcement, unless residency or availability forces local control. A central control plane keeps policy consistent but can become a latency and residency problem; a fully regional one improves locality but multiplies duplication, rollout complexity and policy-drift risk.
+- Regional controls reshape routing, storage, backup and logging, so settle early whether they are hard requirements or customer exceptions.
+- The balanced answer is central policy definition with regional enforcement, unless residency or availability forces local control.
+- A central control plane keeps policy consistent but can become a latency and residency problem; a fully regional one improves locality but multiplies duplication, rollout complexity and policy-drift risk.
 
-The regional scheduler places work in an allowed region and tier as a control-plane decision. The same rule covers artifacts. Logs, backups and inference traces follow the tenant's residency policy, not the platform's convenience. Retention is part of the data model, attached to the tenant record or a versioned policy it references, so no service rediscovers policy from brittle configuration.
+- The regional scheduler places work in an allowed region and tier as a control-plane decision.
+- The same rule covers artifacts. Logs, backups and inference traces follow the tenant's residency policy, not the platform's convenience.
+- Retention is part of the data model, attached to the tenant record or a versioned policy it references, so no service rediscovers policy from brittle configuration.
 
-A control-plane outage is not always a full outage, but it is always serious. Policy distribution, deployment coordination and config updates may be impaired while requests still flow. Monitor control-plane health separately from the data plane and alert when the local authority source stops refreshing. If local auth, cached policy and preloaded keys are sufficient, keep serving verified-safe operations only. Otherwise fail closed for sensitive changes, queue non-critical writes, or reroute. Never silently continue with stale control state for irreversible actions. Recover by restoring the regional controller, reconciling queued changes and confirming sync with the authoritative policy source. Prevent by designing for stale-control tolerance, caching minimum policy state locally, rehearsing regional failover, and keeping distinct emergency access paths.
+- A control-plane outage is not always a full outage, but it is always serious.
+- Policy distribution, deployment coordination and config updates may be impaired while requests still flow.
+- Monitor control-plane health separately from the data plane and alert when the local authority source stops refreshing.
+- If local auth, cached policy and preloaded keys are sufficient, keep serving verified-safe operations only.
+- Otherwise fail closed for sensitive changes, queue non-critical writes, or reroute. Never silently continue with stale control state for irreversible actions.
+- Recover by restoring the regional controller, reconciling queued changes and confirming sync with the authoritative policy source.
+- Prevent by designing for stale-control tolerance, caching minimum policy state locally, rehearsing regional failover, and keeping distinct emergency access paths.
 
-Export and delete across regions deserve their own answer. A tenant inventory and a deletion workflow span every store: relational rows, blobs, logs, embeddings, caches, queues and derived artifacts. Export assembles a complete package with clear ownership and time bounds. Deletion is a coordinated job with verification, retention exceptions and an auditable completion record. Backup deletion semantics follow retention windows and restore controls, not ad hoc surgical erasure.
+- Export and delete across regions deserve their own answer. A tenant inventory and a deletion workflow span every store: relational rows, blobs, logs, embeddings, caches, queues and derived artifacts.
+- Export assembles a complete package with clear ownership and time bounds. Deletion is a coordinated job with verification, retention exceptions and an auditable completion record.
+- Backup deletion semantics follow retention windows and restore controls, not ad hoc surgical erasure.
 
 ## 9. Fail Closed on Security, Degrade on Capacity
 
@@ -24,7 +36,13 @@ Memorise the pattern, not the table. Security defects fail closed. Capacity pres
 | Vector index surfaces a neighbour | Fail closed on the post-retrieval tenant invariant; block the response | Usually a tenant filter missing or wrong at query time (as in section 14), or chunks ingested without a tenant tag |
 | Misrouted regional traffic | Reject at the scheduler; alert; audit the route | A route sending protected data to an unauthorised region is a residency breach |
 
-Each of the first five has a rehearsed drill in the tutorial, and they share a shape: detect, refuse and log, contain, recover, prevent. For the missing predicate, detection is code review plus automated tests plus runtime alerts on any query reaching a repository without tenant scope; it never depends on a customer ticket. Refusal is a security error, never a silently substituted default tenant, with identity, trace, operation and the missing-scope fact logged. Containment blocks the release in pre-production. In production it disables the feature path, rotates credentials and freezes logs and traces. In-flight retries keep failing closed rather than retrying into a different scope. Recovery re-runs affected requests through the corrected path and confirms idempotency keys and replay logs cannot bypass the fixed check. Prevention is a negative test that fails if any unscoped repository method is reachable, plus static query-shape lint, so the unscoped path is hard to call, not only discouraged.
+- Each of the first five has a rehearsed drill in the tutorial, and they share a shape: detect, refuse and log, contain, recover, prevent.
+- For the missing predicate, detection is code review plus automated tests plus runtime alerts on any query reaching a repository without tenant scope; it never depends on a customer ticket.
+- Refusal is a security error, never a silently substituted default tenant, with identity, trace, operation and the missing-scope fact logged.
+- Containment blocks the release in pre-production. In production it disables the feature path, rotates credentials and freezes logs and traces.
+- In-flight retries keep failing closed rather than retrying into a different scope.
+- Recovery re-runs affected requests through the corrected path and confirms idempotency keys and replay logs cannot bypass the fixed check.
+- Prevention is a negative test that fails if any unscoped repository method is reachable, plus static query-shape lint, so the unscoped path is hard to call, not only discouraged.
 
 ```mermaid
 flowchart TD
@@ -34,11 +52,30 @@ flowchart TD
     D --> E["Recover:\nre-run affected requests through\ncorrected path; verify no cross-tenant\nresult was returned; check replay/idempotency safety"]
     E --> F["Prevent:\nnegative test blocks any reachable\nunscoped repository method;\nstatic lint / query-shape checks"]
     style A fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class C cbStop
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,E,F cbPolicy
 ```
 
-Candidates often underrate the cache drill. A cache bug looks harmless in isolation, because the database stays protected, but a shared cache replays the wrong tenant's object if the key misses tenant scope. Detect by instrumenting key components in metrics and traces. Contain by disabling the cache path or namespace, invalidating suspect entries and falling back to the source of truth. Recover by rebuilding from correctly scoped reads and re-checking responses served in the window. Prevent by requiring tenant id in every cache-key helper, centralising key construction, and a negative test asserting a cross-tenant lookup is a miss. If the cache holds auth-sensitive material, treat it as a security incident, not a performance bug.
+- Candidates often underrate the cache drill. A cache bug looks harmless in isolation, because the database stays protected, but a shared cache replays the wrong tenant's object if the key misses tenant scope.
+- Detect by instrumenting key components in metrics and traces. Contain by disabling the cache path or namespace, invalidating suspect entries and falling back to the source of truth.
+- Recover by rebuilding from correctly scoped reads and re-checking responses served in the window.
+- Prevent by requiring tenant id in every cache-key helper, centralising key construction, and a negative test asserting a cross-tenant lookup is a miss.
+- If the cache holds auth-sensitive material, treat it as a security incident, not a performance bug.
 
-Production failure behaviour is the difference between a toy and a system. Timeouts tight enough to avoid pile-ups of stale work. Retries only for transient failures, never for authorisation failures or malformed requests. Idempotency on writes, billing events and workflow triggers. Circuit breakers on dependencies returning repeated failures. Dead-letter queues that hold poison messages for inspection rather than endless reprocessing. Human escalation for policy corruption, suspected isolation failure or ambiguous tenant ownership. The honest system says what it can recover automatically and what needs a human with authority.
+- Production failure behaviour is the difference between a toy and a system.
+- Timeouts tight enough to avoid pile-ups of stale work. Retries only for transient failures, never for authorisation failures or malformed requests.
+- Idempotency on writes, billing events and workflow triggers. Circuit breakers on dependencies returning repeated failures.
+- Dead-letter queues that hold poison messages for inspection rather than endless reprocessing.
+- Human escalation for policy corruption, suspected isolation failure or ambiguous tenant ownership.
+- The honest system says what it can recover automatically and what needs a human with authority.
 
 Say what breaks first at 10x. Noisy-neighbour risk and cache churn become dominant, so pooled-plus-quotas becomes pooled-plus-partitioning, with more dedicated pools and more explicit regional controls.
 
@@ -55,7 +92,8 @@ A suite that tries to break the boundary proves the central promise, and a singl
 | Cost per tenant | Within the band for the tenant class | Above band | Billing mapped to tenant usage | Finance + platform |
 | Regional failover time | Within the agreed RTO | Recovery exceeds target | Game-day and failover drills | SRE |
 
-Keep technical health, model quality, adoption and business outcome as separate metric layers, because once they blur you cannot tell an engineering problem from a product-fit problem or from customer behaviour. Trace a user outcome back to component telemetry in one chain. "Document processing feels slow" becomes request arrival, quota admission, queue depth, inference duration, retrieval latency, cache hit ratio and regional routing.
+- Keep technical health, model quality, adoption and business outcome as separate metric layers, because once they blur you cannot tell an engineering problem from a product-fit problem or from customer behaviour.
+- Trace a user outcome back to component telemetry in one chain. "Document processing feels slow" becomes request arrival, quota admission, queue depth, inference duration, retrieval latency, cache hit ratio and regional routing.
 
 The interview-sized isolation test proves one invariant at the API level, not only in the database. A secret created under one tenant is invisible to another. The other tenant does not even learn that the object exists.
 
@@ -112,7 +150,10 @@ It deliberately omits authentication middleware, request signing, database trans
 
 The operational question is "can we prove the system fails in the right direction, and recover without widening the blast radius?", not "do we have security?" Every external dependency and irreversible action needs an explicit failure and recovery policy. The absence of a policy is itself a policy, and it usually fails open.
 
-The data model carries four ownership boundaries rather than four tables. Tenant(id, region, tier, key_ref, retention_policy) is data ownership. Membership(user_id, tenant_id, role, status) is authority. UsageLedger(tenant_id, period, tokens, requests, cost) is commercial control. AuditEvent(tenant_id, actor, action, resource, decision) is defensibility. Every write boundary needs an idempotency key, which stops duplicate writes from retries, and optimistic concurrency, which stops lost updates from concurrent writers. Model output never flows raw into the system; it is parsed into a typed schema and policy-checked before persistence.
+- The data model carries four ownership boundaries rather than four tables. Tenant(id, region, tier, key_ref, retention_policy) is data ownership.
+- Membership(user_id, tenant_id, role, status) is authority. UsageLedger(tenant_id, period, tokens, requests, cost) is commercial control.
+- AuditEvent(tenant_id, actor, action, resource, decision) is defensibility. Every write boundary needs an idempotency key, which stops duplicate writes from retries, and optimistic concurrency, which stops lost updates from concurrent writers.
+- Model output never flows raw into the system; it is parsed into a typed schema and policy-checked before persistence.
 
 ## 11. Roll Out Internal Tenants First and the Dedicated Tier Last
 
@@ -134,13 +175,32 @@ flowchart LR
     style P2 fill:#f4ead2,stroke:#a06a08
     style P3 fill:#f4ead2,stroke:#a06a08
     style P4 fill:#e4efe9,stroke:#1f6f5c
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class P1 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class P2 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class P3 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class P4 cbPolicy
 ```
 
 In weeks: 0-1 name stakeholders, the dangerous failure and explicit exclusions. 1-2 internal tenants. 2-3 the isolation suite. 3-4 hold promotion until it passes. 5 low-risk shared tenants under conservative quotas. 6-8 validate boundaries, latency and operator understanding. After the pilot, the dedicated tier on measurable thresholds rather than for whoever asks loudest.
 
-Rollout is more than code promotion. A canary takes a tiny slice of low-risk traffic first. Rollback returns to the prior configuration with no data loss and no cross-tenant contamination. Migration moves tenant metadata, quotas and routing with validation at each step. Training makes support and customer-facing teams fluent in the guarantees and non-guarantees. Documentation covers setup, limits, escalation paths and what a quota error means. Ownership is named: platform engineering owns runtime, security owns boundary validation, support owns first-response triage, product owns tiering policy, SRE owns service health and failover rehearsals.
+- Rollout is more than code promotion. A canary takes a tiny slice of low-risk traffic first.
+- Rollback returns to the prior configuration with no data loss and no cross-tenant contamination.
+- Migration moves tenant metadata, quotas and routing with validation at each step.
+- Training makes support and customer-facing teams fluent in the guarantees and non-guarantees.
+- Documentation covers setup, limits, escalation paths and what a quota error means.
+- Ownership is named: platform engineering owns runtime, security owns boundary validation, support owns first-response triage, product owns tiering policy, SRE owns service health and failover rehearsals.
 
-Keep four kinds of thing apart. Anything re-implemented per customer is a sign the platform is turning into a bundle of one-off projects. Configuration is what varies per customer without code: quotas, region preferences, feature flags, retention, routing policy. Adapters absorb external variance: identity providers, storage systems, logging sinks, approval workflows. Shared services are expensive to rebuild and central to reuse: tenant registry, policy enforcement, metering, audit, failover orchestration. Core product defines the platform: isolation, admission, data access boundaries, observability primitives, internal APIs.
+- Keep four kinds of thing apart. Anything re-implemented per customer is a sign the platform is turning into a bundle of one-off projects.
+- Configuration is what varies per customer without code: quotas, region preferences, feature flags, retention, routing policy.
+- Adapters absorb external variance: identity providers, storage systems, logging sinks, approval workflows.
+- Shared services are expensive to rebuild and central to reuse: tenant registry, policy enforcement, metering, audit, failover orchestration.
+- Core product defines the platform: isolation, admission, data access boundaries, observability primitives, internal APIs.
 
 | Risk | Owner | Mitigation | Trigger |
 |---|---|---|---|

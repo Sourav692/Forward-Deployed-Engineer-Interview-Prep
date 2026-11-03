@@ -45,7 +45,17 @@ The forty-five minutes belong to the four constraints, because those are the wor
 
 The two-minute summary to rehearse:
 
-> *"I'd build the gateway with two faces. The edge face screens the customer's input with free regex and PII masking first. It pays for an LLM guard only on what survives, and it validates the agent's output before it reaches the customer. The model face sits under every call the agent makes. It meters each one against a per-request cap and a daily ledger, routes simple turns to a small model, and wraps each provider in retry inside a circuit breaker. It fails over to a warm second provider and degrades to a labelled answer or a human handoff. Priced out, the day costs about $245 against $500, and 96% of that is the complex agent path, so that is where I'd watch. The latency sum fits 3 s on the common path. The agent path needs a first-token SLO, and retries need a deadline, not an attempt count. Every request carries its cost, its model and its guard decisions in one trace. If data can't leave the region, the fallback chain has to stay inside the region too."*
+> - I'd build the gateway with two faces.
+> - The edge face screens the customer's input with free regex and PII masking first.
+> - It pays for an LLM guard only on what survives, and it validates the agent's output before it reaches the customer.
+> - The model face sits under every call the agent makes.
+> - It meters each one against a per-request cap and a daily ledger, routes simple turns to a small model, and wraps each provider in retry inside a circuit breaker.
+> - It fails over to a warm second provider and degrades to a labelled answer or a human handoff.
+> - Priced out, the day costs about $245 against $500, and 96% of that is the complex agent path, so that is where I'd watch.
+> - The latency sum fits 3 s on the common path.
+> - The agent path needs a first-token SLO, and retries need a deadline, not an attempt count.
+> - Every request carries its cost, its model and its guard decisions in one trace.
+> - If data can't leave the region, the fallback chain has to stay inside the region too.
 
 ## 15. Answer the Cost Pivot in Ten Minutes
 
@@ -59,7 +69,9 @@ The pivot after a good design is "the bill is over budget." No worked drill cove
 | Do not | Downgrade every request to the small model, or cache account-specific answers to raise the hit rate |
 | 60-second line | Almost all the money is the complex agent path, so route fewer turns there, cap its steps, and send common intents down a one-call path. Cache only answers the key proves are safe. Prove it with cost per resolved conversation, not cost per request. |
 
-The playbook's own case says the same: "reduce cost **by workflow**, not across the board; protect high-value paths." Every strong cost answer follows four verbs in order. Measure, with spend by route and by prompt version. Route, sending simple turns to the small model and common intents to a workflow. Bound, with step caps, token caps and the pacer. Cache safely, with permission-aware, version-keyed entries only.
+- The playbook's own case says the same: "reduce cost **by workflow**, not across the board; protect high-value paths." Every strong cost answer follows four verbs in order.
+- Measure, with spend by route and by prompt version. Route, sending simple turns to the small model and common intents to a workflow.
+- Bound, with step caps, token caps and the pacer. Cache safely, with permission-aware, version-keyed entries only.
 
 ---
 

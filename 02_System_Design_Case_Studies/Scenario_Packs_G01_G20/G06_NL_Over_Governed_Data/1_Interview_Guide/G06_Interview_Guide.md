@@ -113,6 +113,16 @@ flowchart LR
     end
     EXEC --> AUDIT[(Append-only query run)]
     VERIFY --> AUDIT
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class METRIC,ID,SCHEMA,BLOCK,VERIFY cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class POLICY,USER,AMB,ASK,GATE,AUDIT cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class CATALOG,AST,EXEC,WH,SUM,ANSWER cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class RES,GEN,TABLE cbReason
 ```
 
 ### Step-by-step architecture
@@ -154,17 +164,27 @@ For mixed questions, route each subtask to the right source: semantic search fin
 
 Keep metric resolution, authorisation, validation, and execution synchronous because they determine the one answer. Crawl catalogs, refresh caches, and replay evaluations asynchronously, partitioned by tenant or warehouse so background jobs do not stampede query traffic. Cache only with tenant, permission signature, metric/schema version, and freshness in mind.
 
-Measure first-try semantic correctness, SQL retry rate, warehouse compute per answer (bytes scanned on BigQuery, DBU or credit time on Databricks and Snowflake), token spend, and p95 by stage. The source flags **>20% above the seven-day baseline** as a cost warning. The cheapest levers are narrower metric context, approved templates, dry-run cost checks, bounded windows, and safe caching. Repeatedly asking a stronger model to repair invalid SQL raises both bills and can still answer the wrong question.
+- Measure first-try semantic correctness, SQL retry rate, warehouse compute per answer (bytes scanned on BigQuery, DBU or credit time on Databricks and Snowflake), token spend, and p95 by stage.
+- The source flags **>20% above the seven-day baseline** as a cost warning.
+- The cheapest levers are narrower metric context, approved templates, dry-run cost checks, bounded windows, and safe caching.
+- Repeatedly asking a stronger model to repair invalid SQL raises both bills and can still answer the wrong question.
 
 ## 7. Evaluation and rollout
 
 **Release gate:** semantic correctness against analyst-approved definitions. Query execution success is a separate, weaker measure. Golden cases pair question, approved SQL, and expected result shape; include ambiguity, wrong grain, join fan-out, hidden columns, scan explosions, and a summary that misstates a correct table. Zero escaped policy violations. The copilot variants add groundedness, citation and high-risk escalation review; their source examples cite **≥90% supported claims, ≥95% correct citations, and ≥95% correct high-risk escalation** as goals to agree with the customer.
 
-Roll out in order: ten governed metrics with owners → golden replay on every change → shadow analysts on live questions → small executive release → domain-by-domain expansion with a named metric owner. Stop or roll back on semantic mismatches, escaped policy, rising scan cost, or declining user trust. An answer users still ask analysts to recheck has not solved the workflow.
+- Roll out in order: ten governed metrics with owners → golden replay on every change → shadow analysts on live questions → small executive release → domain-by-domain expansion with a named metric owner.
+- Stop or roll back on semantic mismatches, escaped policy, rising scan cost, or declining user trust.
+- An answer users still ask analysts to recheck has not solved the workflow.
 
 ## 8. Interview answer to rehearse
 
-> “I would first ask who owns the metric definitions, because valid SQL against the wrong meaning of revenue is the worst failure here. I would resolve each question to a versioned governed metric, clarify ambiguity, retrieve only permitted schema, and let the LLM propose SQL from that small context. An AST policy and cost gate rechecks entitlements before a read-only warehouse gateway runs it as the user, under native row and column controls. The answer includes the definition, SQL, lineage, and freshness; any prose is cross-checked against the table. I would prove ten metrics with golden cases and analyst shadowing before executives rely on it. At scale I would trim schema context, use reviewed routes, bound scans, and measure semantic correctness and cost per answer.”
+> - I would first ask who owns the metric definitions, because valid SQL against the wrong meaning of revenue is the worst failure here.
+> - I would resolve each question to a versioned governed metric, clarify ambiguity, retrieve only permitted schema, and let the LLM propose SQL from that small context.
+> - An AST policy and cost gate rechecks entitlements before a read-only warehouse gateway runs it as the user, under native row and column controls.
+> - The answer includes the definition, SQL, lineage, and freshness; any prose is cross-checked against the table.
+> - I would prove ten metrics with golden cases and analyst shadowing before executives rely on it.
+> - At scale I would trim schema context, use reviewed routes, bound scans, and measure semantic correctness and cost per answer.
 
 **Memory line:** “The semantic layer defines the answer; the LLM translates and explains it.”
 

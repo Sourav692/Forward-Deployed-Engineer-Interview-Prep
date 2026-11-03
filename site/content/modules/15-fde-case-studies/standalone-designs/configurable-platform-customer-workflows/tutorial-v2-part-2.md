@@ -123,6 +123,16 @@ flowchart TB
   RUNTIME --> IDP
   RUNTIME --> NOTIFY
   REGISTRY -.-> MIGRATE
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class ADMIN,MIGRATE,UIRENDER,IDP cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class EDITOR,ADAPTERSDK,NOTIFY cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class VALIDATOR,HARNESS,REGISTRY,RUNTIME,SANDBOX,APIS cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class FLAGS cbAction
 ```
 
 - There are two trust boundaries. One lies between content a tenant writes and execution the platform owns. The other lies between platform execution and outside dependencies.
@@ -154,13 +164,27 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-  participant AdminUI as Admin UI
-  participant Validator as Schema/Rule Validator
-  participant Harness as Tenant Test Harness
-  participant Registry as Configuration Registry
-  participant Flags as Feature Flag Service
-  participant Runtime as Workflow Runtime
-  participant Support as Support / Rollback
+  box rgb(219,234,254)
+      participant AdminUI as Admin UI
+  end
+  box rgb(237,233,254)
+      participant Validator as Schema/Rule Validator
+  end
+  box rgb(220,252,231)
+      participant Harness as Tenant Test Harness
+  end
+  box rgb(254,243,199)
+      participant Registry as Configuration Registry
+  end
+  box rgb(219,234,254)
+      participant Flags as Feature Flag Service
+  end
+  box rgb(237,233,254)
+      participant Runtime as Workflow Runtime
+  end
+  box rgb(220,252,231)
+      participant Support as Support / Rollback
+  end
 
   AdminUI->>Validator: config editor: author change against versioned schema
   Validator-->>AdminUI: catches structural errors<br/>may miss semantic cycle unless loop detection enabled
@@ -201,6 +225,16 @@ flowchart TD
   G -->|Yes| H["Promote: becomes active version"]
   G -->|No| I["Rollback: flag moves back to<br/>prior immutable version"]
   style I fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E,I cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,D,H cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class F cbReason
 ```
 
 ### Systems of Record, Caches, Queues, and Backpressure

@@ -2,7 +2,10 @@
 
 *Answer from everything an employee may see and nothing they may not, without the permission check making retrieval too slow to use.*
 
-The hard part of this system is that a Tier-1 agent, a Tier-3 engineer and an account manager must get different correct answers to the same question. Finding the right passage comes second. So the design starts from access control and works on retrieval quality inside it. This page combines the group's prompts into one read for the day before. Every other case in the group is a delta on it.
+- The hard part of this system is that a Tier-1 agent, a Tier-3 engineer and an account manager must get different correct answers to the same question.
+- Finding the right passage comes second. So the design starts from access control and works on retrieval quality inside it.
+- This page combines the group's prompts into one read for the day before.
+- Every other case in the group is a delta on it.
 
 | Case in the group                                                | What it contributes here                                                   |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -25,7 +28,10 @@ Open with the outcome and the risk before any architecture. An assistant that an
 
 For a less technical room, use the technology-agnostic version from the tutorial:
 
-> *"We need an internal knowledge assistant for employees across departments. The assistant should answer questions using approved content from Drive, SharePoint, Slack, wikis, and support tickets, but only from material the requesting user is allowed to see. The success metric is grounded answers with citations, low hallucination risk, and freshness that matches source updates. I'd start by clarifying authority sources, permission inheritance, freshness expectations, and what the business wants to happen when the system is unsure or the sources conflict."*
+> - We need an internal knowledge assistant for employees across departments.
+> - The assistant should answer questions using approved content from Drive, SharePoint, Slack, wikis, and support tickets, but only from material the requesting user is allowed to see.
+> - The success metric is grounded answers with citations, low hallucination risk, and freshness that matches source updates.
+> - I'd start by clarifying authority sources, permission inheritance, freshness expectations, and what the business wants to happen when the system is unsure or the sources conflict.
 
 | Answer  | What it does                                                                                                                               | What it misses                                               |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |

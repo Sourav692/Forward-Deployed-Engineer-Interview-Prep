@@ -6,29 +6,58 @@ The organising rule is a split. The control plane decides what to evaluate, and 
 
 The planes and lanes as one picture *(own construction from the sources' component map)*:
 
+```mermaid
+flowchart TD
+    N0["Release request: candidate and baseline"]
+    N1["Immutable artifact registry"]
+    N2["Dataset store with suites, labels, rubrics, and sensitivity"]
+    N3["Evaluation scheduler with tenant quotas, admission, and backpressure"]
+    N4["Sandboxed runner"]
+    N5["Application, model, retrieval, and tool calls"]
+    N6["Grader: task success, safety, latency, cost"]
+    N7["Validated results warehouse"]
+    N8["Fail-closed release policy: pass, block, or hold"]
+    N9["Human review and adjudication"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N9 --> N8
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N8 cbPolicy
 ```
- ╔════════════════════════ CONTROL PLANE (decides what to evaluate) ════════════════════════╗
- ║                                                                                          ║
- ║  Release request ──► Artifact Registry ──► Dataset Store ──► Evaluation Scheduler         ║
- ║  (candidate +        (immutable prompt,    (suites, labels,   (fan-out, per-tenant        ║
- ║   baseline ref)       model, retrieval,     rubrics, case      quotas, admission control, ║
- ║                       tools, seed, hash)    sensitivity)       backpressure)              ║
- ║                                                                     │                     ║
- ║  Human Review UI ◄──► Release Policy Engine ◄── Results Warehouse   │                     ║
- ║  (adjudication,       (Δ vs thresholds;         (validated runs     │                     ║
- ║   overrides =          pass / block / hold;      only; audit)       │                     ║
- ║   policy input)        fails closed)                 ▲              │                     ║
- ╚══════════════════════════════════════════════════════╪══════════════╪═════════════════════╝
-                                                        │              ▼
- ╔════════════════════ DATA PLANE (executes; untrusted boundary) ═══════════════════════════╗
- ║                                                                                          ║
- ║  Sandboxed Runner ──► app / model / retrieval / tool calls ──► Grader Service ───────────╫──► warehouse
- ║  (timeouts, egress limits,                                     (task success, safety,     ║
- ║   secrets scoping, concurrency caps)                            latency, cost; escalates) ║
- ╚══════════════════════════════════════════════════════════════════════════════════════════╝
-                                                        ▲
- Online Sampling Pipeline (live / shadow traffic, redacted) ── new failure cases ──► Dataset Store
+
+```mermaid
+flowchart TD
+    N0["Redacted live or shadow sampling"]
+    N1["New failure cases"]
+    N2["Dataset store"]
+    N0 --> N1
+    N1 --> N2
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
 ```
+
+- Artifacts include prompts, models, retrieval, tools, seeds, and hashes.
+- Bound runner timeouts, egress, secrets, and concurrency. Human overrides are policy inputs and validated runs remain auditable.
 
 The same flow with the decision branches, from the answer key and the tutorial:
 
@@ -52,6 +81,16 @@ flowchart TB
     RPE -->|"uncertain / insufficient evidence"| HOLD[["Hold for review"]]
     PASS --> OSP["Online Sampling Pipeline"]
     OSP -.->|"production regressions,<br/>redacted"| DS
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class RR,HOLD cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class AR,ES,CALLS,GS,OSP cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class DS,RW,HRUI,PASS cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class RPE,SR,BLOCK cbPolicy
 ```
 
 Read the components in the order a release travels through them. The first four columns are the tutorial's; the failure column is own construction, drawn from the tutorial's failure-policy table.
@@ -68,9 +107,16 @@ Read the components in the order a release travels through them. The first four 
 | Release Policy Engine | Decide pass, block, or hold for review | Policy decision state | Closed: reads only completed, validated records |
 | Online Sampling Pipeline | Sample live or shadow traffic post-release | Monitoring / sampling state | Degrades: dashboards lag, the gate keeps running |
 
-Point at three boundaries while the diagram is up. The registry and dataset store are strongly consistent, so a run always points at fixed inputs. The warehouse can be eventually consistent for analytics, but the final gate reads only completed, validated records. And the runner is the trust boundary: prompts, retrieved documents and uploaded cases are adversarial until proven otherwise.
+- Point at three boundaries while the diagram is up. The registry and dataset store are strongly consistent, so a run always points at fixed inputs.
+- The warehouse can be eventually consistent for analytics, but the final gate reads only completed, validated records.
+- And the runner is the trust boundary: prompts, retrieved documents and uploaded cases are adversarial until proven otherwise.
 
-The happy path runs in ten steps. A release engineer submits an immutable candidate to the registry. The registry pins the exact prompt, model, retrieval, tool, seed and baseline identifiers. The scheduler selects the application's suite, partitions work by tenant and enforces concurrency limits. The runner executes cases in isolation with controlled seeds. The grader scores correctness, safety, latency and cost. The warehouse stores run-level and aggregate results. The policy engine compares candidate metrics and confidence intervals with the pinned baseline. Ambiguous cases route to human review. The decision is issued as pass, block or hold, with reasons attached to the release record.
+- The happy path runs in ten steps. A release engineer submits an immutable candidate to the registry.
+- The registry pins the exact prompt, model, retrieval, tool, seed and baseline identifiers.
+- The scheduler selects the application's suite, partitions work by tenant and enforces concurrency limits.
+- The runner executes cases in isolation with controlled seeds. The grader scores correctness, safety, latency and cost.
+- The warehouse stores run-level and aggregate results. The policy engine compares candidate metrics and confidence intervals with the pinned baseline.
+- Ambiguous cases route to human review. The decision is issued as pass, block or hold, with reasons attached to the release record.
 
 Each step answers a different customer question. The registry answers "what exactly changed?" The suite answers "what did we test?" The runner answers "under what conditions?" The grader answers "how did it perform?" The policy engine answers "can we ship?"
 
@@ -80,9 +126,13 @@ The MVP is the smallest trustworthy path from registration to decision: registry
 
 A score means nothing without the thing it is compared against. The platform does not produce one "good" number; it says whether a candidate is better, worse or indistinguishable from a pinned baseline.
 
-The comparison is **Δ = Metric_candidate − Metric_baseline**. The metric can be quality, safety violation rate, task success, refusal accuracy, latency or cost, depending on the gate. A shift is useful only when the baseline is fixed, versioned and comparable. A two-tenths-of-a-point gain on a noisy rubric may not justify release. Weigh variance, confidence bands and operational risk as well as the sign of the delta.
+- The comparison is **Δ = Metric_candidate − Metric_baseline**. The metric can be quality, safety violation rate, task success, refusal accuracy, latency or cost, depending on the gate.
+- A shift is useful only when the baseline is fixed, versioned and comparable.
+- A two-tenths-of-a-point gain on a noisy rubric may not justify release. Weigh variance, confidence bands and operational risk as well as the sign of the delta.
 
-Say the derivation on the whiteboard in one breath. For each test case, compare candidate output to a pinned baseline output or rubric score. Compute Δ for the metric that matters to the application. Aggregate by application, by release and across the fleet. If the distribution of Δ crosses the allowed regression threshold, the gate fails or routes to human review.
+- Say the derivation on the whiteboard in one breath. For each test case, compare candidate output to a pinned baseline output or rubric score.
+- Compute Δ for the metric that matters to the application. Aggregate by application, by release and across the fleet.
+- If the distribution of Δ crosses the allowed regression threshold, the gate fails or routes to human review.
 
 Four records carry the whole design. Their lifecycles let you reconstruct a decision a year later.
 
@@ -93,9 +143,16 @@ Four records carry the whole design. Their lifecycles let you reconstruct a deci
 | `EvalRun(id, candidate, baseline, status)` | One comparison of a candidate against a baseline under a policy snapshot | Status moves monotonically through submitted, queued, running, completed, failed, blocked |
 | `EvalResult(run_id, case_id, scores, trace_ref)` | One case-level outcome with multidimensional scores and a trace pointer | Written once; changed only by an explicit superseding correction |
 
-Ownership is split on purpose. The evaluation program owns `EvalCase`, the control plane owns `EvalRun`, and the execution path writes `EvalResult` for reviewers and auditors to read. That split keeps the gate from silently rewriting evidence after the fact. The decision record and the redacted score summary also outlive the raw trace. A shorter trace-retention policy therefore never destroys auditability.
+- Ownership is split on purpose. The evaluation program owns `EvalCase`, the control plane owns `EvalRun`, and the execution path writes `EvalResult` for reviewers and auditors to read.
+- That split keeps the gate from silently rewriting evidence after the fact.
+- The decision record and the redacted score summary also outlive the raw trace.
+- A shorter trace-retention policy therefore never destroys auditability.
 
-The API surface stays at four endpoints: `POST /v1/eval-runs`, `GET /v1/eval-runs/{id}`, `POST /v1/reviews` and `POST /v1/release-decisions`. Three ideas do most of the reliability work at that boundary. An idempotency key on every retryable write returns the original `run_123` on a retry instead of creating `run_124`. Explicit contract versions keep a run created under policy `v7` from being read under `v8` semantics. An ETag on reviews and decisions means two actors finalising the same run cannot both win; the second gets a `412 Precondition Failed` and must re-read. An override is always a new superseding record, never an invisible overwrite.
+- The API surface stays at four endpoints: `POST /v1/eval-runs`, `GET /v1/eval-runs/{id}`, `POST /v1/reviews` and `POST /v1/release-decisions`.
+- Three ideas do most of the reliability work at that boundary. An idempotency key on every retryable write returns the original `run_123` on a retry instead of creating `run_124`.
+- Explicit contract versions keep a run created under policy `v7` from being read under `v8` semantics.
+- An ETag on reviews and decisions means two actors finalising the same run cannot both win; the second gets a `412 Precondition Failed` and must re-read.
+- An override is always a new superseding record, never an invisible overwrite.
 
 ## 6. Decide on Four Dimensions and Fail Closed
 
@@ -147,7 +204,9 @@ The named failure is a grader that rewards verbosity over correctness. Long, con
 | Recover | Re-run the affected cases with a pinned prior grader version and a manually sampled audit set |
 | Prevent | Version the grader, store rubric hashes, and require a calibration suite that includes concise-correct and verbose-wrong examples |
 
-Validate a grader against human judgements on a representative sample, not the easy cases. Measure agreement on the cases that drive release decisions, then inspect the disagreements. Some reveal rubric gaps; others expose ambiguity in the task itself. Re-score a held-out set with humans periodically, because a grader drifts after rubric changes or model upgrades even when the platform is stable.
+- Validate a grader against human judgements on a representative sample, not the easy cases.
+- Measure agreement on the cases that drive release decisions, then inspect the disagreements.
+- Some reveal rubric gaps; others expose ambiguity in the task itself. Re-score a held-out set with humans periodically, because a grader drifts after rubric changes or model upgrades even when the platform is stable.
 
 Trust is earned in levels. Early on the grader is advisory: it blocks only low-risk deploys or requires human approval on uncertain cases. As agreement stabilises, high-confidence checks move to automatic gating. The design assumes the grader is imperfect and builds a path to trust.
 

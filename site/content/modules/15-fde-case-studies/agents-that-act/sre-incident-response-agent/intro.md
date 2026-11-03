@@ -2,9 +2,14 @@
 
 ## Overview
 
-An SRE team wants an agent that helps when hundreds of alerts fire after a bad deploy. A wrong rollback at 3 a.m. is worse than a slow summary, so the agent may read anything it is authorised to see and change nothing on its own. The same incident may degrade the observability stack it queries, so it must tell "nothing found" apart from "source unavailable".
+- An SRE team wants an agent that helps when hundreds of alerts fire after a bad deploy.
+- A wrong rollback at 3 a.m. is worse than a slow summary, so the agent may read anything it is authorised to see and change nothing on its own.
+- The same incident may degrade the observability stack it queries, so it must tell "nothing found" apart from "source unavailable".
 
-The design folds the alert storm into one investigation before any model call. Read-only tools query metrics, logs and traces in parallel, and each result carries one state: success, empty, unavailable, denied or invalid. A strong model ranks likely causes with citations and coverage gaps, then proposes a mitigation with its blast radius, runbook and dry run. A human approves it, and one gateway executes it once. The agent runs outside the failure it is investigating.
+- The design folds the alert storm into one investigation before any model call.
+- Read-only tools query metrics, logs and traces in parallel, and each result carries one state: success, empty, unavailable, denied or invalid.
+- A strong model ranks likely causes with citations and coverage gaps, then proposes a mitigation with its blast radius, runbook and dry run.
+- A human approves it, and one gateway executes it once. The agent runs outside the failure it is investigating.
 
 The related variants keep this read-only boundary and shift the weight to requirements, approved mitigation or latency.
 
@@ -20,6 +25,16 @@ flowchart LR
   D --> E{Human approves?}
   E -->|Yes| F[Gateway executes once]
   E -->|No| G[Nothing runs]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,D cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,F,G cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class E cbPolicy
 ```
 
 ## Who it is for

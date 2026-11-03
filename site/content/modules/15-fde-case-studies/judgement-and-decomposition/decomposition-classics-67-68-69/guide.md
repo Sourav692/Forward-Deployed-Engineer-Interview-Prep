@@ -10,7 +10,10 @@ These three prompts have no hidden right architecture. They test whether you pin
 | Bank fraud | "A regional bank wants to unify fraud detection across three legacy systems acquired through M&A. None of the data is labelled consistently. How do you scope the first 90 days?" | Data quality realism, phased scoping, regulatory constraints |
 | Medication errors | "A hospital network wants to reduce medication errors in post-surgery care. They have patient records, pharmacy dispensing logs, and nurse assignment schedules. Where do you start?" | High-stakes HITL design, safety-first decomposition |
 
-The source gives the three prompts, the six-step framework and the Tier 2 probes. It gives no worked answer for any of the three. So every case section is *(own construction)*, built from the framework's arguments, and every number in those sections is an assumption to state aloud, not a sourced fact. Domain facts are general knowledge and are marked where they appear.
+- The source gives the three prompts, the six-step framework and the Tier 2 probes.
+- It gives no worked answer for any of the three.
+- So every case section is *(own construction)*, built from the framework's arguments, and every number in those sections is an assumption to state aloud, not a sourced fact.
+- Domain facts are general knowledge and are marked where they appear.
 
 ---
 
@@ -18,7 +21,9 @@ The source gives the three prompts, the six-step framework and the Tier 2 probes
 
 The decomposition round is 45 to 60 minutes on a vague enterprise problem. The source describes the task as breaking it "into users, data, workflows, constraints, and a prioritised V1 — out loud, collaboratively." There is no correct answer. The interviewer watches how the path gets chosen when none is given.
 
-The source names two failure modes that eliminate many candidates. The first is jumping to architecture before clarifying scope. One OpenAI FDE candidate reported being stopped mid-design and asked, "What questions would you ask the customer before designing anything?" The second is hand-waving evaluation. "How do you know your AI system is actually working well?" is asked on purpose to separate candidates.
+- The source names two failure modes that eliminate many candidates. The first is jumping to architecture before clarifying scope.
+- One OpenAI FDE candidate reported being stopped mid-design and asked, "What questions would you ask the customer before designing anything?" The second is hand-waving evaluation.
+- "How do you know your AI system is actually working well?" is asked on purpose to separate candidates.
 
 The scoring rewards narration. A polished answer delivered in silence scores worse than messy, well-narrated thinking. The source's pattern note: every prompt is business goal first, data second, model last. None of these three prompts asks which model to use.
 
@@ -122,20 +127,35 @@ The model comes last, and it is mostly not machine learning. Travel-time estimat
 
 ### 5.6 Draw the architecture
 
-```
- Call log ──┐                          ┌──────────────────────────┐
- GPS pings ─┼─► Ingest + join on ─────►│ Interval segmentation    │──► Baseline dashboard
- Traffic ───┘   call id / unit / time  │ (answer·triage·dispatch· │     by district × hour
-                                       │  travel)                 │
-                                       └────────────┬─────────────┘
-                                                    ▼
-                               Travel-time model ─► Coverage optimiser
-                                                    │  (per hour: where idle units wait)
-                                                    ▼
-                                  Dispatcher console: recommendation + reason
-                                                    │  accept / override (logged)
-                                                    ▼
-                                  Outcome log ──► equity + tail metrics ──► review
+```mermaid
+flowchart TD
+    N0["Call logs, GPS, and traffic"]
+    N1["Join by call ID, unit, and time"]
+    N2["Segment answer, triage, dispatch, and travel intervals"]
+    N3["Baseline dashboard by district and hour"]
+    N4["Travel-time model"]
+    N5["Hourly idle-unit coverage optimiser"]
+    N6["Dispatcher recommendation and reason"]
+    N7["Accept or override with log"]
+    N8["Outcome log: equity and tail metrics, then review"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N4 --> N5
+    N2 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N4,N5,N6 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 cbPolicy
 ```
 
 ```mermaid
@@ -151,6 +171,16 @@ flowchart LR
   UI -->|accept or override| L[Outcome log]
   L --> M[Tail and equity metrics]
   M --> O
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C,S,UI cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class J,D,TT,L cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class G,M cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class T,O cbPolicy
 ```
 
 | Component | Job | Why it exists |

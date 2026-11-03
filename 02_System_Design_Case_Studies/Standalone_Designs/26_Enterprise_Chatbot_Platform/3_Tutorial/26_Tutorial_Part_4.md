@@ -30,6 +30,14 @@ flowchart LR
     style P2 fill:#f4ead2,stroke:#a06a08
     style P3 fill:#f4ead2,stroke:#a06a08
     style P4 fill:#e4efe9,stroke:#1f6f5c
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class P1 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class P2,P4 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class P3 cbAction
 ```
 
 ### Metrics
@@ -85,7 +93,10 @@ These figures are made up to show the format, not taken from a real deployment.
 
 The format, with invented numbers:
 
-> "We moved AI use off unmanaged consumer tools and onto a platform that classifies each prompt, honours existing permissions on each retrieval and audits each turn. Measured consumer-AI egress fell ~78% over two quarters, with 61% of staff active weekly. Staff report saving ~3 hours a week; we read that as a direction, not a precise figure. It costs ~$22 per active user a month versus a ~$30 vendor seat at list price; two connectors no vendor sells justify the gap."
+> - We moved AI use off unmanaged consumer tools and onto a platform that classifies each prompt, honours existing permissions on each retrieval and audits each turn.
+> - Measured consumer-AI egress fell ~78% over two quarters, with 61% of staff active weekly.
+> - Staff report saving ~3 hours a week; we read that as a direction, not a precise figure.
+> - It costs ~$22 per active user a month versus a ~$30 vendor seat at list price; two connectors no vendor sells justify the gap.
 
 - **Structure:** risk removed first, then adoption, then a frank caveat on the soft figure, then cost and why building paid off.
 - Interviewers notice fast when self-reported time saved gets passed off as hard ROI.
@@ -102,6 +113,14 @@ flowchart LR
     P2 -.-> M2["Governance health<br/>boundary violations · drift · audit completeness"]
     P3 -.-> M3["Business health<br/>egress displaced · cost per active user"]
     P4 -.-> M4["Product health<br/>WAU · regeneration · thumbs-down"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class P1,P3,M1,M2,M3 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class P2,M4 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class P4 cbPolicy
 ```
 
 ---
@@ -125,6 +144,16 @@ flowchart LR
     E --> F["36-43 min\nFailure walkthroughs,\nlead with permission\nlaundromat"]
     F --> G["43-47 min\nDelivery: four phases,\ngates as measurements"]
     G --> H["47-50 min\nSummary: built,\nexcluded, first gate"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,F,H cbPolicy
 ```
 
 | Min | Do |
@@ -179,7 +208,17 @@ flowchart LR
 
 ### 90-second architecture summary (rehearse verbatim)
 
-> "We own a thin orchestration layer on top of someone else's model API. Each turn, SSO signs the user in and we check their right to this exact conversation. We scan and classify the input. We build context from compacted history, permission-filtered retrieval and the assistant definition. We route by classification and provider health. We stream the reply, scanning a sliding window of output as it goes. Every turn closes with citations, usage figures and an audit record, whether it completed, was blocked or failed. Retrieval permissions come from the employee asking, never from whoever built the assistant. Adapters wrap each provider, which turns an outage into a rerouting rather than an incident. For the MVP: chat and a single grounded corpus. It ships without write tools, voice or memory."
+> - We own a thin orchestration layer on top of someone else's model API.
+> - Each turn, SSO signs the user in and we check their right to this exact conversation.
+> - We scan and classify the input.
+> - We build context from compacted history, permission-filtered retrieval and the assistant definition.
+> - We route by classification and provider health.
+> - We stream the reply, scanning a sliding window of output as it goes.
+> - Every turn closes with citations, usage figures and an audit record, whether it completed, was blocked or failed.
+> - Retrieval permissions come from the employee asking, never from whoever built the assistant.
+> - Adapters wrap each provider, which turns an outage into a rerouting rather than an incident.
+> - For the MVP: chat and a single grounded corpus.
+> - It ships without write tools, voice or memory.
 
 ### Worksheet
 

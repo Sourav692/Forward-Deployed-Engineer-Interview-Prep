@@ -34,7 +34,17 @@ The round rewards spending the first third on diagnosis. A candidate who draws t
 
 **The two-minute spoken answer.**
 
-> "I wouldn't start with a model. I'd first find out whether the data can support a measurable improvement in one specific decision. So I'd pick that decision with the customer and spend a week measuring the data it depends on. That means null and placeholder rates, a join test across systems, freshness, and, most important, two experts relabelling the same hundred records so I know whether the historical labels are ground truth or noise. That gives me a scorecard. If the field the decision depends on is red and nothing can route around it, the honest answer is a data project first. Usually something can: extraction from documents doesn't need historical labels, and a review queue turns every correction into a trusted label. So phase one ships extraction with confidence scores and human review. Quality gates at ingestion quarantine bad records rather than defaulting them, and a data contract fixes the worst defects at source. Evaluation starts from a small adjudicated set, reported per segment and split by time. I'd say out loud that a set that small only catches large regressions. Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode."
+> - I'd first find out whether the data can support a measurable improvement in one specific decision.
+> - So I'd pick that decision with the customer and spend a week measuring the data it depends on.
+> - That means null and placeholder rates, a join test across systems, freshness, and, most important, two experts relabelling the same hundred records so I know whether the historical labels are ground truth or noise.
+> - That gives me a scorecard.
+> - If the field the decision depends on is red and nothing can route around it, the honest answer is a data project first.
+> - Usually something can: extraction from documents doesn't need historical labels, and a review queue turns every correction into a trusted label.
+> - So phase one ships extraction with confidence scores and human review.
+> - Quality gates at ingestion quarantine bad records rather than defaulting them, and a data contract fixes the worst defects at source.
+> - Evaluation starts from a small adjudicated set, reported per segment and split by time.
+> - I'd say out loud that a set that small only catches large regressions.
+> - Every phase exits on a measured condition, and the system doesn't decide anything on its own until it has matched the experts in shadow mode.
 
 **Likely follow-ups.** The source gives none for this question, so these are *(own construction)*, each with a one-line answer.
 

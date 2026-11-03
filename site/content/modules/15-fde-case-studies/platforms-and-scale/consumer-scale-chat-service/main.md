@@ -88,6 +88,16 @@ flowchart TB
   G -->|disconnect / stop| X[Cancel model + tools; free KV]
   X --> L
   T[Bounded web / sandbox tools] <--> L
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C,B cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class G,T cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class I,S,Q,L,O cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class M,R,X cbReason
 ```
 
 ### Step-by-step architecture
@@ -112,7 +122,9 @@ flowchart TB
 
 ## Evaluation and rollout
 
-Measure p50/p95 time to first token by tier/region, queue wait, cache-read token share, regenerate and edit-resend rate, abandonment, output tokens after abandon, moderation errors, cost per daily active user and cross-user-read tests. Treat model and system-prompt changes as releases: canary, evaluate quality/safety/latency/cost, and watch cache hit rate. For the Anthropic wording, be ready to zoom into replica capacity, batching and failover from the LLM Inference Serving case.
+- Measure p50/p95 time to first token by tier/region, queue wait, cache-read token share, regenerate and edit-resend rate, abandonment, output tokens after abandon, moderation errors, cost per daily active user and cross-user-read tests.
+- Treat model and system-prompt changes as releases: canary, evaluate quality/safety/latency/cost, and watch cache hit rate.
+- For the Anthropic wording, be ready to zoom into replica capacity, batching and failover from the LLM Inference Serving case.
 
 ## Two-minute interview answer
 

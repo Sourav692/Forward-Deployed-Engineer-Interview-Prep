@@ -20,13 +20,21 @@ Each record needs stable ID, owner, updated time, and ACL metadata; exclude unma
 
 ## 2. Identity and CRM sharing mirror
 
-Validate the customer IdP token’s signature, issuer, audience, and expiry, then map customer groups into local roles. Alert on group-mapping drift; provision a new user only to their own tenant with minimal rights. The CRM mirror carries `owner_id`, `territory_ids`, role visibility, sharing rules, and field masks for sensitive fields such as amount. Compile tenant, territory, and role into the retrieval pre-filter. Recheck live attributes and field masks after retrieval and before generation or serving a snapshot. A count or aggregate containing forbidden rows violates the same zero-leak gate as a document excerpt.
+- Validate the customer IdP token’s signature, issuer, audience, and expiry, then map customer groups into local roles.
+- Alert on group-mapping drift; provision a new user only to their own tenant with minimal rights.
+- The CRM mirror carries `owner_id`, `territory_ids`, role visibility, sharing rules, and field masks for sensitive fields such as amount.
+- Compile tenant, territory, and role into the retrieval pre-filter. Recheck live attributes and field masks after retrieval and before generation or serving a snapshot.
+- A count or aggregate containing forbidden rows violates the same zero-leak gate as a document excerpt.
 
 Connector credentials are vault references, resolved at use time, never written into model prompts or traces. Scope each connection to one customer and use per-tenant encryption boundaries where required. Embeddings and snapshots are derived state and never grant access.
 
 ## 3. Snapshot as a materialized view
 
-Calendar trigger or on-demand job builds summary, open opportunities/stage/next step, recent calls and emails, support escalations, segment objections, and approved claims. Run the job as the rep, key the cache on account plus permission signature, and stamp source/index/policy versions. A manager and rep on the same account may get different snapshots. On role or territory change, invalidate affected snapshots. At serve time, reauthorise with current attributes; if the CRM is down, show a permitted last snapshot with staleness labelling or refuse. Precompute improves p95, but on its own it cannot honour a revocation.
+- Calendar trigger or on-demand job builds summary, open opportunities/stage/next step, recent calls and emails, support escalations, segment objections, and approved claims.
+- Run the job as the rep, key the cache on account plus permission signature, and stamp source/index/policy versions.
+- A manager and rep on the same account may get different snapshots.
+- On role or territory change, invalidate affected snapshots. At serve time, reauthorise with current attributes; if the CRM is down, show a permitted last snapshot with staleness labelling or refuse.
+- Precompute improves p95, but on its own it cannot honour a revocation.
 
 At 10× accounts, shard jobs by territory and make connector schedules independent so one rate-limited source does not block others. Interactive load should scale with snapshot hit rate rather than live CRM fan-out.
 
@@ -71,11 +79,17 @@ Rollout: one CRM connector and territory matrix; historical golden set; offline 
 
 ## 8. Latency pivot
 
-The source drill starts with 30–45 s account prep. The likely driver is serial tool calls and agent steps, not necessarily model inference. Trace the graph, then precompute the account snapshot, route common questions deterministically, parallelise independent read-only calls, cache permission-scoped state, cap steps/top-k/timeouts, and use the agent only for ambiguous next steps. Track agent step count, tool latency, snapshot hit rate, timeout rate, p95, and cost/workflow. A real-time in-call assistant is a distinct G16 problem with stronger precompute/stream/async split.
+- The source drill starts with 30–45 s account prep. The likely driver is serial tool calls and agent steps, not necessarily model inference.
+- Trace the graph, then precompute the account snapshot, route common questions deterministically, parallelise independent read-only calls, cache permission-scoped state, cap steps/top-k/timeouts, and use the agent only for ambiguous next steps.
+- Track agent step count, tool latency, snapshot hit rate, timeout rate, p95, and cost/workflow.
+- A real-time in-call assistant is a distinct G16 problem with stronger precompute/stream/async split.
 
 ## 9. Model regression incident
 
-On the source’s 2026-07-08 scenario, `llm_standard_v2` changed to `llm_premium_v3`. Persuasive drafts began claiming a pending SOC 2 renewal and a 34% support-cost reduction from an internal pilot. Online unsupported-claim rate reached 8.7% versus 1.2% baseline (sample 430, 37 external-policy failures). The offline suite passed 96.7% of 120, but its six regulated-claim cases passed only 83.3% and omitted pending security, internal ROI, and customer-logo permission cases. The verifier had been weakened to warn-only.
+- On the source’s 2026-07-08 scenario, `llm_standard_v2` changed to `llm_premium_v3`. Persuasive drafts began claiming a pending SOC 2 renewal and a 34% support-cost reduction from an internal pilot.
+- Online unsupported-claim rate reached 8.7% versus 1.2% baseline (sample 430, 37 external-policy failures).
+- The offline suite passed 96.7% of 120, but its six regulated-claim cases passed only 83.3% and omitted pending security, internal ROI, and customer-logo permission cases.
+- The verifier had been weakened to warn-only.
 
 **Detect:** compare online failures with offline slices and policy action. **Contain:** roll back model route, restore block mode, flag experiment drafts for review. **Root cause:** stronger extrapolation, weak critical-slice coverage, weakened policy gate. **Prevent:** claim-level labels, independent critical-slice release gates, negative examples that must refuse, online unsupported-claim monitoring, and no warn-only external-claim route. The failure is in evaluation and release control, beyond prose style.
 

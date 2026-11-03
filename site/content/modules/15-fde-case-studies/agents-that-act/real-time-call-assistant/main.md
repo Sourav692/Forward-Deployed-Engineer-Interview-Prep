@@ -104,6 +104,16 @@ flowchart TB
     H -->|approves| G[Idempotent CRM gateway] --> D[(CRM + audit)]
     H -->|corrects| E[(Evaluation cases)]
   end
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C,TS,B cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class S,N,R,P,U,F,E cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,T,K,L,H,G cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class V,Q,M,Z,J,D cbAction
 ```
 
 ### Step-by-step architecture
@@ -124,7 +134,8 @@ flowchart TB
 
 ## Evaluate and roll out
 
-There is no single canonical call summary. Evaluate usefulness with a human rubric, action-item precision and recall, factual consistency against the transcript, required-field coverage, CRM accuracy, rep edit distance and downstream task completion. Slice by call type and language. Invented commitments are especially harmful. For the live lane, track p95 first-bullet time, timeout, snapshot hit rate, rep acceptance, abandonment and cost per call.
+- There is no single canonical call summary. Evaluate usefulness with a human rubric, action-item precision and recall, factual consistency against the transcript, required-field coverage, CRM accuracy, rep edit distance and downstream task completion.
+- Slice by call type and language. Invented commitments are especially harmful. For the live lane, track p95 first-bullet time, timeout, snapshot hit rate, rep acceptance, abandonment and cost per call.
 
 Launch post-call summary for one team and language first, then reviewed CRM proposals, then live suggestions for a small rep cohort. Widen only when redaction, transcript quality, action precision/recall and live latency meet agreed bars per slice. Narrow auto-apply for low-risk fields may be considered only after measured accuracy and explicit authority; day one uses human approval.
 

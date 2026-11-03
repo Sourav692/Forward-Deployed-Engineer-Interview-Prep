@@ -76,6 +76,16 @@ flowchart TB
   L -. heartbeat .-> P
   H[Model registry / rollout / autoscaler] -. config .-> R
   H -.-> S
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C,D cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class G,X,L cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A,R,S,T,K cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class P,H cbReason
 ```
 
 ### Step-by-step architecture
@@ -100,7 +110,10 @@ flowchart TB
 
 ## Variants and evaluation
 
-For the one-GPU variant, a single GPU batcher flushes at 100 requests or after a short wait; each synchronous caller has a request-ID future and timeout, and the queue is bounded. For the 100K-rps variant, price the workload before saying 100K rps: the source's assumed chat shape implies ~21,400 replicas at 70%, while short completions imply ~2,570. Use independent cells and global backpressure so one hot tenant or deploy does not damage the fleet. For the junior-design review, lead with the three highest risks and their fixes.
+- For the one-GPU variant, a single GPU batcher flushes at 100 requests or after a short wait; each synchronous caller has a request-ID future and timeout, and the queue is bounded.
+- For the 100K-rps variant, price the workload before saying 100K rps: the source's assumed chat shape implies ~21,400 replicas at 70%, while short completions imply ~2,570.
+- Use independent cells and global backpressure so one hot tenant or deploy does not damage the fleet.
+- For the junior-design review, lead with the three highest risks and their fixes.
 
 Track p50/p95 TTFT, TPOT, queue wait, service time, prefill/decode throughput, prefix hit rate, KV occupancy/preemptions, cancellation delay, explicit failures and goodput (requests finished within SLO). Load-test actual prompt/output distributions, zone failure, stale capacity heartbeats, long-prefill interference and overload before claiming the illustrative replica count works.
 

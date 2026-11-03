@@ -21,7 +21,10 @@ Say the framing sentence in the first two minutes. It names the test before you 
 
 > *"This isn't really a software architecture question — it's an operating-model question. Anyone can draw a pipeline with seven boxes. The signal is whether each box is a real, enforced gate or just a status someone reports honestly. I designed it so the gates are code, not trust."*
 
-The naive answer is "work faster" or "hire more people", and that is the trap. Two weeks is only possible if most of the work already existed before the customer showed up. If every engagement starts from a blank page, two weeks is not a schedule, it is a wish. So speed has to be a side effect of reuse and hard gates, never a target chased by cutting corners.
+- The naive answer is "work faster" or "hire more people", and that is the trap.
+- Two weeks is only possible if most of the work already existed before the customer showed up.
+- If every engagement starts from a blank page, two weeks is not a schedule, it is a wish.
+- So speed has to be a side effect of reuse and hard gates, never a target chased by cutting corners.
 
 That splits the answer into two questions, and a strong answer spends its time on both:
 
@@ -59,7 +62,9 @@ A two-week clock started against something nobody can measure is worse than no c
 | Tier-1 ticket first-response time drops below 5 minutes for the top 3 ticket categories | Ticket timestamps |
 | Agent-drafted replies are sent with no human edit on at least 60% of eligible tickets by week 4 | Edit history |
 
-Both are measurable from data the customer already has, not "the agent should be helpful". Say that aloud: if a metric cannot be measured this cleanly, intake refuses rather than starting a clock against it. The week-4 target cannot be proved on day 14, so intake also agrees a limited-release acceptance rule for the day-14 gate and names the owner who measures the week-4 target later.
+- Both are measurable from data the customer already has, not "the agent should be helpful".
+- Say that aloud: if a metric cannot be measured this cleanly, intake refuses rather than starting a clock against it.
+- The week-4 target cannot be proved on day 14, so intake also agrees a limited-release acceptance rule for the day-14 gate and names the owner who measures the week-4 target later.
 
 **Functional requirements of the delivery framework.** Most are the source's; the MoSCoW split is *(own construction)*.
 
@@ -106,57 +111,137 @@ Engagement · Stage · Gate · Principal (role) · Artifact · AcceleratorAsset 
 
 Narrate one engagement end to end before drawing:
 
-> *"A scoping request comes in. Intake checks it's actually measurable, has an SME assigned and names its data sources, or refuses it outright. Accepted, it enters day 1 at the Scoping stage. Each of the next six stages is blocked behind a named gate, signed off only by the role authorised for that gate — the FDA cannot sign the security gate, no matter how senior. Every stage pulls what it needs from a reusable accelerator library before building anything custom. On day 14, if the agreed limited-release acceptance rule was actually met, the sponsor signs the go/no-go gate and the engagement deploys with a runbook and dashboards handed over, while a named owner measures the week-4 target later."*
+> - A scoping request comes in.
+> - Intake checks it's actually measurable, has an SME assigned and names its data sources, or refuses it outright.
+> - Accepted, it enters day 1 at the Scoping stage.
+> - Each of the next six stages is blocked behind a named gate, signed off only by the role authorised for that gate — the FDA cannot sign the security gate, no matter how senior.
+> - Every stage pulls what it needs from a reusable accelerator library before building anything custom.
+> - On day 14, if the agreed limited-release acceptance rule was actually met, the sponsor signs the go/no-go gate and the engagement deploys with a runbook and dashboards handed over, while a named owner measures the week-4 target later.
 
 The source's pipeline, kept verbatim. Label every gate with who signs it.
 
-```
- SCOPING ──> gate:security_review_passed ──> DATA READY ──> gate:data_access_granted ──> CONFIGURE
-  (1-2)         (security reviewer)     (3-4)           (customer SME)      (5-7)
-                                            |
-                                   day 3, still pending?
-                                   AUTO-ESCALATE
-                                            v
-      gate:golden_set_signed_off ──> EVALUATE ──> gate:eval_baseline_met ──> SHADOW
-       (customer SME)       (8-9)          (FDA)              (10-11)
-                                                                   |
-      gate:rollback_tested ──> LIMITED PROD ──> gate:success_metrics_met ──> GO/NO-GO
-             (FDA)                (12-13)            (sponsor)              (14)
-                                                                                |
-                                                                          DEPLOYED
+```mermaid
+flowchart TD
+    N0["Scoping: days 1–2"]
+    N1["Security reviewer passes security_review_passed"]
+    N2["Data ready: days 3–4"]
+    N3["Customer SME grants data_access_granted"]
+    N4["Configure: days 5–7"]
+    N5["Customer SME signs golden_set_signed_off"]
+    N6["Evaluate: days 8–9"]
+    N7["FDA confirms eval_baseline_met"]
+    N8["Shadow: days 10–11"]
+    N9["FDA confirms rollback_tested"]
+    N10["Limited production: days 12–13"]
+    N11["Sponsor confirms success_metrics_met"]
+    N12["Go or no-go: day 14"]
+    N13["Deployed"]
+    N14["Day 3 access still pending: auto-escalate"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    N10 --> N11
+    N11 --> N12
+    N12 --> N13
+    N2 --> N14
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8,N12 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N6,N9,N13 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N10,N14 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N11 cbPolicy
 ```
 
 Both layers on one board, with the agent inside the pipeline *(own construction)*:
 
+```mermaid
+flowchart TD
+    N0["Scoping request"]
+    N1["Intake check"]
+    N2["Fail: refused with no engagement or clock"]
+    N3["Pass: engagement state"]
+    N4["7-stage machine and 6 role-gated sign-offs"]
+    N5["Deployed"]
+    N6["Engagement state"]
+    N7["Accelerator library: connectors, prompts, evaluation, policies, dashboards"]
+    N8["Day 3 data-access check: escalate once if pending"]
+    N9["Replayable event log of allowed and denied attempts"]
+    N10["Metrics: time-to-value, eval, override, week-4 retention, reuse"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    N3 --> N4
+    N4 --> N5
+    N6 --> N7
+    N6 --> N8
+    N6 --> N9
+    N6 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N3,N7,N8 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N2,N9 cbStop
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6,N10 cbAction
 ```
- ╔══════════════════ DELIVERY CONTROL PLANE (the framework) ═══════════════════════╗
- ║ scoping request ─> INTAKE ──fails──> REFUSED (no engagement, no clock)          ║
- ║                      │ passes                                                   ║
- ║                      v                                                          ║
- ║ ENGAGEMENT state ─> 7-stage state machine ─> 6 role-gated sign-offs ─> DEPLOYED ║
- ║   │   stage, day, gates, artifacts, pulls, escalations                          ║
- ║   ├─> ACCELERATOR LIBRARY: connectors · prompt templates · eval harness ·       ║
- ║   │     guardrail policies · dashboards   (pull, or build custom + log)         ║
- ║   ├─> ESCALATION CHECK: data access pending on day 3 -> raise once              ║
- ║   ├─> EVENT LOG: every attempt, allowed or denied, replayable                   ║
- ║   └─> METRICS: time-to-value · eval score · override rate · week-4 retention ·  ║
- ║         reuse rate                                                              ║
- ╚══════════════════════════════════╤═════════════════════════════════════════════╝
-                                    │ configures and gates
- ╔══════════════════ THE DELIVERED AGENT (Northwind tier-1 triage) ════════════════╗
- ║ Zendesk ticket ─> webhook ─> PII redaction ─> classify (top 3 categories?)       ║
- ║                                                │ no -> route to human queue      ║
- ║                                                v yes                            ║
- ║   retrieve: Confluence KB (read-only) + Salesforce account (read-only)          ║
- ║                                                v                                ║
- ║   draft reply (support_triage_prompt) ─> groundedness check ─> escalation policy ║
- ║                                                v                                ║
- ║   SHADOW (days 10-11): store draft, human writes own reply, compare             ║
- ║   LIMITED PROD (12-13): human approves or edits, then send; rollback tested      ║
- ║                                                v                                ║
- ║   telemetry: first-response time · zero-edit sends · override rate · cost       ║
- ╚═════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Northwind Zendesk ticket"]
+    N1["Webhook"]
+    N2["PII redaction"]
+    N3["Top 3 supported categories?"]
+    N4["No: human queue"]
+    N5["Yes: read-only Confluence and Salesforce retrieval"]
+    N6["Draft support reply"]
+    N7["Groundedness check"]
+    N8["Escalation policy"]
+    N9["Scoped rollout"]
+    N10["Shadow days 10–11: store draft, compare human reply"]
+    N11["Limited production days 12–13: human approves or edits, then send"]
+    N12["Telemetry: first response, zero-edit sends, overrides, cost"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N3 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    N9 --> N11
+    N11 --> N12
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N12 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N4,N6,N10 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N8,N11 cbPolicy
 ```
+
+- The delivery framework configures and gates the delivered agent. Pull a library asset when available; otherwise build and log the custom asset.
+- Store stage, day, gates, artifacts, asset pulls, and escalations. Test rollback before limited production.
 
 The delivery pipeline for viewers that render Mermaid, compressed from the source's state machine:
 
@@ -179,6 +264,18 @@ flowchart LR
     S6 --> G6{success_metrics_met<br/>sponsor}
     G6 --> S7[7 Go/no-go<br/>day 14] --> DEP([Deployed + runbook])
     LIB[(Accelerator library)] -.pull or build.-> S1 & S3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class REQ,G1,S3,S5,S7 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class IN,S2,G3,S4,G5,DEP cbReason
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class REF cbStop
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class S1,G2,G4,G6 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class ESC,S6,LIB cbAction
 ```
 
 The delivered agent *(own construction)*:
@@ -201,6 +298,16 @@ flowchart LR
     MODE -- limited prod --> APP[Human approves or edits] --> SEND[Send via Zendesk]
     SEND --> TEL[Telemetry: first response, zero-edit, overrides, cost]
     CMP --> TEL
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class ZD,RET,GR cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class RED,EP,APP cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class CLS,HQ,SF,MODE,CMP,TEL cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class CF,DR,SEND cbReason
 ```
 
 Read the components in dependency order. The pipeline rows are the source's; the agent rows and the failure column are own construction.
@@ -223,4 +330,5 @@ Read the components in dependency order. The pipeline rows are the source's; the
 | Human approval step | The override signal in shadow and limited production | Trust is assumed rather than earned |
 | Handover bundle | Runbook, dashboards, named owner | Day 15 has nobody to call |
 
-Point at two lines while the diagram is up. "This is deliberately the same decision shape as the RAG project's ABAC engine: a named rule, a role check, deny overrides, and an explicit reason." And "there is no code path that jumps a stage, the same way the RAG project has no code path that queries the vector store without the ACL filter."
+- Point at two lines while the diagram is up.
+- "This is deliberately the same decision shape as the RAG project's ABAC engine: a named rule, a role check, deny overrides, and an explicit reason." And "there is no code path that jumps a stage, the same way the RAG project has no code path that queries the vector store without the ACL filter."

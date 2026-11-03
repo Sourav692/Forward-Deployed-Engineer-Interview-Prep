@@ -2,9 +2,14 @@
 
 ## Overview
 
-A consumer product wants a research agent that takes a question, searches the public web and the user's own documents, and returns a cited brief. The case assumes about 100,000 daily users and 40,000 research runs a day, with a p95 under 90 seconds, a first signal under 3 seconds and a cost of about $0.20 a run. The hard constraint is honesty under failure. When a source times out or the evidence is thin, the answer must say so, and private documents must never leak through the web branch or the rendered answer.
+- A consumer product wants a research agent that takes a question, searches the public web and the user's own documents, and returns a cited brief.
+- The case assumes about 100,000 daily users and 40,000 research runs a day, with a p95 under 90 seconds, a first signal under 3 seconds and a cost of about $0.20 a run.
+- The hard constraint is honesty under failure. When a source times out or the evidence is thin, the answer must say so, and private documents must never leak through the web branch or the rendered answer.
 
-The design is a bounded, read-only multi-agent workflow. A planner splits the question; public-web workers and a separate user-scoped document worker search in parallel, and the web worker never holds private-document credentials. Findings go into a typed evidence ledger with an append reducer, and a coverage check can trigger a capped replan. A stronger model writes only from the ledger, a verifier checks every citation, and an egress sanitizer strips images and unapproved links. Hop, time and spend caps stop the loop, and a failed branch becomes a named gap.
+- The design is a bounded, read-only multi-agent workflow. A planner splits the question; public-web workers and a separate user-scoped document worker search in parallel, and the web worker never holds private-document credentials.
+- Findings go into a typed evidence ledger with an append reducer, and a coverage check can trigger a capped replan.
+- A stronger model writes only from the ledger, a verifier checks every citation, and an egress sanitizer strips images and unapproved links.
+- Hop, time and spend caps stop the loop, and a failed branch becomes a named gap.
 
 ## The core idea
 
@@ -17,6 +22,14 @@ flowchart LR
   C --> D{Enough coverage?}
   D -->|No| A
   D -->|Yes| E[Cited answer with gaps]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,E cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ## Who it is for

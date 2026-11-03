@@ -171,6 +171,18 @@ flowchart TB
 
     style DENY fill:#a63d40,stroke:#5c1f22,color:#fff
     style DEG fill:#c77b30,stroke:#7a4a18,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class U,ASM cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class GW,RET,ROUTE,ADP,EXT,DEG cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class CONV,POL,CONN,AREG,USE cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class RELAY,STORE,AUD cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class DENY cbStop
 ```
 
 - **Overlay 1:** a restricted class is blocked or rerouted, and the block is audited. "We stopped it" counts as evidence only once it is recorded.
@@ -181,15 +193,33 @@ flowchart TB
 
 ```mermaid
 sequenceDiagram
-    participant U as Employee
-    participant GW as Gateway / Session
-    participant CS as Conversation Service
-    participant P as Policy & DLP
-    participant A as Context Assembler
-    participant R as Retrieval + Connectors
-    participant MR as Model Router
-    participant PA as Provider Adapter
-    participant ST as Store / Audit / Usage
+    box rgb(219,234,254)
+        participant U as Employee
+    end
+    box rgb(237,233,254)
+        participant GW as Gateway / Session
+    end
+    box rgb(220,252,231)
+        participant CS as Conversation Service
+    end
+    box rgb(254,243,199)
+        participant P as Policy & DLP
+    end
+    box rgb(219,234,254)
+        participant A as Context Assembler
+    end
+    box rgb(237,233,254)
+        participant R as Retrieval + Connectors
+    end
+    box rgb(220,252,231)
+        participant MR as Model Router
+    end
+    box rgb(254,243,199)
+        participant PA as Provider Adapter
+    end
+    box rgb(219,234,254)
+        participant ST as Store / Audit / Usage
+    end
 
     U->>GW: POST /messages (SSO token, conversation id)
     GW->>CS: Validated principal + request

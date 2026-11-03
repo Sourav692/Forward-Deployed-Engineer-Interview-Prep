@@ -16,7 +16,9 @@ Plan with measured distributions: p50/p95 record tokens, model latency, batch ef
 
 ## 3. State and replay
 
-The immutable snapshot prevents input drift during a long run. Partition IDs are deterministic and bounded; queue messages contain identifiers, while workers fetch scoped records. A lease expiration makes crashed work visible again. The result sink's unique key `(job_id, record_id, model_version)` turns reprocessing into an upsert rather than a duplicate. Commit output before checkpoint, checkpoint before queue ack. A crash at any point can replay work safely; it may still pay for another model call, so track replay cost.
+- The immutable snapshot prevents input drift during a long run. Partition IDs are deterministic and bounded; queue messages contain identifiers, while workers fetch scoped records.
+- A lease expiration makes crashed work visible again. The result sink's unique key `(job_id, record_id, model_version)` turns reprocessing into an upsert rather than a duplicate.
+- Commit output before checkpoint, checkpoint before queue ack. A crash at any point can replay work safely; it may still pay for another model call, so track replay cost.
 
 Transient errors include throttling, network failure and temporary sink outage. Use backoff, jitter and capped retries. Validation failures or invalid source records should be quarantined with reason and lineage. Reconciliation compares manifest count, successful unique results and quarantined records. Publish only when those counts and the stored policy agree.
 
@@ -24,7 +26,11 @@ Transient errors include throttling, network failure and temporary sink outage. 
 
 Keep input and output encrypted, isolate tenants, scope snapshots and credentials, and avoid full customer payloads in queue messages or logs. Record operator actions and model version changes. A per-tenant rate coordinator prevents one customer from starving others; global controls protect provider quota. Circuit breaking stops repeated failing calls while retaining durable pending work.
 
-At 4 a.m. with 45% complete, calculate the throughput still required, then identify the limiting stage. Add workers only if provider and sink capacity permit. Splitting a straggler partition must preserve deterministic IDs. A fallback model changes output semantics, so it must be approved and versioned. If success is impossible, preserve the state, stop leasing and communicate the exact incomplete count. Whether partial output may publish is a business rule, set before the run.
+- At 4 a.m. with 45% complete, calculate the throughput still required, then identify the limiting stage.
+- Add workers only if provider and sink capacity permit. Splitting a straggler partition must preserve deterministic IDs.
+- A fallback model changes output semantics, so it must be approved and versioned.
+- If success is impossible, preserve the state, stop leasing and communicate the exact incomplete count.
+- Whether partial output may publish is a business rule, set before the run.
 
 ## 5. Variants and trade-offs
 
@@ -34,4 +40,6 @@ For nightly PDF summarisation, deduplicate by content hash and process only chan
 
 ## 6. Evidence to collect
 
-Track throughput, tokens/s, provider throttles, lease retries, oldest queued partition, predicted completion time, unique committed records, quarantine reasons, sink p95, cost per million and replay spend. Begin rollout on a representative token distribution, then 1%, 10% and higher load. Inject worker crash after write, provider quota exhaustion, and sink outage. Show restart and reconciliation under those failures; a clean demo run does not prove recovery.
+- Track throughput, tokens/s, provider throttles, lease retries, oldest queued partition, predicted completion time, unique committed records, quarantine reasons, sink p95, cost per million and replay spend.
+- Begin rollout on a representative token distribution, then 1%, 10% and higher load.
+- Inject worker crash after write, provider quota exhaustion, and sink outage. Show restart and reconciliation under those failures; a clean demo run does not prove recovery.

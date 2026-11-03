@@ -109,6 +109,18 @@ flowchart LR
         HUMAN --> AUDIT[(Evidence, versions, decision audit)]
         ESC --> AUDIT
     end
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class DOC,HOLD,RR,CITE cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class PARSE,EVID,EX,STRUCT,VERIFY cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class RULE,QA,IDX,AUTH,CMP,HUMAN cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class USER,RISK,LLM,AUDIT cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class ESC cbStop
 ```
 
 ### Step-by-step architecture
@@ -151,14 +163,24 @@ Bulk surveillance is a screening funnel: rules and small classifiers process all
 
 ## 6. Evaluation and rollout
 
-Use separate datasets and gates for extraction fields, answer groundedness, citation span accuracy, high-risk escalation, and PHI/permission safety. The source gives example targets of ≥90% grounded claims, ≥95% correct span citations, ≥95% high-risk escalation, ≥80% task completion, and zero permission/PHI violations; agree final thresholds per workflow. Track reviewer overrides, false-positive burden, preparation time, first-pass approval/denial, p95, and cost per true issue found.
+- Use separate datasets and gates for extraction fields, answer groundedness, citation span accuracy, high-risk escalation, and PHI/permission safety.
+- The source gives example targets of ≥90% grounded claims, ≥95% correct span citations, ≥95% high-risk escalation, ≥80% task completion, and zero permission/PHI violations; agree final thresholds per workflow.
+- Track reviewer overrides, false-positive burden, preparation time, first-pass approval/denial, p95, and cost per true issue found.
 
-The two source incidents show why gates are separate. In the legal citation incident, the answer was supported but cited the wrong clause; grounding scored 0.91 while citation accuracy was 0.38. In the parser incident, the parser detected 17 tables but extracted only 9 (52.9% coverage), so pages 31–33 and the approval matrix never reached the index. Retrieval tuning fixes neither missing input nor a verifier that ignores span mismatch.
+- The two source incidents show why gates are separate. In the legal citation incident, the answer was supported but cited the wrong clause; grounding scored 0.91 while citation accuracy was 0.38.
+- In the parser incident, the parser detected 17 tables but extracted only 9 (52.9% coverage), so pages 31–33 and the approval matrix never reached the index.
+- Retrieval tuning fixes neither missing input nor a verifier that ignores span mismatch.
 
 Roll out one document type and rule source → offline golden cases → red-team and shadow mode → read-only reviewer pilot → one low-risk category with approved drafting. Expand only while extraction, citation, escalation, and privacy gates hold. Reviewer corrections feed a governed evaluation set, not silent training.
 
 ## 7. Interview answer to rehearse
 
-> “I would first clarify which decision the reviewer makes and what the assistant must never decide. I would ingest the right rule version and case evidence under patient or matter permissions, with a parser gate for critical tables. A small model extracts typed fields and spans, deterministic checks compare them to criteria and flag gaps, and a strong LLM drafts only flagged cases. Every claim cites the exact span used; a separate verifier blocks a mismatched or forbidden citation. A named human approves material cases, and versioned evidence and edits go into the audit. I would launch on one document type, shadow real reviewers, and gate on extraction, citation, escalation, and zero privacy violations. Cost is controlled by cheap screening and strong-model routing, not by skipping review.”
+> - I would first clarify which decision the reviewer makes and what the assistant must never decide.
+> - I would ingest the right rule version and case evidence under patient or matter permissions, with a parser gate for critical tables.
+> - A small model extracts typed fields and spans, deterministic checks compare them to criteria and flag gaps, and a strong LLM drafts only flagged cases.
+> - Every claim cites the exact span used; a separate verifier blocks a mismatched or forbidden citation.
+> - A named human approves material cases, and versioned evidence and edits go into the audit.
+> - I would launch on one document type, shadow real reviewers, and gate on extraction, citation, escalation, and zero privacy violations.
+> - Cost is controlled by cheap screening and strong-model routing, not by skipping review.
 
 Use the [Deep Dive](../2_Technical_Deep_Dive/G08_Technical_Deep_Dive.md) for incident and schema details and the [Cheat Sheet](../3_Quick_Review/G08_Quick_Review.md) for recall.

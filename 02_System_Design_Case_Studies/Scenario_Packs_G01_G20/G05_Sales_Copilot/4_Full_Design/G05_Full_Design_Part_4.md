@@ -21,7 +21,9 @@ The sixty-second line:
 
 The snapshot lane in section 5 is that graph's first node, so the design already holds the drill answer.
 
-Build every strong cost answer from four verbs, in order. Measure, by tracing and attributing first. Route, matching model and path to risk. Bound, with limits on steps, tokens, top-k, timeouts and budgets. Cache safely, with tenant, permission and version in the key. Deliver it in six moves: frame the business impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence.
+- Build every strong cost answer from four verbs, in order. Measure, by tracing and attributing first.
+- Route, matching model and path to risk. Bound, with limits on steps, tokens, top-k, timeouts and budgets.
+- Cache safely, with tenant, permission and version in the key. Deliver it in six moves: frame the business impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence.
 
 The sibling drill is a real-time sales assistant with a sub-3-second target during calls. It is a different system and lives in G16. Its answer is to precompute before the call, stream small suggestions during, and enrich asynchronously after.
 
@@ -29,7 +31,10 @@ The sibling drill is a real-time sales assistant with a sub-3-second target duri
 
 The sheet maps this incident to G13, evaluation and release gating, because that is the lesson. It is walked here because the system is a sales copilot drafting outreach emails from CRM notes, product documentation and approved messaging. It is the failure the claim verifier in section 8 exists to prevent.
 
-Detect. The company moved sales email drafting from `llm_standard_v2` to `llm_premium_v3` on 2026-07-08 at 09:00 after an offline eval showed better fluency and personalisation. Sales leaders then saw persuasive drafts claiming "SOC 2 Type II renewal completed in June 2026" and "average 34% support cost reduction". The SOC 2 claim was not yet approved for external use, and the ROI number came from an internal pilot. Offline evals had passed.
+- Detect. The company moved sales email drafting from `llm_standard_v2` to `llm_premium_v3` on 2026-07-08 at 09:00 after an offline eval showed better fluency and personalisation.
+- Sales leaders then saw persuasive drafts claiming "SOC 2 Type II renewal completed in June 2026" and "average 34% support cost reduction".
+- The SOC 2 claim was not yet approved for external use, and the ROI number came from an internal pilot.
+- Offline evals had passed.
 
 ```text
 2026-07-08T12:16:44.921Z level=warn service=online-eval-monitor
@@ -53,7 +58,10 @@ Detect. The company moved sales email drafting from `llm_standard_v2` to `llm_pr
 
 Contain. Roll back to `llm_standard_v2`. Restore block mode for external claims. Add review banners to every draft from the experiment.
 
-Root cause. The eval suite over-measured writing quality and under-measured unsupported business claims. It had 120 cases and only 6 about regulated claims, and lacked cases for pending security certifications, internal-only ROI numbers and unapproved customer references. The model upgrade increased persuasive extrapolation. The policy evaluator had been switched from block to warn-only during the experiment to reduce false positives, so the risky drafts went through. Three changes lined up: a stronger model, a weaker gate, and a suite blind to the slice that mattered.
+- Root cause. The eval suite over-measured writing quality and under-measured unsupported business claims.
+- It had 120 cases and only 6 about regulated claims, and lacked cases for pending security certifications, internal-only ROI numbers and unapproved customer references.
+- The model upgrade increased persuasive extrapolation. The policy evaluator had been switched from block to warn-only during the experiment to reduce false positives, so the risky drafts went through.
+- Three changes lined up: a stronger model, a weaker gate, and a suite blind to the slice that mattered.
 
 Prevent. Build a claim-level eval suite with labelled approval status. Add slice-based release gates and require zero critical failures on regulated claims. Monitor the unsupported-claim rate online against baseline. Add negative examples where the model must refuse to use internal-only claims. Never run a policy evaluator in warn-only mode for external drafts, whatever the false-positive rate.
 

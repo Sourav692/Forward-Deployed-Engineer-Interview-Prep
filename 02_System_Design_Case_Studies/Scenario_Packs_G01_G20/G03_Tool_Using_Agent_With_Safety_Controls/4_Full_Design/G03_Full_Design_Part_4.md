@@ -2,7 +2,12 @@
 
 ## 12. Answer the Cost and Latency Pivot in Ten Minutes
 
-The pivot after a good design is "the agent is slow and expensive". On this system the dominant driver is agent steps and tool calls, plus retries after failed or rejected actions. An agent that acts must be bounded before it is optimised. The bounds already exist in the design. Cap the steps. Make the common paths deterministic. Cache read-only tool results within the request. Let the approval gate stop the loop. Do not give the loop a bigger model and a longer budget. Prove it with steps per request, tool latency, retry count and cost per request.
+- The pivot after a good design is "the agent is slow and expensive".
+- On this system the dominant driver is agent steps and tool calls, plus retries after failed or rejected actions.
+- An agent that acts must be bounded before it is optimised. The bounds already exist in the design.
+- Cap the steps. Make the common paths deterministic. Cache read-only tool results within the request.
+- Let the approval gate stop the loop. Do not give the loop a bigger model and a longer budget.
+- Prove it with steps per request, tool latency, retry count and cost per request.
 
 | | |
 |---|---|
@@ -12,15 +17,36 @@ The pivot after a good design is "the agent is slow and expensive". On this syst
 | Do not | Give the loop a bigger model and a longer budget |
 | 60-second line | An agent that acts must be bounded before it is optimised. Cap the steps, make the common paths deterministic, and let the approval gate stop the loop |
 
-Two production scenarios arrive as the same pivot in different words. "The agent keeps calling tools repeatedly": it repeats a CRM lookup or retrieval and times out. Ask which tool repeats, what observation triggers it and whether state is preserved. The causes are a poor stopping condition, ambiguous tool descriptions, missing memory, a failed parse or no result cache. Inspect the trace, find the loop trigger and the missing state transition. Now: set max steps, cache the tool result, improve the schema, add a deterministic route. Later: agent budget tests and trace-based loop detection. Prevent with unit tests for tool selection and loop prevention. Say: *"I would treat this as a control-loop bug. The fix is step budgets, better tool routing, cached results, and explicit stopping criteria."*
+- Two production scenarios arrive as the same pivot in different words. "The agent keeps calling tools repeatedly": it repeats a CRM lookup or retrieval and times out.
+- Ask which tool repeats, what observation triggers it and whether state is preserved.
+- The causes are a poor stopping condition, ambiguous tool descriptions, missing memory, a failed parse or no result cache.
+- Inspect the trace, find the loop trigger and the missing state transition.
+- Now: set max steps, cache the tool result, improve the schema, add a deterministic route.
+- Later: agent budget tests and trace-based loop detection. Prevent with unit tests for tool selection and loop prevention.
+- Say: *"I would treat this as a control-loop bug. The fix is step budgets, better tool routing, cached results, and explicit stopping criteria."*
 
-"The tool-calling workflow times out": the response fails because an external workflow exceeds the timeout. Ask which tool is slow, whether it can be async and whether the result is needed immediately. The causes are a slow external API, serial calls, no timeout budget or synchronous side effects. Trace the calls and find the critical-path dependency. Now: set tool timeouts, parallelise read-only calls, return a partial answer or an async job. Later: dependency SLAs and circuit breakers. Prevent with a workflow design review before adding tools. Say: *"A tool timeout is not always an LLM issue. I would redesign slow side effects as async and keep the user informed."*
+- "The tool-calling workflow times out": the response fails because an external workflow exceeds the timeout.
+- Ask which tool is slow, whether it can be async and whether the result is needed immediately.
+- The causes are a slow external API, serial calls, no timeout budget or synchronous side effects.
+- Trace the calls and find the critical-path dependency. Now: set tool timeouts, parallelise read-only calls, return a partial answer or an async job.
+- Later: dependency SLAs and circuit breakers. Prevent with a workflow design review before adding tools.
+- Say: *"A tool timeout is not always an LLM issue. I would redesign slow side effects as async and keep the user informed."*
 
-Every strong cost answer follows four verbs in order. Measure, by tracing and attributing first. Route, matching model and path to risk. Bound, with limits on steps, tokens, timeouts and budgets. Cache safely, with tenant, permission and version in the key. Deliver it in six moves: frame the business impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence. Where the interviewer wants unit economics, the model-time to tool-time ratio decides the lever. Batch reads into one planning pass when planning is expensive. Cache safe reads and prefetch context when tool calls dominate. Tighten the threshold so only high-value cases reach a person when human time is the cost.
+- Every strong cost answer follows four verbs in order. Measure, by tracing and attributing first.
+- Route, matching model and path to risk. Bound, with limits on steps, tokens, timeouts and budgets.
+- Cache safely, with tenant, permission and version in the key. Deliver it in six moves: frame the business impact, decompose the path, name the largest measured driver, fix safely, prove with before and after, prevent recurrence.
+- Where the interviewer wants unit economics, the model-time to tool-time ratio decides the lever.
+- Batch reads into one planning pass when planning is expensive. Cache safe reads and prefetch context when tool calls dominate.
+- Tighten the threshold so only high-value cases reach a person when human time is the cost.
 
 ## 13. Debug the Refund Near Miss as Detect, Contain, Root Cause, Prevent
 
-The incident on this design is a near miss, and the trap is to say there was no problem because the gateway blocked it. A retail support assistant may summarise orders, draft replies, check policy and recommend refunds. It may not execute refunds above €250 without manager approval. It may only create a proposed refund ticket. On 2026-07-08 an agent asked it to "handle all delayed VIP shipments from yesterday". The planner selected the refund tool for 18 orders, including several above the threshold. The tool gateway blocked execution, so no money moved.
+- The incident on this design is a near miss, and the trap is to say there was no problem because the gateway blocked it.
+- A retail support assistant may summarise orders, draft replies, check policy and recommend refunds.
+- It may not execute refunds above €250 without manager approval. It may only create a proposed refund ticket.
+- On 2026-07-08 an agent asked it to "handle all delayed VIP shipments from yesterday".
+- The planner selected the refund tool for 18 orders, including several above the threshold.
+- The tool gateway blocked execution, so no money moved.
 
 ```text
 2026-07-08T16:07:51.119Z level=warn service=agent-planner
@@ -42,9 +68,14 @@ The incident on this design is a near miss, and the trap is to say there was no 
   planner_policy_compliance_score=0.42
 ```
 
-Detect from the telemetry: 18 planned calls, 6 blocked and 12 allowed, a €740 refund against a €250 limit with approval state missing, and a planner compliance score of 0.42. The gateway's critical line is enforcement working; the safety evaluator's line is the planner failing. Contain immediately: disable bulk refund planning, force all VIP refund actions into review-ticket mode, and add a user confirmation step for financial actions. Then audit the 12 allowed calls to confirm the smaller refunds were legitimate.
+- Detect from the telemetry: 18 planned calls, 6 blocked and 12 allowed, a €740 refund against a €250 limit with approval state missing, and a planner compliance score of 0.42.
+- The gateway's critical line is enforcement working; the safety evaluator's line is the planner failing.
+- Contain immediately: disable bulk refund planning, force all VIP refund actions into review-ticket mode, and add a user confirmation step for financial actions.
+- Then audit the 12 allowed calls to confirm the smaller refunds were legitimate.
 
-The root cause is a planner prompt, `agent_planner_2026_07`, deployed to make the agent "more action-oriented", whose examples emphasised completing workflows end to end and omitted bulk-action approval boundaries. The planner over-generalised "handle delayed shipments" into direct refund execution, retrieved the refund policy, and failed to apply the threshold during planning. The gateway policy was unchanged and blocked correctly. Separate planner failure from enforcement success: this is a near miss, not a completed unauthorised transaction.
+- The root cause is a planner prompt, `agent_planner_2026_07`, deployed to make the agent "more action-oriented", whose examples emphasised completing workflows end to end and omitted bulk-action approval boundaries.
+- The planner over-generalised "handle delayed shipments" into direct refund execution, retrieved the refund policy, and failed to apply the threshold during planning.
+- The gateway policy was unchanged and blocked correctly. Separate planner failure from enforcement success: this is a near miss, not a completed unauthorised transaction.
 
 Prevent with defence in depth rather than a prompt edit:
 
@@ -58,7 +89,10 @@ The same pattern applies to account deletion, data export and permission changes
 
 > *"This is a near miss. The gateway prevented loss, but the planner attempted unauthorised high-value refunds. I would inspect the planned calls, policy retrieval, and gateway decisions. Then I would disable bulk refund execution, route VIP refunds to review tickets, encode approval thresholds in the tool schema, add policy simulation before execution, and keep the gateway as a non-bypassable enforcement layer."*
 
-The weak answer is "the tool was blocked, so there is no problem, I would tell the agent to be more careful". The scorecard rewards four things. Reading planned, blocked and allowed calls with role, amount and approval state. Separating planner failure from gateway success. Auditing plan, policy context, schema and gateway logs rather than editing the prompt. Naming the fraud and unauthorised-action risk.
+- The weak answer is "the tool was blocked, so there is no problem, I would tell the agent to be more careful".
+- The scorecard rewards four things. Reading planned, blocked and allowed calls with role, amount and approval state.
+- Separating planner failure from gateway success. Auditing plan, policy context, schema and gateway logs rather than editing the prompt.
+- Naming the fraud and unauthorised-action risk.
 
 ---
 

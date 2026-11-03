@@ -102,6 +102,16 @@ flowchart TB
   E -. evaluates .-> Agent
   H -. shadows .-> Agent
   L -. controls rollout .-> Agent
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class I,Z,M cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class S,E,H,P,T,Agent cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class D,L cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,G,R,V,A,O cbPolicy
 ```
 
 ### Step-by-step architecture
@@ -129,7 +139,10 @@ The gate API should reject wrong roles, missing evidence and skipped prior stage
 
 ## Trade-offs, cost and honest limits
 
-Northwind reuses five of six accelerator components (about 83%); the bespoke part is the custom escalation (guardrail) policy. The demo script hard-codes 4m12s first response, 63% zero-edit sends, a .83 evaluation score against a .75 baseline, and a rollback note saying under two minutes; none of these was measured or timed. Week-four retention was not observed; `None` does not mean zero. The source's deterministic gate demo has 17 tests but does not implement full agent provisioning, eval-harness wiring, scope-change approval, versioned rollback or multi-engagement operations. State those gaps plainly in the interview.
+- Northwind reuses five of six accelerator components (about 83%); the bespoke part is the custom escalation (guardrail) policy.
+- The demo script hard-codes 4m12s first response, 63% zero-edit sends, a .83 evaluation score against a .75 baseline, and a rollback note saying under two minutes; none of these was measured or timed.
+- Week-four retention was not observed; `None` does not mean zero. The source's deterministic gate demo has 17 tests but does not implement full agent provisioning, eval-harness wiring, scope-change approval, versioned rollback or multi-engagement operations.
+- State those gaps plainly in the interview.
 
 For cost, agree on cost per resolved ticket at intake; bound model steps and tokens, reuse common connectors, and sample evaluation proportionally to risk. Keep customer credentials in a vault with scoped access and revoke or transfer them at handover. Record tenant boundaries and override rate. A low-cost pilot that fails its outcome metric is not success.
 

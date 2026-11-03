@@ -54,7 +54,15 @@ Spend the time on the gap between prototype and production. The model choice is 
 
 The two-minute spoken answer *(own construction)*:
 
-> *First I would ask what "works" meant, because a hundred volunteers prove the idea is useful and nothing about cost, the slow tail, permissions or adoption. Assuming an internal document assistant going to 100,000 employees, I would size it: about 30% daily active at eight requests each is 240,000 requests a day, around 20 a second at peak and roughly 8 million tokens a minute. On one mid-tier model that is about $120,000 a month; routing, prefix caching and an output cap cut it by nearly half. Then I would walk the tenfold steps. At a thousand users I need SSO, versioned prompts and traces. At ten thousand I need a gateway with per-user limits, retry inside a circuit breaker, a fallback provider and permission-filtered retrieval. At a hundred thousand I need fair queuing per department, a capacity commitment, sampled online evaluation and on-call. I would rebuild the eval set from real traffic, gate every release on slices with security at zero, and roll out by department cohort with shadow, canary and a pointer-flip rollback. Finally I would measure adoption, week-4 retention and override rate, because a system nobody uses has failed however well it scales.*
+> - First I would ask what "works" meant, because a hundred volunteers prove the idea is useful and nothing about cost, the slow tail, permissions or adoption.
+> - Assuming an internal document assistant going to 100,000 employees, I would size it: about 30% daily active at eight requests each is 240,000 requests a day, around 20 a second at peak and roughly 8 million tokens a minute.
+> - On one mid-tier model that is about $120,000 a month; routing, prefix caching and an output cap cut it by nearly half.
+> - Then I would walk the tenfold steps.
+> - At a thousand users I need SSO, versioned prompts and traces.
+> - At ten thousand I need a gateway with per-user limits, retry inside a circuit breaker, a fallback provider and permission-filtered retrieval.
+> - At a hundred thousand I need fair queuing per department, a capacity commitment, sampled online evaluation and on-call.
+> - I would rebuild the eval set from real traffic, gate every release on slices with security at zero, and roll out by department cohort with shadow, canary and a pointer-flip rollback.
+> - Finally I would measure adoption, week-4 retention and override rate, because a system nobody uses has failed however well it scales.
 
 The lines that carry the round *(own construction unless quoted)*:
 

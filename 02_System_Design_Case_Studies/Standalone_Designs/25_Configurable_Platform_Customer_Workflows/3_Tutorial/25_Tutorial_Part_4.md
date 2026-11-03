@@ -55,6 +55,16 @@ flowchart TD
   RECOVER --> PREVENT["Prevention:<br/>stronger graph validation,<br/>cyclic-approval test cases,<br/>reject non-topologically-orderable graphs"]
   DETECT -.->|"if loop reaches runtime undetected"| FAILCLOSED["Fail closed for that workflow version"]
   style FAILCLOSED fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class DETECT cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class CONTAIN,RECOVER cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class PREVENT cbStop
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class FAILCLOSED cbInput
 ```
 
 ### Other Named Failure Cases

@@ -4,7 +4,9 @@
 
 A catalogue team must classify 100 million records overnight and publish by 6 a.m., inside a six-hour window. The hard part is recovery. Workers crash, the provider throttles, some output is malformed, and at 4 a.m. the job may be behind. The customer must decide in advance whether a labelled partial result may be published or everything is held.
 
-The design freezes the input and the model, prompt and schema versions in a snapshot, then workers pull partitions under durable leases behind a shared rate coordinator. Each output passes typed validation, is written once with an idempotency key on job, record and model version, and is checkpointed only after the write succeeds. Transient errors retry and permanent ones go to quarantine. A live ETA and a pre-agreed publish policy decide what happens when the window is at risk.
+- The design freezes the input and the model, prompt and schema versions in a snapshot, then workers pull partitions under durable leases behind a shared rate coordinator.
+- Each output passes typed validation, is written once with an idempotency key on job, record and model version, and is checkpointed only after the write succeeds.
+- Transient errors retry and permanent ones go to quarantine. A live ETA and a pre-agreed publish policy decide what happens when the window is at risk.
 
 The same spine extends to a bank that extracts structured data from millions of documents, which adds OCR, schema-constrained extraction, human review and reprocessing by model version.
 
@@ -19,6 +21,14 @@ flowchart LR
   C --> D{On time?}
   D -->|Yes| E[Publish all]
   D -->|No| F[Apply agreed policy]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,D,F cbPolicy
 ```
 
 ## Who it is for

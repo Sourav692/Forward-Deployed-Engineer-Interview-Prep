@@ -80,6 +80,16 @@ flowchart LR
   P --> Q[Optional distill / quantise for device]
   Q --> T[Serving + reviewed feedback]
   T -. gated data feedback .-> F
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class D,J,P cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class F,B,S,R,U,A cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class V,M,C,K,E,T cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class Q cbAction
 ```
 
 ### Step-by-step architecture

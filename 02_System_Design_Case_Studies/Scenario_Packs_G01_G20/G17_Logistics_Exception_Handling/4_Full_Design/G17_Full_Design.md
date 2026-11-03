@@ -20,7 +20,9 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 This case is framed as an FDE round, and it runs in interview order. Clarifying questions come first; you record each answer and draw out its implication. In this format, the questions shape the design.
 
-The prompt: the FDE is embedded with a mid-size logistics customer. They want an AI exception-handling assistant that watches their shipment pipeline and detects disruptions: customs holds, missed carrier scans, weather delays. It either auto-resolves them or drafts a resolution for a human ops agent to approve. It works across multiple carriers and a mix of real-time and batch feeds.
+- The prompt: the FDE is embedded with a mid-size logistics customer. They want an AI exception-handling assistant that watches their shipment pipeline and detects disruptions: customs holds, missed carrier scans, weather delays.
+- It either auto-resolves them or drafts a resolution for a human ops agent to approve.
+- It works across multiple carriers and a mix of real-time and batch feeds.
 
 | Asked | Answer | Implication |
 |---|---|---|
@@ -81,7 +83,10 @@ The arithmetic below is own construction from the source's figures. Say it aloud
 | Concurrent approvers at peak | ~40, during shift handoff | The approval queue, not the model, is the human bottleneck |
 | Batch drops | every 2–6 hours, a few thousand records each | Batch exceptions surface hours late by design |
 
-The gap between the first two rows and the third is the design. Most events are routine scans. Detection is a rules-and-classifier layer on the stream, and the resolution model runs only on the small fraction that is an exception. Put the model on the event stream and cost and latency scale with every scan. Put it behind detection and they scale with disruptions.
+- The gap between the first two rows and the third is the design.
+- Most events are routine scans. Detection is a rules-and-classifier layer on the stream, and the resolution model runs only on the small fraction that is an exception.
+- Put the model on the event stream and cost and latency scale with every scan.
+- Put it behind detection and they scale with disruptions.
 
 ## 4. Draw the Architecture End to End
 
@@ -89,68 +94,114 @@ Two ingestion paths, one exception pipeline, a policy gate before anything acts.
 
 The source's own diagram, kept verbatim:
 
-```
-Carriers (60% real-time, 40% batch)
-        │
-   ┌────┴────┐
-Webhook   Batch File
-Ingest    Ingest (EDI/CSV, scheduled)
-   │         │
-   └────┬────┘
-        │
-Event Normalisation & Stream
-        │
-Disruption Detection Service
-   (customs hold · missed scan · weather delay)
-        │
-Resolution Agent
- (drafts action + confidence score)
-        │
-   Policy Gate
- (value + confidence + always-human customs rule)
-   │            │
-Auto-Resolve   Human Approval Queue
-   │            │  (ops agent: approve / edit / reject)
-   └─────┬──────┘
-         │
-   Carrier / Ops Systems (execute the resolution)
-         │
-   Audit Log (every decision, automated or human)
+```mermaid
+flowchart TD
+    N0["Carriers: 60% real-time, 40% batch"]
+    N1["Webhook ingestion"]
+    N2["Normalised event stream"]
+    N3["Scheduled EDI or CSV batch ingestion"]
+    N4["Detect customs hold, missed scan, or weather delay"]
+    N5["Resolution agent drafts action and confidence"]
+    N6["Policy gate"]
+    N7["Permitted automatic resolution"]
+    N8["Carrier or operations systems"]
+    N9["Human queue: approve, edit, or reject"]
+    N10["Audit every automated and human decision"]
+    N0 --> N1
+    N1 --> N2
+    N0 --> N3
+    N3 --> N2
+    N2 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N6 --> N9
+    N9 --> N8
+    N8 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N10 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N6,N7 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N9 cbStop
 ```
 
 The same system drawn with its planes and trust boundaries *(own construction)*. The control plane is shared and versioned identically everywhere. The data plane is one copy per region.
 
+```mermaid
+flowchart TD
+    N0["Webhook carriers"]
+    N1["Validate and deduplicate"]
+    N2["Normalise"]
+    N3["Batch carriers"]
+    N4["Parse and diff against last state, tag late detection"]
+    N5["Queue"]
+    N6["Rules and classifier detect exceptions"]
+    N7["Agent drafts action, confidence, and reasons"]
+    N8["Policy gate"]
+    N9["Customs, regulatory, or unknown: human queue"]
+    N10["Other case: value < $500 and confidence meets threshold"]
+    N11["Execute with scoped carrier permission and idempotency key"]
+    N12["Other case outside threshold: human queue"]
+    N13["Regional operator approves, edits, or rejects"]
+    N14["Carrier and operations systems"]
+    N15["Immutable regional audit"]
+    N0 --> N1
+    N1 --> N2
+    N3 --> N4
+    N4 --> N2
+    N2 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N8 --> N10
+    N10 --> N11
+    N8 --> N12
+    N9 --> N13
+    N13 --> N14
+    N12 --> N13
+    N11 --> N14
+    N14 --> N15
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N3,N8,N11 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N5,N9,N10,N12,N14,N15 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N6,N7 cbReason
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N13 cbStop
 ```
- ╔═══════════════════ SHARED CONTROL PLANE (versioned identically in every region) ═══════════════════╗
- ║  agent prompts + tools · model routing · POLICY DEFINITIONS (customs rule, $500, threshold) · UI     ║
- ║  carrier adapter registry · confidence threshold · eval gates · release versions                      ║
- ╚══════════════════════════════════════════════╤═════════════════════════════════════════════════════╝
-                                                │ deploys the same logic into each region
- ┌──────────────────────────────── ONE REGIONAL DATA PLANE (US | EU | APAC) ─────────────────────────────┐
- │                                                                                                        │
- │  webhook carriers ─► [Webhook ingest: validate, dedupe] ─┐                                             │
- │                                                          ├─► [Normalise] ─► [Queue] ─► [Detection]     │
- │  batch carriers ──► [Batch ingest: parse, DIFF vs last] ─┘                   (rules + classifier)      │
- │                       state; tag "detected late"                                  │ exceptions only    │
- │                                                                                   ▼                    │
- │                                            [Resolution Agent: draft action + confidence + reasons]     │
- │                                                                                   │                    │
- │  ════════════════════════ TRUST BOUNDARY 1: nothing acts without the gate ═══════╪══════════════════  │
- │                                                                                   ▼                    │
- │                               [POLICY GATE]  1. customs/regulatory or unknown? → HUMAN, stop           │
- │                                              2. value < $500 AND confidence ≥ threshold? → AUTO        │
- │                                              3. otherwise → HUMAN                                      │
- │                                    AUTO │                         │ HUMAN                              │
- │                                         ▼                         ▼                                    │
- │  ═══ TRUST BOUNDARY 2: least-privilege  [Execute]         [Approval queue] ◄── ops agents, this region │
- │      carrier scopes, idempotency key ══  │ circuit breaker    │ approve / edit / reject                │
- │                                          ▼                    ▼                                        │
- │                                  [Carrier / ops systems] ◄────┘                                        │
- │                                                                                                        │
- │  [Event store]   [Audit log: every verdict + action + confidence + reasoning, immutable]               │
- │  ═══ TRUST BOUNDARY 3: no replication out of the region; EU data never leaves the EU ═══               │
- └────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+```mermaid
+flowchart TD
+    N0["Shared versioned control plane"]
+    N1["US regional data plane"]
+    N2["EU regional data plane"]
+    N3["APAC regional data plane"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1,N2,N3 cbReason
 ```
+
+- Version the same prompts, tools, routing, customs rule, $500 threshold, confidence threshold, UI, carrier adapters, evaluation gates, and releases in each region.
+- Nothing executes before policy. Circuit breakers protect carrier calls.
+- Keep event stores, audit verdicts, actions, confidence, and decision summaries inside their region; EU data never leaves the EU.
 
 The same flow in Mermaid *(own construction)*, with the gate's ordering visible:
 
@@ -182,6 +233,16 @@ flowchart TD
         POL[Policy definitions] -.-> G1 & G2
         PR[Prompts + routing] -.-> RA
     end
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class WH,G1,HQ,POL cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class NORM,DET,DROP,RA,G2,PR cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class BT,Q,EX,AUD cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class SYS cbInput
 ```
 
 Read the components in the order an event meets them. The component names and responsibilities are the source's. The failure column is own construction.
@@ -207,7 +268,10 @@ Point at three things while the diagram is up *(own construction)*. The gate is 
 
 Forcing the 40% batch-only carriers onto a fake "real-time" interface buys nothing. It means polling a file drop every few seconds. The data does not get fresher, and only the infrastructure gets more complex. A poll cannot make a carrier report sooner than it reports.
 
-Both paths converge *after* ingestion instead. Webhook ingest validates and deduplicates, then pushes onto the stream immediately. Detection must be low-latency on this path. Batch ingest picks up the carrier's drop on its schedule, every 2–6 hours. It parses the drop and diffs it against the last known state per shipment, so only changes enter the stream. Both paths write the same normalised event schema. Detection never needs to know which path an event came from.
+- Both paths converge *after* ingestion instead. Webhook ingest validates and deduplicates, then pushes onto the stream immediately.
+- Detection must be low-latency on this path. Batch ingest picks up the carrier's drop on its schedule, every 2–6 hours.
+- It parses the drop and diffs it against the last known state per shipment, so only changes enter the stream.
+- Both paths write the same normalised event schema. Detection never needs to know which path an event came from.
 
 A missed scan on a batch carrier is detected late by design. Surface that latency to agents instead of hiding it, because it changes how urgently they should act. Tag every batch-sourced exception with its detection lag, and show it on the draft.
 

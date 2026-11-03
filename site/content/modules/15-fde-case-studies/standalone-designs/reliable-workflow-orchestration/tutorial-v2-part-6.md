@@ -43,6 +43,14 @@ flowchart TD
   D -->|"Transient, worker lost only"| E["Continue from next unfinished step"]
   D -->|"Terminal failure after partial completion"| F["Compensation engine triggers refund"]
   style F fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,D cbAction
 ```
 
 > **Interview pointer:** If you are asked what happens when the worker dies after the payment goes through, build the answer on one sentence: the durable history and the completion receipt decide whether to redeliver or compensate; worker memory never does. A lost worker is not a lost business action. Tie detection, containment, recovery and prevention back to durable history every time.
@@ -62,6 +70,16 @@ flowchart TD
   D -->|"Transient"| E["Idempotent retry to CRM"]
   D -->|"Needs judgment"| F["Dead-letter handoff / manual reconciliation"]
   style F fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ### Failure Drill: Approval Waits Seven Days
@@ -78,6 +96,12 @@ flowchart TD
   B --> C{"Approval received before threshold?"}
   C -->|"Yes"| D["Resume workflow from wait state"]
   C -->|"No"| E["Escalate: reminder, reassign, or expire per policy"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,C,D,E cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
 ```
 
 ### Failure Drill: Definition Changes While Instances Run
@@ -94,6 +118,14 @@ flowchart TD
   B -->|"Running instance matches new version"| C["Continue on current logic"]
   B -->|"Running instance predates the change"| D["Old instance continues on the version it started with"]
   D --> E["Forward-compatible step routing, or controlled migration with audit"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,D cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,E cbAction
 ```
 
 ### Failure Drill: External API Times Out Indefinitely
@@ -111,6 +143,16 @@ flowchart TD
   C -->|"Yes"| D["Resume normal dispatch"]
   C -->|"No, prolonged outage"| E["Fallback queue or human intervention"]
   style E fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class B cbStop
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,E cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ### Evidence the Interviewers Want to Hear

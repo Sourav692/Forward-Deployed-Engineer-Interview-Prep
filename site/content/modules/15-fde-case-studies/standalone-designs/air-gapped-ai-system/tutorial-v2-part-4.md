@@ -176,6 +176,16 @@ flowchart TD
     style F1 fill:#a63d40,stroke:#5c1f22,color:#fff
     style F2 fill:#a63d40,stroke:#5c1f22,color:#fff
     style F3 fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,H cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,E,F3 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class F1,F2,I cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C,D,G,J cbPolicy
 ```
 
 ### What the Snippet Omits on Purpose

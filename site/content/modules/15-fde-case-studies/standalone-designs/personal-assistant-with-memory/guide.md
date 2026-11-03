@@ -99,49 +99,89 @@ The organising rule is resolve, read, assemble, reply, then write. Identity come
 
 The whole system *(own construction)*:
 
+```mermaid
+flowchart TD
+    N0["Web, phone, or chat client"]
+    N1["Gateway"]
+    N2["Identity service derives user_id from auth session"]
+    N3["Parallel memory reads"]
+    N4["Thread checkpoint: thread_id"]
+    N5["Context builder"]
+    N6["Session state: session_id and TTL"]
+    N7["Semantic facts: semantic namespace and user_id"]
+    N8["Episode search: episodic namespace and user filter"]
+    N9["Episode digest: digest namespace and user_id"]
+    N10["System prompt, facts, digest, top-k episodes, summary, recent turns, message"]
+    N11["Assistant with calendar, mail, and booking tools"]
+    N12["Stream reply"]
+    N13["Checkpoint turn by thread_id"]
+    N14["Enqueue async writes"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N3 --> N6
+    N6 --> N5
+    N3 --> N7
+    N7 --> N5
+    N3 --> N8
+    N8 --> N5
+    N3 --> N9
+    N9 --> N5
+    N5 --> N10
+    N10 --> N11
+    N11 --> N12
+    N12 --> N13
+    N13 --> N14
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9,N10 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N12,N14 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N4,N7,N11,N13 cbPolicy
 ```
- ╔═════════════════════ CONTROL PLANE (changes are releases) ═════════════════════╗
- ║ memory policy: what may be stored, per category · retention and caps per scope ║
- ║ summary threshold (~15 turns) · episode cap (100/user) · session TTL           ║
- ║ extraction prompt (versioned) · residency map · eval gates                     ║
- ╚══════════════════════════════════════╤═════════════════════════════════════════╝
-                                        │ configures every box below
- ╔═════════════════════ DATA PLANE (calls are requests) ══════════════════════════╗
- ║                                                                                ║
- ║ client (web, phone, chat) ──> GATEWAY ──> IDENTITY SERVICE                     ║
- ║                                          user_id from the auth session         ║
- ║                                                  │                             ║
- ║                                                  v                             ║
- ║                      ┌──────── MEMORY READ FAN-OUT (parallel) ────────┐        ║
- ║                      │ thread checkpoint   key: thread_id             │        ║
- ║                      │ session state       key: session_id, TTL       │        ║
- ║                      │ semantic facts      ns: (semantic, user_id)    │        ║
- ║                      │ episodic search     ns: (episodic, user_id)    │        ║
- ║                      │                     vector index, user filter  │        ║
- ║                      │ episode digest      ns: (digest, user_id)      │        ║
- ║                      └───────────────────────┬────────────────────────┘        ║
- ║                                              v                                 ║
- ║                        CONTEXT BUILDER: system prompt + facts + digest         ║
- ║                        + top-k episodes + summary + recent turns + message     ║
- ║                                              │                                 ║
- ║                                              v                                 ║
- ║                        ASSISTANT MODEL + TOOLS (calendar, mail, booking)       ║
- ║                                              │ reply streams to client         ║
- ║                                              v                                 ║
- ║                        CHECKPOINT the turn (thread_id)                         ║
- ║                                              │ enqueue                         ║
- ╠══════════════════════════════════════════════╪═════════════════════════════════╣
- ║ ASYNC WRITE PATH (after the reply)           v                                 ║
- ║   MEMORY WRITER: extract candidate facts → policy filter → stable-key upsert   ║
- ║                  (previous value kept one version back)                        ║
- ║   EPISODE WRITER: one append per completed task → embed → index               ║
- ║   SUMMARISER: fold buffer into running summary past ~15 turns                  ║
- ║   PRUNER: keep newest 100 episodes, fold older into the rolling digest         ║
- ║   DELETION JOB: "forget X" and account deletion across every store and index   ║
- ║                                                                                ║
- ║ OBSERVABILITY: read latency per store, hit counts, writes by category — no text║
- ╚════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Async writes"]
+    N1["Memory candidates: extract, policy-filter, stable-key upsert"]
+    N2["Keep previous value one version back"]
+    N3["Episode writer: append once per completed task"]
+    N4["Embed and index"]
+    N5["Summariser after about 15 turns"]
+    N6["Running summary"]
+    N7["Pruner keeps newest 100 episodes per user"]
+    N8["Fold older episodes into rolling digest"]
+    N9["Forget or account-delete request"]
+    N10["Delete across every store and index"]
+    N0 --> N1
+    N1 --> N2
+    N0 --> N3
+    N3 --> N4
+    N0 --> N5
+    N5 --> N6
+    N0 --> N7
+    N7 --> N8
+    N9 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N7 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N3,N4,N6,N10 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N5,N9 cbReason
 ```
+
+- Version category-specific memory policy, scope retention/caps, the ~15-turn summary threshold, 100/user episode cap, session TTL, extraction prompts, residency, and evaluation gates.
+- Monitor read latency, hits, and writes by category without memory text.
 
 The same flow for viewers that render Mermaid *(own construction)*:
 
@@ -184,6 +224,16 @@ flowchart LR
     MP -.-> MW
     RC -.-> SU & PR & SS
     EP -.-> MW
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class MP,C,TC,DG,DEL cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class RC,EP,ID,SF,M,MW,SU cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class GW,SS,CB cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class FO,EV,Q,EW,PR cbAction
 ```
 
 Read the components in request order. The failure column is *own construction*.

@@ -20,6 +20,16 @@ flowchart LR
   C -->|Yes| E{Answer matches evidence?}
   E -->|No| F[Fix model or prompt]
   E -->|Yes| G[Check tool calls and latency]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,D,E cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class G cbPolicy
 ```
 
 ## Who it is for

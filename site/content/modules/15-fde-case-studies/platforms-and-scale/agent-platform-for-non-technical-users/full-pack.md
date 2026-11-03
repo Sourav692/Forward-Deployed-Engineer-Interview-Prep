@@ -2,7 +2,10 @@
 
 *A business user must be able to switch on an automation that moves real money, without being able to read the code that decides whether it should.*
 
-An agent platform is a safety and orchestration problem wearing an AI costume. The model can choose which value goes into an argument; everything that decides whether a destructive action runs is code. This page puts the group's prompts into one read for the day before. The group has one whiteboard script and one handbook module that teaches the same built project in prose.
+- An agent platform is a safety and orchestration problem wearing an AI costume.
+- The model can choose which value goes into an argument; everything that decides whether a destructive action runs is code.
+- This page puts the group's prompts into one read for the day before.
+- The group has one whiteboard script and one handbook module that teaches the same built project in prose.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -45,7 +48,10 @@ Then scope out loud:
 
 ## 2. Anchor Every Answer on One $500 Refund
 
-One concrete tenant keeps every later claim testable. Cascade Robotics wants Tier-1 support triage across two channels: a Zendesk webhook for new tickets, and an `#support-escalations` Slack channel for urgent messages. A high-priority ticket gets a drafted reply. A billing complaint also gets an automatic refund up to $50, a hard cap. A refund above it is refused outright, even with approval; raising the cap is a separate, authorised policy change. A duplicate or retried step must never issue a second refund.
+- One concrete tenant keeps every later claim testable. Cascade Robotics wants Tier-1 support triage across two channels: a Zendesk webhook for new tickets, and an `#support-escalations` Slack channel for urgent messages.
+- A high-priority ticket gets a drafted reply. A billing complaint also gets an automatic refund up to $50, a hard cap.
+- A refund above it is refused outright, even with approval; raising the cap is a separate, authorised policy change.
+- A duplicate or retried step must never issue a second refund.
 
 The user's request, in their own words: *"If a customer messages us anywhere asking for a refund and it's under $50, just refund them. Don't bother me for small stuff."* The platform must silently guarantee six things the user never has to name.
 
@@ -120,57 +126,123 @@ Write the nouns before the boxes, because the nouns are the contract every box s
 Event · Channel · WorkflowSpec (versioned) · Trigger · Step · Tool · Run · Guardrail · Principal
 ```
 
-Then narrate one event before drawing. A ticket webhook arrives, and a channel adapter normalises it into a canonical event. Routing finds the highest-priority live workflow that triggers on it and checks that no other run is already active on that ticket. The orchestrator executes the workflow's steps one at a time and checkpoints after each. A non-destructive step, such as drafting a reply, runs straight away. A destructive one, such as issuing a refund, goes through the guardrail first. It checks whether the workflow is live enough to act, whether this tool is allow-listed for autonomous use, whether a human is needed and whether it fits the spend cap. If it passes, it executes with an idempotency key, so a retry can never double-refund. Every decision, allowed or denied, is logged.
+- Then narrate one event before drawing. A ticket webhook arrives, and a channel adapter normalises it into a canonical event.
+- Routing finds the highest-priority live workflow that triggers on it and checks that no other run is already active on that ticket.
+- The orchestrator executes the workflow's steps one at a time and checkpoints after each.
+- A non-destructive step, such as drafting a reply, runs straight away. A destructive one, such as issuing a refund, goes through the guardrail first.
+- It checks whether the workflow is live enough to act, whether this tool is allow-listed for autonomous use, whether a human is needed and whether it fits the spend cap.
+- If it passes, it executes with an idempotency key, so a retry can never double-refund.
+- Every decision, allowed or denied, is logged.
 
 The anchor's board, verbatim. Label the two independent decisions in routing.
 
-```
-  raw payload (any channel) --> ADAPTER --> canonical Event
-                                                  |
-                                                  v
-                                    ┌─────────────────────────┐
-                                    │  ROUTING                 │
-                                    │  1. priority match        │  <- design-time: which SHOULD run
-                                    │  2. entity lock check      │  <- run-time: can TWO ever run
-                                    └─────────────────────────┘
-                                                  |
-                                                  v
-                              ┌───────────────────────────────────┐
-                              │  ORCHESTRATOR (durable, checkpointed) │
-                              │   step -> validate args -> guardrail  │
-                              │   -> execute (idempotent) -> checkpoint│
-                              └───────────────────────────────────┘
-                                                  |
-                                    COMPLETED / PAUSED_FOR_APPROVAL / HALTED
+```mermaid
+flowchart TD
+    N0["Raw channel payload"]
+    N1["Adapter"]
+    N2["Canonical event"]
+    N3["Priority match"]
+    N4["Entity lock check"]
+    N5["Durable orchestrator"]
+    N6["Resolve step and validate arguments"]
+    N7["Guardrail check"]
+    N8["Idempotent execution"]
+    N9["Checkpoint"]
+    N10["Completed"]
+    N11["Paused for approval"]
+    N12["Halted"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    N9 --> N11
+    N9 --> N12
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N12 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N8,N10 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N4,N6,N7,N9,N11 cbPolicy
 ```
 
 The full platform adds the authoring plane and the stores *(own construction from the sources' components)*. The authoring plane changes what may run; the runtime plane decides whether a given step runs now.
 
+```mermaid
+flowchart TD
+    N0["Builder or natural-language-to-spec: implementation gap"]
+    N1["Draft WorkflowSpec"]
+    N2["Approver or admin promotes one stage at a time"]
+    N3["Versioned workflow store"]
+    N4["Live workflow selection"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N3 cbAction
 ```
- AUTHORING PLANE (slow, human)                     RUNTIME PLANE (every event)
- ┌──────────────────────────────┐                 ┌───────────────────────────────────────────┐
- │ builder / NL-to-spec (gap)   │                 │ email  slack  chat  web_form  webhook     │
- │        │                     │                 │   └──────┴──────┴──────┴────────┘         │
- │        v                     │                 │           CHANNEL ADAPTERS                │
- │ WorkflowSpec (DRAFT)         │                 │                  │ canonical Event        │
- │        │  promote()          │                 │                  v                        │
- │        │  approver/admin     │   all_live()    │ ROUTING: match -> priority -> entity lock │
- │        v  one stage at a time├────────────────>│                  │                        │
- │ WORKFLOW STORE (versioned)   │                 │                  v                        │
- └──────────────────────────────┘                 │ ORCHESTRATOR loop (from next_step_index)  │
-                                                  │   resolve args -> validate_args()         │
- ┌──────────────────────────────┐                 │   -> idempotency check (replay = no-op)   │
- │ TENANT POLICY                │  caps,          │   -> authorize_step()  <──── policy       │
- │ spend_cap_usd, max_steps,    ├── allow-list ──>│   -> apply side effect -> CHECKPOINT      │
- │ allowed_destructive_tools    │                 │                  │                        │
- └──────────────────────────────┘                 │     tools: draft_reply  tag_ticket        │
-                                                  │            issue_refund* close_ticket*    │
- ┌──────────────────────────────┐                 │            (* destructive)                │
- │ HUMAN APPROVER (role-checked)├── approval ────>│                  │                        │
- └──────────────────────────────┘                 └──────────────────┼────────────────────────┘
-                                                                     v
-                              STORES: lock store · idempotency store · run store + trace
+
+```mermaid
+flowchart TD
+    N0["Email, Slack, chat, web form, webhook"]
+    N1["Channel adapters"]
+    N2["Canonical event"]
+    N3["Match, priority, and entity lock"]
+    N4["Durable orchestrator from next_step_index"]
+    N5["Resolve and validate arguments"]
+    N6["Idempotency check"]
+    N7["Replay: no-op"]
+    N8["New step: authorise against tenant policy"]
+    N9["Apply side effect"]
+    N10["Checkpoint"]
+    N11["Lock, idempotency, run, and trace stores"]
+    N12["Tenant spend cap, maximum steps, destructive-tool allowlist"]
+    N13["Role-checked human approver"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N6 --> N8
+    N8 --> N9
+    N9 --> N10
+    N10 --> N11
+    N12 --> N8
+    N13 --> N8
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N12 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N9 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N4,N11 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N5,N6,N7,N8,N10,N13 cbPolicy
 ```
+
+- Tools include draft_reply, tag_ticket, issue_refund, and close_ticket. Refund and close-ticket operations are destructive.
+- The live workflow store supplies runtime selection; tenant policy and approval remain separate execution checks.
 
 ```mermaid
 flowchart TB
@@ -199,6 +271,16 @@ flowchart TB
     WS[(Workflow store<br/>versioned specs)] --> R
     POL[(Tenant policy)] --> G
     P -. approver resumes .-> O
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class E,W,L,TR cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class S,A,X,Y,H,I,T cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,R,O,M,D,WS cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class F,V,CK,G,P,POL cbPolicy
 ```
 
 | Component | Job | What goes wrong without it *(own construction)* |

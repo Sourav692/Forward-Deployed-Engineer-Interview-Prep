@@ -39,7 +39,9 @@ Three prompts in the group look different but use the same instrument. Answer ea
 
 **Latency regression.** "An enterprise customer reports that responses have become slow." First clarify which latency: time to first token, time between tokens, total completion time, or user-perceived latency. Then decompose across ten stages: client and network, authentication, middleware, retrieval, prompt construction, model prefill, token generation, tool calls, post-processing and streaming. Check input and output token counts and retrieval p95 and p99. Then check retry rates, rate-limit throttling and traffic patterns. Finish with model version, prompt changes, cache hit rates and regional routing. The latency incident is this prompt with real numbers.
 
-The follow-up is "it only happens at peak traffic." Peak-only latency points at queueing, not a slower model. Separate queue wait from service time. Queueing delay climbs steeply as utilisation nears 100%; for a simple queue the wait is about 4× service time at 80% and 9× at 90%. A rising p99 with a flat p50 usually means queueing. Add admission control and shed non-interactive work to batch *(the utilisation point comes from the additions file, section D; the multiples are simple single-queue arithmetic)*.
+- The follow-up is "it only happens at peak traffic." Peak-only latency points at queueing, not a slower model.
+- Separate queue wait from service time. Queueing delay climbs steeply as utilisation nears 100%; for a simple queue the wait is about 4× service time at 80% and 9× at 90%.
+- A rising p99 with a flat p50 usually means queueing. Add admission control and shed non-interactive work to batch *(the utilisation point comes from the additions file, section D; the multiples are simple single-queue arithmetic)*.
 
 **RAG with poor answer quality.** Separate seven failure classes: retrieval, context assembly, reasoning or synthesis, prompt or instruction, output format, evaluation, and user experience. Measure each separately. Use recall@k, precision@k and MRR or nDCG for retrieval. Use citation correctness and context sufficiency for assembly. Use answer faithfulness, answer relevance and abstention quality for generation. Use end-to-end task success for the whole. The section 9 flowchart is the first cut; these metrics are the second.
 
@@ -47,7 +49,10 @@ The follow-up is "would you fine-tune the model?" Classify the problem first. A 
 
 **Diagnose high latency in an LLM inference pipeline.** This is the layer below the application. Walk the full stack: tokenization, network, batch size, KV cache, post-processing. Two facts carry the answer *(from the additions file, section B)*. Prefill processes the whole prompt in parallel and sets time to first token, so it scales with input tokens. Decode generates one token at a time and sets tokens per second, so it scales with output tokens. A frozen UI points at prompt size, retrieval and queueing. An answer that starts fast then drags points at output length.
 
-Batch size trades throughput for per-request latency. With continuous batching nothing waits to fill; each decode step gets slower as more sequences share it. The KV cache holds attention state for tokens already processed. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption. Post-processing is usually small, but a synchronous evaluator or logger on the hot path is not. The same stack walk anchors the LLM Inference Serving case on inference serving, so prepare it once.
+- Batch size trades throughput for per-request latency. With continuous batching nothing waits to fill; each decode step gets slower as more sequences share it.
+- The KV cache holds attention state for tokens already processed. Its memory caps how many sequences fit on a GPU at once, and a full cache forces queueing or preemption.
+- Post-processing is usually small, but a synchronous evaluator or logger on the hot path is not.
+- The same stack walk anchors the LLM Inference Serving case on inference serving, so prepare it once.
 
 ## 13. Roll Out in Four Phases With Named Owners
 
@@ -77,7 +82,9 @@ The go/no-go gate: if trace coverage falls below the minimum or overhead moves l
 
 Decide what is product, adapter, service or configuration. Per-customer sampling rates, retention windows and alert thresholds are configuration. Ticketing and alerting integrations are adapters. Collection, redaction, correlation propagation and the access gateway are a shared service. The request lifecycle, outcome tags and the minimal schema are core product. That split keeps customer edge cases out of the core.
 
-Launch readiness needs a canary on one tenant or slice and a fast rollback switch. Keep old and new trace schemas interoperable during migration. Train support on what a healthy trace looks like, and publish an ops guide with metric definitions, access rules and rollback steps. Have three artifacts ready before launch: an evidence policy, a response runbook and an access review.
+- Launch readiness needs a canary on one tenant or slice and a fast rollback switch.
+- Keep old and new trace schemas interoperable during migration. Train support on what a healthy trace looks like, and publish an ops guide with metric definitions, access rules and rollback steps.
+- Have three artifacts ready before launch: an evidence policy, a response runbook and an access review.
 
 | Risk | Owner | Mitigation | Trigger |
 |---|---|---|---|

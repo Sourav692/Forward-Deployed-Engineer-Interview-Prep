@@ -2,7 +2,9 @@
 
 ## 9. Fail Closed on Policy, Degrade on Everything Else
 
-A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human. Incidents deserve different reactions: a policy engine outage differs from a visualisation glitch, and a query scan that explodes cost differs from a benign cache miss. Memorise the pattern by category: authorisation closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
+- A strong answer says exactly what fails open, what fails closed, what degrades, what queues and what escalates to a human.
+- Incidents deserve different reactions: a policy engine outage differs from a visualisation glitch, and a query scan that explodes cost differs from a benign cache miss.
+- Memorise the pattern by category: authorisation closed, connectivity degrade or queue, ambiguity human, suspicious scan closed and alert.
 
 | Situation | Preferred policy | Why |
 |---|---|---|
@@ -13,7 +15,12 @@ A strong answer says exactly what fails open, what fails closed, what degrades, 
 | Ambiguous metric mapping or business-definition conflict | Human intervention | A wrong answer is worse than a slower answer |
 | Execution produces a suspicious row count or scan volume | Fail closed and alert | Treat unexpected scale as a probable correctness or cost issue |
 
-Five drills cover the failures that survive unit tests. The headline drill is the wrong business question. The user asks for "active customers". The assistant quietly uses login activity when the definition requires paid activity. The SQL returns rows and the chart renders. Detect by comparing the generated query against governed metric metadata and approved aliases. Contain by blocking publication and marking the run. Preserve the prompt hash, SQL text, policy decision, asset versions and rejection reason. Recover by routing to a clarified metric choice or human review. Prevent by tightening the mapping, the test case or the disambiguation prompt. The blast radius is scoped by tenant, workflow and metric family, never "all analytics is broken".
+- Five drills cover the failures that survive unit tests. The headline drill is the wrong business question.
+- The user asks for "active customers". The assistant quietly uses login activity when the definition requires paid activity.
+- The SQL returns rows and the chart renders. Detect by comparing the generated query against governed metric metadata and approved aliases.
+- Contain by blocking publication and marking the run. Preserve the prompt hash, SQL text, policy decision, asset versions and rejection reason.
+- Recover by routing to a clarified metric choice or human review. Prevent by tightening the mapping, the test case or the disambiguation prompt.
+- The blast radius is scoped by tenant, workflow and metric family, never "all analytics is broken".
 
 ```mermaid
 flowchart TD
@@ -23,9 +30,22 @@ flowchart TD
     Preserve --> Recover[Recover: route to clarified metric<br/>choice or human review]
     Recover --> Prevent[Prevent: tighten metric mapping,<br/>test case, or disambiguation prompt]
     style Contain fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Detect cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class Contain,Preserve cbStop
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class Recover cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Prevent cbReason
 ```
 
-Schema drift is the second drill. A column disappears, a table is renamed overnight, a join key shifts, and a previously good template still produces something that looks reasonable. Detect it during plan validation, not after a failed warehouse call. Fail closed on the affected template, refresh the schema cache, and queue a review if the business definition itself changed.
+- Schema drift is the second drill. A column disappears, a table is renamed overnight, a join key shifts, and a previously good template still produces something that looks reasonable.
+- Detect it during plan validation, not after a failed warehouse call. Fail closed on the affected template, refresh the schema cache, and queue a review if the business definition itself changed.
 
 ```mermaid
 flowchart TD
@@ -37,9 +57,21 @@ flowchart TD
     F -->|Yes| G[Queue for review]
     F -->|No| H[Resume once cache refreshed]
     style D fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,D cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,E,G,H cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class F cbReason
 ```
 
-Join fan-out is the third. A join multiplies rows and inflates totals while remaining syntactically valid and passing every SQL check. Validate join cardinality assumptions, compare expected row counts against heuristics, and block suspicious fan-out unless the user explicitly asked for a detailed expansion. If the join cannot be proven safe, refuse or downgrade; never hope the aggregate still looks plausible.
+- Join fan-out is the third. A join multiplies rows and inflates totals while remaining syntactically valid and passing every SQL check.
+- Validate join cardinality assumptions, compare expected row counts against heuristics, and block suspicious fan-out unless the user explicitly asked for a detailed expansion.
+- If the join cannot be proven safe, refuse or downgrade; never hope the aggregate still looks plausible.
 
 ```mermaid
 flowchart TD
@@ -50,6 +82,16 @@ flowchart TD
     D -->|Yes| F[Allow, with explicit expansion caveat]
     C -->|Within expectation| F
     style E fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,F cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,D cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class E cbStop
 ```
 
 Excessive scans are the fourth, and cost is a reliability issue because one query can exhaust concurrency and slow other tenants. Estimate before executing. Where the estimate exceeds the threshold, rewrite to a bounded window or a pre-aggregation if one exists; otherwise fail closed and ask the user to narrow or confirm.
@@ -62,6 +104,16 @@ flowchart TD
     D -->|Yes| E[Rewrite to bounded/pre-aggregated form]
     D -->|No| F[Fail closed: ask user to narrow<br/>or require explicit confirmation]
     style F fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 The summary contradicting the table is the fifth, already drawn in section 8. Around all five sit the operational safeguards:
@@ -76,23 +128,55 @@ Treat human escalation as a designed path.
 
 Backpressure belongs to the background lane. Crawler and registry refresh jobs sit behind a queue with rate-limited bursts, so they never stampede the warehouse during peak query traffic. The query API degrades gracefully when metadata confidence drops. The compact failure policy reads as one flow:
 
-```
-request received
-  -> authenticate user
-  -> authorise against tenant + role + metric policy
-  -> parse SQL AST
-  -> validate tables, columns, joins, limits, and query shape
-  -> if policy or semantic check fails: reject + log redacted evidence
-  -> execute read-only as the user (on-behalf-of) under warehouse-native RLS/CLS
-  -> if scan/time budget exceeded: cancel + surface safe fallback
-  -> if results pass checks: mask sensitive fields
-  -> generate summary from structured result
-  -> if summary mismatch detected: return table only, alert review queue
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Authenticate"]
+    N2["Authorise tenant, role, and metric"]
+    N3["Parse SQL AST"]
+    N4["Validate tables, columns, joins, limits, and query shape"]
+    N5["Policy or semantic failure: reject and log redacted evidence"]
+    N6["Pass: execute read-only as user with native RLS and CLS"]
+    N7["Scan or time budget exceeded?"]
+    N8["Yes: cancel and return safe fallback"]
+    N9["No: check results and mask sensitive fields"]
+    N10["Summarise structured result"]
+    N11["Summary matches?"]
+    N12["No: table only and review alert"]
+    N13["Yes: return result"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N4 --> N6
+    N6 --> N7
+    N7 --> N8
+    N7 --> N9
+    N9 --> N10
+    N10 --> N11
+    N11 --> N12
+    N11 --> N13
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8,N12 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3,N4,N7,N9,N11 cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class N5 cbStop
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N6,N10,N13 cbAction
 ```
 
 ## 10. Gate the Release on Semantic Correctness, Not Execution Success
 
-A query that runs can still be wrong, so the evaluation separates two things. Execution accuracy is proved by the golden-set replay. Semantic correctness is proved only by analyst review against the governed definition, and that is the release gate. Golden cases pair the user's natural-language question, the approved SQL and the expected result shape. They include easy examples, ambiguous paraphrases, edge cases with filters and time windows, and known traps where a valid query answers the wrong question.
+- A query that runs can still be wrong, so the evaluation separates two things.
+- Execution accuracy is proved by the golden-set replay. Semantic correctness is proved only by analyst review against the governed definition, and that is the release gate.
+- Golden cases pair the user's natural-language question, the approved SQL and the expected result shape.
+- They include easy examples, ambiguous paraphrases, edge cases with filters and time windows, and known traps where a valid query answers the wrong question.
 
 | Metric | Good threshold | Bad threshold | Dataset / method | Owner |
 |---|---:|---:|---|---|
@@ -112,13 +196,21 @@ Measure in four buckets, so model quality is never confused with operational hea
 - adoption: trust score
 - business outcome: answer turnaround before and after, analyst escalation volume, executive self-service rate
 
-A successful assistant changes behaviour. If executives keep asking analysts to re-check, the product has not solved the problem. The dashboard is layered the same way: business outcome on top, model quality in the middle, system health at the bottom. Each business metric is wired to the component that can move it. A trust drop then points at slow answers, too many clarifications, broken mapping, or policy blocks that feel arbitrary.
+- A successful assistant changes behaviour. If executives keep asking analysts to re-check, the product has not solved the problem.
+- The dashboard is layered the same way: business outcome on top, model quality in the middle, system health at the bottom.
+- Each business metric is wired to the component that can move it.
+- A trust drop then points at slow answers, too many clarifications, broken mapping, or policy blocks that feel arbitrary.
 
-Red-team the definitions as well as the SQL. Semantic substitution, where login activity stands in for paid activity. Schema drift that keeps a template plausible. Join explosions that pass every SQL check. Excessive scans that slow other tenants. Summary drift, where the table is right and the prose misstates the trend. For the copilot personas, add fabricated business reasons, leakage across regions or business units, stale dashboard refreshes presented as current, and an overconfident board-level narrative.
+- Red-team the definitions as well as the SQL. Semantic substitution, where login activity stands in for paid activity.
+- Schema drift that keeps a template plausible. Join explosions that pass every SQL check.
+- Excessive scans that slow other tenants. Summary drift, where the table is right and the prose misstates the trend.
+- For the copilot personas, add fabricated business reasons, leakage across regions or business units, stale dashboard refreshes presented as current, and an overconfident board-level narrative.
 
 ## 11. Roll Out Ten Metrics at a Time
 
-The rollout must prove three things in order. The assistant answers a narrow set of governed questions correctly. It does so safely under policy. Real users adopt it because it improves their workflow rather than impressing them in a demo. Each phase left to right widens the blast radius. The assistant advances only when the prior phase's exit criteria are met.
+- The rollout must prove three things in order. The assistant answers a narrow set of governed questions correctly.
+- It does so safely under policy. Real users adopt it because it improves their workflow rather than impressing them in a demo.
+- Each phase left to right widens the blast radius. The assistant advances only when the prior phase's exit criteria are met.
 
 ```mermaid
 flowchart LR
@@ -126,6 +218,14 @@ flowchart LR
     P2 -->|Exit: regressions detectable,<br/>every failure explainable| P3["Phase 3<br/>Shadow analysts"]
     P3 -->|Exit: matches analyst review,<br/>escalation path works| P4["Phase 4<br/>Expand domain by domain"]
     P4 -->|Rollback gate at every stage| P1
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class P1 cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class P2,P3 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class P4 cbPolicy
 ```
 
 | Week | Gate |
@@ -138,9 +238,16 @@ flowchart LR
 | 6-8 | Executive release once the assistant consistently matches analyst-reviewed answers and escalation works |
 | After | Expand domain by domain, each with a named metric owner who approves definitions, reviews golden cases and owns semantic-layer changes |
 
-Name the owners. The metric owner approves definitions and golden cases. The application owner owns the runtime, prompt assembly, generation and API contracts. The data owner owns warehouse tables, the semantic layer and policy mappings. The security owner reviews access control, audit logging and blocked-query handling. The support owner receives escalations and coordinates rollback. Rollback triggers are a spike in policy violations, a drop in semantic correctness, a jump in bytes scanned, or users routing around the assistant because they stopped trusting it. Rollback keeps a partial success from becoming an incident.
+- Name the owners. The metric owner approves definitions and golden cases. The application owner owns the runtime, prompt assembly, generation and API contracts.
+- The data owner owns warehouse tables, the semantic layer and policy mappings.
+- The security owner reviews access control, audit logging and blocked-query handling. The support owner receives escalations and coordinates rollback.
+- Rollback triggers are a spike in policy violations, a drop in semantic correctness, a jump in bytes scanned, or users routing around the assistant because they stopped trusting it.
+- Rollback keeps a partial success from becoming an incident.
 
-Decide what is configuration, adapter, shared service and core product, because an FDE system pays off only when the next customer inherits the stable core and swaps the edges. Metric definitions, allowed domains and rollout thresholds are configuration. Warehouse and identity integrations are adapters. Query validation, policy enforcement, tracing and audit logging are shared services. Question understanding, explanation behaviour and safe query orchestration are the core. Five delivery items make it stick:
+- Decide what is configuration, adapter, shared service and core product, because an FDE system pays off only when the next customer inherits the stable core and swaps the edges.
+- Metric definitions, allowed domains and rollout thresholds are configuration. Warehouse and identity integrations are adapters.
+- Query validation, policy enforcement, tracing and audit logging are shared services. Question understanding, explanation behaviour and safe query orchestration are the core.
+- Five delivery items make it stick:
 
 - a canary on a small user group or metric set
 - staged migration of governed questions from analyst workflows

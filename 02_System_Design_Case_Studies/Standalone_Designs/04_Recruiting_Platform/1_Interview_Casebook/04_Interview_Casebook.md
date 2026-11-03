@@ -6,7 +6,9 @@ You are asked to build a recruiting platform with AI at every step. It reads res
 
 ## Step 1. Define the problem space
 
-A recruiter posts a job description and a large batch of resumes arrives. The platform has to rank those candidates by fit, draft questions and scorecards, book interviews and suggest a decision. The recruiter still makes the final call, and that requirement shapes the rest of the design: we are building a tool that helps people hire, not one that hires on its own.
+- A recruiter posts a job description and a large batch of resumes arrives.
+- The platform has to rank those candidates by fit, draft questions and scorecards, book interviews and suggest a decision.
+- The recruiter still makes the final call, and that requirement shapes the rest of the design: we are building a tool that helps people hire, not one that hires on its own.
 
 This case works from the answers in the table. Check each one with the interviewer before you rely on it.
 
@@ -49,6 +51,16 @@ flowchart TD
     P --> Q[Human Recruiter Review]
     Q --> R[Interview Scheduler]
     R --> S[Candidate Portal]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E,I,Q cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F,H,J,M,N,P,R cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G,K,O,S cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D,L cbPolicy
 ```
 
 **The extraction service is where documents turn into data.** Upstream of it, the system handles PDFs and loose text. Downstream, it handles profiles that share one shape, so they can be compared and ranked. This is the chunking-by-format lesson from Module 06 again. Resumes come in every layout, and the parser must still emit one consistent structure.
@@ -68,24 +80,51 @@ flowchart TD
 
 ## Step 4. The deep dive: explainable ranking
 
-The ranking does not rest on a single similarity number. It blends semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success. Explicit weights let a recruiter follow the ranking and an auditor inspect it; one opaque score allows neither. The weights do not by themselves make the ranking fair or job-relevant.
+- The ranking does not rest on a single similarity number. It blends semantic similarity, the match on required skills, level of experience, domain knowledge, location, certifications, availability and, where it applies, past hiring success.
+- Explicit weights let a recruiter follow the ranking and an auditor inspect it; one opaque score allows neither.
+- The weights do not by themselves make the ranking fair or job-relevant.
 
 Here is a weighting I would open with. It is my own starting point, not an industry norm: semantic similarity ~30% · skills match ~25% · experience ~20% · domain expertise ~15% · everything else ~10%. With weights like these on show, a recruiter can see the reasons behind a candidate's place as well as the place.
 
-The AI judge works the same way. It scores against a fixed rubric and explains each score, and the decision is never its to make. The evaluation pipeline pulls together similarity, profile completeness, judge scores, interview feedback and input from the recruiter and hiring manager. When confidence falls below a set threshold, a person must review the case. Module 04 warned against letting an LLM judge alone gate a high-stakes outcome. Here the outcome is someone's career.
+- The AI judge works the same way. It scores against a fixed rubric and explains each score, and the decision is never its to make.
+- The evaluation pipeline pulls together similarity, profile completeness, judge scores, interview feedback and input from the recruiter and hiring manager.
+- When confidence falls below a set threshold, a person must review the case.
+- Module 04 warned against letting an LLM judge alone gate a high-stakes outcome.
+- Here the outcome is someone's career.
 
 ## Step 5. Scaling to thousands of resumes an hour
 
-Keep the application servers stateless so they scale out. Process documents asynchronously: parsing and embedding run as background jobs, and an upload never waits on them. Spread the vector database across nodes. Use GPU-backed inference to soak up bursts, such as a new posting that sets off thousands of comparisons at once. Drive ingestion with events, so upload is decoupled from parsing, extraction, embedding and ranking. Deploy in several regions to cut latency and keep candidate PII where it has to stay. Cache embeddings and generated text, and lean on queues during peak hiring periods.
+- Keep the application servers stateless so they scale out. Process documents asynchronously: parsing and embedding run as background jobs, and an upload never waits on them.
+- Spread the vector database across nodes. Use GPU-backed inference to soak up bursts, such as a new posting that sets off thousands of comparisons at once.
+- Drive ingestion with events, so upload is decoupled from parsing, extraction, embedding and ranking.
+- Deploy in several regions to cut latency and keep candidate PII where it has to stay.
+- Cache embeddings and generated text, and lean on queues during peak hiring periods.
 
 ## Security and fairness: candidate data is sensitive; hiring decisions carry legal weight
 
-Encrypt data both when stored and when moving. Guard PII. Give recruiters and hiring managers role-based access through RBAC. Write an audit record for every AI suggestion and every hiring action. Agree with the privacy and legal owners which GDPR, CCPA and EEOC duties apply, and honour candidates who ask for their data to be deleted. These controls support compliance; they do not certify it. Watch the models for bias across protected groups continuously, not once at launch.
+- Encrypt data both when stored and when moving. Guard PII. Give recruiters and hiring managers role-based access through RBAC.
+- Write an audit record for every AI suggestion and every hiring action.
+- Agree with the privacy and legal owners which GDPR, CCPA and EEOC duties apply, and honour candidates who ask for their data to be deleted.
+- These controls support compliance; they do not certify it. Watch the models for bias across protected groups continuously, not once at launch.
 
+```mermaid
+flowchart TD
+    N0["AI ranking and scores"]
+    N1["Human recruiter review"]
+    N2["Approve or override"]
+    N3["Final hiring decision"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N0,N1 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3 cbPolicy
 ```
-AI Ranking & Scores → Human Recruiter Review → Approve or Override → Final Hiring Decision
-                        (continuous bias and fairness monitoring over the whole path)
-```
+
+- Monitor bias and fairness across the full decision path.
 
 No AI ranking reaches a decision without a person in between.
 

@@ -4,7 +4,10 @@
 
 ◷ 29 min
 
-Correlating logs with deploys is the easy part. The hard part is that the agent depends on the same observability stack that is most likely to be degraded during the incident it is investigating. It can also propose changes to production while the people who would catch a wrong hypothesis are at their busiest. This page consolidates the group's prompts into one read for the day before. Everything else in the group is a delta on it.
+- Correlating logs with deploys is the easy part. The hard part is that the agent depends on the same observability stack that is most likely to be degraded during the incident it is investigating.
+- It can also propose changes to production while the people who would catch a wrong hypothesis are at their busiest.
+- This page consolidates the group's prompts into one read for the day before.
+- Everything else in the group is a delta on it.
 
 | Case in the group                                                           | What it contributes here                                                                                                       |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -22,9 +25,19 @@ Open with the risk profile, not the components. A research agent that is wrong w
 
 > *"The agent may query anything and change nothing on its own. A ten-second human approval is acceptable mid-incident. An autonomous rollback on a wrong hypothesis is not."*
 
-The three answer tiers show what that opening buys. The weak answer connects the LLM to logs and metrics, lets it find the root cause, and restarts services from runbooks. It treats the model as the security boundary and never separates guidance from action. The average answer builds a triage assistant that queries observability tools and retrieves runbooks, requires approval for actions and evaluates root-cause accuracy. It has the right direction but no numbers, no failure design and no rollout gates. The strong answer designs an evidence-first incident copilot. It never claims a root cause without supporting telemetry. It presents hypotheses, confidence, blast radius, recent deployments and the recommended next checks. Remediation stays approval-gated with service ownership and change-risk validation.
+- The three answer tiers show what that opening buys. The weak answer connects the LLM to logs and metrics, lets it find the root cause, and restarts services from runbooks.
+- It treats the model as the security boundary and never separates guidance from action.
+- The average answer builds a triage assistant that queries observability tools and retrieves runbooks, requires approval for actions and evaluates root-cause accuracy.
+- It has the right direction but no numbers, no failure design and no rollout gates.
+- The strong answer designs an evidence-first incident copilot. It never claims a root cause without supporting telemetry.
+- It presents hypotheses, confidence, blast radius, recent deployments and the recommended next checks.
+- Remediation stays approval-gated with service ownership and change-risk validation.
 
-Restate the problem in one sentence, ask for the eight numbers, then name the oracle and cut scope. The eight numbers are throughput, latency, horizon, accuracy, cost, autonomy, data class and recovery. The oracle is the answer to "how will we know a run succeeded". The scope cut is "I'll treat X as out of scope unless you want it in". Close the requirements phase by restating everything as one sentence and asking "is that the system?" It costs 20 seconds, and interviewers consistently mark it as a strong signal.
+- Restate the problem in one sentence, ask for the eight numbers, then name the oracle and cut scope.
+- The eight numbers are throughput, latency, horizon, accuracy, cost, autonomy, data class and recovery.
+- The oracle is the answer to "how will we know a run succeeded".
+- The scope cut is "I'll treat X as out of scope unless you want it in".
+- Close the requirements phase by restating everything as one sentence and asking "is that the system?" It costs 20 seconds, and interviewers consistently mark it as a strong signal.
 
 | Question to ask                                                                                                                 | What the answer decides                                                                                                           |
 | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -68,9 +81,16 @@ This OpenAI-style practice prompt lists the topics an interviewer expects you to
 
 A requirement the responder cannot test is a preference. "Fast during incidents" is a preference; "first useful summary under 30 seconds at 400 alerts in 90 seconds" is a constraint, and only the second one changes the architecture. Split the functional list with MoSCoW so the launch gate is the smallest set that still helps an on-call engineer.
 
-There are four must-haves. Correlate logs, metrics, traces, deployments and runbooks for a fired alert, and propose a likely cause with the evidence that supports it. Execute only safe read-only diagnostics automatically; every write is a proposal with an exact command, its blast radius and the evidence behind it. Apply user, role and service-ownership permissions before retrieval and before generation, and hold only scoped read credentials. Show confidence, missing evidence and which sources could not be reached, because source coverage is a first-class output field.
+- There are four must-haves. Correlate logs, metrics, traces, deployments and runbooks for a fired alert, and propose a likely cause with the evidence that supports it.
+- Execute only safe read-only diagnostics automatically; every write is a proposal with an exact command, its blast radius and the evidence behind it.
+- Apply user, role and service-ownership permissions before retrieval and before generation, and hold only scoped read credentials.
+- Show confidence, missing evidence and which sources could not be reached, because source coverage is a first-class output field.
 
-The should-haves belong in the first usable version. Draft the incident timeline as events arrive. Ground every step in an approved runbook and cite it. Route proposals to the service owner and the incident commander with change-freeze awareness. Simulate a command before proposing it where the platform allows. Collect responder feedback and post-incident review outcomes for evaluation, never for direct training. Add admin controls for tool allowlists, source inclusion, blocked actions and audit export. Later come automatic low-risk reversible actions, historical-incident similarity search, and per-service tuning.
+- The should-haves belong in the first usable version. Draft the incident timeline as events arrive.
+- Ground every step in an approved runbook and cite it. Route proposals to the service owner and the incident commander with change-freeze awareness.
+- Simulate a command before proposing it where the platform allows. Collect responder feedback and post-incident review outcomes for evaluation, never for direct training.
+- Add admin controls for tool allowlists, source inclusion, blocked actions and audit export.
+- Later come automatic low-risk reversible actions, historical-incident similarity search, and per-service tuning.
 
 Declare the non-goals. The request is "tell us what is broken and fix it automatically", and the first release does not do that:
 
@@ -119,8 +139,13 @@ The agent's inputs are the systems that break during incidents, so map each sour
 | Incident management (PagerDuty, Jira) | Alerts, incidents, past tickets  | On-call program          | Minutes             | Team-based                 | Duplicate incidents; stale ownership                                            |
 | Runbook repository                    | Symptoms, steps, risk level      | Service owners           | Days                | Repo permissions           | Stale steps; injection planted in a runbook                                     |
 
-State the integration assumptions aloud. Every source record has a stable ID, an owner, a last-updated timestamp and ACL metadata. A source that lacks ACL metadata is excluded until it is mapped. Embeddings are never the authority for permissions. Source freshness varies by system, so the summary carries stale-source warnings when a record is older than the approved threshold. Responder feedback is stored separately from ground truth, and post-incident reviews become evaluation data only after approval.
+- State the integration assumptions aloud. Every source record has a stable ID, an owner, a last-updated timestamp and ACL metadata.
+- A source that lacks ACL metadata is excluded until it is mapped.
+- Embeddings are never the authority for permissions. Source freshness varies by system, so the summary carries stale-source warnings when a record is older than the approved threshold.
+- Responder feedback is stored separately from ground truth, and post-incident reviews become evaluation data only after approval.
 
-The core records follow from that. Alert(id, service, severity, labels, start_time). Signal(id, alert_id, source, metric or log or trace, timestamp, value). Deployment(id, service, version, commit, deploy_time). Runbook(id, service, symptom, steps, risk_level). ActionProposal(id, action_type, blast_radius, approval_status). IncidentTimeline(event_id, incident_id, timestamp, source). Add one field the answer key does not name and the anchor insists on: SourceCoverage(investigation_id, source, status) with the five typed states.
+- The core records follow from that. Alert(id, service, severity, labels, start_time). Signal(id, alert_id, source, metric or log or trace, timestamp, value).
+- Deployment(id, service, version, commit, deploy_time). Runbook(id, service, symptom, steps, risk_level). ActionProposal(id, action_type, blast_radius, approval_status).
+- IncidentTimeline(event_id, incident_id, timestamp, source). Add one field the answer key does not name and the anchor insists on: SourceCoverage(investigation_id, source, status) with the five typed states.
 
 Say the dependency inversion while the map is up. The agent depends on the observability stack, which is disproportionately likely to be degraded during the incident it is investigating. So run outside the affected blast radius, treat every telemetry query as potentially `EMPTY` or `UNAVAILABLE`, and report which sources could not be reached.

@@ -4,7 +4,9 @@
 
 A provider wants one AI platform for many customer organisations, because a stack per customer costs too much. The hard part is isolation. Acme must never see Globex's documents, whether through a database row, a cache hit, a log line or the model's prompt. A tenant ID on a row does not guarantee that.
 
-The design derives tenant context once from verified identity, freezes it on the request, and enforces it independently at seven layers: row, object, cache, queue, log, vector index and key. Spend is metered before the model call, fair queues stop one heavy tenant from slowing the rest, region rules cover logs and backups, and offboarding proves that keys and copies are gone. Shared infrastructure is the default; a dedicated tier is for tenants whose residency, risk or performance needs justify it.
+- The design derives tenant context once from verified identity, freezes it on the request, and enforces it independently at seven layers: row, object, cache, queue, log, vector index and key.
+- Spend is metered before the model call, fair queues stop one heavy tenant from slowing the rest, region rules cover logs and backups, and offboarding proves that keys and copies are gone.
+- Shared infrastructure is the default; a dedicated tier is for tenants whose residency, risk or performance needs justify it.
 
 This is the anchor case for shared AI platforms. Per-customer budgets, one unusually active tenant and a cross-tenant retrieval incident reuse the same tenant context and request path and change what dominates.
 
@@ -19,6 +21,14 @@ flowchart LR
   C -->|Yes| D[Tenant scoped retrieval]
   C -->|No| E[Degrade that tenant]
   D --> F[Model call and audit]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,C,D cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class E cbInput
 ```
 
 ## Who it is for

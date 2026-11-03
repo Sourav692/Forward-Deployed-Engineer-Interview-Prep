@@ -31,7 +31,12 @@ Ask five questions first, and state an assumption for each one the interviewer d
 | One model or many? Fixed or variable output length? | Variable length rules out static batching | One model, variable output |
 | Peak rate, burst shape, tenants and priorities? | Sets headroom, fairness and shedding policy | 1,000 rps peak, bursty, several tenants |
 
-The weak answer draws a load balancer, a queue and a pool of GPUs, then stops. It never says what a batch is or why a GPU fills up. The strong answer names the two phases of inference in the first two minutes *(from the additions file, section B1)*. Prefill processes the whole prompt in parallel and sets time to first token. Decode generates one token at a time and sets tokens per second. Every later decision is a way of scheduling those two phases on scarce memory.
+- The weak answer draws a load balancer, a queue and a pool of GPUs, then stops.
+- It never says what a batch is or why a GPU fills up.
+- The strong answer names the two phases of inference in the first two minutes *(from the additions file, section B1)*.
+- Prefill processes the whole prompt in parallel and sets time to first token.
+- Decode generates one token at a time and sets tokens per second.
+- Every later decision is a way of scheduling those two phases on scarce memory.
 
 > *"A GPU is a stateful server with a memory budget. Prefill sets first-token time, decode sets streaming speed, and the KV cache decides how many requests fit at once. I'll design the scheduler around those three facts."*
 
@@ -39,7 +44,10 @@ The weak answer draws a load balancer, a queue and a pool of GPUs, then stops. I
 
 A requirement that cannot fail a test is a preference. "Fast" is a preference. "First token under 500 ms at p95 at 1,000 rps" is a constraint. The split and the numbers are *own construction*; the nouns come from the prompts.
 
-The must-haves come straight from the anchor prompt's wording. Accept generation requests with a prompt, a token limit, sampling parameters and a stream flag. Batch them onto GPUs. Route each batch or sequence to a GPU with capacity. Deliver the response to the right caller, streamed or whole. Detect a failed GPU and move its work elsewhere. Reject or queue excess load rather than collapse under it.
+- The must-haves come straight from the anchor prompt's wording. Accept generation requests with a prompt, a token limit, sampling parameters and a stream flag.
+- Batch them onto GPUs. Route each batch or sequence to a GPU with capacity.
+- Deliver the response to the right caller, streamed or whole. Detect a failed GPU and move its work elsewhere.
+- Reject or queue excess load rather than collapse under it.
 
 The should-haves make it operable: per-tenant quotas and priorities, cancellation when a caller disconnects, prefix reuse for repeated system prompts, rolling model upgrades without dropping traffic, and metrics that separate queue wait from service time.
 
@@ -100,37 +108,68 @@ The organising rule is admit, then route, then batch per GPU. Admission and rout
 
 The whole system *(own construction)*, with the control plane above and the request path below:
 
+```mermaid
+flowchart TD
+    N0["Client"]
+    N1["Gateway authenticates, validates, and tokenises on CPU"]
+    N2["Admission: token-weighted tenant bucket and bounded queue"]
+    N3["Overload: 429 and Retry-After, shed or defer to batch"]
+    N4["Admitted: router reads free KV, queue, running sequences, health"]
+    N5["Power-of-two choice and prefix affinity"]
+    N6["Replica scheduler: continuous batching"]
+    N7["GPU prefill, decode, and KV pool"]
+    N8["Demultiplex by request_id"]
+    N9["Detokenise and post-process"]
+    N10["SSE stream to client"]
+    N11["Client disconnects"]
+    N12["Cancel and free KV slot immediately"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    N11 --> N12
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8,N12 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N3,N7,N11 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N4,N6,N10 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N5,N9 cbReason
 ```
- ╔══════════════════════ CONTROL PLANE (changes are deployments) ═══════════════════════╗
- ║  model registry + versions · autoscaler (queue depth, KV use) · tenant quotas         ║
- ║  routing policy · health policy · SLO targets · rollout controller (drain, canary)    ║
- ╚═══════════════════════════════════════╤═══════════════════════════════════════════════╝
-                                         │ configures every box below
- ╔══════════════════════ DATA PLANE (per request) ═══════════════════════════════════════╗
- ║                                                                                       ║
- ║ client ─> GATEWAY ─> ADMISSION ────────────> ROUTER ────────────────> REPLICA k      ║
- ║           authN      token bucket per         reads capacity           ┌───────────┐ ║
- ║           validate   tenant, weighted by      registry: free KV,       │ SCHEDULER │ ║
- ║           TOKENIZE   estimated tokens;        queue, running seqs;     │ continuous│ ║
- ║           (CPU)      bounded queue;           power-of-two choice      │ batching  │ ║
- ║                      429 + Retry-After        + prefix affinity        │ ┌───────┐ │ ║
- ║                        │ reject                    │                   │ │  GPU  │ │ ║
- ║                        v                           │                   │ │prefill│ │ ║
- ║                   shed or defer                    │                   │ │decode │ │ ║
- ║                   to batch tier                    │                   │ │KV pool│ │ ║
- ║                                                    │                   │ └───────┘ │ ║
- ║                                                    │                   └─────┬─────┘ ║
- ║  CAPACITY REGISTRY <── heartbeat every ~1 s ───────┼─────────────────────────┤       ║
- ║  (free KV blocks, waiting, running, healthy)       │                         │ tokens║
- ║                                                    │                         v       ║
- ║  HEALTH CHECKER ── liveness · readiness · 1-token probe ──> evict / drain    │       ║
- ║                                                                              │       ║
- ║ client <── STREAM (SSE) <── DETOKENIZE + post-process <── DEMUX by request_id┘       ║
- ║            cancel on disconnect ──────────────────────────> free KV slot now          ║
- ║                                                                                       ║
- ║  OBSERVABILITY: TTFT · TPOT · queue wait vs service time · goodput · KV use · errors  ║
- ╚═══════════════════════════════════════════════════════════════════════════════════════╝
+
+```mermaid
+flowchart TD
+    N0["Replica heartbeat about every 1 s"]
+    N1["Capacity registry: free KV blocks, waiting, running, health"]
+    N2["Router"]
+    N3["Health checker: liveness, readiness, 1-token probe"]
+    N4["Evict or drain replica"]
+    N0 --> N1
+    N1 --> N2
+    N3 --> N4
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 cbPolicy
 ```
+
+- Version model registry, autoscaling, tenant quotas, routing, health policy, SLO targets, and drain/canary rollout. Autoscaling uses queue depth and KV use.
+- Measure TTFT, TPOT, queue wait versus service time, goodput, KV use, and errors.
 
 The same flow for viewers that render Mermaid *(own construction)*:
 
@@ -167,6 +206,16 @@ flowchart LR
     Q -.-> ADM
     AS -.-> R1 & R2
     RO -.-> RT
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class REG,CAP,GPU2 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class AS,ADM,SCH,ST,CAN cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Q,RO,GW,REJ,GPU,HC,DM,R1 cbPolicy
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class C,RT,SCH2,DT,R2 cbInput
 ```
 
 Read the components in request order *(own construction)*.
@@ -193,6 +242,8 @@ Point at three boundaries while the diagram is up. Admission is the only place l
 
 Tokenization is CPU work, and CPU work on the GPU's request thread steals time from the most expensive machine in the building. Move it to the gateway.
 
-Tokenizing early buys three things. The admission controller can charge a tenant by real tokens, not by request count. The router can estimate KV memory before it picks a replica. A malformed or oversized prompt fails before it reaches a queue. Cap input length at the gateway and return a clear error, because one 100,000-token prompt can monopolise a replica's prefill.
+- Tokenizing early buys three things. The admission controller can charge a tenant by real tokens, not by request count.
+- The router can estimate KV memory before it picks a replica. A malformed or oversized prompt fails before it reaches a queue.
+- Cap input length at the gateway and return a clear error, because one 100,000-token prompt can monopolise a replica's prefill.
 
 Detokenization runs at the other end, incrementally. Some tokens are partial characters, so the streaming layer must buffer until a complete character exists. Stop sequences are checked on text, not tokens, for the same reason.

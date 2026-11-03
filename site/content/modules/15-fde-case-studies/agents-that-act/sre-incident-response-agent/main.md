@@ -110,6 +110,16 @@ flowchart LR
     POLICY[Read/propose/execute policy and freeze rules] -.-> READ
     POLICY -.-> APPROVE
     POLICY -.-> GATE
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class ALERT,READ cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class DEDUPE,HYP,PROP cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class CAP,COVER,TIMELINE cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class CONTEXT,SUMMARY,APPROVE,GATE,EXEC,POLICY cbPolicy
 ```
 
 ### Step-by-step architecture
@@ -128,7 +138,9 @@ flowchart LR
 
 ## 4. How investigation works
 
-Collapse related alerts into one incident before spending model calls. Attach new alerts to an active investigation and cap concurrent runs per service. Build context from service topology, deploys, flags, owners, and freeze status. Query telemetry in parallel with bounded lookback; pre-aggregate log signatures, metric buckets, trace samples, and deploy diffs before they become model tokens. Use the strong model for a small set of ranked hypotheses, not raw-log search.
+- Collapse related alerts into one incident before spending model calls. Attach new alerts to an active investigation and cap concurrent runs per service.
+- Build context from service topology, deploys, flags, owners, and freeze status. Query telemetry in parallel with bounded lookback; pre-aggregate log signatures, metric buckets, trace samples, and deploy diffs before they become model tokens.
+- Use the strong model for a small set of ranked hypotheses, not raw-log search.
 
 Every tool returns one typed state: `SUCCESS`, `EMPTY`, `UNAVAILABLE`, `DENIED`, or `INVALID`. `EMPTY` means the query worked and found nothing; `UNAVAILABLE` means the source did not answer. Never treat the two as the same evidence. To the model, `DENIED` is a dead end; the details go into the human audit, never into a hint for working around it.
 
@@ -136,9 +148,13 @@ A mitigation always starts as a proposal. Compute blast radius from the service 
 
 ## 5. Latency, scale, and cost
 
-At the source’s burst of 400 alerts/90 s, one investigation per alert would overload the telemetry stack and produce noisy summaries. Dedupe/correlation should take under a second; context building ~1–2 s; parallel telemetry fan-out ~5–10 s for the slowest source; strong-model synthesis ~10–15 s in this budget, streamed; verification completes the under-30-second first output. Track time to first useful hypothesis, not only final response time.
+- At the source’s burst of 400 alerts/90 s, one investigation per alert would overload the telemetry stack and produce noisy summaries.
+- Dedupe/correlation should take under a second; context building ~1–2 s; parallel telemetry fan-out ~5–10 s for the slowest source; strong-model synthesis ~10–15 s in this budget, streamed; verification completes the under-30-second first output.
+- Track time to first useful hypothesis, not only final response time.
 
-At 10×, provider quotas and telemetry rate limits likely bind first. Per-service caps and pre-aggregation keep strong-model calls tied to real incidents rather than alert count. Profile input tokens and serial steps before choosing a faster model. Cache versioned service catalogs/runbooks, shrink lookback and top-k, and parallelise independent read-only calls. Measure spend per resolved investigation, and keep it visible even when a SEV-1 justifies a larger budget.
+- At 10×, provider quotas and telemetry rate limits likely bind first. Per-service caps and pre-aggregation keep strong-model calls tied to real incidents rather than alert count.
+- Profile input tokens and serial steps before choosing a faster model. Cache versioned service catalogs/runbooks, shrink lookback and top-k, and parallelise independent read-only calls.
+- Measure spend per resolved investigation, and keep it visible even when a SEV-1 justifies a larger budget.
 
 ## 6. Failure and safety playbook
 
@@ -164,7 +180,11 @@ Start with historical incidents and one alert class. Build an SME-approved golde
 
 For a 45-minute round: requirements and oracle (8), records/action space (4), architecture (8), failure ladder and gates (8), scale/cost arithmetic (7), measurement/rollout (6), questions back (4).
 
-> “I’d start with a read-only incident assistant. It deduplicates an alert storm before any model call, builds service/deploy context, queries telemetry in parallel, and presents ranked hypotheses with evidence and explicit source coverage within 30 seconds. Since telemetry can fail during the incident, it distinguishes empty from unavailable and runs outside the affected blast radius. A mitigation is an exact, blast-radius-aware proposal; only the service owner and incident commander can approve a write through a gateway. I’d validate precision against post-incident reviews, shadow it first, then ship live read-only summaries before allowing approved low-risk actions.”
+> - I’d start with a read-only incident assistant.
+> - It deduplicates an alert storm before any model call, builds service/deploy context, queries telemetry in parallel, and presents ranked hypotheses with evidence and explicit source coverage within 30 seconds.
+> - Since telemetry can fail during the incident, it distinguishes empty from unavailable and runs outside the affected blast radius.
+> - A mitigation is an exact, blast-radius-aware proposal; only the service owner and incident commander can approve a write through a gateway.
+> - I’d validate precision against post-incident reviews, shadow it first, then ship live read-only summaries before allowing approved low-risk actions.
 
 | Follow-up                      | Short answer                                                                                                         |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------- |

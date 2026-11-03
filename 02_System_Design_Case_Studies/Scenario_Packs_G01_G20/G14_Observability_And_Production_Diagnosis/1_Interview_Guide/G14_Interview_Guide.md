@@ -86,6 +86,16 @@ flowchart TB
   D --> G[Global aggregate dashboard]
   D --> V[Tenant-scoped support access gateway]
   V -. access event .-> Q[(Separate durable audit log)]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class U,T,V cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,M,P,C,S cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class R,O,D,Q cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class B,G cbPolicy
 ```
 
 ### Step-by-step architecture
@@ -100,7 +110,10 @@ flowchart TB
 
 ## Diagnose from the complaint down
 
-Start with the user outcome: p95/p99, first-token time, failure/partial rate and affected tenant. Then split request time into retrieval, rerank, model queue, provider, tools and delivery. For a wrong answer, compare retrieved evidence with the answer: empty/stale/off-topic evidence points upstream; good evidence contradicted by the answer points to synthesis or prompt; one-tenant failures point to config, permission or integration state. Track completion, abandonment and support contacts alongside technical quality.
+- Start with the user outcome: p95/p99, first-token time, failure/partial rate and affected tenant.
+- Then split request time into retrieval, rerank, model queue, provider, tools and delivery.
+- For a wrong answer, compare retrieved evidence with the answer: empty/stale/off-topic evidence points upstream; good evidence contradicted by the answer points to synthesis or prompt; one-tenant failures point to config, permission or integration state.
+- Track completion, abandonment and support contacts alongside technical quality.
 
 **If sampling dropped the only bad trace:** compare complaints with trace coverage, temporarily raise fidelity for the affected slice, reconstruct from gateway/dependency evidence, mark the trace gap, then add error-class overrides and always-on exemplars. A missing trace does not mean no failure.
 

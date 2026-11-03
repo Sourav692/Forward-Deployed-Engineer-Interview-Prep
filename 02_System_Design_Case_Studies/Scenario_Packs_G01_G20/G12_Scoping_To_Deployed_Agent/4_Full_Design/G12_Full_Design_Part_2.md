@@ -48,7 +48,11 @@ Three ordered deny rules decide every sign-off, and every attempt is logged, all
 
 Seniority is not an override, and the reason is the same one that keeps an LLM from enforcing its own access control. The person closest to the work is not automatically the person authorised to certify it is safe.
 
-Two pairs of gates sound alike and check different things, which makes them a favourite follow-up. `security_review_passed` asks whether it is safe to touch this customer's systems at all. `data_access_granted` asks whether the agreed sources actually connected. One is a go-ahead; the other confirms the thing done afterwards worked. `golden_set_signed_off` certifies the exam is fair, judged by the SME who knows the business. `eval_baseline_met` certifies the agent passed it, judged by the FDA. A representative set with a failing score, or a rigorous score against a bad set, both correctly fail.
+- Two pairs of gates sound alike and check different things, which makes them a favourite follow-up.
+- `security_review_passed` asks whether it is safe to touch this customer's systems at all.
+- `data_access_granted` asks whether the agreed sources actually connected. One is a go-ahead; the other confirms the thing done afterwards worked.
+- `golden_set_signed_off` certifies the exam is fair, judged by the SME who knows the business.
+- `eval_baseline_met` certifies the agent passed it, judged by the FDA. A representative set with a failing score, or a rigorous score against a bad set, both correctly fail.
 
 The Northwind stall answers "are the gates real?" in three rows:
 
@@ -111,6 +115,9 @@ A gate can be structurally real and still be a rubber stamp. The right role must
 
 The fix is a checklist, not a sentence. Adversarial testing done, permission boundaries tested and data agreements signed must all be present before the gate passes. That is intake's discipline applied to what a signature attests to.
 
-Three more gaps sit in the delivery process itself, easy to miss because attention is on what gets deployed. The process holds live customer credentials in two windows: when sources first connect, and when the agent first runs against the real environment. Those credentials need a vault, engagement scope and revocation at handover. The golden set built with the SME often contains real customer data, so it follows that customer's sensitivity tier rather than one default. And many engagements at once is a tenancy decision, not only a capacity one: are two customers' gate evidence and test sets separated by a tag or physically?
+- Three more gaps sit in the delivery process itself, easy to miss because attention is on what gets deployed.
+- The process holds live customer credentials in two windows: when sources first connect, and when the agent first runs against the real environment.
+- Those credentials need a vault, engagement scope and revocation at handover. The golden set built with the SME often contains real customer data, so it follows that customer's sensitivity tier rather than one default.
+- And many engagements at once is a tenancy decision, not only a capacity one: are two customers' gate evidence and test sets separated by a tag or physically?
 
 > *"A gate proving access was granted proves a human attested it's live. It doesn't prove the credentials enabling that access were ever handled safely during the engagement — stored in a vault, scoped only to what this engagement needs, revoked cleanly at handover."*

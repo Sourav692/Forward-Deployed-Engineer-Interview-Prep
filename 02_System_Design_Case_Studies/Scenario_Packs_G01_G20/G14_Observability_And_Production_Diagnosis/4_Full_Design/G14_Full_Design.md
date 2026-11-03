@@ -28,7 +28,10 @@ The customer wants to connect a user-visible failure to a technical cause, fast,
 
 Good discovery separates three problems the complaint compresses. Latency asks whether the request is slow, and where in the pipeline. Correctness asks whether the answer is wrong, and whether the fault is upstream in retrieval or downstream in the model or a tool. Diagnosability asks whether support and engineering can explain a failure without exposing sensitive content.
 
-Each stakeholder wants a different signal. Support wants to triage a complaint without waiting on engineering. Engineering wants to know whether the fault is retrieval, the model or a tool integration. Security wants assurance that telemetry does not become a new exposure surface. The executive sponsor wants proof that quality improves release over release, which green dashboards alone do not give.
+- Each stakeholder wants a different signal. Support wants to triage a complaint without waiting on engineering.
+- Engineering wants to know whether the fault is retrieval, the model or a tool integration.
+- Security wants assurance that telemetry does not become a new exposure surface.
+- The executive sponsor wants proof that quality improves release over release, which green dashboards alone do not give.
 
 | Question | Why it changes the design |
 |---|---|
@@ -64,7 +67,12 @@ The interviewer usually injects this as a hidden constraint mid-round: the custo
 
 A requirement that cannot fail a test is a preference. "Observable" is a preference. "Support moves from a complaint to the request family without seeing raw content" is a constraint, and it shapes the architecture.
 
-There are six functional requirements. Support the core workflow: a support agent moves from a user complaint to the exact request family and explains the failure without seeing raw sensitive content. Attach a stable correlation ID to every request and propagate trace context across services, integrations and queue boundaries. Capture per-hop timing across authentication, tenant resolution, retrieval, model call, tool use, post-processing and delivery. Record retrieval evidence, model version, prompt template version, generation settings and tool outcomes as structured attributes. Keep an aggregate global dashboard for platform health separate from tenant-scoped views for customer debugging. Tag every request with a user-visible outcome, so complaints map to telemetry.
+- There are six functional requirements. Support the core workflow: a support agent moves from a user complaint to the exact request family and explains the failure without seeing raw sensitive content.
+- Attach a stable correlation ID to every request and propagate trace context across services, integrations and queue boundaries.
+- Capture per-hop timing across authentication, tenant resolution, retrieval, model call, tool use, post-processing and delivery.
+- Record retrieval evidence, model version, prompt template version, generation settings and tool outcomes as structured attributes.
+- Keep an aggregate global dashboard for platform health separate from tenant-scoped views for customer debugging.
+- Tag every request with a user-visible outcome, so complaints map to telemetry.
 
 | Constraint | Stated so it can be tested |
 |---|---|
@@ -106,7 +114,9 @@ The chapter itself gives no numbers. The V2 gap note supplies a worked version; 
 
 The note's conclusion, which I'd defend at this scale, is that storage is not the constraint. Classifier CPU and redaction-policy correctness are. Every span passes through the classifier before storage, so the classifier sits on the observability path's critical line.
 
-Sampling is a deliberate control. Head sampling decides at the start of a request, which is simple and cheap but blind to how the request ends. Tail sampling decides after the request completes, so it can keep slow and failed traces, but it needs more infrastructure and careful policy. The interview-safe position is to retain latency-heavy, error-heavy and anomalous traces first.
+- Sampling is a deliberate control. Head sampling decides at the start of a request, which is simple and cheap but blind to how the request ends.
+- Tail sampling decides after the request completes, so it can keep slow and failed traces, but it needs more infrastructure and careful policy.
+- The interview-safe position is to retain latency-heavy, error-heavy and anomalous traces first.
 
 ```mermaid
 flowchart TD
@@ -117,6 +127,16 @@ flowchart TD
   TAIL --> RETAIN["Preferential Retention<br/>of anomalous traces"]
   RISK --> LOST["Only Bad Trace Lost"]
   style LOST fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class REQ,RISK cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class DECIDE,RETAIN cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class HEAD,LOST cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class TAIL cbPolicy
 ```
 
 ## 5. Draw the Architecture End to End
@@ -125,35 +145,66 @@ The design is tracing-first: structured spans, selective redaction, and a stable
 
 The same system drawn with its trust boundaries *(own construction)*:
 
+```mermaid
+flowchart TD
+    N0["Authenticate and assign correlation ID"]
+    N1["Resolve tenant"]
+    N2["Retrieve"]
+    N3["Model call"]
+    N4["Tool use"]
+    N5["Post-process"]
+    N6["Response and actual outcome"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N5 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 cbAction
 ```
- REQUEST PATH (serves the user; never waits on telemetry)
- ┌──────────┐  ┌──────────┐  ┌───────────┐  ┌───────┐  ┌──────┐  ┌──────────┐  ┌──────────┐
- │ AuthN +  │─▶│ Tenant   │─▶│ Retrieval │─▶│ Model │─▶│ Tool │─▶│ Post-    │─▶│ Response │
- │ corr. ID │  │ resolve  │  │           │  │ call  │  │ use  │  │ process  │  │ + outcome│
- └────┬─────┘  └────┬─────┘  └─────┬─────┘  └───┬───┘  └──┬───┘  └────┬─────┘  └────┬─────┘
-      │ span        │ span         │ span       │ span    │ span      │ span        │ outcome tag
-      ▼             ▼              ▼            ▼         ▼           ▼             ▼
- ═════════════════ async, bounded buffer; export failure degrades, never blocks ═══════════════
-      │
- OBSERVABILITY PATH
- ┌────────────────────┐   ┌──────────────────────────┐   ┌────────────────────┐
- │ Trace collector    │──▶│ Sensitivity classifier   │──▶│ Sampling policy    │
- │ correlation ID,    │   │ classify, keyed HMAC,    │   │ tail-biased, error │
- │ structured spans   │   │ cap cardinality          │   │ overrides, exemplar│
- └────────────────────┘   └──────────────────────────┘   └─────────┬──────────┘
-          ── TRUST BOUNDARY: nothing raw crosses this line ──       │
-                                                        ┌──────────▼──────────┐
-                                                        │ Trace store         │
-                                                        │ retention-bounded   │
-                                                        └───┬─────────────┬───┘
-                                   ┌────────────────────────┘             └──────────────┐
-                        ┌──────────▼──────────┐                              ┌───────────▼───────────┐
-                        │ Global dashboard    │                              │ Support + access      │
-                        │ aggregates only,    │                              │ gateway → tenant-     │
-                        │ cross-tenant        │                              │ scoped views          │
-                        └─────────────────────┘                              └───────────────────────┘
- AUDIT PATH (separate write path, durable, fail closed): who accessed which trace, when, why
+
+```mermaid
+flowchart TD
+    N0["Per-stage spans and outcome tags"]
+    N1["Async bounded buffer"]
+    N2["Trace collector"]
+    N3["Classify sensitivity, keyed HMAC, cap cardinality"]
+    N4["Tail-biased sampling, error overrides, exemplars"]
+    N5["Retention-bounded trace store"]
+    N6["Global aggregate-only dashboard"]
+    N7["Support access gateway"]
+    N8["Tenant-scoped view"]
+    N9["Separate durable fail-closed access audit: who, when, why"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N5 --> N7
+    N7 --> N8
+    N7 --> N9
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N5,N6,N9 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N7 cbPolicy
 ```
+
+- Serving never waits for telemetry export. Buffer/export failure degrades observability without blocking the user.
+- No raw content crosses the classification boundary.
 
 The source's diagram, kept verbatim:
 
@@ -179,6 +230,16 @@ flowchart TB
   COLLECT --> CLASSIFY --> STORE
   STORE --> GLOBAL["Global Health Dashboard<br/>(platform-wide)"]
   STORE --> TENANTVIEW["Tenant-Scoped Views<br/>(support / customer debugging)"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class AUTH,POST cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class RETRIEVE,MODEL,RESP,CLASSIFY,GLOBAL cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class TOOL cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class COLLECT,STORE,TENANTVIEW cbAction
 ```
 
 The source's component table, with a column added for how each part fails *(the last column is own construction)*.

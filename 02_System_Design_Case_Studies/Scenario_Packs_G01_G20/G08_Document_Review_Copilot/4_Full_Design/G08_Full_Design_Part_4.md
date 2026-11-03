@@ -13,11 +13,20 @@ Spend minutes in proportion to risk. The decision boundary, the citation verifie
 | 45–55 | Rollout, the red-team objections, the cost pivot (sections 11 to 13) |
 | 55–60 | Close: three sentences, trade-offs, week one |
 
-The three-sentence close is this page's construction. A permission-aware drafting system extracts structure on every page with a cheap model and spends the strong model only on flagged risk. Every claim cites the exact span that supported it, and a verifier fails closed on any mismatch. A named human decides every material case. The release is gated on extraction accuracy, citation accuracy, escalation quality and zero sensitive-data violations.
+- The three-sentence close is this page's construction. A permission-aware drafting system extracts structure on every page with a cheap model and spends the strong model only on flagged risk.
+- Every claim cites the exact span that supported it, and a verifier fails closed on any mismatch.
+- A named human decides every material case. The release is gated on extraction accuracy, citation accuracy, escalation quality and zero sensitive-data violations.
 
 The two-minute spoken answer, from the anchor's key:
 
-> *I would not start with the model. I would start by clarifying the broken healthcare prior authorisation workflow, who uses the system, what decision they need to make, and what risk we cannot automate. For Healthcare Prior Authorisation Assistant, I would design a permission-aware assistant around the workflow: staff prepares prior-auth package by checking payer policy, patient record facts, clinical criteria, missing documents, and drafts a submission for clinician approval. The architecture would ingest approved sources from systems like EHR via FHIR, payer policy portals, document store, claims/prior-auth system, identity provider, audit/compliance logs, preserve metadata, freshness, and ACLs, then use hybrid retrieval with permission filtering before generation. The LLM would produce cited answers, show uncertainty, and escalate when evidence is missing or risk is high. Tool use would be allowlisted: read-only tools can run automatically, but any write-back or externally visible action needs preview and human approval. I would evaluate with SME-approved golden cases, citation accuracy, groundedness, permission red-team tests, task completion, latency, and cost. Rollout would be staged: offline prototype, shadow mode, read-only pilot, then limited approved actions with monitoring and rollback. The production goal is not a flashy demo; it is a trusted workflow assistant that is secure, auditable, and measurably improves the business process.*
+> - I would start by clarifying the broken healthcare prior authorisation workflow, who uses the system, what decision they need to make, and what risk we cannot automate.
+> - For Healthcare Prior Authorisation Assistant, I would design a permission-aware assistant around the workflow: staff prepares prior-auth package by checking payer policy, patient record facts, clinical criteria, missing documents, and drafts a submission for clinician approval.
+> - The architecture would ingest approved sources from systems like EHR via FHIR, payer policy portals, document store, claims/prior-auth system, identity provider, audit/compliance logs, preserve metadata, freshness, and ACLs, then use hybrid retrieval with permission filtering before generation.
+> - The LLM would produce cited answers, show uncertainty, and escalate when evidence is missing or risk is high.
+> - Tool use would be allowlisted: read-only tools can run automatically, but any write-back or externally visible action needs preview and human approval.
+> - I would evaluate with SME-approved golden cases, citation accuracy, groundedness, permission red-team tests, task completion, latency, and cost.
+> - Rollout would be staged: offline prototype, shadow mode, read-only pilot, then limited approved actions with monitoring and rollback.
+> - The production goal is not a flashy demo; it is a trusted workflow assistant that is secure, auditable, and measurably improves the business process.
 
 The lines that carry the round, drawn from the sources and this page:
 
@@ -43,7 +52,11 @@ The follow-ups arrive in a predictable order.
 | How should the system behave when clinical notes conflict with payer rules? | Surface the conflict, prefer the approved current source, flag the case and escalate; never resolve it in the draft |
 | What if the payer rule changed after the request was started? | Rule versioning by effective date; the request is judged against the version in force at the date of service, and a mismatch is counted and shown |
 
-Repair the common weak answers on the spot. "The answer is correct, so the citation is cosmetic" becomes citation faithfulness as a high-severity dimension. "Increase top-k or tell the model to read tables" becomes an ingestion gate, because absent content cannot be retrieved. "Put the user's role in the prompt" becomes permissions enforced in retrieval and tool execution. "Use a faster model if it is slow" becomes a latency budget by stage and tiered routing. "Test a few examples and ask users" becomes a golden set with human decisions, adversarial cases and launch gates.
+- Repair the common weak answers on the spot. "The answer is correct, so the citation is cosmetic" becomes citation faithfulness as a high-severity dimension.
+- "Increase top-k or tell the model to read tables" becomes an ingestion gate, because absent content cannot be retrieved.
+- "Put the user's role in the prompt" becomes permissions enforced in retrieval and tool execution.
+- "Use a faster model if it is slow" becomes a latency budget by stage and tiered routing.
+- "Test a few examples and ask users" becomes a golden set with human decisions, adversarial cases and launch gates.
 
 ---
 

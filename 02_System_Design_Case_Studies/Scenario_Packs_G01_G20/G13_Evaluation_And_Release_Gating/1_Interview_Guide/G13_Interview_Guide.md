@@ -87,6 +87,18 @@ flowchart LR
   P -->|block| B[Stop / remediate]
   P -->|hold| H[Human review / more evidence]
   N[Redacted online sampling] --> D
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,X,N cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class R,O cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class D,J cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class S,T,W,P,H cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class B cbStop
 ```
 
 ### Step-by-step architecture
@@ -102,7 +114,10 @@ flowchart LR
 
 **Quality** uses task-specific outcomes and a confidence-aware lower bound on candidate delta. **Safety** has an independent floor: better average quality cannot compensate for a safety regression. **Latency** and **cost** have agreed envelopes. Missing evidence blocks; thin evidence holds. A critical slice must pass on its own. For nondeterministic outputs, use repeated trials and outcome equivalence rather than exact text match.
 
-In the source's sales-copilot incident, the release suite passed 96.7% of 120 cases, but only six covered regulated claims, and that slice passed at 83.3%. Unsupported claims in production reached 8.7% versus 1.2% baseline after a model route change and a policy evaluator's switch from block to warn-only. Roll back the route, restore blocking, review affected drafts, and add claim-level cases for security status, ROI and customer-logo permission. Version the policy mode so it cannot bypass the gate.
+- In the source's sales-copilot incident, the release suite passed 96.7% of 120 cases, but only six covered regulated claims, and that slice passed at 83.3%.
+- Unsupported claims in production reached 8.7% versus 1.2% baseline after a model route change and a policy evaluator's switch from block to warn-only.
+- Roll back the route, restore blocking, review affected drafts, and add claim-level cases for security status, ROI and customer-logo permission.
+- Version the policy mode so it cannot bypass the gate.
 
 ## Grader trust, cost and rollout
 
@@ -110,7 +125,9 @@ An LLM grader can reward verbosity over correctness. Version its model and rubri
 
 To control cost, run smoke samples on ordinary changes, broader regression at release, and deep audits for high-risk changes. Route easy cases to a cheaper judge, escalate disagreements to a strong judge/human, and cache only unchanged artifact–case–grader pairs. Do not sample away critical slices. Measure cost per release, decision time, grader agreement, escape rate, flaky-case rate and override rate.
 
-Roll out on one critical app with an advisory recommendation; calibrate graders against human labels; add latency and cost gates; then expand through a shared schema with app-specific rubrics. A grader timeout or unavailable evidence store blocks release. A delayed dashboard can degrade if the durable decision record remains intact. Roll back on a bad canary, unchecked severe incident or untrustworthy scoring.
+- Roll out on one critical app with an advisory recommendation; calibrate graders against human labels; add latency and cost gates; then expand through a shared schema with app-specific rubrics.
+- A grader timeout or unavailable evidence store blocks release. A delayed dashboard can degrade if the durable decision record remains intact.
+- Roll back on a bad canary, unchecked severe incident or untrustworthy scoring.
 
 ## Two-minute interview answer
 

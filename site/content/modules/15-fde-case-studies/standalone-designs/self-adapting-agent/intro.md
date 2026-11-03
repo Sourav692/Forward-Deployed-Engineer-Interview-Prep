@@ -6,7 +6,8 @@ An internal operations agent handles requests such as "restart service X" and "r
 
 The hard constraint is that every change the agent makes to itself is a regression nobody reviewed. It needs the freedom to change its behaviour, yet it must never quietly get worse, and it must never grant itself more permission, budget or irreversible reach.
 
-The design treats adaptation as five rungs, from context to weights, each about ten times costlier and harder to undo than the one before, and works from the cheap end. A runtime loop and a learning loop meet at one evaluation gate, and every memory write, promoted skill, prompt change or weight update passes the gate a human pull request would.
+- The design treats adaptation as five rungs, from context to weights, each about ten times costlier and harder to undo than the one before, and works from the cheap end.
+- A runtime loop and a learning loop meet at one evaluation gate, and every memory write, promoted skill, prompt change or weight update passes the gate a human pull request would.
 
 ## The core idea
 
@@ -22,6 +23,18 @@ flowchart LR
   E --> F{Evaluation gate}
   F -->|Pass| G[Promote to memory, skill or prompt]
   F -->|Fail| H[Discard or demote]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F,G cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class H cbStop
 ```
 
 ## Who it is for

@@ -17,7 +17,9 @@ Sections and tables marked *(own construction)* were built for this page from th
 
 ## 1. Restate the Throughput Prompt as a Recovery Problem
 
-The prompt sounds simple: classify 100 million records every night before 6:00 a.m. The room splits three ways at once. The business owner says, "We just need classifications ready by morning." The data platform lead says, "Only if it doesn't break the warehouse." The on-call engineer says, "Only if we can rerun it safely when the model or upstream feed fails."
+- The prompt sounds simple: classify 100 million records every night before 6:00 a.m.
+- The room splits three ways at once.
+- The business owner says, "We just need classifications ready by morning." The data platform lead says, "Only if it doesn't break the warehouse." The on-call engineer says, "Only if we can rerun it safely when the model or upstream feed fails."
 
 That disagreement, more than the throughput number, is the problem to solve. Restate the target before drawing anything.
 
@@ -47,7 +49,9 @@ The business does not decide batch retry semantics. The on-call engineer does no
 
 The brief is incomplete on purpose. The interviewer may confirm the volume and the deadline, then stop. The gap is the test.
 
-Ask first about the constraint that most changes the architecture: can the batch be partial, or must it be all-or-nothing? A late but correct job can be rerun or explained. A job that silently drops or duplicates records is much harder to trust. The partial-result answer sets the retry strategy, the checkpoint cadence and how much to spend on the last 10%.
+- Ask first about the constraint that most changes the architecture: can the batch be partial, or must it be all-or-nothing?
+- A late but correct job can be rerun or explained. A job that silently drops or duplicates records is much harder to trust.
+- The partial-result answer sets the retry strategy, the checkpoint cadence and how much to spend on the last 10%.
 
 | Question | Design axis it unlocks |
 |---|---|

@@ -4,7 +4,10 @@
 
 A CRM record outlives the call. A wrong stage or an invented commitment misleads forecasting for weeks. So the assistant proposes and a person approves. It is the same preview-then-approve rule as section 8 of the Sales Copilot case.
 
-The anchor prompt lists confidence scoring and human correction as components for this reason. Score each proposed field on evidence: an explicit statement in a customer turn scores high, an inference from tone scores low *(own construction)*. High-confidence fields are pre-filled in the review form. Low-confidence fields are shown as suggestions the rep must confirm. Nothing is auto-applied on day one. Auto-apply may later earn a narrow scope, such as logging the call date, once measured accuracy there holds.
+- The anchor prompt lists confidence scoring and human correction as components for this reason.
+- Score each proposed field on evidence: an explicit statement in a customer turn scores high, an inference from tone scores low *(own construction)*.
+- High-confidence fields are pre-filled in the review form. Low-confidence fields are shown as suggestions the rep must confirm.
+- Nothing is auto-applied on day one. Auto-apply may later earn a narrow scope, such as logging the call date, once measured accuracy there holds.
 
 Approval routes the write through the tool gateway with an idempotency key, so a double-clicked approval writes once. Every correction the rep makes is logged against the proposal. That log is the best evaluation data this system will ever have, and section 11 depends on it.
 
@@ -41,7 +44,9 @@ The source's seven methods, verbatim: rubric-based human assessment, action-item
 | How much did the rep have to fix? | User-edit distance |
 | Did the follow-up happen? | Downstream task completion |
 
-Precision and recall on action items is the sharpest of these. It turns an open-ended summary into a checklist with a right answer. Label a golden set of calls with their true action items. Measure how many the system found and how many it invented. An invented action item is the worse error, because it becomes a promise nobody made.
+- Precision and recall on action items is the sharpest of these. It turns an open-ended summary into a checklist with a right answer.
+- Label a golden set of calls with their true action items. Measure how many the system found and how many it invented.
+- An invented action item is the worse error, because it becomes a promise nobody made.
 
 Slice every metric by call type and by language, as the anchor prompt lists. A system that scores well on English sales calls can fail on accented support calls. The average hides it. The rep's corrections from section 9 grow the golden set every week, which is why they are logged.
 
@@ -74,7 +79,18 @@ Spend the hour on the three clocks, the latency budget, redaction and the evalua
 
 The two-minute spoken answer *(own construction)*:
 
-> *I would treat this as three systems on three clocks. Before the call, there are hours, so I build an account snapshot as the rep, with the rep's CRM permissions, and cache it. During the call, there are three seconds, so nothing in that lane calls the CRM live. Voice activity detection finds the end of the customer's question, streaming ASR with diarization has the text ready, redaction masks PII on the stream, and a cheap trigger decides whether the question is answerable. If it is, a small prompt of recent turns, a snapshot slice and one playbook entry goes to a small fast model that streams two or three bullets. The budget is about two seconds, with a second of headroom for one allowlisted live lookup like current price. On timeout the rep sees nothing, never a late answer. After the call, there are minutes, so a larger model writes a structured summary and action items, each citing its transcript span, and proposes CRM changes with confidence scores. The rep approves or corrects, and the write goes through a gateway with an idempotency key. Corrections become evaluation data. I would evaluate summaries by what they are for: action-item precision and recall, factual consistency, field coverage, CRM accuracy and edit distance, sliced by call type and language. I would launch post-call first, then live suggestions.*
+> - I would treat this as three systems on three clocks.
+> - Before the call, there are hours, so I build an account snapshot as the rep, with the rep's CRM permissions, and cache it.
+> - During the call, there are three seconds, so nothing in that lane calls the CRM live.
+> - Voice activity detection finds the end of the customer's question, streaming ASR with diarization has the text ready, redaction masks PII on the stream, and a cheap trigger decides whether the question is answerable.
+> - If it is, a small prompt of recent turns, a snapshot slice and one playbook entry goes to a small fast model that streams two or three bullets.
+> - The budget is about two seconds, with a second of headroom for one allowlisted live lookup like current price.
+> - On timeout the rep sees nothing, never a late answer.
+> - After the call, there are minutes, so a larger model writes a structured summary and action items, each citing its transcript span, and proposes CRM changes with confidence scores.
+> - The rep approves or corrects, and the write goes through a gateway with an idempotency key.
+> - Corrections become evaluation data.
+> - I would evaluate summaries by what they are for: action-item precision and recall, factual consistency, field coverage, CRM accuracy and edit distance, sliced by call type and language.
+> - I would launch post-call first, then live suggestions.
 
 The lines that carry the round *(own construction from the sources' arguments)*:
 
@@ -100,4 +116,7 @@ The follow-ups arrive in a predictable order, and each has a prepared answer.
 | Could the customer manipulate the assistant by what they say? | The transcript is untrusted evidence; it may still sway the model, but no utterance can trigger a write, because writes need the rep's approval |
 | What does it cost per call? | One small-model call per answerable question, one large-model pass per call after hang-up; the large model never runs per utterance |
 
-Repair the common weak answers on the spot. "Use the best model for suggestions" becomes a small model on a small prompt. "Look it up in the CRM live" becomes the snapshot plus a tiny allowlist. "Auto-update the CRM" becomes propose, score, approve. "Measure summary quality with ROUGE" becomes score by purpose. "Store the transcript" becomes redact first, then store, then delete on schedule.
+- Repair the common weak answers on the spot. "Use the best model for suggestions" becomes a small model on a small prompt.
+- "Look it up in the CRM live" becomes the snapshot plus a tiny allowlist.
+- "Auto-update the CRM" becomes propose, score, approve. "Measure summary quality with ROUGE" becomes score by purpose.
+- "Store the transcript" becomes redact first, then store, then delete on schedule.

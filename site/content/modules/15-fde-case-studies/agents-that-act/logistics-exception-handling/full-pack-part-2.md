@@ -4,16 +4,27 @@
 
 The gate is its own component, not a side-check inside the Resolution Agent. The customer said it must never be bypassed for customs, so it must be testable and auditable on its own.
 
-```
-Resolution Agent output (action + confidence + shipment value + exception type)
-            │
-   Is exception type = customs/regulatory?
-     │ Yes                    │ No
-     ↓                        ↓
- Human Approval        value < $500 AND confidence ≥ threshold?
- Queue (always)          │ Yes                  │ No
-                          ↓                      ↓
-                     Auto-Resolve          Human Approval Queue
+```mermaid
+flowchart TD
+    N0["Resolution proposal: action, confidence, value, exception type"]
+    N1["Customs or regulatory exception?"]
+    N2["Yes: always human approval"]
+    N3["No: value < $500 and confidence meets threshold?"]
+    N4["Yes: automatic resolution"]
+    N5["No: human approval"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    N3 --> N4
+    N3 --> N5
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N2,N3,N5 cbPolicy
 ```
 
 The diagram is the source's. In this design the exception type comes from the detection service, not from the agent's output, and a missing or unknown type goes to the Human Approval Queue like a customs hold.
@@ -22,19 +33,33 @@ The diagram is the source's. In this design the exception type comes from the de
 
 State the ordering out loud. A candidate who checks confidence before the customs carve-out has built a system where a high-confidence model could, in principle, auto-resolve a customs hold, the one outcome the customer ruled out. It is the same structure as deny-rules-first in the Tool-Using Agent with Safety Controls tool gateway, and the same short-circuit logic.
 
-Three details make the gate trustworthy *(own construction)*. Take the exception type from the detection service, not from the agent's own output. An agent that mislabels a customs hold as a weather delay must not be able to talk its way past the gate. Fail closed on any missing field: no value, no type or no confidence routes to a human. Keep the policy definitions in the control plane under version control, so a threshold change is a release with an audit entry, not a config edit.
+- Three details make the gate trustworthy *(own construction)*. Take the exception type from the detection service, not from the agent's own output.
+- An agent that mislabels a customs hold as a weather delay must not be able to talk its way past the gate.
+- Fail closed on any missing field: no value, no type or no confidence routes to a human.
+- Keep the policy definitions in the control plane under version control, so a threshold change is a release with an audit entry, not a config edit.
 
 ## 7. Share the Logic, Isolate the Data by Region
 
-The customer requires EU data to stay in the EU, so a single global deployment is out. That is their rule, stricter than GDPR, which allows transfers with safeguards. The pattern has two halves. A shared control plane holds agent logic, model routing, policy definitions and the UI, deployed identically in each region. A regional data plane holds the event store, any vector store and the audit log, and never replicates across regions.
+- The customer requires EU data to stay in the EU, so a single global deployment is out.
+- That is their rule, stricter than GDPR, which allows transfers with safeguards.
+- The pattern has two halves. A shared control plane holds agent logic, model routing, policy definitions and the UI, deployed identically in each region.
+- A regional data plane holds the event store, any vector store and the audit log, and never replicates across regions.
 
-```
-        Shared Control Plane (logic, policy, UI — versioned identically)
-              │                    │                    │
-         US Region             EU Region             APAC Region
-     (US carrier data,     (EU carrier data,     (APAC carrier data,
-      US audit log)         EU audit log —        APAC audit log)
-                             never leaves EU)
+```mermaid
+flowchart TD
+    N0["Shared versioned logic, policy, and UI"]
+    N1["US data and audit"]
+    N2["EU data and audit: never leaves EU"]
+    N3["APAC data and audit"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N0 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N1,N2,N3 cbAction
 ```
 
 An ops agent in any region sees the same UI and the same policy. Execution, storage, model calls, telemetry and support access are partitioned by region. Name the pattern (*shared logic, isolated data*) instead of only drawing three boxes. It is the tenancy ladder from the Secure Multi-Tenant AI Platform case, applied at the region level instead of the customer level.
@@ -49,7 +74,9 @@ Reliability here means two things. A missed exception is a shipment sitting stuc
 
 Keep detection and resolution stateless behind a queue, with state in the event store and audit log. Put a queue in front of detection. A regional weather event that disrupts many shipments at once then smooths into backlog instead of overwhelming detection.
 
-Give every auto-resolve action an idempotency key. A client that times out cannot tell a failed rebooking from a slow one, so it retries. The key lets the retry return the first result instead of booking twice. Legacy carrier APIs that cannot honour a key carry a real cost: those carriers may be forced into human-only handling regardless of confidence.
+- Give every auto-resolve action an idempotency key. A client that times out cannot tell a failed rebooking from a slow one, so it retries.
+- The key lets the retry return the first result instead of booking twice.
+- Legacy carrier APIs that cannot honour a key carry a real cost: those carriers may be forced into human-only handling regardless of confidence.
 
 Wrap carrier API calls in circuit breakers. A flaky carrier should degrade to "route to human", not pile up retries that delay every other exception behind it.
 
@@ -67,7 +94,9 @@ Hold least-privilege carrier credentials. The execution path holds only the scop
 
 Enforce regional access control at the application layer, as section 7 describes.
 
-Require explainability at the point of approval. The draft shown to an ops agent must say why the model proposed it: which signals, which confidence. An agent approving a black box under time pressure is how a wrong suggestion becomes a wrong human decision too. Human review is a control only when the human can see what they are reviewing.
+- Require explainability at the point of approval. The draft shown to an ops agent must say why the model proposed it: which signals, which confidence.
+- An agent approving a black box under time pressure is how a wrong suggestion becomes a wrong human decision too.
+- Human review is a control only when the human can see what they are reviewing.
 
 ## 10. Evaluate It Before Anyone Asks
 
@@ -99,7 +128,9 @@ Gate every release on the same suite. Detection recall must not drop, the custom
 
 ## 11. Map the Stakeholder Surface for the Rerouting Variant
 
-The rerouting prompt is the same system with three different nouns. It says: *"A logistics firm wants an AI agent to handle automated shipment rerouting. They have SAP data, real-time weather APIs, and 500 warehouse managers on different regional systems."* The source bank says it tests three things: multi-system data unification, stakeholder surface area, and whether evaluation is first-class. Section 10 covers the last. This section covers the first two.
+- The rerouting prompt is the same system with three different nouns.
+- It says: *"A logistics firm wants an AI agent to handle automated shipment rerouting. They have SAP data, real-time weather APIs, and 500 warehouse managers on different regional systems."* The source bank says it tests three things: multi-system data unification, stakeholder surface area, and whether evaluation is first-class.
+- Section 10 covers the last. This section covers the first two.
 
 Map the anchor onto the prompt before drawing anything new *(own construction)*.
 

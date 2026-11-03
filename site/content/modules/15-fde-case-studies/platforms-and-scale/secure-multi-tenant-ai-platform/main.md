@@ -114,6 +114,18 @@ flowchart LR
         OUT --> AUDIT
     end
     KEYS --> STORE
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class IDP,KEYS,CTX,CHECK cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class DIR,AUTH,SERVICE,LLM cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class PDP,REGION,LIMITS,GW,ADMIT,RET,OUT cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class USER,DENY,STORE,ANSWER,AUDIT cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class THROTTLE cbStop
 ```
 
 ### Step-by-step architecture
@@ -145,7 +157,10 @@ Default to shared infrastructure with enforced tenant rows. A separate namespace
 
 ## 5. Fairness, regions, and failures
 
-Rate limiting caps a tenant’s own usage; fair queuing decides order under contention. Use token, concurrency, and burst quotas to cap each tenant, and weighted fair queuing across per-tenant queues to share the worker pool; reserve capacity for contractual tiers. Diagnose unusually high usage by API key, user, feature, time, model route, tokens, batch jobs, and agent steps. Support legitimate adoption; stop loops or abuse. Do not rely on autoscaling alone.
+- Rate limiting caps a tenant’s own usage; fair queuing decides order under contention.
+- Use token, concurrency, and burst quotas to cap each tenant, and weighted fair queuing across per-tenant queues to share the worker pool; reserve capacity for contractual tiers.
+- Diagnose unusually high usage by API key, user, feature, time, model route, tokens, batch jobs, and agent steps.
+- Support legitimate adoption; stop loops or abuse. Do not rely on autoscaling alone.
 
 Define policy centrally and enforce it regionally when residency requires. Data, traces, logs, backups, and derived indexes follow placement and retention. During a control-plane outage, continue only operations whose local verified policy and keys remain sufficient; block sensitive changes, queue where safe, and reconcile on recovery.
 
@@ -165,6 +180,10 @@ Export and deletion need a tenant inventory across rows, blobs, embeddings, cach
 
 Roll out internal tenants → negative isolation suite → small shared tenants with conservative quotas → dedicated tier by policy and economics. Canary, rollback, operator runbooks, support training, and audited admin actions are part of delivery.
 
-> “I would default to a shared platform for 500 tenants, but derive tenant context from verified identity once and make it immutable. The control plane sets membership, policy, region, keys, and quotas; the data plane enforces scope independently in rows, objects, caches, queues, logs, indexes, and keys. I would meter before LLM inference and use fair queues so a large tenant cannot starve the rest. A missing tenant predicate or cross-tenant retrieved chunk fails closed. I would prove that with an adversarial suite before external rollout, then offer dedicated capacity only when the customer’s risk, residency, or SLO requires it.”
+> - I would default to a shared platform for 500 tenants, but derive tenant context from verified identity once and make it immutable.
+> - The control plane sets membership, policy, region, keys, and quotas; the data plane enforces scope independently in rows, objects, caches, queues, logs, indexes, and keys.
+> - I would meter before LLM inference and use fair queues so a large tenant cannot starve the rest.
+> - A missing tenant predicate or cross-tenant retrieved chunk fails closed.
+> - I would prove that with an adversarial suite before external rollout, then offer dedicated capacity only when the customer’s risk, residency, or SLO requires it.
 
 Use the [Deep Dive](/design/secure-multi-tenant-ai-platform#deep-dive) for the leak drill and isolation mechanics and the [Cheat Sheet](/design/secure-multi-tenant-ai-platform#cheat-sheet) for last-minute recall.

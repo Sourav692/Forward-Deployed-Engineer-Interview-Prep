@@ -242,7 +242,12 @@ Use one framework: measure the workload, find the bottleneck, then bound or rout
 
 **Interview-ready answer:**
 
-> “I’d start by quantifying corpus size, peak QPS, freshness, latency and cost targets. I’d separate asynchronous ingestion from online serving and scale retrieval and generation independently. On the query path I’d enforce permissions inside retrieval, keep top-k and context bounded, and use reranking and model size selectively based on measured quality. I’d cache only with tenant, permission and index or policy versions in the key, and invalidate on changes. Then I’d track p95 by stage, cost per request, freshness and answer quality together. Under pressure I can skip optional work or abstain, but I never relax authorisation.”
+> - I’d start by quantifying corpus size, peak QPS, freshness, latency and cost targets.
+> - I’d separate asynchronous ingestion from online serving and scale retrieval and generation independently.
+> - On the query path I’d enforce permissions inside retrieval, keep top-k and context bounded, and use reranking and model size selectively based on measured quality.
+> - I’d cache only with tenant, permission and index or policy versions in the key, and invalidate on changes.
+> - Then I’d track p95 by stage, cost per request, freshness and answer quality together.
+> - Under pressure I can skip optional work or abstain, but I never relax authorisation.
 
 ---
 

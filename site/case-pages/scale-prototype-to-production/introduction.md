@@ -6,7 +6,9 @@ An AI prototype works for a hundred forgiving volunteers, and the business wants
 
 The hard constraint is that the prototype proved usefulness and nothing else. It says nothing about cost, tail latency, permissions, fairness between departments or adoption, and the model provider's uptime caps what the system can promise.
 
-The answer sizes the jump from licensed users down to tokens and dollars, then walks it in tenfold steps and names what breaks at each. The design puts one gateway in front of every model call for identity, per-user limits, a fair queue, metering, routing and safe caching. It rebuilds the eval set from production traffic and rolls out by cohort, with a rollback that is a pointer flip.
+- The answer sizes the jump from licensed users down to tokens and dollars, then walks it in tenfold steps and names what breaks at each.
+- The design puts one gateway in front of every model call for identity, per-user limits, a fair queue, metering, routing and safe caching.
+- It rebuilds the eval set from production traffic and rolls out by cohort, with a rollback that is a pointer flip.
 
 ## The core idea
 
@@ -17,6 +19,16 @@ flowchart LR
   A[100 users] --> B[1,000 users: identity breaks]
   B --> C[10,000 users: capacity breaks]
   C --> D[100,000 users: fairness and ownership break]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ## Who it is for

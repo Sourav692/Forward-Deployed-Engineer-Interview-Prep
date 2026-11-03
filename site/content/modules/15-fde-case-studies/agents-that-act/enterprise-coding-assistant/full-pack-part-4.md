@@ -12,7 +12,11 @@ The interviewer's pivot after a good design is "the completions are slow and the
 | Do not | One big model for completions and chat alike |
 | 60-second line | Completions are a latency product. Funnel the context, cache the prefix, keep completions short and fast, and reserve the strong model for the tasks a user waits for. |
 
-Two drivers explain almost every cost surprise on this system. Input tokens grow when the funnel loosens: teams count the developer's cursor line and ignore the system prompt, the retrieved snippets and the history, so the bill rises with flat traffic and quality drops from distraction. The fix is to trim, compress, deduplicate and cache the static prompt parts, and to monitor first-token latency separately. Output tokens grow when completions run long: teams measure requests, not generated tokens. The fix is a max-token cap, concise templates and short defaults with expansion on demand, accepting that a cap set too low produces incomplete suggestions.
+- Two drivers explain almost every cost surprise on this system.
+- Input tokens grow when the funnel loosens: teams count the developer's cursor line and ignore the system prompt, the retrieved snippets and the history, so the bill rises with flat traffic and quality drops from distraction.
+- The fix is to trim, compress, deduplicate and cache the static prompt parts, and to monitor first-token latency separately.
+- Output tokens grow when completions run long: teams measure requests, not generated tokens.
+- The fix is a max-token cap, concise templates and short defaults with expansion on demand, accepting that a cap set too low produces incomplete suggestions.
 
 Every strong cost answer follows four verbs in order. Measure, by tracing latency and tokens by stage first. Route, matching model to task. Bound, with caps on context, completion length and timeouts. Cache safely, with the permission scope and the prompt version in the key.
 

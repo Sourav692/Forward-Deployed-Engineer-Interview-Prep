@@ -22,6 +22,16 @@ flowchart LR
     style P2 fill:#eef,stroke:#446
     style P3 fill:#eef,stroke:#446
     style P4 fill:#efe,stroke:#464
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class P1 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class P2 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class P3 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class P4 cbPolicy
 ```
 
 1. **Stand up a staging environment on identical hardware.**

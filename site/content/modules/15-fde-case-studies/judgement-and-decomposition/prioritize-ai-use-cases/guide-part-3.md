@@ -16,7 +16,17 @@ The source's reusable opening fits almost unchanged. Clarify the business outcom
 
 **The two-minute spoken answer** *(own construction)*:
 
-> *"I wouldn't pick from the list directly. The most impressive demo is usually the one with the most hidden production cost. First, I'd turn each of the thirty ideas into the same card: user, workflow step, outcome metric with a baseline, volume, data and owner, how we'd evaluate it, risk, and kill criteria. Anything that can't fill the card isn't ready. Second, gates before scores: no measurable outcome, no owner, an unreviewed adverse decision on a customer, or a problem that rules or a purchase solve better. Those leave the list. Third, score what's left on value adjusted for adoption, feasibility, data readiness, evaluability, risk, time to value and platform reuse, with weights I'd state and let you argue with. I'd estimate value from volume times saving times unit cost times adoption, not from the slide. Fourth, I'd distrust the sum: floor any dimension below three, fund shared enablers separately because they usually lose on value alone, and rerun the ranking under different weights to see what's actually decided. For an insurer, that gives a first wave like call wrap-up summaries and claims intake summaries: high volume, low risk, clean eval, and they build the gateway, eval harness and ingestion that make the next ten items cheap. Every item gets kill criteria before the pilot, and the register is re-scored quarterly with real data."*
+> - I wouldn't pick from the list directly.
+> - The most impressive demo is usually the one with the most hidden production cost.
+> - First, I'd turn each of the thirty ideas into the same card: user, workflow step, outcome metric with a baseline, volume, data and owner, how we'd evaluate it, risk, and kill criteria.
+> - Anything that can't fill the card isn't ready.
+> - Second, gates before scores: no measurable outcome, no owner, an unreviewed adverse decision on a customer, or a problem that rules or a purchase solve better.
+> - Those leave the list.
+> - Third, score what's left on value adjusted for adoption, feasibility, data readiness, evaluability, risk, time to value and platform reuse, with weights I'd state and let you argue with.
+> - I'd estimate value from volume times saving times unit cost times adoption, not from the slide.
+> - Fourth, I'd distrust the sum: floor any dimension below three, fund shared enablers separately because they usually lose on value alone, and rerun the ranking under different weights to see what's actually decided.
+> - For an insurer, that gives a first wave like call wrap-up summaries and claims intake summaries: high volume, low risk, clean eval, and they build the gateway, eval harness and ingestion that make the next ten items cheap.
+> - Every item gets kill criteria before the pilot, and the register is re-scored quarterly with real data.
 
 **Likely follow-ups** *(own construction, except the first, which comes from the prompt)*:
 
@@ -42,7 +52,10 @@ The pivot is "how much will the programme cost, and how do you stop the cost per
 | Do not | Fund thirty pilots in parallel, or let every team build its own ingestion, prompts and eval |
 | 60-second line | The expensive thing in an AI portfolio is people rebuilding the same plumbing. Build it once under the first high-volume use case, cap what is in flight, and kill on schedule. Then the tenth use case costs a fraction of the first, and that ratio is the number to report. |
 
-The four verbs from the cost playbook still apply, one level up. Measure cost per use case and per successful outcome. Route commodity capabilities to purchase and deterministic problems to rules. Bound work in progress with a pilot cap. Cache safely by reusing platform components rather than rebuilding them. The cost cram sheet's customer-complaint drill ends the same way: *"show cost by workflow and propose concrete reductions that preserve value."*
+- The four verbs from the cost playbook still apply, one level up.
+- Measure cost per use case and per successful outcome. Route commodity capabilities to purchase and deterministic problems to rules.
+- Bound work in progress with a pilot cap. Cache safely by reusing platform components rather than rebuilding them.
+- The cost cram sheet's customer-complaint drill ends the same way: *"show cost by workflow and propose concrete reductions that preserve value."*
 
 ---
 

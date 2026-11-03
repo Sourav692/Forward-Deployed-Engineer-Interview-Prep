@@ -6,7 +6,9 @@ A large enterprise has thirty enthusiastic one-line AI ideas and asks which to b
 
 The hard constraint is that nothing gets drawn until the list has been cut. The answer is a repeatable method rather than a pick. A ranking has to hold up when its weights change, and an idea with a fatal flaw cannot buy its way back with a high value score.
 
-The method turns every idea into the same card, applies pass-or-fail gates before any scoring, scores seven dimensions with stated weights, and stress-tests the result. The survivors become a funded sequence of waves with kill criteria written before each pilot, and the architecture appears only as the shared platform that makes later items cheaper. A worked insurer portfolio runs through the whole method.
+- The method turns every idea into the same card, applies pass-or-fail gates before any scoring, scores seven dimensions with stated weights, and stress-tests the result.
+- The survivors become a funded sequence of waves with kill criteria written before each pilot, and the architecture appears only as the shared platform that makes later items cheaper.
+- A worked insurer portfolio runs through the whole method.
 
 ## The core idea
 
@@ -20,6 +22,16 @@ flowchart LR
   C -->|Pass| D[Score seven weighted dimensions]
   D --> E[Stress-test the weights]
   E --> F[Waves with kill criteria]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,D cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,E cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,F cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class H cbPolicy
 ```
 
 ## Who it is for

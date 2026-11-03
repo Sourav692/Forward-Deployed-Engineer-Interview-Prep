@@ -47,7 +47,8 @@ Week one at a customer is one alert class, the telemetry sources with named owne
 | Week 6-8 | Approved low-risk actions: create the Jira, draft the timeline, recommend a rollback. Never auto-remediation first                |
 | After    | Expand alert classes and sources only while hypothesis precision, false mitigation rate, latency and cost hold; rehearse rollback |
 
-State the rollback conditions before the pilot: a leak, a high-risk wrong hypothesis acted upon, latency over the ceiling during a real incident, or responders ignoring the output. The practice prompt's follow-up asks whether the agent should restart production services automatically, and the answer is the progression above: read-only investigation, suggested remediation, human-approved execution, then limited autonomous action only for low-risk, reversible operations.
+- State the rollback conditions before the pilot: a leak, a high-risk wrong hypothesis acted upon, latency over the ceiling during a real incident, or responders ignoring the output.
+- The practice prompt's follow-up asks whether the agent should restart production services automatically, and the answer is the progression above: read-only investigation, suggested remediation, human-approved execution, then limited autonomous action only for low-risk, reversible operations.
 
 ## 11. Deliver It in Forty-Five Minutes
 
@@ -61,6 +62,16 @@ flowchart LR
     D --> E["28-35 min<br/>Scale, cost<br/>arithmetic, capacity"]
     E --> F["35-41 min<br/>Measurement<br/>and rollout"]
     F --> G["41-45 min<br/>Your questions"]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,G cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 | Minutes | Phase                                                                                                                       | Section here |
@@ -77,7 +88,15 @@ Miss the first 8 minutes and every later answer is guesswork. Miss the last 5 an
 
 The two-minute spoken answer, adapted from the answer key:
 
-> *I would not start with the model. I would start by clarifying the broken incident response workflow, who uses the system, what decision they need to make, and what risk we cannot automate. For an SRE incident agent I would design a permission-aware assistant around the workflow: an alert fires, the agent deduplicates and correlates before any model call, correlates logs, metrics, traces, deployments and runbooks, proposes the likely cause with the evidence, drafts the incident timeline, and executes only safe read-only diagnostics unless a human approves. It ingests approved sources such as Prometheus, Grafana, Datadog, logs, traces, Kubernetes, CI/CD, feature flags, incident management and the runbook repository, preserves metadata, freshness and ACLs, and pre-aggregates telemetry before it becomes tokens. It runs outside the affected blast radius and treats every telemetry source as possibly unavailable, reporting what it could not reach. The model produces cited hypotheses with confidence and escalates when evidence is missing. Tool use is allowlisted: read-only tools run automatically, and any write is a proposal with an exact command and blast radius that a human approves in about ten seconds. I would evaluate with hypothesis precision from post-incident review, time to first useful output under thirty seconds, source coverage, approval decision time and the reversal rate on approved mitigations. Rollout is staged: shadow summaries on history, live read-only summaries, then approved low-risk actions, never auto-remediation first. The goal is not a demo; it is an incident tool responders keep reading.*
+> - I would start by clarifying the broken incident response workflow, who uses the system, what decision they need to make, and what risk we cannot automate.
+> - For an SRE incident agent I would design a permission-aware assistant around the workflow: an alert fires, the agent deduplicates and correlates before any model call, correlates logs, metrics, traces, deployments and runbooks, proposes the likely cause with the evidence, drafts the incident timeline, and executes only safe read-only diagnostics unless a human approves.
+> - It ingests approved sources such as Prometheus, Grafana, Datadog, logs, traces, Kubernetes, CI/CD, feature flags, incident management and the runbook repository, preserves metadata, freshness and ACLs, and pre-aggregates telemetry before it becomes tokens.
+> - It runs outside the affected blast radius and treats every telemetry source as possibly unavailable, reporting what it could not reach.
+> - The model produces cited hypotheses with confidence and escalates when evidence is missing.
+> - Tool use is allowlisted: read-only tools run automatically, and any write is a proposal with an exact command and blast radius that a human approves in about ten seconds.
+> - I would evaluate with hypothesis precision from post-incident review, time to first useful output under thirty seconds, source coverage, approval decision time and the reversal rate on approved mitigations.
+> - Rollout is staged: shadow summaries on history, live read-only summaries, then approved low-risk actions, never auto-remediation first.
+> - The goal is not a demo; it is an incident tool responders keep reading.
 
 The lines that carry the round:
 
@@ -118,11 +137,25 @@ flowchart TD
     B[Interviewer keeps redirecting] --> B1["Stop defending your path, follow.<br/>Ask directly what they want to assess."]
     C[You gave a wrong number] --> C1["Correct it immediately, out loud.<br/>Self-correction is a strong signal;<br/>an uncorrected noticed error is a weak one."]
     D[You don't know the domain] --> D1["Say so, ask 2 questions that would<br/>let you reason about it.<br/>Ignorance is expected; hiding it is not."]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,C cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A1,C1,D1 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class B,D cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class B1 cbStop
 ```
 
 Interviewers respect explicit prioritisation and penalise silent overruns, so say it aloud when you are running short of time.
 
-Repair the common weak answers on the spot. "Connect the LLM to logs and let it restart services from runbooks" becomes read-only investigation with staged, approved mitigation. "Put the user's role in the prompt and tell the model not to reveal restricted data" becomes permissions enforced at retrieval and at the gateway. "Use a faster model if it is slow" becomes a decomposed latency budget with parallel queries and pre-aggregation. "Test a few examples manually" becomes a golden set from historical incidents, red-team cases and hypothesis precision from review. "Optimise cost later" becomes tiered routing and a cost per resolved investigation from day one.
+- Repair the common weak answers on the spot. "Connect the LLM to logs and let it restart services from runbooks" becomes read-only investigation with staged, approved mitigation.
+- "Put the user's role in the prompt and tell the model not to reveal restricted data" becomes permissions enforced at retrieval and at the gateway.
+- "Use a faster model if it is slow" becomes a decomposed latency budget with parallel queries and pre-aggregation.
+- "Test a few examples manually" becomes a golden set from historical incidents, red-team cases and hypothesis precision from review.
+- "Optimise cost later" becomes tiered routing and a cost per resolved investigation from day one.
 
 Ask them something at the end:
 

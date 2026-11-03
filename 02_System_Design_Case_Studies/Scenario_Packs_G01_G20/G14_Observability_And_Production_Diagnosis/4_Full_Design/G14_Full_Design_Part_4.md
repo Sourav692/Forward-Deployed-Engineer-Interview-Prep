@@ -17,15 +17,25 @@ Spend time in proportion to risk, not diagram size. The pacing below is the chap
 
 Defend four trade-offs. Full capture against privacy and cost: capture structure, keep a break-glass path. Head against tail sampling: prefer tail retention for slow and failed traces. Raw prompts against hashed metadata: store template ID, field presence, sanitized entity markers and fingerprints. Global dashboard against tenant views: build both, with a permission boundary.
 
-Repair the common weak answers on the spot. "Log everything and sort it out later" becomes a tiered capture strategy with named privacy and cost consequences. "Use tracing" becomes what is traced, how context propagates, and which layer each span isolates. "Sample 10 percent" becomes a question about the failure distribution. "Put it on one dashboard" becomes global health plus tenant-scoped debugging. "If the answer is wrong, the model is wrong" becomes a walk through auth, retrieval, prompt construction, tools and integrations.
+- Repair the common weak answers on the spot. "Log everything and sort it out later" becomes a tiered capture strategy with named privacy and cost consequences.
+- "Use tracing" becomes what is traced, how context propagates, and which layer each span isolates.
+- "Sample 10 percent" becomes a question about the failure distribution. "Put it on one dashboard" becomes global health plus tenant-scoped debugging.
+- "If the answer is wrong, the model is wrong" becomes a walk through auth, retrieval, prompt construction, tools and integrations.
 
 > *"My design goal is to connect user-visible failures to technical causes without collecting more sensitive data than we need. I would instrument the full request path with correlation IDs, structured spans, and bounded metadata across authentication, retrieval, model calls, and tools. I would store raw prompts and customer content only through a narrow, audited escalation path, because the default should be privacy-preserving and cost-aware. For debugging, I would rely on template IDs, document references, timing, error classes, and outcome labels so support can separate auth, retrieval, model, and integration problems. I'd use a global operational view plus tenant-scoped views for authorised support, and I'd prefer selective retention for slow or anomalous traces over blind random sampling so we do not lose the one bad trace. The riskiest trade-off is observability depth versus privacy and cost, and my first production rollout gate would be proving that the system can consistently identify the root cause of real customer incidents without exposing unnecessary content or overwhelming the team."*
 
-Have two gap answers ready *(V2 gap note, supplementary)*. On build versus buy: buy the span plumbing, build the redaction and classification boundary, because "what counts as sensitive for this tenant" is business logic no vendor can own. On regulation: hashed prompts make a deletion request smaller, not trivial. A keyed hash tied to a user is still personal data under GDPR, so delete or unlink those fingerprints too, along with quarantine and break-glass records. The retention window should follow the customer's data-processing agreement.
+- Have two gap answers ready *(V2 gap note, supplementary)*.
+- On build versus buy: buy the span plumbing, build the redaction and classification boundary, because "what counts as sensitive for this tenant" is business logic no vendor can own.
+- On regulation: hashed prompts make a deletion request smaller, not trivial.
+- A keyed hash tied to a user is still personal data under GDPR, so delete or unlink those fingerprints too, along with quarantine and break-glass records.
+- The retention window should follow the customer's data-processing agreement.
 
 ## 15. Answer Every Cost and Latency Pivot With a Card
 
-Ten members of this group are the same system asked a cost or latency question. Each gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse, and the line to say. The "Do not" field for the §15 scenarios is *(own construction)*; the playbook gives no weak answer for them. Every card shares the playbook's customer-communication sentence: *"Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric."*
+- Ten members of this group are the same system asked a cost or latency question.
+- Each gets a card: the dominant driver, the cheapest lever, the metric that proves it, the move to refuse, and the line to say.
+- The "Do not" field for the §15 scenarios is *(own construction)*; the playbook gives no weak answer for them.
+- Every card shares the playbook's customer-communication sentence: *"Acknowledge impact, show measured cause, provide immediate mitigation, then explain long-term prevention and success metric."*
 
 ### 15.1 LLM costs exploded after launch
 
@@ -107,7 +117,9 @@ Ten members of this group are the same system asked a cost or latency question. 
 | Do not | Scale capacity before inspecting the key |
 | 60-second line | A cache hit drop is usually a keying, versioning, traffic, or invalidation issue; I would inspect those before scaling. |
 
-Two facts sharpen this card *(additions file, section A1)*. Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it. A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss. The cost incident adds the other half: cache changes need a security review too, because a key missing `role_scope` serves one role's answer to another.
+- Two facts sharpen this card *(additions file, section A1)*. Prompt caching is a byte-exact prefix match, so one changed byte invalidates everything after it.
+- A timestamp in the system prompt, unsorted JSON keys, a reordered tool list or a model swap each cause a silent miss.
+- The cost incident adds the other half: cache changes need a security review too, because a key missing `role_scope` serves one role's answer to another.
 
 ### 15.9 Rate limits are throttling us at peak
 

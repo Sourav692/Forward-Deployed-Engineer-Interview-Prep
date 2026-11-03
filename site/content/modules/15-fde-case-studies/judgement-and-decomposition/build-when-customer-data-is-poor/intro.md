@@ -6,7 +6,9 @@ A customer wants value from AI this quarter, and its data is poor: missing field
 
 The hard constraint is that the data can only prove what it contains. Poor data changes what gets built first, but it is no reason to refuse the work, and "not yet" is the right answer only when a measured defect blocks every route.
 
-The answer splits "poor" into eight failure types, each with its own measurement and remedy, and scores readiness in one week. The design is a data-repair pipeline with a small decision layer on top: quality gates quarantine bad records at ingestion, the review queue grows labels, and a small, trusted eval set exists before the labels are clean. Data fixes ship as phases of value.
+- The answer splits "poor" into eight failure types, each with its own measurement and remedy, and scores readiness in one week.
+- The design is a data-repair pipeline with a small decision layer on top: quality gates quarantine bad records at ingestion, the review queue grows labels, and a small, trusted eval set exists before the labels are clean.
+- Data fixes ship as phases of value.
 
 ## The core idea
 
@@ -21,6 +23,16 @@ flowchart LR
   E --> F[Review queue grows labels]
   F --> D
   C -->|Not yet| G[Fix the data at its source]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,F,G cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ## Who it is for

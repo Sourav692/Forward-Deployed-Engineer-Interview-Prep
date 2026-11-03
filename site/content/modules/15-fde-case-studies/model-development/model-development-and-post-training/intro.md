@@ -4,7 +4,9 @@
 
 A team wants a model that solves maths problems. The interview walks from data through supervised fine-tuning (SFT), post-training and evaluation. The hard part is evaluation integrity. Leaked or near-duplicate test problems inflate scores: in the source's example, duplicated traces gave a 94% offline score against roughly 78% in production.
 
-The design collects answer-checkable problems, removes duplicates and evaluation overlap, and uses a short SFT run to teach the format. It then scores the model's own sampled answers with a verifier, step grader or preference labels and updates with drift control. Each checkpoint must pass a held-out gate for maths, general ability and safety; a failure loops back to the data mix.
+- The design collects answer-checkable problems, removes duplicates and evaluation overlap, and uses a short SFT run to teach the format.
+- It then scores the model's own sampled answers with a verifier, step grader or preference labels and updates with drift control.
+- Each checkpoint must pass a held-out gate for maths, general ability and safety; a failure loops back to the data mix.
 
 Three neighbouring prompts change one constraint in the same pipeline: a fixed compute budget, a harmless but useful model, and a polite model that fits on a phone.
 
@@ -20,6 +22,16 @@ flowchart LR
   D -->|Yes| E[Release candidate]
   D -->|No| F[Error analysis and data mix]
   F --> A
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,D cbPolicy
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class B,F cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class E cbInput
 ```
 
 ## Who it is for

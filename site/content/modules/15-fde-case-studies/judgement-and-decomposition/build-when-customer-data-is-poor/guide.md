@@ -8,7 +8,10 @@ Poor data changes what gets built first. It is no reason to refuse the work. The
 |---|---|
 | Build an AI System When the Customer's Data Is Poor | Sections 1 to 15: diagnosis, readiness scoring, the build-anyway decision, a worked warranty-claims design, evaluation with poor labels, the customer conversation, a phased plan, the script and the cost card |
 
-The source gives this case one prompt, eleven talking points and one closing line. It has no "likely follow-up" block, unlike most questions in the bank. Everything past those lines is assembled from other repo material or marked *(own construction)*. The worked example in sections 6 to 10 is entirely own construction, and every number in it is an assumption.
+- The source gives this case one prompt, eleven talking points and one closing line.
+- It has no "likely follow-up" block, unlike most questions in the bank.
+- Everything past those lines is assembled from other repo material or marked *(own construction)*.
+- The worked example in sections 6 to 10 is entirely own construction, and every number in it is an assumption.
 
 ---
 
@@ -80,7 +83,10 @@ A readiness assessment turns "poor" into a number the customer can argue with. I
 | 4 | Test joins across systems; check freshness; count records by segment and period | Join rate, staleness, coverage by segment |
 | 5 | Score the card; write the decision memo | Build, narrow, or not yet |
 
-Day 3 is the most important day. Relabelling by two SMEs measures label consistency directly, instead of asking someone whether the labels are good. Use Cohen's kappa rather than raw agreement: agreement corrected for what two random labellers would achieve by chance. Raw agreement overstates quality when one label dominates, because always guessing the majority class looks accurate. Set the floor for a judge at κ ≥ 0.60, and I'd use the same floor for a pair of humans.
+- Day 3 is the most important day. Relabelling by two SMEs measures label consistency directly, instead of asking someone whether the labels are good.
+- Use Cohen's kappa rather than raw agreement: agreement corrected for what two random labellers would achieve by chance.
+- Raw agreement overstates quality when one label dominates, because always guessing the majority class looks accurate.
+- Set the floor for a judge at κ ≥ 0.60, and I'd use the same floor for a pair of humans.
 
 The scorecard scores only the dimensions the target decision depends on *(own construction)*:
 
@@ -112,8 +118,12 @@ Poor data rules out some designs and barely affects others. Pick a design whose 
 | Weak supervision | Several cheap, noisy labelling rules vote; the votes become a training signal | A small trusted set to measure the rules against |
 | Synthetic data | Covers rare cases the history lacks | Real data to validate against; never the only evaluation |
 
-Weak supervision needs a gloss. Instead of hand-labelling every record, write several cheap labelling rules: a keyword match, a lookup table, a model's guess. Each rule is individually unreliable. Their combined votes, weighted by each rule's estimated accuracy, give a usable label at scale. Tools like Snorkel estimate those weights from where the rules agree and disagree; a small trusted sample checks the result.
+- Weak supervision needs a gloss. Instead of hand-labelling every record, write several cheap labelling rules: a keyword match, a lookup table, a model's guess.
+- Each rule is individually unreliable. Their combined votes, weighted by each rule's estimated accuracy, give a usable label at scale.
+- Tools like Snorkel estimate those weights from where the rules agree and disagree; a small trusted sample checks the result.
 
 Synthetic data carries the sharpest caveat. One rule for eval sets applies directly: "a small, real eval beats a synthetic one for customer-specific evaluation." Synthetic examples fill gaps in coverage. They cannot tell anyone how the system performs on this customer's records.
 
-Say "not yet" when three things line up: the target decision depends on a field that scores red, no design can route around it, and no human process exists that could generate the missing truth. The honest answer then is a data project with a date, not an AI project with a hope. The delivery framework's intake rule says the same thing about metrics: "Refuse to start. A two-week clock against an unmeasurable goal is worse than no clock."
+- Say "not yet" when three things line up: the target decision depends on a field that scores red, no design can route around it, and no human process exists that could generate the missing truth.
+- The honest answer then is a data project with a date, not an AI project with a hope.
+- The delivery framework's intake rule says the same thing about metrics: "Refuse to start. A two-week clock against an unmeasurable goal is worse than no clock."

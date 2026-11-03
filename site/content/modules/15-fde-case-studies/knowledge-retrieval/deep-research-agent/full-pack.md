@@ -77,7 +77,9 @@ The anchor's state carries seven things: run and user identity, the goal, a depe
 | Step, replan and hop counters | The termination defences read them |
 | Budget dict, summed across branches | The $0.20 ceiling is enforced per run, not per branch |
 
-The supervisor-and-workers mock names the fix in one line: any key more than one node writes needs a reducer that accumulates. The same mock warns against the scalar version of the bug. Several agents writing one `summary` key through a hand-rolled last-write-wins merge means the final answer reflects only the last one to run. Accumulate findings into a list, then synthesise once at the end.
+- The supervisor-and-workers mock names the fix in one line: any key more than one node writes needs a reducer that accumulates.
+- The same mock warns against the scalar version of the bug. Several agents writing one `summary` key through a hand-rolled last-write-wins merge means the final answer reflects only the last one to run.
+- Accumulate findings into a list, then synthesise once at the end.
 
 ## 4. Draw the Architecture End to End
 
@@ -85,57 +87,96 @@ The organising rule is privilege separation first, then cost. Web sub-agents rea
 
 The source's flow, redrawn as text:
 
-```
-Question + cache probe
-        │
-Plan (reasoning tier): decompose?
-   ┌────┴─────────────────────┐
-Web sub-agents             Document sub-agent
-(untrusted, NO user        (user-scoped)
- doc access)                   │
-   └────┬─────────────────────┘
-Schema boundary — typed findings only
-        │
-Evidence ledger (user-scoped, dedups sources)
-        │
-Grade coverage + agreement
-        │
-Synthesize with citations
-        │
-Verify claims against evidence
-        │
-Streamed answer + citations + coverage note
+```mermaid
+flowchart TD
+    N0["Question and cache probe"]
+    N1["Reasoning-tier plan"]
+    N2["Decompose into independent questions"]
+    N3["Web sub-agents: untrusted, no user-document access"]
+    N4["Typed findings boundary"]
+    N5["Document sub-agent: user-scoped"]
+    N6["User-scoped evidence ledger with source deduplication"]
+    N7["Grade coverage and agreement"]
+    N8["Synthesise citations"]
+    N9["Verify claims against evidence"]
+    N10["Stream answer, citations, and coverage note"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N2 --> N5
+    N5 --> N4
+    N4 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N0,N2,N6,N10 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N3,N5,N8 cbReason
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N4 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N7,N9 cbPolicy
 ```
 
 The same system with its planes and trust zones *(own construction)*: a control plane that changes by release, and a data plane split by who may see what.
 
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["Authentication, rate limits, and input guardrail"]
+    N2["Cache probe"]
+    N3["Valid hit: return"]
+    N4["Miss: reasoning-tier planner and budget"]
+    N5["Dependency-aware web questions"]
+    N6["Untrusted web sub-agents: small model, no private-document scope"]
+    N7["Typed findings"]
+    N8["Private-document questions"]
+    N9["User-scoped document sub-agent"]
+    N10["Deduplicated user-scoped evidence ledger"]
+    N11["Grade coverage"]
+    N12["Thin: replan within cap"]
+    N13["Enough: synthesise with citations"]
+    N14["Verify claims"]
+    N15["Render-time egress firewall"]
+    N16["Stream"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N4 --> N8
+    N8 --> N9
+    N9 --> N7
+    N7 --> N10
+    N10 --> N11
+    N11 --> N12
+    N12 --> N4
+    N11 --> N13
+    N13 --> N14
+    N14 --> N15
+    N15 --> N16
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N3,N4,N7,N11,N14,N15 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N10,N16 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N5,N6,N9,N12,N13 cbReason
 ```
- ╔══════════════════════ CONTROL PLANE (changes are releases) ══════════════════════╗
- ║ prompts per role (versioned) · tier routing · hop/step caps · budget ceiling      ║
- ║ egress allowlist for rendering · cache thresholds · grader rubric · eval gates    ║
- ╚══════════════════════════════════════╤════════════════════════════════════════════╝
-                                        │ configures every box below
- ╔══════════════════════ DATA PLANE (calls are requests) ═══════════════════════════╗
- ║                                                                                   ║
- ║  ENTRY   user ─> authN + rate limit ─> input guardrail ─> CACHE PROBE ─ hit ─> out║
- ║                                                              │ miss               ║
- ║  PLAN                                     PLANNER (reasoning tier, plan + budget) ║
- ║                                             │ dependency-aware sub-questions      ║
- ║  ┌──────────── UNTRUSTED ZONE ────────────┐ │ ┌──────── USER-SCOPED ZONE ───────┐ ║
- ║  │ web sub-agents × N (small model)       │<┴>│ document sub-agent (user ACL)   │ ║
- ║  │ fetch · read · extract  NO doc scope   │   │ retrieve · extract              │ ║
- ║  └───────────────┬────────────────────────┘   └───────────────┬─────────────────┘ ║
- ║                  └──────── SCHEMA BOUNDARY: typed findings ────┘                   ║
- ║                                        │                                          ║
- ║  SYNTH   evidence ledger (dedup, user-scoped) ─> grade ─ thin ─> replan (capped)  ║
- ║                                        │ enough                                   ║
- ║          synthesise w/ citations (reasoning tier) ─> VERIFY claims vs evidence    ║
- ║                                        │                                          ║
- ║  OUT     EGRESS FIREWALL on render (strip images, non-allowlisted links) ─> stream║
- ║                                                                                   ║
- ║  OBSERVE trace per run, sub-agent traces linked · tokens + $ by branch · grades   ║
- ╚═══════════════════════════════════════════════════════════════════════════════════╝
-```
+
+- Version role prompts, tier routing, hop and step caps, budget ceilings, cache thresholds, grader rubric, evaluation gates, and the rendering egress allowlist.
+- Strip images and links outside the allowlist before rendering.
+- Link sub-agent traces to the run; record tokens and spend by branch and the resulting grades.
 
 The same flow for viewers that render Mermaid *(own construction)*:
 
@@ -174,6 +215,16 @@ flowchart TD
     PR -.-> W1 & W2 & D & S
     EA -.-> EF
     P & SB & G & V --> T[(Trace + cost by branch)]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class PR,P,W1,W2,D,G,S,T cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class TR,U,GW,SB,V cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class EA,C,OUT,L cbAction
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class EF cbInput
 ```
 
 Read the components in dependency order *(own construction; the components are the source's)*.
@@ -199,7 +250,9 @@ Sub-agent isolation is the single largest cost lever in this design. A parent th
 
 Context rot compounds the cost problem. Model accuracy degrades as the window fills, and unevenly, so information stuck in the middle is retrieved less reliably. A run with three well-chosen observations often beats the same run stuffed with twelve.
 
-Isolate when a subtask's intermediate steps are not needed downstream. That is the common case for research, verification and extraction. Share context only when steps must reason across each other's intermediates, which is rarer than it feels. On a ten-step run, isolation can shrink the parent's input tokens a lot, but sub-agents bill their own tokens, so measure the total.
+- Isolate when a subtask's intermediate steps are not needed downstream. That is the common case for research, verification and extraction.
+- Share context only when steps must reason across each other's intermediates, which is rarer than it feels.
+- On a ten-step run, isolation can shrink the parent's input tokens a lot, but sub-agents bill their own tokens, so measure the total.
 
 Isolation costs you auditability across the boundary. Store each sub-agent's full trace and link it from the parent's span. Otherwise a wrong conclusion becomes unexplainable.
 
@@ -219,7 +272,8 @@ Saying the numbers out loud is the senior signal. Derive them in front of the in
 
 Little's Law says work in flight equals arrival rate times mean time in system. It turns a throughput number into a capacity number. Name it.
 
-Three levers bring the naive run under $0.20. Sub-agent isolation means the parent sees hundreds of tokens, not raw pages, so the planner's calls stay cheap, though each sub-agent still pays for the pages it reads. Prefix caching covers the stable instructions and tool definitions. Tier routing sends extraction and summarisation to a small model and keeps the reasoning tier for the plan and verification only.
+- Three levers bring the naive run under $0.20. Sub-agent isolation means the parent sees hundreds of tokens, not raw pages, so the planner's calls stay cheap, though each sub-agent still pays for the pages it reads.
+- Prefix caching covers the stable instructions and tool definitions. Tier routing sends extraction and summarisation to a small model and keeps the reasoning tier for the plan and verification only.
 
 At 10x, I'd expect provider quota to bind before compute. Name the quota first, then the arithmetic, then which lever to pull and what it costs.
 

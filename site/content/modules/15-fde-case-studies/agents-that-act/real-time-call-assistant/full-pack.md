@@ -2,7 +2,10 @@
 
 *A suggestion has to land while the customer is still talking, and a CRM record has to be right long after the call ends.*
 
-A call assistant is a workflow-timing problem before it is a model problem. The same call needs a three-second answer during the conversation and a careful, reviewed record after it. This group has one question-bank prompt and one latency drill and no worked design, so most of this page is built here. It folds the group's prompts into one read for the day before.
+- A call assistant is a workflow-timing problem before it is a model problem.
+- The same call needs a three-second answer during the conversation and a careful, reviewed record after it.
+- This group has one question-bank prompt and one latency drill and no worked design, so most of this page is built here.
+- It folds the group's prompts into one read for the day before.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -19,7 +22,9 @@ A call assistant is a workflow-timing problem before it is a model problem. The 
 
 The prompt sounds like one system: "A company wants to transcribe calls, summarise them, extract actions, and update its CRM." It is three systems with three clocks. A sub-3-second answer cannot wait on work that takes ten seconds. So the first move is to sort every task by when its answer is needed.
 
-The drill's framing settles it: "a sub-3s target is a **workflow design** problem, not only a model choice." Before the call there are hours, so precompute the account context. During the call there are three seconds, so send a small prompt to a fast model and stream the suggestion. After the call there are minutes, so summarise, extract actions and propose the CRM update asynchronously.
+- The drill's framing settles it: "a sub-3s target is a **workflow design** problem, not only a model choice." Before the call there are hours, so precompute the account context.
+- During the call there are three seconds, so send a small prompt to a fast model and stream the suggestion.
+- After the call there are minutes, so summarise, extract actions and propose the CRM update asynchronously.
 
 Ask the drill's five questions first. They come verbatim from Case 6. The answers are the assumptions this page designs against *(own construction)*.
 
@@ -33,7 +38,9 @@ Ask the drill's five questions first. They come verbatim from Case 6. The answer
 
 Add three questions the prompt implies. Which languages and call types are in scope? Is there consent to record in every jurisdiction? Who reviews a CRM change before it lands?
 
-The weak answer is the drill's own: "large model with a live CRM lookup on each request". It misses the budget on the first question and pays for a large model on every utterance. The strong answer is the drill's line: "precompute account context, keep the prompt small, mid/small model for suggestions, stream quick bullets, run enrichment asynchronously, fall back gracefully." Say that shape in the first two minutes.
+- The weak answer is the drill's own: "large model with a live CRM lookup on each request".
+- It misses the budget on the first question and pays for a large model on every utterance.
+- The strong answer is the drill's line: "precompute account context, keep the prompt small, mid/small model for suggestions, stream quick bullets, run enrichment asynchronously, fall back gracefully." Say that shape in the first two minutes.
 
 > *"This is three systems on three clocks. Hours before the call, I precompute the account context. Inside the three seconds, a small prompt goes to a fast model and streams. After the call, summaries, actions and the CRM update run asynchronously and a human approves the write."*
 
@@ -75,7 +82,9 @@ Interviewers probe the latency budget more than any other constraint. Say it as 
 | Network and UI | ~150 ms | Persistent connection to the rep's client |
 | **Total** | **~2.0 s** | Leaves about 1 s of headroom under 3 s |
 
-The headroom covers the one allowlisted live lookup, such as current price, which runs in parallel with the model call and is dropped when it misses its timeout. The Realtime Voice AI Agent reference implementation targets the same class of loop, voice in to voice out, "with <2 second response latency"; it is a stated goal, not a measurement, but it shows 2 seconds is a normal design target. That project also has to speak the answer, which this one does not.
+- The headroom covers the one allowlisted live lookup, such as current price, which runs in parallel with the model call and is dropped when it misses its timeout.
+- The Realtime Voice AI Agent reference implementation targets the same class of loop, voice in to voice out, "with <2 second response latency"; it is a stated goal, not a measurement, but it shows 2 seconds is a normal design target.
+- That project also has to speak the answer, which this one does not.
 
 Every must-have then needs an owner in the architecture *(own construction)*.
 

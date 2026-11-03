@@ -4,7 +4,11 @@
 
 Normalise at the first layer and nowhere else. If channel-specific logic leaks past the adapter, every later component must know every channel forever.
 
-The canonical `Event` has six fields, and five carry the design. `channel` and `event_type` are what triggers match on. `tenant_id` scopes everything downstream. `target_entity_id` is what the entity lock keys on. `raw_ref` means normalisation is not destruction: the original is always recoverable for audit. Downstream of the three adapters, nothing knows which channel an event came from except by reading `event.channel`. Adding a sixth channel is one new adapter and zero changes anywhere else.
+- The canonical `Event` has six fields, and five carry the design. `channel` and `event_type` are what triggers match on.
+- `tenant_id` scopes everything downstream. `target_entity_id` is what the entity lock keys on.
+- `raw_ref` means normalisation is not destruction: the original is always recoverable for audit.
+- Downstream of the three adapters, nothing knows which channel an event came from except by reading `event.channel`.
+- Adding a sixth channel is one new adapter and zero changes anywhere else.
 
 The Slack adapter shows why adapters are more than field mapping. It classifies `urgent_message` against plain `message` from the raw flag. That is how Cascade Robotics' `wf_slack_escalation` workflow triggers only on urgent messages.
 
@@ -12,7 +16,11 @@ The Slack adapter shows why adapters are more than field mapping. It classifies 
 
 Routing asks two independent questions, so it runs two independent checks. Priority answers a configuration question: which workflow is *supposed* to win. The entity lock answers a safety question: can two workflows ever mutate the same ticket at once.
 
-Routing runs in three steps. First, match: return every workflow whose tenant, status and trigger fit, where a `Trigger` is `(channel, event_type, priority)`. A `DRAFT` workflow never matches a real event, and that one rule makes authoring safe. Second, prioritise: the highest `priority` wins. Third, lock: `acquire_lock(target_entity_id, run_id)` refuses if another run is active on the same entity. `route()` returns the selected workflow or a named reason, `no_trigger_match` or `entity_locked`. It never returns a silent no-op.
+- Routing runs in three steps. First, match: return every workflow whose tenant, status and trigger fit, where a `Trigger` is `(channel, event_type, priority)`.
+- A `DRAFT` workflow never matches a real event, and that one rule makes authoring safe.
+- Second, prioritise: the highest `priority` wins. Third, lock: `acquire_lock(target_entity_id, run_id)` refuses if another run is active on the same entity.
+- `route()` returns the selected workflow or a named reason, `no_trigger_match` or `entity_locked`.
+- It never returns a silent no-op.
 
 Cascade Robotics' fixture builds the conflict on purpose. `wf_ticket_triage` at priority 10 and `wf_legacy_ticket_tagger` at priority 1 share the trigger `webhook / ticket.created`. The triage workflow wins.
 
@@ -43,7 +51,9 @@ Five determinism controls are all built and tested.
 | Confirmation gates on destructive actions, per tenant and tool | An irreversible action without authority | Guardrail approval plus per-tenant allow-list (section 10) |
 | Deterministic control flow split from probabilistic reasoning | The model improvising what happens next | The fixed, declarative step list |
 
-The registry holds four tools: `draft_reply`, `issue_refund`, `close_ticket`, `tag_ticket`. Two are destructive and two are not. `destructive` is declared once at registration, so the guardrail asks "is this one of the tagged ones?" and never "does this call look risky?" A guardrail cannot reason about risk it is not told about explicitly. `scopes` lists what the tool may touch, which is the start of least privilege for connector credentials.
+- The registry holds four tools: `draft_reply`, `issue_refund`, `close_ticket`, `tag_ticket`. Two are destructive and two are not.
+- `destructive` is declared once at registration, so the guardrail asks "is this one of the tagged ones?" and never "does this call look risky?" A guardrail cannot reason about risk it is not told about explicitly.
+- `scopes` lists what the tool may touch, which is the start of least privilege for connector credentials.
 
 The non-technical half of the problem has five constraints, and the sources say which exist.
 
@@ -61,19 +71,45 @@ Versioning follows from the same idea. `WorkflowStore` keeps every published ver
 
 A recovery path that is different code from the normal path gets tested only during incidents, so there is no separate recovery path. One loop always starts wherever `next_step_index` says.
 
+```mermaid
+flowchart TD
+    N0["Run 1: draft at step 0"]
+    N1["Checkpoint"]
+    N2["Refund at step 1 requires approval"]
+    N3["Pause"]
+    N4["Process restarts or approval arrives an hour later"]
+    N5["Resume at next_step_index = 1"]
+    N6["Valid approval"]
+    N7["Execute step 1 and record idempotency key"]
+    N8["Repeated step 1"]
+    N9["Same idempotency key exists"]
+    N10["No-op: no duplicate refund"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N8 --> N9
+    N9 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N8 cbInput
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N1,N2,N3,N4,N6 cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N5,N7,N10 cbAction
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N9 cbReason
 ```
-  Run 1: step 0 (draft) -> CHECKPOINT -> step 1 (refund, needs approval) -> PAUSED
 
-  [process restarts / human takes an hour to approve]
+- The key is `{tenant_id}:{run_id}:{step_name}:{args_hash}`. Resume never reruns step 0.
 
-  resume(): reads next_step_index=1, re-enters at step 1 - step 0 NEVER re-runs.
-  Approval granted -> step 1 executes -> idempotency_key = "{tenant_id}:{run_id}:{step_name}:{args_hash}" recorded.
-
-  If step 1 is somehow attempted again (a redelivered event, a retry):
-  same idempotency_key already exists -> no-op. The refund never fires twice.
-```
-
-The checkpoint is one integer on the `Run`. `resume()` and a fresh `run_workflow()` call the same `_continue()` loop, so the recovery path is exercised on every run. The demo proves it with a real crash. `run_workflow(..., crash_after_step=0)` sets the state to `CRASHED` after the checkpoint is saved, and `resume()` continues from step 1. The external call count shows step 0 never ran again.
+- The checkpoint is one integer on the `Run`. `resume()` and a fresh `run_workflow()` call the same `_continue()` loop, so the recovery path is exercised on every run.
+- The demo proves it with a real crash. `run_workflow(..., crash_after_step=0)` sets the state to `CRASHED` after the checkpoint is saved, and `resume()` continues from step 1.
+- The external call count shows step 0 never ran again.
 
 A run ends in exactly one of `COMPLETED`, `PAUSED_FOR_APPROVAL` or `HALTED_BUDGET`, plus `CRASHED` as a transient state that `resume()` clears. There is no fourth "it just stopped and nobody knows" path.
 
@@ -83,7 +119,10 @@ The verified happy path, from `scripts/run_workflow_demo.py`: `run_001` on `wf_t
 
 ## 9. Key Idempotency on the Action, and Cover Every Side Effect
 
-A run legitimately retries after a transient failure, so a run-level "already started" flag cannot stop one step from firing twice. The key goes on the action: `idempotency_key = f"{tenant_id}:{run_id}:{step_name}:{args_hash}"`. The reference build keyed on `{run_id}:{step_name}` alone; adding the tenant and an arguments hash stops a retry with different arguments, or another tenant's run, from matching. `_apply_side_effect()` returns `True` only the first time a key is seen. Reruns of the loop are fine; reruns of an already-applied side effect are not. The verified result: before retry, 1 apply; after retry, still 1 apply.
+- A run legitimately retries after a transient failure, so a run-level "already started" flag cannot stop one step from firing twice.
+- The key goes on the action: `idempotency_key = f"{tenant_id}:{run_id}:{step_name}:{args_hash}"`. The reference build keyed on `{run_id}:{step_name}` alone; adding the tenant and an arguments hash stops a retry with different arguments, or another tenant's run, from matching.
+- `_apply_side_effect()` returns `True` only the first time a key is seen. Reruns of the loop are fine; reruns of an already-applied side effect are not.
+- The verified result: before retry, 1 apply; after retry, still 1 apply.
 
 Two real bugs from building the project are the strongest material in the round. Tell them as stories.
 

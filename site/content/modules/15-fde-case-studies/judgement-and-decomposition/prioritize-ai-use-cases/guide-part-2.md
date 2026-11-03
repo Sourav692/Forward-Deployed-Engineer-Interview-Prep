@@ -37,7 +37,8 @@ The running example is a mid-size property and casualty insurer. All thirty use 
 | 14 | LLM-set premiums | 5 | 1 | 2 | 1 | 1 | 1 | 1 | 2.15 | No |
 | 24 | Auto-generated board pack | 2 | 3 | 2 | 2 | 2 | 2 | 1 | 2.05 | No |
 
-The bucket rules, in order: a gate failure is "No"; a commodity capability is "Buy"; a shared component is "Enabler"; a score of 3.8 or more with no dimension below 3 is "Now"; a score of 3.3 or more is "Next"; the rest are "Later" unless they score under 2.6. The totals are five Now, seven Next, ten Later, three Enablers, two Buy and three No.
+- The bucket rules, in order: a gate failure is "No"; a commodity capability is "Buy"; a shared component is "Enabler"; a score of 3.8 or more with no dimension below 3 is "Now"; a score of 3.3 or more is "Next"; the rest are "Later" unless they score under 2.6.
+- The totals are five Now, seven Next, ten Later, three Enablers, two Buy and three No.
 
 Read the table for what the sum hides, not only for its order.
 
@@ -53,31 +54,42 @@ Read the table for what the sum hides, not only for its order.
 
 The architecture in this case is the shared platform, not any one use case. It earns a diagram because the enablers make every later card cheaper, which explains the sequencing. The delivery framework's governing question applies to a portfolio too. For each new use case, how much is pulled from a library, and how much is built from scratch?
 
+```mermaid
+flowchart TD
+    N0["Wave 1: #7 call wrap-up summary"]
+    N1["Shared LLM Gateway #28"]
+    N2["Wave 2: #1 claims intake summary"]
+    N3["Wave 2: #6 and #13 policy and guideline questions"]
+    N4["Later: #3 fraud triage and #29 settlement"]
+    N5["Document ingestion and OCR #26"]
+    N6["Permission-aware retrieval #27"]
+    N7["Per-use-case evaluation and release gates"]
+    N8["Claims, policy-admin, contact-centre systems"]
+    N9["Portfolio office: cards, scores, gates"]
+    N10["Trace cost per successful outcome and adoption"]
+    N0 --> N1
+    N2 --> N1
+    N3 --> N1
+    N4 --> N1
+    N1 --> N5
+    N1 --> N6
+    N1 --> N7
+    N8 --> N1
+    N9 --> N1
+    N1 --> N10
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N7,N9 cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N10 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N6,N8 cbPolicy
 ```
-   WAVE 1 USE CASES           WAVE 2                      LATER
- ┌──────────────┐ ┌──────────────┐ ┌──────────────┐   ┌──────────────┐
- │ #7 call      │ │ #1 claims    │ │ #6/#13 policy│   │ #3 fraud     │
- │ wrap-up      │ │ intake       │ │ & guideline  │   │ triage       │
- │ summary      │ │ summary      │ │ Q&A          │   │ #29 settle   │
- └──────┬───────┘ └──────┬───────┘ └──────┬───────┘   └──────┬───────┘
-        │                │                │                  │
- ═══════╪════════════════╪════════════════╪══════════════════╪═══════
-        ▼                ▼                ▼                  ▼
- ┌──────────────────────────────────────────────────────────────────┐
- │  LLM GATEWAY (#28): identity · routing · quotas · cost per       │
- │  use case · guardrails · audit log                                │
- ├──────────────────────┬─────────────────────┬─────────────────────┤
- │ DOCUMENT INGESTION   │ PERMISSION-AWARE    │ EVALUATION HARNESS  │
- │ & OCR (#26)          │ RETRIEVAL (#27)     │ golden sets per use │
- │ claims, submissions, │ policy wording,     │ case, release gate, │
- │ loss runs            │ guidelines, HR docs │ online sampling     │
- ├──────────────────────┴─────────────────────┴─────────────────────┤
- │  OBSERVABILITY: traces · cost per successful outcome · adoption   │
- └──────────────────────────────────────────────────────────────────┘
-        ▲                                   ▲
-   claims system, policy admin,        portfolio office:
-   contact-centre platform             card register, scores, gates
-```
+
+- Gateway controls cover identity, routing, quotas, guardrails, audit, and cost per use case. Ingestion handles claims, submissions, and loss runs; retrieval covers policy wording, guidelines, and HR documents.
 
 ```mermaid
 flowchart TB
@@ -108,6 +120,16 @@ flowchart TB
   GW --> OBS
   OBS --> PO
   EVAL --> PO
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class U7,UL cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class U1,U12,EVAL,OBS cbReason
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class U6,GW,RET cbPolicy
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class ING,PO cbAction
 ```
 
 | COMPONENT | WHY IT IS FUNDED IN WAVE 1 | FIRST USE CASE THAT NEEDS IT | LATER CARDS IT MAKES CHEAPER |
@@ -149,7 +171,9 @@ The stage gates reuse the delivery framework's shape: a named, checkable conditi
 | Limited production | Adoption and outcome metric moving; rollback tested | Delivery lead | Adoption under the card's floor at week 4 |
 | Scale | Outcome metric met; cost per successful outcome within plan | Executive sponsor | Value under run cost at the next quarterly re-score |
 
-The gate names and roles adapt the delivery operating model's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio *(own construction)*. The delivery framework's week-4 retention metric is the adoption kill signal. It is recorded as "none" until measured, never as a fake zero. Its accelerator reuse rate becomes the portfolio's platform health metric.
+- The gate names and roles adapt the delivery operating model's six gates, including `data_access_granted`, `eval_baseline_met`, `rollback_tested` and `success_metrics_met`, from a single engagement to a portfolio *(own construction)*.
+- The delivery framework's week-4 retention metric is the adoption kill signal. It is recorded as "none" until measured, never as a fake zero.
+- Its accelerator reuse rate becomes the portfolio's platform health metric.
 
 Re-score the whole register every quarter. Pilot data replaces estimates, so the portfolio corrects itself. A Later item whose data problem was solved by an enabler moves up without anyone lobbying for it. [Scoping to Deployed Agent](/design/scoping-to-deployed-agent#full-pack) covers the gate mechanics in depth.
 

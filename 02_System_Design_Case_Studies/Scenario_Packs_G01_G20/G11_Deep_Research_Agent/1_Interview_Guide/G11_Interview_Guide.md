@@ -85,6 +85,14 @@ flowchart LR
   Y --> V[Claim and citation verifier]
   V --> E[Egress sanitizer: links / images / markup]
   E --> O[Streamed answer + explicit coverage gaps]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class U,T,V cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class P,W,D,Y,E cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class L,G,O cbAction
 ```
 
 ### Step-by-step architecture

@@ -77,6 +77,16 @@ flowchart TD
 
     D1 --> C1 --> C2 --> C3 --> C4 --> C5 --> R1 --> R2 --> R3 --> P1
     style D1 fill:#a63d40,stroke:#5c1f22,color:#fff
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class D1,C4,R3 cbInput
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class C1 cbStop
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C2,C5,R1 cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C3,R2,P1 cbPolicy
 ```
 
 ### Other Failure Paths

@@ -2,9 +2,14 @@
 
 ## Overview
 
-The prompt asks for end-to-end batching of LLM requests, including which GPU has capacity and what happens when one fails. The hard part is that each GPU is a stateful server with a limited KV-memory budget. Prefill drives time to first token, decode drives per-token speed, and output lengths vary. The case's capacity figures are constructed examples, not measurements of a real engine.
+- The prompt asks for end-to-end batching of LLM requests, including which GPU has capacity and what happens when one fails.
+- The hard part is that each GPU is a stateful server with a limited KV-memory budget.
+- Prefill drives time to first token, decode drives per-token speed, and output lengths vary.
+- The case's capacity figures are constructed examples, not measurements of a real engine.
 
-The design tokenises each request and gives it an ID at the gateway, admits work through a token-weighted bounded queue, and routes it to a healthy replica with free KV memory. Each replica batches continuously, releasing finished sequences instead of waiting for the longest output, and results stream back by request ID. Health checks evict sick GPUs, a disconnect frees KV memory, unstreamed requests retry under a budget, and streamed ones need explicit continuation or partial-error semantics.
+- The design tokenises each request and gives it an ID at the gateway, admits work through a token-weighted bounded queue, and routes it to a healthy replica with free KV memory.
+- Each replica batches continuously, releasing finished sequences instead of waiting for the longest output, and results stream back by request ID.
+- Health checks evict sick GPUs, a disconnect frees KV memory, unstreamed requests retry under a budget, and streamed ones need explicit continuation or partial-error semantics.
 
 Related prompts reuse the same foundation: one GPU batching up to 100 synchronous inputs, a service at 100,000 requests per second, a review of a junior engineer's design, and a diagnosis of high inference latency.
 
@@ -19,6 +24,16 @@ flowchart LR
   B -->|Yes| D[Route by free KV]
   D --> E[Continuous batch]
   E --> F[Stream by request ID]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class A,E cbInput
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class B,F cbAction
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class C cbStop
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D cbPolicy
 ```
 
 ## Who it is for

@@ -31,7 +31,11 @@ Across all five, never push harder against a failing dependency. Slow the arriva
 
 The signature follow-up is that the job is 45% complete at 4 a.m. The forecaster should have flagged it already. The console should answer three questions instead of only turning red. Can we still finish by 6:00 a.m.? Which lever do we pull first? What is the blast radius if we keep going?
 
-Find the bottleneck before choosing the lever: compute, a hot partition, provider throttling or downstream backpressure. Then choose the smallest intervention that restores schedule confidence. That means raising concurrency if there is headroom, splitting slow partitions, or switching remaining work to a fallback model. Alternatively, publish only the subset that meets the correctness and policy bar. If throttling is temporary, the coordinator reduces concurrency and keeps the run stable. If it is persistent, stop taking new leases, checkpoint everything and page the customer with a recovery plan.
+- Find the bottleneck before choosing the lever: compute, a hot partition, provider throttling or downstream backpressure.
+- Then choose the smallest intervention that restores schedule confidence. That means raising concurrency if there is headroom, splitting slow partitions, or switching remaining work to a fallback model.
+- Alternatively, publish only the subset that meets the correctness and policy bar.
+- If throttling is temporary, the coordinator reduces concurrency and keeps the run stable.
+- If it is persistent, stop taking new leases, checkpoint everything and page the customer with a recovery plan.
 
 ```mermaid
 flowchart LR
@@ -43,13 +47,31 @@ flowchart LR
     Checkpoint --> Page["Operations Console pages\ncustomer with recovery plan"]
     Continue -.-> Safe["Idempotent Result Sink\nrejects duplicates on replay"]
     Page -.-> Safe
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class Detect cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class Decide,Stop,Page cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class Throttle cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Continue,Checkpoint cbPolicy
+    classDef cbStop fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class Safe cbStop
 ```
 
-The contingency modes are business decisions agreed before launch, each with a named owner. They are: continue at full accuracy until cutoff, switch to a cheaper or smaller model, or reduce low-value record classes. The other two are narrowing scope to the highest-priority segments and pausing nonessential enrichment. The product owner and operations lead agree them before the first run, not after the first miss.
+- The contingency modes are business decisions agreed before launch, each with a named owner.
+- They are: continue at full accuracy until cutoff, switch to a cheaper or smaller model, or reduce low-value record classes.
+- The other two are narrowing scope to the highest-priority segments and pausing nonessential enrichment.
+- The product owner and operations lead agree them before the first run, not after the first miss.
 
 Partial results are publishable only under a partial-acceptance policy the customer defined. Some workloads can publish completed partitions if each unit is independently valid and clearly labelled. Others need all-or-nothing, because downstream cannot handle mixed vintages. State which regime applies. If partial, define the exact publish gate and completeness metadata.
 
-Two more probes arrive in this part of the round. To rebalance a hot partition, detect it early through lag, runtime histograms and queue age. Split it with a deterministic key so work stays replayable. If it is in flight, move only the unprocessed remainder and record the new ownership. To avoid paying twice after a timeout, treat the timeout as ambiguous: it may or may not have completed. Idempotency keys, durable checkpoints and write-side deduplication make the retry cheap and harmless.
+- Two more probes arrive in this part of the round. To rebalance a hot partition, detect it early through lag, runtime histograms and queue age.
+- Split it with a deterministic key so work stays replayable. If it is in flight, move only the unprocessed remainder and record the new ownership.
+- To avoid paying twice after a timeout, treat the timeout as ambiguous: it may or may not have completed.
+- Idempotency keys, durable checkpoints and write-side deduplication make the retry cheap and harmless.
 
 ## 10. Defend Four Trade-Offs With a Verdict First
 
@@ -80,7 +102,11 @@ The riskiest assumption is that the backlog is evenly distributed and model runt
 | Retry rate | Failures are transient, not systemic | Retry counters and failure taxonomy | Within the normal band by failure class | On-call |
 | Cost per million records | Unit economics hold under retries and stragglers | Cloud billing plus model usage logs | Inside the approved budget envelope | Finance / platform |
 
-Build the dashboard top-down. The headline asks one question: will the batch complete by 6:00 a.m.? It shows the forecast, remaining partitions and the contingency mode. Below it sit the levers that explain the forecast: records/sec, tokens/sec, retry rate, straggler age, queue depth and sink lag. Below those sit correctness signals: duplicates, rejected inputs, checkpoint freshness and replayed partitions. A business user sees whether the run is on track. An operator sees which subsystem is slowing it. An engineer traces a retry spike to a quota cut or a bad input cohort.
+- Build the dashboard top-down. The headline asks one question: will the batch complete by 6:00 a.m.?
+- It shows the forecast, remaining partitions and the contingency mode. Below it sit the levers that explain the forecast: records/sec, tokens/sec, retry rate, straggler age, queue depth and sink lag.
+- Below those sit correctness signals: duplicates, rejected inputs, checkpoint freshness and replayed partitions.
+- A business user sees whether the run is on track. An operator sees which subsystem is slowing it.
+- An engineer traces a retry spike to a quota cut or a bad input cohort.
 
 Keep four layers distinct: technical health, model quality from sampled evaluation, adoption by downstream teams, and business outcome.
 
@@ -111,4 +137,9 @@ Carry a risk register with owner, mitigation and trigger.
 
 The go/no-go gate is blunt. Without stable throughput, rehearsed crash recovery and an available contingency owner, do not expand. That sounds conservative until the batch misses one deadline because nobody wanted to say no.
 
-Complete the launch plan with canarying, rollback, migration, training, support and documentation. A slice of nightly work runs the new path while the old one stays as fallback. Rollback stops new work, preserves checkpoints and resumes on the stable path. Separate reusable value from delivery work too. Thresholds, deadlines, model choice and contingency policy are configuration. Warehouse, queue and identity integrations are adapters. Retry, checkpoint and rate-limit wrappers become a common service. Partition orchestration, replay semantics and the push/degrade/stop policy engine are core product.
+- Complete the launch plan with canarying, rollback, migration, training, support and documentation.
+- A slice of nightly work runs the new path while the old one stays as fallback.
+- Rollback stops new work, preserves checkpoints and resumes on the stable path.
+- Separate reusable value from delivery work too. Thresholds, deadlines, model choice and contingency policy are configuration.
+- Warehouse, queue and identity integrations are adapters. Retry, checkpoint and rate-limit wrappers become a common service.
+- Partition orchestration, replay semantics and the push/degrade/stop policy engine are core product.

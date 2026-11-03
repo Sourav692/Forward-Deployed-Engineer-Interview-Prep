@@ -4,7 +4,10 @@
 
 ◷ 40 min
 
-Generating SQL is the easy part. A syntactically perfect query against the wrong metric definition is a governance failure that looks like a working feature, so the design anchors every question on a governed definition before it touches a table. This page consolidates the group's prompts into one read for the day before. Every other case in the group is a delta on it.
+- Generating SQL is the easy part.
+- A syntactically perfect query against the wrong metric definition is a governance failure that looks like a working feature, so the design anchors every question on a governed definition before it touches a table.
+- This page consolidates the group's prompts into one read for the day before.
+- Every other case in the group is a delta on it.
 
 | Case in the group | What it contributes here |
 |---|---|
@@ -18,11 +21,22 @@ Generating SQL is the easy part. A syntactically perfect query against the wrong
 
 ## 1. Name the Wrong-Answer Risk Before Drawing Anything
 
-Open with the failure before the pipeline. Executives ask analysts the same handful of questions every week, and each time someone hand-translates English into SQL, runs it and sanity-checks the result. The naive pitch, "let an LLM write the SQL", loses the interview immediately, because generation is the easy part. "Revenue" might mean booked, recognised or cash collected. The system must never produce valid SQL that confidently answers the wrong business question. That failure is more dangerous than an outright error, because the SQL ran, the chart rendered, and the number looks plausible.
+- Open with the failure before the pipeline. Executives ask analysts the same handful of questions every week, and each time someone hand-translates English into SQL, runs it and sanity-checks the result.
+- The naive pitch, "let an LLM write the SQL", loses the interview immediately, because generation is the easy part.
+- "Revenue" might mean booked, recognised or cash collected. The system must never produce valid SQL that confidently answers the wrong business question.
+- That failure is more dangerous than an outright error, because the SQL ran, the chart rendered, and the number looks plausible.
 
-Reframe the ask from "build a text-to-SQL model" to "build a governed decision-support system that only speaks in terms the business has already agreed to". That framing implies three things from day one. A semantic layer of governed metric definitions. A safety boundary around the warehouse that is read-only and cost-bounded. And an explicit way to say "I don't know which definition you mean" instead of guessing.
+- Reframe the ask from "build a text-to-SQL model" to "build a governed decision-support system that only speaks in terms the business has already agreed to".
+- That framing implies three things from day one. A semantic layer of governed metric definitions.
+- A safety boundary around the warehouse that is read-only and cost-bounded. And an explicit way to say "I don't know which definition you mean" instead of guessing.
 
-The three answer tiers show what the reframe buys. The weak answer lets an LLM write SQL against the schema and run it. It ignores who owns metric definitions, allows an unapproved reading of revenue, and has no AST validation, cost bound or way to notice a confident wrong answer. The average answer adds a semantic layer, validates before running, executes read-only with row limits and logs every query. It still never says what happens when the question is ambiguous, when the schema drifts, or when the prose summary disagrees with the table. The strong answer consults the metric registry before any physical table and turns ambiguity into a clarifying question. It parses SQL into a tree and checks it against policy and a scan budget before a read-only gateway sees it. It re-checks entitlements at execution and proves the design on ten governed metrics with golden cases before any executive sees output.
+- The three answer tiers show what the reframe buys. The weak answer lets an LLM write SQL against the schema and run it.
+- It ignores who owns metric definitions, allows an unapproved reading of revenue, and has no AST validation, cost bound or way to notice a confident wrong answer.
+- The average answer adds a semantic layer, validates before running, executes read-only with row limits and logs every query.
+- It still never says what happens when the question is ambiguous, when the schema drifts, or when the prose summary disagrees with the table.
+- The strong answer consults the metric registry before any physical table and turns ambiguity into a clarifying question.
+- It parses SQL into a tree and checks it against policy and a scan budget before a read-only gateway sees it.
+- It re-checks entitlements at execution and proves the design on ten governed metrics with golden cases before any executive sees output.
 
 Then ask the questions that change the architecture, before sketching a box. Each one decides a component.
 
@@ -46,15 +60,26 @@ Map the people, because the three groups want different things and the architect
 | Data / platform engineer | Bounded blast radius: no whole-warehouse scans, no restricted-column leaks, no company-wide budget blowups | One ambiguous question exhausting concurrency | Read-only gateway, scan budgets, warehouse-native policies reused |
 | Metric owner | One versioned definition every consumer shares | Two answers to one question | The registry as the single artefact, with approval on change |
 
-The same design arrives with two more personas from the practice worksheets. The Executive Dashboard Assistant user asks natural-language KPI questions. The assistant translates them to governed metrics, retrieves dashboard and data context, explains variance, cites metric definitions, and escalates uncertain answers to analysts. The Retail Demand Forecast Explanation Assistant user is a planner reviewing forecast variance who asks why demand changed. The assistant explains drivers using sales history, promotions, weather, inventory and events, and recommends human-reviewed planning actions. Neither changes the architecture. Both add a variance-explanation step after the query, which section 8 covers.
+- The same design arrives with two more personas from the practice worksheets.
+- The Executive Dashboard Assistant user asks natural-language KPI questions. The assistant translates them to governed metrics, retrieves dashboard and data context, explains variance, cites metric definitions, and escalates uncertain answers to analysts.
+- The Retail Demand Forecast Explanation Assistant user is a planner reviewing forecast variance who asks why demand changed.
+- The assistant explains drivers using sales history, promotions, weather, inventory and events, and recommends human-reviewed planning actions.
+- Neither changes the architecture. Both add a variance-explanation step after the query, which section 8 covers.
 
-Declare the non-goals as a scope fence. Users cannot author write queries or modify data. The system answers a governed set of business questions; it is no general-purpose exploration tool for every table in the warehouse. It does not define what "revenue" means either. The business decides that and the semantic layer records it; the assistant never decides it on the fly.
+- Declare the non-goals as a scope fence. Users cannot author write queries or modify data.
+- The system answers a governed set of business questions; it is no general-purpose exploration tool for every table in the warehouse.
+- It does not define what "revenue" means either. The business decides that and the semantic layer records it; the assistant never decides it on the fly.
 
 ## 2. State Requirements as Testable Constraints
 
 Correctness dominates every other axis. A fast, confidently wrong answer is the single worst outcome, because the executive cannot tell it is wrong, so the system trades latency for safety every time. Asking, narrowing scope or refusing all beat guessing. Depth on ten metrics beats shallow coverage of the whole warehouse.
 
-The functional core is one pipeline, and the must-haves are its stages. Take a natural-language question. Resolve it against governed metric definitions before touching physical tables. Retrieve only the tables, joins and freshness context needed, never the whole schema. Detect ambiguity and ask rather than silently choosing one of several plausible metrics. Generate dialect-specific SQL from the narrowed context only. Parse it into an AST and enforce policy against the tree, not the text. Estimate cost and execute read-only with limits. Return the result with the exact SQL, metric lineage and caveats such as snapshot staleness.
+- The functional core is one pipeline, and the must-haves are its stages.
+- Take a natural-language question. Resolve it against governed metric definitions before touching physical tables.
+- Retrieve only the tables, joins and freshness context needed, never the whole schema.
+- Detect ambiguity and ask rather than silently choosing one of several plausible metrics.
+- Generate dialect-specific SQL from the narrowed context only. Parse it into an AST and enforce policy against the tree, not the text.
+- Estimate cost and execute read-only with limits. Return the result with the exact SQL, metric lineage and caveats such as snapshot staleness.
 
 ```mermaid
 flowchart TD
@@ -67,6 +92,16 @@ flowchart TD
     AST --> Cost[Estimate cost, apply limits]
     Cost --> Exec[Execute read-only]
     Exec --> Ret[Return answer + SQL + lineage + caveats]
+
+    %% Casebook colours: entry, reasoning, results, controls, and stopped paths.
+    classDef cbInput fill:#dbeafe,stroke:#2563eb,color:#172554
+    class Q,Clarify cbInput
+    classDef cbReason fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class R,Gen cbReason
+    classDef cbAction fill:#dcfce7,stroke:#15803d,color:#14532d
+    class S,Exec,Ret cbAction
+    classDef cbPolicy fill:#fef3c7,stroke:#b45309,color:#78350f
+    class Amb,AST,Cost cbPolicy
 ```
 
 The should-haves come from the copilot personas:
@@ -103,7 +138,10 @@ Every must-have then needs an owner in the architecture.
 
 ## 3. Map Every Source and Who Owns Its Definition
 
-Three kinds of state exist here, and each has one owner. The warehouse catalog owns physical schema truth. The semantic metric registry owns business definitions. The identity provider owns authentication and the policy store owns access decisions. Caches hold schema snippets, metric lookups and recent plans only as a performance layer, with TTLs and version stamps so the system can explain what it used. Question interpretation, candidate SQL, the AST, the validation result and the execution trace are short-lived workflow state and must not become hidden durable state.
+- Three kinds of state exist here, and each has one owner. The warehouse catalog owns physical schema truth.
+- The semantic metric registry owns business definitions. The identity provider owns authentication and the policy store owns access decisions.
+- Caches hold schema snippets, metric lookups and recent plans only as a performance layer, with TTLs and version stamps so the system can explain what it used.
+- Question interpretation, candidate SQL, the AST, the validation result and the execution trace are short-lived workflow state and must not become hidden durable state.
 
 | Data source | Owner | Freshness | Permission model | Risk |
 |---|---|---|---|---|
@@ -114,6 +152,11 @@ Three kinds of state exist here, and each has one owner. The warehouse catalog o
 | Financial planning, CRM, ERP | Finance and sales systems owners | Daily to weekly | Source-system roles | Numbers that disagree with the warehouse |
 | Forecasting platform, POS sales, inventory, promotions calendar, pricing, weather and event feeds (retail persona) | Planning and merchandising | Daily; feeds hourly | Region and store scope | Stale promotions data; correlation read as causation |
 
-The core records follow. Metric(id, name, definition, dimensions, owner, version). SchemaAsset(id, engine, object, columns, sensitivity). QueryRun(id, actor, sql_hash, policy_decision, bytes_scanned, result_ref). The copilot personas add KPIValue(metric_id, period, dimension, value, source_table), Dashboard(id, owner, metric_ids, refresh_time), Insight(id, metric_id, explanation, supporting_queries, confidence) and UserAccess(user_id, metric_id, dimension_scope). The retail persona adds SKU, Store, Forecast(id, sku_id, store_id, horizon, prediction, confidence), ActualSales, DriverSignal(id, type, value, source, timestamp) and Explanation(forecast_id, top_drivers, confidence, caveats).
+- The core records follow. Metric(id, name, definition, dimensions, owner, version). SchemaAsset(id, engine, object, columns, sensitivity).
+- QueryRun(id, actor, sql_hash, policy_decision, bytes_scanned, result_ref). The copilot personas add KPIValue(metric_id, period, dimension, value, source_table), Dashboard(id, owner, metric_ids, refresh_time), Insight(id, metric_id, explanation, supporting_queries, confidence) and UserAccess(user_id, metric_id, dimension_scope).
+- The retail persona adds SKU, Store, Forecast(id, sku_id, store_id, horizon, prediction, confidence), ActualSales, DriverSignal(id, type, value, source, timestamp) and Explanation(forecast_id, top_drivers, confidence, caveats).
 
-State the versioning rules aloud. Retain metric versions long enough to reconstruct why last quarter's dashboard produced a different number than today's. QueryRun is write-once and append-only, because incident review and adoption analysis start from query history. Version every artifact that influences behaviour (metric definitions, schema snapshots, policy bundles, generated plans), or the system works in the happy path and fails at rollout. Idempotency keys go on question submission and feedback, and optimistic concurrency on metric edits, so one team cannot silently overwrite another team's definition.
+- State the versioning rules aloud. Retain metric versions long enough to reconstruct why last quarter's dashboard produced a different number than today's.
+- QueryRun is write-once and append-only, because incident review and adoption analysis start from query history.
+- Version every artifact that influences behaviour (metric definitions, schema snapshots, policy bundles, generated plans), or the system works in the happy path and fails at rollout.
+- Idempotency keys go on question submission and feedback, and optimistic concurrency on metric edits, so one team cannot silently overwrite another team's definition.
