@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-Use the [offline walkthrough](#lesson-request-walkthrough) to compare an accepted dispatch, admission rejection, and a started call with uncertain termination. The static lifecycle remains readable without scripting.
+Use the [offline walkthrough](/labs/system-design/05_overload_fairness/lab.html#request-walkthrough) to compare an accepted dispatch, admission rejection, and a started call with uncertain termination. The static lifecycle remains readable without scripting.
+
+```lab
+src: /labs/system-design/05_overload_fairness/lab.html
+title: Handle overload and fair scheduling: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -54,7 +59,7 @@ Retries at multiple layers multiply rather than merely add. If three nested laye
 
 ## Lab: A Noisy Tenant in a Fixed Service Window
 
-Open the [fair-scheduling experiment](#lesson-lab-a-noisy-tenant-in-a-fixed-service-window). It varies policy, Tenant A burst (0–60 jobs), provider slots (1–6 one-second jobs), unsafe retry copies (0–2), and a common deadline (1–10 seconds). B and C each offer six jobs. All arrive at time zero in A-then-B-then-C insertion order. FIFO preserves that fixed arrival order. Priority serves B before C before A.
+Open the [fair-scheduling experiment](/labs/system-design/05_overload_fairness/lab.html#lab). It varies policy, Tenant A burst (0–60 jobs), provider slots (1–6 one-second jobs), unsafe retry copies (0–2), and a common deadline (1–10 seconds). B and C each offer six jobs. All arrive at time zero in A-then-B-then-C insertion order. FIFO preserves that fixed arrival order. Priority serves B before C before A.
 
 This is a simplified provider-call class, not a replacement for Stage 2’s illustrative 20-second document preparation and 90-second durable-job deadline. Mixed production classes need separate cost/deadline analysis before mapping them to service shares.
 

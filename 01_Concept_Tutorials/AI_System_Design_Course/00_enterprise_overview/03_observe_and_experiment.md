@@ -3,7 +3,12 @@
 
 ## Follow Alice’s Request From Start to Finish
 
-The [interactive walkthrough](#lesson-follow-alice-s-request-from-start-to-finish) adds direct step selection, Previous/Next, Reset, and blocked/uncertain branches to this complete static flow. This is a request explanation, not an executing model or production simulator.
+The [interactive walkthrough](/labs/system-design/00_enterprise_overview/lab.html#request-walkthrough) adds direct step selection, Previous/Next, Reset, and blocked/uncertain branches to this complete static flow. This is a request explanation, not an executing model or production simulator.
+
+```lab
+src: /labs/system-design/00_enterprise_overview/lab.html
+title: Enterprise use case and target architecture: request walkthrough and architecture map
+```
 
 ```mermaid
 sequenceDiagram

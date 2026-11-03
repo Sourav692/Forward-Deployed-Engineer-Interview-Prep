@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-Use the [offline walkthrough](#lesson-request-walkthrough) to compare a healthy shared-state request, revoked access with a warm cache, and a cold replacement replica. It retains the full static contracts below.
+Use the [offline walkthrough](/labs/system-design/04_application_scaling/lab.html#request-walkthrough) to compare a healthy shared-state request, revoked access with a warm cache, and a cold replacement replica. It retains the full static contracts below.
+
+```lab
+src: /labs/system-design/04_application_scaling/lab.html
+title: Scale the application: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -52,7 +57,7 @@ A pool of 20 database connections per replica grows to 160 at eight replicas. In
 
 ## Lab: Moving the Bottleneck
 
-Open the [capacity experiment](#lesson-lab-moving-the-bottleneck). Adjust replicas (1–8), passage hit rate (0–100%), offered request rate (20–200 RPS), and provider capacity (30–120 RPS). The model uses fixed 25 ms CPU, 70% app target, and a 500-query/second DB budget. It contains no stochastic arrival distribution, actual autoscaler, or measured service latency.
+Open the [capacity experiment](/labs/system-design/04_application_scaling/lab.html#lab). Adjust replicas (1–8), passage hit rate (0–100%), offered request rate (20–200 RPS), and provider capacity (30–120 RPS). The model uses fixed 25 ms CPU, 70% app target, and a 500-query/second DB budget. It contains no stochastic arrival distribution, actual autoscaler, or measured service latency.
 
 | Case | Inputs | Planned capacity | Meaning |
 | --- | --- | --- | --- |
