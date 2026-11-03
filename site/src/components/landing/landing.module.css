@@ -3,7 +3,7 @@
  * axes: light/display-condensed/chromatic-green · posture: restrained · contrast: pass · fold: pass · scope: landing only, tokens on .home · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, the head is the site's own claim and could front any prep site; the practice card in the fold carries the specificity, so it leads the page and owns the right half */
 /* Hallmark · waive 72 · the paper on .home is a spread shadow behind the capped main column, so its box edge is the container edge, not a card · the page has no boxed text */
-/* Hallmark · dismissed 77 · the linter counts top-level sections; this page nests eight (hero, journey, areas, different, who, coverage, close, the site footer) inside .home */
+/* Hallmark · dismissed 77 · the linter counts top-level sections; this page nests seven (hero, journey, what's inside, different, who, close, the site footer) inside .home */
 /* Hallmark · answered F16 · caret themed on .home; the scrollbar belongs to the site shell, which this landing-only redesign leaves alone */
 /* Hallmark · dropped "From the customer’s problem to production" · 54 names the eyebrow; the journey section already says it */
 /* Hallmark · reworded the lede, the area lines, the persona lines and the four differentiators to fit 58; every line is listed in the handoff */
@@ -213,6 +213,63 @@
 .table th, .table td { padding-block: var(--space-sm); border-top: var(--rule-hair) solid color-mix(in oklab, var(--band-ink) 30%, transparent); text-align: left; font-weight: 500; }
 .table td { text-align: right; font-family: var(--font-display); font-size: var(--text-title); font-weight: var(--display-weight); font-variation-settings: "wdth" 75, "opsz" 32; }
 
+/* What's inside: the four areas with their counts, then the Learn topic groups */
+.inside :is(h3, h4, a) { color: var(--band-ink); }
+.insideHead { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--space-lg); align-items: end; }
+.insideAreas { margin-top: var(--space-2xl); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--space-lg); row-gap: var(--space-xl); }
+.insideArea { display: flex; flex-direction: column; border-top: var(--rule-heavy) solid var(--band-ink); padding-top: var(--space-md); }
+/* Doubled class beats `.home :is(h1, h2, h3)`, which sets the condensed display weight and zero margin. */
+.inside .insideLabel { font-weight: 500; font-variation-settings: "opsz" 12; font-size: var(--text-md); letter-spacing: normal; line-height: 1.3; }
+.insideCount { margin-top: var(--space-sm); font-size: var(--text-md); }
+.insideCount span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-display-s);
+  line-height: 0.95;
+  font-weight: var(--display-weight);
+  font-variation-settings: "wdth" 75, "opsz" 96;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.insidePurpose { margin-top: var(--space-sm); font-size: var(--text-sm); line-height: 1.5; min-height: 4.5em; }
+.insideTable { margin-top: var(--space-md); }
+.insideTable th { font-size: var(--text-sm); }
+.insideTable td { font-size: var(--text-md); }
+.insideLink {
+  margin-top: auto;
+  padding-top: var(--space-md);
+  align-self: start;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 12;
+  text-decoration-line: underline;
+}
+.inside .insideTopicsHead { margin-top: var(--space-2xl); }
+.insideGroups {
+  margin-top: var(--space-sm);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--rule-hair);
+  background: color-mix(in oklab, var(--band-ink) 30%, transparent);
+  border: var(--rule-hair) solid color-mix(in oklab, var(--band-ink) 30%, transparent);
+}
+.insideGroup { background: var(--color-band); }
+.insideGroup > * { display: block; height: 100%; padding: var(--space-md); text-decoration: none; }
+.insideGroup > a:hover { background: color-mix(in oklab, var(--band-ink) 8%, var(--color-band)); }
+.insideGroup p { margin-top: var(--space-2xs); font-size: var(--text-sm); }
+.insideNum {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: var(--rule-hair) solid var(--band-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+}
+.insideGroupTitle { margin-top: var(--space-sm); font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; }
+.insideSoon > * { outline: var(--rule-hair) dashed color-mix(in oklab, var(--band-ink) 45%, transparent); outline-offset: -6px; }
+.insideSoon :is(h4, p, span) { opacity: 0.7; }
+.insideNote { color: var(--band-ink); }
+
 /* Close */
 .close { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-xl); }
 .close .actions { margin-top: 0; }
@@ -220,11 +277,15 @@
 @media (max-width: 60rem) {
   .hero { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xl); min-height: 0; }
   .beside, .tables { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xl); }
+  .insideHead { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-md); }
+  .insideAreas, .insideGroups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .row { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-xs); }
   .rowLink { justify-self: start; }
 }
 @media (max-width: 40rem) {
   .pairs, .indexRow { grid-template-columns: minmax(0, 1fr); }
+  .insideAreas { grid-template-columns: minmax(0, 1fr); }
+  .insidePurpose { min-height: 0; }
   .indexRow { row-gap: var(--space-2xs); }
   .section { margin-top: var(--section-gap-s); }
 }

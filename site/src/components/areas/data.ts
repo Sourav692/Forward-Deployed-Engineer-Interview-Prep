@@ -2,10 +2,12 @@ import 'server-only'
 
 import { cache } from 'react'
 import { getAllScenarios, getTracks } from '@/lib/content'
-import { MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
+import { INTERVIEW_ROUNDS, MODULES as CURRICULUM_MODULES, TRACKS as CURRICULUM_TRACKS } from '@/lib/curriculum'
 import type { CurriculumModule, ModuleStatus } from '@/lib/curriculum-types'
 import { FAMILY_META, LEVELS, RELATED_CASE, RELATED_PRACTICE, REVIEWS, TWIN_LABEL, type Level } from '@/lib/editorial'
-import { learnTracks, trackHours } from '@/lib/learn'
+import { getLearnManifest, learnTracks, trackHours } from '@/lib/learn'
+import { isLearnTrack } from '@/lib/curriculum-href'
+import { liveRounds } from '@/lib/interview-rounds'
 import { MODULE_AREAS, qualifiedTitle, scenarioHref, type ScenarioRef } from '@/lib/scenario'
 import type { LinkItem } from './Area'
 
@@ -84,15 +86,28 @@ export type SiteCounts = {
   /** Tracks listed under /learn, and how many study hours they add up to. */
   learnTracks: number
   learnHours: number
+  /** Modules listed in Learn tracks, and the lesson pages they hold (links to other areas not counted). */
+  learnModules: number
+  learnLessons: number
   /** Modules in the curriculum, Learn and Interview together, by status. */
   modules: number
   byStatus: Record<ModuleStatus, number>
   worksheets: number
+  /** Worksheets by set: customer discovery and system design. */
+  discoveryWorksheets: number
+  systemDesignWorksheets: number
   behavioural: number
   designs: number
+  /** Casebook designs outside the scenario packs. */
+  standaloneDesigns: number
+  judgementCases: number
   /** Designs that read at three depths (they have a Technical Deep Dive tab). */
   layeredDesigns: number
   reviews: number
+  /** Interview rounds with a page, all rounds, and the mock interviews. */
+  liveRounds: number
+  rounds: number
+  mocks: number
 }
 
 /**
@@ -107,15 +122,25 @@ export const siteCounts = cache(async (): Promise<SiteCounts> => {
   const byStatus: Record<ModuleStatus, number> = { ready: 0, partly: 0, 'coming-soon': 0, 'on-hold': 0 }
   for (const m of modules) byStatus[m.status] += 1
   const learn = learnTracks()
+  const inTrack = (moduleId: string, trackId: string) => scenarios.filter((s) => s.moduleId === moduleId && s.trackId === trackId).length
   return {
     learnTracks: learn.length,
     learnHours: learn.reduce((sum, t) => sum + trackHours(t), 0),
+    learnModules: modules.filter((m) => isLearnTrack(m.track)).length,
+    learnLessons: getLearnManifest().filter((l) => l.kind === 'sync' && isLearnTrack(l.track)).length,
     modules: modules.length,
     byStatus,
     worksheets: count(LIVE.worksheets),
+    discoveryWorksheets: inTrack(LIVE.worksheets, 'core'),
+    systemDesignWorksheets: inTrack(LIVE.worksheets, 'system-design'),
     behavioural: count(LIVE.behavioural),
     designs: count(LIVE.casebook),
+    standaloneDesigns: inTrack(LIVE.casebook, 'standalone-designs'),
+    judgementCases: inTrack(LIVE.casebook, 'judgement-and-decomposition'),
     layeredDesigns: scenarios.filter((s) => s.moduleId === LIVE.casebook && s.tabs?.some((t) => t.id === 'deep-dive')).length,
     reviews: REVIEWS.length,
+    liveRounds: liveRounds().length,
+    rounds: INTERVIEW_ROUNDS.length,
+    mocks: CURRICULUM_MODULES.find((m) => m.slug === 'mock-interviews')?.lessons.length ?? 0,
   }
 })

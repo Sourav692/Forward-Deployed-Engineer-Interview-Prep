@@ -7,7 +7,9 @@ import { PracticePreview } from '@/components/landing/PracticePreview'
 import { LearningJourney } from '@/components/landing/LearningJourney'
 import styles from '@/components/landing/landing.module.css'
 import '@/components/landing/tokens.css'
-import { NAV, SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
+import { SITE_NAME, SITE_TAGLINE } from '@/lib/editorial'
+import { getTrack, trackHours } from '@/lib/learn'
+import { LEARN_STAGES, groupHref } from '@/lib/learn-stages'
 import { pageMetadata, webSiteJsonLd } from '@/lib/seo'
 import { JsonLd } from '@/components/JsonLd'
 import { ExpressLane } from '@/components/start/ExpressLane'
@@ -41,15 +43,6 @@ const PERSONAS = [
   { who: 'Revision-only candidate', line: 'Condensed reviews, worked designs, timed practice.' },
 ]
 
-/** One line per area, keyed by the stable NAV ids. Labels and hrefs come from NAV. */
-const AREA_COPY: Record<(typeof NAV)[number]['id'], { purpose: string; cta: string }> = {
-  start: { purpose: 'A few questions, then a study path that fits you.', cta: 'Pick a path' },
-  learn: { purpose: 'The curriculum: tracks, modules and lessons.', cta: 'Browse the curriculum' },
-  design: { purpose: 'Complete system designs, read as interview answers or deep dives.', cta: 'Open the casebook' },
-  practice: { purpose: 'Worksheets and behavioural questions, scored against a model answer.', cta: 'Start practising' },
-  interview: { purpose: 'Mock rounds and the final-week review for the days before the loop.', cta: 'Get interview ready' },
-}
-
 const DIFFERENT = [
   { title: 'A Judgement Layer', body: 'Every design asks why: the constraint, the trade-off, what you tell the customer.' },
   { title: 'A Casebook at Three Depths', body: 'Each case as the spoken answer, the deep dive, or the night-before review.' },
@@ -59,18 +52,30 @@ const DIFFERENT = [
 
 export default async function HomePage() {
   const counts = await siteCounts()
+  const liveGroups = LEARN_STAGES.filter((g) => g.tracks.length > 0).length
 
-  const status: { label: string; value: number }[] = [
-    { label: 'Ready', value: counts.byStatus.ready },
-    { label: 'Partly ready', value: counts.byStatus.partly },
-    { label: 'Coming soon', value: counts.byStatus['coming-soon'] },
-    { label: 'On hold', value: counts.byStatus['on-hold'] },
-  ]
-  const material: { label: string; value: number }[] = [
-    { label: 'Technical worksheets', value: counts.worksheets },
-    { label: 'Behavioural worksheets', value: counts.behavioural },
-    { label: 'Worked system designs', value: counts.designs },
-    { label: 'Final-week reviews', value: counts.reviews },
+  /** The four content areas, each with its headline count and how it is organised. */
+  const inside: { label: string; count: number; unit: string; purpose: string; rows: [string, string | number][]; href: string; cta: string }[] = [
+    {
+      label: 'Learn', count: counts.learnLessons, unit: 'lessons', purpose: 'The curriculum, from foundations to production AI, grouped by topic.',
+      rows: [['Topic groups live', `${liveGroups} of ${LEARN_STAGES.length}`], ['Tracks', counts.learnTracks], ['Modules', counts.learnModules]],
+      href: '/learn', cta: 'Browse the curriculum',
+    },
+    {
+      label: 'Casebook', count: counts.designs, unit: 'worked designs', purpose: 'Complete AI system designs, each read as the spoken answer, the deep dive or the night-before review.',
+      rows: [['Scenario packs', counts.designs - counts.standaloneDesigns - counts.judgementCases], ['Additional system designs', counts.standaloneDesigns], ['Judgement and decomposition', counts.judgementCases]],
+      href: '/design', cta: 'Open the casebook',
+    },
+    {
+      label: 'Practice', count: counts.worksheets + counts.behavioural, unit: 'worksheets', purpose: 'Timed worksheets. Write your answer first, then score it against a model answer.',
+      rows: [['Customer discovery', counts.discoveryWorksheets], ['System design', counts.systemDesignWorksheets], ['Behavioural', counts.behavioural]],
+      href: '/practice', cta: 'Start practising',
+    },
+    {
+      label: 'Interview', count: counts.liveRounds, unit: 'rounds', purpose: 'The rounds of a real FDE loop, each with what it tests, what to study and how to practise.',
+      rows: [['Mock interviews', counts.mocks], ['Final-week reviews', counts.reviews], ['Rounds coming soon', counts.rounds - counts.liveRounds]],
+      href: '/interview', cta: 'Get interview ready',
+    },
   ]
 
   return (
@@ -93,45 +98,52 @@ export default async function HomePage() {
 
       <LearningJourney />
 
-      <section id="coverage" tabIndex={-1} aria-labelledby="coverage-heading" className={cx(styles.band, styles.beside)}>
-        <div>
-          <h2 id="coverage-heading" className={styles.sectionHead}>What Is Ready Today</h2>
-          <p className={cx(styles.lead, 'mt-6')}>
-            {counts.modules} modules across {counts.learnTracks} Learn tracks and the Interview area. Not all have material yet, and each module page says so.
+      <section id="areas" tabIndex={-1} aria-labelledby="areas-heading" className={cx(styles.band, styles.inside)}>
+        <div className={styles.insideHead}>
+          <h2 id="areas-heading" className={styles.sectionHead}>What&apos;s Inside</h2>
+          <p className={styles.lead}>
+            Four areas. Learn teaches the material, the casebook and the worksheets give you real problems to work, and Interview puts it all in the order of a real loop.
           </p>
         </div>
-        <div className={styles.tables}>
-          <table className={styles.table}>
-            <caption>Modules</caption>
-            <tbody>
-              {status.map((s) => (
-                <tr key={s.label}><th scope="row">{s.label}</th><td>{s.value}</td></tr>
-              ))}
-            </tbody>
-          </table>
-          <table className={styles.table}>
-            <caption>Live today</caption>
-            <tbody>
-              {material.map((m) => (
-                <tr key={m.label}><th scope="row">{m.label}</th><td>{m.value}</td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="areas" tabIndex={-1} aria-labelledby="areas-heading" className={cx(styles.section, styles.opens)}>
-        <h2 id="areas-heading" className={styles.sectionHead}>Find Your Next Step</h2>
-        <ul className={styles.rows}>
-          {NAV.map((area) => (
-            <li key={area.id} className={styles.row}>
-              <h3 className={styles.rowTitle}>{area.label}</h3>
-              <p>{AREA_COPY[area.id].purpose}</p>
-              <Link href={area.href} className={styles.rowLink}>{AREA_COPY[area.id].cta}</Link>
+        <ul className={styles.insideAreas}>
+          {inside.map((a) => (
+            <li key={a.label} className={styles.insideArea}>
+              <h3 className={styles.insideLabel}>{a.label}</h3>
+              <p className={styles.insideCount}><span>{a.count}</span> {a.unit}</p>
+              <p className={styles.insidePurpose}>{a.purpose}</p>
+              <table className={cx(styles.table, styles.insideTable)}>
+                <tbody>
+                  {a.rows.map(([k, v]) => (
+                    <tr key={k}><th scope="row">{k}</th><td>{v}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+              <Link href={a.href} className={styles.insideLink}>{a.cta}</Link>
             </li>
           ))}
         </ul>
-        <p className={styles.caption}>Your reading and practice progress stays in this browser as you go.</p>
+        <h3 className={cx(styles.insideLabel, styles.insideTopicsHead)}>Learn by topic</h3>
+        <ul className={styles.insideGroups}>
+          {LEARN_STAGES.map((g, i) => {
+            const tracks = g.tracks.flatMap((slug) => getTrack(slug) ?? [])
+            const hours = tracks.reduce((sum, t) => sum + trackHours(t), 0)
+            const body = (
+              <>
+                <span className={styles.insideNum}>{i + 1}</span>
+                <h4 className={styles.insideGroupTitle}>{g.title}</h4>
+                <p>{tracks.length ? `${tracks.length} ${tracks.length === 1 ? 'track' : 'tracks'}, about ${hours} h` : 'Coming soon'}</p>
+              </>
+            )
+            return (
+              <li key={g.slug} className={cx(styles.insideGroup, !tracks.length && styles.insideSoon)}>
+                {tracks.length ? <Link href={groupHref(g.slug)}>{body}</Link> : <div>{body}</div>}
+              </li>
+            )
+          })}
+        </ul>
+        <p className={cx(styles.caption, styles.insideNote)}>
+          {counts.byStatus.ready} of {counts.modules} modules are ready. Each module page says what is still missing. Your reading and practice progress stays in this browser.
+        </p>
       </section>
 
       <section id="different" tabIndex={-1} aria-labelledby="different-heading" className={cx(styles.section, styles.beside)}>
