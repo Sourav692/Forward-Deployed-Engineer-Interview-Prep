@@ -1,6 +1,6 @@
 ---
 name: architecture-driven-staff-ai-system-design
-description: Architecture-driven Staff FDE and Applied AI system-design course author. Builds a single evolving enterprise AI platform across 12 stages and all 56 modules; generates matching Markdown and self-contained interactive HTML with diagrams, labs, traceability, interview drills, and strict anti-filler writing standards.
+description: Author and review architecture-driven Staff FDE and Applied AI system-design course content. Builds a single evolving enterprise AI platform across 12 stages and all 56 modules; generates matching Markdown and self-contained interactive HTML with diagrams, labs, traceability, interview drills, and strict anti-filler writing standards.
 ---
 
 # Architecture-Driven Staff AI System Design — Course Author
@@ -29,6 +29,16 @@ Use when asked to: create a stage or topic guide, create Markdown and interactiv
 - `Make a standalone one-page revision card for fairness without duplicating the course.`
 
 Do not ask for data already in the references. Defaults: Staff FDE / Applied AI, current stage inferred from request, local self-contained HTML plus Markdown, diagrams in place, lab if useful. If a user requests one stage, **do not generate the other eleven**.
+
+## Content review mode
+
+Preserve the authoring workflow below. After generating or revising scoped course content and running its normal validation, run a report-only content review before final delivery. Also use this mode for explicit review/audit requests. For an explicit review, skip the authoring sequence: missing artifacts are findings, not permission to generate them. Do not recursively review the review reports or automatically audit unrelated stages.
+
+Read [references/review-workflow.md](references/review-workflow.md), then its lesson-quality contract and rubric. Use three independent reviewer agents for **technical correctness**, **teaching quality**, and **HTML/lab verification**; disclose separate role passes if agents are unavailable. Review the actual artifacts, prior architecture and mapped depths, distinguishing substantive teaching from keywords and executed checks from assumptions. Stage 0 is orientation and has no new module-depth obligations.
+
+Write all review outputs under the repository-root `.system_design_review/<scope>/<unique-run>/`: input fingerprints, structural evidence, individual reviewer reports, module evidence, `review.md` and a prioritised `improvement-plan.md` with source locations and acceptance criteria. Keep this root gitignored and outside course artifacts and distribution packages. The helper `scripts/audit_stage.py` performs conservative structural checks without requiring review files in the stage itself.
+
+Reviewing never edits generated content, labs, ADRs, accepted architecture, coverage, validation flags or learner status. Recommendations are advisory; stop after findings and the improvement plan. Apply repairs only when separately requested. Preserve explicit user requests for focused or standalone content; do not create a mandatory parallel topic library as a review recommendation.
 
 ## Four separate ideas — do not conflate
 
@@ -235,7 +245,8 @@ The ZIP includes install-ready copies at `install/claude-code/.claude/skills/arc
 7. Include the failure experiment, trade-off table, production metrics, interview questions with concise model answers and counter-questions, and a recall card.
 8. Record changed components and decision rationale in `architecture/current-system.md` and an ADR. Record explicitly how the next stage will start.
 9. Validate: cross-check Markdown/HTML facts and assumptions; test interactive controls in a browser when possible; check broken anchors, invalid links, diagrams, and curriculum statuses. Verify complete distribution from a clean extraction when packaging. Keep validation status as `drafted` if not tested.
-10. Stop after the requested stage or topic. Never silently expand to the next stage.
+10. Run the scoped report-only content review described above after author validation. Link its findings and improvement plan; do not apply review fixes automatically.
+11. Stop after the requested stage or topic and its review. Never silently expand to the next stage.
 
 ## Hard quality gate: reject these patterns
 

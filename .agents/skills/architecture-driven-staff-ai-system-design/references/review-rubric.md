@@ -1,6 +1,6 @@
 # Editorial and technical review rubric (0–5 per dimension)
 
-Rate the *actual lesson* only after examining Markdown, HTML, and available labs. Report any checks not executed.
+Rate the *actual lesson* only after examining Markdown, HTML, and available labs. Report any checks not executed. Store scores, evidence, and the improvement plan only in `.system_design_review/<scope>/<run>/`, following `review-workflow.md`. Reviewer recommendations never mutate the lesson or declare learner mastery.
 
 1. **Causal architecture:** clear requirement → failure → concept → change → outcome; preserves old capabilities.
 2. **Concept teaching:** each first-taught module explained at mapped depth, not merely mentioned.
@@ -13,14 +13,16 @@ Rate the *actual lesson* only after examining Markdown, HTML, and available labs
 9. **Curriculum continuity:** correct coverage and ADR mapping; carried-forward architecture.
 10. **Distribution integrity:** parity, offline behavior, links, referenced files and validation evidence.
 
+Use **not applicable** for dimensions outside the requested artifact’s scope, including implementation depth in Stage 0. Use **unchecked** when evidence cannot be inspected; do not convert missing verification into a passing score or invent a baseline comparison.
+
 **Scores:** 5 = complete and evidenced; 4 = strong with small gaps; 3 = useful but missing important teaching/evidence; 2 = superficial; 1 = largely missing; 0 = absent.
 
 Do not give an unconditional score above 4/5 for lab functionality without executing it. Distinguish code inspection, static HTML validation, browser interaction tests and real application integration tests. A structural validator cannot establish factual accuracy or mastery.
 
 ## Review output
 
-- Overall score (editorial judgment) with previous-version comparison when available.
-- 3 strengths tied to exact sections.
-- At most 5 priority-ranked changes with reason, acceptance test and scope impact.
+- Ten dimension scores and an overall editorial judgement; disclose excluded/not-applicable/unchecked dimensions and any comparison baseline actually inspected.
+- Up to 3 strengths tied to exact sections; do not fabricate strengths for incomplete material.
+- At most 5 priority-ranked next changes in `improvement-plan.md`, with stable finding IDs, source locations, reasons, acceptance tests, dependencies and scope impact. Keep remaining findings in the reviewer reports or a deferred section.
 - Clear pass/fail/unchecked for module-level evidence, source parity, HTML behavior and lab tests.
-- Explicit approval status: draft / conditional approval / approved as course baseline.
+- Advisory recommendation: draft / conditional approval / approved as course baseline. Unexecuted applicable checks prevent unconditional approval; recommendations do not change course state.

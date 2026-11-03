@@ -70,3 +70,20 @@ This package also provides install-ready copies for each client under `install/c
 The example simulator (`examples/stage-05-traffic-simulation.html`) is self-contained and can be opened directly in a browser. Its fixed throughput assumptions are a teaching model, not actual performance measurements.
 
 After copying a skill, run `python .claude/skills/architecture-driven-staff-ai-system-design/scripts/test_package.py` (Claude) or `python .agents/skills/architecture-driven-staff-ai-system-design/scripts/test_package.py` (Codex).
+
+## Content Review and Improvement Plans
+
+The same `architecture-driven-staff-ai-system-design` skill reviews generated content automatically after generation/revision and normal author validation, and on explicit review requests. It uses separate technical, teaching, and HTML/lab reviewer agents when available, with a disclosed role-pass fallback otherwise. It preserves the existing authoring workflow.
+
+Read `references/review-workflow.md` for coordination and output rules. Reports, module evidence, scores, test logs, and a prioritised improvement plan stay in repository-root `.system_design_review/<scope>/<unique-run>/`, which must be gitignored. Review is report-only: it does not edit lessons or update architecture, coverage, validation flags, or learner status. Stage 0 is reviewed as orientation rather than an extra instructional stage.
+
+Example: `Use architecture-driven-staff-ai-system-design to review Stage 1. Run the three reviewers and write findings plus an improvement plan under .system_design_review/. Do not modify course artifacts.`
+
+The structural helper is read-only unless an ignored report directory is supplied:
+
+```sh
+python <skill-dir>/scripts/audit_stage.py --workspace 10_AI_System_Design --stage 1
+python <skill-dir>/scripts/audit_stage.py --workspace 10_AI_System_Design --stage 1 --report-dir .system_design_review/stage-01/<unique-run>
+```
+
+Structural checks do not prove teaching depth, technical correctness, interactivity, lab functionality, or learner mastery. Missing artifacts and unchecked runtime/browser evidence must remain visible in the review.

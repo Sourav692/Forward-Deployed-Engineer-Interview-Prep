@@ -24,3 +24,5 @@ CLAUDE.local.md
 # Local implementation plans and task cards (not published)
 .plan/
 website_audit
+# Local system-design content reviews and improvement plans
+/.system_design_review/

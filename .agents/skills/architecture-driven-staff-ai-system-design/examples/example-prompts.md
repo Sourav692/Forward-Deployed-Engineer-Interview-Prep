@@ -13,7 +13,19 @@ Use the skill to generate **Stage 5: Handle Overload and Fair Scheduling**, targ
 Use the skill to teach **Module 3.1: consistency models** within Stage 7. Reference its first-teaching stage and earlier system decisions; explain which state may be stale and which access-control decisions need an authoritative path. Generate `guide.md` and `guide.html` for this focused lesson and make no claims about completed stages not present on disk.
 
 ## Audit progress
-Use the skill to compare authored, validated stage files against `references/curriculum-map.json`. Produce `progress/coverage-status.csv` with `not_started / drafted / reviewed / tested` status. Report missing modules and missing artifacts; do not infer completion solely from the reference map.
+Use the skill in report-only review mode to compare authored, validated stage files against `references/curriculum-map.json`. Record missing modules, missing artifacts and actual teaching evidence in the ignored review run’s `module-evidence.md`, with prioritised actions in `improvement-plan.md`. Do not modify `progress/coverage-status.csv`, stage state or architecture, and do not infer learner completion from the reference map.
 
 ## Produce a revision-only card
 Use the skill to create a one-page Staff FDE revision card for Domain 5 from already-authored lessons. One diagram, one decision table, five key failure symptoms, six interview recall cues, and links back to canonical lessons. No new long-form theory.
+
+## Review Existing Generated Content
+
+Use `architecture-driven-staff-ai-system-design` in content review mode for Stage 1. Read the actual Markdown, HTML, available labs, prior architecture and curriculum map. Use independent technical, teaching, and HTML/lab reviewers. Write input fingerprints, findings, module evidence and a prioritised improvement plan inside a new gitignored `.system_design_review/stage-01/` run. Do not change the lesson, architecture, coverage, stage state or learner completion.
+
+## Review the Orientation
+
+Use the same skill to review Stage 0’s customer story, target architecture, stage map and implemented-versus-proposed claims. Assess offline HTML and walkthrough evidence where available. Stage 0 has no first-taught modules or D3 implementation requirement. Save the three reviewers’ findings and improvement plan under `.system_design_review/stage-00/`; do not edit course files.
+
+## Review After a Requested Repair
+
+After completing and validating the requested Stage 5 repair under the normal authoring workflow, run the scoped three-reviewer review. Keep the review phase report-only. Record the revised input fingerprints and produce a new improvement plan; do not treat an earlier report as verification of the changed artifacts.
