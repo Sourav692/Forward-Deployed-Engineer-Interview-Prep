@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) compares a permitted retrieval, a spoofed tenant header, and stale policy. The static path makes every disclosure boundary visible.
+The [offline walkthrough](/labs/system-design/06_enterprise_security/lab.html#request-walkthrough) compares a permitted retrieval, a spoofed tenant header, and stale policy. The static path makes every disclosure boundary visible.
+
+```lab
+src: /labs/system-design/06_enterprise_security/lab.html
+title: Enterprise security: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -47,7 +52,7 @@ If identity, policy and audit each add illustrative 2 ms, 5 ms and 3 ms on a seq
 
 ## Lab: Identity and Policy Are Independent Gates
 
-Open the [identity/freshness experiment](#lesson-lab-identity-and-policy-are-independent-gates). One control selects valid or invalid identity; another selects policy age from 0 to 60 seconds. The toy policy expires at age 30 exactly. It assumes the document itself is current/readable and audit succeeds; other cases are in the Python tests.
+Open the [identity/freshness experiment](/labs/system-design/06_enterprise_security/lab.html#lab). One control selects valid or invalid identity; another selects policy age from 0 to 60 seconds. The toy policy expires at age 30 exactly. It assumes the document itself is current/readable and audit succeeds; other cases are in the Python tests.
 
 | Case | Inputs | Expected result |
 | --- | --- | --- |

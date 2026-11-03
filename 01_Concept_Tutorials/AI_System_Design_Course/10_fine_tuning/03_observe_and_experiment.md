@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) traces the approved candidate path and blocked safety/report paths. Each step is a design boundary; the lab implements metadata checks rather than external execution.
+The [offline walkthrough](/labs/system-design/10_fine_tuning/lab.html#request-walkthrough) traces the approved candidate path and blocked safety/report paths. Each step is a design boundary; the lab implements metadata checks rather than external execution.
+
+```lab
+src: /labs/system-design/10_fine_tuning/lab.html
+title: Fine-tuning and model customisation: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -46,7 +51,7 @@ Training memory includes activations, gradients, and optimiser state as well as 
 
 ## Lab: Does the Candidate Pass the Frozen Gate?
 
-Open the [offline lab](#lesson-lab-does-the-candidate-pass-the-frozen-gate). Change schema passes (0–200 cases), safety failures (0–5 cases), and whether the report matches the candidate identity. The deterministic gate accepts at least 196 schema passes, exactly zero known safety failures, and matching identity. It does not simulate training improvement, statistical confidence, or a real safety evaluator.
+Open the [offline lab](/labs/system-design/10_fine_tuning/lab.html#lab). Change schema passes (0–200 cases), safety failures (0–5 cases), and whether the report matches the candidate identity. The deterministic gate accepts at least 196 schema passes, exactly zero known safety failures, and matching identity. It does not simulate training improvement, statistical confidence, or a real safety evaluator.
 
 | Preset | Inputs | Expected decision |
 | --- | --- | --- |

@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) follows commit, lost-response handling, delayed projection and a freshness-aware read. Branches expose normal catch-up, lag requiring primary, and unavailable current authority.
+The [offline walkthrough](/labs/system-design/07_reliability_consistency/lab.html#request-walkthrough) follows commit, lost-response handling, delayed projection and a freshness-aware read. Branches expose normal catch-up, lag requiring primary, and unavailable current authority.
+
+```lab
+src: /labs/system-design/07_reliability_consistency/lab.html
+title: Reliability and consistency: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -52,7 +57,7 @@ For failover, distinguish recovery time objective (how long recovery may take) f
 
 ## Lab: Select the Right Read and Remaining Budget
 
-Open the [consistency/deadline experiment](#lesson-lab-select-the-right-read-and-remaining-budget). Choose saved history versus current authority, replica lag (0–10 logical seconds) and remaining overall time (0–5,000 ms). The model reserves 200 ms for inherited required work. It assumes a reachable primary; outage branches are exercised separately in Python/the walkthrough.
+Open the [consistency/deadline experiment](/labs/system-design/07_reliability_consistency/lab.html#lab). Choose saved history versus current authority, replica lag (0–10 logical seconds) and remaining overall time (0–5,000 ms). The model reserves 200 ms for inherited required work. It assumes a reachable primary; outage branches are exercised separately in Python/the walkthrough.
 
 | Case | Inputs | Expected decision |
 | --- | --- | --- |

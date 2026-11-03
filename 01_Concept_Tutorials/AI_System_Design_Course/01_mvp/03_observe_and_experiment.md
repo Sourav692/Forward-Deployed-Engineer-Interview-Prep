@@ -40,7 +40,12 @@ Alice sends key `supplier-draft-001`. Her trusted scope is `(A, alice)`. The dat
 
 ### Request Lifecycle: Advance One Boundary at a Time
 
-Open the [clickable request walkthrough](#lesson-8-trace-one-request). Select a step or use Previous/Next, choose success, provider timeout, or final-write failure, and predict the visible state before advancing. This is a deterministic explanation of the application contract, not an execution trace or latency benchmark.
+Open the [clickable request walkthrough](/labs/system-design/01_mvp/lab.html#request-walkthrough). Select a step or use Previous/Next, choose success, provider timeout, or final-write failure, and predict the visible state before advancing. This is a deterministic explanation of the application contract, not an execution trace or latency benchmark.
+
+```lab
+src: /labs/system-design/01_mvp/lab.html
+title: Build the MVP: request walkthrough and lab
+```
 
 | Step and responsible component | Input | Output or durable state | Possible failure |
 | --- | --- | --- | --- |
@@ -81,7 +86,7 @@ The non-provider budget is 120 ms. At a 4,000 ms provider deadline, a simulated 
 
 ## 10. Lab: Move the Deadline, Observe the Outcome
 
-Open the [offline interactive lab](#lesson-10-lab-move-the-deadline-observe-the-outcome). It varies provider duration (500–6,000 ms) and provider deadline (1,000–4,000 ms). Fixed overhead is 120 ms. These controls illustrate the latency/outcome trade-off without pretending to call a model.
+Open the [offline interactive lab](/labs/system-design/01_mvp/lab.html#lab). It varies provider duration (500–6,000 ms) and provider deadline (1,000–4,000 ms). Fixed overhead is 120 ms. These controls illustrate the latency/outcome trade-off without pretending to call a model.
 
 The toy rule is: provider duration less than or equal to deadline completes; a larger duration times out. The equality case is an explicit modelling convention. Real deadline races require margins and integration tests.
 

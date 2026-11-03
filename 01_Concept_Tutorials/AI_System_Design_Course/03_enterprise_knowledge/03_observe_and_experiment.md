@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) follows ingestion through cited context. Choose current authorised text, a source deletion, or a permission revocation. The full static path remains below without scripting.
+The [offline walkthrough](/labs/system-design/03_enterprise_knowledge/lab.html#request-walkthrough) follows ingestion through cited context. Choose current authorised text, a source deletion, or a permission revocation. The full static path remains below without scripting.
+
+```lab
+src: /labs/system-design/03_enterprise_knowledge/lab.html
+title: Enterprise knowledge: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -54,7 +59,7 @@ For a serial text-extraction capacity of 20 seconds/document inherited from Stag
 
 ## Lab: Which Evidence May Leave the Application?
 
-Open the [policy/version experiment](#lesson-lab-which-evidence-may-leave-the-application). Two controls vary identity and evidence condition. The single illustrative candidate is version 2 of the supplier policy; the scenario describes a trusted gate, not a search latency model.
+Open the [policy/version experiment](/labs/system-design/03_enterprise_knowledge/lab.html#lab). Two controls vary identity and evidence condition. The single illustrative candidate is version 2 of the supplier policy; the scenario describes a trusted gate, not a search latency model.
 
 | Case | Identity and event | Context chunks | Citation and decision |
 | --- | --- | --- | --- |

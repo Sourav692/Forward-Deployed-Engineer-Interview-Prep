@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) follows promotion on the control plane, then Alice's request on the data plane, with wrong-geography, unfenced-writer and lost-quorum branches.
+The [offline walkthrough](/labs/system-design/11_multi_region/lab.html#request-walkthrough) follows promotion on the control plane, then Alice's request on the data plane, with wrong-geography, unfenced-writer and lost-quorum branches.
+
+```lab
+src: /labs/system-design/11_multi_region/lab.html
+title: Global multi-region platform: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -109,7 +114,7 @@ Measure input/output tokens by model and tenant, device-hours including idle res
 
 ## Lab: When Is Recovery Eligible?
 
-Open the [offline lab](#lesson-lab-when-is-recovery-eligible). Four controls change the gap at isolation (last renewal minus watermark, 0–120 seconds; the lab adds the 20-second lease), destination (EU-secondary, US-home or the failed EU-primary), writer authority evidence, and restore and model load time (60–720 seconds). Policy, approval, audit and bundle gates are assumed true in the visual worksheet; the Python tests exercise them. Safety gates decide whether promotion is safe. The RTO column is separate: a safe but late plan still proceeds in a real incident, reports the missed objective, and goes back for rehearsal or redesign. Results are computed assumptions, not elapsed measurements.
+Open the [offline lab](/labs/system-design/11_multi_region/lab.html#lab). Four controls change the gap at isolation (last renewal minus watermark, 0–120 seconds; the lab adds the 20-second lease), destination (EU-secondary, US-home or the failed EU-primary), writer authority evidence, and restore and model load time (60–720 seconds). Policy, approval, audit and bundle gates are assumed true in the visual worksheet; the Python tests exercise them. Safety gates decide whether promotion is safe. The RTO column is separate: a safe but late plan still proceeds in a real incident, reports the missed objective, and goes back for rehearsal or redesign. Results are computed assumptions, not elapsed measurements.
 
 | Preset | Inputs | Safe to promote | Blocking reasons | Planned recovery (seconds) | Meets 600-second RTO | Loss bound (seconds) |
 | --- | --- | --- | --- | --- | --- | --- |

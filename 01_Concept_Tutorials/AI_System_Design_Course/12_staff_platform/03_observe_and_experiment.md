@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) traces migration intent through a controlled route change, including mismatch, revoked-previous-route and control-plane-outage branches.
+The [offline walkthrough](/labs/system-design/12_staff_platform/lab.html#request-walkthrough) traces migration intent through a controlled route change, including mismatch, revoked-previous-route and control-plane-outage branches.
+
+```lab
+src: /labs/system-design/12_staff_platform/lab.html
+title: Staff-level platform architecture: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -86,7 +91,7 @@ At these inputs, break-even month = 15 + 3 × overlap months, and each overlap m
 
 ## Lab: Is Migration Economically Reversible?
 
-Open the [offline lab](#lesson-lab-is-migration-economically-reversible). Change migration effort (0–1,200 hours), shared operations and support (30–150 hours a month), dual-run overlap (0–12 months) and planning horizon (12–60 months). Fixed assumptions: 120 baseline hours a month, $100 an hour, $1,000 a month of control infrastructure and $20,000 a month of common serving. Outputs: monthly saving after the overlap, up-front cost, break-even month, both horizon TCOs and their difference. Zero or negative savings report no break-even rather than dividing by zero.
+Open the [offline lab](/labs/system-design/12_staff_platform/lab.html#lab). Change migration effort (0–1,200 hours), shared operations and support (30–150 hours a month), dual-run overlap (0–12 months) and planning horizon (12–60 months). Fixed assumptions: 120 baseline hours a month, $100 an hour, $1,000 a month of control infrastructure and $20,000 a month of common serving. Outputs: monthly saving after the overlap, up-front cost, break-even month, both horizon TCOs and their difference. Zero or negative savings report no break-even rather than dividing by zero.
 
 Inputs read: migration hours, shared hours a month, overlap months, horizon months. Output columns use the lab's labels, shortened; all values are USD except break-even.
 

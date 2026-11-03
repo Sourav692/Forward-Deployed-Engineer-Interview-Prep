@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) exposes success, worker crash before external effects, and unknown external outcome. At each step read the owner, input, durable output, and possible failure before advancing.
+The [offline walkthrough](/labs/system-design/02_distributed_execution/lab.html#request-walkthrough) exposes success, worker crash before external effects, and unknown external outcome. At each step read the owner, input, durable output, and possible failure before advancing.
+
+```lab
+src: /labs/system-design/02_distributed_execution/lab.html
+title: Distributed execution: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -47,7 +52,7 @@ Assuming five state writes per job, six jobs/minute yields about 30 writes/minut
 
 ## Lab: Crash Position Changes Recovery
 
-Open the [lease experiment](#lesson-lab-crash-position-changes-recovery). Its two controls are the lease interval (5–30 logical seconds) and crash position. A worker is assumed to stop at time zero; no real time elapses and no provider is called.
+Open the [lease experiment](/labs/system-design/02_distributed_execution/lab.html#lab). Its two controls are the lease interval (5–30 logical seconds) and crash position. A worker is assumed to stop at time zero; no real time elapses and no provider is called.
 
 | Case              | Lease | Failure position            | Expected result                                                               |
 | ----------------- | ----- | --------------------------- | ----------------------------------------------------------------------------- |

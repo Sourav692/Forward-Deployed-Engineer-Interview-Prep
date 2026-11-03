@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) freezes evidence, evaluates, gates, exposes eligible traffic, observes and safely changes routing. Branches show an eligible candidate, a known safety failure and a canary regression requiring withdrawal.
+The [offline walkthrough](/labs/system-design/08_evaluation_releases/lab.html#request-walkthrough) freezes evidence, evaluates, gates, exposes eligible traffic, observes and safely changes routing. Branches show an eligible candidate, a known safety failure and a canary regression requiring withdrawal.
+
+```lab
+src: /labs/system-design/08_evaluation_releases/lab.html
+title: Production AI quality and releases: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -49,7 +54,7 @@ For a separate planning example, 100 live requests/second split 5% canary and 95
 
 ## Lab: Separate the Release Gates
 
-Open the [release experiment](#lesson-lab-separate-the-release-gates). Select good, wrong-rule, known-leak, slow or costly fixture output. Vary the quality threshold (80–100%), fixture latency maximum (1,000–4,000 ms) and mean cost maximum (1–8 units). The default policy is 95%, 2,000 ms and three units; the separate known-safety gate cannot be disabled.
+Open the [release experiment](/labs/system-design/08_evaluation_releases/lab.html#lab). Select good, wrong-rule, known-leak, slow or costly fixture output. Vary the quality threshold (80–100%), fixture latency maximum (1,000–4,000 ms) and mean cost maximum (1–8 units). The default policy is 95%, 2,000 ms and three units; the separate known-safety gate cannot be disabled.
 
 | Case | Inputs | Expected result |
 | --- | --- | --- |

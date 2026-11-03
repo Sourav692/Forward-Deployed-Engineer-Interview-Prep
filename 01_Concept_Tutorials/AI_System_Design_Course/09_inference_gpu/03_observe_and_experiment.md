@@ -3,7 +3,12 @@
 
 ## Request Walkthrough
 
-The [offline walkthrough](#lesson-request-walkthrough) compares an approved dispatch, a forbidden/unready route and a lost provider response. Read the static boundary table before advancing the interactive steps.
+The [offline walkthrough](/labs/system-design/09_inference_gpu/lab.html#request-walkthrough) compares an approved dispatch, a forbidden/unready route and a lost provider response. Read the static boundary table before advancing the interactive steps.
+
+```lab
+src: /labs/system-design/09_inference_gpu/lab.html
+title: Inference and GPU infrastructure: request walkthrough and lab
+```
 
 ```mermaid
 sequenceDiagram
@@ -55,7 +60,7 @@ For a latency worksheet, if queue/verification/retrieval total an assumed 300 ms
 
 ## Lab: Change Memory Assumptions Without Claiming Speed
 
-Open the [single-device memory experiment](#lesson-lab-change-memory-assumptions-without-claiming-speed). Four controls vary total cached tokens/sequence, active sequences, raw weight bits (16 or 4) and assumed VRAM. KV stays FP16 and the runtime reserve stays four GiB. No GPU, kernel, scheduling engine or real model is invoked.
+Open the [single-device memory experiment](/labs/system-design/09_inference_gpu/lab.html#lab). Four controls vary total cached tokens/sequence, active sequences, raw weight bits (16 or 4) and assumed VRAM. KV stays FP16 and the runtime reserve stays four GiB. No GPU, kernel, scheduling engine or real model is invoked.
 
 | Case | Assumptions | Arithmetic result |
 | --- | --- | --- |
