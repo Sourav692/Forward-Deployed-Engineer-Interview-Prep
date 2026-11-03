@@ -1093,7 +1093,9 @@ export const RAG_MODULES: CurriculumModule[] = [
       "retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store",
       "retrieval-hybrid-rerank-interview-questions"
     ],
-    "seeAlso": []
+    "seeAlso": [
+      "enterprise-knowledge-learn-and-design"
+    ]
   },
   {
     "slug": "query-transformation-and-routing",
