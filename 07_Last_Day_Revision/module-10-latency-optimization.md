@@ -1,6 +1,6 @@
 # Review 10: Latency Optimisation
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -11,145 +11,263 @@
 
 ### 2. Core Mental Model
 
-```text
-MEASURE → DEFINE SLO → FIND CRITICAL PATH
-                              ↓
-STREAM / PARALLELIZE / REDUCE HOPS
-                              ↓
-RETRIEVAL / TOOLS / QUEUE / ASYNC
-                              ↓
-           Recheck quality + latency + cost
+```mermaid
+flowchart TD
+    A["Measure where users wait"] --> B["Define workload and latency SLO"]
+    B --> C["Find the critical path"]
+    C --> D["Stream output, overlap reads, or reduce hops"]
+    D --> E["Tune retrieval, tools, queues, or delivery"]
+    E --> F["Recheck latency, quality, safety, and cost"]
+    classDef measure fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef act fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef verify fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,B,C measure
+    class D,E act
+    class F verify
 ```
 
-A service-level objective (SLO) is an agreed target for a defined workload and measurement window.
+- Define the service-level objective (SLO): metric, target, workload, and measurement window.
+- Trace the full request, including queue wait and repeated calls.
+- Add sequential stages. For parallel work, count the slowest required branch plus overhead.
+- Avoid double-counting child spans already included in a parent span.
 
-```text
-End-to-end latency includes:
-Queue wait + network + retrieval + model calls
-           + orchestration overhead + tools
+```mermaid
+flowchart TD
+    A["End-to-end latency"] --> B["Queue wait and network"]
+    A --> C["Retrieval and model calls"]
+    A --> D["Orchestration and tools"]
+    classDef total fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef wait fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef compute fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef tools fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A total
+    class B wait
+    class C compute
+    class D tools
 ```
 
-Do not double-count time already included inside another measured span. Parallel branches contribute their critical-path duration, not the sum of all branch durations.
+The boxes group sources of delay; the request trace determines their order and overlap.
 
 ### 3. Essential Concepts
 
 #### 1. P50/P95/P99: Inspect the Distribution
 
-P50 is the median. P95 and P99 show slower-tail behaviour: 95% or 99% of measured requests complete at or below those values.
+- P50 is the median: half of requests finish at or below this time.
+- P95 and P99 describe the slower tail: 95% or 99% finish at or below those times.
+- Compare the same task types and measurement windows.
+- Break results down by tenant and workload. An overall improvement can hide a slower experience for one group.
 
 > “I’d segment latency by workload and inspect the tail, not just the average.”
 
-```text
-Average looks acceptable
-        ↓
-P99 very slow → Some users still wait too long
+```mermaid
+flowchart TD
+    A["Average looks acceptable"] --> B["Check P95 and P99"]
+    B --> C["Inspect slow requests by tenant and workload"]
+    classDef typical fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef tail fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef inspect fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A typical
+    class B tail
+    class C inspect
 ```
-
-Compare consistent measurement windows and task types. Aggregate improvements can hide a badly affected tenant or workload.
 
 #### 2. Trace the Request: Locate the Critical Path
 
-Measure queue, retrieval, model, tool, and network spans, including repeated calls. Look at the slow requests themselves.
+- Open traces for slow requests, including repeated model and tool calls.
+- Separate queue, network, retrieval, model, tool, and orchestration time.
+- Check which stages run in sequence and which overlap.
 
 > “If the model takes two seconds and the task takes twelve, I’d inspect the other ten seconds before switching models.”
 
-```text
-Queue 4s → Retrieval 1s → Model 2s → Tool 4s → Overhead 1s
+```mermaid
+flowchart TD
+    A["Queue: 4 s"] --> B["Retrieval: 1 s"]
+    B --> C["Model: 2 s"]
+    C --> D["Tool: 4 s"]
+    D --> E["Overhead: 1 s"]
+    classDef slow fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef retrieval fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef model fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef overhead fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,D slow
+    class B retrieval
+    class C model
+    class E overhead
 ```
 
-These times are illustrative. Identify which stages are sequential and which overlap.
+Illustrative sequential trace: 12 seconds total. Queue and tool waits account for eight seconds.
 
 #### 3. Time to First Token and Streaming: Improve Perceived Waiting
 
-Time to first token (TTFT) measures when model output begins; user-visible first useful output may occur later. Streaming displays partial output while generation continues.
+- Time to first token (TTFT) measures when model output begins.
+- First useful output may reach the user later. Track it separately from final completion.
+- Streaming shows partial output while generation continues; total work may stay the same.
 
-> “I’d track both first useful output and final completion; streaming improves waiting experience without necessarily reducing total work.”
+> “I’d track when users first get something useful and when the task finishes.”
 
-```text
-Non-streamed: Wait ─────────→ Full response
-Streamed:     Wait → Partial output → Full response
+```mermaid
+flowchart TD
+    A["Without streaming"] --> B["Wait for generation to finish"] --> C["Show full response"]
+    D["With streaming"] --> E["Wait for first output"] --> F["Show partial output"] --> G["Show full response"]
+    classDef mode fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef wait fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef output fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A,D mode
+    class B,E wait
+    class C,F,G output
 ```
 
-Do not stream an action as successful before execution is confirmed. Partial output must remain safe and not expose unverified sensitive information.
+- Confirm execution before showing an action as successful.
+- Keep partial output safe. Do not expose sensitive information before required checks finish.
 
 #### 4. Parallelisation: Overlap Independent Work
 
-Run independent retrieval or read-tool calls together when permissions, dependency limits, and correctness allow it.
+- Run independent retrieval or read-tool calls together.
+- Check permissions, dependency limits, and correctness first.
+- Keep steps in sequence when one needs another's result.
 
 > “I’d parallelise independent order and policy reads, but preserve sequencing where one result is needed for another.”
 
-```text
-Sequential: Read A → Read B → Combine
-Parallel:   Read A ─┐
-            Read B ─┴→ Combine
+```mermaid
+flowchart TD
+    subgraph Sequential
+        A["Read A"] --> B["Read B"] --> C["Combine results"]
+    end
+    subgraph Parallel
+        D["Start independent reads"] --> E["Read A"]
+        D --> F["Read B"]
+        E --> G["Combine when both finish"]
+        F --> G
+    end
+    classDef readA fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef readB fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef combine fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef start fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,E readA
+    class B,F readB
+    class C,G combine
+    class D start
 ```
 
-The parallel path is governed by the slowest necessary branch plus overhead. Parallelism can increase load and does not justify unordered business writes.
+- Parallel time depends on the slowest required branch plus overhead.
+- More concurrent calls increase dependency load.
+- Preserve the required order of business writes.
 
 #### 5. Reduce Sequential Model Hops: Remove Unnecessary Reasoning Calls
 
-Inspect router, planner, agent, critic, and writer calls. Combine or replace steps only when their purpose is preserved.
+- Inspect router, planner, agent, critic, and writer calls.
+- Ask what each call contributes before combining or replacing it.
+- Use a rule or schema check where model reasoning adds no value.
+- Keep required policy, authorisation, and evaluation controls.
 
 > “Does this stage need model reasoning, or can a rule, schema check, or simpler call do it?”
 
-```text
-Five model hops → Identify required functions
-                       ↓
-                Fewer justified calls
+```mermaid
+flowchart TD
+    A["Five sequential model calls"] --> B["Identify each call's purpose"]
+    B --> C["Combine or replace redundant calls"]
+    C --> D["Verify quality and required controls"]
+    classDef calls fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef inspect fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef change fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef verify fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A calls
+    class B inspect
+    class C change
+    class D verify
 ```
-
-Do not remove policy, authorisation, or evaluation controls merely to reduce latency.
 
 #### 6. Retrieval: Optimise the Evidence Path
 
-Measure query embedding, search, filtering, reranking, and context construction. Tune candidate counts, indexing, and caching against quality requirements.
+- Measure query embedding, search, filtering, reranking, and context construction.
+- Tune candidate counts, indexing, and caching against evidence recall and answer quality.
+- Reuse cached evidence only when permissions and freshness allow it.
 
-> “I’d reduce retrieval work only while preserving evidence recall, access enforcement, and answer quality.”
+> “I’d check recall and answer quality as I tune retrieval, and keep access checks intact.”
 
-```text
-Search candidates → Rerank if useful → Select context
+```mermaid
+flowchart TD
+    A["Search candidates"] --> B["Rerank when it improves results"]
+    B --> C["Select permitted, fresh context"]
+    classDef search fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef rank fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef context fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A search
+    class B rank
+    class C context
 ```
-
-Permission-safe cache reuse can help; stale or unauthorised evidence is not an acceptable speed improvement.
 
 #### 7. Tools: Control Slow Dependencies
 
-Measure enterprise API latency, set deadlines, reuse results only within freshness limits, and use fallback or async completion where the use case allows it.
+- Measure enterprise API latency and set deadlines.
+- Reuse results only within their freshness limits.
+- Choose a safe fallback, defer the task, or escalate when the dependency is too slow.
+- For write timeouts, check the operation's status before retrying. A timeout does not automatically cancel a remote side effect.
 
 > “A slow ERP will not become fast just because I choose a faster model.”
 
-```text
-Slow tool → Deadline → Safe fallback / defer / escalate
+```mermaid
+flowchart TD
+    A["Tool exceeds deadline"] --> B["Read: use safe fallback, defer, or escalate"]
+    A --> C["Write: reconcile operation status"]
+    C --> D["Decide whether a retry is safe"]
+    classDef timeout fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef fallback fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef reconcile fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef decision fill:#dcfce7,stroke:#15803d,color:#14532d
+    class A timeout
+    class B fallback
+    class C reconcile
+    class D decision
 ```
-
-For write timeouts, reconcile the operation's status before retry. Stopping waiting does not cancel a remote side effect automatically.
 
 #### 8. Queue Wait: Protect Tail Latency Under Load
 
-Separate time waiting for capacity from actual processing. Apply admission control, tenant-aware limits, bounded queues, and useful capacity scaling.
+- Measure queue wait separately from processing time.
+- Use admission control, tenant-aware limits, and bounded queues.
+- Scale capacity where the bottleneck can scale.
+- Define when to reject or defer excess work. An unbounded queue can make every request late.
 
 > “If model time is stable but queue wait grows at peak, I’d address overload rather than model speed.”
 
-```text
-Low load:  Short wait + processing
-Peak load: Long wait  + similar processing
+```mermaid
+flowchart TD
+    A["Low load"] --> B["Short queue wait"] --> C["Processing"]
+    D["Peak load"] --> E["Long queue wait"] --> F["Similar processing time"]
+    classDef load fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef short fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef long fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef process fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class A,D load
+    class B short
+    class E long
+    class C,F process
 ```
-
-An unbounded queue can make every request late instead of rejecting excess work clearly.
 
 #### 9. Async Delivery: Change the Interaction for Long Tasks
 
-For work that legitimately takes minutes, return a task identifier and provide status, progress, and result retrieval rather than holding one interactive request open.
+- For tasks that take minutes, return a task identifier and run the work in the background.
+- Provide status, progress, and a way to retrieve the result.
+- Persist task state and define cancellation and timeout behaviour.
+- Agree on completion expectations. Async delivery releases the client while execution continues.
 
 > “For a five-minute research task, I’d agree on completion expectations and use asynchronous delivery.”
 
-```text
-Submit → Acknowledge task ID → Background execution
-                                      ↓
-                              Status / result / notification
+```mermaid
+flowchart TD
+    A["Submit task"] --> B["Return task ID"]
+    B --> C["Execute with durable task state"]
+    C --> D["Expose status and progress"]
+    D --> E["Deliver result or notification"]
+    classDef request fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef ack fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef work fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef status fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A request
+    class B,E ack
+    class C work
+    class D status
 ```
-
-Async reduces blocking for the client, not necessarily task completion time. Persist state and define cancellation or timeout behaviour.
 
 ### 4. Requirement → Component Reasoning
 
@@ -158,12 +276,16 @@ Async reduces blocking for the client, not necessarily task completion time. Per
 | Know where time goes | End-to-end traces | Identify critical path | Instrumentation effort |
 | Earlier useful output | Streaming | Reduce perceived waiting | Partial-output handling |
 | Independent slow reads | Concurrent execution | Overlap waiting | More concurrent dependency load |
-| Too many sequential calls | Simpler routing/workflow | Remove redundant hops | Quality must be reevaluated |
+| Too many sequential calls | Simpler routing/workflow | Remove redundant hops | Recheck answer quality |
 | Repeated eligible lookups | Scoped cache | Avoid repeated retrieval/tools | Freshness and permissions |
 | Peak queue delay | Admission + bounded queues + capacity | Protect waiting time | Deferral/rejection |
 | Long-running task | Async jobs + durable state | Match interaction to duration | Status/result UX |
 
-**Support example:** measure policy retrieval and live order lookup, overlap them if independent, limit unnecessary model hops, and keep refund checks and confirmation intact. Investigate peak queue wait separately from normal processing time.
+For a support request:
+
+- Measure policy retrieval and live order lookup; overlap them if independent.
+- Remove redundant model hops while keeping refund checks and confirmation.
+- Investigate peak queue wait separately from processing time.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -211,14 +333,19 @@ Async reduces blocking for the client, not necessarily task completion time. Per
 
 ### Recall Flow
 
-```text
-MEASURE → SLO → CRITICAL PATH
-                    ↓
-STREAM / PARALLELIZE / REDUCE HOPS
-                    ↓
-RETRIEVAL / TOOLS / QUEUE / ASYNC
-                    ↓
-         Recheck quality and cost
+```mermaid
+flowchart TD
+    A["Measure wait and define SLO"] --> B["Find the critical path"]
+    B --> C["Choose a change for the measured delay"]
+    C --> D["Recheck latency, quality, safety, and cost"]
+    classDef measure fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef trace fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    classDef change fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef verify fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A measure
+    class B trace
+    class C change
+    class D verify
 ```
 
 ### Checklist
@@ -257,12 +384,20 @@ RETRIEVAL / TOOLS / QUEUE / ASYNC
 
 ### Critical-Path Rules
 
-Sequential stages add. Parallel branches overlap; do not sum all branch times as elapsed latency. Avoid double-counting nested spans. Inspect slow requests, not only aggregate dashboards.
-
-Preserve ordering where results depend on one another. Parallel calls increase concurrent load. Do not reorder business writes merely to save time, remove required policy checks, or stream unconfirmed action success.
-
-Optimise retrieval candidate counts and reranking against evidence quality. Cache only when permissions and freshness hold. For tool write timeouts, reconcile status before retry. For queues, use bounded waiting and clear overload behaviour; more workers help only if the bottleneck can scale.
+- Add sequential stages; use the slowest required branch for parallel work, plus overhead.
+- Avoid double-counting nested spans. Open slow-request traces as well as aggregate dashboards.
+- Preserve dependencies and write ordering; check the load added by parallel calls.
+- Keep policy checks and confirm actions before reporting success.
+- Tune retrieval against evidence quality; cache only within permission and freshness limits.
+- Reconcile a timed-out write before retrying.
+- Bound queue waits and define overload behaviour. Add workers only where the bottleneck can scale.
 
 ### 30-Second Answer
 
-> “I’d define workload-specific first-output and completion targets, inspect P95/P99 traces, and find the critical path. I’d then stream safe output, parallelise independent work, reduce unnecessary model hops, and optimise measured retrieval, tool, or queue delays. For genuinely long tasks, I’d use asynchronous delivery. I’d verify quality, action safety, and cost after each change.”
+Practise these points as one spoken answer:
+
+- “I’d agree on first useful output and completion targets for each workload.”
+- “Then I’d inspect P95/P99 traces and find where users spend time waiting.”
+- “I’d overlap independent reads, cut redundant model calls, and tune the slow stages. Streaming can show useful output sooner.”
+- “For tasks that take minutes, I’d return a task ID with progress and result retrieval.”
+- “After each change, I’d recheck latency, quality, action safety, and cost.”
