@@ -39,11 +39,11 @@ flowchart TB
 
 Target diagram. Text alternative: an authenticated regional request passes current policy and admission, gathers authorised source evidence, calls an approved model through Model Gateway, and commits its result. Ingestion supplies versioned source/index state. Evaluation and optional training supply approved release identities. Platform control configures eligible regional execution; customer prompts stay out of the global control plane. A hosted provider is an approved external processing boundary whose geography and handling require separate checks.
 
-The [offline architecture map](/labs/system-design/00_enterprise_overview/lab.html#target-map) shows the same four paths with selectable stage highlights. The full explanation remains visible without JavaScript. Read the customer request lane first, then inspect how the other lanes supply it.
+The [offline architecture map](/labs/system-design/00_enterprise_overview/map.html#target-map) shows the same four paths with selectable stage highlights. The full explanation remains visible without JavaScript. Read the customer request lane first, then inspect how the other lanes supply it.
 
 ```lab
-src: /labs/system-design/00_enterprise_overview/lab.html
-title: Enterprise use case and target architecture: request walkthrough and architecture map
+src: /labs/system-design/00_enterprise_overview/map.html
+title: Enterprise use case and target architecture: architecture map
 ```
 
 ## What Each Boundary Is Responsible For

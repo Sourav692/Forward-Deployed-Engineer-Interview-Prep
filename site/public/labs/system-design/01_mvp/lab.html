@@ -32,7 +32,10 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-bo
 main.lab{max-width:60rem;margin:0 auto;padding:2rem 1.25rem 4rem}
 main.lab h1{font-family:var(--font-display);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.1;margin:0 0 .75rem}
 main.lab>p{max-width:75ch;color:var(--muted)}
-main.lab h2{font-family:var(--font-display);font-size:1.4rem;margin:2.5rem 0 1rem}</style>
+main.lab h2{font-family:var(--font-display);font-size:1.4rem;margin:2.5rem 0 1rem}
+html.embedded main.lab{padding:0 0 1rem}
+html.embedded main.lab>h1,html.embedded main.lab>p{display:none}
+html.embedded main.lab section:first-of-type h2{margin-top:0}</style>
 <link rel="stylesheet" href="/labs/_site-tokens.css">
 <script src="/labs/_site-lab.js"></script>
 </head>
@@ -97,6 +100,9 @@ document.getElementById('flow-previous').addEventListener('click',()=>{flowStep=
 document.getElementById('flow-next').addEventListener('click',()=>{flowStep=Math.min(5,flowStep+1);renderFlow();});
 document.getElementById('flow-reset').addEventListener('click',()=>{flowStep=0;flowCase.value='success';renderFlow();});
 flowCase.addEventListener('change',()=>{flowStep=0;renderFlow();});renderFlow();
+</script>
+<script>
+if (window.self !== window.top) new ResizeObserver(() => parent.postMessage({ labHeight: document.body.getBoundingClientRect().height + 2 }, '*')).observe(document.body)
 </script>
 </body>
 </html>

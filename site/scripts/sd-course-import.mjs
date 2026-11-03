@@ -17,7 +17,8 @@
  *    architecture map, HTML-only anchors `#request-walkthrough`, `#lab`, `#target-map`) are cut from
  *    its `guide.html` into `site/public/labs/system-design/NN_<stage>/lab.html` (task SDC-03): the
  *    blocks, their JSON config and the inline script, on the site's lab tokens through
- *    `siteLab()`, which fails on any request. Links to those anchors go to the lab, and a ```lab
+ *    `siteLab()`, which fails on any request. Framed in a lesson, a lab hides its own heading and
+ *    reports its height (`{ labHeight }`) so LabFrame fits it. Links to those anchors go to the lab, and a ```lab
  *    fence follows the first paragraph that links it in each part;
  *  - a link to any other course file (labs, ADRs, validation, progress records) becomes a GitHub
  *    link, since learn.mjs turns a repository path into plain text;
@@ -185,7 +186,9 @@ function findAnchor(stage, anchor) {
 /** "Build the MVP: think like a staff engineer": the file H1 and the curriculum lesson title. */
 export const lessonTitle = (stage, part) => `${stage.title}: ${part.title.charAt(0).toLowerCase()}${part.title.slice(1)}`
 
-const labHref = (stage) => `/labs/system-design/${stage.out}/lab.html`
+/** Stage 0's architecture map gets a page of its own (map.html); the other blocks share lab.html. */
+const labPage = (anchor) => (anchor === 'target-map' ? 'map' : 'lab')
+const labHref = (stage, anchor) => `/labs/system-design/${stage.out}/${labPage(anchor)}.html`
 
 const sectionId = (section) => (section ? `#lesson-${readingSlug(section) || 'section'}` : '')
 const partFile = (stage, part) => `${stage.out}/0${part.n}_${part.title.toLowerCase().replace(/[^a-z0-9]+/g, '_')}.md`
@@ -207,7 +210,7 @@ function rewriteLinks(lines, ctx) {
       if (guide) {
         const dest = stagesByDir.get(guide[1])
         if (!dest) throw new Error(`${stage.rel}/guide.md: link to unknown stage: ${all}`)
-        if (LAB_ANCHORS.includes(anchor)) return `[${text}](${labHref(dest)}#${anchor})`
+        if (LAB_ANCHORS.includes(anchor)) return `[${text}](${labHref(dest, anchor)}#${anchor})`
         const spot = anchor ? findAnchor(dest, anchor) : { part: dest.parts[0], section: null }
         if (!spot) throw new Error(`${stage.rel}/guide.md: anchor #${anchor} not found in ${dest.rel}/guide.md: ${all}`)
         const file = partFile(dest, spot.part)
@@ -267,12 +270,20 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-bo
 main.lab{max-width:60rem;margin:0 auto;padding:2rem 1.25rem 4rem}
 main.lab h1{font-family:var(--font-display);font-size:clamp(1.75rem,4vw,2.5rem);line-height:1.1;margin:0 0 .75rem}
 main.lab>p{max-width:75ch;color:var(--muted)}
-main.lab h2{font-family:var(--font-display);font-size:1.4rem;margin:2.5rem 0 1rem}`
+main.lab h2{font-family:var(--font-display);font-size:1.4rem;margin:2.5rem 0 1rem}
+html.embedded main.lab{padding:0 0 1rem}
+html.embedded main.lab>h1,html.embedded main.lab>p{display:none}
+html.embedded main.lab section:first-of-type h2{margin-top:0}`
+
+/** Framed in a lesson (LabFrame), the lab reports its height so the frame fits it (as RAG labs do). */
+const LAB_HEIGHT_SCRIPT = `<script>
+if (window.self !== window.top) new ResizeObserver(() => parent.postMessage({ labHeight: document.body.getBoundingClientRect().height + 2 }, '*')).observe(document.body)
+</script>`
 
 /**
- * A stage's lab page: its interactive blocks cut from guide.html (each heading's following
+ * A stage's lab pages: its interactive blocks cut from guide.html (each heading's following
  * element, or the Stage 0 map figure), the JSON config and inline script, on the site tokens.
- * Null when the stage has none.
+ * One page per labPage() name, each `{ name, title, html, anchors }`; empty when the stage has none.
  */
 function buildLab(stage) {
   const where = `${stage.rel}/guide.html`
@@ -292,13 +303,18 @@ function buildLab(stage) {
     const title = plainText(html.slice(tag.index + tag[0].length, close))
     blocks.push({ anchor, title: title === 'Request Walkthrough' ? 'Request walkthrough' : title, body: element(html, start, 'div', where) })
   }
-  if (!blocks.length) return null
+  if (!blocks.length) return []
   const style = html.match(/<style>([\s\S]*?)<\/style>/)[1].replace(/@font-face\s*\{[^}]*\}/g, '')
   const scripts = [...html.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/g)].map((m) => relink(m[0], where))
   for (const b of blocks) b.body = relink(b.body, where)
-  const what = blocks.some((b) => b.anchor === 'target-map') ? 'request walkthrough and architecture map' : 'request walkthrough and lab'
-  const title = `${stage.title}: ${what}`
-  const page = `<!doctype html>
+  // Every page keeps every block, because the course's one script expects all of their elements;
+  // the blocks that belong to another page are hidden.
+  const names = [...new Set(blocks.map((b) => labPage(b.anchor)))]
+  return names.map((name) => {
+    const own = blocks.filter((b) => labPage(b.anchor) === name)
+    const what = name === 'map' ? 'architecture map' : own.some((b) => b.anchor === 'lab') ? 'request walkthrough and lab' : 'request walkthrough'
+    const title = `${stage.title}: ${what}`
+    const page = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -312,13 +328,15 @@ function buildLab(stage) {
 <main class="lab" id="content">
 <h1>${escapeHtml(title)}</h1>
 <p>Part of the Staff AI System Design course. Everything runs in your browser and makes no network requests. Every figure is illustrative.</p>
-${blocks.map((b) => `<section aria-labelledby="${b.anchor}">\n<h2 id="${b.anchor}">${escapeHtml(b.title)}</h2>\n${b.body}\n</section>`).join('\n')}
+${blocks.map((b) => `<section aria-labelledby="${b.anchor}"${own.includes(b) ? '' : ' hidden'}>\n<h2 id="${b.anchor}">${escapeHtml(b.title)}</h2>\n${b.body}\n</section>`).join('\n')}
 </main>
 ${scripts.join('\n')}
+${LAB_HEIGHT_SCRIPT}
 </body>
 </html>
 `
-  return { title, html: siteLab(page, where), anchors: blocks.map((b) => b.anchor) }
+    return { name, title, html: siteLab(page, where), anchors: own.map((b) => b.anchor) }
+  })
 }
 
 /** Stage 0's map links each stage guide (a static href and the paths in its JSON config). */
@@ -329,17 +347,20 @@ function relink(html, where) {
   return out
 }
 
-/** Adds a ```lab fence after the first paragraph of a part that links its stage's lab. */
-function addLabFence(lines, stage, lab) {
-  const href = `](${labHref(stage)}#`
+/** Adds a ```lab fence, for the page it links, after the first paragraph of a part that links a lab. */
+function addLabFence(lines, stage, pages) {
+  const href = new RegExp(`\\]\\(/labs/system-design/${stage.out}/([a-z]+)\\.html#`)
   let at = -1
+  let page = null
   eachProseLine(lines, (line, i) => {
-    if (at === -1 && line.includes(href)) at = i
+    const m = at === -1 && line.match(href)
+    if (m) [at, page] = [i, pages.find((p) => p.name === m[1])]
   })
   if (at === -1) return lines
   let end = at
   while (end + 1 < lines.length && lines[end + 1].trim() !== '') end++
-  return [...lines.slice(0, end + 1), '', '```lab', `src: ${labHref(stage)}`, `title: ${lab.title}`, '```', ...lines.slice(end + 1)]
+  const src = `/labs/system-design/${stage.out}/${page.name}.html`
+  return [...lines.slice(0, end + 1), '', '```lab', `src: ${src}`, `title: ${page.title}`, '```', ...lines.slice(end + 1)]
 }
 
 // ------------------------------------------------------------------ code lab
@@ -458,19 +479,20 @@ export function importCourse() {
   const files = new Map()
   const labs = new Map()
   for (const stage of stages) {
-    const lab = buildLab(stage)
-    if (lab) labs.set(stage.out, lab.html)
+    const pages = buildLab(stage)
+    for (const page of pages) labs.set(`${stage.out}/${page.name}.html`, page.html)
+    const anchors = pages.flatMap((page) => page.anchors)
     let linked = false
     const pyFiles = labFiles(stage)
     let codeLab = false
     for (const part of stage.parts) {
       const body = [...(part.n === 1 ? stage.preamble : []), ...part.lines]
       let lines = dropPackageSentences(rewriteLinks(body, { stage, part, stagesByDir }))
-      for (const [, anchor] of lines.join('\n').matchAll(new RegExp(`\\]\\(${labHref(stage)}#([a-z-]+)\\)`, 'g'))) {
-        if (!lab?.anchors.includes(anchor)) throw new Error(`${stage.rel}/guide.md: links #${anchor}, which its guide.html has no interactive block for`)
+      for (const [, anchor] of lines.join('\n').matchAll(new RegExp(`\\]\\(/labs/system-design/${stage.out}/[a-z]+\\.html#([a-z-]+)\\)`, 'g'))) {
+        if (!anchors.includes(anchor)) throw new Error(`${stage.rel}/guide.md: links #${anchor}, which its guide.html has no interactive block for`)
         linked = true
       }
-      if (lab) lines = addLabFence(lines, stage, lab)
+      if (pages.length) lines = addLabFence(lines, stage, pages)
       lines = dropNodeChecks(lines)
       const withLab = pyFiles.length && !codeLab ? addCodeLab(lines, stage, pyFiles) : null
       if (withLab) [lines, codeLab] = [withLab, true]
@@ -490,7 +512,7 @@ export function importCourse() {
       stage.extra = { after: part.n, part: extra }
     }
     if (pyFiles.length && !codeLab) throw new Error(`${stage.rel}: labs/ has Python files but guide.md gives no \`python3 …/labs/test_*.py\` command`)
-    if (lab && !linked) throw new Error(`${stage.rel}/guide.md: never links its lab, so no lesson would show it`)
+    if (pages.length && !linked) throw new Error(`${stage.rel}/guide.md: never links its lab, so no lesson would show it`)
   }
 
   checkLinks(files)
@@ -516,9 +538,9 @@ export function importCourse() {
   writeFileSync(join(out, 'source.json'), `${JSON.stringify(source, null, 2)}\n`)
   const labsOut = join(REPO_ROOT, LABS_REL)
   rmSync(labsOut, { recursive: true, force: true })
-  for (const [dir, html] of labs) {
-    mkdirSync(join(labsOut, dir), { recursive: true })
-    writeFileSync(join(labsOut, dir, 'lab.html'), html)
+  for (const [file, html] of labs) {
+    mkdirSync(dirname(join(labsOut, file)), { recursive: true })
+    writeFileSync(join(labsOut, file), html)
   }
   return { stages: stages.length, lessons: files.size, labs: labs.size, commit }
 }

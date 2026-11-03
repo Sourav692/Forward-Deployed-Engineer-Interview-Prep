@@ -7,7 +7,7 @@ The [interactive walkthrough](/labs/system-design/00_enterprise_overview/lab.htm
 
 ```lab
 src: /labs/system-design/00_enterprise_overview/lab.html
-title: Enterprise use case and target architecture: request walkthrough and architecture map
+title: Enterprise use case and target architecture: request walkthrough
 ```
 
 ```mermaid
