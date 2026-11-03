@@ -1,6 +1,6 @@
 # Review 14: Release & Change Management
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -11,106 +11,197 @@
 
 ### 2. Core Mental Model
 
-```text
-Version candidate → Offline evaluation → Release gate
-                                              ↓
-                   Shadow and/or scoped canary
-                                              ↓
-                       Observe → Expand / stop / rollback
+```mermaid
+flowchart TD
+    N0["Version candidate"]
+    N1["Offline evaluation"]
+    N2["Release gate"]
+    N3["Shadow and/or scoped canary"]
+    N4["Observe"]
+    N5["Expand if criteria pass"]
+    N6["Stop or roll back if criteria fail"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N4 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Use a rollout path appropriate to the change. Shadow and canary serve different purposes; both are not mandatory for every release.
+- Use a rollout path appropriate to the change.
+- Shadow and canary serve different purposes; both are not mandatory for every release.
 
 ### 3. Essential Concepts
 
 #### 1. Version the Behaviour: More Than the Model
 
-Track prompts, model/configuration, tools and schemas, routing, retrieval settings, corpus/index versions where feasible, policy, and evaluation artifacts.
+- Track prompts, model/configuration, tools and schemas, routing, retrieval settings, corpus/index versions where feasible, policy, and evaluation artifacts.
 
 > “I’d record the versions that produced each task's behaviour so we can reproduce and compare changes.”
 
-```text
-Release identity → Prompt + model + tools + retrieval + policy
+```mermaid
+flowchart TD
+    N0["Release identity"]
+    N1["Prompt and model"]
+    N2["Tools and schemas"]
+    N3["Retrieval and policy"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Include workflow/state-schema compatibility for long-running tasks. A model rollback alone may not restore previous behaviour.
+- Include workflow/state-schema compatibility for long-running tasks.
+- A model rollback alone may not restore previous behaviour.
 
 #### 2. Offline Evaluation: Compare Before Exposure
 
-Evaluate representative held-out normal, edge, failure, and high-risk cases against the baseline. Check task success, constraints, latency, and cost.
+- Evaluate representative held-out normal, edge, failure, and high-risk cases against the baseline.
+- Check task success, constraints, latency, and cost.
 
 > “Improving twenty examples is encouraging, but I’d check coverage and critical regressions before release.”
 
 #### 3. Release Gates: Define Pass/Fail Criteria
 
-Agree on acceptable quality, prohibited failures, operational limits, and required evidence before evaluating the candidate.
+- Agree on acceptable quality, prohibited failures, operational limits, and required evidence before evaluating the candidate.
 
-```text
-Quality + policy + task success + latency/cost criteria
-                         ↓
-                 Pass / investigate / reject
+```mermaid
+flowchart TD
+    N0["Quality, policy, task success, latency, and cost criteria"]
+    N1["Pass, investigate, or reject"]
+    N0 --> N1
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 > “A better average should not override a serious permission or action-safety regression.”
 
 #### 4. Shadow Traffic: Evaluate Without User-Facing Actions
 
-Run the candidate alongside the current path for comparison while the current path serves the user. Use sandboxed or read-only operation paths for candidate actions.
+- Run the candidate alongside the current path for comparison while the current path serves the user.
+- Use sandboxed or read-only operation paths for candidate actions.
 
-```text
-Request ─┬→ Current → User / real execution
-         └→ Candidate → Evaluation only
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Current path"]
+    N2["User and real execution"]
+    N3["Shadow candidate"]
+    N4["Evaluation only: no production writes"]
+    N0 --> N1
+    N1 --> N2
+    N0 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 > “The shadow candidate must not issue a second refund or change production state.”
 
-Shadow calls can still incur cost, load, and data exposure. Control access and resource budgets, and note that shadow results may not capture user reactions to candidate output.
+- Shadow calls can still incur cost, load, and data exposure.
+- Control access and resource budgets, and note that shadow results may not capture user reactions to candidate output.
 
 #### 5. Canary: Expose a Limited Real Cohort
 
-Route a small eligible cohort to the candidate, then monitor real quality, task outcomes, errors, latency, and cost against the baseline.
+- Route a small eligible cohort to the candidate, then monitor real quality, task outcomes, errors, latency, and cost against the baseline.
 
-```text
-Eligible users / tenants
-       ↓
-Small candidate cohort → Observe → Expand or revert
+```mermaid
+flowchart TD
+    N0["Eligible users and tenants"]
+    N1["Small candidate cohort"]
+    N2["Observe"]
+    N3["Expand or revert"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 > “I’d define the cohort, observation window, stop criteria, and owner before enabling it.”
 
-Use consistent assignment where conversation/workflow continuity matters. A tiny cohort may not cover rare failures or all tenant types.
+- Use consistent assignment where conversation/workflow continuity matters.
+- A tiny cohort may not cover rare failures or all tenant types.
 
 #### 6. Feature Flags: Control Scope
 
-Enable behaviour by tenant, cohort, capability, or version. Flags can support limited exposure and fast disabling without a full deployment.
+- Enable behaviour by tenant, cohort, capability, or version.
+- Flags can support limited exposure and fast disabling without a full deployment.
 
 > “For two pilot enterprises, I’d scope the flag to those tenants and track their outcomes separately.”
 
-Flags must cover the actual execution path, not only the UI. Avoid silently changing a pending approval's action semantics.
+- Flags must cover the actual execution path, not only the UI.
+- Avoid silently changing a pending approval's action semantics.
 
 #### 7. Rollback: Restore a Known Compatible Version
 
-Keep a tested rollback path and know what happens to active workflows, state changes, and already completed business actions.
+- Keep a tested rollback path and know what happens to active workflows, state changes, and already completed business actions.
 
-```text
-Regression → Stop expansion → Route new work to baseline
-                                      ↓
-                         Handle active tasks explicitly
+```mermaid
+flowchart TD
+    N0["Regression"]
+    N1["Stop expansion"]
+    N2["Route new work to baseline"]
+    N3["Handle active tasks explicitly"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 > “Rollback restores software behaviour; completed refunds need separate business reconciliation.”
 
 #### 8. Kill Switch: Stop Execution Quickly
 
-Disable the affected action, tool, tenant, or agent capability at a trusted boundary. Keep safe unaffected functions where possible.
+- Disable the affected action, tool, tenant, or agent capability at a trusted boundary.
+- Keep safe unaffected functions where possible.
 
 > “If refund execution is unsafe, I’d disable that capability while preserving safe assistance.”
 
-A kill switch stops permitted new execution according to its scope; it cannot undo a submitted payment.
+- A kill switch stops permitted new execution according to its scope; it cannot undo a submitted payment.
 
 #### 9. Monitor and Feed Back: Release Continues After Deployment
 
-Track candidate/baseline versions, segment outcomes, errors, escalations, delayed results, and customer feedback. Add discovered failures to regression coverage.
+- Track candidate/baseline versions, segment outcomes, errors, escalations, delayed results, and customer feedback.
+- Add discovered failures to regression coverage.
 
 > “I’d expand only after the observed cohort meets the agreed criteria.”
 
@@ -125,7 +216,13 @@ Track candidate/baseline versions, segment outcomes, errors, escalations, delaye
 | Pilot selected tenants | Feature flags | Scope behaviour explicitly | Configuration complexity |
 | Recover from regression | Compatible rollback + kill switch | Restore/stop behaviour | In-flight state and actions |
 
-**Support example:** evaluate a new refund prompt and tool schema offline, shadow without payment writes, canary eligible pilot tenants, and monitor confirmed refunds, approval compliance, errors, latency, and cost. Keep the previous version and an execution switch available.
+For a new refund prompt and tool schema:
+
+- Evaluate offline against the baseline.
+- Run shadow comparisons without payment writes where useful.
+- Canary eligible pilot tenants.
+- Monitor confirmed refunds, approval compliance, errors, latency, and cost.
+- Keep the previous version and an execution switch available.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -168,16 +265,33 @@ Track candidate/baseline versions, segment outcomes, errors, escalations, delaye
 
 ## One-Page Memory Card: Release & Change Management
 
-**Core question:** How do we expose a candidate gradually, detect regressions, and retain control over behaviour and actions?
+- **Core question:** How do we expose a candidate gradually, detect regressions, and retain control over behaviour and actions?
 
 ### Recall Flow
 
-```text
-VERSION → EVALUATE → GATE
-                       ↓
-          SHADOW and/or CANARY
-                       ↓
-           MONITOR → EXPAND / STOP / ROLLBACK
+```mermaid
+flowchart TD
+    N0["Version candidate"]
+    N1["Offline evaluation"]
+    N2["Release gate"]
+    N3["Shadow and/or scoped canary"]
+    N4["Observe"]
+    N5["Expand if criteria pass"]
+    N6["Stop or roll back if criteria fail"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N4 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Checklist
@@ -214,12 +328,23 @@ VERSION → EVALUATE → GATE
 
 ### Rollout Rules
 
-Define cohort, metrics, observation window, stop/expand criteria, and owner before exposure. Monitor critical segments, not only averages. Candidate shadow execution must not duplicate business actions; it can still add model/tool load and data exposure. Keep budgets and access restrictions in place.
+- Define cohort, metrics, observation window, stop/expand criteria, and owner before exposure.
+- Monitor critical segments, not only averages.
+- Candidate shadow execution must not duplicate business actions; it can still add model/tool load and data exposure.
+- Keep budgets and access restrictions in place.
 
-Prefer stable cohort assignment when conversations or workflows need continuity. A small cohort cannot prove all rare cases safe; combine offline coverage with production evidence. Keep versions attached to tasks so pending approvals do not change meaning unexpectedly.
+- Prefer stable cohort assignment when conversations or workflows need continuity.
+- A small cohort cannot prove all rare cases safe; combine offline coverage with production evidence.
+- Keep versions attached to tasks so pending approvals do not change meaning unexpectedly.
 
-On regression, stop expansion, disable dangerous execution where needed, and restore a compatible baseline for new work. Reconcile already submitted actions and decide how active tasks resume. Feed discovered failures into regression cases.
+- On regression, stop expansion, disable dangerous execution where needed, and restore a compatible baseline for new work.
+- Reconcile already submitted actions and decide how active tasks resume.
+- Feed discovered failures into regression cases.
 
 ### 30-Second Answer
 
-> “I’d version all behaviour-changing artifacts, evaluate against the baseline, and apply agreed quality, policy, latency, and cost gates. I’d use shadow where comparison must avoid real actions and canary for controlled live exposure. Flags would scope the rollout, versioned telemetry would guide expansion, and tested rollback and execution switches would control regressions and in-flight work.”
+Practise these points as one spoken answer:
+
+- “I’d version all behaviour-changing artifacts, evaluate against the baseline, and apply agreed quality, policy, latency, and cost gates.”
+- “I’d use shadow where comparison must avoid real actions and canary for controlled live exposure.”
+- “Flags would scope the rollout, versioned telemetry would guide expansion, and tested rollback and execution switches would control regressions and in-flight work.”

@@ -1,6 +1,6 @@
 # Core Architecture Building Blocks
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -11,125 +11,267 @@
 
 ### 2. Core Mental Model
 
-**Every box needs a requirement-based reason.**
+- **Every box needs a requirement-based reason.**
 
-```text
-Customer requirement
-        ↓
-Responsibility we need
-        ↓
-Component / pattern
-        ↓
-Trade-off + failure behaviour
+```mermaid
+flowchart TD
+    N0["Customer requirement"]
+    N1["Responsibility"]
+    N2["Component or pattern"]
+    N3["Trade-off and failure behaviour"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Recall seven responsibilities:
 
-```text
-API Gateway   → Control entry to application
-Router        → Choose capability
-Orchestrator  → Coordinate workflow
-State Store   → Preserve progress/context
-Model Gateway → Control access to models
-Cache         → Reuse eligible results
-Queue / Events→ Decouple work or notify consumers
+```mermaid
+flowchart TD
+    N0["Architecture responsibilities"]
+    N1["API Gateway: application entry"]
+    N2["Router: capability selection"]
+    N3["Orchestrator: workflow"]
+    N4["State store: progress and context"]
+    N5["Model Gateway: model access"]
+    N6["Cache: eligible reuse"]
+    N7["Queues and events: deferred work or notifications"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    N0 --> N5
+    N0 --> N6
+    N0 --> N7
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
-These are logical responsibilities. A small implementation can combine some in one service.
+- These are logical responsibilities.
+- A small implementation can combine some in one service.
 
 ### 3. Essential Concepts
 
 #### 1. API Gateway: User → Application Control
 
-Own application-entry authentication, request validation, tenant context, and user/tenant rate limits or quotas. Coordinate with authorisation services; downstream data and tools still enforce their own access checks.
+- Enforce authentication, request validation, tenant context, and user or tenant limits at application entry.
+- Coordinate with authorisation services; downstream data and tools still enforce their own access checks.
 
 > “We need a controlled application boundary for user identity, tenant context, and request limits.”
 
-```text
-User → API Gateway → Application
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway"]
+    N2["Application"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-**API Gateway = User → Application control.** It does not own model-provider selection.
+- **api Gateway = User → Application control.** It does not own model-provider selection.
 
 #### 2. Model Gateway: Application → Model Control
 
-Centralise model routing, provider abstraction, compatible fallback, bounded retries, provider limits, and token/cost tracking when those needs justify it.
+- Centralise model routing and provider access when needed.
+- Manage compatible fallback, bounded retries, provider limits, and token and cost tracking.
 
 > “Because we need provider fallback and consistent model-call controls, I’d introduce a Model Gateway.”
 
-```text
-Application → Model Gateway → Model A / B
+```mermaid
+flowchart TD
+    N0["Application"]
+    N1["Model Gateway"]
+    N2["Model A"]
+    N3["Model B"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-**Model Gateway = Application → Model control.** Fallback must preserve required capabilities, data restrictions, and acceptable quality.
+- **Model Gateway = Application → Model control.** Fallback must preserve required capabilities, data restrictions, and acceptable quality.
 
 #### 3. Router: Choose the Capability
 
-Select retrieval, live tools, a workflow, or human handling. Use rules or classifiers where sufficient.
+- Select retrieval, live tools, a workflow, or human handling.
+- Use rules or classifiers where sufficient.
 
 > “The router decides what handles the request; it does not manage the whole workflow.”
 
-```text
-            ┌→ Knowledge answer
-Request ────┼→ Order lookup
-            └→ Refund workflow
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Router"]
+    N2["Knowledge answer"]
+    N3["Order lookup"]
+    N4["Refund workflow"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    N1 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Capability routing differs from choosing which model provider processes a model call.
+- Capability routing differs from choosing which model provider processes a model call.
 
 #### 4. Orchestrator: Coordinate the Work
 
-Manage steps, branches, tool calls, timeouts, retries, checkpoints, and approval transitions. It may execute a fixed workflow or host a bounded agent loop.
+- Manage steps, branches, tool calls, timeouts, retries, checkpoints, and approval transitions.
+- It may execute a fixed workflow or host a bounded agent loop.
 
 > “We need coordination because the refund task combines data lookup, policy checks, approval, and execution.”
 
-```text
-Read order → Check policy → Approval needed?
-                               ↓
-                        Wait / execute / stop
+```mermaid
+flowchart TD
+    N0["Read order"]
+    N1["Check policy"]
+    N2["Approval needed?"]
+    N3["Wait for valid approval"]
+    N4["Execute if permitted"]
+    N5["Stop if denied"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N2 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-The orchestrator coordinates; policy authorises; the executor performs the business write.
+- The orchestrator coordinates; policy authorises; the executor performs the business write.
 
 #### 5. State Store: Preserve Context and Progress
 
-Store relevant session, workflow, approval, and completed-operation state. Durable state allows restart or delayed approval without relying on process memory.
+- Store relevant session, workflow, approval, and completed-operation state.
+- Durable state allows restart or delayed approval without relying on process memory.
 
 > “If approval takes hours or a worker crashes, we must recover the workflow from stored state.”
 
-```text
-Workflow → Checkpoint → Worker restart → Resume
+```mermaid
+flowchart TD
+    N0["Workflow"]
+    N1["Checkpoint"]
+    N2["Worker restart"]
+    N3["Resume"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-A checkpoint alone does not prevent duplicate side effects. Record action identifiers and reconcile uncertain external results.
+- Keep action identifiers and status checks alongside checkpoints to prevent duplicate effects.
+- Record action identifiers and reconcile uncertain external results.
 
 #### 6. Cache: Reuse Safe Results
 
-Cache eligible response, retrieval, or tool results. Choose keys, lifetime, invalidation, and tenant/permission scope to meet freshness and access requirements.
+- Cache eligible response, retrieval, or tool results.
+- Choose keys, lifetime, invalidation, and tenant/permission scope to meet freshness and access requirements.
 
 > “I’d cache repeated policy lookups only when the cache preserves freshness and access boundaries.”
 
-```text
-Request → Valid scoped cache hit? → Reuse
-                         No      → Compute / fetch
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Valid scoped cache hit?"]
+    N2["Yes: reuse"]
+    N3["No: compute or fetch"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Current transactional data needs an explicit freshness rule. Similar-looking requests are not automatically safe to share through a semantic cache.
+- Current transactional data needs an explicit freshness rule.
+- Similar-looking requests are not automatically safe to share through a semantic cache.
 
 #### 7. Queue / Event Bus: Decouple Work and Communication
 
-A work queue lets workers process tasks separately from the immediate request. An event bus distributes notifications about events to interested consumers.
+- A work queue lets workers process tasks separately from the immediate request.
+- An event bus distributes notifications about events to interested consumers.
 
 > “This task can outlast the interactive response, so I’d accept it as a job and return a task identifier.”
 
-```text
-Work queue: Submit job → Queue → Worker → Result
-
-Event bus:  Refund completed → Audit consumer
-                           → Notification consumer
+```mermaid
+flowchart TD
+    N0["Submit job"]
+    N1["Queue"]
+    N2["Worker"]
+    N3["Result"]
+    N4["Refund completed event"]
+    N5["Audit consumer"]
+    N6["Notification consumer"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N4 --> N5
+    N4 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-These are patterns, not necessarily separate products. Queues buffer bursts but do not create processing capacity; queue depth and wait time still need limits.
+- These are patterns, not necessarily separate products.
+- Queues buffer bursts but do not create processing capacity; queue depth and wait time still need limits.
 
 ### 4. Requirement → Component Reasoning
 
@@ -146,23 +288,44 @@ These are patterns, not necessarily separate products. Queues buffer bursts but 
 
 #### Support Example: Add Only What Is Needed
 
-```text
-User → API Gateway → Router
-                       ├→ Policy retrieval → Answer
-                       ├→ Live order tool  → Answer
-                       └→ Refund workflow
-                              ↓
-                        Policy / approval
-                              ↓
-                           Executor
-
-Supporting responsibilities:
-State store  ← Context, progress, pending approval
-Model Gateway← Model calls when centralized controls are needed
-Audit        ← Evidence, decisions, action results
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway"]
+    N2["Router"]
+    N3["Policy retrieval"]
+    N4["Policy answer"]
+    N5["Live order tool"]
+    N6["Order answer"]
+    N7["Refund workflow"]
+    N8["Policy and approval if required"]
+    N9["Executor"]
+    N10["Durable context, progress, and approval state"]
+    N11["Model Gateway when central controls are needed"]
+    N12["Audit evidence and results"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N2 --> N5
+    N5 --> N6
+    N2 --> N7
+    N7 --> N8
+    N8 --> N9
+    N7 --> N10
+    N7 --> N11
+    N9 --> N12
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8,N12 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N11 c3
 ```
 
-A cache or queue is added only if repetition, freshness, task duration, or traffic requirements justify it.
+- A cache or queue is added only if repetition, freshness, task duration, or traffic requirements justify it.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -172,10 +335,25 @@ A cache or queue is added only if repetition, freshness, task duration, or traff
 4. **Queue vs event bus:** distribute work to processors vs distribute event notifications. Redelivery may occur; consumers must handle duplicates where relevant.
 5. **Logical box vs separate service:** a responsibility can live inside the application. Do not add a network service without a reason.
 
-```text
-“Which path?”      → Router
-“What step next?”  → Orchestrator
-“Where did we stop?”→ State store
+```mermaid
+flowchart TD
+    N0["Which path?"]
+    N1["Router"]
+    N2["What step next?"]
+    N3["Orchestrator"]
+    N4["Where did we stop?"]
+    N5["State store"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### 6. Trigger → Concept Table
@@ -215,17 +393,27 @@ A cache or queue is added only if repetition, freshness, task duration, or traff
 
 ## One-Page Memory Card: Core Architecture Building Blocks
 
-**Core question:** Which responsibility does this requirement create, and what component should own it?
+- **Core question:** Which responsibility does this requirement create, and what component should own it?
 
 ### Recall Flow
 
-```text
-Requirement → Responsibility → Component
-                                  ↓
-                          Trade-off + failure
-
-Entry / Routing / Workflow / State
-Model access / Reuse / Async work or events
+```mermaid
+flowchart TD
+    N0["Requirement"]
+    N1["Responsibility"]
+    N2["Component"]
+    N3["Trade-off and failure behaviour"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Seven Building Blocks
@@ -240,12 +428,29 @@ Model access / Reuse / Async work or events
 | Cache | Safe reuse with keys, scope, lifetime, invalidation | Repeated eligible work |
 | Queue / events | Deferred task processing / event distribution | Long work, bursts / independent consumers |
 
-```text
-API Gateway   = User → Application control
-Model Gateway = Application → Model control
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway: application-entry controls"]
+    N2["Application"]
+    N3["Model Gateway: model-call controls"]
+    N4["Model provider"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Downstream retrieval and tools still enforce access. Model fallback must respect capabilities, data boundaries, and required quality.
+- Downstream retrieval and tools still enforce access.
+- Model fallback must respect capabilities, data boundaries, and required quality.
 
 ### Trigger → Concept
 
@@ -269,26 +474,58 @@ Downstream retrieval and tools still enforce access. Model fallback must respect
 
 ### Small Support Architecture
 
-```text
-User → API Gateway → Router
-                      ├→ Retrieval
-                      ├→ Live order tool
-                      └→ Refund workflow → Policy → Executor
-                               ↕
-                        Durable approval state
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway"]
+    N2["Router"]
+    N3["Policy retrieval"]
+    N4["Policy answer"]
+    N5["Live order tool"]
+    N6["Order answer"]
+    N7["Refund workflow"]
+    N8["Policy and approval if required"]
+    N9["Executor"]
+    N10["Durable approval state"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N2 --> N5
+    N5 --> N6
+    N2 --> N7
+    N7 --> N8
+    N8 --> N9
+    N7 --> N10
+    N10 --> N7
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
-Use the Model Gateway for centralised model-call control when justified. Add cache or queue only when requirements warrant them. Capture audit evidence and action results across the flow.
+- Use the Model Gateway for centralised model-call control when justified.
+- Add cache or queue only when requirements warrant them.
+- Capture audit evidence and action results across the flow.
 
 ### Component Defence
 
 > “It does ___. We need it because ___. The customer requirement is ___. Its main trade-off is ___.”
 
-Check failure behaviour too: a queue does not add capacity, a checkpoint does not guarantee safe external retries, and a cache does not make stale data correct.
+- Check failure behaviour too: a queue does not add capacity, a checkpoint does not guarantee safe external retries, and a cache does not make stale data correct.
 
 ### 30-Second Answer
 
-> “I’d assign responsibilities from requirements: entry controls to the API Gateway, capability selection to the router, workflow coordination to the orchestrator, and durable progress to the state store. Model-call controls belong to the Model Gateway. I’d add caching, queues, or events only when reuse, task duration, traffic, or consumer requirements justify them.”
+Practise these points as one spoken answer:
+
+- “I’d assign responsibilities from requirements: entry controls to the API Gateway, capability selection to the router, workflow coordination to the orchestrator, and durable progress to the state store.”
+- “Model-call controls belong to the Model Gateway.”
+- “I’d add caching, queues, or events only when reuse, task duration, traffic, or consumer requirements justify them.”
+
 
 ## Sources (checked 27 Sep 2026)
 

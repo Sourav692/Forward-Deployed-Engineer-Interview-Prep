@@ -1,6 +1,6 @@
 # Security and Enterprise Multi-Tenancy
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -11,156 +11,286 @@
 
 ### 2. Core Mental Model
 
-```text
-Authenticate identity → Resolve trusted tenant/scope
-                                  ↓
-               Authorise data and tool operations
-                                  ↓
-                 Policy → Approval if required
-                                  ↓
-                      Execute → Audit
+```mermaid
+flowchart TD
+    N0["Authenticate identity"]
+    N1["Resolve trusted tenant and scope"]
+    N2["Authorise data and tools"]
+    N3["Check business policy"]
+    N4["Approval if required"]
+    N5["Execute permitted action"]
+    N6["Audit"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-**Security checks apply at each relevant boundary. A model prompt is not an access-control system.**
+- Enforce access at each relevant data and execution boundary.
+- Keep authorisation in trusted controls outside the prompt.
 
 ### 3. Essential Concepts
 
 #### 1. Authentication: Establish Identity
 
-Verify who or what is calling, including users, services, and workers. Derive trusted tenant context from verified identity or controlled membership, not model-generated fields.
+- Verify who or what is calling, including users, services, and workers.
+- Derive trusted tenant context from verified identity or controlled membership, not model-generated fields.
 
 > “I’d establish user and tenant identity before retrieval or tool execution.”
 
-```text
-Verified identity → Trusted tenant membership → Request context
+```mermaid
+flowchart TD
+    N0["Verified identity"]
+    N1["Trusted tenant membership"]
+    N2["Request context"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 #### 2. Authorisation and RBAC: Decide Permitted Operations
 
-Authorisation asks what that identity may do. Role-based access control (RBAC) assigns permissions through roles; resource ownership and tenant scope may require additional checks.
+- Authorisation asks what that identity may do.
+- Role-based access control (rbac) assigns permissions through roles; resource ownership and tenant scope may require additional checks.
 
 > “An authenticated support user is not automatically authorised to read every account or issue every refund.”
 
-```text
-Identity + role + resource + operation + tenant → Allow / deny
+```mermaid
+flowchart TD
+    N0["Identity, role, resource, operation, and tenant"]
+    N1["Allow or deny"]
+    N0 --> N1
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Check resource-level access, not only whether a tool name is permitted.
+- Check resource-level access, not only whether a tool name is permitted.
 
 #### 3. Permission-Aware RAG: Keep Restricted Evidence Out
 
-Retrieval-augmented generation (RAG) must enforce current access before restricted content enters model context. Preserve source permissions through ingestion and query execution.
+- Retrieval-augmented generation (rag) must enforce current access before restricted content enters model context.
+- Preserve source permissions through ingestion and query execution.
 
-```text
-Employee identity → Allowed document scope
-                          ↓
-                Authorised retrieval → Context
+```mermaid
+flowchart TD
+    N0["Employee identity"]
+    N1["Allowed document scope"]
+    N2["Authorised retrieval"]
+    N3["Context"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 > “Employee B's prompt should never receive HR evidence that only Employee A may access.”
 
-Update permissions, deletions, and cache scope; filtering the final answer is too late to prevent unauthorised context exposure.
+- Update permissions, deletions, and cache scope; filtering the final answer is too late to prevent unauthorised context exposure.
 
 #### 4. Least-Privilege Tools: Limit Enterprise Reach
 
-Expose only necessary operations and use scoped credentials outside model context. Separate reads from writes and enforce access again at execution.
+- Expose only necessary operations and use scoped credentials outside model context.
+- Separate reads from writes and enforce access again at execution.
 
 > “A refund task needs permitted order/payment operations, not unrestricted CRM or database administration.”
 
-```text
-Model proposes → Validate inputs → Authorise resource/action
-                                     ↓
-                              Controlled executor
+```mermaid
+flowchart TD
+    N0["Model proposes"]
+    N1["Validate inputs"]
+    N2["Authorise resource and action"]
+    N3["Controlled executor"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Agent recommends → Policy decides → Executor acts. Human approval, where required, does not grant unrelated access.
+- Agent recommends → Policy decides → Executor acts.
+- Human approval, where required, does not grant unrelated access.
 
 #### 5. Tenant Isolation: Cover More Than the Database
 
-Scope documents/indexes, caches, state, queues, tool credentials, logs, audit records, and results. Choose shared or separated resources according to required isolation and operational trade-offs.
+- Scope documents/indexes, caches, state, queues, tool credentials, logs, audit records, and results.
+- Choose shared or separated resources according to required isolation and operational trade-offs.
 
 > “I’d trace tenant context end to end, including cache keys and background workers.”
 
-```text
-Tenant scope → Data / cache / state / jobs / tools / output
+```mermaid
+flowchart TD
+    N0["Tenant scope"]
+    N1["Data and cache"]
+    N2["State and jobs"]
+    N3["Tools and output"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Data isolation and resource fairness are separate needs. A tenant can harm others' latency without accessing their data.
+- Data isolation and resource fairness are separate needs.
+- A tenant can harm others' latency without accessing their data.
 
 #### 6. Secrets: Keep Credentials in Trusted Execution
 
-Manage credentials through controlled secret storage and scoped runtime access. Do not embed them in prompts, retrieved documents, tool descriptions, or unrestricted telemetry.
+- Manage credentials through controlled secret storage and scoped runtime access.
+- Do not embed them in prompts, retrieved documents, tool descriptions, or unrestricted telemetry.
 
 > “The tool service uses the credential; the model only requests the approved operation.”
 
-Define rotation and access ownership appropriate to the integration.
+- Define rotation and access ownership appropriate to the integration.
 
 #### 7. Sensitive Data: Minimise Across the Whole Lifecycle
 
-Confirm what data is necessary, which providers may process it, and retention/access requirements for prompts, outputs, caches, logs, and backups. Mask or redact where it preserves required functionality.
+- Confirm what data is necessary, which providers may process it, and retention/access requirements for prompts, outputs, caches, logs, and backups.
+- Mask or redact where it preserves required functionality.
 
-```text
-Collect necessary data → Approved processing
-                              ↓
-                    Controlled storage / retention
+```mermaid
+flowchart TD
+    N0["Collect necessary data"]
+    N1["Approved processing"]
+    N2["Controlled storage and retention"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 > “I’d inspect every copy of sensitive data, not only the primary database.”
 
 #### 8. Data Residency: Follow Data Through Dependencies
 
-Confirm the exact regional boundary and processing/storage restrictions with the customer. Include models, retrieval, tools, telemetry, backups, failover, and support access where relevant.
+- Confirm the exact regional boundary and processing/storage restrictions with the customer.
+- Include models, retrieval, tools, telemetry, backups, failover, and support access where relevant.
 
 > “If data must stay in-region, fallback and logging must respect that restriction too.”
 
-```text
-Regional application → Approved regional data/model paths
-                                  ↓
-                         Compatible failover only
+```mermaid
+flowchart TD
+    N0["Regional application"]
+    N1["Approved regional data and model paths"]
+    N2["Compatible failover only"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Do not infer a universal legal requirement from geography; translate the stated customer constraint into architecture.
+- Do not infer a universal legal requirement from geography; translate the stated customer constraint into architecture.
 
 #### 9. Defence in Depth: Do Not Let Text Grant Authority
 
-Treat user text, retrieved documents, and tool outputs as untrusted input. Use validation, permissions, policy, and execution controls outside model discretion.
+- Treat user text, retrieved documents, and tool outputs as untrusted input.
+- Use validation, permissions, policy, and execution controls outside model discretion.
 
 > “A document telling the agent to expose secrets cannot change the user's authorisation.”
 
-```text
-Input checks + scoped retrieval + tool authorisation
-             + policy + audit + execution controls
-```
+- Input checks + scoped retrieval + tool authorisation
+- + policy + audit + execution controls
 
-Test denied-access, cross-tenant, credential-exposure, and instruction-bypass cases alongside normal workflows.
+- Test denied-access, cross-tenant, credential-exposure, and instruction-bypass cases alongside normal workflows.
 
 ### 4. Requirement → Component Reasoning
 
 | Requirement | Pattern / component | Why | Trade-off |
 |---|---|---|---|
 | Verified user/tenant context | Authentication + membership resolution | Trusted identity boundary | Identity integration |
-| Enforce resource access | Authorization/RBAC + resource checks | Limit permitted operations | Permission-model maintenance |
+| Enforce resource access | Authorisation/RBAC + resource checks | Limit permitted operations | Permission-model maintenance |
 | Restricted document access | Permission-aware retrieval | Keep unauthorised context out | Source ACL integration |
 | Scoped enterprise writes | Controlled tools + policy/executor | Limit actions and authority | Integration and approval overhead |
 | Prevent cross-tenant leaks | Scoped storage, caches, jobs, logs/results | Preserve boundaries across copies | Isolation complexity |
 | Protect credentials | Trusted secret management | Keep secrets outside model context | Rotation and runtime access |
 | In-region processing | Approved regional dependencies/failover | Respect customer data boundary | Provider and availability options |
 
-```text
-API Gateway   = User → Application control
-Model Gateway = Application → Model control
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway: application-entry controls"]
+    N2["Application"]
+    N3["Model Gateway: model-call controls"]
+    N4["Model provider"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Application-entry checks establish identity and tenant context. Model-call controls select permitted providers. Retrieval, state access, and enterprise tools still enforce their own resource boundaries.
+- Application-entry checks establish identity and tenant context.
+- Model-call controls select permitted providers.
+- Retrieval, state access, and enterprise tools still enforce their own resource boundaries.
 
-**Support example:** authenticate the customer, resolve tenant/account scope, retrieve only allowed policy content, read only their permitted orders, and execute a policy-approved refund through scoped credentials. Keep the same scope in caches, async jobs, and audit records.
+For a support request:
+
+- Authenticate the customer and resolve tenant and account scope.
+- Retrieve only permitted policy content and order records.
+- Execute a policy-approved refund using scoped credentials.
+- Keep the same scope in caches, async jobs, and audit records.
 
 ### 5. Important Distinctions and Gotchas
 
 1. **Authentication vs authorisation:** established identity vs permitted resource and operation.
 2. **Authorisation vs policy:** allowed to request an action vs action meets business rules; both can be required.
 3. **Pre-context access vs final-output filtering:** keeping restricted evidence out is stronger than asking the model not to reveal it.
-4. **Tenant isolation vs fairness:** preventing data leaks vs preventing capacity monopolization.
+4. **Tenant isolation vs fairness:** preventing data leaks vs preventing capacity monopolisation.
 5. **Regional hosting vs end-to-end residency:** remote models, logs, backups, or fallback can cross the boundary.
 
 ### 6. Trigger → Concept Table
@@ -197,19 +327,36 @@ Application-entry checks establish identity and tenant context. Model-call contr
 
 ## One-Page Memory Card: Security & Enterprise Multi-Tenancy
 
-**Core question:** Who may access which data and operations, and how do those boundaries survive every stage of the task?
+- **Core question:** Who may access which data and operations, and how do those boundaries survive every stage of the task?
 
 ### Recall Flow
 
-```text
-IDENTITY → TRUSTED TENANT → AUTHORISATION
-                               ↓
-           DATA / TOOL PERMISSIONS → POLICY
-                               ↓
-                 APPROVAL → EXECUTE → AUDIT
+```mermaid
+flowchart TD
+    N0["Authenticate identity"]
+    N1["Resolve trusted tenant and scope"]
+    N2["Authorise data and tools"]
+    N3["Check business policy"]
+    N4["Approval if required"]
+    N5["Execute permitted action"]
+    N6["Audit"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Agent recommends → Policy decides → Executor acts.
+- Agent recommends → Policy decides → Executor acts.
 
 ### Checklist
 
@@ -242,22 +389,34 @@ Agent recommends → Policy decides → Executor acts.
 
 1. **Authentication vs authorisation:** who you are vs what you may access or do.
 2. **Authorisation vs business policy:** resource permission vs whether this action meets the rule.
-3. **Isolation vs fairness:** no cross-tenant data exposure vs no shared-capacity monopolization.
+3. **Isolation vs fairness:** no cross-tenant data exposure vs no shared-capacity monopolisation.
 4. **Regional app vs residency:** external model, logging, backup, or failover can still cross the boundary.
 
 ### Enforcement Rules
 
-Derive tenant scope from trusted identity, not caller/model claims alone. Authorise the specific resource and operation. Do not retrieve restricted evidence and rely on a prompt to hide it. Keep permissions and cache scope current when access changes.
+- Derive tenant scope from trusted identity, not caller/model claims alone.
+- Authorise the specific resource and operation.
+- Do not retrieve restricted evidence and rely on a prompt to hide it.
+- Keep permissions and cache scope current when access changes.
 
-Use scoped tool credentials outside model context. Approval must refer to the action, and execution still rechecks access and business policy. Carry trusted scope through background workers and result retrieval. Review logs, audit, backups, and caches as additional sensitive-data copies.
+- Use scoped tool credentials outside model context.
+- Approval must refer to the action, and execution still rechecks access and business policy.
+- Carry trusted scope through background workers and result retrieval.
+- Review logs, audit, backups, and caches as additional sensitive-data copies.
 
-API Gateway = User → Application control.
-Model Gateway = Application → Model control.
-Neither replaces resource checks in retrieval or enterprise tools. Provider selection and fallback must respect the customer's data restrictions.
+- API Gateway = User → Application control.
+- Model Gateway = Application → Model control.
+- Neither replaces resource checks in retrieval or enterprise tools.
+- Provider selection and fallback must respect the customer's data restrictions.
 
 ### 30-Second Answer
 
-> “I’d establish verified identity and tenant scope, then enforce resource-level access in retrieval, state, and tools. The agent would receive only necessary operations, while credentials remain in trusted execution. I’d isolate tenant data across caches, jobs, logs, and results, check business policy and approval for writes, and trace sensitive data and residency through providers, telemetry, backups, and failover.”
+Practise these points as one spoken answer:
+
+- “I’d establish verified identity and tenant scope, then enforce resource-level access in retrieval, state, and tools.”
+- “The agent would receive only necessary operations, while credentials remain in trusted execution.”
+- “I’d isolate tenant data across caches, jobs, logs, and results, check business policy and approval for writes, and trace sensitive data and residency through providers, telemetry, backups, and failover.”
+
 
 ## Sources (checked 27 Sep 2026)
 

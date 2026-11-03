@@ -1,8 +1,8 @@
 # FDE AI System Design: Rapid Revision Guide
 
-> **Purpose:** Last-day revision for an AI/Agentic FDE problem-decomposition interview.
+> Purpose: Last-day revision for an AI/Agentic FDE problem-decomposition interview.
 >
-> Memorise the **decision process** rather than architectures.
+> Practise the decisions you need to make during the interview.
 
 ---
 
@@ -10,39 +10,34 @@
 
 Whenever you get a vague prompt:
 
-```text
-Customer Problem
-      ↓
-Discovery
-      ↓
-Functional Requirements
-      ↓
-Non-Functional Requirements
-      ↓
-Happy-Path Architecture
-      ↓
-Data / RAG
-      ↓
-Agent / Tools / Actions
-      ↓
-Policy / HITL
-      ↓
-Scale
-      ↓
-Latency + Cost
-      ↓
-Reliability
-      ↓
-Evaluation + Release
-      ↓
-Observability + Security
-      ↓
-Trade-offs
+```mermaid
+flowchart TD
+    N0["Discover business problem and current workflow"]
+    N1["Confirm functional requirements and operating limits"]
+    N2["Design data, reasoning, and controlled actions"]
+    N3["Stress-test scale, latency, cost, failures, and security"]
+    N4["Evaluate and release"]
+    N5["Observe outcomes and revisit trade-offs"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-### Opening line
+### Opening Line
 
-> "Before jumping into architecture, I'd first understand the business outcome and current workflow, then clarify users and scale, data and integrations, how much autonomy the AI should have, success criteria, and production constraints."
+- “What outcome matters, and how does the work happen today?”
+- “Who uses it, at what volume, and which data and systems does it need?”
+- “Should it answer, recommend, or act? What counts as success, and what limits must it respect?”
 
 ---
 
@@ -50,16 +45,14 @@ Trade-offs
 
 Remember:
 
-```text
-WHY
-TODAY
-WHO
-SCALE
-DATA
-ACTION
-SUCCESS
-BOUNDARIES
-```
+- Why
+- Today
+- Who
+- Scale
+- Data
+- Action
+- Success
+- Boundaries
 
 ### WHY
 
@@ -89,28 +82,24 @@ BOUNDARIES
 
 Think:
 
-```text
-Business KPI
-AI Quality
-Task Success
-Latency
-Reliability
-Cost
-```
+- Business KPI
+- AI quality
+- Task success
+- Latency
+- Reliability
+- Cost
 
 ### BOUNDARIES
 
 Ask about:
 
-```text
-Security
-Privacy
-Compliance
-Latency
-Availability
-Cost
-Integrations
-```
+- Security
+- Privacy
+- Compliance
+- Latency
+- Availability
+- Cost
+- Integrations
 
 ---
 
@@ -118,22 +107,29 @@ Integrations
 
 Think:
 
-```text
-Understand
-    ↓
-Retrieve
-    ↓
-Route
-    ↓
-Reason
-    ↓
-Tool
-    ↓
-Act
-    ↓
-Escalate
-    ↓
-Audit
+```mermaid
+flowchart TD
+    N0["Required capabilities"]
+    N1["Understand and retain context"]
+    N2["Retrieve authorised evidence"]
+    N3["Route and reason"]
+    N4["Read tools and act if permitted"]
+    N5["Approval and failure behaviour"]
+    N6["Audit and outcome feedback"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    N0 --> N5
+    N0 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Typical requirements:
@@ -156,32 +152,25 @@ Typical requirements:
 
 Remember:
 
-```text
-SCALE
-LATENCY
-RELIABILITY
-QUALITY
-SECURITY
-SAFETY
-COST
-OBSERVABILITY
-AUDIT
-```
+- Scale
+- Latency
+- Reliability
+- Quality
+- Security
+- Safety
+- Cost
+- Observability
+- Audit
 
-Don't invent numbers.
+- Confirm targets with the customer; label provisional assumptions.
 
-Ask the customer and turn requirements into measurable SLOs.
+- Define each service-level objective (slo) with a metric, target, workload, and measurement window.
 
 Example (the 5 seconds is a placeholder; confirm the real number with the customer):
 
-```text
-Bad:
-"The system must be fast."
-
-Better:
-"P95 response latency < 5 seconds
-for interactive requests."
-```
+- Vague request: “The system must be fast.”
+- Measurable example: “P95 response latency below five seconds for interactive requests.”
+- Confirm the target, workload, and measurement window with the customer.
 
 ---
 
@@ -189,56 +178,73 @@ for interactive requests."
 
 ## API Gateway
 
-```text
-User
- ↓
-API Gateway
- ↓
-AI Application
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway"]
+    N2["AI application"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 Handles:
 
-```text
-Authentication
-Authorisation
-Tenant Context
-User Rate Limits
-Quota
-Request Validation
-```
+- Authentication
+- Authorisation
+- Tenant Context
+- User Rate Limits
+- Quota
+- Request Validation
 
 Think:
 
-> **User → Application control**
+> User → Application control
 
 ---
 
 ## Model Gateway
 
-```text
-AI Application
-      ↓
-Model Gateway
-      ↓
-Model A / B / C
+```mermaid
+flowchart TD
+    N0["AI application"]
+    N1["Model Gateway"]
+    N2["Model A"]
+    N3["Model B"]
+    N4["Model C"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    N1 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Handles:
 
-```text
-Model Routing
-Provider Abstraction
-Fallback
-Retry
-Provider Limits
-Tokens
-Cost
-```
+- Model Routing
+- Provider Abstraction
+- Fallback
+- Retry
+- Provider Limits
+- Tokens
+- Cost
 
 Think:
 
-> **Application → Model control**
+> Application → Model control
 
 ---
 
@@ -246,11 +252,9 @@ Think:
 
 Determines:
 
-```text
-What capability should handle this request?
-```
+- What capability should handle this request?
 
-Use deterministic rules/classifiers where possible.
+- Use deterministic rules/classifiers where possible.
 
 ---
 
@@ -258,15 +262,13 @@ Use deterministic rules/classifiers where possible.
 
 Controls:
 
-```text
-Workflow
-State
-Branching
-Agents
-Tools
-Retries
-Checkpoints
-```
+- Workflow
+- State
+- Branching
+- Agents
+- Tools
+- Retries
+- Checkpoints
 
 ---
 
@@ -274,12 +276,10 @@ Checkpoints
 
 Stores durable:
 
-```text
-Session
-Workflow
-Agent
-Approval State
-```
+- Session
+- Workflow
+- Agent
+- Approval State
 
 ---
 
@@ -287,30 +287,38 @@ Approval State
 
 Use when:
 
-```text
-Long-running work
-Traffic bursts
-Async processing
-Background jobs
-```
+- Long-running work
+- Traffic bursts
+- Async processing
+- Background jobs
 
 ---
 
 ## Cache
 
-Use for repeated safe work.
+- Use for repeated safe work.
 
 Remember:
 
-```text
-Cache
- ↓
-Latency ↓
-Cost ↓
-
-BUT
-
-Freshness risk ↑
+```mermaid
+flowchart TD
+    N0["Valid scoped cache"]
+    N1["Less repeated work"]
+    N2["Lower latency and cost"]
+    N3["Expiry and invalidation"]
+    N4["Manage freshness risk"]
+    N0 --> N1
+    N1 --> N2
+    N0 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ---
@@ -319,32 +327,50 @@ Freshness risk ↑
 
 ## Ingestion
 
-```text
-Documents
- ↓
-Parse
- ↓
-Chunk
- ↓
-Embed
- ↓
-Index
+```mermaid
+flowchart TD
+    N0["Documents"]
+    N1["Parse"]
+    N2["Chunk"]
+    N3["Embed"]
+    N4["Index with metadata, permissions, and versions"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ## Query
 
-```text
-Question
- ↓
-Permission / Metadata Filter
- ↓
-Retrieve
- ↓
-Rerank
- ↓
-Context
- ↓
-LLM
+```mermaid
+flowchart TD
+    N0["Question and trusted identity"]
+    N1["Permission and metadata filters"]
+    N2["Retrieve"]
+    N3["Rerank if useful"]
+    N4["Select context"]
+    N5["Supported answer"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Remember:
@@ -363,14 +389,22 @@ Remember:
 
 ### Static vs Live
 
-```text
-"What is the refund policy?"
-        ↓
-       RAG
-
-"Where is my refund?"
-        ↓
-     Live API
+```mermaid
+flowchart TD
+    N0["What is the refund policy?"]
+    N1["RAG"]
+    N2["Where is my refund?"]
+    N3["Live API or tool"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Security rule
@@ -383,48 +417,70 @@ Remember:
 
 First ask:
 
-> **Do I need an agent?**
+> Do I need an agent?
 
-```text
-Deterministic problem
-       ↓
-Workflow / Code
-
-Dynamic reasoning
-       ↓
-Agent
+```mermaid
+flowchart TD
+    N0["Known deterministic steps"]
+    N1["Workflow or code"]
+    N2["Dynamic step selection"]
+    N3["Bounded agent"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Then ask:
 
-> **Do I need multiple agents?**
+> Do I need multiple agents?
 
-Don't create multi-agent architecture without a reason.
+- Don't create multi-agent architecture without a reason.
 
 ### Agent loop
 
-```text
-Reason
- ↓
-Tool
- ↓
-Observe
- ↓
-Reason
- ↓
-Action
+```mermaid
+flowchart TD
+    N0["Task"]
+    N1["Select next step"]
+    N2["Validate, authorise, and check budget"]
+    N3["Controlled tool"]
+    N4["Observe result"]
+    N5["Continue?"]
+    N6["More work within bounds"]
+    N7["Complete, stop, or escalate"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N1
+    N5 --> N7
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ### Always bound agents
 
-```text
-Max Steps
-Max Tools
-Max Tokens
-Max Retries
-Max Time
-Max Cost
-```
+- Maximum steps
+- Maximum tool calls
+- Maximum tokens
+- Maximum retries
+- Maximum elapsed time
+- Maximum cost
 
 ---
 
@@ -432,45 +488,71 @@ Max Cost
 
 Prefer:
 
-```text
-Agent
- ↓
-Controlled Tool
- ↓
-Enterprise System
+```mermaid
+flowchart TD
+    N0["Agent requests operation"]
+    N1["Validated and authorised tool"]
+    N2["Enterprise system"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-rather than unrestricted production access.
+- Expose only approved operations with validated arguments and scoped access.
 
 For business actions:
 
-```text
-Agent
- ↓
-Recommendation
- ↓
-Policy
- ↓
-Executor
- ↓
-Enterprise System
+```mermaid
+flowchart TD
+    N0["Agent recommendation"]
+    N1["Policy and required approval"]
+    N2["Executor"]
+    N3["Enterprise system"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Critical term: Idempotency
 
-```text
-Refund
- ↓
-Timeout
- ↓
-Retry
-
-Must NOT
- ↓
-Refund twice
+```mermaid
+flowchart TD
+    N0["Refund submission"]
+    N1["Timeout"]
+    N2["Reconcile status"]
+    N3["Confirmed result"]
+    N4["Safe retry of same logical action"]
+    N5["Still unknown: defer or escalate"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N2 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Use an idempotency key that the execution path actually honours.
+- Use an idempotency key that the execution path actually honours.
 
 ---
 
@@ -478,40 +560,51 @@ Use an idempotency key that the execution path actually honours.
 
 Remember:
 
-```text
-Agent recommends
-      ↓
-Policy decides
-      ↓
-Executor acts
+```mermaid
+flowchart TD
+    N0["Agent recommends"]
+    N1["Policy decides"]
+    N2["Executor acts"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Do not use the LLM as the final authority for deterministic business rules.
+- Do not use the LLM as the final authority for deterministic business rules.
 
 Example (illustrative thresholds; the customer sets the real ones, including the middle band):
 
-```text
-Refund < $100
-      ↓
-Auto
-
-Refund $100–500
-      ↓
-Policy checks
-
-Refund > $500
-      ↓
-Human Approval
+```mermaid
+flowchart TD
+    N0["Illustrative refund amount"]
+    N1["Below 100 dollars: permitted automatic path"]
+    N2["100 to 500 dollars: customer-defined policy checks"]
+    N3["Above 500 dollars: required human approval"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Other terms:
 
-```text
-Least Privilege
-Fail-Closed
-Kill Switch
-Defence in Depth
-```
+- Least Privilege
+- Fail-Closed
+- Kill Switch
+- Defence in Depth
 
 ---
 
@@ -523,18 +616,16 @@ Interviewer says:
 
 Think:
 
-```text
-Stateless Workers
-Horizontal Scaling
-Rate Limits
-Admission Control
-Queue
-Backpressure
-Fairness
-Tenant Isolation
-Caching
-Autoscaling
-```
+- Stateless Workers
+- Horizontal Scaling
+- Rate Limits
+- Admission Control
+- Queue
+- Backpressure
+- Fairness
+- Tenant Isolation
+- Caching
+- Autoscaling
 
 ### Rate Limit
 
@@ -546,23 +637,34 @@ Autoscaling
 
 ### Backpressure
 
-> What happens when incoming work exceeds processing capacity?
+> How do we slow or stop upstream work when downstream capacity is full?
 
 ### Fair Queue
 
 Prevent:
 
-```text
-Tenant A ███████████████████
-
-Tenant B █
-
-Tenant C █
+```mermaid
+flowchart TD
+    N0["Tenant A: dominant demand"]
+    N1["Shared capacity"]
+    N2["Tenant B: little capacity left"]
+    N3["Tenant C: little capacity left"]
+    N0 --> N1
+    N2 --> N1
+    N3 --> N1
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Noisy Neighbour
 
-One tenant consumes shared resources and hurts others.
+- One tenant consumes shared resources and hurts others.
 
 ---
 
@@ -570,51 +672,70 @@ One tenant consumes shared resources and hurts others.
 
 First decompose:
 
-```text
-Total Latency
-     │
-     ├── Queue
-     ├── Retrieval
-     ├── LLM
-     ├── Agent
-     ├── Tool
-     └── Network
+```mermaid
+flowchart TD
+    N0["End-to-end latency"]
+    N1["Queue wait"]
+    N2["Retrieval"]
+    N3["Model calls"]
+    N4["Agent and orchestration overhead"]
+    N5["Tools"]
+    N6["Network"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    N0 --> N5
+    N0 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Then optimise.
+- Then optimise.
 
 Remember:
 
-```text
-MEASURE
-   ↓
-SLO
-   ↓
-STREAM
-   ↓
-PARALLELIZE
-   ↓
-REDUCE MODEL HOPS
-   ↓
-OPTIMISE RETRIEVAL
-   ↓
-OPTIMISE TOOLS
-   ↓
-CONTROL QUEUE
-   ↓
-ASYNC LONG TASKS
+```mermaid
+flowchart TD
+    N0["Measure wait and define SLO"]
+    N1["Find critical path"]
+    N2["Choose measured latency change"]
+    N3["Stream safe output"]
+    N4["Overlap independent reads"]
+    N5["Reduce redundant hops"]
+    N6["Tune retrieval, tools, or queues"]
+    N7["Use async delivery for long tasks"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N2 --> N5
+    N2 --> N6
+    N2 --> N7
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 Track:
 
-```text
-P50
-P95
-P99
-TTFT
-```
+- P50
+- P95
+- P99
+- TTFT
 
-Don't optimise only average latency.
+- Don't optimise only average latency.
 
 ---
 
@@ -622,56 +743,55 @@ Don't optimise only average latency.
 
 Break cost down:
 
-```text
-Model
-Tokens
-Retrieval
-Tools
-Compute
-Retries
-```
+- Model cost, including input and output tokens.
+- Retrieval, tools, and compute.
+- Retries and relevant review or rework.
 
 Then:
 
-```text
-MODEL
- ↓
-CONTEXT
- ↓
-CACHE
- ↓
-CALLS
- ↓
-BOUNDS
- ↓
-BATCH
- ↓
-MEASURE
+```mermaid
+flowchart TD
+    N0["Measure spend"]
+    N1["Agree on quality floor"]
+    N2["Evaluate model choice"]
+    N3["Reduce irrelevant context"]
+    N4["Cache eligible work"]
+    N5["Remove redundant calls"]
+    N6["Bound total work"]
+    N7["Batch eligible jobs"]
+    N8["Measure cost per successful task"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ### Questions to ask
 
-Can a smaller model handle this?
-
-Can I reduce context?
-
-Can I cache it?
-
-Do I need this LLM call?
-
-Can deterministic code handle it?
-
-Is the agent making unnecessary calls?
+- Can a smaller model meet the quality requirement?
+- Which context is irrelevant or duplicated?
+- Can fresh, permission-safe results be reused?
+- What does each model call contribute?
+- Can code handle a known rule or validation?
+- Is the agent repeating work without progress?
 
 ### Best metric
 
-```text
-Cost
- ÷
-Successful Tasks
-```
+- Cost per successful task = total cost across attempts ÷ successful tasks.
 
-> **Cost per successful task**: the one I'd lead with, because it counts retries and failed attempts.
+> Cost per successful task: the one I'd lead with, because it counts retries and failed attempts.
 
 ---
 
@@ -679,65 +799,92 @@ Successful Tasks
 
 When something fails:
 
-```text
-Failure
- ↓
-Timeout?
- ↓
-Retry?
- ↓
-Fallback?
- ↓
-Degrade?
- ↓
-Recover?
- ↓
-Escalate?
+```mermaid
+flowchart TD
+    N0["Classify failure"]
+    N1["Bound waiting"]
+    N2["Check retry safety"]
+    N3["Choose fallback or safe degradation"]
+    N4["Recover or escalate"]
+    N5["Record actual status"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Know these:
 
 ### Timeout
 
-Don't wait forever.
+- Set a dependency deadline within the task budget. A write timeout leaves the remote outcome uncertain.
 
 ### Retry
 
-Retry transient failures, and only when the call is safe to repeat.
+- Retry transient failures, and only when the call is safe to repeat.
 
 ### Exponential Backoff + Jitter
 
-Don't hammer a failing dependency.
+- Increase retry delays, add jitter, honour dependency guidance, and stop within the task budget.
 
 ### Circuit Breaker
 
-```text
-Repeated failures
-       ↓
-Stop calling temporarily
+```mermaid
+flowchart TD
+    N0["Repeated dependency failures"]
+    N1["Stop normal calls temporarily"]
+    N2["Probe recovery"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 ### Graceful Degradation
 
-One non-critical service failing shouldn't necessarily kill everything.
+- One non-critical service failing shouldn't necessarily kill everything.
 
 ### DLQ
 
-```text
-Fail
- ↓
-Retry
- ↓
-Retry
- ↓
-DLQ
+```mermaid
+flowchart TD
+    N0["Processing failure"]
+    N1["Bounded safe retries"]
+    N2["Dead-letter queue"]
+    N3["Owner investigates and prepares safe replay"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Checkpoint
 
-Resume long-running workflows after failure.
+- Resume long-running workflows after failure.
 
-A checkpoint doesn't make an external action happen exactly once. If a write may have gone through, reconcile its status first.
+- A checkpoint doesn't make an external action happen exactly once.
+- If a write may have gone through, reconcile its status first.
 
 ### Blast Radius
 
@@ -751,60 +898,48 @@ A checkpoint doesn't make an external action happen exactly once. If a write may
 
 Evaluate:
 
-```text
-Retrieval
-Groundedness
-Answer Quality
-```
+- Retrieval
+- Groundedness
+- Answer Quality
 
 ## Agents
 
 Evaluate:
 
-```text
-Routing
-Tool Selection
-Tool Arguments
-Trajectory
-Task Success
-```
+- Routing
+- Tool Selection
+- Tool Arguments
+- Trajectory
+- Task success
 
 ### Deterministic
 
-```text
-Correct schema?
-Correct tool?
-Correct arguments?
-Latency threshold?
-Required citation?
-```
+- Correct schema?
+- Correct tool?
+- Correct arguments?
+- Latency threshold?
+- Required citation?
 
 ### Non-Deterministic
 
-```text
-Helpful?
-Relevant?
-Grounded?
-High-quality?
-```
+- Helpful?
+- Relevant?
+- Grounded?
+- High-quality?
 
-Use human/LLM judges.
+- Use a clear rubric and calibrate human or model judges against expert labels.
 
 ### Offline
 
-Before release.
+- Use held-out cases to compare candidates before release.
 
 ### Online
 
-Production traces + outcomes + feedback.
+- Track production traces, actual outcomes, and feedback after release.
 
 Remember:
 
-```text
-Beautiful Answer
-      ≠
-Successful Task
-```
+- Verify actual task completion even when the response sounds good.
 
 ---
 
@@ -812,56 +947,101 @@ Successful Task
 
 Avoid:
 
-```text
-New Prompt
-   ↓
-100% Production
+```mermaid
+flowchart TD
+    N0["New prompt"]
+    N1["Immediate full production exposure"]
+    N2["Risk of untested regressions"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 Prefer:
 
-```text
-Change
- ↓
-Offline Evaluation
- ↓
-Release Gate
- ↓
-Shadow / Canary
- ↓
-Online Evaluation
- ↓
-Full Production
+```mermaid
+flowchart TD
+    N0["Version candidate"]
+    N1["Offline evaluation"]
+    N2["Release gate"]
+    N3["Shadow and/or scoped canary"]
+    N4["Observe"]
+    N5["Expand if criteria pass"]
+    N6["Stop or roll back if criteria fail"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N4 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Shadow
 
-```text
-Request
- ├→ Current → User
- └→ Candidate → Evaluate only
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Current path"]
+    N2["User and real execution"]
+    N3["Shadow candidate"]
+    N4["Evaluation only: no production writes"]
+    N0 --> N1
+    N1 --> N2
+    N0 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Canary
 
-```text
-Candidate
- ↓
-Small % Users
- ↓
-Observe
- ↓
-Expand / Rollback
+```mermaid
+flowchart TD
+    N0["Candidate"]
+    N1["Small eligible user cohort"]
+    N2["Observe"]
+    N3["Expand if criteria pass"]
+    N4["Stop or roll back if criteria fail"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Also know:
 
-```text
-Versioning
-Feature Flags
-Rollback
-Kill Switch
-```
+- Versioning
+- Feature Flags
+- Rollback
+- Kill Switch
 
 ---
 
@@ -869,43 +1049,52 @@ Kill Switch
 
 Trace the entire request:
 
-```text
-Request
- ↓
-Router
- ↓
-Agent
- ↓
-Retriever
- ↓
-LLM
- ↓
-Tool
- ↓
-Response
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Router"]
+    N2["Workflow or agent"]
+    N3["Retrieval"]
+    N4["Model calls"]
+    N5["Tool calls"]
+    N6["Response and actual outcome"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N2 --> N5
+    N3 --> N6
+    N4 --> N6
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Capture:
 
-```text
-Latency
-Tokens
-Cost
-Model
-Agent Steps
-Retrieved Docs
-Tool Calls
-Errors
-Outcome
-```
+- Latency
+- Tokens
+- Cost
+- Model
+- Agent Steps
+- Retrieved Docs
+- Tool Calls
+- Errors
+- Outcome
 
 ### Observability vs Audit
 
-**Observability**
+- Observability
 
 > Why is my system behaving badly?
 
-**Audit**
+- Audit
 
 > Why did my system take this business action?
 
@@ -923,33 +1112,40 @@ Outcome
 
 Then:
 
-```text
-Identity
- ↓
-Authorisation
- ↓
-Data Permissions
- ↓
-Tool Permissions
- ↓
-Policy
- ↓
-Human Approval
- ↓
-Audit
+```mermaid
+flowchart TD
+    N0["Authenticate identity"]
+    N1["Resolve trusted tenant and scope"]
+    N2["Authorise data and tools"]
+    N3["Check business policy"]
+    N4["Approval if required"]
+    N5["Execute permitted action"]
+    N6["Audit"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Remember:
 
-```text
-Least Privilege
-Tenant Isolation
-Permission-Aware RAG
-Secrets Management
-PII
-Data Residency
-Defence in Depth
-```
+- Least Privilege
+- Tenant Isolation
+- Permission-Aware RAG
+- Secrets Management
+- PII
+- Data Residency
+- Defence in Depth
 
 ---
 
@@ -957,54 +1153,107 @@ Defence in Depth
 
 Almost every decision should have:
 
-```text
-Decision
- ↓
-Why?
- ↓
-Trade-off?
+```mermaid
+flowchart TD
+    N0["Decision"]
+    N1["Customer requirement"]
+    N2["Trade-off and verification"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 ### Main triangle
 
-```text
-             QUALITY
-              /   \
-             /     \
-          COST ─── LATENCY
+```mermaid
+flowchart TD
+    N0["Quality"]
+    N1["Cost"]
+    N2["Latency"]
+    N0 --- N1
+    N1 --- N2
+    N2 --- N0
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
+
+- Required security, safety, and correctness constraints still apply.
 
 Examples:
 
-```text
-Stronger Model
-→ Quality ↑
-→ Cost ↑
-→ Latency ↑
+```mermaid
+flowchart TD
+    N0["Stronger model"]
+    N1["Possible quality gain"]
+    N2["Cost and latency may increase"]
+    N0 --> N1
+    N0 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-```text
-More Retrieval
-→ Recall potentially ↑
-→ Tokens ↑
-→ Cost ↑
-→ Latency ↑
+```mermaid
+flowchart TD
+    N0["More retrieval"]
+    N1["Recall may improve"]
+    N2["Tokens, cost, latency, and noise may increase"]
+    N0 --> N1
+    N0 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-```text
-Cache
-→ Cost ↓
-→ Latency ↓
-→ Freshness Risk ↑
+```mermaid
+flowchart TD
+    N0["Valid scoped cache"]
+    N1["Lower repeated cost and latency"]
+    N2["Manage freshness and permissions"]
+    N0 --> N1
+    N0 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-```text
-More Agents
-→ Potential capability ↑
-→ Cost ↑
-→ Latency ↑
-→ Complexity ↑
-→ Failure Points ↑
+```mermaid
+flowchart TD
+    N0["More agents"]
+    N1["Possible capability or parallel-work benefit"]
+    N2["More calls, coordination, complexity, and failure paths"]
+    N0 --> N1
+    N0 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 ### Strong interview sentence
@@ -1015,67 +1264,67 @@ More Agents
 
 # Trigger → Concept Cheat Sheet
 
-Revise this section immediately before the interview.
+- Revise this section immediately before the interview.
 
 | Interviewer Says                      | Think                                         |
 | ------------------------------------- | --------------------------------------------- |
-| **100K users**                  | Horizontal scaling, stateless workers, queues |
-| **Traffic spike**               | Queue, admission control, backpressure        |
-| **One tenant dominates**        | Noisy neighbour, quota, fair queue             |
-| **Overloaded system**           | Admission control, load shedding              |
-| **Multiple customers**          | Multi-tenancy, isolation                      |
-| **Slow requests**               | P95/P99 + trace stages                        |
-| **Slow chat experience**        | TTFT + streaming                              |
-| **Independent APIs**            | Parallelise                                   |
-| **Slow dependency**             | Timeout, cache, async                         |
-| **Flaky dependency**            | Retry, backoff, circuit breaker               |
-| **Action happened twice**       | Idempotency                                   |
-| **Duplicate event**             | Idempotent consumer                           |
-| **Repeated job failure**        | DLQ                                           |
-| **10-minute agent**             | Async + queue + durable state                 |
-| **Agent crashes halfway**       | Checkpoint + reconcile uncertain actions      |
-| **Approval tomorrow**           | Durable state + HITL                          |
-| **Conversation history**        | Session state                                 |
-| **Long-term preferences**       | Memory                                        |
-| **Growing prompt**              | Bounded context + summary                     |
-| **Repeated requests**           | Cache                                         |
-| **Freshness concern**           | TTL                                           |
-| **Company documents**           | RAG                                           |
-| **Current order status**        | Tool/API                                      |
-| **Can't find document**         | Retrieval recall                              |
-| **Too many irrelevant docs**    | Precision + reranking                         |
-| **Document permissions**        | ACL-aware retrieval                           |
-| **Unsupported claims**          | Grounding                                     |
-| **Different request types**     | Router                                        |
-| **Multi-step workflow**         | Orchestrator                                  |
-| **Simple routing**              | Rules/code                                    |
-| **Runaway agent**               | Execution bounds                              |
-| **Production actions**          | Controlled tools                              |
-| **Sensitive action**            | Policy + executor                             |
-| **High-risk action**            | HITL                                          |
-| **Policy unavailable**          | Fail-closed                                   |
-| **Agent misbehaving**           | Kill switch                                   |
-| **Multiple LLMs**               | Model gateway                                 |
-| **Provider outage**             | Fallback                                      |
-| **AI bill high**                | Model + context + calls + cache               |
-| **Tenant cost**                 | Cost attribution                              |
-| **New prompt/model**            | Offline eval + release gate                   |
-| **Real traffic without impact** | Shadow                                        |
-| **Gradual rollout**             | Canary                                        |
-| **Selected tenants only**       | Feature flag                                  |
-| **Bad deployment**              | Rollback                                      |
-| **Measure agent quality**       | Offline + online eval                         |
-| **Good answer, failed action**  | Task success                                  |
-| **Wrong tool**                  | Trajectory evaluation                         |
-| **Exact pass/fail**             | Deterministic eval                            |
-| **Semantic quality**            | LLM/human judge                               |
-| **Why slow/failing?**           | Observability                                 |
-| **Why did AI act?**             | Audit                                         |
-| **Reliability target**          | SLI/SLO/SLA                                   |
-| **Worker dies**                 | Stateless + durable state                     |
-| **Limit failure impact**        | Blast radius                                  |
-| **Sensitive data**              | AuthN/AuthZ + least privilege                 |
-| **Safe action-taking AI**       | Defence in depth                              |
+| 100K users | Clarify active users, peak rates, concurrency, and task duration |
+| Traffic spike               | Queue, admission control, backpressure        |
+| One tenant dominates        | Noisy neighbour, quota, fair queue             |
+| Overloaded system           | Admission control, load shedding              |
+| Multiple customers          | Multi-tenancy, isolation                      |
+| Slow requests               | P95/P99 + trace stages                        |
+| Slow chat experience        | TTFT + streaming                              |
+| Independent APIs            | Parallelise                                   |
+| Slow dependency             | Timeout, cache, async                         |
+| Flaky dependency            | Retry, backoff, circuit breaker               |
+| Action happened twice       | Idempotency                                   |
+| Duplicate event             | Idempotent consumer                           |
+| Repeated job failure        | DLQ                                           |
+| 10-minute agent             | Async + queue + durable state                 |
+| Agent crashes halfway       | Checkpoint + reconcile uncertain actions      |
+| Approval tomorrow           | Durable state + HITL                          |
+| Conversation history        | Session state                                 |
+| Long-term preferences       | Memory                                        |
+| Growing prompt              | Bounded context + summary                     |
+| Repeated requests           | Cache                                         |
+| Freshness concern           | TTL                                           |
+| Company documents           | RAG                                           |
+| Current order status        | Tool/API                                      |
+| Can't find document         | Retrieval recall                              |
+| Too many irrelevant docs    | Precision + reranking                         |
+| Document permissions        | ACL-aware retrieval                           |
+| Unsupported claims          | Grounding                                     |
+| Different request types     | Router                                        |
+| Multi-step workflow         | Orchestrator                                  |
+| Simple routing              | Rules/code                                    |
+| Runaway agent               | Execution bounds                              |
+| Production actions          | Controlled tools                              |
+| Sensitive action            | Policy + executor                             |
+| High-risk action            | HITL                                          |
+| Policy unavailable | Block or defer sensitive writes; keep safe unaffected functions available |
+| Agent misbehaving           | Kill switch                                   |
+| Multiple LLMs               | Model gateway                                 |
+| Provider outage | Compatible fallback within quality, capability, and data restrictions |
+| AI bill high                | Model + context + calls + cache               |
+| Tenant cost                 | Cost attribution                              |
+| New prompt/model            | Offline eval + release gate                   |
+| Real traffic without impact | Shadow                                        |
+| Gradual rollout             | Canary                                        |
+| Selected tenants only       | Feature flag                                  |
+| Bad deployment              | Rollback                                      |
+| Measure agent quality       | Offline + online eval                         |
+| Good answer, failed action  | Task success                                  |
+| Wrong tool                  | Trajectory evaluation                         |
+| Exact pass/fail             | Deterministic eval                            |
+| Semantic quality            | LLM/human judge                               |
+| Why slow/failing?           | Observability                                 |
+| Why did AI act?             | Audit                                         |
+| Reliability target          | SLI/SLO/SLA                                   |
+| Worker dies                 | Stateless + durable state                     |
+| Limit failure impact        | Blast radius                                  |
+| Sensitive data              | AuthN/AuthZ + least privilege                 |
+| Safe action-taking AI       | Defence in depth                              |
 
 ---
 
@@ -1083,103 +1332,82 @@ Revise this section immediately before the interview.
 
 After drawing your architecture, quickly ask yourself:
 
-```text
-1. SCALE
-   What happens at 100K users?
-
-2. LATENCY
-   Where is the critical path?
-
-3. COST
-   Where are model calls/tokens growing?
-
-4. FAILURE
-   What happens if model/RAG/tool fails?
-
-5. STATE
-   What happens if a worker dies?
-
-6. SECURITY
-   Can users access unauthorized data/actions?
-
-7. SAFETY
-   Can the agent take dangerous actions?
-
-8. QUALITY
-   How do I know the AI works?
-
-9. RELEASE
-   How do I safely change it?
-
-10. OPERATIONS
-    How do I debug it?
-```
+- Scale: What happens at 100K users?
+- Latency: Where is the critical path?
+- Cost: Where are model calls/tokens growing?
+- Failure: What happens if model/rag/tool fails?
+- State: What happens if a worker dies?
+- Security: Can users access unauthorised data/actions?
+- Safety: Can the agent take dangerous actions?
+- Quality: How do I know the AI works?
+- Release: How do I safely change it?
+- Operations: How do I debug it?
 
 ---
 
 # 10 Rapid Practice Questions
 
-Try answering each in **1–2 minutes**, not 20 minutes.
+- Try answering each in 1–2 minutes, not 20 minutes.
 
 ### 1.
 
 > "Build an AI customer-support agent."
 
-What are your first discovery questions?
+- What are your first discovery questions?
 
 ### 2.
 
 > "Now it needs to issue refunds."
 
-What changes architecturally?
+- What changes architecturally?
 
 ### 3.
 
 > "We now have 100K users."
 
-What changes?
+- What changes?
 
 ### 4.
 
 > "P99 latency is 20 seconds."
 
-How do you investigate and optimise it?
+- How do you investigate and optimise it?
 
 ### 5.
 
 > "The AI bill increased 3×."
 
-How do you investigate and reduce it?
+- How do you investigate and reduce it?
 
 ### 6.
 
 > "The refund API is unreliable."
 
-How do you design around it?
+- How do you design around it?
 
 ### 7.
 
 > "Employees have different document permissions."
 
-How does your RAG architecture change?
+- How does your RAG architecture change?
 
 ### 8.
 
 > "We changed the prompt."
 
-How do you safely release it?
+- How do you safely release it?
 
 ### 9.
 
 > "The agent gives good responses but sometimes chooses the wrong tool."
 
-How do you evaluate this?
+- How do you evaluate this?
 
 ### 10.
 
 > "One enterprise tenant consumes most model capacity."
 
-How do you protect other tenants?
+- How do you protect other tenants?
 
 ---
 
@@ -1187,92 +1415,80 @@ How do you protect other tenants?
 
 Before finishing:
 
-```text
-□ Business problem clear?
-
-□ Current workflow understood?
-
-□ Functional requirements defined?
-
-□ NFRs measurable?
-
-□ Every architecture box justified?
-
-□ RAG vs live API clear?
-
-□ Agent actually required?
-
-□ Actions protected by policy?
-
-□ High-risk actions HITL?
-
-□ Scale addressed?
-
-□ Latency addressed?
-
-□ Cost addressed?
-
-□ Failure handling addressed?
-
-□ Security addressed?
-
-□ Evaluation defined?
-
-□ Release strategy defined?
-
-□ Observability defined?
-
-□ Major trade-offs explained?
-```
+- Business problem clear?
+- Current workflow understood?
+- Functional requirements defined?
+- NFRs measurable?
+- Every architecture box justified?
+- RAG vs live API clear?
+- Agent actually required?
+- Actions protected by policy?
+- High-risk actions HITL?
+- Scale addressed?
+- Latency addressed?
+- Cost addressed?
+- Failure handling addressed?
+- Security addressed?
+- Evaluation defined?
+- Release strategy defined?
+- Observability defined?
+- Major trade-offs explained?
 
 ---
 
 # The One Framework to Remember
 
-If everything else disappears from your head:
+Use these stages to organise the answer:
 
-```text
-CUSTOMER PROBLEM
-      ↓
-DISCOVERY
-      ↓
-REQUIREMENTS
-      ↓
-SIMPLE HAPPY PATH
-      ↓
-DATA + AI + ACTIONS
-      ↓
-PRESSURE TEST
- ┌────┼────┬────┐
-Scale Latency Cost Failure
- └────┼────┴────┘
-      ↓
-SECURITY + SAFETY
-      ↓
-EVALUATION
-      ↓
-RELEASE + OBSERVABILITY
-      ↓
-TRADE-OFFS
+```mermaid
+flowchart TD
+    N0["Discover business problem and current workflow"]
+    N1["Confirm functional requirements and operating limits"]
+    N2["Design data, reasoning, and controlled actions"]
+    N3["Stress-test scale, latency, cost, failures, and security"]
+    N4["Evaluate and release"]
+    N5["Observe outcomes and revisit trade-offs"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 And use this reasoning pattern repeatedly:
 
-```text
-Customer says X
-      ↓
-Therefore Requirement Y
-      ↓
-That creates Constraint Z
-      ↓
-So I introduce Component A
-      ↓
-Trade-off is B
+```mermaid
+flowchart TD
+    N0["Customer statement"]
+    N1["Requirement"]
+    N2["Constraint"]
+    N3["Component or pattern"]
+    N4["Trade-off"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-> **Show that you know exactly when and why to use each architecture term.**
 
 ---
+
 
 ## Sources (checked 27 Sep 2026)
 

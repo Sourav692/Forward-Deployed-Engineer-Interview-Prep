@@ -1,18 +1,38 @@
 # FDE Interview: Trigger → Concept Cheat Sheet
 
-Use this to recognise what an interviewer is testing and decide your next move. A trigger suggests a question or requirement; it does not automatically justify a component.
+- Use each trigger to choose your next question or design check.
+- A trigger suggests a question or requirement; it does not automatically justify a component.
 
-```text
-HEAR THE TRIGGER → RECALL THE CONCEPT
-                           ↓
-        CLARIFY → REQUIREMENT → CHOICE → TRADE-OFF
+```mermaid
+flowchart TD
+    N0["Hear the trigger"]
+    N1["Recall concept"]
+    N2["Clarify"]
+    N3["Requirement"]
+    N4["Choice"]
+    N5["Trade-off"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-**Answer pattern:** “That suggests ___. I’d clarify ___ before choosing ___. The main trade-off is ___.”
+- **Answer pattern:** “That suggests ___.
+- I’d clarify ___ before choosing ___.
+- The main trade-off is ___.”
 
 ## 1. Discovery and Requirements: Reviews 1–3
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “We need an AI agent” | Proposed solution vs business problem | “What outcome matters, and what is painful today?” | 1 |
 | “People waste time on this” | Current workflow and bottleneck | “Walk me through the steps and where time is spent.” | 1 |
@@ -24,11 +44,11 @@ HEAR THE TRIGGER → RECALL THE CONCEPT
 | “Reduce support cost” | Business outcome | Baseline, resolved cases, quality and customer experience | 1, 3, 11 |
 | “Trustworthy answers” | AI quality | Correctness, claim support, relevant evaluation cases | 3, 13 |
 
-**Recall discovery:** WHY → TODAY → WHO/HOW MUCH → WHAT → HOW FAR → BOUNDARIES.
+- - Recall discovery: why, today, who and how much, what data, permitted autonomy, and operating boundaries.
 
 ## 2. Architecture Responsibilities: Review 4
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “User identity, tenant quotas, request validation” | API Gateway | Application-entry controls; downstream access still checked | 4 |
 | “Several model providers, fallback, token tracking” | Model Gateway | Compatible model-call controls and provider limits | 4 |
@@ -39,18 +59,39 @@ HEAR THE TRIGGER → RECALL THE CONCEPT
 | “Long task / temporary burst” | Queue | Bounded wait, job status, processing capacity | 4, 9, 10 |
 | “Several consumers react to a refund” | Event distribution | Delivery, duplicate handling, independent consumers | 4 |
 
-```text
-API Gateway   = User → Application control
-Model Gateway = Application → Model control
-
-Router: Which capability?
-Orchestrator: Which step / transition next?
-State store: Where did the task stop?
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway: application-entry controls"]
+    N2["Application"]
+    N3["Model Gateway: model-call controls"]
+    N4["Model provider"]
+    N5["Choose capability"]
+    N6["Router"]
+    N7["Choose next step"]
+    N8["Orchestrator"]
+    N9["Recover task progress"]
+    N10["State store"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N5 --> N6
+    N7 --> N8
+    N9 --> N10
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ## 3. RAG and Enterprise Data: Review 5
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “Company policies / manuals” | RAG knowledge | Approved sources, ingestion, freshness, access | 5 |
 | “Current order or refund status” | Live API/tool | Query the system of record within authorised scope | 5, 7 |
@@ -62,21 +103,40 @@ State store: Where did the task stop?
 | “Includes citations” | Evidence support | Do sources support the important claims? | 5, 13 |
 | “Different document permissions” | Authorised retrieval | Enforce before context; update permissions and cache scope | 5, 16 |
 
-```text
-Debug RAG:
-Source → Parse/index → Access/version filters
-       → Retrieve/rank → Final context → Supported answer
+```mermaid
+flowchart TD
+    N0["Check source exists and is current"]
+    N1["Check parsing and indexing"]
+    N2["Check access and version filters"]
+    N3["Check retrieval and ranking"]
+    N4["Check final context"]
+    N5["Check answer uses evidence correctly"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-RAG = retrieval-augmented generation. Recall concerns finding relevant evidence; precision concerns how much retrieved evidence is relevant. Groundedness concerns support, not whether the source is current and correct for the case.
+- RAG means retrieval-augmented generation.
+- Recall measures relevant evidence found; precision measures how much retrieved evidence is relevant.
+- Groundedness concerns support, not whether the source is current and correct for the case.
 
 ## 4. Agents, Tools, Actions, and Approval: Reviews 6–8
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “Same steps every time” | Workflow/code | Keep defined rules and branches deterministic | 6 |
 | “Next steps depend on findings” | Bounded agent | Which decisions need flexible reasoning? | 6 |
-| “Separate agent for every feature” | Complexity justification | What specialization/parallel benefit exceeds coordination cost? | 6, 17 |
+| “Separate agent for every feature” | Complexity justification | What specialisation/parallel benefit exceeds coordination cost? | 6, 17 |
 | “Twenty calls for a simple task” | Bounds / no progress | Shared step/tool/token/time/cost/retry budget | 6, 11 |
 | “Access production CRM/ERP” | Controlled tool layer | Specific operations, validated inputs, scoped credentials | 7 |
 | “Issue refund / cancel order” | Write action | Authorisation, policy, safe execution, confirmation | 7, 8 |
@@ -87,17 +147,50 @@ RAG = retrieval-augmented generation. Recall concerns finding relevant evidence;
 | “Policy service unavailable” | Fail-closed sensitive writes | Stop/defer action; safe unaffected assistance may continue | 8 |
 | “Disable refunds now” | Kill switch | Execution boundary, queued/in-flight work, actual outcomes | 8, 14 |
 
-```text
-Agent recommends → Policy decides → Executor acts
-                          ↓
-                 Approval if required
+```mermaid
+flowchart TD
+    N0["Agent proposes"]
+    N1["Authorisation and policy"]
+    N2["Allowed"]
+    N3["Revalidate action"]
+    N4["Executor"]
+    N5["Audit"]
+    N6["Review required"]
+    N7["Human decision"]
+    N8["Approved"]
+    N9["Rejected or expired"]
+    N10["Stop"]
+    N11["Denied"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N1 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N3
+    N7 --> N9
+    N9 --> N10
+    N1 --> N11
+    N11 --> N10
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N11 c3
 ```
 
-HITL = human-in-the-loop. High model confidence is not permission to act. Approval does not grant unrelated access or reverse completed transactions.
+- HITL = human-in-the-loop.
+- High model confidence is not permission to act.
+- Approval does not grant unrelated access or reverse completed transactions.
 
 ## 5. Scale, Latency, and Cost: Reviews 9–11
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “One tenant hurts everyone” | Noisy neighbour / fairness | Tenant concurrency, quotas, weighted scheduling | 9 |
 | “Within quota, but system full” | Admission control | Can this task be accepted within capacity now? | 9 |
@@ -115,20 +208,20 @@ HITL = human-in-the-loop. High model confidence is not permission to act. Approv
 | “Background work can wait” | Batch eligibility | Deadline and measured billing/processing benefit | 11 |
 | “Cheap requests, many failed tasks” | Cost per successful task | Include retries, escalation, and relevant rework | 11 |
 
-```text
-Rate limit: May this tenant send this much work?
-Admission:  Can the system accept it now?
-Queue:      Where can accepted work wait within limits?
+- Rate limit: may this tenant send this much work?
+- Admission: can the system accept it now?
+- Queue: where can accepted work wait within limits?
+- Latency: trace the critical path, optimise, and recheck quality.
+- Cost per successful task: total cost across attempts ÷ successful tasks.
 
-Latency: Trace → Critical path → Optimise → Recheck quality
-Cost: Total cost across attempts ÷ successful tasks
-```
-
-Streaming does not necessarily reduce computation. Async does not automatically shorten completion. A queue does not create capacity. TTFT marks only when output starts; useful user output and confirmed action completion are separate measurements.
+- Streaming does not necessarily reduce computation.
+- Async does not automatically shorten completion.
+- A queue does not create capacity.
+- TTFT marks only when output starts; useful user output and confirmed action completion are separate measurements.
 
 ## 6. Failure and Recovery: Review 12
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “Write timed out” | Unknown outcome | Query status/reconcile before another write | 7, 12 |
 | “Repeated request / message” | Idempotency | Stable identifier for the same logical action | 7, 12 |
@@ -139,11 +232,14 @@ Streaming does not necessarily reduce computation. Async does not automatically 
 | “Message fails repeatedly” | DLQ | Dead-letter queue owner, diagnosis, safe replay | 12 |
 | “Optional feature breaks everything” | Blast radius / degradation | Keep safe independent capabilities available | 12 |
 
-**Rule:** timeout ≠ confirmed failure; checkpoint ≠ exactly-once external effect; DLQ ≠ completion. Never generate a fresh logical action key because the previous attempt timed out.
+- A timed-out write needs reconciliation before retry.
+- A checkpoint does not prevent duplicate external effects by itself.
+- A dead-letter queue still needs an owner and safe recovery.
+- Never generate a fresh logical action key because the previous attempt timed out.
 
 ## 7. Evaluate, Release, and Operate: Reviews 13–15
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “Says cancelled, order still active” | Task success | Verify confirmed downstream state | 13 |
 | “Wrong tool arguments” | Deterministic assertions | Schema, permitted values, intended resource/action | 13 |
@@ -160,23 +256,20 @@ Streaming does not necessarily reduce computation. Async does not automatically 
 | “Why was this refund issued?” | Business audit | Identity, evidence, policy, approval, action result | 15 |
 | “Did we meet the promised service?” | SLI / SLO / SLA | Measured indicator / target / agreed commitment | 15 |
 
-```text
-Good wording ≠ completed task
-Offline evaluation ≠ real production outcome
-Shadow ≠ canary
-Rollback ≠ undo completed payment
+- Good wording still needs confirmed task completion.
+- Combine offline evaluation with real production outcomes.
+- Shadow evaluates without production writes; canary exposes a limited real cohort.
+- Software rollback does not undo a completed payment.
+- Logs record specific events; metrics show aggregate patterns.
+- Traces follow the correlated path; audit records explain business decisions and actions.
 
-Logs: Specific events
-Metrics: Aggregate patterns
-Traces: Correlated path
-Audit: Business decision/action trail
-```
-
-Observe tool operations, state transitions, decision summaries, and evidence, not private model chain-of-thought, which is often hidden and not always faithful. Shadow candidates must not duplicate real actions. Keep telemetry access and retention appropriate to sensitive data.
+- Observe tool operations, state transitions, decision summaries, and evidence, not private model chain-of-thought, which is often hidden and not always faithful.
+- Shadow candidates must not duplicate real actions.
+- Keep telemetry access and retention appropriate to sensitive data.
 
 ## 8. Enterprise Security: Review 16
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “Logged-in user” | Authentication, then authorisation | Which resource/operation is permitted? | 16 |
 | “Roles differ” | RBAC + resource scope | Role-based access plus ownership and tenant checks | 16 |
@@ -186,11 +279,14 @@ Observe tool operations, state transitions, decision summaries, and evidence, no
 | “Data cannot leave this region” | Residency | Models, telemetry, backups, failover, tools | 16 |
 | “Document/tool says ignore checks” | Untrusted data | Text cannot change authority | 16 |
 
-**Distinguish:** authentication = who; authorisation = allowed resource/operation; business policy = whether this action meets the rule; tenant fairness = shared-capacity allocation.
+- Authentication: who is calling.
+- Authorisation: permitted resources and operations.
+- Business policy: whether the proposed action meets the rule.
+- Tenant fairness: how shared capacity is allocated.
 
 ## 9. Trade-Offs and Interview Execution: Reviews 17–18
 
-| Hear… | Think… | Ask / say next | Module |
+| Hear… | Think… | Ask / say next | Review |
 |---|---|---|---|
 | “Critic adds latency and cost” | Marginal benefit | Critical-case improvement vs targets and simpler baseline | 17 |
 | “Maximum recall, minimum latency” | Evidence/processing trade-off | Required quality, search/rerank, candidate budget | 17 |
@@ -205,25 +301,24 @@ Observe tool operations, state transitions, decision summaries, and evidence, no
 
 ## 10. Final 60-Second Recall
 
-```text
-Need AI?       → WHY + TODAY
-What must do?  → FRs
-How well?     → NFRs
-Documents?    → Authorised RAG
-Live state?   → API/tool
-Dynamic steps?→ Bounded agent; otherwise workflow
-Business write?→ Policy + approval if required + executor
-More users?   → Workload + bottleneck + capacity/fairness
-Slow?         → Critical-path trace
-Expensive?    → Cost per successful task
-Timeout write?→ Reconcile; preserve action identifier
-Ready to ship?→ Evaluate + version + gate + scoped rollout
-Why happened? → Observability or audit?
-Restricted data?→ Enforce resource/tenant boundaries
-Why this choice?→ Requirement + trade-off + verification
-```
+- Need AI?         why + today
+- What must do?    FRs
+- How well?       NFRs
+- Documents?      Authorised RAG
+- Live state?     api/tool
+- Dynamic steps?  Bounded agent; otherwise workflow
+- Business write?  Policy + approval if required + executor
+- More users?     Workload + bottleneck + capacity/fairness
+- Slow?           Critical-path trace
+- Expensive?      Cost per successful task
+- Timeout write?  Reconcile; preserve action identifier
+- Ready to ship?  Evaluate + version + gate + scoped rollout
+- Why happened?   Observability or audit?
+- Restricted data?  Enforce resource/tenant boundaries
+- Why this choice?  Requirement + trade-off + verification
 
-**Closing check:** every important box should have a customer requirement, a failure behaviour, and a way to verify that it worked.
+- **Closing check:** every important box should have a customer requirement, a failure behaviour, and a way to verify that it worked.
+
 
 ## Sources (checked 27 Sep 2026)
 

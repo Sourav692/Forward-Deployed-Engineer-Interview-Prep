@@ -1,6 +1,6 @@
 # Review 7: Tools, Actions & Enterprise Integration
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -11,135 +11,268 @@
 
 ### 2. Core Mental Model
 
-```text
-Agent recommends
-       ↓
-Validate request + authorise + check policy
-       ↓
-Executor → Enterprise API → Confirm result
-                              ↓
-                       Record outcome / audit
+```mermaid
+flowchart TD
+    N0["Agent recommends"]
+    N1["Validate, authorise, and check policy"]
+    N2["Executor"]
+    N3["Enterprise API"]
+    N4["Confirm result"]
+    N5["Record outcome and audit"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-**Agent recommends → Policy decides → Executor acts.**
+- **Agent recommends → Policy decides → Executor acts.**
 
 For every integration, remember:
 
-```text
-CONTRACT → ACCESS → READ/WRITE → TIMEOUT
-                    ↓
-        RETRY SAFETY → RECOVERY → AUDIT
+```mermaid
+flowchart TD
+    N0["Integration checklist"]
+    N1["Contract and access"]
+    N2["Read or write"]
+    N3["Timeout and retry safety"]
+    N4["Recovery and audit"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### 3. Essential Concepts
 
 #### 1. Controlled Tool Layer: Expose Operations, Not Unlimited Access
 
-Give the model approved operations with clear input and output schemas. Validate arguments and enforce access in application code or the downstream system.
+- Give the model approved operations with clear input and output schemas.
+- Validate arguments and enforce access in application code or the downstream system.
 
 > “I’d expose specific operations like get_order_status and request_refund, rather than unrestricted production access.”
 
-```text
-Model tool request → Validate → Authorise → Execute
+```mermaid
+flowchart TD
+    N0["Model tool request"]
+    N1["Validate"]
+    N2["Authorise"]
+    N3["Execute"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Tool results are data, not permission to bypass policy. The model must not be able to supply its own trusted tenant identity or credentials.
+- Tool results are data, not permission to bypass policy.
+- The model must not be able to supply its own trusted tenant identity or credentials.
 
 #### 2. Integration Contract: Discover the Real Constraints
 
-Ask about API availability, authentication, schemas, limits, synchronous vs asynchronous behaviour, ownership, and error semantics.
+- Ask about API availability, authentication, schemas, limits, synchronous vs asynchronous behaviour, ownership, and error semantics.
 
 > “Does this API confirm completion, or only accept the operation for later processing?”
 
-```text
-CRM: Customer context
-Order system: Current order state
-Payment system: Refund execution / status
-```
+- CRM: Customer context
+- Order system: Current order state
+- Payment system: Refund execution / status
 
-CRM means customer relationship management; ERP means enterprise resource planning. The integration may be harder than the reasoning step.
+- CRM means customer relationship management; ERP means enterprise resource planning.
+- The integration may be harder than the reasoning step.
 
 #### 3. Read vs Write Tools: Different Consequences
 
-Reads need access checks and freshness rules. Writes also need policy, explicit action scope, duplicate protection, confirmation, and audit.
+- Reads need access checks and freshness rules.
+- Writes also need policy, explicit action scope, duplicate protection, confirmation, and audit.
 
 > “Reading an order and issuing a refund have different risk and recovery requirements.”
 
-```text
-Read:  Authorised lookup → Data
-Write: Authorised proposal → Policy → Execute → Confirm
+```mermaid
+flowchart TD
+    N0["Authorised read lookup"]
+    N1["Data"]
+    N2["Authorised write proposal"]
+    N3["Policy"]
+    N4["Execute"]
+    N5["Confirm"]
+    N0 --> N1
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Read calls still incur cost and may expose sensitive data; do not treat them as unrestricted.
+- Read calls still incur cost and may expose sensitive data; do not treat them as unrestricted.
 
 #### 4. Executor: Own the Business Side Effect
 
-The executor turns a validated, permitted action into a concrete API operation. Bind execution to the approved operation and inputs.
+- The executor turns a validated, permitted action into a concrete API operation.
+- Bind execution to the approved operation and inputs.
 
 > “The model proposes the action; the executor checks that the specific action is still permitted before sending it.”
 
-```text
-Refund proposal + approval + action identifier
-                     ↓
-             Controlled payment call
+```mermaid
+flowchart TD
+    N0["Refund proposal, approval, and action identifier"]
+    N1["Controlled payment call"]
+    N0 --> N1
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Keep secrets outside model context. Record whether the action was accepted, completed, rejected, or remains unknown.
+- Keep secrets outside model context.
+- Record whether the action was accepted, completed, rejected, or remains unknown.
 
 #### 5. Idempotency: Make Repetition Safe
 
-An idempotent operation produces no additional business effect when repeated as the same logical operation. Use an action/idempotency key supported by the execution path.
+- An idempotent operation produces no additional business effect when repeated as the same logical operation.
+- Use an action/idempotency key supported by the execution path.
 
 > “Retries of the same refund must reuse the same operation identifier.”
 
-```text
-refund_request_123 → First call: refund created
-refund_request_123 → Retry: existing result / same operation
+```mermaid
+flowchart TD
+    N0["Logical action refund_request_123"]
+    N1["First call: create refund"]
+    N2["Retry with same identifier: existing result or same operation"]
+    N0 --> N1
+    N0 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Do not generate a new key for every retry. Idempotency scope, retention, and changed-input behaviour must match the downstream contract.
+- Do not generate a new key for every retry.
+- Idempotency scope, retention, and changed-input behaviour must match the downstream contract.
 
 #### 6. Timeout: Stop Waiting Without Assuming Failure
 
-Set dependency deadlines within the task's total time budget. A timeout means the caller did not receive a result in time; the remote action may have succeeded.
+- Set dependency deadlines within the task's total time budget.
+- A timeout means the caller did not receive a result in time; the remote action may have succeeded.
 
 > “After a write timeout, I’d check operation status before sending another refund.”
 
-```text
-Refund call → Timeout → Status lookup / reconcile
-                              ↓
-                 Completed / failed / still unknown
+```mermaid
+flowchart TD
+    N0["Refund call"]
+    N1["Timeout"]
+    N2["Status lookup and reconciliation"]
+    N3["Completed"]
+    N4["Failed"]
+    N5["Still unknown: preserve state"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N2 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-If status cannot be determined, preserve the unknown state and escalate or reconcile later. Never claim completion without confirmation.
+- If status cannot be determined, preserve the unknown state and escalate or reconcile later.
+- Never claim completion without confirmation.
 
 #### 7. Retry: Retry Only When Safe and Useful
 
-Retry transient failures within a bounded budget, with backoff and jitter. Do not blindly retry invalid input, denied permission, or policy rejection.
+- Retry transient failures within a bounded budget, with backoff and jitter.
+- Do not blindly retry invalid input, denied permission, or policy rejection.
 
 > “I’d distinguish transient dependency failures from permanent errors and uncertain writes.”
 
-```text
-Transient read failure → Bounded retry
-Invalid arguments      → Correct / clarify
-Unknown write result   → Reconcile + idempotent recovery
+```mermaid
+flowchart TD
+    N0["Transient read failure"]
+    N1["Bounded retry"]
+    N2["Invalid arguments"]
+    N3["Correct or clarify"]
+    N4["Unknown write result"]
+    N5["Reconcile and recover idempotently"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Avoid nested retry loops at the tool, orchestrator, and model layers multiplying attempts.
+- Avoid nested retry loops at the tool, orchestrator, and model layers multiplying attempts.
 
 #### 8. Circuit Breaker: Protect a Failing Dependency
 
-After repeated failures, temporarily stop normal calls and later probe recovery. Combine this with a defined fallback or safe stop.
+- After repeated failures, temporarily stop normal calls and later probe recovery.
+- Combine this with a defined fallback or safe stop.
 
 > “If the ERP is repeatedly failing, I’d stop hammering it and return a defined unavailable or deferred state.”
 
-```text
-Repeated failures → Open breaker → Fast failure / defer
-                              ↓
-                        Recovery probe
+```mermaid
+flowchart TD
+    N0["Repeated failures"]
+    N1["Open breaker"]
+    N2["Fast failure or defer"]
+    N3["Recovery probe"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-A breaker does not repair the API, confirm an unknown write, or replace authorisation.
+- A breaker does not repair the API, confirm an unknown write, or replace authorisation.
 
 ### 4. Requirement → Component Reasoning
 
@@ -152,13 +285,36 @@ A breaker does not repair the API, confirm an unknown write, or replace authoris
 | Recover uncertain writes | Status query / reconciliation | Establish actual outcome | Recovery delay |
 | Protect failing ERP | Circuit breaker + bounded retries | Avoid repeated load | Temporary unavailability |
 
-```text
-API Gateway   = User → Application control
-Model Gateway = Application → Model control
-Tool layer    = Controlled enterprise operations
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway: application-entry controls"]
+    N2["Application"]
+    N3["Model Gateway: model-call controls"]
+    N4["Model provider"]
+    N5["Enterprise operation"]
+    N6["Controlled tool layer"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-**Support example:** retrieve refund policy, read live order state, propose the refund, authorise and check policy, execute with one action identifier, then confirm status and audit the result.
+For a refund request:
+
+- Retrieve the policy and read live order state.
+- Propose the refund, then authorise it and check policy.
+- Execute with a stable action identifier.
+- Confirm status and audit the result.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -182,7 +338,7 @@ Tool layer    = Controlled enterprise operations
 
 ### 7. Interview Phrases
 
-> “I’d expose approved business operations rather than unrestricted system access.”
+> “I’d expose only the approved operations this task needs.”
 
 > “A write timeout is an unknown outcome until we reconcile it.”
 
@@ -202,18 +358,38 @@ Tool layer    = Controlled enterprise operations
 
 ## One-Page Memory Card: Tools, Actions & Enterprise Integration
 
-**Core question:** How do we execute enterprise operations safely and establish their actual outcome?
+- **Core question:** How do we execute enterprise operations safely and establish their actual outcome?
 
 ### Recall Flow
 
-```text
-Propose → Validate + authorise → Policy
-              ↓
-     Executor → Enterprise API → Confirm
-                                   ↓
-                            Audit + outcome
-
-Timeout after write → Reconcile → Safe recovery
+```mermaid
+flowchart TD
+    N0["Propose"]
+    N1["Validate and authorise"]
+    N2["Policy"]
+    N3["Executor"]
+    N4["Enterprise API"]
+    N5["Confirm"]
+    N6["Audit and outcome"]
+    N7["Write timeout"]
+    N8["Reconcile"]
+    N9["Safe recovery"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N7 --> N8
+    N8 --> N9
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ### Checklist
@@ -230,7 +406,8 @@ Timeout after write → Reconcile → Safe recovery
 | Retry | Transient and safe; bounded attempts, backoff, jitter |
 | Circuit breaker | Temporarily stop normal calls after repeated failures; probe recovery |
 
-CRM = customer relationship management. ERP = enterprise resource planning.
+- CRM = customer relationship management.
+- ERP = enterprise resource planning.
 
 ### Trigger → Concept
 
@@ -253,25 +430,52 @@ CRM = customer relationship management. ERP = enterprise resource planning.
 
 ### Recovery Rules
 
-```text
-Read failure      → Retry if transient and within budget
-Permission denied → Stop / correct access, not blind retry
-Invalid input     → Correct / clarify
-Write unknown     → Query status / reconcile
-Still unknown     → Preserve status; defer or escalate
+```mermaid
+flowchart TD
+    N0["Read failure"]
+    N1["Retry if transient and within budget"]
+    N2["Permission denied"]
+    N3["Stop or correct access"]
+    N4["Invalid input"]
+    N5["Correct or clarify"]
+    N6["Write unknown"]
+    N7["Query status and reconcile"]
+    N8["Still unknown"]
+    N9["Preserve status, defer, or escalate"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    N6 --> N7
+    N8 --> N9
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
-Check the API's idempotency scope, retention, and treatment of changed inputs. Avoid multiplying retries across layers. A circuit breaker prevents repeated calls during failure; it does not confirm uncertain actions.
+- Check the api's idempotency scope, retention, and treatment of changed inputs.
+- Avoid multiplying retries across layers.
+- A circuit breaker prevents repeated calls during failure; it does not confirm uncertain actions.
 
 ### Requirement → Boundary
 
-API Gateway = User → Application control.
-Model Gateway = Application → Model control.
-The controlled tool layer owns enterprise operations; downstream authorisation remains necessary.
+- API Gateway = User → Application control.
+- Model Gateway = Application → Model control.
+- The controlled tool layer owns enterprise operations; downstream authorisation remains necessary.
 
 ### 30-Second Answer
 
-> “I’d connect the agent through approved tools with validated arguments and scoped access. Reads need freshness and permission checks; writes also need policy, safe execution, and confirmation. I’d use stable action identifiers for idempotent retries, reconcile write timeouts, and bound dependency waiting and retries. Repeated failures would trigger a circuit breaker and a defined fallback or deferred state.”
+Practise these points as one spoken answer:
+
+- “I’d connect the agent through approved tools with validated arguments and scoped access.”
+- “Reads need freshness and permission checks; writes also need policy, safe execution, and confirmation.”
+- “I’d use stable action identifiers for idempotent retries, reconcile write timeouts, and bound dependency waiting and retries.”
+- “Repeated failures would trigger a circuit breaker and a defined fallback or deferred state.”
+
 
 ## Sources (checked 27 Sep 2026)
 
