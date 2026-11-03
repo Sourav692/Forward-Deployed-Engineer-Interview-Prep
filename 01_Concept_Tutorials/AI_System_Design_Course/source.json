@@ -1,0 +1,344 @@
+{
+  "course": "10_AI_System_Design",
+  "commit": "f3e32e37b35e0c09465c55b66a78fa0ded454d7c",
+  "stages": [
+    {
+      "dir": "00-enterprise-overview",
+      "title": "Enterprise use case and target architecture",
+      "lessons": [
+        {
+          "file": "00_enterprise_overview/01_understand_the_problem.md",
+          "title": "Enterprise use case and target architecture: understand the problem"
+        },
+        {
+          "file": "00_enterprise_overview/02_learn_and_design.md",
+          "title": "Enterprise use case and target architecture: learn and design"
+        },
+        {
+          "file": "00_enterprise_overview/03_observe_and_experiment.md",
+          "title": "Enterprise use case and target architecture: observe and experiment"
+        },
+        {
+          "file": "00_enterprise_overview/04_think_like_a_staff_engineer.md",
+          "title": "Enterprise use case and target architecture: think like a staff engineer"
+        },
+        {
+          "file": "00_enterprise_overview/05_validate_and_carry_forward.md",
+          "title": "Enterprise use case and target architecture: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "01-mvp",
+      "title": "Build the MVP",
+      "lessons": [
+        {
+          "file": "01_mvp/01_understand_the_problem.md",
+          "title": "Build the MVP: understand the problem"
+        },
+        {
+          "file": "01_mvp/02_learn_and_design.md",
+          "title": "Build the MVP: learn and design"
+        },
+        {
+          "file": "01_mvp/03_observe_and_experiment.md",
+          "title": "Build the MVP: observe and experiment"
+        },
+        {
+          "file": "01_mvp/04_think_like_a_staff_engineer.md",
+          "title": "Build the MVP: think like a staff engineer"
+        },
+        {
+          "file": "01_mvp/05_validate_and_carry_forward.md",
+          "title": "Build the MVP: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "02-distributed-execution",
+      "title": "Distributed execution",
+      "lessons": [
+        {
+          "file": "02_distributed_execution/01_understand_the_problem.md",
+          "title": "Distributed execution: understand the problem"
+        },
+        {
+          "file": "02_distributed_execution/02_learn_and_design.md",
+          "title": "Distributed execution: learn and design"
+        },
+        {
+          "file": "02_distributed_execution/03_observe_and_experiment.md",
+          "title": "Distributed execution: observe and experiment"
+        },
+        {
+          "file": "02_distributed_execution/04_think_like_a_staff_engineer.md",
+          "title": "Distributed execution: think like a staff engineer"
+        },
+        {
+          "file": "02_distributed_execution/05_validate_and_carry_forward.md",
+          "title": "Distributed execution: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "03-enterprise-knowledge",
+      "title": "Enterprise knowledge",
+      "lessons": [
+        {
+          "file": "03_enterprise_knowledge/01_understand_the_problem.md",
+          "title": "Enterprise knowledge: understand the problem"
+        },
+        {
+          "file": "03_enterprise_knowledge/02_learn_and_design.md",
+          "title": "Enterprise knowledge: learn and design"
+        },
+        {
+          "file": "03_enterprise_knowledge/03_observe_and_experiment.md",
+          "title": "Enterprise knowledge: observe and experiment"
+        },
+        {
+          "file": "03_enterprise_knowledge/04_think_like_a_staff_engineer.md",
+          "title": "Enterprise knowledge: think like a staff engineer"
+        },
+        {
+          "file": "03_enterprise_knowledge/05_validate_and_carry_forward.md",
+          "title": "Enterprise knowledge: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "04-application-scaling",
+      "title": "Scale the application",
+      "lessons": [
+        {
+          "file": "04_application_scaling/01_understand_the_problem.md",
+          "title": "Scale the application: understand the problem"
+        },
+        {
+          "file": "04_application_scaling/02_learn_and_design.md",
+          "title": "Scale the application: learn and design"
+        },
+        {
+          "file": "04_application_scaling/03_observe_and_experiment.md",
+          "title": "Scale the application: observe and experiment"
+        },
+        {
+          "file": "04_application_scaling/04_think_like_a_staff_engineer.md",
+          "title": "Scale the application: think like a staff engineer"
+        },
+        {
+          "file": "04_application_scaling/05_validate_and_carry_forward.md",
+          "title": "Scale the application: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "05-overload-fairness",
+      "title": "Handle overload and fair scheduling",
+      "lessons": [
+        {
+          "file": "05_overload_fairness/01_understand_the_problem.md",
+          "title": "Handle overload and fair scheduling: understand the problem"
+        },
+        {
+          "file": "05_overload_fairness/02_learn_and_design.md",
+          "title": "Handle overload and fair scheduling: learn and design"
+        },
+        {
+          "file": "05_overload_fairness/03_observe_and_experiment.md",
+          "title": "Handle overload and fair scheduling: observe and experiment"
+        },
+        {
+          "file": "05_overload_fairness/04_think_like_a_staff_engineer.md",
+          "title": "Handle overload and fair scheduling: think like a staff engineer"
+        },
+        {
+          "file": "05_overload_fairness/05_validate_and_carry_forward.md",
+          "title": "Handle overload and fair scheduling: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "06-enterprise-security",
+      "title": "Enterprise security",
+      "lessons": [
+        {
+          "file": "06_enterprise_security/01_understand_the_problem.md",
+          "title": "Enterprise security: understand the problem"
+        },
+        {
+          "file": "06_enterprise_security/02_learn_and_design.md",
+          "title": "Enterprise security: learn and design"
+        },
+        {
+          "file": "06_enterprise_security/03_observe_and_experiment.md",
+          "title": "Enterprise security: observe and experiment"
+        },
+        {
+          "file": "06_enterprise_security/04_think_like_a_staff_engineer.md",
+          "title": "Enterprise security: think like a staff engineer"
+        },
+        {
+          "file": "06_enterprise_security/05_validate_and_carry_forward.md",
+          "title": "Enterprise security: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "07-reliability-consistency",
+      "title": "Reliability and consistency",
+      "lessons": [
+        {
+          "file": "07_reliability_consistency/01_understand_the_problem.md",
+          "title": "Reliability and consistency: understand the problem"
+        },
+        {
+          "file": "07_reliability_consistency/02_learn_and_design.md",
+          "title": "Reliability and consistency: learn and design"
+        },
+        {
+          "file": "07_reliability_consistency/03_observe_and_experiment.md",
+          "title": "Reliability and consistency: observe and experiment"
+        },
+        {
+          "file": "07_reliability_consistency/04_think_like_a_staff_engineer.md",
+          "title": "Reliability and consistency: think like a staff engineer"
+        },
+        {
+          "file": "07_reliability_consistency/05_validate_and_carry_forward.md",
+          "title": "Reliability and consistency: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "08-evaluation-releases",
+      "title": "Production AI quality and releases",
+      "lessons": [
+        {
+          "file": "08_evaluation_releases/01_understand_the_problem.md",
+          "title": "Production AI quality and releases: understand the problem"
+        },
+        {
+          "file": "08_evaluation_releases/02_learn_and_design.md",
+          "title": "Production AI quality and releases: learn and design"
+        },
+        {
+          "file": "08_evaluation_releases/03_observe_and_experiment.md",
+          "title": "Production AI quality and releases: observe and experiment"
+        },
+        {
+          "file": "08_evaluation_releases/04_think_like_a_staff_engineer.md",
+          "title": "Production AI quality and releases: think like a staff engineer"
+        },
+        {
+          "file": "08_evaluation_releases/05_validate_and_carry_forward.md",
+          "title": "Production AI quality and releases: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "09-inference-gpu",
+      "title": "Inference and GPU infrastructure",
+      "lessons": [
+        {
+          "file": "09_inference_gpu/01_understand_the_problem.md",
+          "title": "Inference and GPU infrastructure: understand the problem"
+        },
+        {
+          "file": "09_inference_gpu/02_learn_and_design.md",
+          "title": "Inference and GPU infrastructure: learn and design"
+        },
+        {
+          "file": "09_inference_gpu/03_observe_and_experiment.md",
+          "title": "Inference and GPU infrastructure: observe and experiment"
+        },
+        {
+          "file": "09_inference_gpu/04_think_like_a_staff_engineer.md",
+          "title": "Inference and GPU infrastructure: think like a staff engineer"
+        },
+        {
+          "file": "09_inference_gpu/05_validate_and_carry_forward.md",
+          "title": "Inference and GPU infrastructure: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "10-fine-tuning",
+      "title": "Fine-tuning and model customisation",
+      "lessons": [
+        {
+          "file": "10_fine_tuning/01_understand_the_problem.md",
+          "title": "Fine-tuning and model customisation: understand the problem"
+        },
+        {
+          "file": "10_fine_tuning/02_learn_and_design.md",
+          "title": "Fine-tuning and model customisation: learn and design"
+        },
+        {
+          "file": "10_fine_tuning/03_observe_and_experiment.md",
+          "title": "Fine-tuning and model customisation: observe and experiment"
+        },
+        {
+          "file": "10_fine_tuning/04_think_like_a_staff_engineer.md",
+          "title": "Fine-tuning and model customisation: think like a staff engineer"
+        },
+        {
+          "file": "10_fine_tuning/05_validate_and_carry_forward.md",
+          "title": "Fine-tuning and model customisation: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "11-multi-region",
+      "title": "Global multi-region platform",
+      "lessons": [
+        {
+          "file": "11_multi_region/01_understand_the_problem.md",
+          "title": "Global multi-region platform: understand the problem"
+        },
+        {
+          "file": "11_multi_region/02_learn_and_design.md",
+          "title": "Global multi-region platform: learn and design"
+        },
+        {
+          "file": "11_multi_region/03_observe_and_experiment.md",
+          "title": "Global multi-region platform: observe and experiment"
+        },
+        {
+          "file": "11_multi_region/04_think_like_a_staff_engineer.md",
+          "title": "Global multi-region platform: think like a staff engineer"
+        },
+        {
+          "file": "11_multi_region/05_validate_and_carry_forward.md",
+          "title": "Global multi-region platform: validate and carry forward"
+        }
+      ]
+    },
+    {
+      "dir": "12-staff-platform",
+      "title": "Staff-level platform architecture",
+      "lessons": [
+        {
+          "file": "12_staff_platform/01_understand_the_problem.md",
+          "title": "Staff-level platform architecture: understand the problem"
+        },
+        {
+          "file": "12_staff_platform/02_learn_and_design.md",
+          "title": "Staff-level platform architecture: learn and design"
+        },
+        {
+          "file": "12_staff_platform/03_observe_and_experiment.md",
+          "title": "Staff-level platform architecture: observe and experiment"
+        },
+        {
+          "file": "12_staff_platform/04_think_like_a_staff_engineer.md",
+          "title": "Staff-level platform architecture: think like a staff engineer"
+        },
+        {
+          "file": "12_staff_platform/05_validate_and_carry_forward.md",
+          "title": "Staff-level platform architecture: validate and carry forward"
+        }
+      ]
+    }
+  ]
+}
