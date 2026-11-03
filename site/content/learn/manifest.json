@@ -6325,9 +6325,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-10-latency-optimization.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/interview/final-week/module-10-latency-optimization",
-      "updated": "2026-10-28"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-11-cost-optimization",
