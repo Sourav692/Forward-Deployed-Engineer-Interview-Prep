@@ -68,9 +68,22 @@ Open the [consistency/deadline experiment](/labs/system-design/07_reliability_co
 
 Lag zero stands for a proven minimum version in this toy model, not a real method of measuring replication freshness from wall time alone. The read decision is a data leg; protected disclosure still requires Stage 6's current access and audit gates. A primary authority outage denies protected access even when historical bytes exist elsewhere.
 
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [reliability.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/labs/reliability.py) | Lab code: read this first |
+| [test_reliability.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/labs/test_reliability.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
+
 ```bash
-python3 10_AI_System_Design/stages/07-reliability-consistency/labs/test_reliability.py
+python3 10_AI_System_Design/stages/07-reliability-consistency/labs/test_reliability.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 [reliability.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/07-reliability-consistency/labs/reliability.py) creates separate primary/projection files, explicit event delivery and a logical breaker. Twelve tests cover rollback/outbox atomicity, lost acknowledgement/replay, payload conflict/tenant scope, lag fallback, duplicate and out-of-order projection, unavailable authority/fallback, durable object recreation, breaker opening/recovery, failed probe and concurrent probe limits. No hosted model runs. The saved result is a provided fixture, so no test should be described as exactly-once provider generation.
 

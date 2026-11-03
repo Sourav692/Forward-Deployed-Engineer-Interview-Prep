@@ -63,9 +63,22 @@ Open the [identity/freshness experiment](/labs/system-design/06_enterprise_secur
 
 The experiment does not verify actual corporate token signatures, source polling or network routes. It demonstrates independent gates. The runnable exercise checks additional signature/scope behaviour using the explicitly public signed-envelope fixture.
 
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [security.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/labs/security.py) | Lab code: read this first |
+| [test_security.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/labs/test_security.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
+
 ```bash
-python3 10_AI_System_Design/stages/06-enterprise-security/labs/test_security.py
+python3 10_AI_System_Design/stages/06-enterprise-security/labs/test_security.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 [security.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/06-enterprise-security/labs/security.py) reuses the actual Stage 3 Knowledge store. Ten tests verify header spoof resistance, signature tampering, issuer/audience/expiry/not-before, rotation/retirement, cross-tenant citation resolution, document revocation, membership age/epoch, worker capability bounds, audit failure/redaction and scoped egress references. The audit contains protected source IDs and decision metadata, never bearer tokens or passage bodies.
 

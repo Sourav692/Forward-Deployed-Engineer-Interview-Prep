@@ -23,6 +23,12 @@
  *    link, since learn.mjs turns a repository path into plain text;
  *  - the "Complete Stage Package" subsection and every sentence about the stage ZIP or its
  *    clean-extraction checks go: the site offers no ZIP (owner decision, 3 November 2026);
+ *  - each stage with a Python lab gets a "Run the code lab" section before its test command
+ *    (task SDC-04; owner decision, 3 November 2026: the reader runs the Python lab in their own
+ *    terminal from their local clone). It lists the stage's `labs/*.py` files as GitHub links,
+ *    replaces the guide's one-line run instruction with the site's, and adds `-v` so the run
+ *    prints one line per tested behaviour. Python only: the guides' `node …test_simulator.cjs`
+ *    lines go, and so does `verify_package.py`, which checks the stage ZIP;
  *  - stage and part titles take sentence case and British spelling (src/lib/spelling.ts).
  * The import fails on a link or anchor that resolves to nothing, on a placeholder (TODO, TBD,
  * XXX, [FILL) and when the course stages have uncommitted changes, so `source.json` names the
@@ -327,6 +333,58 @@ function addLabFence(lines, stage, lab) {
   return [...lines.slice(0, end + 1), '', '```lab', `src: ${labHref(stage)}`, `title: ${lab.title}`, '```', ...lines.slice(end + 1)]
 }
 
+// ------------------------------------------------------------------ code lab
+
+const TOOLING = ['verify_package.py']
+const TEST_COMMAND = /^python3 10_AI_System_Design\/stages\/[^/]+\/labs\/test_\w+\.py$/
+
+/** The stage's Python lab files, lab code first, then tests; empty when it has none. */
+function labFiles(stage) {
+  const dir = join(REPO_ROOT, stage.rel, 'labs')
+  if (!existsSync(dir)) return []
+  const files = readdirSync(dir).filter((f) => f.endsWith('.py') && !TOOLING.includes(f))
+  return [...files.filter((f) => !f.startsWith('test_')).sort(), ...files.filter((f) => f.startsWith('test_')).sort()]
+}
+
+/**
+ * Inserts the "Run the code lab" section at the stage's test command (lines before heading
+ * promotion, so the section heading is written `### `). A one-line run instruction ending in ":"
+ * right above the command is replaced; other prose above it stays. When the command sits directly
+ * under a heading, that heading keeps the section and no new one is added. Returns null when this
+ * part has no test command.
+ */
+function addCodeLab(lines, stage, files) {
+  const at = lines.findIndex((line, i) => /^```(bash|sh)?$/.test(line.trim()) && TEST_COMMAND.test(lines[i + 1] ?? ''))
+  if (at === -1) return null
+  let start = at
+  let above = at - 1
+  while (above >= 0 && !lines[above].trim()) above--
+  if (above >= 0 && lines[above].trim().endsWith(':') && !HEADING.test(lines[above]) && !lines[above - 1]?.trim()) start = above
+  let before = start - 1
+  while (before >= 0 && !lines[before].trim()) before--
+  const underHeading = before >= 0 && HEADING.test(lines[before])
+  const close = lines.indexOf('```', at + 1)
+  const command = lines.slice(at, close + 1).map((line) => (TEST_COMMAND.test(line) ? `${line} -v` : line))
+  const section = [
+    ...(underHeading ? [] : ['### Run the code lab', '']),
+    "Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.",
+    '',
+    '| File | What it is |',
+    '| --- | --- |',
+    ...files.map((f) => `| [${f}](${GITHUB}/${stage.rel}/labs/${f}) | ${f.startsWith('test_') ? 'Tests: one test per behaviour this stage teaches' : 'Lab code: read this first'} |`),
+    '',
+    'From the root of your local clone of the repository, run:',
+    '',
+    ...command,
+    '',
+    '`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.',
+  ]
+  return [...lines.slice(0, start), ...section, ...lines.slice(close + 1)]
+}
+
+/** Drops the course's Node simulator checks from command blocks: the site's labs are Python only. */
+const dropNodeChecks = (lines) => lines.filter((line) => !/^node 10_AI_System_Design\/tools\/test_simulator\.cjs\b/.test(line))
+
 /** Trims blank lines at both ends and collapses runs of blank lines. */
 const tidy = (lines) => lines.join('\n').replace(/\n{3,}/g, '\n\n').trim()
 
@@ -353,6 +411,8 @@ export function importCourse() {
     const lab = buildLab(stage)
     if (lab) labs.set(stage.out, lab.html)
     let linked = false
+    const pyFiles = labFiles(stage)
+    let codeLab = false
     for (const part of stage.parts) {
       const body = [...(part.n === 1 ? stage.preamble : []), ...part.lines]
       let lines = dropPackageSentences(rewriteLinks(body, { stage, part, stagesByDir }))
@@ -361,12 +421,16 @@ export function importCourse() {
         linked = true
       }
       if (lab) lines = addLabFence(lines, stage, lab)
+      lines = dropNodeChecks(lines)
+      const withLab = pyFiles.length && !codeLab ? addCodeLab(lines, stage, pyFiles) : null
+      if (withLab) [lines, codeLab] = [withLab, true]
       const text = tidy(promote(lines))
       const markdown = `${HEADER}# ${lessonTitle(stage, part)}\n\n${text}\n`
       const hit = markdown.match(PLACEHOLDER)
       if (hit) throw new Error(`${stage.rel}/guide.md, part ${part.n}: placeholder "${hit[0]}"`)
       files.set(partFile(stage, part), markdown)
     }
+    if (pyFiles.length && !codeLab) throw new Error(`${stage.rel}: labs/ has Python files but guide.md gives no \`python3 …/labs/test_*.py\` command`)
     if (lab && !linked) throw new Error(`${stage.rel}/guide.md: never links its lab, so no lesson would show it`)
   }
 

@@ -70,11 +70,22 @@ Open the [policy/version experiment](/labs/system-design/03_enterprise_knowledge
 
 “No model call authorised” in this experiment means no call for this grounded-answer path because no evidence remains; it does not disable the separate general drafting API. Real mixed-result retrieval may keep other permitted passages. The model is deterministic, uses one candidate, and has no network or hidden relevance score.
 
-Run the Python tests from the workspace’s parent directory:
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [knowledge.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/labs/knowledge.py) | Lab code: read this first |
+| [test_knowledge.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/labs/test_knowledge.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```bash
-python3 10_AI_System_Design/stages/03-enterprise-knowledge/labs/test_knowledge.py
+python3 10_AI_System_Design/stages/03-enterprise-knowledge/labs/test_knowledge.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 [knowledge.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/03-enterprise-knowledge/labs/knowledge.py) uses a real SQLite FTS5 index and immutable/current metadata tables. Tests cover relevant scoped results, duplicate publication, content replacement, tombstone ordering, revocation between search/context, forged/stale hits, orphan publication failure, immutable-version conflict, and query syntax. A pipeline test also uses Stage 2’s durable job store to claim and complete an ingestion event. Python must include SQLite FTS5 and JSON functions; a missing extension is a prerequisite failure, not permission to silently substitute an untested search engine.
 

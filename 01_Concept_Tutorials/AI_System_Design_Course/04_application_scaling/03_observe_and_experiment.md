@@ -68,11 +68,22 @@ Open the [capacity experiment](/labs/system-design/04_application_scaling/lab.ht
 
 “Unserved offered rate” is `max(0, offered − planned capacity)`. It is a fluid demand shortfall, not a simulated latency percentile or an implemented rejection count. If all excess were queued indefinitely, that rate would grow backlog until a finite limit intervenes. Do not present the model as a production load test.
 
-Run the Python tests:
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [scaling.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/labs/scaling.py) | Lab code: read this first |
+| [test_scaling.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/labs/test_scaling.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```bash
-python3 10_AI_System_Design/stages/04-application-scaling/labs/test_scaling.py
+python3 10_AI_System_Design/stages/04-application-scaling/labs/test_scaling.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 [scaling.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/04-application-scaling/labs/scaling.py) adds bounded cache behaviour and independent capacity arithmetic. Tests instantiate the actual Stage 1 application against a shared SQLite file to verify cross-replica history and key replay, then use the actual Stage 3 store to test warm policy checks, update/delete/revocation, tenant key separation, TTL/eviction/cache outage, and bottleneck boundaries. These are integration/invariant tests across local objects, not a benchmark or managed-database migration test.
 

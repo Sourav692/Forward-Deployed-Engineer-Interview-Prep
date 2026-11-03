@@ -126,12 +126,22 @@ Open the [offline lab](/labs/system-design/11_multi_region/lab.html#lab). Four c
 | Quorum lost | Baseline with EU authority quorum lost | no | authority unavailable | 360 | yes | 35 |
 | Slow model load | Baseline with 600-second restore | yes under assumptions | none | 780 | no: rehearse or redesign | 35 |
 
-Run with Python 3.10+ and Node from repository root:
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [regions.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/11-multi-region/labs/regions.py) | Lab code: read this first |
+| [test_regions.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/11-multi-region/labs/test_regions.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```sh
-python3 10_AI_System_Design/stages/11-multi-region/labs/test_regions.py
-node 10_AI_System_Design/tools/test_simulator.cjs 10_AI_System_Design/stages/11-multi-region
+python3 10_AI_System_Design/stages/11-multi-region/labs/test_regions.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 Fault task: in `labs/regions.py`, set a withdrawn approval, missing audit, lost quorum, the failed region as destination, or a 41-second gap in `Recovery`, and expect one named blocking reason. A 600-second restore gives no blocking reason, only `meets_rto` false. No real routing changes occur. These are independent design slices; they do not compose earlier runtime fixtures into a deployed multi-region service.
 

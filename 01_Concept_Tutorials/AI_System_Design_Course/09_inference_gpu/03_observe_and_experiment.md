@@ -72,9 +72,23 @@ Open the [single-device memory experiment](/labs/system-design/09_inference_gpu/
 
 A “within” decision means only that this arithmetic sum is below the entered capacity. It is not ready-for-production status, a token-rate prediction, a quality check or proof of memory isolation. The static table remains useful without JavaScript.
 
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [gateway.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/labs/gateway.py) | Lab code: read this first |
+| [inference.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/labs/inference.py) | Lab code: read this first |
+| [test_inference.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/labs/test_inference.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
+
 ```bash
-python3 10_AI_System_Design/stages/09-inference-gpu/labs/test_inference.py
+python3 10_AI_System_Design/stages/09-inference-gpu/labs/test_inference.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 [inference.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/labs/inference.py) independently computes memory. [gateway.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/09-inference-gpu/labs/gateway.py) composes actual prior Security, Gate and Releases fixtures plus a durable operation table. Twelve tests check approved dispatch, readiness/private constraints, registry/provider denial, context/output bounds, quota before transport, unknown replay without retry, original bundle preservation across release changes, current revocation on saved replay, input conflicts, memory arithmetic, final-write failure without completed acknowledgement or a second call, and partial revocation of original multi-source evidence.
 
