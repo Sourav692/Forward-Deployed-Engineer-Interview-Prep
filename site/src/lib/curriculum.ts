@@ -638,7 +638,7 @@ export const MODULES: CurriculumModule[] = [
       'output-guardrails-and-refusals',
       'practise-enterprise-rag',
     ],
-    seeAlso: ['retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store', 'the-evaluation-pyramid', 'the-run-trace'],
+    seeAlso: ['retriever-patterns-compared-hybrid-rerank-in-a-managed-vector-store', 'the-evaluation-pyramid', 'the-run-trace', 'enterprise-knowledge-learn-and-design'],
   },
   {
     slug: 'evaluation-and-release-gates',
@@ -663,7 +663,7 @@ export const MODULES: CurriculumModule[] = [
       'release-gates-safety-quality-and-cost',
       'practise-evaluation-and-release-gates',
     ],
-    seeAlso: ['g13-evaluation-and-release-gating', 'rag-from-first-principles-overview', 'reliability-feedback-loops-and-diversity-overview'],
+    seeAlso: ['g13-evaluation-and-release-gating', 'rag-from-first-principles-overview', 'reliability-feedback-loops-and-diversity-overview', 'evaluation-releases-learn-and-design'],
   },
   {
     slug: 'security-tenancy-prompt-injection',
@@ -688,7 +688,7 @@ export const MODULES: CurriculumModule[] = [
       'fair-sharing-between-tenants',
       'practise-security-and-tenancy',
     ],
-    seeAlso: ['g07-secure-multi-tenant-ai-platform', 'from-a-tool-calling-chatbot-to-mcp', 'red-teaming-and-layered-guardrails'],
+    seeAlso: ['g07-secure-multi-tenant-ai-platform', 'from-a-tool-calling-chatbot-to-mcp', 'red-teaming-and-layered-guardrails', 'enterprise-security-learn-and-design'],
   },
   {
     slug: 'observability-and-diagnosis',
@@ -740,7 +740,7 @@ export const MODULES: CurriculumModule[] = [
       'budgets-and-spend-guardrails',
       'practise-cost-and-latency',
     ],
-    seeAlso: ['cache-answers-without-serving-wrong-ones', 'deterministic-context-assembly', 'adaptive-rag-and-query-routing-overview'],
+    seeAlso: ['cache-answers-without-serving-wrong-ones', 'deterministic-context-assembly', 'adaptive-rag-and-query-routing-overview', 'inference-gpu-learn-and-design'],
   },
   {
     slug: 'scaling-and-reliability',
@@ -765,7 +765,7 @@ export const MODULES: CurriculumModule[] = [
       'failover-graceful-degradation-and-kill-switches',
       'practise-scaling-and-reliability',
     ],
-    seeAlso: ['scale-prototype-to-production', 'g18-consumer-scale-chat-service', 'g10-high-volume-batch-pipeline'],
+    seeAlso: ['scale-prototype-to-production', 'g18-consumer-scale-chat-service', 'g10-high-volume-batch-pipeline', 'application-scaling-learn-and-design', 'overload-fairness-learn-and-design', 'reliability-consistency-learn-and-design'],
   },
   {
     slug: 'agentops',
@@ -791,7 +791,7 @@ export const MODULES: CurriculumModule[] = [
       'practise-agentops',
       'anatomy-of-a-deployed-multi-agent-platform',
     ],
-    seeAlso: ['gate-releases-on-quality', 'roll-out-changes-gradually', 'access-controlled-enterprise-rag', 'anatomy-of-a-deployed-multi-agent-platform'],
+    seeAlso: ['gate-releases-on-quality', 'roll-out-changes-gradually', 'access-controlled-enterprise-rag', 'anatomy-of-a-deployed-multi-agent-platform', 'evaluation-releases-learn-and-design'],
   },
   {
     slug: 'model-adaptation-and-serving',
@@ -815,7 +815,7 @@ export const MODULES: CurriculumModule[] = [
       'the-data-flywheel',
     ],
     gapNote: 'Serving internals (the packs are design answers only).',
-    seeAlso: ['g19-model-development-and-post-training', 'g20-llm-inference-serving', 'fine-tuning-fundamentals-overview', 'memory-and-state-overview'],
+    seeAlso: ['g19-model-development-and-post-training', 'g20-llm-inference-serving', 'fine-tuning-fundamentals-overview', 'memory-and-state-overview', 'inference-gpu-learn-and-design', 'fine-tuning-learn-and-design'],
   },
   {
     slug: 'design-framework',

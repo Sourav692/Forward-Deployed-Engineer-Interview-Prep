@@ -33,6 +33,8 @@ type Stage = {
   scope: string
   probe: string
   practiceMinutes: number
+  /** Lessons elsewhere on the site that teach a concept this stage applies (their canonical homes). */
+  seeAlso?: string[]
   /** Part 4 is over the page limit, so the import splits its interview questions into a lesson. */
   interviewLesson?: true
 }
@@ -73,6 +75,7 @@ const STAGES: Stage[] = [
     scope: 'Connector ingestion, search index, metadata, source synchronisation and permission-filtered retrieval',
     probe: 'Why not start with vector search?',
     practiceMinutes: 345,
+    seeAlso: ['permission-aware-ingestion', 'pushing-policy-into-the-index', 'dense-sparse-hybrid-retrieval-with-bm25-and-ensembleretriever'],
   },
   {
     dir: '04-application-scaling',
@@ -82,6 +85,7 @@ const STAGES: Stage[] = [
     scope: 'Stateless replicas, caching, capacity maths, autoscaling policies and measured bottlenecks',
     probe: 'What does stateless mean?',
     practiceMinutes: 345,
+    seeAlso: ['capacity-latency-and-cost-at-scale'],
   },
   {
     dir: '05-overload-fairness',
@@ -91,6 +95,7 @@ const STAGES: Stage[] = [
     scope: 'Admission limits, bounded per-tenant queues, weighted scheduling, concurrency limits, rejection policies and metrics',
     probe: 'Why limit more than requests?',
     practiceMinutes: 390,
+    seeAlso: ['fair-sharing-between-tenants', 'retries-circuit-breakers-and-bulkheads'],
   },
   {
     dir: '06-enterprise-security',
@@ -100,6 +105,7 @@ const STAGES: Stage[] = [
     scope: 'Tenant-aware authentication and authorisation, trust boundaries, auditing, secrets, private connectivity and isolated data policies',
     probe: 'Does a valid token authorise retrieval?',
     practiceMinutes: 405,
+    seeAlso: ['tenant-isolation-levels', 'identity-verification-with-sso-and-oidc', 'prompt-injection-and-egress-control'],
   },
   {
     dir: '07-reliability-consistency',
@@ -109,6 +115,7 @@ const STAGES: Stage[] = [
     scope: 'Consistency choices by data class, circuit breakers, retries, failover, runbooks and end-to-end traces',
     probe: 'Which reads may lag?',
     practiceMinutes: 450,
+    seeAlso: ['retries-circuit-breakers-and-bulkheads', 'failover-graceful-degradation-and-kill-switches'],
   },
   {
     dir: '08-evaluation-releases',
@@ -118,6 +125,7 @@ const STAGES: Stage[] = [
     scope: 'Versioned eval datasets, release gates, canary and shadow tests, observability and rollback',
     probe: 'What exactly is evaluated?',
     practiceMinutes: 345,
+    seeAlso: ['release-gates-safety-quality-and-cost', 'golden-sets-and-sample-size', 'prompt-versioning-rollout-and-rollback'],
   },
   {
     dir: '09-inference-gpu',
@@ -127,6 +135,7 @@ const STAGES: Stage[] = [
     scope: 'Model-serving gateway, inference performance budget, self-hosted deployment option and GPU placement boundaries',
     probe: 'Why a model gateway?',
     practiceMinutes: 330,
+    seeAlso: ['latency-prefill-decode-streaming-and-the-tail', 'model-routing-and-prompt-discipline'],
   },
   {
     dir: '10-fine-tuning',
@@ -136,6 +145,7 @@ const STAGES: Stage[] = [
     scope: 'Dataset and version pipeline, training job control, tracking, checkpoints, evaluation, registry and approval',
     probe: 'Why tune this workflow?',
     practiceMinutes: 225,
+    seeAlso: ['when-fine-tuning-earns-its-cost', 'the-data-flywheel'],
   },
   {
     dir: '11-multi-region',
@@ -226,7 +236,7 @@ export const SD_MODULES: CurriculumModule[] = STAGES.map((stage, i) => ({
   interviewProbe: stage.probe,
   commonMistakes: [],
   lessons: lessonsOf(stage).map(([part]) => `${moduleSlug(stage)}-${part}`),
-  seeAlso: [],
+  seeAlso: stage.seeAlso ?? [],
 }))
 
 export const SD_LESSONS: CurriculumLesson[] = STAGES.flatMap((stage) =>
