@@ -66,9 +66,23 @@ Open the [release experiment](/labs/system-design/08_evaluation_releases/lab.htm
 
 The experiment computes deterministic arithmetic only. It does not query an LLM judge, send traffic, approve a production release or update the actual fixture controller's gate policy. Its outputs remain readable as static cases without JavaScript.
 
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [evaluation.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/evaluation.py) | Lab code: read this first |
+| [releases.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/releases.py) | Lab code: read this first |
+| [test_releases.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/test_releases.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
+
 ```bash
-python3 10_AI_System_Design/stages/08-evaluation-releases/labs/test_releases.py
+python3 10_AI_System_Design/stages/08-evaluation-releases/labs/test_releases.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 [evaluation.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/evaluation.py) loads the JSON cases, validates coverage/metrics, scores the rubric and binds a report to versions. [releases.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/08-evaluation-releases/labs/releases.py) reuses Stage 7's transaction helper for approval and a generation-checked pointer. Fourteen tests cover good/sliced scoring, quality/safety/latency/cost, missing/duplicate/invalid data, dataset/report binding, stale CAS, eligible sticky cohorts, rollback with an actual Stage 7 saved result, shadow policy, telemetry redaction, refusal labels hiding answer text, weakened gate settings and withdrawing a later canary without reverting the current stable bundle.
 

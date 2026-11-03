@@ -103,11 +103,22 @@ The visual lab assumes all database operations succeed, includes the state-write
 
 The [Python API](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/01-mvp/labs/mvp.py) uses standard-library HTTP and SQLite. The model and identity integrations are fixtures, while the HTTP requests and database commits are real. Read the adapter’s interface, request state transitions, and scoped queries before running it. Public fixture tokens authenticate local test identities only. Do not expose this server or treat it as a production identity stack.
 
-Run from the repository root, with Python 3.10 or newer and SQLite support:
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [mvp.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/01-mvp/labs/mvp.py) | Lab code: read this first |
+| [test_mvp.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/01-mvp/labs/test_mvp.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```bash
-python3 10_AI_System_Design/stages/01-mvp/labs/test_mvp.py
+python3 10_AI_System_Design/stages/01-mvp/labs/test_mvp.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 In a separate terminal, use a fresh disposable database path:
 

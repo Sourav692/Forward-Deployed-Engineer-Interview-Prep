@@ -81,11 +81,21 @@ Default inputs are A=30, B=6, C=6, three slots, no retry copies, four-second dea
 
 ## Implement the Guard, Then Break Its Boundaries
 
-Run from the directory containing `10_AI_System_Design/`:
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [admission.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/admission.py) | Lab code: read this first |
+| [scheduler.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/scheduler.py) | Lab code: read this first |
+| [test_overload.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/test_overload.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```bash
-python3 10_AI_System_Design/stages/05-overload-fairness/labs/test_overload.py
+python3 10_AI_System_Design/stages/05-overload-fairness/labs/test_overload.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 [admission.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/admission.py) uses real SQLite transactions for shared fixture reservations, request/token buckets, per-tenant request buckets, and concurrency. [scheduler.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/05-overload-fairness/labs/scheduler.py) independently computes finite-burst queues and service shares. Tests race concurrent reservation callers, separate request and token limits, refill logical buckets, reject conflicting/replayed keys, retain unknown slots, reject expired work, isolate a noisy tenant, compare four policies, exercise deadlines/empty queues/retry amplification, and integrate a grant with Stage 2’s actual durable worker store.
 

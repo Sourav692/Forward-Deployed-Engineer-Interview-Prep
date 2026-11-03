@@ -60,12 +60,22 @@ Open the [offline lab](/labs/system-design/10_fine_tuning/lab.html#lab). Change 
 | Wrong artifact | 198 passes, zero safety failures, mismatched report | Blocked |
 | Weak behaviour | 195 passes, zero safety failures, matching report | Blocked |
 
-Run from the repository root with Python 3.10+ and Node:
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [lifecycle.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/labs/lifecycle.py) | Lab code: read this first |
+| [test_lifecycle.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/10-fine-tuning/labs/test_lifecycle.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```sh
-python3 10_AI_System_Design/stages/10-fine-tuning/labs/test_lifecycle.py
-node 10_AI_System_Design/tools/test_simulator.cjs 10_AI_System_Design/stages/10-fine-tuning
+python3 10_AI_System_Design/stages/10-fine-tuning/labs/test_lifecycle.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 The executable slice freezes example metadata, rejects supplier-group split leakage, scopes job keys, records monotonically increasing checkpoints, binds trusted reports, and checks role and release generation. It uses in-memory records and supplied counts. It does not call the Stage 8 release controller or Stage 9 gateway; those contracts are retained as production integration requirements, not tested composition.
 

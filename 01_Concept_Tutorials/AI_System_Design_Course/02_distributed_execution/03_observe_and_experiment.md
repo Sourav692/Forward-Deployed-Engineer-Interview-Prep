@@ -63,11 +63,22 @@ Open the [lease experiment](/labs/system-design/02_distributed_execution/lab.htm
 
 An actual worker that lives longer than its lease needs a bounded heartbeat/renewal policy. This slice instead rejects expired completions and uses explicit logical-clock experiments. A shorter lease can improve recovery time but can create false takeovers during pauses. The epoch protects state writes, not duplicate billing.
 
-Run the runnable tests from the directory containing `10_AI_System_Design/`:
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [jobs.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/labs/jobs.py) | Lab code: read this first |
+| [test_jobs.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/labs/test_jobs.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```bash
-python3 10_AI_System_Design/stages/02-distributed-execution/labs/test_jobs.py
+python3 10_AI_System_Design/stages/02-distributed-execution/labs/test_jobs.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 The tests create a temporary database, instantiate/recreate worker stores, race two claimers, expire a lease, attempt a stale completion, record an external start, exhaust safe retries, enforce a deadline, and reject an unapproved tool. They exercise real SQLite commits with a simulated clock. They do not start an HTTP job endpoint or run a network broker. Inspect [jobs.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/02-distributed-execution/labs/jobs.py), change a lease/deadline, and explain which test should fail before rerunning it.
 

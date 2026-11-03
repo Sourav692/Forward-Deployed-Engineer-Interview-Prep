@@ -103,12 +103,22 @@ Inputs read: migration hours, shared hours a month, overlap months, horizon mont
 | Support burden | 600, 110, 6, 36 | 0 | 132,000 | none | 1,152,000 | 1,284,000 | −132,000 |
 | Negative savings | 600, 150, 6, 12 | −4,000 | 156,000 | none | 384,000 | 564,000 | −180,000 |
 
-Run from repository root with Python 3.10+ and Node:
+## Run the code lab
+
+Run this stage's Python lab in your terminal to see each idea in the stage hold. It needs Python 3.10 or later and nothing else: the standard library and SQLite only.
+
+| File | What it is |
+| --- | --- |
+| [migration.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/12-staff-platform/labs/migration.py) | Lab code: read this first |
+| [test_platform.py](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/stages/12-staff-platform/labs/test_platform.py) | Tests: one test per behaviour this stage teaches |
+
+From the root of your local clone of the repository, run:
 
 ```sh
-python3 10_AI_System_Design/stages/12-staff-platform/labs/test_platform.py
-node 10_AI_System_Design/tools/test_simulator.cjs 10_AI_System_Design/stages/12-staff-platform
+python3 10_AI_System_Design/stages/12-staff-platform/labs/test_platform.py -v
 ```
+
+`-v` prints one line per test, and each test name states one behaviour. Read a test, change one value in the lab code, predict which test fails, and run it again.
 
 The SQLite controller stands in for the regional migration controller's change records and one cell's route record. It has no signatures, pull loop or staleness timer. It persists proposal identity and appends shadow reports bound to the route and generation they were compared against. It rejects side-effectful comparison, applies a fixed sample and mismatch floor, and changes route plus generation atomically with a history row. `apply()` stands in for a pulled, signed generation: it needs current eligibility and refuses any generation not above the current one. Rollback needs actor and reason and writes generation N+2 carrying the previous route, so a later attempt to apply N+1 is refused. It also clears the previous pointer, so a rollback cannot itself be rolled back; going forward again needs a fresh, gated change. `inspect()` reports the change's state and the cell's route separately: after a rollback the change still reads `cutover`, while route and generation show what the cell serves. Fourteen tests cover durable restart, lost acknowledgement, stale generation, stale evidence, mismatch retention, history, inspection after revocation, policy blockers, cross-tenant lookup, rollback eligibility, refusal of a rolled-back generation and injected pre-commit failure. Eligibility booleans stand in for trusted evaluation. The controller never migrates a result row or executes a customer request.
 
