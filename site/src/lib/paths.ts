@@ -537,6 +537,8 @@ export const PATHS: LearningPath[] = [
         'communication-and-behavioural',
         'portfolio-write-up',
       ],
+      // Architects are asked staff-level design questions, so the T17 course is recommended here.
+      recommended: ['staff-ai-system-design'],
       optional: [
         'engineering-foundations',
         'model-adaptation-and-serving',
@@ -545,7 +547,7 @@ export const PATHS: LearningPath[] = [
         'architecture-synthesis-and-capstone',
       ],
     }),
-    estHours: 295,
+    estHours: 374,
     skipCriteria: 'The design framework, if you already score 3 or more on a case-study worksheet.',
     readinessCriteria: [
       'Every required module completed: lessons read and confidence rated 3 or more.',
