@@ -1,6 +1,6 @@
 # Review 17: Trade-Off Thinking
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -13,130 +13,271 @@
 
 > “I’m choosing X because of requirement Y. The trade-off is Z. I’d verify it using metric W.”
 
-```text
-Requirement → Options → Benefits and costs
-                              ↓
-                 Decision → Evidence → Revisit condition
+```mermaid
+flowchart TD
+    N0["Requirement"]
+    N1["Compare options"]
+    N2["Benefits and costs"]
+    N3["Choose"]
+    N4["Verify with evidence"]
+    N5["Revisit if conditions change"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-```text
-            QUALITY
-            /     \
-           /       \
-        COST ─── LATENCY
-
-Within required security, safety, and correctness boundaries
+```mermaid
+flowchart TD
+    N0["Quality"]
+    N1["Cost"]
+    N2["Latency"]
+    N0 --- N1
+    N1 --- N2
+    N2 --- N0
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-The triangle is a reasoning aid, not a law: some changes improve several dimensions together. State expected effects as hypotheses until measured.
+- Required security, safety, and correctness constraints still apply.
+
+- The triangle is a reasoning aid, not a law: some changes improve several dimensions together.
+- State expected effects as hypotheses until measured.
 
 ### 3. Essential Concepts
 
 #### 1. Hard Constraints vs Preferences: Know What Cannot Be Traded Away
 
-Separate required permission, policy, residency, and action-correctness boundaries from negotiable latency, cost, or feature preferences.
+- Separate required permission, policy, residency, and action-correctness boundaries from negotiable latency, cost, or feature preferences.
 
 > “Which conditions must always hold, and where can the customer accept a compromise?”
 
-```text
-Unauthorized data exposure → Not an acceptable speed trade
-Long research completion  → May be acceptable if agreed
+```mermaid
+flowchart TD
+    N0["Unauthorised data exposure"]
+    N1["Reject this trade-off"]
+    N2["Long research completion"]
+    N3["Accept only if agreed"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Clarify conflicts rather than silently dropping a requirement.
+- Clarify conflicts rather than silently dropping a requirement.
 
 #### 2. Stronger vs Smaller Model: Match Capability to Need
 
-A more capable model may improve difficult-task quality but increase cost or latency. A smaller model may meet simple-task requirements more efficiently.
+- A more capable model may improve difficult-task quality but increase cost or latency.
+- A smaller model may meet simple-task requirements more efficiently.
 
 > “I’d choose the least expensive path that meets the required quality for this task segment.”
 
-```text
-Simple task → Evaluate smaller model
-Hard task   → Stronger model if measured benefit justifies it
+```mermaid
+flowchart TD
+    N0["Simple task"]
+    N1["Evaluate smaller model"]
+    N2["Hard task"]
+    N3["Stronger model if measured benefit justifies it"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Include fallback attempts and manual rework in the comparison, not only per-call price.
+- Include fallback attempts and manual rework in the comparison, not only per-call price.
 
 #### 3. More Retrieval: Balance Evidence Coverage and Noise
 
-More candidates may improve recall but add reranking work, context noise, and latency. Better selection can sometimes improve quality and efficiency together.
+- More candidates may improve recall but add reranking work, context noise, and latency.
+- Better selection can sometimes improve quality and efficiency together.
 
 > “I’d tune candidate count and context selection against recall and answer support rather than retrieve everything.”
 
-```text
-More candidates → Possible recall gain
-                → More processing and irrelevant evidence
+```mermaid
+flowchart TD
+    N0["More candidates"]
+    N1["Possible recall gain"]
+    N2["More processing and irrelevant evidence"]
+    N0 --> N1
+    N0 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Permissions remain enforced regardless of retrieval size.
+- Permissions remain enforced regardless of retrieval size.
 
 #### 4. More Agents or Critic Calls: Require Measured Value
 
-Specialists or a critic can improve some tasks, but add model calls, handoffs, state, and failure paths.
+- Specialists or a critic can improve some tasks, but add model calls, handoffs, state, and failure paths.
 
 > “I’d add the critic only if its improvement on important cases justifies the extra latency and cost.”
 
-```text
-Candidate with critic → Compare against simpler baseline
-                         Task success / errors / latency / cost
+```mermaid
+flowchart TD
+    N0["Candidate with critic"]
+    N1["Compare against simpler baseline"]
+    N2["Task success, errors, latency, and cost"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Independent subtasks may run in parallel. Dependent reasoning hops still extend the critical path.
+- Independent subtasks may run in parallel.
+- Dependent reasoning hops still extend the critical path.
 
 #### 5. Caching: Exchange Repeated Work for Freshness Management
 
-Caching can reduce latency and cost. It introduces expiry, invalidation, access-scope, and source-version concerns.
+- Caching can reduce latency and cost.
+- It introduces expiry, invalidation, access-scope, and source-version concerns.
 
 > “I’d cache policy results within their freshness and permission boundaries, but confirm live order state when the action needs it.”
 
-```text
-Repeated policy lookup → Scoped valid cache may help
-Current refund status → Freshness requirement decides reuse
+```mermaid
+flowchart TD
+    N0["Repeated policy lookup"]
+    N1["Scoped valid cache may help"]
+    N2["Current refund status"]
+    N3["Freshness requirement determines reuse"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Do not present cache hits as a benefit when reused results are incorrect or unauthorised.
+- Do not present cache hits as a benefit when reused results are incorrect or unauthorised.
 
 #### 6. Autonomy vs Human Review: Balance Workload and Consequences
 
-Automatic execution can reduce human work and waiting, but requires reliable policy, permissions, safe writes, and recovery. Review adds context checking but also delay and reviewer workload.
+- Automatic execution can reduce human work and waiting, but requires reliable policy, permissions, safe writes, and recovery.
+- Review adds context checking but also delay and reviewer workload.
 
 > “I’d agree on which action classes can execute automatically and which need review.”
 
-```text
-Agent recommends → Policy decides → Executor acts
-                          ↓
-                 Approval when required
+```mermaid
+flowchart TD
+    N0["Agent proposes"]
+    N1["Authorisation and policy"]
+    N2["Allowed"]
+    N3["Revalidate action"]
+    N4["Executor"]
+    N5["Audit"]
+    N6["Review required"]
+    N7["Human decision"]
+    N8["Approved"]
+    N9["Rejected or expired"]
+    N10["Stop"]
+    N11["Denied"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N1 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N3
+    N7 --> N9
+    N9 --> N10
+    N1 --> N11
+    N11 --> N10
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N11 c3
 ```
 
-Human approval is not permission to bypass other controls, and a confident model is not an authorisation source.
+- Human approval is not permission to bypass other controls, and a confident model is not an authorisation source.
 
 #### 7. Sync vs Async: Match Interaction to Task Duration
 
-Synchronous execution gives a direct result for short work. Async execution lets long tasks continue with status and results, but adds durable state and a different user interaction.
+- Synchronous execution gives a direct result for short work.
+- Async execution lets long tasks continue with status and results, but adds durable state and a different user interaction.
 
 > “For work that takes minutes, I’d return a task ID and progress rather than hold an interactive request open.”
 
-Async reduces client blocking; it does not necessarily shorten task completion or increase underlying processing capacity.
+- Async reduces client blocking; it does not necessarily shorten task completion or increase underlying processing capacity.
 
 #### 8. Shared vs Isolated Resources: Balance Efficiency and Isolation
 
-Shared infrastructure can use capacity efficiently but needs tenant scoping, fairness, and blast-radius controls. Dedicated resources may strengthen isolation but increase cost and operational effort.
+- Shared infrastructure can use capacity efficiently but needs tenant scoping, fairness, and blast-radius controls.
+- Dedicated resources may strengthen isolation but increase cost and operational effort.
 
 > “I’d choose the isolation level from the tenant's data, performance, and operational requirements.”
 
-Data isolation and resource fairness remain distinct concerns in either design.
+- Data isolation and resource fairness remain distinct concerns in either design.
 
 #### 9. Reversibility and Evidence: Explain When You Would Change Your Mind
 
-Prefer a choice you can measure and adjust when uncertainty is high. Define the signal that would justify a more complex alternative.
+- Prefer a choice you can measure and adjust when uncertainty is high.
+- Define the signal that would justify a more complex alternative.
 
 > “I’d start with one workflow; I’d introduce specialists if evaluation shows a clear task-success benefit.”
 
-```text
-Provisional choice → Observe metric → Threshold / requirement changes
-                                             ↓
-                                      Revisit architecture
+```mermaid
+flowchart TD
+    N0["Provisional choice"]
+    N1["Observe metric"]
+    N2["Threshold or requirement changes"]
+    N3["Revisit architecture"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### 4. Requirement → Component Reasoning
@@ -151,7 +292,13 @@ Provisional choice → Observe metric → Threshold / requirement changes
 | Long research task | Async job + durable state | Fit interaction to duration | Status/result delivery complexity |
 | Strong tenant guarantees | Isolation + fairness controls | Protect data and service | Resource cost and operational effort |
 
-**Support example:** cache eligible policy retrieval, use a sufficient model for simple questions, read live order data for refund decisions, and keep deterministic policy in code. Evaluate any added critic or specialist against resolved cases, latency, and cost, rather than nicer wording.
+For a support workflow:
+
+- Cache policy retrieval only within freshness and permission limits.
+- Use a model that meets the quality requirement for simple questions.
+- Read live order data for refund decisions.
+- Keep deterministic policy in code.
+- Evaluate any added critic or specialist against resolved cases, latency, and cost, rather than nicer wording.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -195,14 +342,31 @@ Provisional choice → Observe metric → Threshold / requirement changes
 
 ## One-Page Memory Card: Trade-Off Thinking
 
-**Core question:** Why this choice, what does it cost, and what evidence would change the decision?
+- **Core question:** Why this choice, what does it cost, and what evidence would change the decision?
 
 ### Recall Flow
 
-```text
-REQUIREMENT → OPTIONS → BENEFIT / COST
-                              ↓
-                 CHOICE → VERIFY → REVISIT
+```mermaid
+flowchart TD
+    N0["Requirement"]
+    N1["Compare options"]
+    N2["Benefits and costs"]
+    N3["Choose"]
+    N4["Verify with evidence"]
+    N5["Revisit if conditions change"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 > “I’m choosing X because of requirement Y. The trade-off is Z. I’d verify it using W.”
@@ -241,17 +405,29 @@ REQUIREMENT → OPTIONS → BENEFIT / COST
 
 ### Decision Rules
 
-Start from the customer's priority and minimum acceptable quality. Compare a simple baseline with the proposed alternative on representative tasks and important risk segments. Discuss changes to latency, cost per successful task, evidence quality, failure behaviour, and operational complexity.
+- Start from the customer's priority and minimum acceptable quality.
+- Compare a simple baseline with the proposed alternative on representative tasks and important risk segments.
+- Discuss changes to latency, cost per successful task, evidence quality, failure behaviour, and operational complexity.
 
-More context or more agents can hurt performance; better selection or fewer redundant calls can improve several dimensions together. The quality–cost–latency triangle is a reminder to inspect interactions, not proof that every benefit requires a loss.
+- More context or more agents can hurt performance; better selection or fewer redundant calls can improve several dimensions together.
+- Check how quality, cost, and latency interact. Some changes improve more than one.
 
-Keep action authority outside free-form reasoning: agent recommends → policy decides → executor acts. Approval remains where required. Caching must preserve access and freshness. Shared resources need both data isolation and capacity fairness.
+- Keep action authority outside free-form reasoning: agent recommends → policy decides → executor acts.
+- Approval remains where required.
+- Caching must preserve access and freshness.
+- Shared resources need both data isolation and capacity fairness.
 
-State a revisit condition: a changed workload, unacceptable tail latency, insufficient task success, rising review burden, or stronger tenant requirements. Architecture choices should follow the evidence and current requirements.
+- State a revisit condition: a changed workload, unacceptable tail latency, insufficient task success, rising review burden, or stronger tenant requirements.
+- Architecture choices should follow the evidence and current requirements.
 
 ### 30-Second Answer
 
-> “I’d separate hard constraints from preferences, compare the simplest viable options, and choose based on the customer's priority. I’d explain what improves, what becomes more expensive or complex, and how we would verify the result. I’d measure successful outcomes, latency, and total task cost, preserve required controls, and revisit the choice if evidence or requirements change.”
+Practise these points as one spoken answer:
+
+- “I’d separate hard constraints from preferences, compare the simplest viable options, and choose based on the customer's priority.”
+- “I’d explain what improves, what becomes more expensive or complex, and how we would verify the result.”
+- “I’d measure successful outcomes, latency, and total task cost, preserve required controls, and revisit the choice if evidence or requirements change.”
+
 
 ## Sources (checked 27 Sep 2026)
 

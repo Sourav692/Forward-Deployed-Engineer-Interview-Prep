@@ -1,6 +1,6 @@
 # Review 3: Non-Functional Requirements
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -11,153 +11,326 @@
 
 ### 2. Core Mental Model
 
-**Functional requirement: What must it DO?**
+- Functional requirement: what must the system do?
 
-**Non-functional requirement (NFR): How WELL must it work, and within what limits?**
+- Non-functional requirement (nfr): how well must it work, and within what limits?
 
-```text
-Customer expectation
-        ↓
-Workload + user experience
-        ↓
-Metric + target + measurement window
-        ↓
-Architecture trade-off
-        ↓
-Verify under realistic conditions
+```mermaid
+flowchart TD
+    N0["Customer expectation"]
+    N1["Workload and user experience"]
+    N2["Metric, target, and measurement window"]
+    N3["Design trade-off"]
+    N4["Verify under realistic conditions"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Recall nine buckets:
 
-```text
-SCALE → LATENCY → RELIABILITY → QUALITY
-                     ↓
-             SECURITY → SAFETY → COST
-                     ↓
-              OBSERVABILITY → AUDIT
+```mermaid
+flowchart TD
+    N0["Operating requirements"]
+    N1["Scale"]
+    N2["Latency"]
+    N3["Reliability"]
+    N4["Quality"]
+    N5["Security"]
+    N6["Safety"]
+    N7["Cost"]
+    N8["Observability"]
+    N9["Audit"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    N0 --> N5
+    N0 --> N6
+    N0 --> N7
+    N0 --> N8
+    N0 --> N9
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
-These are a checklist, not an execution sequence. Prioritise what the customer cannot afford to get wrong.
+- These are a checklist, not an execution sequence.
+- Prioritise what the customer cannot afford to get wrong.
 
 ### 3. Essential Concepts
 
 #### 1. Scale: Describe the Workload
 
-Ask for request rate, concurrency, peak traffic, tenants, growth, and task duration. User count alone is insufficient.
+- Ask for request rate, concurrency, peak traffic, tenants, growth, and task duration.
+- User count alone is insufficient.
 
 > “For 100K users, what normal and peak request rates and concurrent agent runs should we expect?”
 
-```text
-Users → Active users → Requests → Concurrent work
-                              + task duration
+```mermaid
+flowchart TD
+    N0["User count"]
+    N1["Active users"]
+    N2["Request rate and task duration"]
+    N3["Concurrent work"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Long tasks occupy capacity longer. Model-provider limits and downstream API limits can become the bottleneck before application servers do.
+- Long tasks occupy capacity longer.
+- Model-provider limits and downstream API limits can become the bottleneck before application servers do.
 
 #### 2. Latency: Define the User's Waiting Experience
 
-Separate time to first useful output from total completion time. Define targets by workload and percentile rather than only an average.
+- Separate time to first useful output from total completion time.
+- Define targets by workload and percentile rather than only an average.
 
 > “For interactive chat, what first-response and total-response targets matter? Can long tasks complete asynchronously?”
 
-```text
-Chat:      First output → Complete response
-Research:  Acknowledge  → Progress → Completed task
+```mermaid
+flowchart TD
+    N0["Interactive chat"]
+    N1["First useful output"]
+    N2["Complete response"]
+    N3["Research task"]
+    N4["Acknowledge"]
+    N5["Progress updates"]
+    N6["Completed task"]
+    N0 --> N1
+    N1 --> N2
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-A service-level objective (SLO) is an agreed target. Example format: “P95 completion latency ≤ X seconds for workload Y over window Z.” P95 means 95% of measured requests meet that latency. Confirm X, Y, and Z with the customer.
+- Define the service-level objective (slo) for an agreed workload and measurement window.
+- Example format: “P95 completion latency ≤ X seconds for workload Y over window Z.” P95 means 95% of measured requests meet that latency.
+- Confirm X, Y, and Z with the customer.
 
 #### 3. Reliability: Finish Correctly, Including During Failures
 
-Availability asks whether the service is usable; reliability also includes correct completion, recovery, and safe side effects.
+- Availability asks whether the service is usable; reliability also includes correct completion, recovery, and safe side effects.
 
 > “What must still work when a model or tool fails, and how do we prevent duplicate actions?”
 
-```text
-Read API unavailable → Defined fallback
-Refund call times out → Check status before retry
-Workflow crashes      → Resume from durable state
+```mermaid
+flowchart TD
+    N0["Read API unavailable"]
+    N1["Defined fallback"]
+    N2["Refund call times out"]
+    N3["Check status before retry"]
+    N4["Workflow crashes"]
+    N5["Resume durable state"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Define availability around meaningful operations. An endpoint returning responses is not enough if it cannot complete the customer's task.
+- Define availability around meaningful operations.
+- An endpoint returning responses is not enough if it cannot complete the customer's task.
 
 #### 4. AI Quality: Define Acceptable Answers and Actions
 
-Measure correctness, groundedness, retrieval quality, tool selection, and end-to-end task success on representative cases.
+- Measure correctness, groundedness, retrieval quality, tool selection, and end-to-end task success on representative cases.
 
 > “What quality threshold must hold before release, including difficult cases and high-risk actions?”
 
-```text
-Relevant evidence → Supported answer → Correct task outcome
+```mermaid
+flowchart TD
+    N0["Relevant evidence"]
+    N1["Supported answer"]
+    N2["Verify actual task outcome"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Specify the evaluation set and scoring method alongside the target. Good wording does not prove that a refund or support resolution succeeded.
+- Specify the evaluation set and scoring method alongside the target.
+- Good wording does not prove that a refund or support resolution succeeded.
 
 #### 5. Security: Enforce Identity and Access Boundaries
 
-Define user and tenant isolation, least-privilege tools, sensitive-data handling, and residency or retention constraints where relevant.
+- Define user and tenant isolation, least-privilege tools, sensitive-data handling, and residency or retention constraints where relevant.
 
 > “Which users can access which documents and actions, and what data may reach approved model providers?”
 
-```text
-Identity → Authorised data → Authorised tools
-                        + tenant boundary
+```mermaid
+flowchart TD
+    N0["Identity"]
+    N1["Tenant-scoped authorisation"]
+    N2["Authorised data"]
+    N3["Authorised tools"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Permission enforcement is a functional behaviour too. NFR discussions clarify how consistently and within which boundaries it must hold.
+- Permission enforcement is a functional behaviour too.
+- NFR discussions clarify how consistently and within which boundaries it must hold.
 
 #### 6. Safety: Keep Actions Within Policy
 
-Agree on prohibited actions, approval rules, safe stopping behaviour, and the ability to disable execution.
+- Agree on prohibited actions, approval rules, safe stopping behaviour, and the ability to disable execution.
 
 > “Which actions require approval, and what must happen if the policy check is unavailable?”
 
-```text
-Agent recommends → Policy decides → Executor acts
-                          ↓
-                Approval / safe stop if required
+```mermaid
+flowchart TD
+    N0["Agent proposes"]
+    N1["Authorisation and policy"]
+    N2["Allowed"]
+    N3["Revalidate action"]
+    N4["Executor"]
+    N5["Audit"]
+    N6["Review required"]
+    N7["Human decision"]
+    N8["Approved"]
+    N9["Rejected or expired"]
+    N10["Stop"]
+    N11["Denied"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N1 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N3
+    N7 --> N9
+    N9 --> N10
+    N1 --> N11
+    N11 --> N10
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N11 c3
 ```
 
-For sensitive actions, do not treat a model's confidence as permission. Policy and access checks remain necessary.
+- For sensitive actions, do not treat a model's confidence as permission.
+- Policy and access checks remain necessary.
 
 #### 7. Cost: Budget for Successful Outcomes
 
-Include models, tokens, retrieval, tools, compute, failed attempts, retries, and human review where relevant.
+- Include models, tokens, retrieval, tools, compute, failed attempts, retries, and human review where relevant.
 
 > “What cost per successfully resolved case is acceptable, and what quality must we preserve?”
 
-```text
-Total task-related cost
-          ÷
-Successful tasks
-```
+- Cost per successful task = total task-related cost ÷ successful tasks.
 
-Reducing model cost while increasing failures or manual rework may worsen the business result.
+- Reducing model cost while increasing failures or manual rework may worsen the business result.
 
 #### 8. Observability: See Where the System Breaks
 
-Define end-to-end traces and metrics for latency, errors, tokens, cost, tool calls, and outcomes. Keep sensitive information out of unrestricted logs.
+- Define end-to-end traces and metrics for latency, errors, tokens, cost, tool calls, and outcomes.
+- Keep sensitive information out of unrestricted logs.
 
 > “Can we locate a slow or failed step across retrieval, model calls, and enterprise tools?”
 
-```text
-Request → Retrieval → Model → Tool → Result
-   └────────── Correlated trace ─────────┘
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Retrieval"]
+    N2["Model"]
+    N3["Tool"]
+    N4["Result"]
+    N5["Correlated trace"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N5 --> N0
+    N5 --> N1
+    N5 --> N2
+    N5 --> N3
+    N5 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 #### 9. Auditability: Reconstruct Business Decisions
 
-Record relevant evidence, policy decisions, approvals, action results, and versions under appropriate access and retention rules.
+- Record relevant evidence, policy decisions, approvals, action results, and versions under appropriate access and retention rules.
 
 > “If a customer disputes a refund, can we explain what was requested, approved, and executed?”
 
-```text
-Evidence + policy + approval + action result
-                       ↓
-                 Business audit
+```mermaid
+flowchart TD
+    N0["Evidence, policy, approval, and action result"]
+    N1["Business audit"]
+    N0 --> N1
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
-Capture decision summaries and evidence, not private model reasoning, which is often hidden and not always faithful.
+- Capture decision summaries and evidence, not private model reasoning, which is often hidden and not always faithful.
 
 ### 4. Requirement → Component Reasoning
 
@@ -171,19 +344,37 @@ Capture decision summaries and evidence, not private model reasoning, which is o
 | Prevent unauthorised access/actions | Authorisation + policy checks | Enforce boundaries | Integration and approval overhead |
 | Diagnose incidents and decisions | Traces + audit records | Link behaviour and business actions | Storage, access, retention |
 
-```text
-API Gateway   = User → Application control
-Model Gateway = Application → Model control
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway: application-entry controls"]
+    N2["Application"]
+    N3["Model Gateway: model-call controls"]
+    N4["Model provider"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-**Support example:** agree on peak workload, interactive latency, policy-answer quality, permitted refunds, failure behaviour, and cost per resolved case. Then use those constraints to choose components.
+For a support system:
+
+- Confirm peak workload and interactive latency.
+- Agree on answer quality, permitted refunds, and failure behaviour.
+- Set the cost target per resolved case.
+- Then use those constraints to choose components.
 
 Write each important NFR as:
 
-```text
-For [workload], measure [metric] against [target]
-over [window / dataset], including [failure / peak cases].
-```
+> For [workload], measure [metric] against [target] over [window or dataset], including [failure and peak cases].
 
 ### 5. Important Distinctions and Gotchas
 
@@ -193,10 +384,33 @@ over [window / dataset], including [failure / peak cases].
 4. **Observability vs audit:** “Why was it slow?” differs from “Why was this refund issued?”
 5. **Target vs assumption:** customer-approved thresholds are requirements; invented numbers must be labelled provisional assumptions.
 
-```text
-Smaller model → Cost ↓, latency may ↓, quality must be checked
-More evidence → Quality may ↑, latency/cost may ↑
-Cache         → Cost/latency ↓, freshness risk ↑
+```mermaid
+flowchart TD
+    N0["Smaller model"]
+    N1["Lower cost"]
+    N2["Latency may fall"]
+    N3["Verify quality"]
+    N4["More evidence"]
+    N5["Quality may improve"]
+    N6["Latency and cost may rise"]
+    N7["Cache"]
+    N8["Less repeated work"]
+    N9["Manage freshness risk"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N4 --> N5
+    N4 --> N6
+    N7 --> N8
+    N7 --> N9
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ### 6. Trigger → Concept Table
@@ -236,17 +450,29 @@ Cache         → Cost/latency ↓, freshness risk ↑
 
 ## One-Page Memory Card: Non-Functional Requirements
 
-**Core question:** How well must the system work, for which workload, and within what limits?
+- **Core question:** How well must the system work, for which workload, and within what limits?
 
 ### Recall Flow
 
-```text
-Expectation → Workload → Metric + target
-                              ↓
-                    Design trade-off → Verify
-
-SCALE / LATENCY / RELIABILITY / QUALITY
-SECURITY / SAFETY / COST / OBSERVABILITY / AUDIT
+```mermaid
+flowchart TD
+    N0["Customer expectation"]
+    N1["Workload and user experience"]
+    N2["Metric, target, and measurement window"]
+    N3["Design trade-off"]
+    N4["Verify under realistic conditions"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Checklist
@@ -263,7 +489,9 @@ SECURITY / SAFETY / COST / OBSERVABILITY / AUDIT
 | Observability | Correlated traces, latency, errors, tokens, cost, outcomes |
 | Audit | Evidence, policy, approval, action result, versions, controlled retention |
 
-An SLO is a service-level objective. Specify the workload, metric, target, and measurement window. P95 means 95% of measured requests meet that latency.
+- An SLO is a service-level objective.
+- Specify the workload, metric, target, and measurement window.
+- P95 means 95% of measured requests meet that latency.
 
 ### Trigger → Concept
 
@@ -279,17 +507,38 @@ An SLO is a service-level objective. Specify the workload, metric, target, and m
 
 ### Requirement → Design
 
-```text
-Bursts         → Admission control / queue / workers
-Repeated work  → Cache if freshness and permissions allow
-Provider outage→ Model fallback, if compatible
-Long workflow  → Durable state + checkpoints
-Business writes→ Idempotency + status reconciliation
-Sensitive acts → Authorisation + policy + approval
+```mermaid
+flowchart TD
+    N0["Bursts"]
+    N1["Admission, bounded queue, and useful worker capacity"]
+    N2["Repeated work"]
+    N3["Cache only when fresh and permitted"]
+    N4["Provider outage"]
+    N5["Compatible fallback"]
+    N6["Long workflow"]
+    N7["Durable state and checkpoints"]
+    N8["Business writes"]
+    N9["Idempotency and reconciliation"]
+    N10["Sensitive action"]
+    N11["Authorisation, policy, and required approval"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    N6 --> N7
+    N8 --> N9
+    N10 --> N11
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7,N11 c3
 ```
 
-API Gateway = User → Application control.
-Model Gateway = Application → Model control.
+- API Gateway = User → Application control.
+- Model Gateway = Application → Model control.
 
 ### Do Not Confuse
 
@@ -302,11 +551,20 @@ Model Gateway = Application → Model control.
 
 > “For workload ___, measure ___ against target ___ over ___, including peak/failure cases ___.”
 
-Confirm targets with the customer. Label assumptions. For quality, specify the representative dataset and scoring method. For cost, count failed attempts and relevant rework as well as model calls.
+- Confirm targets with the customer.
+- Label assumptions.
+- For quality, specify the representative dataset and scoring method.
+- For cost, count failed attempts and relevant rework as well as model calls.
 
 ### 30-Second Answer
 
-> “I’d define the workload first, then agree on latency, availability, quality, security, safety, and cost targets. I’d measure both system behaviour and successful task completion, including peak traffic and dependency failures. For business actions, I’d require safe retries and recovery. These targets would drive the architecture and evaluation criteria.”
+Practise these points as one spoken answer:
+
+- “I’d define the workload first, then agree on latency, availability, quality, security, safety, and cost targets.”
+- “I’d measure both system behaviour and successful task completion, including peak traffic and dependency failures.”
+- “For business actions, I’d require safe retries and recovery.”
+- “These targets would drive the architecture and evaluation criteria.”
+
 
 ## Sources (checked 27 Sep 2026)
 

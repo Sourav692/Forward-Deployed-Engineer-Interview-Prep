@@ -1,64 +1,66 @@
 # Interview Learning Roadmap
 
-> **Goal:** Build a reusable problem-decomposition and system-design framework for AI/Agentic FDE interviews.
->
-> This is **not** intended to be a deep theoretical system-design course. The focus is:
->
-> - What should I ask?
-> - What requirement does this create?
-> - What component/pattern solves it?
-> - Why do I need that component?
-> - What trade-off does it introduce?
+Use this roadmap to practise five decisions:
+
+- What should I ask the customer?
+- What requirement does the answer create?
+- Which component or pattern meets it?
+- Why does the system need that component?
+- What trade-off does the choice introduce?
 
 ---
 
 ## 0. The FDE Interview Mental Model
 
-For almost any vague AI/Agentic problem:
+Start with the customer problem, then work through the design:
 
-```text
-Vague Customer Problem
-        ↓
-Discovery
-        ↓
-Functional + Non-Functional Requirements
-        ↓
-Happy-Path Architecture
-        ↓
-Data / RAG / Agent Flow
-        ↓
-Actions + Safety
-        ↓
-Scale
-        ↓
-Latency + Cost
-        ↓
-Failures + Reliability
-        ↓
-Evaluation
-        ↓
-Release
-        ↓
-Observability + Operations
-        ↓
-Trade-offs
+```mermaid
+flowchart TD
+    N0["Discover business problem and current workflow"]
+    N1["Confirm functional requirements and operating limits"]
+    N2["Design data, reasoning, and controlled actions"]
+    N3["Stress-test scale, latency, cost, failures, and security"]
+    N4["Evaluate and release"]
+    N5["Observe outcomes and revisit trade-offs"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Follow this chain throughout the interview:
 
-```text
-Customer Need
-      ↓
-Requirement
-      ↓
-Constraint / Problem
-      ↓
-Architecture Decision
-      ↓
-Trade-off
+```mermaid
+flowchart TD
+    N0["Customer need"]
+    N1["Requirement"]
+    N2["Constraint or problem"]
+    N3["Architecture decision"]
+    N4["Trade-off"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Do **not** start with technology.
+- Ask about the problem before choosing technology.
 
 ---
 
@@ -66,7 +68,7 @@ Do **not** start with technology.
 
 ### Goal
 
-Take a vague customer request and turn it into a well-defined engineering problem.
+- Take a vague customer request and turn it into a well-defined engineering problem.
 
 ### Topics
 
@@ -110,14 +112,25 @@ Take a vague customer request and turn it into a well-defined engineering proble
 
 #### AI Autonomy
 
-```text
-Answer
-   ↓
-Recommend
-   ↓
-Take Action
-   ↓
-Take High-Risk Action
+```mermaid
+flowchart TD
+    N0["Choose permitted autonomy"]
+    N1["Answer"]
+    N2["Recommend"]
+    N3["Take action"]
+    N4["High-risk action with required controls"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 #### Success Criteria
@@ -131,36 +144,21 @@ Take High-Risk Action
 
 ### Discovery Mental Model
 
-```text
-WHY
-Business problem
-
-TODAY
-Current workflow
-
-WHO
-Users
-
-HOW MUCH
-Scale
-
-WHAT DATA
-Knowledge + live systems
-
-HOW FAR CAN AI GO
-Answer → Recommend → Act
-
-SUCCESS
-How do we measure it?
-```
+- Why: business problem.
+- Today: current workflow.
+- Who: users.
+- How much: workload and scale.
+- What data: knowledge and live systems.
+- How far: answer, recommend, or act.
+- Success: measurable outcome.
 
 ### Practice Questions
 
-1. A bank says, **"We want an AI agent for customer support."** What are the first 5–7 questions you would ask before discussing architecture?
-2. A logistics customer says, **"Our operations team spends too much time resolving shipment exceptions."** How would you understand the current workflow before proposing AI?
-3. The customer immediately says, **"We want a multi-agent architecture."** How would you determine whether multi-agent is required?
-4. A customer says they want to **reduce support cost by 30%**. What additional success metrics would you define before designing the system?
-5. What questions would you ask to determine whether the AI should **answer, recommend, or autonomously act**?
+1. A bank says, "We want an AI agent for customer support." What are the first 5–7 questions you would ask before discussing architecture?
+2. A logistics customer says, "Our operations team spends too much time resolving shipment exceptions." How would you understand the current workflow before proposing AI?
+3. The customer immediately says, "We want a multi-agent architecture." How would you determine whether multi-agent is required?
+4. A customer says they want to reduce support cost by 30%. What additional success metrics would you define before designing the system?
+5. What questions would you ask to determine whether the AI should answer, recommend, or autonomously act?
 
 ---
 
@@ -170,7 +168,7 @@ How do we measure it?
 
 Translate discovery into:
 
-> **What must the system do?**
+> What must the system do?
 
 ### Topics
 
@@ -224,10 +222,10 @@ Translate discovery into:
 
 #### Escalate
 
-- Low confidence
-- High risk
-- Policy requirement
-- Tool failure
+- Missing or conflicting evidence
+- High-risk actions requiring review
+- Policy-required escalation
+- Tool failure that cannot be recovered safely
 
 #### Audit & Feedback
 
@@ -239,31 +237,38 @@ Translate discovery into:
 
 ### Functional Mental Model
 
-```text
-Understand
-    ↓
-Retrieve
-    ↓
-Route
-    ↓
-Reason
-    ↓
-Tool
-    ↓
-Act
-    ↓
-Escalate
-    ↓
-Audit
+```mermaid
+flowchart TD
+    N0["Required capabilities"]
+    N1["Understand and retain context"]
+    N2["Retrieve authorised evidence"]
+    N3["Route and reason"]
+    N4["Read tools and act if permitted"]
+    N5["Approval and failure behaviour"]
+    N6["Audit and outcome feedback"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    N0 --> N5
+    N0 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Practice Questions
 
-1. For an **enterprise customer-support agent**, define 6–8 functional requirements.
+1. For an enterprise customer-support agent, define 6–8 functional requirements.
 2. A support agent must answer policy questions, check order status, and issue eligible refunds. Break these into functional requirements.
-3. Which requirements would tell you that the system needs **conversation state**?
-4. How would functional requirements change if the system moves from **answer-only** to **taking actions**?
-5. When should **human escalation** be considered a functional requirement?
+3. Which requirements would tell you that the system needs conversation state?
+4. How would functional requirements change if the system moves from answer-only to taking actions?
+5. When should human escalation be considered a functional requirement?
 
 ---
 
@@ -273,7 +278,7 @@ Audit
 
 Define:
 
-> **How well must the system work?**
+> How well must the system work?
 
 ### Topics
 
@@ -289,24 +294,22 @@ Define:
 
 ### NFR Mental Model
 
-```text
-Scale
-Latency
-Reliability
-Quality
-Security
-Safety
-Cost
-Observability
-Auditability
-```
+- Scale
+- Latency
+- Reliability
+- Quality
+- Security
+- Safety
+- Cost
+- Observability
+- Auditability
 
 ### Practice Questions
 
-1. The customer says, **"The system should be fast."** How would you turn that into a measurable NFR?
-2. The system serves **50 enterprise customers and 100K total users**. Which NFRs become especially important?
+1. The customer says, "The system should be fast." How would you turn that into a measurable NFR?
+2. The system serves 50 enterprise customers and 100K total users. Which NFRs become especially important?
 3. A refund agent handles financial actions. Which NFRs would you prioritise and why?
-4. How would the NFRs differ between a **real-time voice agent** and a **10-minute deep-research agent**?
+4. How would the NFRs differ between a real-time voice agent and a 10-minute deep-research agent?
 5. What AI-quality NFRs would you define beyond traditional uptime and latency?
 
 ---
@@ -315,18 +318,26 @@ Auditability
 
 ### Goal
 
-Know the reusable building blocks and, above all, **what requirement triggers each one**.
+- Know each building block and the requirement that justifies it.
 
 ### Topics
 
 #### API Gateway
 
-```text
-User
- ↓
-API Gateway
- ↓
-AI Application
+```mermaid
+flowchart TD
+    N0["User"]
+    N1["API Gateway"]
+    N2["AI application"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 Handles:
@@ -340,12 +351,20 @@ Handles:
 
 #### Model Gateway
 
-```text
-AI Application
-      ↓
-Model Gateway
-      ↓
-Model Providers
+```mermaid
+flowchart TD
+    N0["AI application"]
+    N1["Model Gateway"]
+    N2["Permitted model providers"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 Handles:
@@ -392,21 +411,29 @@ Handles:
 
 ### Component Selection Rule
 
-```text
-What does it do?
-      ↓
-Why do I need it?
-      ↓
-Which requirement triggered it?
+```mermaid
+flowchart TD
+    N0["Component responsibility"]
+    N1["Why it is needed"]
+    N2["Customer requirement that justifies it"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 ### Practice Questions
 
-1. Explain the difference between an **API Gateway and Model Gateway** in 30 seconds.
-2. When would you introduce an **orchestrator** rather than putting everything inside one agent?
+1. Explain the difference between an API Gateway and Model Gateway in 30 seconds.
+2. When would you introduce an orchestrator rather than putting everything inside one agent?
 3. A customer has three LLM providers and wants automatic fallback. Which component owns this responsibility?
-4. When would you add a **queue** rather than processing the request synchronously?
-5. The interviewer points to one of your architecture boxes and asks, **"Why do you need this?"** How would you justify components based on requirements rather than technology preference?
+4. When would you add a queue rather than processing the request synchronously?
+5. The interviewer points to one of your architecture boxes and asks, "Why do you need this?" How would you justify components based on requirements rather than technology preference?
 
 ---
 
@@ -414,32 +441,40 @@ Which requirement triggered it?
 
 ### Goal
 
-Design practical enterprise RAG without unnecessary theoretical depth.
+- Design practical enterprise RAG without unnecessary theoretical depth.
 
 ### Core Flow
 
-```text
-Source
- ↓
-Parse
- ↓
-Chunk
- ↓
-Embed
- ↓
-Index
-
-Question
- ↓
-Permission Filter
- ↓
-Search
- ↓
-Rerank
- ↓
-Context
- ↓
-LLM
+```mermaid
+flowchart TD
+    N0["Sources"]
+    N1["Parse"]
+    N2["Chunk"]
+    N3["Embed and index with permissions, metadata, and versions"]
+    N4["Identity and question"]
+    N5["Authorised search"]
+    N6["Retrieve candidates"]
+    N7["Rerank if useful"]
+    N8["Select context"]
+    N9["Supported answer"]
+    N10["Cite evidence"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ### Topics
@@ -458,11 +493,11 @@ LLM
 
 ### Practice Questions
 
-1. Your RAG system frequently **fails to retrieve the correct document**. What would you investigate?
-2. It retrieves the correct document but also returns **many irrelevant chunks**. What problem is this and how would you improve it?
-3. Why should **current order status** normally come from an API instead of RAG?
+1. Your RAG system frequently fails to retrieve the correct document. What would you investigate?
+2. It retrieves the correct document but also returns many irrelevant chunks. What problem is this and how would you improve it?
+3. Why should current order status normally come from an API instead of RAG?
 4. Two employees have different document permissions. How would you prevent unauthorised information from entering the LLM context?
-5. The customer says, **"The model is hallucinating."** What parts of the RAG pipeline would you investigate before simply changing the model?
+5. The customer says, "The model is hallucinating." What parts of the RAG pipeline would you investigate before simply changing the model?
 
 ---
 
@@ -470,7 +505,7 @@ LLM
 
 ### Goal
 
-Know when agents are useful and how to prevent uncontrolled execution.
+- Know when agents are useful and how to prevent uncontrolled execution.
 
 ### Topics
 
@@ -484,25 +519,41 @@ Know when agents are useful and how to prevent uncontrolled execution.
 
 ### Core Flow
 
-```text
-Reason
- ↓
-Tool
- ↓
-Observe
- ↓
-Reason
- ↓
-Action
+```mermaid
+flowchart TD
+    N0["Task"]
+    N1["Select next step"]
+    N2["Validate, authorise, and check budget"]
+    N3["Controlled tool"]
+    N4["Observe result"]
+    N5["Continue?"]
+    N6["More work within bounds"]
+    N7["Complete, stop, or escalate"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    N6 --> N1
+    N5 --> N7
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ### Practice Questions
 
-1. When would you choose a **deterministic workflow instead of an agent**?
+1. When would you choose a deterministic workflow instead of an agent?
 2. A customer wants separate RAG, refund, order and escalation agents. Would you accept this architecture immediately? What would you ask first?
-3. An agent occasionally executes **20–30 tool calls** for a simple request. How would you control it?
+3. An agent occasionally executes 20–30 tool calls for a simple request. How would you control it?
 4. What happens if a long-running agent crashes after completing 8 of 10 steps?
-5. How would you explain **agent trajectory** and why it matters for evaluation?
+5. How would you explain agent trajectory and why it matters for evaluation?
 
 ---
 
@@ -510,26 +561,33 @@ Action
 
 ### Goal
 
-Move from chatbot architecture to production action-taking systems.
+- Move from chatbot architecture to production action-taking systems.
 
 ### Core Pattern
 
-```text
-Agent
- ↓
-Recommendation
- ↓
-Policy
- ↓
-Executor
- ↓
-Enterprise System
+```mermaid
+flowchart TD
+    N0["Agent recommendation"]
+    N1["Policy and required approval"]
+    N2["Executor"]
+    N3["Enterprise system"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Topics
 
 - Controlled tool layer
-- CRM/ERP/API integrations
+- Crm/erp/api integrations
 - Read vs write tools
 - Executor
 - Idempotency
@@ -540,9 +598,9 @@ Enterprise System
 ### Practice Questions
 
 1. Why would you avoid giving an LLM direct unrestricted access to a production CRM?
-2. An agent issues a refund, the API times out, and the agent retries. How do you prevent a **double refund**?
+2. An agent issues a refund, the API times out, and the agent retries. How do you prevent a double refund?
 3. A downstream ERP API frequently takes 30 seconds or fails. How would you protect the agent workflow?
-4. Why might you separate the **agent's decision** from the **actual execution**?
+4. Why might you separate the agent's decision from the actual execution?
 5. How would you treat a read-only `get_order_status` tool differently from an `issue_refund` tool?
 
 ---
@@ -551,16 +609,24 @@ Enterprise System
 
 ### Goal
 
-Safely allow agents to perform real business actions.
+- Safely allow agents to perform real business actions.
 
 ### Core Pattern
 
-```text
-Agent recommends
-      ↓
-Policy decides
-      ↓
-Executor acts
+```mermaid
+flowchart TD
+    N0["Agent recommends"]
+    N1["Policy decides"]
+    N2["Executor acts"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 ### Topics
@@ -578,7 +644,7 @@ Executor acts
 2. Why shouldn't the LLM itself be the final authority for a deterministic financial policy?
 3. The policy service becomes unavailable during a $10,000 transaction. Should the system fail-open or fail-closed, and why?
 4. How would you design a workflow where human approval may take several hours?
-5. What would a **kill switch** disable in an action-taking agent?
+5. What would a kill switch disable in an action-taking agent?
 
 ---
 
@@ -588,7 +654,7 @@ Executor acts
 
 Handle:
 
-> **"Great. Now scale it to 100K users."**
+> "Great. Now scale it to 100K users."
 
 ### Topics
 
@@ -607,11 +673,11 @@ Handle:
 
 ### Practice Questions
 
-1. Your prototype supports 100 users. The customer now expects **100K users**. Walk through what changes.
+1. Your prototype supports 100 users. The customer now expects 100K users. Walk through what changes.
 2. Tenant A suddenly consumes 70% of model capacity and Tenant B starts experiencing poor latency. What is happening?
-3. Explain the difference between **rate limiting and admission control**.
+3. Explain the difference between rate limiting and admission control.
 4. Incoming traffic is 10K requests/sec but the system can process only 5K. What mechanisms would you consider?
-5. Why would you prefer **stateless workers + external durable state** when horizontally scaling agents?
+5. Why would you prefer stateless workers + external durable state when horizontally scaling agents?
 
 ---
 
@@ -619,19 +685,33 @@ Handle:
 
 ### Goal
 
-Diagnose latency before optimising.
+- Diagnose latency before optimising.
 
 ### Latency Decomposition
 
-```text
-Total Latency
-     │
-     ├── Queue
-     ├── Retrieval
-     ├── LLM
-     ├── Agent
-     ├── Tools
-     └── Network
+```mermaid
+flowchart TD
+    N0["End-to-end latency"]
+    N1["Queue wait"]
+    N2["Retrieval"]
+    N3["Model calls"]
+    N4["Agent and orchestration overhead"]
+    N5["Tools"]
+    N6["Network"]
+    N0 --> N1
+    N0 --> N2
+    N0 --> N3
+    N0 --> N4
+    N0 --> N5
+    N0 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Topics
@@ -651,7 +731,7 @@ Total Latency
 1. Average latency is 3 seconds but P99 is 25 seconds. What does this tell you?
 2. Your agent calls CRM, order and ticket APIs sequentially. Each takes 1 second. What obvious optimisation would you consider?
 3. The model itself takes only 2 seconds but total latency is 12 seconds. How would you investigate?
-4. When does **streaming** improve perceived latency without actually reducing total compute time?
+4. When does streaming improve perceived latency without actually reducing total compute time?
 5. A research task takes five minutes. Would you continue optimising it as a synchronous API request or change the interaction model?
 
 ---
@@ -660,20 +740,35 @@ Total Latency
 
 ### Goal
 
-Understand and control AI economics.
+- Understand and control AI economics.
 
 ### Cost Decomposition
 
-```text
-Cost / Task
-    │
-    ├── Model
-    ├── Input Tokens
-    ├── Output Tokens
-    ├── Retrieval
-    ├── Tools
-    ├── Compute
-    └── Retries
+```mermaid
+flowchart TD
+    N0["Task cost"]
+    N1["Model usage"]
+    N2["Input tokens"]
+    N3["Output tokens"]
+    N4["Retrieval"]
+    N5["Tools"]
+    N6["Compute"]
+    N7["Retries and rework"]
+    N0 --> N1
+    N1 --> N2
+    N1 --> N3
+    N0 --> N4
+    N0 --> N5
+    N0 --> N6
+    N0 --> N7
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 ### Topics
@@ -691,9 +786,9 @@ Cost / Task
 ### Practice Questions
 
 1. The customer's LLM bill doubles after launching an agent. What would you inspect first?
-2. Why might **model routing** reduce cost without materially reducing quality?
+2. Why might model routing reduce cost without materially reducing quality?
 3. Conversation history grows indefinitely and token cost keeps increasing. What would you change?
-4. Why is **cost per successful task** often more meaningful than cost/request?
+4. Why is cost per successful task often more meaningful than cost/request?
 5. Your architecture uses five LLM calls for every request. How would you determine whether all five are necessary?
 
 ---
@@ -704,7 +799,7 @@ Cost / Task
 
 Answer:
 
-> **"What happens when something fails?"**
+> "What happens when something fails?"
 
 ### Topics
 
@@ -722,20 +817,27 @@ Answer:
 
 ### Failure Mental Model
 
-```text
-Failure
- ↓
-Timeout?
- ↓
-Retry?
- ↓
-Fallback?
- ↓
-Degrade?
- ↓
-Recover?
- ↓
-Escalate?
+```mermaid
+flowchart TD
+    N0["Classify failure"]
+    N1["Bound waiting"]
+    N2["Check retry safety"]
+    N3["Choose fallback or safe degradation"]
+    N4["Recover or escalate"]
+    N5["Record actual status"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Practice Questions
@@ -752,7 +854,7 @@ Escalate?
 
 ### Goal
 
-Make AI quality measurable.
+- Make AI quality measurable.
 
 ### Topics
 
@@ -780,19 +882,15 @@ Make AI quality measurable.
 
 ### Key Principle
 
-```text
-Good Answer
-    ≠
-Successful Task
-```
+- A good answer must still be checked against actual task completion.
 
 ### Practice Questions
 
-1. How would you evaluate a customer-support system containing both **RAG and action-taking agents**?
-2. Give examples of **deterministic checks** for an agent.
+1. How would you evaluate a customer-support system containing both RAG and action-taking agents?
+2. Give examples of deterministic checks for an agent.
 3. Which checks require semantic or non-deterministic evaluation?
 4. The final response sounds perfect, but the agent used the wrong tool and never actually cancelled the order. How should evaluation catch this?
-5. Why do we need both **offline and online evaluation**?
+5. Why do we need both offline and online evaluation?
 
 ---
 
@@ -800,22 +898,33 @@ Successful Task
 
 ### Goal
 
-Safely ship AI changes.
+- Safely ship AI changes.
 
 ### Core Flow
 
-```text
-Candidate
-   ↓
-Offline Evaluation
-   ↓
-Release Gate
-   ↓
-Shadow / Canary
-   ↓
-Production
-   ↓
-Monitor
+```mermaid
+flowchart TD
+    N0["Version candidate"]
+    N1["Offline evaluation"]
+    N2["Release gate"]
+    N3["Shadow and/or scoped canary"]
+    N4["Observe"]
+    N5["Expand if criteria pass"]
+    N6["Stop or roll back if criteria fail"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N4 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Topics
@@ -831,7 +940,7 @@ Monitor
 ### Practice Questions
 
 1. Your team creates a new prompt that performs better on 20 examples. Would you immediately deploy it?
-2. Explain when you would use **shadow traffic vs canary deployment**.
+2. Explain when you would use shadow traffic vs canary deployment.
 3. How would you release a new agent to only two enterprise customers first?
 4. Which artifacts should be versioned besides the model itself?
 5. Production quality suddenly drops after a new release. What mechanisms should allow you to respond quickly?
@@ -842,7 +951,7 @@ Monitor
 
 ### Goal
 
-Understand what is happening inside the system after deployment.
+- Understand what is happening inside the system after deployment.
 
 ### Topics
 
@@ -857,29 +966,40 @@ Understand what is happening inside the system after deployment.
 
 ### Trace Mental Model
 
-```text
-Request
- ↓
-Router
- ↓
-Agent
- ↓
-LLM
- ↓
-Retriever
- ↓
-Tool
- ↓
-Response
+```mermaid
+flowchart TD
+    N0["Request"]
+    N1["Router"]
+    N2["Workflow or agent"]
+    N3["Retrieval"]
+    N4["Model calls"]
+    N5["Enterprise tools"]
+    N6["Response and actual outcome"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N2 --> N4
+    N2 --> N5
+    N3 --> N6
+    N4 --> N6
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Practice Questions
 
-1. A user says, **"My request took 18 seconds yesterday."** What telemetry would you inspect?
-2. Explain the difference between **logging, metrics and tracing** using an agent request.
+1. A user says, "My request took 18 seconds yesterday." What telemetry would you inspect?
+2. Explain the difference between logging, metrics and tracing using an agent request.
 3. Which AI-specific telemetry would you capture beyond normal infrastructure metrics?
-4. Compliance asks, **"Why did the agent issue this refund?"** What information should be available?
-5. Explain **SLI vs SLO vs SLA** using an AI assistant latency example.
+4. Compliance asks, "Why did the agent issue this refund?" What information should be available?
+5. Explain SLI vs SLO vs SLA using an AI assistant latency example.
 
 ---
 
@@ -887,7 +1007,7 @@ Response
 
 ### Goal
 
-Make the system enterprise-ready.
+- Make the system enterprise-ready.
 
 ### Topics
 
@@ -904,26 +1024,35 @@ Make the system enterprise-ready.
 
 ### Core Mental Model
 
-```text
-Identity
- ↓
-Authorisation
- ↓
-Data Permission
- ↓
-Tool Permission
- ↓
-Policy
- ↓
-Human Approval
- ↓
-Audit
+```mermaid
+flowchart TD
+    N0["Authenticate identity"]
+    N1["Resolve trusted tenant and scope"]
+    N2["Authorise data and tools"]
+    N3["Check business policy"]
+    N4["Approval if required"]
+    N5["Execute permitted action"]
+    N6["Audit"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ### Practice Questions
 
 1. Employee A can access HR documents while Employee B cannot. How should this affect retrieval?
-2. Why is filtering unauthorised documents **after generation** a weak security design?
+2. Why is filtering unauthorised documents after generation a weak security design?
 3. What permissions would you give a refund agent following least-privilege principles?
 4. A shared platform serves 50 enterprise tenants. What needs tenant isolation?
 5. A European customer says their data cannot leave a particular region. What architectural concerns does this introduce?
@@ -934,31 +1063,43 @@ Audit
 
 ### Goal
 
-Explain **why** you made architecture decisions.
+- Explain why you made architecture decisions.
 
 ### Core Principle
 
-> **"I'm choosing X because of requirement Y. The trade-off is Z."**
+> "I'm choosing X because of requirement Y. The trade-off is Z."
 
 ### Topics
 
 #### Cost ↔ Quality ↔ Latency
 
-```text
-             QUALITY
-              /   \
-             /     \
-          COST ─── LATENCY
+```mermaid
+flowchart TD
+    N0["Quality"]
+    N1["Cost"]
+    N2["Latency"]
+    N0 --- N1
+    N1 --- N2
+    N2 --- N0
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
+
+- Required security, safety, and correctness constraints still apply.
 
 #### Common Trade-Offs
 
-- More retrieval → recall ↑, cost/latency ↑
-- More agents → possible quality ↑, complexity/cost ↑
-- Cache → latency/cost ↓, freshness risk ↑
-- Strong model → quality ↑, latency/cost ↑
-- More autonomy → human effort ↓, business risk ↑
-- Async → better scalability, immediate response ↓
+- More retrieval may improve recall; check noise, latency, and cost.
+- More agents may help independent work; measure coordination and model-call overhead.
+- Caching reduces repeated work; enforce freshness and permission scope.
+- A stronger model may help difficult tasks; compare quality, latency, and total task cost.
+- More autonomy can reduce human work; preserve policy, approval, and safe execution.
+- Async delivery releases the client while work continues; it still needs capacity and completion tracking.
 
 ### Practice Questions
 
@@ -966,7 +1107,7 @@ Explain **why** you made architecture decisions.
 2. The customer wants maximum retrieval recall but also very low latency. What trade-off would you discuss?
 3. When might you intentionally choose a smaller model even if a larger model performs slightly better?
 4. Caching tool responses reduces latency dramatically. What new risk does caching introduce?
-5. The interviewer asks, **"Why did you choose this architecture instead of a simpler one?"** How would you structure your answer?
+5. The interviewer asks, "Why did you choose this architecture instead of a simpler one?" How would you structure your answer?
 
 ---
 
@@ -974,40 +1115,27 @@ Explain **why** you made architecture decisions.
 
 ### Goal
 
-Combine everything into one repeatable interview flow.
+- Combine everything into one repeatable interview flow.
 
-```text
-1. Business Problem
-        ↓
-2. Current Workflow
-        ↓
-3. Discovery
-        ↓
-4. Functional Requirements
-        ↓
-5. NFRs
-        ↓
-6. Happy-Path Architecture
-        ↓
-7. Data / RAG
-        ↓
-8. Agents + Tools
-        ↓
-9. Policy / HITL
-        ↓
-10. Scale
-        ↓
-11. Latency
-        ↓
-12. Cost
-        ↓
-13. Reliability
-        ↓
-14. Evaluation
-        ↓
-15. Release
-        ↓
-16. Observability
-        ↓
-17. Trade-Offs
+```mermaid
+flowchart TD
+    N0["Discover business problem and current workflow"]
+    N1["Confirm functional requirements and operating limits"]
+    N2["Design data, reasoning, and controlled actions"]
+    N3["Stress-test scale, latency, cost, failures, and security"]
+    N4["Evaluate and release"]
+    N5["Observe outcomes and revisit trade-offs"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```

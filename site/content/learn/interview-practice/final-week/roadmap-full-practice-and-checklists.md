@@ -2,7 +2,7 @@
 
 ### Full Case-Study Practice
 
-These should be solved **without looking at the earlier reviews**.
+- These should be solved without looking at the earlier reviews.
 
 #### Case 1: Customer Support Agent
 
@@ -10,16 +10,27 @@ These should be solved **without looking at the earlier reviews**.
 
 Cover:
 
-```text
-Discovery
-→ Requirements
-→ Architecture
-→ RAG
-→ Tools
-→ Policy
-→ Scale
-→ Cost/Latency
-→ Evaluation
+```mermaid
+flowchart TD
+    N0["Discover support workflow"]
+    N1["Confirm requirements"]
+    N2["Design policy retrieval and live tools"]
+    N3["Control refund actions"]
+    N4["Stress-test scale, latency, and cost"]
+    N5["Evaluate task outcomes"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ---
@@ -30,14 +41,12 @@ Discovery
 
 Focus on:
 
-```text
-RAG
-Permission-aware retrieval
-Scale
-Latency
-Security
-Evaluation
-```
+- RAG
+- Permission-aware retrieval
+- Scale
+- Latency
+- Security
+- Evaluation
 
 ---
 
@@ -47,16 +56,14 @@ Evaluation
 
 Focus on:
 
-```text
-Events
-Agents
-Tools
-Policy
-HITL
-Idempotency
-Reliability
-Audit
-```
+- Events
+- Agents
+- Tools
+- Policy
+- HITL
+- Idempotency
+- Reliability
+- Audit
 
 ---
 
@@ -66,16 +73,14 @@ Audit
 
 Focus on:
 
-```text
-Tools
-Observability
-Agent reasoning
-Permissions
-Policy
-HITL
-Kill switch
-Audit
-```
+- Tools
+- Observability
+- Agent reasoning
+- Permissions
+- Policy
+- HITL
+- Kill switch
+- Audit
 
 ---
 
@@ -85,15 +90,13 @@ Audit
 
 Focus on:
 
-```text
-Async execution
-Queue
-Checkpoint
-Agent bounds
-Cost
-Long-running state
-Evaluation
-```
+- Async execution
+- Queue
+- Checkpoint
+- Agent bounds
+- Cost
+- Long-running state
+- Evaluation
 
 ---
 
@@ -103,16 +106,14 @@ Evaluation
 
 Focus on:
 
-```text
-API Gateway
-Model Gateway
-Multi-tenancy
-Quotas
-Fairness
-Model routing
-Cost attribution
-Observability
-```
+- API Gateway
+- Model Gateway
+- Multi-tenancy
+- Quotas
+- Fairness
+- Model routing
+- Cost attribution
+- Observability
 
 ---
 
@@ -120,175 +121,151 @@ Observability
 
 ### Phase 1: Problem Decomposition
 
-```text
-Review 1 — Discovery
-Review 2 — Functional Requirements
-Review 3 — Non-Functional Requirements
-```
+- Review 1 — Discovery
+- Review 2 — Functional Requirements
+- Review 3 — Non-Functional Requirements
 
-**Outcome:** Understand before designing.
+- Outcome: Understand before designing.
 
 ---
 
 ### Phase 2: Architecture
 
-```text
-Review 4 — Core Components
-Review 5 — RAG
-Review 6 — Agents
-Review 7 — Tools
-Review 8 — Policy / HITL
-```
+- Review 4 — Core Components
+- Review 5 — RAG
+- Review 6 — Agents
+- Review 7 — Tools
+- Review 8 — Policy / HITL
 
-**Outcome:** Build the right system.
+- Outcome: Build the right system.
 
 ---
 
 ### Phase 3: Production Scale
 
-```text
-Review 9  — Scaling
-Review 10 — Latency
-Review 11 — Cost
-Review 12 — Reliability
-```
+- Review 9  — Scaling
+- Review 10 — Latency
+- Review 11 — Cost
+- Review 12 — Reliability
 
-**Outcome:** Turn the POC into production.
+- Outcome: Turn the poc into production.
 
 ---
 
 ### Phase 4: Production Quality
 
-```text
-Review 13 — Evaluation
-Review 14 — Release
-Review 15 — Observability
-Review 16 — Security
-```
+- Review 13 — Evaluation
+- Review 14 — Release
+- Review 15 — Observability
+- Review 16 — Security
 
-**Outcome:** Safely operate the system.
+- Outcome: Safely operate the system.
 
 ---
 
 ### Phase 5: Interview Mastery
 
-```text
-Review 17 — Trade-Offs
-Review 18 — Full Case Studies
-```
+- Review 17 — Trade-Offs
+- Review 18 — Full Case Studies
 
 At this stage:
 
-> **Stop adding terminology. Start solving cases.**
+- Practise the full cases using the concepts from reviews 1–16.
 
 ---
 
 ## Trigger → Concept Cheat Sheet
 
-Skip memorising definitions.
-
-Train yourself to hear a customer/interviewer statement and automatically recognise the architecture concern.
+- - Use each statement to identify a concern, then ask what the workload needs.
+- Confirm the requirement before adding a component.
 
 | Interviewer Says                               | Your Brain Should Trigger                                  |
 | ---------------------------------------------- | ---------------------------------------------------------- |
-| **"100K users"**                         | Horizontal scaling, stateless workers, rate limits, queues |
-| **"Traffic suddenly spikes"**            | Queue, admission control, backpressure                     |
-| **"One tenant generates huge traffic"**  | Noisy neighbour, quota, fair queue                          |
-| **"Traffic exceeds capacity"**           | Admission control, load shedding                           |
-| **"Multiple enterprise customers"**      | Multi-tenancy, isolation, quotas, cost attribution         |
-| **"Request sometimes takes 20 seconds"** | Stage tracing, P95/P99                                     |
-| **"Chat feels slow"**                    | Streaming, TTFT, fewer sequential hops                     |
-| **"Three independent APIs"**             | Parallelisation                                            |
-| **"External API is slow"**               | Timeout, cache, async, fallback                            |
-| **"External API keeps failing"**         | Retry, backoff, circuit breaker                            |
-| **"Action happened twice"**              | Idempotency                                                |
-| **"Message may arrive twice"**           | At-least-once + idempotent consumer                        |
-| **"Background job keeps failing"**       | Retry → DLQ                                               |
-| **"Agent runs 10 minutes"**              | Async + queue + durable state                              |
-| **"Agent crashes halfway"**              | Checkpoint + resume, reconcile uncertain actions           |
-| **"Human approves tomorrow"**            | Durable state + HITL                                       |
-| **"Need conversation history"**          | Session state                                              |
-| **"Need long-term preferences"**         | Memory                                                     |
-| **"Prompt keeps growing"**               | Bounded context + summarisation                            |
-| **"Repeated questions"**                 | Cache                                                      |
-| **"Information changes frequently"**     | TTL / freshness                                            |
-| **"Need company documents"**             | RAG                                                        |
-| **"Need current order status"**          | Live API/tool                                              |
-| **"RAG can't find answer"**              | Recall, chunking, hybrid search                            |
-| **"RAG retrieves junk"**                 | Precision, filtering, reranking                            |
-| **"Different document permissions"**     | Permission-aware retrieval                                 |
-| **"Unsupported AI claims"**              | Grounding, citations, fallback                             |
-| **"Different request types"**            | Router                                                     |
-| **"Multiple workflow steps"**            | Orchestrator                                               |
-| **"Routing is deterministic"**           | Code/rules before LLM                                      |
-| **"Agent keeps calling tools"**          | Execution bounds                                           |
-| **"Agent accesses production"**          | Controlled tools                                           |
-| **"Agent modifies customer data"**       | Policy + executor + audit                                  |
-| **"Large refund needs approval"**        | Deterministic policy + HITL                                |
-| **"Agent has powerful credentials"**     | Least privilege                                            |
-| **"Policy unavailable"**                 | Fail-closed for risky actions                              |
-| **"Agent behaving dangerously"**         | Kill switch                                                |
-| **"Multiple models/providers"**          | Model gateway                                              |
-| **"Model provider unavailable"**         | Provider fallback                                          |
-| **"AI bill exploded"**                   | Model routing, context, cache, calls                       |
-| **"Who caused the spend?"**              | Cost attribution                                           |
-| **"Need cheaper AI"**                    | Cost per successful task                                   |
-| **"New prompt/model"**                   | Offline eval + release gate                                |
-| **"Test on real traffic safely"**        | Shadow                                                     |
-| **"Gradual production rollout"**         | Canary                                                     |
-| **"Only some tenants get feature"**      | Feature flag                                               |
-| **"New version performs badly"**         | Rollback                                                   |
-| **"Is the agent good?"**                 | Offline + online evaluation                                |
-| **"Good answer, task failed"**           | Task success                                               |
-| **"Wrong tool used"**                    | Trajectory/tool evaluation                                 |
-| **"Exact pass/fail checks"**             | Deterministic evaluator                                    |
-| **"Semantic quality"**                   | LLM/human judge                                            |
-| **"Why was this slow?"**                 | Observability/tracing                                      |
-| **"Why did AI take this action?"**       | Audit                                                      |
-| **"Latency commitment"**                 | SLI → SLO → SLA                                          |
-| **"Worker dies"**                        | Stateless compute + durable state                          |
-| **"Failure shouldn't affect everyone"**  | Blast-radius reduction                                     |
-| **"Sensitive enterprise data"**          | AuthN, AuthZ, least privilege, audit                       |
-| **"Safe enterprise agent"**              | Defence in depth                                           |
+| "100K users" | Clarify active users, peak rates, concurrency, and task duration before sizing capacity |
+| "Traffic suddenly spikes"            | Queue, admission control, backpressure                     |
+| "One tenant generates huge traffic"  | Noisy neighbour, quota, fair queue                          |
+| "Traffic exceeds capacity"           | Admission control, load shedding                           |
+| "Multiple enterprise customers"      | Multi-tenancy, isolation, quotas, cost attribution         |
+| "Request sometimes takes 20 seconds" | Stage tracing, P95/P99                                     |
+| "Chat feels slow"                    | Streaming, TTFT, fewer sequential hops                     |
+| "Three independent APIs"             | Parallelisation                                            |
+| "External API is slow"               | Timeout, cache, async, fallback                            |
+| "External API keeps failing"         | Retry, backoff, circuit breaker                            |
+| "Action happened twice"              | Idempotency                                                |
+| "Message may arrive twice"           | At-least-once + idempotent consumer                        |
+| "Background job keeps failing"       | Retry → DLQ                                               |
+| "Agent runs 10 minutes"              | Async + queue + durable state                              |
+| "Agent crashes halfway"              | Checkpoint + resume, reconcile uncertain actions           |
+| "Human approves tomorrow"            | Durable state + HITL                                       |
+| "Need conversation history"          | Session state                                              |
+| "Need long-term preferences"         | Memory                                                     |
+| "Prompt keeps growing"               | Bounded context + summarisation                            |
+| "Repeated questions"                 | Cache                                                      |
+| "Information changes frequently"     | TTL / freshness                                            |
+| "Need company documents"             | RAG                                                        |
+| "Need current order status"          | Live API/tool                                              |
+| "RAG can't find answer"              | Recall, chunking, hybrid search                            |
+| "RAG retrieves junk"                 | Precision, filtering, reranking                            |
+| "Different document permissions"     | Permission-aware retrieval                                 |
+| "Unsupported AI claims"              | Grounding, citations, fallback                             |
+| "Different request types"            | Router                                                     |
+| "Multiple workflow steps"            | Orchestrator                                               |
+| "Routing is deterministic"           | Code/rules before LLM                                      |
+| "Agent keeps calling tools"          | Execution bounds                                           |
+| "Agent accesses production"          | Controlled tools                                           |
+| "Agent modifies customer data"       | Policy + executor + audit                                  |
+| "Large refund needs approval"        | Deterministic policy + HITL                                |
+| "Agent has powerful credentials"     | Least privilege                                            |
+| "Policy unavailable"                 | Fail-closed for risky actions                              |
+| "Agent behaving dangerously"         | Kill switch                                                |
+| "Multiple models/providers"          | Model gateway                                              |
+| "Model provider unavailable"         | Provider fallback                                          |
+| "AI bill exploded"                   | Model routing, context, cache, calls                       |
+| "Who caused the spend?"              | Cost attribution                                           |
+| "Need cheaper AI"                    | Cost per successful task                                   |
+| "New prompt/model"                   | Offline eval + release gate                                |
+| "Test on real traffic safely"        | Shadow                                                     |
+| "Gradual production rollout"         | Canary                                                     |
+| "Only some tenants get feature"      | Feature flag                                               |
+| "New version performs badly"         | Rollback                                                   |
+| "Is the agent good?"                 | Offline + online evaluation                                |
+| "Good answer, task failed"           | Task success                                               |
+| "Wrong tool used"                    | Trajectory/tool evaluation                                 |
+| "Exact pass/fail checks"             | Deterministic evaluator                                    |
+| "Semantic quality"                   | LLM/human judge                                            |
+| "Why was this slow?"                 | Observability/tracing                                      |
+| "Why did AI take this action?"       | Audit                                                      |
+| "Latency commitment"                 | SLI → SLO → SLA                                          |
+| "Worker dies"                        | Stateless compute + durable state                          |
+| "Failure shouldn't affect everyone"  | Blast-radius reduction                                     |
+| "Sensitive enterprise data"          | AuthN, AuthZ, least privilege, audit                       |
+| "Safe enterprise agent"              | Defence in depth                                           |
 
 ---
 
 ## Final Interview Mental Model
 
-```text
-                 CUSTOMER
-                    ↓
-            WHY ARE WE BUILDING?
-                    ↓
-                DISCOVERY
-                    ↓
-              REQUIREMENTS
-                    ↓
-               HAPPY PATH
-                    ↓
-         ┌──────────┼──────────┐
-         ↓          ↓          ↓
-        DATA        AI       ACTION
-        RAG       Agents      Tools
-                              ↓
-                       Policy / Human
-                    ↓
-              PRESSURE TEST
-                    ↓
-         ┌──────────┼──────────┐
-         ↓          ↓          ↓
-       Scale      Latency     Cost
-         └──────────┼──────────┘
-                    ↓
-               FAILURES
-                    ↓
-              EVALUATION
-                    ↓
-                RELEASE
-                    ↓
-          OBSERVE + OPERATE
-                    ↓
-               TRADE-OFFS
+```mermaid
+flowchart TD
+    N0["Discover business problem and current workflow"]
+    N1["Confirm functional requirements and operating limits"]
+    N2["Design data, reasoning, and controlled actions"]
+    N3["Stress-test scale, latency, cost, failures, and security"]
+    N4["Evaluate and release"]
+    N5["Observe outcomes and revisit trade-offs"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 ---
@@ -297,102 +274,110 @@ Train yourself to hear a customer/interviewer statement and automatically recogn
 
 Before finishing any architecture, mentally ask:
 
-```text
-□ Did I understand the BUSINESS problem?
-
-□ Did I understand the CURRENT workflow?
-
-□ Did I define FUNCTIONAL requirements?
-
-□ Did I define measurable NFRs?
-
-□ Is every major architecture box JUSTIFIED?
-
-□ Where does DATA come from?
-
-□ Does AI ANSWER, RECOMMEND or ACT?
-
-□ What requires HUMAN approval?
-
-□ Does it SCALE?
-
-□ What makes it SLOW?
-
-□ What makes it EXPENSIVE?
-
-□ What happens when dependencies FAIL?
-
-□ How is it SECURED?
-
-□ How do I measure AI QUALITY?
-
-□ How do I RELEASE changes safely?
-
-□ How do I OBSERVE it in production?
-
-□ What are my major TRADE-OFFS?
-```
+- Did I understand the business problem?
+- Did I understand the current workflow?
+- Did I define functional requirements?
+- Did I define measurable NFRs?
+- Is every major architecture box justified?
+- Where does data come from?
+- Does AI answer, recommend or act?
+- What requires human approval?
+- Does it scale?
+- What makes it slow?
+- What makes it expensive?
+- What happens when dependencies fail?
+- How is it secured?
+- How do I measure AI quality?
+- How do I release changes safely?
+- How do I observe it in production?
+- What are my major trade-offs?
 
 ---
 
 ## The Core FDE Principle
 
-Do **not** memorise architectures.
+Use the customer’s requirement to justify each design choice:
 
-Memorise:
-
-```text
-Customer says X
-      ↓
-Requirement Y
-      ↓
-Problem / Constraint Z
-      ↓
-Component / Pattern A
-      ↓
-Trade-off B
+```mermaid
+flowchart TD
+    N0["Customer statement"]
+    N1["Requirement"]
+    N2["Constraint"]
+    N3["Component or pattern"]
+    N4["Trade-off"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Example:
 
-```text
-"Refunds above $500 are risky."
-              ↓
-High-risk actions need approval
-              ↓
-LLM cannot be final authority
-              ↓
-Policy Engine + HITL
-              ↓
-Safer execution
-but additional latency
+```mermaid
+flowchart TD
+    N0["Customer approval threshold: refunds above 500 dollars"]
+    N1["Encode high-risk approval policy"]
+    N2["Keep authority outside model reasoning"]
+    N3["Policy and durable human review"]
+    N4["Controlled execution with approval delay"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 Another example:
 
-```text
-"We expect 100K users."
-          ↓
-High concurrency
-          ↓
-Finite model capacity
-          ↓
-Rate Limit + Queue
-+ Horizontal Scaling
-          ↓
-Better resilience
-but more infrastructure
+```mermaid
+flowchart TD
+    N0["100K expected users"]
+    N1["Clarify active users, rates, and concurrency"]
+    N2["Find model and tool capacity limits"]
+    N3["Use justified limits, queues, and worker scaling"]
+    N4["More infrastructure and bounded waiting"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-> **Interview rule:** Don't name a component until you can explain which requirement caused you to introduce it.
+> “This component meets requirement ___. Its trade-off is ___.”
 
 ---
 
 ## One-Line FDE Framework
 
-> **Start from the customer problem, turn discovery into measurable requirements, build the simplest happy-path architecture, and then pressure-test it across scale, latency, cost, reliability, security, AI quality and operations, adding components only when a requirement justifies them.**
+- Start with the customer problem and confirm measurable requirements.
+- Draw the smallest happy path that meets them.
+- Test scale, latency, cost, failures, security, AI quality, and operations.
+- Add components only when a requirement justifies them.
 
 ---
+
 
 ### Sources (checked 27 Sep 2026)
 

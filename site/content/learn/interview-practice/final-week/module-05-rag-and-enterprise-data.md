@@ -1,6 +1,6 @@
 # RAG and Enterprise Data
 
-## Concise Interview Module
+## Interview Review
 
 ### 1. What the Interviewer Is Testing
 
@@ -11,157 +11,316 @@
 
 ### 2. Core Mental Model
 
-**Retrieval-augmented generation (RAG) retrieves relevant evidence to support a model's answer.**
+- Retrieval-augmented generation (rag) supplies relevant evidence for the model’s answer.
 
-```text
-INGESTION
-Sources → Parse → Chunk → Embed / index
-              + metadata + permissions + versions
-
-QUERY
-Identity + question
-        ↓
-Authorised search → Retrieve → Rerank if useful
-        ↓
-Select context → Generate supported answer → Cite evidence
+```mermaid
+flowchart TD
+    N0["Sources"]
+    N1["Parse"]
+    N2["Chunk"]
+    N3["Embed and index with permissions, metadata, and versions"]
+    N4["Identity and question"]
+    N5["Authorised search"]
+    N6["Retrieve candidates"]
+    N7["Rerank if useful"]
+    N8["Select context"]
+    N9["Supported answer"]
+    N10["Cite evidence"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
 Three questions guide debugging:
 
-```text
-Does usable evidence exist in the index?
-                 ↓
-Did we retrieve and retain it?
-                 ↓
-Did the answer use it correctly?
+```mermaid
+flowchart TD
+    N0["Evidence exists in the index?"]
+    N1["Retrieved and retained?"]
+    N2["Used correctly in the answer?"]
+    N0 --> N1
+    N1 --> N2
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
 ```
 
 ### 3. Essential Concepts
 
 #### 1. Data Choice: Knowledge vs Live State
 
-Use RAG for maintained policies, manuals, and enterprise reference material. Query current transactional state through approved APIs or tools when freshness requires it.
+- Use RAG for maintained policies, manuals, and enterprise reference material.
+- Query current transactional state through approved APIs or tools when freshness requires it.
 
 > “Does the answer depend on reference knowledge or current state in an enterprise system?”
 
-```text
-“What is the refund policy?” → Policy retrieval
-“Has refund #123 completed?” → Refund API/tool
+```mermaid
+flowchart TD
+    N0["What is the refund policy?"]
+    N1["Policy retrieval"]
+    N2["Has refund 123 completed?"]
+    N3["Refund API or tool"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Some requests need both: retrieve eligibility policy and read the current order before recommending a refund.
+- Some requests need both: retrieve eligibility policy and read the current order before recommending a refund.
 
 #### 2. Parse and Maintain Sources: Make Evidence Usable
 
-Extract content faithfully, including headings, tables, and scanned text where needed. Carry source identifiers, versions, timestamps, and access metadata into the index.
+- Extract content faithfully, including headings, tables, and scanned text where needed.
+- Carry source identifiers, versions, timestamps, and access metadata into the index.
 
 > “Before tuning retrieval, I’d check whether the relevant content was parsed and indexed correctly.”
 
-```text
-Policy source → Parsed content → Indexed evidence
-     update / delete / permission change → Refresh index
+```mermaid
+flowchart TD
+    N0["Policy source"]
+    N1["Parsed content"]
+    N2["Indexed evidence"]
+    N3["Source update, deletion, or permission change"]
+    N4["Refresh index"]
+    N0 --> N1
+    N1 --> N2
+    N3 --> N4
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-An answer cannot reliably use evidence that was omitted, corrupted, or left outdated during ingestion.
+- An answer cannot reliably use evidence that was omitted, corrupted, or left outdated during ingestion.
 
 #### 3. Chunking: Keep Enough Meaning Together
 
-Split content into searchable units while preserving context. Prefer meaningful boundaries such as sections when practical.
+- Split content into searchable units while preserving context.
+- Prefer meaningful boundaries such as sections when practical.
 
 > “I’d choose chunking based on document structure and the questions users ask, then evaluate the result.”
 
-```text
-Too small → Missing conditions / references
-Too large → Extra noise / context cost
-Useful unit → Rule + relevant exceptions
+```mermaid
+flowchart TD
+    N0["Chunk too small"]
+    N1["Conditions or references lost"]
+    N2["Chunk too large"]
+    N3["Noise and context cost"]
+    N4["Useful chunk"]
+    N5["Rule and relevant exceptions"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-No chunk size is universally correct. Preserve the link to the source and surrounding content.
+- No chunk size is universally correct.
+- Preserve the link to the source and surrounding content.
 
 #### 4. Embeddings and Search: Match Meaning and Exact Terms
 
-Embeddings represent content for similarity search. Vector search helps with related meaning; keyword search helps with exact identifiers and terms. Hybrid search combines signals from both.
+- Embeddings represent content for similarity search.
+- Vector search helps with related meaning; keyword search helps with exact identifiers and terms.
+- Hybrid search combines signals from both.
 
 > “For policy language and exact product codes, I’d compare vector, keyword, and hybrid retrieval on representative questions.”
 
-```text
-“Return damaged goods” → Meaning-based matching
-“Policy SKU-781”       → Exact-term matching
-Both needed           → Consider hybrid search
+```mermaid
+flowchart TD
+    N0["Return damaged goods"]
+    N1["Meaning-based matching"]
+    N2["Policy SKU-781"]
+    N3["Exact-term matching"]
+    N4["Both signals needed"]
+    N5["Evaluate hybrid search"]
+    N0 --> N1
+    N2 --> N3
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Embedding similarity is a relevance signal, not proof that a statement is correct.
+- Embedding similarity is a relevance signal, not proof that a statement is correct.
 
 #### 5. Metadata and Permissions: Narrow the Search Safely
 
-Use trusted identity, tenant, and access scope to constrain retrieval. Metadata can also select the correct region, product, language, or policy version.
+- Use trusted identity, tenant, and access scope to constrain retrieval.
+- Metadata can also select the correct region, product, language, or policy version.
 
 > “Only authorised evidence should enter context, and the policy version must match the customer's case.”
 
-```text
-Trusted identity → Allowed scope → Search eligible content
-                                         ↓
-                                Authorised context
+```mermaid
+flowchart TD
+    N0["Trusted identity"]
+    N1["Allowed scope"]
+    N2["Search eligible content"]
+    N3["Authorised context"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Enforce access before content reaches the model. Handle permission changes and tenant-scoped caches; retrieved document instructions do not become authority to bypass controls.
+- Enforce access before content reaches the model.
+- Handle permission changes and tenant-scoped caches; retrieved document instructions do not become authority to bypass controls.
 
 #### 6. Reranking and Context Selection: Keep the Best Evidence
 
-Reranking reorders retrieved candidates using an additional relevance assessment. Context selection then chooses what fits the answer's evidence needs and model budget.
+- Reranking reorders retrieved candidates using an additional relevance assessment.
+- Context selection then chooses what fits the answer's evidence needs and model budget.
 
 > “If relevant evidence is buried among candidates, reranking may help; it cannot recover a document that was never retrieved.”
 
-```text
-Candidate set → Optional rerank → Select evidence → Context
+```mermaid
+flowchart TD
+    N0["Candidate set"]
+    N1["Optional rerank"]
+    N2["Select evidence"]
+    N3["Context"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Deduplicate and preserve important exceptions. More context can add noise, latency, and cost.
+- Deduplicate and preserve important exceptions.
+- More context can add noise, latency, and cost.
 
 #### 7. Recall vs Precision: Find Enough Without Too Much Noise
 
-Recall asks how much relevant evidence was found. Precision asks how much retrieved evidence is relevant. Define the evidence labels and retrieval cutoff in evaluation.
+- Recall: how much relevant evidence did we find?
+- Precision: how much of the retrieved evidence is relevant?
+- Define the evidence labels and retrieval cutoff in evaluation.
 
 > “If we miss the answer document, I’d investigate recall; if we retrieve lots of irrelevant material, I’d inspect precision and ranking.”
 
-```text
-Missing relevant evidence → Recall concern
-Many irrelevant results  → Precision concern
+```mermaid
+flowchart TD
+    N0["Missing relevant evidence"]
+    N1["Recall concern"]
+    N2["Many irrelevant results"]
+    N3["Precision concern"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Evaluate representative questions, including exact terms, ambiguous requests, restricted documents, and missing-answer cases.
+- Evaluate representative questions, including exact terms, ambiguous requests, restricted documents, and missing-answer cases.
 
 #### 8. Groundedness: Support the Answer With Evidence
 
-Require the answer's claims to be supported by the selected context. Cite actual supporting sources and acknowledge missing or conflicting evidence.
+- Require the answer's claims to be supported by the selected context.
+- Cite actual supporting sources and acknowledge missing or conflicting evidence.
 
 > “I’d check whether each important claim is supported; a citation alone doesn’t show that.”
 
-```text
-Enough relevant evidence → Supported answer + source
-Insufficient evidence   → Clarify / explain limit / escalate
+```mermaid
+flowchart TD
+    N0["Enough relevant evidence"]
+    N1["Supported answer with source"]
+    N2["Insufficient evidence"]
+    N3["Clarify, explain limit, or escalate"]
+    N0 --> N1
+    N2 --> N3
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Groundedness is not the same as truth: a faithfully quoted outdated policy can still be wrong for today's case.
+- Groundedness is not the same as truth: a faithfully quoted outdated policy can still be wrong for today's case.
 
 #### 9. Diagnose by Stage: Do Not Blame the Model First
 
-Inspect the evidence path before changing models or prompts.
+- Inspect the evidence path before changing models or prompts.
 
-```text
-Wrong answer
-    ↓
-Correct source exists and is current?
-    ↓
-Parsed / indexed correctly?
-    ↓
-Eligible under access/version filters?
-    ↓
-Retrieved and ranked high enough?
-    ↓
-Retained in final context?
-    ↓
-Model used it correctly?
+```mermaid
+flowchart TD
+    N0["Check source exists and is current"]
+    N1["Check parsing and indexing"]
+    N2["Check access and version filters"]
+    N3["Check retrieval and ranking"]
+    N4["Check final context"]
+    N5["Check answer uses evidence correctly"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
 > “I’d trace the question from source to final context so we can locate whether this is a data, retrieval, or generation problem.”
@@ -181,20 +340,33 @@ Model used it correctly?
 
 #### Support Example
 
-```text
-“Can I get a refund for order #123?”
-                   ↓
-       Identify user + authorised order
-          ┌────────┴────────┐
-    Retrieve policy     Read live order
-          └────────┬────────┘
-                   ↓
-       Supported eligibility recommendation
-                   ↓
-       Policy decides → Executor acts if allowed
+```mermaid
+flowchart TD
+    N0["Refund question"]
+    N1["Identify user and authorised order"]
+    N2["Retrieve policy"]
+    N3["Supported eligibility recommendation"]
+    N4["Read live order"]
+    N5["Policy decides"]
+    N6["Executor acts if allowed"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N1 --> N4
+    N4 --> N3
+    N3 --> N5
+    N5 --> N6
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-RAG supplies evidence; it does not authorise or execute the refund.
+- RAG supplies evidence; it does not authorise or execute the refund.
 
 ### 5. Important Distinctions and Gotchas
 
@@ -240,20 +412,44 @@ RAG supplies evidence; it does not authorise or execute the refund.
 
 ## One-Page Memory Card: RAG and Enterprise Data
 
-**Core question:** How do we get the right authorised evidence into the answer and verify that it was used correctly?
+- **Core question:** How do we get the right authorised evidence into the answer and verify that it was used correctly?
 
 ### Recall Flow
 
-```text
-INGEST: Source → Parse → Chunk → Embed / index
-          + metadata + permissions + versions
-
-QUERY: Identity + question → Authorised search
-          → Retrieve → Optional rerank
-          → Select context → Answer + supporting citations
+```mermaid
+flowchart TD
+    N0["Sources"]
+    N1["Parse"]
+    N2["Chunk"]
+    N3["Embed and index with permissions, metadata, and versions"]
+    N4["Identity and question"]
+    N5["Authorised search"]
+    N6["Retrieve candidates"]
+    N7["Rerank if useful"]
+    N8["Select context"]
+    N9["Supported answer"]
+    N10["Cite evidence"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N4 --> N5
+    N5 --> N6
+    N6 --> N7
+    N7 --> N8
+    N8 --> N9
+    N9 --> N10
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4,N8 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5,N9 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2,N6,N10 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3,N7 c3
 ```
 
-RAG means retrieval-augmented generation. It supplies evidence for generation; it does not grant permission or execute business actions.
+- RAG means retrieval-augmented generation.
+- It supplies evidence for generation; it does not grant permission or execute business actions.
 
 ### Checklist
 
@@ -290,29 +486,50 @@ RAG means retrieval-augmented generation. It supplies evidence for generation; i
 
 ### Debugging Order
 
-```text
-Source exists/current?
-      ↓
-Parse/index correct?
-      ↓
-Access/version filters correct?
-      ↓
-Retrieved/ranked?
-      ↓
-Kept in final context?
-      ↓
-Used correctly in answer?
+```mermaid
+flowchart TD
+    N0["Check source exists and is current"]
+    N1["Check parsing and indexing"]
+    N2["Check access and version filters"]
+    N3["Check retrieval and ranking"]
+    N4["Check final context"]
+    N5["Check answer uses evidence correctly"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 --> N5
+    classDef c0 fill:#dbeafe,stroke:#2563eb,color:#172554
+    class N0,N4 c0
+    classDef c1 fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    class N1,N5 c1
+    classDef c2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    class N2 c2
+    classDef c3 fill:#fef3c7,stroke:#b45309,color:#78350f
+    class N3 c3
 ```
 
-Do not switch models before locating the failing stage. Increasing retrieved context can add noise, latency, and cost. Rerank only when its measured benefit justifies the overhead.
+- Do not switch models before locating the failing stage.
+- Increasing retrieved context can add noise, latency, and cost.
+- Rerank only when its measured benefit justifies the overhead.
 
 ### Support Pattern
 
-Retrieve refund policy and read live order data, then produce an evidence-based recommendation. Policy decides whether execution is allowed. If evidence is insufficient or conflicting, clarify, explain the limitation, or escalate. Cache reuse must preserve freshness and access scope.
+- Retrieve the refund policy and read live order data.
+- Use both to support the recommendation.
+- Policy decides whether execution is allowed.
+- If evidence is insufficient or conflicting, clarify, explain the limitation, or escalate.
+- Cache reuse must preserve freshness and access scope.
 
 ### 30-Second Answer
 
-> “I’d first separate reference knowledge from live transactional data. For RAG, I’d build a maintained ingestion path with useful chunks, metadata, permissions, and versions. At query time I’d retrieve authorised evidence, rerank if useful, select context, and require supported claims. I’d evaluate retrieval separately from generation and trace failures from the source to the final answer.”
+Practise these points as one spoken answer:
+
+- “I’d first separate reference knowledge from live transactional data.”
+- “For RAG, I’d build a maintained ingestion path with useful chunks, metadata, permissions, and versions.”
+- “At query time I’d retrieve authorised evidence, rerank if useful, select context, and require supported claims.”
+- “I’d evaluate retrieval separately from generation and trace failures from the source to the final answer.”
+
 
 ## Sources (checked 27 Sep 2026)
 

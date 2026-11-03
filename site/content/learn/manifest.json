@@ -5773,7 +5773,7 @@
       "source": "07_Last_Day_Revision/module-12-reliability-and-failure-handling.md",
       "estMinutes": 7,
       "href": "/interview/final-week/module-12-reliability-and-failure-handling",
-      "updated": "2026-10-28"
+      "updated": "2026-11-03"
     },
     {
       "slug": "internal-knowledge-assistant",
@@ -6171,7 +6171,7 @@
       "source": "07_Last_Day_Revision/Roadmap.md",
       "estMinutes": 13,
       "href": "/interview/final-week/roadmap",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "roadmap-full-practice-and-checklists",
@@ -6181,9 +6181,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/Roadmap.md",
-      "estMinutes": 5,
+      "estMinutes": 6,
       "href": "/interview/final-week/roadmap-full-practice-and-checklists",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "rapid-revision-guide",
@@ -6193,9 +6193,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/Rapid_Revision_Guide.md",
-      "estMinutes": 8,
+      "estMinutes": 10,
       "href": "/interview/final-week/rapid-revision-guide",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "trigger-to-concept-cheat-sheet",
@@ -6205,9 +6205,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/trigger-to-concept-cheat-sheet.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/interview/final-week/trigger-to-concept-cheat-sheet",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-01-fde-problem-decomposition",
@@ -6217,9 +6217,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-01-fde-problem-decomposition.md",
-      "estMinutes": 10,
+      "estMinutes": 11,
       "href": "/interview/final-week/module-01-fde-problem-decomposition",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-02-functional-requirements",
@@ -6231,7 +6231,7 @@
       "source": "07_Last_Day_Revision/module-02-functional-requirements.md",
       "estMinutes": 11,
       "href": "/interview/final-week/module-02-functional-requirements",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-03-non-functional-requirements",
@@ -6241,9 +6241,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-03-non-functional-requirements.md",
-      "estMinutes": 8,
+      "estMinutes": 9,
       "href": "/interview/final-week/module-03-non-functional-requirements",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-04-core-architecture-building-blocks",
@@ -6255,7 +6255,7 @@
       "source": "07_Last_Day_Revision/module-04-core-architecture-building-blocks.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-04-core-architecture-building-blocks",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-05-rag-and-enterprise-data",
@@ -6267,7 +6267,7 @@
       "source": "07_Last_Day_Revision/module-05-rag-and-enterprise-data.md",
       "estMinutes": 9,
       "href": "/interview/final-week/module-05-rag-and-enterprise-data",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-06-agentic-architecture",
@@ -6279,7 +6279,7 @@
       "source": "07_Last_Day_Revision/module-06-agentic-architecture.md",
       "estMinutes": 10,
       "href": "/interview/final-week/module-06-agentic-architecture",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-07-tools-actions-and-enterprise-integration",
@@ -6291,7 +6291,7 @@
       "source": "07_Last_Day_Revision/module-07-tools-actions-and-enterprise-integration.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-07-tools-actions-and-enterprise-integration",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-08-guardrails-policy-and-human-approval",
@@ -6303,7 +6303,7 @@
       "source": "07_Last_Day_Revision/module-08-guardrails-policy-and-human-approval.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-08-guardrails-policy-and-human-approval",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-09-scaling-ai-systems",
@@ -6315,7 +6315,7 @@
       "source": "07_Last_Day_Revision/module-09-scaling-ai-systems.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-09-scaling-ai-systems",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-10-latency-optimization",
@@ -6339,7 +6339,7 @@
       "source": "07_Last_Day_Revision/module-11-cost-optimization.md",
       "estMinutes": 9,
       "href": "/interview/final-week/module-11-cost-optimization",
-      "updated": "2026-10-28"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-13-ai-evaluation",
@@ -6351,7 +6351,7 @@
       "source": "07_Last_Day_Revision/module-13-ai-evaluation.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-13-ai-evaluation",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-14-release-and-change-management",
@@ -6363,7 +6363,7 @@
       "source": "07_Last_Day_Revision/module-14-release-and-change-management.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-14-release-and-change-management",
-      "updated": "2026-10-28"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-15-observability-and-production-operations",
@@ -6375,7 +6375,7 @@
       "source": "07_Last_Day_Revision/module-15-observability-and-production-operations.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-15-observability-and-production-operations",
-      "updated": "2026-10-28"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-16-security-and-enterprise-multi-tenancy",
@@ -6387,7 +6387,7 @@
       "source": "07_Last_Day_Revision/module-16-security-and-enterprise-multi-tenancy.md",
       "estMinutes": 9,
       "href": "/interview/final-week/module-16-security-and-enterprise-multi-tenancy",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-17-trade-off-thinking",
@@ -6397,9 +6397,9 @@
       "kind": "sync",
       "publish": "own",
       "source": "07_Last_Day_Revision/module-17-trade-off-thinking.md",
-      "estMinutes": 9,
+      "estMinutes": 10,
       "href": "/interview/final-week/module-17-trade-off-thinking",
-      "updated": "2026-10-28"
+      "updated": "2026-11-03"
     },
     {
       "slug": "module-18-end-to-end-fde-interview-execution",
@@ -6411,7 +6411,7 @@
       "source": "07_Last_Day_Revision/module-18-end-to-end-fde-interview-execution.md",
       "estMinutes": 8,
       "href": "/interview/final-week/module-18-end-to-end-fde-interview-execution",
-      "updated": "2026-11-02"
+      "updated": "2026-11-03"
     },
     {
       "slug": "choose-a-capstone-project",
