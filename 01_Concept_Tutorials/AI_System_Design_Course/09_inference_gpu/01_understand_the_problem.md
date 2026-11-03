@@ -39,7 +39,7 @@ An enterprise may require a particular network/data-handling path or a reproduci
 | 7.2 AI gateway and provider management | Taught at mapped depth | D3: approved route policy, envelopes, budgets, durable replay and unknown/commit-failure tests |
 | 9.1 LLM execution and inference fundamentals | Taught at mapped depth | D2: prefill/decode, tokens, TTFT/ITL and peak context/memory exercise |
 | 9.2 Model serving architecture | Taught at mapped depth | D2: gateway/engine separation, readiness, batching and deployment alternatives |
-| 9.3 Inference performance optimization | Taught at mapped depth | D1: quantisation/batching/prefix-cache implications and profiling boundary, not kernel tuning |
+| 9.3 Inference performance optimisation | Taught at mapped depth | D1: quantisation/batching/prefix-cache implications and profiling boundary, not kernel tuning |
 | 10.1 GPU architecture fundamentals | Taught at mapped depth | D1: VRAM versus bandwidth/compute and practical memory accounting |
 | 10.2 Distributed GPU execution | Taught at mapped depth | D1: replicas versus tensor/pipeline sharding and communication cost |
 | 10.3 GPU infrastructure and scheduling | Taught at mapped depth | D1: placement, memory reservations, sharing/isolation and finite capacity |

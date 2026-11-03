@@ -48,7 +48,7 @@ export function LessonSideNav({
         href={learnHref.module(mod)}
         className={cx('mt-1 flex items-start gap-2 rounded-md px-2 py-1 font-semibold hover:text-accent', focusRing)}
       >
-        {moduleTag(mod) && <span className="w-9 shrink-0 tabular-nums text-subtle">{moduleTag(mod)}</span>}
+        {moduleTag(mod) && <span className="min-w-9 shrink-0 tabular-nums text-subtle">{moduleTag(mod)}</span>}
         <span className="min-w-0 flex-1">{mod.title}</span>
       </Link>
 

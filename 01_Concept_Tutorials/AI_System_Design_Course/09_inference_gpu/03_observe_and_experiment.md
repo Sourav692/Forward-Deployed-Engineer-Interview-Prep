@@ -23,7 +23,7 @@ sequenceDiagram
  G->>D: Inspect replay or reserve new operation identity
  G->>B: Fresh token/request/slot grant
  alt Policy envelope or budget rejects
- G-->>C: Explicit refusal or blocked state; no transport
+ G-->>C: Explicit refusal or blocked state#59; no transport
  else Grant and ready route
  G->>E: Approved context and bounded generation request
  alt Known result and successful commit

@@ -173,6 +173,21 @@ export const TRACK_MODULES: Record<string, readonly string[]> = {
     'coding-round-practice',
   ],
   'capstone-and-portfolio': ['capstone-build', 'portfolio-write-up'],
+  'staff-ai-system-design': [
+    'enterprise-overview',
+    'mvp',
+    'distributed-execution',
+    'enterprise-knowledge',
+    'application-scaling',
+    'overload-fairness',
+    'enterprise-security',
+    'reliability-consistency',
+    'evaluation-releases',
+    'inference-gpu',
+    'fine-tuning',
+    'multi-region',
+    'staff-platform',
+  ],
 }
 
 /**
@@ -204,6 +219,9 @@ type FlagSpec = Partial<Record<ModuleFlag, string[]>>
 function flags(fallback: ModuleFlag, spec: FlagSpec): Record<string, ModuleFlag> {
   const out: Record<string, ModuleFlag> = {}
   for (const slug of ALL_MODULES) out[slug] = fallback
+  // The Staff AI System Design course (T17) is an optional deep dive on every path; a path's own
+  // spec can still raise it. Optional modules add nothing to a path's hours.
+  for (const slug of TRACK_MODULES['staff-ai-system-design']) out[slug] = 'optional'
   for (const level of FLAG_ORDER) for (const item of spec[level] ?? []) for (const slug of expand(item)) out[slug] = level
   for (const slug of GAP_MODULES) if (out[slug] !== 'skip') out[slug] = 'later'
   // Kept in the registry for case references and saved progress, not assigned in Learn.
@@ -578,7 +596,7 @@ export const PATHS: LearningPath[] = [
       'The Forward Deployed Engineer path for loops with a coding round and a take-home build of 3 to 5 hours, with customer delivery and evaluation required.',
     moduleFlags: {
       ...FDE_FLAGS,
-      // T17 Forward Deployed Engineering and T15.7 Evaluation and release gates.
+      // T18 Forward Deployed Engineering and T15.7 Evaluation and release gates.
       'customer-discovery': 'required',
       'scoping-an-fde-project': 'required',
       'judgement-cases': 'required',

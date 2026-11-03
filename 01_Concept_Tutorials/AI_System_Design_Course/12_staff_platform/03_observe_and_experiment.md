@@ -19,22 +19,22 @@ sequenceDiagram
  participant D as Cell route authority in the regional authority store
  participant R as Regional runtime
  A->>M: Scoped manifest and stable change key
- M->>M: Validate against current regional policy; record the change
+ M->>M: Validate against current regional policy#59; record the change
  M->>S: Authorised read-only comparison, no business effects
  S-->>M: Evidence bound to baseline route and generation
  alt Current eligibility and pilot evidence pass
  M->>P: Contract part only: opaque tenant, app and profile IDs
  P->>P: Sign and publish route generation N+1
  D->>P: Pull, verify signature, reject older generations
- D->>D: Check current eligibility; CAS N to N+1; append history
+ D->>D: Check current eligibility#59; CAS N to N+1#59; append history
  D-->>A: Inspectable committed generation
- R->>D: Serve under one generation; enforce access and operation identity
+ R->>D: Serve under one generation#59; enforce access and operation identity
  opt Canary fails and the previous route is still eligible
  D->>D: CAS new local generation N+2 carrying N's route, with actor and reason
- D->>P: On reconnect, report N+2; N+1 is marked rolled back
+ D->>P: On reconnect, report N+2#59; N+1 is marked rolled back
  end
  else Failed evidence or revoked target
- M-->>A: Block; retain current route
+ M-->>A: Block#59; retain current route
  end
 ```
 

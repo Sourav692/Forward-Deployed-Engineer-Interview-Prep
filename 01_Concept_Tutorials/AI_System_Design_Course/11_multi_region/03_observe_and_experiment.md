@@ -19,9 +19,9 @@ sequenceDiagram
  participant S as EU-secondary
  participant G as Regional Model Gateway
  Note over I,S: Control plane: promotion
- I->>Q: Check EU-secondary is allowed and not failed; request lease
+ I->>Q: Check EU-secondary is allowed and not failed#59; request lease
  alt Quorum lost or destination not allowed
- Q-->>I: No lease; stay fail closed; authority unavailable
+ Q-->>I: No lease#59; stay fail closed#59; authority unavailable
  else 2 of 3 voters grant epoch 8
  Q-->>I: Lease epoch 8 after epoch 7 expiry plus drift margin
  I->>S: Install epoch 8 in every store it will use, then probe epoch 7
@@ -32,12 +32,12 @@ sequenceDiagram
  end
  Note over C,G: Data plane: Alice's request
  C->>N: Request to the EU hostname with original operation key
- N->>Q: Authenticate from headers; tenant scope, placement, current policy
+ N->>Q: Authenticate from headers#59; tenant scope, placement, current policy
  alt Not promoted, tenant not placed here or no current policy
- N-->>C: Unavailable; key kept; no US redirect
+ N-->>C: Unavailable#59; key kept#59; no US redirect
  else EU-secondary holds epoch 8
  N->>S: Forward to the epoch 8 writer
- S->>G: Inspect operation; dispatch only if admitted
+ S->>G: Inspect operation#59; dispatch only if admitted
  G-->>C: Saved replay or recovery hold
  end
 ```

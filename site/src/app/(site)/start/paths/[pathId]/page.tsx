@@ -151,7 +151,7 @@ export default async function PathPage({ params }: { params: Promise<Params> }) 
                         return (
                           <li key={m.slug} className="flex flex-col gap-1.5 px-3 py-2.5 sm:flex-row sm:items-center sm:gap-3">
                             <div className="flex min-w-0 flex-1 items-baseline gap-2 sm:min-w-56">
-                              {moduleTag(m) && <span className="w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(m)}</span>}
+                              {moduleTag(m) && <span className="min-w-9 shrink-0 text-xs font-semibold tabular-nums text-subtle">{moduleTag(m)}</span>}
                               <Link
                                 href={learnHref.module(m)}
                                 className={cx('min-w-0 rounded-sm text-sm hover:text-accent', flag === 'skip' ? 'text-muted' : 'font-medium', focusRing)}

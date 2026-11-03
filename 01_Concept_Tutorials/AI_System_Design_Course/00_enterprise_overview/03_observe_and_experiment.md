@@ -25,7 +25,7 @@ sequenceDiagram
  A->>R: Resolve current permitted source versions
  alt No permitted current evidence
  R-->>A: No permitted current evidence
- A-->>C: Refuse grounded answer; no restricted context sent
+ A-->>C: Refuse grounded answer#59; no restricted context sent
  else Permitted evidence and approved route
  A->>M: Approved bundle, bounded context and fresh budget grant
  alt Known result and successful final commit
@@ -33,7 +33,7 @@ sequenceDiagram
  A->>H: Commit answer with original source references
  A-->>C: Saved-success result and citation
  else Provider outcome unknown or final commit fails
- A-->>C: Inspectable incomplete or unknown state; no blind retry
+ A-->>C: Inspectable incomplete or unknown state#59; no blind retry
  end
  end
 ```

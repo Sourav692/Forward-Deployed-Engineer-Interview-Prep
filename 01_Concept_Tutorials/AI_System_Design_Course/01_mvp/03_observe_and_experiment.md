@@ -12,25 +12,25 @@ sequenceDiagram
     participant M as Model adapter
     participant P as Hosted model (stub in lab)
     C->>A: POST prompt + bearer + request key
-    A->>I: Verify identity; derive tenant/user
+    A->>I: Verify identity#59; derive tenant/user
     I-->>A: Trusted scope or reject 401
-    A->>D: Insert processing row; commit
+    A->>D: Insert processing row#59; commit
     D-->>A: Request ID durable
     A->>M: Generate within remaining budget
-    M->>P: Bounded generation; no automatic retry
+    M->>P: Bounded generation#59; no automatic retry
     alt Provider succeeds and final commit succeeds
         P-->>M: Answer
         M-->>A: Normalised answer
-        A->>D: Update completed + answer; commit
+        A->>D: Update completed + answer#59; commit
         D-->>A: Committed
         A-->>C: 201 saved answer + ID
     else Provider times out
         M-->>A: ProviderTimeout
-        A->>D: Update failed; commit
+        A->>D: Update failed#59; commit
         A-->>C: 504 + ID if failed-state commit succeeds
     else Final storage operation fails
         D-->>A: Write/commit error
-        A-->>C: 503; no completed answer acknowledgement
+        A-->>C: 503#59; no completed answer acknowledgement
     end
 ```
 

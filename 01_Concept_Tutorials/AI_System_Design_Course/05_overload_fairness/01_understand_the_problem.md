@@ -41,13 +41,13 @@ At the same time, a single global first-in-first-out queue can let A’s large b
 | 5.1 Rate limiting and admission control | Taught at mapped depth | D3: separate request/token/concurrency budgets and atomic guard tests |
 | 5.2 Queuing and queueing theory | Taught at mapped depth | D2: backlog growth, stability, bounded wait, Little’s law limitations |
 | 5.3 Backpressure and overload management | Taught at mapped depth | D3: finite queues, rejection/deadline/retry policy, failure exercises |
-| 5.4 Fair scheduling and workload prioritization | Taught at mapped depth | D2: FIFO, strict priority, RR, WRR, starvation and cost-normalised trade-offs |
+| 5.4 Fair scheduling and workload prioritisation | Taught at mapped depth | D2: FIFO, strict priority, RR, WRR, starvation and cost-normalised trade-offs |
 | 5.5 AI workload management | Taught at mapped depth | D3: token reservation, provider slots, workload classes and explicit unknown outcomes |
 | 4.1 Concurrency fundamentals | Revisited from Stage 2 | D3: apply atomic authority to simultaneous budget reservations |
 | 4.2 Messaging and event streams | Revisited from Stage 2 | D3: queue/prefetch/retry limits preserve durable completion and ownership |
 | 6.2 Caching systems | Revisited from Stage 4 | D2: hits save body work without bypassing admission or permission |
 | 12.1 Scaling and traffic engineering | Revisited from Stage 4 | D3: provider capacity stays binding while app replicas increase |
 | 7.2 AI gateway and provider management | Context only | Stage 9, D3: the guard protects a provider boundary; routing/fallback is not retaught here |
-| 9.3 Inference performance optimization | Deferred | Stage 9, D1: no kernel, batching-engine, or GPU optimisation implementation |
+| 9.3 Inference performance optimisation | Deferred | Stage 9, D1: no kernel, batching-engine, or GPU optimisation implementation |
 
 Outcomes: distinguish the five budgets; enforce a race-safe provider reservation; reproduce noisy-neighbour outcomes; expire waiting work; and explain why retries/extra replicas cannot create capacity. Prerequisites are the first four stage contracts. [Curriculum](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/curriculum-map.json) and [actual coverage](https://github.com/Sourav692/Forward-Deployed-Engineer-Interview-Prep/blob/main/10_AI_System_Design/progress/coverage-status.csv) remain separate from learner completion.

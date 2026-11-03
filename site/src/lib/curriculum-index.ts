@@ -808,6 +808,189 @@ export const INDEX_MODULES: IndexModule[] = [
     "practiceMinutes": 140
   },
   {
+    "slug": "enterprise-overview",
+    "code": "T17.1",
+    "title": "Enterprise use case and target architecture",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "enterprise-overview-understand-the-problem",
+      "enterprise-overview-learn-and-design",
+      "enterprise-overview-observe-and-experiment",
+      "enterprise-overview-think-like-a-staff-engineer",
+      "enterprise-overview-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 30
+  },
+  {
+    "slug": "mvp",
+    "code": "T17.2",
+    "title": "Build the MVP",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "mvp-understand-the-problem",
+      "mvp-learn-and-design",
+      "mvp-observe-and-experiment",
+      "mvp-think-like-a-staff-engineer",
+      "mvp-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 390
+  },
+  {
+    "slug": "distributed-execution",
+    "code": "T17.3",
+    "title": "Distributed execution",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "distributed-execution-understand-the-problem",
+      "distributed-execution-learn-and-design",
+      "distributed-execution-observe-and-experiment",
+      "distributed-execution-think-like-a-staff-engineer",
+      "distributed-execution-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 345
+  },
+  {
+    "slug": "enterprise-knowledge",
+    "code": "T17.4",
+    "title": "Enterprise knowledge",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "enterprise-knowledge-understand-the-problem",
+      "enterprise-knowledge-learn-and-design",
+      "enterprise-knowledge-observe-and-experiment",
+      "enterprise-knowledge-think-like-a-staff-engineer",
+      "enterprise-knowledge-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 345
+  },
+  {
+    "slug": "application-scaling",
+    "code": "T17.5",
+    "title": "Scale the application",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "application-scaling-understand-the-problem",
+      "application-scaling-learn-and-design",
+      "application-scaling-observe-and-experiment",
+      "application-scaling-think-like-a-staff-engineer",
+      "application-scaling-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 345
+  },
+  {
+    "slug": "overload-fairness",
+    "code": "T17.6",
+    "title": "Handle overload and fair scheduling",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "overload-fairness-understand-the-problem",
+      "overload-fairness-learn-and-design",
+      "overload-fairness-observe-and-experiment",
+      "overload-fairness-think-like-a-staff-engineer",
+      "overload-fairness-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 390
+  },
+  {
+    "slug": "enterprise-security",
+    "code": "T17.7",
+    "title": "Enterprise security",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "enterprise-security-understand-the-problem",
+      "enterprise-security-learn-and-design",
+      "enterprise-security-observe-and-experiment",
+      "enterprise-security-think-like-a-staff-engineer",
+      "enterprise-security-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 405
+  },
+  {
+    "slug": "reliability-consistency",
+    "code": "T17.8",
+    "title": "Reliability and consistency",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "reliability-consistency-understand-the-problem",
+      "reliability-consistency-learn-and-design",
+      "reliability-consistency-observe-and-experiment",
+      "reliability-consistency-think-like-a-staff-engineer",
+      "reliability-consistency-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 450
+  },
+  {
+    "slug": "evaluation-releases",
+    "code": "T17.9",
+    "title": "Production AI quality and releases",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "evaluation-releases-understand-the-problem",
+      "evaluation-releases-learn-and-design",
+      "evaluation-releases-observe-and-experiment",
+      "evaluation-releases-think-like-a-staff-engineer",
+      "evaluation-releases-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 345
+  },
+  {
+    "slug": "inference-gpu",
+    "code": "T17.10",
+    "title": "Inference and GPU infrastructure",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "inference-gpu-understand-the-problem",
+      "inference-gpu-learn-and-design",
+      "inference-gpu-observe-and-experiment",
+      "inference-gpu-think-like-a-staff-engineer",
+      "inference-gpu-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 330
+  },
+  {
+    "slug": "fine-tuning",
+    "code": "T17.11",
+    "title": "Fine-tuning and model customisation",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "fine-tuning-understand-the-problem",
+      "fine-tuning-learn-and-design",
+      "fine-tuning-observe-and-experiment",
+      "fine-tuning-think-like-a-staff-engineer",
+      "fine-tuning-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 225
+  },
+  {
+    "slug": "multi-region",
+    "code": "T17.12",
+    "title": "Global multi-region platform",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "multi-region-understand-the-problem",
+      "multi-region-learn-and-design",
+      "multi-region-observe-and-experiment",
+      "multi-region-think-like-a-staff-engineer",
+      "multi-region-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 315
+  },
+  {
+    "slug": "staff-platform",
+    "code": "T17.13",
+    "title": "Staff-level platform architecture",
+    "track": "staff-ai-system-design",
+    "lessons": [
+      "staff-platform-understand-the-problem",
+      "staff-platform-learn-and-design",
+      "staff-platform-observe-and-experiment",
+      "staff-platform-think-like-a-staff-engineer",
+      "staff-platform-staff-interview-practice",
+      "staff-platform-validate-and-carry-forward"
+    ],
+    "practiceMinutes": 435
+  },
+  {
     "slug": "tool-design-mcp-a2a",
     "code": "T15.1",
     "title": "Tool design and the agent-computer interface",
@@ -1088,7 +1271,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "customer-discovery",
-    "code": "T17.1",
+    "code": "T18.1",
     "title": "Customer discovery and problem decomposition",
     "track": "forward-deployed",
     "lessons": [
@@ -1102,7 +1285,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "scoping-an-fde-project",
-    "code": "T17.2",
+    "code": "T18.2",
     "title": "Scoping an FDE project",
     "track": "forward-deployed",
     "lessons": [
@@ -1118,7 +1301,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "judgement-cases",
-    "code": "T17.3",
+    "code": "T18.3",
     "title": "Judgement cases",
     "track": "forward-deployed",
     "lessons": [],
@@ -1126,7 +1309,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "delivery-stages-and-gates",
-    "code": "T17.4",
+    "code": "T18.4",
     "title": "Delivery: six stages, gates, two-week launch",
     "track": "forward-deployed",
     "lessons": [
@@ -1142,7 +1325,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "adoption-and-impact",
-    "code": "T17.5",
+    "code": "T18.5",
     "title": "Adoption, change management and business impact",
     "track": "forward-deployed",
     "lessons": [
@@ -1154,7 +1337,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "debugging-customer-environment",
-    "code": "T17.6",
+    "code": "T18.6",
     "title": "Debugging in the customer's environment",
     "track": "forward-deployed",
     "lessons": [],
@@ -1162,7 +1345,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "telling-the-build-story",
-    "code": "T18.1",
+    "code": "T19.1",
     "title": "Telling the build story",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1177,7 +1360,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "building-the-story-bank",
-    "code": "T18.2",
+    "code": "T19.2",
     "title": "The behavioural round",
     "track": "communication-and-behavioural",
     "lessons": [
@@ -1305,7 +1488,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "capstone-build",
-    "code": "T19.1",
+    "code": "T20.1",
     "title": "Capstone build",
     "track": "capstone-and-portfolio",
     "lessons": [
@@ -1316,7 +1499,7 @@ export const INDEX_MODULES: IndexModule[] = [
   },
   {
     "slug": "portfolio-write-up",
-    "code": "T19.2",
+    "code": "T20.2",
     "title": "Portfolio write-up and presentation",
     "track": "capstone-and-portfolio",
     "lessons": [],
@@ -1685,8 +1868,28 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
     ]
   },
   {
-    "slug": "forward-deployed",
+    "slug": "staff-ai-system-design",
     "code": "T17",
+    "title": "Staff AI System Design: Building an Enterprise AI Platform",
+    "modules": [
+      "enterprise-overview",
+      "mvp",
+      "distributed-execution",
+      "enterprise-knowledge",
+      "application-scaling",
+      "overload-fairness",
+      "enterprise-security",
+      "reliability-consistency",
+      "evaluation-releases",
+      "inference-gpu",
+      "fine-tuning",
+      "multi-region",
+      "staff-platform"
+    ]
+  },
+  {
+    "slug": "forward-deployed",
+    "code": "T18",
     "title": "Forward Deployed Engineering",
     "modules": [
       "customer-discovery",
@@ -1699,7 +1902,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "communication-and-behavioural",
-    "code": "T18",
+    "code": "T19",
     "title": "Communication and Behavioural",
     "modules": [
       "telling-the-build-story",
@@ -1720,7 +1923,7 @@ export const INDEX_TRACKS: { slug: string; code: string; title: string; modules:
   },
   {
     "slug": "capstone-and-portfolio",
-    "code": "T19",
+    "code": "T20",
     "title": "Capstone and Portfolio",
     "modules": [
       "capstone-build",

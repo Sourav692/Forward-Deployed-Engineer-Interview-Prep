@@ -26,7 +26,7 @@ sequenceDiagram
  A->>D: Commit saved result when generating
  A-->>C: Success after durable commit
  else Revoked or deleted
- A-->>C: No restricted content; same refusal contract
+ A-->>C: No restricted content#59; same refusal contract
  end
 ```
 

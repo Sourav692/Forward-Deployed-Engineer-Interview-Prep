@@ -27,6 +27,7 @@ import { RENAMED_T7 } from './consolidation/t7.ts'
 import { RENAMED_T8 } from './consolidation/t8.ts'
 import { RENAMED_T9 } from './consolidation/t9.ts'
 import { RAG_LESSONS, RAG_MODULES, RAG_TRACKS } from './rag-tracks.ts'
+import { SD_LESSONS, SD_MODULES, SD_TRACKS } from './sd-course.ts'
 
 export const TRACKS: CurriculumTrack[] = [
   {
@@ -197,9 +198,10 @@ export const TRACKS: CurriculumTrack[] = [
       },
     ],
   },
+  ...SD_TRACKS,
   {
     slug: 'forward-deployed',
-    code: 'T17',
+    code: 'T18',
     title: 'Forward Deployed Engineering',
     objective: 'Take a vague customer need to an adopted deployment',
     forWhom: 'FDE, consultant, architect',
@@ -238,7 +240,7 @@ export const TRACKS: CurriculumTrack[] = [
   },
   {
     slug: 'communication-and-behavioural',
-    code: 'T18',
+    code: 'T19',
     title: 'Communication and Behavioural',
     objective: 'Tell grounded stories and explain trade-offs to any audience',
     forWhom: 'All',
@@ -294,7 +296,7 @@ export const TRACKS: CurriculumTrack[] = [
   },
   {
     slug: 'capstone-and-portfolio',
-    code: 'T19',
+    code: 'T20',
     title: 'Capstone and Portfolio',
     objective: 'Build and present evidence of real capability',
     forWhom: 'Career changers, architects',
@@ -347,7 +349,7 @@ export const MODULES: CurriculumModule[] = [
     status: 'ready',
     practiceMinutes: 30,
     objective: 'Explain how FDE differs from SWE and solutions roles',
-    scope: 'Role and cadence; delivery detail lives in T17.4',
+    scope: 'Role and cadence; delivery detail lives in T18.4',
     prerequisites: [],
     deliverable: 'Write a 3-sentence "why FDE" answer',
     assessment: 'Quiz',
@@ -512,6 +514,7 @@ export const MODULES: CurriculumModule[] = [
     seeAlso: [],
   },
   ...RAG_MODULES,
+  ...SD_MODULES,
   {
     slug: 'tool-design-mcp-a2a',
     code: 'T15.1',
@@ -971,14 +974,14 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'customer-discovery',
-    code: 'T17.1',
+    code: 'T18.1',
     title: 'Customer discovery and problem decomposition',
     track: 'forward-deployed',
     section: 'discovery-and-scoping',
     status: 'ready',
     practiceMinutes: 210,
     objective: 'Turn a vague ask into requirements, constraints and metrics',
-    scope: 'Discovery only; scoping in T17.2',
+    scope: 'Discovery only; scoping in T18.2',
     prerequisites: ['first-ten-minutes'],
     deliverable: 'Discovery worksheets (10 existing) + 3 bank cases aloud',
     assessment: 'Worksheet rubric',
@@ -995,7 +998,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'scoping-an-fde-project',
-    code: 'T17.2',
+    code: 'T18.2',
     title: 'Scoping an FDE project',
     track: 'forward-deployed',
     section: 'discovery-and-scoping',
@@ -1021,7 +1024,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'judgement-cases',
-    code: 'T17.3',
+    code: 'T18.3',
     title: 'Judgement cases',
     track: 'forward-deployed',
     section: 'discovery-and-scoping',
@@ -1039,7 +1042,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'delivery-stages-and-gates',
-    code: 'T17.4',
+    code: 'T18.4',
     title: 'Delivery: six stages, gates, two-week launch',
     track: 'forward-deployed',
     section: 'delivery-and-adoption',
@@ -1065,7 +1068,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'adoption-and-impact',
-    code: 'T17.5',
+    code: 'T18.5',
     title: 'Adoption, change management and business impact',
     track: 'forward-deployed',
     section: 'delivery-and-adoption',
@@ -1088,7 +1091,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'debugging-customer-environment',
-    code: 'T17.6',
+    code: 'T18.6',
     title: 'Debugging in the customer\'s environment',
     track: 'forward-deployed',
     section: 'delivery-and-adoption',
@@ -1107,7 +1110,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'telling-the-build-story',
-    code: 'T18.1',
+    code: 'T19.1',
     title: 'Telling the build story',
     track: 'communication-and-behavioural',
     section: 'stories-and-communication',
@@ -1133,7 +1136,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'building-the-story-bank',
-    code: 'T18.2',
+    code: 'T19.2',
     title: 'The behavioural round',
     track: 'communication-and-behavioural',
     section: 'stories-and-communication',
@@ -1363,7 +1366,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'capstone-build',
-    code: 'T19.1',
+    code: 'T20.1',
     title: 'Capstone build',
     track: 'capstone-and-portfolio',
     section: 'capstone',
@@ -1385,7 +1388,7 @@ export const MODULES: CurriculumModule[] = [
   },
   {
     slug: 'portfolio-write-up',
-    code: 'T19.2',
+    code: 'T20.2',
     title: 'Portfolio write-up and presentation',
     track: 'capstone-and-portfolio',
     section: 'capstone',
@@ -5295,4 +5298,5 @@ export const LESSONS: CurriculumLesson[] = [
     publish: 'own',
   },
   ...RAG_LESSONS,
+  ...SD_LESSONS,
 ]
