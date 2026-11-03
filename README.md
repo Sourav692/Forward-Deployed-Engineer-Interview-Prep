@@ -23,6 +23,7 @@ Folders are grouped by the kind of material they hold, numbered in study order.
 | `07_Last_Day_Revision/` | Eighteen rapid-review modules, memory cards and the final interview execution framework |
 | `08_Company_Specific_Prep/` | Company loops: Blitzy, OpenAI Applied, OpenAI/Anthropic |
 | `09_Study_Plans/` | Study-plan spreadsheets and coverage maps (local only, gitignored) |
+| `10_AI_System_Design/` | Staff AI System Design course: one enterprise AI platform grown from an MVP to a multi-region, staff-level architecture in 13 stages, with guides, browser labs, Python labs and ADRs (site track T17) |
 | `99_Reference_Library/` | Third-party PDFs, sketchnotes and external references |
 | `site/` | The deployable interactive course experience |
 
