@@ -1592,6 +1592,25 @@ export const INTERVIEW_ROUNDS: InterviewRound[] = [
           'practise-evaluation-and-release-gates',
         ],
       },
+      {
+        // The staff interview questions of the Staff AI System Design course (T17), one lesson
+        // per stage; Stage 12's sit in its own lesson because its part 4 is over the page limit.
+        title: 'Staff platform questions',
+        lessons: [
+          'mvp-think-like-a-staff-engineer',
+          'distributed-execution-think-like-a-staff-engineer',
+          'enterprise-knowledge-think-like-a-staff-engineer',
+          'application-scaling-think-like-a-staff-engineer',
+          'overload-fairness-think-like-a-staff-engineer',
+          'enterprise-security-think-like-a-staff-engineer',
+          'reliability-consistency-think-like-a-staff-engineer',
+          'evaluation-releases-think-like-a-staff-engineer',
+          'inference-gpu-think-like-a-staff-engineer',
+          'fine-tuning-think-like-a-staff-engineer',
+          'multi-region-think-like-a-staff-engineer',
+          'staff-platform-staff-interview-practice',
+        ],
+      },
       { title: 'System design worksheets', lessons: DESIGN_WORKSHEETS },
     ],
     mocks: [
